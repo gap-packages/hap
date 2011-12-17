@@ -2,8 +2,9 @@
 
 #####################################################################
 InstallGlobalFunction(PolytopalComplex,
-function(G,StartVector)
+function(arg)
 local
+	G,StartVector,
 	PG,
 	GG,
 	Action,
@@ -11,57 +12,36 @@ local
 	FaceToVertices,
 	Hasse,
 	p,x,
-	CreatPoints,
 	Points,
 	Dimension,
 	Boundary,
 	lngth,
 	StabilizerSubgroup,
-	VectorToGroupElt;
+	StabilizerRecord,
+	VectorToGroupElt,
+	BoundaryComponent,
+	EltsG,
+	PseudoBoundary,
+	OrbitReps,
+	StabSum;
 
+G:=arg[1];
+StartVector:=arg[2];
 PG:=PolytopalGenerators(G,StartVector);
-lngth:=Length(PG.hasseDiagram);
+if Length(arg)>2 then lngth:=arg[3]; else lngth:=Length(PG.hasseDiagram); fi;
 Points:=[];
 GG:=Filtered(Elements(G),x->not x=Identity(G));
+EltsG:=Elements(G);
 
 #####################################################################
 Dimension:=function(k);
 if k<0 then return 0; fi;
 if k=0 then return 1; fi;
-return Length(PG.hasseDiagram[k]);
+return Length(Hasse[k]);
 end;
 #####################################################################
-
-#########################CREATE POINTS###############################
-CreatPoints:=function()
-local x,w,D,i,v;
-
-D:=Length(StartVector);
 
 if IsPermGroup(G) then
-
-for x in G do
-w:=[];
-	for i in [1..D] do
-        Append(w,[StartVector[i^x]]);
-        od;
-Append(Points, [w]);
-od;
-
-else
-
-for x in G do
-w:=x*StartVector;
-Append(Points, [w]);
-od;
-fi;
-
-return Points;
-end;
-#####################################################################
-
-CreatPoints();
-										
 #####################################################################
 Action:=function(g,V)
 local i,gV;
@@ -74,6 +54,21 @@ od;
 return gV;
 end;
 #####################################################################
+else
+#####################################################################
+Action:=function(g,V) ;
+return g*V;
+end;
+#####################################################################
+fi;
+
+
+#########################CREATE POINTS###############################
+for x in G do
+Append(Points, [Action(x,StartVector)]);
+od;
+#####################################################################
+
 
 #####################################################################
 VertexToVector:=function(v);
@@ -89,6 +84,7 @@ if Action(g,StartVector)=v then return g; fi;
 od;
 end;
 #####################################################################
+
 
 #####################################################################
 FaceToVertices:=function(F)
@@ -108,16 +104,50 @@ return V;
 end;
 #####################################################################
 
+
 Hasse:=[];
-for x in PG.hasseDiagram do
-Append(Hasse,[List(x,y->FaceToVertices(y))     ]);
+for x in [1..lngth] do
+Append(Hasse,[List(PG.hasseDiagram[x],y->FaceToVertices(y))     ]);
 od;
+
+#####################################################################
+OrbitReps:=function(L)  #L=Hasse[i]
+local g,R,S, T,Reps,bool,count;
+
+Reps:=[];
+for S in L do
+bool:=true;
+count:=0;
+for g in G do
+count:=count+1;
+T:=List(S,x->Action(g,x));
+for R in Reps do
+if Length(T)=Length(Intersection(T,R)) then
+bool:=false; break; fi;
+od;
+if bool =false then break;fi;
+if count=Order(G) then Append(Reps,[S]); fi;
+od;
+od;
+
+return Reps;
+end;
+#####################################################################
+
+Hasse:=List(Hasse,x->OrbitReps(x));
+StabilizerRecord:=List([1..lngth],i->[1..Dimension(i)]);
+
 
 #####################################################################
 StabilizerSubgroup:=function(k,n)
 local S,T,verts,StabGroup,x;
+
 if k=0 then return VectorStabilizer(G,StartVector); fi;
-if k=lngth then return G; fi;
+
+if not IsInt(StabilizerRecord[k][n]) then
+return StabilizerRecord[k][n]; fi;
+
+if k=Length(PG.hasseDiagram) then return G; fi;
 
 StabGroup:=[];
 S:=Hasse[k][n];
@@ -129,20 +159,138 @@ od;
 StabGroup:=Concatenation(StabGroup,
 	GeneratorsOfGroup(VectorStabilizer(G,StartVector)));
 StabGroup:=ReduceGenerators(StabGroup,Group(StabGroup));
-return Group(StabGroup);
+if Length(StabGroup)=0 then StabGroup:=[Identity(G)]; fi;
+
+StabilizerRecord[k][n]:=Group(StabGroup);
+return StabilizerRecord[k][n];
 end;
 #####################################################################
 
+StabSum:=List([1..lngth],k->
+Sum(List([1..Dimension(k-1)],j->Order(StabilizerSubgroup(k-1,j)))-1));
+
+#####################################################################
+BoundaryComponent:=function(k,m,n)  	#Let Fm be the m-th face in 
+					#dimension k, and Fn the n-th
+					#face in dimension k-1. Return 
+					#a list [g1,...,gd] of the elements
+					#gi in G such that gi.Fn lies in the
+					#boundary of Fn. The list is maximal
+					#with respect to the property that
+					#gi*gj^-1 is not in the stabilizer
+					#of Fn.
+local 	Fm,Fn, Stab, FmElts, Component,test,
+	g, gFn;
+
+Fm:=Hasse[k][m];
+if k>1 then Fn:=Hasse[k-1][n];
+else Fn:=[StartVector]; fi;
+Stab:=StabilizerSubgroup(k-1,n);
+FmElts:=List(Fm,x->VectorToGroupElt(x));
+Component:=[];
+
+	#############################################################
+	test:=function(g)
+	local x,bool;
+	bool:=true;
+	for x in Component do
+	if g*x^-1 in Stab then bool:=false; break; fi;
+	od;
+	return bool;
+	end;
+	#############################################################
+
+for g in FmElts do
+if test(g) then
+gFn:=List(Fn,x->Action(g,x));
+if Size(gFn) = Size(Intersection(gFn,Fm)) then
+Append(Component,[g]); fi;
+fi;
+od;
+
+return Component;
+end;
+#####################################################################
+
+PseudoBoundary:=List([1..lngth],i->[1..Dimension(i)]);
+
+#####################################################################
+Boundary:=function(k,mm)
+local b,bb,x,n, bnd,signedbnd,bndbnd,tmp,m;
+
+m:=AbsoluteValue(mm);
+
+if not IsInt(PseudoBoundary[k][m]) then 
+if mm>0 then return PseudoBoundary[k][m]; 
+else return NegateWord(PseudoBoundary[k][m]);fi;
+fi;
+
+bnd:=[];
+for n in [1..Dimension(k-1)] do
+tmp:=BoundaryComponent(k,m,n);
+tmp:=List(tmp, x->Position(EltsG,x));
+tmp:=List(tmp, x->[n,x]);
+Append(bnd,tmp);
+od;
+
+
+
+	######Inserting the signs#########
+if k=1 then
+bnd[1][1]:=-bnd[1][1];
+fi;
+if k>1 and StabSum[k-1]=0 then
+bndbnd:=[];
+bnd:=SSortedList(bnd);
+signedbnd:=[bnd[1]]; RemoveSet(bnd,bnd[1]);
+for x in signedbnd do
+b:=Boundary(k-1,x[1]);
+b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+Append(bndbnd,b);
+od;
+
+while Length(bnd)>0 do
+x:=Random(bnd);
+b:=Boundary(k-1,x[1]);
+b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+if Length(Intersection(b,bndbnd))>0 then
+Append(signedbnd, [[-x[1],x[2]]]);
+Append(bndbnd,NegateWord(b));
+RemoveSet(bnd,x);
+
+else
+
+if Length(Intersection(NegateWord(b),bndbnd))>0 then
+Append(signedbnd, [[x[1],x[2]]]);
+Append(bndbnd,b);
+RemoveSet(bnd,x);
+fi;
+
+fi;
+od;
+
+bnd:=signedbnd;
+fi;
+	######Signs inserted##############
+
+
+PseudoBoundary[k][m]:=bnd;
+return Boundary(k,mm);
+end;
+#####################################################################
 return rec(
             dimension:=Dimension,
-#            boundary:=Boundary,
+            boundary:=Boundary,
             homotopy:=fail,
-            elts:=Elements(G),
+            elts:=EltsG,
             group:=G,
 	    stabilizer:=StabilizerSubgroup,
+	    hasse:=Hasse,
             properties:=
-             [["type","nonFreeResolution"],
+             [["type","resolution"],
               ["length",lngth],
               ["characteristic", 0] ]);
 
 end);
+#####################################################################
+

@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.2",
-  Date    := "07/03/2006",
+  Version := "1.3",
+  Date    := "24/03/2006",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.2",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.3",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -37,9 +37,9 @@ SetPackageInfo( rec(
 
   Status  := "deposited",
   #CommunicatedBy 
-  #        := "none",
+  #        := "Derek Holt",
   #AcceptDate 
-  #        := "not applicable",
+  #        := "",
 
   README_URL := "http://hamilton.nuigalway.ie/Hap/README.HAP",
   PackageInfoURL := "http://hamilton.nuigalway.ie/Hap/PackageInfo.g",
@@ -56,14 +56,14 @@ SetPackageInfo( rec(
     PDFFile   := "doc/manual.pdf",
     SixFile   := "doc/manual.six",
     LongTitle := "Homological Algebra Programming Package",
-    Autoload := false 
+    Autoload := true 
   ),
 
 
   Dependencies := rec(
     GAP := ">= 4.3",
     NeededOtherPackages := [],
-    SuggestedOtherPackages := [],
+    SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ]],
     ExternalConditions := [["Some functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"]]
   ),
@@ -73,10 +73,9 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "Loading HAP ",
                             String( ~.Version ), " ...\n" ),
 
+Autoload := false,
 
-  Autoload := false,
-
-#TestFile := "Hap/test/examples.test",
+TestFile := "Hap/test/test.gap",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities" ]

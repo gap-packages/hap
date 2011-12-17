@@ -11,6 +11,7 @@ local
 		gens, rels,
 		FirstBoundaryHomomorphism,
 		Boundary2Relator, Relator2Word,
+		start,
 		b, r, x;
 
 Dimension:=R.dimension;
@@ -20,6 +21,9 @@ F:=FreeGroup(Dimension(1));
 Fgens:=GeneratorsOfGroup(F);
 Frels:=[];
 gens:=[];
+
+start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+start:=SortedList(Intersection(start))[1];
 
 #####################################################################
 Mult:=function(g,h);
@@ -47,8 +51,8 @@ end;
 Boundary2Relator:=function(b)
 local c, rel, w;
 
-b:=SortedList(b);
-rel:=[1];  
+b:=SortedList(AlgebraicReduction(b));
+rel:=[start];
 
 while Length(b)>0 do
 	for x in b do

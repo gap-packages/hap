@@ -304,11 +304,61 @@ group G with a subnormal series G=L<sub>1</sub> &gt; L<sub>2</sub> &gt;
 resolutions (with contracting homotopies) for the group L<sub>k</sub>
 and for each quotient L<sub>i</sub>/L<sub>i+1</sub>. The group G need
 not be finite. In particular, computationally efficient resolutions for
-polycyclic groups could (probably) be found in this way.<br>
+polycyclic groups could be found in this way.<br>
       <br>
-However, it seems that some of the
-most interesting groups have no subnormal series! So we
-need techniques for computing their homology.<br>
+For example, the following commands use the technique to show that the
+3-dimensional Heisenberg group G - an infinite nilpotent group of class
+2 -&nbsp; has&nbsp; trivial integral homology in dimensions greater
+than 7. In dimensions 1 to 7 we see that the integral homology H<sub>n</sub>(G,Z)
+is free abelian of ranks&nbsp; 6, 16, 25, 25, 16, 6, 1
+respectively.<br>
+      <br>
+The group G is created using the GAP package "Polycyclic".<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=HeisenbergPcpGroup(3);;<br>
+gap&gt; R:=ResolutionNilpotentGroup(G,10);;<br>
+gap&gt; TR:=TensorWithIntegers(R);;<br>
+      <br>
+gap&gt; List([1..10],i-&gt;R.dimension(i));<br>
+[ 7, 21, 35, 35, 21, 7, 1, 0, 0, 0 ]<br>
+# Thus the resolution has no generators in dimensions n&gt;7.<br>
+gap&gt; for i in [1..8] do<br>
+&gt; Print("Homology in dimension ", i," is \n",Homology(TR,i),"\n");<br>
+&gt; od;<br>
+Homology in dimension 1 is<br>
+[ 0, 0, 0, 0, 0, 0 ]<br>
+Homology in dimension 2 is<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+Homology in dimension 3 is<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0 ]<br>
+Homology in dimension 4 is<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0 ]<br>
+Homology in dimension 5 is<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+Homology in dimension 6 is<br>
+[ 0, 0, 0, 0, 0, 0 ]<br>
+Homology in dimension 7 is<br>
+[ 0 ]<br>
+Homology in dimension 8 is<br>
+[&nbsp; ]<br>
+      <br>
+gap&gt; List([1..10],i-&gt;Length(Homology(TR,i)));<br>
+[ 6, 16, 25, 25, 16, 6, 1, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">However,
+it seems that some of the
+most interesting groups have no subnormal series and so the above
+techniques can't be applied to them. We need some additional
+techniques. <br>
       </td>
     </tr>
     <tr>

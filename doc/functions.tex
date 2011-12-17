@@ -229,11 +229,52 @@ This function should work for reasonably small nilpotent groups or extremely sma
 
 Inputs a permutation group $G$ and its degree $n$. Returns a bijective homomorphism $f:G\rightarrow M$ where $M$ is a group of permutation matrices.
 
+\>PolytopalComplex(G,v)
+\>PolytopalComplex(G,v)
+
+Inputs a permutation group or matrix group G of degree n and a rational vector 
+v of length n. In both cases there is a natural action of G on v. Let 
+P(G,v) be the convex polytope arising as the convex hull of the Euclidean 
+points in the orbit of v under the action of G. The cellular chain complex 
+$C_{*}=C_{*}(P(G,v))$ is an exact sequence of (not necessarily free) ZG-modules. 
+The function returns a record R with components:
+
+R.dimension(k) is a function which returns the number of G-orbits of the 
+k-dimensional faces in  P(G,v).  If each k-face has trivial stabilizer 
+subgroup in G then $C_{k}$ is a free ZG-module of rank R.dimension(k).
+
+R.stabilizer(k,n) is a function which returns the stabilizer subgroup for a face in the n-th orbit of k-faces.
+
+If all faces of dimension less than k+1 have trivial stabilizer group then the first k 
+terms of $C_{*}$ constitute part of a free  ZG-resolution. The boundary map is 
+described by the function R.boundary(k,n) . 
+(If some faces have non-trivial stabilizer group then $C_{*}$ is not free and no attempt is made to determine signs for the boundary map.)
+
+R.elements, R.group, R.properties are as in a ZG-resolution.
+
+If an optional third input variable n is used, then only the first n terms of 
+the resolution $C_{*}$ will be computed.
+
+The function uses Polymake software. 
+
 \>PolytopalGenerators(G,v)
 
-Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v, and the vector v must be chosen so that it has trivial stabilizer subgroup in G. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The function returns a list of all those elements g in G such that g·v has an edge in common with v.
+Inputs a permutation group or matrix group G of degree n and a rational vector 
+v of length n. In both cases there is a natural action of G on v, and the 
+vector v must be chosen so that it has trivial stabilizer subgroup in G. Let 
+P(G,v) be the convex polytope arising as the convex hull of the Euclidean 
+points in the orbit of v under the action of G. The function returns a record P with components:
+
+P.generators is a list of all those elements g in G such that g·v has an edge 
+in common with v. The list is a generating set for G.
+
+P.vector is the vector v.
+
+P.hasseDiagram is the Hasse diagram of the cone at v.
 
 The function uses Polymake software.
+The function is joint work with Seamus Kelly.
+
 
 \>PresentationOfResolution(R)
 

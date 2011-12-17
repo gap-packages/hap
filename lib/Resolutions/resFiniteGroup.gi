@@ -39,7 +39,9 @@ local
 	AlgebraicRed,
 	i, ii;
 
-Gens:=SSortedList(StructuralCopy(arg[1]));
+if IsGroup(arg[1]) then Gens:=GeneratorsOfGroup(arg[1]);
+else Gens:=arg[1]; fi;
+Gens:=SSortedList(StructuralCopy(Gens));
 K:=StructuralCopy(arg[2]);
 if Length(arg)>2 then tietze:=arg[3]; else tietze:=false; fi;
 
@@ -51,7 +53,13 @@ if Length(arg)>4 then saveSpace:=arg[5]; else saveSpace:=false; fi;
 
 G:=Group(Gens);
 N:=Order(G);
-Elts:=ShallowCopy(Elements(G));
+Elts:=[];
+for i in Elements(G) do
+Append(Elts,[i]);
+od;
+i:=Position(Elts,Identity(G));
+Elts[i]:=Elts[1];
+Elts[1]:=Identity(G);
 RemoveSet(Gens,Identity(G));
 
 ExtendedElts:=List(Gens,g->Position(Elts,g));	

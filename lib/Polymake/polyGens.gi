@@ -189,22 +189,34 @@ input:=InputTextFile("tmp2In.log");
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Index:= IndexFn(tmp);
+
 tmp:=ReadLine(input);
 
 while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-if Length(Faces[1])=1 then
-Faces:=Reversed(Faces); fi;
-
 Exec("rm tmp2In.log");
 
-FacesFinal:=[[1..Index[1]]];
-for i in [1..Length(Index)-1] do
-Append(FacesFinal,[[Index[i]+1..Index[i+1]]]);
-od;
-FacesFinal:=Reversed(List(FacesFinal,x->List(x,i->Faces[i])));
+if Length(Faces[1])=1 then
+
+	FacesFinal:=[];
+	for i in [1..Length(Index)-1] do
+	Append(FacesFinal,[[Index[i]..Index[i+1]-1]]);
+	od;
+	Append(FacesFinal,[[Index[i+1]]]);
+	FacesFinal:=(List(FacesFinal,x->List(x,i->Faces[i])));
+
+else
+
+	FacesFinal:=[[1..Index[1]]];
+	for i in [2..Length(Index)-1] do
+	Append(FacesFinal,[[Index[i]+1..Index[i+1]]]);
+	od;
+	FacesFinal:=Reversed(List(FacesFinal,x->List(x,i->Faces[i])));
+	
+fi;
+
 
 ############### HASSE DIAGRAM READ ##################################
 return rec(

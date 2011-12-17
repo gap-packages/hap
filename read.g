@@ -25,8 +25,8 @@ ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 
 ##################### RESOLUTIONS ###################################
 ReadPackage("HAP", "lib/Resolutions/resAspherical.gi");
-ReadPackage("HAP", "lib/Resolutions/resAbGroup.gi");
 if COMPILED=false then
+ReadPackage("HAP", "lib/Resolutions/resAbGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resFiniteGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/presentation.gi");
@@ -63,6 +63,7 @@ ReadPackage("HAP", "lib/Homology/cycles.gi");
 ReadPackage("HAP", "lib/Homology/cocycleCondition.gi");
 
 ##################### PERTURBATIONS #################################
+ReadPackage("HAP", "lib/Perturbations/resExtension.gi");
 if COMPILED=false then
 ReadPackage("HAP", "lib/Perturbations/resDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/twistedTensorProduct.gi");
@@ -87,3 +88,14 @@ ReadPackage("HAP", "lib/Polymake/aspherical.gi");
 ReadPackage("HAP", "lib/Polymake/polyGens.gi");
 ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
+
+################### POLYCYLIC ######################################
+Bool:=LoadPackage("polycyclic");
+if not Bool then 
+NaturalHomomorphism:=NaturalHomomorphismByNormalSubgroupNC;
+IsPcpGroup:=function(G);return false;end;
+fi;
+ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi"); 
+ReadPackage("HAP", "lib/Polycyclic/resNilpotentPcpGrp.gi");
+
+

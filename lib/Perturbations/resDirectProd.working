@@ -49,8 +49,8 @@ gensE:=Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H));
 E:=Group(gensE);
 
 gensE1:=Concatenation(GeneratorsOfGroup(G),
-       List([1..Length(GeneratorsOfGroup(H))],x->Identity(G)));
-gensE2:=Concatenation(List([1..Length(GeneratorsOfGroup(G))],x->Identity(H)),
+       List([1..Length(GeneratorsOfGroup(H))],x->Identity(E)));
+gensE2:=Concatenation(List([1..Length(GeneratorsOfGroup(G))],x->Identity(E)),
        GeneratorsOfGroup(H));
         
 GhomE:=GroupHomomorphismByFunction(G,E,x->x);
@@ -65,15 +65,13 @@ fi;
 
 
 
-EltsE:=[Identity(E)];
+EltsE:=[];
 for g in EltsG do
 for h in EltsH do
-AddSet(EltsE,Image(GhomE,g)*Image(HhomE,h));
+Append(EltsE,[Image(GhomE,g)*Image(HhomE,h)]);
 od;
 od;
-i:=Position(EltsE,Identity(E));
-EltsE[i]:=EltsE[1];
-EltsE[1]:=Identity(E);
+EltsE:=SSortedList(EltsE);
 
 
 PseudoBoundary:=[];
@@ -254,7 +252,7 @@ tmp:=Int2Vector(n,a);
 
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
-horizontal:=StructuralCopy(BoundaryR(p,r));
+horizontal:=ShallowCopy(BoundaryR(p,r));
 Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R.elts[x[2]]) )]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
@@ -291,10 +289,9 @@ Eg1:=Image(EhomG,Eg);
 Eg2:=Image(EhomH,Eg);
 g2:=Position(S.elts,Eg2);
 g1:=Position(R.elts,Eg1);
-#Eg1:=Image(GhomE,Image(EhomG,Eg));
-#Eg2:=Image(HhomE,Image(EhomH,Eg));
-Eg1:=Image(GhomE,Eg1);
-Eg2:=Image(HhomE,Eg2);
+Eg1:=Image(GhomE,Image(EhomG,Eg));
+Eg2:=Image(HhomE,Image(EhomH,Eg));
+
 
 
 hty:=HomotopyS(q,[s,g2]);

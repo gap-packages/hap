@@ -149,7 +149,7 @@ gap&gt; for i in [1..7] do<br>
 is a <span style="font-style: italic;">contravariant functor, </span>meaning
 that a group homomorphism f:G&#8594;Q induces a cohomology homomorphism H<sup>n</sup>(f):H<sup>n</sup>(Q,Z)
 &#8594; H<sup>n</sup>(G,Z) for all n. The following commands compute the
-orders of the kernel and image of H<sup>4</sup>(f) for the quotient
+orders of the kernel and image of H<sup>3</sup>(f) for the quotient
 homomorphism f:B<sub>5</sub> &#8594; S<sub>5</sub> from the 5-string braid
 group to the symmetric group of degree 5.<br>
       </td>
@@ -158,10 +158,10 @@ group to the symmetric group of degree 5.<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 D:=[[1,[2,3]],[2,[3,3]],[3,[4,3]]];;<br>
-gap&gt; R:=ResolutionArtinGroup(D,5);;<br>
+gap&gt; R:=ResolutionArtinGroup(D,4);;<br>
 gap&gt; TR:=HomToIntegers(R);;<br>
       <br>
-gap&gt; for i in [1..4]
+gap&gt; for i in [1..3]
 do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 #These seemingly unnecessary commands are needed to<br>
 gap&gt; x:=Cohomology(TR,i);; od;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -169,17 +169,17 @@ gap&gt; x:=Cohomology(TR,i);; od;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <br>
 gap&gt; B5:=R.group;; B5gens:=GeneratorsOfGroup(B5);;<br>
 gap&gt; S5:=SymmetricGroup(5);; S5gens:=[(1,2),(2,3),(3,4),(4,5)];;<br>
-gap&gt; S:=ResolutionFiniteGroup(S5,5);;<br>
+gap&gt; S:=ResolutionFiniteGroup(S5,4);;<br>
       <br>
 gap&gt; f:=GroupHomomorphismByImages(B5,S5,B5gens,S5gens);;<br>
 gap&gt; eqchmap:=EquivariantChainMap(R,S,f);;<br>
 gap&gt; chmap:=HomToIntegers(eqchmap);;<br>
-gap&gt; Hf:=Cohomology(chmap,4);;<br>
+gap&gt; Hf:=Cohomology(chmap,3);;<br>
       <br>
 gap&gt; Order(Kernel(Hf));<br>
-24<br>
-gap&gt; Order(Image(Hf));<br>
 1<br>
+gap&gt; Order(Image(Hf));<br>
+2<br>
       </td>
     </tr>
     <tr>
@@ -356,7 +356,7 @@ has no other generators in higher degrees. </td>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 R:=ResolutionFiniteGroup(SymmetricGroup(4),16);;<br>
 gap&gt; TR:=HomToIntegers(R);;<br>
-gap&gt; for n in [1..10] do<br>
+gap&gt; for n in [1..15] do<br>
 &gt; Print("The cohomology in degree ", n," is&nbsp; ",
 Cohomology(TR,n),"\n");<br>
 &gt; Print("The cohomology ring generators in degree ", n, " are&nbsp;

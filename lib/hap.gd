@@ -49,6 +49,8 @@ DeclareGlobalFunction("TwistedTensorProduct");
 DeclareGlobalFunction("ResolutionFiniteExtension");
 DeclareGlobalFunction("ResolutionNormalSeries");
 DeclareGlobalFunction("ResolutionDirectProduct");
+DeclareGlobalFunction("ResolutionExtension");
+
 
 ## ARTIN COXETER ####################################################
 DeclareGlobalFunction("CoxeterDiagramMatrix");
@@ -87,4 +89,8 @@ DeclareGlobalFunction("IsAspherical");
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");
+
+## POLYCYLIC ########################################################
+DeclareGlobalFunction("ResolutionAbelianPcpGroup");
+DeclareGlobalFunction("ResolutionNilpotentGroup");
 

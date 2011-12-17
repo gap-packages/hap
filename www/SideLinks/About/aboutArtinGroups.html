@@ -38,10 +38,11 @@
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">So
-far we have computed the homology of mainly finite groups. We now
-turn to infinite groups such as the free abelian group on n
-generators, or the braid group on n+1 strings. These are both examples
-of <span style="font-style: italic;">Artin groups</span>, the
+far we have computed the homology of mainly finite groups or infinite
+nilpotent groups. We now
+turn to infinite groups such as the braid group on n+1 strings. This is
+an example
+of an <span style="font-style: italic;">Artin group</span>, the
 definition of which we now recall.<br>
       <br>
 A <span style="font-style: italic;">Coxeter diagram </span>is a
@@ -196,9 +197,10 @@ is obtained by identifying similarly labelled faces of the following
       </div>
 The following commands use this resolution to show that the Artin group
 corresponding to the first of the three diagrams above has integral
-homology H<sub>1</sub>(A<sub>D</sub>,Z)=Z,
-H<sub>2</sub>(A<sub>D</sub>,Z)=Z<sub>2</sub> and H<sub>n</sub>(A<sub>D</sub>,Z)=0
-for n&gt;2. </td>
+homology H<sub>1</sub>(A<sub>D</sub>,Z)=Z+Z,
+H<sub>2</sub>(A<sub>D</sub>,Z)=Z<sub>2</sub>+Z+Z,&nbsp; H<sub>3</sub>(A<sub>D</sub>,Z)=Z+Z,&nbsp;
+H<sub>4</sub>(A<sub>D</sub>,Z)=Z and H<sub>n</sub>(A<sub>D</sub>,Z)=0
+for n&gt;4. </td>
     </tr>
     <tr>
       <td
@@ -208,16 +210,16 @@ R:=ResolutionArtinGroup(D1,5);;<br>
 gap&gt; TR:=TensorWithIntegers(R);;<br>
       <br>
 gap&gt; Homology(TR,1);<br>
-[ 0 ]<br>
+[ 0, 0 ]<br>
       <br>
 gap&gt; Homology(TR,2);<br>
-[ 2 ]<br>
+[ 2, 0, 0 ]<br>
       <br>
 gap&gt; Homology(TR,3);<br>
-[&nbsp; ]<br>
+[ 0, 0 ]<br>
       <br>
 gap&gt; TRHomology(R,4);<br>
-[&nbsp; ]<br>
+[ 0 ]<br>
       </td>
     </tr>
     <tr>

@@ -9,21 +9,24 @@ local
 	GhomQ, 			#Let f:G-->Q
 	Charact,
 	map, mapgens, ChainMap, mapgensRec, 
+	QisFinite,
 	N,m,i,g;
 
 N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
 HomotopyS:=S.homotopy;
 EltsQ:=S.elts;
+QisFinite:=false;
+if IsFinite(S.group) then
+	if Order(S.group)=Length(S.elts) then QisFinite:=true; fi;
+fi;
+if QisFinite then
 	for g in S.group do
 	if not g in EltsQ then Append(EltsQ,[g]);fi;
 	od;
+fi;
 DimensionR:=R.dimension;
 BoundaryR:=R.boundary;
 EltsG:=R.elts;
-#	for g in R.group do
-#        if not g in EltsG then Append(EltsG,[g]);fi;
-#        od;
-
 
 mapgensRec:=[];
 for m in [0..N] do
@@ -36,17 +39,43 @@ od;
 od;
 od;
 
+if QisFinite then
 #####################################################################
 GhomQ:=function(i);
 return Position(EltsQ,Image(f,EltsG[i]));
 end;
 #####################################################################
+else
+#####################################################################
+GhomQ:=function(i)
+local p,Eltq;
+Eltq:=Image(f,EltsG[i]);
+p:= Position(EltsQ,Eltq);
+if p=fail then Append(EltsQ,Eltq);
+p:=Length(EltsQ); fi;
+return p;
+end;
+#####################################################################
+fi;
 
+if QisFinite then
 #####################################################################
 Mult:=function(i,j);
 return Position(EltsQ,EltsQ[i]*EltsQ[j]);
 end;
 #####################################################################
+else
+#####################################################################
+Mult:=function(i,j)
+local p,Eltq;
+Eltq:=EltsQ[i]*EltsQ[j];
+p:= Position(EltsQ,Eltq);
+if p=fail then Append(EltsQ,Eltq);
+p:=Length(EltsQ); fi;
+return p;
+end;
+#####################################################################
+fi;
 
 #####################################################################
 mapgens:=function(x,m)

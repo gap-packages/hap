@@ -24,7 +24,7 @@ FhomG:=GroupHomomorphismByImagesNC(F,G,gensF,gensG);
 EltsG:=[Identity(G)];
 
 if IsFreeGroup(G) and Length(gensG)=1 then toggle:=true;
-for i in [1..3]  do
+x:=4; for i in [1..x]  do	##INCREASE x IF THIS CAUSES PROBLEMS
 Append(EltsG,[F.1^i,F.1^-i]);
 od;
 fi;
@@ -67,7 +67,10 @@ od;
 Boundary:=function(n,i);
 if n<1 or n>2 then return [ ]; fi;
 
+if i>0 then 
 return PseudoBoundary[n][i];
+else return NegateWord(PseudoBoundary[n][-i]);
+fi;
 end;
 #####################################################################
 
@@ -80,14 +83,19 @@ local g,k,j,hty;
 if i>0 then return []; fi;
 g:=EltsG[x[2]];
 if g=Identity(F) then return []; fi;
-for k in [-100..100] do
+for k in [-100..100] do			#THIS SLOPPINESS MIGHT CAUSE PROBLEMS
 if F.1^k=g then j:=k; break; fi;
 od;
 
 if j>0 then k:=Position(EltsG,F.1^(j-1));
-else k:=Position(EltsG,F.1^(j+1)); fi;
+hty:=Concatenation(ShallowCopy(HomotopyRecord(i,[x[1],k])),
+				[[1,k]]);
 
-hty:=Concatenation(ShallowCopy(HomotopyRecord(i,[x[1],k])),[[1,j]]);
+else k:=Position(EltsG,F.1^(j+1)); 
+hty:=Concatenation(ShallowCopy(HomotopyRecord(i,[x[1],k])),
+                                [[-1,x[2]]]);
+fi;  #Need to think more about this!
+
 
 return hty;
 end;

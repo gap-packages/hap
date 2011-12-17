@@ -599,6 +599,7 @@ V:=[];
 	else V[j]:=0;
 	fi; fi;
 	od;
+V:=List([1..Order(G)],x->V[x+(i-1)*Order(G)]);
 Append(IrinasRes[1],[V]);
 od;
 
