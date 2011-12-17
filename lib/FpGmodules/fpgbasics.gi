@@ -18,7 +18,7 @@ local
 	n;
 
 if IsHapFPGModule(arg[1]) then
-R:=ResolutionFpGModule(arg[1],arg[2]);
+R:=ResolutionFpGModule(arg[1],Maximum(arg[2],1));
 else
 R:=arg[1];
 fi;
@@ -142,7 +142,7 @@ ConvertToMatrixRepNC(B,prime);
 
 radB:=[];
 gens:=GeneratorsOfGroup(SylowSubgroup(G,prime));
-gens:=ReduceGenerators(gens,G);
+#gens:=ReduceGenerators(gens,G);
 
 for g in gens do
 Append(radB,SemiEchelonMat(B-M!.action(g,B)).vectors);

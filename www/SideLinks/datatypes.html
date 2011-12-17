@@ -101,7 +101,7 @@ is a boolean valued function <tt> IsHapNameOfDataType(X) </tt>. </p>
 <br>
 <br>
 <h3> HAP Representations using existing GAP data types</h3>
-<table style="width: 100%;"  cellspacing="10">
+<table style="width: 100%;" cellspacing="10">
   <tbody>
     <tr>
       <td>Free
@@ -183,24 +183,32 @@ finitely presented groups. <br>
 represented similarly.) </td>
     </tr>
     <tr>
-
-<tr>
-<td>
-Mtx-module
-</td>
-<td>
-A module over the mod p group ring FG of a finite group G can be represented 
-using the standard GAP notion of  "meat-axe" module. 
-Such a module consists of a record M with components 
-
-<br><br>
-
-   <li><tt>M.generators</tt> is a list of matrices over the field of p elements which generate an isomorphic copy of G.</li>
-   <li><tt>M.dimension</tt> is the dimension of the underlying vector space.</li>
-   <li><tt>M.field</tt> is the field F=GF(p) .</li>
-   <li><tt>M.isMTXModule<tt> is the boolean <tt>true</tt>.</li>
-</td>
-</tr>
+    </tr>
+    <tr>
+      <td>Mtx-module </td>
+      <td>A module over the mod p group ring FG of a finite group G can
+be
+represented using the standard GAP notion of "meat-axe" module. Such a
+module consists of a record M with components <br>
+      <br>
+      <li><tt>M.generators</tt> is a list of matrices over the field of
+p elements that generates a homomorphic image of G.</li>
+      <li><tt>M.gens</tt> is a list of generators of G corresponding to
+the matrices in <tt>M.generators</tt>. (This component is optional. In
+its abscence it is assumed that <tt>M.gens </tt> = <tt>M.generators</tt>).
+      </li>
+      <li><tt>M.dimension</tt> is the dimension of the underlying
+vector space.</li>
+      <li><tt>M.field</tt> is the field F=GF(p) .</li>
+      <li><tt>M.isMTXModule<tt> is the boolean <tt>true</tt>.</tt></tt></li>
+      <br>
+All modules in HAP are assumed to act on the left. (So care is needed
+because in GAP's standard meataxe functions the matrix action is
+assumed to be on the right. A left meataxe module can be converted to a
+right module by replacing generators with their transposes.) </td>
+      <br>
+    </tr>
+    <tr>
       <td>Coxeter
 diagram <br>
       </td>
@@ -243,7 +251,7 @@ names.<br>
 <br>
 <br>
 <h3> HAP Representations involving new GAP data types</h3>
-<table style="width: 100%;"  cellspacing="10">
+<table style="width: 100%;" cellspacing="10">
   <tbody>
     <tr>
       <td>ZG-resolution </td>

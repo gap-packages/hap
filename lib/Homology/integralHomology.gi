@@ -67,6 +67,7 @@ M2:=0;
 #BasisKerd1:=MutableCopyMat(BasisKerd1);
 #ConvertToMatrixRep(BasisKerd1);
 BasisImaged2:=MutableCopyMat(List([1..dim],i->BasisImaged2[i]));
+#!!!!!!!!!!!!!!!CHANGE IT
 #ConvertToMatrixRep(BasisImaged2);
 
 if Length(BasisImaged2)>0 then
@@ -221,7 +222,8 @@ end;
 #####################################################################
 
 if EvaluateProperty(X,"type")="chainComplex" then
-return Homology_Obj(X,n).torsionCoefficients; fi;
+#return Homology_Obj(X,n).torsionCoefficients; fi; #unecessarily slow!!
+return IntegralHomologyOfChainComplex(X,n); fi;
 
 if EvaluateProperty(X,"type")="chainMap" then
 return Homology_Arr(X,n); fi;

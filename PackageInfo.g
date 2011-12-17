@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.8",
-  Date    := "16/08/2007",
+  Version := "1.8.2",
+  Date    := "06/09/2007",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.8",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.8.2",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -66,6 +66,8 @@ SetPackageInfo( rec(
     SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ],
     		 	       [ "nq",         ">=1.1" ],
 			       [ "aclib",      ">=1.1" ],
+			       #[ "edim",      ">=1.2.2" ],
+			       [ "gapdoc",      ">=0.0" ]
 			      ],
     ExternalConditions := [["Some optional functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"],
@@ -81,7 +83,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "Loading HAP ",
                             String( ~.Version ), " ...\n" ),
 
-Autoload := false,
+Autoload := true,
 
 TestFile := "test/hap.tst",
 

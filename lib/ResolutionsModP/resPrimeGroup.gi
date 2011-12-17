@@ -100,7 +100,8 @@ local v,x,a;			#v is a list of vectors mod p.
 #v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(pp,0) );
 #How many more times will I make this mistake?
 
-v:=List([1..Dimension(k)],x-> ListWithIdenticalEntries(pp,0)      );
+#v:=List([1..Dimension(k)],x-> ListWithIdenticalEntries(pp,0)      );
+v:=NullMat(Dimension(k),pp);
 for x in w do
 a:=AbsoluteValue(x[1]);
 v[a][x[2]]:=v[a][x[2]] + SignInt(x[1]);
@@ -406,7 +407,8 @@ ConvertToMatrixRep(ImageFBasis[m]);
 fi;
 
 coeffs:=SolutionMat(ImageFBasis[m],w);
-answer:=List([1..Dimension(m)*pp], a->zero);
+#answer:=List([1..Dimension(m)*pp], a->zero);
+answer:=ListWithIdenticalEntries(Dimension(m)*pp,zero);
 ConvertToVectorRep(answer);
 for i in [1..Length(coeffs)] do
 if not IsZero(coeffs[i]) then

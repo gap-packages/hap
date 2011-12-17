@@ -24,12 +24,17 @@ local
 	i;
 
 if n <0 then return false; fi;
-if n=0 then return [0]; fi;
 
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
+
+
+########################
+if n=0 then 
+BasisKerd1:=IdentityMat(Dimension(n));
+
+else
 M1:=[];
-M2:=[];
 
 for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
@@ -39,6 +44,11 @@ BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;
 #BasisKerd1:=NullspaceIntMat(M1);
 M1:=0;
 
+fi;
+#######################
+
+
+M2:=[];
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
@@ -93,6 +103,13 @@ HomologyAsFpGroup:=function(C,n)
 local  
 	F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
 	Vector2Word, BasisKerd1, rel, i, j, Htmp,FhomHtmp,HtmphomH;
+
+if not "fpIntHom" in NamesOfComponents(C) then
+C!.fpIntHom:=[1..999];        #SLOPPPY! Some one might ask for 
+			      #the 1000-dimensional homology
+fi;
+
+if IsInt(C!.fpIntHom[n]) then
 
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
@@ -154,10 +171,13 @@ return Image(FhomH,w);
 end;
 #####################################################################
 
-return rec(
+C!.fpIntHom[n]:=rec(
 	    fpgroup:=H,
 	    h2c:=HhomC,
 	    c2h:=ChomH );
+fi;
+
+return C!.fpIntHom[n];
 end;
 #####################################################################
 #####################################################################

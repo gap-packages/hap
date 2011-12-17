@@ -3,7 +3,7 @@
 #####################################################################
 TestHap:=function()
 local H0,H1,H2,H3,H4,H4a,H5,H6,H7,H8,H9,R,TR,Tensor,Tensor2,
-S5,S4,A,AS5,AS4,D,Bool;
+S5,S4,A,AS5,AS4,D,Bool,Poincare;
 
 H0:=GroupHomology(AlternatingGroup(5),2,2);;
 
@@ -45,10 +45,12 @@ D:=[S5,S4,[AS5,AS4]];
 R:=ResolutionGraphOfGroups(D,3);
 H8:=Homology(TensorWithIntegers(R),2);
 H9:=Homology(ChevalleyEilenbergComplex(SimpleLieAlgebra("A",2,Integers),3),2);
+Poincare:=
+ CoefficientsOfUnivariateRationalFunction(PoincareSeries(SmallGroup(64,134)));
 Bool:=
 H0=[2]
 and
-H1=5
+H1=[ 2, 2, 2, 2, 2 ]
 and
 H2=[ 2, 2, 2, 2, 2, 2, 2, 2 ]
 and
@@ -74,7 +76,9 @@ H8=[2,2]
 and
 H9=[ 3, 3, 3, 3, 3, 3 ]
 and
-IsSuperperfect(PerfectGroup(120,1));
+IsSuperperfect(PerfectGroup(120,1))
+and
+Poincare=[ [ 1 ], [ 1, -3, 3, -1 ], 0 ];
 
 if Bool then
 Print("\n\n HAP seems to be working fine. \n");

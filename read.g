@@ -3,6 +3,8 @@
 ##  read.g                  HAP library               Graham Ellis 
 ##
 #####################################################################
+ReadPackage("HAP","lib/hap.gd");
+
 
 HAPconstant:=2;	
 SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
@@ -10,14 +12,14 @@ SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 ReadPackage("HAP","boolean");
 #ReadPackage("HAP", "lib/TitlePage/title.gap");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
-ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
+#ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 
 ################### POLYCYLIC COMMANDS ##############################
 ## Most functions should work on pcp groups if the polycyclic package 
 ## is installed. Otherwise we need to give a meaning to certain commands
 ## defined in the polycyclic package.
-Bool:=LoadPackage("polycyclic");
+Bool:=LoadPackage("polycyclic","0.0",false);
 if Bool=fail then
 NaturalHomomorphism:=NaturalHomomorphismByNormalSubgroupNC;
 IsPcpGroup:=function(G);return false;end;
@@ -34,20 +36,36 @@ fi;
 ################## POLYCICLIC COMMANDS DONE #########################
 
 ################# NQ COMMANDS #######################################
-Bool:=LoadPackage("nq");
+Bool:=LoadPackage("nq","0.0",false);
 if Bool=fail then
 NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
 fi;
 ################# NQ COMMANDS DONE ###############################
 
 ################# SIMPHOM COMMANDS ##################################
-Bool:=LoadPackage("homology");
+Bool:=LoadPackage("homology","0.0",false);
 if Bool=fail then
 SMInvariantFactors:=function(M); return fail; end;
 else SetInfoLevel(InfoHomology,0);
 ReadPackage("HAP", "lib/Homology/probHomology.gi");
 fi;
 ################ SIMPHOM COMMANDS DONR ##############################
+
+################# EDIM COMMANDS #######################################
+Bool:=LoadPackage("edim","0.0",false);
+if Bool=fail then
+ElementaryDivisorsPPartRk:=function(G); return fail; end;
+fi;
+################# EDIM COMMANDS DONE ###############################
+
+################# GAPDOC COMMANDS #######################################
+Bool:=LoadPackage("gapdoc","0.0",false);
+if Bool=fail then
+MakeGAPDocDoc:=function(G); return fail; end;
+fi;
+################# GAPDOC COMMANDS DONE ###############################
+
+ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 ################# OBJECTIFICATIONS ###############################
 ReadPackage("HAP", "lib/Objectifications/types.gi");
@@ -75,7 +93,7 @@ ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 
-if LoadPackage("nq")=true then
+if LoadPackage("nq","0.0",false)=true then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
@@ -90,7 +108,7 @@ ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
 
-if LoadPackage("aclib")=true then
+if LoadPackage("aclib","0.0",false)=true then
 ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
 fi;
@@ -129,6 +147,10 @@ ReadPackage("HAP", "lib/Homology/isSuperperfect.gi");
 ReadPackage("HAP", "lib/Homology/modularCohomology.gi");
 ReadPackage("HAP", "lib/Homology/solutionsMat.gi");
 ReadPackage("HAP", "lib/Homology/groupCohomology.gi");
+ReadPackage("HAP", "lib/Homology/integralHomologyObj.gi");
+ReadPackage("HAP", "lib/Homology/integralCohomologyObj.gi");
+
+
 
 
 ##################### PERTURBATIONS #################################
@@ -177,6 +199,10 @@ ReadPackage("HAP", "lib/GraphsOfGroups/resGraph.gi");
 ################### TEST ###########################################
 ReadPackage("HAP", "test/test.gap");
 
+################### STREAMS ########################################
+ReadPackage("HAP","lib/Streams/streams.gi");
+
+
 ################### RESOLUTIONS (CONTD) ############################
 ReadPackage("HAP","lib/Resolutions/cayley.gi");
 
@@ -186,5 +212,7 @@ ReadPackage("HAP","lib/LieAlgebras/isLieHom.gi");
 ReadPackage("HAP","lib/LieAlgebras/groupToLie.gi");
 ReadPackage("HAP","lib/LieAlgebras/leibniz.gi");
 
+if COMPILED=false then
 ################### MEAT AXE #######################################
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
+fi;
