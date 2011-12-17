@@ -198,7 +198,8 @@ NS:=arg[2];
 fi;
 
 ConvertToMatrixRepNC(B,prime); 
-heads:=SemiEchelonMat(B).heads;
+B:=MutableCopyMat(B);
+heads:=SemiEchelonMatDestructive(B).heads;
 ln:=Length(B[1]);
 BC:=[];
 
@@ -235,28 +236,17 @@ BndMat:=BoundaryMatrix(k);
 
 ConvertToMatrixRepNC(BndMat,prime); 
 NS:=SemiEchelonMat(NullspaceMat(BndMat));
-B:=NS.vectors;
 
-tB:=TransposedMat(B);
-Bcomp:=ComplementaryBasis(B);
-
-
+tB:=TransposedMat(NS.vectors);
+Bcomp:=ComplementaryBasis(NS.vectors);
 					
 for g in pcgens do     	 
-b:=TransposedMat(tB-GactMat(g,tB));
-for i in [1..Length(b)] do
-Add(Bcomp,b[i]);
-od;
-if SpaceSave then
-#Include the next two lines to save space.
-ConvertToMatrixRep(Bcomp);
-Bcomp:=MutableCopyMat(SemiEchelonMat(Bcomp).vectors);
-fi;
+Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
 
 
 B1:=ComplementaryBasis(Bcomp,NS);
-
+NS:=0;
 B1:=List(B1,v->List(v,x->IntFFE(x)));
 return B1;
 end;
@@ -389,6 +379,50 @@ return Objectify(HapResolution,
 			 ["isMinimal",true]],
 		solutionMatBoundaryMatrices:=
 		  SMBM));
+end);
+#####################################################################
+#####################################################################
+
+
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(RankHomologyPGroup,
+function(arg)
+local
+	G, R, N, Ranks, i;
+
+if IsHapResolution(arg[1]) then
+if EvaluateProperty(arg[1],"isMinimal")=true then 
+R:=arg[1]; G:=R!.group; N:=arg[2];
+else
+Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; 
+fi;
+else
+if IsGroup(arg[1]) and Length(arg)=2 then
+G:=arg[1]; N:=arg[2];
+R:=ResolutionPrimePowerGroup(G,N);
+else
+
+if  IsGroup(arg[1]) and Length(arg)=3 then
+return
+ExpansionOfRationalFunction(PoincareSeries(arg[1]),arg[2])[1+arg[2]];
+fi;
+
+
+
+Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; fi;
+fi;
+
+Ranks:=[];
+Ranks[1]:=Length(AbelianInvariants(G));
+
+for i in [2..N] do
+Ranks[i]:=R!.dimension(i) - Ranks[i-1];
+od;
+
+return Ranks[N];
+
 end);
 #####################################################################
 #####################################################################

@@ -3,10 +3,10 @@
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ResolutionPrimePowerGroup,
+InstallGlobalFunction(ResolutionFpGModule,
 function(arg)
 local
-	G,n,
+	MDL,G,n,
 	eltsG,
 	gensG,
 	Dimension,
@@ -22,6 +22,7 @@ local
 	MT,
 	GactMat,
 	ZGbasisOfKernel,
+	Mgens,
 	one,
 	InverseFlat,
 	ComplementaryBasis,
@@ -37,7 +38,8 @@ local
 	g,h,i,x,tmp;
 
 
-G:=arg[1];
+MDL:=arg[1];
+G:=MDL!.group;
 n:=arg[2];
 if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
 tmp:=SSortedList(Factors(Order(G)));
@@ -100,11 +102,12 @@ return v mod prime;
 end;
 #####################################################################
 
-for x in gensG do
-Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
-Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
-( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
-od;
+#for x in gensG do
+#Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
+#Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
+#( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
+#od;
+
 
 #####################################################################
 VectorListToWord:=function(v)
@@ -122,6 +125,18 @@ od;
 return w;
 end;
 #####################################################################
+
+Mgens:=GeneratorsOfFpGModule(MDL);
+for x in Mgens do
+tmp:=[];
+for i in [1..Length(x)/pp] do
+tmp[i]:=x{[1+(i-1)*pp..i*pp]};
+tmp[i]:=List(tmp[i],j->IntFFE(j));
+od;
+Add(PseudoBoundary[1], VectorListToWord(tmp));
+Add(PseudoBoundaryAsVec[1],x);
+od;
+
 
 
 #####################################################################
@@ -385,36 +400,3 @@ end);
 
 
 
-#####################################################################
-#####################################################################
-InstallGlobalFunction(RankHomologyPGroup,
-function(arg)
-local
-	G, R, N, Ranks, i;
-
-if IsHapResolution(arg[1]) then
-if EvaluateProperty(arg[1],"isMinimal")=true then 
-R:=arg[1]; G:=R!.group; N:=arg[2];
-else
-Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; 
-fi;
-else
-if IsGroup(arg[1]) and Length(arg)=2 then
-G:=arg[1]; N:=arg[2];
-R:=ResolutionPrimePowerGroup(G,N);
-else
-Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; fi;
-fi;
-
-Ranks:=[];
-Ranks[1]:=Length(AbelianInvariants(G));
-
-for i in [2..N] do
-Ranks[i]:=R!.dimension(i) - Ranks[i-1];
-od;
-
-return Ranks[N];
-
-end);
-#####################################################################
-#####################################################################

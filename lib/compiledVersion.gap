@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.7.3/");
+tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.7.4/");
 
 ########## FREE G MODULES ###########################################
 
@@ -10,10 +10,20 @@ Concatenation(tmppath,"lib/FreeGmodules/Compiled/tietze.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/FreeGmodules/Compiled/wordOperations.so"));
 
+######### FPG MODULES ###############################################
+LoadDynamicModule(
+Concatenation(tmppath,"lib/FpGmodules/Compiled/fpgbasics.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/FpGmodules/Compiled/resfpgmod.so"));
+
 
 ##################### NONABELIAN TENSOR #############################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorSquare.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorPair.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/NonabelianTensor/Compiled/exteriorProduct.so"));
@@ -74,6 +84,8 @@ fi;
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ResolutionsModP/Compiled/poincare.so"));
 
 ######### PERTURBATIONS #############################################
 

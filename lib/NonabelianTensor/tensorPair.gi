@@ -1,7 +1,7 @@
 #(C) Graham Ellis, October 2005
 
 #####################################################################
-InstallGlobalFunction(NonabelianExteriorProduct,
+InstallGlobalFunction(NonabelianTensorProduct,
 function(AG,AH)
 local
 	gensAG, NiceGensAG, 
@@ -33,6 +33,14 @@ local
 # The homomorphisms GhomBG, AGhomG, FhomSF, FhomAF, AFhomSF are all 
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
+
+#############################################################
+if Order(AH)=1 then 
+delta:=GroupHomomorphismByFunction(AH,G,x->x);
+CrossedPairing:=function(x,y); return Identity(G); end;
+return rec(homomorphism:=delta, pairing:=CrossedPairing);
+fi;
+############################################################
 
 gensAG:=GeneratorsOfGroup(AG);
 AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);	
@@ -69,14 +77,22 @@ G2homF:=GroupHomomorphismByFunction(H,F,x->Image(BG2homF,Image(HhomBH,x)));
 AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AH,F,g->Image(G2homF,Image(AHhomH,g)));
 
+if IsSolvable(AG) then #
+ NiceGensAG:=Pcgs(AG); #Need to check the maths here!
+         else	       #
+	 
 NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 NiceGensAG[1]:=[Identity(AG)];
 NiceGensAG:=Flat(NiceGensAG);
 Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
+fi;                    #
 
 
-
+if IsSolvable(AG) then #
+ NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
+          else         # the eight lines ending in #.
+	  
 NiceGensAH:=
 List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 NiceGensAH[1]:=[Identity(AH)];
@@ -84,7 +100,7 @@ NiceGensAH:=Flat(NiceGensAH);
 NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
-
+fi;                    #
 
 relsT:=[];
 for x in relsG do
@@ -110,10 +126,10 @@ od;
 od;
 od;
 
-for y in AH do
-v:=Comm(Image(AG1homF,y),Image(AG2homF,y));
-Append(relsT,[v]);
-od;
+#for y in AH do
+#v:=Comm(Image(AG1homF,y),Image(AG2homF,y));
+#Append(relsT,[v]);
+#od;
 
 #####################################################################IF
 if not IsSolvable(AG) then
@@ -183,47 +199,4 @@ end);
 #####################################################################
 
 
-#####################################################################
-InstallGlobalFunction(RelativeSchurMultiplier,
-function(G,N);
 
-if G=N  then return GroupHomology(G,2); fi;
-
-return AbelianInvariants(Kernel
-          (NonabelianExteriorProduct(G,N).homomorphism));
-
-end);
-#####################################################################
-
-#####################################################################
-InstallGlobalFunction(EpiCentre,
-function(arg)
-local 		G,N,gensG, Epi, Pairing,toggle,x,z;
-
-G:=arg[1];
-if Length(arg)>1 then N:=arg[2]; else 
-
-if IsNilpotent(G) and LoadPackage("nq")=true then
-return UpperEpicentralSeries(G,1); fi;
-
-N:=G; fi;
-
-if IsTrivial(Centre(N)) then return Centre(N); fi;
-
-gensG:=GeneratorsOfGroup(G);
-
-Pairing:=NonabelianExteriorProduct(G,N).pairing;
-
-Epi:=[];
-
-for z in Center(N) do
-toggle:=true;
-for x in gensG do
-if Order(Pairing(x,z))>1 then toggle:=false; break; fi;
-od;
-if toggle then Append(Epi,[z]); fi;
-od;
-
-return Group(Epi);
-end);
-#####################################################################

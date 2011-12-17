@@ -61,8 +61,11 @@ return EhomGsecond[i];
 end;
 #####################################################################
 fi;
-GmapEfirst:=GroupHomomorphismByImagesNC(G,E,GensG,GensE);
-GmapEsecond:=List([1..Size(G)],i->Position(EltsE,Image(GmapEfirst,EltsG[i])));
+#GmapEfirst:=GroupHomomorphismByImagesNC(G,E,GensG,GensE);
+#GmapEsecond:=List([1..Size(G)],i->Position(EltsE,Image(GmapEfirst,EltsG[i])));
+
+GmapEsecond:=List([1..Size(G)],i->Position(EltsE,
+PreImagesRepresentative(EhomGfirst,EltsG[i])));
 
 #####################################################################
 GmapE:=function(i);
@@ -72,7 +75,10 @@ end;
 
 N:=Kernel(EhomGfirst);
 if IsAbelian(N) then GensN:=TorsionGeneratorsAbelianGroup(N);
-else GensN:=ReduceGenerators(GeneratorsOfGroup(N),N);fi;
+else 
+GensN:=ReduceGenerators(GeneratorsOfGroup(N),N);
+fi;
+
 if Order(N)=1 then GensN:=[Identity(N)];
 else
 if Length(GensN) > 1 then
@@ -109,6 +115,7 @@ end;
 
 NEhomNfirst:=List([1..Size(E)], k->Position(NhomEsecond,k));
 
+#This next function can produce a fail when incorrectly used!!
 #####################################################################
 NEhomN:=function(i);
 return NEhomNfirst[i];
