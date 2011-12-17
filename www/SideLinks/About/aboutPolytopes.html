@@ -94,9 +94,9 @@ polytope P(S<sub>4</sub>,v).<br>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 G:=SymmetricGroup(4);;v:=[1,2,3,4];;<br>
 gap&gt; P:=PolytopalComplex(G,v);;<br>
-gap&gt; P.dimension(1);<br>
+gap&gt; P!.dimension(1);<br>
 3<br>
-gap&gt; P.dimension(2);<br>
+gap&gt; P!.dimension(2);<br>
 3<br>
       </td>
     </tr>
@@ -111,11 +111,11 @@ and S<sub>3</sub>=&lt;y,z&gt;.</td>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-P.stabilizer(2,1);<br>
+P!.stabilizer(2,1);<br>
 Group([ (1,2), (1,2)(3,4) ])<br>
-gap&gt; P.stabilizer(2,2);<br>
+gap&gt; P!.stabilizer(2,2);<br>
 Group([ (1,3,2), (1,3) ])<br>
-gap&gt; P.stabilizer(2,3);<br>
+gap&gt; P!.stabilizer(2,3);<br>
 Group([ (2,4,3), (2,4) ])<br>
       </td>
     </tr>
@@ -154,8 +154,8 @@ gap&gt; B:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;<br>
 gap&gt; Q:=Group([A,B]);;<br>
 gap&gt; P:=PolytopalComplex(Q,[1,0,0,0]);;<br>
 gap&gt; for k in [1..3] do<br>
-&gt; for n in [1..P.dimension(k)] do<br>
-&gt; Print(Order(P.stabilizer(k,n)),"\n");<br>
+&gt; for n in [1..P!.dimension(k)] do<br>
+&gt; Print(Order(P!.stabilizer(k,n)),"\n");<br>
 &gt; od;od;<br>
 1<br>
 1<br>
@@ -270,19 +270,19 @@ with six generators and 21 relators. The relators are of lengths
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 P:=PolytopalComplex(AlternatingGroup(8),[1,2,3,4,5,6,7,7],2);;<br>
-gap&gt; NumberOfGens:=P.dimension(1);<br>
+gap&gt; NumberOfGens:=P!.dimension(1);<br>
 6<br>
       <br>
 gap&gt;
-OrdersOfGens:=List([1..NumberOfGens],x-&gt;Order(P.stabilizer(1,x)));<br>
+OrdersOfGens:=List([1..NumberOfGens],x-&gt;Order(P!.stabilizer(1,x)));<br>
 [ 1, 2, 2, 2, 2, 2 ]<br>
       <br>
-gap&gt; NumberOfRels:=5+P.dimension(2);<br>
+gap&gt; NumberOfRels:=5+P!.dimension(2);<br>
 21<br>
       <br>
 gap&gt; SizesOfRels:=Concatenation([2,2,2,2,2],<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-List([1..NumberOfRels-5],x-&gt;Length(P.boundary(2,x))));<br>
+List([1..NumberOfRels-5],x-&gt;Length(P!.boundary(2,x))));<br>
 [ 2, 2, 2, 2, 2, 3, 8, 5, 5, 5, 5, 6, 4, 4, 4, 6, 4, 4, 6, 4, 6 ]<br>
       <br>
 gap&gt; Sum(SizesOfRels);<br>

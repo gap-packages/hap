@@ -14,7 +14,7 @@ local
 
 C:=F(R);
 
-P:=R.group;
+P:=R!.group;
 prime:=Factors(Order(P))[1];
 core:=[];
 for x in P do

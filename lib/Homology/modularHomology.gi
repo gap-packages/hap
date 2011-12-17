@@ -26,8 +26,8 @@ local
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;
 
-Dimension:=C.dimension;
-Boundary:=C.boundary;
+Dimension:=C!.dimension;
+Boundary:=C!.boundary;
 M1:=[];
 M2:=[];
 						
@@ -35,8 +35,10 @@ for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
 M1:=MutableCopyMat(M1);
+ConvertToMatrixRep(M1);
 if Length(M1)=0 then RankM1:=0; else
-RankM1:=RankMatDestructive(M1);fi;
+RankM1:=RankMatDestructive(M1);
+fi;
 LengthM1:=Length(M1);
 M1:=0;
 
@@ -44,6 +46,7 @@ for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
 M2:=MutableCopyMat(M2);
+ConvertToMatrixRep(M2);
 if Length(M2)=0 then RankM2:=0; else
 RankM2:=RankMatDestructive(M2);fi;
 M2:=0;
@@ -70,8 +73,8 @@ local
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;
 
-Dimension:=C.dimension;
-Boundary:=C.boundary;
+Dimension:=C!.dimension;
+Boundary:=C!.boundary;
 M1:=[];
 M2:=[];
 
@@ -208,9 +211,9 @@ local
                 x;
 
 
-C:=f.source;
-D:=f.target;
-ChomD:=f.mapping;
+C:=f!.source;
+D:=f!.target;
+ChomD:=f!.mapping;
 
 IHC:=HomologyAsFpGroup(C,n);
 HC:=IHC.fpgroup;

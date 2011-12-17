@@ -14,9 +14,9 @@ local
 		start,
 		b, r, x;
 
-Dimension:=R.dimension;
-Boundary:=R.boundary;
-Elts:=R.elts;
+Dimension:=R!.dimension;
+Boundary:=R!.boundary;
+Elts:=R!.elts;
 F:=FreeGroup(Dimension(1));
 Fgens:=GeneratorsOfGroup(F);
 Frels:=[];

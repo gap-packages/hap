@@ -89,7 +89,7 @@ gap&gt; PresentationOfResolution(R);<br>
 &nbsp; [ f1^2, f2^2, f3^2, f3*f1*f3*f1, f1*f2*f1*f2*f1*f2,
 f2*f3*f2*f3*f2*f3 ] ]<br>
       <br>
-gap&gt;&nbsp; R.dimension(20);<br>
+gap&gt;&nbsp; Dimension(R)(20);<br>
 97<br>
       </td>
     </tr>
@@ -97,8 +97,8 @@ gap&gt;&nbsp; R.dimension(20);<br>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top;">The
 function <span style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteGroup(G,n)</span>
-actually returns a record R with several components, one of which is a
-function <span style="font-family: helvetica,arial,sans-serif;">R.dimension(n)</span>
+actually returns an object R with several components, one of which is a
+function <span style="font-family: helvetica,arial,sans-serif;">Dimension(R)</span>
 giving the ZG-rank
 of the nth module in the resolution arising from a certain CW-space X.<br>
       <br>
@@ -124,7 +124,7 @@ for a resolution R. What is not seen from the above commands on S<sub>4
 that the last of the 97 generators in dimension 20 has an extremely
 large
 number of 19-dimensional cells in its boundary. This can be seen using <span
- style="font-family: helvetica,arial,sans-serif;">R.boundary(n,j)</span>
+ style="font-family: helvetica,arial,sans-serif;">R!.boundary(n,j)</span>
 which is a function giving the boundary of the j-th
 n-dimensional generator. The 97-th generator has a boundary of length
 7303 in the 19-dimensional module of the resolution considered as a
@@ -155,17 +155,19 @@ G:=DihedralGroup(32);;<br>
       <br>
 gap&gt; R:=ResolutionFiniteGroup(G,8);;<br>
 gap&gt;
-BoundaryLengthSum:=Sum(List([1..R.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+BoundaryLengthSum:=Sum(List([1..Dimension(R)(8)],x-&gt;Length(BoundaryMap(R)(8,x))));<br>
 2813<br>
       <br>
 gap&gt; Rsimplified:=ResolutionFiniteGroup(G,8,true);;<br>
-gap&gt;
-BoundaryLengthSum:=Sum(List([1..Rsimplified.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+gap&gt; BoundaryLengthSum:=
+Sum(List([1..Dimension(Rsimplified)(8)],x-&gt;Length(BoundaryMap(R)(8,x))));<br>
 186<br>
       <br>
 gap&gt; Rmod2:=ResolutionPrimePowerGroup(G,8);;<br>
 gap&gt;
-BoundaryLengthSum:=Sum(List([1..Rmod2.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+BoundaryLengthSum:=Sum(List([1..Dimension(Rmod2)(8)],x-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Length(BoundaryMap(R)(8,x))));<br>
 264<br>
       </td>
     </tr>
@@ -193,7 +195,7 @@ To illustrate this point, consider the following timings for the
 symmetric group S<sub>3</sub> . The first command computes 100 terms of
 a resolution in less time than it takes the second command to compute
 29 terms. The third command shows that the order of the generating set
-is important.<br>
+can be important.<br>
       </td>
     </tr>
     <tr>

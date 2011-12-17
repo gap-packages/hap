@@ -2,19 +2,54 @@
 
 #####################################################################
 InstallGlobalFunction(NonabelianTensorSquare,
-function(AG)
+function(arg)
 local
-	gensAG, NiceGensAG, 
+	AG, SizeOrList,
+	gensAG, NiceGensAG,  
 	G, gensG, relsG, 
 	BG, GhomBG, BG1homF, BG2homF,
 	F, relsT, gensF, gensF1, gensF2,
 	AF, FhomAF,
 	AGhomG, G1homF, G2homF, AG1homF, AG2homF,
 	SF, gensSF, gensSFG, FhomSF, AFhomSF, AG1homSF, AG2homSF, SFhomAG,
+	AFhomSSF,SSF,gensSF2,SSFhomSF,
 	TensorSquare, delta,
 	Trans,
-	CrossedPairing,
+	CrossedPairing, 
+	UpperBound,
 	i,v,w,x,y,z;
+
+
+#####################################################################
+UpperBound:=function(AG)
+local Facts, p,P,hom,bnd;
+
+Facts:=SSortedList(Factors(Order(AG)));
+bnd:=1;
+
+for p in Facts do
+P:=SylowSubgroup(AG,p);
+hom:=NonabelianTensorSquare(P).homomorphism;
+bnd:=bnd*Order(Source(hom))/Order(DerivedSubgroup(P));
+od;
+
+return bnd*Order(DerivedSubgroup(AG))*Order(AG)^2;
+end;
+#####################################################################
+
+
+
+
+
+AG:=arg[1];
+if Length(arg)>1 then SizeOrList:=arg[2]*Order(AG)^2; 
+else 
+	if IsSolvable(AG) and not IsNilpotent(AG) then
+	SizeOrList:=UpperBound(AG);
+	else
+	SizeOrList:=0;
+	fi;
+fi;
 
 # AG and SF are groups whose elements are essentially enumerated. AG is 
 # isomorphic to G and to BG. SF is equal to F/relsT and AF. Two isomorphic 
@@ -24,8 +59,9 @@ local
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
 
+
 gensAG:=GeneratorsOfGroup(AG);
-AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);	
+AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
 G:=Image(AGhomG);
 gensG:=FreeGeneratorsOfFpGroup(G);
 relsG:=RelatorsOfFpGroup(G);
@@ -47,11 +83,15 @@ G2homF:=GroupHomomorphismByFunction(G,F,x->Image(BG2homF,Image(GhomBG,x)));
 AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AG,F,g->Image(G2homF,Image(AGhomG,g)));
 
-NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
-NiceGensAG[1]:=[Identity(AG)];
-NiceGensAG:=Flat(NiceGensAG);
-Trans:=RightTransversal(AG,Group(NiceGensAG));
-Append(NiceGensAG,Elements(Trans));
+	if IsSolvable(AG) then 
+	NiceGensAG:=Pcgs(AG);
+	else
+	NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
+	NiceGensAG[1]:=[Identity(AG)];
+	NiceGensAG:=Flat(NiceGensAG);
+	Trans:=RightTransversal(AG,Group(NiceGensAG));
+	Append(NiceGensAG,Elements(Trans));
+	fi;
 
 relsT:=[];
 for x in relsG do
@@ -71,11 +111,17 @@ od;
 od;
 
 #####################################################################IF
-if not IsNilpotent(AG) then
+if 
+
+SizeOrList=0  
+or
+not ( (IsSolvable(AG) and IsInt(SizeOrList)) or IsNilpotent(AG))
+
+then
 
 AF:=F/relsT;
 FhomAF:=
-GroupHomomorphismByImages(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
+GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
 AFhomSF:=IsomorphismSimplifiedFpGroup(AF);
 SF:=Image(AFhomSF);
@@ -87,10 +133,23 @@ else
 
 AF:=F/relsT;
 FhomAF:=
-GroupHomomorphismByImages(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
+GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
-AFhomSF:=EpimorphismNilpotentQuotient(AF);
-SF:=Image(AFhomSF);
+AFhomSSF:=IsomorphismSimplifiedFpGroup(AF);
+SSF:=Image(AFhomSSF);
+
+	if IsNilpotent(AG) then
+	SSFhomSF:=EpimorphismNilpotentQuotient(SSF);
+	else
+	SSFhomSF:=EpimorphismSolvableQuotient(SSF,SizeOrList); 
+	fi;
+
+SF:=Image(SSFhomSF);
+gensSF2:=List(GeneratorsOfGroup(AF),x->Image(SSFhomSF,Image(AFhomSSF,x)));
+
+AFhomSF:=GroupHomomorphismByImagesNC(AF,SF,GeneratorsOfGroup(AF),gensSF2);
+
+
 FhomSF:=
 GroupHomomorphismByFunction(F,SF,x->Image(AFhomSF,Image(FhomAF,x)) );
 
@@ -115,7 +174,7 @@ for i in [1..Length(gensAG)] do
 Append(gensSFG,[gensAG[i]]);
 od;
 
-SFhomAG:=GroupHomomorphismByImages(SF,AG,gensSF,gensSFG);
+SFhomAG:=GroupHomomorphismByImagesNC(SF,AG,gensSF,gensSFG);
 
 delta:=GroupHomomorphismByFunction(TensorSquare,AG,x->Image(SFhomAG,x));
 
@@ -133,10 +192,15 @@ end);
 
 #####################################################################
 InstallGlobalFunction(ThirdHomotopyGroupOfSuspensionB,
-function(G);
+function(arg) ;
 
+if Length(arg)>1 then
 return AbelianInvariants(Kernel(
-			NonabelianTensorSquare(G).homomorphism));
+			NonabelianTensorSquare(arg[1],arg[2]).homomorphism));
+else
+return AbelianInvariants(Kernel(
+                        NonabelianTensorSquare(arg[1]).homomorphism));
+fi;
 
 end);
 #####################################################################

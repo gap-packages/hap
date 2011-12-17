@@ -49,7 +49,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallGlobalFunction(AddWords,
+InstallGlobalFunction(AddFreeWords,
 function(v,w)
 local x,u,AddLetter, w2;
 
@@ -79,7 +79,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallGlobalFunction(AddWordsModP,
+InstallGlobalFunction(AddFreeWordsModP,
 function(v,w,p)
 local  x, w2,  AddLetter;
 
@@ -110,7 +110,7 @@ return w2;
 fi;
 	########################## fi p=2 ###########################
 
-return AddWords(v,w);
+return AddFreeWords(v,w);
 end);
 #####################################################################
 
@@ -180,7 +180,7 @@ v:=Collected(w);
 v:=List(v,x->[x[1],x[2] mod p]);
 u:=[];
 for y in v do
-u:=AddWords(u, MultiplyWord(y[2],[y[1]]));
+u:=AddFreeWords(u, MultiplyWord(y[2],[y[1]]));
 od;
 
 return u;

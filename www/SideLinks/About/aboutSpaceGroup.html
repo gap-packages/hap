@@ -30,7 +30,8 @@ crystallographic groups - an example of how to piece resolutions
 together<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutCocycles.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+ href="aboutRosenbergerMonster.html"><small
+ style="color: rgb(0, 0, 102);">next</small></a><br>
             </td>
           </tr>
         </tbody>
@@ -127,13 +128,13 @@ as follows.<br>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 RN:=ResolutionAbelianGroup([0,0],12);;<br>
       <br>
-gap&gt; fpN:=RN.group;;<br>
+gap&gt; fpN:=RN!.group;;<br>
 gap&gt; fpNhomN:=GroupHomomorphismByImages(fpN,N,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 GeneratorsOfGroup(fpN),[translationS,translationT]);;<br>
       <br>
-gap&gt; RN.group:=N;;<br>
-gap&gt; RN.elts:=List(RN.elts,x-&gt;Image(fpNhomN,x));;<br>
+gap&gt; RN!.group:=N;;<br>
+gap&gt; RN!.elts:=List(RN!.elts,x-&gt;Image(fpNhomN,x));;<br>
       </td>
     </tr>
     <tr>
@@ -217,7 +218,7 @@ period 4.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-List([1..11],n-&gt;RG.dimension(n));<br>
+List([1..11],n-&gt;RG!.dimension(n));<br>
 [ 4, 8, 12, 16, 21, 28, 36, 44, 52, 60, 68 ]<br>
       </td>
     </tr>
@@ -261,9 +262,9 @@ construct such a periodic ZG-resolution.<br>
 F:=FreeGroup(2);;<br>
 gap&gt; relators:=[ F.1^2, F.1*F.2*F.1^-1*F.2^-2 ];;<br>
 gap&gt; RP:=ResolutionSmallFpGroup(F/relators,12);;<br>
-gap&gt; hom:=GroupHomomorphismByImagesNC(RP.group,P,<br>
+gap&gt; hom:=GroupHomomorphismByImagesNC(RP!.group,P,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; GeneratorsOfGroup(RP.group),
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; GeneratorsOfGroup(RP!.group),
 [reflectionX,reflectionX*reflectionY]);;<br>
       <br>
 gap&gt; Order(Kernel(hom));<br>
@@ -272,13 +273,13 @@ gap&gt; Order(Image(hom));<br>
 6<br>
 gap&gt; # So hom is an isomorphism.<br>
       <br>
-gap&gt; RP.group:=P;;<br>
-gap&gt; RP.elts:=List(RP.elts,x-&gt;Image(hom,x));;<br>
+gap&gt; RP!.group:=P;;<br>
+gap&gt; RP!.elts:=List(RP!.elts,x-&gt;Image(hom,x));;<br>
       <br>
 gap&gt;
 RG:=ResolutionExtension(GhomP,RN,RP,"Don't Test Finiteness", PmapG);;<br>
       <br>
-gap&gt; List([1..11],n-&gt;RG.dimension(n));<br>
+gap&gt; List([1..11],n-&gt;RG!.dimension(n));<br>
 [ 4, 7, 7, 5, 5, 7, 7, 5, 5, 7, 7 ]<br>
       </td>
     </tr>
@@ -286,31 +287,150 @@ gap&gt; List([1..11],n-&gt;RG.dimension(n));<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 above techniques can be applied to any <span
- style="font-style: italic;">almost crstallographic</span> group G
+ style="font-style: italic;">almost crystallographic</span> group G
 (that is, a nilpotent-by-finite group G with no non-trivial finite
 normal subgroups).
-Such groups can be produced using the AClib package. The function <span
- style="font-family: helvetica,arial,sans-serif;">ResolutionAlmostCrystalGroup(G,n)</span>
+Such groups can be produced using the Cryst and AClib packages. <br>
+      <br>
+The function <span style="font-family: helvetica,arial,sans-serif;">ResolutionAlmostCrystalGroup(G,n)</span>
 allows one to construct the resolution directly if G is an almost
-crystallographic pcp group. For example;<br>
+crystallographic pcp group. For example, the following commands compute
+the ranks of the mod 2 cohomology of a 2-dimensional space group with
+point group equal to the cyclic group of order 4. <br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-G := AlmostCrystallographicPcpGroup( 4, 50, [ 1, -4, 1, 2 ] );;<br>
+G:=SpaceGroup(2,10);;<br>
+gap&gt; StructureDescription(PointGroup(G));<br>
+"C4"<br>
       <br>
-gap&gt; R:=ResolutionAlmostCrystalGroup(G,6);<br>
-gap&gt;
-TR:=TensorWithIntegers(R);;<br>
+gap&gt; G:=Image(IsomorphismPcpGroup(G));;<br>
+gap&gt; R:=ResolutionAlmostCrystalGroup(G,6);;<br>
+gap&gt; HomR:=HomToIntegersModP(R,2);;<br>
 gap&gt; for n in [1..5] do<br>
-&gt; Print("The homology in dimension ",n," is ",Homology(TR,n),"\n");<br>
+&gt; Print("The mod 2 cohomology in dimension ",n," has rank
+",Cohomology(HomR,n),"\n");<br>
 &gt; od;<br>
-The homology in dimension 1 is [ 2, 0 ]<br>
-The homology in dimension 2 is [ 2 ]<br>
-The homology in dimension 3 is [ 0 ]<br>
-The homology in dimension 4 is [ 0 ]<br>
-The homology in dimension 5 is [&nbsp; ]<br>
+The mod 2 cohomology in dimension 1 has rank 2<br>
+The mod 2 cohomology in dimension 2 has rank 3<br>
+The mod 2 cohomology in dimension 3 has rank 3<br>
+The mod 2 cohomology in dimension 4 has rank 3<br>
+The mod 2 cohomology in dimension 5 has rank 3<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">An
+almost crsystallographic group G has a normal nilpotent subgroup T of
+finite index. We define T<sub>1</sub>=T and T<sub>c+1</sub>=[T<sub>c</sub>,G].
+The command ResolutionAlmostCrystallographicQuotient(G,n,c) produces a
+free ZQ-resolution for the group Q=G/T<sub>c</sub>.<br>
+      <br>
+The following commands calculate the ranks of the mod&nbsp; 2
+cohomology of Q=G/T<sub>c</sub> for the preceding space group G and
+c=2,3,4,5.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+#CASE C=2.<br>
+gap&gt; S:=ResolutionAlmostCrystalQuotient(G,6,2);; Q:=S!.group;;<br>
+gap&gt; Order(Q);<br>
+8<br>
+gap&gt; Coclass(Q);<br>
+2<br>
+      <br>
+gap&gt; HomS:=HomToIntegersModP(S,2);;<br>
+gap&gt; for n in [1..5] do<br>
+&gt; Print("The mod 2 cohomology in dimension ",n," has rank
+",Cohomology(HomS,n), "\n");<br>
+&gt; od;<br>
+The mod 2 cohomology in dimension 1 has rank 2<br>
+The mod 2 cohomology in dimension 2 has rank 3<br>
+The mod 2 cohomology in dimension 3 has rank 4<br>
+The mod 2 cohomology in dimension 4 has rank 5<br>
+The mod 2 cohomology in dimension 5 has rank 6<br>
+      <br>
+      <br>
+gap&gt; #CASE C=3.<br>
+gap&gt; S:=ResolutionAlmostCrystalQuotient(G,6,3);; Q:=S!.group;;<br>
+gap&gt; Order(Q);<br>
+16<br>
+gap&gt;Coclass(Q);<br>
+2<br>
+      <br>
+gap&gt; HomS:=HomToIntegersModP(S,2);;<br>
+gap&gt; for n in [1..5] do<br>
+&gt; Print("The mod 2 cohomology in dimension ",n," has rank
+",Cohomology(HomS,n), "\n");<br>
+&gt; od;<br>
+The mod 2 cohomology in dimension 1 has rank 2<br>
+The mod 2 cohomology in dimension 2 has rank 4<br>
+The mod 2 cohomology in dimension 3 has rank 6<br>
+The mod 2 cohomology in dimension 4 has rank 9<br>
+The mod 2 cohomology in dimension 5 has rank 12<br>
+      <br>
+gap&gt; #CASE c=4.<br>
+gap&gt; S:=ResolutionAlmostCrystalQuotient(G,6,4);; Q:=S!.group;;<br>
+gap&gt; Order(Q);<br>
+32<br>
+gap&gt;Coclass(Q);<br>
+2<br>
+      <br>
+gap&gt; HomS:=HomToIntegersModP(S,2);;<br>
+gap&gt; for n in [1..5] do<br>
+&gt; Print("The mod 2 cohomology in dimension ",n," has rank
+",Cohomology(HomS,n), "\n");<br>
+&gt; od;<br>
+The mod 2 cohomology in dimension 1 has rank 2<br>
+The mod 2 cohomology in dimension 2 has rank 4<br>
+The mod 2 cohomology in dimension 3 has rank 6<br>
+The mod 2 cohomology in dimension 4 has rank 9<br>
+The mod 2 cohomology in dimension 5 has rank 12<br>
+      <br>
+gap&gt; #CASE c=5.<br>
+gap&gt; S:=ResolutionAlmostCrystalQuotient(G,6,5);; Q:=S!.group;;<br>
+gap&gt; Order(Q);<br>
+64<br>
+gap&gt; Coclass(Q);<br>
+2<br>
+      <br>
+gap&gt; HomS:=HomToIntegersModP(S,2);;<br>
+gap&gt; for n in [1..5] do<br>
+&gt; Print("The mod 2 cohomology in dimension ",n," has rank
+",Cohomology(HomS,n), "\n");<br>
+&gt; od;<br>
+The mod 2 cohomology in dimension 1 has rank 2<br>
+The mod 2 cohomology in dimension 2 has rank 4<br>
+The mod 2 cohomology in dimension 3 has rank 6<br>
+The mod 2 cohomology in dimension 4 has rank 9<br>
+The mod 2 cohomology in dimension 5 has rank 12<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+finite group of order p<sup>n</sup> and nilpotency class c is said to
+have <span style="font-style: italic;">coclass</span> r=n-c. It was
+shown by Charles Leedham-Green and others [C.Leedham-Green, The
+structure of finite p-groups, <span style="font-style: italic;">J.
+London Mathematical Society</span>, (2) 50 (1994) 49-67] that, with a
+finite number of exceptions, every p-group of coclass r is associated
+to one of only a finite number of p-adic uniserial space
+groups G. In particular, for sufficiently large m the groups G/T<sub>m</sub>
+all have
+coclass r. The above calculations are consistent with the conjecture
+that almost all groups of coclass r associated to a particular space
+group G have "very similar cohomological properties".<br>
+      <br>
+For the prime p=2 it is known [J. Carlson,
+Coclass and cohomology, <span style="font-style: italic;">J Pure
+Applied Algebra</span> 200 (2005) 251-266] that there are only finitely
+many isomorphism classes of mod 2 cohomology rings of 2-groups of a
+given coclass r.<br>
       </td>
     </tr>
     <tr>
@@ -328,7 +448,8 @@ Page</a><br>
  href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
             </td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutCocycles.html"><span style="color: rgb(0, 0, 102);">Next
+ href="aboutRosenbergerMonster.html"><span
+ style="color: rgb(0, 0, 102);">Next
 page</span><br>
             </a> </td>
           </tr>

@@ -15,7 +15,7 @@ local
 
 	####################BEGIN TO READ THE INPUT##################
 R:=arg[1];
-DimensionR:=R.dimension;
+DimensionR:=R!.dimension;
 u:=arg[2];
 v:=arg[3];
 p:=arg[4];

@@ -16,8 +16,8 @@ local
 
 R:=arg[1];
 n:=arg[2];
-Dimension:=R.dimension;
-Boundary:=R.boundary;
+Dimension:=R!.dimension;
+Boundary:=R!.boundary;
 
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;

@@ -16,7 +16,7 @@ fi;
 Ltrunc:=List([1..Length(L)-1],i->L[i]);
 
 RN:=ResolutionSubnormalSeries(Ltrunc,K);
-N:=RN.group;
+N:=RN!.group;
 E:=L[1];
 EhomQ:=NaturalHomomorphismByNormalSubgroup(E,N);
 Q:=Image(EhomQ);

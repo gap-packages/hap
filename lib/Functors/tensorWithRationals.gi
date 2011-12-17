@@ -26,11 +26,11 @@ if n=0 then return [0]; fi;
 if M[n]=n then
 Mt:=[];
 
-for i in [1..R.dimension(n-1)] do
+for i in [1..R!.dimension(n-1)] do
 row:=[];
-   for j in [1..R.dimension(n)] do
+   for j in [1..R!.dimension(n)] do
    sum:=0;
-          for x in R.boundary(n,j) do
+          for x in R!.boundary(n,j) do
           if AbsoluteValue(x[1])=i then
          sum := sum + SignInt(x[1]);
           fi;
@@ -47,15 +47,16 @@ return M[n][k];
 end;
 #####################################################################
 
-return rec(
-            dimension:=R.dimension,
+return Objectify(HapChainComplex,
+	    rec(
+            dimension:=R!.dimension,
             boundary:=BoundaryC,
             properties:=
             [["length",LengthC],
              ["connected",true],
              ["type", "chainComplex"],
              ["characteristic", -1/2]
-				     ]);
+				     ]));
 end);
 #####################################################################
 #####################################################################

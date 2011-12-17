@@ -5,7 +5,7 @@
 InstallGlobalFunction(ResolutionDirectProduct,
 function(arg)
 local
-	R,S,
+	R,S,T,
 	G,H,E,K,GhomE,HhomE,EhomG,EhomH,EltsE,
 	pcpEmod,Emod,Ehom, homE,
  	DimensionR,BoundaryR,HomotopyR,
@@ -32,19 +32,19 @@ local
 R:=arg[1];
 S:=arg[2];
 
-if "appendToElts" in RecNames(R) then RappendToElts:=R.appendToElts;
+if "appendToElts" in NamesOfComponents(R) then RappendToElts:=R!.appendToElts;
 else
-RappendToElts:=function(x); Append(R.elts,[x]); return R.elts; end;
+RappendToElts:=function(x); Append(R!.elts,[x]);  end;
 fi;
 
-if "appendToElts" in RecNames(S) then SappendToElts:=S.appendToElts;
+if "appendToElts" in NamesOfComponents(S) then SappendToElts:=S!.appendToElts;
 else
-SappendToElts:=function(x); Append(S.elts,[x]); return S.elts; end;
+SappendToElts:=function(x); Append(S!.elts,[x]);  end;
 fi;
 
 
-G:=R.group; 
-H:=S.group; 
+G:=R!.group; 
+H:=S!.group; 
 
 ####################### DIRECT PRODUCT OF GROUPS ###########
 if Length(arg)=2 then
@@ -59,51 +59,35 @@ else  	#if G and H both lie in a group K, and if they commute and have
 	#have trivial intersection then we create their direct product as
 	#a subgroup of K. We treat pcp groups as a seperate case.
 
-#####PCP CASE #######################
-if IsPcpGroup(G) then
-K:=PcpGroupByCollector(Collector(Identity(G)));
 
-gensE:=Igs(Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H)));
+#####PCP CASE #######################
+if IsPcpGroup(G)   
+then
+K:=PcpGroupByCollector(Collector(Identity(G)));
+#G:=Subgroup(K,GeneratorsOfGroup(G));
+#H:=Subgroup(K,GeneratorsOfGroup(H));
+
+gensE:=(Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H)));
 E:=Subgroup(K,gensE);
-       
        
 GhomE:=GroupHomomorphismByFunction(G,E,x->x);
 HhomE:=GroupHomomorphismByFunction(H,E,x->x);
 
-pcpEmod:=[];
-pcpEmod[1]:=Pcp(E,G);
-pcpEmod[2]:=Pcp(E,H);
 
-Emod:=[];
-Emod[1]:=PcpGroupByPcp(pcpEmod[1]);
-Emod[2]:=PcpGroupByPcp(pcpEmod[2]);
+EhomG:=GroupHomomorphismByImages(E,G,
+GeneratorsOfGroup(E),
+Concatenation(GeneratorsOfGroup(G),
+List(GeneratorsOfGroup(H),x->One(G))));
 
-Ehom:=[];
-Ehom[1]:=NaturalHomomorphism(E,G);
-Ehom[2]:=NaturalHomomorphism(E,H);
-
-homE:=[];
-homE[1]:=GroupHomomorphismByImagesNC(Range(Ehom[1]),E,
-	GeneratorsOfGroup(Range(Ehom[1])),
-	GeneratorsOfPcp(pcpEmod[1]));
-
-homE[2]:=GroupHomomorphismByImagesNC(Range(Ehom[2]),E,
-        GeneratorsOfGroup(Range(Ehom[2])),
-        GeneratorsOfPcp(pcpEmod[2]));
+EhomH:=GroupHomomorphismByImages(E,H,
+GeneratorsOfGroup(E),
+Concatenation(
+List(GeneratorsOfGroup(G),x->One(G)),
+GeneratorsOfGroup(H)));
 
 
-	
-	fn:=function(x,n);
-	return
-	Image(homE[n],Image(Ehom[n],x));
-	end;
-
-
-	
-EhomG:=GroupHomomorphismByFunction(E,G,x->fn(x,2));
-EhomH:=GroupHomomorphismByFunction(E,H,x->fn(x,1));
 fi;
-############PCP CASE DONE###########
+############PCP CASE DONE ###########
 
 ############OTHER CASE##############
 if not IsPcpGroup(G) then
@@ -129,19 +113,20 @@ fi;
 
 EltsE:=[Identity(E)];
 
+#####################################################################
 	AppendToElts:=function(x);
 	EltsE[Length(EltsE)+1]:=x;
-	return EltsE;
 	end;
+#####################################################################
 
 PseudoBoundary:=[];
-DimensionR:=R.dimension; 
-DimensionS:=S.dimension; 
-BoundaryS:= S.boundary;
+DimensionR:=R!.dimension; 
+DimensionS:=S!.dimension; 
+BoundaryS:= S!.boundary;
 	   
-BoundaryR:=R.boundary;  
-HomotopyR:=R.homotopy;
-HomotopyS:=S.homotopy;  
+BoundaryR:=R!.boundary;  
+HomotopyR:=R!.homotopy;
+HomotopyS:=S!.homotopy;  
 
 #################DETERMINE VARIOUS PROPERTIES########################
 Lngth:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
@@ -169,9 +154,9 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 ]));
 fi;
 
-if Charact=0 then AddWrds:=AddWords; else
+if Charact=0 then AddWrds:=AddFreeWords; else
         AddWrds:=function(v,w);
-        return AddWordsModP(v,w,Charact);
+        return AddFreeWordsModP(v,w,Charact);
         end;
 fi;
 ####################PROPERTIES DETERMINED############################
@@ -255,6 +240,7 @@ return Pair2Int([r,s],p,q);
 end;
 #####################################################################
 
+T:=0;
 #####################################################################
 Elts2Int:=function(x)
 local pos;
@@ -263,6 +249,8 @@ pos:=Position(EltsE,x);
 if IsPosInt(pos) then return pos;
 else
 	Append(EltsE,[x]);
+	if not IsInt(T) then
+	Append(T!.elts,[x]); fi;
 	return Length(EltsE); 
 fi;
 end;
@@ -280,11 +268,11 @@ tmp:=Int2Vector(k,j);
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=ShallowCopy(BoundaryR(p,r));
-Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R.elts[x[2]])   )  ]);
+Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R!.elts[x[2]])   )  ]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
 vertical:=ShallowCopy(BoundaryS(q,s));
-Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S.elts[x[2]])  )    ]);
+Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S!.elts[x[2]])  )    ]);
 Apply(vertical,x->[Vector2Int(p,q-1,r,x[1]),x[2]]);
 if IsOddInt(p) then
 vertical:=NegateWord(vertical);
@@ -314,7 +302,7 @@ p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=StructuralCopy(BoundaryR(p,r));
 
-Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R.elts[x[2]]) )]);
+Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R!.elts[x[2]]) )]);
 
 
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
@@ -345,19 +333,19 @@ local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;	#bool=true for vertical homotopy
 
 Eg:=EltsE[g];
 Eg1:=Image(EhomG,Eg);
-	if not Eg1 in R.elts then R.elts:=RappendToElts(Eg1); fi; 
+	if not Eg1 in R!.elts then RappendToElts(Eg1); fi; 
 				    
 Eg2:=Image(EhomH,Eg);
-	if not Eg2 in S.elts then S.elts:=SappendToElts(Eg2); fi;
+	if not Eg2 in S!.elts then SappendToElts(Eg2); fi;
 				    
-g2:=Position(S.elts,Eg2); 
-g1:=Position(R.elts,Eg1); 
+g2:=Position(S!.elts,Eg2); 
+g1:=Position(R!.elts,Eg1); 
 Eg1:=Image(GhomE,Eg1);
 Eg2:=Image(HhomE,Eg2);
 
 
 hty:=HomotopyS(q,[s,g2]);
-Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S.elts[x[2]])]); 
+Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S!.elts[x[2]])]); 
 Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
 if IsOddInt(p) then
 hty:=NegateWord(hty); fi;
@@ -373,7 +361,7 @@ if q>0 then return hty; fi;
 
 
 hty1:=HomotopyR(p,[r,g1]);
-Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R.elts[x[2]])]);
+Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R!.elts[x[2]])]);
 Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 
 Append(hty,hty1);
@@ -437,7 +425,13 @@ g:=Boundary(i,j);
 od;
 od;
 
-return rec(
+#####################################################################
+AppendToElts:=function(x)
+Append(T!.elts,[x]);
+end;
+#####################################################################
+
+T:= rec(
             dimension:=Dimension,
 	    boundary:=Boundary,
 	    homotopy:=FinalHomotopy,
@@ -451,6 +445,9 @@ return rec(
 	    ["characteristic",Charact] ],
 	    appendToElts:=AppendToElts);
 
+
+return Objectify(HapResolution,T);
 end);
+
 #####################################################################
 

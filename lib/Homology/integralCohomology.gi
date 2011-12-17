@@ -29,8 +29,8 @@ if N <0 then return rec(torsionCoefficients:=[ ]); fi;
 #	); 
 #fi;
 
-Dimension:=C.dimension;
-Boundary:=C.boundary;
+Dimension:=C!.dimension;
+Boundary:=C!.boundary;
 M1:=[];
 M2:=[];
 
@@ -157,9 +157,9 @@ local
 		HChomHD, gensHC, imageGensHC,
 		x;
 
-C:=f.source;
-D:=f.target;
-ChomD:=f.mapping;
+C:=f!.source;
+D:=f!.target;
+ChomD:=f!.mapping;
 
 IHC:=CohomologyAsFpGroup(C,n);
 HC:=IHC.fpgroup;

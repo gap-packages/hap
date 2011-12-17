@@ -6,10 +6,9 @@ function(X,name)
 local
 	x;
 
-if not IsRecord(X) then return fail; fi;
-if not "properties" in RecNames(X) then return fail; fi;
+if not "properties" in NamesOfComponents(X) then return fail; fi;
 
-x:=First(X.properties,v->v[1]=name);
+x:=First(X!.properties,v->v[1]=name);
 if x=fail then return fail;
 else return x[2]; fi;
 
@@ -121,4 +120,36 @@ od;
 return BSLCS;
 end);
 #####################################################################
+
+#####################################################################
+InstallGlobalFunction(Coclass,
+function(G)
+local
+	facs;
+
+facs:=SSortedList(Factors(Order(G)));
+if Length(facs)>1 then 
+Print("G should be a prime-power group. \n");
+return fail; 
+fi;
+
+return LogInt(Order(G),facs[1])-NilpotencyClassOfGroup(G);
+end);
+#####################################################################
+
+#####################################################################
+InstallGlobalFunction(BoundaryMatrix,
+function(C,n)
+local
+        M,i,j;
+
+M:=[];
+for i in [1..C!.dimension(n)] do
+M[i]:=C!.boundary(n,i);
+od;
+
+return TransposedMat(M);
+
+end);
+####################################################################
 

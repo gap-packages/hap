@@ -115,7 +115,7 @@ Append(relsT,[v]);
 od;
 
 #####################################################################IF
-if not IsNilpotent(AG) then
+if not IsSolvable(AG) then
 
 AF:=F/relsT;
 FhomAF:=
@@ -133,7 +133,12 @@ AF:=F/relsT;
 FhomAF:=
 GroupHomomorphismByImages(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
+if IsNilpotent(AG) then
 AFhomSF:=EpimorphismNilpotentQuotient(AF);
+else
+AFhomSF:=EpimorphismSolvableQuotient(AF, SSortedList(Factors(Order(G))));
+fi;
+
 SF:=Image(AFhomSF);
 FhomSF:=
 GroupHomomorphismByFunction(F,SF,x->Image(AFhomSF,Image(FhomAF,x)) );
@@ -193,7 +198,12 @@ function(arg)
 local 		G,N,gensG, Epi, Pairing,toggle,x,z;
 
 G:=arg[1];
-if Length(arg)>1 then N:=arg[2]; else N:=G; fi;
+if Length(arg)>1 then N:=arg[2]; else 
+
+if IsNilpotent(G) and LoadPackage("nq")=true then
+return UpperEpicentralSeries(G,1); fi;
+
+N:=G; fi;
 gensG:=GeneratorsOfGroup(G);
 
 Pairing:=NonabelianExteriorProduct(G,N).pairing;

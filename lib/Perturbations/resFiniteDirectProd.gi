@@ -31,8 +31,8 @@ local
 R:=arg[1];
 S:=arg[2];
 
-G:=R.group; 
-H:=S.group; 
+G:=R!.group; 
+H:=S!.group; 
 
 ####################### DIRECT PRODUCT OF GROUPS ###########
 if Length(arg)=2 then
@@ -95,8 +95,8 @@ fi;
 
 
 EltsE:=[Identity(E)];
-for g in R.elts do					
-for h in S.elts do					
+for g in R!.elts do					
+for h in S!.elts do					
 AddSet(EltsE,Image(GhomE,g)*Image(HhomE,h));		
 #AddSet(EltsE,(Image(GhomE,g)*Image(HhomE,h))^-1);
 AddSet(EltsE,Image(HhomE,h)*Image(GhomE,g));		
@@ -112,13 +112,13 @@ EltsE[1]:=Identity(E);
 
 
 PseudoBoundary:=[];
-DimensionR:=R.dimension; 
-DimensionS:=S.dimension; 
-BoundaryS:= S.boundary;
+DimensionR:=R!.dimension; 
+DimensionS:=S!.dimension; 
+BoundaryS:= S!.boundary;
 	   
-BoundaryR:=R.boundary;  
-HomotopyR:=R.homotopy;
-HomotopyS:=S.homotopy;  
+BoundaryR:=R!.boundary;  
+HomotopyR:=R!.homotopy;
+HomotopyS:=S!.homotopy;  
 
 #################DETERMINE VARIOUS PROPERTIES########################
 Lngth:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
@@ -146,9 +146,9 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 ]));
 fi;
 
-if Charact=0 then AddWrds:=AddWords; else
+if Charact=0 then AddWrds:=AddFreeWords; else
         AddWrds:=function(v,w);
-        return AddWordsModP(v,w,Charact);
+        return AddFreeWordsModP(v,w,Charact);
         end;
 fi;
 ####################PROPERTIES DETERMINED############################
@@ -257,11 +257,11 @@ tmp:=Int2Vector(k,j);
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=ShallowCopy(BoundaryR(p,r));
-Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R.elts[x[2]])   )  ]);
+Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R!.elts[x[2]])   )  ]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
 vertical:=ShallowCopy(BoundaryS(q,s));
-Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S.elts[x[2]])  )    ]);
+Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S!.elts[x[2]])  )    ]);
 Apply(vertical,x->[Vector2Int(p,q-1,r,x[1]),x[2]]);
 if IsOddInt(p) then
 vertical:=NegateWord(vertical);
@@ -291,7 +291,7 @@ p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=StructuralCopy(BoundaryR(p,r));
 
-Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R.elts[x[2]]) )]);
+Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R!.elts[x[2]]) )]);
 
 
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
@@ -323,8 +323,8 @@ local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;	#bool=true for vertical homotopy
 Eg:=EltsE[g];
 Eg1:=Image(EhomG,Eg);
 Eg2:=Image(EhomH,Eg);
-g2:=Position(S.elts,Eg2);
-g1:=Position(R.elts,Eg1);
+g2:=Position(S!.elts,Eg2);
+g1:=Position(R!.elts,Eg1);
 #Eg1:=Image(GhomE,Image(EhomG,Eg));
 #Eg2:=Image(HhomE,Image(EhomH,Eg));
 Eg1:=Image(GhomE,Eg1);
@@ -332,7 +332,7 @@ Eg2:=Image(HhomE,Eg2);
 
 
 hty:=HomotopyS(q,[s,g2]);
-Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S.elts[x[2]])]); 
+Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S!.elts[x[2]])]); 
 Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
 if IsOddInt(p) then
 hty:=NegateWord(hty); fi;
@@ -348,7 +348,7 @@ if q>0 then return hty; fi;
 
 
 hty1:=HomotopyR(p,[r,g1]);
-Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R.elts[x[2]])]);
+Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R!.elts[x[2]])]);
 Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 
 Append(hty,hty1);
@@ -412,7 +412,8 @@ g:=Boundary(i,j);
 od;
 od;
 
-return rec(
+return Objectify(HapResolution,
+	    rec(
             dimension:=Dimension,
 	    boundary:=Boundary,
 	    homotopy:=FinalHomotopy,
@@ -423,7 +424,7 @@ return rec(
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],
-	    ["characteristic",Charact] ]);
+	    ["characteristic",Charact] ]));
 
 end);
 #####################################################################

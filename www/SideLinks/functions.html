@@ -71,23 +71,24 @@ elements of G.<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">A
 ZG-resolution&nbsp; ... &#8594; M<sub>n</sub> &#8594; M<sub>n-1</sub> &#8594; ... &#8594; M<sub>1</sub>
-&#8594; M<sub>0</sub> &#8594; Z<big> </big>is represented by a record R with the
+&#8594; M<sub>0</sub> &#8594; Z<big> </big>is represented by a component object R
+with the
 following components.<br>
       <big> </big>
       <ul>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R.dimension(k)</span>
+ style="font-family: helvetica,arial,sans-serif;">R!.dimension(k)</span>
 is a function which returns the
 ZG-rank of the module
 M<sub>k</sub>.</li>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R.boundary(k, j)</span>
+ style="font-family: helvetica,arial,sans-serif;">R!.boundary(k, j)</span>
 is a function which returns
 the image in M<sub>k-1</sub>
 of the
 j-th free generator of M<sub>k</sub>.</li>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R.homotopy(k,[i,g]) </span>is
+ style="font-family: helvetica,arial,sans-serif;">R!.homotopy(k,[i,g]) </span>is
 a function which
 returns the image in M<sub>k+1</sub>,
 under a contracting homotopy M<sub>k</sub> &#8594; M<sub>k+1</sub>, of
@@ -97,14 +98,14 @@ as an abelian group.) For some resolutions a contracting homotopy is
 not
 constructed, in which case R.homotopy is set equal to "fail". </li>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R.elts</span> is a
+ style="font-family: helvetica,arial,sans-serif;">R!.elts</span> is a
 (partial) list of (possibly
 duplicate) elements
 in G.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">R.group</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R!.group</span>
 is the group in question (and could be a permutation
 group, matrix group, finitely presented group etc.).</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">R.properties</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R!.properties</span>
 is a list of pairs ["name", value] where
 "name"
 is a
@@ -113,8 +114,12 @@ are:&nbsp; ["length", n] which records that there are n terms in
 the resolution; ["characteristic", p] which records the
 characteristic of Z; ["reduced", true] which record that M<sub>0</sub>
 is isomorphic to ZG; ["type","resolution"] which records the type of
-the object R.<br>
-        </li>
+the object R.</li>
+      </ul>
+The operation<span style="font-family: helvetica,arial,sans-serif;"></span>
+      <span style="font-family: helvetica,arial,sans-serif;">IsHapResoluton(R)</span>
+returns "true" for a resolution.<br>
+      <ul>
         <big> </big>
       </ul>
       <big> </big> </td>
@@ -130,24 +135,25 @@ map</span><br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">An
 equivariant
 chain mapping f : R &#8594; S from a ZG-resolution to a ZG'-resolution is
-represented by a
-record F with the following components.<br>
+represented by a component object F with the following components.<br>
       <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.source</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.source</span>
 is the ZG-resolution R.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.target</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
 is the ZG'-resolution S.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.mapping(k,[i,g])
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(k,[i,g])
           </span>is a
 function which
 returns the image in S<sub>k</sub>,
 under the chain map, of
 the element
 [[i,g]]&nbsp; in R<sub>k</sub>.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.properties</span>
-is a list of pairs such as ["type", "equivariantChainMap"].<br>
-        </li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
+is a list of pairs such as ["type", "equivariantChainMap"].</li>
       </ul>
+The operation <span style="font-family: helvetica,arial,sans-serif;"></span><span
+ style="font-family: helvetica,arial,sans-serif;">IsHapEquivariantChainMap(F)</span>
+returns "true" for an equivariant chain map F.<br>
       </td>
     </tr>
     <tr>
@@ -165,18 +171,18 @@ chain complex&nbsp; ... &#8594; C<sub>n</sub> &#8594; C<sub>n-1</sub> &#8594; ..
 &#8594; C<sub>0 </sub><big> </big>is represented by a record C with the
 following components.<br>
       <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">C.dimension(k)</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">C!.dimension(k)</span>
 is a function which returns the
 Z-rank of the module C<sub>k</sub>.</li>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">C.boundary(j, k) </span>is
+ style="font-family: helvetica,arial,sans-serif;">C!.boundary(j, k) </span>is
 a function which returns
 the image in C<sub>k-1</sub>
 of the
 j-th free generator of C<sub>k</sub>. <br>
         </li>
         <big> </big><big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">C.properties</span>
+ style="font-family: helvetica,arial,sans-serif;">C!.properties</span>
 is a list of pairs
 ["name",value] where "name"
 is a
@@ -185,11 +191,14 @@ are:&nbsp; ["length", n] which would record that there are n terms in
 the chain complex; ["characteristic", p] which would record the
 characteristic of Z.</li>
       </ul>
+The operation <span style="font-family: helvetica,arial,sans-serif;"></span><span
+ style="font-family: helvetica,arial,sans-serif;">IsHapChainComplex(C)</span>
+returns "true" for a chain complex C.<br>
       <br>
 (A cochain complex&nbsp; ... &#8592; C<sub>n</sub> &#8592; C<sub>n-1</sub> &#8592; ... &#8592; C<sub>1</sub>
 &#8592; C<sub>0 </sub><big> </big>is represented by a similar record
-C.&nbsp; The only difference is that <span
- style="font-family: helvetica,arial,sans-serif;">C.boundary(k,j)</span>
+C.&nbsp; The difference is that <span
+ style="font-family: helvetica,arial,sans-serif;">C!.boundary(k,j)</span>
 returns an element in C<sub>k+1</sub>.) </td>
     </tr>
     <tr>
@@ -202,22 +211,27 @@ map<br>
       </span></td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-chain mapping f : C &#8594; D between chain complexes is a record F with the
+chain mapping f : C &#8594; D between chain complexes is a component object F
+with the
 following components.<br>
       <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.source</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.source</span>
 is the chain complex C.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.target</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
 is the chain complex D.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.mapping(k,i)
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(k,i)
           </span>is a
 function which
 returns the image in D<sub>k</sub>,
 under the chain map, of
 the element i-th free generator of&nbsp; C<sub>k</sub>.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.properties</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
 is a list of pairs such as ["type", "chainMap"].</li>
       </ul>
+The operation<span style="font-family: helvetica,arial,sans-serif;"></span>
+      <span style="font-family: helvetica,arial,sans-serif;">IsHapEquivariantChainMap(F)</span>
+returns "true" for a chain map F.<br>
+      <br>
 (A cochain mapping is represented by a similar record.)<br>
       </td>
     </tr>
@@ -291,7 +305,7 @@ LIST OF HAP FUNCTIONS</span></h2>
     <tr>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top; font-family: helvetica,arial,sans-serif; color: rgb(255, 204, 0);"><span
- style="color: rgb(0, 0, 0);">AddWords(v,w)</span><big><br>
+ style="color: rgb(0, 0, 0);">AddFreeWords(v,w)</span><big><br>
       </big></td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -303,7 +317,7 @@ greater than 0 then the next function should be more efficient.<big><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">AddWordsModP(v,w,p)</span><br>
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">AddFreeWordsModP(v,w,p)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -331,6 +345,30 @@ entered.<big><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">BaerInvariant(G,c)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a <span style="font-style: italic;">nilpotent</span> group G and
+integer c&gt;0. It returns the Baer invariant M<sup>(c)</sup>(G)
+defined as follows.<br>
+      <br>
+For an <span style="font-style: italic;">arbitrary</span> group G let L<sup>*</sup><sub>c+1</sub>(G)
+be the (c+1)-st
+term
+of the upper central series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. This is an invariant of G and
+we define M<sup>(c)</sup>(G) to be the kernel of the canonical
+homomorphism M<sup>(c)</sup>(G)&#8594;G. For c=1 the Baer invariant M<sup>(1)</sup>(G)
+is isomorphic to the second integral homology H<sub>2</sub>(G,Z).<br>
+      <br>
+This function requires the NQ package.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BigStepLCS(G,n)</span><br>
       </td>
       <td
@@ -338,6 +376,39 @@ entered.<big><br>
 a group G and a positive integer n. It returns a subseries G=L<sub>1</sub>&gt;L<sub>2</sub>&gt;...L<sub>k</sub>=1
 of the lower central series of G such that L<sub>i</sub>/L<sub>i+1</sub>
 has order greater than n.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BoundaryMap(C)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution, chain complex or cochain complex C and returns the
+function C!.boundary.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BoundaryMatrix(C,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain or cochain complex C and integer n&gt;0. It returns the n-th
+boundary map of C as a matrix.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Coclass(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G of prime-power order p<sup>n</sup> and nilpotency class c
+say. It returns the integer r=n-c .<br>
       </td>
     </tr>
     <tr>
@@ -365,14 +436,15 @@ M<sup>t</sup>f=0 mod q. <br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 either a cochain complex X=C or a cochain map X=(C&#8594;D) over the integers
-Z. At present only characteristic 0 is implemented. <br>
+Z. <br>
       <ul>
         <li>If X=C then the torsion coefficients of H<sup>n</sup>(C)
 are
 retuned.</li>
         <li>If X=(C&#8594;D) then the induced homomorphism H<sup>n</sup>(C) &#8594;
 H<sup>n</sup>(D) is returned as a homomorphism of finitely presented
-groups.</li>
+groups. <br>
+        </li>
       </ul>
       </td>
     </tr>
@@ -475,6 +547,16 @@ set of vertices.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Dimension(C)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution, chain complex or cochain complex C and returns the
+function C!.dimension .</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Epicentre(G,N)<br>
       <br>
@@ -490,8 +572,11 @@ trivially. <br>
       <br>
 If no value for N is entered then it is assumed that N=G. In this case
 the group Z<sup>*</sup>(G,G) is trivial if and only if G is isomorphic
-to a quotient G=E/Z(E) of some group E by the the centre of E.&nbsp;
-(There are probably quicker ways to compute Z<sup>*</sup>(G,G) . )<br>
+to a quotient G=E/Z(E) of some group E by the centre of E.&nbsp;
+(See also the command<span
+ style="font-family: helvetica,arial,sans-serif;">
+UpperEpicentralSeries(G,c)</span>.
+)<br>
       </td>
     </tr>
     <tr>
@@ -503,18 +588,17 @@ to a quotient G=E/Z(E) of some group E by the the centre of E.&nbsp;
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a ZG-resolution R, a ZG'-resolution S, and a group homomorphism f : G &#8594;
-G'. It outputs a
-record M with the following components.<br>
+G'. It outputs a component object M with the following components.<br>
       <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M.source</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.source</span>
 is the resolution R.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M.target
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.target
           </span>is the resolution S.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M.mapping(w,n)</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.mapping(w,n)</span>
 is a function which gives the image in S<sub>n</sub>, under a chain map
 induced by f, of a word w in R<sub>n</sub>. (Here&nbsp; R<sub>n</sub>
 and S<sub>n </sub>are the n-th modules in the resolutions R and S.)</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F.properties</span>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
 is a list of pairs such as ["type", "equivariantChainMap"].</li>
       </ul>
       <br>
@@ -528,7 +612,8 @@ resolution S must have a contracting homotopy. </td>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a record X (such as a ZG-resolution or chain map) and a string "name"
+a component object X (such as a ZG-resolution or chain map) and a
+string "name"
 (such as "characteristic" or "type"). It searches X.property for
 the&nbsp; pair ["name",value] and returns value. If X.property does not
 exist, or if ["name",value] does not exist, it returns fail.<br>
@@ -583,6 +668,16 @@ choices yourself!<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">GroupOfResolution(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns the group G.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HAPcopyright()</span><br>
       </td>
       <td
@@ -626,6 +721,20 @@ module of integers (characteristic 0).<br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">HomToIntegersModP(R)<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns
+the cochain complex obtained by applying Hom<sub>ZG</sub>(
+_ , Z<sub>p</sub>) where Z<sub>p</sub> is the trivial
+module of integers mod p. (At present this function does handle
+equivariant chain maps.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HomToIntegralModule(R,f)</td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -633,8 +742,9 @@ a ZG-resolution R and a group homomorphism f:G &#8594; GL<sub>n</sub>(Z)&nbsp;
 to the group of n&times;n invertible integer matrices. Here Z must have
 characteristic
 0. It returns the cochain complex obtained by applying Hom<sub>ZG</sub>(
-_ , A) where A is the ZG-module Z<sup>n</sup> with G action via f. <br>
-      </td>
+_ , A) where A is the ZG-module Z<sup>n</sup> with G action via f. (At
+present this function does handle
+equivariant chain maps.) </td>
     </tr>
     <tr>
       <td
@@ -756,12 +866,33 @@ integral homology of G is trivial. Otherwise, it returns "false". <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Length(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution R and returns its length (i.e. the number of terms of R
+that Hap has computed). <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a word w and integer n. It returns the scalar multiple n&middot;w .<br>
       </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Map(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map or equivariant chain map f and returns the
+mapping function (as opposed to the target or the source of f) .</td>
     </tr>
     <tr>
       <td
@@ -813,9 +944,10 @@ groups.</td>
     <tr>
       <td
  style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
- style="color: rgb(0, 0, 0);">NonabelianTensor<br>
-Square(G)</span><br>
-      </td>
+ style="color: rgb(0, 0, 0);">NonabelianTensorSquare(G)<br>
+      <br>
+NonabelianTensorSquare(G,m)<br>
+      </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a finite group G and returns a record T with the following components.<br>
@@ -834,8 +966,18 @@ and returns the tensor x (&times;) y in the tensor square G (&times;) G
 . <br>
         </li>
       </ul>
+An optional second varible m can be set equal to a multiple of the
+order of the tensor square G(&times;)G . This might help when G is
+solvable but not nilpotent (especially if the estimated upper bound m
+is reasonable accurate) as the bound is used in the solvable quotient
+algorithm.<br>
+      <br>
+The optional second variable m can also be set equal to 0. In this case
+the Todd-Coxeter procedure will be used to enumerate the tensor square
+even when G is solvable.<br>
+      <br>
 This function should work for
-reasonably small nilpotent groups or extremely small non-nilpotent
+reasonably small solvable groups or extremely small non-solvable
 groups.<br>
       <span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
@@ -868,14 +1010,14 @@ P(G,v) be the convex polytope arising as the convex hull of
 the Euclidean points in the orbit of v under the action of G. The
 cellular chain complex C<sub>*</sub>=C<sub>*</sub>(P(G,v)) is an exact
 sequence of (not necessarily free) ZG-modules. The
-function returns a record R with components:<br>
+function returns a component object R with components:<br>
       <ul style="font-family: helvetica,arial,sans-serif;">
-        <li>R.dimension(k)<span style="font-family: serif;"> is a
+        <li>R!.dimension(k)<span style="font-family: serif;"> is a
 function which returns the number of G-orbits of the k-dimensional
 faces in&nbsp; P(G,v).&nbsp; If each k-face has trivial stabilizer
 subgroup in G then C<sub>k</sub> is a free ZG-module of rank
 R.dimension(k).</span></li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">R.stabilizer(k,n)<span
+        <li><span style="font-family: helvetica,arial,sans-serif;">R!.stabilizer(k,n)<span
  style="font-family: serif;"> is a function which returns the
 stabilizer subgroup for a face in the n-th orbit of k-faces.</span></span></li>
         <li><span style="font-family: helvetica,arial,sans-serif;"><span
@@ -890,8 +1032,9 @@ map.)<br>
           </span></span></li>
         <li><span style="font-family: helvetica,arial,sans-serif;"><span
  style="font-family: serif;"><span
- style="font-family: helvetica,arial,sans-serif;">R.elements, R.group,
-R.properties <span style="font-family: serif;">are as in a
+ style="font-family: helvetica,arial,sans-serif;">R!.elements,
+R!.group,
+R!.properties <span style="font-family: serif;">are as in a
 ZG-resolution.</span></span></span></span></li>
       </ul>
 If an optional third input variable n is used, then only the first n
@@ -1045,7 +1188,15 @@ groups can be constructed using the ACLIB package.) <br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystal<br>
-Quotient(G,n,c)</span></td>
+Quotient(G,n,c)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystal<br>
+Quotient(G,n,c,false)<br>
+      </span><br>
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      </span></td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">An
 almost crystallographic group G is an extension of a finite group P by
@@ -1061,6 +1212,10 @@ R for the group Q=G/T<sub>c</sub> .<br>
 In addition to the usual components, the resolution R has the component
       <span style="font-family: helvetica,arial,sans-serif;">R.quotientHomomorphism</span>
 which gives the quotient homomorphism G&#8594;Q.<br>
+      <br>
+If a fourth optional variable is set equal to "false" then the the
+function omits to test whether Q is finite and a "more canonical"
+resolution is constructed.<br>
       </td>
     </tr>
     <tr>
@@ -1360,9 +1515,11 @@ calculations.<span style="color: rgb(255, 0, 0);"><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionPrimePower<br>
-Group(G,n)</span><br>
-      </td>
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionPrimePowerGroup(G,n)<br>
+      <br>
+ResolutionPrimePower<br>
+Group(G,n,"non minimal")<br>
+      </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a p-group G and integer n&gt;0. It uses GAP's standard linear algebra
@@ -1372,6 +1529,10 @@ resolution is minimal - meaning that the number of generators
 of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). (I
 suspect this function could be implemented far more efficiently.)<br>
       <br>
+If an optional third variable is set equal to the strinf "non minimal"
+then the resolution should be computed more quickly but may be
+non-minimal.<br>
+      <br>
       <span style="color: rgb(255, 0, 0);">The contracting homotopy on
 the
 ZG-resolution has not yet been implemented!</span><br>
@@ -1380,17 +1541,18 @@ ZG-resolution has not yet been implemented!</span><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><br
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
-      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGroup(G,n)<br>
       <br>
       </span><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><br
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
-      <span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGroup(G,n,p)</span><br>
-      </td>
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGroup(G,n,p)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"></span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      <br>
+      </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a small finitely presented group G and an integer n&gt;0. It returns n
@@ -1454,6 +1616,34 @@ will possibly work more efficiently.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">SolutionsMatDestructive(M,B)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an m&times;n matrix M and a k&times;n matrix B over a field. It returns
+a k&times;m matrix S satisfying SM=B.<br>
+      <br>
+The function will probably change the matrices M and B.<br>
+      <br>
+(This is&nbsp; a trivial rewrite of the standard GAP function <span
+ style="font-family: helvetica,arial,sans-serif;">SolutionMatDestructive(&lt;mat&gt;,&lt;vec&gt;)</span>
+.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Source(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map or equivariant chain map f and returns it
+source.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">StandardCocycle(R,f,n)</span><br
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
       <br
@@ -1487,6 +1677,14 @@ resolution corresponding
 to the n-tuple g. This function can be used to construct explicit
 standard n-cocycles. (Currently implemented only for n&lt;4.)<br>
       </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Target(f)</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map or equivariant chain map f and returns its
+target.</td>
     </tr>
     <tr>
       <td
@@ -1543,14 +1741,27 @@ they produce the correct output.&nbsp; <br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ThirdHomotopyGroup<br>
-OfSuspensionB(G)</span><br>
+OfSuspensionB(G)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ThirdHomotopyGroup<br>
+OfSuspensionB(G,m)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a finite group G and returns the abelian invariants of the third
 homotopy group of the suspension SB(G) of the Eilenberg-Mac Lane
-space&nbsp; K(G,1). This function should work for reasonably small
-nilpotent groups or extremely small non-nilpotent groups.<br>
+space&nbsp; K(G,1).<br>
+      <br>
+An optional second varible m can be set equal to a multiple of the
+order of the tensor square G(&times;)G . This might help when G is
+solvable
+but not nilpotent (especially if the estimated upper bound m is
+reasonable accurate).<br>
+      <br>
+This function should work for
+reasonably small solvable groups or extremely small non-solvable
+groups.<br>
       </td>
     </tr>
     <tr>
@@ -1598,6 +1809,29 @@ minimum of the "length"s of R and S. The resolution R needs no
 contracting homotopy if no such homotopy is requied for F. <span
  style="color: rgb(255, 0, 0);"></span><big><br>
       </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">UpperEpicentralSeries(G,c)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a <span style="font-style: italic;">nilpotent </span>group G and an
+integer c. It returns the c-th term of the
+upper epicentral series 1 &lt; Z<sub>1</sub><sup>*</sup>(G) &lt; Z<sub>2</sub><sup>*</sup>(G)
+&lt; ... . <br>
+      <br>
+The upper epicentral series is defined for an <span
+ style="font-style: italic;">arbitrary</span> group G. The
+group Z<sub>c</sub><sup>*</sup>(G) is the image in G of the c-th
+term Z<sub>c</sub>(U)
+of the upper central series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. <br>
+      <br>
+This functions requires the NQ package.<br>
+      </td>
     </tr>
     <tr>
       <td

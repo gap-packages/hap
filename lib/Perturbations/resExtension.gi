@@ -18,7 +18,9 @@ local
 	NisFinite,GisFinite,EisFinite,
 	Lngth,T,
 	AppendToElts,
-	gn,i,j,Count;
+	gn,i,j;
+
+T:=0;
 
 EEhomGG:=arg[1];
 RN:=arg[2];
@@ -37,7 +39,7 @@ else
 	#############################################################
 fi;
 
-N:=RN.group;
+N:=RN!.group;
 E:=Source(EEhomGG);
 G:=Image(EEhomGG);
 
@@ -46,11 +48,11 @@ GisFinite:=false;
 EisFinite:=false; 
 if TestFinite then
 if IsFinite(N) then
-	if Order(N)<=Length(RN.elts) then NisFinite:=true; fi;
+	if Order(N)<=Length(RN!.elts) then NisFinite:=true; fi;
 fi;
 
 if IsFinite(G) then
-        if Order(G)<=Length(RG.elts) then GisFinite:=true; fi;
+        if Order(G)<=Length(RG!.elts) then GisFinite:=true; fi;
 fi;
 
 EisFinite:=IsFinite(E);
@@ -72,14 +74,13 @@ EltsE[1]:=Identity(E);
 	########################################################
 	AppendToElts:=function(x);
 	Append(EltsE,[x]);
-	return(EltsE);
 	end;
 	########################################################
 
 if GisFinite then
 	#########################################
 	EhomG:=function(x);
-	return Position(RG.elts,ImageElm(EEhomGG,EltsE[x]));
+	return Position(RG!.elts,ImageElm(EEhomGG,EltsE[x]));
 	end;
 	#########################################
 else
@@ -87,12 +88,13 @@ else
         EhomG:=function(x)
 	local g,Eltg;
 	Eltg:=ImageElm(EEhomGG,EltsE[x]); 
-        g:=Position(RG.elts,Eltg); 
+        g:=Position(RG!.elts,Eltg); 
 	if g=fail then 
-	RG.elts:=RG.appendToElts(Eltg); 
-	g:=Length(RG.elts); fi;
-	#if Position(RG.elts,Eltg^-1)=fail then 
-	#Append(RG.elts,[Eltg^-1]);fi;
+	RG!.appendToElts(Eltg); 
+	Append(RG!.elts,[Eltg]);
+	g:=Length(RG!.elts); fi;
+	#if Position(RG!.elts,Eltg^-1)=fail then 
+	#Append(RG!.elts,[Eltg^-1]);fi;
 	return g;
         end;
         #########################################
@@ -101,16 +103,16 @@ fi;
 if EisFinite then
 	#########################################
 	NhomE:=function(x);
-	return Position(EltsE,RN.elts[x]);
+	return Position(EltsE,RN!.elts[x]);
 	end;
 	#########################################
 else	
         #########################################
         NhomE:=function(x)
 	local e,Elte;
-	Elte:=RN.elts[x];
+	Elte:=RN!.elts[x];
         e:=Position(EltsE,Elte);
-	if e=fail then Append(EltsE,[Elte]);
+	if e=fail then AppendToElts(Elte);
 	e:=Length(EltsE); fi;
 	#if Position(EltsE,Elte^-1)=fail then
 	#Append(EltsE,[Elte^-1]); fi;
@@ -121,7 +123,7 @@ fi;
 
 if GisFinite and EisFinite then
 PreimagesRecordE:=List([1..Order(G)],x->
-	Position(EltsE,PreImRep(RG.elts[x])));
+	Position(EltsE,PreImRep(RG!.elts[x])));
 	
 	#########################################
 	GmapE:=function(x);
@@ -134,17 +136,17 @@ PreimagesRecordE:=[];
 	#########################################
 	GmapE:=function(x)
 	local e,Elte,Eltg,pos;
-	Eltg:=RG.elts[x];
+	Eltg:=RG!.elts[x];
 	pos:=Position(PreimagesRecordG,Eltg); 
 	if not pos=fail then 
 	return PreimagesRecordE[pos]; fi;
 	
 	Elte:=PreImRep(Eltg);
 	e:=Position(EltsE,Elte);
-	if e=fail then Append(EltsE,[Elte]);
+	if e=fail then AppendToElts(Elte);
         e:=Length(EltsE); fi;
 	if Position(EltsE,Elte^-1)=fail then
-        Append(EltsE,[Elte^-1]); fi;
+        AppendToElts(Elte^-1); fi;
 	Append(PreimagesRecordG,[Eltg]);
 	Append(PreimagesRecordE,[e]);
         return e;
@@ -155,7 +157,7 @@ fi;
 if NisFinite then
 	#########################################
 	NEhomN:=function(x);
-	return Position(RN.elts,EltsE[x]);
+	return Position(RN!.elts,EltsE[x]);
 	end;
 	#########################################
 else
@@ -163,9 +165,10 @@ else
 	NEhomN:=function(x)
 	local p,Eltp;
 	Eltp:= EltsE[x];
-	p:=Position(RN.elts,Eltp);
-	if p=fail then RN.elts:=RN.appendToElts(Eltp);
-	p:=Length(RN.elts); fi;
+	p:=Position(RN!.elts,Eltp);
+	if p=fail then RN!.appendToElts(Eltp);
+	Append(RN!.elts,[Eltp]);
+	p:=Length(RN!.elts); fi;
 	return p;
 	end;
 	#########################################
@@ -183,7 +186,7 @@ else
 	local p,Eltp;
 	Eltp:=EltsE[x]*EltsE[y];
 	p:= Position(EltsE,Eltp);
-	if p=fail then Append(EltsE,[Eltp]);
+	if p=fail then AppendToElts(Eltp);
 	p:=Length(EltsE); fi;
 	#if Position(EltsE,Eltp^-1)=fail then
         #Append(EltsE,[Eltp^-1]); fi;
@@ -203,7 +206,7 @@ else
 	InvE:=function(x)
 	local p;
 	p:=(Position(EltsE,EltsE[x]^-1));
-	if p=fail then Append(EltsE,[EltsE[x]^-1]); 
+	if p=fail then AppendToElts(EltsE[x]^-1); 
 	p:=Length(EltsE);fi;
 	return p;
 	end;
@@ -211,16 +214,23 @@ else
 fi;
 
 if (not EisFinite ) and HAPconstant<50 then
-for i in RN.elts do
-for j in RG.elts do
-Append(EltsE, [i*PreImRep(j)]);
+for i in RN!.elts do
+for j in RG!.elts do
+AppendToElts(i*PreImRep(j));
 od;
 od;
 fi;
 
 T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE);
 
-T.appendToElts:=AppendToElts;
+        ########################################################
+        AppendToElts:=function(x);
+        Append(T!.elts,[x]); 
+        end;
+        ########################################################
+
+
+T!.appendToElts:=AppendToElts;
 
 return T;
 end);

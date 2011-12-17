@@ -11,7 +11,7 @@ local
 #####################################################################
 ElementaryReduction:=function(b,c)
 local d;
-d:=AddWords(b,c);
+d:=AddFreeWords(b,c);
 if Length(d) < Length(c) then return ElementaryReduction(b,d);
 else return c; fi;
 end;

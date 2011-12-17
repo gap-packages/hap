@@ -112,7 +112,8 @@ end;
 #####################################################################
 fi;
 
-return rec(
+return Objectify(HapResolution,
+	    rec(
             dimension:=Dimension,
             boundary:=Boundary,
             homotopy:=Homotopy,
@@ -122,7 +123,7 @@ return rec(
             [["length",N],
 	     ["characteristic",0],
 	     ["type","resolution"],
-	     ["reduced",true]]  );
+	     ["reduced",true]]  ));
 end);
 #####################################################################
 #####################################################################

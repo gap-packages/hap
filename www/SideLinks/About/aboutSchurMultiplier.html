@@ -24,7 +24,8 @@
             </td>
             <td
  style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
- style="font-weight: bold;">About HAP: A relative Schur multiplier <br>
+ style="font-weight: bold;">About HAP: A relative Schur multiplier,
+Baer invariants <br>
 and the capability of groups<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
@@ -208,8 +209,11 @@ think this is the correct statement!)</span> </td>
  style="background-color: rgb(255, 255, 255); vertical-align: top;">A
 second application of the (relative) Schur multiplier concerns groups G
 that are isomorphic to a quotient G = K/Z(K) of a group K by the centre
-of K. Such groups G are said to be <span style="font-style: italic;">capable</span>.&nbsp;
-Beyl, Felgner and Schmid showed that, using the Schur multiplier, one
+of K. Such groups G are said to be <span style="font-style: italic;">capable</span>.
+The notion&nbsp; first arose in Philip Halls' work on classification of
+p-groups.
+Subsequently Beyl, Felgner and Schmid showed that, using the Schur
+multiplier, one
 can define a characteristic subgroup Z<sup>*</sup>(G) of the centre of
 G with the property that Z<sup>*</sup>(G)=0 if and only if G is
 capable. For details, see the paper [F.R. Beyl, U. Felgner and P.
@@ -262,6 +266,198 @@ gap&gt; Order(Epicentre(G,N));<br>
       <br>
 gap&gt; Order(Epicentre(G));<br>
 2<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands quantify the number of capable prime-power groups of
+order
+less than 256. (No cyclic group is capable, so prime orders are
+omitted.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+for i in [1..255] do<br>
+&gt; if IsPrimePowerInt(i) and not IsPrimeInt(i) then<br>
+&gt; NumberCapableGroups:=0;<br>
+&gt; for G in AllSmallGroups(i) do<br>
+&gt; if Order(Epicentre(G))=1 then
+NumberCapableGroups:=NumberCapableGroups+1;<br>
+&gt; fi;<br>
+&gt; od;<br>
+&gt; Print("There are ",NumberSmallGroups(i), " groups of order ", i, "
+of which ",&nbsp; <br>
+&gt; NumberCapableGroups, "&nbsp; are capable. \n");<br>
+&gt; fi;<br>
+&gt; od;<br>
+There are 2 groups of order 4 of which 1&nbsp; are capable.<br>
+There are 5 groups of order 8 of which 2&nbsp; are capable.<br>
+There are 2 groups of order 9 of which 1&nbsp; are capable.<br>
+There are 14 groups of order 16 of which 5&nbsp; are capable.<br>
+There are 2 groups of order 25 of which 1&nbsp; are capable.<br>
+There are 5 groups of order 27 of which 2&nbsp; are capable.<br>
+There are 51 groups of order 32 of which 15&nbsp; are capable.<br>
+There are 2 groups of order 49 of which 1&nbsp; are capable.<br>
+There are 267 groups of order 64 of which 69&nbsp; are capable.<br>
+There are 15 groups of order 81 of which 5&nbsp; are capable.<br>
+There are 2 groups of order 121 of which 1&nbsp; are capable.<br>
+There are 5 groups of order 125 of which 2&nbsp; are capable.<br>
+There are 2328 groups of order 128 of which 432&nbsp; are capable.<br>
+There are 2 groups of order 169 of which 1&nbsp; are capable.<br>
+There are 67 groups of order 243 of which 19&nbsp; are capable.<br>
+      <br>
+gap&gt; time;<br>
+246268<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+number of papers have been written recently on the characterization of
+capable p-groups. For example, the capable 2-generator p-groups of
+class two are classified for odd primes in [M. Bacon &amp; L.-C. Kappe,
+On capable p-groups of nilpotency class two, <span
+ style="font-style: italic;">Illinois J. Math</span> 47 (2003) no.1/2,
+49-62] and for p=2 in [A. Magidin, Capable two-generator 2-groups, <span
+ style="font-style: italic;">Communications in Algebra</span>, to
+appear.] These two papers also provide a good introduction to the
+subject.<br>
+      <br>
+The term <span style="font-style: italic;">epicentre, </span>along
+with that of <span style="font-style: italic;">upper epicentral
+series, </span>was
+coined in the paper [J.Burns &amp; G.Ellis,<big><font size="-1"><big>
+On the nilpotent multipliers of a group, <span
+ style="font-style: italic;">Mathematische Zeitschrifft</span> 226
+(1997), 405-428]. </big></font></big>The
+upper epicentral series 1 &lt; Z<sub>1</sub><sup>*</sup>(G) &lt; Z<sub>2</sub><sup>*</sup>(G)
+&lt; ...&nbsp; is defined by setting Z<sub>c</sub><sup>*</sup>(G) equal
+to the image in G of the c-th
+term Z<sub>c</sub>(U)
+of the upper central series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. It is not difficult to show
+that Z<sub>c</sub><sup>*</sup>(G) is an invariant of G.<br>
+      <br>
+We define a group G to be <span style="font-style: italic;">c-capable</span>
+if it is isomorphic to a
+group K/Z(K) where the group K is (c-1)-capable; it is <span
+ style="font-style: italic;">1-capable</span> if it is capable. Note
+that if G is c-capable then it is also (c-1)-capable. It can be shown
+that a group G is c-capable if and only if&nbsp; Z<sub>c</sub><sup>*</sup>(G)=1.
+It can also be shown that a finitely generated abelian group is
+c-capable (for any c) if and only if it is capable.<br>
+      <br>
+The
+following commands quantify the number of 2-capable prime-power groups
+of
+order
+less than 256. Note that some groups are capable but not
+2-capable.&nbsp; </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+for i in [1..255] do<br>
+&gt; if IsPrimePowerInt(i) and not IsPrimeInt(i) then<br>
+&gt; NumberCapableGroups:=0;<br>
+&gt; for G in AllSmallGroups(i) do<br>
+&gt; if Order(UpperEpicentralSeries(G,2))=1 then <br>
+&gt; NumberCapableGroups:=NumberCapableGroups+1;<br>
+&gt; fi;<br>
+&gt; od;<br>
+&gt; Print("There are ",NumberSmallGroups(i), " groups of order ", i, "
+of which ",&nbsp; <br>
+&gt; NumberCapableGroups, "&nbsp; are 2-capable. \n");<br>
+&gt; fi;<br>
+&gt; od;<br>
+There are 2 groups of order 4 of which 1&nbsp; are 2-capable.<br>
+There are 5 groups of order 8 of which 2&nbsp; are 2-capable.<br>
+There are 2 groups of order 9 of which 1&nbsp; are 2-capable.<br>
+There are 14 groups of order 16 of which 5&nbsp; are 2-capable.<br>
+There are 2 groups of order 25 of which 1&nbsp; are 2-capable.<br>
+There are 5 groups of order 27 of which 2&nbsp; are 2-capable.<br>
+There are 51 groups of order 32 of which 14&nbsp; are 2-capable.<br>
+There are 2 groups of order 49 of which 1&nbsp; are 2-capable.<br>
+There are 267 groups of order 64 of which 58&nbsp; are 2-capable.<br>
+There are 15 groups of order 81 of which 5&nbsp; are 2-capable.<br>
+There are 2 groups of order 121 of which 1&nbsp; are 2-capable.<br>
+There are 5 groups of order 125 of which 2&nbsp; are 2-capable.<br>
+There are 2328 groups of order 128 of which 264&nbsp; are 2-capable.<br>
+There are 2 groups of order 169 of which 1&nbsp; are 2-capable.<br>
+There are 67 groups of order 243 of which 15&nbsp; are 2-capable.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">There
+is a "dual" invariant to Z<sub>c</sub><sup>*</sup>(G) which we denote
+by M<sup>(c)</sup>(G) and refer to as a <span
+ style="font-style: italic;">Baer invariant</span>. It is an abelian
+group defined as the kernel of the canonical homomorphism L<sub>c+1</sub>(U)
+&#8594; G where L<sub>c+1</sub>(U) is the (c+1)-st term of the lower central
+series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. The invariant M<sup>(1)</sup>(G)
+is isomorphic to the second integral homology H<sub>2</sub>(G,Z).<br>
+      <br>
+Baer invariants can be defined for arbitrary varieties of groups, and
+so strictly speaking we should refer to M<sup>(c)</sup>(G) as the <span
+ style="font-style: italic;">Baer invariant of </span>G<span
+ style="font-style: italic;"> with respect to the variety of nilpotent
+groups of class</span> c. Note however that in the definition the group
+G
+itself need not be nilpotent.<br>
+      <br>
+The following commands show that the Baer invariants M<sup>(c)</sup>(H)
+for the Heisenberg group H on three&nbsp; complex variables, with
+C=1,2,3,&nbsp; are free
+abelian of ranks 14, 70 and 315 respectively.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+BaerInvariant(HeisenbergPcpGroup(3),1);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      <br>
+gap&gt;
+BaerInvariant(HeisenbergPcpGroup(3),2);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      <br>
+gap&gt; BaerInvariant(HeisenbergPcpGroup(3),3);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
       </td>
     </tr>
     <tr>

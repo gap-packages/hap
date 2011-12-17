@@ -26,8 +26,8 @@ local
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;
 
-Dimension:=C.dimension;
-Boundary:=C.boundary;
+Dimension:=C!.dimension;
+Boundary:=C!.boundary;
 M1:=[];
 M2:=[];
 
@@ -161,9 +161,9 @@ local
 		HChomHD, gensHC, imageGensHC,
 		x;
 
-C:=f.source;
-D:=f.target;
-ChomD:=f.mapping;
+C:=f!.source;
+D:=f!.target;
+ChomD:=f!.mapping;
 
 IHC:=HomologyAsFpGroup(C,n);
 HC:=IHC.fpgroup;

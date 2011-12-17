@@ -8,10 +8,10 @@ local
 	DimensionR,BoundaryR, HomotopyR, EltsG, Mult,
 	map, mapgens, ChainMap, mapgensRec, m,i,g;
 
-DimensionR:=R.dimension;
-BoundaryR:=R.boundary;
-HomotopyR:=R.homotopy;
-EltsG:=R.elts;
+DimensionR:=R!.dimension;
+BoundaryR:=R!.boundary;
+HomotopyR:=R!.homotopy;
+EltsG:=R!.elts;
 
 mapgensRec:=[];
 for m in [0..n] do
@@ -62,7 +62,7 @@ fi;
    z:=map(y,m-1);
    u:=[];
       for a in z do
-            u:=AddWords(HomotopyR(m-1,a),u);
+            u:=AddFreeWords(HomotopyR(m-1,a),u);
       od;
       Apply(u,t->[t[1],Mult(x[2],t[2])]);
       if x[1]>0 then
@@ -86,7 +86,7 @@ local a, u,v,x,y,z;
 v:=[];
 
    for x in w do
-   v:=AddWords(mapgens(x,m),v); 
+   v:=AddFreeWords(mapgens(x,m),v); 
    od;
 
 return v;

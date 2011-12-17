@@ -95,7 +95,7 @@ local pG,
       i, z, pg;
 
 table:=[];
-pG:=Range(IsomorphismPermGroup(G));
+pG:=Image(IsomorphismPermGroup(G));
 
 for pg in Elements(pG) do
   product:=[];
@@ -169,7 +169,7 @@ local FpToPerm, pG,
       d, i;
 
 FpToPerm:=IsomorphismPermGroup(G);
-pG:=Range(FpToPerm);
+pG:=Image(FpToPerm);
 
 l:=NullList(Size(pG));
 for d in zg do
@@ -296,7 +296,7 @@ local pG,
       k, U, 
       Index, i, j;
 
-pG:=Range(IsomorphismPermGroup(G));
+pG:=Image(IsomorphismPermGroup(G));
 k:=Size(v)/Size(pG);
 U:=[];
 
@@ -649,7 +649,8 @@ end;
 
 
 
-return rec(
+return Objectify(HapResolution,
+	    rec(
 	    dimension:=Dimension,
 	    boundary:=Boundary,
 	    homotopy:=fail,
@@ -659,7 +660,7 @@ return rec(
 	     [["type","resolution"],
 	     ["length",n],
 	     ["characteristic", Charact],
-	     ["reduced",true] ]);
+	     ["reduced",true] ]));
 end);
 #####################################################################
 

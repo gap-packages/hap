@@ -4,8 +4,8 @@
 DeclareGlobalFunction("Negate");
 DeclareGlobalFunction("NegateWord");
 DeclareGlobalFunction("AlgebraicReduction");
-DeclareGlobalFunction("AddWords");
-DeclareGlobalFunction("AddWordsModP");
+DeclareGlobalFunction("AddFreeWords");
+DeclareGlobalFunction("AddFreeWordsModP");
 DeclareGlobalFunction("PrintZGword");
 DeclareGlobalFunction("TietzeReduction");
 DeclareGlobalFunction("MultiplyWord");
@@ -17,6 +17,9 @@ DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
 DeclareGlobalFunction("NonabelianExteriorProduct");
 DeclareGlobalFunction("RelativeSchurMultiplier");
 DeclareGlobalFunction("Epicentre");
+DeclareGlobalFunction("UpperEpicentralSeries");
+DeclareGlobalFunction("BaerInvariant");
+
 
 ## RESOLUTIONS ######################################################
 DeclareGlobalFunction("ResolutionFiniteGroup");
@@ -47,6 +50,9 @@ DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
 DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
 DeclareGlobalFunction("TensorWithRationals");
 DeclareGlobalFunction("BigStepLCS");
+DeclareGlobalFunction("HomToIntegersModP");
+DeclareGlobalFunction("Coclass");
+DeclareGlobalFunction("BoundaryMatrix");
 
 
 ## PERTURBATIONS ####################################################
@@ -72,17 +78,22 @@ DeclareGlobalFunction("CoxeterDiagramIsSpherical");
 DeclareGlobalFunction("ResolutionArtinGroup");
 
 ## HOMOLOGY #########################################################
-DeclareGlobalFunction("Homology");
+DeclareOperation("Homology",[IsObject,IsObject]);
+#DeclareGlobalFunction("Homology");
 DeclareGlobalFunction("IntegralHomology");
 DeclareGlobalFunction("ModularHomology");
 DeclareGlobalFunction("GroupHomology");
 DeclareGlobalFunction("IntegralCohomology");
-DeclareGlobalFunction("Cohomology");
+DeclareOperation("Cohomology",[IsObject,IsObject]);
+#DeclareGlobalFunction("Cohomology");
 DeclareGlobalFunction("Syzygy");
 DeclareGlobalFunction("CR_IntegralCycleToClass");
 DeclareGlobalFunction("CocycleCondition");
 DeclareGlobalFunction("StandardCocycle");
 DeclareGlobalFunction("IsSuperperfect");
+DeclareGlobalFunction("ModularCohomology");
+DeclareOperation("SolutionsMatDestructive",
+			[IsOrdinaryMatrix,IsOrdinaryMatrix]);
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -103,3 +114,8 @@ DeclareGlobalFunction("PolytopalComplex");
 DeclareGlobalFunction("ResolutionAbelianPcpGroup");
 DeclareGlobalFunction("ResolutionNilpotentGroup");
 
+## OBJECTIFICATION ##################################################
+DeclareOperation("Target",[IsObject]);
+DeclareOperation("Map",[IsObject]);
+DeclareOperation("BoundaryMap",[IsObject]);
+DeclareOperation("GroupOfResolution",[IsObject]);

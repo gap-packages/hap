@@ -3,8 +3,9 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionPrimePowerGroup,
-function(G,n)
+function(arg)
 local
+	G,n,
 	eltsG,
 	gensG,
 	Dimension,
@@ -23,8 +24,11 @@ local
 	InverseFlat,
 	ComplementaryBasis,
 	zero,
+	pcgens,
 	g,h,i,x,tmp;
 
+G:=arg[1];
+n:=arg[2];
 tmp:=SSortedList(Factors(Order(G)));
 if Length(tmp)>1 then 
 Print("This function can only be applied to small prime-power groups. \n");
@@ -38,6 +42,12 @@ zero:=0*one;
 gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
 MT:=MultiplicationTable(eltsG);
+
+pcgens:=Pcgs(G);
+if Length(arg)>2 then
+pcgens:=ReduceGenerators(pcgens,G);
+fi;
+pcgens:=List(pcgens,x->Position(eltsG,x));
 
 PseudoBoundary:=[];
 for i in [1..n] do
@@ -112,11 +122,13 @@ end;
 #####################################################################
 GactZGlist:=function(g,w)
 local v,gw;
-gw:=[];
-for v in w do
-Append(gw,[GactZG(g,v)]);
-od;
-return gw;
+#gw:=[];
+#for v in w do
+#Append(gw,[GactZG(g,v)]);
+#od;
+#return gw;
+
+return List(w,v->GactZG(g,v));
 end;
 #####################################################################
 
@@ -161,6 +173,7 @@ end;
 ComplementaryBasis:=function(B)
 local BC, heads,ln, i, v;
 
+ConvertToMatrixRep(B);
 heads:=SemiEchelonMat(B).heads;
 ln:=Length(B[1]);
 BC:=[];
@@ -169,6 +182,7 @@ for i in [1..ln] do
 if heads[i]=0 then
 v:=List([1..ln], x->zero);
 v[i]:=one;
+#ConvertToVectorRep(v);
 Append(BC,[v]);
 fi;
 od;
@@ -180,17 +194,19 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	i, v, g, h, b, ln, B, B1, B2,NS, 
-	Bcomp, Bfrattini, BfrattComp, BasInts, IF;
+	Bcomp, Bfrattini, BfrattComp, BasInts, IF,BndMat;
 
 IF:=InverseFlat;
-NS:=SemiEchelonMat(NullspaceMat(BoundaryMatrix(k)));
+BndMat:=BoundaryMatrix(k);
+ConvertToMatrixRep(BndMat);
+NS:=SemiEchelonMat(NullspaceMat(BndMat));
 B:=NS.vectors;
 Bcomp:=ComplementaryBasis(B);
 
-
 Bfrattini:=[];
 for b in B do
-for g in [2..pp] do
+for g in pcgens do     #I should check the maths here!
+#for g in [2..pp] do
 Append(Bfrattini,[b-  Flat(GactZGlist(g,IF(b)))]);
 od;
 od;
@@ -236,7 +252,8 @@ od;
 od;
 
 
-return rec(
+return Objectify(HapResolution,
+	        rec(
 		dimension:=Dimension,
 		boundary:=Boundary,
 		homotopy:=fail,
@@ -246,7 +263,7 @@ return rec(
 			[["length",n],
 			 ["reduced",true],
 			 ["type","resolution"],
-			 ["characteristic",prime]]);
+			 ["characteristic",prime]]));
 end);
 #####################################################################
 #####################################################################

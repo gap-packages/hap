@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.4",
-  Date    := "03/05/2006",
+  Version := "1.5",
+  Date    := "11/06/2006",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.4",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.5",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -64,7 +64,8 @@ SetPackageInfo( rec(
     GAP := ">= 4.3",
     NeededOtherPackages := [],
     SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ],
-    		 	       [ "nq",         ">=1.1" ]],
+    		 	       [ "nq",         ">=1.1" ],
+			      ],
     ExternalConditions := [["Some functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"]]
   ),
@@ -76,7 +77,7 @@ BannerString     := Concatenation( "Loading HAP ",
 
 Autoload := false,
 
-TestFile := "Hap/test/test.gap",
+TestFile := "Hap/test/hap.tst",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities" ]

@@ -182,14 +182,307 @@ Small group G = [ 30, 3 ] has Pi3(SK(G,1))= [ 2 ]<br>
     <tr>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top;">The
-functions TensorSquare(G) and ThirdHomotopyGroupOfSuspensionB(G) first
-decide if G is nilpotent. If it is then the nilpotent quotient
+functions <span style="font-family: helvetica,arial,sans-serif;">NonableianTensorSquare(G)</span>
+and <span style="font-family: helvetica,arial,sans-serif;">ThirdHomotopyGroupOfSuspensionB(G)</span>
+first
+decide if G is nilpotent or solvable. If it is then the nilpotent or
+solvable quotient
 algorithm is used on a certain finitely presented group H of order
 |H|=|G|<sup>2</sup>|G(&times;)G|. Otherwise coset enumeration is used
 on
-H.&nbsp; (If |G| is solvable then a solvable quotient algorithm could
-in principle be used on H but, as such an algorithm is not a standard
-GAP function, coset enumeration is used in this case.)<br>
+H.&nbsp; <br>
+      <br>
+(A more elaborate set of functions for computing the nonabelian tesnor
+product of distinct groups, and functorial homomorphisms, have been
+implemented in Magma and can be downloaded from <a
+ href="http://hamilton.nuigalway.ie/software.html">here</a>.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+abelian group<br>
+      <br>
+      <table
+ style="width: 80%; text-align: left; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="20" cellspacing="2">
+        <tbody>
+          <tr>
+            <td
+ style="text-align: center; vertical-align: top; background-color: rgb(204, 255, 255);">J<sub>2</sub>(G)
+= <span style="color: rgb(0, 0, 102);">Ker ( &micro; : G(&times;)G &#8594; G
+)</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+was first studied algebraically in [R.K.&nbsp;Dennis, `In search of new
+"Homology" functors having a close relationship to K-theory', preprint,
+Cornell, 1976] as an alternative to the second homology functor H<sub>2</sub>(G,Z).
+The isomorphism J<sub>2</sub>(G) = Pi<sub>3</sub>(SK(G,1)) of Brown and
+Loday can be inserted into the famous Certain Exact Sequence of J.H.C.
+Whitehead to obtain the following exact sequence<br>
+      <br>
+      <table
+ style="width: 80%; text-align: left; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="20" cellspacing="0">
+        <tbody>
+          <tr>
+            <td
+ style="text-align: center; vertical-align: top; background-color: rgb(204, 255, 255);">&#8594;&nbsp;
+H<sub>3</sub>(G,Z)&nbsp; &#8594;&nbsp; Gamma(G<sub>ab</sub>)&nbsp; &#8594;&nbsp; J<sub>2</sub>(G)&nbsp;
+&#8594;&nbsp; H<sub>2</sub>(G,Z)&nbsp; &#8594;&nbsp; 0<br>
+            <br>
+            <div style="text-align: right;">(1)<br>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+in which the abelian group Gamma(G<sub>ab</sub>) is Whitehead's
+universal quadratic functor. We immediately get that J<sub>2</sub>(G)
+coincides with H<sub>2</sub>(G,Z) for perfect groups G. This sequence,
+together with the fact that the homology of a Sylow p-subgroup of G
+maps onto the p-part of the homology of G, also&nbsp; yields the
+following.<br>
+      <br>
+      <table
+ style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
+ border="0" cellpadding="20" cellspacing="0">
+        <tbody>
+          <tr>
+            <td
+ style="vertical-align: top; background-color: rgb(204, 255, 255);"><span
+ style="color: rgb(0, 0, 102);">For any Sylow p-subgroup P of a finite
+group G, the p-primary part of J</span><sub
+ style="color: rgb(0, 0, 102);">2</sub><span
+ style="color: rgb(0, 0, 102);">(G) is a quotient of J</span><sub
+ style="color: rgb(0, 0, 102);">2</sub><span
+ style="color: rgb(0, 0, 102);">(P).</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+This last result is used in the function <span
+ style="font-family: helvetica,arial,sans-serif;">NonabelianTensorSquare(G)
+      <span style="font-family: serif;">to bound the order of</span> </span>J<sub>2</sub>(G)
+for a non-nilpotent solvable group G. <br>
+      <br>
+The kernel of the quotient homomorphism J<sub>2</sub>(P) &#8594; J<sub>2</sub>(G)
+is presumably described by a Cartan-Eilenberg double coset type formula
+like the one for group homology. So one should be able to compute the
+functor J<sub>2</sub>(G) for an arbitrary finite group G from its
+values on the Sylow subgroups. This approach has not yet been
+implemented in HAP.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">HAP
+commands can be used to compare the two functors J<sub>2</sub>(G) and H<sub>2</sub>(G,Z)
+empirically. For example, there are 92 prime-power groups of order at
+most 32. There are thus 4140 unordered pairs (G,Q) of distinct
+prime-power groups of order at most 32. The following commands show
+that, of these pairs,<br>
+      <ul>
+        <li>114 pairs have G<sub>ab</sub> = Q<sub>ab</sub> and H<sub>2</sub>(G,Z)
+= H<sub>2</sub>(Q,Z).</li>
+        <li>47 pairs have G<sub>ab</sub> = Q<sub>ab</sub> and J<sub>2</sub>(G)
+= J<sub>2</sub>(Q).</li>
+        <li>45 pairs have G<sub>ab</sub> = Q<sub>ab</sub> and H<sub>2</sub>(G,Z)
+= H<sub>2</sub>(Q,Z) and J<sub>2</sub>(G) = J<sub>2</sub>(Q).</li>
+        <li>G<sub>ab</sub> = Q<sub>ab</sub> and J<sub>2</sub>(G) = J<sub>2</sub>(Q)
+but H<sub>2</sub>(G,Z) is different to H<sub>2</sub>(Q,Z) in just two
+cases:&nbsp; either G=SmallGroup(16,12) and Q=SmallGroup(32,31) or
+G=SmallGroup(32,29) and Q=SmallGroup(32,31).<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">L:=[];;
+H2:=[];; J2:=[];; H2J2:=[];;<br>
+      <br>
+for i in [1..32] do<br>
+if IsPrimePowerInt(i) then<br>
+for G in AllSmallGroups(i) do<br>
+x:=[IdSmallGroup(G),AbelianInvariants(G),GroupHomology(G,2),<br>
+ThirdHomotopyGroupOfSuspensionB(G)];<br>
+Append(L,[x]);<br>
+od;<br>
+od;fi;od;<br>
+      <br>
+gap&gt; for x in L do for y in L do<br>
+&gt; if Position(L,x)&lt;Position(L,y) then<br>
+&gt; if x[2]=y[2] and x[3]=y[3]&nbsp; then Append(H2,[[x,y]]); fi;<br>
+&gt; fi;<br>
+&gt; od;od;<br>
+gap&gt; Length(H2);<br>
+114<br>
+      <br>
+gap&gt; for x in L do for y in L do<br>
+&gt; if Position(L,x)&lt;Position(L,y) then<br>
+&gt; if x[2]=y[2] and x[4]=y[4]&nbsp; then Append(J2,[[x,y]]); fi;<br>
+&gt; fi;<br>
+&gt; od;od;<br>
+gap&gt; Length(J2);<br>
+47<br>
+      <br>
+gap&gt; for x in L do for y in L do<br>
+&gt; if Position(L,x)&lt;Position(L,y) then<br>
+&gt; if x[2]=y[2] and x[3]=y[3] and x[4]=y[4] then
+Append(H2J2,[[x,y]]); fi;<br>
+&gt; fi;<br>
+&gt; od;od;<br>
+gap&gt; Length(H2J2);<br>
+45<br>
+      <br>
+gap&gt; Difference(J2,H2J2);<br>
+[ [ [ [ 16, 12 ], [ 2, 2, 2 ], [ 2, 2 ], [ 2, 2, 2, 2, 2, 2, 4, 4 ] ],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ [ 32, 31 ], [ 2, 2, 2 ], [ 2, 4 ], [
+2, 2, 2, 2, 2, 2, 4, 4 ] ] ],<br>
+&nbsp; [ [ [ 32, 29 ], [ 2, 2, 2 ], [ 2, 2 ], [ 2, 2, 2, 2, 2, 2, 4, 4
+] ],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ [ 32, 31 ], [ 2, 2, 2 ], [ 2, 4 ], [
+2, 2, 2, 2, 2, 2, 4, 4 ] ] ] ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Recall
+that a prime-power group G of order p<sup>n</sup> and nilpotency class
+c is said to have <span style="font-style: italic;">coclass</span>
+r=n-c . In a recent preprint Bettina Eick has shown that the second
+integral homology functor H<sub>2</sub>(G,Z) <span
+ style="font-weight: bold;">sometimes</span> has only finitely many
+values for the infinitely many 2-groups G of a given coclass. This
+result extends to the functor J<sub>2</sub>(G) thanks to the exact
+sequence (1) . Her proof relies on the five term exact sequence in
+integral group homology. There is an analogous sequence for the functor
+J<sub>2</sub>(G).<br>
+      <br>
+      <table
+ style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
+ border="0" cellpadding="20" cellspacing="0">
+        <tbody>
+          <tr>
+            <td
+ style="vertical-align: top; background-color: rgb(204, 255, 255);">For
+any group G with normal subgroup N there is a natural exact sequence<br>
+            <br>
+            <div style="text-align: center;">J<sub>2</sub>(G)&nbsp;
+&#8594;&nbsp; J<sub>2</sub>(G/N)&nbsp; &#8594;&nbsp; N/[N,G]&nbsp; &#8594;&nbsp; G<sub>ab</sub>&nbsp;
+&#8594;&nbsp; (G/N)<sub>ab</sub>&nbsp; &#8594; 0<br>
+            <br>
+            <div style="text-align: right;">(2)<br>
+            </div>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+Sequences (1) and (2) yield the following result.<br>
+      <br>
+      <table
+ style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
+ border="0" cellpadding="20" cellspacing="0">
+        <tbody>
+          <tr>
+            <td
+ style="vertical-align: top; background-color: rgb(204, 255, 255);"><span
+ style="font-weight: bold;">Proposition</span><br>
+            <br>
+Let S be a group with normal subgroup T. Define a <span
+ style="font-style: italic;">relative lower central series</span> by
+setting T<sub>1</sub>=T and T<sub>n+1</sub>=[T<sub>n</sub>,S] . Suppose
+that S/T is a finite p-group and that T<sub>n</sub>/T<sub>n+1</sub> is
+elementary abelian for all n.<br>
+            <ul>
+              <li>If H<sub>2</sub>(G,Z) is finite then there is a
+finite abelian group A
+such that&nbsp; </li>
+            </ul>
+            <div style="text-align: center;">J<sub>2</sub>(S/T<sub>n</sub>)
+= A + (T<sub>n</sub>/T<sub>n+1</sub>) <br>
+            </div>
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for all
+sufficiently large n.<br>
+            <br>
+            <ul>
+              <li>If H<sub>2</sub>(G,Z) is infinite then the order of J<sub>2</sub>(S/T<sub>n</sub>)
+is unbounded.</li>
+            </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <p>To prove the proposition&nbsp; we consider the canonical
+homomorphisms f<sub>n</sub>:J<sub>2</sub>(S) &#8594; J<sub>2</sub>(S/T<sub>n</sub>)
+and&nbsp; h<sub>n</sub>:J<sub>2</sub>(S/T<sub>n</sub>) &#8594; J<sub>2</sub>(S/T<sub>n-1</sub>)
+. Since f<sub>n-1</sub> = h<sub>n</sub>f<sub>n&nbsp;</sub> we have that
+Ker(f<sub>n+1</sub>) lies in Ker(f<sub>n</sub>) . Since S/T and T/T<sub>2
+      </sub>are finite, then so too is S/T<sub>2</sub>. Hence S<sub>ab</sub>&nbsp;
+is finite. If H<sub>2</sub>(S,Z) is finite, then so is J<sub>2</sub>(S)
+by sequence (1) above. It follows that&nbsp; Ker(f<sub>n+1</sub>) =
+Ker(f<sub>n</sub>) for all sufficiently large n. Let A denote the
+cokernel of f<sub>n</sub>&nbsp; (for n sufficiently large). The exact
+sequence (2) implies that J<sub>2</sub>(S/T<sub>n</sub>) is an
+extension of A by (T<sub>n</sub>/T<sub>n+1</sub>). Since (T<sub>n</sub>/T<sub>n+1</sub>)
+is elementary abelian we get J<sub>2</sub>(S/T<sub>n</sub>) = A + (T<sub>n</sub>/T<sub>n+1</sub>)
+as required. The statement for infinite H<sub>2</sub>(G,Z) is got by
+showing that Ker(f<sub>n+1</sub>) is in this case a proper subgroup of
+Ker(f<sub>n</sub>) for all n. </p>
+      <p>The interest in the proposition is that, associated to any
+p-group G, there is an infinite space group S with normal translation
+subgroup T such that T<sub>n</sub>/T<sub>n+1</sub> is cyclic of order p
+and S/T<sub>n</sub> has the same coclass as G for all sufficiently
+large n. Furthermore, for some n the quotient S/T<sub>n</sub> is
+isomorphic to a lower central quotient of G. By the proposition, nearly
+all the values of J(S/T<sub>n</sub>) will be equal if H<sub>2</sub>(S,Z)
+is finite. Also, nearly all the values of H<sub>2</sub>(S/T<sub>n</sub>,Z)
+will be equal. The following commands illustrate this phenomenon. </p>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+S:=Image(IsomorphismPcpGroup(SpaceGroup(2,11)));;<br>
+gap&gt; IsAlmostCrystallographic(S);;<br>
+gap&gt; T:=Kernel(NaturalHomomorphismOnHolonomyGroup(S));;<br>
+gap&gt; RCS:=[];; RCS[1]:=T;;<br>
+gap&gt; for i in [2..7] do<br>
+&gt; RCS[i]:=CommutatorSubgroup(RCS[i-1],S);<br>
+&gt; od;<br>
+gap&gt;
+Quotients:=List([1..7],i-&gt;RefinedPcGroup(Range(IsomorphismPcGroup(S/RCS[i]))));;<br>
+      <br>
+gap&gt; #RCS is the relative lower central series. Quotients is the
+list of quotient groups.<br>
+      <br>
+gap&gt; List([2..7],i-&gt;Order(RCS[i]/RCS[i-1]));<br>
+[ 1, 1, 1, 1, 1, 1 ]<br>
+      <br>
+gap&gt; List([1..7],i-&gt;Coclass(Quotients[i]));<br>
+[ 1, 2, 3, 3, 3, 3, 3 ]<br>
+      <br>
+gap&gt;
+List([1..7],i-&gt;ThirdHomotopyGroupOfSuspensionB(Quotients[i]));<br>
+[ [ 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ],<br>
+&nbsp; [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+],<br>
+&nbsp; [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+],<br>
+&nbsp; [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ] ]<br>
+      <br>
+gap&gt; List([1..7],i-&gt;GroupHomology(Quotients[i],2));<br>
+[ [ 2 ], [ 2, 2, 2 ], [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ],<br>
+&nbsp; [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ] ]<br>
       </td>
     </tr>
     <tr>

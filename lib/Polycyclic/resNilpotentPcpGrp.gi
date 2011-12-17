@@ -7,7 +7,6 @@ local
 	EE,K,Test,
 	N,E,G, 
 	EEhomGG,
-	NhomE,
 	EhomG,
 	GmapE,
 	RN,
@@ -21,7 +20,11 @@ K:=arg[2];
 if Length(arg)>2 then Test:=arg[3]; else Test:="NoTest"; fi;
 if IsAbelian(EE) then 
 	if IsPcpGroup(EE) then 
+		#if IsFinite(EE) then
+		#return ResolutionFiniteGroup(EE,K);
+		#else
 		return ResolutionAbelianPcpGroup(EE,K);
+		#fi;
 	else
 		return ResolutionAbelianGroup(EE,K);
 	fi;
@@ -36,7 +39,7 @@ else
 fi;
 
 E:=Source(EEhomGG);
-G:=Image(EEhomGG);
+G:=Range(EEhomGG);			#####here
 if Test="TestFiniteness" then
 RN:=ResolutionFiniteGroup(N,K);
 else

@@ -41,8 +41,8 @@ T:=ResolutionDirectProduct(R,T);
 else
 T:=ResolutionFiniteDirectProduct(R,T);
 fi;
-FirstProj[k]:=T.firstProjection;
-SecondProj[k]:=T.secondProjection;
+FirstProj[k]:=T!.firstProjection;
+SecondProj[k]:=T!.secondProjection;
 od;
 
 	#############################################################
@@ -58,8 +58,8 @@ od;
 	end;
 	#############################################################
 
-T.elts:=List(T.elts,x->GhomFrAb(d,x));
-T.group:=FrAb;
+T!.elts:=List(T!.elts,x->GhomFrAb(d,x));
+T!.group:=FrAb;
 
 return T;
 end;
@@ -126,24 +126,18 @@ R:=ResolutionFiniteDirectProduct(ResolutionAbGroup(head,n),
                         ResolutionAbGroup(tail,n));
 fi;
 
-OriginalElts:=R.elts;
-OriginalGroup:=R.group;
+OriginalElts:=R!.elts;
+if IsMutable(R!.elts) then
+Append(R!.elts,Elements(R!.group));
+fi;
+OriginalGroup:=R!.group;
 
 hom:=GroupHomomorphismByFunction(OriginalGroup,G,x->
 Image(Projection(OriginalGroup,1),x)*
 Image(Projection(OriginalGroup,2),x));
 
-R.appendToElts:=function(x)
-local g,a;
-for g in OriginalGroup do
-if Image(hom,g)=x then a:=g; break; fi;
-od;
-Append(OriginalElts,[a]);
-return List(OriginalElts, z->Image(hom,z));
-end;
-
-R.elts:=List(R.elts,x->Image(hom,x));
-R.group:=G;
+R!.elts:=List(R!.elts,x->Image(hom,x));
+R!.group:=G;
 return R;
 
 end;

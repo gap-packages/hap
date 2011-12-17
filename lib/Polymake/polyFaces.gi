@@ -278,7 +278,8 @@ PseudoBoundary[k][m]:=bnd;
 return Boundary(k,mm);
 end;
 #####################################################################
-return rec(
+return Objectify(HapNonFreeResolution,
+	   rec(
             dimension:=Dimension,
             boundary:=Boundary,
             homotopy:=fail,
@@ -289,7 +290,7 @@ return rec(
             properties:=
              [["type","resolution"],
               ["length",lngth],
-              ["characteristic", 0] ]);
+              ["characteristic", 0] ]));
 
 end);
 #####################################################################

@@ -1,7 +1,11 @@
 #(C) Graham Ellis, 2005-2006
 
+
 #####################################################################
-InstallGlobalFunction(Homology,
+#InstallGlobalFunction(Homology,
+
+InstallMethod(Homology,"homology calculations",
+[IsHapChain, IsInt],0,
 function(X,N)
 
 if EvaluateProperty(X,"characteristic")=0 then

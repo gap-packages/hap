@@ -136,9 +136,15 @@ F:=FreeGroup(2);;x:=F.1;;y:=F.2;;<br>
 gap&gt; G:=F/[x^2,y^512,(x*y)^2];;&nbsp;
 D_512:=Image(IsomorphismPermGroup(G));;<br>
       <br>
-gap&gt; R:=ResolutionFiniteGroup(D_512,26);;<br>
+gap&gt; R:=ResolutionFiniteGroup(D_512,26);<br>
+Resolution of length 26 in characteristic 0 for &lt;permutation group
+of size 1024 with 2 generators&gt; .<br>
+      <br>
+gap&gt; time; #The time, in milliseconds, for constructing R.<br>
+265262<br>
       <br>
 gap&gt; TR:=TensorWithIntegers(R);;<br>
+Chain complex of length 26 in characteristic 0 .<br>
       <br>
 gap&gt; Homology(TR,25);<br>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
@@ -147,13 +153,15 @@ gap&gt; Homology(TR,25);<br>
     <tr>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top;">We
-see that H<sub>25</sub>(D<sub>256</sub>,Z) = (Z<span
- style="font-family: monospace;"><sub>2</sub></span>)<sup>14</sup>. <br>
+see that H<sub>25</sub>(D<sub>512</sub>,Z) = (Z<span
+ style="font-family: monospace;"><sub>2</sub></span>)<sup>14</sup>.&nbsp;
+(Quicker methods for computing this are given on subsequent pages!)<br>
       <br>
-Homology with other coefficients can also be calculated from R. For
+Homology with other coefficients can also be calculated from the
+resolution R. For
 instance, the following additional command shows that the 25th
-homology of D<sub>256</sub> with coefficients in the trivial module Z<sub>2</sub>
-is the vector space H<sub>25</sub>(D<sub>256</sub>,Z<sub>2</sub>) = (Z<sub>2</sub>)<sup>26</sup>.
+homology of D<sub>512</sub> with coefficients in the trivial module Z<sub>2</sub>
+is the vector space H<sub>25</sub>(D<sub>512</sub>,Z<sub>2</sub>) = (Z<sub>2</sub>)<sup>26</sup>.
       <br>
       </td>
     </tr>
@@ -161,6 +169,7 @@ is the vector space H<sub>25</sub>(D<sub>256</sub>,Z<sub>2</sub>) = (Z<sub>2</su
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
 T2R:=TensorWithIntegersModP(R,2);;<br>
+Chain complex of length 26 in characteristic 2 .<br>
       <br>
 gap&gt; Homology(T2R,25);<br>
 26<br>
@@ -177,18 +186,47 @@ One approach, which has been used very succesfully by Jon Carlson on
 small p-groups, is to regard the group ring Z<sub>p</sub>G as a vector
 space of rank |G|. Each term in a Z<sub>p</sub>G-resolution R is then
 also a vector space, and one can use linear algebra techniques to
-construct R. Details can be found <a
- href="http://www.math.uga.edu/%7EIvalero/cohointro.html">here</a>. The
-approach will not work so well on large
-groups G since one ends up having to compute null-spaces of large
-matrices. Consider for instance our computation for G=D<sub>256</sub>.
-Any resolution is going to have at least 26 Z<sub>2</sub>G-generators
-in dimension 25, and 25 generators in dimension 24. So one has to
-compute the nullspace of a matrix with (512)<sup>2</sup>&times;26&times;25
-= 170393600 entries.&nbsp; <br>
+construct R. Details of Carlson's computations can be found <a
+ href="http://www.math.uga.edu/%7Elvalero/cohointro.html">here</a>. <br>
       <br>
-An efficient approach to mod p homology computations of larger groups
-has been developed by David Green. His approach involves non-abelian
+The HAP function <span style="font-family: helvetica,arial,sans-serif;">ResolutionPrimePowerGroup(G,n)</span>
+uses this idea to compute a free Z<sub>p</sub>G-resolution
+for a p-group G. The resolution is minimal in the sense that the number
+of free generators in degree n is equal to the rank of the vector space
+H<sub>n</sub>(G,Z<sub>p</sub>) . For example, the following commands
+compute the ranks of the first 15 mod 2 homology groups of the Sylow
+2-subgroup of the Mathieu group M<sub>12</sub> .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SmallGroup(64,135);;&nbsp;&nbsp;&nbsp; #This is the Sylow 2-subgroup
+of MathieuGroup(12).<br>
+gap&gt; R:=ResolutionPrimePowerGroup(G,15);; time;<br>
+323272<br>
+      <br>
+gap&gt; #The dimensions of the first fifteen mod 2 homology groups of G
+are:<br>
+gap&gt; List([1..15],n-&gt;Dimension(R)(n));<br>
+[ 3, 6, 10, 14, 18, 21, 23, 26, 30, 35, 41, 47, 53, 58, 62 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+linear algebra approach to mod p cohomology will not work so well on
+large
+groups G since one ends up having to compute null-spaces of large
+matrices. Consider for instance the above computation for G=D<sub>512</sub>.
+Any resolution is going to have at least 26 Z<sub>2</sub>G-generators
+in dimension 25, and 25 generators in dimension 24. So to obtain the
+26th term one would have
+to compute the nullspace of a matrix with (1024)<sup>2</sup>&times;26&times;25
+=&nbsp; 681574400 entries.&nbsp; <br>
+      <br>
+An efficient method for mod p cohomology of larger groups has been
+developed by David Green. It involves non-abelian
 Gr&ouml;bner basis techniques and is described in the book [D.J.
 Green, <span style="font-style: italic;">Gr&ouml;bner bases and the
 computation of group cohomology</span>, Lecture Notes in Math., No.
@@ -196,20 +234,21 @@ computation of group cohomology</span>, Lecture Notes in Math., No.
  style="color: rgb(0, 0, 102);"
  href="http://www.math.uni-wuppertal.de/%7Egreen/Coho/index.html">web
 page</a>.) <br>
-      <br>
-      <br>
-For integral computations to succeed the ZG-rank of the resolution R
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; background-color: rgb(255, 255, 255); vertical-align: top;">
+For integral (or mod p) computations to succeed the ZG-rank of the
+resolution R
 should not
 be too large in any given dimension. The construction of small
 ZG-resolutions is an interesting problem and at first glance might seem
 to
 be a purely algebraic one. However, we can benefit from the advice
 of Sir Michael Atiyah.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="text-align: left; background-color: rgb(255, 255, 255); vertical-align: top;">
+      <br>
+      <br>
       <table
  style="margin-left: auto; margin-right: auto; text-align: left; width: 621px; height: 185px;"
  border="0" cellpadding="10" cellspacing="2">

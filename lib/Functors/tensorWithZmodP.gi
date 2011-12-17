@@ -34,11 +34,11 @@ if n=0 then return [0]; fi;
 if M[n]=n then 
    Mt:=[];
 
-   for i in [1..R.dimension(n-1)] do
+   for i in [1..R!.dimension(n-1)] do
    row:=[];
-        for j in [1..R.dimension(n)] do
+        for j in [1..R!.dimension(n)] do
         sum:=0;
-                for x in R.boundary(n,j) do
+                for x in R!.boundary(n,j) do
                 if AbsoluteValue(x[1])=i then
                 sum := sum + SignInt(x[1]);
                 fi;
@@ -62,15 +62,16 @@ else
 Print("ERROR: You probably entered the wrong prime. \n");
 return fail; fi;
 
-return rec(
-		dimension:=R.dimension,
+return Objectify(HapChainComplex,
+		rec(
+		dimension:=R!.dimension,
 		boundary:=BoundaryC,
 		properties:=
 		[["length",LengthC],
 		["connected",true],
 		["type", "chainComplex"],
 		["characteristic", Charact]
-		 ]);
+		 ]));
 end;
 #####################################################################
 #####################################################################
@@ -88,13 +89,13 @@ local
 		FieldToInt, one,
                 x;
 
-R:=F.source;
-S:=F.target;
-DimensionS:=S.dimension;
-RhomS:=F.mapping;
+R:=F!.source;
+S:=F!.target;
+DimensionS:=S!.dimension;
+RhomS:=F!.mapping;
 C:=Tensor_Obj(R,prime);
 D:=Tensor_Obj(S,prime);
-DimensionC:=C.dimension;
+DimensionC:=C!.dimension;
 
 one:=Elements(GaloisField(prime))[2];
 
@@ -154,13 +155,14 @@ SmapD(RhomS(CmapR(v,n),n),n);
 end;
 #####################################################################
 
-return rec(
+return Objectify(HapChainMap,
+	rec(
            source:=C,
            target:=D,
            mapping:=ChomD,
            properties:=
 	   [ ["type","chainMap"],
-             ["characteristic", prime]    ]);
+             ["characteristic", prime]    ]));
 end;
 #####################################################################
 #####################################################################

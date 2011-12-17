@@ -13,27 +13,27 @@ local
 	N,m,i,g;
 
 N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
-HomotopyS:=S.homotopy;
-EltsQ:=S.elts;
+HomotopyS:=S!.homotopy;
+EltsQ:=S!.elts;
 QisFinite:=false;
-if IsFinite(S.group) then
-	if Order(S.group)=Length(S.elts) then QisFinite:=true; fi;
+if IsFinite(S!.group) then
+	if Order(S!.group)=Length(S!.elts) then QisFinite:=true; fi;
 fi;
 if QisFinite then
-	for g in S.group do
+	for g in S!.group do
 	if not g in EltsQ then Append(EltsQ,[g]);fi;
 	od;
 fi;
-DimensionR:=R.dimension;
-BoundaryR:=R.boundary;
-EltsG:=R.elts;
+DimensionR:=R!.dimension;
+BoundaryR:=R!.boundary;
+EltsG:=R!.elts;
 
 mapgensRec:=[];
 for m in [0..N] do
 mapgensRec[m+1]:=[];
 for i in [1..DimensionR(m)] do
 mapgensRec[m+1][i]:=[];
-for g in [1..Length(R.elts)] do
+for g in [1..Length(R!.elts)] do
 mapgensRec[m+1][i][g]:=0;
 od;
 od;
@@ -107,7 +107,7 @@ fi;
    z:=map(y,m-1);
    u:=[];
       for a in z do
-            u:=AddWords(HomotopyS(m-1,a),u);
+            u:=AddFreeWords(HomotopyS(m-1,a),u);
       od;
       Apply(u,t->[t[1],Mult(GhomQ(x[2]),t[2])]);
       if x[1]>0 then
@@ -131,7 +131,7 @@ local a, u,v,x,y,z;
 v:=[];
 
    for x in w do
-   v:=AddWords(mapgens(x,m),v);
+   v:=AddFreeWords(mapgens(x,m),v);
    od;
 
 return AlgebraicReduction(v);
@@ -150,13 +150,14 @@ if EvaluateProperty(R,"characteristic")>0
 then Charact:=1;
 fi;
 
-return rec(
+return Objectify(HapEquivariantChainMap,
+	   rec(
 	    source:=R,
 	    target:=S,
 	    mapping:=map,
 	    properties:=
 	    [["type","equivariantChainMap"],
-	     ["characteristic",Charact]  ]);
+	     ["characteristic",Charact]  ]));
 end);
 #####################################################################
 

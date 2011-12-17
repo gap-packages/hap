@@ -17,8 +17,8 @@ local
 R:=arg[1];
 n:=arg[2];
 if Length(arg)>2 then toggle := arg[3]; else toggle := false; fi;
-Dimension:=R.dimension;
-Boundary:=R.boundary;
+Dimension:=R!.dimension;
+Boundary:=R!.boundary;
 
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;

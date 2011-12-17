@@ -9,11 +9,12 @@ local 	HomToZ_Obj,
 	HomToZ_Arr;
 
 	
-if EvaluateProperty(X,"characteristic")>0 then
+#if EvaluateProperty(X,"characteristic")>0 then
 
-Print("ERROR: You should use the function HomToIntegersModP(). But you'll first have to wright it! \n"); 
+#Print("ERROR: You should use the function HomToIntegersModP(). But 
+#you'll first have to wright it! \n"); 
 
-return fail; fi;
+#return fail; fi;
 
 #####################################################################
 #####################################################################
@@ -35,18 +36,18 @@ n:=N+1;
 if n <0 then return false; fi;
 
 if n=0 then
-return List([1..R.dimesnion(1)],x->0); fi;		
+return List([1..R!.dimesnion(1)],x->0); fi;		
 
 if M[n]=n then 
    Mt:=[];
 
-   if R.dimension(n)>0 then
+   if R!.dimension(n)>0 then
 
-   for i in [1..R.dimension(n)] do
+   for i in [1..R!.dimension(n)] do
    row:=[];
-        for j in [1..R.dimension(n-1)] do
+        for j in [1..R!.dimension(n-1)] do
         sum:=0;
-                for x in R.boundary(n,i) do
+                for x in R!.boundary(n,i) do
                 if AbsoluteValue(x[1])=j then
                 sum := sum + SignInt(x[1]);
                 fi;
@@ -61,10 +62,10 @@ if M[n]=n then
    else
 
    row:=[];
-   for j in [1..R.dimension(n-1)] do
+   for j in [1..R!.dimension(n-1)] do
    row[j]:=0;
    od;
-   for i in [1..R.dimension(n-1)] do
+   for i in [1..R!.dimension(n-1)] do
    Append(Mt,[row]);
    od;
    M[n]:=Mt;
@@ -76,15 +77,16 @@ return M[n][k];
 end;
 #####################################################################
 
-return rec(
-		dimension:=R.dimension,
+return Objectify(HapCochainComplex,
+		rec(
+		dimension:=R!.dimension,
 		boundary:=BoundaryC,
 		properties:=
 		[["length",LengthC],
 		["connected",true],
 		["type", "cochainComplex"],
 		["characteristic", 
-		EvaluateProperty(R,"characteristic")] ]);
+		EvaluateProperty(R,"characteristic")] ]));
 end;
 #####################################################################
 #####################################################################
@@ -103,13 +105,13 @@ local
 		DimensionC,		
 		DimensionD,		#Throughout the program we
 		x;			#identify R and S with their
-R:=F.source;				#duals Hom(R,Z).
-S:=F.target;
-RhomS:=F.mapping;
+R:=F!.source;				#duals Hom(R,Z).
+S:=F!.target;
+RhomS:=F!.mapping;
 C:=HomToZ_Obj(R);
 D:=HomToZ_Obj(S);
-DimensionC:=C.dimension;
-DimensionD:=D.dimension;
+DimensionC:=C!.dimension;
+DimensionD:=D!.dimension;
 
 #####################################################################
 DhomC:=function(v,n)
@@ -137,15 +139,16 @@ end;
 #####################################################################
 
 
-return rec(
+return Objectify(HapCochainMap,
+	rec(
 	   source:=D,
 	   target:=C,
 	   mapping:=DhomC,
 	   properties:=[ ["type","cochainMap"],
 	   ["characteristic", Maximum( 
-	   EvaluateProperty(X.source,"characteristic"),
-	   EvaluateProperty(X.target,"characteristic"))]
-	   ]);
+	   EvaluateProperty(X!.source,"characteristic"),
+	   EvaluateProperty(X!.target,"characteristic"))]
+	   ]));
 end;
 #####################################################################
 #####################################################################

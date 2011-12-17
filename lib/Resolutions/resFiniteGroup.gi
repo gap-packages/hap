@@ -385,7 +385,8 @@ MaxComplex[i]:=[];
 if i>1 and saveSpace then InitComputedContractions(i-1); fi;
 od;
 
-return rec(
+return Objectify(HapResolution,
+		rec(
 		dimension:=Dimension,
 		boundary:=Boundary,
 		homotopy:=Homotopy,
@@ -395,6 +396,6 @@ return rec(
 		   [["length",K],
 		    ["reduced",true],
 		    ["type","resolution"],
-		    ["characteristic",Charact]  ]); 
+		    ["characteristic",Charact]  ])); 
 end);
 #####################################################################

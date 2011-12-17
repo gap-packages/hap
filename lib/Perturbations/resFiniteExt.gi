@@ -20,8 +20,8 @@ GensG:=StructuralCopy(arg[2]);
 R:=arg[3];
 n:=arg[4];
 if Length(arg)>4 then tietze:=arg[5]; else tietze:=false; fi;
-G:=R.group;
-EltsG:=R.elts;
+G:=R!.group;
+EltsG:=R!.elts;
 E:=Group(GensE);
 EltsE:=Elements(E);
 
@@ -80,8 +80,10 @@ S:=ResolutionFiniteGroup(GensN,n,tietze);
 #fi;
 fi;
 
-EltsN:=S.elts;
+EltsN:=S!.elts;
 NhomEfirst:=GroupHomomorphismByImagesNC(N,E,GensN,GensN);
+#NhomEfirst:=GroupHomomorphismByFunction(N,E,x->x);
+
 NhomEsecond:=List([1..Size(N)],i->Position(EltsE,Image(NhomEfirst,EltsN[i])));
 
 #####################################################################

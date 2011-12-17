@@ -19,7 +19,7 @@ M:=[1..LengthC]; M0:=0;
 
 #####################################################################
 DimensionC:=function(n);
-return LA*R.dimension(n);
+return LA*R!.dimension(n);
 end;
 #####################################################################
 
@@ -52,14 +52,14 @@ a[kr]:=1;
 	##################
 	fn:=function(x)
 	if AbsoluteValue(x[1])=kq then return 
-	SignInt(x[1])*Image(f,R.elts[x[2]])*a;
+	SignInt(x[1])*Image(f,R!.elts[x[2]])*a;
 	else return 0*a; fi;
 	end;
 	#######################
 
 row:=[];
-for i in [1..R.dimension(n+1)] do
-bnd:= R.boundary(n+1,i);
+for i in [1..R!.dimension(n+1)] do
+bnd:= R!.boundary(n+1,i);
 bnd:=List(bnd, y->fn(y));
 bnd:=Sum(bnd);
 Append(row,[bnd]);
@@ -112,7 +112,8 @@ end;
 #####################################################################
 
 
-return rec(test:=IntToPair,
+return Objectify(HapCochainComplex,
+		rec(
                 dimension:=DimensionC,
                 boundary:=BoundaryC,
                 properties:=
@@ -120,7 +121,7 @@ return rec(test:=IntToPair,
                 ["connected",true],
                 ["type", "cochainComplex"],
                 ["characteristic",
-                EvaluateProperty(R,"characteristic")] ]);
+                EvaluateProperty(R,"characteristic")] ]));
 						
 end);
 #####################################################################

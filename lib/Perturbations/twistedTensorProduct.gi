@@ -28,12 +28,12 @@ local
 		FinalHomotopy,
 		HorizontalPseudoBoundary;
 
-DimensionR:=R.dimension;
-DimensionS:=S.dimension;
-BoundaryR:=R.boundary;
-BoundaryS:=S.boundary;
-HomotopyR:=R.homotopy;
-HomotopyS:=S.homotopy;
+DimensionR:=R!.dimension;
+DimensionS:=S!.dimension;
+BoundaryR:=R!.boundary;
+BoundaryS:=S!.boundary;
+HomotopyR:=R!.homotopy;
+HomotopyS:=S!.homotopy;
 n:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
 
 if EvaluateProperty(R,"characteristic")=0
@@ -60,9 +60,9 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 fi;
 
 
-if Charact=0 then AddWrds:=AddWords; else
+if Charact=0 then AddWrds:=AddFreeWords; else
 	AddWrds:=function(v,w);
-	return AddWordsModP(v,w,Charact);
+	return AddFreeWordsModP(v,w,Charact);
 	end;
 fi;
 
@@ -361,8 +361,8 @@ local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;       #bool=true for vertical homotopy
 #Eg:=EltsE[g];
 #Eg1:=Image(EhomG,Eg);
 #Eg2:=Image(EmapN,Eg);
-#g2:=Position(S.elts,Eg2);
-#g1:=Position(R.elts,Eg1);
+#g2:=Position(S!.elts,Eg2);
+#g1:=Position(R!.elts,Eg1);
 #Eg1:=Image(GmapE,Eg1);
 #Eg2:=Image(NhomE,Eg2);
 
@@ -374,7 +374,7 @@ Eg2:=NhomE(g2);
 
 
 hty:=HomotopyS(q,[s,g2]);
-#Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(NhomE,S.elts[x[2]])]);
+#Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(NhomE,S!.elts[x[2]])]);
 #Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
 Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), NhomE(x[2])]);
 Apply(hty,x->[ x[1], Mult(Eg1,x[2])]);
@@ -392,7 +392,7 @@ if q>0 then return hty; fi;
 
 
 hty1:=HomotopyR(p,[r,g1]);
-#Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GmapE,R.elts[x[2]])]);
+#Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GmapE,R!.elts[x[2]])]);
 #Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), GmapE(x[2])]);
 
@@ -455,7 +455,8 @@ fi;
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
 
 
-return rec(
+return Objectify(HapResolution,
+	    rec(
 	    dimension:=Dimension, 
 	    boundary:=Boundary, 
 	    homotopy:=FinalHomotopy, 
@@ -464,7 +465,7 @@ return rec(
 	    properties:=
 	    [["type","resolution"],
 	     ["length",n],
-	     ["characteristic",Charact] ]);
+	     ["characteristic",Charact] ]));
 end);
 #####################################################################
 

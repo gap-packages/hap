@@ -15,15 +15,15 @@ if Length(arg)=3 then
 R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
 fi;
 if Length(arg)=2 then
-R:=arg[1]; gensG:=R.group; gensK:=arg[2];
+R:=arg[1]; gensG:=R!.group; gensK:=arg[2];
 fi;
 				#gensG and gensK originally had to be
 				#generating sets. Later I allowed them to be
 				#the groups G, K themselves. Sloppy!
-DimensionR:=R.dimension;
-BoundaryR:=R.boundary;
-HomotopyR:=R.homotopy;
-EltsG:=R.elts;
+DimensionR:=R!.dimension;
+BoundaryR:=R!.boundary;
+HomotopyR:=R!.homotopy;
+EltsG:=R!.elts;
 
 if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
 if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
@@ -96,7 +96,8 @@ return Gword2Kword(w);
 end;
 #####################################################################
 
-return rec(
+return Objectify(HapResolution,
+	     rec(
 	     dimension:=Dimension,
 	     boundary:=Boundary,
 	     homotopy:=fail,
@@ -106,7 +107,7 @@ return rec(
 	     [["length",EvaluateProperty(R,"length")],
 	      ["characteristic",EvaluateProperty(R,"characteristic")],
 	      ["reduced",false],
-	      ["type","resolution"] ]);
+	      ["type","resolution"] ]));
 end);
 #####################################################################
 

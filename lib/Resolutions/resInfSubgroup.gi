@@ -12,11 +12,11 @@ local
 		Mult,N,G;
 
 N:=EvaluateProperty(R,"length");
-DimensionR:=R.dimension;
-BoundaryR:=R.boundary;
-HomotopyR:=R.homotopy;
-EltsG:=R.elts;
-G:=R.group;
+DimensionR:=R!.dimension;
+BoundaryR:=R!.boundary;
+HomotopyR:=R!.homotopy;
+EltsG:=R!.elts;
+G:=R!.group;
 F:=FreeGroup(Length(GeneratorsOfGroup(G)));
 GhomF:=GroupHomomorphismByImagesNC(G,F,GeneratorsOfGroup(G),
 						GeneratorsOfGroup(F));
@@ -116,7 +116,8 @@ return Gword2Kword(w);
 end;
 #####################################################################
 
-return rec(
+return Objectify(HapResolution,
+	  rec(
 	   dimension:=Dimension,
 	   boundary:=Boundary,
 	   homotopy:=fail,
@@ -126,7 +127,7 @@ return rec(
 	   [["length",EvaluateProperty(R,"length")],
 	    ["characteristic",EvaluateProperty(R,"characteristic")],
 	    ["type","resolution"],
-	    ["reduced",false] ]);
+	    ["reduced",false] ]));
 end);
 #####################################################################
 

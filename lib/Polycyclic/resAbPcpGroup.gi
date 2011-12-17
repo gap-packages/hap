@@ -10,53 +10,46 @@ local
 #####################################################################
 ResolutionAbGroup:=function(G,n)
 local 
-	gens,gensInf, gensFin, C, head, tail, 
-	R, hom,x,tmp,FreeElts,gensG ,
-	PcpGT;
+	gens, C, head, tail, 
+	R, hom,x,tmp,FreeElts,
+	PcpG,
+	gens1,hom1,OriginalAppend;
 
-gensFin:= GeneratorsOfGroup(TorsionSubgroup(G));
-PcpGT:=Pcp(G,TorsionSubgroup(G));
-gensInf:=List([1..Length(PcpGT)],i->PcpGT[i]);
+#if IsFinite(G) then return ResolutionAbelianGroup(G,n); fi;
+###The last command is a real cheat!!
 
+PcpG:=Pcp(G,"snf");
+gens:=List([1..Length(PcpG)],i->PcpG[i]);
 
-if Length(gensFin)>0 then
-gensFin:=TorsionGeneratorsAbelianGroup(Group(gensFin));
-else
-gensFin:=[];
-fi;
-
-if Length(gensInf)>0 then
-gensInf:=ReduceGenerators(gensInf,Group(gensInf));
-#gensInf:=GeneratorsOfGroup(Group(gensInf));
-fi;
-
-gens:=Concatenation(gensInf,gensFin);
-gensG:=gens;
 
 if Length(gens)=1 then
 
 if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
 else
+
+
+
 tmp:=ResolutionAbelianGroup([0],n);
-FreeElts:=tmp.elts;
-	tmp.appendToElts:=function(x)
+FreeElts:=tmp!.elts;
+	tmp!.appendToElts:=function(x)
 	local a,i,j;
-	a:=MappedWord(FreeElts[2],[FreeElts[2]], gensG);
+	a:=gens[1];		######################HERE
 	for i in [0..10000] do
 	j:=false;
 	if a^i=x then j:=i; break; fi;
 	if a^-i=x then j:=-i; break; fi;
 	od;
 	Append(FreeElts,[FreeElts[2]^j]);
-	return(List(FreeElts, b-> 
-	MappedWord(FreeElts[2],[FreeElts[2]], gensG)));
+	Append(tmp!.elts,
+	[MappedWord(x,GeneratorsOfGroup(tmp!.group),
+	                                        gens)]);
 	end;
 
-tmp.elts:=List(tmp.elts,x->MappedWord(x,GeneratorsOfGroup(tmp.group),
-                                        gensG));
+tmp!.elts:=List(tmp!.elts,x->MappedWord(x,GeneratorsOfGroup(tmp!.group),
+                                        gens));
 
 
-tmp.group:=G;
+tmp!.group:=G;
 return tmp;
 fi;
 fi;
@@ -65,15 +58,14 @@ if Length(gens)=0 then return
 ResolutionFiniteGroup([Identity(G)],n); fi;
 
 head:=Subgroup(G,[gens[1]]);
-tail:=Subgroup(G,List([2..Length(gens)],i->gens[i]));
+tail:=Subgroup(G,
+List([2..Length(gens)],i->gens[i]));
+
+
 
 R:=ResolutionDirectProduct(ResolutionAbGroup(head,n),
 		        ResolutionAbGroup(tail,n),"internal");
-hom:=GroupHomomorphismByFunction(R.group,G,x->
-Image(R.firstProjection,x)*
-Image(R.secondProjection,x));
-R.elts:=List(R.elts,x->Image(hom,x));
-R.group:=G;
+
 return R;
 
 end;
