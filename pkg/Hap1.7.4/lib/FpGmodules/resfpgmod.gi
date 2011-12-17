@@ -3,10 +3,10 @@
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ResolutionPrimePowerGroup,
+InstallGlobalFunction(ResolutionFpGModule,
 function(arg)
 local
-	G,n,
+	MDL,G,n,
 	eltsG,
 	gensG,
 	Dimension,
@@ -22,6 +22,7 @@ local
 	MT,
 	GactMat,
 	ZGbasisOfKernel,
+	Mgens,
 	one,
 	InverseFlat,
 	ComplementaryBasis,
@@ -33,10 +34,14 @@ local
 	SolutionMatBoundaryMatrices,
 	Toggle,
 	SMBM,
+	SpaceSave,
 	g,h,i,x,tmp;
 
-G:=arg[1];
+
+MDL:=arg[1];
+G:=MDL!.group;
 n:=arg[2];
+if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
 tmp:=SSortedList(Factors(Order(G)));
 if Length(tmp)>1 then 
 Print("This function can only be applied to small prime-power groups. \n");
@@ -97,11 +102,12 @@ return v mod prime;
 end;
 #####################################################################
 
-for x in gensG do
-Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
-Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
-( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
-od;
+#for x in gensG do
+#Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
+#Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
+#( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
+#od;
+
 
 #####################################################################
 VectorListToWord:=function(v)
@@ -119,6 +125,18 @@ od;
 return w;
 end;
 #####################################################################
+
+Mgens:=GeneratorsOfFpGModule(MDL);
+for x in Mgens do
+tmp:=[];
+for i in [1..Length(x)/pp] do
+tmp[i]:=x{[1+(i-1)*pp..i*pp]};
+tmp[i]:=List(tmp[i],j->IntFFE(j));
+od;
+Add(PseudoBoundary[1], VectorListToWord(tmp));
+Add(PseudoBoundaryAsVec[1],x);
+od;
+
 
 
 #####################################################################
@@ -195,7 +213,8 @@ NS:=arg[2];
 fi;
 
 ConvertToMatrixRepNC(B,prime); 
-heads:=SemiEchelonMat(B).heads;
+B:=MutableCopyMat(B);
+heads:=SemiEchelonMatDestructive(B).heads;
 ln:=Length(B[1]);
 BC:=[];
 
@@ -225,32 +244,24 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
-	Bcomp, Bfrattini, BndMat;
+	Bcomp, BndMat;
 
 BndMat:=BoundaryMatrix(k); 
 
 
 ConvertToMatrixRepNC(BndMat,prime); 
 NS:=SemiEchelonMat(NullspaceMat(BndMat));
-B:=NS.vectors;
 
-tB:=TransposedMat(B);
-Bcomp:=ComplementaryBasis(B);
-
-
-Bfrattini:=[];						
+tB:=TransposedMat(NS.vectors);
+Bcomp:=ComplementaryBasis(NS.vectors);
 					
 for g in pcgens do     	 
-b:=TransposedMat(tB-GactMat(g,tB));
-for i in [1..Length(b)] do
-Add(Bfrattini,b[i]);
-od;
+Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
 
 
-Append(Bfrattini,Bcomp);
-B1:=ComplementaryBasis(Bfrattini,NS);
-
+B1:=ComplementaryBasis(Bcomp,NS);
+NS:=0;
 B1:=List(B1,v->List(v,x->IntFFE(x)));
 return B1;
 end;
@@ -386,3 +397,6 @@ return Objectify(HapResolution,
 end);
 #####################################################################
 #####################################################################
+
+
+

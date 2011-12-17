@@ -62,8 +62,13 @@ if COMPILED=false then
 ReadPackage("HAP", "lib/FreeGmodules/wordOperations.gi");
 ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
 
+##################### FP G MODULES ##################################
+ReadPackage("HAP", "lib/FpGmodules/fpgbasics.gi");
+ReadPackage("HAP", "lib/FpGmodules/resfpgmod.gi");
+
 ##################### NONABELIAN TENSOR #############################
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 
@@ -90,6 +95,8 @@ fi;
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
+ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
+
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");

@@ -11,8 +11,21 @@ DeclareGlobalFunction("TietzeReduction");
 DeclareGlobalFunction("MultiplyWord");
 DeclareGlobalFunction("WordModP");
 
+## FpG MODULES#######################################################
+DeclareGlobalFunction("FpGCyclesModule");
+DeclareGlobalFunction("RadicalOfFpGModule");
+DeclareGlobalFunction("GeneratorsOfFpGModule");
+DeclareGlobalFunction("ComplementaryBasis");
+DeclareGlobalFunction("FpGModule");
+DeclareGlobalFunction("DirectSumOfFpGModules");
+DeclareGlobalFunction("ResolutionFpGModule");
+DeclareGlobalFunction("IsFpGModuleHomomorphismData");
+
+
+
 ## NONABELIAN TENSOR ################################################
 DeclareGlobalFunction("NonabelianTensorSquare");
+DeclareGlobalFunction("NonabelianTensorProduct");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
 DeclareGlobalFunction("NonabelianExteriorProduct");
 DeclareGlobalFunction("RelativeSchurMultiplier");
@@ -38,6 +51,12 @@ DeclareGlobalFunction("CayleyGraphDisplay");
 
 ## RESOLUTIONS MOD P ################################################
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
+DeclareGlobalFunction("RankHomologyPGroup");
+DeclareGlobalFunction("PoincareSeries");
+DeclareGlobalFunction("PoincareSeriesApproximation");
+DeclareGlobalFunction("PoincareSeriesPrimePart");
+DeclareGlobalFunction("ExpansionOfRationalFunction");
+
 
 ## FUNCTORS #########################################################
 DeclareGlobalFunction("EvaluateProperty");
