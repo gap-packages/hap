@@ -1,13 +1,26 @@
   
-  [1X27. Some functions for accessing basic data[0X
+  [1X27 Parallel Computation - Extra Functions[0X
   
-      | [10X BoundaryMap(C) [0X Inputs a resolution, chain complex or cochain complex C and returns the function C!.boundary.                                                                                                                                                                                                      | 
-      | [10X BoundaryMatrix(C,n) [0X Inputs a chain or cochain complex C and integer n>0. It returns the n-th boundary map of C as a matrix.                                                                                                                                                                                       | 
-      | [10X Dimension(C) [0X [10X Dimension(M) [0X Inputs a resolution, chain complex or cochain complex C and returns the function C!.dimension . Alternatively, inputs an FpG-module M and returns its dimension as a vector space over the field of p elements.                                                                       | 
-      | [10X EvaluateProperty(X,"name") [0X Inputs a component object X (such as a ZG-resolution or chain map) and a string "name" (such as "characteristic" or "type"). It searches X.property for the pair ["name",value] and returns value. If X.property does not exist, or if ["name",value] does not exist, it returns fail. | 
-      | [10X GroupOfResolution(R) [0X Inputs a ZG-resolution R and returns the group G.                                                                                                                                                                                                                                            | 
-      | [10X Length(R) [0X Inputs a resolution R and returns its length (i.e. the number of terms of R that HAP has computed).                                                                                                                                                                                                     | 
-      | [10X Map(f) [0X Inputs a chain map, or cochain map or equivariant chain map f and returns the mapping function (as opposed to the target or the source of f) .                                                                                                                                                             | 
-      | [10X Source(f) [0X Inputs a chain map, or cochain map, or equivariant chain map, or FpG-module homomorphism f and returns it source.                                                                                                                                                                                       | 
-      | [10X Target(f) [0X Inputs a chain map, or cochain map, or equivariant chain map, or FpG-module homomorphism f and returns its target.                                                                                                                                                                                      | 
+  ::::::::::::::::::::::::
+  [10XChildFunction("function(arg);",s)[0m
+  
+  This  runs  the GAP function "function(arg);" on a child process accessed by
+  the stream s. The output from "func;" can be accessed via the stream.
+  ::::::::::::::::::::::::
+  [10XChildRead(s)[0m
+  
+  This   returns,  as  a  string,  the  output  of  the  last  application  of
+  ChildFunction("function(arg);",s).
+  ::::::::::::::::::::::::
+  [10XChildReadEval(s)[0m
+  
+  This  returns, as an evaluated string, the output of the last application of
+  ChildFunction("function(arg);",s).
+  ::::::::::::::::::::::::
+  [10XParallelList(I,fn,L)[0m
+  
+  Inputs  a  list  I, a function fn such that fn(x) is defined for all x in I,
+  and   a  list  of  children  L.  It  uses  the  children  in  L  to  compute
+  List(I,x->fn(x)).  (Obviously  the  function fn must be defined on all child
+  processes in L.)
   

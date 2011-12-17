@@ -3,7 +3,7 @@
 #####################################################################
 #####################################################################
 #####################################################################
-InstallGlobalFunction(HomToIntegers,
+InstallGlobalFunction(HomToIntegers, 
 function(X)
 local 	HomToZ_Obj,
 	HomToZ_Arr;
@@ -27,7 +27,7 @@ M:=[1..LengthC];
 #####################################################################
 BoundaryC:=function(N,k)
 local
-	n,row, Mt, i, j, x, sum;
+	n,row, Mt, i, j, x;
 
 n:=N+1;
 if n <0 then return false; fi;
@@ -41,16 +41,13 @@ if M[n]=n then
    if R!.dimension(n)>0 then
 
    for i in [1..R!.dimension(n)] do
-   row:=[];
-        for j in [1..R!.dimension(n-1)] do
-        sum:=0;
-                for x in R!.boundary(n,i) do
-                if AbsoluteValue(x[1])=j then
-                sum := sum + SignInt(x[1]);
-                fi;
-                od;
-        row[j]:=sum;
-        od;
+
+     row:=ListWithIdenticalEntries(R!.dimension(n-1), 0);
+		 for x in R!.boundary(n,i) do
+			 j := AbsoluteValue(x[1]);
+			 row[j] := row[j] + SignInt(x[1]);
+		 od;
+
    Mt[i]:=row;
    od;
 

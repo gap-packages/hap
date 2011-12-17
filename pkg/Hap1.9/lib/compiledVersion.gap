@@ -70,6 +70,9 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Resolutions/Compiled/resFiniteGroup.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Resolutions/Compiled/resGenericGroup.so"));
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Resolutions/Compiled/presentation.so"));
 
 LoadDynamicModule(
@@ -185,6 +188,9 @@ Concatenation(tmppath,"lib/Functors/Compiled/primePartDerived.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZmodP.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZModule.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithTwistedZmodP.so"));
@@ -331,3 +337,21 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/chainComplexes.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/twoDimensional.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/dvf.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/rips.so"));
+
+
+
+################# SIMPLICIAL GROUPS ################################
+LoadDynamicModule(
+Concatenation(tmppath,"lib/SimplicialGroups/Compiled/mooreComplex.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/SimplicialGroups/Compiled/nerveCat1Group.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/SimplicialGroups/Compiled/barresolution.so"));
+Concatenation(tmppath,"lib/SimplicialGroups/Compiled/barcomplex.so"));
+Concatenation(tmppath,"lib/SimplicialGroups/Compiled/chaincomplexofsimplicalgroup.so"));
+
+

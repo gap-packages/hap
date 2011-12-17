@@ -16,11 +16,15 @@ local
 	Rot,Stab,
         RotSubGroups,Action, ActionRecord,
         TransMat,
-        x, lstMathieu, lstAlexander,n,k,s,BI,SGN,tmp, LstEl , bool;
+        InfGrps,
+        x, lstMathieu, lstAlexander,n,k,s,BI,SGN,tmp, LstEl , bool, name;
 
 groupname:=Filtered(groupname,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
+name:=groupname;
 groupname:=Concatenation("lib/Perturbations/Gcomplexes/",groupname);
 bool:=ReadPackage("HAP",groupname);
+
+InfGrps:=["SL2O-5"];
 
 if HAP_GCOMPLEX_SETUP[1] then 
 TransMat:=function(x); return x^-1; end;
@@ -32,11 +36,11 @@ fi;
 if bool = false then 
 Print("G-complexes are implemented for the following groups only:  \n\n");
 
-lstMathieu:="  SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) , \n PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d \n"; 
+lstMathieu:="  SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) , \n  PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d , \n  Sp(4,Z) \n"; 
 
-lstAlexander:=" SL(2,Z[sqrt(-d)]) , d=2, 7, 11, 19, 43, 67, 163  \n";
+lstAlexander:=" SL(2,O-d) , d=2, 7, 11, 19, 43, 67, 163  \n";
 
-Print(lstMathieu,"\n", "(where subscripts _b etc denote alternative complexes for a given group) and \n\n", lstAlexander, "\n\n");
+Print(lstMathieu,"\n(where subscripts _b etc denote alternative complexes for a given group) and \n\n", lstAlexander, "\nwhere O-d denotes the ring of integers of the number field Q(\sqrt(-d)).\n\n");
 return fail;
 fi;
 
@@ -65,7 +69,9 @@ boundaryList[n]:=[];
 StabilizerGroups[n]:=[];
 RotSubGroups[n]:=[];
   for k in [1..Dimension(n-1)] do
+  if not name in InfGrps then
   Append(Elts,Elements(C[n][k].TheMatrixStab));
+  fi;
   Add(StabilizerGroups[n],C[n][k].TheMatrixStab);
   Add(RotSubGroups[n],C[n][k].TheRotSubgroup);
   od;
@@ -127,6 +133,10 @@ abk:=AbsInt(k);
 if not IsBound(ActionRecord[n+1][abk][g]) then 
 H:=StabilizerGroups[n+1][abk];
 
+if Order(H)=infinity then ActionRecord[n+1][abk][g]:=1;
+#So we are assuming that any infinite stabilizer group acts trivially!!
+else
+######
 id:=CanonicalRightCosetElement(H,Identity(H));
 r:=CanonicalRightCosetElement(H,Elts[g]^-1);
 r:=id^-1*r;
@@ -136,6 +146,8 @@ if u in RotSubGroups[n+1][abk] then  ans:= 1;
 else ans:= -1; fi;
 
 ActionRecord[n+1][abk][g]:=ans;
+fi;
+######
 fi;
 
 return ActionRecord[n+1][abk][g];
@@ -243,3 +255,55 @@ od;
 end);
 ################################################
 ################################################	
+
+
+################################################
+################################################
+InstallGlobalFunction(QuotientOfContractibleGcomplex,
+function(C,S)
+local
+        Elts,G,Stabilizer,Action,D;
+
+SetInfoLevel(InfoWarning,0);
+D:=List(Elements(S),x->x);
+Elts:=List(C!.elts, x->QuotientGroup(x,D));
+G:=Group(Elts);
+Action:=function(a,b,c) return 1; end;
+
+#####################
+Action:=function(n,k,g)
+local gg;
+gg:=Position(C!.elts,Elts[g][1]);
+return C!.action(n,k,gg);
+end;
+#####################
+
+#####################
+Stabilizer:=function(n,i);
+return 
+Group(List(Elements(C!.stabilizer(n,i)),x->QuotientGroup(x,D)));
+end;
+#####################
+
+SetInfoLevel(InfoWarning,1);
+
+return Objectify(HapNonFreeResolution,
+            rec(
+            dimension:=C!.dimension,
+            boundary:=C!.boundary,
+            homotopy:=fail,
+            elts:=Elts,
+            group:=G,
+            stabilizer:=Stabilizer,
+            action:=Action,
+            properties:=
+            [["length",EvaluateProperty(C,"length")],
+             ["characteristic",0],
+             ["type","resolution"],
+             ["reduced",true]]  ));
+
+end);
+################################################
+################################################
+
+

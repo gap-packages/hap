@@ -1,3 +1,27 @@
+############################################################
+############################################################
+InstallGlobalFunction(XmodToHAP,
+function(X)
+local   C;
+
+if IsHapCatOneGroup(X) then return X; fi;
+
+if IsComponentObjectRep(X) then
+if "TailMap" in NamesOfComponents(X)  and "HeadMap" in NamesOfComponents(X)
+then
+     C:=Objectify(HapCatOneGroup,rec(
+             sourceMap:=X!.TailMap,
+             targetMap:=X!.HeadMap));
+     return C;
+fi;
+fi;
+
+Print("Argument is not a cat-1-group from the Xmod package.\n");
+return fail;
+
+end);
+############################################################
+############################################################
 
 ############################################################
 ############################################################
@@ -6,7 +30,7 @@ InstallMethod(MooreComplex,
 [IsHapCatOneGroup],
 
 function(C)
-local M,N,d;
+local M,N,d,fn,ans;
 
 if not "mooreComplex" in NamesOfComponents(C) then 
 M:=Kernel(C!.sourceMap);
@@ -14,7 +38,24 @@ N:=Image(C!.sourceMap);
 d:=GroupHomomorphismByImagesNC(M,N,GeneratorsOfGroup(M),
 List(GeneratorsOfGroup(M),x->Image(C!.targetMap,x)));
 
-C!.mooreComplex:=[d];
+#########
+fn:=function(i);
+if i=1 then return GOuterGroup(d); fi;
+if i=2 then return
+GOuterGroup(
+GroupHomomorphismByFunction(Group(Identity(Source(d))),Source(d), x->x)
+);
+fi;
+end;
+#########
+ans:=Objectify(HapGComplex, 
+    rec(
+    boundary:=fn,
+    properties:=[["length",2]] 
+     )
+      );
+
+C!.mooreComplex:=ans;
 fi;
 
 return C!.mooreComplex;
@@ -32,7 +73,11 @@ function(C,n)
 local hm, pi,G,alpha,bnd,nat,PI;
 
 if n=2 then
-bnd:=MooreComplex(C)[1];
+#bnd:=MooreComplex(C)[1];
+bnd:=MooreComplex(C)!.boundary;
+bnd:=bnd(1);
+bnd:=bnd!.Mapping;
+
 nat:=NaturalHomomorphismByNormalSubgroup(Range(bnd),Image(bnd));
 G:=Image(nat);
 pi:=Kernel(bnd);
@@ -66,15 +111,18 @@ InstallMethod(HomotopyGroup,
 [IsHapCatOneGroup,IsInt],
 
 function(C,n)
-local hm, nat;
+local hm, nat, bnd;
 
+bnd:=MooreComplex(C)!.boundary;
+bnd:=bnd(1);
+bnd:=bnd!.Mapping;
 if n=2 then
-return Kernel(MooreComplex(C)[1]);
+return Kernel(bnd);
 fi;
 
 if n=1 then
 nat:=NaturalHomomorphismByNormalSubgroup(
-Range(MooreComplex(C)[1]),  Image(MooreComplex(C)[1]));
+Range(bnd),  Image(bnd));
 return Image(nat);
 fi;
 

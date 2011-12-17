@@ -9,6 +9,14 @@
 HAPconstant:=2;	
 SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 
+#From version 4.5 of GAP we'll use the new function IsPackageMarkedForLoading
+if not CompareVersionNumbers(VERSION,"4.5") then
+        IsPackageMarkedForLoading:=function(ver,num) local b;
+        b:=LoadPackage(ver,num,false);
+        if b=true then return b; else return false; fi;
+        end;
+fi;
+
 ReadPackage("HAP","boolean");
 #ReadPackage("HAP", "lib/TitlePage/title.gap");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
@@ -19,8 +27,7 @@ ReadPackage("HAP", "lib/TitlePage/copyright.gap");
 ## Most functions should work on pcp groups if the polycyclic package 
 ## is installed. Otherwise we need to give a meaning to certain commands
 ## defined in the polycyclic package.
-Bool:=LoadPackage("polycyclic","0.0",false);
-if Bool=fail then
+if not IsPackageMarkedForLoading("polycyclic","1.1") then 
 DeclareOperation("NaturalHomomorphism",[IsGroup,IsGroup]);
 IsPcpGroup:=function(G);return false;end;
 Collector:=function(x);return fail; end;
@@ -32,16 +39,15 @@ Pcp:=function(G,D); return fail; end;
 IsAlmostCrystallographic:=function(G); return fail; end;
 GeneratorsOfPcp:=function(G); return fail; end;
 IsomorphismPcpGroup:=function(G);return fail;end;
+AbelianPcpGroup:=function(G);return fail;end;
 fi;
 ################## POLYCICLIC COMMANDS DONE #########################
 
 ################# NQ COMMANDS #######################################
-LoadPackage("nq","0.0",false);
-if  IsBound(NqEpimorphismNilpotentQuotient) then
+if  IsPackageMarkedForLoading("nq","1.1") then 
 HAP_NqEpimorphismNilpotentQuotient:=NqEpimorphismNilpotentQuotient;
 else
-LoadPackage("nql","0.0",false);
-if IsBound(NqEpimorphismNilpotentQuotientLpGroup) then
+if IsPackageMarkedForLoading("nql","1.0") then 
 HAP_NqEpimorphismNilpotentQuotient:=NqEpimorphismNilpotentQuotientLpGroup;
 else
 HAP_NqEpimorphismNilpotentQuotient:=EpimorphismNilpotentQuotient;
@@ -50,24 +56,22 @@ fi;
 ################# NQ COMMANDS DONE ###############################
 
 ################# SIMPHOM COMMANDS ##################################
-Bool:=LoadPackage("homology","0.0",false);
-if Bool=fail then
+if not IsPackageMarkedForLoading("homology","0.0") then 
 SMInvariantFactors:=function(M); return fail; end;
+InfoHomology:=function(M); return fail; end;
 else SetInfoLevel(InfoHomology,0);
 ReadPackage("HAP", "lib/Homology/probHomology.gi");
 fi;
 ################ SIMPHOM COMMANDS DONR ##############################
 
 ################# EDIM COMMANDS #######################################
-Bool:=LoadPackage("edim","0.0",false);
-if Bool=fail then
+if not IsPackageMarkedForLoading("edim","1.2.2") then 
 ElementaryDivisorsPPartRk:=function(G); return fail; end;
 fi;
 ################# EDIM COMMANDS DONE ###############################
 
 ################# GAPDOC COMMANDS #######################################
-Bool:=LoadPackage("gapdoc","0.0",false);
-if Bool=fail then
+if not IsPackageMarkedForLoading("gapdoc","0.0") then 
 MakeGAPDocDoc:=function(G); return fail; end;
 fi;
 ################# GAPDOC COMMANDS DONE ###############################
@@ -109,7 +113,7 @@ ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
 
-if LoadPackage("nq","0.0",false)=true then
+if IsPackageMarkedForLoading("nq","1.1") then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
@@ -123,10 +127,11 @@ ReadPackage("HAP", "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
+ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 
-if LoadPackage("aclib","0.0",false)=true then
+if IsPackageMarkedForLoading("aclib","1.1") then
 ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
 fi;
@@ -143,6 +148,7 @@ ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
 ReadPackage("HAP", "lib/Functors/homToZmodule.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithZ.gi");
+ReadPackage("HAP", "lib/Functors/tensorWithZmodule.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithTwistedZ.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithTwistedZmodP.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithZmodP.gi");
@@ -267,6 +273,8 @@ ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/dvf.gi");
+ReadPackage("HAP","lib/PolyComplexes/rips.gi");
 fi;
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
@@ -287,8 +295,19 @@ ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
+################## SIMPLICIAL GROUPS ###############################
+ReadPackage("HAP","lib/SimplicialGroups/nerveCat1Group.gi");
+ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
+ReadPackage("HAP","lib/SimplicialGroups/chaincomplexofsimplicalgroup.gi");
+
+################## REGULAR CW_SPACES ###############################
+ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
+
+
 ################## HAP PRIME ##################################
-if not LoadPackage("singular","1.0",false)=fail then
+if IsPackageMarkedForLoading("singular","06.07.23") then
 ReadPackage("HAP","lib/HapPrime/singular.gi");
 ReadPackage("HAP","lib/HapPrime/rings.gi");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gi");

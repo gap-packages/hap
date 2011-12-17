@@ -4,6 +4,8 @@ DeclareGlobalFunction("EvaluateProperty");
 ReadPackage("HAP","lib/Objectifications/types.gd");
 ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
+ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
+ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
 
 
 
@@ -19,6 +21,7 @@ DeclareGlobalFunction("TietzeReduction");
 DeclareGlobalFunction("MultiplyWord");
 DeclareGlobalFunction("WordModP");
 DeclareGlobalFunction("OppositeGroup");
+DeclareGlobalFunction("QuotientGroup");
 DeclareGlobalFunction("ResolutionBoundaryOfWord");
 
 ## FpG MODULES#######################################################
@@ -70,6 +73,7 @@ DeclareGlobalFunction("NonabelianTensorSquare_inf");
 
 
 ## RESOLUTIONS ######################################################
+DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareGlobalFunction("ResolutionFiniteGroup");
 DeclareGlobalFunction("ResolutionSmallFpGroup");
 DeclareGlobalFunction("PresentationOfResolution");
@@ -113,6 +117,7 @@ DeclareGlobalFunction("PrimePartDerivedFunctor");
 DeclareGlobalFunction("ReduceGenerators");
 DeclareGlobalFunction("HomToIntegers");
 DeclareGlobalFunction("HomToIntegralModule");
+DeclareGlobalFunction("TensorWithIntegralModule");
 DeclareGlobalFunction("PermToMatrixGroup");
 DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
 DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
@@ -138,6 +143,7 @@ DeclareGlobalFunction("ResolutionFiniteDirectProduct");
 DeclareGlobalFunction("ResolutionSubnormalSeries");
 DeclareGlobalFunction("FreeGResolution");
 DeclareGlobalFunction("ContractibleGcomplex");
+DeclareGlobalFunction("QuotientOfContractibleGcomplex");
 DeclareGlobalFunction("ExtendScalars");
 DeclareGlobalFunction("InduceScalars");
 DeclareGlobalFunction("TwistedResolution");
@@ -163,6 +169,7 @@ DeclareGlobalFunction("CoxeterWythoffComplex");
 
 ## HOMOLOGY #########################################################
 DeclareOperation("Homology",[IsHapChain,IsInt]);
+DeclareOperation("Homology",[IsHapGComplex,IsInt]);
 #DeclareOperation("Homology",[IsObject,IsInt]);
 DeclareOperation("PersistentHomology",[IsList,IsInt, IsInt]);
 DeclareGlobalFunction("BarCode");
@@ -207,7 +214,6 @@ DeclareGlobalFunction("IntegralHomologyOfChainComplex");
 DeclareGlobalFunction("IntegralCohomologyOfCochainComplex");
 DeclareGlobalFunction("LefschetzNumberOfChainMap");
 DeclareOperation("LefschetzNumber",[IsObject]);
-DeclareGlobalFunction("MorseFiltration");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -306,6 +312,7 @@ DeclareRepresentation(  "IsPseudoListRep",
 DeclareGlobalFunction("ContractibleSubcomplexOfPureCubicalComplex");
 DeclareGlobalFunction("ContractibleSubcomplexOfSimplicialComplex");
 DeclareGlobalFunction("AcyclicSubcomplexOfPureCubicalComplex");
+DeclareGlobalFunction("IntegerSimplicialComplex");
 DeclareGlobalFunction("HomotopyEquivalentMaximalPureCubicalSubcomplex");
 DeclareGlobalFunction("HomotopyEquivalentMinimalPureCubicalSubcomplex");
 #DeclareOperation("EulerCharacteristic",[IsObject]);
@@ -337,6 +344,7 @@ DeclareGlobalFunction("ChainComplexOfSimplicialComplex");
 DeclareGlobalFunction("ChainMapOfSimplicialMap");
 DeclareGlobalFunction("SkeletonOfSimplicialComplex");
 DeclareGlobalFunction("CechComplexOfPureCubicalComplex");
+DeclareGlobalFunction("PureComplexToSimplicialComplex");
 DeclareGlobalFunction("QuillenComplex");
 DeclareGlobalFunction("SimplicialMap");
 DeclareGlobalFunction("SimplicialMapNC");
@@ -351,6 +359,8 @@ DeclareGlobalFunction("ThickenedPureCubicalComplex");
 DeclareGlobalFunction("ThickenedPureCubicalComplex_dim2");
 DeclareGlobalFunction("BoundaryOfPureCubicalComplex");
 DeclareGlobalFunction("ContractPureCubicalComplex");
+DeclareGlobalFunction("ZigZagContractedPureCubicalComplex");
+DeclareGlobalFunction("CropPureCubicalComplex");
 #DeclareGlobalFunction("SingularChainComplex");
 DeclareGlobalFunction("ComplementOfPureCubicalComplex");
 DeclareGlobalFunction("SingularitiesOfPureCubicalComplex");
@@ -371,9 +381,18 @@ DeclareGlobalFunction("SymmetricMatrixToGraph");
 DeclareGlobalFunction("GraphOfSimplicialComplex");
 DeclareGlobalFunction("PathComponentsOfGraph");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex");
+DeclareGlobalFunction("PathComponentsOfSimplicialComplex_alt");
 DeclareGlobalFunction("ContractGraph");
 DeclareGlobalFunction("SimplicialNerveOfGraph");
 DeclareGlobalFunction("GraphDisplay");
+DeclareGlobalFunction("SkeletonOfCubicalComplex");
+DeclareGlobalFunction("MorseFiltration");
+DeclareGlobalFunction("ContractCubicalComplex_dim2");
+DeclareGlobalFunction("ContractCubicalComplex_dim3");
+DeclareGlobalFunction("ContractCubicalComplex");
+DeclareGlobalFunction("DVFReducedCubicalComplex");
+DeclareGlobalFunction("BoundingPureCubicalComplex");
+
 
 
 ########################## ARRAYS ################################
@@ -383,6 +402,7 @@ DeclareGlobalFunction("ArrayValueKD");
 DeclareGlobalFunction("ArrayToPureCubicalComplex");
 DeclareGlobalFunction("FrameArray");
 DeclareGlobalFunction("UnframeArray");
+DeclareGlobalFunction("PermuteArray");
 DeclareGlobalFunction("ArraySum");
 DeclareGlobalFunction("ArrayDimension");
 DeclareGlobalFunction("ArrayDimensions");
@@ -398,6 +418,7 @@ DeclareGlobalFunction("ContractibleSubMatrix");
 DeclareGlobalFunction("HomotopyEquivalentLargerSubMatrix");
 DeclareGlobalFunction("HomotopyEquivalentSmallerSubMatrix");
 DeclareGlobalFunction("ArrayAssign");
+DeclareGlobalFunction("UnboundedArrayAssign");
 DeclareGlobalFunction("ArrayAssignFunctions");
 DeclareGlobalFunction("ArrayIterate");
 DeclareGlobalFunction("IsContractibleCube_higherdims");
@@ -406,15 +427,19 @@ DeclareGlobalFunction("BinaryArrayToTextFile");
 
 
 ## CAT ONE GROUPS ###################################################
+DeclareGlobalFunction("XmodToHAP");
 DeclareGlobalFunction("AutomorphismGroupAsCatOneGroup");
 DeclareGlobalFunction("GModuleAsCatOneGroup");
 DeclareOperation("HomotopyGroup",[IsHapCatOneGroup,IsInt]);
+DeclareOperation("HomotopyGroup",[IsHapSimplicialGroup,IsInt]);
 DeclareOperation("HomotopyModule",[IsHapCatOneGroup,IsInt]);
 DeclareOperation("MooreComplex",[IsObject]);
 DeclareGlobalFunction("HasTrivialPostnikovInvariant");
 DeclareGlobalFunction("IdentityAmongRelatorsDisplay");
 DeclareGlobalFunction("IdentityAmongRelators");
 DeclareGlobalFunction("NormalSubgroupAsCatOneGroup");
+DeclareGlobalFunction("QuasiIsomorph");
+DeclareGlobalFunction("SylowSubgroupOfCatOneGroup");
 
 ## COMMUTATIVE DIAGRAMS #############################################
 DeclareGlobalFunction("HomomorphismChainToCommutativeDiagram");
@@ -423,9 +448,24 @@ DeclareGlobalFunction("GroupHomologyOfCommutativeDiagram");
 DeclareGlobalFunction("PersistentHomologyOfCommutativeDiagramOfPGroups");
 DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
 
+## SIMPLICIAL GROUPS ################################################
+DeclareGlobalFunction("NerveOfCatOneGroup");
+DeclareGlobalFunction("BarResolutionBoundary");
+DeclareGlobalFunction("BarResolutionEquivalence");
+DeclareGlobalFunction("BarComplexBoundary");
+DeclareGlobalFunction("BarComplexEquivalence");
+DeclareGlobalFunction("ReduceAlg");
+DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
+
+## REGULAR CW-SPACES ################################################
+DeclareGlobalFunction("SimplicialComplexToRegularCWSpace");
+DeclareGlobalFunction("GraphOfRegularCWSpace");#Not yet implemented
+DeclareGlobalFunction("CubicalComplexToRegularCWSpace");#Not yet implemented
+DeclareGlobalFunction("ContractRegularCWSpace");
+
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");
-ReadPackage("HAP","lib/TopologicalSpaces/topTypes.gd");
+#ReadPackage("HAP","lib/TopologicalSpaces/topTypes.gd");
 #ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 #ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/CategoryTheory/categories.gd");

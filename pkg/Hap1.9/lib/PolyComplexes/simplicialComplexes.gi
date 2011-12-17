@@ -32,7 +32,7 @@ InstallOtherMethod(Homology,
 [IsHapSimplicialComplex],
 function(M);
 return
-List([0..Dimension(M)],n->Homology(ChainComplex(M),n));
+List([0..Dimension(M)],n->Homology(M,n));
 end);
 #####################################################################
 #####################################################################
@@ -46,7 +46,7 @@ InstallOtherMethod(Homology,
 #return
 #Homology(ChainComplex(M),n);
 function(M,n) local P, PM, i, answer,C,A;
-P:=PathComponentsOfGraph(GraphOfSimplicialComplex(M),0);
+P:=PathComponentsOfSimplicialComplex(M,0);
 if n=0 then return P;fi;
 answer:=[];
 for i in [1..P] do
@@ -67,7 +67,8 @@ InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex,IsInt,IsInt],
 function(M,n,p) local P, PM, i, answer,C,A;
-P:=PathComponentsOfGraph(GraphOfSimplicialComplex(M),0);
+#P:=PathComponentsOfGraph(GraphOfSimplicialComplex(M),0);
+P:=PathComponentsOfSimplicialComplex(M,0);
 if n=0 then return P;fi;
 answer:=0;
 for i in [1..P] do
@@ -100,20 +101,6 @@ end);
 
 #####################################################################
 #####################################################################
-#InstallOtherMethod(Homology,
-#"Homology  of a simplicial complex",
-#[IsHapSimplicialComplex,IsInt],
-#function(M,n);
-#return
-#Homology(ChainComplex(M),n);
-#end);
-#####################################################################
-#####################################################################
-
-
-
-#####################################################################
-#####################################################################
 InstallOtherMethod(ChainComplex,
 "Cellular chain complex of a simplicial complex",
 [IsHapSimplicialComplex],
@@ -137,7 +124,7 @@ end;
 #############################
 
 nullvecs:=[];
-for i in [0..Dimension(M)] do
+for i in [0..Dimension(M)+1] do
 nullvecs[i+1]:=List([1..M!.nrSimplices(i)],a->0);
 od;
 
@@ -262,9 +249,13 @@ SimplicesLst[1]:=List(Vertices,x->[x]);
 for v in V do
 for n in [1..Length(v)] do
 for x in Combinations(v,n) do
-AddSet(SimplicesLst[n],x);
+Add(SimplicesLst[n],x);
 od;
 od;
+od;
+
+for n in [1..Length(v)] do
+SimplicesLst[n]:=SSortedList(SimplicesLst[n]);
 od;
 
 return SimplicesToSimplicialComplex(SimplicesLst);
@@ -450,7 +441,8 @@ Faces:=K!.simplicesLst;
 dim:=PositionProperty(Faces,x->Size(x)=0);
 if IsInt(dim) then dim:=dim-1; else dim:=Dimension(K); fi;
 A:=G!.incidenceMatrix;
-PC:=PathComponentsOfGraph(G,0);
+#PC:=PathComponentsOfGraph(G,0);
+PC:=PathComponentsOfSimplicialComplex(K,0);
 bool:=List(Faces,Length);;
 Vertices:=StructuralCopy(K!.vertices);
 
@@ -555,12 +547,40 @@ end);
 #################################################################
 InstallGlobalFunction(ContractGraph,
 function(G)
-local RemoveApex,RemoveEdge,A,LA,bool,PC,row,x,i,j,k;
+local RemoveApex,RemoveEdge,A,LA,bool,PC,row,x,i,j,k,RemoveNonCritical1And2Cells;
 
 A:=G!.incidenceMatrix;
 PC:=PathComponentsOfGraph(G,0);
 Unbind(G!.pathComponents);
 bool:=Sum(Sum(A));
+
+
+###############################################
+RemoveNonCritical1And2Cells:=function(A)
+local bool, i,j,L;
+
+bool:=true;
+while bool do
+bool:=false;
+L:=Filtered([1..Length(A)],i->not Sum(A[i])=1);
+if Length(L)<Length(A) then bool:=true; 
+A:=A{L};
+A:=List(A,row->row{L});
+fi;
+
+L:=[];
+for i in [1..Length(A)-1] do
+for j in [i+1..Length(A)] do
+if A[i][j]=1 then
+if A[i]*A[j]=1 then A[i][j]:=0; A[j][i]:=0; bool:=true;  fi;
+fi;
+od;
+od;
+od;
+
+end;
+#################################################
+
 
 ################################################
 ##
@@ -611,7 +631,6 @@ if A[cols[x]][cols[y]]=0  then return false; fi;
 od;
 od;
 
-if A[i][j]=0 then Print("hello"); fi;
 A[i][j]:=0;
 A[j][i]:=0;
 
@@ -621,6 +640,8 @@ end;
 ################################################ 
 
 LA:=Filtered([1..Length(A)], i->Sum(A[i])>0);
+
+RemoveNonCritical1And2Cells(A);
 
 x:=true;
 while x do
@@ -825,9 +846,66 @@ end);
 #################################################################
 #################################################################
 
-#################################################################
-#################################################################
+#############################################
+#############################################
 InstallGlobalFunction(PathComponentsOfSimplicialComplex,
+function(KK,N)
+local
+
+      K,Colours, clr,leaves,i,v,e,newleaves,Edges, EDGES, L,nr;
+
+K:=IntegerSimplicialComplex(KK);
+L:=Maximum(Flat(K!.simplicesLst[1]));
+Colours:=List([1..L],i->0);
+EDGES:=List([1..L],i->[]);
+
+for e in K!.simplicesLst[2] do
+  Add(EDGES[e[1]],e[2]);
+  Add(EDGES[e[2]],e[1]);
+od;
+clr:=0;
+
+while Length(Filtered(Colours,c->c=0)) > L-KK!.nrSimplices(0) do
+  clr:=clr+1;
+  leaves:=[Position(Colours,0)];
+  while Size(leaves)>0 do
+    for v in leaves do
+      Colours[v]:=clr;
+    od;
+    newleaves:=[];
+    for v in leaves do
+      Append(newleaves,
+      Filtered(EDGES[v],w->Colours[w]=0));
+    od;
+    leaves:=Difference(Flat(newleaves), leaves);
+  od;
+
+od;
+
+nr:=Length(SSortedList(Colours));
+
+if N=0 then
+return nr;
+fi;
+
+if N=1 and nr=1 then return IntegerSimplicialComplex(K); fi;
+
+
+L:=StructuralCopy(K!.simplicesLst);
+for i in [1..Length(L)] do
+L[i]:=Filtered(L[i],x->not false in List(x,a->Colours[a]=N));
+od;
+
+return SimplicesToSimplicialComplex(L);;
+end);
+############################################
+############################################
+
+
+
+#################################################################
+#################################################################
+InstallGlobalFunction(PathComponentsOfSimplicialComplex_alt,
 function(K,n)
 local
         G,A,P,V,L,n1,i;
@@ -922,4 +1000,37 @@ Objectify(HapChainComplex,
 end);
 #################################################################
 #################################################################
+
+#############################################
+#############################################
+InstallGlobalFunction(IntegerSimplicialComplex,
+function(K)
+local
+
+      Vertices, L, n;
+
+if EvaluateProperty(K,"integer")=true then
+  return K;
+fi;
+
+if not false in List(K!.vertices,x->IsInt(x)) then
+  Add(K!.properties,["integer",true]);
+  return K;
+fi;
+
+Vertices:=K!.vertices;
+L:=StructuralCopy(K!.simplicesLst);
+
+for n in [1..Length(L)] do
+L[n]:=List(L[n],x->List(x,v->Position(Vertices,v)));
+L[n]:=SSortedList(L[n]);
+od;
+
+L:=SimplicesToSimplicialComplex(L);
+Add(L!.properties,["integer",true]);
+return L;
+
+end);
+############################################
+############################################
 

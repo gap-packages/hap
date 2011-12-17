@@ -7,6 +7,7 @@ function(arg)
 local 
 	P,N,prime,
 	Dimension, DimensionRecord, DimRecs, FiltDimRecs,
+        BinGp,
 	Boundary,
 	BoundaryP,
 	Pair2Quad, Pair2QuadRec,
@@ -23,6 +24,8 @@ local
         FilteredLength, FilteredDimension, FilteredDimensionRecord,
 	L,i,k,n,q,r,s,t ;
 
+SetInfoLevel(InfoWarning,0);
+
 P:=arg[1];
 N:=arg[2];
 if Length(arg)>2 then prime:=Gcd(arg[3],EvaluateProperty(P,"characteristic"));
@@ -33,16 +36,42 @@ G:=P!.group;
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
+BinGp:=ContractibleGcomplex("SL(2,O-2)");
+BinGp:=BinGp!.stabilizer(0,4);;
+BinGp:=Image(RegularActionHomomorphism(BinGp));
+#BinGp:=Group(ReduceGenerators(GeneratorsOfGroup(BinGp),BinGp));
+
 #############################
 ResolutionFG:=function(G,n)
-local iso,Q,res;
+local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
 
+###
+if Order(G)=infinity and IsAbelian(G) then
+#This will only be correct if G is abelian of "rank" equal
+#to the number of generators GAP has for G 
+
+res:=ResolutionGenericGroup(G,n);
+
+return res;
+fi;
+###
 iso:=RegularActionHomomorphism(G);
 Q:=Image(iso);
+
+if IdGroup(Image(iso))=[24,3] then 
+iso1:=IsomorphismGroups(Q,BinGp); 
+res:=ResolutionFiniteGroup(BinGp,n);
+res!.group:=G;
+res!.elts:=List(res!.elts,x->
+PreImagesRepresentative(iso,PreImagesRepresentative(iso1,x)));
+return res;
+fi;
+
 res:=ResolutionFiniteGroup(Q,n);
 res!.group:=G;
 res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
 return res;
+###
 
 end;
 #############################
@@ -477,7 +506,7 @@ return Length(Filtered(FiltDimRecs[k+1],x->x<=r));
 end;
 ##################################################
 
-
+SetInfoLevel(InfoWarning,1);
 
 return Objectify(HapResolution,
                 rec(
@@ -558,7 +587,6 @@ end;
 GmapTH:=function(g)    #ht=g^-1 ==> g=t^-1 h^-1
 local t,h,gg,pos1,pos2;
 
-#Print("HELLO \n");
 
 gg:=EltsG[g]^-1;
 t:=CanonicalRightCosetElement(H,gg)^-1;

@@ -76,6 +76,18 @@ DeclareOperation("GOuterGroup", [IsGroup,IsGroup]);
 
 #############################################################################
 ##
+##  Constructor for G-outer group from a group E 
+##
+DeclareOperation("GOuterGroup", [IsGroup]);
+
+#############################################################################
+##
+##  Constructor for G-outer group homomorphism from a group homomorphism  
+##
+DeclareOperation("GOuterGroup", [IsGroupHomomorphism]);
+
+#############################################################################
+##
 ##  Constructor for  G-outer group homomorphisms 
 ##
 DeclareOperation("GOuterGroupHomomorphism", 
@@ -134,4 +146,37 @@ HapGCocomplex:=NewType(HapGCocomplexFamily,IsHapGCocomplexRep);
 ##  a G-outer group.
 DeclareOperation("CohomologyModule",
                 [IsHapGCocomplex,IsInt]);
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapGComplex",IsObject);
+
+DeclareRepresentation(  "IsHapGComplexRep",
+                        IsComponentObjectRep,
+                        ["boundary",
+                         "properties"]);
+
+HapGComplexFamily:=NewFamily("HapGComplexFamily",
+                                IsHapGComplex,
+                                IsHapGComplex);
+
+HapGComplex:=NewType(HapGComplexFamily,IsHapGComplexRep);
+
+InstallMethod( ViewObj,
+"for HapGComplex",
+ [IsHapGComplex],
+ function(R)
+ Print("G-Complex of length ", EvaluateProperty(R,"length"), "\n");
+ end);
+
+InstallMethod( PrintObj,
+"for HapGComplex",
+ [IsHapGComplex],
+ function(R)
+ Print("G-Complex of length ", EvaluateProperty(R,"length"), "\n");
+ end);
+
+#####################################################################
+#####################################################################
+
 

@@ -1,19 +1,125 @@
   
-  [1X24. Arrays and Pseudo lists[0X
+  [1X24 Commutative diagrams and abstract categories[0X
   
-      | [10X Array(A,f)[0X Inputs an array A and a function f. It returns the the array obtained by applying f to each entry of A (and leaves A unchanged).                                                                                                                                                                                                                                                              | 
-      | [10X ArrayDimension(A)[0X Inputs an array A and returns its dimension.                                                                                                                                                                                                                                                                                                                                           | 
-      | [10X ArrayDimensions(A)[0X Inputs an array A and returns its dimensions.                                                                                                                                                                                                                                                                                                                                         | 
-      | [10X ArraySum(A)[0X Inputs an array A and returns the sum of its entries.                                                                                                                                                                                                                                                                                                                                        | 
-      | [10X ArrayValue(A,x)[0X Inputs an array A and a coordinate vector x. It returns the value of the entry in A with coordinate x.                                                                                                                                                                                                                                                                                   | 
-      | [10X ArrayValueFunctions(d)[0X Inputs a positive integer d and returns an efficient version of the function ArrayValue for arrays of dimension d.                                                                                                                                                                                                                                                                | 
-      | [10X ArrayAssign(A,x,n)[0X Inputs an array A and a coordinate vector x and an integer n. It sets the entry of A with coordinate x equal to n.                                                                                                                                                                                                                                                                    | 
-      | [10X ArrayAssignFunctions(d)[0X Inputs a positive integer d and returns an efficient version of the function ArrayAssign for arrays of dimension d.                                                                                                                                                                                                                                                              | 
-      | [10X ArrayIterate(d)[0X Inputs a positive integer d and returns a function ArrayIt(Dimensions,f). This function inputs a list Dimensions of d positive integers and also a function f(x). It applies the function f(x) to each integer list x of length d with entries x[i] in the range [1..Dimension[i]].                                                                                                      | 
-      | [10X BinaryArrayToTextFile(file,A)[0X Inputs a string containing the address of a file, and an array A of 0s and 1s. The array represents a pure cubical complex. A representation of this complex is written to the file in a format that can be read by the CAPD (Computer Assisted Proofs in Dynamics) software developed by Marian Mrozek and others. The second input A can also be a pure cubical complex. | 
-      | [10X FrameArray(A)[0X Inputs an array A and returns the array obtained by appending a 0 to the beginning and end of each "row" of the array.                                                                                                                                                                                                                                                                     | 
-      | [10X UnframeArray(A)[0X Inputs an array A and returns the array obtained by removing the first and last entry in each "row" of the array.                                                                                                                                                                                                                                                                        | 
-      | [10X Add(L,x)[0X Let L be a pseudo list of length n, and x an object compatible with the entries in L. If x is not in L then this operation converts L into a pseudo list of length n+1 by adding x as the final entry. If x is in L the operation has no effect on L.                                                                                                                                           | 
-      | [10X Append(L,K)[0X Let L be a pseudo list and K a list whose objects are compatible with those in L. This operation applies Add(L,x) for each x in K.                                                                                                                                                                                                                                                           | 
-      | [10X ListToPseudoList(L)[0X Inputs a list L and returns the pseudo list representation of L.                                                                                                                                                                                                                                                                                                                     | 
+  [12XCOMMUTATIVE DIAGRAMS[0m
+  ::::::::::::::::::::::::
+  [10XHomomorphismChainToCommutativeDiagram(H) [0m
+  
+  Inputs  a  list  H=[h_1,h_2,...,h_n]  of  mappings  such  that the composite
+  h_1h_2...h_n is defined. It returns the list of composable homomorphism as a
+  commutative diagram.
+  ::::::::::::::::::::::::
+  [10XNormalSeriesToQuotientDiagram(L) [0m
+  [10XNormalSeriesToQuotientDiagram(L,M)[0m
+  
+  Inputs  an  increasing  (or  decreasing)  list L=[L_1,L_2,...,L_n] of normal
+  subgroups  of  a  group  G  with  G=L_n.  It  returns  the chain of quotient
+  homomorphisms G/L_i -> G/L_i+1 as a commutative diagram.
+  
+  Optionally  a subseries M of L can be entered as a second variable. Then the
+  resulting  diagram  of quotient groups has two rows of horizontal arrows and
+  one row of vertical arrows.
+  ::::::::::::::::::::::::
+  [10XNerveOfCommutativeDiagram(D) [0m
+  
+  Inputs  a  commutative  diagram  D  and  returns  the commutative diagram ND
+  consisting of all possible composites of the arrows in D.
+  ::::::::::::::::::::::::
+  [10XGroupHomologyOfCommutativeDiagram(D,n) [0m
+  [10XGroupHomologyOfCommutativeDiagram(D,n,prime) [0m
+  [10XGroupHomologyOfCommutativeDiagram(D,n,prime,Resolution_Algorithm) [0m
+  
+  Inputs  a  commutative  diagram  D  of  p-groups  and positive integer n. It
+  returns  the commutative diagram of vector spaces obtained by applying mod p
+  homology.
+  
+  Non-prime  power  groups  can also be handled if a prime p is entered as the
+  third  argument.  Integral  homology can be obtained by setting p=0. For p=0
+  the result is a diagram of groups.
+  
+  A  particular resolution algorithm, such as ResolutionNilpotentGroup, can be
+  entered   as   a   fourth   argument.   For   positive   p  the  default  is
+  ResolutionPrimePowerGroup. For p=0 the default is ResolutionFiniteGroup.
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfCommutativeDiagramOfPGroups(D,n) [0m
+  
+  Inputs  a commutative diagram D of finite p-groups and a positive integer n.
+  It  returns  a  list  containing, for each homomorphism in the nerve of D, a
+  triple  [k,l,m]  where k is the dimension of the source of the induced mod p
+  homology  map  in  degree  n,  l is the dimension of the image, and m is the
+  dimension of the cokernel.
+  [12XABSTRACT CATEGORIES[0m
+  ::::::::::::::::::::::::
+  [10XCategoricalEnrichment(X,Name) [0m
+  
+  Inputs  a  structure  X such as a group or group homomorphism, together with
+  the  name  of  some  existing  category  such as Name:=Category_of_Groups or
+  Category_of_Abelian_Groups.  It  returns, as appropriate, an object or arrow
+  in the named category.
+  ::::::::::::::::::::::::
+  [10XIdentityArrow(X) [0m
+  
+  Inputs  an  object X in some category, and returns the identity arrow on the
+  object X.
+  ::::::::::::::::::::::::
+  [10XInitialArrow(X) [0m
+  
+  Inputs  an object X in some category, and returns the arrow from the initial
+  object in the category to X.
+  ::::::::::::::::::::::::
+  [10XTerminalArrow(X) [0m
+  
+  Inputs  an  object  X  in some category, and returns the arrow from X to the
+  terminal object in the category.
+  ::::::::::::::::::::::::
+  [10XHasInitialObject(Name) [0m
+  
+  Inputs the name of a category and returns true or false depending on whether
+  the category has an initial object.
+  ::::::::::::::::::::::::
+  [10XHasTerminalObject(Name) [0m
+  
+  Inputs the name of a category and returns true or false depending on whether
+  the category has a terminal object.
+  ::::::::::::::::::::::::
+  [10XSource(f) [0m
+  
+  Inputs an arrow f in some category, and returns its source.
+  ::::::::::::::::::::::::
+  [10XTarget(f) [0m
+  
+  Inputs an arrow f in some category, and returns its target.
+  ::::::::::::::::::::::::
+  [10XCategoryName(X) [0m
+  
+  Inputs  an  object  or arrow X in some category, and returns the name of the
+  category.
+  [10X"*", "=", "+", "-" [0m
+  
+  Composition  of  suitable  arrows  f,g  is given by f*g when the source of f
+  equals  the  target  of  g.  (Warning:  this  differes  to  the standard GAP
+  convention.)
+  
+  Equality is tested using f=g.
+  
+  In  an  additive category the sum and difference of suitable arrows is given
+  by f+g and f-g.
+  ::::::::::::::::::::::::
+  [10XObject(X) [0m
+  
+  Inputs  an  object  X in some category, and returns the GAP structure Y such
+  that X=CategoricalEnrichment(Y,CategoryName(X)).
+  ::::::::::::::::::::::::
+  [10XMapping(X) [0m
+  
+  Inputs  an  arrow  f  in some category, and returns the GAP structure Y such
+  that f=CategoricalEnrichment(Y,CategoryName(X)).
+  ::::::::::::::::::::::::
+  [10XIsCategoryObject(X) [0m
+  
+  Inputs X and returns true if X is an object in some category.
+  ::::::::::::::::::::::::
+  [10XIsCategoryArrow(X) [0m
+  
+  Inputs X and returns true if X is an arrow in some category.
   

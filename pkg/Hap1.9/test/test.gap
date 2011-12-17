@@ -2,7 +2,7 @@
 
 #####################################################################
 TestHap:=function()
-local H0,H1,H2,H3,H4,H4a,H5,H6,H7,H8,H9,R,TR,Tensor,Tensor2,
+local P, H0,H1,H2,H3,H4,H4a,H5,H6,H7,H8,H9,R,TR,Tensor,Tensor2,
 S5,S4,A,AS5,AS4,D,Bool,Poincare;
 
 H0:=GroupHomology(AlternatingGroup(5),2,2);;

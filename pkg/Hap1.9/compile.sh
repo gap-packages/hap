@@ -82,3 +82,7 @@ $GACDIR/gac -d $LIB/PolyComplexes/*.gi;
 mkdir $LIB/PolyComplexes/Compiled/;
 mv *.so $LIB/PolyComplexes/Compiled/;
 
+$GACDIR/gac -d $LIB/SimplicialGroups/*.gi;
+mkdir $LIB/SImplicialGroups/Compiled/;
+mv *.so $LIB/SImplicialGroups/Compiled/;
+

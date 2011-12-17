@@ -37,7 +37,7 @@ end;
 #####################################################################
 BoundaryOfElt:=function(n,k)	#Only use this for k>0
 local
-        row, a, kq, kr, i, j, x, fn, sum, bnd;
+        row, kq, kr, i, x, sum;
 
 if n<0 then return List([1..DimensionC(0)],a->0); fi;
 
@@ -46,26 +46,20 @@ if n<0 then return List([1..DimensionC(0)],a->0); fi;
 x:=IntToPair(k);
 kq:=x[1]; kr:=x[2];
 
-a:=List([1..LA],x->0);
-a[kr]:=1;
-
-	##################
-	fn:=function(x)
-	if AbsoluteValue(x[1])=kq then return 
-	SignInt(x[1])*Image(f,R!.elts[x[2]])*a;
-	else return 0*a; fi;
-	end;
-	#######################
-
 row:=[];
 for i in [1..R!.dimension(n+1)] do
-bnd:= R!.boundary(n+1,i);
-bnd:=List(bnd, y->fn(y));
-bnd:=Sum(bnd);
-Append(row,[bnd]);
+	sum := ListWithIdenticalEntries(LA, 0);
+
+	for x in R!.boundary(n+1,i) do
+		if AbsoluteValue(x[1])=kq then 
+			# It is left action
+			sum := sum + SignInt(x[1])*Image(f,R!.elts[x[2]]){[1..LA]}[kr];
+		fi;
+	od;
+	Append(row,sum);
+
 od;
 
-row:=Flat(row);
 
 if Length(row)>0 then
 return row;

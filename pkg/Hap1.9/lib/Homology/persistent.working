@@ -285,6 +285,58 @@ end);
 ###############################################################
 ###############################################################
 
+###############################################################
+###############################################################
+InstallGlobalFunction(LinearHomomorphismsZZPersistenceMat,
+function(HOMS)
+local
+        L, WrongComposition;
+
+###################################
+WrongComposition:=function(LUV,LWV)  #LUV:U-->V, LWV:W-->V
+local x, U,W, LUW, ImLUV, ImLWV, InterUW,  BW,  BU, BUW, dim;
+
+ImLUV:=Image(LUV);
+ImLWV:=Image(LWV);
+InterUW:=Intersection(ImLUV,ImLWV);
+U:=Source(LUV);
+W:=Source(LWV);
+if Dimension(InterUW)=0 then 
+   return ZeroMapping(U,W);  
+
+else
+
+   BUW:=Basis(InterUW);
+   BUW:=Elements(BUW);
+fi;
+
+dim:=Length(BUW);
+BU:=List(BUW,x->PreImagesRepresentative(LUV,x));;
+BW:=List(BUW,x->PreImagesRepresentative(LWV,x));;
+
+
+for x in Elements(Basis(U)) do
+  if Rank(Concatenation(BU,[x]))>dim then
+    dim:=dim+1;
+    Add(BU,x);;
+    Add(BW,Zero(W));
+  fi;
+od;
+
+LUW:=LeftModuleHomomorphismByImagesNC(U,W,BU,BW);;
+return LUW;
+end;
+###################################
+
+L:=List([1..Length(HOMS)/2],n->
+WrongComposition(HOMS[2*n-1],HOMS[2*n]));
+
+return LinearHomomorphismsPersistenceMat(L); 
+
+end);
+###############################################################
+###############################################################
+
 
 ###############################################################
 ###############################################################
@@ -360,9 +412,20 @@ prime:=arg[3];
 
 F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
 
+###############################
+LM[1]:=ContractedComplex(LM[1]);
+for i in [2..Length(LM)] do
+LM[i]:=F(LM[i],LM[i-1]);
+od;
+###############################
+
 ##Initialize##############
 M:=LM[1];
-S:=ContractibleSubcomplexOfPureCubicalComplex(M);
+if false then #deg=0 then 
+S:=ContractibleSubcomplexOfPureCubicalComplex(M); #SHOULD DELETE THIS!
+else
+S:=AcyclicSubcomplexOfPureCubicalComplex(M);
+fi;
 L:=[[M,S]];
 triv:=List([1..Dimension(M)+1],i->0); triv[1]:=1;
 bool:=true;
@@ -374,6 +437,7 @@ for i in [2..Length(LM)] do
   TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
   Add(L,[TM,TS]); 
 od;
+
 
 L[1][1]:=F(L[1][1],L[1][2]);
 
@@ -475,7 +539,7 @@ fi;
 Collapses_dim2:=function(X,Y)
 ##Number of cycles killed going from position X to position Y
 local
-	Acomp,A,Bcomp,TP, rows, cols, cnt, bettizero, Pathcomps, k, i, j;
+	P, Acomp,A,Bcomp,TP, rows, cols, cnt, bettizero, Pathcomps, k, i, j;
 
 Acomp:=PureCubicalComplex(FrameArray(L[Y]!.binaryArray));
 A:=Acomp!.binaryArray;
@@ -845,5 +909,97 @@ return          Objectify( HapResolution,
 end);
 ##########################################
 ##########################################
+
+
+###############################################################
+###############################################################
+InstallGlobalFunction(ZZPersistentHomologyOfPureCubicalComplex,
+function(arg)
+local
+        LM,deg,prime,
+        ChnCmps,vsmaps,L,
+        U,CU,V,CV,W,CW,
+        x,y,i,F,PC,correction;
+
+##Input###################
+LM:=arg[1];
+deg:=arg[2];
+prime:=arg[3];
+##########################
+
+correction:=[];
+F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
+
+##Initialize##############
+U:=LM[1];
+CU:=ContractibleSubcomplexOfPureCubicalComplex(U);
+L:=[[U,CU]];
+vsmaps:=[];
+#########################
+
+
+#########################
+for i in [1..Length(LM)-1] do
+# U --> V <-- W
+
+U:=L[Length(L)][1];
+CU:=L[Length(L)][2];
+
+W:=LM[i+1];
+
+V:=PureCubicalComplexUnion(U,W);
+if Size(CU)>0 then
+CV:=HomotopyEquivalentMaximalPureCubicalSubcomplex(V,CU);
+else
+CV:=ContractibleSubcomplexOfPureCubicalComplex(V);
+fi;
+
+CW:=PureCubicalComplexIntersection(CV,W);
+CW:=ContractibleSubcomplexOfPureCubicalComplex(CW);
+
+if Size(CW)=0 then Add(correction,i+1); fi;
+
+Add(L,[V,CV]);
+Add(L,[W,CW]);
+od;
+#####################
+
+L[1]:=ChainComplexOfPair(L[1][1],L[1][2]);
+
+#################
+for i in [1..Length(LM)-1] do
+  L[2*i]:=ChainComplexOfPair(L[2*i][1],L[2*i][2]);
+  vsmaps[2*i-1]:=
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[2*i-1],L[2*i]) , prime);
+  vsmaps[2*i-1]:=HomologyVectorSpace(vsmaps[2*i-1],deg);
+
+L[2*i+1]:=ChainComplexOfPair(L[2*i+1][1],L[2*i+1][2]);
+  vsmaps[2*i]:=
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[2*i+1],L[2*i]) , prime);
+  vsmaps[2*i]:=HomologyVectorSpace(vsmaps[2*i],deg);
+Unbind(L[2*i]);
+  Unbind(L[2*i-1]);
+
+od;
+#################
+
+
+if deg>0 then
+  return LinearHomomorphismsZZPersistenceMat(vsmaps);
+fi;
+
+
+L:=LinearHomomorphismsZZPersistenceMat(vsmaps);
+for i in [1..Length(L)] do
+for y in [i..Length(L)] do
+if Length(Intersection([i..y],correction))=0 then
+  L[i][y]:=L[i][y]+1;
+fi;
+od;od;
+return L;
+
+end);
+###############################################################
+###############################################################
 
 

@@ -496,3 +496,36 @@ Print(R!.element, "_op ");
 #####################################################################
 #####################################################################
 
+#####################################################################
+DeclareCategory("IsHapQuotientElement",IsMultiplicativeElementWithInverse);
+
+DeclareRepresentation(  "IsHapQuotientElementRep",
+                        IsComponentObjectRep,
+                        IsMultiplicativeElementWithInverse,
+                        ["oppositeElement",
+                         ]);
+
+HapQuotientElementFamily:=NewFamily( "HapQuotientElementFamily",
+                                          IsHapQuotientElement,
+                                          IsHapQuotientElement);
+
+HapQuotientElement:=NewType(HapQuotientElementFamily,
+                                IsHapQuotientElementRep);
+
+
+InstallMethod( ViewObj,
+"for HapQuotientElement",
+ [IsHapQuotientElement],
+function(R)
+Print(R!.element, "_quotient ");
+end);
+
+InstallMethod( PrintObj,
+"for HapQuotientElement",
+ [IsHapQuotientElement],
+ function(R)
+Print(R!.element, "_quotient ");
+ end);
+#####################################################################
+#####################################################################
+

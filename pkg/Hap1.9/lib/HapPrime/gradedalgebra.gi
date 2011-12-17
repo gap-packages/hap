@@ -377,9 +377,9 @@ end);
 #####################################################################
 ##  <#GAPDoc Label="TensorProduct_DTmanGradedAlgebra_Func">
 ##  <ManSection>
-##  <Heading>TensorProduct</Heading>
-##  <Oper Name="TensorProduct" Arg="A, B" Label="for two algebra presentations"/>
-##  <Oper Name="TensorProduct" Arg="coll" Label="for collection of algebra presentations"/>
+##  <Heading>TensorProductOp</Heading>
+##  <Oper Name="TensorProductOp" Arg="A, B" Label="for two algebra presentations"/>
+##  <Oper Name="TensorProductOp" Arg="coll" Label="for collection of algebra presentations"/>
 ##
 ##  <Returns>
 ##  GradedAlgebraPresentation
@@ -392,7 +392,7 @@ end);
 ##  </ManSection>
 ##  <#/GAPDoc>
 #####################################################################
-InstallOtherMethod(TensorProduct,
+InstallOtherMethod(TensorProductOp,
   "for list of GradedAlgebraPresentations",
   [IsHomogeneousList],
   function(coll)
@@ -404,13 +404,13 @@ InstallOtherMethod(TensorProduct,
 
     A := coll[1];
     for i in [2..Length(coll)] do
-      A := TensorProduct(A, coll[i]);
+      A := TensorProductOp(A, coll[i]);
     od;
     return A;
   end
 );
 #####################################################################
-InstallMethod(TensorProduct,
+InstallMethod(TensorProductOp,
   "for GradedAlgebraPresentation",
   IsIdenticalObj,
   [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation],

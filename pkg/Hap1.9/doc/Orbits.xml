@@ -4,9 +4,8 @@
 <Row>
 <Item>
 <Index> CoxeterComplex</Index>
-<C> CoxeterComplex(D)</C>
-&nbsp;
-<C> CoxeterComplex(D,n)</C>
+<C>CoxeterComplex(D)</C>
+<C>CoxeterComplex(D,n)</C>
 <P/>
 Inputs a Coxeter diagram <M>D</M> of finite type. It returns a non-free ZW-resolution for the associated Coxeter group <M>W</M>. The non-free resolution is obtained from the permutahedron of type <M>W</M>. A positive integer <M>n</M>
 can be entered as an optional second variable; just the first <M>n</M> terms of the non-free resolution are then returned.
@@ -16,11 +15,12 @@ can be entered as an optional second variable; just the first <M>n</M> terms of 
 <Row>
 <Item>
 <Index> ContractibleGcomplex</Index>
-<C> ContractibleGcomplex("PSL(4,Z)")</C>
+<C>ContractibleGcomplex("PSL(4,Z)")</C>
 <P/>
 Inputs one of the following strings: <Br/><Br/> 
 "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" ,
- "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d"
+ "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" ,
+ "Sp(4,Z)" 
 <Br/><Br/>
 or one of the following strings <Br/><Br/>
 "SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" ,
@@ -35,8 +35,25 @@ Data for the first list of  non-free resolutions was provided provided by <B>Mat
 
 <Row>
 <Item>
+<Index> QuotientOfContractibleGcomplex</Index>
+<C>QuotientOfContractibleGcomplex(C,D)</C>
+<P/>
+Inputs
+a non-free <M>ZG</M>-resolution <M>C</M> and a finite subgroup <M>D</M> of <M>G</M> which is  
+ a subgroup of each cell stabilizer group for <M>C</M>. Each element of <M>D</M> must preserves the orientation of any cell stabilized by it. 
+It returns the corresponding non-free
+<M>Z(G/D)</M>-resolution. (So, for instance,  from the <M>SL(2,O)</M> complex <M>C=ContractibleGcomplex("SL(2,O-2)");</M> we can construct a <M>PSL(2,O)</M>-complex using this function.)  
+
+</Item>
+</Row>
+
+
+
+
+<Row>
+<Item>
 <Index> TruncatedGComplex</Index>
-<C> TruncatedGComplex(R,m,n)</C>
+<C>TruncatedGComplex(R,m,n)</C>
 <P/>
 Inputs 
 a non-free <M>ZG</M>-resolution <M>R</M> and two positive
@@ -49,7 +66,7 @@ It returns the  non-free <M>ZG</M>-resolution  consisting of those modules in <M
 <Row>
 <Item>
 <Index> FundamentalDomainStandardSpaceGroup (HAPcryst)</Index>
-<C> FundamentalDomainStandardSpaceGroup(v,G)</C>
+<C>FundamentalDomainStandardSpaceGroup(v,G)</C>
 <P/>
 Inputs a crystallographic
 group G (represented using AffineCrystGroupOnRight as in 
@@ -69,9 +86,7 @@ The function requires the use of Polymake software.
 <Row>
 <Item>
 <Index>OrbitPolytope</Index>
-<C>
-OrbitPolytope(G,v,L)
-</C>
+<C>OrbitPolytope(G,v,L) </C>
 <P/>
 
 Inputs a permutation group or matrix group <M>G</M> of degree <M>n</M>
@@ -101,13 +116,8 @@ The function uses Polymake software.
 <Row>
 <Item>
 <Index> PolytopalComplex</Index>
-<C>
-PolytopalComplex(G,v)
-</C>
-<Br/>
-<C>
-PolytopalComplex(G,v,n)
-</C>
+<C>PolytopalComplex(G,v) </C>
+<C>PolytopalComplex(G,v,n) </C>
 <P/>
 
 Inputs a permutation group or matrix group <M>G</M>
@@ -154,9 +164,7 @@ is used, then only the first <M>n</M> terms of the resolution
 <Row>
 <Item>
 <Index> PolytopalGenerators</Index>
-<C>
-PolytopalGenerators(G,v)
-</C>
+<C>PolytopalGenerators(G,v) </C>
 <P/>
 
 
@@ -187,9 +195,7 @@ The list is a generating set for <M>G</M>.</Item>
 <Row>
 <Item>
 <Index>VectorStabilizer</Index>
-<C> 
-VectorStabilizer(G,v)
-</C>
+<C>VectorStabilizer(G,v) </C>
 <P/>
 
 Inputs a permutation group or matrix group <M>G</M> of degree <M>n</M> 
