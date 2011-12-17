@@ -84,5 +84,6 @@ fi;
 
 ################### POLYMAKE #######################################
 ReadPackage("HAP", "lib/Polymake/aspherical.gi");
-ReadPackage("HAP", "lib/Polymake/basedEdges.gi");
+ReadPackage("HAP", "lib/Polymake/polyGens.gi");
 ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
+ReadPackage("HAP", "lib/Polymake/polyFaces.gi");

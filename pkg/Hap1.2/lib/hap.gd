@@ -86,3 +86,5 @@ DeclareGlobalFunction("IntegralRingGenerators");
 DeclareGlobalFunction("IsAspherical");
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
+DeclareGlobalFunction("PolytopalComplex");
+
