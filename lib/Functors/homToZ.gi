@@ -64,7 +64,9 @@ if M[n]=n then
    for j in [1..R.dimension(n-1)] do
    row[j]:=0;
    od;
-   Mt[1]:=row;
+   for i in [1..R.dimension(n-1)] do
+   Append(Mt,[row]);
+   od;
    M[n]:=Mt;
    fi;
 
