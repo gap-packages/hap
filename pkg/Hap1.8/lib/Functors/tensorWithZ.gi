@@ -114,10 +114,25 @@ local
 R:=F!.source;
 S:=F!.target;
 DimensionS:=S!.dimension;
-RhomS:=F!.mapping;
 C:=TensorWithZ_Obj(R);
 D:=TensorWithZ_Obj(S);
 DimensionC:=C!.dimension;
+
+#####################################################################
+RhomS:=function(w,n)
+local x,y,v;
+v:=[];
+
+for x in w do
+y:=F!.mapping([[x[2],1]],n);
+Apply(y,t->[x[1]*SignInt(t[1]),AbsInt(t[1])]);
+Append(v,y);
+od;
+
+return v;
+end;
+#####################################################################
+
 
 #####################################################################
 CmapR:=function(v,n)
@@ -127,10 +142,7 @@ w:=[];
 
 for i in [1..DimensionC(n)] do
 if not v[i]=0 then
-	x:=[SignInt(v[i])*i,1];
-	for j in [1..AbsoluteValue(v[i])] do
-	     Append(w,[x]);
-	od;
+	Add(w,[v[i],i]);
 fi;
 od;
 
@@ -148,7 +160,9 @@ v[i]:=0;
 od;
 
 for x in w do
-v[AbsoluteValue(x[1])]:=v[AbsoluteValue(x[1])]+SignInt(x[1]);
+v[x[2]]:=v[x[2]]+x[1];
+
+
 od;
 
 return v;

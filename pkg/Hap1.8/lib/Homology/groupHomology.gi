@@ -45,6 +45,9 @@ Print("ERROR: third variable should be a prime integer. \n");
 return fail;
 fi;
 
+if N=0 and p=0 then return [0]; fi;
+if N=0 and p>0 then return [p]; fi;
+
 ############################## DATA INPUT ###########################
 
 if IsPrime(p) then
@@ -145,7 +148,7 @@ for q in primes do
 
 S:=SylowSubgroup(G,q);
 
-if Order(S)>=128 and N>2 then
+if Order(S)>=128 or N>2 then
 R:=ResolutionNormalSeries(LowerCentralSeries(S),N+1);
 else
 gens:=GeneratorsOfGroup(S);

@@ -23,8 +23,7 @@ local
 	LengthM1,LengthM2,
         i;
 
-if n <0 then return false; fi;
-#if n=0 then return [0]; fi;
+if n <0 then return 0; fi;
 
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
@@ -44,7 +43,8 @@ fi;
 if Length(M1)=0 then RankM1:=0; else
 RankM1:=RankMatDestructive(M1);
 fi;
-LengthM1:=Length(M1);
+#LengthM1:=Length(M1);
+LengthM1:=Dimension(n);
 M1:=0;
 
 for i in [1..Dimension(n+1)] do
@@ -76,7 +76,7 @@ local
 	i,k,tmp;
 
 if n <0 then return false; fi;
-if n=0 then return [0]; fi;
+if n=0 then return [1]; fi;  #This is in general WRONG!!!
 
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
