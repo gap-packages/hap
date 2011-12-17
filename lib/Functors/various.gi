@@ -103,3 +103,22 @@ return gens;
 end);
 #####################################################################
 
+#####################################################################
+InstallGlobalFunction(BigStepLCS,
+function(G,n)
+local LCS,BSLCS,i;
+
+LCS:=LowerCentralSeries(G);;
+BSLCS:=[LCS[1]];
+
+for i in [2..Length(LCS)] do
+if Order(LCS[i])=1 or
+Order(BSLCS[Length(BSLCS)])/Order(LCS[i])>n then
+Append(BSLCS,[LCS[i]]);
+fi;
+od;
+
+return BSLCS;
+end);
+#####################################################################
+

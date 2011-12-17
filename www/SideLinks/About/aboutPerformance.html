@@ -52,7 +52,7 @@ from further work on these.&nbsp; We discuss this below.<br>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top;"><span
  style="font-family: helvetica,arial,sans-serif; font-weight: bold;">1.&nbsp;
-ResolutionOfFiniteGroup(gens,n)<br>
+ResolutionFiniteGroup(gens,n)<br>
       </span><span
  style="font-family: helvetica,arial,sans-serif; font-weight: bold;"><span
  style="text-decoration: underline;"><br>
@@ -73,25 +73,25 @@ timings (in milliseconds)</span><span
  style="text-decoration: underline;"></span><br
  style="font-family: serif;">
       <span style="font-family: serif; color: rgb(0, 0, 0);">gap&gt;
-P:=ResolutionFiniteGroup([(1,2),(1,2,3,4,5,6,7)],2);;time;</span><br
+P:=ResolutionFiniteGroup([(1,2),(1,2,3,4,5,6)],2);;time;</span><br
  style="font-family: serif; color: rgb(0, 0, 0);">
       <span style="font-family: serif;"><span
- style="color: rgb(0, 0, 0);">49330</span><br
+ style="color: rgb(0, 0, 0);">8144</span><br
  style="color: rgb(0, 0, 0);">
       <br style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">gap&gt;
-P:=PresentationViaCosetTable(Group([(1,2),(1,2,3,4,5,6,7)]));;time;</span><br
+P:=PresentationViaCosetTable(Group([(1,2),(1,2,3,4,5,6)]));;time;</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">210</span><br>
+      <span style="color: rgb(0, 0, 0);">21</span><br>
       <br>
 suggest that </span></span><span
  style="font-family: helvetica,arial,sans-serif;"><span
  style="font-family: serif;">the run time of</span> <span
  style="font-family: serif;">the resolution function is not optimal.
-Most of the timing discrepancy arises because</span></span> the
-resolution function first computes the multiplication for G. This table
-takes 33 seconds to calculate, but pays off when n&gt;2. Nevertheless,
-there is a remaining discrepancy of 13 seconds between the timings
+Some of the timing discrepancy arises because</span></span> the
+resolution function first computes the multiplication for G. This pays
+off when n&gt;2. Nevertheless,
+there is a large remaining discrepancy between the timings
 which needs investigation. <br>
       <br>
 b) The performance of the resolution function for higher n is also very
@@ -291,7 +291,7 @@ PrimePartDerivedFunctor(G,R,T,2);time;</span><br
  style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">[&nbsp; ]</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">23406</span><br
+      <span style="color: rgb(0, 0, 0);">8077</span><br
  style="color: rgb(0, 0, 0);">
       <br style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">gap&gt;
@@ -299,7 +299,7 @@ PrimePartDerivedFunctor(G,S,T,2);time;</span><br
  style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">[&nbsp; ]</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">10913</span><br
+      <span style="color: rgb(0, 0, 0);">9594</span><br
  style="color: rgb(0, 0, 0);">
       <br>
       <span style="color: rgb(0, 0, 102);">The discrepancy

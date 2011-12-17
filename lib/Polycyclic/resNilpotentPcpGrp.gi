@@ -12,8 +12,10 @@ local
 	GmapE,
 	RN,
 	RG,
-	RE;
+	RE,
+	T;
 
+HAPconstant:=50;
 EE:=arg[1];
 K:=arg[2];
 if Length(arg)>2 then Test:=arg[3]; else Test:="NoTest"; fi;
@@ -42,7 +44,11 @@ RN:=ResolutionNilpotentGroup(N,K);;
 fi;
 RG:=ResolutionNilpotentGroup(G,K);;
 
-return ResolutionExtension(EEhomGG,RN,RG,Test);
+
+T:= ResolutionExtension(EEhomGG,RN,RG,Test);
+HAPconstant:=2;
+
+return T;
 end);
 #####################################################################
 

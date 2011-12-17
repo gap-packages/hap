@@ -7,7 +7,7 @@ Print("           ##                       HAP                       ##\n");
 Print("           ##            A library of functions for           ##\n");
 Print("           ##         Homological Alegbra Programming         ##\n");
 Print("           ##                                                 ##\n");
-Print("           ## (21 March 2006. 'Type Copyright();' for details ##\n");
+Print("           ## (7 April 2006. Type 'Copyright();' for details  ##\n");
 Print("           ##  of the GPL copyright.)                         ##\n");
 Print("           ####################################################\n");
 Print("           ####################################################\n\n");

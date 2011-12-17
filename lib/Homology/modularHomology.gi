@@ -6,9 +6,54 @@
 InstallGlobalFunction(ModularHomology,
 function(X,n)
 local  
+	FasterHomology_Obj,
 	Homology_Obj,
 	Homology_Arr,
 	HomologyAsFpGroup;
+
+#####################################################################
+#####################################################################
+FasterHomology_Obj:=function(C,n)
+local
+        M1, M2,
+        dim,
+        rankM1, rankM2,
+        Dimension, Boundary,
+        BasisKerd1, BasisImaged2, Rels, Rank, RankM1, RankM2,
+	LengthM1,LengthM2,
+        i;
+
+if n <0 then return false; fi;
+if n=0 then return [0]; fi;
+
+Dimension:=C.dimension;
+Boundary:=C.boundary;
+M1:=[];
+M2:=[];
+						
+for i in [1..Dimension(n)] do
+M1[i]:=Boundary(n,i);
+od;
+M1:=MutableCopyMat(M1);
+if Length(M1)=0 then RankM1:=0; else
+RankM1:=RankMatDestructive(M1);fi;
+LengthM1:=Length(M1);
+M1:=0;
+
+for i in [1..Dimension(n+1)] do
+M2[i]:=Boundary(n+1,i);
+od;
+M2:=MutableCopyMat(M2);
+if Length(M2)=0 then RankM2:=0; else
+RankM2:=RankMatDestructive(M2);fi;
+M2:=0;
+
+Rank:= LengthM1-RankM1 -RankM2;;
+
+return rec( rank:=Rank);
+end;
+#####################################################################
+#####################################################################
 
 
 #####################################################################
@@ -20,7 +65,7 @@ local
 	rankM1, rankM2, 
 	Dimension, Boundary,
 	BasisKerd1, BasisImaged2, Rels, Rank, 
-	i;
+	i,k,tmp;
 
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;
@@ -33,15 +78,24 @@ M2:=[];
 for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
-
-BasisKerd1:=NullspaceMat(M1);
+M1:=MutableCopyMat(M1);
+BasisKerd1:=NullspaceMatDestructive(M1);
 
 M1:=0;
-for i in [1..Dimension(n+1)] do
-M2[i]:=Boundary(n+1,i);
-od;
+tmp:=[];
+k:=0;
 
-BasisImaged2:=BaseMat(M2);
+while k<Dimension(n+1) do
+M2:=[];
+for i in [k+1..Minimum(Dimension(n+1),k+100)] do
+M2[i-k]:=Boundary(n+1,i);
+od;
+k:=Minimum(Dimension(n+1),k+100);
+Append(tmp,BaseMat(M2));
+od;
+Append(tmp,[M2[1]]);
+
+BasisImaged2:=BaseMat(tmp); tmp:=0;
 dim:=Length(BasisImaged2);
 
 Rels:=[];
@@ -115,7 +169,7 @@ od;
 od;
 
 H:=F/Frels;
-FhomH:=GroupHomomorphismByImages(F,H,Fgens,GeneratorsOfGroup(H));
+FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
 
 #####################################################################
 HhomC:=function(w);
@@ -174,7 +228,7 @@ for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
 od;
 
-HChomHD:=GroupHomomorphismByImages(HC,HD,gensHC,imageGensHC);
+HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
 return HChomHD;
 end;
 #####################################################################
@@ -185,7 +239,7 @@ end;
 		
 
 if EvaluateProperty(X,"type")="chainComplex" then
-return Homology_Obj(X,n).rank; fi;
+return FasterHomology_Obj(X,n).rank; fi;
 
 if EvaluateProperty(X,"type")="chainMap" then
 return Homology_Arr(X,n); fi;

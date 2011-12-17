@@ -71,7 +71,7 @@ returns the abelian group
 invariants of the n-dimensional homology of the group G with
 coefficients in the integers Z with trivial G-action. We see that H<sub>99</sub>(D<sub>201</sub>,Z)
 = Z<sub>402</sub>, (Timings are in milliseconds, and measured on a
-1.4GHz laptop with 256MB memory using an uncompiled version of HAP.)<br>
+1.4GHz laptop with 256MB memory.)<br>
       <br>
 The above example has two features that dramatically help the
 computations.
@@ -85,9 +85,12 @@ be computed in low dimensions. The following commands show that:<br>
       <ul>
         <li>the
 alternating group A<sub>7</sub> (of order 2520) has H<sub>10</sub>(A<sub>7</sub>,Z)
-= Z<sub>6</sub>+(Z<sub>3</sub>)<sup>2</sup> ,&nbsp; </li>
+= Z<sub>6</sub>+(Z<sub>3</sub>)<sup>2</sup> , <br>
+        </li>
         <li>the special linear group SL<sub>3</sub>(Z<sub>3</sub>) (of
 order 5616) has H<sub>8</sub>(SL<sub>3</sub>(Z<sub>3</sub>),Z)=Z<sub>6 ,</sub></li>
+        <li>the diherdral group D<sub>2048</sub> (of order 4096) has H<sub>8</sub>(D<sub>2048</sub>,Z)
+= (Z<sub>2</sub>)<sup>4</sup> ,</li>
         <li>the group SL<sub>3</sub>(Z<sub>5</sub>) (of order 372000)
 has H<sub>3</sub>(SL<sub>3</sub>(Z<sub>5</sub>),Z) = Z<sub>24</sub> .</li>
         <li>the abelian group G=C<sub>2</sub>&times;C<sub>4</sub>&times;C<sub>6</sub>&times;C<sub>8</sub>&times;C<sub>10
@@ -102,17 +105,21 @@ has H<sub>3</sub>(SL<sub>3</sub>(Z<sub>5</sub>),Z) = Z<sub>24</sub> .</li>
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
 GroupHomology(AlternatingGroup(7),10);time;<br>
 [ 2, 3, 3, 3 ]<br>
-3899<br>
+1090<br>
       <br>
 gap&gt; S:=Image(IsomorphismPermGroup(SL(3,3)));;<br>
 gap&gt; GroupHomology(S,8);time;<br>
 [ 2, 3 ]<br>
-28797<br>
+14704<br>
+      <br>
+gap&gt; GroupHomology(DihedralGroup(2^12),8);time;<br>
+[ 2, 2, 2, 2 ]<br>
+18139<br>
       <br>
 gap&gt; S:=Image(IsomorphismPermGroup(SL(3,5)));;<br>
 gap&gt; GroupHomology(S,3);time;<br>
 [ 8, 3 ]<br>
-246062<br>
+36003<br>
       <br>
 gap&gt;G:=AbelianGroup([2,4,6,8,10,12]);;<br>
 gap&gt; GroupHomology(G,6);time;<br>
@@ -164,9 +171,18 @@ GroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 homology of certain infinite groups can also be calculated. The
-following shows that the classical braid group B on eight strings
+following shows that <br>
+      <ul>
+        <li>the classical braid group B on eight strings
 (represented by a linear Coxeter diagram D with seven vertices) has
-5-dimensional integral homology H<sub>5</sub>(B,Z) = Z<sub>3</sub> .<br>
+5-dimensional integral homology H<sub>5</sub>(B,Z) = Z<sub>3</sub> .</li>
+        <li>the Heisenberg group H in five complex variables (a torsion
+free nilpotent group of class two) has 5-dimensional integral homology H<sub>5</sub>(H,Z)
+= (Z<sub>2</sub>)<sup>43</sup>+Z<sub>6</sub>+Z<sup>132</sup>.</li>
+        <li>the free nilpotent group N of class 2 on four generators
+has 4-dimensional integral homology H<sub>4</sub>(N,Z) = (Z<sub>3</sub>)<sup>4</sup>+Z<sup>84</sup>.</li>
+      </ul>
+      <span style="font-family: helvetica,arial,sans-serif;"></span><br>
       </td>
     </tr>
     <tr>
@@ -174,10 +190,38 @@ following shows that the classical braid group B on eight strings
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 D:=[&nbsp; [1,[2,3]],&nbsp; [2,[3,3]],&nbsp; [3,[4,3]],&nbsp;
 [4,[5,3]],&nbsp; [5,[6,3]],&nbsp; [6,[7,3]]&nbsp; ];;<br>
-      <br>
 gap&gt; GroupHomology(D,5);time;<br>
 [ 3 ]<br>
-13885<br>
+9885<br>
+      <br>
+gap&gt; GroupHomology(HeisenbergPcpGroup(5),5);time;<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0 ]<br>
+114034<br>
+      <br>
+gap&gt; F:=FreeGroup(4);; N:=NilpotentQuotient(F,2);;<br>
+gap&gt; GroupHomology(N,4);time;<br>
+[ 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+35967<br>
       </td>
     </tr>
     <tr>

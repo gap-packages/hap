@@ -4,13 +4,15 @@
 InstallGlobalFunction(GroupHomology,
 function(arg)
 local
-		G, gensG, N, p, D,
+		G, gensG, N, p, D, 
+		Functor,
 		HomologyPrimePowerGroup,
 		HomologyGenericGroup,
-		HomologyGenericGroupModP,
 		HomologySmallGroup,
 		HomologyArtinGroup,
-		HomologyAbelianGroup;
+		HomologyAbelianGroup,
+		HomologyNilpotentPcpGroup;
+
 
 ############################### INPUT DATA ##########################
 if IsList(arg[1]) then D:=arg[1]; G:=false; 
@@ -30,10 +32,16 @@ fi;
 if Length(arg)>2 then p:=arg[3]; else p:=0; fi;
 if not (p=0 or IsPrimeInt(p)) then 
 Print("ERROR: third variable should be a prime integer. \n");
+return fail;
 fi;
 
 ############################## DATA INPUT ###########################
 
+if IsPrime(p) then
+Functor:=function(R); return TensorWithIntegersModP(R,p); end;
+else
+Functor:=TensorWithIntegers;
+fi;
 
 #####################################################################
 #####################################################################
@@ -41,11 +49,7 @@ HomologySmallGroup:=function()
 local R;
 
 R:=ResolutionFiniteGroup(gensG,N+1,false,p);
-if p=0 then
-return Homology(TensorWithIntegers(R),N);
-else
-return Homology(TensorWithIntegersModP(R,p),N);
-fi;
+return Homology(Functor(R),N);
 
 end;
 #####################################################################
@@ -56,22 +60,17 @@ end;
 #####################################################################
 HomologyPrimePowerGroup:=function()
 local
-		R, C, L, LL, x;
+		R, L, LL, x;
 
 if Order(G)<32 then R:=ResolutionFiniteGroup(gensG,N+1,false,p); 
 else
-L:=LowerCentralSeries(G);
+#L:=LowerCentralSeries(G);
+L:=BigStepLCS(G,9);
 
 R:=ResolutionNormalSeries(L,N+1,false,p);
 fi;
 
-if p=0 then
-C:=TensorWithIntegers(R);
-return Homology(C,N);
-else
-C:=TensorWithIntegersModP(R,p);
-return Homology(C,N);
-fi;
+return Homology(Functor(R),N);
 
 end;
 #####################################################################
@@ -81,18 +80,12 @@ end;
 #####################################################################
 #####################################################################
 HomologyAbelianGroup:=function()
-local L,R,C;
+local L,R;
 
 L:=AbelianInvariantsToTorsionCoefficients(AbelianInvariants(G));
 R:=ResolutionAbelianGroup(L,N+1);
 
-if p=0 then
-C:=TensorWithIntegers(R);
-else
-C:=TensorWithIntegersModP(R,p);
-fi;
-
-return Homology(C,N);
+return Homology(Functor(R),N);
 end;
 #####################################################################
 #####################################################################
@@ -115,7 +108,10 @@ gens:=GeneratorsOfGroup(S);
 gens:=ReduceGenerators(gens,S);
 R:=ResolutionFiniteGroup(gens,N+1,false,p);
 
-H:=Homology(TensorWithIntegers(R),N);
+H:=Homology(Functor(R),N);
+if IsInt(H) then
+	if H=0 then H:=[]; else H:=[H]; fi;
+fi;
 
 if 
 Order(Centralizer(G,S))=Order(Center(S))*Order(G)/Order(S)
@@ -124,7 +120,7 @@ Length(H)=0
 then Append(TorsionCoeffs,H); 
 else
 Append(TorsionCoeffs,
-PrimePartDerivedFunctor(G,R,TensorWithIntegers,N));
+PrimePartDerivedFunctor(G,R,Functor,N));
 fi;
 od;
 
@@ -139,43 +135,20 @@ HomologyArtinGroup:=function()
 local R;
 
 R:=ResolutionArtinGroup(D,N+1);;
-R:=TensorWithIntegers(R);;
-return Homology(R,N);
+return Homology(Functor(R),N);
 
 end;
 #####################################################################
 #####################################################################
 
-
 #####################################################################
 #####################################################################
-HomologyGenericGroupModP:=function()
-local
-        S, gens, R, H, functor;
+HomologyNilpotentPcpGroup:=function()
+local R;
 
-#####################################################################
-functor:=function(X);
-return TensorWithIntegersModP(X,p);
-end;
-#####################################################################
+R:=ResolutionNilpotentGroup(G,N+1);;
+return Homology(Functor(R),N);
 
-	S:=SylowSubgroup(G,p);
-	gens:=GeneratorsOfGroup(S);
-	gens:=ReduceGenerators(gens,S);
-	R:=ResolutionFiniteGroup(gens,N+1,false,p);
-
-	H:=Homology(functor(R),N);
-
-	if
-	Order(Centralizer(G,S))=Order(Center(S))*Order(G)/Order(S)
-	or
-	H=0
-	then return H;
-	else
-	return	
-	PrimePartDerivedFunctor(G,R,functor,N);
-	fi;
-	
 end;
 #####################################################################
 #####################################################################
@@ -184,6 +157,15 @@ end;
 
 if IsList(D) then
 return HomologyArtinGroup(); fi;
+
+if IsPcpGroup(G) then
+	if IsNilpotentGroup(G) then
+	return HomologyNilpotentPcpGroup();
+	else
+	Print("Only nilpotent pcp groups are handled by this function. \n");
+	return fail;
+	fi;
+fi;
 
 if IsAbelian(G) then
 return HomologyAbelianGroup(); fi;
@@ -194,9 +176,7 @@ return HomologyPrimePowerGroup(); fi;
 if Order(G)<16 then
 return HomologySmallGroup(); fi;
 
-if p=0 then
-return HomologyGenericGroup(); fi;
+return HomologyGenericGroup(); 
 
-return HomologyGenericGroupModP();
 
 end);

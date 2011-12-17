@@ -302,36 +302,58 @@ returns a list of cohomology classes in H<sup>n</sup>(G,Z)
 which, together with all cup products of classes of lower degrees,
 generates the group H<sup>n</sup>(G,Z). <br>
       <br>
-The following commands show that, for the free abelian group A=Z<sup>4</sup>
-of rank four, the (well-known) cohomology H<sup>*</sup>(A,Z) is
+The following commands show that, for the free nilpotent group G of
+class 2 on three generators, the cohomology H<sup>*</sup>(G,Z) is
 generated as a ring
-by four classes in degree 1. They also show that, as an abelian
-group, H<sup>*</sup>(A,Z) is free abelian of rank 16.<br>
+by three classes in dimension 1, eight classes in dimension&nbsp; 2 and
+six classes in dimension 3. They also show that, as an abelian
+group, the ring H<sup>*</sup>(G,Z) is free abelian of rank 35.<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-R:=ResolutionAbelianGroup([0,0,0,0],5);;<br>
-gap&gt; R.dimension(5);<br>
-0<br>
-gap&gt; C:=HomToIntegers(R);;<br>
-gap&gt; Cohomology(C,0);Cohomology(C,1);Cohomology(C,2);
-Cohomology(C,3);Cohomology(C,4);<br>
-[ 0 ]<br>
-[ 0, 0, 0, 0 ]<br>
-[ 0, 0, 0, 0, 0, 0 ]<br>
-[ 0, 0, 0, 0 ]<br>
-[ 0 ]<br>
+F:=FreeGroup(3);;G:=NilpotentQuotient(F,2);;<br>
+gap&gt; R:=ResolutionNilpotentGroup(G,10);;<br>
       <br>
-gap&gt; IntegralRingGenerators(R,1);<br>
-[ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ]<br>
-gap&gt; IntegralRingGenerators(R,2);<br>
-[&nbsp; ]<br>
-gap&gt; IntegralRingGenerators(R,3);<br>
-[&nbsp; ]<br>
-gap&gt; IntegralRingGenerators(R,4);<br>
-[&nbsp; ]<br>
+gap&gt; for n in [1..9] do<br>
+&gt; Print("Cohomology group in dimension ",n," =
+",Cohomology(HomToIntegers(R),n),"\n");<br>
+&gt;od;<br>
+Cohomology group in dimension 1 = [ 0, 0, 0 ]<br>
+Cohomology group in dimension 2 = [ 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+Cohomology group in dimension 3 = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+Cohomology group in dimension 4 = [ 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+Cohomology group in dimension 5 = [ 0, 0, 0 ]<br>
+Cohomology group in dimension 6 = [ 0 ]<br>
+Cohomology group in dimension 7 = [&nbsp; ]<br>
+Cohomology group in dimension 8 = [&nbsp; ]<br>
+Cohomology group in dimension 9 = [&nbsp; ]<br>
+      <br>
+gap&gt; for n in [1..9] do<br>
+&gt; Print("Ring generators in dimension ",n, " =
+",IntegralRingGenerators(R,n),"\n");<br>
+&gt; od;<br>
+Ring generators in dimension 1 = [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1
+] ]<br>
+Ring generators in dimension 2 =<br>
+[ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ],<br>
+&nbsp; [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ]<br>
+Ring generators in dimension 3 = <br>
+[ [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],<br>
+&nbsp; [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]<br>
+Ring generators in dimension 4 = [&nbsp; ]<br>
+Ring generators in dimension 5 = [&nbsp; ]<br>
+Ring generators in dimension 6 = [&nbsp; ]<br>
+Ring generators in dimension 7 = [&nbsp; ]<br>
+Ring generators in dimension 8 = [&nbsp; ]<br>
+Ring generators in dimension 9 = [&nbsp; ]<br>
       </td>
     </tr>
     <tr>

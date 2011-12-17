@@ -24,7 +24,8 @@ FhomG:=GroupHomomorphismByImagesNC(F,G,gensF,gensG);
 EltsG:=[Identity(G)];
 
 if IsFreeGroup(G) and Length(gensG)=1 then toggle:=true;
-x:=4; for i in [1..x]  do	##INCREASE x IF THIS CAUSES PROBLEMS
+x:=HAPconstant; ##CHANGE x IF THIS CAUSES PROBLEMS!
+for i in [1..x]  do
 Append(EltsG,[F.1^i,F.1^-i]);
 od;
 fi;
@@ -43,7 +44,7 @@ end;
 PseudoBoundary:=[[],[]];
 
 for i in [1..Dimension(1)] do
-Append(PseudoBoundary[1], [   [ [-1,1], [1,i+1] ]   ]);
+Append(PseudoBoundary[1], [   [ [-1,1], [1,i+1] ]   ]); 
 Append(EltsG,[gensG[i]]);
 od;
 
@@ -87,13 +88,13 @@ for k in [-100..100] do			#THIS SLOPPINESS MIGHT CAUSE PROBLEMS
 if F.1^k=g then j:=k; break; fi;
 od;
 
-if j>0 then k:=Position(EltsG,F.1^(j-1));
+if j>0 then k:=Position(EltsG,F.1^(j-1)); 
 hty:=Concatenation(ShallowCopy(HomotopyRecord(i,[x[1],k])),
-				[[1,k]]);
+				[[1,k]]); 
 
 else k:=Position(EltsG,F.1^(j+1)); 
 hty:=Concatenation(ShallowCopy(HomotopyRecord(i,[x[1],k])),
-                                [[-1,x[2]]]);
+                                [[-1,x[2]]]); 
 fi;  #Need to think more about this!
 
 

@@ -8,12 +8,13 @@ if EvaluateProperty(X,"characteristic")=0 then
 return IntegralHomology(X,N); fi;
 
 if 	IsPrimeInt(EvaluateProperty(X,"characteristic"))
-#	and
-#	EvaluateProperty(X,"type")="chainComplex"
+	or (EvaluateProperty(X,"characteristic")=-1/2
+	    and 
+	    EvaluateProperty(X,"type")="chainComplex")
 then
 	return ModularHomology(X,N); 
 else
-	Print("Induced morphisms in mod p homology are not yet implemented\n");
+	Print("Induced morphisms in rational homology are not yet implemented\n");
 	return fail;
 fi;
 

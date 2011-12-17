@@ -1,13 +1,15 @@
 #(C) Graham Ellis, 2005-2006
 
+
 #####################################################################
 InstallGlobalFunction(ResolutionDirectProduct,
 function(arg)
 local
 	R,S,
-	G,H,E,GhomE,HhomE,EhomG,EhomH,EltsE,
- 	DimensionR,BoundaryR,HomotopyR,EltsG,
-        DimensionS,BoundaryS,HomotopyS,EltsH,
+	G,H,E,K,GhomE,HhomE,EhomG,EhomH,EltsE,
+	pcpEmod,Emod,Ehom, homE,
+ 	DimensionR,BoundaryR,HomotopyR,
+        DimensionS,BoundaryS,HomotopyS,
 	Lngth,Dimension,Boundary,Homotopy,
 	PseudoBoundary,
 	DimPQ,
@@ -23,14 +25,26 @@ local
 	HorizontalBoundaryGen,
 	HorizontalBoundaryWord,
 	F,FhomE,
-	gensE, gensE1, gensE2,
-	i,g,h;
+	gensE, gensE1, gensE2, 
+	AppendToElts, RappendToElts, SappendToElts,
+	i,j,k,g,h,fn;
 
 R:=arg[1];
 S:=arg[2];
 
-G:=R.group; EltsG:=R.elts;
-H:=S.group; EltsH:=S.elts;
+if "appendToElts" in RecNames(R) then RappendToElts:=R.appendToElts;
+else
+RappendToElts:=function(x); Append(R.elts,[x]); return R.elts; end;
+fi;
+
+if "appendToElts" in RecNames(S) then SappendToElts:=S.appendToElts;
+else
+SappendToElts:=function(x); Append(S.elts,[x]); return S.elts; end;
+fi;
+
+
+G:=R.group; 
+H:=S.group; 
 
 ####################### DIRECT PRODUCT OF GROUPS ###########
 if Length(arg)=2 then
@@ -43,22 +57,70 @@ EhomH:=Projection(E,2);
 
 else  	#if G and H both lie in a group K, and if they commute and have
 	#have trivial intersection then we create their direct product as
-	#a subgroup of K.
+	#a subgroup of K. We treat pcp groups as a seperate case.
 
+#####PCP CASE #######################
+if IsPcpGroup(G) then
+K:=PcpGroupByCollector(Collector(Identity(G)));
+
+gensE:=Igs(Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H)));
+E:=Subgroup(K,gensE);
+       
+       
+GhomE:=GroupHomomorphismByFunction(G,E,x->x);
+HhomE:=GroupHomomorphismByFunction(H,E,x->x);
+
+pcpEmod:=[];
+pcpEmod[1]:=Pcp(E,G);
+pcpEmod[2]:=Pcp(E,H);
+
+Emod:=[];
+Emod[1]:=PcpGroupByPcp(pcpEmod[1]);
+Emod[2]:=PcpGroupByPcp(pcpEmod[2]);
+
+Ehom:=[];
+Ehom[1]:=NaturalHomomorphism(E,G);
+Ehom[2]:=NaturalHomomorphism(E,H);
+
+homE:=[];
+homE[1]:=GroupHomomorphismByImagesNC(Range(Ehom[1]),E,
+	GeneratorsOfGroup(Range(Ehom[1])),
+	GeneratorsOfPcp(pcpEmod[1]));
+
+homE[2]:=GroupHomomorphismByImagesNC(Range(Ehom[2]),E,
+        GeneratorsOfGroup(Range(Ehom[2])),
+        GeneratorsOfPcp(pcpEmod[2]));
+
+
+	
+	fn:=function(x,n);
+	return
+	Image(homE[n],Image(Ehom[n],x));
+	end;
+
+
+	
+EhomG:=GroupHomomorphismByFunction(E,G,x->fn(x,2));
+EhomH:=GroupHomomorphismByFunction(E,H,x->fn(x,1));
+fi;
+############PCP CASE DONE###########
+
+############OTHER CASE##############
+if not IsPcpGroup(G) then
 gensE:=Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H));
 E:=Group(gensE);
 
 gensE1:=Concatenation(GeneratorsOfGroup(G),
-       List([1..Length(GeneratorsOfGroup(H))],x->Identity(G)));
-gensE2:=Concatenation(List([1..Length(GeneratorsOfGroup(G))],x->Identity(H)),
-       GeneratorsOfGroup(H));
-        
+ List([1..Length(GeneratorsOfGroup(H))],x->Identity(G)));
+ gensE2:=Concatenation(List([1..Length(GeneratorsOfGroup(G))],x->Identity(H)),
+              GeneratorsOfGroup(H));
+
 GhomE:=GroupHomomorphismByFunction(G,E,x->x);
 HhomE:=GroupHomomorphismByFunction(H,E,x->x);
 EhomG:=GroupHomomorphismByImagesNC(E,G,gensE,gensE1);
 EhomH:=GroupHomomorphismByImagesNC(E,H,gensE,gensE2);
-
-
+fi;
+###########OTHER CASE DONE#########
 
 fi;
 ################ DIRECT PRODUCT OF GROUPS CONSTRUCTED #########
@@ -66,25 +128,20 @@ fi;
 
 
 EltsE:=[Identity(E)];
-for g in EltsG do
-for h in EltsH do
-AddSet(EltsE,Image(GhomE,g)*Image(HhomE,h));
-od;
-od;
-i:=Position(EltsE,Identity(E));
-EltsE[i]:=EltsE[1];
-EltsE[1]:=Identity(E);
 
+	AppendToElts:=function(x);
+	EltsE[Length(EltsE)+1]:=x;
+	return EltsE;
+	end;
 
 PseudoBoundary:=[];
 DimensionR:=R.dimension; 
 DimensionS:=S.dimension; 
-BoundaryR:=function(n,i);
-           return NegateWord(R.boundary(n,i));
-	   end;
-BoundaryS:=S.boundary; 
+BoundaryS:= S.boundary;
+	   
+BoundaryR:=R.boundary;  
 HomotopyR:=R.homotopy;
-HomotopyS:=S.homotopy; 
+HomotopyS:=S.homotopy;  
 
 #################DETERMINE VARIOUS PROPERTIES########################
 Lngth:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
@@ -225,13 +282,14 @@ p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 horizontal:=ShallowCopy(BoundaryR(p,r));
 Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R.elts[x[2]])   )  ]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
-if IsEvenInt(q) then
-horizontal:=NegateWord(horizontal);
-fi;
 
 vertical:=ShallowCopy(BoundaryS(q,s));
 Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S.elts[x[2]])  )    ]);
 Apply(vertical,x->[Vector2Int(p,q-1,r,x[1]),x[2]]);
+if IsOddInt(p) then
+vertical:=NegateWord(vertical);
+fi;
+
 
 PseudoBoundary[k][j]:= Concatenation(horizontal, vertical);
 fi;
@@ -255,14 +313,13 @@ tmp:=Int2Vector(n,a);
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=StructuralCopy(BoundaryR(p,r));
+
 Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R.elts[x[2]]) )]);
+
+
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
-if IsEvenInt(q) then
-return NegateWord(horizontal);
-else
 return horizontal;
-fi;
 
 end;
 #####################################################################
@@ -288,11 +345,13 @@ local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;	#bool=true for vertical homotopy
 
 Eg:=EltsE[g];
 Eg1:=Image(EhomG,Eg);
+	if not Eg1 in R.elts then R.elts:=RappendToElts(Eg1); fi; 
+				    
 Eg2:=Image(EhomH,Eg);
-g2:=Position(S.elts,Eg2);
-g1:=Position(R.elts,Eg1);
-#Eg1:=Image(GhomE,Image(EhomG,Eg));
-#Eg2:=Image(HhomE,Image(EhomH,Eg));
+	if not Eg2 in S.elts then S.elts:=SappendToElts(Eg2); fi;
+				    
+g2:=Position(S.elts,Eg2); 
+g1:=Position(R.elts,Eg1); 
 Eg1:=Image(GhomE,Eg1);
 Eg2:=Image(HhomE,Eg2);
 
@@ -300,6 +359,8 @@ Eg2:=Image(HhomE,Eg2);
 hty:=HomotopyS(q,[s,g2]);
 Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S.elts[x[2]])]); 
 Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
+if IsOddInt(p) then
+hty:=NegateWord(hty); fi;
 
 if (p=0 and q>0) or bool then return hty; fi;
 
@@ -313,7 +374,7 @@ if q>0 then return hty; fi;
 
 hty1:=HomotopyR(p,[r,g1]);
 Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R.elts[x[2]])]);
-Apply(hty1,x->[ x[1], Elts2Int(Eg2*x[2])]);
+Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 
 Append(hty,hty1);
 
@@ -321,13 +382,11 @@ hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty1)),true
 
 Append(hty,NegateWord(hty1));
 
-#if p>0 then
 hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty1)),false);
 
 
 Append(hty,hty1); 	#I think this perturbation term is always zero and
 			#thus not necessary.
-#fi;
 
 return hty;
 end;
@@ -340,7 +399,7 @@ local vec,a;
 
 a:=AbsoluteValue(x[1]);
 vec:=Int2Vector(n,a);
-if SignInt(x[1])=1 then
+if SignInt(x[1])=1 then 
 return HomotopyGradedGen(x[2],vec[1],vec[2],vec[3],vec[4],bool);
 else
 return NegateWord(HomotopyGradedGen(x[2],vec[1],vec[2],vec[3],vec[4],bool));
@@ -372,6 +431,12 @@ if HomotopyR=fail or HomotopyS=fail then
 FinalHomotopy:=fail;
 fi;
 
+for i in [1..Lngth] do
+for j in [1..Dimension(i)] do
+g:=Boundary(i,j);
+od;
+od;
+
 return rec(
             dimension:=Dimension,
 	    boundary:=Boundary,
@@ -383,7 +448,8 @@ return rec(
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],
-	    ["characteristic",Charact] ]);
+	    ["characteristic",Charact] ],
+	    appendToElts:=AppendToElts);
 
 end);
 #####################################################################

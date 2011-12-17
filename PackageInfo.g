@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.3",
-  Date    := "24/03/2006",
+  Version := "1.4",
+  Date    := "03/05/2006",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.3",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.4",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -35,11 +35,11 @@ SetPackageInfo( rec(
     )
   ],  
 
-  Status  := "deposited",
-  #CommunicatedBy 
-  #        := "Derek Holt",
-  #AcceptDate 
-  #        := "",
+  Status  := "accepted",
+  CommunicatedBy 
+          := "Derek Holt (Warwick)",
+  AcceptDate 
+          := "03/2006",
 
   README_URL := "http://hamilton.nuigalway.ie/Hap/README.HAP",
   PackageInfoURL := "http://hamilton.nuigalway.ie/Hap/PackageInfo.g",
@@ -63,7 +63,8 @@ SetPackageInfo( rec(
   Dependencies := rec(
     GAP := ">= 4.3",
     NeededOtherPackages := [],
-    SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ]],
+    SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ],
+    		 	       [ "nq",         ">=1.1" ]],
     ExternalConditions := [["Some functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"]]
   ),

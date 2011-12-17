@@ -9,15 +9,15 @@ local
 #####################################################################
 #####################################################################
 ResolutionAbGroup:=function(G,n)
-local gens,gensInf, gensFin, C, head, tail, R, hom,x,tmp ;
+local 
+	gens,gensInf, gensFin, C, head, tail, 
+	R, hom,x,tmp,FreeElts,gensG ,
+	PcpGT;
 
-gensInf:=[];
-gensFin:=[];
+gensFin:= GeneratorsOfGroup(TorsionSubgroup(G));
+PcpGT:=Pcp(G,TorsionSubgroup(G));
+gensInf:=List([1..Length(PcpGT)],i->PcpGT[i]);
 
-for x in GeneratorsOfGroup(G) do
-if Order(x)=infinity then Append(gensInf,[x]); fi;
-if Order(x)<infinity  then Append(gensFin,[x]); fi;
-od;
 
 if Length(gensFin)>0 then
 gensFin:=TorsionGeneratorsAbelianGroup(Group(gensFin));
@@ -27,19 +27,35 @@ fi;
 
 if Length(gensInf)>0 then
 gensInf:=ReduceGenerators(gensInf,Group(gensInf));
+#gensInf:=GeneratorsOfGroup(Group(gensInf));
 fi;
 
 gens:=Concatenation(gensInf,gensFin);
-
+gensG:=gens;
 
 if Length(gens)=1 then
 
-if IsFinite(G) then return ResolutionFiniteGroup(gens,n);
+if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
 else
 tmp:=ResolutionAbelianGroup([0],n);
+FreeElts:=tmp.elts;
+	tmp.appendToElts:=function(x)
+	local a,i,j;
+	a:=MappedWord(FreeElts[2],[FreeElts[2]], gensG);
+	for i in [0..10000] do
+	j:=false;
+	if a^i=x then j:=i; break; fi;
+	if a^-i=x then j:=-i; break; fi;
+	od;
+	Append(FreeElts,[FreeElts[2]^j]);
+	return(List(FreeElts, b-> 
+	MappedWord(FreeElts[2],[FreeElts[2]], gensG)));
+	end;
 
 tmp.elts:=List(tmp.elts,x->MappedWord(x,GeneratorsOfGroup(tmp.group),
-					GeneratorsOfGroup(G)));
+                                        gensG));
+
+
 tmp.group:=G;
 return tmp;
 fi;
@@ -48,8 +64,8 @@ fi;
 if Length(gens)=0 then return
 ResolutionFiniteGroup([Identity(G)],n); fi;
 
-head:=Group([gens[1]]);
-tail:=Group(List([2..Length(gens)],i->gens[i]));
+head:=Subgroup(G,[gens[1]]);
+tail:=Subgroup(G,List([2..Length(gens)],i->gens[i]));
 
 R:=ResolutionDirectProduct(ResolutionAbGroup(head,n),
 		        ResolutionAbGroup(tail,n),"internal");

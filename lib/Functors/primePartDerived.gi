@@ -9,7 +9,8 @@ local
 	HP, HK, HPK, HKhomHPK, HPKhomHP, HKhomHP,
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
-	HPrels, x, y, i,prime, core, conjs, conjelt;
+	HPrels, x, y, i,prime, core, conjs, conjelt,CentP,
+	HPpres,G1;
 
 C:=F(R);
 
@@ -20,29 +21,33 @@ for x in P do
 if Order(x)=prime then AddSet(core,x); fi;
 od;
 
-DCRS1:=DoubleCosetRepsAndSizes(G,P,P);
+DCRS1:=List(DoubleCosetRepsAndSizes(G,P,P),x->x[1]);
+
 DCRS:=[];
 for x in DCRS1 do
 for y in core do
-if x[1]*y*x[1]^-1 in core then Append(DCRS,[x]); break; fi;
+if x*y*x^-1 in core then Append(DCRS,[x]); break; fi;
 od;od;
 DCRSpruned:=[];
 
 HP:=GroupHomomorphismByFunction(P,P,x->x);
 HP:=EquivariantChainMap(R,R,HP);
 HP:=F(HP);
+
+
 HP:=Homology(HP,n);
+
 HP:=Source(HP);
 HPrels:=[Identity(HP)];
 
-if Order(HP)=1 then return []; fi;
+if Length(AbelianInvariants(HP))=0 then return []; fi;
 
 conjs:=[];
 conjelt:=[];
 for x in DCRS do
-Y:=(Intersection(P,P^x[1]));
+Y:=Intersection(P,P^x);
 AddSet(conjs,Y);
-Append(conjelt,[[x[1],Y]]);
+Append(conjelt,[[x,Y]]);
 od;
 
 for Y in conjs do
@@ -57,8 +62,12 @@ for L in DCRSpruned do
 K:=Intersection(P,P^L[1]);
 gensK:=ReduceGenerators(GeneratorsOfGroup(K),K);
 
+G1:=Group(Concatenation(gensK,[Identity(P)]));
+if Order(G1)<=32 then
 S:=ResolutionFiniteGroup(gensK,n+1);
-
+else
+S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
+fi;
 #S:=ResolutionFiniteSubgroup(R,K);
 if not (Homology(F(S),n)=[]) then
 
@@ -66,7 +75,7 @@ f:=GroupHomomorphismByFunction(K,P,x->x);
 HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
 HK:=Source(HKhomHPK);
 
-HPK:=Parent(Image(HKhomHPK));
+HPK:=Range(HKhomHPK);
 HPKhomHP:=GroupHomomorphismByImagesNC(HPK,HP,GeneratorsOfGroup(HPK),
                                                   GeneratorsOfGroup(HP));
 HKhomHP:=GroupHomomorphismByFunction(HK,HP,x->
@@ -93,8 +102,8 @@ od;
 fi;
 od;
 
-
 return AbelianInvariants(HP/NormalClosure(HP,Group(HPrels)));
+#return AbelianInvariants(FactorGroupFpGroupByRels(HP,HPrels));
 end);
 #####################################################################
 

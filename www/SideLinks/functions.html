@@ -331,6 +331,18 @@ entered.<big><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BigStepLCS(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and a positive integer n. It returns a subseries G=L<sub>1</sub>&gt;L<sub>2</sub>&gt;...L<sub>k</sub>=1
+of the lower central series of G such that L<sub>i</sub>/L<sub>i+1</sub>
+has order greater than n.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">CocycleCondition(R,n)</span><br>
       </td>
       <td
@@ -733,6 +745,17 @@ The function uses Polymake software. <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsSuperperfect(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and returns "true" if&nbsp; both the first and second
+integral homology of G is trivial. Otherwise, it returns "false". <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span><br>
       </td>
       <td
@@ -1004,6 +1027,44 @@ itself.<br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystalGroup(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and an almost
+crystallographic pcp group G.
+It
+returns n terms of a free ZG-resolution. (A group is <span
+ style="font-style: italic;">almost crystallographic</span> if it
+nilpotent-by-finite and has no non-trivial finite normal subgroup. Such
+groups can be constructed using the ACLIB package.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystal<br>
+Quotient(G,n,c)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">An
+almost crystallographic group G is an extension of a finite group P by
+a nilpotent group T, and has no non-trivial finite normal subgroup. We
+define the <span style="font-style: italic;">relative lower central
+series</span> by setting T<sub>1</sub>=T and T<sub>i+1</sub>=[T<sub>i</sub>,G].
+      <br>
+      <br>
+This function inputs an almost crystallographic group G together with
+positive integers n and c. It returns n terms of a free ZQ-resolution
+R for the group Q=G/T<sub>c</sub> .<br>
+      <br>
+In addition to the usual components, the resolution R has the component
+      <span style="font-family: helvetica,arial,sans-serif;">R.quotientHomomorphism</span>
+which gives the quotient homomorphism G&#8594;Q.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionArtinGroup(D,n)</span><br>
       </td>
@@ -1100,9 +1161,28 @@ return an element GmapE(x) in E&nbsp; which gets mapped onto x by g. <span
       <br>
       <span style="color: rgb(255, 0, 0);">The contracting homotopy on
 the
-ZE-resolution has not yet been implemented!</span><span
+ZE-resolution has not yet been fully implemented for infinite groups!</span><span
  style="font-family: helvetica,arial,sans-serif;"></span><br>
       </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteDirectProduct(R,S)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteDirect<br>
+Product(R,S,"internal")<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and ZH-resolution S where G and H are finite groups.
+It outputs a ZD-resolution for
+the direct product D=G&times;H. <br>
+      <br>
+If G and H lie in a common group K, and if they commute and have
+trivial intersection, then an optional third variable "internal" can be
+used. This will force D to be the subgroup GH in K.</td>
     </tr>
     <tr>
       <td
@@ -1142,10 +1222,7 @@ If a ZN-resolution S is available, where N is the kernel of the
 quotient E&#8594;G, then this can be incorporated into the computations using
 an optional fifth argument. </span></span><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
- style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 0, 102);"></span><br>
-      <br>
-The contracting homotopy on the
-ZE-resolution has not yet been implemented!</span><span
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 0, 102);"></span></span><span
  style="color: rgb(0, 0, 102);"><small><span
  style="color: rgb(255, 0, 0);"></span></small><br>
       </span></td>
@@ -1230,16 +1307,12 @@ the function ResolutionNormalSeries() probably gives better results.<br>
       <br>
 If an optional third argument is set equal to "TestFiniteness" then the
 groups N and G will be tested to see if they are finite. If they are
-finite then some speed saving routines will be invoked.<br>
-      <br>
-      <span style="font-weight: bold;">WARNING: This function is not
-yet perfect! It might crash or, even worse, produce a wrong answer. The
-problem can be avoided for finite groups by setting the third variable
-equal to the string "TestFiniteness". </span><br>
+finite then some speed saving routines will be invoked.<span
+ style="font-weight: bold;"></span><br>
       <br>
       <span style="color: rgb(255, 0, 0);">The contracting homotopy on
 the
-ZE-resolution has not yet been implemented!</span><br>
+ZE-resolution has not yet been fully implemented for infinite groups.</span><br>
       </td>
     </tr>
     <tr>
@@ -1272,7 +1345,7 @@ list of generating sets for the L<sub>i</sub> (and these&nbsp;
 particular generators will be used in the construction of resolutions).
 It returns a Z(G/L<sub>k</sub>)-resolution by repeatedly using the
 function
-ResolutionOfFiniteExtension(). Typically L<sub>k</sub>=1 in which case
+ResolutionFiniteExtension(). Typically L<sub>k</sub>=1 in which case
 a ZG-resolution is returned.<br>
       <br>
 The function has an optional third
@@ -1281,10 +1354,8 @@ construction of resolutions. <br>
       <br>
 The function has an optional fourth argument which, if set equal to
 p&gt;0, produces a resolution which is only valid for mod p
-calculations.<br>
-      <span style="color: rgb(255, 0, 0);"><br>
-The contracting homotopy on the
-ZG-resolution has not yet been implemented!</span></td>
+calculations.<span style="color: rgb(255, 0, 0);"><br>
+      </span></td>
     </tr>
     <tr>
       <td
@@ -1361,6 +1432,28 @@ applied to it!</span></span><big><span style="color: rgb(0, 0, 102);"> </span></
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSubnormalSeries(L,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer
+n and a list L = [L<sub>1</sub> , ..., L<sub>k</sub>] of&nbsp;
+subgroups L<sub>i </sub>of
+a finite group G=L<sub>1</sub> such that L<sub>1</sub>&gt;L<sub>2</sub>
+... &gt;L<sub>k </sub>is a subnormal series in G (meaning that each L<sub>i+1</sub>
+must be normal in L<sub>i</sub>). It returns a Z(G/L<sub>k</sub>)-resolution
+by repeatedly using the
+function <span style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteExtension()</span>.
+Typically L<sub>k</sub>=1 in which case
+a ZG-resolution is returned.<br>
+      <br>
+If L is a series of normal subgroups in G then the function <span
+ style="font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries(L,n)</span>
+will possibly work more efficiently.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">StandardCocycle(R,f,n)</span><br
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
       <br
@@ -1425,6 +1518,29 @@ module of integers modulo p.<br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorWithRationals(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns
+the chain complex obtained by tensoring with the trivial
+module of rational numbers. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TestHap()</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+runs a representative sample of HAP functions and checks to see that
+they produce the correct output.&nbsp; <br>
+      </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ThirdHomotopyGroup<br>
 OfSuspensionB(G)</span><br>
@@ -1480,10 +1596,7 @@ uses a perturbation technique of CTC Wall to construct a ZE-resolution
 F. Both G and N could be infinite. The "length" of F is equal to the
 minimum of the "length"s of R and S. The resolution R needs no
 contracting homotopy if no such homotopy is requied for F. <span
- style="color: rgb(255, 0, 0);"><br>
-      <br>
-The contracting homotopy on F has not
-yet been implemented!</span> <big><br>
+ style="color: rgb(255, 0, 0);"></span><big><br>
       </big></td>
     </tr>
     <tr>

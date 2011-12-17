@@ -4,8 +4,8 @@
 InstallGlobalFunction(TwistedTensorProduct,
 function(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE)
 local   
-		DimensionR,BoundaryR,HomotopyR,EltsR,
-		DimensionS,BoundaryS,HomotopyS,EltsS,
+		DimensionR,BoundaryR,HomotopyR,
+		DimensionS,BoundaryS,HomotopyS,
 		Dimension,Boundary,Homotopy,
 		DimPQ,
 		Int2Pair, Pair2Int,
@@ -14,7 +14,19 @@ local
 		PseudoBoundary,
 		Charact,
 		AddWrds,
-		i,j,k,l,n,p,q,r;
+		i,j,k,l,n,p,q,r,rr,
+				######Remaining variables are concerned
+				######with the contracting homotopy.
+		Int2Vector,
+		Vector2Int,
+		HorizontalBoundaryGen,
+		HorizontalBoundaryWord,
+		HomotopyGradedGen,
+		EmapN,
+		Homtpy,
+		HomotopyOfWord,
+		FinalHomotopy,
+		HorizontalPseudoBoundary;
 
 DimensionR:=R.dimension;
 DimensionS:=S.dimension;
@@ -236,16 +248,20 @@ od;
 od;
 
 PseudoBoundary:=[];
+HorizontalPseudoBoundary:=[];
 for k in [1..n] do
 PseudoBoundary[k]:=[];
+HorizontalPseudoBoundary[k]:=[];
    for q in [0..k] do
    p:=k-q;
       for j in [DimPQ(p+1,q-1)+1..DimPQ(p,q)] do
-      r:=[];
+      r:=[];rr:=[];
          for l in [0..p] do
          r:=AddWrds(Del(l,p,q,j),r);
+	 if l>0 then rr:=AddWrds(Del(l,p,q,j),rr);fi;
          od;
          Append(PseudoBoundary[k],[r]);
+	 Append(HorizontalPseudoBoundary[k],[rr]);
       od;
   od;
 od;
@@ -262,10 +278,187 @@ fi;
 end;
 #####################################################################
 
+
+
+
+
+
+
+
+
+
+#######START WORKING ON THE CONTRACTING HOMOTOPY####################
+
+#####################################################################
+EmapN:=function(x);
+
+return NEhomN(Mult(x,InvE(GmapE(EhomG(x)))));
+
+end;
+#####################################################################
+
+
+
+#####################################################################
+Int2Vector:=function(k,j)
+local tmp,p,q;
+
+p:=k;q:=0;
+while j>=DimPQ(p,q)+1 do
+p:=p-1;q:=q+1;
+od;                             #p,q are now computed from k,j
+
+tmp:=Int2Pair(j,p,q);
+
+return [p,q,tmp[1],tmp[2]];
+end;
+#####################################################################
+
+#####################################################################
+Vector2Int:=function(p,q,r,s);
+return Pair2Int([r,s],p,q);
+end;
+#####################################################################
+
+
+#####################################################################
+HorizontalBoundaryGen:=function(k,y)
+local horizontal;
+
+if k=0 then return [];
+else
+        if SignInt(y[1])=1 then horizontal:=StructuralCopy(
+	HorizontalPseudoBoundary[k][y[1]]);
+        else horizontal:=NegateWord(StructuralCopy(
+	HorizontalPseudoBoundary[k][-y[1]]));
+        fi;
+fi;
+
+Apply(horizontal,x->[x[1],Mult(y[2],x[2])]);
+
+return horizontal;
+end;
+#####################################################################
+
+#####################################################################
+HorizontalBoundaryWord:=function(n,w)
+local x, bnd;
+
+bnd:=[];
+for x in w do
+Append(bnd,HorizontalBoundaryGen(n,x));
+od;
+return bnd;
+
+end;
+#####################################################################
+
+#####################################################################
+HomotopyGradedGen:=function(g,p,q,r,s,bool)    #Assume EltsE[g] exists!
+local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;       #bool=true for vertical homotopy
+#This function seems to work! But I should really check the maths again!!
+
+#Eg:=EltsE[g];
+#Eg1:=Image(EhomG,Eg);
+#Eg2:=Image(EmapN,Eg);
+#g2:=Position(S.elts,Eg2);
+#g1:=Position(R.elts,Eg1);
+#Eg1:=Image(GmapE,Eg1);
+#Eg2:=Image(NhomE,Eg2);
+
+g1:=EhomG(g);
+g2:=EmapN(g);
+Eg1:=GmapE(g1);
+Eg2:=NhomE(g2);
+
+
+
+hty:=HomotopyS(q,[s,g2]);
+#Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(NhomE,S.elts[x[2]])]);
+#Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
+Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), NhomE(x[2])]);
+Apply(hty,x->[ x[1], Mult(Eg1,x[2])]);
+
+
+if (p=0 and q>0) or bool then return hty; fi;
+
+if p>0 then
+hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty)),false);
+Append(hty, NegateWord(hty1));
+
+fi;
+
+if q>0 then return hty; fi;
+
+
+hty1:=HomotopyR(p,[r,g1]);
+#Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GmapE,R.elts[x[2]])]);
+#Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
+Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), GmapE(x[2])]);
+
+
+hty1:=NegateWord(hty1); ####added
+Append(hty,hty1);
+
+hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty1)),true);
+
+Append(hty,NegateWord(hty1));
+
+hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty1)),false);
+
+
+Append(hty,hty1);       #I think this perturbation term is always zero and
+                        #thus not necessary.
+
+return hty;
+end;
+#####################################################################
+
+#####################################################################
+Homtpy:=function(n,x,bool)
+local vec,a;
+
+
+a:=AbsoluteValue(x[1]);
+vec:=Int2Vector(n,a);
+if SignInt(x[1])=1 then
+return HomotopyGradedGen(x[2],vec[1],vec[2],vec[3],vec[4],bool);
+else
+return NegateWord(HomotopyGradedGen(x[2],vec[1],vec[2],vec[3],vec[4],bool));
+fi;
+end;
+#####################################################################
+
+#####################################################################
+HomotopyOfWord:=function(n,w,bool)
+local x, hty;
+
+hty:=[];
+for x in w do
+Append(hty,Homtpy(n,x,bool));
+od;
+return hty;
+
+end;
+#####################################################################
+
+#####################################################################
+FinalHomotopy:=function(n,x);
+return Homtpy(n,x,false);
+end;
+#####################################################################
+
+if HomotopyR=fail or HomotopyS=fail then
+FinalHomotopy:=fail;
+fi;
+
+#########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
+
+
 return rec(
 	    dimension:=Dimension, 
 	    boundary:=Boundary, 
-	    homotopy:=fail, 
+	    homotopy:=FinalHomotopy, 
 	    elts:=EltsE, 
 	    group:=Group(EltsE),
 	    properties:=

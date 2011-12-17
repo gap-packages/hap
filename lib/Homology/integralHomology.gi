@@ -35,15 +35,17 @@ for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
 M1:=TransposedMat(M1);
+BasisKerd1:=LLLReducedBasis(TransposedMat(M1),"linearcomb").relations;
+M1:=0;
 
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
 M2:=TransposedMat(M2);
 
-BasisKerd1:=LLLReducedBasis(TransposedMat(M1),"linearcomb").relations;
 BasisImaged2:=LLLReducedBasis(TransposedMat(M2)).basis;
 dim:=Length(BasisImaged2);
+M2:=0;
 
 Rels:=[];
 for i in [1..dim] do
@@ -77,7 +79,7 @@ end;
 HomologyAsFpGroup:=function(C,n)
 local  
 	F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
-	Vector2Word, BasisKerd1, rel, i, j;
+	Vector2Word, BasisKerd1, rel, i, j, Htmp,FhomHtmp,HtmphomH;
 
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
@@ -111,8 +113,17 @@ Append(Frels,[Fgens[i]*Fgens[j]*Fgens[i]^-1*Fgens[j]^-1]);
 od;
 od;
 
+#Htmp:=F/Frels;
+#FhomHtmp:=GroupHomomorphismByImages(F,Htmp,Fgens,GeneratorsOfGroup(Htmp));
+
+#HtmphomH:=MaximalAbelianQuotient(Htmp);
+#H:=Image(HtmphomH);
+#FhomH:=GroupHomomorphismByFunction(F,H,x->Image(HtmphomH,Image(FhomHtmp,x)));
+
 H:=F/Frels;
-FhomH:=GroupHomomorphismByImages(F,H,Fgens,GeneratorsOfGroup(H));
+FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+
+
 
 #####################################################################
 HhomC:=function(w);
@@ -170,7 +181,7 @@ for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
 od;
 
-HChomHD:=GroupHomomorphismByImages(HC,HD,gensHC,imageGensHC);
+HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
 return HChomHD;
 end;
 #####################################################################

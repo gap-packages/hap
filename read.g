@@ -4,8 +4,9 @@
 ##
 #####################################################################
 
-COMPILED:=false;   
+HAPconstant:=2;	
 
+COMPILED:=false;   
 if COMPILED=true then
 ReadPackage("HAP","lib/compiledVersion.gap");
 fi;
@@ -13,11 +14,34 @@ fi;
 #ReadPackage("HAP", "lib/TitlePage/title.gap");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
 
-##################### FREE G MODULES ################################
+################### POLYCYLIC COMMANDS ##############################
+## Most functions should work on pcp groups if the polycyclic package 
+## is installed. Otherwise we need to give a meaning to certain commands
+## defined in the polycyclic package.
+Bool:=LoadPackage("polycyclic");
+if Bool=fail then
+NaturalHomomorphism:=NaturalHomomorphismByNormalSubgroupNC;
+IsPcpGroup:=function(G);return false;end;
+Collector:=function(x);return fail; end;
+PcpGroupByCollector:=function(x);return fail; end;
+Igs:=function(x);return fail; end;
+GenExpList:=function(x);return fail; end;
+HeisenbergPcpGroup:=function(x);return fail; end;
+fi;
+################## POLYCICLIC COMMANDS DONE #########################
+
+################## ACLIB COMMANDS ###################################
+Bool:=LoadPackage("aclib");
+if Bool=fail then
+NaturalHomomorphismOnHolonomyGroup:=function(G); return false; end;
+fi;
+################# ACLIB COMMANDS DONE ###############################
+
+
 if COMPILED=false then
+##################### FREE G MODULES ################################
 ReadPackage("HAP", "lib/FreeGmodules/wordOperations.gi");
 ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
-fi;
 
 ##################### NONABELIAN TENSOR #############################
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
@@ -25,31 +49,29 @@ ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 
 ##################### RESOLUTIONS ###################################
 ReadPackage("HAP", "lib/Resolutions/resAspherical.gi");
-if COMPILED=false then
 ReadPackage("HAP", "lib/Resolutions/resAbGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resFiniteGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
-fi;
+ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
+ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
+
 
 ##################### RESOLUTIONS MOD P #############################
-if COMPILED=false then
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
-fi;
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
 ReadPackage("HAP", "lib/Functors/homToZmodule.gi");
-if COMPILED=false then
 ReadPackage("HAP", "lib/Functors/tensorWithZ.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithZmodP.gi");
 ReadPackage("HAP", "lib/Functors/various.gi");
 ReadPackage("HAP", "lib/Functors/equiChainMap.gi");
 ReadPackage("HAP", "lib/Functors/primePartDerived.gi");
 ReadPackage("HAP", "lib/Functors/homToZ.gi");
-fi;
+ReadPackage("HAP", "lib/Functors/tensorWithRationals.gi");
 
 ##################### HOMOLOGY ######################################
 ReadPackage("HAP", "lib/Homology/integralHomology.gi");
@@ -61,27 +83,28 @@ ReadPackage("HAP", "lib/Homology/cohomology.gi");
 ReadPackage("HAP", "lib/Homology/syzygy.gi");
 ReadPackage("HAP", "lib/Homology/cycles.gi");
 ReadPackage("HAP", "lib/Homology/cocycleCondition.gi");
+ReadPackage("HAP", "lib/Homology/isSuperperfect.gi");
 
 ##################### PERTURBATIONS #################################
 ReadPackage("HAP", "lib/Perturbations/resExtension.gi");
-if COMPILED=false then
 ReadPackage("HAP", "lib/Perturbations/resDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/twistedTensorProduct.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteExt.gi");
 ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
-fi;
+ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
+ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
+
+
 
 #################### ARTIN COXETER ##################################
 ReadPackage("HAP", "lib/ArtinCoxeter/diagrams.gi");
 ReadPackage("HAP", "lib/ArtinCoxeter/resArtin.gi");
 
 #################### COHOMOLOGY RINGS ###############################
-if COMPILED=false then
 ReadPackage("HAP", "lib/Rings/intCoh.gi");
 ReadPackage("HAP", "lib/Rings/cocycleChainMap.gi");
 ReadPackage("HAP", "lib/Rings/cupProduct.gi");
 ReadPackage("HAP", "lib/Rings/integralGens.gi");
-fi;
 
 ################### POLYMAKE #######################################
 ReadPackage("HAP", "lib/Polymake/aspherical.gi");
@@ -90,12 +113,10 @@ ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
 
 ################### POLYCYLIC ######################################
-Bool:=LoadPackage("polycyclic");
-if not Bool then 
-NaturalHomomorphism:=NaturalHomomorphismByNormalSubgroupNC;
-IsPcpGroup:=function(G);return false;end;
-fi;
-ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi"); 
+ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
 ReadPackage("HAP", "lib/Polycyclic/resNilpotentPcpGrp.gi");
+fi;
 
+################### TEST ###########################################
+ReadPackage("HAP", "test/test.gap");
 

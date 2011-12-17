@@ -21,8 +21,8 @@ local
 	ZGbasisOfKernel,
 	one,
 	InverseFlat,
-	FieldToInt,
 	ComplementaryBasis,
+	zero,
 	g,h,i,x,tmp;
 
 tmp:=SSortedList(Factors(Order(G)));
@@ -33,6 +33,7 @@ fi;
 prime:=tmp[1];
 pp:=Order(G);
 one:=Identity(GaloisField(prime));
+zero:=0*one;
 
 gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
@@ -63,16 +64,6 @@ return PseudoBoundary[i][j];
 else return
  NegateWord(PseudoBoundary[i][-j]);
  fi;
-end;
-#####################################################################
-
-#####################################################################
-FieldToInt:=function(x)
-local i;
-for i in [0..prime] do
-if one*i=x then return i; fi;
-od;
-return fail;
 end;
 #####################################################################
 
@@ -112,7 +103,7 @@ GactZG:=function(g,v)
 local u,h;
 u:=[];
 for h in [1..Length(v)] do
-u[MT[g][h]]:=StructuralCopy(v[h]);
+u[MT[g][h]]:=v[h];
 od;
 return u;
 end;
@@ -176,12 +167,11 @@ BC:=[];
 
 for i in [1..ln] do
 if heads[i]=0 then
-v:=List([1..ln], x->0*one);
+v:=List([1..ln], x->zero);
 v[i]:=one;
 Append(BC,[v]);
 fi;
 od;
-
 
 return BC;
 end;
@@ -190,7 +180,7 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	i, v, g, h, b, ln, B, B1, B2,NS, 
-	Bcomp, Bfrattini, BasInts, IF;
+	Bcomp, Bfrattini, BfrattComp, BasInts, IF;
 
 IF:=InverseFlat;
 NS:=SemiEchelonMat(NullspaceMat(BoundaryMatrix(k)));
@@ -201,7 +191,6 @@ Bcomp:=ComplementaryBasis(B);
 Bfrattini:=[];
 for b in B do
 for g in [2..pp] do
-#AddSet(Bfrattini,b-  Flat(GactZGlist(g,IF(b))));
 Append(Bfrattini,[b-  Flat(GactZGlist(g,IF(b)))]);
 od;
 od;
@@ -215,23 +204,24 @@ v:=List([1..ln],x->0);
 for i in [1..prime] do
 v:=v+ Flat(GactZGlist(Position(eltsG,eltsG[g]^i),IF(b)));
 od;
-#AddSet(Bfrattini,v);
 Append(Bfrattini,v);
 fi;
 od;
 od;
 fi;
 
-B1:=ComplementaryBasis(Concatenation(Bfrattini,Bcomp));
+BfrattComp:=Concatenation(Bfrattini,Bcomp);
+
+B1:=ComplementaryBasis(BfrattComp);
 B2:=[];
 for b in B1 do
-i:=PositionProperty(b,x->(not x= (0*one)));
+i:=PositionProperty(b,x->(not x= (zero)));
 Append(B2, [  B[NS.heads[i]] ]);
 od;
 
 BasInts:=[];
 for v in B2 do
-Append(BasInts,[List(v,x->FieldToInt(x))]);
+Append(BasInts,[List(v,x->IntFFE(x))]);
 od;
 
 return List(BasInts,v->InverseFlat(v));
@@ -240,6 +230,7 @@ end;
 
 for i in [2..n] do
 for x in ZGbasisOfKernel(i-1) do
+#x:=TietzeReduction(PseudoBoundary[i],x);
 Append(PseudoBoundary[i], [VectorListToWord(x)]   );
 od;
 od;

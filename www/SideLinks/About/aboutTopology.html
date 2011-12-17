@@ -66,7 +66,7 @@ structure of a ZG-module from the action of G on X.)<br>
       <br>
 Not all free ZG-resolutions arise in this way. However, the algorithms
 in HAP are&nbsp; based on the topological view of group cohomology, and
-all resolutions in HAP do arise from a space X.<br>
+most resolutions in HAP do arise from a space X.<br>
       <br>
 The orbit space X/G is a classifying space for the group G, and its
 2-skeleton corresponds to a group presentation <span
@@ -123,8 +123,8 @@ for a resolution R. What is not seen from the above commands on S<sub>4
       </sub>is
 that the last of the 97 generators in dimension 20 has an extremely
 large
-number of 19-dimensional cells in its boundary. This can be seen using
-      <span style="font-family: helvetica,arial,sans-serif;">R.boundary(n,j)</span>
+number of 19-dimensional cells in its boundary. This can be seen using <span
+ style="font-family: helvetica,arial,sans-serif;">R.boundary(n,j)</span>
 which is a function giving the boundary of the j-th
 n-dimensional generator. The 97-th generator has a boundary of length
 7303 in the 19-dimensional module of the resolution considered as a
@@ -136,12 +136,37 @@ process of its construction. The idea is to find simple homotopy
 equivalences that reduce the space X to one involving "smaller"
 cells.&nbsp; The option is invoked by setting a third variable equal to
 "true", as in the following. More work needs
-to be done on the simple homotopy simplification procedure!</td>
+to be done on the simple homotopy simplification procedure!<br>
+      <br>
+The following commands compute three resolutions for the dihedral group
+G=D<sub>16</sub> of order 32. The first is computed without
+simplifications and the second with simplifications. For comparison,
+the third is a free Z<sub>2</sub>G-resolution of Z<sub>2</sub> computed
+using standard linear algebra procedures over the field of two elements
+(and does not correspond to a CW-space X). The sum of the lengths of
+the&nbsp; boundaries of the 8-dimensional generators is 2813 without
+simplifications, 186 with simplifications and 264 in the mod 2 case.<br>
+      </td>
     </tr>
     <tr>
       <td
- style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
-R:=ResolutionFiniteGroup(SymmetricGroup(4), 20, true);;<br>
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+G:=DihedralGroup(32);;<br>
+      <br>
+gap&gt; R:=ResolutionFiniteGroup(G,8);;<br>
+gap&gt;
+BoundaryLengthSum:=Sum(List([1..R.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+2813<br>
+      <br>
+gap&gt; Rsimplified:=ResolutionFiniteGroup(G,8,true);;<br>
+gap&gt;
+BoundaryLengthSum:=Sum(List([1..Rsimplified.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+186<br>
+      <br>
+gap&gt; Rmod2:=ResolutionPrimePowerGroup(G,8);;<br>
+gap&gt;
+BoundaryLengthSum:=Sum(List([1..Rmod2.dimension(8)],x-&gt;Length(R.boundary(8,x))));<br>
+264<br>
       </td>
     </tr>
     <tr>

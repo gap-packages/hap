@@ -36,7 +36,11 @@ od;
 
 T:=R;
 for k in [2..d] do
+if HAPconstant>49 then
 T:=ResolutionDirectProduct(R,T);
+else
+T:=ResolutionFiniteDirectProduct(R,T);
+fi;
 FirstProj[k]:=T.firstProjection;
 SecondProj[k]:=T.secondProjection;
 od;
@@ -82,8 +86,14 @@ fi;
 head:=[coeffs[1]];
 tail:=List([2..Length(coeffs)],i->coeffs[i]);
 
+#if Minimum(coeffs)=0 then
+if HAPconstant>49 then 
 return ResolutionDirectProduct(ResolutionAbelianInvariants(head,n),
 	ResolutionAbelianInvariants(tail,n));
+else
+return ResolutionFiniteDirectProduct(ResolutionAbelianInvariants(head,n),
+        ResolutionAbelianInvariants(tail,n));
+fi;
 
 end;
 #####################################################################
@@ -92,7 +102,7 @@ end;
 #####################################################################
 #####################################################################
 ResolutionAbGroup:=function(G,n)
-local gens, C, head, tail, R, hom ;
+local gens, C, head, tail, R, hom, OriginalElts,OriginalGroup ;
 
 gens:=TorsionGeneratorsAbelianGroup(G); 
 
@@ -107,12 +117,31 @@ fi;
 head:=Group([gens[1]]);
 tail:=Group(List([2..Length(gens)],i->gens[i]));
 
+#if Minimum(AbelianInvariants(G))=0 then
+if HAPconstant>49 then 
 R:=ResolutionDirectProduct(ResolutionAbGroup(head,n),
 		        ResolutionAbGroup(tail,n));
+else
+R:=ResolutionFiniteDirectProduct(ResolutionAbGroup(head,n),
+                        ResolutionAbGroup(tail,n));
+fi;
 
-hom:=GroupHomomorphismByFunction(R.group,G,x->
-Image(Projection(R.group,1),x)*
-Image(Projection(R.group,2),x));
+OriginalElts:=R.elts;
+OriginalGroup:=R.group;
+
+hom:=GroupHomomorphismByFunction(OriginalGroup,G,x->
+Image(Projection(OriginalGroup,1),x)*
+Image(Projection(OriginalGroup,2),x));
+
+R.appendToElts:=function(x)
+local g,a;
+for g in OriginalGroup do
+if Image(hom,g)=x then a:=g; break; fi;
+od;
+Append(OriginalElts,[a]);
+return List(OriginalElts, z->Image(hom,z));
+end;
+
 R.elts:=List(R.elts,x->Image(hom,x));
 R.group:=G;
 return R;
@@ -122,7 +151,7 @@ end;
 #####################################################################
 
 if IsList(arg[1]) and IsInt(arg[2]) then
-	if Sum(arg[1])=0 then return 
+	if Sum(arg[1])=0 and Length(arg[1])>1 then return 
 	ResolutionFreeAbelianGroup(Length(arg[1]),arg[2]);
 	else
 	return ResolutionAbelianInvariants(arg[1],arg[2]);

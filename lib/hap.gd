@@ -26,6 +26,8 @@ DeclareGlobalFunction("ResolutionFiniteSubgroup");
 DeclareGlobalFunction("ResolutionSubgroup");
 DeclareGlobalFunction("ResolutionAsphericalPresentation");
 DeclareGlobalFunction("ResolutionAbelianGroup");
+DeclareGlobalFunction("ResolutionAlmostCrystalGroup");
+DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
 
 ## RESOLUTIONS MOD P ################################################
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
@@ -43,6 +45,9 @@ DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("PermToMatrixGroup");
 DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
 DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
+DeclareGlobalFunction("TensorWithRationals");
+DeclareGlobalFunction("BigStepLCS");
+
 
 ## PERTURBATIONS ####################################################
 DeclareGlobalFunction("TwistedTensorProduct");
@@ -50,6 +55,9 @@ DeclareGlobalFunction("ResolutionFiniteExtension");
 DeclareGlobalFunction("ResolutionNormalSeries");
 DeclareGlobalFunction("ResolutionDirectProduct");
 DeclareGlobalFunction("ResolutionExtension");
+DeclareGlobalFunction("ResolutionFiniteDirectProduct");
+DeclareGlobalFunction("ResolutionSubnormalSeries");
+
 
 
 ## ARTIN COXETER ####################################################
@@ -74,6 +82,7 @@ DeclareGlobalFunction("Syzygy");
 DeclareGlobalFunction("CR_IntegralCycleToClass");
 DeclareGlobalFunction("CocycleCondition");
 DeclareGlobalFunction("StandardCocycle");
+DeclareGlobalFunction("IsSuperperfect");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");

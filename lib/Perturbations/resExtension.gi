@@ -16,7 +16,9 @@ local
 	InvE,
 	PreimagesRecordG,PreimagesRecordE,
 	NisFinite,GisFinite,EisFinite,
-	gn;
+	Lngth,T,
+	AppendToElts,
+	gn,i,j,Count;
 
 EEhomGG:=arg[1];
 RN:=arg[2];
@@ -67,6 +69,13 @@ gn:=Position(EltsE,Identity(E));
 EltsE[gn]:=EltsE[1];
 EltsE[1]:=Identity(E);
 
+	########################################################
+	AppendToElts:=function(x);
+	Append(EltsE,[x]);
+	return(EltsE);
+	end;
+	########################################################
+
 if GisFinite then
 	#########################################
 	EhomG:=function(x);
@@ -77,12 +86,13 @@ else
         #########################################
         EhomG:=function(x)
 	local g,Eltg;
-	Eltg:=ImageElm(EEhomGG,EltsE[x]);
-        g:=Position(RG.elts,Eltg);
-	if g=fail then Append(RG.elts,[Eltg]);
+	Eltg:=ImageElm(EEhomGG,EltsE[x]); 
+        g:=Position(RG.elts,Eltg); 
+	if g=fail then 
+	RG.elts:=RG.appendToElts(Eltg); 
 	g:=Length(RG.elts); fi;
-	if Position(RG.elts,Eltg^-1)=fail then 
-	Append(RG.elts,[Eltg^-1]);fi;
+	#if Position(RG.elts,Eltg^-1)=fail then 
+	#Append(RG.elts,[Eltg^-1]);fi;
 	return g;
         end;
         #########################################
@@ -102,8 +112,8 @@ else
         e:=Position(EltsE,Elte);
 	if e=fail then Append(EltsE,[Elte]);
 	e:=Length(EltsE); fi;
-	if Position(EltsE,Elte^-1)=fail then
-	Append(EltsE,[Elte^-1]); fi;
+	#if Position(EltsE,Elte^-1)=fail then
+	#Append(EltsE,[Elte^-1]); fi;
 	return e;
         end;
         #########################################
@@ -125,9 +135,9 @@ PreimagesRecordE:=[];
 	GmapE:=function(x)
 	local e,Elte,Eltg,pos;
 	Eltg:=RG.elts[x];
-	pos:=Position(PreimagesRecordG,Eltg);
-	if not pos=fail then
-	return PreimagesRecordE[pos];fi;
+	pos:=Position(PreimagesRecordG,Eltg); 
+	if not pos=fail then 
+	return PreimagesRecordE[pos]; fi;
 	
 	Elte:=PreImRep(Eltg);
 	e:=Position(EltsE,Elte);
@@ -154,7 +164,7 @@ else
 	local p,Eltp;
 	Eltp:= EltsE[x];
 	p:=Position(RN.elts,Eltp);
-	if p=fail then Append(RN.elts,[Eltp]);
+	if p=fail then RN.elts:=RN.appendToElts(Eltp);
 	p:=Length(RN.elts); fi;
 	return p;
 	end;
@@ -175,8 +185,8 @@ else
 	p:= Position(EltsE,Eltp);
 	if p=fail then Append(EltsE,[Eltp]);
 	p:=Length(EltsE); fi;
-	if Position(EltsE,Eltp^-1)=fail then
-        Append(EltsE,[Eltp^-1]); fi;
+	#if Position(EltsE,Eltp^-1)=fail then
+        #Append(EltsE,[Eltp^-1]); fi;
 	return p;
 	end;
 	#########################################
@@ -200,7 +210,19 @@ else
 	#########################################
 fi;
 
-return TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE);
+if (not EisFinite ) and HAPconstant<50 then
+for i in RN.elts do
+for j in RG.elts do
+Append(EltsE, [i*PreImRep(j)]);
+od;
+od;
+fi;
+
+T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE);
+
+T.appendToElts:=AppendToElts;
+
+return T;
 end);
 #####################################################################
 
