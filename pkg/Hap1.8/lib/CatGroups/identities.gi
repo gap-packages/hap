@@ -18,7 +18,13 @@ local
 		Edges,
 		Color,
 		COLOURS,
+  		tmpDir,tmpInlog,tmpIn2log,tmpIngif,
 		b, r, x,i,X;
+
+tmpDir:=DirectoryTemporary();
+tmpInlog:=Filename(tmpDir,"tmpInlog");
+tmpIn2log:=Filename(tmpDir,"tmpIn2log");
+tmpIngif:=Filename(tmpDir,"tmpIngif");
 
 R:=arg[1];
 idnum:=arg[2];
@@ -150,40 +156,40 @@ Edges:=List([1..Length(Edges)/2],i->Edges[2*i]);
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo("/tmp/tmpIn.log"," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
 
 for x in Edges do
-AppendTo("/tmp/tmpIn.log",x[1]," -- ", x[2], "[color=",Color(x), "] \n");
+AppendTo(tmpInlog,x[1]," -- ", x[2], "[color=",Color(x), "] \n");
 od;
 
 ####
 X:=FreeGroup(Length(gens));
 X:=GeneratorsOfGroup(X);
-AppendTo("/tmp/tmpIn.log"," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
+AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
 
 if Maximum(List(X,x->Length(String(x))))<20 then
 for i in [1..Length(X)] do
-AppendTo("/tmp/tmpIn.log",-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
+AppendTo(tmpInlog,-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
 od;
 fi;
 
 ####
 
-AppendTo("/tmp/tmpIn.log","}\n }\n");
+AppendTo(tmpInlog,"}\n }\n");
 
 ############### WRITTEN ############################################
-Exec("neato -Tgif /tmp/tmpIn.log > /tmp/tmpIn.gif");
+Exec(Concatenation("neato -Tgif ",tmpInlog," > ",tmpIngif));
 
 if Length(arg)=2 then
-Exec("mozilla /tmp/tmpIn.gif");
-Exec("rm /tmp/tmpIn.log; rm /tmp/tmpIn.gif");
+Exec(Concatenation("mozilla ",tmpIngif));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",tmpIngif));
 
 else
 
-AppendTo("/tmp/tmpIn2.log", "Browser=",arg[3],"\n");
-AppendTo("/tmp/tmpIn2.log","$Browser /tmp/tmpIn.gif");
-Exec("chmod a+x /tmp/tmpIn2.log; /tmp/tmpIn2.log");
-Exec("rm /tmp/tmpIn.log; rm /tmp/tmpIn.gif; rm /tmp/tmpIn2.log;");
+AppendTo(tmpIn2log, "Browser=",arg[3],"\n");
+AppendTo(tmpIn2log,"$Browser ",tmpIngif);
+Exec(Concatenation("chmod a+x ",tmpIn2log,"; ",tmpIn2log));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",tmpIngif,"; rm ",tmpIn2log,";"));
 fi;
 
 

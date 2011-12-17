@@ -14,7 +14,12 @@ local
 	Faces, FacesFinal, FacesFn,
 	Index, IndexFn,
 	Count,
-	tmp, x, w, i, y, p;
+	tmp, x, w, i, y, p,
+	tmpInlog, tmp2Inlog,tmpDir;
+
+tmpDir:=DirectoryTemporary();
+tmpInlog:=Filename(tmpDir,"tmpIn.log");
+tmp2Inlog:=Filename(tmpDir,"tmp2In.log");
 
 if not (IsPermGroup(GG) or IsMatrixGroup(GG)) then 
 Print("The group G must be a permutation or matrix group.\n");
@@ -85,16 +90,16 @@ for i in [1..Length(Points)] do
 Points[i]:=proj(Points[i]);	  
 od;
 
-AppendTo("/tmp/tmpIn.log","POINTS","\n");
+AppendTo(tmpInlog,"POINTS","\n");
 for p in Points do
-AppendTo("/tmp/tmpIn.log",1);
+AppendTo(tmpInlog,1);
 	for i in [1..Length(p)] do
-	AppendTo("/tmp/tmpIn.log"," ",p[i]);
+	AppendTo(tmpInlog," ",p[i]);
 	od;
-AppendTo("/tmp/tmpIn.log","\n");
+AppendTo(tmpInlog,"\n");
 od;
 
-Exec("beneath_beyond /tmp/tmpIn.log POINTS");
+Exec(Concatenation("beneath_beyond ",tmpInlog,"  POINTS"));
 ################# HULL CALCULATED ###################################
 
 #####################################################################
@@ -119,7 +124,7 @@ end;
 #####################################################################
 
 ################# READ VERTICES #####################################
-input:=InputTextFile("/tmp/tmpIn.log");
+input:=InputTextFile(tmpInlog);
 tmp:="hello";
 while not tmp="VERTICES\n" do
 tmp:=ReadLine(input);
@@ -147,8 +152,8 @@ od;
 ################ EDGE GENERATORS RECOVERED ##########################
 
 ################ READ HASSE DIAGRAM #################################
-Exec("polymake /tmp/tmpIn.log HASSE_DIAGRAM >/tmp/tmp2In.log");
-Exec("rm /tmp/tmpIn.log");
+Exec(Concatenation("polymake ",tmpInlog," HASSE_DIAGRAM >",tmp2Inlog));
+Exec(Concatenation("rm ",tmpInlog));
 
 Faces:=[];
 Index:=[];
@@ -191,7 +196,7 @@ Index:=[];
 	end;
 	############################################################
 
-input:=InputTextFile("/tmp/tmp2In.log");
+input:=InputTextFile(tmp2Inlog);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Index:= IndexFn(tmp);
@@ -202,7 +207,7 @@ while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-Exec("rm /tmp/tmp2In.log");
+Exec(Concatenation("rm ",tmp2Inlog));
 
 if Length(Faces[1])=1 then
 

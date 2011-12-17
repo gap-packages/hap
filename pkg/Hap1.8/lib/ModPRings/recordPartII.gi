@@ -202,6 +202,9 @@ end;
 
 B!.degree:=degree;
 B!.intToPair:=A!.intToPair;
+B!.intToPairModified:=A!.intToPairModified;
+B!.pairToInt:=A!.pairToInt;
+B!.pairToIntModified:=A!.pairToIntModified;
 B!.niceBasis:=nicbas;
 
 return B;

@@ -203,7 +203,7 @@ Int2Pair:=function(i,p,q)       #Assume that x<=DimR(p)*DimS(q).
 local s,r,x;
                                 #The idea is that the generator f_i in F
 				#corresponds to a tensor (e_r x e_s)
-x:=AbsoluteValue(i)-DimPQ(p+1,q-1);     #with e_r in R_p, e_s in S_q. If we
+x:=AbsInt(i)-DimPQ(p+1,q-1);     #with e_r in R_p, e_s in S_q. If we
 s:= x mod DimensionS(q);                #input i we get output [r,s].
 r:=(x-s)/DimensionS(q);
 
@@ -217,7 +217,7 @@ end;
 Pair2Int:=function(x,p,q)
 local y;                        #Pair2Int is the inverse of Int2Pair.
 
-y:=[AbsoluteValue(x[1]),AbsoluteValue(x[2])];
+y:=[AbsInt(x[1]),AbsInt(x[2])];
 return SignInt(x[1])*SignInt(x[2])*((y[1]-1)*DimensionS(q)+y[2]+DimPQ(p+1,q-1));end;
 #####################################################################
 
@@ -263,7 +263,7 @@ Boundary:=function(k,jj)
 local j, p,q,r,s,tmp, horizontal, vertical;
 
 if k<1 then return []; fi;
-j:=AbsoluteValue(jj);
+j:=AbsInt(jj);
 	#################IF BOUNDARY NOT ALREADY COMPUTED############
 if IsInt(PseudoBoundary[k][j]) then
 tmp:=Int2Vector(k,j);
@@ -297,7 +297,7 @@ end;
 HorizontalBoundaryGen:=function(n,y)
 local a,i, p,q,r,s, tmp,horizontal;
 
-a:=AbsoluteValue(y[1]);
+a:=AbsInt(y[1]);
 tmp:=Int2Vector(n,a);
 
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
@@ -387,7 +387,7 @@ Homotopy:=function(n,x,bool)
 local vec,a;
 
 
-a:=AbsoluteValue(x[1]);
+a:=AbsInt(x[1]);
 vec:=Int2Vector(n,a);
 if SignInt(x[1])=1 then 
 return HomotopyGradedGen(x[2],vec[1],vec[2],vec[3],vec[4],bool);

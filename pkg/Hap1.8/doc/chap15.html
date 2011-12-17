@@ -24,6 +24,11 @@
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
+<td class="tdleft"><code class="code"> CompositionSeriesOfFpGModules(M) </code></p>
+
+<p>Inputs an FpG-module M and returns a list of FpG-modules that constitute a composition series for M.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> DirectSumOfFpGModules(M,N) </code> <br /> <code class="code"> DirectSumOfFpGModules([ M[1], M[2], ..., M[k] ])) </code></p>
 
 <p>Inputs two FpG-modules M and N with common group and characteristic. It returns the direct sum of M and N as an FpG-Module.</p>
@@ -77,6 +82,11 @@
 <p>Inputs an FpG-module M with G a p-group, and returns the Radical of M as an FpG-module. (Ig G is not a p-group then a submodule of the radical is returned.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code"> RadicalSeriesOfFpGModule(M) </code></p>
+
+<p>Inputs an FpG-module M and returns a list of FpG-modules that constitute the radical series for M.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> GeneratorsOfFpGModule(M) </code></p>
 
 <p>Inputs an FpG-module M and returns a matrix whose rows correspond to a minimal generating set for M.</td>
@@ -85,6 +95,11 @@
 <td class="tdleft"><code class="code"> ImageOfFpGModuleHomomorphism(f) </code></p>
 
 <p>Inputs an FpG-module homomorphism f:M --&gt; N and returns its image f(M) as an FpG-module.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> GroupAlgebraAsFpGModule(G) </code></p>
+
+<p>Inputs a p-group G and returns its mod p group algebra as an FpG-module.</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code"> IntersectionOfFpGModules(M,N) </code></p>
@@ -101,6 +116,16 @@
 <p>extends to a homomorphism of FpG-modules. Otherwise it returns false.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code"> MaximalSubmoduleOfFpGModule(M) </code></p>
+
+<p>Inputs an FpG-module M and returns one maximal FpG-submodule of M.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> MaximalSubmodulesOfFpGModule(M) </code></p>
+
+<p>Inputs an FpG-module M and returns the list of maximal FpG-submodules of M.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> MultipleOfFpGModule(w,M) </code></p>
 
 <p>Inputs an FpG-module M and a list w:=[g_1 , ..., g_t] of elements in the group G=M!.group. The list w can be thought of as representing the element w=g_1 + ... + g_t in the group algebra FG, and the function returns a semi-echelon matrix B which is a basis for the vector subspace wM .</td>
@@ -108,7 +133,7 @@
 <tr>
 <td class="tdleft"><code class="code"> ProjectedFpGModule(M,k) </code></p>
 
-<p>Inputs an FpG-module M of ambient dimension n|G|, and an integer k between 1 and n. The module M is a submodule of the free module (FG)^n . Let M_k denote the intersection of M with the k-th summand of (FG)^n . The function returns M_k as an FpG-module with ambient dimension n|G|.</td>
+<p>Inputs an FpG-module M of ambient dimension n|G|, and an integer k between 1 and n. The module M is a submodule of the free module (FG)^n . Let M_k denote the intersection of M with the last k summands of (FG)^n . The function returns the image of the projection of M_k onto the k-th summand of (FG)^n . This image is returned an FpG-module with ambient dimension |G|.</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code"> RandomHomomorphismOfFpGModules(M,N) </code></p>

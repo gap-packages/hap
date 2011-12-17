@@ -20,6 +20,10 @@ LIB=$PKGDIR/Hap1.8/lib;
 rm $PKGDIR/Hap1.8/boolean;
 echo "COMPILED:=true;" > $PKGDIR/Hap1.8/boolean;
 
+$GACDIR/gac -d $LIB/CompiledGAP/*.c;
+mkdir  $LIB/CompiledGAP/Compiled;
+mv *.so $LIB/CompiledGAP/Compiled/;
+
 
 $GACDIR/gac -d $LIB/ArtinCoxeter/*.gi; 
 mkdir  $LIB/ArtinCoxeter/Compiled;

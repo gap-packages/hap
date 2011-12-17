@@ -13,7 +13,6 @@ local
 	Elts, ExtendedElts, 
 	N,
 	MT,
-	Mult,
 	Action,
 	ChangeSign,
 	Abs,
@@ -37,8 +36,14 @@ local
 	saveSpace,
 	Charact,
 	AlgebraicRed,
-	i, ii;
-
+	i, ii,
+#################################
+AbsInt,				#
+SignInt;			#
+				#
+AbsInt:=AbsInt_HAP;		#
+SignInt:=SignInt_HAP;		#
+#################################
 
 if IsGroup(arg[1]) then Gens:=GeneratorsOfGroup(arg[1]);
 if Length(Gens)=0 then Gens:=[Identity(arg[1])]; fi;
@@ -93,39 +98,36 @@ if Order(G)<4096  then
 MT:=MultiplicationTable(Elts);
 
 #####################################################################
-Mult:=function(i,j);
-return MT[i][j]; 
+Action:=function(g,l);
+return [l[1],MT[g][l[2]]];
 end;
 #####################################################################
 
 else
 
 #####################################################################
-Mult:=function(i,j);
-return Position(Elts,Elts[i]*Elts[j]);
+Action:=function(g,l);
+return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
 end;
 #####################################################################
 
 fi;
 
-#####################################################################
-Action:=function(g,l);
-return [l[1],Mult(g,l[2])];
-end;
-#####################################################################
 
 #####################################################################
 ChangeSign:=function(j,b);
 if j>0 then return b; else 
-return NegateWord(b); fi;
+return List(b,x->[-x[1],x[2]]); fi;
 end;
 #####################################################################
 
 #####################################################################
 Abs:=function(l)
 local r;
+
 r:=ShallowCopy(l);
-Apply(r,x->[AbsoluteValue(x[1]),x[2]]);
+Apply(r,x->[AbsInt(x[1]),x[2]]);
+
 return r;
 end;
 #####################################################################
@@ -151,7 +153,7 @@ end;
 #####################################################################
 Boundary:=function(i,j);
 if i=0 then return []; else 
-return ChangeSign(j,PseudoBoundary[i][AbsoluteValue(j)]); fi;
+return ChangeSign(j,PseudoBoundary[i][AbsInt(j)]); fi;
 end;
 #####################################################################
 
@@ -164,20 +166,20 @@ Apply(l,x->Action(p[2],x));
 v:=Length(l);				#l is the boundary of cell p
 					#where p has dimension i.
 for e in l do
-v:=v-MC[AbsoluteValue(e[1])][e[2]];
+v:=v-MC[AbsInt(e[1])][e[2]];
 od;
 
 q:=0;
 if v = 1 then 
 for x in l do
-if MC[AbsoluteValue(x[1])][x[2]] = 0 then q:=x; break; fi;
+if MC[AbsInt(x[1])][x[2]] = 0 then q:=x; break; fi;
 od;
 fi;
 
 if tietze then
    if (v = 0)  then Add(Spheres,l);fi;	
-fi;						#Spheres is a list of contractible
-						#spheres. 
+fi;					#Spheres is a list of contractible
+					#spheres. 
 return [v,q];
 end;
 #####################################################################
@@ -225,8 +227,8 @@ if i<1 then return [[-1,1]]; else	#in the function were arrived at by trial and
 					#it stores it in ComputedContractions[i] and uses
 					#this computed value subsequently.
 					
-   if ComputedContractions[i][AbsoluteValue(x[1])][x[2]]=0 then
-   z:=[AbsoluteValue(x[1]),x[2]];
+   if ComputedContractions[i][AbsInt(x[1])][x[2]]=0 then
+   z:=[AbsInt(x[1]),x[2]];
       if ContractionMatrix[i][z[1]][z[2]]=1 then return []; 
       else
       m:=ContractionMatrix[i][z[1]][z[2]];
@@ -246,7 +248,7 @@ if i<1 then return [[-1,1]]; else	#in the function were arrived at by trial and
       fi;
    else
 
-   c:=ComputedContractions[i][AbsoluteValue(x[1])][x[2]];
+   c:=ComputedContractions[i][AbsInt(x[1])][x[2]];
    return ChangeSign(x[1],c);
    fi;
 
@@ -269,7 +271,7 @@ j:=p[1];
 k:=p[2];
 Diff:=[p];
 if i=1 then l:=[1]; else
-l:=ShallowCopy(PseudoBoundary[i-1][AbsoluteValue(j)]); 
+l:=ShallowCopy(PseudoBoundary[i-1][AbsInt(j)]); 
 Apply(l,x->Action(k,x));	#l is the boundary of p.
 l:=ChangeSign(j,l);
 fi;
@@ -284,7 +286,12 @@ end;
 
 #####################################################################
 FindConsequences:=function(i,MC)  	#MC=StructuralCopy(MacComplex[i])
-local j,g,c,p,toggle;
+local j,g,c,p,toggle, SignIntLoc,CellValueLoc;
+
+
+SignIntLoc:=SignInt;
+CellValueLoc:=CellValue;
+
 toggle:=true;
 
 if i<K then
@@ -292,9 +299,9 @@ while toggle do
 toggle:=false;
 for g in ExtendedElts do
 for j in [1..Dimension(i)] do
-c:=CellValue(i,MC,[j,g]); p:=c[2];
-if c[1]=1 then MC[AbsoluteValue(p[1])][p[2]]:=1;
-ContractionMatrix[i][AbsoluteValue(p[1])][p[2]]:=[SignInt(p[1])*j,g];
+c:=CellValueLoc(i,MC,[j,g]); p:=c[2];
+if c[1]=1 then MC[AbsInt(p[1])][p[2]]:=1;
+ContractionMatrix[i][AbsInt(p[1])][p[2]]:=[SignInt(p[1])*j,g];
 MaxComplex[i+1][j][g]:=1;
 toggle:=true;fi;
 od;
@@ -307,8 +314,8 @@ while toggle do
 toggle:=false;
 for g in ExtendedElts do
 for j in [1..Dimension(i)] do
-c:=CellValue(i,MC,[j,g]); p:=c[2];
-if c[1]=1 then MC[AbsoluteValue(p[1])][p[2]]:=1;
+c:=CellValueLoc(i,MC,[j,g]); p:=c[2];
+if c[1]=1 then MC[AbsInt(p[1])][p[2]]:=1;
 MaxComplex[i+1][j][g]:=1;
 toggle:=true;fi;
 od;

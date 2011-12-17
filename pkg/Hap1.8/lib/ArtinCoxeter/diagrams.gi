@@ -3,7 +3,12 @@
 #####################################################################
 InstallGlobalFunction(CoxeterDiagramDisplay,
 function(arg)
-local D,V,M,i,j;
+local D,V,M,i,j,tmpDir,tmpInlog,tmpIn2log,basicgif;
+
+tmpDir:=DirectoryTemporary();
+tmpInlog:=Filename(tmpDir,"tmpIn.log");
+tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
+basicgif:=Filename(tmpDir,"basic.gif");
 
 D:=arg[1];
 V:=CoxeterDiagramVertices(D);
@@ -13,42 +18,42 @@ end;
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo("/tmp/tmpIn.log"," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue,label=\" \"] \n edge [style=\"setlinewidth(5)\"] \n");
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue,label=\" \"] \n edge [style=\"setlinewidth(5)\"] \n");
 
 for i in V do
 for j in V do
 
 if j>=i and M(i,j)=3 then 
-AppendTo("/tmp/tmpIn.log",i," -- ", j, "\n");
+AppendTo(tmpInlog,i," -- ", j, "\n");
 fi;
 
 if j>=i and (M(i,j)>3 or M(i,j)<2) then
-AppendTo("/tmp/tmpIn.log",i," -- ", j, "[label=\" ",M(i,j), " \",fontsize=20 ] \n");
+AppendTo(tmpInlog,i," -- ", j, "[label=\" ",M(i,j), " \",fontsize=20 ] \n");
 fi;
 od;od;
 
 if CoxeterDiagramIsSpherical(D) then
 
-AppendTo("/tmp/tmpIn.log","10000 [label=\" Spherical Coxeter\\n Diagram \", color=white, fontsize=20,fontcolor=red,width=1.5 ]  \n");
+AppendTo(tmpInlog,"10000 [label=\" Spherical Coxeter\\n Diagram \", color=white, fontsize=20,fontcolor=red,width=1.5 ]  \n");
 
 else
-AppendTo("/tmp/tmpIn.log","10000 [label=\" Non-spherical Coxeter\\n Diagram \", color=white, fontsize=20, fontcolor=red,width=1.5 ]  \n");
+AppendTo(tmpInlog,"10000 [label=\" Non-spherical Coxeter\\n Diagram \", color=white, fontsize=20, fontcolor=red,width=1.5 ]  \n");
 
  fi;
-AppendTo("/tmp/tmpIn.log","} \n");
+AppendTo(tmpInlog,"} \n");
 ################ WRITTEN ############################################
 
-Exec("neato -Tgif /tmp/tmpIn.log > /tmp/basic.gif");
+Exec(Concatenation("neato -Tgif ",tmpInlog," > ",basicgif));
 
 if Length(arg)=1 then
-Exec("mozilla /tmp/basic.gif");
-Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif");
+Exec(Concatenation("mozilla ",basicgif));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",basicgif));
 
 else
-AppendTo("/tmp/tmpIn2.log", "Browser=",arg[2],"\n");
-AppendTo("/tmp/tmpIn2.log","$Browser /tmp/basic.gif");
-Exec("chmod a+x /tmp/tmpIn2.log; /tmp/tmpIn2.log");
-Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif; rm /tmp/tmpIn2.log;");
+AppendTo(tmpIn2log, "Browser=",arg[2],"\n");
+AppendTo(tmpIn2log,"$Browser ",basicgif);
+Exec(Concatenation("chmod a+x ",tmpIn2log,"; ",tmpIn2log));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",basicgif,"; rm ",tmpIn2log,";"));
 fi;
 end);
 #####################################################################

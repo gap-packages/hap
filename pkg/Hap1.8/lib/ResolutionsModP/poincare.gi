@@ -196,6 +196,7 @@ local
 
 P:=SylowSubgroup(G,p);
 R:=ResolutionFiniteGroup(P,n+1,false,p);
+#R:=ResolutionPrimePowerGroup(P,n+1);
 
 ####################################################################
 F:=function(R);

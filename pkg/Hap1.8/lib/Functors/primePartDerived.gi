@@ -22,7 +22,11 @@ for x in P do
 if Order(x)=prime then AddSet(core,x); fi;
 od;
 
+if not IsPrimeInt(Order(P)) then
 DCRS1:=List(DoubleCosetRepsAndSizes(G,P1,P1),x->x[1]);
+else
+DCRS1:=[];
+fi;
 if Order(P1)>Order(P) then
 Append(DCRS1,Filtered(ReduceGenerators(GeneratorsOfGroup(P1),P1),
 x->not x in P));
@@ -70,7 +74,7 @@ K:=Intersection(P,P^L[1]);
 gensK:=ReduceGenerators(GeneratorsOfGroup(K),K);
 
 G1:=Group(Concatenation(gensK,[Identity(P)]));
-if Order(G1)<128 and n<4 then 	##NEED TO FIND AN "OPTIMAL" CHOICE HERE
+if Order(G1)<64 and n<4 then 	##NEED TO FIND AN "OPTIMAL" CHOICE HERE
 S:=ResolutionFiniteGroup(gensK,n+1);
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
@@ -78,7 +82,9 @@ fi;
 if not (Homology(F(S),n)=[]) then
 
 f:=GroupHomomorphismByFunction(K,P,x->x);
+
 HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
+
 HK:=Source(HKhomHPK);
 
 HPK:=Range(HKhomHPK);

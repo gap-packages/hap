@@ -148,13 +148,15 @@ od;
 
 H:=F/Frels;
 SetIsAbelian(H,true);
-ExpH:=Maximum(AbelianInvariants(H));
+ExpH:=AbelianInvariants(H);
+  if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
 FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
 ################################
 else
 ################################
 HH:=F/Frels;
-ExpH:=Maximum(AbelianInvariants(HH));
+ExpH:=AbelianInvariants(HH);
+  if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
 FhomHH:=GroupHomomorphismByImagesNC(F,HH,Fgens,GeneratorsOfGroup(HH));
 HHhomH:=NqEpimorphismNilpotentQuotient(HH,1);;
 H:=Range(HHhomH);

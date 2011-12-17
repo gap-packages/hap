@@ -882,7 +882,10 @@ of $G$. The function prints the word $w$ to the screen in the form
 \hyperdef{L}{X81A2A3C97C09685E}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{DirectSumOfFpGModules} \texttt{ DirectSumOfFpGModules(M,N) } \\
+\begin{tabular}{|l|} \index{CompositionSeriesOfFpGModules} \texttt{ CompositionSeriesOfFpGModules(M) } 
+
+ Inputs an $FpG$-module $M$ and returns a list of $FpG$-modules that constitute a composition series for $M$. \\
+ \index{DirectSumOfFpGModules} \texttt{ DirectSumOfFpGModules(M,N) } \\
  \texttt{ DirectSumOfFpGModules([ M[1], M[2], ..., M[k] ])) } 
 
  Inputs two $FpG$-modules $M$ and $N$ with common group and characteristic. It returns the direct sum of $M$ and $N$ as an $FpG$-Module. 
@@ -923,12 +926,18 @@ and simply returns the $FpG$-module homomorphism. \\
  \index{RadicalOfFpGModule} \texttt{ RadicalOfFpGModule(M) } 
 
  Inputs an $FpG$-module $M$ with $G$ a $p$-group, and returns the Radical of $M$ as an $FpG$-module. (Ig $G$ is not a $p$-group then a submodule of the radical is returned. \\
+ \index{RadicalSeriesOfFpGModule} \texttt{ RadicalSeriesOfFpGModule(M) } 
+
+ Inputs an $FpG$-module $M$ and returns a list of $FpG$-modules that constitute the radical series for $M$. \\
  \index{GeneratorsOfFpGModule} \texttt{ GeneratorsOfFpGModule(M) } 
 
  Inputs an $FpG$-module $M$ and returns a matrix whose rows correspond to a minimal generating set for $M$. \\
  \index{ImageOfFpGModuleHomomorphism} \texttt{ ImageOfFpGModuleHomomorphism(f) } 
 
  Inputs an $FpG$-module homomorphism $f:M \longrightarrow N$ and returns its image $f(M)$ as an $FpG$-module. \\
+ \index{GroupAlgebraAsFpGModule} \texttt{ GroupAlgebraAsFpGModule(G) } 
+
+ Inputs a $p$-group $G$ and returns its mod $p$ group algebra as an $FpG$-module. \\
  \index{IntersectionOfFpGModules} \texttt{ IntersectionOfFpGModules(M,N) } 
 
  Inputs two $FpG$-modules $M, N$ arising as submodules in a common free module $(FG)^n$ where $G$ is a finite group and $F$ the field of $p$-elements. It returns the $FpG$-module arising as the intersection of $M$ and $N$. \\
@@ -939,12 +948,18 @@ and simply returns the $FpG$-module homomorphism. \\
  $ M!.generators[i] \longrightarrow A[i]$ 
 
  extends to a homomorphism of $FpG$-modules. Otherwise it returns false. \\
+ \index{MaximalSubmoduleOfFpGModule} \texttt{ MaximalSubmoduleOfFpGModule(M) } 
+
+ Inputs an $FpG$-module $M$ and returns one maximal $FpG$-submodule of $M$. \\
+ \index{MaximalSubmodulesOfFpGModule} \texttt{ MaximalSubmodulesOfFpGModule(M) } 
+
+ Inputs an $FpG$-module $M$ and returns the list of maximal $FpG$-submodules of $M$. \\
  \index{MultipleOfFpGModule} \texttt{ MultipleOfFpGModule(w,M) } 
 
  Inputs an $FpG$-module $M$ and a list $w:=[g_1 , ..., g_t]$ of elements in the group $G=M!.group$. The list $w$ can be thought of as representing the element $w=g_1 + \ldots + g_t$ in the group algebra $FG$, and the function returns a semi-echelon matrix $B$ which is a basis for the vector subspace $wM$ . \\
  \index{ProjectedFpGModule} \texttt{ ProjectedFpGModule(M,k) } 
 
- Inputs an $FpG$-module $M$ of ambient dimension $n|G|$, and an integer $k$ between $1$ and $n$. The module $M$ is a submodule of the free module $(FG)^n$ . Let $M_k$ denote the intersection of $M$ with the $k$-th summand of $(FG)^n$ . The function returns $M_k$ as an $FpG$-module with ambient dimension $n|G|$. \\
+ Inputs an $FpG$-module $M$ of ambient dimension $n|G|$, and an integer $k$ between $1$ and $n$. The module $M$ is a submodule of the free module $(FG)^n$ . Let $M_k$ denote the intersection of $M$ with the last $k$ summands of $(FG)^n$ . The function returns the image of the projection of $M_k$ onto the $k$-th summand of $(FG)^n$ . This image is returned an $FpG$-module with ambient dimension $|G|$. \\
  \index{RandomHomomorphismOfFpGModules} \texttt{ RandomHomomorphismOfFpGModules(M,N) } 
 
  Inputs two $FpG$-modules $M$ and $N$ over a common group $G$. It returns a random matrix $A$ whose rows are vectors in $N$ such that the function 
@@ -1307,7 +1322,7 @@ viewing image files. A black/white image is displayed. \\
  \index{PathComponent} \texttt{ PathComponent(T,n)} 
 
  Inputs a topological space $T$ and an integer $n$ in the rane 0, ..., Bettinumbers(T,0) . It returns the n-th path component of $T$ as a topological space. \\
- \index{SingularChainComplex} \texttt{ SingularChainComplex(A)} 
+ \index{SingularChainComplex} \texttt{ SingularChainComplex(T)} 
 
  Inputs a topological space $T$ and returns a (usually very large) integral chain complex that is homotopy
 equivalent to the singular chain complex of $T$. \\
@@ -1368,6 +1383,13 @@ dimensions. It returns a topological space $T$ got by juxtaposing the spaces $L[
 \begin{tabular}{|l|} \index{BigStepLCS} \texttt{ BigStepLCS(G,n) } 
 
  Inputs a group $G$ and a positive integer $n$. It returns a subseries $G=L_1${\textgreater}$L_2${\textgreater}$ \ldots L_k=1$ of the lower central series of $G$ such that $L_i/L_{i+1}$ has order greater than $n$. \\
+ \index{Classify} \texttt{ Classify(L,Inv) } 
+
+ Inputs a list of objects $L$ and a function $Inv$ which computes an invariant of each object. It returns a list of lists which
+classifies the objects of $L$ according to the invariant.. \\
+ \index{RefineClassification} \texttt{ RefineClassification(C,Inv) } 
+
+ Inputs a list $C:=Classify(L,OldInv)$ and returns a refined classification according to the invariant $Inv$. \\
  \index{Compose(f,g)} \texttt{ Compose(f,g) } 
 
  Inputs two $FpG$-module homomorphisms $ f:M \longrightarrow N$ and $g:L \longrightarrow M$ with $Source(f)=Target(g)$ . It returns the composite homomorphism $fg:L \longrightarrow N$ . 

@@ -64,8 +64,13 @@ InstallGlobalFunction(GraphOfGroupsDisplay,
 function(arg)
 local
 
-	PositionName,
+	PositionName, tmpDir, tmpInlog, tmpIn2log, basicgif,
 	D, Boole, Vertices, Edges,x;
+
+tmpDir:=DirectoryTemporary();
+tmpInlog:=Filename(tmpDir,"tmpIn.log");
+tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
+basicgif:=Filename(tmpDir,"basic.gif");
 
 #####################################################################
 PositionName:=function(L,x);
@@ -88,34 +93,34 @@ od;
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo("/tmp/tmpIn.log"," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue] \n edge [style=\"setlinewidth(5)\"] \n");
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue] \n edge [style=\"setlinewidth(5)\"] \n");
 
 
 for x in Vertices do
-AppendTo("/tmp/tmpIn.log",PositionName(Vertices,x), "[label=\" ", Name(x), "\",fontsize=10]\n");
+AppendTo(tmpInlog,PositionName(Vertices,x), "[label=\" ", Name(x), "\",fontsize=10]\n");
 od;
 
 for x in Edges do
-AppendTo("/tmp/tmpIn.log",
+AppendTo(tmpInlog,
 PositionName(Vertices,Range(x[1]))," -- ",
 PositionName(Vertices,Range(x[2])), "[label=\" ",Name(Source(x[1])),"\",fontsize=10,color=brown] \n");
 od;
 
-AppendTo("/tmp/tmpIn.log","} \n");
+AppendTo(tmpInlog,"} \n");
 ################ WRITTEN ############################################
 
-Exec("neato -Tgif /tmp/tmpIn.log > /tmp/basic.gif");
+Exec(Concatenation("neato -Tgif ",tmpInlog ," > ",basicgif));
 
 if Length(arg)=1 then
-Exec("mozilla /tmp/basic.gif");
+Exec(Concatenation("mozilla ", basicgif));
 Sleep(2);
-Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif");
+Exec(Concatenation("rm ",tmpInlog, "; rm ",basicgif));
 
 else
-AppendTo("/tmp/tmpIn2.log", "Browser=",arg[2],"\n");
-AppendTo("/tmp/tmpIn2.log","$Browser /tmp/basic.gif");
-Exec("chmod a+x /tmp/tmpIn2.log; /tmp/tmpIn2.log");
-Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif; rm /tmp/tmpIn2.log;");
+AppendTo(tmpIn2log, "Browser=",arg[2],"\n");
+AppendTo(tmpIn2log,"$Browser ",basicgif);
+Exec(Concatenation("chmod a+x ",tmpIn2log,"; ",tmpIn2log));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",basicgif,"; rm ",tmpIn2log,";"));
 fi;
 
 end);

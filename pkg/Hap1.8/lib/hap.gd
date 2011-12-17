@@ -31,6 +31,13 @@ DeclareGlobalFunction("FpGModuleHomomorphismNC");
 DeclareGlobalFunction("FpGModuleHomomorphism");
 DeclareGlobalFunction("ImageOfFpGModuleHomomorphism");
 DeclareGlobalFunction("CompositionOfFpGModuleHomomorphisms");
+DeclareGlobalFunction("GroupAlgebraAsFpGModule");
+DeclareGlobalFunction("MaximalSubmodulesOfFpGModule");
+DeclareGlobalFunction("MaximalSubmoduleOfFpGModule");
+DeclareGlobalFunction("RadicalSeriesOfFpGModule");
+DeclareGlobalFunction("CompositionSeriesOfFpGModule");
+DeclareGlobalFunction("Classify");
+DeclareGlobalFunction("RefineClassification");
 
 
 ## NONABELIAN TENSOR ################################################
@@ -121,6 +128,7 @@ DeclareGlobalFunction("CoxeterDiagramDegree");
 DeclareGlobalFunction("CoxeterDiagramIsSpherical");
 DeclareGlobalFunction("ResolutionArtinGroup");
 DeclareGlobalFunction("CoxeterDiagramDisplay");
+DeclareGlobalFunction("NoncrossingPartitionsLatticeDisplay");
 
 ## HOMOLOGY #########################################################
 DeclareOperation("Homology",[IsObject,IsObject]);

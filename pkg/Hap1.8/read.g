@@ -21,7 +21,7 @@ ReadPackage("HAP", "lib/TitlePage/copyright.gap");
 ## defined in the polycyclic package.
 Bool:=LoadPackage("polycyclic","0.0",false);
 if Bool=fail then
-NaturalHomomorphism:=NaturalHomomorphismByNormalSubgroupNC;
+DeclareOperation("NaturalHomomorphism",[IsGroup,IsGroup]);
 IsPcpGroup:=function(G);return false;end;
 Collector:=function(x);return fail; end;
 PcpGroupByCollector:=function(x);return fail; end;
@@ -79,6 +79,13 @@ fi;
 
 
 if COMPILED=false then
+
+##################### RENAME GAP FUNCTIONS ##########################
+AbsInt_HAP:=AbsInt;
+MakeReadOnlyGlobal("AbsInt_HAP");
+SignInt_HAP:=SignInt;
+MakeReadOnlyGlobal("SignInt_HAP");
+
 ##################### FREE G MODULES ################################
 ReadPackage("HAP", "lib/FreeGmodules/wordOperations.gi");
 ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
@@ -171,11 +178,16 @@ ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 #################### ARTIN COXETER ##################################
 ReadPackage("HAP", "lib/ArtinCoxeter/diagrams.gi");
 ReadPackage("HAP", "lib/ArtinCoxeter/resArtin.gi");
+ReadPackage("HAP", "lib/ArtinCoxeter/noncrossing.gi");
+
 
 #################### COHOMOLOGY RINGS ###############################
 ReadPackage("HAP", "lib/Rings/intCoh.gi");
 ReadPackage("HAP", "lib/Rings/cocycleChainMap.gi");
 ReadPackage("HAP", "lib/Rings/cupProduct.gi");
+
+
+
 ReadPackage("HAP", "lib/Rings/integralGens.gi");
 
 ################### POLYMAKE #######################################
@@ -252,3 +264,6 @@ ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
 ################## G-OUTER GROUPS ##################################
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
+
+
+SetInfoLevel(InfoWarning,1); #This is GAP's default level

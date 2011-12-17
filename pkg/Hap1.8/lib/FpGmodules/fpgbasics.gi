@@ -306,7 +306,7 @@ end);
 InstallGlobalFunction(FpGModule,
 function(arg)
 local
-	A,G,M,GA,one,ambdim,pp,prime,MT,GactMat,Action,Elts,g;
+	A,G,M,one,ambdim,pp,prime,MT,GactMat,Action,Elts,g;
 
 A:=arg[1];
 G:=arg[2];
@@ -353,8 +353,6 @@ TransposedMat(B)));
 end;
 #####################################################################
 
-GA:=[];
-
 if Length(A)>0 then
 for g in G do
 A:=MutableCopyMat(A);
@@ -362,6 +360,9 @@ Append(A,Action(g,A));
 A:=SemiEchelonMat(A).vectors;
 od;
 fi;
+
+A:=MutableCopyMat(A);
+TriangulizeMat(A);
 
 M:=rec(
 	group:=G,
@@ -625,6 +626,33 @@ end);
 
 #####################################################################
 #####################################################################
+InstallOtherMethod(\<,
+"for FpG modules",
+[IsHapFPGModule,IsHapFPGModule],
+function(x,y)
+if x!.group=y!.group then 
+return x!.matrix < y!.matrix;
+else return false; fi;
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(\=,
+"for FpG modules",
+[IsHapFPGModule,IsHapFPGModule],
+function(x,y)
+if x!.group=y!.group then
+return x!.matrix = y!.matrix;
+else return false; fi;
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 InstallOtherMethod(SumOp,
 "for FpG homomorphisms",
 [IsHapFPGModuleHomomorphism,IsHapFPGModuleHomomorphism],
@@ -679,4 +707,181 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(GroupAlgebraAsFpGModule,
+function(G)
+local S,M,p,V,A;
+
+if not IsPGroup(G) then
+Print("G must be a finite p-group\n");
+return fail; fi;
+
+p:=PrimePGroup(G);
+
+V:=List([1..Order(G)],i->0);
+V[1]:=1;
+V:=One(GF(p))*V;
+
+return FpGModule([V],G);
+
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(MaximalSubmodulesOfFpGModule,
+function(M)
+local R,L,gens,dim,prime,V,v,SSP,B;
+
+if not IsHapFPGModule(M) then
+Print("Input is not an FpG-module\n");
+return fail;
+fi;
+
+L:=[];
+
+if Dimension(M)= 0 then return L; fi;
+
+prime:=PrimePGroup(M!.group);
+R:=RadicalOfFpGModule(M);
+if Dimension(R)>0 then
+R:=GeneratorsOfFpGModule(R);
+else R:=[];fi;
+
+gens:=GeneratorsOfFpGModule(M);
+dim:=Length(gens);
+SSP:=Subspaces(GF(prime)^dim,dim-1);
+
+for V in List(SSP,x->x) do
+B:=[];
+for v in Basis(V) do
+Add(B,v*gens);
+od;
+Add(L,Concatenation(B,R));
+od;
+
+for B in L do
+TriangulizeMat(B);
+od;
+
+Apply(L,b->FpGModule(b,M!.group));
+
+return L;
+
+end);
+########################################
+########################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(MaximalSubmoduleOfFpGModule,
+function(M)
+local R,gens,dim,prime;
+
+if not IsHapFPGModule(M) then
+Print("Input is not an FpG-module\n");
+return fail;
+fi;
+
+
+if Dimension(M)= 0 then return M; fi;
+
+prime:=PrimePGroup(M!.group);
+R:=RadicalOfFpGModule(M);
+if Dimension(R)>0 then
+R:=GeneratorsOfFpGModule(R);
+else R:=[];fi;
+
+gens:=GeneratorsOfFpGModule(M);
+dim:=Length(gens);
+
+Append(R,gens{[1..dim-1]}); 
+
+return FpGModule(R,M!.group);
+
+end);
+########################################
+########################################
+
+
+########################################
+########################################
+InstallGlobalFunction(RadicalSeriesOfFpGModule,
+function(M)
+local S;
+
+S:=[M];
+
+while Dimension(M)>0 do
+M:=RadicalOfFpGModule(M);
+Add(S,M);
+od;
+
+return S;
+
+end);
+########################################
+########################################
+
+########################################
+########################################
+InstallGlobalFunction(CompositionSeriesOfFpGModule,
+function(M)
+local S;
+
+S:=[M];
+while Dimension(M)>0 do
+M:=MaximalSubmoduleOfFpGModule(M);
+Add(S,M);
+od;
+
+return S;
+end);
+########################################
+########################################
+
+
+########################################
+########################################
+InstallGlobalFunction(Classify,
+function(L,Inv)
+local Class, ValInv, x,c;
+
+ValInv:=[];
+Class:=[];
+
+for x in L do
+c:=Inv(x);
+if not c in ValInv then Add(ValInv,c); Add(Class,[]);fi;
+Add(Class[Position(ValInv,c)],x);
+od;
+
+return  Class;
+
+end);
+########################################
+########################################
+
+########################################
+########################################
+InstallGlobalFunction(RefineClassification,
+function(C,Inv)
+local x,RefC;
+
+RefC:=[];
+
+for x in C do
+if Length(x)=1 then
+Add(RefC,x);
+else
+Append(RefC,Classify(x,Inv));
+fi;
+od;
+
+return RefC;
+end);
+########################################
+########################################
 

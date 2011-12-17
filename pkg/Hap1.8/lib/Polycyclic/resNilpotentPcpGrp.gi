@@ -14,6 +14,7 @@ local
 	RE,
 	T;
 
+SetInfoLevel(InfoWarning,0);
 HAPconstant:=50;
 EE:=arg[1];
 K:=arg[2];
@@ -50,7 +51,7 @@ RG:=ResolutionNilpotentGroup(G,K);;
 
 T:= ResolutionExtension(EEhomGG,RN,RG,Test);
 HAPconstant:=2;
-
+SetInfoLevel(InfoWarning,1);
 return T;
 end);
 #####################################################################

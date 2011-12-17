@@ -18,7 +18,14 @@ local
 	InEqualities,
 	InEqSizes,
 	Polymake,
+        tmpdir, tmpin, tmpodir, tmpout,
 	R,Redges,V, i,x,row,n,m,M;
+
+tmpdir := DirectoryTemporary();;
+tmpin:=Filename( tmpdir , "tmpIn.log" );
+tmpodir := DirectoryTemporary();;
+tmpout:=Filename( tmpdir , "tmpOut.log" );
+
 
 Vertices:=[];
 CollEdges:=[];
@@ -129,41 +136,41 @@ od;
 Polymake:=function()
 local V, i, x, input;
 
-AppendTo("tmpin.log","EQUATIONS","\n");
+AppendTo(tmpin,"EQUATIONS","\n");
 
 for i in [1..Length(EqualitiesMat)] do
-AppendTo("tmpin.log",-EqualitiesVec[i]," ");
+AppendTo(tmpin,-EqualitiesVec[i]," ");
 for x in [1..Length(EqualitiesMat[1])] do
-AppendTo("tmpin.log",EqualitiesMat[i][x]," ");
+AppendTo(tmpin,EqualitiesMat[i][x]," ");
 od;
-AppendTo("tmpin.log","\n");
+AppendTo(tmpin,"\n");
 od;
 
-AppendTo("tmpin.log","\n","INEQUALITIES","\n");
+AppendTo(tmpin,"\n","INEQUALITIES","\n");
 
 for i in [1..Length(InEqualities)] do
-AppendTo("tmpin.log",-2," ");
+AppendTo(tmpin,-2," ");
 for x in [1..Length(InEqualities[1])] do
-AppendTo("tmpin.log",InEqualities[i][x]," ");
+AppendTo(tmpin,InEqualities[i][x]," ");
 od;
-AppendTo("tmpin.log","\n");
+AppendTo(tmpin,"\n");
 od;
 
 for i in [1..Length(InEqualities[1])] do
-AppendTo("tmpin.log",0," ");
+AppendTo(tmpin,0," ");
 for x in [1..Length(InEqualities[1])] do
-if i=x then AppendTo("tmpin.log",1," ");
-else  AppendTo("tmpin.log",0," "); fi;
+if i=x then AppendTo(tmpin,1," ");
+else  AppendTo(tmpin,0," "); fi;
 od;
-AppendTo("tmpin.log","\n");
+AppendTo(tmpin,"\n");
 od;
 
-Exec("polymake tmpin.log FEASIBLE >tmpout.log");
-Exec("rm tmpin.log");
-input := InputTextFile("tmpout.log");
+Exec(Concatenation("polymake ", tmpin, " FEASIBLE > ",tmpout));
+Exec(Concatenation("rm ",tmpin));
+input := InputTextFile(tmpout);
 x:=ReadLine(input);
 x:=Int(Chomp(ReadLine(input)));
-Exec("rm tmpout.log");
+Exec(Concatenation("rm ",tmpout));
 
 return x;
 end;

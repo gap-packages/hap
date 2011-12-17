@@ -3,11 +3,17 @@
 InstallGlobalFunction(OrbitPolytope,
 function(G,v,Props)
 local
-	Points,p,x,i,w,Dim,tmp,input,
+	Points,p,x,i,w,Dim,tmp,input, tmpdir, tmpIn, tmp2dir, tmp2In,
 	a,b,c,d,U,V,W;
 
 Dim:=Length(v);
 Points:=[];
+
+tmpdir := DirectoryTemporary();;
+tmpIn:=Filename( tmpdir , "tmpIn.log" );
+tmp2dir := DirectoryTemporary();;
+tmp2In:=Filename( tmpdir , "tmp2In.log" );
+
 
 ############################CREATE POINTS###############
 if IsPermGroup(G) then
@@ -31,13 +37,13 @@ fi;
 
 
 ################## CALCULATE HULL POINTS ###############
-AppendTo("/tmp/tmpIn.log","POINTS","\n");
+AppendTo(tmpIn,"POINTS","\n");
 for p in Points do
-AppendTo("/tmp/tmpIn.log",1);
+AppendTo(tmpIn,1);
     for i in [1..Dim] do
-    AppendTo("/tmp/tmpIn.log"," ",p[i]);
+    AppendTo(tmpIn," ",p[i]);
     od;
-AppendTo("/tmp/tmpIn.log","\n");
+AppendTo(tmpIn,"\n");
 od;
 
 
@@ -45,39 +51,39 @@ od;
 
 
 if "DIMENSION" in Props or "dimension" in Props then
-Exec("polymake /tmp/tmpIn.log DIM > /tmp/tmp2In.log");
-input:=InputTextFile("/tmp/tmp2In.log");
+Exec(Concatenation("polymake ", tmpIn," DIM > ", tmp2In));
+input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Print("Dimension of orbit polytope is: ", tmp, "\n");
-Exec("rm /tmp/tmp2In.log");
+Exec(Concatenation("rm ", tmp2In));
 fi;
 
 if "VERTREX_DEGREE" in Props or "vertex_degree" in Props then
-Exec("polymake /tmp/tmpIn.log VERTEX_DEGREES > /tmp/tmp2In.log");
-input:=InputTextFile("/tmp/tmp2In.log");
+Exec(Concatenation("polymake ",tmpIn,  " VERTEX_DEGREES > ",tmp2In));
+input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
-Print("Vertex degree in graph of polytope is: ", Rat([tmp[1]]), "\n");
-Exec("rm /tmp/tmp2In.log");
+Print("Vertex degree in graph of polytope is: ", Rat(Concatenation([tmp{[1..Position(tmp,' ')-1]}])), "\n");
+Exec(Concatenation("rm ",tmp2In));
 fi;
 
 
 
 if "VISUAL_GRAPH" in Props or "visual_graph" in Props then
-Exec("polymake /tmp/tmpIn.log VISUAL_GRAPH");
+Exec(Concatenation("polymake ",tmpIn ," VISUAL_GRAPH"));
 fi;
 
 if "SCHLEGEL" in Props or "schlegel" in Props then
-Exec("polymake /tmp/tmpIn.log SCHLEGEL");
+Exec(Concatenation("polymake ",tmpIn ," SCHLEGEL"));
 fi;
 
 
 if "VISUAL" in Props or "visual" in Props then
 
 if IsPermGroup(G) and Length(v)=4 then
-	Exec("rm /tmp/tmpIn.log");
-	AppendTo("/tmp/tmpIn.log","POINTS","\n");
+	Exec(Concatenation("rm ",tmpIn));
+	AppendTo(tmpIn,"POINTS","\n");
 
 	for x in G do
 	a:=v[1^x]-v[1];
@@ -87,13 +93,13 @@ if IsPermGroup(G) and Length(v)=4 then
 	U:=2*a-2*b;
 	V:=2*c-2*d;
 	W:=a+b-c-d;
-	AppendTo ("/tmp/tmpIn.log",1," ",U, " ",V," ",W,  "\n");
+	AppendTo (tmpIn,1," ",U, " ",V," ",W,  "\n");
 	od;
 fi;
-Exec("polymake /tmp/tmpIn.log VISUAL");
+Exec(Concatenation("polymake ",tmpIn ," VISUAL"));
 fi;
 
-Exec("rm /tmp/tmpIn.log");
+Exec(Concatenation("rm ",tmpIn));
 
 
 

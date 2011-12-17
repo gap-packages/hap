@@ -28,7 +28,6 @@ local
 		HomotopyOfWord,
 		FinalHomotopy,
 		HorizontalPseudoBoundary,
-		SMALL,SizeE,BoolE,MT,
 #################################
 AbsInt,                         #
 SignInt;                        #
@@ -37,29 +36,6 @@ AbsInt:=AbsInt_HAP;             #
 SignInt:=SignInt_HAP;           #
 #################################
 		
-SMALL:=4096;;
-if Order(S!.group) >SMALL  then SizeE:=Order(S!.group); fi;
-if Order(R!.group) >SMALL
- then SizeE:=Order(R!.group); fi;
-if not IsBound(SizeE) then
-SizeE:=Order(R!.group)*Order(S!.group);
-fi;
-
-BoolE:=SizeE<=SMALL and Size(R!.group)=Size(R!.elts)
-and Size(S!.group)=Size(S!.elts);
-#################################
-if BoolE then
-MT:=[];
-#for i in [1..SizeE] do
-for i in [1..Length(EltsE)] do
-MT[i]:=[];
-#for j in [1..SizeE] do
-for j in [1..Length(EltsE)] do
-MT[i][j]:=Mult(i,j);
-od;
-od;
-fi;
-#################################
 
 DimensionR:=R!.dimension;
 DimensionS:=S!.dimension;
@@ -190,7 +166,6 @@ od;
 od;
 od;
 
-if not BoolE then
 #####################################################################
 Htpy:=function(p,q,x)
 local tensor, t,g, r, s,AB;
@@ -217,37 +192,6 @@ fi;
 
 end;
 #####################################################################
-else
-#####################################################################
-Htpy:=function(p,q,x)
-local tensor, t,g, r, s,AB;
-
-AB:=AbsInt(x[1]);
-
-if not IsBound(HtpyRecord[p+1][q+1][AB][x[2]]) then
-
-tensor:=Int2Pair(AB,p,q);
-
-g:=NEhomN(MT[InvE(GmapE(EhomG(x[2])))][x[2]] );
-t:=GmapE(EhomG(x[2]));
-r:=ShallowCopy(HomotopyS(q,[tensor[2],g]));
-Apply(r,y->[y[1],NhomE(y[2])]);
-Apply(r,y->[Pair2Int([tensor[1],y[1]],p,q+1),MT[t][y[2]]]);
-HtpyRecord[p+1][q+1][AB][x[2]]:=r;
-fi;
-
-if SignInt(x[1])>0 then
-return HtpyRecord[p+1][q+1][AB][x[2]];
-else
-return NegateWord(HtpyRecord[p+1][q+1][AB][x[2]]);
-fi;
-
-end;
-#####################################################################
-fi;
-
-
-
 
 if not Charact=2 then
 #####################################################################
@@ -354,8 +298,6 @@ fi;
 end;
 #####################################################################
 
-
-if not BoolE then
 #####################################################################
 CompDel:=function(k,p,q,b)
 local r,v,w,x, map,SM,j,y;
@@ -395,47 +337,6 @@ fi;
 return r;
 end;
 #####################################################################
-else
-#####################################################################
-CompDel:=function(k,p,q,b)
-local r,v,w,x, map,SM,j,y;
-
-map:=function(x);
-return Del(k,p,q,x);
-end;
-
-###############
-if not Charact=2 then
-r:=[];
-for v in b do
-w:=ShallowCopy(map(v[1]));
-Apply(w,y->[y[1],MT[v[2]][y[2]]]);
-r:=AddWrds(w,r);
-od;
-
-else
-SM:=[];
-for v in b do
-w:=ShallowCopy(map(v[1]));
-Apply(w,y->[y[1],MT[v[2]][y[2]]]);
-AddLst(w,SM);
-od;
-
-r:=[];
-for y in SM do
-for j in y do
-#if not j=0 then
-Add(r,j);
-#fi;
-od;
-od;
-fi;
-###############
-
-return r;
-end;
-#####################################################################
-fi;
 
 DelRecord:=[];
 for l in [0..n] do

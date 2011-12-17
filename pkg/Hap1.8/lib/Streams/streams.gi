@@ -20,10 +20,7 @@ f:=Filename(DirectoriesSystemPrograms(),"ssh");
 s := InputOutputLocalProcess(d,f,[arg[1],"gap","-f","-T","-q","-b"]);
 fi;
 
-Name:=Concatenation("/tmp/",String(Random([1..100000])));
-while IsExistingFile(Name) do
-Name:=Concatenation("/tmp/",String(Random([1..100000])));
-od;
+Name:=Filename(DirectoryTemporary(),"name");
 
 Add(HAPchildren,Name);
 PrintTo(Name,"HAPchildToggle\:=true;");
@@ -152,10 +149,7 @@ NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
-while IsExistingFile(fle) do
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
-od;
+fle:=Filename(DirectoryTemporary(),"fle");
 
 PrintTo(fle,Concatenation(Name,":="));
 AppendTo(fle,X);
@@ -188,10 +182,8 @@ NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
-while IsExistingFile(fle) do
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
-od;
+fle:=Filename(DirectoryTemporary(),"fle");
+
 
 i:=Concatenation("PrintTo(\"",fle,"\", \"HAP_XYXYXYXY:=\");");
 WriteLine(s.stream,i);
