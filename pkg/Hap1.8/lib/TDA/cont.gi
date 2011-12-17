@@ -1,3 +1,5 @@
+#C 2007 Graham Ellis
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ContractMatrix,
@@ -9,7 +11,8 @@ local
 	Contract,
 	ContractImageMatrix,
 	TOG1,
-	TOG2;
+	TOG2,
+	A;
 A:=arg[1];
 #####################################################################
 ChooseRandomBox:=function(A)
@@ -353,7 +356,7 @@ InstallGlobalFunction(ThickenedMatrix,
 function(arg)
 local A,N,row,col,B,Neighbours,i,j,box;
 
-A:=arg[1];
+A:=StructuralCopy(arg[1]);
 if Length(arg)>1 then N:=arg[2];
 if N>1 then return ThickenedMatrix(ThickenedMatrix(A,N-1));fi;
 fi;
@@ -396,3 +399,27 @@ return B;
 end);
 ######################################################################
 ######################################################################
+
+######################################################################
+######################################################################
+InstallGlobalFunction(ComplementedMatrix,
+function(A)
+local
+		B,
+		i,j,rows,cols;
+rows:=Length(A);
+cols:=Length(A[1]);
+B:=StructuralCopy(A);
+
+for i in [1..rows] do
+for j in [1..cols] do
+if B[i][j]=1 then B[i][j]:=0;
+else B[i][j]:= 1 ;fi;
+od;
+od;
+
+return B;
+end);
+#####################################################################
+#####################################################################
+

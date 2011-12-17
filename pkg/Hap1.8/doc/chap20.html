@@ -19,31 +19,76 @@
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code"> ReadImageFile("file.png",n)</code></p>
+<td class="tdleft"><code class="code"> MatrixToTopologicalSpace(A,n)</code></p>
 
-<p>Inputs an image file ("file.png", "file.eps", "file.bmp" etc) and an integer n between 0 and 765. It returns a 1/0 integer matrix representing a black/white version of the image determined by the threshold n.</td>
+<p>Inputs an integer matrix A and an integer n. It returns a 2-dimensional topological space corresponding to the black/white image determined by the threshold n and the values of the pixels in A.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> BettiNumbersOfMatrix(A)</code></p>
+<td class="tdleft"><code class="code"> ReadImageAsTopologicalSpace("file.png",n)</code> <code class="code"> ReadImageAsTopologicalSpace("file.png",[m,n])</code></p>
 
-<p>Inputs a 1/0 integer matrix A representing a black/white version of an image. It returns a list [b0,b1] where b0 is the zeroth betti number of the black image space, and b1 is the first betti number. All higher betti numbers will be zero as the space is 2-dimensional.</td>
+<p>Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer n or pair [m,n] of integers between 0 and 765. It returns a topological space based on the black/white version of the image determined by the threshold n or threshold range [m,n].</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> MatrixToChainComplex(A)</code></p>
+<td class="tdleft"><code class="code"> ReadImageAsMatrix("file.png")</code></p>
 
-<p>Inputs a 1/0 integer matrix A representing a black/white version of an image and returns the cellular chain complex of the black image space (in characteristic 0).</td>
+<p>Reads an image file ("file.png", "file.eps", "file.bmp" etc) and returns an integer matrix whose entries are the sum of the RGB values of the pixels in the image.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> ContractMatrix(A)</code></p>
+<td class="tdleft"><code class="code"> WriteTopologicalSpaceAsImage(T,"filename","ext")</code></p>
 
-<p>Inputs a 1/0 integer matrix A representing a black/white version of an image and modifies A so that it represents a homotopy equivalent image space hopefully with fewer black cells. Black cells are removed from the image to produce a homotopy equivalent image from which no further black cell can be removed without changing the homotopy type. The function returns true if it succeeds in reducing the number of cells of the original image; otherwise it returns false.</td>
+<p>Inputs a 2-dimensional topological space T, and a filename followed by its extension (e.g. "myfile" followed by "png"). A black/white image is saved to the file.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> ThickenedMatrix(A)</code> <code class="code"> ThickenedMatrix(A,n)</code></p>
+<td class="tdleft"><code class="code"> ViewTopologicalSpace(T)</code> <code class="code"> ViewTopologicalSpace(T,"mozilla")</code></p>
 
-<p>Inputs a 1/0 integer matrix A and returns a 1/0 matrix B. If an entry in A is equal to 1 then the corresponding entry in B and all eight neighbouring entries in B are equal to 1.</p>
+<p>Inputs a topological space T, and optionally a command such as "mozilla" for viewing image files. A black/white image is displayed.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BettiNumbers(T,n)</code> <code class="code"> BettiNumbers(T)</code></p>
+
+<p>Inputs a topological space T and a non-negative integer n. It returns the n-th betti number of T. If the integer n is not input then a list of all betti numbers is returned.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> PathComponent(T,n)</code></p>
+
+<p>Inputs a topological space T and an integer n in the rane 0, ..., BettiNumbers(T,0) . It returns the n-th path component of T as a topological space.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> SingularChainComplex(A)</code></p>
+
+<p>Inputs a topological space T and returns a (usually very large) integral chain complex that is homotopy equivalent to the singular chain complex of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ContractTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T of dimension d and removes d-dimensional cells from T without changing the homotopy type of T. When the function has been applied, no further d-cells can be removed from T without changing the homotopy type.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BoundaryTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T and returns its boundars as a topological space.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BoundarySingularities(T)</code></p>
+
+<p>Inputs a topological space T and returns the subspace of points in the boundary where the boundary is not differentiable. (The method for deciding differentiability at a point is crude/discrete and prone to errors.) The zeroth betti number of the set of points is a measure of the number of "corners" in the boundary of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ThickenedTopologicalSpace(T)</code> <code class="code"> ThickenedTopologicalSpace(T,n)</code></p>
+
+<p>Inputs a topological space T and returns a topological space S. If a euclidean point is in T then this point and all its perpendicularly neighbouring euclidean points are included in S.</p>
 
 <p>If a positive integer n is input as a second argument then the thickening process is repeated n times.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ComplementTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T and returns a topological space S. A euclidean point is in S precisely when the point is not in T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ConcatenatedTopologicalSpace(L)</code></p>
+
+<p>Inputs a list L of topological spaces whose underlying arrays of numbers all have equal dimensions. It returns a topological space T got by juxtaposing the spaces L[1], L[2], ..., L[Length(L)].</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>

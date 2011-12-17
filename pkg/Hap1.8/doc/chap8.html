@@ -51,18 +51,31 @@
 <p>(Let a_i be the i-th canonical generator of the d-generator abelian group H^n(G,Z). The cohomology class n_1a_1 + ... +n_da_d is represented by the integer vector u=(n_1, ..., n_d). )</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> ModPCohomologyRing(G,n) </code> <br /> <code class="code"> ModPCohomologyRing(R) </code></p>
+<td class="tdleft"><code class="code"> ModPCohomologyGenerators(G,n) </code> <br /> <code class="code"> ModPCohomologyGenerators(R) </code></p>
+
+<p>Inputs either a p-group G and positive integer n, or else n terms of a minimal Z_pG-resolution R of Z_p. It returns a pair whose first entry is a minimal set of homogeneous generators for the cohomology ring A=H^*(G,Z_p) modulo all elements in degree greater than n. The second entry of the pair is a function deg which, when applied to a minimal generator, yields its degree.</p>
+
+<p>WARNING: the following rule must be applied when multiplying generators x_i together. Only products of the form x_1*(x_2*(x_3*(x_4*...))) with deg(x_i) le deg(x_i+1) should be computed (since the x_i belong to a structure constant algebra with only a partially defined structure constants table).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ModPCohomologyRing(G,n) </code> <br /> <code class="code"> ModPCohomologyRing(G,n,level) </code> <br /> <code class="code"> ModPCohomologyRing(R) </code> <br /> <code class="code"> ModPCohomologyRing(R,level) </code></p>
 
 <p>Inputs either a p-group G and positive integer n, or else n terms of a minimal Z_pG-resolution R of Z_p. It returns the cohomology ring A=H^*(G,Z_p) modulo all elements in degree greater than n.</p>
 
 <p>The ring is returned as a structure constant algebra A.</p>
 
-<p>The ring A is graded. It has a component A!.degree(x) which is a function returning the degree of each (homogeneous) element x in GeneratorsOfAlgebra(A).</td>
+<p>The ring A is graded. It has a component A!.degree(x) which is a function returning the degree of each (homogeneous) element x in GeneratorsOfAlgebra(A).</p>
+
+<p>An optional input variable "level" can be set to one of the strings "medium" or "high". These settings determine parameters in the algorithm. The default setting is "medium".</p>
+
+<p>When "level" is set to "high" the ring A is returned with a component A!.niceBasis. This component is a pair [Coeff,Bas]. Here Bas is a list of integer lists; a "nice" basis for the vector space A can be constructed using the command List(Bas,x-&gt;Product(List(x,i-&gt;Basis(A)[i])). The coefficients of the canonical basis element Basis(A)[i] are stored as Coeff[i].</p>
+
+<p>If the ring A is computed using the setting "level"="medium" then the component A!.niceBasis can be added to A using the command A:=ModPCohomologyRing_part_2(A).</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code"> ModPRingGenerators(A) </code></p>
 
-<p>Inputs a mod p cohomology ring A (created using the preceeding function). It returns a generating set for the ring A. Each generator is homogeneous.</td>
+<p>Inputs a mod p cohomology ring A (created using the preceeding function). It returns a minimal generating set for the ring A. Each generator is homogeneous.</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>

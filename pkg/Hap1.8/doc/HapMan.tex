@@ -370,7 +370,7 @@ sparse.
  It inputs a chain complex $C$ in characteristic $0$ and returns the torsion coefficients of $H_n(C)$ . There is a small probability that an incorrect answer could be returned. The
 computation relies on probabilistic Smith Normal Form algorithms implemented
 in the Simplicial Homology GAP package. This package therefore needs to be
-loaded. 
+loaded. The computation is stored as a component of $C$ so, when called a second time for a given $C$ and $n$, the calculation is recalled without rerunning the algorithm. 
 
  The choice of probabalistic algorithm can be changed using the command 
 
@@ -478,18 +478,36 @@ implements the cup product for characteristic 0 only.
 group $H^n(G,Z)$ . 
 
  (Let $a_i$ be the $i$-th canonical generator of the $d$-generator abelian group $H^n(G,Z)$. The cohomology class $n_1a_1 + ... +n_da_d$ is represented by the integer vector $u=(n_1, ..., n_d)$. ) \\
+ \index{ModPCohomologyGenerators} \texttt{ ModPCohomologyGenerators(G,n) } \\
+ \texttt{ ModPCohomologyGenerators(R) } 
+
+ Inputs either a $p$-group $G$ and positive integer $n$, or else $n$ terms of a minimal $Z_pG$-resolution $R$ of $Z_p$. It returns a pair whose first entry is a minimal set of homogeneous
+generators for the cohomology ring $A=H^*(G,Z_p)$ modulo all elements in degree greater than $n$. The second entry of the pair is a function $deg$ which, when applied to a minimal generator, yields its degree. 
+
+ WARNING: the following rule must be applied when multiplying generators $x_i$ together. Only products of the form $x_1*(x_2*(x_3*(x_4*...)))$ with $deg(x_i) \le deg(x_{i+1})$ should be computed (since the $x_i$ belong to a structure constant algebra with only a partially defined structure
+constants table). \\
  \index{ModPCohomologyRing} \texttt{ ModPCohomologyRing(G,n) } \\
- \texttt{ ModPCohomologyRing(R) } 
+ \texttt{ ModPCohomologyRing(G,n,level) } \\
+ \texttt{ ModPCohomologyRing(R) } \\
+ \texttt{ ModPCohomologyRing(R,level) } 
 
  Inputs either a $p$-group $G$ and positive integer $n$, or else $n$ terms of a minimal $Z_pG$-resolution $R$ of $Z_p$. It returns the cohomology ring $A=H^*(G,Z_p)$ modulo all elements in degree greater than $n$. 
 
  The ring is returned as a structure constant algebra $A$. 
 
- The ring $A$ is graded. It has a component $A!.degree(x)$ which is a function returning the degree of each (homogeneous) element $x$ in $GeneratorsOfAlgebra(A)$. \\
+ The ring $A$ is graded. It has a component $A!.degree(x)$ which is a function returning the degree of each (homogeneous) element $x$ in $GeneratorsOfAlgebra(A)$. 
+
+ An optional input variable "level" can be set to one of the strings "medium"
+or "high". These settings determine parameters in the algorithm. The default
+setting is "medium". 
+
+ When "level" is set to "high" the ring $A$ is returned with a component $A!.niceBasis$. This component is a pair $[Coeff,Bas]$. Here $Bas$ is a list of integer lists; a "nice" basis for the vector space $A$ can be constructed using the command $List(Bas,x->Product(List(x,i->Basis(A)[i]))$. The coefficients of the canonical basis element $Basis(A)[i]$ are stored as $Coeff[i]$. 
+
+ If the ring $A$ is computed using the setting "level"="medium" then the component $A!.niceBasis$ can be added to $A$ using the command $ A:=ModPCohomologyRing_part_2(A) $. \\
  \index{ModPRingGenerators} \texttt{ ModPRingGenerators(A) } 
 
- Inputs a mod $p$ cohomology ring $A$ (created using the preceeding function). It returns a generating set for the
-ring $A$. Each generator is homogeneous. \\
+ Inputs a mod $p$ cohomology ring $A$ (created using the preceeding function). It returns a minimal generating set
+for the ring $A$. Each generator is homogeneous. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -1049,31 +1067,63 @@ stream s. The output from "func;" can be accessed via the stream. \\
 \chapter{\textcolor{Chapter }{ Topological Data Analysis}}\logpage{[ 20, 0, 0 ]}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{ReadImageFile} \texttt{ ReadImageFile("file.png",n)} 
+\begin{tabular}{|l|} \index{MatrixToTopologicalSpace} \texttt{ MatrixToTopologicalSpace(A,n)} 
 
- Inputs an image file ("file.png", "file.eps", "file.bmp" etc) and an integer $n$ between 0 and 765. It returns a 1/0 integer matrix representing a black/white
-version of the image determined by the threshold $n$. \\
- \index{BettiNumbersOfMatrix} \texttt{ BettiNumbersOfMatrix(A)} 
+ Inputs an integer matrix $A$ and an integer $n$. It returns a 2-dimensional topological space corresponding to the
+black/white image determined by the threshold $n$ and the values of the pixels in $A$. \\
+ \index{ReadImageAsTopologicalSpace} \texttt{ ReadImageAsTopologicalSpace("file.png",n)} \texttt{ ReadImageAsTopologicalSpace("file.png",[m,n])} 
 
- Inputs a 1/0 integer matrix $A$ representing a black/white version of an image. It returns a list $[b0,b1]$ where $b0$ is the zeroth betti number of the black image space, and $b1$ is the first betti number. All higher betti numbers will be zero as the space
-is $2$-dimensional. \\
- \index{MatrixToChainComplex} \texttt{ MatrixToChainComplex(A)} 
+ Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer $n$ or pair $[m,n]$ of integers between 0 and 765. It returns a topological space based on the
+black/white version of the image determined by the threshold $n$ or threshold range $[m,n]$. \\
+ \index{ReadImageAsMatrix} \texttt{ ReadImageAsMatrix("file.png")} 
 
- Inputs a 1/0 integer matrix $A$ representing a black/white version of an image and returns the cellular chain
-complex of the black image space (in characteristic 0). \\
- \index{ContractMatrix} \texttt{ ContractMatrix(A)} 
+ Reads an image file ("file.png", "file.eps", "file.bmp" etc) and returns an
+integer matrix whose entries are the sum of the RGB values of the pixels in
+the image. \\
+ \index{WriteTopologicalSpaceAsImage} \texttt{ WriteTopologicalSpaceAsImage(T,"filename","ext")} 
 
- Inputs a 1/0 integer matrix $A$ representing a black/white version of an image and modifies $A$ so that it represents a homotopy equivalent image space hopefully with fewer
-black cells. Black cells are removed from the image to produce a homotopy
-equivalent image from which no further black cell can be removed without
-changing the homotopy type. The function returns true if it succeeds in
-reducing the number of cells of the original image; otherwise it returns
-false. \\
- \index{ThickenedMatrix} \texttt{ ThickenedMatrix(A)} \texttt{ ThickenedMatrix(A,n)} 
+ Inputs a 2-dimensional topological space T, and a filename followed by its
+extension (e.g. "myfile" followed by "png"). A black/white image is saved to
+the file. \\
+ \index{ViewTopologicalSpace} \texttt{ ViewTopologicalSpace(T)} \texttt{ ViewTopologicalSpace(T,"mozilla")} 
 
- Inputs a 1/0 integer matrix $A$ and returns a 1/0 matrix $B$. If an entry in $A$ is equal to 1 then the corresponding entry in $B$ and all eight neighbouring entries in $B$ are equal to 1. 
+ Inputs a topological space T, and optionally a command such as "mozilla" for
+viewing image files. A black/white image is displayed. \\
+ \index{BettiNumbers} \texttt{ BettiNumbers(T,n)} \texttt{ BettiNumbers(T)} 
+
+ Inputs a topological space $T$ and a non-negative integer $n$. It returns the n-th betti number of $T$. If the integer $n$ is not input then a list of all betti numbers is returned. \\
+ \index{PathComponent} \texttt{ PathComponent(T,n)} 
+
+ Inputs a topological space $T$ and an integer $n$ in the rane 0, ..., BettiNumbers(T,0) . It returns the n-th path component of $T$ as a topological space. \\
+ \index{SingularChainComplex} \texttt{ SingularChainComplex(A)} 
+
+ Inputs a topological space $T$ and returns a (usually very large) integral chain complex that is homotopy
+equivalent to the singular chain complex of $T$. \\
+ \index{ContractTopologicalSpace} \texttt{ ContractTopologicalSpace(T)} 
+
+ Inputs a topological space $T$ of dimension $d$ and removes $d$-dimensional cells from $T$ without changing the homotopy type of $T$. When the function has been applied, no further $d$-cells can be removed from $T$ without changing the homotopy type. \\
+ \index{BoundaryTopologicalSpace} \texttt{ BoundaryTopologicalSpace(T)} 
+
+ Inputs a topological space $T$ and returns its boundars as a topological space. \\
+ \index{BoundarySingularities} \texttt{ BoundarySingularities(T)} 
+
+ Inputs a topological space $T$ and returns the subspace of points in the boundary where the boundary is not
+differentiable. (The method for deciding differentiability at a point is
+crude/discrete and prone to errors.) The zeroth betti number of the set of
+points is a measure of the number of "corners" in the boundary of $T$. \\
+ \index{ThickenedTopologicalSpace} \texttt{ ThickenedTopologicalSpace(T)} \texttt{ ThickenedTopologicalSpace(T,n)} 
+
+ Inputs a topological space $T$ and returns a topological space $S$. If a euclidean point is in $T$ then this point and all its perpendicularly neighbouring euclidean points are
+included in $S$. 
 
  If a positive integer $n$ is input as a second argument then the thickening process is repeated $n$ times. \\
+ \index{ComplementTopologicalSpace} \texttt{ ComplementTopologicalSpace(T)} 
+
+ Inputs a topological space $T$ and returns a topological space $S$. A euclidean point is in $S$ precisely when the point is not in $T$. \\
+ \index{ConcatenatedTopologicalSpace} \texttt{ ConcatenatedTopologicalSpace(L)} 
+
+ Inputs a list $L$ of topological spaces whose underlying arrays of numbers all have equal
+dimensions. It returns a topological space $T$ got by juxtaposing the spaces $L[1], L[2], ..., L[Length(L)]$. \\
 \end{tabular}\\[2mm]
 \end{center}
 

@@ -152,8 +152,13 @@ DeclareGlobalFunction("IntegralRingGenerators");
 
 ## ModPRings ########################################################
 DeclareGlobalFunction("ModPCohomologyRing");
+DeclareGlobalFunction("ModPCohomologyRing_part_1");
+DeclareGlobalFunction("ModPCohomologyRing_part_2");
+
 DeclareGlobalFunction("ModPRingGeneratorsAlt");
 DeclareGlobalFunction("ModPRingGenerators");
+DeclareGlobalFunction("ModPCohomologyGenerators");
+
 
 ## CURVATURE ########################################################
 DeclareGlobalFunction("IsAspherical");
@@ -218,7 +223,31 @@ DeclareRepresentation(  "IsPseudoListRep",
 
 ## TOPOLOGICAL DATA ANALYSIS ########################################
 DeclareGlobalFunction("MatrixToChainComplex");
-DeclareGlobalFunction("ReadImageFile");
+DeclareGlobalFunction("ReadImageAsMatrix");
 DeclareGlobalFunction("ContractMatrix");
 DeclareGlobalFunction("BettiNumbersOfMatrix");
 DeclareGlobalFunction("ThickenedMatrix");
+DeclareGlobalFunction("ComplementedMatrix");
+DeclareGlobalFunction("WriteImageFile");
+DeclareGlobalFunction("ViewMatrix");
+DeclareGlobalFunction("DeleteAndContract");
+DeclareGlobalFunction("BoundaryOfMatrix");
+DeclareGlobalFunction("SingularityMatrix");
+
+## TOPOLOGICAL SPACES ###############################################
+DeclareGlobalFunction("MatrixToTopologicalSpace");
+DeclareGlobalFunction("ReadImageAsTopologicalSpace");
+DeclareGlobalFunction("WriteTopologicalSpaceAsImage");
+DeclareGlobalFunction("ViewTopologicalSpace");
+DeclareGlobalFunction("ConcatenatedTopologicalSpace");
+DeclareGlobalFunction("PathComponent");
+DeclareGlobalFunction("ZerothBettiNumber");
+DeclareOperation("BettiNumbers",[IsObject,IsInt]);
+DeclareGlobalFunction("ThickenedTopologicalSpace");
+DeclareGlobalFunction("ComplementTopologicalSpace");
+DeclareGlobalFunction("BoundaryTopologicalSpace");
+DeclareGlobalFunction("SetT");
+DeclareGlobalFunction("EvalT");
+DeclareGlobalFunction("ContractTopologicalSpace");
+DeclareGlobalFunction("SingularChainComplex");
+DeclareGlobalFunction("BoundarySingularities");

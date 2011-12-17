@@ -39,7 +39,7 @@ local
 	HomotopyRec,
 	InitHomotopyRec,
 	Toggle2,
-	g,h,i,x,tmp;
+	A,g,h,i,x,tmp;
 
 
 G:=arg[1];
@@ -84,12 +84,14 @@ end;
 
 #####################################################################
 Boundary:=function(i,j);
+
 if i<=0 then return []; fi;
 if j>0 then
 return PseudoBoundary[i][j]; 
 else return
  NegateWord(PseudoBoundary[i][-j]);
  fi;
+
 end;
 #####################################################################
 
@@ -329,9 +331,15 @@ EchelonMatrices:=[];
 for i in [1..n] do
 #We want to solve XM=W, so work on (Mt)(Xt)=(Wt)
 # where
-#ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
-T:=SemiEchelonMatTransformation(BoundaryMatrices[i]);
-EchelonMatrices[i]:=[T.coeffs,Reversed(T.heads),T.vectors];
+ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
+A:=TransposedMat(BoundaryMatrices[i]);
+ConvertToMatrixRepNC(A);
+#T:=SemiEchelonMatTransformation(TransposedMat(BoundaryMatrices[i]));
+T:=SemiEchelonMatTransformation(A);
+ConvertToMatrixRepNC(T.vectors);
+ConvertToMatrixRepNC(T.coeffs);
+ConvertToMatrixRepNC(T.relations);
+EchelonMatrices[i]:=[T,Length(A),Length(A[1])];
 od;
 
 end;
@@ -357,29 +365,27 @@ end;
 
 
 #####################################################################
-SolutionMatBoundaryMatrices:=function(m,w)
-local h,u,v,i,cnt,pos,col,row,diff;
+SolutionMatBoundaryMatrices:=function(m,vec)
+local i,ncols,sem, vno, z,x, row, sol;
+ncols := Length(vec);
+z := zero;
+sol := ListWithIdenticalEntries(EchelonMatrices[m][2],z);
+ConvertToVectorRepNC(sol);
+sem := EchelonMatrices[m][1];
+for i in [1..ncols] do
+vno := sem.heads[i];
+if vno <> 0 then
+x := vec[i];
+if x <> z then
+AddRowVector(vec, sem.vectors[vno], -x);
+ AddRowVector(sol, sem.coeffs[vno], x);
+       fi;
+       fi;
+    od;
+       if IsZero(vec) then
+      return sol;
+        fi;
 
-ConvertToVectorRep(w);
-v:=EchelonMatrices[m][1]*w;
-h:=StructuralCopy(EchelonMatrices[m][2]);
-u:=ListWithIdenticalEntries(Length(h),0*one);
-
-while not Sum(h)=0 do
-
-col:=PositionProperty(h,x->not x=0);
-row:=h[col];
-h[col]:=0;
-diff:=EchelonMatrices[m][3][row]*u;
-pos:=Length(u)+1-col;
-u[pos]:=v[row]-diff;
-ConvertToVectorRep(u);
-od;
-
-#return
-#SolutionMat(BoundaryMatrices[m],w*one);
-
-return u;
 end;
 #####################################################################
 
@@ -485,7 +491,8 @@ return Objectify(HapResolution,
 			 ["characteristic",prime],
 			 ["isMinimal",true]],
 		solutionMatBoundaryMatrices:=
-		  SMBM
+		  SMBM,
+		actMat:=GactMat
 		  ));
 end);
 #####################################################################
