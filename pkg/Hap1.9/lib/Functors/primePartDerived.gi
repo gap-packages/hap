@@ -13,10 +13,10 @@ local
 	HPpres,G1,epi,HPP,rho;
 
 C:=F(R);
-
 P:=StructuralCopy(R!.group);
 P1:=Normalizer(G,P);
 prime:=Factors(Order(P))[1];
+
 core:=[];
 for x in P do
 if Order(x)=prime then AddSet(core,x); fi;
@@ -27,16 +27,16 @@ DCRS1:=List(DoubleCosetRepsAndSizes(G,P1,P1),x->x[1]);
 else
 DCRS1:=[];
 fi;
+
 if Order(P1)>Order(P) then
 Append(DCRS1,Filtered(ReduceGenerators(GeneratorsOfGroup(P1),P1),
 x->not x in P));
 fi;
 
-
 DCRS:=[];
-for x in DCRS1 do
+for x in DCRS1 do  #I've forgotten what all this means!!
 for y in core do
-if x*y*x^-1 in core then Append(DCRS,[x]); break; fi;
+if x*y*x^-1 in core then Add(DCRS,x); break; fi;
 od;od;
 DCRSpruned:=[];
 
@@ -58,7 +58,7 @@ conjelt:=[];
 for x in DCRS do
 Y:=Intersection(P,P^x);
 AddSet(conjs,Y);
-Append(conjelt,[[x,Y]]);
+Append(conjelt,[[x,Y]]);  #An improvement would be to not save all Y (twice!).
 od;
 
 for Y in conjs do

@@ -2,11 +2,180 @@
 
 #########################################################
 #########################################################
+InstallGlobalFunction(SymmetricMatrixToIncidenceMatrix,
+function(S,t)
+local
+   	M,len,i,j; 
+
+M:=StructuralCopy(S);
+
+len:=Length(M);
+for i in [1..len] do
+for j in [1..len] do
+if M[i][j]>t then M[i][j]:=0;
+else M[i][j]:=1;
+fi;
+od;
+od;
+
+for i in [1..len] do
+M[i][i]:=0;
+od;
+
+return M;
+
+end);
+#########################################################
+#########################################################
+
+#########################################################
+#########################################################
+InstallGlobalFunction(IncidenceMatrixToGraph,
+function(M)
+	local vertices;
+
+vertices:=Length(M);
+
+return 
+ Objectify(HapGraph,
+                rec(
+                incidenceMatrix:=StructuralCopy(M),
+                properties:=
+                [
+                ["numberofvertices",vertices]
+                ]));
+
+
+end);
+#########################################################
+#########################################################
+
+#########################################################
+#########################################################
+InstallGlobalFunction(SymmetricMatrixToGraph,
+function(S,t);
+
+return 
+IncidenceMatrixToGraph(SymmetricMatrixToIncidenceMatrix(S,t));
+end);
+#########################################################
+#########################################################
+
+#########################################################
+#########################################################
+InstallGlobalFunction(PathComponentsOfGraph,
+function(G,n)
+local  MaximalConnectedGraph, BettiZero, COLOUR,singletons, FindOne, bool, c, i, j, v, M, A;
+
+M:=StructuralCopy(G!.incidenceMatrix);
+
+if not "pathComponents" in NamesOfComponents(G) then
+################
+################
+################
+singletons:=[];
+for i in [1..Length(M)] do
+if Sum(M[i])=0 then Add(singletons,i); fi;
+od;
+
+
+##################
+FindOne:=function(M)
+local i,j;
+
+for i in [1..Length(M)] do
+for j in [1..Length(M)] do
+if M[i][j]=1 then return [i,j];fi;
+od;od;
+return false;
+
+end;
+##################
+
+################################################
+MaximalConnectedGraph:=function(M,v)
+local i,j,colour,len,leaves,newleaves,vertices;
+#Find a maximal tree containing the free edge v.
+#Colour the edges of the tree.
+
+len:=Length(M);
+colour:=Maximum(List(M,x->Maximum(x)))+1;
+M[v[1]][v[2]]:=colour;
+M[v[2]][v[1]]:=colour;
+leaves:=v;
+vertices:=SSortedList(v);
+
+while Size(leaves)>0 do
+newleaves:=[];
+for i in leaves do
+for j in [1..len] do
+if M[i][j]=1 then 
+M[i][j]:=colour; M[j][i]:=colour; 
+   if not j in vertices then
+       AddSet(vertices,j);
+       Add(newleaves,j);
+   fi;
+fi;
+od;
+od;
+leaves:=newleaves;
+od;
+
+return colour;
+end;
+################################################
+
+COLOUR:=1;
+v:=FindOne(M);
+while not v=false do
+COLOUR:=MaximalConnectedGraph(M,v);
+v:=FindOne(M);
+od;
+
+BettiZero:=Length(singletons)+COLOUR-1;
+G!.bettiZero:=BettiZero;
+G!.pathComponents:=M;
+G!.singletons:=singletons;
+####################
+####################
+####################
+fi;
+
+if n=0 then
+return G!.bettiZero;
+fi;
+if n>G!.bettiZero then
+Print("The are not so many path components!\n");
+return fail;
+fi;
+if n<=Length(G!.singletons) then return
+IncidenceMatrixToGraph([[0]]);
+fi;
+
+M:=G!.pathComponents;
+c:=n-Length(G!.singletons)+1;
+A:=Filtered(M,row->c in row);
+A:=MutableCopyMat(TransposedMat(A));
+A:=Filtered(A,row->c in row);
+for i in [1..Length(A)] do
+for j in [1..Length(A)] do
+if not A[i][j]=0 then A[i][j]:=1; fi;
+od;od;
+
+return IncidenceMatrixToGraph(A);
+
+end);
+#########################################################
+#########################################################
+
+
+
+#########################################################
+#########################################################
 InstallGlobalFunction(RipsChainComplex,
 function(arg)
 local 
 	M,epsilon,BOOL,
-	BinaryMatrix,
         FindFreeEdge,
 	MaximalTree,
 	MaximalForest,
@@ -22,34 +191,14 @@ local
 	Boundary,
 	answer,
 	zro, zroone,
+	RedundantFaces, RedundantEdges,
         BettiZero, BettiZeroA, BettiZeroB,
-	i,j,k,c;
+        CollEdges,
+	i,j,k,l,c,x,y,z,e;
 
 M:=arg[1];
-epsilon:=arg[2];
+if Length(arg)=2 then epsilon:=arg[2];  fi;
 if Length(arg)=3 then BOOL:=true; else BOOL:=false; fi;
-
-################################################
-BinaryMatrix:=function(M,t)
-local i,j, len;
-#M is a square symmetric matrix and t a number.
-#The matrix M will be destroyed: it will become a binary matrix.
-
-len:=Length(M);
-for i in [1..len] do
-for j in [1..len] do
-if M[i][j]>t then M[i][j]:=0;
-else M[i][j]:=1;
-fi;
-od;
-od;
-
-for i in [1..len] do
-M[i][i]:=0;
-od;
-
-end; 
-################################################
 
 ################################################
 FindFreeEdge:=function(M)
@@ -88,7 +237,7 @@ while Size(leaves)>0 do
 newleaves:=[];
 for i in leaves do
 for j in [1..len] do
-#if M[i][j]=1 and not colour in M[j] then 
+#if M[i][j]=1 and not colour in M[j] then
 if M[i][j]=1 and not j in vertices then
 M[i][j]:=colour; M[j][i]:=colour; AddSet(vertices,j);
 Add(newleaves,j);
@@ -155,8 +304,14 @@ return colour-2;
 end;
 ################################################
 
-MM:=StructuralCopy(M);
-BinaryMatrix(MM,epsilon);
+###################
+if IsHapGraph(M)  then
+MM:=StructuralCopy(M!.incidenceMatrix);
+else
+MM:=SymmetricMatrixToIncidenceMatrix(M,epsilon);
+fi;
+###################
+
 BettiZeroA:=ExtendedForest(MM);
 BettiZeroB:=0;
 for i in [1..Length(MM)] do
@@ -205,13 +360,57 @@ Edges:=SSortedList(Edges);
 Faces:=[];
 
 for i in [1..Length(MM)] do
-for j in [i..Length(MM)] do
-for k in [j..Length(MM)] do
+for j in [i+1..Length(MM)] do ############
+for k in [j+1..Length(MM)] do ############
 if (not MM[i][j]=0) and (not MM[i][k]=0) and (not MM[j][k]=0) then
 if MM[i][j]=1 or MM[i][k]=1 or MM[j][k]=1  then Add(Faces,[i,j,k]); fi;
 fi;
 od;od;od;
 
+
+#####################################################
+Faces:=SSortedList(Faces);
+RedundantFaces:=[];
+
+for i in [1..Length(MM)] do
+for j in [i+1..Length(MM)] do
+if not MM[i][j]=0 then
+for k in [j+1..Length(MM)] do
+if not MM[i][j]*MM[j][k]*MM[i][k]=0 then
+for l in [k+1..Length(MM)] do
+if not MM[i][j]*MM[i][k]*MM[i][l]*MM[j][k]*MM[j][l]*MM[k][l] = 0 then
+Add(RedundantFaces,[i,j,k]);
+break;
+fi;
+od;fi;od;fi;od;od;
+
+Faces:=Difference(Faces,RedundantFaces);
+Faces:=SSortedList(Faces);
+
+########################################
+#bool:=true;
+#while bool do
+#bool:=false;
+#RedundantFaces:=[];     
+#RedundantEdges:=[];
+#CollEdges:=List(Faces,f->[[f[1],f[2]],[f[1],f[3]],[f[2],f[3]]]);
+#CollEdges:=Concatenation(CollEdges);
+#CollEdges:=Collected(CollEdges);
+#CollEdges:=Filtered(CollEdges,b->b[2]=1);
+
+#if Length(CollEdges)>0 then bool:=true;
+
+#CollEdges:=List(CollEdges,b->b[1]); 
+#for e in CollEdges do
+#Add(RedundantEdges,e);
+#Add(RedundantFaces,Faces[PositionProperty(Faces,b->e[1] in b and e[2] in b)]);
+#od;
+
+#Faces:=Difference(Faces,RedundantFaces);
+#Edges:=Difference(Edges,RedundantEdges);
+#fi;
+#od;
+#####################################################
 
 #################################
 Dimension:=function(n);
@@ -270,11 +469,6 @@ return answer;
 end);
 ####################################################
 ####################################################
-
-
-
-
-
 
 
 ###########################################
@@ -342,3 +536,251 @@ return S;
 end);
 #######################################
 #######################################
+
+
+
+
+
+
+#####################################################################
+InstallGlobalFunction(GraphDisplay,
+function(arg)
+local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log;
+
+tmpDir:=DirectoryTemporary();
+
+tmpInlog:=Filename(tmpDir,"tmpIn.log");
+tmpIngif:=Filename(tmpDir,"tmpIn.gif");
+tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
+
+G:=arg[1];
+
+M:=G!.incidenceMatrix;
+
+
+################ WRITE TO TMPIN.LOG #################################
+
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+
+for i in [1..Length(M)] do
+for j in [i+1..Length(M)] do
+
+if  M[i][j]=0 then
+AppendTo(tmpInlog,i, " \n");
+else
+AppendTo(tmpInlog,i," -- ", j, " \n");
+fi;
+
+od;od;
+
+AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
+
+
+
+AppendTo(tmpInlog,"}\n }\n");
+############### WRITTEN ############################################
+Exec(Concatenation(NEATO_PATH,"-Tgif ", tmpInlog," > ", tmpIngif));
+
+if Length(arg)=1 then
+Exec(Concatenation(DISPLAY_PATH, tmpIngif));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",tmpIngif));
+
+else
+
+AppendTo(tmpIn2log, "Browser=",arg[2],"\n");
+AppendTo(tmpIn2log,"$Browser ", tmpIngif);
+Exec(Concatenation("chmod a+x ",tmpIn2log," ; ", tmpIn2log));
+Exec(Concatenation("rm ",tmpInlog," ; rm ",tmpIngif,"; rm ",tmpIn2log,";"));
+fi;
+
+
+end);
+#####################################################################
+
+#######################################
+#######################################
+InstallGlobalFunction(SimplicialNerveOfGraph,
+function(G,dim)
+local  A, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
+       bool, VL,x, y, d, i,j,k,l,m,n,RedundantFaces;
+
+A:=G!.incidenceMatrix;
+
+Vertices:=[1..EvaluateProperty(G,"numberofvertices")];
+VL:=Length(Vertices);
+
+SimplicesLst:=[];
+
+##########################
+if dim>=0 then
+SimplicesLst[1]:=List(Vertices,x->[x]); 
+fi;
+
+if dim>=1 then
+SimplicesLst[2]:=[];
+for i in Vertices do
+for j in [i+1..VL] do
+if A[i][j]>0 then Add(SimplicesLst[2],[i,j]); fi;
+od;od;
+SimplicesLst[2]:=SSortedList(SimplicesLst[2]);
+fi;
+
+if dim>=2 then
+SimplicesLst[3]:=[];
+for i in Vertices do
+for j in [i+1..VL] do
+for k in [j+1..VL] do
+if A[i][j]>0 and A[i][k]>0 and A[j][k]>0
+then Add(SimplicesLst[3],[i,j,k]); fi;
+od;od;od;
+SimplicesLst[3]:=SSortedList(SimplicesLst[3]);
+fi;
+
+if dim>=3 then
+SimplicesLst[4]:=[];
+for i in Vertices do
+for j in [i+1..VL] do
+for k in [j+1..VL] do
+for l in [k+1..VL] do
+if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and
+A[j][k]>0 and A[j][l]>0 and A[k][l]>0
+then Add(SimplicesLst[4],[i,j,k,l]); fi;
+od;od;od;od;
+SimplicesLst[4]:=SSortedList(SimplicesLst[4]);
+fi;
+
+if dim>=4 then
+SimplicesLst[5]:=[];
+for i in Vertices do
+for j in [i+1..VL] do
+for k in [j+1..VL] do
+for l in [k+1..VL] do
+for m in [l+1..VL] do
+if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and A[i][m]>0
+and A[j][k]>0 and A[j][l]>0 and A[j][m]>0 
+and A[k][l]>0 and A[k][m]>0
+and A[l][m]>0
+then Add(SimplicesLst[5],[i,j,k,l,m]); fi;
+od;od;od;od;od;
+SimplicesLst[5]:=SSortedList(SimplicesLst[5]);
+fi;
+
+if dim>=5 then
+SimplicesLst[6]:=[];
+for i in Vertices do
+for j in [i+1..VL] do
+for k in [j+1..VL] do
+for l in [k+1..VL] do
+for m in [l+1..VL] do
+for n in [m+1..VL] do
+if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and A[i][m]>0 and A[i][n]>0
+and A[j][k]>0 and A[j][l]>0 and A[j][m]>0  and A[j][n]>0
+and A[k][l]>0 and A[k][m]>0 and   A[k][n]>0
+and A[m][m]>0 and   A[l][n]>0
+and   A[m][n]>0
+then Add(SimplicesLst[6],[i,j,k,l,m,n]); fi;
+od;od;od;od;od;od;
+SimplicesLst[6]:=SSortedList(SimplicesLst[6]);
+fi;
+
+
+
+for d in [6..dim+1] do
+SimplicesLst[d]:=[];
+for y in Combinations(Vertices,d) do
+bool:=true;
+for x in Combinations(y,2) do
+if A[x[1]][x[2]]=0 then bool:=false; break; fi;
+od;
+if bool then Add(SimplicesLst[d],y); fi;
+od;
+SimplicesLst[d]:=SSortedList(SimplicesLst[d]);
+od;
+##########################
+
+##########################
+##########################
+if dim=2 then 
+RedundantFaces:=[];
+
+for i in [1..Length(A)] do
+for j in [i+1..Length(A)] do
+if not A[i][j]=0 then
+for k in [j+1..Length(A)] do
+if not A[i][j]*A[j][k]*A[i][k]=0 then
+for l in [k+1..Length(A)] do
+if not A[i][j]*A[i][k]*A[i][l]*A[j][k]*A[j][l]*A[k][l] = 0 then
+Add(RedundantFaces,[i,j,k]);
+break;
+fi;
+od;fi;od;fi;od;od;
+
+SimplicesLst[dim]:=Difference(SimplicesLst[dim],RedundantFaces);
+SimplicesLst[dim]:=SSortedList(SimplicesLst[dim]);
+fi;
+###########################
+###########################
+
+##########################
+##########################
+if dim=3 then
+RedundantFaces:=[];
+
+for i in [1..Length(A)] do
+for j in [i+1..Length(A)] do
+if not A[i][j]=0 then
+for k in [j+1..Length(A)] do
+if not A[i][j]*A[j][k]*A[i][k]=0 then
+for l in [k+1..Length(A)] do
+if not A[i][j]*A[i][k]*A[i][l]*A[j][k]*A[j][l]*A[k][l] = 0 then
+for m in [l+1..Length(A)] do
+if not A[i][j]*A[i][k]*A[i][l]*A[i][m]*A[j][k]*A[j][l]*A[j][m]*A[k][l]*A[k][m]*A[l][m] = 0 then
+Add(RedundantFaces,[i,j,k,l]);
+break;
+fi;
+od;fi;od;fi;od;fi;od;od;
+
+SimplicesLst[dim]:=Difference(SimplicesLst[dim],RedundantFaces);
+SimplicesLst[dim]:=SSortedList(SimplicesLst[dim]);
+fi;
+###########################
+###########################
+
+
+##########################
+Simplices:=function(d,k);
+return SimplicesLst[d+1][k];
+end;
+#########################
+
+
+##########################
+NrSimplices:=function(d);
+return Length(SimplicesLst[d+1]);
+end;
+#########################
+
+#########################
+EnumeratedSimplex:=function(v);
+return Position(SimplicesLst[Length(v)],v);
+end;
+#########################
+
+
+return
+Objectify(HapSimplicialComplex,
+           rec(
+           vertices:=Vertices,
+           nrSimplices:=NrSimplices,
+           simplices:=Simplices,
+           simplicesLst:=SimplicesLst,
+           enumeratedSimplex:=EnumeratedSimplex,
+           properties:=[
+           ["dimension",dim]]
+           ));
+
+
+
+end);
+#####################################################################
+

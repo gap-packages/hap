@@ -199,7 +199,9 @@ for u1 in [1..lenBL] do
 od;
 
 I:=Ideal(C,vectorsI);
-LTL:=C/I;
+#LTL:=C/I;
+g1:=NaturalHomomorphismByIdeal(C,I);
+LTL:=Image(g1);
 vectorsII:=[];
 
 for t in [1..Length(vectorsI)] do
@@ -284,7 +286,7 @@ od;
 
 bLTL:=Basis(LTL);
 g:= AlgebraHomomorphismByImages( LTL, L, bLTL , bL );;
-g1:= NaturalHomomorphismByIdeal( C, I );
+#g1:= NaturalHomomorphismByIdeal( C, I );
 
 ################################
 Pair:=function(x,y)

@@ -431,3 +431,35 @@ Source(R!.sourceMap),
 #####################################################################
 #####################################################################
 
+#####################################################################
+DeclareCategory("IsHapGraph",IsObject);
+
+DeclareRepresentation(  "IsHapGraphRep",
+                        IsComponentObjectRep,
+                        ["incidenceMatrix",
+                         ]);
+
+HapGraphFamily:=NewFamily( "HapGraphFamily",
+                                          IsHapGraph,
+                                          IsHapGraph);
+
+HapGraph:=NewType(HapGraphFamily,
+                                IsHapGraphRep);
+
+
+InstallMethod( ViewObj,
+"for HapGraph",
+ [IsHapGraph],
+function(R)
+Print("Graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapGraph",
+ [IsHapGraph],
+ function(R)
+Print("Graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
+ end);
+#####################################################################
+#####################################################################
+

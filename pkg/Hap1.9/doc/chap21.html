@@ -30,9 +30,14 @@
 <p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and a non-negative integer n. It returns the n-th integral homology of T as a list of torsion integers. If no value of n is input then the list of all homologies of T in dimensions 0 to Dimension(T) is returned .</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> Bettinumbers(T)</code></p>
+<td class="tdleft"><code class="code">RipsHomology(G,n)</code> <code class="code">RipsHomology(G,n,p)</code></p>
 
-<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T. The list of free ranks of the homology groups of T in dimensions 0 to Dimension(T) is returned .</td>
+<p>Inputs a graph G, a non-negative integer n (and optionally a prime number p). It returns the integral homology (or mod p homology) in degree n of the Rips complex of G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Bettinumbers(T,n)</code> <code class="code"> Bettinumbers(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, simplicial complex or chain complex T and a non-negative integer n. The rank of the n-th rational homology group H_n(T, Q) is returned. If no value for n is input then the list of Betti numbers in dimensions 0 to Dimension(T) is returned .</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code">ChainComplex(T)</code></p>
@@ -76,9 +81,64 @@
 <p>Inputs a simplicial complex S and a positive integer k less than or equal to the dimension of S. It returns the truncated k-dimensional simplicial complex S^k (and leaves S unchanged).</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code">GraphOfSimplicialComplex(S)</code></p>
+
+<p>Inputs a simplicial complex S and returns the graph of S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ContractibleSubcomplexOfSimplicialComplex(S)</code></p>
+
+<p>Inputs a simplicial complex S and returns a (probably maximal) contractible subcomplex of S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PathComponentsOfSimplicialComplex(S,n)</code></p>
+
+<p>Inputs a simplicial complex S and a nonnegative integer n. If n=0 the number of path components of S is returned. Otherwise the n-th path component is returned (as a simplicial complex).</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code">QuillenComplex(G)</code></p>
 
 <p>Inputs a finite group G and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SymmetricMatrixToIncidenceMatrix(S,t)</code></p>
+
+<p>Inputs a symmetric integer matrix S and an integer t. It returns the matrix M with M_ij=1 if I_ij is less than t and I_ij=1 otherwise. .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IncidenceMatrixToGraph(M)</code></p>
+
+<p>Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each row of M and an edges between vertices i and j if the (i,j) entry in M equals 1.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PathComponentsOfGraph(G,n)</code></p>
+
+<p>Inputs a graph G and a nonnegative integer n. If n=0 the number of path components is returned. Otherwise the n-th path component is returned (as a graph).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ContractGraph(G)</code></p>
+
+<p>Inputs a graph G and tries to remove vertices and edges to produce a smaller graph G' such that the indlusion G' -&gt; G induces a homotopy equivalence RG -&gt; RG' of Rips complexes. If the graph G is modified the function returns true, and otherwise returns false.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GraphDisplay(G)</code></p>
+
+<p>This function uses GraphViz software to display a graph G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SimplicialMap(K,L,f)</code> <code class="code">SimplicialMapNC(K,L,f)</code></p>
+
+<p>Inputs simplicial complexes K , L and a function f: K!.vertices -&gt; L!.vertices representing a simplicial map. It returns a simplicial map K -&gt; L. If f does not happen to represent a simplicial map then SimplicialMap(K,L,f) will return fail; SimplicialMapNC(K,L,f) will not do any check and always return something of the data type "simplicial map".</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainMapOfSimplicialMap(f)</code></p>
+
+<p>Inputs a simplicial map f: K -&gt; L and returns the corresponding chain map C_*(f) : C_*(K) -&gt; C_*(L) of the simplicial chain complexes..</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SimplicialNerveOfGraph(G,d)</code></p>
+
+<p>Inputs a graph G and returns a d-dimensional simplicial complex K whose 1-skeleton is equal to G. There is a simplicial inclusion K -&gt; RG where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions less than d; (ii) the complex RG is the Rips complex (with one n-simplex for each complete subgraph of G on n+1 vertices).</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>

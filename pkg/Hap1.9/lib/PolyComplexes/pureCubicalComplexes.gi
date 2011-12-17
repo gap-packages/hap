@@ -106,7 +106,7 @@ C:=rec();
 C.binaryArray:=StructuralCopy(M!.binaryArray);
 C.properties:=StructuralCopy(M!.properties);
 C:=Objectify(HapPureCubicalComplex,C);
-ContractPureCubicalComplex(C);
+#ContractPureCubicalComplex(C);
 D:=ChainComplexOfCubicalComplex(
 PureCubicalComplexToCubicalComplex(C),true);
 return
@@ -128,6 +128,85 @@ Sum(List([0..Dimension(M)],i->((-1)^i)*C!.dimension(i)));
 end);
 #####################################################################
 #####################################################################
+
+#################################################################
+#################################################################
+InstallGlobalFunction(ReadMatrixAsPureCubicalComplex,
+function(AA)
+local PCC,B, fn, Dims,x, Dim, i, Iter,A;
+
+A:=SSortedList(AA);
+
+Dims:=[];
+Dim:=Length(A[1]);
+for i in [1..Dim] do
+Add(Dims,3+Maximum(List(A,x->x[i])));
+od;
+
+B:=List([1..1+Dims[Length(Dims)]],a->0);
+for i in Reversed([1..Dim-1]) do
+B:=List([1..Dims[i]],a->StructuralCopy(B));
+od;
+
+##############
+if Dim=1 then
+for x in A do
+B[1+x[1]]:=1;
+od;
+fi;
+##############
+if Dim=2 then
+for x in A do
+B[1+x[1]][1+x[2]]:=1;
+od;
+fi;
+##############
+if Dim=3 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]]:=1;
+od;
+fi;
+##############
+if Dim=4 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]]:=1;
+od;
+fi;
+##############
+if Dim=5 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]]:=1;
+od;
+fi;
+##############
+if Dim=6 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]]:=1;
+od;
+fi;
+##############
+if Dim=7 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]][1+x[7]]:=1;
+od;
+fi;
+##############
+if Dim=8 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]][1+x[7]][1+x[8]]:=1;
+od;
+fi;
+##############
+if Dim>8 then
+Print("This function is not yet implemented for matrices with more than 8 columns.\n");
+return fail;
+fi;
+
+return PureCubicalComplex(B);;
+end);
+#####################################################################
+#####################################################################
+
 
 
 HAPAAA:=0;
@@ -971,6 +1050,7 @@ Objectify(HapSimplicialComplex,
            rec(
            vertices:=Vertices,
            simplices:=Simplices,
+           simplicesLst:=SimplicesLst,
 	   nrSimplices:=NrSimplices,
 	   enumeratedSimplex:=EnumeratedSimplex,
            properties:=[
@@ -1184,13 +1264,28 @@ end);
 #################################################################
 #################################################################
 
+#################################################################
+#################################################################
+InstallOtherMethod(Bettinumbers,
+"Rank of n-th homology of a chain complex",
+[IsHapChainComplex,IsInt],
+function(M,n)
+local H;
+return Homology(TensorWithRationals(M),n);
+end);
+#################################################################
+#################################################################
+
+
+
+
 
 #################################################################
 #################################################################
 InstallOtherMethod(Homology,
 "Homology of a pure cubical complex",
-[IsHapPureCubicalComplex,IsInt],
-function(M,n) 
+[IsHapPureCubicalComplex,IsInt,IsInt],
+function(M,n,p) 
 local S,T,C,H,b,P,i;
 if n>=Dimension(M) then return [ ]; fi;
 
@@ -1218,8 +1313,20 @@ S:=PureCubicalComplexUnion(S,
 ContractibleSubcomplexOfPureCubicalComplex(P));
 od;
 C:=ChainComplexOfPair(T,S);
+if IsPrime(p) then C:=TensorWithIntegersModP(C,p); fi;
 return Homology(C,n);
 
+end);
+#################################################################
+#################################################################
+
+#################################################################
+#################################################################
+InstallOtherMethod(Homology,
+"Homology of a pure cubical complex",
+[IsHapPureCubicalComplex,IsInt],
+function(M,n)
+return Homology(M,n,0);
 end);
 #################################################################
 #################################################################
@@ -1569,7 +1676,7 @@ dims:=EvaluateProperty(D,"arraySize");
 CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 for x in CART do
-if ArrayValueDim1(N!.binaryArray,x)=1 then
+if ArrayValueDim(N!.binaryArray,x)=1 then
 w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
 w[x[1]]:=0;
 fi;

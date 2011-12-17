@@ -9,7 +9,13 @@ local
         LengthC,
         M,
         One,
-        Charact;
+        Charact ;
+
+##########################################################
+if IsHapChainComplex(R) then
+return TensorWithIntegersModP(R,-1/2);
+fi;
+##########################################################
 
 One:=1;
 LengthC:=EvaluateProperty(R,"length");

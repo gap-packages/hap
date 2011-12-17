@@ -123,6 +123,7 @@ ReadPackage("HAP", "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
+ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 
 if LoadPackage("aclib","0.0",false)=true then
@@ -130,14 +131,13 @@ ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
 fi;
 
-
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
-fi;
-ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
-if COMPILED=false then
+#fi;
+#ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
+#if COMPILED=false then
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
@@ -157,6 +157,7 @@ ReadPackage("HAP", "lib/Functors/homToZmodP.gi");
 
 ##################### HOMOLOGY ######################################
 ReadPackage("HAP", "lib/Homology/integralHomology.gi");
+ReadPackage("HAP", "lib/Homology/lefschetz.gi");
 ReadPackage("HAP", "lib/Homology/modularHomology.gi");
 ReadPackage("HAP", "lib/Homology/modularHomologyVectSpace.gi");
 ReadPackage("HAP", "lib/Homology/homology.gi");
@@ -187,6 +188,7 @@ ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
+ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
 
 
 

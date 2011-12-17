@@ -108,3 +108,40 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapSimplicialMap",IsObject);
+
+DeclareRepresentation(  "IsHapSimplicialMapRep",
+                        IsComponentObjectRep
+                        and IsHapMap,
+                        ["source",
+                        "target",
+                        "mapping",
+                        "properties"]);
+
+HapSimplicialMapFamily:=NewFamily( "HapSimplicialMapFamily",
+                               IsHapSimplicialMap,
+                               IsHapSimplicialMap);
+
+HapSimplicialMap:=NewType(HapSimplicialMapFamily, IsHapSimplicialMapRep);
+
+
+InstallMethod( ViewObj,
+"for HapSimplicialMap",
+ [IsHapSimplicialMap],
+ function(R)
+  Print("Simplicial Map\n  ");
+ end);
+
+
+InstallMethod( PrintObj,
+"for HapSimplicialMap",
+ [IsHapSimplicialMap],
+ function(R)
+  Print("Simplicial Map\n  ");
+ end);
+
+#####################################################################
+#####################################################################
+
