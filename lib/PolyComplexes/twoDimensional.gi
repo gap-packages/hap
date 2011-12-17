@@ -415,7 +415,7 @@ B:=A*0;
 rows:=Length(B);
 cols:=Length(B[1]);
 ball:=Cartesian([-1,0,1],[-1,0,1]);
-RemoveSet(ball,[0,0]);
+#RemoveSet(ball,[0,0]);
 
 for i in [2..rows-1] do
 for j in [2..cols-1] do

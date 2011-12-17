@@ -203,6 +203,8 @@ od;
 
 I:=Ideal(C,vectorsI);
 LTL:=C/I;
+#g1:=NaturalHomomorphismByIdeal(C,I);
+#LTL:=Image(g1);
 vectorsII:=[];
 
 for t in [1..Length(vectorsI)] do
@@ -225,7 +227,9 @@ for i in [1..lenBL] do
 od;
 
 II:=Ideal(C,vectorsII);
-LVL:=C/II;
+#LVL:=C/II;
+g1:=NaturalHomomorphismByIdeal(C,II);
+LVL:=Image(g1);
 MLTL:=[];
 
 for i in [1..Length(Basis(C))] do
@@ -352,7 +356,7 @@ BLVL:=Basis(LVL);
 LL:=LieDerivedSubalgebra(L);
 #####  f: hom(LwL ---> [L,L])  ##################
 f:= AlgebraHomomorphismByImages( LVL, LL, BLVL , bLV );
-g1:= NaturalHomomorphismByIdeal( C, II );
+#g1:= NaturalHomomorphismByIdeal( C, II );
 
 ################################
 Pair:=function(x,y)

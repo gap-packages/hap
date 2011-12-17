@@ -56,7 +56,10 @@
 \hyperdef{L}{X8735FC5E7BB5CE3A}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{FreeGResolution} \texttt{ FreeGResolution(P,n)} \texttt{ FreeGResolution(P,n,p)} 
+\begin{tabular}{|l|} \index{TietzeReducedResolution} \texttt{TietzeReducedResolution(R)} 
+
+ Inputs a $\mathbb ZG$-resolution $R$ and returns a $\mathbb ZG$-resolution $S$ which is obtained from $R$ by applying "Tietze like operations" in each dimension. The hope is that $S$ has fewer free generators than $R$. \\
+ \index{FreeGResolution} \texttt{ FreeGResolution(P,n)} \texttt{ FreeGResolution(P,n,p)} 
 
  Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. If one requires only a mod $p$ resolution then the prime $p$ can be entered as an optional third argument. \\
  \index{ResolutionAbelianGroup} \texttt{ ResolutionAbelianGroup(L,n)} {\nobreakspace} \texttt{ ResolutionAbelianGroup(G,n)} 
@@ -141,7 +144,7 @@ of $E \longrightarrow G$.
 
  If a $ZN$-resolution $S$ is available, where $N$ is the kernel of the quotient $E \longrightarrow G$, then this can be incorporated into the computations using an optional fifth
 argument. \\
- \index{ResolutionFiniteGroup} \texttt{ ResolutionFiniteGroup(gens,n)} {\nobreakspace} \texttt{ ResolutionFiniteGroup(gens,n,true)} {\nobreakspace} \texttt{ ResolutionFiniteGroup(gens,n,false,p) }
+ \index{ResolutionFiniteGroup} \texttt{ ResolutionFiniteGroup(gens,n)} {\nobreakspace} \texttt{ ResolutionFiniteGroup(gens,n,true)} {\nobreakspace} \texttt{ ResolutionFiniteGroup(gens,n,false,p) } {\nobreakspace} \texttt{ ResolutionFiniteGroup(gens,n,false,0,"extendible") } 
 
  Inputs a set $gens$ of generators for a finite group $G$ and a positive integer $n$. It outputs $n$ terms of a $ZG$-resolution.
 
@@ -149,7 +152,9 @@ argument. \\
 
  The function has an optional fourth argument which, when set equal to a prime $p$, records the fact that the resolution will only be used for mod $p$ calculations. This could speed up subsequent constructions. 
 
- \\
+ The function has an optional fifth argument which, when set equal to
+"extendible", returns a resolution whose length can be increased using the
+command R!.extend() . \\
  \index{ResolutionFiniteSubgroup} \texttt{ ResolutionFiniteSubgroup(R,K)} {\nobreakspace} \texttt{ ResolutionFiniteSubgroup(R,gensG,gensK)} 
 
  Inputs a $ZG$-resolution for a finite group $G$ and a subgroup $K$ of index $|G:K|$. It returns a free $ZK$-resolution whose $ZK$-rank is $|G:K|$ times the $ZG$-rank in each dimension.
@@ -367,6 +372,11 @@ of the algebra $A$).
 
  Inputs a chain complex $C$ and returns a quasi-isomorphic chain complex $D$. In many cases the complex $D$ should be smaller than $C$. If an optional second input argument is set equal to 2 then an alternative
 method is used for reducing the size of the chain complex. \\
+ \index{LefschetzNumber} \texttt{LefschetzNumber(F)} 
+
+ Inputs a chain map $F\colon C\rightarrow C$ with common source and target. It returns the Lefschetz number of the map
+(that is, the alternating sum of the traces of the homology maps in each
+degree). \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -483,6 +493,9 @@ entered as a fourth argument. \\
 matrix. 
 
  Alternatively, the list $L$ can be replaced by a single cubical complex $M$. The function then constructs an increasing chain $L$ with first term $M$ and final term a contracible complex. \\
+ \index{RipsHomology} \texttt{RipsHomology(G,n)} \texttt{RipsHomology(G,n,p)} 
+
+ Inputs a graph $G$, a non-negative integer $n$ (and optionally a prime number $p$). It returns the integral homology (or mod p homology) in degree $n$ of the Rips complex of $G$. \\
  \index{BarCode} \texttt{BarCode(P)} 
 
  Inputs an integer persistence matrix P and returns the same information in the
@@ -1359,9 +1372,14 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
 \begin{tabular}{|l|} \texttt{ Homology(T,n)} \texttt{ Homology(T)} 
 
  Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. It returns the n-th integral homology of $T$ as a list of torsion integers. If no value of $n$ is input then the list of all homologies of $T$ in dimensions 0 to Dimension(T) is returned . \\
- \texttt{ Bettinumbers(T)} 
+ \texttt{RipsHomology(G,n)} \texttt{RipsHomology(G,n,p)} 
 
- Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$. The list of free ranks of the homology groups of $T$ in dimensions 0 to Dimension(T) is returned . \\
+ Inputs a graph $G$, a non-negative integer $n$ (and optionally a prime number $p$). It returns the integral homology (or mod p homology) in degree $n$ of the Rips complex of $G$. \\
+ \index{Bettinumbers} \texttt{ Bettinumbers(T,n)} \texttt{ Bettinumbers(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, simplicial complex or chain
+complex $T$ and a non-negative integer $n$. The rank of the n-th rational homology group $H_n(T,\mathbb Q)$ is returned. If no value for n is input then the list of Betti numbers in
+dimensions 0 to Dimension(T) is returned . \\
  \texttt{ChainComplex(T)} 
 
  Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns the (often very large) cellular chain complex of $T$. \\
@@ -1400,10 +1418,49 @@ simplices of a simplicial complex. The simplicial complex is returned. Here a
  \index{SkeletonOfSimplicialComplex} \texttt{SkeletonOfSimplicialComplex(S,k)} 
 
  Inputs a simplicial complex $S$ and a positive integer $k$ less than or equal to the dimension of $S$. It returns the truncated $k$-dimensional simplicial complex $S^k$ (and leaves $S$ unchanged). \\
+ \index{GraphOfSimplicialComplex} \texttt{GraphOfSimplicialComplex(S)} 
+
+ Inputs a simplicial complex $S$ and returns the graph of $S$. \\
+ \index{ContractibleSubcomplexOfSimplicialComplex} \texttt{ContractibleSubcomplexOfSimplicialComplex(S)} 
+
+ Inputs a simplicial complex $S$ and returns a (probably maximal) contractible subcomplex of $S$. \\
+ \index{PathComponentsOfSimplicialComplex} \texttt{PathComponentsOfSimplicialComplex(S,n)} 
+
+ Inputs a simplicial complex $S$ and a nonnegative integer $n$. If $n=0$ the number of path components of $S$ is returned. Otherwise the n-th path component is returned (as a simplicial
+complex). \\
  \index{QuillenComplex} \texttt{QuillenComplex(G)} 
 
  Inputs a finite group $G$ and returns, as a simplicial complex, the order complex of the poset of
 non-trivial elementary abelian subgroups of $G$. \\
+ \index{SymmetricMatrixToIncidenceMatrix} \texttt{SymmetricMatrixToIncidenceMatrix(S,t)} 
+
+ Inputs a symmetric integer matrix S and an integer t. It returns the matrix $M$ with $M_{ij}=1$ if $I_{ij}$ is less than $ t$ and $I_{ij}=1$ otherwise. . \\
+ \index{IncidenceMatrixToGraph} \texttt{IncidenceMatrixToGraph(M)} 
+
+ Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each
+row of $M$ and an edges between vertices $i$ and $j$ if the $(i,j)$ entry in $M$ equals 1. \\
+ \index{PathComponentsOfGraph} \texttt{PathComponentsOfGraph(G,n)} 
+
+ Inputs a graph $G$ and a nonnegative integer $n$. If $n=0$ the number of path components is returned. Otherwise the n-th path component
+is returned (as a graph). \\
+ \index{ContractGraph} \texttt{ContractGraph(G)} 
+
+ Inputs a graph $G$ and tries to remove vertices and edges to produce a smaller graph $G'$ such that the indlusion $G' \rightarrow G$ induces a homotopy equivalence $RG \rightarrow RG'$ of Rips complexes. If the graph $G$ is modified the function returns true, and otherwise returns false. \\
+ \index{GraphDisplay} \texttt{GraphDisplay(G)} 
+
+ This function uses GraphViz software to display a graph $G$. \\
+ \index{SimplicialMap} \index{SimplicialMapNC} \texttt{SimplicialMap(K,L,f)} \texttt{SimplicialMapNC(K,L,f)} 
+
+ Inputs simplicial complexes $K$ , $L$ and a function $f\colon K!.vertices \rightarrow L!.vertices$ representing a simplicial map. It returns a simplicial map $K \rightarrow L$. If $f$ does not happen to represent a simplicial map then SimplicialMap(K,L,f) will
+return fail; SimplicialMapNC(K,L,f) will not do any check and always return
+something of the data type "simplicial map". \\
+ \index{ChainMapOfSimplicialMap} \texttt{ChainMapOfSimplicialMap(f)} 
+
+ Inputs a simplicial map $f\colon K \rightarrow L$ and returns the corresponding chain map $C_\ast(f) \colon C_\ast(K) \rightarrow C_\ast(L)$ of the simplicial chain complexes.. \\
+ \index{SimplicialNerveOfGraph} \texttt{SimplicialNerveOfGraph(G,d)} 
+
+ Inputs a graph $G$ and returns a $d$-dimensional simplicial complex $K$ whose 1-skeleton is equal to $G$. There is a simplicial inclusion $K \rightarrow RG$ where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions
+less than $d$; (ii) the complex $RG$ is the Rips complex (with one $n$-simplex for each complete subgraph of $G$ on $n+1$ vertices). \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -1467,7 +1524,8 @@ as "mozilla" for viewing image files. A black/white image is displayed. \\
  Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. It returns the n-th integral homology of $T$ as a list of torsion integers. If no value of $n$ is input then the list of all homologies of $T$ in dimensions 0 to Dimension(T) is returned . \\
  \index{Bettinumbers} \texttt{ Bettinumbers(T,n)} \texttt{ Bettinumbers(T)} 
 
- Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. The free rank of the n-th integral homology group of $T$ is returned. If no value for n is input then the list of Betti numbers in
+ Inputs a pure cubical complex, or cubical complex, simplicial complex or chain
+complex $T$ and a non-negative integer $n$. The rank of the n-th rational homology group $H_n(T,\mathbb Q)$ is returned. If no value for n is input then the list of Betti numbers in
 dimensions 0 to Dimension(T) is returned . \\
  \index{DirectProductOfPureCubicalComplexes} \texttt{DirectProductOfPureCubicalComplexes(M,N)} 
 

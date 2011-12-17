@@ -47,6 +47,7 @@ StabilizerGroups:=[];
 RotSubGroups:=[];
 boundaryList:=[];
 
+
 #######
 for n in [1..lnth+1] do
 boundaryList[n]:=[];

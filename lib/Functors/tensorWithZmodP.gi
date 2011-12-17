@@ -189,6 +189,14 @@ D!.properties:=List(C!.properties,a->StructuralCopy(a));
 pos:=PositionProperty(C!.properties,a->"characteristic" in a);
 D!.properties[pos][2]:=prime;
 
+##############
+if not IsPrimeInt(prime) then
+D!.boundary:=StructuralCopy(C!.boundary);
+return
+Objectify(HapChainComplex, D);
+fi;
+##############
+
 one:=One(GF(prime));
 oldboundary:=StructuralCopy(C!.boundary);
 #############################

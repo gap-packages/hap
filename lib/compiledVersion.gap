@@ -111,6 +111,7 @@ Concatenation(tmppath,"lib/ResolutionsModP/Compiled/poincare.so"));
 
 #LoadDynamicModule(
 #Concatenation(tmppath,"lib/ResolutionsModP/Compiled/primepart.so"));
+ReadPackage("hap","lib/ResolutionsModP/primepart.gi");
 
 
 LoadDynamicModule(
@@ -140,6 +141,9 @@ Concatenation(tmppath,"lib/Perturbations/Compiled/resSubNormSeries.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/freeRes.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Perturbations/Compiled/filteredChainComplex.so"));
 
 
 
@@ -213,6 +217,10 @@ Concatenation(tmppath,"lib/Homology/Compiled/cocycleCondition.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralHomology.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/lefschetz.so"));
+
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralHomologyObj.so"));

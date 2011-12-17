@@ -638,9 +638,9 @@ AppendTo(barcodedot,
 for i in [1..Length(B)] do
 for j in [1..Length(B[1])] do
 if B[i][j]=1 then
-AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,".",j,"\n");
+AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,j,"\n");
 else
-AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,".",j,"\n");
+AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,j,"\n");
 fi;
 od;
 od;
@@ -648,9 +648,9 @@ od;
 for i in [1..Length(B)] do
 for j in [1..Length(B[1])-1] do
 if B[i][j]=1 and B[i][j+1]=1 then
-AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=black,arrowhead=none];\n");
+AppendTo(barcodedot,i,j,"->",i,j+1," [color=black,arrowhead=none];\n");
 else
-AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=white,arrowhead=none];\n");
+AppendTo(barcodedot,i,j,"->",i,j+1," [color=white,arrowhead=none];\n");
 fi;
 od;
 od;

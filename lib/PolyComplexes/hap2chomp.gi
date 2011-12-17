@@ -91,7 +91,7 @@ fi;
 ######
 
 ######
-if ArrayDimension(A)=4 then
+if ArrayDimension(A)=5 then
 for i in [1..ArrayDimensions(A)[5]] do
 for j in [1..ArrayDimensions(A)[4]] do
 for k in [1..ArrayDimensions(A)[3]] do

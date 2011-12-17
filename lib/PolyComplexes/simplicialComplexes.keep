@@ -3,11 +3,11 @@
 InstallOtherMethod(Dimension,
 "Dimension of  simplicial complex",
 [IsHapSimplicialComplex],
-function(f) return EvaluateProperty(f,"dimension");
-#function(f) local i;
-#for i in [1..EvaluateProperty(f,"dimension")] do
-#if f!.nrSimplices=0 then return i; break; fi;
-#od;
+#function(f) return EvaluateProperty(f,"dimension");
+function(f) local i;
+for i in [1..EvaluateProperty(f,"dimension")] do
+if f!.nrSimplices=0 then return i; break; fi;
+od;
 return EvaluateProperty(f,"dimension");
 end);
 #####################################################################
@@ -42,21 +42,9 @@ end);
 InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex,IsInt],
-#function(M,n) ;
-#return
-#Homology(ChainComplex(M),n);
-function(M,n) local P, PM, i, answer,C,A;
-P:=PathComponentsOfGraph(GraphOfSimplicialComplex(M),0);
-if n=0 then return P;fi;
-answer:=[];
-for i in [1..P] do
-PM:=PathComponentsOfSimplicialComplex(M,i);
-PM:=SkeletonOfSimplicialComplex(PM,n+1);
-A:=ContractibleSubcomplexOfSimplicialComplex(PM);;
-C:=ChainComplexOfSimplicialPair(PM,A);
-answer:=Concatenation(answer,Homology(C,n));
-od;
-return answer;
+function(M,n) ;
+return
+Homology(ChainComplex(M),n);
 end);
 #####################################################################
 #####################################################################
@@ -66,16 +54,13 @@ end);
 InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex,IsInt,IsInt],
-function(M,n,p) local P, PM, i, answer,C,A;
+function(M,n,p) local P, PM, i, answer;
 P:=PathComponentsOfGraph(GraphOfSimplicialComplex(M),0);
 if n=0 then return P;fi;
 answer:=0;
 for i in [1..P] do
 PM:=PathComponentsOfSimplicialComplex(M,i);
-PM:=SkeletonOfSimplicialComplex(PM,n+1);
-A:=ContractibleSubcomplexOfSimplicialComplex(PM);;
-C:=ChainComplexOfSimplicialPair(PM,A);
-answer:=answer+Homology(TensorWithIntegersModP(C,p),n);
+answer:=answer+Homology(TensorWithIntegersModP(ChainComplex(PM),p),n);
 od;
 return answer;
 end);
@@ -194,16 +179,12 @@ local
 
 dim:=PositionProperty(L,x->Size(x)=0);
 if dim=fail then dim:=Length(L)-1; else dim:=dim-2; fi;
-if Length(L)>0 then
 Vertices:=Concatenation(L[1]);
-else Vertices:=[];
-fi;
 Vertices:=SSortedList(Vertices);
 SimplicesLst:=L;
 
 #####################
 NrSimplices:=function(n);
-if n<0 or n>dim then return 0; fi;
 return Length(SimplicesLst[n+1]);
 end;
 #####################
@@ -441,112 +422,40 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(ContractSimplicialComplex,
+InstallGlobalFunction(ContractMaximalSimplices,
 function(K)
-local RemoveApex,RemoveEdge,Vertices,G,A,LA,Faces,bool,dim,PC,iter,row,x,i,j,k;
+local
+	S, IsContractibleSimplex,bool, s;
 
-G:=GraphOfSimplicialComplex(K);
-Faces:=K!.simplicesLst;
-dim:=PositionProperty(Faces,x->Size(x)=0);
-if IsInt(dim) then dim:=dim-1; else dim:=Dimension(K); fi;
-A:=G!.incidenceMatrix;
-PC:=PathComponentsOfGraph(G,0);
-bool:=List(Faces,Length);;
-Vertices:=StructuralCopy(K!.vertices);
-
-################################################
-##
-RemoveApex:=function(i)
-local x, y, cols, lc,D;
-
-cols:=[];
-for x in LA do
-if not A[i][x]=0 then Add(cols,x); fi;
+############################################
+IsContractibleSimplex:=function(K,s)
+local cnt,x,d,d1;
+d:=Length(s)-1;d1:=Length(s);
+cnt:=0;
+for x in K do
+if Size(Intersection(x,s))=d then cnt:=cnt+1; fi;
+if cnt=d1 then return false; fi;
 od;
-
-if Length(cols)=0 or Length(cols)>dim then  return false; fi;
-
-cols:=K!.vertices{cols};
-AddSet(cols,K!.vertices[i]);
-if not cols in Faces[Length(cols)] then return false; fi;
-
-for x in LA do
-A[i][x]:=0;
-A[x][i]:=0;
-od;
-
-for x in [1..dim] do #####?
-Faces[x]:=Filtered(Faces[x], a->not K!.vertices[i] in a);
-od;
-
-RemoveSet(Vertices,K!.vertices[i]);
-
-return true;
+if cnt=d-1 then return true;
+else
+return false;
+fi;
 end;
-##
-################################################
+############################################
 
-################################################
-##
-RemoveEdge:=function(i,j)
-local cols, x, y,lc;
+bool:=true;
 
-
-cols:=[];
-for x in LA do
-if (not A[i][x]=0) and (not A[j][x]=0) then Add(cols,x); fi;
-od;
-
-if Length(cols)=0  or Length(cols)>dim-2 then return false; fi;
-
-cols:=K!.vertices{cols};
-AddSet(cols,K!.vertices[i]);
-AddSet(cols,K!.vertices[j]);
-if not IsBound(Faces[Length(cols)]) then return false; fi;
-if not cols in Faces[Length(cols)] then return false; fi;
-
-A[i][j]:=0;
-A[j][i]:=0;
-
-for x in [2..dim+1] do #####?
-Faces[x]:=Filtered(Faces[x], a->
-not SSortedList([K!.vertices[i], K!.vertices[j]]) in a);
-od;
-
-
-return true;
-end;
-##
-################################################
-
-
-LA:=Filtered([1..Length(A)], i->Sum(A[i])>0);
-iter:=Filtered(LA,i->Sum(A[i])<dim+1);
-
-x:=true;
-while x do
-x:=false;
-   for i in iter do
-   if RemoveApex(i) then x:=true; fi;
+while bool do
+bool:=false;
+   for s in [1..Length(K)] do
+      if IsContractibleSimplex(K,K[s]) then
+      K[s]:=0; bool:=true; 
+      K:=Filtered(K,x->not x=0); 
+      break; fi;
    od;
 od;
 
-#K!.vertices:=Vertices;
-#if bool=Sum(Sum(A)) then return false; fi;;;
-#return true;
-
-LA:=Filtered([1..Length(A)], i->Sum(A[i])>0);
-   for i in [1..Length(LA)] do
-   for j in [i+1..Length(LA)] do
-   if RemoveEdge(LA[i],LA[j]) then x:=true;  fi;
-   od;
-   od;
-
-if bool=List(Faces,Length) then return false; fi;;;
-K!.vertices:=Vertices;
-ContractSimplicialComplex(K);
-
-return true;
+return K;
 end);
 #################################################################
 #################################################################
@@ -595,8 +504,6 @@ end;
 RemoveEdge:=function(i,j)
 local cols, x, y,lc;
 
-if A[i][j]=0 then return false; fi;
-
 cols:=[];
 for x in LA do
 if (not A[i][x]=0) and (not A[j][x]=0) then Add(cols,x); fi;
@@ -611,7 +518,6 @@ if A[cols[x]][cols[y]]=0  then return false; fi;
 od;
 od;
 
-if A[i][j]=0 then Print("hello"); fi;
 A[i][j]:=0;
 A[j][i]:=0;
 
@@ -630,16 +536,12 @@ x:=false;
    od;
 od;
 
-x:=true;
-while x do
-x:=false;
 LA:=Filtered([1..Length(A)], i->Sum(A[i])>0);
    for i in [1..Length(LA)] do
    for j in [i+1..Length(LA)] do
    if RemoveEdge(LA[i],LA[j]) then x:=true;  fi;
    od;
    od;
-od;
 
 if bool=Sum(Sum(A)) then return false; fi;;;
 ContractGraph(G);
@@ -725,15 +627,17 @@ InstallGlobalFunction(ContractibleSubcomplexOfSimplicialComplex,
 function(KK)
 local L,K,Simplices, NrSimplices, EnumeratedSimplex,
       RemoveSimplexIfPoss, Link, RemovableSimplex, 
-      Leaves,  G, HH,   
-      Faces,dim,bool,d,k,s,t,tt,x;;
+      Leaves, NewLeaves, G, V, LST,
+      Faces,dim,bool,BOOL,d,k,s,t,tt,x;;
 
 K:=PathComponentsOfSimplicialComplex(KK,1);
 dim:=Dimension(K);
 G:=GraphOfSimplicialComplex(K);
 G:=G!.incidenceMatrix;
+V:=K!.vertices;
+LST:=[1..Length(V)];
 
-################
+#######
 if IsBound(K!.simplicesLst) then
 Faces:=StructuralCopy(K!.simplicesLst);
 else
@@ -746,7 +650,7 @@ od;
 Faces[d+1]:=SSortedList(Faces[d+1]);
 od;
 fi;
-################ 
+####### 
 
 #####################
 RemoveSimplexIfPoss:=function(s)
@@ -754,42 +658,68 @@ local i,t,cnt,tt;
 cnt:=0;
        for i in s do
        t:=StructuralCopy(s); RemoveSet(t,i);
-       if not t in L[d-1] then cnt:=cnt+1; tt:=t; fi;
+       if not t in L[d-1] then cnt:=cnt+1; tt:=StructuralCopy(t); fi;
        if cnt>1 then break; fi;  
        od;
 
-       if cnt=0 then Add(HH,s); else 
-       if cnt=1 then Add(L[d],s); Add(HH,s); 
-       Add(L[d-1],tt);
-       return true;
-       fi;
+       if cnt=1 then AddSet(L[d],s); RemoveSet(Faces[d],s); 
+       AddSet(L[d-1],tt);  AddSet(Leaves,tt); return true;
        fi;
 return false;
 end;
 #####################
 
+#####################
+Link:=function(s)
+local lnk,lst,i;
+lnk:=StructuralCopy(LST);
+for i in s do
+lnk:=Filtered(lnk, x-> G[x][i]>0);
+od;
+lnk:=List(lnk,x->V[x]);
+lst:=List(lnk,x->SSortedList(Concatenation(s,[x])));
+return lst;
+end;
+#####################
+
+#####################
+RemovableSimplex:=function(d)
+local i,t,cnt,tt,s; #retrun one free d-2-dimensional edge.
+for s in Faces[d] do
+cnt:=0;
+       for i in s do
+       t:=StructuralCopy(s); RemoveSet(t,i);
+       if not t in L[d-1] then cnt:=cnt+1; tt:=StructuralCopy(t); fi;
+       if cnt>1 then break; fi;
+       od;
+
+       if cnt=1 then 
+       return tt;
+       fi;
+od;
+return fail;
+end;
+#####################
 
 L:=[];
-if Length(Faces[1])=0 then return SimplicesToSimplicialComplex(L); fi;
-
 L[1]:=[Faces[1][1]];
 
 for d in [2..dim+1] do
    L[d]:=[];
-   HH:=[];
+   Leaves:=[];
    bool:=true;
    while bool do
       bool:=false;
-      Faces[d]:=Difference(Faces[d],HH);
-      HH:=[];
       for s in Faces[d]  do 
          if RemoveSimplexIfPoss(s) then bool:=true;  fi;
+         for t in Leaves do
+         RemoveSet(Leaves,t);
+         for tt in Link(t) do
+         RemoveSimplexIfPoss(tt);
+         od;
+         od;
       od;
    od;
-od;
-
-for d in [dim+2..dim+100] do ##SLOPPY!
-L[d]:=[];
 od;
 
 return SimplicesToSimplicialComplex(L);
@@ -847,78 +777,6 @@ for i in [1..Length(L)] do
 L[i]:=Filtered(L[i],x->IsSubset(V,x));
 od;
 return SimplicesToSimplicialComplex(L);
-end);
-#################################################################
-#################################################################
-
-#################################################################
-#################################################################
-InstallGlobalFunction(ChainComplexOfSimplicialPair,
-function(K,A)
-local
-	Dimen,Boundary,Faces,nullvecs,dim,d,i;
-
-dim:=Dimension(K);
-Faces:=[];
-
-for d in [1..dim+1] do
-if A!.nrSimplices(d-1)>0 then
-Faces[d]:=Difference(K!.simplicesLst[d],A!.simplicesLst[d]);
-else
-Faces[d]:=K!.simplicesLst[d];
-fi;
-od;
-
-#############################
-Dimen:=function(k);
-if k<0 or k>dim then return 0; fi;
-return Length(Faces[k+1]);
-end;
-#############################
-
-nullvecs:=[];
-for i in [0..dim] do
-nullvecs[i+1]:=List([1..Maximum(Dimen(i),1)],a->0);
-od;
-
-#############################
-Boundary:=function(n,i)
-local V,Vhat, j, bnd,pos;
-V:=Faces[n+1][i];
-
-bnd:=StructuralCopy(nullvecs[n]);
-
-for j in [1..Length(V)] do
-Vhat:=StructuralCopy(V);
-RemoveSet(Vhat,V[j]);
-pos:=Position(Faces[n],Vhat);
-if not pos=fail then
-
-if IsOddInt(j) then
-bnd[pos]:=1;
-else
-bnd[pos]:=-1;
-fi;
-
-fi;
-od;
-
-return bnd;
-end;
-#############################
-
-
-return
-Objectify(HapChainComplex,
-           rec(
-           dimension:=Dimen,
-           boundary:=Boundary,
-           properties:=[
-           ["length",dim],
-           ["type","chainComplex"],
-           ["characteristic",0]]
-           ));
-
 end);
 #################################################################
 #################################################################

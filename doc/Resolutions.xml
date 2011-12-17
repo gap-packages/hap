@@ -1,6 +1,17 @@
 <Chapter><Heading>Resolutions of the ground ring</Heading>
 
 <Table Align="|l|" >
+
+<Row>
+<Item>
+<Index>TietzeReducedResolution</Index>
+<C>TietzeReducedResolution(R)</C>
+<P/>
+
+Inputs a <M>\mathbb ZG</M>-resolution <M>R</M> and returns a <M>\mathbb ZG</M>-resolution <M>S</M> which is obtained from <M>R</M> by applying "Tietze like operations" in each dimension. The hope is that <M>S</M> has fewer free generators than <M>R</M>. 
+</Item>
+</Row>
+
 <Row>
 <Item>
 <Index>FreeGResolution</Index>
@@ -259,8 +270,10 @@ kernel of the quotient <M>E \longrightarrow G</M>, then this can be incorporated
 &nbsp;
 <C> ResolutionFiniteGroup(gens,n,true)</C>
 &nbsp;
-<C> ResolutionFiniteGroup(gens,n,false,p)
-</C><P/>
+<C> ResolutionFiniteGroup(gens,n,false,p) </C>
+&nbsp;
+<C> ResolutionFiniteGroup(gens,n,false,0,"extendible") </C>
+<P/>
 
 Inputs a set <M>gens</M> of generators for a finite group <M>G</M> and
 a positive integer <M>n</M>. It outputs <M>n</M> terms of a
@@ -275,6 +288,9 @@ argument which, when set equal to a prime <M>p</M>, records the
 fact that the resolution will only be used for mod <M>p</M>
 calculations. This could speed up subsequent constructions.
 <P/>
+
+The function has an optional fifth
+argument which, when set equal to "extendible", returns a resolution whose length can be increased using the command R!.extend() .
 
 </Item></Row>
 

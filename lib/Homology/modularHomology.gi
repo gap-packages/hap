@@ -29,8 +29,8 @@ prime:=EvaluateProperty(C,"characteristic");
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
-if n <0 then return 0; fi;
-if Dimension(n)=0 then return 0; fi;
+if n <0 then return rec( rank:=0); fi;
+if Dimension(n)=0 then return rec( rank:=0); fi;
 
 ########################
 if n=0 then
@@ -45,6 +45,7 @@ M1:=[];
 
  for i in [1..Dimension(n)] do
  M1[i]:=Boundary(n,i);
+ConvertToVectorRep(M1[i]);
  od;
  M1:=MutableCopyMat(M1);
  ConvertToMatrixRep(M1);
@@ -63,6 +64,7 @@ M1:=0;
 M2:=[];
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
+ConvertToVectorRep(M2[i]);
 od;
 if Length(M2)=0 then RankM2:=0; else
 M2:=MutableCopyMat(M2);

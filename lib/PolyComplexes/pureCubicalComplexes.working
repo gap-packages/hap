@@ -106,7 +106,7 @@ C:=rec();
 C.binaryArray:=StructuralCopy(M!.binaryArray);
 C.properties:=StructuralCopy(M!.properties);
 C:=Objectify(HapPureCubicalComplex,C);
-ContractPureCubicalComplex(C);
+#ContractPureCubicalComplex(C);
 D:=ChainComplexOfCubicalComplex(
 PureCubicalComplexToCubicalComplex(C),true);
 return
@@ -129,6 +129,85 @@ end);
 #####################################################################
 #####################################################################
 
+#################################################################
+#################################################################
+InstallGlobalFunction(ReadMatrixAsPureCubicalComplex,
+function(AA)
+local PCC,B, fn, Dims,x, Dim, i, Iter,A;
+
+A:=SSortedList(AA);
+
+Dims:=[];
+Dim:=Length(A[1]);
+for i in [1..Dim] do
+Add(Dims,3+Maximum(List(A,x->x[i])));
+od;
+
+B:=List([1..1+Dims[Length(Dims)]],a->0);
+for i in Reversed([1..Dim-1]) do
+B:=List([1..Dims[i]],a->StructuralCopy(B));
+od;
+
+##############
+if Dim=1 then
+for x in A do
+B[1+x[1]]:=1;
+od;
+fi;
+##############
+if Dim=2 then
+for x in A do
+B[1+x[1]][1+x[2]]:=1;
+od;
+fi;
+##############
+if Dim=3 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]]:=1;
+od;
+fi;
+##############
+if Dim=4 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]]:=1;
+od;
+fi;
+##############
+if Dim=5 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]]:=1;
+od;
+fi;
+##############
+if Dim=6 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]]:=1;
+od;
+fi;
+##############
+if Dim=7 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]][1+x[7]]:=1;
+od;
+fi;
+##############
+if Dim=8 then
+for x in A do
+B[1+x[1]][1+x[2]][1+x[3]][1+x[4]][1+x[5]][1+x[6]][1+x[7]][1+x[8]]:=1;
+od;
+fi;
+##############
+if Dim>8 then
+Print("This function is not yet implemented for matrices with more than 8 columns.\n");
+return fail;
+fi;
+
+return PureCubicalComplex(B);;
+end);
+#####################################################################
+#####################################################################
+
+
 
 HAPAAA:=0;
 #################################################################
@@ -138,7 +217,7 @@ function(file,threshold)
 # Inputs a string "file" that points either to a single image file, or 
 # to a list of suitable image files, and returns either a 2-dimensional 
 # or 3-dimensional cubical complex.
-local f,i,prog,A;
+local f,i,x,prog,B,A,AA;
 
 prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/PolyComplexes/prog");
 #MUST FIX THIS
@@ -154,16 +233,23 @@ Exec(i);
 Read("/tmp/im.g");
 Exec("rm /tmp/im.g");
 Exec("rm /tmp/im.txt");
-A:=StructuralCopy(HAPAAA);
+B:=StructuralCopy(HAPAAA);
 HAPAAA:=0;
 
+A:=[];
+for i in [1..B[1]] do
+A[i]:=List([1..B[2]],a->0);
+od;
+for x in B{[3..Length(B)-1]} do
+A[x[1]][x[2]]:=x[3];
+od;
 return ArrayToPureCubicalComplex(A,threshold);
 fi;
 #################################  
 
 ##################################
 if IsList(file) then
-A:=[];
+AA:=[];
 for f in file do
 i:=Concatenation("convert ",f," /tmp/im.txt");
 Exec(i);
@@ -173,11 +259,19 @@ Exec(i);
 Read("/tmp/im.g");
 Exec("rm /tmp/im.g");
 Exec("rm /tmp/im.txt");
-Add(A,StructuralCopy(HAPAAA));
+B:=StructuralCopy(HAPAAA);
+A:=[];
+for i in [1..B[1]] do
+A[i]:=List([1..B[2]],a->0);
+od;
+for x in B{[3..Length(B)-1]} do
+A[x[1]][x[2]]:=x[3];
+od;
+Add(AA,StructuralCopy(A));
 HAPAAA:=0;
 od;
 
-return ArrayToPureCubicalComplex(A,threshold);
+return ArrayToPureCubicalComplex(AA,threshold);
 fi;
 #################################
 

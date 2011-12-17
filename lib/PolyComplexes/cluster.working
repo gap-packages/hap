@@ -602,7 +602,7 @@ end);
 InstallGlobalFunction(SimplicialNerveOfGraph,
 function(G,dim)
 local  A, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
-       bool, VL,x, y, d, i,j,k,l,m,n,RedundantFaces;
+       bool, VL,x, y, d, i,j,k,l,m,n;
 
 A:=G!.incidenceMatrix;
 
@@ -622,7 +622,6 @@ for i in Vertices do
 for j in [i+1..VL] do
 if A[i][j]>0 then Add(SimplicesLst[2],[i,j]); fi;
 od;od;
-SimplicesLst[2]:=SSortedList(SimplicesLst[2]);
 fi;
 
 if dim>=2 then
@@ -633,7 +632,6 @@ for k in [j+1..VL] do
 if A[i][j]>0 and A[i][k]>0 and A[j][k]>0
 then Add(SimplicesLst[3],[i,j,k]); fi;
 od;od;od;
-SimplicesLst[3]:=SSortedList(SimplicesLst[3]);
 fi;
 
 if dim>=3 then
@@ -646,7 +644,6 @@ if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and
 A[j][k]>0 and A[j][l]>0 and A[k][l]>0
 then Add(SimplicesLst[4],[i,j,k,l]); fi;
 od;od;od;od;
-SimplicesLst[4]:=SSortedList(SimplicesLst[4]);
 fi;
 
 if dim>=4 then
@@ -662,7 +659,6 @@ and A[k][l]>0 and A[k][m]>0
 and A[l][m]>0
 then Add(SimplicesLst[5],[i,j,k,l,m]); fi;
 od;od;od;od;od;
-SimplicesLst[5]:=SSortedList(SimplicesLst[5]);
 fi;
 
 if dim>=5 then
@@ -680,7 +676,6 @@ and A[m][m]>0 and   A[l][n]>0
 and   A[m][n]>0
 then Add(SimplicesLst[6],[i,j,k,l,m,n]); fi;
 od;od;od;od;od;od;
-SimplicesLst[6]:=SSortedList(SimplicesLst[6]);
 fi;
 
 
@@ -694,58 +689,9 @@ if A[x[1]][x[2]]=0 then bool:=false; break; fi;
 od;
 if bool then Add(SimplicesLst[d],y); fi;
 od;
-SimplicesLst[d]:=SSortedList(SimplicesLst[d]);
+
 od;
 ##########################
-
-##########################
-##########################
-if dim=2 then 
-RedundantFaces:=[];
-
-for i in [1..Length(A)] do
-for j in [i+1..Length(A)] do
-if not A[i][j]=0 then
-for k in [j+1..Length(A)] do
-if not A[i][j]*A[j][k]*A[i][k]=0 then
-for l in [k+1..Length(A)] do
-if not A[i][j]*A[i][k]*A[i][l]*A[j][k]*A[j][l]*A[k][l] = 0 then
-Add(RedundantFaces,[i,j,k]);
-break;
-fi;
-od;fi;od;fi;od;od;
-
-SimplicesLst[dim]:=Difference(SimplicesLst[dim],RedundantFaces);
-SimplicesLst[dim]:=SSortedList(SimplicesLst[dim]);
-fi;
-###########################
-###########################
-
-##########################
-##########################
-if dim=3 then
-RedundantFaces:=[];
-
-for i in [1..Length(A)] do
-for j in [i+1..Length(A)] do
-if not A[i][j]=0 then
-for k in [j+1..Length(A)] do
-if not A[i][j]*A[j][k]*A[i][k]=0 then
-for l in [k+1..Length(A)] do
-if not A[i][j]*A[i][k]*A[i][l]*A[j][k]*A[j][l]*A[k][l] = 0 then
-for m in [l+1..Length(A)] do
-if not A[i][j]*A[i][k]*A[i][l]*A[i][m]*A[j][k]*A[j][l]*A[j][m]*A[k][l]*A[k][m]*A[l][m] = 0 then
-Add(RedundantFaces,[i,j,k,l]);
-break;
-fi;
-od;fi;od;fi;od;fi;od;od;
-
-SimplicesLst[dim]:=Difference(SimplicesLst[dim],RedundantFaces);
-SimplicesLst[dim]:=SSortedList(SimplicesLst[dim]);
-fi;
-###########################
-###########################
-
 
 ##########################
 Simplices:=function(d,k);
@@ -773,7 +719,6 @@ Objectify(HapSimplicialComplex,
            vertices:=Vertices,
            nrSimplices:=NrSimplices,
            simplices:=Simplices,
-           simplicesLst:=SimplicesLst,
            enumeratedSimplex:=EnumeratedSimplex,
            properties:=[
            ["dimension",dim]]
