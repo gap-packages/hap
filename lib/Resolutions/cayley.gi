@@ -3,7 +3,14 @@
 #####################################################################
 InstallGlobalFunction(CayleyGraphDisplay,
 function(arg)
-local G,X,Elts,M,i,j,COLOURS;
+local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log;
+
+tmpDir:=DirectoryTemporary();
+
+tmpInlog:=Filename(tmpDir,"tmpIn.log");
+tmpIngif:=Filename(tmpDir,"tmpIn.gif");
+tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
+
 
 COLOURS:=["blue","red","green","yellow","brown","black"];
 
@@ -32,42 +39,42 @@ od;
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo("/tmp/tmpIn.log"," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
 
 for i in [1..Length(Elts)] do
 for j in [1..Length(Elts)] do
 
 if  M[i][j]=fail then
-AppendTo("/tmp/tmpIn.log",i, " \n");
+AppendTo(tmpInlog,i, " \n");
 else
-AppendTo("/tmp/tmpIn.log",i," -- ", j, "[color=",COLOURS[M[i][j]],"] \n");
+AppendTo(tmpInlog,i," -- ", j, "[color=",COLOURS[M[i][j]],"] \n");
 fi;
 
 od;od;
 
-AppendTo("/tmp/tmpIn.log"," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
+AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
 
 if Maximum(List(X,x->Length(String(x))))<20 then
 for i in [1..Length(X)] do
-AppendTo("/tmp/tmpIn.log",-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
+AppendTo(tmpInlog,-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
 od;
 fi;
 
 
-AppendTo("/tmp/tmpIn.log","}\n }\n");
+AppendTo(tmpInlog,"}\n }\n");
 ############### WRITTEN ############################################
-Exec("neato -Tgif /tmp/tmpIn.log > /tmp/tmpIn.gif");
+Exec(Concatenation("neato -Tgif ", tmpInlog," > ", tmpIngif));
 
 if Length(arg)=2 then
-Exec("mozilla /tmp/tmpIn.gif");
-Exec("rm /tmp/tmpIn.log; rm /tmp/tmpIn.gif");
+Exec(Concatenation("mozilla ", tmpIngif));
+Exec(Concatenation("rm ",tmpInlog,"; rm ",tmpIngif));
 
 else
 
-AppendTo("/tmp/tmpIn2.log", "Browser=",arg[3],"\n");
-AppendTo("/tmp/tmpIn2.log","$Browser /tmp/tmpIn.gif");
-Exec("chmod a+x /tmp/tmpIn2.log; /tmp/tmpIn2.log");
-Exec("rm /tmp/tmpIn.log; rm /tmp/tmpIn.gif; rm /tmp/tmpIn2.log;");
+AppendTo(tmpIn2log, "Browser=",arg[3],"\n");
+AppendTo(tmpIn2log,"$Browser ", tmpIngif);
+Exec(Concatenation("chmod a+x ",tmpIn2log," ; ", tmpIn2log));
+Exec(Concatenation("rm ",tmpInlog," ; rm ",tmpIngif,"; rm ",tmpIn2log,";"));
 fi;
 
 

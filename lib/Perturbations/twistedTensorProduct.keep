@@ -28,7 +28,7 @@ local
 		HomotopyOfWord,
 		FinalHomotopy,
 		HorizontalPseudoBoundary,
-		SMALL,SizeE,BoolE,MT,
+		MT, SMALL, SizeE,
 #################################
 AbsInt,                         #
 SignInt;                        #
@@ -37,24 +37,15 @@ AbsInt:=AbsInt_HAP;             #
 SignInt:=SignInt_HAP;           #
 #################################
 		
-SMALL:=4096;;
-if Order(S!.group) >SMALL  then SizeE:=Order(S!.group); fi;
-if Order(R!.group) >SMALL
- then SizeE:=Order(R!.group); fi;
-if not IsBound(SizeE) then
-SizeE:=Order(R!.group)*Order(S!.group);
-fi;
 
-BoolE:=SizeE<=SMALL and Size(R!.group)=Size(R!.elts)
-and Size(S!.group)=Size(S!.elts);
 #################################
-if BoolE then
+SMALL:=4096;
+SizeE:=Order(R!.group)*Order(S!.group);
+if SizeE<=SMALL then
 MT:=[];
-#for i in [1..SizeE] do
-for i in [1..Length(EltsE)] do
+for i in [1..SizeE] do
 MT[i]:=[];
-#for j in [1..SizeE] do
-for j in [1..Length(EltsE)] do
+for j in [1..SizeE] do
 MT[i][j]:=Mult(i,j);
 od;
 od;
@@ -190,7 +181,6 @@ od;
 od;
 od;
 
-if not BoolE then
 #####################################################################
 Htpy:=function(p,q,x)
 local tensor, t,g, r, s,AB;
@@ -217,37 +207,6 @@ fi;
 
 end;
 #####################################################################
-else
-#####################################################################
-Htpy:=function(p,q,x)
-local tensor, t,g, r, s,AB;
-
-AB:=AbsInt(x[1]);
-
-if not IsBound(HtpyRecord[p+1][q+1][AB][x[2]]) then
-
-tensor:=Int2Pair(AB,p,q);
-
-g:=NEhomN(MT[InvE(GmapE(EhomG(x[2])))][x[2]] );
-t:=GmapE(EhomG(x[2]));
-r:=ShallowCopy(HomotopyS(q,[tensor[2],g]));
-Apply(r,y->[y[1],NhomE(y[2])]);
-Apply(r,y->[Pair2Int([tensor[1],y[1]],p,q+1),MT[t][y[2]]]);
-HtpyRecord[p+1][q+1][AB][x[2]]:=r;
-fi;
-
-if SignInt(x[1])>0 then
-return HtpyRecord[p+1][q+1][AB][x[2]];
-else
-return NegateWord(HtpyRecord[p+1][q+1][AB][x[2]]);
-fi;
-
-end;
-#####################################################################
-fi;
-
-
-
 
 if not Charact=2 then
 #####################################################################
@@ -284,12 +243,13 @@ return r;
 end;
 #####################################################################
 fi;
+
 #####################################################################
 Del:=function(k,p,q,x)
 local b,i,r,v,w,tensor,Record,Ab,j,SM,y;  #Assume that 1 <= x <= DimR(p)*DimS(q)
 
 Ab:=AbsInt(x);
-if not DelRecord[k+1][p+1][q+1][Ab] = 0 then 
+if IsBound(DelRecord[k+1][p+1][q+1][Ab])  then
     if SignInt(x)=1 then return DelRecord[k+1][p+1][q+1][Ab]; 
     else return NegateWord( DelRecord[k+1][p+1][q+1][Ab] );
     fi;
@@ -338,11 +298,7 @@ if k>1 then
 
        r:=[];
        for i in [1..k] do
-###
-### THE NEXT LINE TAKES UP ALL THE TIME!
        r:=AddWrds(CompDel(i,p-k+i,q+k-i-1,Del(k-i,p,q,-x)),r);
-###
-###
        od;
        v:= CompHtpy(p-k,q+k-2,r);
        Record();
@@ -354,39 +310,35 @@ fi;
 end;
 #####################################################################
 
-
-if not BoolE then
+if SizeE<=SMALL then
 #####################################################################
 CompDel:=function(k,p,q,b)
-local r,v,w,x, map,SM,j,y;
-
-map:=function(x);
-return Del(k,p,q,x);
-end;
+local r,v,w,x,SM,j,y;
 
 ###############
 if not Charact=2 then
 r:=[];
 for v in b do
-w:=ShallowCopy(map(v[1])); 
-Apply(w,y->[y[1],Mult(v[2],y[2])]);
+w:=ShallowCopy(Del(k,p,q,v[1])); 
+Apply(w,y->[y[1],MT[v[2]][y[2]]]);
 r:=AddWrds(w,r);
 od;
 
 else
 SM:=[];
 for v in b do
-w:=ShallowCopy(map(v[1])); 
-Apply(w,y->[y[1],Mult(v[2],y[2])]);
+w:=ShallowCopy(Del(k,p,q,v[1]));
+
+    ## THE NEXT LINE TAKES A PROPORTION OF THE TIME FOR SMALL GROUPS
+Apply(w,y->[y[1],MT[v[2]][y[2]]]);
+
 AddLst(w,SM);
 od;
 
 r:=[];
 for y in SM do
 for j in y do
-#if not j=0 then
 Add(r,j);
-#fi;
 od;
 od;
 fi;
@@ -398,35 +350,36 @@ end;
 else
 #####################################################################
 CompDel:=function(k,p,q,b)
-local r,v,w,x, map,SM,j,y;
-
-map:=function(x);
-return Del(k,p,q,x);
-end;
+local r,v,w,x,SM,j,y;
 
 ###############
 if not Charact=2 then
 r:=[];
 for v in b do
-w:=ShallowCopy(map(v[1]));
-Apply(w,y->[y[1],MT[v[2]][y[2]]]);
+w:=ShallowCopy(Del(k,p,q,v[1]));
+Apply(w,y->[y[1],Mult(v[2],y[2])]);
 r:=AddWrds(w,r);
 od;
 
 else
 SM:=[];
 for v in b do
-w:=ShallowCopy(map(v[1]));
-Apply(w,y->[y[1],MT[v[2]][y[2]]]);
+w:=ShallowCopy(Del(k,p,q,v[1]));
+
+####
+####
+    ## THE NEXT LINE TAKES 60% OF THE TIME FOR LARGE GROUPS
+Apply(w,y->[y[1],Mult(v[2],y[2])]);
+####
+####
+
 AddLst(w,SM);
 od;
 
 r:=[];
 for y in SM do
 for j in y do
-#if not j=0 then
 Add(r,j);
-#fi;
 od;
 od;
 fi;
@@ -444,9 +397,7 @@ for p in [0..n] do
 DelRecord[l+1][p+1]:=[];
 for q in [0..n-p] do
 DelRecord[l+1][p+1][q+1]:=[];
-for j in [DimPQ(p+1,q-1)+1..DimPQ(p,q)] do
-DelRecord[l+1][p+1][q+1][j]:=0;
-od;
+DelRecord[l+1][p+1][q+1][j]:=[];
 od;
 od;
 od;
@@ -671,7 +622,6 @@ fi;
 
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
 grp:=Group(EltsE);
-
 
 return Objectify(HapResolution,
 	    rec(

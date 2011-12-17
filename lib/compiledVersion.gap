@@ -2,6 +2,13 @@
 
 tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.8/");
 
+########## COMPILED GAP FUNCTIONS ###################################
+LoadDynamicModule(
+Concatenation(tmppath,"lib/CompiledGAP/Compiled/absint.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/CompiledGAP/Compiled/signint.so"));
+
 ########## FREE G MODULES ###########################################
 
 LoadDynamicModule(
@@ -136,6 +143,10 @@ Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/diagrams.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/resArtin.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/noncrossing.so"));
+
 
 
 ######### FUNCTORS ##################################################

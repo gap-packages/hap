@@ -16,8 +16,8 @@ local
 	pp,
 	one,zero,
 	IntPairList,
-	IntToPair,
-	PairToInt,
+	IntToPair, IntToPairModified,
+	PairToInt, PairToIntModified,
 	ComposeGens,
 	ComposeGensAugmented,
 	SCT,
@@ -127,10 +127,29 @@ end;
 #####################################################################
 
 #####################################################################
+IntToPairModified:=function(k);
+if k = 1 then return [0,1]; 
+else           
+return IntPairList[k-1]; 
+fi;
+end;
+#####################################################################
+
+#####################################################################
 PairToInt:=function(x);
 return Position(IntPairList,x);
 end;
 #####################################################################
+
+#####################################################################
+PairToIntModified:=function(x);
+if x = [0,1] then  return 1;       
+else                      
+return Position(IntPairList,x)+1;  
+fi;
+end;
+#####################################################################
+
 
 
 #####################################################################
@@ -348,6 +367,9 @@ od;
 A:=AlgebraByStructureConstants(GF(prime),SCT);
 A!.degree:=Degree;
 A!.intToPair:=IntToPair;
+A!.intToPairModified:=IntToPairModified;
+A!.pairToInt:=PairToInt;
+A!.pairToIntModified:=PairToIntModified;
 RngGens:=ModPRingGenerators(A);
 if Length(RngGens)=Dimension(R)(1)+1 then
 return A; fi;
@@ -371,6 +393,9 @@ od;
 A:=AlgebraByStructureConstants(GF(prime),SCT);
 A!.degree:=Degree;
 A!.intToPair:=IntToPair;
+A!.intToPairModified:=IntToPairModified;
+A!.pairToInt:=PairToInt;
+A!.pairToIntModified:=PairToIntModified;
 
 return A;
 fi;
@@ -395,6 +420,9 @@ A:=AlgebraByStructureConstants(GF(prime),SCT);
 
 A!.degree:=Degree;
 A!.intToPair:=IntToPair;
+A!.intToPairModified:=IntToPairModified;
+A!.pairToInt:=PairToInt;
+A!.pairToIntModified:=PairToIntModified;
 
 return A;
 
@@ -420,6 +448,9 @@ od;
 A:=AlgebraByStructureConstants(GF(prime),SCT);
 A!.degree:=Degree;
 A!.intToPair:=IntToPair;
+A!.intToPairModified:=IntToPairModified;
+A!.pairToInt:=PairToInt;
+A!.pairToIntModified:=PairToIntModified;
 RngGens:=ModPRingGenerators(A);
 if Length(RngGens)=Dimension(R)(1)+1 then
 return A; fi;
@@ -462,6 +493,9 @@ od;
 A:=AlgebraByStructureConstants(GF(prime),SCT);
 A!.degree:=Degree;
 A!.intToPair:=IntToPair;
+A!.intToPairModified:=IntToPairModified;
+A!.pairToInt:=PairToInt;
+A!.pairToIntModified:=PairToIntModified;
 A!.gensSupport:=gensSupport;
 
 return A;
@@ -513,6 +547,9 @@ InstallGlobalFunction(ModPRingGenerators,
 function(A)
 local S, gradedgens, deg, mingens, i,j,n, vecs,V,x,y;
 
+if "mingens" in NamesOfComponents(A) then return A!.mingens;fi;
+
+
 S:=GeneratorsOfAlgebra(A);
 deg:=A!.degree(S[Length(S)]);
 gradedgens:=List([1..1+deg],i->[]);
@@ -544,6 +581,8 @@ vecs:=[];
 	od;
 
 od;
+
+A!.mingens:=mingens;
 
 return mingens;
 end);

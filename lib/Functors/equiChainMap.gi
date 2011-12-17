@@ -77,6 +77,9 @@ end;
 #####################################################################
 fi;
 
+Charact:=Maximum(EvaluateProperty(R,"characteristic"),
+                 EvaluateProperty(S,"characteristic"));
+
 #####################################################################
 mapgens:=function(x,m)
 local z,u,a,y;
@@ -106,10 +109,21 @@ fi;
    if m>0 then y:=StructuralCopy(BoundaryR(m,x[1]));
    z:=map(y,m-1);
    u:=[];
-      for a in z do
-            u:=AddFreeWords(HomotopyS(m-1,a),u);
+##########################
+if Charact=0 then 
+ for a in Collected(z) do
+      Append(u,MultiplyWord(a[2],
+List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
+));
       od;
-      Apply(u,t->[t[1],Mult(GhomQ(x[2]),t[2])]);
+else
+      for a in Collected(z) do
+      Append(u,MultiplyWord(a[2] mod Charact,
+List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
+));
+      od;
+fi;
+#########################
       if x[1]>0 then
             mapgensRec[m+1][x[1]][x[2]]:=u;
       else
@@ -128,25 +142,25 @@ end;
 #####################################################################
 map:=function(w,m)
 local a, u,v,x,y,z;
-v:=[];
 
-   for x in w do
-   v:=AddFreeWords(mapgens(x,m),v);
-   od;
-
-return AlgebraicReduction(v);
+v:=Collected(w);
+if Charact=0 then
+Apply(v,x->MultiplyWord(x[2],  mapgens(x[1],m)));
+else
+Apply(v,x->MultiplyWord(x[2] mod Charact,  mapgens(x[1],m)));
+fi;
+v:= Concatenation(v);
+return v;
 end;
 #####################################################################
 
-Charact:=Maximum(EvaluateProperty(R,"characteristic"),
-                 EvaluateProperty(R,"characteristic"));
 
 if EvaluateProperty(R,"characteristic")>0
    and
-   EvaluateProperty(R,"characteristic")>0
+   EvaluateProperty(S,"characteristic")>0
    and
    not EvaluateProperty(R,"characteristic")=
-         EvaluateProperty(R,"characteristic")
+         EvaluateProperty(S,"characteristic")
 then Charact:=1;
 fi;
 

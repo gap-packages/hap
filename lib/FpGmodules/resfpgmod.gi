@@ -252,7 +252,10 @@ BndMat:=BoundaryMatrix(k);
 
 
 ConvertToMatrixRepNC(BndMat,prime); 
-NS:=SemiEchelonMat(NullspaceMat(BndMat));
+NS:=NullspaceMat(BndMat);
+#if Length(NS)>0 then     #Need to handle case =0 at some stage!!
+NS:=SemiEchelonMat(NS);
+#fi;
 
 tB:=TransposedMat(NS.vectors);
 Bcomp:=ComplementaryBasis(NS.vectors);
@@ -413,7 +416,7 @@ return Objectify(HapResolution,
 		elts:=eltsG,
 		group:=G,
 		properties:=
-			[["length",n],
+			[["length",n-1], 
 			 ["reduced",true],
 			 ["type","resolution"],
 			 ["characteristic",prime],

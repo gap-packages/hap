@@ -4,7 +4,7 @@ DeclareCategory("IsHapTopologicalSpace",IsObject);
 
 DeclareRepresentation(  "IsHapTopologicalSpaceRep",
                         IsComponentObjectRep,
-                        ["rawData",
+                        ["BinaryList",
                          "properties"]);
 
 HapTopologicalSpaceFamily:=NewFamily( "HapTopologicalSpaceFamily",

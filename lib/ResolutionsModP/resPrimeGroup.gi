@@ -1,6 +1,5 @@
 #(C) Graham Ellis, 2005-2006
 
-
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionPrimePowerGroup,
@@ -39,7 +38,14 @@ local
 	HomotopyRec,
 	InitHomotopyRec,
 	Toggle2,
-	A,g,h,i,x,tmp;
+	A,g,h,i,x,tmp, htpy,
+#################################
+AbsInt,                         #
+SignInt;                        #
+                                #
+AbsInt:=AbsInt_HAP;             #
+SignInt:=SignInt_HAP;           #
+#################################
 
 
 G:=arg[1];
@@ -139,17 +145,19 @@ end;
 
 #####################################################################
 GactMat:=function(g,tB)
-local k,q,h,C;
+local k,q,h,C,ppp;
+
+ppp:=pp;
 
 C:=[];
 
 k:=0;
-for q in [0..(-1+Length(tB)/pp)] do
+for q in [0..(-1+Length(tB)/ppp)] do
 
-for h in [1..pp] do
+for h in [1..ppp] do
 C[k+MT[g][h]]:=tB[k+h];
 od;
-k:=k+pp;
+k:=k+ppp;
 od;
 
 ConvertToMatrixRepNC(C);
@@ -428,15 +436,18 @@ end;
 
 #####################################################################
 Homotopy:=function(k,w)         #assume w is in kernel d_n
-local u,v,s;
+local u,v,s,Ab;
 
+Ab:=AbsInt(w[1]);
 if Toggle2 then InitHomotopyRec(); Toggle2:=false; fi;
 
-if not IsInt(HomotopyRec[k+1][AbsInt(w[1])][w[2]]) then
+if not IsInt(HomotopyRec[k+1][Ab][w[2]]) then
 if SignInt(w[1]) > 0 then
-return HomotopyRec[k+1][AbsInt(w[1])][w[2]]; 
+
+return HomotopyRec[k+1][Ab][w[2]]; 
 else
-return NegateWord(HomotopyRec[k+1][AbsInt(w[1])][w[2]]);
+
+return NegateWord(HomotopyRec[k+1][Ab][w[2]]);
 fi;
 fi;
 
@@ -480,7 +491,7 @@ end;
 return Objectify(HapResolution,
 	        rec(
 		dimension:=Dimension,
-		boundary:=Boundary,
+		boundary:=Boundary ,
 		homotopy:=Homotopy,
 		elts:=eltsG,
 		group:=G,

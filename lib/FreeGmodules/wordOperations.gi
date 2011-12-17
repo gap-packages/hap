@@ -10,7 +10,7 @@ end);
 #####################################################################
 InstallGlobalFunction(NegateWord,
 function(b);
-return List(b, x->Negate(x));
+return List(b, x->[-x[1],x[2]]);
 end);
 #####################################################################
 
@@ -25,8 +25,8 @@ if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 if p= 0 or p>2 then
 	v:=[];
 	for x in w do
-	k:=Position(v,Negate(x));
-	if (k=fail) then Append(v,[x]); else
+	k:=Position(v,[-x[1],x[2]]);
+	if (k=fail) then Add(v,x); else
 	v[k]:=0;
 	fi;
 	od;
@@ -34,79 +34,95 @@ if p= 0 or p>2 then
 	return Filtered(v,y->(not y=0));
 fi;
 
-if p= 2 then
-	v:=[];
-	for x in w do
-	if x in v then RemoveSet(v,x); else
-	if Negate(x) in v then RemoveSet(v,Negate(x));
-	else AddSet(v,x); fi; fi;
-	od;
+if p= 2 then #Words mod 2 are automatically simplified when added.
+        v:=List(w,x->[AbsInt(x[1]),x[2]]);
+	v:=Collected(v);
+        Apply(v,x->[x[1],x[2] mod 2]);
+        Apply(v, x->MultiplyWord(x[2],[x[1]]));
 
-	return v;
+return Concatenation(v);
 fi;
 
 end);
 #####################################################################
 
+
 #####################################################################
 InstallGlobalFunction(AddFreeWords,
-function(v,w)
-local x,u,AddLetter, w2;
+function(arg)
+local x,u,v,w,r, w2;
+
+if Length(arg[2])<Length(arg[1]) then
+v:=arg[1];w:=arg[2];
+else
+w:=arg[1];v:=arg[2];fi;
+
 
 if Length(w)=0 then return v; fi;
 if Length(v)=0 then return w; fi;
 
 w2:=ShallowCopy(w);
 
-   ##################################################################
-   AddLetter:=function(x,u)
-   local r;
-
-   r:=Position(w2,Negate(x));
-   if r=fail then Append(u,[x]);
-   else u[r]:=0; w2[r]:=0;fi; 
-   end;
-   ##################################################################
-
 u:=ShallowCopy(w);
+
 for x in v do
-AddLetter(x,u);
+   r:=Position(w2,[-x[1],x[2]]);
+   if r=fail then Add(u,x);
+   else u[r]:=0; w2[r]:=0;fi;
 od;
 
 u:=Filtered(u,i->(not i=0));
+
 return u;
 end);
 #####################################################################
 
+
 #####################################################################
 InstallGlobalFunction(AddFreeWordsModP,
 function(v,w,p)
-local  x, w2,  AddLetter;
+local x, SM,vw,i,j,ab;
 
 if Length(v)=0 then return w; fi;
 if Length(w)=0 then return v; fi;
 
+
 	########################### if p=2 #############################
 if p = 2 then
-w2:=SSortedList(w);
 
-        #############################################################
-        AddLetter:=function(x,u)
-        local nx,r ;
-
-        nx:=Negate(x);
-        if nx in w2 then RemoveSet(w2,nx);
-        else if x in w2 then RemoveSet(w2,x);
-        else AddSet(w2,nx);fi;fi;
-
-        end;
-        #############################################################
+SM:=[];
 
 for x in v do
-AddLetter(x,w2);
+if not IsBound(SM[x[2]]) then SM[x[2]]:=[]; fi;
+ab:=AbsInt(x[1]);
+if not IsBound(SM[x[2]][ab]) then
+	SM[x[2]][ab]:=[ab,x[2]];
+else
+Unbind(SM[x[2]][ab]);
+fi;
 od;
 
-return w2;
+for x in w do
+if not IsBound(SM[x[2]]) then SM[x[2]]:=[]; fi;
+ab:=AbsInt(x[1]);
+if not IsBound(SM[x[2]][ab]) then
+        SM[x[2]][ab]:=[ab,x[2]];
+else
+Unbind(SM[x[2]][ab]);
+fi;
+od;
+
+
+vw:=[];
+for x in SM do
+for j in x do
+Add(vw,j);
+od;
+od;
+
+
+return vw;
+
 fi;
 	########################## fi p=2 ###########################
 
@@ -161,7 +177,7 @@ function(n,w)
 local v, u, i;
 v:=[];
 
-if n>0 then u:=w; else u:=NegateWord(w); fi;
+if n>0 then u:=w; else u:=List(w,x->[-x[1],x[2]]); fi;
 
 for i in [1..AbsoluteValue(n)] do
 Append(v,u);

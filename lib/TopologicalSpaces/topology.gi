@@ -32,7 +32,7 @@ fi;
 
 return Objectify(HapTopologicalSpace,
 	   rec(
-	   rawData:=A,
+	   BinaryList:=A,
 	   properties:=[
 	   ["dimension",2],
 	   ["arraySize",[rows,cols]],
@@ -79,7 +79,7 @@ if not EvaluateProperty(T,"dimension")=2 then
 Print("There is no method for viewing a topological space of dimension ",
 EvaluateProperty(T,"dimension"),".\n"); return fail; fi;
 
-A:=T!.rawData;
+A:=T!.BinaryList;
 rows:=Length(A);;
 cols:=Length(A[1]);
 
@@ -151,7 +151,7 @@ od;
 return
 Objectify(HapTopologicalSpace,
            rec(
-	        rawData:=List(L,T->StructuralCopy(T!.rawData)),
+	        BinaryList:=List(L,T->StructuralCopy(T!.BinaryList)),
 	        properties:=[
 	        ["dimension",dim+1],
 	        ["genericCWtype",genericCWtype],
@@ -190,7 +190,7 @@ ArraySizePO:=ArraySize+List([1..Length(ArraySize)],i->1);
 SmallCircle:=Cartesian(List([1..Dim],i->[-1,0,1]));
 SmallCircle:=Filtered(SmallCircle,x->not IsZero(x));
 SmallCircumference:=Length(SmallCircle);
-RawData:=T!.rawData;
+RawData:=T!.BinaryList;
 
 Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
@@ -259,7 +259,7 @@ InstallOtherMethod(Bettinumbers,
 function(T,n);
 if n=0 then return ZerothBettiNumber(T); fi;
 if n=1 then return BettiNumbersOfMatrix(
-ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.rawData)[2]; fi;
+ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.BinaryList)[2]; fi;
 if n>EvaluateProperty(T,"dimension") then return 0;fi;
 
 Print("Theis function is not yet defined for n= ",n,"\n");
@@ -277,7 +277,7 @@ InstallOtherMethod(Bettinumbers,
 function(T);
 if EvaluateProperty(T,"dimension")=2 then
 return BettiNumbersOfMatrix(
-ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.rawData); fi;
+ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.BinaryList); fi;
 
 Print("This function is not yet defined for spaces if dimension >2.","\n");
 return fail;
@@ -297,10 +297,10 @@ N:=n+1;
 Dim:=EvaluateProperty(T,"dimension");
 ArraySize:=EvaluateProperty(T,"arraySize");
 ArraySizePO:=ArraySize+List([1..Length(ArraySize)],i->1);
-RawData:=StructuralCopy(T!.rawData);
+RawData:=StructuralCopy(T!.BinaryList);
 Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
-A:=0*T!.rawData;
+A:=0*T!.BinaryList;
 lp:=Dim-1;
 for point in Tarray do
 if EvalT(RawData,ArraySizePO,point)=N
@@ -312,7 +312,7 @@ od;
 return 
 Objectify(HapTopologicalSpace,
            rec(
-                rawData:=A,
+                BinaryList:=A,
                 properties:=[
                 ["dimension",Dim],
                 ["genericCWtype",EvaluateProperty(T,"genericCWtype")],
@@ -344,7 +344,7 @@ ArraySizePO:=ArraySize+List([1..Length(ArraySize)],i->1);
 SmallCircle:=Cartesian(List([1..Dim],i->[-1,0,1]));
 SmallCircle:=Filtered(SmallCircle,x->not IsZero(x));
 SmallCircumference:=Length(SmallCircle);
-RawData:=1*(T!.rawData);
+RawData:=1*(T!.BinaryList);
 Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
 
@@ -357,7 +357,7 @@ end;
 #################################################
 
 for point in Tarray do
-if not EvalT(T!.rawData,ArraySizePO,point)=0 then
+if not EvalT(T!.BinaryList,ArraySizePO,point)=0 then
 SetT(RawData,ArraySizePO,point,lp,1);
 for p in Neighbours(SmallCircle,SmallCircumference,point) do
 SetT(RawData,ArraySizePO,p,lp,1); 
@@ -368,7 +368,7 @@ od;
 return
 Objectify(HapTopologicalSpace,
            rec(
-               rawData:=RawData,
+               BinaryList:=RawData,
                properties:=[
                ["dimension",Dim],
                ["genericCWtype",EvaluateProperty(T,"genericCWtype")],
@@ -394,7 +394,7 @@ Dim:=EvaluateProperty(T,"dimension");
 lp:=Dim-1;
 ArraySize:=EvaluateProperty(T,"arraySize");
 ArraySizePO:=ArraySize+List([1..Length(ArraySize)],i->1);
-RawData:=1*(T!.rawData);
+RawData:=1*(T!.BinaryList);
 Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
 for point in Tarray do
@@ -406,7 +406,7 @@ od;
 return
 Objectify(HapTopologicalSpace,
            rec(
-	       rawData:=RawData,
+	       BinaryList:=RawData,
 	       properties:=[
 	       ["dimension",Dim],
 	       ["genericCWtype",EvaluateProperty(T,"genericCWtype")],
@@ -477,15 +477,15 @@ Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
 C:=ComplementTopologicalSpace(T);
 C:=ThickenedTopologicalSpace(C);
-RawData:=C!.rawData;
+RawData:=C!.BinaryList;
 
 for point in Tarray do
-if EvalT(T!.rawData,ArraySizePO,point)=0 then
+if EvalT(T!.BinaryList,ArraySizePO,point)=0 then
 SetT(RawData,ArraySizePO,point,lp,0);
 fi;
 od;
 
-C!.rawData:=RawData;
+C!.BinaryList:=RawData;
 return C;
 end);
 ######################################################################
@@ -501,7 +501,7 @@ Print("This function is not yet implemented for spaces of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
-ContractMatrix(T!.rawData);
+ContractMatrix(T!.BinaryList);
 
 end);
 ######################################################################
@@ -517,7 +517,7 @@ Print("This function is not yet implemented for spaces of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
-return MatrixToChainComplex(T!.rawData);
+return MatrixToChainComplex(T!.BinaryList);
 end);
 ######################################################################
 ######################################################################
@@ -534,12 +534,12 @@ Print("This function is not yet implemented for spaces of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
-A:=SingularityMatrix(T!.rawData);
+A:=SingularityMatrix(T!.BinaryList);
 return 
 
 Objectify(HapTopologicalSpace,
           rec(
-               rawData:=A,
+               BinaryList:=A,
                properties:=[
              ["dimension",2],
              ["arraySize",[Length(A),Length(A[1])]],
