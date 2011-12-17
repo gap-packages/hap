@@ -412,6 +412,13 @@ prime:=arg[3];
 
 F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
 
+###############################
+LM[1]:=ContractedComplex(LM[1]);
+for i in [2..Length(LM)] do
+LM[i]:=F(LM[i],LM[i-1]);
+od;
+###############################
+
 ##Initialize##############
 M:=LM[1];
 if true then #deg=0 then 
@@ -430,6 +437,7 @@ for i in [2..Length(LM)] do
   TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
   Add(L,[TM,TS]); 
 od;
+
 
 L[1][1]:=F(L[1][1],L[1][2]);
 
@@ -531,7 +539,7 @@ fi;
 Collapses_dim2:=function(X,Y)
 ##Number of cycles killed going from position X to position Y
 local
-	Acomp,A,Bcomp,TP, rows, cols, cnt, bettizero, Pathcomps, k, i, j;
+	P, Acomp,A,Bcomp,TP, rows, cols, cnt, bettizero, Pathcomps, k, i, j;
 
 Acomp:=PureCubicalComplex(FrameArray(L[Y]!.binaryArray));
 A:=Acomp!.binaryArray;

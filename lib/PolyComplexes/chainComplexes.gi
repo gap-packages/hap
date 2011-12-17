@@ -6,7 +6,7 @@ InstallGlobalFunction(CoreducedChainComplex,
 function(arg)
 local
         C,D,
-        S,T,TCopy,
+        S,T,
         Lngth,
         NewBoundary,
         FinalBoundary,
@@ -57,16 +57,13 @@ end;
 ############################
 for n in [1..Lngth] do
 for i in [1..C!.dimension(n)] do
-if AbsInt(Sum(NewBoundary(n,i)))=1 then
+if AbsInt(Sum(List(NewBoundary(n,i),x->AbsInt(x))))=1 then 
 
-#if Sum(List(NewBoundary(n,i),a->AbsInt(a)))=1 then
-if Length(Filtered(NewBoundary(n,i),x->not x=0))=1 then
 RemoveSet(S[n+1],i);
 pp:=PositionProperty(NewBoundary(n,i),a->not a=0);
 RemoveSet(S[n],pp);
 Add(T[n],pp);
 Add(T[n+1],i);
-fi;
 
 fi;
 od;

@@ -1443,7 +1443,7 @@ od;
 ##      then the cohomology rings for those groups are found (by recursive
 ##      calls to <Ref Func="Mod2CohomologyRingPresentation" BookName="HAPprime"/>)
 ##      and combined using 
-##      <Ref Func="TensorProduct" Label="for collection of algebra presentations"/></Item>
+##      <Ref Func="TensorProductOp" Label="for collection of algebra presentations"/></Item>
 ##  </List>
 ##  </Description>
 ##  </ManSection>
@@ -1478,7 +1478,7 @@ InstallGlobalFunction(HAPPRIME_CohomologyRingWithoutResolution,
       if not IsHomogeneousList(C) then
         return fail;
       else
-        return TensorProduct(C);
+        return TensorProductOp(C);
       fi;
     fi;
     

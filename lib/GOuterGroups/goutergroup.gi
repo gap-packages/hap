@@ -120,6 +120,53 @@ InstallMethod( GOuterGroup,
         return N;
     end);
 
+#############################################################################
+##
+##  Creation of a G-Outer E group from a group E (with G trivial) 
+##
+InstallMethod( GOuterGroup,
+    "basic method for creating a GOuterGroup from a group",
+    [ IsGroup ],
+
+    function( E )
+        local
+              A, N, type, G, ##E=A, G=1
+              alpha,     ## Action of G on G
+              nat;       ## Natural homomorphism from G to G
+
+        nat := NaturalHomomorphismByNormalSubgroup(E,E);
+        A:=E;
+        G:=Group(Identity(E));
+
+        ######################################################
+        alpha := function(g,a);
+            return g*a*g^-1;
+            end;
+        ######################################################
+
+        N:=GOuterGroup();
+               SetActingGroup(N,G);
+               SetActedGroup(N,A);
+               SetOuterAction(N,alpha);
+        return N;
+    end);
+
+
+#############################################################################
+##
+##  Creation of a G-Outer group homomorphism from a grouphomomorphism 
+##
+InstallMethod( GOuterGroup,
+    "basic method for creating a GOuterGroup homomorphism from a group homomorphism",
+    [ IsGroupHomomorphism ],
+
+    function( phi )
+    local PHI,S, T;
+
+    S:=GOuterGroup(Source(phi));
+    T:=GOuterGroup(Range(phi));
+    return GOuterGroupHomomorphism(S,T,phi);
+    end);
 
 #############################################################################
 ##

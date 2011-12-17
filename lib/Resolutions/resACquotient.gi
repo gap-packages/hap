@@ -6,7 +6,8 @@ function(arg)
 local
 	G,K,KK,bool,
 	GhomP,P,T,Derived,i, RGD,
-	pcpGD, GD, GDhomPCGD,PCGD,GhomGD, GDhomG, GDhomP, TD, gensP, RP,RTD;
+	pcpGD, GD, GDhomPCGD,PCGD,GhomGD, GDhomG, GDhomP, TD, gensP, RP,RTD,
+        iso, isoTD;
 
 G:=arg[1];
 K:=arg[2];
@@ -61,8 +62,16 @@ GeneratorsOfGroup(GD),gensP);
 TD:=Kernel(GDhomP);
 
 RP:=ResolutionFiniteGroup(P,K);
+if 0 in AbelianInvariants(TD) then
 RTD:=ResolutionNilpotentGroup(TD,K);
-#RTD:=ResolutionAbelianGroup(TD,K);
+else
+RTD:=ResolutionFiniteGroup(TD,K);
+#TD:=Group(TorsionGeneratorsAbelianGroup(TD));
+#iso:=IsomorphismPcGroup(TD);
+#isoTD:=Image(iso);
+#RTD:=ResolutionFiniteGroup(isoTD,K);
+#RTD!.elts:=List(RTD!.elts,x->PreImagesRepresentative(iso,x));
+fi;
 
 
 RGD:=ResolutionExtension(GDhomP,RTD,RP,"Don't Test Finiteness");

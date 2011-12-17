@@ -1,4 +1,4 @@
-#C 2009 Graham Ellis
+#(C) 2009 Graham Ellis
 
 #####################################################################
 #####################################################################
@@ -73,6 +73,17 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallOtherMethod(Dimension,
+"Dimension of pure cubical complex",
+[IsHapCubicalComplex],
+function(f) return EvaluateProperty(f,"dimension");
+end);
+#####################################################################
+#####################################################################
+
+
 
 #####################################################################
 #####################################################################
@@ -84,16 +95,17 @@ end);
 #####################################################################
 #####################################################################
 
-
 #####################################################################
 #####################################################################
-InstallOtherMethod(Dimension,
-"Dimension of  cubical complex",
+InstallOtherMethod(Size,
+"Volume of a pure cubical complex",
 [IsHapCubicalComplex],
-function(f) return EvaluateProperty(f,"dimension");
+function(f) return Sum(Flat(f!.binaryArray));
 end);
 #####################################################################
 #####################################################################
+
+
 
 
 #####################################################################
@@ -362,6 +374,12 @@ ArrayValueDim,ArrayValueDim1,ArrayAssignDim,ArrayIt,dimsSet,Fun;
 
 M:=arg[1];
 
+if not IsHapCubicalComplex(M) then
+Print("This function must be applied to a cubical complex.\n");
+return fail;
+fi;
+
+
 faces:=List([0..Dimension(M)+10],i->0);
 dims:=EvaluateProperty(M,"arraySize");
 dimsSet:=List(dims,d->[1..d]);
@@ -423,6 +441,48 @@ return faces[n+1];
 end;
 #######################################
 
+if EvaluateProperty(M,"nonregular")=true then
+#######################################
+Boundary:=function(n,j) #THIS ONLY WORKS CORRECTLY MOD 2 AT PRESENT
+local x,poscells,negcells,nn,a,b,cnt;
+poscells:=[];
+negcells:=[];
+
+cnt:=0;
+nn:=Reversed(LstBin[n+1][j]);
+for x in [1..Length(nn)] do
+  if IsEvenInt(nn[x]) then
+    cnt:=cnt+1;
+    a:=StructuralCopy(nn);
+    a[x]:=a[x]+1;
+    b:=StructuralCopy(nn);
+    b[x]:=b[x]-1;
+    if IsOddInt(cnt) then
+        Append(poscells,M!.rewrite([a])); 
+        Append(negcells,M!.rewrite([b]));
+    else
+        Append(poscells,M!.rewrite([b]));
+        Append(negcells,M!.rewrite([a]));
+    fi;
+  fi;
+od;
+
+Apply(poscells,x->ArrayValueDim(BinLst,Reversed(x)));
+Apply(negcells,x->ArrayValueDim(BinLst,Reversed(x)));
+
+nn:=List([1..faces[n]],i->0);
+for x in poscells do
+  nn[x]:=nn[x]-1;
+od;
+for x in negcells do
+  nn[x]:=nn[x]+1;
+od;
+
+return nn;
+
+end;
+#######################################
+else
 #######################################
 Boundary:=function(n,j)
 local x,poscells,negcells,nn,a,b,cnt;
@@ -432,36 +492,36 @@ negcells:=[];
 cnt:=0;
 nn:=LstBin[n+1][j];
 for x in [1..Length(nn)] do
-if IsEvenInt(nn[x]) then
-cnt:=cnt+1;
-a:=StructuralCopy(nn);
-a[x]:=a[x]+1;
-b:=StructuralCopy(nn);
-b[x]:=b[x]-1;
-if IsOddInt(cnt) then
-Add(poscells,a);
-Add(negcells,b);
-else
-Add(poscells,b);
-Add(negcells,a);
-fi;
-fi;
+  if IsEvenInt(nn[x]) then
+    cnt:=cnt+1;
+    a:=StructuralCopy(nn);
+    a[x]:=a[x]+1;
+    b:=StructuralCopy(nn);
+    b[x]:=b[x]-1;
+    if IsOddInt(cnt) then
+        Add(poscells,a); 
+        Add(negcells,b);
+    else
+        Add(poscells,b);
+        Add(negcells,a);
+    fi;
+  fi;
 od;
 
 Apply(poscells,x->ArrayValueDim(BinLst,x));
 Apply(negcells,x->ArrayValueDim(BinLst,x));
-
 nn:=List([1..faces[n]],i->0);
 for x in poscells do
-nn[x]:=-1;
+  nn[x]:=-1;
 od;
 for x in negcells do
-nn[x]:=1;
+  nn[x]:=1;
 od;
 
 return nn;
 end;
 #######################################
+fi;
 
 return
 Objectify(HapChainComplex,
@@ -547,6 +607,12 @@ ArrayValueDim,ArrayValueDim1,Generator2Coordinates,Coordinates2Generator,NN;
 faces:=List([0..Dimension(M)],i->0);
 dims:=EvaluateProperty(M,"arraySize");
 index:=Cartesian(List([1..Dimension(M)],x->[1..dims[x]]));
+##
+##
+##For n=2,3,4 I should write quicker code that does not construct index
+##
+##
+##
 dim:=Dimension(M);
 dim1:=dim-1;
 ArrayValueDim:=ArrayValueFunctions(dim);
@@ -819,7 +885,7 @@ fi;
 
 P:=PathComponentOfPureCubicalComplex(T,0);
 P:=List([1..P],x->PathComponentOfPureCubicalComplex(T,x));
-P:=List(P,p->ContractibleSubcomplexOfPureCubicalComplex(p));
+Apply(P,p->ContractibleSubcomplexOfPureCubicalComplex(p));
 
 A:=P[1];
 for i in [2..Length(P)] do
@@ -895,7 +961,7 @@ local
 # This writes a 2-dimensional cubical complex to an image file.
 
 if not Dimension(T)=2 then
-Print("There is no method for viewing a topological manifold of dimension ",
+Print("There is no method for viewing a pure cubical complex of dimension ",
 Dimension(T),".\n"); return fail; fi;
 
 A:=T!.binaryArray;
@@ -949,13 +1015,162 @@ end);
 #################################################################
 #################################################################
 
+##################################################
+##################################################
+InstallGlobalFunction(PureComplexToSimplicialComplex,
+function(M,DIM)
+local AO,A,dim,dims,
+      ArrayValueDim,
+      CartProd,
+      Vertices, VertexCoordinates,ArrayValueDim1,
+      CubicalBall, PermutahedralBall,
+      Ball, Balls,
+      SimplicesLst, Simplices, NrSimplices, EnumeratedSimplex,
+       b, i, j, t, t1, t2, v, x, y;
+
+AO:=FrameArray(M!.binaryArray);
+A:=StructuralCopy(AO);
+dim:=ArrayDimension(A);
+dims:=ArrayDimensions(A);
+Vertices:=0;
+VertexCoordinates:=[];
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayValueDim1:=ArrayValueFunctions(dim-1);
+CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
+
+
+#############################
+CubicalBall:=function(dim) local Ball;
+Ball:=Cartesian(List([1..dim],i->[-1,0,1]));
+RemoveSet(Ball,List([1..dim],i->0));
+return Ball;
+end;
+#############################
+
+#############################
+PermutahedralBall:=function(dim)
+local  n,i,B,U,A;
+
+n:=dim+1;
+
+A:=List([1..n],i->List([1..n],j->1));
+for i in [1..n] do
+A[i][i]:=-n+1;
+od;
+
+U:=Filtered(Combinations(A),x->not Length(x) in [0,n]);;
+U:=List(U,x->Sum(x));
+
+U:=SolutionsMatDestructive(A,U);
+U:=List(U,x->x{[1..n-1]});
+return U;
+end;
+#############################
+
+if IsHapPureCubicalComplex(M) then
+Ball:=CubicalBall(dim); 
+else
+Ball:=PermutahedralBall(dim); fi;
+
+
+#############################
+Balls:=[];
+Balls[1]:=Ball;
+for t in [2..DIM] do
+  Balls[t]:=Cartesian(Balls[t-1],Ball);
+  if t>2 then
+    Balls[t]:=List(Balls[t],x->Concatenation(x[1],[x[2]]));
+  fi;
+  Balls[t]:=Filtered(Balls[t],x->x[t-1]<x[t]);
+  for i in [1..t-1] do
+    Balls[t]:=Filtered(Balls[t],x->x[i]-x[t] in Ball);
+  od;
+od;
+#############################
+
+for x in CartProd do
+  if ArrayValueDim(AO,x)=1 then Vertices:=Vertices+1;
+    y:=ArrayValueDim1(A,x{[2..dim]});
+    y[x[1]]:=Vertices;
+    VertexCoordinates[Vertices]:=x;
+  fi;
+od;
+
+Vertices:=[1..Vertices];
+SimplicesLst:=List([1..1000],i->[]);  #VERY SLOPPY!!!
+
+if DIM>=0 then
+  SimplicesLst[1]:=List(Vertices,i->[i]);
+fi;
+
+if DIM>=1 then
+for v in Vertices do
+  x:=VertexCoordinates[v];
+  for b in Ball do
+    t:= ArrayValueDim(A,b+x);
+    if t>v then Add(SimplicesLst[2],[v,t]); fi;
+  od;
+od;
+fi;
+
+if DIM>=2 then
+for j in [2..DIM] do
+
+for v in Vertices do
+  x:=VertexCoordinates[v];
+  for b in Balls[j] do
+    t:=List([1..j],i->ArrayValueDim(A,b[i]+x));
+    if not 0 in t then
+       Add(SimplicesLst[j+1],SortedList(Concatenation([v],t)));
+    fi;
+  od;
+od;
+SimplicesLst[j+1]:=SSortedList(SimplicesLst[j+1]);
+od;
+fi;
+
+#################################################################
+NrSimplices:=function(n);
+return Length(SimplicesLst[n+1]);
+end;
+#################################################################
+
+#################################################################
+Simplices:=function(n,i);
+return SimplicesLst[n+1][i];
+end;
+#################################################################
+
+#############################################
+EnumeratedSimplex:=function(v);
+return Position(SimplicesLst[Length(v)],v);
+end;
+#############################################
+
+return
+Objectify(HapSimplicialComplex,
+           rec(
+           vertices:=Vertices,
+           simplices:=Simplices,
+           simplicesLst:=SimplicesLst,
+           nrSimplices:=NrSimplices,
+           enumeratedSimplex:=EnumeratedSimplex,
+           properties:=[
+           ["dimension",PositionProperty(SimplicesLst,IsEmpty)-2]
+           ]
+           ));
+
+end);
+##################################################
+##################################################
+
 
 #################################################################
 #################################################################
 InstallGlobalFunction(CechComplexOfPureCubicalComplex,
-function(M)
+function(arg)
 local
-	Vertices,
+	M,DIM,Vertices,
 	Simplices,
 	SimplicesLst,
 	NrSimplices,
@@ -971,6 +1186,8 @@ local
 	ArrayValueDim1,
 	v, x, y, U, V, i;
 
+M:=arg[1];
+if Length(arg)>1 then DIM:=1+arg[2]; else DIM:=10000; fi; ##SLOPPY!!
 if not IsHapPureCubicalComplex(M) then
 Print("This function can only be applied to a pure cubical complex.\n");
 return fail; fi;
@@ -1034,13 +1251,17 @@ end;
 
 for v in Cartesian(List([1..dim],a->List([0..dims[a]],j->2*j+1))) do
 U:=Star(v);
-for i in [2..Length(U)] do
+for i in [2..Minimum(DIM,Length(U))] do
 V:=Combinations(U,i);
 
 for y in V do
-AddSet(SimplicesLst[i],y);
+Add(SimplicesLst[i],y);
 od;
 od;
+od;
+
+for i in [1..Length(SimplicesLst)] do
+SimplicesLst[i]:=SSortedList(SimplicesLst[i]);
 od;
 
 #############################################
@@ -2002,6 +2223,131 @@ else
 return G;
 fi;
 
+end);
+##########################################
+##########################################
+
+##########################################
+##########################################
+InstallGlobalFunction(SkeletonOfCubicalComplex,
+function(MM,K)
+local
+	M, A,dimsSet,dimsM,Fun,numevens,ArrayIt,ArrayAssignDim,
+        ArrayValueDim,dim;
+
+if IsHapPureCubicalComplex(MM) then
+M:=PureCubicalComplexToCubicalComplex(MM);
+else
+M:=MM;
+fi;
+
+if not IsHapCubicalComplex(M) then
+Print("This functions must be applied to a cubical, or pure cubical, complex.\n");
+return fail;
+fi;
+
+dim:=Dimension(M);
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayAssignDim:=ArrayAssignFunctions(dim);
+ArrayIt:=ArrayIterate(dim);
+dimsM:=EvaluateProperty(M,"arraySize");
+dimsSet:=List([1..dim],x->[1..dimsM[x]]);
+
+
+##############################
+numevens:=function(x);
+return Length(Filtered(x,i->IsEvenInt(i)));
+end;
+##############################
+
+#######################
+Fun:=function(x) local y,z;
+if ArrayValueDim(M!.binaryArray,x)=1 then
+y:=numevens(x);
+if y<=K then
+ ArrayAssignDim(A,x,1);
+fi;
+fi;
+end;
+#######################
+
+A:=StructuralCopy(M!.binaryArray);
+A:=0*A;
+ArrayIt(dimsSet,Fun);
+
+return Objectify(HapCubicalComplex,
+rec(
+   binaryArray:=A,
+   properties:=StructuralCopy(M!.properties)));
+
+end);
+##########################################
+##########################################
+
+##########################################
+##########################################
+InstallGlobalFunction(ZigZagContractedPureCubicalComplex,
+function(MM)
+local A,B,M,N,i,d,dim;
+
+if not IsHapPureCubicalComplex(MM) then
+Print("This functions must be applied to a pure cubical complex.\n");
+return fail;
+fi;
+
+dim:=Dimension(MM);
+M:=CropPureCubicalComplex(MM);
+
+   #########################
+   A:=M!.binaryArray;
+   for i in [2..Length(A)] do
+      if A[i]=A[i-1] then A[i-1]:=0; fi;
+   od;
+   A:=Filtered(A,x-> not x=0);
+
+   for d in [2..dim] do
+   A:=PermuteArray(A,(1,d));
+   for i in [2..Length(A)] do
+      if A[i]=A[i-1] then A[i-1]:=0; fi;
+   od;
+   A:=Filtered(A,x-> not x=0);
+   od;
+   #########################
+
+
+M:=PureCubicalComplex(A);
+B:=BoundingPureCubicalComplex(M);
+N:=HomotopyEquivalentMaximalPureCubicalSubcomplex(B,M);
+N:=ContractedComplex(N);
+
+while Size(N) < Size(M) do
+
+   M:=CropPureCubicalComplex(N);
+   B:=BoundingPureCubicalComplex(M);
+   N:=HomotopyEquivalentMaximalPureCubicalSubcomplex(B,M);
+
+   #########################
+   A:=N!.binaryArray;
+   for i in [2..Length(A)] do
+      if A[i]=A[i-1] then A[i-1]:=0; fi;
+   od;
+   A:=Filtered(A,x-> not x=0);
+
+   for d in [2..dim] do
+   A:=PermuteArray(A,(1,d));
+   for i in [2..Length(A)] do
+      if A[i]=A[i-1] then A[i-1]:=0; fi;
+   od;
+   A:=Filtered(A,x-> not x=0);
+   od;
+   #########################
+
+
+   N:=PureCubicalComplex(A);
+   ContractPureCubicalComplex(N);
+od;
+
+return M;
 end);
 ##########################################
 ##########################################

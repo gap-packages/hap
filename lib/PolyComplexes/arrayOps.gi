@@ -49,6 +49,26 @@ end);
 #####################################################################
 #####################################################################
 
+#############################################
+#############################################
+InstallGlobalFunction(UnboundedArrayAssign,
+function(A,x,v)
+local
+
+      i,B;
+
+B:=A;
+for i in Reversed(x) do
+  if not IsBound(B[i]) then B[i]:=[]; fi;
+  B:=B[i];
+od;
+
+ArrayAssign(A,x,v);
+end);
+############################################
+############################################
+
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayIterate,
@@ -210,6 +230,9 @@ local
 
 if ArrayDimension(AA)=2 then  return 
 HomotopyEquivalentSmallerSubMatrix(AA,SS); fi;
+if ArrayDimension(AA)=3 then  return
+HomotopyEquivalentSmallerSubArray3D(AA,SS); fi;
+
 AA:=FrameArray(AA);
 SS:=FrameArray(SS);
 dim:=ArrayDimension(AA);
@@ -552,5 +575,41 @@ end);
 
 ##############################################################
 ##############################################################
+
+##################################################
+##################################################
+InstallGlobalFunction(PermuteArray,
+function(A,pi)
+local B,x,dim,dims,dimsSet,Fun,
+      ArrayValueDim,ArrayIt,ArrayAssignDim,
+      d, NewDimsSet;
+
+
+dim:=ArrayDimension(A);
+dims:=ArrayDimensions(A);
+dimsSet:=List(dims,d->[1..d]);
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayIt:=ArrayIterate(dim);
+ArrayAssignDim:=ArrayAssignFunctions(dim);
+
+NewDimsSet:=List([1..dim],n->dimsSet[n^pi]);
+B:=0;
+for d in [1..dim] do
+B:=List(NewDimsSet[d],i->StructuralCopy(B));
+od;
+
+
+################
+Fun:=function(x) local y;
+y:=List([1..dim],a->x[a^pi]);
+ArrayAssignDim(B,x,ArrayValueDim(A,y));
+end;
+################
+ArrayIt(NewDimsSet,Fun);
+
+return B;
+end);
+##################################################
+##################################################
 
 

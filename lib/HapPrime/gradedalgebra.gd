@@ -73,7 +73,7 @@ DeclareAttribute("PresentationIdeal", IsGradedAlgebraPresentation);
 DeclareAttribute("GeneratorsOfPresentationIdeal", IsGradedAlgebraPresentation);
 DeclareAttribute("IndeterminateDegrees", IsGradedAlgebraPresentation);
 
-DeclareOperation("TensorProduct", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
+DeclareOperation("TensorProductOp", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
 
 DeclareOperation("DegreeOfRepresentative", [IsGradedAlgebraPresentation, IsPolynomial]);
 DeclareOperation("IsIsomorphicGradedAlgebra", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);

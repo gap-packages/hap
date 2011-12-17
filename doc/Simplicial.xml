@@ -5,8 +5,8 @@
 
 <Row>
 <Item>
-<C> Homology(T,n)</C>
-<C> Homology(T)</C>
+<C>Homology(T,n)</C>
+<C>Homology(T)</C>
 
 <P/>
 Inputs a pure cubical complex, or cubical complex, or simplicial complex <M>T</M>
@@ -62,29 +62,38 @@ and returns the (often very large) cellular chain complex of <M>T</M>.
 Inputs a d-dimensional pure cubical complex 
  <M>T</M>
 and returns  a simplicial complex <M>S</M>. The simplicial complex <M>S</M> has one vertex for each d-cube in <M>T</M>, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection.
+ The homotopy types of <M>T</M> and <M>S</M> are equal.
 </Item>
 </Row>
 
 <Row>
 <Item>
+<Index>PureComplexToSimplicialComplex</Index>
+<C>PureComplexToSimplicialComplex(T,k)</C>
+
+<P/>
+Inputs either a d-dimensional pure cubical complex
+ <M>T</M> or a d-dimensional pure permutahedral complex <M>T</M> together with
+a non-negative integer <M>k</M>. It 
+returns the first <M>k</M> dimensions of
+  a simplicial complex <M>S</M>. The simplicial complex <M>S</M> has one vertex for each d-cell in <M>T</M>, and an n-simplex for each collection of n+1 d-cells with non-trivial common intersection.
+ The homotopy types of <M>T</M> and <M>S</M> are equal.
+
+
+<P/> For a pure cubical complex <M>T</M> this uses a slightly different algorithm to the function CechComplexOfPureCubicalComplex(T) but constructs the same simplicial complex.
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
 <Index>RipsChainComplex</Index>
-<C>RipsChainComplex(S,epsilon)</C>
-<C>RipsChainComplex(S,epsilon,true)</C>
+<C>RipsChainComplex(G,n)</C>
 <P/>
-Inputs an <M>n \times n</M>  symmetric matrix <M>S</M>
-with non-negative rational entries, together with  a positive rational number epsilon. The matrix is interpreted as that
-arising from a set of <M>n</M> points in a metric space, the (i,j) entry representing the distance between the i-th and j-th points. (However, for the construction to work, there is no need for <M>S</M> to actually arise in this way.)
-
-The function constructs the simplicial complex <M>X</M>
-with <M>n</M> vertices and with one <M>k</M>-simplex for each subset of <M>k</M> points where any two elements in the subset are within a distance epsilon of each other. The function then returns the low dimensions of
-a chain complex <M>C</M> which is homotopy equivalent to the cellular chain complex <M>C(X)</M>. With any luck <M>C</M> will be smaller than <M>C(X)</M>.
-
-<P/>
-At present the function only returns   <M>C</M> up to and including dimension 2. So it can be used to compute the first homology of <M>X</M>.
-
-<P/>
-If an optional third argument is set equal to true then the function returns a list of chain complexes whose direct sum is homotopy equivalent to <M>C(X)</M> in low dimensions. 
- This option can be used to calculate the homology of <M>C</M> more efficiently.
+Inputs a graph <M>G</M>  and a non-negative integer <M>n</M>. It returns  
+ <M>n+1</M> terms of a chain complex whose homology is that of the nerve (or Rips complex) of
+the graph in degrees up to <M>n</M>.
 </Item>
 </Row>
 
@@ -188,11 +197,16 @@ and returns, as a simplicial complex, the order complex of the poset of non-triv
 <Item>
 <Index>SymmetricMatrixToIncidenceMatrix</Index>
 <C>SymmetricMatrixToIncidenceMatrix(S,t)</C>
+<C>SymmetricMatrixToIncidenceMatrix(S,t,d)</C>
 
 <P/>
 Inputs a symmetric integer matrix S and an integer t. It
  returns the matrix  <M>M</M> with <M>M_{ij}=1</M> if <M>I_{ij}</M> is less than <M> t</M>
-and <M>I_{ij}=1</M> otherwise. .
+and <M>I_{ij}=1</M> otherwise. 
+
+<P/> 
+An optional integer <M>d</M> can be given as a third argument. In this case 
+the incidence matrix should have roughly at most <M>d</M> entries in each row (corresponding to the $d$ smallest entries in each row of <M>S</M>). 
 </Item>
 </Row>
 

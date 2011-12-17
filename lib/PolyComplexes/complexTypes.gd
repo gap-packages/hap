@@ -54,16 +54,36 @@ InstallMethod( ViewObj,
 "for HapCubicalComplex",
 [IsHapCubicalComplex],
 function(T)
-Print("Cubical complex of dimension ",
-EvaluateProperty(T,"dimension"), ".\n");
+if EvaluateProperty(T,"nonregular")=true then
+  Print("Non-regular cubical complex of dimension ",
+  EvaluateProperty(T,"dimension"));
+else
+  Print("Cubical complex of dimension ",
+  EvaluateProperty(T,"dimension"));
+fi;
+if IsBound(T!.vectors) then 
+  Print(" with discrete vector field.\n");
+else
+  Print(".\n");
+fi;
 end);
 
 InstallMethod( PrintObj,
 "for HapCubicalComplex",
 [IsHapCubicalComplex],
 function(T)
-Print("Cubical complex of dimension ",
-EvaluateProperty(T,"dimension"), ".\n");
+if EvaluateProperty(T,"nonregular")=true then
+  Print("Non-regular cubical complex of dimension ",
+  EvaluateProperty(T,"dimension"));
+else
+  Print("Cubical complex of dimension ",
+  EvaluateProperty(T,"dimension"));
+fi;
+if IsBound(T!.vectors) then
+  Print(" with discrete vector field.\n");
+else
+  Print(".\n");
+fi;
 end);
 
 #####################################################################

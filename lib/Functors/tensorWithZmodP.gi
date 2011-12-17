@@ -60,6 +60,29 @@ return M[n][k];
 end;
 #####################################################################
 
+#####################################################################
+BoundaryC:=function(n,k)
+local returnvec, bound, x, i;
+
+if n <0 then return false; fi;
+if n=0 then return [0]*One; fi;
+returnvec:=0*[1..R!.dimension(n-1)];
+# 0*[1..n] is faster than List([1..n],i->0)
+# in (seemingly) any case.
+# For large n, NullMat(1,n)[1] is faster than 0*[1..n].
+
+bound:=R!.boundary(n,k);
+for x in [1..Size(bound)]
+do
+i:=AbsInt(bound[x][1]);
+returnvec[i]:=returnvec[i]+SignInt(bound[x][1]);
+od;
+
+return returnvec*One;
+end;
+#####################################################################
+
+
 if EvaluateProperty(R,"characteristic")=0
 or EvaluateProperty(R,"characteristic")=prime
 then Charact:=prime;

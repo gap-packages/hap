@@ -503,7 +503,8 @@ end;
 #####################################################################
 EmapN:=function(x);
 
-return NEhomN(Mult(x,InvE(GmapE(EhomG(x)))));
+#return NEhomN(Mult(x,InvE(GmapE(EhomG(x))))); 
+return NEhomN(Mult(InvE(GmapE(EhomG(x))),x)); #Added 9th March 2011
 
 end;
 #####################################################################
@@ -616,7 +617,6 @@ hty1:=HomotopyOfWord(p+q,ShallowCopy(HorizontalBoundaryWord(p+q+1,hty1)),true);
 Append(hty,NegateWord(hty1));
 
 hty1:=HomotopyOfWord(p+q,ShallowCopy(HorizontalBoundaryWord(p+q+1,hty1)),false);
-
 
 Append(hty,hty1);       #I think this perturbation term is always zero and
                         #thus not necessary.

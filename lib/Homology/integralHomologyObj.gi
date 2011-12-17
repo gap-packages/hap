@@ -23,6 +23,9 @@ M1:=[];
 for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
+
+if Dimension(n-1)=0 then M1:=List(M1,x->[0]); fi;
+
 ConvertToMatrixRep(M1);
 if Length(M1)=0 then 
 DimKerd1:=0;
@@ -39,6 +42,8 @@ M2:=[];
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
+
+if Dimension(n)=0 then M2:=List(M2,x->[0]); fi;
 
 ConvertToMatrixRep(M2);
 Smith:= SmithNormalFormIntegerMat(M2);

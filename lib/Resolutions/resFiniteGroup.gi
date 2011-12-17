@@ -419,6 +419,7 @@ R:=Objectify(HapResolution,
 		homotopy:=Homotopy,
 		elts:=Elts,
 		group:=G,
+                vectorField:=ContractionMatrix,
 		properties:=
 		   [["length",0],
 		    ["reduced",true],

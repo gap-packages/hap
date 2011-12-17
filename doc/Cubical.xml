@@ -5,7 +5,7 @@
 <Row>
 <Item>
 <Index>ArrayToPureCubicalComplex</Index>
-<C> ArrayToPureCubicalComplexA,n)</C>
+<C>ArrayToPureCubicalComplexA,n)</C>
 
 <P/>
 Inputs an integer array <M>A</M> of dimension <M>d</M> 
@@ -79,7 +79,7 @@ It returns a 2-dimensional pure cubical complex based on the
 <Row>
 <Item>
 <Index>ReadImageSequenceAsPureCubicalComplex</Index>
-<C> ReadImageSequenceAsPureCubicalComplex("directory",n)</C>
+<C>ReadImageSequenceAsPureCubicalComplex("directory",n)</C>
 
 
 <P/>
@@ -95,10 +95,20 @@ It returns a 3-dimensional pure cubical complex based on the
 
 <Row>
 <Item>
-<C> Size(T)</C>
+<C>Size(T)</C>
 
 <P/>
-This returns the number of non-zero entries in the binary array of the pure cubical complex T.
+This returns the number of non-zero entries in the binary array of the  cubical complex, or pure cubical complex T.
+
+ </Item>
+ </Row>
+
+<Row>
+<Item>
+<C>Dimension(T)</C>
+
+<P/>
+This returns the dimension of the  cubical complex, or pure cubical complex T.
 
  </Item>
  </Row>
@@ -107,7 +117,7 @@ This returns the number of non-zero entries in the binary array of the pure cubi
 <Row>
 <Item>
 <Index>WritePureCubicalComplexAsImage</Index>
-<C> WritePureCubicalComplexAsImage(T,"filename","ext")</C>
+<C>WritePureCubicalComplexAsImage(T,"filename","ext")</C>
 
 
 <P/>
@@ -120,8 +130,8 @@ Inputs a 2-dimensional pure cubical complex T, and a filename followed by its ex
 <Row>
 <Item>
 <Index>ViewPureCubicalComplex</Index>
-<C> ViewPureCubicalComplex(T)</C>
-<C> ViewPureCubicalComplex(T,"mozilla")</C>
+<C>ViewPureCubicalComplex(T)</C>
+<C>ViewPureCubicalComplex(T,"mozilla")</C>
 
 
 <P/>
@@ -133,8 +143,8 @@ A black/white image is displayed.
 <Row>
 <Item>
 <Index>Homology</Index>
-<C> Homology(T,n)</C>
-<C> Homology(T)</C>
+<C>Homology(T,n)</C>
+<C>Homology(T)</C>
 
 <P/>
 Inputs a pure cubical complex, or cubical complex, or simplicial complex <M>T</M> 
@@ -147,8 +157,8 @@ in dimensions 0 to Dimension(T)  is returned .
 <Row>
 <Item>
 <Index>Bettinumbers</Index>
-<C> Bettinumbers(T,n)</C>
-<C> Bettinumbers(T)</C>
+<C>Bettinumbers(T,n)</C>
+<C>Bettinumbers(T)</C>
 
 <P/>
 Inputs a pure cubical complex, or cubical complex,  simplicial complex or chain complex <M>T</M> and a non-negative integer <M>n</M>.
@@ -182,7 +192,7 @@ and returns its Euler characteristic.
 <Row>
 <Item>
 <Index>PathComponentOfPureCubicalComplex</Index>
-<C> PathComponentOfPureCubicalComplex(T,n)</C>
+<C>PathComponentOfPureCubicalComplex(T,n)</C>
 
 <P/>
 Inputs a pure cubical complex <M>T</M>
@@ -253,7 +263,7 @@ It returns the chain map <M>C(M/S) \rightarrow C(N/T)</M> of quotient cellular c
 <Row>
 <Item>
 <Index>ContractPureCubicalComplex</Index>
-<C> ContractPureCubicalComplex(T)</C>
+<C>ContractPureCubicalComplex(T)</C>
 
 
 <P/>
@@ -268,7 +278,7 @@ from <M>T</M> without changing its homotopy type. This function modifies <M>T</M
 <Row>
 <Item>
 <Index>ContractedComplex</Index>
-<C> ContractedComplex(T)</C>
+<C>ContractedComplex(T)</C>
 
 
 <P/>
@@ -277,48 +287,88 @@ Inputs a  pure cubical complex <M>T</M> and returns a structural copy of the com
 </Item>
 </Row>
 
+<Row>
+<Item>
+<Index>ZigZagContractedPureCubicalComplex</Index>
+<C>ZigZagContractedPureCubicalComplex(T)</C>
+
+
+<P/>
+Inputs a  pure cubical complex <M>T</M> and returns a homotopy equivalent pure cubical complex <M>S</M>. The aim is for <M>S</M> to involve fewer cells than <M>T</M> and certainly to involve no more cells than <M>T</M>. 
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>ContractCubicalComplex</Index>
+<C>ContractCubicalComplex(T)</C>
+
+
+<P/>
+Inputs a  cubical complex <M>T</M> and removes cells without changing the homotopy type of <M>T</M>. It changes <M>T</M>. In particular, it adds the components T.vectors and T.rewrite of a discrete vector field.
+
+<P/> At present this function only works for cubical complexes of dimension 2 or 3.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>SkeletonOfCubicalComplex</Index>
+<C>SkeletonOfCubicalComplex(T,n)</C>
+
+
+<P/>
+Inputs a  cubical complex, or pure cubical complex <M>T</M> and positive integer <M>n</M>. It
+returns the <M>n</M>-skeleton of <M>T</M> as a cubical complex.
+
+</Item>
+</Row>
+
 
 <Row>
 <Item>
 <Index>ContractibleSubomplexOfPureCubicalComplex</Index>
-<C> ContractibleSubomplexOfPureCubicalComplex(T)</C>
+<C>ContractibleSubomplexOfPureCubicalComplex(T)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>T</M>  and 
-returns a maximal contractible subcomplex.
+returns a maximal contractible pure cubical subcomplex.
 </Item>
 </Row>
 
 <Row>
 <Item>
 <Index>AcyclicSubomplexOfPureCubicalComplex</Index>
-<C> AcyclicSubomplexOfPureCubicalComplex(T)</C>
+<C>AcyclicSubomplexOfPureCubicalComplex(T)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>T</M>  and
-returns a (not necessarily connected) subcomplex having trivial homology in all degrees greater than <M>0</M>.
+returns a (not necessarily connected) pure cubical subcomplex having trivial homology in all degrees greater than <M>0</M>.
 </Item>
 </Row>
 
 <Row>
 <Item>
 <Index>HomotopyEquivalentMaximalPureCubicalSubcomplex</Index>
-<C> HomotopyEquivalentMaximalPureCubicalSubcomplex(T,S)</C>
+<C>HomotopyEquivalentMaximalPureCubicalSubcomplex(T,S)</C>
 
 <P/>
-Inputs a  pure cubical complex <M>T</M> together with  a subcomplex <M>S</M>.
-It returns a  subcomplex <M>H</M> of <M>T</M> which contains <M>S</M> and  is maximal with respect to the property that it is homotopy equivalent to <M>S</M>.
+Inputs a  pure cubical complex <M>T</M> together with  a pure cubical subcomplex <M>S</M>.
+It returns a  pure cubical subcomplex <M>H</M> of <M>T</M> which contains <M>S</M> and  is maximal with respect to the property that it is homotopy equivalent to <M>S</M>.
 </Item>
 </Row>
 
 <Row>
 <Item>
 <Index>HomotopyEquivalentMinimalPureCubicalSubcomplex</Index>
-<C> HomotopyEquivalentMinimalPureCubicalSubcomplex(T,S)</C>
+<C>HomotopyEquivalentMinimalPureCubicalSubcomplex(T,S)</C>
 
 <P/>
-Inputs a  pure cubical complex <M>T</M> together with  a subcomplex <M>S</M>.
-It returns a  subcomplex <M>H</M> of <M>T</M> which contains <M>S</M> and  is minimal with respect to the property that it is homotopy equivalent to <M>T</M>.
+Inputs a  pure cubical complex <M>T</M> together with  a pure cubical
+subcomplex <M>S</M>.
+It returns a  pure cubical subcomplex <M>H</M> of <M>T</M> which contains <M>S</M> and  is minimal with respect to the property that it is homotopy equivalent to <M>T</M>.
 </Item>
 </Row>
 
@@ -326,7 +376,7 @@ It returns a  subcomplex <M>H</M> of <M>T</M> which contains <M>S</M> and  is mi
 <Row>
 <Item>
 <Index>BoundaryOfPureCubicalComplex</Index>
-<C> BoundaryOfPureCubicalComplex(T)</C>
+<C>BoundaryOfPureCubicalComplex(T)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>T</M> and  returns its boundary as a 
@@ -343,7 +393,7 @@ pure cubical complex. The boundary consists of all cubes which have one or more 
 
 <P/>
 Inputs a  pure cubical complex <M>T</M> together with a positive integer "radius" and an integer "tolerance" in the range 1..100.
-It returns the subcomplex of those points in the boundary where the boundary
+It returns the pure cubical subcomplex of those cells in the boundary where the boundary
 is not differentiable. (The method for deciding differentiability at a point is crude/discrete, prone to errors and depends on the radius and tolerance.)  
  </Item>
  </Row>
@@ -351,7 +401,7 @@ is not differentiable. (The method for deciding differentiability at a point is 
 <Row>
 <Item>
 <Index>ThickenedPureCubicalComplex</Index>
-<C> ThickenedPureCubicalComplex(T)</C>
+<C>ThickenedPureCubicalComplex(T)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>T</M> 
@@ -364,9 +414,34 @@ Inputs a  pure cubical complex <M>T</M>
 
 <Row>
 <Item>
+<Index>CropPureCubicalComplex</Index>
+<C>CropPureCubicalComplex(T)</C>
+
+<P/>
+Inputs a  pure cubical complex <M>T</M>
+ and returns a pure cubical complex  <M>S</M> obtained from <M>T</M> by removing any "zero boundary sheets" of the binary array. Thus <M>S</M> and
+<M>T</M> are isometric as euclidean spaces but there may be fewer zero entries in the binary array for <M>S</M>.
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>BoundingPureCubicalComplex</Index>
+<C>BoundingPureCubicalComplex(T)</C>
+
+<P/>
+Inputs a  pure cubical complex <M>T</M>
+ and returns a contractible pure cubical complex  <M>S</M> containing <M>T</M>. 
+</Item>
+</Row>
+
+
+<Row>
+<Item>
 <Index>MorseFiltration</Index>
-<C> MorseFiltration(M,i,t,bool)</C>
-<C> MorseFiltration(M,i,t)</C>
+<C>MorseFiltration(M,i,t,bool)</C>
+<C>MorseFiltration(M,i,t)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>M</M> of dimension <M>d</M>, an integer 
@@ -381,7 +456,7 @@ low coordinate (if bool=False).
 <Row>
 <Item>
 <Index>ComplementOfPureCubicalComplex</Index>
-<C> ComplementOfPureCubicalComplex(T)</C>
+<C>ComplementOfPureCubicalComplex(T)</C>
 
 
 <P/>
@@ -394,7 +469,7 @@ Inputs a  pure cubical complex <M>T</M>
 <Row>
 <Item>
 <Index>PureCubicalComplexToTextFile</Index>
-<C> PureCubicalComplexToTextFile(file,M)</C>
+<C>PureCubicalComplexToTextFile(file,M)</C>
 <P/>
 Inputs a pure cubical complex <M>M</M> and a string  containing the address of a file.  A
 representation of this complex is written to the file in a format that

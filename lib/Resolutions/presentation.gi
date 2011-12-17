@@ -2,7 +2,7 @@
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(PresentationOfResolution,
+InstallGlobalFunction(PresentationOfResolution_alt,
 function(R)
 local  
 		Dimension,
@@ -228,28 +228,21 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(PresentationOfResolution_alt,
+InstallGlobalFunction(PresentationOfResolution,
 function(R)
 local
                 Dimension,
                 Boundary,
                 Elts, Mult, Inv,
-                F, Frels, Fgens,
-                gens, rels,
-                GENS,
-                FirstBoundaryHomomorphism,
-                Boundary2Relator, Relator2Word,
-                i,b, r, x;
+                HGens,HRels,HRels1,
+                Tree,Verts, NTree, NNTree, VertElts,
+                index, cnt, gens, Gens, F,
+                src,trg,
+                B,i,a, b,bb,x,y,g,lst,bool;
 
-if not (IsHapResolution(R) or IsHapNonFreeResolution(R)) then
+if not (IsHapResolution(R)) then
 Print("This function must be applied to a resolution. \n");
 return fail;
-fi;
-
-if not EvaluateProperty(R,"reduced")=true then
-if R!.dimension(0)>1 then
-Print("This function must be applied to a REDUCED resolution. \n");
-return fail; fi;
 fi;
 
 if not EvaluateProperty(R,"characteristic")=0 then
@@ -257,15 +250,14 @@ Print("This function only works in characteristic 0. \n");
 return fail;
 fi;
 
-
 Dimension:=R!.dimension;
 Boundary:=R!.boundary;
 Elts:=R!.elts;
-F:=FreeGroup(Dimension(1));
-Fgens:=GeneratorsOfGroup(F);
-Frels:=[];
-gens:=[];
-GENS:=[];
+
+######Let's make sure the first two boundaries of R are computed.
+i:=List([1..Dimension(1)],i->Boundary(1,i));
+i:=List([1..Dimension(2)],i->Boundary(2,i));
+i:=0;
 
 #####################################################################
 Mult:=function(g,h)
@@ -290,73 +282,144 @@ return pos;
 end;
 #####################################################################
 
-for i in [1..Dimension(1)] do
-b:=Boundary(1,i);
-x:=R!.elts[b[1][2]] * R!.elts[b[2][2]]^-1;
-if b[1][1]<0 then x:=x^-1; fi;
-Add(GENS,x);
-GENS:=Reversed(GENS);
+###############################
+HGens:=List([1..Dimension(1)],i->Boundary(1,i));
+###############################
+
+###############################
+Tree:=[];
+Verts:=[1];
+while Length(Verts)<Dimension(0) do
+for x in HGens do
+if AbsInt(x[1][1]) in Verts and not AbsInt(x[2][1]) in Verts then
+Add(Verts, AbsInt(x[2][1])); 
+Add(Tree,[x[1],x[2],Position(HGens,x)]);
+fi;
+if AbsInt(x[2][1]) in Verts and not AbsInt(x[1][1]) in Verts then
+Add(Verts, AbsInt(x[1][1])); 
+Add(Tree,[x[1],x[2],Position(HGens,x)]); 
+fi;
+od;
+od;
+NTree:=1*Tree;
+Tree:=List(Tree,x->x[3]);
+Verts:=SSortedList(Verts);
+###############################
+
+NTree:=SSortedList(NTree);
+NNTree:=[];
+
+if Length(NTree)>0 then
+a:=NTree[1];
+RemoveSet(NTree,a);
+AddSet(NNTree,a);
+
+while Length(NTree)>0 do
+a:=NTree[1];
+RemoveSet(NTree,a);
+
+for x in NTree do
+
+if AbsInt(x[1][1])=AbsInt(a[1][1]) then
+a[1][2]:=x[1][2]; a[2][2]:= Mult( x[1][2], Mult(Inv(a[1][2]),a[2][2]));
+break; fi;
+
+if AbsInt(x[1][1])=AbsInt(a[2][1]) then
+a[2][2]:=x[1][2]; a[1][2]:= Mult( x[1][2], Mult(Inv(a[2][2]),a[2][2]));
+break; fi;
+
+if AbsInt(x[2][1])=AbsInt(a[1][1]) then
+a[1][2]:=x[2][2]; a[2][2]:= Mult( x[2][2], Mult(Inv(a[1][2]),a[2][2]));
+break; fi;
+
+if AbsInt(x[2][1])=AbsInt(a[2][1]) then
+a[2][2]:=x[2][2]; a[1][2]:= Mult( x[2][2], Mult(Inv(a[2][2]),a[2][2]));
+break; fi;
+
+od;
+AddSet(NNTree,a);
+od;
+fi;
+
+NTree:=NNTree;
+
+VertElts:=[];
+if Length(NTree)=0 then VertElts[1]:=1;fi;
+for x in NTree do
+VertElts[AbsInt(x[1][1])]:=x[1][2];
+VertElts[AbsInt(x[2][1])]:=x[2][2];
 od;
 
-gens:=List(GENS,x->Position(R!.elts,x));
-return gens;
 
-#####################################################################
-FirstBoundaryHomomorphism:=function(i)
-local r ;
-r:=Boundary(1,i);
-r:=List(r,w->[w[1],w[2],Mult(x[2],w[2])]);
-if x[1]>0 then return r;
-else return Reversed(r); fi;
-end;
-#####################################################################
+##########################
+#HRels will be a list of relators given as ordered edges of a polygon.
+HRels:=[];
+for i in [1..Dimension(2)] do
+b:=[];
 
-#####################################################################
-Boundary2Relator:=function(b)
-local c, rel, w;
-
-end;
-#####################################################################
-
-for r in [1..Dimension(2)] do
-Append(Frels,[Boundary2Relator(Boundary(2,r))]);
+for x in StructuralCopy(Boundary(2,i)) do
+y:=StructuralCopy(HGens[AbsInt(x[1])]);
+if SignInt(x[1])<0 then y[1][1]:=-y[1][1]; y[2][1]:=-y[2][1]; fi;
+y[1][2]:=Mult(x[2],y[1][2]);
+y[2][2]:=Mult(x[2],y[2][2]);
+Add(b,[y[1],y[2],x[1]]);
 od;
 
+B:=1*b;
+bb:=[b[1]]; b:=Difference(b,bb);
+src:=bb[1][1];
+trg:=bb[1][2];
+while Length(b)>0 do
+   lst:=StructuralCopy(trg);
+   lst:=StructuralCopy([-lst[1],lst[2]]);
+      for x in b do
+      if x[1]=lst then src:=x[1]; trg:=x[2];  break; fi; 
+      if x[2]=lst then src:=x[2]; trg:=x[1];  break; fi;
+      od;
+   Add(bb,x); b:=Difference(b,bb);
+od;
+Add(HRels,bb);
+od;
+###################################
 
-for r in Frels do
-if (not Inv(r[2]) in gens) then AddSet(gens,r[2]);fi;
-if (not Inv(r[Length(r)-1]) in gens) then AddSet(gens,r[Length(r)-1]);fi;
+
+cnt:=0;
+index:=[];
+Gens:=[];
+for i in [1..Length(HGens)] do
+if not i in Tree then cnt:=cnt+1; index[i]:=cnt; Add(Gens,HGens[i]);fi;
+od;
+#Gens contains the information needed to return gens
+#Gens:=List(Gens,x->Mult(Inv(x[1][2]),x[2][2])); #IMPORTANT: NEEDS FIXING    
+Gens:=List(Gens,x->
+Mult(Inv(VertElts[AbsInt(x[2][1])]),  
+Mult(
+Mult(VertElts[AbsInt(x[1][1])],Inv(x[1][2])),x[2][2])));
+
+HRels1:=[];
+for x in HRels do
+a:=Filtered(x,a->not AbsInt(a[3]) in Tree);
+a:=List(a,i->SignInt(i[3])*index[AbsInt(i[3])]);
+Add(HRels1,a);
 od;
 
+F:=FreeGroup(Length(HGens)-Length(Tree));
+gens:=GeneratorsOfGroup(F);
+HRels:=[];
 
-for r in Frels do
-if (not Inv(r[2]) in gens) then AddSet(gens,r[2]);fi;
-if (not Inv(r[Length(r)-1]) in gens) then AddSet(gens,r[Length(r)-1]);fi;
+for x in HRels1 do
+a:=Identity(F);
+for i in x do
+a:=a*gens[AbsInt(i)]^SignInt(i);
 od;
-
-#####################################################################
-Relator2Word:=function(r)
-local w,v,g,h;
-w:=Identity(F);
-
-for v in [2..Length(r)] do
-        for g in gens do
-        if Mult(r[v-1],g)=r[v] then h:=Position(gens,g); break; fi;
-        if Mult(r[v-1],Inv(g))=r[v] then h:=-Position(gens,g); break; fi;
-        od;
-w:=w*Fgens[AbsoluteValue(h)]^SignInt(h);
+Add(HRels,a);
 od;
-
-return w;
-end;
-#####################################################################
-
-rels:= List(Frels,g->Relator2Word(g));
 
 return rec(
                 freeGroup:=F,
-                relators:=rels,
-                gens:=gens );
+                relators:=HRels,
+                gens:=Gens
+          );
 end);
 #####################################################################
 #####################################################################
