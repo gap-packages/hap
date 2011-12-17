@@ -1,7 +1,11 @@
+#C 2007 Graham Ellis
 
 #################################################################
 InstallGlobalFunction(MatrixToChainComplex,
-function(A)
+function(A)		#Inputs a 1/0 matrix and returns the cellular chain
+			#complex of the cubical 2-complex in the plane with 
+			#with 2-cells in the "1 positions".
+			
 local  row,col,i,j,x,Vertices, Edges, Faces,char,
        Boundary, BoundaryFace, BoundaryEdge, Dimension;
 
@@ -95,11 +99,13 @@ end);
 #################################################################
 #################################################################
 
+
 HAPAAA:=0;
 #################################################################
 #################################################################
-InstallGlobalFunction(ReadImageFile,
-function(file,threshold)
+InstallGlobalFunction(ReadImageAsMatrix,
+#function(file,threshold)
+function(file)
 local i,j,prog,A;
 
 prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.8/lib/TDA/prog");
@@ -111,14 +117,63 @@ Exec(i);
 
 Read("/tmp/im.g");
 
-for i in [1..Length(HAPAAA)] do
-for j in [1..Length(HAPAAA[1])] do
-if HAPAAA[i][j]<threshold then  HAPAAA[i][j]:=1; else  HAPAAA[i][j]:=0; fi;
-od;od;
+#for i in [1..Length(HAPAAA)] do
+#for j in [1..Length(HAPAAA[1])] do
+#if HAPAAA[i][j]<threshold then  HAPAAA[i][j]:=1; else  HAPAAA[i][j]:=0; fi;
+#od;od;
 
 return HAPAAA;
 end);
 #################################################################
 #################################################################
 
+
+#################################################################
+#################################################################
+InstallGlobalFunction(WriteImageFile,
+function(A,file,ext)
+local
+	i,j,rows,cols,colour,filetxt;
+rows:=Length(A);;
+cols:=Length(A[1]);
+
+filetxt:=Concatenation(file,".txt");
+
+PrintTo(filetxt,"# ImageMagick pixel enumeration: ",
+Length(A),",",Length(A[1]),",255,RGB\n");
+
+for i in [1..rows] do
+for j in [1..cols] do
+if A[i][j]=0 then colour:="(255,255,255)"; else colour:="(0,0,100)";fi;
+AppendTo(filetxt,i,",",j,": ",colour,"\n");
+od;
+od;
+
+i:=Concatenation("convert ",filetxt," ",file,".",ext);
+Exec(i);
+i:=Concatenation("rm ",filetxt);
+Exec(i);
+
+end);
+#################################################################
+#################################################################
+
+
+#################################################################
+#################################################################
+InstallGlobalFunction(ViewMatrix,
+function(arg)
+local i,A,viewer;
+
+A:=arg[1];
+if Length(arg)>1 then viewer:=arg[2];
+else viewer:="mozilla";fi;
+WriteImageFile(A,"HAPtmpImage","png");
+Exec(Concatenation(viewer," ","HAPtmpImage.png"));
+Sleep(2);
+Exec(Concatenation("rm  ","HAPtmpImage.png"));
+
+end);
+#################################################################
+#################################################################
 

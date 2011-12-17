@@ -1,11 +1,11 @@
 #(C) 2005-2006 Graham Ellis
 
-A:=Group([(1,2),(1,2,3,4,5)]);SetName(A,"S5");
-B:=Group([(1,2),(1,2,3,4)]);SetName(B,"S4");
-C:=SymmetricGroup(3);SetName(C,"S3");
-CA:=GroupHomomorphismByFunction(C,A,x->x);
-CB:=GroupHomomorphismByFunction(C,B,x->x);
-D:=[A,B,[CA,CB]];
+#A:=Group([(1,2),(1,2,3,4,5)]);SetName(A,"S5");
+#B:=Group([(1,2),(1,2,3,4)]);SetName(B,"S4");
+#C:=SymmetricGroup(3);SetName(C,"S3");
+#CA:=GroupHomomorphismByFunction(C,A,x->x);
+#CB:=GroupHomomorphismByFunction(C,B,x->x);
+#D:=[A,B,[CA,CB]];
 
 #####################################################################
 #####################################################################

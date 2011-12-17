@@ -259,3 +259,7 @@ Concatenation(tmppath,"lib/Polycyclic/Compiled/resNilpotentPcpGrp.so"));
 ################## MOD P RINGS #####################################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/record.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ModPRings/Compiled/recordPart1.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ModPRings/Compiled/recordPartII.so"));

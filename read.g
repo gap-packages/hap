@@ -190,6 +190,9 @@ ReadPackage("HAP", "lib/Polycyclic/resNilpotentPcpGrp.gi");
 
 ################### MOD P RINGS ####################################
 ReadPackage("HAP", "lib/ModPRings/record.gi");
+ReadPackage("HAP", "lib/ModPRings/recordPart1.gi");
+ReadPackage("HAP", "lib/ModPRings/recordPartII.gi");
+
 
 fi;
 
@@ -221,3 +224,7 @@ fi;
 ################## TDA #############################################
 ReadPackage("HAP","lib/TDA/tda.gi");
 ReadPackage("HAP","lib/TDA/cont.gi");
+ReadPackage("HAP","lib/TDA/contII.gi");
+
+################## TOPOLOGICAL SPACES ##############################
+ReadPackage("HAP","lib/TopologicalSpaces/topology.gi");
