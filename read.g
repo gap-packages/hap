@@ -55,10 +55,12 @@ ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
 ##################### NONABELIAN TENSOR #############################
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 
 if LoadPackage("nq")=true then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
 fi;
 
 ##################### RESOLUTIONS ###################################

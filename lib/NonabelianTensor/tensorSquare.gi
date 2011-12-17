@@ -19,6 +19,8 @@ local
 	UpperBound,
 	Todd,i,v,w,x,y,z;
 
+if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
+
 Todd:=32;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
 #####################################################################
 UpperBound:=function(AG)
@@ -63,7 +65,7 @@ fi;
 
 gensAG:=ReduceGenerators(GeneratorsOfGroup(AG),AG);
 AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
-G:=Image(AGhomG);
+G:=Range(AGhomG);
 
 gensG:=FreeGeneratorsOfFpGroup(G);
 relsG:=RelatorsOfFpGroup(G);
@@ -177,7 +179,10 @@ od;
 
 SFhomAG:=GroupHomomorphismByImagesNC(SF,AG,gensSF,gensSFG);
 
-delta:=GroupHomomorphismByFunction(TensorSquare,AG,x->Image(SFhomAG,x));
+delta:=GroupHomomorphismByImagesNC(TensorSquare,AG,
+GeneratorsOfGroup(TensorSquare),
+List(GeneratorsOfGroup(TensorSquare),x->Image(SFhomAG,x)));
+#delta:=GroupHomomorphismByFunction(TensorSquare,AG,x->Image(SFhomAG,x));
 
 #####################################################################
 CrossedPairing:=function(x,y)
@@ -196,8 +201,12 @@ InstallGlobalFunction(ThirdHomotopyGroupOfSuspensionB,
 function(arg) ;
 
 if Length(arg)>1 then
+if arg[2]=0 then
+return ThirdHomotopyGroupOfSuspensionB_alt(arg[1]);
+else
 return AbelianInvariants(Kernel(
 			NonabelianTensorSquare(arg[1],arg[2]).homomorphism));
+fi;
 else
 return AbelianInvariants(Kernel(
                         NonabelianTensorSquare(arg[1]).homomorphism));

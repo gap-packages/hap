@@ -9,7 +9,7 @@ D:=[A,B,[CA,CB]];
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(IsGraphOfGroups,
+InstallGlobalFunction(GraphOfGroupsTest,
 function(D)
 local
 	Boole, x, VertexNames, EdgeNames, RangeNames;
@@ -77,7 +77,7 @@ D:=arg[1];
 Vertices:=[];
 Edges:=[];
 
-if not IsGraphOfGroups(D) then
+if not GraphOfGroupsTest(D) then
 Print("The list D does not represent a Graph of Groups \n");
 return fail; fi;
 

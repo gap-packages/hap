@@ -192,7 +192,7 @@ end;
 #####################################################################
 
 if IsList(D) then
-if IsGraphOfGroups(D) then
+if GraphOfGroupsTest(D) then
 return HomologyGraphOfGroups();
 else
 return HomologyArtinGroup(); 

@@ -657,9 +657,9 @@ function C!.dimension .</td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Epicentre(G,N)<br>
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">EpiCentre(G,N)<br>
       <br>
-Epicentre(G)<br>
+EpiCentre(G)<br>
       </span></td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -746,6 +746,16 @@ Mozilla web browser as a default to view the diagram.&nbsp; An
 alternative browser can be set using a second argument. <br>
       <br>
 This function requires Graphviz software.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsTest(D)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an object D and tests whether it is a Graph of Groups. However, it DOES
+NOT test the injectivity of any homomorphisms. It returns true if D
+passes the test, and false otherwise.</td>
     </tr>
     <tr>
       <td
@@ -970,18 +980,6 @@ The function uses Polymake software. <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsGraphOfGroups(D)</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-an object D and tests whether it is a Graph of Groups. However, it DOES
-NOT test the injectivity of any homomorphisms. It returns true if D
-passes the test, and false otherwise.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsLieAlgebraHomomorphism(f)</span><br>
       </td>
       <td
@@ -1168,7 +1166,8 @@ NonabelianTensorSquare(G,m)<br>
       </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a finite group G and returns a record T with the following components.<br>
+a finite or nilpotent infinite group G and returns a record T with the
+following components.<br>
       <ul>
         <li><span style="font-family: helvetica,arial,sans-serif;">T.homomorphism</span>
 is a group homomorphism &micro; :
@@ -2021,19 +2020,27 @@ OfSuspensionB(G,m)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a finite group G and returns the abelian invariants of the third
-homotopy group of the suspension SB(G) of the Eilenberg-Mac Lane
+a finite or nilpotent infinite group G and returns the abelian
+invariants of the third
+homotopy group JG of the suspension SK(G,1) of the Eilenberg-Mac Lane
 space&nbsp; K(G,1).<br>
       <br>
-An optional second varible m can be set equal to a multiple of the
-order of the tensor square G(&times;)G . This might help when G is
+For non-nilpotent groups the implementation of the function <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 102);">ThirdHomotopyGroupOfSuspensionB(G)<span
+ style="font-family: serif;"> is far from optimal and will soon be
+improved.</span></span> As a temporary solution to this problem, an
+optional second variable m can be set equal to 0, and then the function
+efficiently returns the abelian invariants of groups A and B such that
+there is an exact sequence 0 &#8594; B &#8594; JG &#8594; A &#8594;0<span
+ style="font-style: italic;"></span>.<br>
+      <br>
+Alternatively, the optional second varible m can be set equal to a
+positive multiple of the
+order of the tensor square G(&times;)G . In this case the function
+returns the abelian invariants of JG. This might help when G is
 solvable
 but not nilpotent (especially if the estimated upper bound m is
 reasonable accurate).<br>
-      <br>
-This function should work for
-reasonably small solvable groups or extremely small non-solvable
-groups.<br>
       </td>
     </tr>
     <tr>

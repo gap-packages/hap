@@ -195,7 +195,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallGlobalFunction(Epicentre,
+InstallGlobalFunction(EpiCentre,
 function(arg)
 local 		G,N,gensG, Epi, Pairing,toggle,x,z;
 

@@ -16,10 +16,12 @@ DeclareGlobalFunction("NonabelianTensorSquare");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
 DeclareGlobalFunction("NonabelianExteriorProduct");
 DeclareGlobalFunction("RelativeSchurMultiplier");
-DeclareGlobalFunction("Epicentre");
+DeclareGlobalFunction("EpiCentre");
 DeclareGlobalFunction("UpperEpicentralSeries");
 DeclareGlobalFunction("BaerInvariant");
 DeclareGlobalFunction("TensorCentre");
+DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB_alt");
+DeclareGlobalFunction("NonabelianTensorSquare_inf");
 
 
 ## RESOLUTIONS ######################################################
@@ -130,7 +132,7 @@ DeclareOperation("GroupOfResolution",[IsObject]);
 ## GRAPHS OF GROUPS #################################################
 DeclareGlobalFunction("GraphOfGroupsDisplay");
 DeclareGlobalFunction("ResolutionGraphOfGroups");
-DeclareGlobalFunction("IsGraphOfGroups");
+DeclareGlobalFunction("GraphOfGroupsTest");
 
 ## LIE ALGEBRAS #####################################################
 DeclareGlobalFunction("ChevalleyEilenbergComplex");

@@ -7,8 +7,8 @@ local
 	GhomFpG, FpGhomG, FpG, U, UU,F, rels, newrels, x, r,
 	epi,upperZ,c,i, UUhomG, UhomG,L,epicentre;
 
-if "Epicentre" in NamesOfComponents(G) then
-return G!.Epicentre; fi;
+if "EpiCentre" in NamesOfComponents(G) then
+return G!.EpiCentre; fi;
 
 if not IsNilpotent(G) then
 Print("Group must be nilpotent \n"); return fail;
@@ -56,7 +56,7 @@ fi;
 
 epicentre:=Subgroup(G,List(GeneratorsOfGroup(upperZ),x->Image(UUhomG,x)));
 
-G!.Epicentre:=epicentre;
+G!.EpiCentre:=epicentre;
 return epicentre;
 end);
 #####################################################################

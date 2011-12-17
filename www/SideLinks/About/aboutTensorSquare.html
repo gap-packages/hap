@@ -86,20 +86,26 @@ group homomorphism<br>
 &nbsp;<br>
 where G(&times;)G denotes a certain "nonabelian tensor square" of the
 group G. The following command uses this isomorphism to compute Pi<sub>3</sub>(SK(G,1))
-= (Z<sub>2</sub>)<sup>4 </sup>for G = D<sub>512 </sub>the dihedral
-group of order 1024.
+= Z<sup>30 </sup>for G<sub> </sub>the free nilpotent group of class 2
+on four generators.
 The command implements a method for calculating the nonabelian tensor
 which is described in [G. Ellis &amp; F. Leonard, "Computations of
 nonabelian tensor products and Schur multipliers of finite groups", <span
  style="font-style: italic;">Proc. Royal Irish Acad.</span>
-1997].<br>
+1997]. A result in [A. McDermott, "Nonabelian tensor products", PhD
+thesis, Galway 1997] enables the implementation to run on certain
+infinite groups. The computational significance of McDermott's result
+was pointed out by R.F. Morse.<br>
       </td>
     </tr>
     <tr>
       <td
- style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
-ThirdHomotopyGroupOfSuspensionB(DihedralGroup(512));<br>
-[2,2,2,2]<br>
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+F:=FreeGroup(4);;G:=NilpotentQuotient(F,2);;<br>
+gap&gt; ThirdHomotopyGroupOfSuspensionB(G);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0,<br>
+&nbsp; 0, 0, 0, 0, 0 ]<br>
       </td>
     </tr>
     <tr>
@@ -116,7 +122,7 @@ following commands which use GAP's small groups library. </td>
     <tr>
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
-for i in [1..30] do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for G in
+for i in [2..30] do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for G in
 AllSmallGroups(i) do<br>
       <br>
 &gt;&nbsp; if not IsAbelian(G) then<br>
@@ -270,11 +276,23 @@ This last result is used in the function <span
 for a non-nilpotent solvable group G. <br>
       <br>
 The kernel of the quotient homomorphism J<sub>2</sub>(P) &#8594; J<sub>2</sub>(G)
-is presumably described by a Cartan-Eilenberg double coset type formula
+can be described by a Cartan-Eilenberg double coset type formula
 like the one for group homology. So one should be able to compute the
 functor J<sub>2</sub>(G) for an arbitrary finite group G from its
-values on the Sylow subgroups. This approach has not yet been
-implemented in HAP.<br>
+values on the Sylow subgroups. This approach has, as yet, only been
+partially implemented in HAP. The command <span
+ style="font-family: helvetica,arial,sans-serif;">ThirdHomotopyGroupOfSuspensionB_alt(G)</span>
+returns the abelian invariants of groups A and B related by a short
+exact sequence 0 &#8594; B &#8594; J<sub>2</sub>(G) &#8594; A &#8594; 0. So, for instance, the
+following commands show that J<sub>2</sub>(S<sub>12</sub>) has order 4
+for the symmetric group on 12 symbols.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+ThirdHomotopyGroupOfSuspensionB_alt(SymmetricGroup(12));<br>
+[ [ 2 ], [ 2 ] ]<br>
       </td>
     </tr>
     <tr>

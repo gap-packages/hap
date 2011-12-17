@@ -29,7 +29,7 @@ else L:=[];
 fi;
 ########################################DATA READ####################
 
-if not IsGraphOfGroups(D) then 
+if not GraphOfGroupsTest(D) then 
 Print("The list D does not represent a Graph of Groups \n");
 return fail;
 fi;

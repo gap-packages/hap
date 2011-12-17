@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.6",
-  Date    := "15/08/2006",
+  Version := "1.7",
+  Date    := "01/09/2006",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.6",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.7",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -80,7 +80,7 @@ BannerString     := Concatenation( "Loading HAP ",
 
 Autoload := false,
 
-TestFile := "Hap/test/hap.tst",
+TestFile := "test/hap.tst",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities" ]
