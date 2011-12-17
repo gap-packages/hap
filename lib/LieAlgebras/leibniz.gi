@@ -3,25 +3,25 @@
 #####################################################################
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ChevalleyEilenbergComplex,
+InstallGlobalFunction(LeibnizComplex,
 function(L,x)
 
-local ChevalleyComplex,ChevalleyMap;
+local Leibnizcomplex,LeibnizMap;
 
-# L: Lie algebra or Lie algebras morphism
+# L: Leibniz algebra or Leibniz algebra morphism
 # x: Length of the chain complex/map to be calculated
 
 
 ###################################################################
 ###################################################################
-ChevalleyComplex:=function(A,s)
+Leibnizcomplex:=function(A,s)
 
-local Sctab,B,Dim,n,i,d,j,Boundary,bound,r,Comb,ITT,TTI,ONE,Charact;
+local Sctab,B,Dim,n,i,d,j,Boundary,bound,r,Tup,ITT,TTI,ONE,Charact;
 
 B:=Basis(A);
 Sctab:=StructureConstantsTable(B);
 d:=Length(B);
-Comb:=List([1..s],r->Combinations([1..d],r));
+Tup:=List([1..s],r->Tuples([1..d],r));
 #################################################################
 
 ################################################################
@@ -42,20 +42,20 @@ end;
 
 ###############################################################
 ITT:=function(j,n);
-return StructuralCopy(Comb[n][j]);
+return StructuralCopy(Tup[n][j]);
 end;
 ###############################################################
 
 ###############################################################
 TTI:=function(n);
-return Position(Comb[Length(n)],SSortedList(n));
+return Position(Tup[Length(n)],n);
 end;
 ###############################################################
 
 ################################################################
 Dim:=function(n);
 if n>s then return fail; else
-return Binomial( d, n ); fi;
+return d^n; fi;
 end;
 ###############################################################
 
@@ -68,11 +68,11 @@ local a,b,x,p,q,R,m,Q;
 if n>s then
 	return fail;
 fi;
-if j>Binomial(d,n) then
+if j>d^n then
 	return fail;
 fi;
 
-bound:=List([1..Binomial(d,n-1)], i->0);
+bound:=List([1..d^(n-1)], i->0);
 Q:=ITT(j,n);
 
 for a in [1..n-1] do
@@ -80,13 +80,10 @@ for b in [a+1..n] do
 	p:=Length(Sctab[Q[a]][Q[b]][1]);
 	for m in [1..p] do
 		R:=StructuralCopy(Q);
-		Add(R,Sctab[Q[a]][Q[b]][1][m],1);
+		Add(R,Sctab[Q[a]][Q[b]][1][m],a);
 		Remove(R,a+1);
 		Remove(R,b);
-		if IsSSortedList(SortedList(R))=true then
-			q:=Position(SortedList(R),R[1]);
-			bound[TTI(R)]:=bound[TTI(R)]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
-		fi;		
+		bound[TTI(R)]:=bound[TTI(R)]+((-1)^b)*Sctab[Q[a]][Q[b]][2][m];		
 	od;
 od;
 od;
@@ -114,11 +111,13 @@ end;
 
 
 
-#############################################################
-#############################################################
-ChevalleyMap:=function(A,s)
 
-local Sour,Ran,DimSour,DimRan,Charact,Map,Comb,CombSour,ITT,TTI,j,n,r,BasisSour,a,BasisRan,Applicat,SourComp,RanComp,Chara,ONE,Arr;
+
+#############################################################
+#############################################################
+LeibnizMap:=function(A,s)
+
+local Sour,Ran,DimSour,DimRan,Charact,Map,Tup,TupSour,ITT,TTI,j,n,r,BasisSour,a,BasisRan,Applicat,SourComp,RanComp,Chara,ONE,Arr;
 
 Sour:=Source(A);
 Ran:=Range(A);
@@ -126,11 +125,10 @@ BasisSour:=Basis(Sour);
 BasisRan:=Basis(Ran);
 DimSour:=Length(BasisSour);
 DimRan:=Length(BasisRan);
-CombSour:=List([1..s],r->Combinations([1..DimSour],r));
-Comb:=List([1..s],r->Combinations([1..DimRan],r));
-SourComp:=ChevalleyEilenbergComplex(Sour,s);
-RanComp:=ChevalleyEilenbergComplex(Ran,s);
-Arr:=List([1..s],r->Arrangements([1..DimRan],r));
+TupSour:=List([1..s],r->Tuples([1..DimSour],r));
+Tup:=List([1..s],r->Tuples([1..DimRan],r));
+SourComp:=Leibnizcomplex(Sour,s);
+RanComp:=Leibnizcomplex(Ran,s);
 ############################################################
 
 ################################################################
@@ -151,13 +149,13 @@ end;
 
 ###############################################################
 ITT:=function(j,n);
-return StructuralCopy(CombSour[n][j]);
+return StructuralCopy(TupSour[n][j]);
 end;
 ###############################################################
 
 ###############################################################
 TTI:=function(n);
-return Position(Comb[Length(n)],SSortedList(n));
+return Position(Tup[Length(n)],n);
 end;
 ###############################################################
 
@@ -170,8 +168,8 @@ if n>s then
 	return fail;
 fi;
 
-Mapping:=List([1..Binomial(DimRan,n)], i->0);
-for j in Arr[n] do
+Mapping:=List([1..DimRan^n], i->0);
+for j in Tup[n] do
 	coef:=1;
 	count:=0;
 	for k in j do
@@ -179,8 +177,7 @@ for j in Arr[n] do
 		a:=BasisSour[ITT(i,n)[count]];
 		coef:=Coefficients(BasisRan,Image(A,a))[k]*coef;
 	od;
-	perm:=SortingPerm(j);
-	Mapping[TTI(SortedList(j))]:=Mapping[TTI(SortedList(j))]+SignPerm(perm)*coef;
+	Mapping[TTI(j)]:=Mapping[TTI(j)]+coef;
 od;
 return Mapping;
 end;
@@ -209,11 +206,10 @@ end;
 ############################################################
 ###########################################################
 
-#if IsLieAlgebra(L)=true then
 if IsLeftModule(L)=true then
-	return ChevalleyComplex(L,x);
+	return Leibnizcomplex(L,x);
 else if IsLeftModuleHomomorphism(L) then
-	return ChevalleyMap(L,x);
+	return LeibnizMap(L,x);
 else
 return fail;
 fi;fi;
@@ -226,12 +222,14 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(LieAlgebraHomology,
+InstallGlobalFunction(LeibnizAlgebraHomology,
 function(A,n);
 
-if not IsLeftModule(A) then return fail; fi;
-return
-Homology(ChevalleyEilenbergComplex(A,n+1),n);
+if not IsLeftModule(A)=true then
+if not IsLeftModuleHomomorphism(A)=true then
+	return fail;
+fi;fi;
+return Homology(LeibnizComplex(A,n+1),n);
 
 end);
 #####################################################################

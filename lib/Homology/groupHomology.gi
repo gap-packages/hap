@@ -200,7 +200,8 @@ fi;
 fi;
 
 if "CrystCatRecord" in KnownAttributesOfObject(G) or
-   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) then
+   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) 
+   then
 return HomologySpaceGroup(); fi;
 
 if IsPcpGroup(G) then

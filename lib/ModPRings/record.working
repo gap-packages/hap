@@ -13,6 +13,9 @@ local
 	VectorListToWord,
 	GactZG,
 	GactZGlist,
+	BoundaryMatrix,
+	BoundaryMatrices,
+	EchelonMatrices,
 	MT,
 	eltsG,
 	pp,
@@ -26,6 +29,7 @@ local
 	SCT,
 	dim,
 	SolutionMatBoundaryMatrices,
+	Echelonize,
 	M,n,i,j,k;
 
 if Length(arg)=1 then R:=arg[1]; 
@@ -75,6 +79,10 @@ end;
 PairToInt:=function(x);
 return Position(IntPairList,x);
 end;
+#####################################################################
+
+#####################################################################
+BoundaryMatrix:=R!.boundaryMatrix;
 #####################################################################
 
 
@@ -146,8 +154,55 @@ return w;
 end;
 #####################################################################
 
+BoundaryMatrices:=[];
+for i in [1..Length(R)] do
+BoundaryMatrices[i]:=TransposedMat(BoundaryMatrix(i)*one);
+od;
+
+EchelonMatrices:=[];
+
 #####################################################################
-SolutionMatBoundaryMatrices:=R!.solutionMatBoundaryMatrices;
+Echelonize:=function()
+local i,  Mt, T;
+
+for i in [1..Length(R)] do
+#We want to solve XM=W, so work on (Mt)(Xt)=(Wt)
+# where 
+Mt:=(BoundaryMatrices[i]);
+ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
+ConvertToMatrixRepNC(Mt,prime);
+T:=SemiEchelonMatTransformation(Mt);
+#ConvertToMatrixRepNC(T.coeffs,prime);
+#ConvertToMatrixRepNC(T.vectors,prime);
+EchelonMatrices[i]:=[T.coeffs,Reversed(T.heads),T.vectors];
+od;
+
+end;
+#####################################################################
+Echelonize();
+
+#####################################################################
+SolutionMatBoundaryMatrices:=function(m,w)
+local h,u,v,i,cnt,pos,col,row,diff;
+
+ConvertToVectorRep(w);
+v:=EchelonMatrices[m][1]*w;
+h:=StructuralCopy(EchelonMatrices[m][2]);
+u:=ListWithIdenticalEntries(Length(h),0*one);
+
+while not Sum(h)=0 do
+
+col:=PositionProperty(h,x->not x=0);
+row:=h[col];
+h[col]:=0;
+diff:=EchelonMatrices[m][3][row]*u;
+pos:=Length(u)+1-col;
+u[pos]:=v[row]-diff;
+ConvertToVectorRep(u);
+od;
+
+return u;
+end;
 #####################################################################
 
 GeneratorLifts:=[1..Length(R)];

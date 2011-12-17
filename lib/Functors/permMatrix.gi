@@ -20,7 +20,7 @@ Append(gensA,[M]);
 od;
 
 A:=Group(gensA);
-GhomA:=GroupHomomorphismByImages(G,A,gensG,gensA);
+GhomA:=GroupHomomorphismByImagesNC(G,A,gensG,gensA);
 
 return GhomA;
 

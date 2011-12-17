@@ -830,6 +830,40 @@ groups. <br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">HomologyPb(C,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+is a back-up function which might work in some instances where
+Homology(C,n) fails. It is most useful for chain complexes whose
+boundary homomorphisms are sparse.<br>
+      <br>
+It inputs
+a chain complex C in characteristic 0 and returns the torsion
+coefficients of H<sub>n</sub>(C) . There is a small
+probability that an
+incorrect answer could be returned. The computation relies on
+probabilistic Smith Normal Form algorithms implemented in the
+Simplicial Homology GAP
+package. This package therefore needs to be loaded. <br>
+      <br>
+The choice of probabalistic algorithm can be changed using the command<br>
+      <br>
+      <span style="font-family: helvetica,arial,sans-serif;">SetHomologyAlgorithm(HomologyAlgorithm[i]);</span><br
+ style="font-family: helvetica,arial,sans-serif;">
+      <br>
+where i = 1,2,3 or 4. The upper limit for the probability of an
+incorrect answer can be set to any rational number 0&lt;e&lt;=1 using
+the following command.<br>
+      <br>
+      <span style="font-family: helvetica,arial,sans-serif;">SetUncertaintyTolerence(e);<br>
+      <br>
+      <span style="font-family: serif;">See the Simplicial Homology
+package manual for further details.</span><br>
+      </span> </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">HomToIntegers(X)<br>
       <br>
@@ -1002,6 +1036,42 @@ integral homology of G is trivial. Otherwise, it returns "false". <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LeibnizComplex(X,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a Lie or Leibniz algebra X=A (over the ring of integers Z or
+over a field
+K)
+or a homomorphism of Lie or Leibniz algebras X=(f:A&#8594;B), together with
+a positive integer n. It
+returns either the first n terms of the Leibniz chain
+complex C(A), or the induced map of Leibniz complexes
+C(f):C(A)&#8594;C(B).<br>
+      <br>
+(The Leibniz complex C(A) was defined by J.-L.Loday. Its homology is by
+definition the Leibniz homology of the algebra A).<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LeibnizAlgebraHomology(A,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Lie or Leibniz algebra X=A (over the ring of integers Z or over a
+field
+K), together with
+a positive integer n. It
+returns the n-dimensional Leibniz homology of A<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Length(R)</span><br>
       </td>
       <td
@@ -1098,7 +1168,7 @@ x in GeneratorsOfAlgebra(A).<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a mod p cohomology ring A (created using the preceeding function). It
-returns a minimal generating set for the ring A. Each generator is
+returns a generating set for the ring A. Each generator is
 homogeneous.<br>
       </td>
     </tr>
@@ -1285,6 +1355,17 @@ for G.<br>
 The function uses Polymake software. <br>
       <span style="font-weight: bold;">The function is joint work with
 Seamus Kelly.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Prank(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a p-group G and returns the rank of the largest elementary abelian
+subgroup. (The implementation of this function is extremely naive!!)<br>
       </td>
     </tr>
     <tr>
@@ -1754,10 +1835,9 @@ a finite group G satisfying G = L<sub>1</sub>&gt;L<sub>2</sub> ... &gt;L<sub>k</
 Alternatively, L = [gensL<sub>1</sub>, ... gensL<sub>k</sub>] can be a
 list of generating sets for the L<sub>i</sub> (and these&nbsp;
 particular generators will be used in the construction of resolutions).
-It returns a Z(G/L<sub>k</sub>)-resolution by repeatedly using the
+It returns a Z(G)-resolution by repeatedly using the
 function
-ResolutionFiniteExtension(). Typically L<sub>k</sub>=1 in which case
-a ZG-resolution is returned.<br>
+ResolutionFiniteExtension(). <br>
       <br>
 The function has an optional third
 argument which, if set equal to true, invokes tietze reductions in the
@@ -1774,7 +1854,7 @@ calculations.<span style="color: rgb(255, 0, 0);"><br>
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionPrimePowerGroup(G,n)<br>
       <br>
 ResolutionPrimePower<br>
-Group(G,n,"non minimal")<br>
+Group(G,n,"save space")<br>
       </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -1782,12 +1862,11 @@ a p-group G and integer n&gt;0. It uses GAP's standard linear algebra
 functions over the field Z<sub>p</sub>
 to construct a ZG-resolution for mod p calculations only. The
 resolution is minimal - meaning that the number of generators
-of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). (I
-suspect this function could be implemented far more efficiently.)<br>
+of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). <br>
       <br>
-If an optional third variable is set equal to the string "non minimal"
-then the resolution should be computed more quickly but may be
-non-minimal.<br>
+If an optional third variable is set equal to the string "save space"
+then the resolution will take a little longer to compute but less space
+will be needed.<br>
       <br>
 Only a partial contracting homotopy is available for this
 ZG-resolution. <span style="color: rgb(255, 0, 0);"></span><br>
@@ -1858,11 +1937,10 @@ n and a list L = [L<sub>1</sub> , ..., L<sub>k</sub>] of&nbsp;
 subgroups L<sub>i </sub>of
 a finite group G=L<sub>1</sub> such that L<sub>1</sub>&gt;L<sub>2</sub>
 ... &gt;L<sub>k </sub>is a subnormal series in G (meaning that each L<sub>i+1</sub>
-must be normal in L<sub>i</sub>). It returns a Z(G/L<sub>k</sub>)-resolution
+must be normal in L<sub>i</sub>). It returns a Z(G)-resolution
 by repeatedly using the
 function <span style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteExtension()</span>.
-Typically L<sub>k</sub>=1 in which case
-a ZG-resolution is returned.<br>
+      <br>
       <br>
 If L is a series of normal subgroups in G then the function <span
  style="font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries(L,n)</span>

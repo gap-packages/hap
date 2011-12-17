@@ -75,12 +75,12 @@ GhomE:=GroupHomomorphismByFunction(G,E,x->x);
 HhomE:=GroupHomomorphismByFunction(H,E,x->x);
 
 
-EhomG:=GroupHomomorphismByImages(E,G,
+EhomG:=GroupHomomorphismByImagesNC(E,G,
 GeneratorsOfGroup(E),
 Concatenation(GeneratorsOfGroup(G),
 List(GeneratorsOfGroup(H),x->One(G))));
 
-EhomH:=GroupHomomorphismByImages(E,H,
+EhomH:=GroupHomomorphismByImagesNC(E,H,
 GeneratorsOfGroup(E),
 Concatenation(
 List(GeneratorsOfGroup(G),x->One(G)),

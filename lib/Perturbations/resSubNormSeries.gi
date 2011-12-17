@@ -13,7 +13,9 @@ if Length(L)=1 then return
 ResolutionFiniteGroup(L[1],K);
 fi;
 
-Ltrunc:=List([1..Length(L)-1],i->L[i]);
+if not Order(L[Length(L)])=1 then     #
+Add(L,Group(Identity(L[1]))); fi;     # 
+Ltrunc:=List([2..Length(L)],i->L[i]); #changed here 7/03/2007
 
 RN:=ResolutionSubnormalSeries(Ltrunc,K);
 N:=RN!.group;

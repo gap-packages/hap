@@ -5,6 +5,7 @@
 #####################################################################
 
 HAPconstant:=2;	
+SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 
 ReadPackage("HAP","boolean");
 #ReadPackage("HAP", "lib/TitlePage/title.gap");
@@ -36,6 +37,15 @@ if Bool=fail then
 NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
 fi;
 ################# NQ COMMANDS DONE ###############################
+
+################# SIMPHOM COMMANDS ##################################
+Bool:=LoadPackage("homology");
+if Bool=fail then
+SMInvariantFactors:=function(M); return fail; end;
+else SetInfoLevel(InfoHomology,0);
+ReadPackage("HAP", "lib/Homology/probHomology.gi");
+fi;
+################ SIMPHOM COMMANDS DONR ##############################
 
 ################# OBJECTIFICATIONS ###############################
 ReadPackage("HAP", "lib/Objectifications/types.gi");
@@ -160,4 +170,4 @@ ReadPackage("HAP","lib/Resolutions/cayley.gi");
 ReadPackage("HAP","lib/LieAlgebras/chevalleyEilenberg.gi");
 ReadPackage("HAP","lib/LieAlgebras/isLieHom.gi");
 ReadPackage("HAP","lib/LieAlgebras/groupToLie.gi");
-
+ReadPackage("HAP","lib/LieAlgebras/leibniz.gi");

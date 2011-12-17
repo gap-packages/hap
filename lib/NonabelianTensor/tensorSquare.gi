@@ -198,7 +198,7 @@ end);
 
 #####################################################################
 InstallGlobalFunction(ThirdHomotopyGroupOfSuspensionB,
-function(arg) ;
+function(arg) local T;
 
 if Length(arg)>1 then
 if arg[2]=0 then
@@ -208,8 +208,11 @@ return AbelianInvariants(Kernel(
 			NonabelianTensorSquare(arg[1],arg[2]).homomorphism));
 fi;
 else
-return AbelianInvariants(Kernel(
-                        NonabelianTensorSquare(arg[1]).homomorphism));
+T:=NonabelianTensorSquare(arg[1]).homomorphism;
+if IsAbelian(arg[1]) then return AbelianInvariants(Source(T));
+else
+return AbelianInvariants(Kernel(T));
+fi;
 fi;
 
 end);

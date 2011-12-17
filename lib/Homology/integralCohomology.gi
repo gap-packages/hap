@@ -120,7 +120,7 @@ od;
 od;
 
 H:=F/Frels;
-FhomH:=GroupHomomorphismByImages(F,H,Fgens,GeneratorsOfGroup(H));
+FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
 
 #####################################################################
 HhomC:=function(w);
@@ -178,7 +178,7 @@ for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
 od;
 
-HChomHD:=GroupHomomorphismByImages(HC,HD,gensHC,imageGensHC);
+HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
 return HChomHD;
 end;
 #####################################################################

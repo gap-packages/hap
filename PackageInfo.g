@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.7",
-  Date    := "01/09/2006",
+  Version := "1.7.3",
+  Date    := "09/03/2007",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.7",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.7.3",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -70,7 +70,10 @@ SetPackageInfo( rec(
     ExternalConditions := [["Some optional functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"],
     ["Some optional functions require Graphviz software",
-    "http://www.graphviz.org/"]]
+    "http://www.graphviz.org/"],
+     ["One optional function requires the Simplicial Homology GAP package",
+         "http://www.cis.udel.edu/~dumas"]
+    ]
   ),
 
 AvailabilityTest := ReturnTrue,

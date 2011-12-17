@@ -1,34 +1,36 @@
 #(C) Graham Ellis, 2005-2006
 
+tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.7.3/");
+
 ########## FREE G MODULES ###########################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/FreeGmodules/Compiled/tietze.so");
+Concatenation(tmppath,"lib/FreeGmodules/Compiled/tietze.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/FreeGmodules/Compiled/wordOperations.so");
+Concatenation(tmppath,"lib/FreeGmodules/Compiled/wordOperations.so"));
 
 
 ##################### NONABELIAN TENSOR #############################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/tensorSquare.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorSquare.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/exteriorProduct.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/exteriorProduct.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/SBG.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/SBG.so"));
 
 if LoadPackage("nq")=true then
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/epiNilGrp.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/epiNilGrp.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/multNilGrp.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/multNilGrp.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/NonabelianTensor/Compiled/tensorSquareInf.so");
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorSquareInf.so"));
 
 fi;
 
@@ -36,33 +38,33 @@ fi;
 ########## RESOLUTIONS ##############################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resFiniteGroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resFiniteGroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/presentation.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/presentation.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resInfSubgroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resInfSubgroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resSubgroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resSubgroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resSmallFpGroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resSmallFpGroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resAbGroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resAbGroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resAspherical.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resAspherical.so"));
 
 if LoadPackage("aclib")=true then
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resACgroup.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resACgroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Resolutions/Compiled/resACquotient.so");
+Concatenation(tmppath,"lib/Resolutions/Compiled/resACquotient.so"));
 
 fi;
 
@@ -70,74 +72,74 @@ fi;
 ######### RESOLUTIONS MOD P #########################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/ResolutionsModP/Compiled/resPrimeGroup.so");
+Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
 
 
 ######### PERTURBATIONS #############################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resFiniteExt.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resFiniteExt.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resNormalSer.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resNormalSer.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/twistedTensorProduct.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/twistedTensorProduct.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resDirectProd.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resDirectProd.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resFiniteDirectProd.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resFiniteDirectProd.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resExtension.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resExtension.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Perturbations/Compiled/resSubNormSeries.so");
+Concatenation(tmppath,"lib/Perturbations/Compiled/resSubNormSeries.so"));
 
 
 
 #################### ARTIN COXETER ##################################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/ArtinCoxeter/Compiled/diagrams.so");
+Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/diagrams.so"));
 
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/ArtinCoxeter/Compiled/resArtin.so");
+Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/resArtin.so"));
 
 
 ######### FUNCTORS ##################################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/equiChainMap.so");
+Concatenation(tmppath,"lib/Functors/Compiled/equiChainMap.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/homToZ.so");
+Concatenation(tmppath,"lib/Functors/Compiled/homToZ.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/primePartDerived.so");
+Concatenation(tmppath,"lib/Functors/Compiled/primePartDerived.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/tensorWithZmodP.so");
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZmodP.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/tensorWithZ.so");
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZ.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/various.so");
+Concatenation(tmppath,"lib/Functors/Compiled/various.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/permMatrix.so");
+Concatenation(tmppath,"lib/Functors/Compiled/permMatrix.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/homToZmodule.so");
+Concatenation(tmppath,"lib/Functors/Compiled/homToZmodule.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/tensorWithRationals.so");
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithRationals.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Functors/Compiled/homToZmodP.so");
+Concatenation(tmppath,"lib/Functors/Compiled/homToZmodP.so"));
 
 
 #####################################################################
@@ -145,76 +147,77 @@ LoadDynamicModule(
 
 ##################### HOMOLOGY ######################################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/cocycleCondition.so");
+Concatenation(tmppath,"lib/Homology/Compiled/cocycleCondition.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/integralHomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/integralHomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/modularHomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/modularHomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/homology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/homology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/groupHomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/groupHomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/integralCohomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/integralCohomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/cohomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/cohomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/syzygy.so");
+Concatenation(tmppath,"lib/Homology/Compiled/syzygy.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/cycles.so");
+Concatenation(tmppath,"lib/Homology/Compiled/cycles.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/isSuperperfect.so");
+Concatenation(tmppath,"lib/Homology/Compiled/isSuperperfect.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/modularCohomology.so");
+Concatenation(tmppath,"lib/Homology/Compiled/modularCohomology.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Homology/Compiled/solutionsMat.so");
+Concatenation(tmppath,"lib/Homology/Compiled/solutionsMat.so"));
 
 ######### COHOMOLOGY RINGS ##########################################
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Rings/Compiled/cocycleChainMap.so");
+Concatenation(tmppath,
+"lib/Rings/Compiled/cocycleChainMap.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Rings/Compiled/cupProduct.so");
+Concatenation(tmppath,"lib/Rings/Compiled/cupProduct.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Rings/Compiled/intCoh.so");
+Concatenation(tmppath,"lib/Rings/Compiled/intCoh.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Rings/Compiled/integralGens.so");
+Concatenation(tmppath,"lib/Rings/Compiled/integralGens.so"));
 
 
 ################### POLYMAKE #######################################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polymake/Compiled/aspherical.so");
+Concatenation(tmppath,"lib/Polymake/Compiled/aspherical.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polymake/Compiled/polyGens.so");
+Concatenation(tmppath,"lib/Polymake/Compiled/polyGens.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polymake/Compiled/stabilizer.so");
+Concatenation(tmppath,"lib/Polymake/Compiled/stabilizer.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polymake/Compiled/polyFaces.so");
+Concatenation(tmppath,"lib/Polymake/Compiled/polyFaces.so"));
 
 ################### POLYCYLIC ######################################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polycyclic/Compiled/resAbPcpGroup.so");
+Concatenation(tmppath,"lib/Polycyclic/Compiled/resAbPcpGroup.so"));
 
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/Polycyclic/Compiled/resNilpotentPcpGrp.so");
+Concatenation(tmppath,"lib/Polycyclic/Compiled/resNilpotentPcpGrp.so"));
 
 ################## MOD P RINGS #####################################
 LoadDynamicModule(
-"/home/graham/pkg/Hap1.7/lib/ModPRings/Compiled/record.so");
+Concatenation(tmppath,"lib/ModPRings/Compiled/record.so"));

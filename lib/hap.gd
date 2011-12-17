@@ -57,6 +57,7 @@ DeclareGlobalFunction("BigStepLCS");
 DeclareGlobalFunction("HomToIntegersModP");
 DeclareGlobalFunction("Coclass");
 DeclareGlobalFunction("BoundaryMatrix");
+DeclareGlobalFunction("Prank");
 
 
 ## PERTURBATIONS ####################################################
@@ -99,6 +100,7 @@ DeclareGlobalFunction("IsSuperperfect");
 DeclareGlobalFunction("ModularCohomology");
 DeclareOperation("SolutionsMatDestructive",
 			[IsOrdinaryMatrix,IsOrdinaryMatrix]);
+DeclareGlobalFunction("HomologyPb");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -139,5 +141,7 @@ DeclareGlobalFunction("ChevalleyEilenbergComplex");
 DeclareGlobalFunction("IsLieAlgebraHomomorphism");
 DeclareGlobalFunction("LieAlgebraHomology");
 DeclareGlobalFunction("LowerCentralSeriesLieAlgebra");
+DeclareGlobalFunction("LeibnizComplex");
+DeclareGlobalFunction("LeibnizAlgebraHomology");
 
 

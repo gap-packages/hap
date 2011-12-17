@@ -33,13 +33,10 @@ local
 	SolutionMatBoundaryMatrices,
 	Toggle,
 	SMBM,
-	SpaceSave,
 	g,h,i,x,tmp;
-
 
 G:=arg[1];
 n:=arg[2];
-if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
 tmp:=SSortedList(Factors(Order(G)));
 if Length(tmp)>1 then 
 Print("This function can only be applied to small prime-power groups. \n");
@@ -228,7 +225,7 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
-	Bcomp, BndMat;
+	Bcomp, Bfrattini, BndMat;
 
 BndMat:=BoundaryMatrix(k); 
 
@@ -241,21 +238,18 @@ tB:=TransposedMat(B);
 Bcomp:=ComplementaryBasis(B);
 
 
+Bfrattini:=[];						
 					
 for g in pcgens do     	 
 b:=TransposedMat(tB-GactMat(g,tB));
 for i in [1..Length(b)] do
-Add(Bcomp,b[i]);
+Add(Bfrattini,b[i]);
 od;
-if SpaceSave then
-#Include the next two lines to save space.
-ConvertToMatrixRep(Bcomp);
-Bcomp:=MutableCopyMat(SemiEchelonMat(Bcomp).vectors);
-fi;
 od;							
 
 
-B1:=ComplementaryBasis(Bcomp,NS);
+Append(Bfrattini,Bcomp);
+B1:=ComplementaryBasis(Bfrattini,NS);
 
 B1:=List(B1,v->List(v,x->IntFFE(x)));
 return B1;

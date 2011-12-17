@@ -14,7 +14,7 @@ local
 		start,
 		b, r, x;
 
-if not IsHapResolution(R) then
+if not (IsHapResolution(R) or IsHapNonFreeResolution(R)) then
 Print("This function must be applied to a resolution. \n");
 return fail;
 fi;

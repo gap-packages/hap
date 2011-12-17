@@ -118,7 +118,7 @@ end;
 #############################################################
 ChevalleyMap:=function(A,s)
 
-local Sour,Ran,DimSour,DimRan,Charact,Map,Comb,CombSour,ITT,TTI,j,n,r,BasisSour,a,BasisRan,Applicat,SourComp,RanComp,Chara,ONE,Arr;
+local Sour,Ran,DimSour,DimRan,Charact,Map,Comb,ITT,TTI,j,n,r,BasisSour,a,BasisRan,Applicat,SourComp,RanComp,Chara,ONE,Arr;
 
 Sour:=Source(A);
 Ran:=Range(A);
@@ -126,7 +126,6 @@ BasisSour:=Basis(Sour);
 BasisRan:=Basis(Ran);
 DimSour:=Length(BasisSour);
 DimRan:=Length(BasisRan);
-CombSour:=List([1..s],r->Combinations([1..DimSour],r));
 Comb:=List([1..s],r->Combinations([1..DimRan],r));
 SourComp:=ChevalleyEilenbergComplex(Sour,s);
 RanComp:=ChevalleyEilenbergComplex(Ran,s);
@@ -151,7 +150,7 @@ end;
 
 ###############################################################
 ITT:=function(j,n);
-return StructuralCopy(CombSour[n][j]);
+return StructuralCopy(Comb[n][j]);
 end;
 ###############################################################
 

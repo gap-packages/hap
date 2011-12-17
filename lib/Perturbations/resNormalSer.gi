@@ -20,6 +20,10 @@ GensSeries:=List(arg[1],x->ReduceGenerators(GeneratorsOfGroup(x),x));
 	GensSeries[Length(GensSeries)]:=[Identity(arg[1][1])]; fi;
 else GensSeries:=StructuralCopy(arg[1]);
 fi;
+
+if not Order(Group(GensSeries[Length(GensSeries)]))=1 then
+Add(GensSeries,[Identity(arg[1][1])]); fi;
+
 n:=arg[2];
 if Length(arg)>2 then tietze:=arg[3]; else tietze:=false; fi;
 if Length(arg)>3 then Charact:=arg[4]; else Charact:=0; fi;
