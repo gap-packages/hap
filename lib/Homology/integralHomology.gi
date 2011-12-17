@@ -102,7 +102,8 @@ end;
 #####################################################################
 HomologyAsFpGroup:=function(C,n)
 local  
-	F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
+	F, H, HH, FhomH, FhomHH, HHhomH,
+	Rels, Fgens, Frels, IHC, HhomC, ChomH, ExpH,
 	Vector2Word, BasisKerd1, rel, i, j, Htmp,FhomHtmp,HtmphomH;
 
 if not "fpIntHom" in NamesOfComponents(C) then
@@ -137,24 +138,30 @@ for rel in Rels do
 Append(Frels,[Vector2Word(rel)]);
 od;
 
-
-for i in [1..Length(Fgens)] do
+if true then #not LoadPackage("nq") then  #This does not work too well!
+#################################	  #Should make "abelian groups"
+for i in [1..Length(Fgens)] do		  #type in GAP
 for j in [i..Length(Fgens)] do
 Append(Frels,[Fgens[i]*Fgens[j]*Fgens[i]^-1*Fgens[j]^-1]);
 od;
 od;
 
-#Htmp:=F/Frels;
-#FhomHtmp:=GroupHomomorphismByImages(F,Htmp,Fgens,GeneratorsOfGroup(Htmp));
-
-#HtmphomH:=MaximalAbelianQuotient(Htmp);
-#H:=Image(HtmphomH);
-#FhomH:=GroupHomomorphismByFunction(F,H,x->Image(HtmphomH,Image(FhomHtmp,x)));
-
 H:=F/Frels;
+SetIsAbelian(H,true);
+ExpH:=Maximum(AbelianInvariants(H));
 FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
-
-
+################################
+else
+################################
+HH:=F/Frels;
+ExpH:=Maximum(AbelianInvariants(HH));
+FhomHH:=GroupHomomorphismByImagesNC(F,HH,Fgens,GeneratorsOfGroup(HH));
+HHhomH:=NqEpimorphismNilpotentQuotient(HH,1);;
+H:=Range(HHhomH);
+FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,
+List(Fgens,x->Image(HHhomH,Image(FhomHH,x)) ));
+################################
+fi;
 
 #####################################################################
 HhomC:=function(w);
@@ -166,8 +173,8 @@ end;
 ChomH:=function(v)
 local w;
 
-w:=SolutionMat(BasisKerd1,v);
-w:=Vector2Word(w);
+w:=SolutionMat(BasisKerd1,v) mod ExpH; #Am I sure about this?
+w:=Vector2Word(w) ; 
 return Image(FhomH,w);
 end;
 #####################################################################
@@ -201,6 +208,7 @@ ChomD:=f!.mapping;
 
 IHC:=HomologyAsFpGroup(C,n);
 HC:=IHC.fpgroup;
+
 gensHC:=GeneratorsOfGroup(HC);
 HChomC:=IHC.h2c;
 ChomHC:=IHC.c2h;
@@ -214,6 +222,7 @@ imageGensHC:=[];
 for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
 od;
+
 
 HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
 return HChomHD;

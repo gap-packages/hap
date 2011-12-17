@@ -71,25 +71,50 @@ InstallMethod( GOuterGroup,
 
     function( E, A )
         local 
-	      N, type,
+	      N, type, G,
               alpha,     ## Action of G on A
-              nat;       ## Natural homomorphism from E to G
+              nat,       ## Natural homomorphism from E to G
+	      alphaRec,p,q,bool;
 
         if not IsNormal(E,A) then
             Error("A must be a normal subgroup of E");
         fi;
   
         nat := NaturalHomomorphismByNormalSubgroup(E,A);
+        G:=Image(nat);
 
+	bool:=true;
+        if IsFinite(G) and IsFinite(A) then
+           if  Order(G)*Size(A) > 2000*2000 then bool:=false; fi;
+        fi;
+	if bool then
+	######################################################
         alpha := function(g,a); 
             return 
             Representative(PreImages(nat,g))
                            *a*
             Representative(PreImages(nat,g))^-1; 
             end;
+	######################################################
+        else
+        alphaRec:=List([1..Order(G)],i->List([1..Size(A)],j->0));
+        ######################################################
+        alpha := function(g,a);
+            p:=Position(Elements(G),g);
+            q:=Position(Elements(A),a);
+            if alphaRec[p][q]=0 then
+            alphaRec[p][q]:= 
+            Representative(PreImages(nat,g))
+                           *a*
+            Representative(PreImages(nat,g))^-1;
+	    fi;
+            return alphaRec[p][q];
+            end;
+        ######################################################
+	fi;
 
  	N:=GOuterGroup(); 
-               SetActingGroup(N,Image(nat));
+               SetActingGroup(N,G);
                SetActedGroup(N,A);
                SetOuterAction(N,alpha);
         return N;
@@ -405,7 +430,8 @@ InstallOtherMethod( DirectProductGog,
 	TryNextMethod(); fi;
 
 	G:=ActingGroup(Lst[1]);
-        UD:=DirectProductOp(List(Lst,ActedGroup), ActedGroup(Lst[1]));	
+        #UD:=DirectProductOp(List(Lst,ActedGroup), ActedGroup(Lst[1]));	
+   UD:=DirectProduct(List(Lst,ActedGroup));
 
 	beta:=function(g,a)
 	local answer;

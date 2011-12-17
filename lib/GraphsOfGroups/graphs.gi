@@ -108,6 +108,7 @@ Exec("neato -Tgif /tmp/tmpIn.log > /tmp/basic.gif");
 
 if Length(arg)=1 then
 Exec("mozilla /tmp/basic.gif");
+Sleep(2);
 Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif");
 
 else

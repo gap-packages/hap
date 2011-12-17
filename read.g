@@ -39,6 +39,7 @@ fi;
 Bool:=LoadPackage("nq","0.0",false);
 if Bool=fail then
 NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
+NilpotentQuotient:=function(G); return fail; end;
 fi;
 ################# NQ COMMANDS DONE ###############################
 

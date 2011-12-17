@@ -178,7 +178,7 @@ R:=C!.resolution;
 
 	###############################################
 	RepresentativeCocycle:=function(c)
-	local lst,cocycle,stancocycle;
+	local lst,cocycle,stancocycle,CocycleRec;
 
 	lst:=ClassRepresentative(c);
 
@@ -200,6 +200,33 @@ R:=C!.resolution;
           return cocycle(Syzygy(R,List([1..Length(arg)],i->arg[i])));
 	  end;
 	  #############################################
+
+##  Let's speed things up
+##  for small groups and
+##  2-cocycles.
+
+	  if Order(R!.group)<2001 and n=2 then
+	   CocycleRec:=
+             List([1..Order(R!.group)], i->
+                List([1..Order(R!.group)],j->0) );
+	  #############################################
+	  stancocycle:=function(arg)
+	  local  u,v;
+          u:=Position(Elements(R!.group),arg[1]); 
+          v:=Position(Elements(R!.group),arg[2]);
+
+	  if CocycleRec[u][v]=0 then
+          CocycleRec[u][v]:= cocycle(Syzygy(R,List([1..Length(arg)],i->arg[i])));
+          fi;
+          
+	  return CocycleRec[u][v];
+          end;
+	  #############################################
+	  fi;
+
+##  Finishished speeding things up.
+##  
+##
 
 	return StandardNCocycle(A,stancocycle,n);
 	end;

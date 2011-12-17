@@ -10,7 +10,7 @@ local
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	HPrels, x, y, i,prime, core, conjs, conjelt,CentP,
-	HPpres,G1;
+	HPpres,G1,epi,HPP;
 
 C:=F(R);
 
@@ -44,6 +44,7 @@ HP:=F(HP);
 HP:=Homology(HP,n);
 
 HP:=Source(HP);
+
 HPrels:=[Identity(HP)];
 
 if Length(AbelianInvariants(HP))=0 then return []; fi;
@@ -69,12 +70,11 @@ K:=Intersection(P,P^L[1]);
 gensK:=ReduceGenerators(GeneratorsOfGroup(K),K);
 
 G1:=Group(Concatenation(gensK,[Identity(P)]));
-if Order(G1)<=32 then
+if Order(G1)<128 and n<4 then 	##NEED TO FIND AN "OPTIMAL" CHOICE HERE
 S:=ResolutionFiniteGroup(gensK,n+1);
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
 fi;
-#S:=ResolutionFiniteSubgroup(R,K);
 if not (Homology(F(S),n)=[]) then
 
 f:=GroupHomomorphismByFunction(K,P,x->x);
@@ -91,7 +91,7 @@ for X in L do
 fx:=GroupHomomorphismByFunction(K,P,g->Image(f,g)^(X^-1));
 HKxhomHPKx:=Homology(F(EquivariantChainMap(S,R,fx)),n);
 HKx:=Source(HKxhomHPKx);
-HPKx:=Parent(Image(HKxhomHPKx));
+HPKx:=Parent(Range(HKxhomHPKx));
 HPKxhomHP:=GroupHomomorphismByImagesNC(HPKx,HP,GeneratorsOfGroup(HPKx),
                                                   GeneratorsOfGroup(HP));
 HKxhomHP:=GroupHomomorphismByFunction(HKx,HP,x->
@@ -108,8 +108,15 @@ od;
 fi;
 od;
 
-return AbelianInvariants(HP/NormalClosure(HP,Group(HPrels)));
-#return AbelianInvariants(FactorGroupFpGroupByRels(HP,HPrels));
+if IsPcpGroup(HP)  then 
+HPP:=HP/Group(SSortedList(HPrels));
+else
+epi:=EpimorphismNilpotentQuotient(HP,1);
+HPP:=Range(epi)/Group(SSortedList(List(HPrels,x->Image(epi,x))));
+#HPP:=HP/Group(SSortedList(HPrels));
+fi;
+
+return AbelianInvariants(HPP);
 end);
 #####################################################################
 

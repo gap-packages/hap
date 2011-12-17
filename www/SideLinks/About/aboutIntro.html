@@ -70,7 +70,8 @@ HAP command <span style="font-family: helvetica,arial,sans-serif;">GroupHomology
 returns the abelian group
 invariants of the n-dimensional homology of the group G with
 coefficients in the integers Z with trivial G-action. We see that H<sub>99</sub>(D<sub>201</sub>,Z)
-= Z<sub>402</sub>, (Timings are in milliseconds, and measured on a
+= Z<sub>402</sub>, (Timings are in milliseconds, and most are measured
+on a
 1.4GHz laptop with 256MB memory.)<br>
       <br>
 The above example has two features that dramatically help the
@@ -104,10 +105,14 @@ to a conjecture of A. Adem.) <br>
         </li>
         <li>the Mathieu simple group M<sub>23</sub> (of order 10200960)
 has H<sub>2</sub>(M<sub>23</sub>,Z) = H<sub>3</sub>(M<sub>23</sub>,Z) =
+H<sub>4</sub>(M<sub>23</sub>,Z) =
 0. (This reproduces J. Milgram's <a target="_Loday"
  href="aboutFunctorial.html#Milgram">counter-example</a> to a
 conjecture of
-J.-L. Loday.)<br>
+J.-L. Loday.)</li>
+        <li>The Mathieu simple group M<sub>24</sub> (of order
+244823040)
+has H<sub>3</sub>(M<sub>24</sub>,Z) = Z<sub>12</sub> .<br>
         </li>
       </ul>
       </td>
@@ -162,8 +167,14 @@ gap&gt; GroupHomology(MathieuGroup(23),2);time;<br>
 [&nbsp; ]<br>
 9395<br>
 gap&gt; GroupHomology(MathieuGroup(23),3);time;<br>
-[&nbsp; ]<br>
 157961<br>
+gap&gt; GroupHomology(MathieuGroup(23),4);time;<br>
+[&nbsp; ]<br>
+276853<br>
+      <br>
+gap&gt; GroupHomology(MathieuGroup(24),3);time;<br>
+[ 4, 3 ]<br>
+3205565<br>
       </td>
     </tr>
     <tr>
