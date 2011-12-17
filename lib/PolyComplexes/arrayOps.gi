@@ -177,13 +177,20 @@ end);
 InstallGlobalFunction(ContractArray,
 function(AA);
 
+if ArrayDimension(AA)=2 then return
+HomotopyEquivalentSmallerSubMatrix(AA,AA*0);
+fi;
+
+if ArrayDimension(AA)=3 then return
+HomotopyEquivalentSmallerSubArray3D(AA,AA*0);
+fi;
+
 return HomotopyEquivalentSmallerSubArray(AA,AA*0);
 
 end);
 ##############################################################
 ##############################################################
 
-HAPCONTRACTIONMOVES:=[];
 ##############################################################
 ##############################################################
 InstallGlobalFunction(HomotopyEquivalentSmallerSubArray,
@@ -316,6 +323,9 @@ local
 
 if ArrayDimension(AAA)=2 then 
 return HomotopyEquivalentLargerSubMatrix(AAA,SSS);fi;
+
+if ArrayDimension(AAA)=3 then
+return HomotopyEquivalentLargerSubArray3D(AAA,SSS);fi;
 
 AA:=FrameArray(AAA);
 S:=FrameArray(SSS);
@@ -476,34 +486,6 @@ end);
 ##############################################################
 ##############################################################
 
-##############################################################
-##############################################################
-InstallGlobalFunction(IsContractibleCube_dim2,
-function(B,A,dims,x)  #A is a sub array of B
-local cols, rows, left, topleft, top,topright,right,
-      bottomright,bottom,bottomleft;
-
-if B[x[2]][x[1]]=0 then return false; fi;
-
-cols:=dims[1];
-rows:=dims[2];
-
-left:=A[x[2]][x[1]-1];
-right:=A[x[2]][x[1]+1];
-top:=A[x[2]-1][x[1]];
-bottom:=A[x[2]+1][x[1]];
-topleft:=A[x[2]-1][x[1]-1];
-topright:=A[x[2]-1][x[1]+1];
-bottomleft:=A[x[2]+1][x[1]-1];
-bottomright:=A[x[2]+1][x[1]+1];
-
-return [topleft,top,topright,left,0,right,bottomleft,bottom,bottomright]
-       in HAPCONTRACTIONMOVES;
-
-end);
-##############################################################
-##############################################################
-
 
 ##############################################################
 ##############################################################
@@ -522,27 +504,30 @@ if ArrayValueDim(A,z) = 1 then
 ArrayAssignDim(Ball!.binaryArray,yy,1);
   if  Length(Filtered(flt,a->a=0))=dim-1 then cnt:=cnt+1;fi;
 fi;
-#fi;
 od;
+
+################
+################Dimensions 2 and 3
+if dim<=3 then
+if not PathComponentOfPureCubicalComplex(Ball,0)=1 then return false; fi;
+if not EulerCharacteristic(Ball)=1 then return false; fi;
+return true;
+fi;
+################
+################
 
 if IsZero(Flat(Ball!.binaryArray)) then return false;fi;
 if cnt=2*dim then return false; fi;
 if cnt=2*dim-1 then return true; fi;
 
+
 if PathComponentOfPureCubicalComplex(Ball,0)>1 then
 Unbind(Ball!.pathCompBinList);return false;fi;
 
 if Sum(Flat(Ball!.binaryArray))<4 then return true; fi;
+if not EulerCharacteristic(Ball)=1 then  return false; fi;
 
 CC:=TensorWithIntegersModP(ChainComplex(Ball),2);
-
-#################dim = 3#################
-if dim=3 then
-if CC!.dimension(0)-CC!.dimension(1)+CC!.dimension(2)-CC!.dimension(3)=
-Ball!.zeroBetti then return true; else return false;fi;
-fi;
-##########################################
-
 
 for z in [1..dim1] do
 if not Homology(CC,z)=0 then return false; fi;

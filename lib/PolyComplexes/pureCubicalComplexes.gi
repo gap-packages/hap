@@ -101,16 +101,11 @@ end);
 InstallMethod(EulerCharacteristic,
 "Euler characteristic  of a pure  cubical complex",
 [IsHapPureCubicalComplex],
-function(M) local  C,D;
-C:=rec();
-C.binaryArray:=StructuralCopy(M!.binaryArray);
-C.properties:=StructuralCopy(M!.properties);
-C:=Objectify(HapPureCubicalComplex,C);
-#ContractPureCubicalComplex(C);
+function(M) local  D;
 D:=ChainComplexOfCubicalComplex(
-PureCubicalComplexToCubicalComplex(C),true);
+PureCubicalComplexToCubicalComplex(M),true);
 return
-Sum(List([0..Dimension(C)],i->((-1)^i)*D!.dimension(i)));
+Sum(List([0..Dimension(M)],i->((-1)^i)*D!.dimension(i)));
 end);
 #####################################################################
 #####################################################################
@@ -515,7 +510,11 @@ end);
 InstallOtherMethod(ChainComplexOfPair,
 "Cellular chain complex of a pair of pure cubical complexes",
 [IsHapPureCubicalComplex,IsHapPureCubicalComplex],
-function(M,S)
+function(MM,SS)
+local M,S,P;
+P:=ExcisedPureCubicalPair(MM,SS);
+M:=P[1];S:=P[2];
+#M:=MM;S:=SS;
 return ChainComplexOfCubicalPair(
 PureCubicalComplexToCubicalComplex(M),
 PureCubicalComplexToCubicalComplex(S));;
@@ -541,7 +540,7 @@ end);
 InstallGlobalFunction(ChainComplexOfCubicalPair,
 function(M,S)
 local faces,dim,dim1,dims,index,x,y,z,numevens,Dimsn,Boundary,BinLst,LstBin,
-ArrayValueDim,ArrayValueDim1,Generator2Coordinates,Coordinates2Generator;
+ArrayValueDim,ArrayValueDim1,Generator2Coordinates,Coordinates2Generator,NN;
 # Inputs a pair of cubical complexes and returns the  cellular
 # chain complex of " M/S ".
 
@@ -588,6 +587,7 @@ return faces[n+1];
 end;
 #######################################
 
+NN:=List([1..dim],i-> List([1..faces[i]],a->0));
 #######################################
 Boundary:=function(n,j)
 local x,poscells,negcells,nn,a,b,cnt;
@@ -624,7 +624,8 @@ od;
 Apply(poscells,x->ArrayValueDim(BinLst,x));
 Apply(negcells,x->ArrayValueDim(BinLst,x));
 
-nn:=List([1..faces[n]],i->0);
+#nn:=List([1..faces[n]],i->0);
+nn:=StructuralCopy(NN[n]);
 for x in poscells do
 nn[x]:=-1;
 od;
@@ -784,6 +785,8 @@ Print("This function can only be applied to pure cubical complexes.\n");
 return fail;
 fi;
 
+if Size(T)=0 then return T; fi;
+
 P:=PathComponentOfPureCubicalComplex(T,0);
 P:=List([1..P],x->PathComponentOfPureCubicalComplex(T,x));
 S:=List(P,Size);
@@ -805,7 +808,7 @@ end);
 
 ######################################################################
 ######################################################################
-InstallGlobalFunction(AlmostContractibleSubcomplexOfPureCubicalComplex,
+InstallGlobalFunction(AcyclicSubcomplexOfPureCubicalComplex,
 function(T)
 local A,P,mx,i;
 
@@ -932,6 +935,8 @@ T:=arg[1];
 if not Dimension(T)=2 then
 Print("There is no method for viewing a topological maqnifold of dimension ",
 Dimension(T),".\n"); return fail; fi;
+T!.binaryArray:=FrameArray(T!.binaryArray);
+T!.binaryArray:=FrameArray(T!.binaryArray);
 
 if Length(arg)>1 then viewer:=arg[2];
 else viewer:=DISPLAY_PATH;fi;
@@ -1256,6 +1261,7 @@ InstallOtherMethod(Bettinumbers,
 [IsHapPureCubicalComplex,IsInt],
 function(M,n)
 local H;
+if n=0 then return PathComponentOfPureCubicalComplex(M,0); fi;
 if Dimension(M)=2 then return Bettinumbers(M)[n+1]; fi;
 H:=Homology(M,n);
 H:=Length(Filtered(H,a->a=0));
@@ -1885,8 +1891,8 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(PureCubicalComplexToFile,
-function(M,file)
+InstallGlobalFunction(PureCubicalComplexToTextFile,
+function(file,M)
 local
 	dim,dims,CART,x,i;
 
@@ -1907,4 +1913,96 @@ end);
 #################################################################
 #################################################################
 
+#################################################################
+#################################################################
+InstallGlobalFunction(ExcisedPureCubicalPair,
+function(M,S)
+local B,intS,N;
+
+if Dimension(M)=2 then return ExcisedPureCubicalPair_dim_2(M,S); fi;
+
+B:=BoundaryOfPureCubicalComplex(S);
+intS:=PureCubicalComplexDifference(S,B);
+N:=PureCubicalComplexDifference(M,intS);
+
+return [N,B];
+end);
+#################################################################
+#################################################################
+
+
+
+###################################################
+###################################################
+InstallGlobalFunction(MorseFiltration,
+function(arg)
+local gradient, M,N,d,bool,dim, dims, G, B, t, J;
+
+#################################
+gradient:=function(arg)
+local A,N,J,bool,B,dim,dims,cart, x, ArrayAss;
+
+A:=arg[1];
+N:=arg[2];
+J:=arg[3];
+if Length(arg)>3 then bool:=arg[4]; else bool:=true; fi;
+
+B:=StructuralCopy(A);
+dim:=ArrayDimension(A);
+dims:=ArrayDimensions(A);
+
+cart:=List(dims,x->[1..x]);
+cart:=Cartesian(cart);
+
+ArrayAss:=ArrayAssignFunctions(dim);
+
+if bool then
+    for x in cart do
+    if x[N]<=J then
+    ArrayAss(B,x,0);
+    fi;
+    od;
+else
+    for x in cart do
+    if x[N]>=J then
+    ArrayAss(B,x,0);
+    fi;
+    od;
+fi;
+
+
+return B;
+end;
+#################################
+
+
+M:=arg[1];
+N:=arg[2];
+d:=arg[3];
+if Length(arg)>3 then bool:=arg[4]; else bool:=true; fi;
+
+dim:=ArrayDimension(M!.binaryArray);
+dims:=ArrayDimensions(M!.binaryArray);
+G:=[];
+t:=Int(dims[N]/d);
+J:=0;
+
+while J<dims[N] do
+B:=StructuralCopy(M!.binaryArray);
+B:=gradient(B,N,J,bool);
+B:=PureCubicalComplex(B);
+Add(G,B);
+J:=J+t;
+od;
+
+G:=Filtered(G,x->Size(x)>0);
+if bool then
+return Reversed(G);
+else
+return G;
+fi;
+
+end);
+##########################################
+##########################################
 

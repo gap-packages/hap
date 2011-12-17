@@ -43,6 +43,9 @@ od;
 #Export the contracting homotopy
 AppendTo(file,"#CONTRATCTING_HOMOTOPY[n][k][g] is the image of the free\n");
 AppendTo(file,"#abelian group generator g(e_k)^n in degree n.\n");
+if R!.homotopy=fail then
+AppendTo(file, "CONTRACTING_HOMOTOPY:=\nfail;\n\n");
+else
 AppendTo(file, "CONTRACTING_HOMOTOPY:=\n[\n\n");
 for n in [0..Length(R)-2] do
 AppendTo(file,"#Degree ", n,"\n","[\n\n"  );
@@ -60,7 +63,7 @@ else
 AppendTo(file,"]\n];\n\n");
 fi;
 od;
-
+fi;
 
 #Export group elements
 AppendTo(file, "ELEMENTS:=\n");

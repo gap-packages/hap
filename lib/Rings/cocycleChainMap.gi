@@ -25,8 +25,11 @@ od;
 od;
 
 #####################################################################
-Mult:=function(i,j);
-return Position(EltsG,EltsG[i]*EltsG[j]);
+Mult:=function(i,j)
+local pos;
+pos:=Position(EltsG,EltsG[i]*EltsG[j]);
+if pos=fail then Add(EltsG,EltsG[i]*EltsG[j]); pos:=Length(EltsG); fi;
+return pos;
 end;
 #####################################################################
 

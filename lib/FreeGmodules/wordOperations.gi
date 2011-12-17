@@ -27,11 +27,13 @@ if p= 0  then
 	for x in w do
 	k:=Position(v,[-x[1],x[2]]);
 	if (k=fail) then Add(v,x); else
-	v[k]:=0;
+        Remove(v,k);
+	#v[k]:=0;
 	fi;
 	od;
 
-	return Filtered(v,y->(not y=0));
+        return v;
+	#return Filtered(v,y->(not y=0));
 fi;
 
 
@@ -76,6 +78,25 @@ od;
 u:=Filtered(u,i->(not i=0));
 
 return u;
+end);
+#####################################################################
+
+#####################################################################
+InstallGlobalFunction(AppendFreeWord,
+function(v,w)
+local x,u,r, w2;
+
+if Length(w)=0 then return false; fi;
+
+for x in w do
+   r:=Position(v,[-x[1],x[2]]);
+   if r=fail then Add(v,x);
+   else v[r]:=0;fi;
+od;
+
+v:=Filtered(v,x->not x=0);
+
+return true;
 end);
 #####################################################################
 
@@ -204,3 +225,134 @@ od;
 return u;
 end);
 #####################################################################
+
+#####################################################################
+InstallGlobalFunction(OppositeGroup,
+function(w)
+local u, v, y;
+
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( \*,
+    "composition in opposite group",
+    [ IsHapOppositeElement, IsHapOppositeElement],
+
+function(x,y) local w;
+w:=y!.element*x!.element;
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( POW,
+    "inverse in opposite group",
+    [ IsHapOppositeElement, IsInt],
+
+function(x,n) local w;
+w:=(x!.element)^n;
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( POW,
+    "inverse in opposite group",
+    [ IsHapOppositeElement, IsHapOppositeElement],
+
+function(x,y) local w;
+w:=(x!.element)^y!.element;
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+
+#####################################################################
+InstallOtherMethod( One,
+    "identity in opposite group",
+    [ IsHapOppositeElement],
+
+function(x) local w;
+w:=One(x!.element);
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( INV,
+    "inverse in opposite group",
+    [ IsHapOppositeElement],
+
+function(x) local w;
+w:=INV(x!.element);
+return Objectify(HapOppositeElement,
+                    rec(
+                    element:=w) );
+end);
+#####################################################################
+
+
+#####################################################################
+InstallOtherMethod( EQ,
+    "equality in opposite group",
+    [ IsHapOppositeElement, IsHapOppositeElement],
+
+function(x,y) ;
+return  x!.element = y!.element;
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( LT,
+    "equality in opposite group",
+    [ IsHapOppositeElement, IsHapOppositeElement],
+
+function(x,y) ;
+return  LT(x!.element , y!.element);
+end);
+#####################################################################
+
+
+###############################################################
+###############################################################
+InstallGlobalFunction(ResolutionBoundaryOfWord,
+function(R,n,W)
+local x, DW, Boundary, Dimension,Elts,pos, ans;
+
+Dimension:=R!.dimension;
+Boundary:=R!.boundary;
+Elts:=R!.elts;
+DW:=[];
+
+for x in W do
+ans:=Boundary(n,x[1]);
+ans:=List(ans, a->[a[1],Elts[a[2]]]);
+ans:=List(ans, a->[a[1],Elts[x[2]]*a[2]]);
+Append(DW,ans);
+od;
+
+DW:= AlgebraicReduction(DW);
+for x in DW do
+if not x[2] in Elts then Add(Elts,x[2]);fi;
+od;
+DW:=List(DW,x->[x[1],Position(Elts,x[2])]);
+return DW;
+
+end);
+###############################################################
+###############################################################
+
+
+

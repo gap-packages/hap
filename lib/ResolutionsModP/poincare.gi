@@ -190,7 +190,7 @@ end);
 
 #####################################################################
 #####################################################################
-if false then
+if true then
 InstallGlobalFunction(PoincareSeriesPrimePart,
 function(G,p,n)
 local

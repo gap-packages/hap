@@ -62,6 +62,8 @@ TD:=Kernel(GDhomP);
 
 RP:=ResolutionFiniteGroup(P,K);
 RTD:=ResolutionNilpotentGroup(TD,K);
+#RTD:=ResolutionAbelianGroup(TD,K);
+
 
 RGD:=ResolutionExtension(GDhomP,RTD,RP,"Don't Test Finiteness");
 fi;

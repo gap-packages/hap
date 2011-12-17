@@ -1,6 +1,7 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
+#####################################################################
 InstallGlobalFunction(PresentationOfResolution,
 function(R)
 local  
@@ -32,36 +33,54 @@ fi;
 
 
 Dimension:=R!.dimension;
+Boundary:=R!.boundary;
 Elts:=R!.elts;
-
-#####################################################################
-Mult:=function(g,h);
-return Position(Elts,Elts[g]*Elts[h]);
-end;
-#####################################################################
-
-#####################################################################
-Inv:=function(g);
-return Position(Elts,Elts[g]^-1);
-end;
-#####################################################################
-
-#####################################################################
-Boundary:=function(n,k)
-local b;
-b:= R!.boundary(n,k);
-return List(b,x->[x[1],Mult(Inv(b[1][2]),x[2])]);
-
-end;
-#####################################################################
-
 F:=FreeGroup(Dimension(1));
 Fgens:=GeneratorsOfGroup(F);
 Frels:=[];
 gens:=[];
 
+#####################################################################
+Mult:=function(g,h)
+local pos;
+pos:=Position(Elts,Elts[g]*Elts[h]);
+if pos=fail then Add(Elts,Elts[g]*Elts[h]); 
+pos:=Length(Elts);
+fi;
+return pos;
+end;
+#####################################################################
+
+#####################################################################
+Inv:=function(g)
+local pos;
+pos:= Position(Elts,Elts[g]^-1);
+if pos=fail then Add(Elts,Elts[g]^-1);
+pos:=Length(Elts);
+fi;
+return pos;
+
+end;
+#####################################################################
+
+
 start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+
+if Length(Intersection(start))=0 then
+###############################################
+Boundary:=function(n,k)
+local w;
+w:=Inv(R!.boundary(n,k)[1][2]) ;
+return
+List(R!.boundary(n,k),x->[x[1],Mult(w,x[2])]);
+end;
+##############################################
+
+start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+fi;
+
 start:=SortedList(Intersection(start))[1];
+
 
 #####################################################################
 FirstBoundaryHomomorphism:=function(x)
@@ -77,7 +96,7 @@ end;
 Boundary2Relator:=function(b)
 local c, rel, w;
 
-b:=SortedList(AlgebraicReduction(b));
+b:=SortedList(AlgebraicReduction(b));  #I'm assuming a regular CW-space.
 rel:=[start];
 
 while Length(b)>0 do
@@ -100,7 +119,6 @@ end;
 for r in [1..Dimension(2)] do
 Append(Frels,[Boundary2Relator(Boundary(2,r))]);
 od;
-
 
 
 for r in Frels do
@@ -129,7 +147,76 @@ rels:= List(Frels,g->Relator2Word(g));
 
 return rec( 
 		freeGroup:=F,
-		relators:=rels );
+		relators:=rels,
+                gens:=gens );
 end);
 #####################################################################
+#####################################################################
+
+
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ResolutionToResolutionOfFpGroup,
+function(R)
+local
+         P,FF,epi,F,G,FFhomF,x,Iso,OldElts;
+
+OldElts:=StructuralCopy(R!.elts);
+P:=PresentationOfResolution(R);
+F:=P.freeGroup/P.relators;
+G:=Group(R!.elts{P.gens});
+epi:=EpimorphismFromFreeGroup(G);;
+FF:=Source(epi);;
+
+
+FFhomF:=GroupHomomorphismByImagesNC(FF,F,
+                   GeneratorsOfGroup(FF), GeneratorsOfGroup(F));
+
+
+
+####################################
+Iso:=function(L)
+local x,pos,cnt,nodup,newelts;
+
+cnt:=0;
+nodup:=[];
+newelts:=[];
+for x in Enumerator(FF) do
+pos:=Position(L,Image(epi,x));
+if IsInt(pos) then 
+  if not IsBound(nodup[pos]) then 
+  newelts[pos]:=Image(FFhomF,x); cnt:=cnt+1;Print([Length(L),cnt],"\n"); 
+  nodup[pos]:=pos;
+  fi;
+fi;
+if cnt=Length(L) then break; fi;
+
+pos:=Position(L,Image(epi,x)^-1);
+if IsInt(pos) then
+  if not IsBound(nodup[pos]) then
+  newelts[pos]:=Image(FFhomF,x^-1); cnt:=cnt+1;Print([Length(L),cnt],"\n");
+
+  nodup[pos]:=pos;
+  fi;
+fi;
+if cnt=Length(L) then break; fi;
+
+od;
+
+return newelts;
+end;
+####################################
+
+R!.elts:=Iso(OldElts);
+R!.group:=F;
+R!.isomorphism:=Iso;
+
+end);
+#####################################################################
+#####################################################################
+
+
+
+
 

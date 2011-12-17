@@ -348,79 +348,63 @@ end);
 InstallGlobalFunction(PersistentHomologyOfPureCubicalComplex,
 function(arg)
 local
-	M,LM,deg,prime,toggle,triv,ChnCmps,vsmaps,A,S,TS,TM,L,bool,x,y,i,F;
+	LM,deg,prime,
+        M,triv,ChnCmps,vsmaps,A,S,TS,TM,L,
+        bool,x,y,i,F,PC;
 
 ##Input###################
+LM:=arg[1];
 deg:=arg[2];
 prime:=arg[3];
-toggle:=IsList(arg[1]);
 ##########################
 
-##IF STARTS
-if toggle then 
-LM:=arg[1];
-M:=LM[1];
-
-  if deg=0 then return
-  PersistentHomologyOfPureCubicalComplex_Alt(LM,deg,prime);
-  fi;
-
-else
-
-M:=arg[1];
-
-  if deg=0 then return
-  PersistentHomologyOfPureCubicalComplex_Alt(M,deg,prime);
-  fi;
-
-fi;
-##IF ENDS
-
 F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
-triv:=List([1..Dimension(M)+1],i->0); triv[1]:=1;
 
+##Initialize##############
+M:=LM[1];
 S:=ContractibleSubcomplexOfPureCubicalComplex(M);
-if not toggle then LM:=[M]; fi;
 L:=[[M,S]];
-
+triv:=List([1..Dimension(M)+1],i->0); triv[1]:=1;
 bool:=true;
-i:=1;
-while bool do
-i:=i+1;
-if toggle then
-  TM:=LM[i];
-else 
-  TM:=ThickenedPureCubicalComplex(L[Length(L)][1]);
-fi;
-TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
-if toggle then 
-  bool:=i<Length(LM);
-  else
-  bool:=not Bettinumbers(ContractedComplex(TM))=triv;
-fi;
-Add(L,[TM,TS]); 
-od;
-
 vsmaps:=[];
+#########################
+
+for i in [2..Length(LM)] do
+  TM:=LM[i];
+  TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
+  Add(L,[TM,TS]); 
+od;
 
 L[1][1]:=F(L[1][1],L[1][2]);
-for x in [1..Length(L)-1] do
-L[x+1][1]:=F(L[x+1][1],PureCubicalComplexUnion(L[x][1],L[x+1][2]));
-od;
 
+#################
+for x in [1..Length(L)-1] do
+  L[x+1][1]:=F(L[x+1][1],PureCubicalComplexUnion(L[x][1],L[x+1][2]));
+od;
+#################
 
 L[1]:=ChainComplexOfPair(L[1][1],L[1][2]);
+
 #################
 for x in [1..Length(L)-1] do
-L[x+1]:=ChainComplexOfPair(L[x+1][1],L[x+1][2]);
-vsmaps[x]:= 
-TensorWithIntegersModP( ChainMapOfCubicalPairs(L[x],L[x+1]) , prime);
-vsmaps[x]:=HomologyVectorSpace(vsmaps[x],deg);
-Unbind(L[x]);
+  L[x+1]:=ChainComplexOfPair(L[x+1][1],L[x+1][2]);
+  vsmaps[x]:= 
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[x],L[x+1]) , prime);
+  vsmaps[x]:=HomologyVectorSpace(vsmaps[x],deg);
+  Unbind(L[x]);
 od;
 #################
 
-return LinearHomomorphismsPersistenceMat(vsmaps);
+if deg>0 then
+  return LinearHomomorphismsPersistenceMat(vsmaps);
+fi;
+
+L:=LinearHomomorphismsPersistenceMat(vsmaps);
+for i in [1..Length(L)] do
+for y in [i..Length(L)] do
+  L[i][y]:=L[i][y]+1;
+od;od;
+return L;
 
 end);
 ###############################################################
@@ -474,7 +458,7 @@ Persist:=List([1..Length(L)],x->List([1..Length(L)],y->0));;
 if deg=0 then
 for x in [1..Length(L)] do
 for y in [x..Length(L)] do
-Persist[x][y]:=Bettis[y][1];
+Persist[x][y]:=Bettis[y][1];   
 od;
 od;
 return Persist;
@@ -638,9 +622,9 @@ AppendTo(barcodedot,
 for i in [1..Length(B)] do
 for j in [1..Length(B[1])] do
 if B[i][j]=1 then
-AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,j,"\n");
+AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,".",j,"\n");
 else
-AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,j,"\n");
+AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,".",j,"\n");
 fi;
 od;
 od;
@@ -648,9 +632,9 @@ od;
 for i in [1..Length(B)] do
 for j in [1..Length(B[1])-1] do
 if B[i][j]=1 and B[i][j+1]=1 then
-AppendTo(barcodedot,i,j,"->",i,j+1," [color=black,arrowhead=none];\n");
+AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=black,arrowhead=none];\n");
 else
-AppendTo(barcodedot,i,j,"->",i,j+1," [color=white,arrowhead=none];\n");
+AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=white,arrowhead=none];\n");
 fi;
 od;
 od;
@@ -665,4 +649,201 @@ Exec(Concatenation("rm -r ",barcodegif{[1..Length(barcodegif)-9]}));
 end);
 #################################################################
 #################################################################
+
+
+############################################################
+############################################################
+InstallGlobalFunction(PersistentHomologyOfFilteredChainComplex,
+function(C,n,prime)
+local
+    SubComplex,
+    ComplexInclusion,
+    bars;
+
+####################################################
+SubComplex:=function(C,r)
+local D,DIM,BND;
+
+DIM:=function(n); if n=0 then return C!.dimension(0);
+else return C!.filteredDimension(r,n); fi; end;
+
+###############
+if EvaluateProperty(C,"initial_inclusion")=false then
+BND:=function(n,v)
+local vv,uu;
+vv:=C!.dimension(n)-C!.filteredDimension(r,n)+v;
+if n>1 then
+uu:=C!.dimension(n-1)-C!.filteredDimension(r,n-1)+1;
+else
+uu:=C!.dimension(0);;
+fi;
+return C!.boundary(n,vv){[uu..C!.dimension(n-1)]};
+end;
+fi;
+##############
+
+##############
+if EvaluateProperty(C,"initial_inclusion")=true then
+BND:=function(n,v)
+local uu;
+if n>1 then
+uu:=C!.filteredDimension(r,n-1);
+else
+uu:=C!.dimension(0);
+fi;
+return C!.boundary(n,v){[1..uu]};
+end;
+fi;
+##############
+
+D:= Objectify(HapChainComplex,
+                rec(
+                dimension:=DIM ,
+                boundary:=BND ,
+                properties:=
+                [["length",EvaluateProperty(C,"length")],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["initial_inclusion",EvaluateProperty(C,"initial_inclusion")],
+                ["characteristic",
+                EvaluateProperty(C,"characteristic")] ]));
+
+return D;
+end;
+####################################################
+
+
+####################################################
+ComplexInclusion:=function(C,k)
+local S,T, M,map,prime;
+
+S:=SubComplex(C,k);
+T:=SubComplex(C,k+1);
+prime:=EvaluateProperty(C,"characteristic");
+
+##################
+if EvaluateProperty(S,"initial_inclusion")=false then
+map:=function(v,n)
+local w,i,a,b;
+w:=[1..T!.dimension(n)]*0;
+a:=Length(w)-Length(v);
+b:=Length(w);
+for i in [a+1..b] do
+w[i]:= v[i-a]*1;
+od;
+return w*One(GF(prime));
+end;
+fi;
+##################
+
+##################
+if EvaluateProperty(S,"initial_inclusion")=true then
+map:=function(v,n)
+local w,i,a,b;
+w:=[1..T!.dimension(n)]*0;
+a:=Length(v);
+for i in [1..a] do
+w[i]:= v[i]*1;
+od;
+return w*One(GF(prime));
+end;
+fi;
+##################
+
+
+
+return Objectify(HapChainMap,
+        rec(
+           source:=S,
+           target:=T,
+           mapping:=map,
+           properties:=[ ["type","chainMap"],
+           ["characteristic",prime ]
+           ]));
+
+end;
+####################################################
+
+
+####################################################
+bars:=function(C,n)
+local FL,K,i;
+
+FL:=EvaluateProperty(C,"filtration_length");
+
+K:=[];
+for i in [0..FL-1] do
+Add(K,ComplexInclusion(C,i));
+od;
+
+Apply(K,x->HomologyVectorSpace(x,n));
+return LinearHomomorphismsPersistenceMat(K);
+end;
+####################################################
+
+return bars(TensorWithIntegersModP(C,prime),n);
+end);
+#############################################################
+#############################################################
+
+##########################################
+##########################################
+InstallGlobalFunction(TruncatedGComplex,
+function(arg)
+local R,a,b,Dimension, Boundary, Stabilizer, Action;
+
+R:=arg[1];
+a:=arg[2];
+b:=arg[3];
+
+##################
+Dimension:=function(n);
+if not n+a in [a..b] then return 0; fi;
+return R!.dimension(n+a);
+end;
+##################
+
+##################
+Boundary:=function(n,i);
+return R!.boundary(n+a,i);
+end;
+##################
+
+##################
+Stabilizer:=function(n,i);
+return R!.stabilizer(n+a,i);
+end;
+##################
+
+##################
+Action:=function(n,k,g);
+return R!.action(n+a,k,g);
+end;
+##################
+
+
+
+if not IsHapNonFreeResolution(R) then return fail; fi;
+
+
+return          Objectify( HapResolution,
+                rec(
+                dimension:=Dimension,
+                boundary:=Boundary,
+                homotopy:=fail,
+                elts:=R!.elts,
+                group:=R!.group,
+                stabilizer:=Stabilizer,
+                action:=Action,
+                properties:=
+                   [["length",EvaluateProperty(R,"length")],
+                    ["reduced",true],
+                    ["type","resolution"],
+                    ["characteristic",EvaluateProperty(R,"characteristic")]  ])
+                );
+
+end);
+##########################################
+##########################################
+
 

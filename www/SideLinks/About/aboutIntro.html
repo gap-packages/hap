@@ -275,6 +275,14 @@ gap&gt; time;<br>
 homology of certain infinite groups can also be calculated. The
 following commands show that <br>
       <ul>
+        <li>the 4-dimensional integral homology of SL<sub>3</sub>(Z) is
+H<sub>4</sub>(SL<sub>3</sub>(Z),Z) = Z<sub>2</sub>.&nbsp;</li>
+        <li>the 6-dimensional integral homology of the Bianchi group SL<sub>2</sub>(Z[w])
+with w<sup>2</sup>=-2 is H<sub>6</sub>(SL<sub>2</sub>(Z[w]),Z) = Z<sub>2</sub>.
+          <br>
+        </li>
+      </ul>
+      <ul>
         <li>the classical braid group B on eight strings
 (represented by a linear Coxeter diagram D with seven vertices) has
 5-dimensional integral homology H<sub>5</sub>(B,Z) = Z<sub>3</sub> .</li>
@@ -306,6 +314,19 @@ required..)<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ContractibleGcomplex("SL(3,Z)");;<br>
+gap&gt; R:=FreeGResolution(C,5);;<br>
+gap&gt; Homology(TensorWithIntegers(R),4);<br>
+[ 2 ]<br>
+      <br>
+      <br>
+gap&gt; C:=ContractibleGcomplex("SL(2,Z[sqrt(-2)])");;<br>
+gap&gt; R:=FreeGResolution(C,7);;<br>
+gap&gt; Homology(TensorWithIntegers(R),6);<br>
+[ 2 ]<br>
+      <br>
+      <br>
+gap&gt;
 D:=[&nbsp; [1,[2,3]],&nbsp; [2,[3,3]],&nbsp; [3,[4,3]],&nbsp;
 [4,[5,3]],&nbsp; [5,[6,3]],&nbsp; [6,[7,3]]&nbsp; ];;<br>
 gap&gt; CoxeterDiagramDisplay(D);;<br>

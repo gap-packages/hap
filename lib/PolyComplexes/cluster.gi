@@ -784,3 +784,28 @@ Objectify(HapSimplicialComplex,
 end);
 #####################################################################
 
+####################################################
+InstallGlobalFunction(DensityMat,
+function(S,k,T)
+local A,s,p,F,B;
+
+A:=[];
+
+for s in S do
+Add(A,SortedList(s)[k]);
+od;
+
+p:=SortedList(A)[T];
+
+F:=Filtered([1..Length(S)],i->A[i]<=p);
+
+B:=StructuralCopy(S);
+B:=B{F};
+B:=TransposedMat(B);
+B:=MutableCopyMat(B);
+B:=B{F};
+
+return B;
+end);
+####################################################
+
