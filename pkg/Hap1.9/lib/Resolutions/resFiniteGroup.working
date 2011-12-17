@@ -6,6 +6,7 @@ InstallGlobalFunction(ResolutionFiniteGroup,
 function(arg)
 
 local
+	R,
 	Gens,
 	K,
 	tietze,
@@ -36,6 +37,7 @@ local
 	saveSpace,
 	Charact,
 	AlgebraicRed,
+	ExtendRes, Extendible,
 	i, ii,
 #################################
 AbsInt,				#
@@ -56,7 +58,11 @@ if Length(arg)>3 then
 		if IsInt(arg[4]) then Charact:=arg[4]; fi;
 else Charact:=0; fi;
 
-if Length(arg)>4 then saveSpace:=arg[5]; else saveSpace:=false; fi;
+if Length(arg)>4 then 
+ if arg[5]="extendible" then Extendible:=true; saveSpace:=false;
+ else saveSpace:=arg[5]; Extendible:=false; fi;
+else saveSpace:=false; Extendible:=false;
+fi;
 
 G:=Group(Gens);
 N:=Order(G);
@@ -186,7 +192,7 @@ end;
 #####################################################################
 
 #####################################################################
-FirstZero:=function(MC)
+FirstZero:=function(MC,i)
 local j,g, temp, temp2, compare, p,q, LengthOfDiff;
 
 temp:=[];
@@ -197,6 +203,8 @@ if MC[j][g]=0 then Add(temp,[j,g]);
 fi;
 od;
 od;
+
+#return Random(temp);
 
 LengthOfDiff:=function(p);
 if DiffLengths[p[1]][p[2]]=0 then 
@@ -244,7 +252,7 @@ if i<1 then return [[-1,1]]; else	#in the function were arrived at by trial and
          fi;
       od;
 
-      if i<K then ComputedContractions[i][z[1]][z[2]]:=
+      if i<K or Extendible then ComputedContractions[i][z[1]][z[2]]:=
                   ChangeSign(x[1],c); fi; 	
       return c;
       fi;
@@ -296,7 +304,7 @@ CellValueLoc:=CellValue;
 
 toggle:=true;
 
-if i<K then
+if i<K or Extendible then
 iterset:= Concatenation([1..Dimension(i)],Reversed([1..Dimension(i)]));
 while toggle do
 toggle:=false;
@@ -366,9 +374,9 @@ InitComputedContractions(i);
 
 l:=[1..N];Apply(l,x->0);l[1]:=1;
 
-if i<K then
+if i<K or Extendible then
 while not IsFinished(MC) do
-p:=FirstZero(MC);
+p:=FirstZero(MC,i);
 if tietze then 
    Diff:=TietzeReduction(Spheres,AlgebraicRed((Differential(i,p))));
 else
@@ -384,16 +392,13 @@ od;
 else
 
 while not IsFinished(MC) do
-p:=FirstZero(MC);
+p:=FirstZero(MC,i);
 if tietze then
 Diff:=TietzeReduction(Spheres,AlgebraicRed((Differential(i,p))));
 else
 Diff:=AlgebraicRed(Differential(i,p));
 fi;
 
-#if IsPrimeInt(Charact) then
-#Diff:=WordModP(Diff,Charact);
-#fi;                              #I'm not sure about the maths of this.
 
 Add(PseudoBoundary[i],Diff);
 Add(MaxComplex[i+1],ShallowCopy(l));
@@ -407,14 +412,7 @@ DiffLengths:=0; MC:=0;
 end;
 #####################################################################
 
-
-for i in [1..K] do
-NextResTerm(i);
-MaxComplex[i]:=[];
-if i>1 and saveSpace then InitComputedContractions(i-1); fi;
-od;
-
-return Objectify(HapResolution,
+R:=Objectify(HapResolution,
 		rec(
 		dimension:=Dimension,
 		boundary:=Boundary,
@@ -422,9 +420,30 @@ return Objectify(HapResolution,
 		elts:=Elts,
 		group:=G,
 		properties:=
-		   [["length",K],
+		   [["length",0],
 		    ["reduced",true],
 		    ["type","resolution"],
 		    ["characteristic",Charact]  ])); 
+
+#####################################################################
+ExtendRes:=function()
+local i;
+i:=R!.properties[1][2]+1;
+NextResTerm(i);
+R!.properties[1][2]:=i;
+MaxComplex[i]:=[];
+if i>1 and saveSpace then InitComputedContractions(i-1); fi;
+end;
+#####################################################################
+if Extendible then
+R!.extend:=ExtendRes;
+fi;
+
+for i in [1..K] do
+ExtendRes();
+od;
+
+
+return R;
 end);
 #####################################################################

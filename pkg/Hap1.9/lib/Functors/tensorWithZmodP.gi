@@ -206,8 +206,15 @@ end;
 #############################
 D!.boundary:=newboundary;
 
+if not IsHapFilteredChainComplex(C) then
 return 
 Objectify(HapChainComplex, D);
+fi;
+
+D!.filteredDimension:=C!.filteredDimension;
+return
+Objectify(HapFilteredChainComplex, D);
+
 end;
 ####################################################################
 ####################################################################

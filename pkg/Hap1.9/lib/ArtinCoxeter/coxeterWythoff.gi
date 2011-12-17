@@ -39,7 +39,7 @@ Vertices:=CoxeterDiagramVertices(D);
 
 #######################
 if not IsSubset(Vertices,B) then
-Print("The sspecified vertices do not all lie in the vertex set of the Coxeter diagram. \n"); return fail; fi;
+Print("The specified vertices do not all lie in the vertex set of the Coxeter diagram. \n"); return fail; fi;
 #######################
 
 

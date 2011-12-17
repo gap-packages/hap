@@ -1,4 +1,5 @@
 HAP_GCOMPLEX_LIST:=0;
+HAP_GCOMPLEX_SETUP:=[true];
 
 ################################################
 ################################################
@@ -14,21 +15,31 @@ local
         Elts,
 	Rot,Stab,
         RotSubGroups,Action, ActionRecord,
-        lst,n,k,s,BI,SGN,tmp, LstEl , bool;
-
+        TransMat,
+        x, lstMathieu, lstAlexander,n,k,s,BI,SGN,tmp, LstEl , bool;
 
 groupname:=Filtered(groupname,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
 groupname:=Concatenation("lib/Perturbations/Gcomplexes/",groupname);
 bool:=ReadPackage("HAP",groupname);
 
+if HAP_GCOMPLEX_SETUP[1] then 
+TransMat:=function(x); return x^-1; end;
+else
+TransMat:=function(x); return x; end;
+fi;
+
+
 if bool = false then 
 Print("G-complexes are implemented for the following groups only:  \n\n");
 
-lst:="  SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) , \n PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d \n"; 
+lstMathieu:="  SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) , \n PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d \n"; 
 
-Print(lst,"\n", "(where subscripts _b etc denote alternative complexes for a given group).\n");
+lstAlexander:=" SL(2,Z[sqrt(-d)]) , d=2, 7, 11, 19, 43, 67, 163  \n";
+
+Print(lstMathieu,"\n", "(where subscripts _b etc denote alternative complexes for a given group) and \n\n", lstAlexander, "\n\n");
 return fail;
 fi;
+
 
 C:=StructuralCopy(HAP_GCOMPLEX_LIST);
 lnth:=Length(C)-1;
@@ -53,18 +64,11 @@ for n in [1..lnth+1] do
 boundaryList[n]:=[];
 StabilizerGroups[n]:=[];
 RotSubGroups[n]:=[];
-for k in [1..Dimension(n-1)] do
-tmp:=C[n][k].BoundaryImage;
-Stab:=C[n][k].TheMatrixStab;;
-Stab:=List(GeneratorsOfGroup(Stab),w->TransposedMat(w));
-C[n][k].TheMatrixStab:=Group(Stab);
-Rot:=C[n][k].TheRotSubgroup;;
-Rot:=List(GeneratorsOfGroup(Rot),w->TransposedMat(w));
-C[n][k].TheRotSubgroup:=Group(Rot);;
-Append(Elts,Elements(C[n][k].TheMatrixStab));
-Add(StabilizerGroups[n],C[n][k].TheMatrixStab);
-Add(RotSubGroups[n],C[n][k].TheRotSubgroup);
-od;
+  for k in [1..Dimension(n-1)] do
+  Append(Elts,Elements(C[n][k].TheMatrixStab));
+  Add(StabilizerGroups[n],C[n][k].TheMatrixStab);
+  Add(RotSubGroups[n],C[n][k].TheRotSubgroup);
+  od;
 od;
 ####
 
@@ -77,8 +81,8 @@ for k in [1..Dimension(n-1)] do
 tmp:=C[n][k].BoundaryImage;
 BI:=tmp.ListIFace;
 SGN:=tmp.ListSign;
-LstEl:=List(tmp.ListElt,w->TransposedMat(w));
-Append(Elts,LstEl);
+LstEl:=List(tmp.ListElt,w->TransMat(w));
+Append(Elts,Difference(LstEl,Elts));
 for s in [1..Length(BI)] do
 BI[s]:=[SGN[s]*BI[s],Position(Elts,LstEl[s])];
 od;
@@ -87,12 +91,23 @@ od;
 od;
 ####
 
-G:=Group(Elts);
+ActionRecord:=[];
+for n in [1..lnth+1] do
+ActionRecord[n]:=[];
+for k in [1..Dimension(n-1)] do
+ActionRecord[n][k]:=[];
+od;
+od;
 
+G:=Group(Elts);
 
 ####################
 Boundary:=function(n,k);
+if k>0 then
 return boundaryList[n+1][k];
+else
+return NegateWord(boundaryList[n+1][-k]);
+fi;
 end;
 ####################
 
@@ -102,16 +117,28 @@ return StabilizerGroups[n+1][k];
 end;
 ####################
 
+
 ####################
 Action:=function(n,k,g)
-local r,u,H;
+local id,r,u,H,abk,ans;
 
-H:=StabilizerGroups[n+1][AbsInt(k)];
-r:=CanonicalRightCosetElement(H,Elts[g]^-1)^-1;
-u:=Elts[g]^-1*r;
-if u in RotSubGroups[n+1][AbsInt(k)] then return 1;
-else return -1; fi;
+abk:=AbsInt(k);
 
+if not IsBound(ActionRecord[n+1][abk][g]) then 
+H:=StabilizerGroups[n+1][abk];
+
+id:=CanonicalRightCosetElement(H,Identity(H));
+r:=CanonicalRightCosetElement(H,Elts[g]^-1);
+r:=id^-1*r;
+u:=r*Elts[g];
+
+if u in RotSubGroups[n+1][abk] then  ans:= 1;
+else ans:= -1; fi;
+
+ActionRecord[n+1][abk][g]:=ans;
+fi;
+
+return ActionRecord[n+1][abk][g];
 end;
 ####################
 
@@ -135,4 +162,84 @@ end);
 ################################################
 
 
+################################################
+################################################
+InstallGlobalFunction(RecalculateIncidenceNumbers,
+function(R)
+local
+        NewBoundaryList,
+        NewBoundary,
+        S,N,pos,
+        cnt,n,i,b,e,V,v,L,LL,x,xx;
 
+NewBoundaryList:=[];
+for n in [1..Length(R)] do
+NewBoundaryList[n]:=[];
+for i in [1..R!.dimension(n)] do
+b:=StructuralCopy(R!.boundary(n,i));
+#b:=List(b,x->[AbsInt(x[1]),x[2]]);
+Add(NewBoundaryList[n],b);
+od;
+od;
+
+
+##############################
+NewBoundary:=function(n,i);
+if i>0 then
+return NewBoundaryList[n][i];
+else
+return NegateWord(NewBoundaryList[n][-i]);
+fi;
+end;
+##############################
+
+########First Incidence Numbers###########
+for b in NewBoundaryList[1] do
+if b[1][1]*b[2][1]>0 then
+b[1][1]:=-1*b[1][1];
+fi;
+od;
+##########################################
+
+
+R!.oldBoundary:=R!.boundary;
+R!.boundary:=NewBoundary;
+
+for N in [2..Length(NewBoundaryList)] do
+######## N-th Incidence Numbers##########
+cnt:=0;
+for e in NewBoundaryList[N] do
+  cnt:=cnt+1;
+  #########################
+  if Length(ResolutionBoundaryOfWord(R,N-1,e))>0 then
+  #########################
+    V:=List(e,x->[AbsInt(x[1]),x[2]]);
+    b:=[V[1]]; V:=V{[2..Length(V)]}; 
+    while Length(V)>0 do
+      L:=ResolutionBoundaryOfWord(R,N-1,b);
+      LL:=List(L,x->[AbsInt(x[1]),x[2]]);
+      for v in V do
+        x:=ResolutionBoundaryOfWord(R,N-1,[v]);
+        xx:=List(x,a->[AbsInt(a[1]),a[2]]);  
+        if Length(Intersection(xx,LL))>0 then
+          if Length(Intersection(x,L))>0 then Add(b,[-v[1],v[2]]); 
+             else Add(b,[v[1],v[2]]); 
+          fi;
+          pos:=Position(V,v);
+          V[pos]:=0;
+          V:=Filtered(V,v->not v=0); 
+          break; 
+        fi;
+      od;
+    od;
+    NewBoundaryList[N][cnt]:=b;
+  #########################
+  fi;
+  #########################
+od;
+##########################################
+od;
+
+end);
+################################################
+################################################	

@@ -163,8 +163,8 @@ local
 
 #############SAVE RECOMPUTATIONS##########
 if "HomVecSpc" in NamesOfComponents(C) then
-if IsBound(C!.HomVecSp[n]) then
-return C!.HomVecSp[n];
+if IsBound(C!.HomVecSp[n+1]) then
+return C!.HomVecSp[n+1];
 fi;
 else
 C!.HomVecSp:=[];
@@ -234,13 +234,13 @@ return w;
 end;
 #####################################################################
 
-C!.HomVecSp[n]:=
+C!.HomVecSp[n+1]:=
 	     rec(
             fpgroup:=H,
 	    h2c:=HhomC,
 	    c2h:=ChomH );
 
-return C!.HomVecSp[n];
+return C!.HomVecSp[n+1];
 end;
 #####################################################################
 #####################################################################

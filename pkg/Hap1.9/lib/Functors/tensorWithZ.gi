@@ -184,23 +184,64 @@ then Print("This function must be applied to a filtered resolution.\n");
 return fail;
 fi;
 
+ln:=EvaluateProperty(R,"filtration_length");
 
 C:=TensorWithIntegers(R);
-ln:=EvaluateProperty(R,"filtration_length");
 
 return Objectify(HapFilteredChainComplex,
 rec(
                 dimension:=C!.dimension,
                 filteredDimension:=R!.filteredDimension,
                 boundary:=C!.boundary,
+                pseudoBoundary:=R!.pseudoBoundary,
                 properties:=
                 [["length",EvaluateProperty(R,"length")],
                 ["connected",true],
                 ["type", "chainComplex"],
                 ["filtration_length",ln],
+                ["initial_inclusion",EvaluateProperty(R,"initial_inclusion")],
                 ["characteristic",
                 EvaluateProperty(R,"characteristic")] ]));
 
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(FilteredTensorWithIntegersModP,
+function(R,prime)
+local
+        C, ln;
+
+if not IsBound(R!.filteredDimension)
+   or
+   not IsInt(EvaluateProperty(R,"filtration_length"))
+then Print("This function must be applied to a filtered resolution.\n");
+return fail;
+fi;
+
+
+ln:=EvaluateProperty(R,"filtration_length");
+
+C:=TensorWithIntegersModP(R,prime);
+
+return Objectify(HapFilteredChainComplex,
+rec(
+                dimension:=C!.dimension,
+                filteredDimension:=R!.filteredDimension,
+                boundary:=C!.boundary,
+                pseudoBoundary:=R!.pseudoBoundary,
+                properties:=
+                [["length",EvaluateProperty(R,"length")],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["filtration_length",ln],
+                ["initial_inclusion",EvaluateProperty(R,"initial_inclusion")],
+                ["characteristic",prime]
+                 ]));
+
+end);
+#####################################################################
+#####################################################################
+

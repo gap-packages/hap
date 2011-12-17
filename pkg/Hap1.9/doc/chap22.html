@@ -107,7 +107,12 @@
 <tr>
 <td class="tdleft"><code class="code">ChainComplexOfPair(T,S)</code></p>
 
-<p>Inputs a pure cubical complex or cubical complex T and contractible subcomplex S. It returns the quotient C(T)/C(S) of cellular chain complexes.</td>
+<p>Inputs a pure cubical complex or cubical complex T and subcomplex S. It returns the quotient C(T)/C(S) of cellular chain complexes.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ExcisedPureCubicalPair(T,S)</code></p>
+
+<p>Inputs a pure cubical complex T and subcomplex S. It returns the pair [T\ intS, S\ intS]) of pure cubical complexes where intS is the pure cubical complex obtained from S by removing its boundary.</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code">ChainInclusionOfPureCubicalPair(S,T)</code></p>
@@ -135,7 +140,7 @@
 <p>Inputs a pure cubical complex T and returns a maximal contractible subcomplex.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> AlmostContractibleSubomplexOfPureCubicalComplex(T)</code></p>
+<td class="tdleft"><code class="code"> AcyclicSubomplexOfPureCubicalComplex(T)</code></p>
 
 <p>Inputs a pure cubical complex T and returns a (not necessarily connected) subcomplex having trivial homology in all degrees greater than 0.</td>
 </tr>
@@ -165,9 +170,21 @@
 <p>Inputs a pure cubical complex T and returns a pure cubical complex S. If a euclidean cube is in T then this cube and all its neighbouring cubes are included in S.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code"> MorseFiltration(M,i,t,bool)</code> <code class="code"> MorseFiltration(M,i,t)</code></p>
+
+<p>Inputs a pure cubical complex M of dimension d, an integer i between 1 and d, a positive integer t and a boolean value True or False. The function returns a list [M_1, M_2, ..., M_t] of pure cubical complexes with M_k a subcomplex of M_k+1. The list is constructed by setting all slices of M perpendicular to the i-th axis equal to zero if they meet the ith axis at a sufficiently high coordinate (if bool=True) or sufficiently low coordinate (if bool=False).</p>
+
+<p>If the variable bool is not specified then it is assumed to have the value True.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> ComplementOfPureCubicalComplex(T)</code></p>
 
 <p>Inputs a pure cubical complex T and returns a pure cubical complex S. A euclidean cube is in S precisely when the cube is not in T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> PureCubicalComplexToTextFile(file,M)</code></p>
+
+<p>Inputs a pure cubical complex M and a string containing the address of a file. A representation of this complex is written to the file in a format that can be read by the CAPD (Computer Assisted Proofs in Dynamics) software developed by Marian Mrozek and others.</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>

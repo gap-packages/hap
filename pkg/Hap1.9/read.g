@@ -266,6 +266,7 @@ ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
 fi;
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");

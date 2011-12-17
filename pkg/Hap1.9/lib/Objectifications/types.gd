@@ -314,8 +314,7 @@ InstallMethod( ViewObj,
 "for HapNonFreeResolution",
 [IsHapNonFreeResolution],
 function(R)
-Print("Non-free resolution of length ", EvaluateProperty(R,"length"),
-" in characteristic ", EvaluateProperty(R,"characteristic"),
+Print("Non-free resolution in characteristic ", EvaluateProperty(R,"characteristic"),
  " for "); ViewObj(R!.group); Print(" . \n");
 if R!.homotopy=fail then
 Print("No contracting homotopy available. \n");
@@ -459,6 +458,40 @@ InstallMethod( PrintObj,
  [IsHapGraph],
  function(R)
 Print("Graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
+ end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+DeclareCategory("IsHapOppositeElement",IsMultiplicativeElementWithInverse);
+
+DeclareRepresentation(  "IsHapOppositeElementRep",
+                        IsComponentObjectRep,
+                        IsMultiplicativeElementWithInverse,
+                        ["oppositeElement",
+                         ]);
+
+HapOppositeElementFamily:=NewFamily( "HapOppositeElementFamily",
+                                          IsHapOppositeElement,
+                                          IsHapOppositeElement);
+
+HapOppositeElement:=NewType(HapOppositeElementFamily,
+                                IsHapOppositeElementRep);
+
+
+InstallMethod( ViewObj,
+"for HapOppositeElement",
+ [IsHapOppositeElement],
+function(R)
+Print(R!.element, "_op ");
+end);
+
+InstallMethod( PrintObj,
+"for HapOppositeElement",
+ [IsHapOppositeElement],
+ function(R)
+Print(R!.element, "_op ");
  end);
 #####################################################################
 #####################################################################

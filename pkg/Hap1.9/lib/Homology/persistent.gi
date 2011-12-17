@@ -285,6 +285,58 @@ end);
 ###############################################################
 ###############################################################
 
+###############################################################
+###############################################################
+InstallGlobalFunction(LinearHomomorphismsZZPersistenceMat,
+function(HOMS)
+local
+        L, WrongComposition;
+
+###################################
+WrongComposition:=function(LUV,LWV)  #LUV:U-->V, LWV:W-->V
+local x, U,W, LUW, ImLUV, ImLWV, InterUW,  BW,  BU, BUW, dim;
+
+ImLUV:=Image(LUV);
+ImLWV:=Image(LWV);
+InterUW:=Intersection(ImLUV,ImLWV);
+U:=Source(LUV);
+W:=Source(LWV);
+if Dimension(InterUW)=0 then 
+   return ZeroMapping(U,W);  
+
+else
+
+   BUW:=Basis(InterUW);
+   BUW:=Elements(BUW);
+fi;
+
+dim:=Length(BUW);
+BU:=List(BUW,x->PreImagesRepresentative(LUV,x));;
+BW:=List(BUW,x->PreImagesRepresentative(LWV,x));;
+
+
+for x in Elements(Basis(U)) do
+  if Rank(Concatenation(BU,[x]))>dim then
+    dim:=dim+1;
+    Add(BU,x);;
+    Add(BW,Zero(W));
+  fi;
+od;
+
+LUW:=LeftModuleHomomorphismByImagesNC(U,W,BU,BW);;
+return LUW;
+end;
+###################################
+
+L:=List([1..Length(HOMS)/2],n->
+WrongComposition(HOMS[2*n-1],HOMS[2*n]));
+
+return LinearHomomorphismsPersistenceMat(L); 
+
+end);
+###############################################################
+###############################################################
+
 
 ###############################################################
 ###############################################################
@@ -348,79 +400,67 @@ end);
 InstallGlobalFunction(PersistentHomologyOfPureCubicalComplex,
 function(arg)
 local
-	M,LM,deg,prime,toggle,triv,ChnCmps,vsmaps,A,S,TS,TM,L,bool,x,y,i,F;
+	LM,deg,prime,
+        M,triv,ChnCmps,vsmaps,A,S,TS,TM,L,
+        bool,x,y,i,F,PC;
 
 ##Input###################
+LM:=arg[1];
 deg:=arg[2];
 prime:=arg[3];
-toggle:=IsList(arg[1]);
 ##########################
 
-##IF STARTS
-if toggle then 
-LM:=arg[1];
-M:=LM[1];
-
-  if deg=0 then return
-  PersistentHomologyOfPureCubicalComplex_Alt(LM,deg,prime);
-  fi;
-
-else
-
-M:=arg[1];
-
-  if deg=0 then return
-  PersistentHomologyOfPureCubicalComplex_Alt(M,deg,prime);
-  fi;
-
-fi;
-##IF ENDS
-
 F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
-triv:=List([1..Dimension(M)+1],i->0); triv[1]:=1;
 
-S:=ContractibleSubcomplexOfPureCubicalComplex(M);
-if not toggle then LM:=[M]; fi;
+##Initialize##############
+M:=LM[1];
+if true then #deg=0 then 
+S:=ContractibleSubcomplexOfPureCubicalComplex(M); #SHOULD DELETE THIS!
+else
+S:=AcyclicSubcomplexOfPureCubicalComplex(M);
+fi;
 L:=[[M,S]];
-
+triv:=List([1..Dimension(M)+1],i->0); triv[1]:=1;
 bool:=true;
-i:=1;
-while bool do
-i:=i+1;
-if toggle then
-  TM:=LM[i];
-else 
-  TM:=ThickenedPureCubicalComplex(L[Length(L)][1]);
-fi;
-TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
-if toggle then 
-  bool:=i<Length(LM);
-  else
-  bool:=not Bettinumbers(ContractedComplex(TM))=triv;
-fi;
-Add(L,[TM,TS]); 
-od;
-
 vsmaps:=[];
+#########################
+
+for i in [2..Length(LM)] do
+  TM:=LM[i];
+  TS:=HomotopyEquivalentMaximalPureCubicalSubcomplex(TM,L[Length(L)][2]);
+  Add(L,[TM,TS]); 
+od;
 
 L[1][1]:=F(L[1][1],L[1][2]);
-for x in [1..Length(L)-1] do
-L[x+1][1]:=F(L[x+1][1],PureCubicalComplexUnion(L[x][1],L[x+1][2]));
-od;
 
+#################
+for x in [1..Length(L)-1] do
+  L[x+1][1]:=F(L[x+1][1],PureCubicalComplexUnion(L[x][1],L[x+1][2]));
+od;
+#################
 
 L[1]:=ChainComplexOfPair(L[1][1],L[1][2]);
+
 #################
 for x in [1..Length(L)-1] do
-L[x+1]:=ChainComplexOfPair(L[x+1][1],L[x+1][2]);
-vsmaps[x]:= 
-TensorWithIntegersModP( ChainMapOfCubicalPairs(L[x],L[x+1]) , prime);
-vsmaps[x]:=HomologyVectorSpace(vsmaps[x],deg);
-Unbind(L[x]);
+  L[x+1]:=ChainComplexOfPair(L[x+1][1],L[x+1][2]);
+  vsmaps[x]:= 
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[x],L[x+1]) , prime);
+  vsmaps[x]:=HomologyVectorSpace(vsmaps[x],deg);
+  Unbind(L[x]);
 od;
 #################
 
-return LinearHomomorphismsPersistenceMat(vsmaps);
+if deg>0 then
+  return LinearHomomorphismsPersistenceMat(vsmaps);
+fi;
+
+L:=LinearHomomorphismsPersistenceMat(vsmaps);
+for i in [1..Length(L)] do
+for y in [i..Length(L)] do
+  L[i][y]:=L[i][y]+1;
+od;od;
+return L;
 
 end);
 ###############################################################
@@ -474,7 +514,7 @@ Persist:=List([1..Length(L)],x->List([1..Length(L)],y->0));;
 if deg=0 then
 for x in [1..Length(L)] do
 for y in [x..Length(L)] do
-Persist[x][y]:=Bettis[y][1];
+Persist[x][y]:=Bettis[y][1];   
 od;
 od;
 return Persist;
@@ -665,4 +705,293 @@ Exec(Concatenation("rm -r ",barcodegif{[1..Length(barcodegif)-9]}));
 end);
 #################################################################
 #################################################################
+
+
+############################################################
+############################################################
+InstallGlobalFunction(PersistentHomologyOfFilteredChainComplex,
+function(C,n,prime)
+local
+    SubComplex,
+    ComplexInclusion,
+    bars;
+
+####################################################
+SubComplex:=function(C,r)
+local D,DIM,BND;
+
+DIM:=function(n); if n=0 then return C!.dimension(0);
+else return C!.filteredDimension(r,n); fi; end;
+
+###############
+if EvaluateProperty(C,"initial_inclusion")=false then
+BND:=function(n,v)
+local vv,uu;
+vv:=C!.dimension(n)-C!.filteredDimension(r,n)+v;
+if n>1 then
+uu:=C!.dimension(n-1)-C!.filteredDimension(r,n-1)+1;
+else
+uu:=C!.dimension(0);;
+fi;
+return C!.boundary(n,vv){[uu..C!.dimension(n-1)]};
+end;
+fi;
+##############
+
+##############
+if EvaluateProperty(C,"initial_inclusion")=true then
+BND:=function(n,v)
+local uu;
+if n>1 then
+uu:=C!.filteredDimension(r,n-1);
+else
+uu:=C!.dimension(0);
+fi;
+return C!.boundary(n,v){[1..uu]};
+end;
+fi;
+##############
+
+D:= Objectify(HapChainComplex,
+                rec(
+                dimension:=DIM ,
+                boundary:=BND ,
+                properties:=
+                [["length",EvaluateProperty(C,"length")],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["initial_inclusion",EvaluateProperty(C,"initial_inclusion")],
+                ["characteristic",
+                EvaluateProperty(C,"characteristic")] ]));
+
+return D;
+end;
+####################################################
+
+
+####################################################
+ComplexInclusion:=function(C,k)
+local S,T, M,map,prime;
+
+S:=SubComplex(C,k);
+T:=SubComplex(C,k+1);
+prime:=EvaluateProperty(C,"characteristic");
+
+##################
+if EvaluateProperty(S,"initial_inclusion")=false then
+map:=function(v,n)
+local w,i,a,b;
+w:=[1..T!.dimension(n)]*0;
+a:=Length(w)-Length(v);
+b:=Length(w);
+for i in [a+1..b] do
+w[i]:= v[i-a]*1;
+od;
+return w*One(GF(prime));
+end;
+fi;
+##################
+
+##################
+if EvaluateProperty(S,"initial_inclusion")=true then
+map:=function(v,n)
+local w,i,a,b;
+w:=[1..T!.dimension(n)]*0;
+a:=Length(v);
+for i in [1..a] do
+w[i]:= v[i]*1;
+od;
+return w*One(GF(prime));
+end;
+fi;
+##################
+
+
+
+return Objectify(HapChainMap,
+        rec(
+           source:=S,
+           target:=T,
+           mapping:=map,
+           properties:=[ ["type","chainMap"],
+           ["characteristic",prime ]
+           ]));
+
+end;
+####################################################
+
+
+####################################################
+bars:=function(C,n)
+local FL,K,i;
+
+FL:=EvaluateProperty(C,"filtration_length");
+
+K:=[];
+for i in [0..FL-1] do
+Add(K,ComplexInclusion(C,i));
+od;
+
+Apply(K,x->HomologyVectorSpace(x,n));
+return LinearHomomorphismsPersistenceMat(K);
+end;
+####################################################
+
+return bars(TensorWithIntegersModP(C,prime),n);
+end);
+#############################################################
+#############################################################
+
+##########################################
+##########################################
+InstallGlobalFunction(TruncatedGComplex,
+function(arg)
+local R,a,b,Dimension, Boundary, Stabilizer, Action;
+
+R:=arg[1];
+a:=arg[2];
+b:=arg[3];
+
+##################
+Dimension:=function(n);
+if not n+a in [a..b] then return 0; fi;
+return R!.dimension(n+a);
+end;
+##################
+
+##################
+Boundary:=function(n,i);
+return R!.boundary(n+a,i);
+end;
+##################
+
+##################
+Stabilizer:=function(n,i);
+return R!.stabilizer(n+a,i);
+end;
+##################
+
+##################
+Action:=function(n,k,g);
+return R!.action(n+a,k,g);
+end;
+##################
+
+
+
+if not IsHapNonFreeResolution(R) then return fail; fi;
+
+
+return          Objectify( HapResolution,
+                rec(
+                dimension:=Dimension,
+                boundary:=Boundary,
+                homotopy:=fail,
+                elts:=R!.elts,
+                group:=R!.group,
+                stabilizer:=Stabilizer,
+                action:=Action,
+                properties:=
+                   [["length",EvaluateProperty(R,"length")],
+                    ["reduced",true],
+                    ["type","resolution"],
+                    ["characteristic",EvaluateProperty(R,"characteristic")]  ])
+                );
+
+end);
+##########################################
+##########################################
+
+
+###############################################################
+###############################################################
+InstallGlobalFunction(ZZPersistentHomologyOfPureCubicalComplex,
+function(arg)
+local
+        LM,deg,prime,
+        ChnCmps,vsmaps,L,
+        U,CU,V,CV,W,CW,
+        x,y,i,F,PC,correction;
+
+##Input###################
+LM:=arg[1];
+deg:=arg[2];
+prime:=arg[3];
+##########################
+
+correction:=[];
+F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
+
+##Initialize##############
+U:=LM[1];
+CU:=ContractibleSubcomplexOfPureCubicalComplex(U);
+L:=[[U,CU]];
+vsmaps:=[];
+#########################
+
+
+#########################
+for i in [1..Length(LM)-1] do
+# U --> V <-- W
+
+U:=L[Length(L)][1];
+CU:=L[Length(L)][2];
+
+W:=LM[i+1];
+
+V:=PureCubicalComplexUnion(U,W);
+if Size(CU)>0 then
+CV:=HomotopyEquivalentMaximalPureCubicalSubcomplex(V,CU);
+else
+CV:=ContractibleSubcomplexOfPureCubicalComplex(V);
+fi;
+
+CW:=PureCubicalComplexIntersection(CV,W);
+CW:=ContractibleSubcomplexOfPureCubicalComplex(CW);
+
+if Size(CW)=0 then Add(correction,i+1); fi;
+
+Add(L,[V,CV]);
+Add(L,[W,CW]);
+od;
+#####################
+
+L[1]:=ChainComplexOfPair(L[1][1],L[1][2]);
+
+#################
+for i in [1..Length(LM)-1] do
+  L[2*i]:=ChainComplexOfPair(L[2*i][1],L[2*i][2]);
+  vsmaps[2*i-1]:=
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[2*i-1],L[2*i]) , prime);
+  vsmaps[2*i-1]:=HomologyVectorSpace(vsmaps[2*i-1],deg);
+
+L[2*i+1]:=ChainComplexOfPair(L[2*i+1][1],L[2*i+1][2]);
+  vsmaps[2*i]:=
+  TensorWithIntegersModP( ChainMapOfCubicalPairs(L[2*i+1],L[2*i]) , prime);
+  vsmaps[2*i]:=HomologyVectorSpace(vsmaps[2*i],deg);
+Unbind(L[2*i]);
+  Unbind(L[2*i-1]);
+
+od;
+#################
+
+
+if deg>0 then
+  return LinearHomomorphismsZZPersistenceMat(vsmaps);
+fi;
+
+
+L:=LinearHomomorphismsZZPersistenceMat(vsmaps);
+for i in [1..Length(L)] do
+for y in [i..Length(L)] do
+if Length(Intersection([i..y],correction))=0 then
+  L[i][y]:=L[i][y]+1;
+fi;
+od;od;
+return L;
+
+end);
+###############################################################
+###############################################################
+
 

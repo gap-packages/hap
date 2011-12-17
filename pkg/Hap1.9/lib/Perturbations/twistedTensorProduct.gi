@@ -7,11 +7,12 @@ local
 		DimensionR,BoundaryR,HomotopyR,
 		DimensionS,BoundaryS,HomotopyS,
 		Dimension,Boundary,Homotopy,
-                FilteredLength, FilteredDimension, FilteredDimensionRecord,
+                FilteredLength, FilteredDimension, 
 		DimPQ,DimPQrec,
 		Int2Pair, Pair2Int,
 		Htpy, HtpyRecord, CompHtpy,
 		Del, CompDel, DelRecord,
+                srtfn,
 		PseudoBoundary,
 		Charact,
 		AddWrds, AddLst,
@@ -470,8 +471,8 @@ HorizontalPseudoBoundary[k]:=[];
 	 if l>0 then rr:=AddWrds(dl,rr);fi;
          od;
 
-         Append(PseudoBoundary[k],[r]);
-	 Append(HorizontalPseudoBoundary[k],[rr]);
+         Add(PseudoBoundary[k],[r,p]);    #I'm pretty sure it's p and not q
+	 Add(HorizontalPseudoBoundary[k],rr);
       od;
   od;
 od;
@@ -481,8 +482,8 @@ od;
 Boundary:=function(k,j);
 if k=0 then return []; 
 else
-	if SignInt(j)=1 then return PseudoBoundary[k][j]; 
-	else return NegateWord(PseudoBoundary[k][-j]);
+	if SignInt(j)=1 then return PseudoBoundary[k][j][1]; 
+	else return NegateWord(PseudoBoundary[k][-j][1]);
 	fi;
 fi;
 end;
@@ -680,23 +681,8 @@ grp:=Group(EltsE);
 FilteredLength:=Length(R);
 
 ##################################################
-FilteredDimension:=function(r,i)
-local D,j;
-if i=0 then return 1; fi;
-D:=0;
-for j in [0..r] do
-D:=D+DimensionR(j)*DimensionS(i-j);
-od;
-return D;
-end;
-
-
-FilteredDimensionRecord:=
-List([0..FilteredLength],r->List([0..n],k->FilteredDimension(r,k)));
-
-FilteredDimension:=function(r,k);
-return FilteredDimensionRecord[r+1][k+1];
-
+FilteredDimension:=function(r,i);
+return Length(Filtered(List(PseudoBoundary[i],x->x[2]),y->y<=r));
 end;
 ##################################################
 
@@ -711,10 +697,12 @@ return Objectify(HapResolution,
 	    group:=grp,
 	    vectorToInt:=Vector2Int,
 	    intToVector:=Int2Vector,
+            pseudoBoundary:=PseudoBoundary,
 	    properties:=
 	    [["type","resolution"],
 	     ["length",n],
              ["filtration_length",FilteredLength],
+             ["initial_inclusion",false],
 	     ["characteristic",Charact],
 	     ["isTwistedTensorProduct",true]
 	      ]));

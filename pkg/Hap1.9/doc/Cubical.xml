@@ -206,13 +206,23 @@ and returns the (often very large) cellular chain complex of <M>T</M>.
 <Row>
 <Item>
 <C>ChainComplexOfPair(T,S)</C>
-
-
 <P/>
-Inputs a  pure cubical complex or cubical complex  <M>T</M> and contractible subcomplex <M>S</M>.
+Inputs a  pure cubical complex or cubical complex  <M>T</M> and  subcomplex <M>S</M>.
 It returns the quotient <M>C(T)/C(S)</M> of cellular chain complexes.
 </Item>
 </Row>
+
+<Row>
+<Item>
+<C>ExcisedPureCubicalPair(T,S)</C>
+<P/>
+Inputs a  pure cubical complex   <M>T</M> and  subcomplex <M>S</M>.
+It returns the pair
+ <M>[T\setminus intS, S\setminus intS])</M> of pure cubical complexes
+where <M>intS</M> is the pure cubical complex obtained from <M>S</M> by removing its boundary.
+</Item>
+</Row>
+
 
 <Row>
 <Item>
@@ -281,8 +291,8 @@ returns a maximal contractible subcomplex.
 
 <Row>
 <Item>
-<Index>AlmostContractibleSubomplexOfPureCubicalComplex</Index>
-<C> AlmostContractibleSubomplexOfPureCubicalComplex(T)</C>
+<Index>AcyclicSubomplexOfPureCubicalComplex</Index>
+<C> AcyclicSubomplexOfPureCubicalComplex(T)</C>
 
 <P/>
 Inputs a  pure cubical complex <M>T</M>  and
@@ -343,13 +353,28 @@ is not differentiable. (The method for deciding differentiability at a point is 
 <Index>ThickenedPureCubicalComplex</Index>
 <C> ThickenedPureCubicalComplex(T)</C>
 
-
 <P/>
 Inputs a  pure cubical complex <M>T</M> 
  and returns a pure cubical complex  <M>S</M>. If a euclidean cube is
  in <M>T</M> then this cube and all its  neighbouring cubes  
  are included in <M>S</M>.
 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>MorseFiltration</Index>
+<C> MorseFiltration(M,i,t,bool)</C>
+<C> MorseFiltration(M,i,t)</C>
+
+<P/>
+Inputs a  pure cubical complex <M>M</M> of dimension <M>d</M>, an integer 
+<M>i</M> between <M>1</M> and <M>d</M>, a positive integer <M>t</M> and a boolean value True or False. The function returns a list 
+<M>[M_1, M_2, ..., M_t]</M> of pure cubical complexes with <M>M_k</M> a subcomplex of <M>M_{k+1}</M>. The list is constructed by setting all slices of <M>M</M> perpendicular to the <M>i</M>-th axis equal to zero if they meet the <M>i</M>th axis at a sufficiently high coordinate (if bool=True) or sufficiently 
+low coordinate (if bool=False).
+
+<P/> If the variable bool is not specified then it is assumed to have the value True. 
 </Item>
 </Row>
 
@@ -365,6 +390,18 @@ Inputs a  pure cubical complex <M>T</M>
 
  </Item>
  </Row>
+
+<Row>
+<Item>
+<Index>PureCubicalComplexToTextFile</Index>
+<C> PureCubicalComplexToTextFile(file,M)</C>
+<P/>
+Inputs a pure cubical complex <M>M</M> and a string  containing the address of a file.  A
+representation of this complex is written to the file in a format that
+can be read by the CAPD (Computer Assisted Proofs in Dynamics) software developed by  Marian Mrozek and others.
+
+</Item> </Row>
+
 
 </Table>
 </Chapter>

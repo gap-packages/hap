@@ -7,6 +7,7 @@ local
 		DimensionR,BoundaryR,HomotopyR,
 		DimensionS,BoundaryS,HomotopyS,
 		Dimension,Boundary,Homotopy,
+                FilteredLength, FilteredDimension, FilteredDimensionRecord,
 		DimPQ,DimPQrec,
 		Int2Pair, Pair2Int,
 		Htpy, HtpyRecord, CompHtpy,
@@ -673,9 +674,37 @@ fi;
 grp:=Group(EltsE);
 
 
+
+################spectral sequence requirements##################
+
+FilteredLength:=Length(R);
+
+##################################################
+FilteredDimension:=function(r,i)
+local D,j;
+if i=0 then return 1; fi;
+D:=0;
+for j in [0..r] do
+D:=D+DimensionR(j)*DimensionS(i-j);
+od;
+return D;
+end;
+
+
+FilteredDimensionRecord:=
+List([0..FilteredLength],r->List([0..n],k->FilteredDimension(r,k)));
+
+FilteredDimension:=function(r,k);
+return FilteredDimensionRecord[r+1][k+1];
+
+end;
+##################################################
+
+
 return Objectify(HapResolution,
 	    rec(
 	    dimension:=Dimension, 
+            filteredDimension:=FilteredDimension,
 	    boundary:=Boundary, 
 	    homotopy:=FinalHomotopy, 
 	    elts:=EltsE, 
@@ -685,6 +714,7 @@ return Objectify(HapResolution,
 	    properties:=
 	    [["type","resolution"],
 	     ["length",n],
+             ["filtration_length",FilteredLength],
 	     ["characteristic",Charact],
 	     ["isTwistedTensorProduct",true]
 	      ]));

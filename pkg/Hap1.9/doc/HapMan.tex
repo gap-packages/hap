@@ -103,8 +103,7 @@ on $R$ will be returned. \\
  Inputs a torsion free crystallographic group $G$, also known as a Bieberbach group, represented using AffineCrystGroupOnRight
 as in the GAP package Cryst. It also optionally inputs a choice of vector $v$ in the euclidean space $R^n$ on which $G$ acts freely. The function returns $n+1$ terms of the free $ZG$-resolution of $Z$ arising as the cellular chain complex of the tesselation of $R^n$ by the Dirichlet-Voronoi fundamental domain determined by $v$. 
 
- This function is part of the HAPcryst package written by Marc Roeder and thus
-requires the HAPcryst package to be loaded. 
+ This function is part of the HAPcryst package written by \textsc{Marc Roeder} and thus requires the HAPcryst package to be loaded. 
 
  The function requires the use of Polymake software. \\
  \index{ResolutionCoxeterGroup} \texttt{ ResolutionCoxeterGroup(D,n)} 
@@ -226,6 +225,12 @@ probably won't work with the function $EquivariantChainMap()$. This $ZK$-resolut
  \index{TwistedTensorProduct} \texttt{ TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE)} 
 
  Inputs a $ZG$-resolution $R$, a $ZN$-resolution $S$, and other data relating to a short exact sequence $1 \longrightarrow N \longrightarrow E \longrightarrow G \longrightarrow 1$. It uses a perturbation technique of CTC Wall to construct a $ZE$-resolution $F$. Both $G$ and $N$ could be infinite. The "length" of $F$ is equal to the minimum of the "length"s of $R$ and $S$. The resolution $R$ needs no contracting homotopy if no such homotopy is requied for $F$. \\
+ \index{RecalculateIncidenceNumbers} \texttt{ RecalculateIncidenceNumbers(R)} 
+
+ Inputs a ZG-resoluton $R$ which arises as the cellular chain complex of a regular CW-complex. (Thus the
+boundary of any cell is a list of distinct cells.) It recalculates the
+incidence numbers for $R$. If it is applied to a resolution that is not regular then a wrong answer may
+be returned. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -353,7 +358,7 @@ rational numbers. \\
 
  (The homology of the Chevalley-Eilenberg complex $C(A)$ is by definition the homology of the Lie algebra $A$ with trivial coefficients in $Z$ or $K$). 
 
- This function was written by Pablo Fernandez Ascariz \\
+ This function was written by \textsc{Pablo Fernandez Ascariz} \\
  \index{LeibnizComplex} \texttt{ LeibnizComplex(X,n) } 
 
  Inputs either a Lie or Leibniz algebra $X=A$ (over the ring of integers $Z$ or over a field $K$) or a homomorphism of Lie or Leibniz algebras $X=(f:A \longrightarrow B)$, together with a positive integer $n$. It returns either the first $n$ terms of the Leibniz chain complex $C(A)$, or the induced map of Leibniz complexes $C(f):C(A) \longrightarrow C(B)$. 
@@ -361,7 +366,7 @@ rational numbers. \\
  (The Leibniz complex $C(A)$ was defined by J.-L.Loday. Its homology is by definition the Leibniz homology
 of the algebra $A$). 
 
- This function was written by Pablo Fernandez Ascariz \\
+ This function was written by \textsc{Pablo Fernandez Ascariz} \\
  \index{SuspendedChainComplex} \texttt{SuspendedChainComplex(C)} 
 
  Inputs a chain complex $C$ and returns the chain complex $S$ defined by applying the degree shift $S_n = C_{n-1}$ to chain groups and boundary homomorphisms. \\
@@ -483,16 +488,26 @@ corresponding persistent homology function.) \\
  Non prime-power (and possibly infinite) groups $G$ can also be handled; in this case the prime must be entered as a third
 argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) must be
 entered as a fourth argument. \\
+ \index{PersistentHomologyOfFilteredChainComplex} \texttt{ PersistentHomologyOfFilteredChainComplex(C,n,p) } 
+
+ Inputs a filtered chain complex $C$ (of characteristic $0$ or $p$) together with a positive integer $n$ and prime $p$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the filtered chain complex $C$. (This function needs a more efficient implementation. Its fine as it stands
+for investigation in group homology, but not sufficiently efficient for the
+homology of large complexes arising in applied topology.) \\
  \texttt{ PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) } 
 
  Inputs a commutative diagram $D$ of finite $p$-groups and a positive integer $n$. It returns a list containing, for each homomorphism in the nerve of $D$, a triple $[k,l,m]$ where $k$ is the dimension of the source of the induced mod $p$ homology map in degree $n$, $l$ is the dimension of the image, and $m$ is the dimension of the cokernel. \\
- \index{PersistentHomologyOfPureCubicalComplex} \texttt{PersistentHomologyOfPureCubicalComplex(L,n,p)} \\
- \texttt{PersistentHomologyOfPureCubicalComplex(M,n,p)} 
+ \index{PersistentHomologyOfPureCubicalComplex} \texttt{PersistentHomologyOfPureCubicalComplex(L,n,p)} 
 
- Inputs a positive integer $n$, a prime $p$ and an increasing chain $L=[L_1, L_2, ..., L_k]$ of subcomplexes in a pure cubical complex $L_k$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion maps. The bar code is returned as a binary
-matrix. 
+ Inputs a positive integer $n$, a prime $p$ and an increasing chain $L=[L_1, L_2, ..., L_k]$ of subcomplexes in a pure cubical complex $L_k$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion maps. The bar code is returned as a matrix. 
 
- Alternatively, the list $L$ can be replaced by a single cubical complex $M$. The function then constructs an increasing chain $L$ with first term $M$ and final term a contracible complex. \\
+ \\
+ \index{ZZPersistentHomologyOfPureCubicalComplex} \texttt{ZZPersistentHomologyOfPureCubicalComplex(L,n,p)} 
+
+ Inputs a positive integer $n$, a prime $p$ and any sequence $L=[L_1, L_2, ..., L_k]$ of subcomplexes of some pure cubical complex. It returns the bar code of the
+zig-zag persistent mod $p$ homology in degree $n$ of the sequence of maps $L_1 \rightarrow L_1 \cup L_2 \leftarrow L_2 \rightarrow L_2 \cup L_3
+\leftarrow L_4 \rightarrow ... \leftarrow L_k$. The bar code is returned as a matrix. 
+
+ \\
  \index{RipsHomology} \texttt{RipsHomology(G,n)} \texttt{RipsHomology(G,n,p)} 
 
  Inputs a graph $G$, a non-negative integer $n$ (and optionally a prime number $p$). It returns the integral homology (or mod p homology) in degree $n$ of the Rips complex of $G$. \\
@@ -607,8 +622,7 @@ to choose a "reasonable" value for $n$. For $2$-groups the function PoincareSeri
 
  Inputs a finite $2$-group $G$ and returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_2)$ for all $k$. 
 
- This function was written by Paul Smith. It use the Singular system for
-commutative algebra. \\
+ This function was written by \textsc{Paul Smith}. It use the Singular system for commutative algebra. \\
  \index{Prank} \texttt{ Prank(G) } 
 
  Inputs a $p$-group $G$ and returns the rank of the largest elementary abelian subgroup. \\
@@ -688,8 +702,8 @@ for $H^*(G,Z_2)$.
 
  Alternatively, the function can be applied directly to either the resolution $R$ or graded algebra $A$. 
 
-This function was written by Paul Smith. It uses the Singular commutative
-algebra package to handle the Lyndon-Hochschild-Serre spectral sequence. \\
+This function was written by \textsc{Paul Smith}. It uses the Singular commutative algebra package to handle the
+Lyndon-Hochschild-Serre spectral sequence. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -699,8 +713,8 @@ algebra package to handle the Lyndon-Hochschild-Serre spectral sequence. \\
 \chapter{\textcolor{Chapter }{ Cohomology rings of $p$-groups (mainly $p=2)$}}\logpage{[ 9, 0, 0 ]}
 \hyperdef{L}{X8731E02A82226A55}{}
 {
- The functions on this page were written by Paul Smith. (They are included in
-HAP but they are also independently included in Paul Smiths HAPprime package.) \begin{center}
+ The functions on this page were written by \textsc{Paul Smith}. (They are included in HAP but they are also independently included in Paul
+Smiths HAPprime package.) \begin{center}
 \begin{tabular}{|l|} \index{Mod2CohomologyRingPresentation (HAPprime)} \texttt{ Mod2CohomologyRingPresentation(G) } \\
  \texttt{ Mod2CohomologyRingPresentation(G,n) } \\
  \texttt{ Mod2CohomologyRingPresentation(A) } \\
@@ -714,14 +728,13 @@ for $H^*(G,Z_2)$.
 
  Alternatively, the function can be applied directly to either the resolution $R$ or graded algebra $A$. 
 
-This function was written by Paul Smith. It uses the Singular commutative
-algebra package to handle the Lyndon-Hochschild-Serre spectral sequence. \\
+This function was written by \textsc{Paul Smith}. It uses the Singular commutative algebra package to handle the
+Lyndon-Hochschild-Serre spectral sequence. \\
  \index{PoincareSeriesLHS (HAPprime)} \texttt{PoincareSeriesLHS(G) } 
 
  Inputs a finite $2$-group $G$ and returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_2)$ for all $k$. 
 
- This function was written by Paul Smith. It use the Singular system for
-commutative algebra. \\
+ This function was written by \textsc{Paul Smith}. It use the Singular system for commutative algebra. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -843,8 +856,7 @@ problem, an optional second variable $m$ can be set equal to $0$, and then the f
 \hyperdef{L}{X7A3DC9327EE1BE6C}{}
 {
  \begin{center}
-\begin{tabular}{|l|} Functions on this page are joint work with Hamid Mohammadzadeh, and
-implemented by him. \\
+\begin{tabular}{|l|} Functions on this page are joint work with \textsc{Hamid Mohammadzadeh}, and implemented by him. \\
  \index{LieCoveringHomomorphism} \texttt{ LieCoveringHomomorphism(L)} 
 
  Inputs a finite dimensional Lie algebra $L$ over a field, and returns a surjective Lie homomorphism $phi : C\rightarrow L$ where: 
@@ -932,6 +944,8 @@ impose a metric on K which restricts to a Euclidean metric on each 2-cell.)
 \begin{itemize}
 \item  $P.freeGroup$ is a free group $F$, 
 \item  $P.relators$ is a list $S$ of words in $F$, 
+\item  $P.gens$ is a list of positive integers such that the $i$-th generator of the presentation corresponds to the group element
+R!.elts[P[i]] . 
 \end{itemize}
  where $G$ is isomorphic to $F$ modulo the normal closure of $S$. This presentation for $G$ corresponds to the 2-skeleton of the classifying CW-space from which $R$ was constructed. The resolution $R$ requires no contracting homotopy. \\
  \index{TorsionGeneratorsAbelianGroup} \texttt{ TorsionGeneratorsAbelianGroup(G) } 
@@ -953,10 +967,27 @@ impose a metric on K which restricts to a Euclidean metric on each 2-cell.)
 group $W$. The non-free resolution is obtained from the permutahedron of type $W$. A positive integer $n$ can be entered as an optional second variable; just the first $n$ terms of the non-free resolution are then returned. \\
  \index{ContractibleGcomplex} \texttt{ ContractibleGcomplex("PSL(4,Z)")} 
 
- Inputs one of the following strings: "SL(3,Z)", "PSL(4,Z)",
-"PSL(4,Z){\textunderscore}b". It returns a non-free ZG-resolution for the
-group $G$ described by the string. The stabilizer groups of cells are finite. These
-non-free resolutions have been provided by Mathieu Dutour. \\
+ Inputs one of the following strings: \\
+\\
+ "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" ,
+"PGL(3,Eisenstein{\textunderscore}Integers)" , "PSL(4,Z)" ,
+"PSL(4,Z){\textunderscore}b" , "PSL(4,Z){\textunderscore}c" ,
+"PSL(4,Z){\textunderscore}d" \\
+\\
+ or one of the following strings \\
+\\
+ "SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" ,
+"SL(2,Z[sqrt(-19)])" , "SL(2,Z[sqrt(-43)])" , "SL(2,Z[sqrt(-67)])" ,
+"SL(2,Z[sqrt(-163)])" \\
+\\
+ It returns a non-free ZG-resolution for the group $G$ described by the string. The stabilizer groups of cells are finite.
+(Subscripts {\textunderscore}b , {\textunderscore}c , {\textunderscore}d
+denote alternative non-free ZG-resolutions for a given group G.)\\
+\\
+ Data for the first list of non-free resolutions was provided provided by \textsc{Mathieu Dutour}. Data for the second list was provided by \textsc{Alexander Rahm}. \\
+ \index{TruncatedGComplex} \texttt{ TruncatedGComplex(R,m,n)} 
+
+ Inputs a non-free $ZG$-resolution $R$ and two positive integers $m $ and $ n $. It returns the non-free $ZG$-resolution consisting of those modules in $R$ of degree at least $m$ and at most $n$. \\
  \index{FundamentalDomainStandardSpaceGroup (HAPcryst)} \texttt{ FundamentalDomainStandardSpaceGroup(v,G)} 
 
  Inputs a crystallographic group G (represented using AffineCrystGroupOnRight
@@ -964,8 +995,7 @@ as in the GAP package Cryst). It also inputs a choice of vector v in the
 euclidean space $R^n$ on which $G$ acts. It returns the Dirichlet-Voronoi fundamental cell for the action of $G$ on euclidean space corresponding to the vector $v$. The fundamental cell is a fundamental domain if $G$ is Bieberbach. The fundamental cell/domain is returned as a ``Polymake object''. Currently the function only applies to certain crystallographic groups. See
 the manuals to HAPcryst and HAPpolymake for full details. 
 
- This function is part of the HAPcryst package written by Marc Roeder and is
-thus only available if HAPcryst is loaded. 
+ This function is part of the HAPcryst package written by \textsc{Marc Roeder} and is thus only available if HAPcryst is loaded. 
 
  The function requires the use of Polymake software. \\
  \index{OrbitPolytope} \texttt{ OrbitPolytope(G,v,L) } 
@@ -1082,6 +1112,9 @@ of $G$. The function prints the word $w$ to the screen in the form
 
  Inputs a set $S$ of words in a free $ZG$-module, and a word $w$ in the module. The function returns a word $w'$ such that \texttt{\symbol{123}}$S,w'$\texttt{\symbol{125}} generates the same abelian group as
 \texttt{\symbol{123}}$S,w$\texttt{\symbol{125}}. The word $w'$ is possibly shorter (and certainly no longer) than $w$. This function needs to be improved! \\
+ \index{ResolutionBoundaryOfWord} \texttt{ ResolutionBoundaryOfWord(R,n,w) } 
+
+ Inputs a resolution $R$, a positive integer $n$ and a list $w$ representing a word in the free module $R_n$. It returns the image of $w$ under the $n$-th boundary homomorphism. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -1541,7 +1574,10 @@ dimensions 0 to Dimension(T) is returned . \\
  Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns the (often very large) cellular chain complex of $T$. \\
  \texttt{ChainComplexOfPair(T,S)} 
 
- Inputs a pure cubical complex or cubical complex $T$ and contractible subcomplex $S$. It returns the quotient $C(T)/C(S)$ of cellular chain complexes. \\
+ Inputs a pure cubical complex or cubical complex $T$ and subcomplex $S$. It returns the quotient $C(T)/C(S)$ of cellular chain complexes. \\
+ \texttt{ExcisedPureCubicalPair(T,S)} 
+
+ Inputs a pure cubical complex $T$ and subcomplex $S$. It returns the pair $[T\setminus intS, S\setminus intS])$ of pure cubical complexes where $intS$ is the pure cubical complex obtained from $S$ by removing its boundary. \\
  \index{ChainInclusionOfPureCubicalPair} \texttt{ChainInclusionOfPureCubicalPair(S,T)} 
 
  Inputs a pure cubical complex $T$ and subcomplex $S$. It returns the chain inclusion $C(S) \rightarrow C(T)$ of cellular chain complexes. \\
@@ -1557,7 +1593,7 @@ dimensions 0 to Dimension(T) is returned . \\
  \index{ContractibleSubomplexOfPureCubicalComplex} \texttt{ ContractibleSubomplexOfPureCubicalComplex(T)} 
 
  Inputs a pure cubical complex $T$ and returns a maximal contractible subcomplex. \\
- \index{AlmostContractibleSubomplexOfPureCubicalComplex} \texttt{ AlmostContractibleSubomplexOfPureCubicalComplex(T)} 
+ \index{AcyclicSubomplexOfPureCubicalComplex} \texttt{ AcyclicSubomplexOfPureCubicalComplex(T)} 
 
  Inputs a pure cubical complex $T$ and returns a (not necessarily connected) subcomplex having trivial homology
 in all degrees greater than $0$. \\
@@ -1581,9 +1617,22 @@ tolerance.) \\
  \index{ThickenedPureCubicalComplex} \texttt{ ThickenedPureCubicalComplex(T)} 
 
  Inputs a pure cubical complex $T$ and returns a pure cubical complex $S$. If a euclidean cube is in $T$ then this cube and all its neighbouring cubes are included in $S$. \\
+ \index{MorseFiltration} \texttt{ MorseFiltration(M,i,t,bool)} \texttt{ MorseFiltration(M,i,t)} 
+
+ Inputs a pure cubical complex $M$ of dimension $d$, an integer $i$ between $1$ and $d$, a positive integer $t$ and a boolean value True or False. The function returns a list $[M_1, M_2, ..., M_t]$ of pure cubical complexes with $M_k$ a subcomplex of $M_{k+1}$. The list is constructed by setting all slices of $M$ perpendicular to the $i$-th axis equal to zero if they meet the $i$th axis at a sufficiently high coordinate (if bool=True) or sufficiently low
+coordinate (if bool=False). 
+
+ If the variable bool is not specified then it is assumed to have the value
+True. \\
  \index{ComplementOfPureCubicalComplex} \texttt{ ComplementOfPureCubicalComplex(T)} 
 
  Inputs a pure cubical complex $T$ and returns a pure cubical complex $S$. A euclidean cube is in $S$ precisely when the cube is not in $T$. \\
+ \index{PureCubicalComplexToTextFile} \texttt{ PureCubicalComplexToTextFile(file,M)} 
+
+ Inputs a pure cubical complex $M$ and a string containing the address of a file. A representation of this
+complex is written to the file in a format that can be read by the CAPD
+(Computer Assisted Proofs in Dynamics) software developed by Marian Mrozek and
+others. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -1712,7 +1761,7 @@ dimension $d$. \\
  \index{ArrayAssign} \texttt{ ArrayAssign(A,x,n)} 
 
  Inputs an array $A$ and a coordinate vector $x$ and an integer $n$. It sets the entry of $A$ with coordinate $x$ equal to $n$. \\
- \index{ArrayAssignFunctions} \texttt{ ArrayAssign(d)} 
+ \index{ArrayAssignFunctions} \texttt{ ArrayAssignFunctions(d)} 
 
  Inputs a positive integer $d$ and returns an efficient version of the function ArrayAssign for arrays of
 dimension $d$. \\

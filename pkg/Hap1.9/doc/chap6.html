@@ -141,16 +141,24 @@
 <p>Non prime-power (and possibly infinite) groups G can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) must be entered as a fourth argument.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code"> PersistentHomologyOfFilteredChainComplex(C,n,p) </code></p>
+
+<p>Inputs a filtered chain complex C (of characteristic 0 or p) together with a positive integer n and prime p. It returns the bar code of the persistent mod p homology in degree n of the filtered chain complex C. (This function needs a more efficient implementation. Its fine as it stands for investigation in group homology, but not sufficiently efficient for the homology of large complexes arising in applied topology.)</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) </code></p>
 
 <p>Inputs a commutative diagram D of finite p-groups and a positive integer n. It returns a list containing, for each homomorphism in the nerve of D, a triple [k,l,m] where k is the dimension of the source of the induced mod p homology map in degree n, l is the dimension of the image, and m is the dimension of the cokernel.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">PersistentHomologyOfPureCubicalComplex(L,n,p)</code> <br /> <code class="code">PersistentHomologyOfPureCubicalComplex(M,n,p)</code></p>
+<td class="tdleft"><code class="code">PersistentHomologyOfPureCubicalComplex(L,n,p)</code></p>
 
-<p>Inputs a positive integer n, a prime p and an increasing chain L=[L_1, L_2, ..., L_k] of subcomplexes in a pure cubical complex L_k. It returns the bar code of the persistent mod p homology in degree n of the sequence of inclusion maps. The bar code is returned as a binary matrix.</p>
+<p>Inputs a positive integer n, a prime p and an increasing chain L=[L_1, L_2, ..., L_k] of subcomplexes in a pure cubical complex L_k. It returns the bar code of the persistent mod p homology in degree n of the sequence of inclusion maps. The bar code is returned as a matrix.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ZZPersistentHomologyOfPureCubicalComplex(L,n,p)</code></p>
 
-<p>Alternatively, the list L can be replaced by a single cubical complex M. The function then constructs an increasing chain L with first term M and final term a contracible complex.</td>
+<p>Inputs a positive integer n, a prime p and any sequence L=[L_1, L_2, ..., L_k] of subcomplexes of some pure cubical complex. It returns the bar code of the zig-zag persistent mod p homology in degree n of the sequence of maps L_1 -&gt; L_1 cup L_2 &lt;- L_2 -&gt; L_2 cup L_3 &lt;- L_4 -&gt; ... &lt;- L_k. The bar code is returned as a matrix.</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code">RipsHomology(G,n)</code> <code class="code">RipsHomology(G,n,p)</code></p>

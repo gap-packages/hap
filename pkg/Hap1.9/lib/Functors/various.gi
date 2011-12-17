@@ -122,7 +122,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallGlobalFunction(Coclass,
+InstallGlobalFunction(CoClass,
 function(G)
 local
 	facs;

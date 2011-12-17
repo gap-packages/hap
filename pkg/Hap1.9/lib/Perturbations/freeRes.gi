@@ -6,7 +6,7 @@ InstallGlobalFunction(FreeGResolution,
 function(arg)
 local 
 	P,N,prime,
-	Dimension, DimensionRecord, DimRecs, 
+	Dimension, DimensionRecord, DimRecs, FiltDimRecs,
 	Boundary,
 	BoundaryP,
 	Pair2Quad, Pair2QuadRec,
@@ -14,9 +14,10 @@ local
 	HtpyGen, HtpyWord,
 	StabGrps, 
 	StabResls, 
+        ResolutionFG,
 	Action,
-        AlgRed, AlgRed2,
-	EltsG, G, Mult,
+        AlgRed,  AlgRed2,
+	EltsG, G, Mult, MultRecord,
 	DelGen, DelWord, DelGenRec,
 	PseudoBoundary,FinalBoundary,
         FilteredLength, FilteredDimension, FilteredDimensionRecord,
@@ -27,11 +28,24 @@ N:=arg[2];
 if Length(arg)>2 then prime:=Gcd(arg[3],EvaluateProperty(P,"characteristic"));
 else prime:=EvaluateProperty(P,"characteristic"); fi;
 
-N:=Minimum(Length(P),N);
+N:=Minimum(EvaluateProperty(P,"length"),N);
 G:=P!.group;
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
+#############################
+ResolutionFG:=function(G,n)
+local iso,Q,res;
+
+iso:=RegularActionHomomorphism(G);
+Q:=Image(iso);
+res:=ResolutionFiniteGroup(Q,n);
+res!.group:=G;
+res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
+return res;
+
+end;
+#############################
 
 if prime>0 then 
 ##############################################
@@ -71,22 +85,29 @@ else
 
 ##############################################
 AlgRed:= function(ww)
-local x,v,k,w;
-w:=StructuralCopy(ww);
+local x,i,v,k,u,w;
+#if Length(ww)>5000 then return ww; fi;
+w:=ww;#w:=StructuralCopy(ww);
 
-  v:=[];
+v:=[];
         for x in w do
         if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
-        k:=Position(v,[-x[1],x[2],x[3]]);
-        if (k=fail) then Add(v,x); else
-        v[k]:=0;
+#RT:=RT-Runtime(); ##This takes neary all the computation time!!
+##########################
+        k:=Position(v,[-x[1],x[2],x[3]]);  
+        if (k=fail) then Add(v,x); 
+        else
+        Remove(v,k);
         fi;
+##########################
+#RT:=RT+Runtime();
         od;
 
-        return Filtered(v,y->(not y=0));
+        return v;
 end;
 ##############################################
 fi;
+
 
 
 ##############################################
@@ -97,12 +118,19 @@ Action:=function(k,j,g) return 1; end;
 fi;
 ##############################################
 
+MultRecord:=[];
 ################################################################
 Mult:=function(g,h)
 local pos;
-pos:= Position(EltsG,EltsG[g]*EltsG[h]);
-if pos=fail then Add(EltsG,EltsG[g]*EltsG[h]); return Length(EltsG);
-else return pos; fi;
+if not IsBound(MultRecord[g]) then MultRecord[g]:=[]; fi;
+if not IsBound(MultRecord[g][h]) then
+    pos:= Position(EltsG,EltsG[g]*EltsG[h]);
+    if pos=fail then Add(EltsG,EltsG[g]*EltsG[h]); 
+    MultRecord[g][h]:= Length(EltsG);
+    else MultRecord[g][h]:= pos; 
+    fi;
+fi;
+return MultRecord[g][h];
 end;
 ################################################################
 
@@ -115,7 +143,7 @@ if prime=0 then
 ##################################
 for L in StabGrps do
 Add(StabResls,List(L,	
-g->ExtendScalars(ResolutionFiniteGroup(g,i),G,EltsG))
+g->ExtendScalars(ResolutionFG(g,i),G,EltsG))
 );
 i:=Maximum(0,AbsInt(i-1));
 od;
@@ -124,7 +152,7 @@ else
 ##################################
 for L in StabGrps do
 Add(StabResls,List(L,
-g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG))
+g->ExtendScalars(ResolutionFG(g,i,false,prime),G,EltsG))
 );
 i:=Maximum(0,AbsInt(i-1));
 od;
@@ -246,24 +274,25 @@ else
 pr:=-r;pt:=-t;
 fi;
 
-y:=StabResls[q+1][pr]!.homotopy(s,[pt,g]);
-y:= List(y,x->[pr,x[1],x[2]]);
+y:=StructuralCopy(StabResls[q+1][pr]!.homotopy(s,[pt,g]));
+Apply(y,x->[pr,x[1],x[2]]);
 return y;
 end;
 ###################################################################
 
 ###################################################################
 HtpyWord:=function(q,s,w)
-local h,x,y;
+local h,z,x,y;
 #This applies the "vertical homotopy" to the r-word w in "dimension" 
 #[q,s]. The output is an r-word in "dimension" [q,s+1].
 
 h:=[];
 for y in w do
 x:=[Action(q,y[1],y[3])*y[1],y[2],y[3]];
-Append(h,HtpyGen(q,s,x[1],x[2],x[3]));
+z:=HtpyGen(q,s,x[1],x[2],x[3]);
+z:=List(z,a->[Action(q,a[1],a[3])*a[1],a[2],a[3]]);
+Append(h,z);
 od;
-Apply(h,a->[Action(q,a[1],a[3])*a[1],a[2],a[3]]);
 
 return AlgRed(h);
 end;
@@ -289,6 +318,7 @@ local y,pr,pt,i;
 #Del_k:A_{q,s} ---> A_{q-k,s+k-1} applied to a free r-generator [r,t]
 #in dimension [q,s].
 
+
 if r>0 then pr:=r;pt:=t;
 else
 pr:=-r;pt:=-t;
@@ -313,7 +343,7 @@ if pt>0 then
 DelGenRec[k+1][q+1][s+1][pr][pt]:= AlgRed(List(y,x->[pr,x[1],x[2]]));
 return DelGenRec[k+1][q+1][s+1][pr][pt];
 else DelGenRec[k+1][q+1][s+1][pr][-pt]:=AlgRed(List(y,x->[pr,-x[1],x[2]]));
-return List(y,x->[pr,x[1],x[2]]);
+return AlgRed(List(y,x->[pr,x[1],x[2]]));   
 fi;
 fi;
 fi;
@@ -340,6 +370,7 @@ return DelGenRec[k+1][q+1][s+1][pr][pt];
 else
 DelGenRec[k+1][q+1][s+1][pr][-pt]:=
 AlgRed(HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,pt)))) ;
+
 return 
 List(DelGenRec[k+1][q+1][s+1][pr][-pt], a->[a[1],-a[2],a[3]]);
 fi;
@@ -377,6 +408,7 @@ for x in w do
 Append(y,List(DelGen(k,q,s,x[1],x[2]),
 a->[a[1],a[2],Mult(x[3],a[3])]));
 od;
+
 return AlgRed(y);
 
 end;
@@ -391,6 +423,7 @@ y:=Pair2Quad(k,n); q:=y[1];s:=y[3];r:=y[2];t:=y[4];
 y:=[];
 
 for i in [0..k] do
+#for i in [0..1] do
 if q>=i then
 z:=DelGen(i,q,s,r,t);
 Append(y,
@@ -398,7 +431,6 @@ List(z,x->[Quad2Pair(q-i,x[1],s+i-1,x[2])[2],x[3]])  );
 else break;
 fi;
 od;
-
 
 return AlgebraicReduction(y);
 end;
@@ -426,27 +458,21 @@ end;
 
 ################spectral sequence requirements##################
 
-FilteredLength:=Length(P);
+
+FiltDimRecs:=[];
+for k in [0..N] do
+FiltDimRecs[k+1]:=[];
+for i in [1..Dimension(k)] do
+FiltDimRecs[k+1][i]:=Pair2Quad(k,i)[1];
+od;
+od;
+
+FilteredLength:=Maximum(Flat(FiltDimRecs));
 
 ##################################################
-FilteredDimension:=function(r,k)
-local dim,i,R;
-dim:=0;
-for i in [0..r] do
-DimRecs[k+1][i+1]:=[];
-for R in StabResls[i+1] do
-dim:=dim+R!.dimension(k-i);
-Add(DimRecs[k+1][i+1],dim);
-od;
-od;
-return dim;
-end;
-
-FilteredDimensionRecord:=
-List([0..FilteredLength],r->List([0..N],k->FilteredDimension(r,k)));
-
 FilteredDimension:=function(r,k);
-return FilteredDimensionRecord[r+1][k+1];
+
+return Length(Filtered(FiltDimRecs[k+1],x->x<=r));
 
 end;
 ##################################################
@@ -461,9 +487,11 @@ return Objectify(HapResolution,
                 homotopy:=fail,
                 elts:=P!.elts,
                 group:=P!.group,
+                pseudoBoundary:=PseudoBoundary,
                 properties:=
                    [["length",N],
                     ["filtration_length",FilteredLength],
+                    ["initial_inclusion",true],
                     ["reduced",true],
                     ["type","resolution"],
                     ["characteristic",prime]  ]));
@@ -529,9 +557,14 @@ end;
 #######################################
 GmapTH:=function(g)    #ht=g^-1 ==> g=t^-1 h^-1
 local t,h,gg,pos1,pos2;
+
+#Print("HELLO \n");
+
 gg:=EltsG[g]^-1;
 t:=CanonicalRightCosetElement(H,gg)^-1;
 h:=(gg*t)^-1;
+
+
 
 pos1:=Position(EltsG,t);
 if pos1=fail then Add(EltsG,t); pos1:=Length(EltsG);fi;
@@ -559,9 +592,8 @@ k:=p[1];
 g:=p[2];
 ht:=GmapTH(g);
 h:=ht[2];t:=ht[1];
-htpy:=StructuralCopy(HomotopyS(n,[k,h]));
-Apply( htpy,x->[x[1],THmapG(t,x[2])] );
-return htpy;
+htpy:=(HomotopyS(n,[k,h]));
+return List( htpy,x->[x[1],THmapG(t,x[2])] );
 end;
 #######################################
 

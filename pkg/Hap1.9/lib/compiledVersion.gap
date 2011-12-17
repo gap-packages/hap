@@ -143,6 +143,10 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/freeRes.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Perturbations/Compiled/dutour.so"));
+
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/filteredChainComplex.so"));
 
 
