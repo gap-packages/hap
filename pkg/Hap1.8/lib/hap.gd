@@ -64,6 +64,7 @@ DeclareGlobalFunction("ResolutionPrimePowerGroup");
 DeclareGlobalFunction("RankPrimeHomology");
 DeclareGlobalFunction("RankHomologyPGroup");
 DeclareGlobalFunction("PoincareSeries");
+DeclareGlobalFunction("PoincareSeries_alt");
 DeclareGlobalFunction("PoincareSeriesApproximation");
 DeclareGlobalFunction("PoincareSeriesPrimePart");
 DeclareGlobalFunction("ExpansionOfRationalFunction");
@@ -134,8 +135,11 @@ DeclareGlobalFunction("ModularCohomology");
 DeclareOperation("SolutionsMatDestructive",
 			[IsOrdinaryMatrix,IsOrdinaryMatrix]);
 DeclareGlobalFunction("HomologyPb");
+DeclareGlobalFunction("HomologyPrimePart");
+DeclareGlobalFunction("CohomologyPrimePart");
 DeclareGlobalFunction("GroupCohomology");
-
+DeclareGlobalFunction("IntegralHomologyOfChainComplex");
+DeclareGlobalFunction("IntegralCohomologyOfCochainComplex");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -187,3 +191,12 @@ DeclareGlobalFunction("MakeHAPManual");
 ## MEAT AXE #########################################################
 DeclareGlobalFunction("GeneratorsOfMtxModule");
 DeclareGlobalFunction("DesuspensionMtxModule");
+DeclareGlobalFunction("FpG_to_MtxModule");
+
+## STREAMS ##########################################################
+DeclareGlobalFunction("ChildProcess");
+DeclareGlobalFunction("ChildClose");
+DeclareGlobalFunction("ChildFunction");
+DeclareGlobalFunction("ChildCommand");
+DeclareGlobalFunction("ChildRead");
+DeclareGlobalFunction("ChildReadEval");

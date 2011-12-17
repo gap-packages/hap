@@ -185,7 +185,8 @@ end;
 #####################################################################
 
 if EvaluateProperty(X,"type")="cochainComplex" then
-return Cohomology_Obj(X,n).torsionCoefficients; fi;
+#return Cohomology_Obj(X,n).torsionCoefficients; fi;
+return IntegralCohomologyOfCochainComplex(X,n); fi;
 
 if EvaluateProperty(X,"type")="cochainMap" then
 return Cohomology_Arr(X,n); fi;

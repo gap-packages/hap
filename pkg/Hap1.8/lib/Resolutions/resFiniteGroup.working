@@ -57,7 +57,7 @@ G:=Group(Gens);
 N:=Order(G);
 Elts:=[];
 for i in Elements(G) do
-Add(Elts,i);
+Append(Elts,[i]);
 od;
 i:=Position(Elts,Identity(G));
 Elts[i]:=Elts[1];
@@ -175,7 +175,7 @@ temp:=[];
 
 for j in [1..Length(MC)] do
 for g in [1..N] do
-if MC[j][g]=0 then Add(temp,[j,g]);
+if MC[j][g]=0 then Append(temp,[ [j,g]]);
 fi;
 od;
 od;
@@ -348,8 +348,8 @@ if tietze then
 else
    Diff:=AlgebraicRed(Differential(i,p));
 fi;
-Add(PseudoBoundary[i],Diff);
-Add(MaxComplex[i+1],ShallowCopy(l));
+Append(PseudoBoundary[i],[Diff]);
+Append(MaxComplex[i+1],[ShallowCopy(l)]);
 MC[p[1]][p[2]]:=1;
 ContractionMatrix[i][p[1]][p[2]]:=[Length(MaxComplex[i+1]),1];
 FindConsequences(i,MC);
@@ -369,8 +369,8 @@ fi;
 #Diff:=WordModP(Diff,Charact);
 #fi;                              #I'm not sure about the maths of this.
 
-Add(PseudoBoundary[i],Diff);
-Add(MaxComplex[i+1],ShallowCopy(l));
+Append(PseudoBoundary[i],[Diff]);
+Append(MaxComplex[i+1],[ShallowCopy(l)]);
 MC[p[1]][p[2]]:=1;
 FindConsequences(i,MC);
 od;

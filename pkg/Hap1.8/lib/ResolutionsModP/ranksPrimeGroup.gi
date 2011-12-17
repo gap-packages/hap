@@ -26,11 +26,15 @@ local
 	ComplementaryBasis,
 	zero,
 	pcgens,
-	g,h,i,x,tmp;
+	g,h,i,x,xx,xxx,tmp;
 
 
 G:=arg[1];
+if arg[2]=-1 then n:=1000;
+else
 n:=arg[2];
+fi;
+
 tmp:=SSortedList(Factors(Order(G)));
 if Length(tmp)>1 then 
 Print("This function can only be applied to small prime-power groups. \n");
@@ -257,6 +261,15 @@ Add(PseudoBoundary[i], VectorListToWord(InverseFlat(x))   );
 Add(PseudoBoundaryAsVec[i], x*one   );
 od;
 DimList[i]:=Length(PseudoBoundary[i]);
+
+
+if i>15 and arg[2]=-1 then
+x:=PoincareSeries(List([0..i],j->Dimension(j)),i+1);
+xx:=PoincareSeries(List([0..i-1],j->Dimension(j)),i);
+xxx:=PoincareSeries(List([0..i-2],j->Dimension(j)),i-1);
+if x=xx and xx=xxx and (not x=fail) then return x; fi;
+fi;
+
 od;
 
 #####################################################################

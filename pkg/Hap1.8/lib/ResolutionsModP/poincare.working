@@ -115,33 +115,31 @@ factos:=List(factos,g-> PoincareSeries(g));
 return Product(factos);
 else
 
-return RankPrimeHomology(G,-1);
-
 ###########################################################
-#Hilbert:=function(G,n,k)
-#local P,R,i,B,PolRing,H;
+Hilbert:=function(G,n,k)
+local P,R,i,B,PolRing,H;
 
-#R:=ResolutionPrimePowerGroup(G,n);
-#P:=[];
-#for i in [1..k] do
-#P[i]:=PoincareSeries(R,n+1-i);
-#od;
+R:=ResolutionPrimePowerGroup(G,n);
+P:=[];
+for i in [1..k] do
+P[i]:=PoincareSeries(R,n+1-i);
+od;
 
-#B:=List([1..k-1],i-> P[i] = P[i+1]);
+B:=List([1..k-1],i-> P[i] = P[i+1]);
 
-#if not false in B then return P[1]; 
-#else return fail; fi;
-#end;
+if not false in B then return P[1]; 
+else return fail; fi;
+end;
 ##########################################################
 
 	
-#kk:=10;
-#H:=Hilbert(G,kk,2);
-#while H=fail do
-#kk:=kk+3;H:=Hilbert(G,kk,3);
-#od;
+kk:=10;
+H:=Hilbert(G,kk,2);
+while H=fail do
+kk:=kk+3;H:=Hilbert(G,kk,3);
+od;
 
-#return H;
+return H;
 fi;
 end);
 #####################################################################

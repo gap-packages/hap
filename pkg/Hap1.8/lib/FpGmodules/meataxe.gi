@@ -1,9 +1,10 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(GeneratorsOfMtxModule,
-function(M)
+function(M) # It is assumed that G acts on column vectors on the 
+	    # left (g,v)-->g.v in all FG-modules. 
 local
-        G,
+	G,
         dim,
         P,
         prime,
@@ -18,7 +19,6 @@ local
         d1,d2;
 
 #####################################################################
-
 DimOfMod:=function(A)
 local B,v,x;
 
@@ -35,7 +35,9 @@ end;
 #####################################################################
 
 
-G:=Group(M.generators);
+G:=Group(List(M.generators,x->TransposedMat(x)));
+# This should handle to left-right module conversion.
+
 dim:=M.dimension;
 prime:=Characteristic(M.field);
 one:=One(GF(prime));
@@ -55,8 +57,9 @@ Append(Rad,Mat-Mat*x);
 od;
 
 if Length(Rad)=0 then Add(Rad,0*Mat[1]); fi;
-Rad:=SemiEchelonMatDestructive(Rad);
-gensM:=Mat{Filtered([1..dim],i->not i in Rad.heads)};
+Rad:=SemiEchelonMat(Rad);
+
+gensM:=Mat{Filtered([1..dim],i->Rad.heads[i]=0)};
 Rad:=0;
 
 ##################
@@ -93,20 +96,29 @@ end);
 #####################################################################
 InstallGlobalFunction(DesuspensionMtxModule,
 function(M)
-local 	DM, gensM, Mat, G, pp, elts, x, v, MT,Action, GactMat;
+local 	gensM, Mat, G, GG,hom,  pp, elts, elts1,elts2,x, v, MT,Action, GactMat;
 
 gensM:=GeneratorsOfMtxModule(M);
-Mat:=[];
+
 G:=Group(M.generators);
-elts:=Elements(G);
+if "gens" in NamesOfComponents(M) then
+GG:=Group(M.gens); else GG:=G; M.gens:=M.generators; fi;
+hom:=GroupHomomorphismByImages(GG,G,M.gens,M.generators);
+
+Mat:=[];
+elts1:=Elements(GG);;
+elts:=List(elts1,x->(Image(hom,x)));
+elts2:=List(elts,x->TransposedMat(x));
+
 pp:=Order(G);
 
 for v in gensM do
-for x in elts do
-Add(Mat,v*TransposedMat(x));
-#Why on earth does GAP multiply on the right?!!
+for x in elts2 do
+Add(Mat,v*x);
+# This is really x*Transpose(v) !!
 od;
 od;
+
 
 ConvertToMatrixRep(Mat);
 Mat:=NullspaceMat(Mat);
@@ -114,7 +126,7 @@ Mat:=NullspaceMat(Mat);
 
 ############################
 ############################Should make this a global function####
-MT:=MultiplicationTable(elts);
+MT:=MultiplicationTable(elts1);
 
 #####################################################################
 GactMat:=function(g,tB)
@@ -127,6 +139,7 @@ for q in [0..(-1+Length(tB)/pp)] do
 
 for h in [1..pp] do
 C[k+MT[g][h]]:=tB[k+h];
+
 od;
 k:=k+pp;
 od;
@@ -140,7 +153,7 @@ end;
 #####################################################################
 Action:=function(g,B);
 return TransposedMat(GactMat(
-Position(elts,g),
+Position(elts1,g),
 TransposedMat(B)));
 end;
 #####################################################################
@@ -149,7 +162,7 @@ end;
 return Objectify(HapFPGModule,
 	rec 
 	(matrix:=Mat,
-	group:=G,
+	group:=GG,
 	action:=Action,
 	dimension:=Length(Mat),
 	ambientDimension:=Length(gensM)*pp,
@@ -159,3 +172,42 @@ return Objectify(HapFPGModule,
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(FpG_to_MtxModule,
+function(M) 
+local
+	MDL,
+	G,
+	gensG,
+	MatgensG,
+	prime,
+	F,
+	B,
+	x;
+
+prime:=M!.characteristic;
+F:=GF(prime);
+
+G:=M!.group;
+gensG:=GeneratorsOfGroup(G);
+MatgensG:=[];
+
+for x in gensG do
+B:=MutableCopyMat(M!.action(x,M!.matrix));
+Add(MatgensG, 
+SolutionsMatDestructive(MutableCopyMat(M!.matrix),B));
+od;
+
+MatgensG:=List(MatgensG,x->TransposedMat(x));
+
+MDL:=GModuleByMats(MatgensG,F);
+MDL.gens:=gensG;
+
+return MDL;
+end);
+#####################################################################
+#####################################################################
+
+

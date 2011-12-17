@@ -332,6 +332,9 @@ of the algebra $A$).
 \item If $X=(C \longrightarrow D)$ then the induced homomorphism $H^n(C)\longrightarrow H^n(D)$ is returned as a homomorphism of finitely presented groups. 
 \end{itemize}
  \\
+ \index{CohomologyPrimePart} \texttt{CohomologyPrimePart(C,n,p)} 
+
+ Inputs a cochain complex $C$ in characteristic 0, a positive integer $n$, and a prime $p$. It returns a list of those torsion coefficients of $H^n(C)$ that are positive powers of $p$. The function uses the EDIM package by Frank Luebeck. \\
  \index{GroupCohomology} \texttt{GroupCohomology(X,n) } ~ \texttt{GroupCohomology(X,n,p)} 
 
  Inputs a positive integer $n$ and either a finite group $X=G$ or a Coxeter diagram $X=D$ representing an infinite Artin group $G$. It returns the torsion coefficients of the integral cohomology $H^n(G,Z)$. 
@@ -379,6 +382,9 @@ answer can be set to any rational number $0${\textless}$e${\textless}= $1$ using
 SetUncertaintyTolerence(e);
 
  See the Simplicial Homology package manual for further details. \\
+ \index{HomologyPrimePart} \texttt{HomologyPrimePart(C,n,p)} 
+
+ Inputs a chain complex $C$ in characteristic 0, a positive integer $n$, and a prime $p$. It returns a list of those torsion coefficients of $H_n(C)$ that are positive powers of $p$. The function uses the EDIM GAP package by Frank Luebeck. \\
  \index{LeibnizAlgebraHomology} \texttt{LeibnizAlgebraHomology(A,n)} 
 
  Inputs a Lie or Leibniz algebra $X=A$ (over the ring of integers $Z$ or over a field $K$), together with a positive integer $n$. It returns the $n$-dimensional Leibniz homology of $A$. \\
@@ -849,6 +855,9 @@ and simply returns the $FpG$-module homomorphism. \\
 mathematically by the existence of a short exact sequence $DM \longrightarrow FM \longrightarrow M$ with $FM$ a free module. Thus the homological properties of $DM$ are equal to those of $M$ with a dimension shift. 
 
  (If $G:=Group(M.generators)$ is a $p$-group then $FM$ is a projective cover of $M$ in the sense that the homomorphism $FM \longrightarrow M$ does not factor as $FM \longrightarrow P \longrightarrow M$ for any projective module $P$.) \\
+ \index{FpG{\textunderscore}to{\textunderscore}MtxModule} \texttt{FpG{\textunderscore}to{\textunderscore}MtxModule(M)} 
+
+ Inputs an FpG-module $M$ and returns an isomorphic meataxe module. \\
  \index{GeneratorsOfMtxModule} \texttt{ GeneratorsOfMtxModule(M)} 
 
  Inputs a meataxe module $M$ acting on, say, the vector space $V$. The function returns a minimal list of row vectors in $V$ which generate $V$ as a $G$-module (where G=Group(M.generators) ). \\
@@ -957,7 +966,38 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
  }
 
  
-\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 18, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation}}\logpage{[ 18, 0, 0 ]}
+{
+ \begin{center}
+\begin{tabular}{|l|} \index{ChildClose} \texttt{ChildClose(s)} 
+
+ This closes the stream s to a child GAP process. \\
+ \index{ChildCommand} \texttt{ChildCommand("cmd;",s)} 
+
+ This runs any GAP command "cmd;" on child process accessed by the stream s. No
+output from "cmd;" can be accessed via the stream. \\
+ \index{ChildFunction} \texttt{ChildFunction("function(arg);",s)} 
+
+ This runs the GAP function "function(arg);" on a child process accessed by the
+stream s. The output from "func;" can be accessed via the stream. \\
+ \index{ChildProcess} \texttt{ChildProcess()} \\
+ \texttt{ChildProcess("workspace")} 
+
+ This starts a GAP session as a child process and returns a stream to the child
+process. The child GAP session can be started with any given workspace. \\
+ \index{ChildRead} \texttt{ChildRead(s)} 
+
+ This returns, as a string, the output of the last application of $ChildFunction("function(arg);",s)$. \\
+ \index{ChildReadEval} \texttt{ChildReadEval(s)} 
+
+ This returns, as an evaluated string, the output of the last application of $ChildFunction("function(arg);",s)$. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 19, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{BigStepLCS} \texttt{ BigStepLCS(G,n) } 

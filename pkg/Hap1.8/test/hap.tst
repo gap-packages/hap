@@ -2,7 +2,7 @@ gap> START_TEST("HAP library");
 gap> GroupHomology(AlternatingGroup(5),2,2);
 [ 2 ]
 gap> GroupHomology(SmallGroup(32,3),4,2);
-5
+[ 2, 2, 2, 2, 2 ]
 gap> GroupHomology(AbelianGroup([2,4,6]),4);
 [ 2, 2, 2, 2, 2, 2, 2, 2 ]
 gap> GroupHomology([[1,[2,3]],[2,[3,4]]],2);
@@ -29,6 +29,8 @@ gap> H7:=Cohomology(HomToIntegersModP(R,2),3);
 1
 gap> IsSuperperfect(PerfectGroup(120,1));
 true
+gap> CoefficientsOfUnivariateRationalFunction(PoincareSeries(SmallGroup(64,134)));
+[ [ 1 ], [ 1, -3, 3, -1 ], 0 ]
 gap> STOP_TEST( "tst.tst", 1000 );
 
 

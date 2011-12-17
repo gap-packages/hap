@@ -3,17 +3,15 @@
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ResolutionFpGModule,
-function(arg) #There is an incorrect dimension shift in the output here!!
+InstallGlobalFunction(RankPrimeHomology,
+function(arg)
 local
-	MDL,G,n,
+	G,n,
 	eltsG,
 	gensG,
 	Dimension,
-	CorrectedDimension,
+	DimList,
 	Boundary,
-	PartialHomotopy,
-	Homotopy,
 	PseudoBoundary,
 	PseudoBoundaryAsVec,
 	WordToVectorList,
@@ -23,26 +21,16 @@ local
 	MT,
 	GactMat,
 	ZGbasisOfKernel,
-	Mgens,
 	one,
 	InverseFlat,
 	ComplementaryBasis,
 	zero,
 	pcgens,
-	BoundaryMatrices,
-	Echelonize,
-	EchelonMatrices,
-	SolutionMatBoundaryMatrices,
-	Toggle,
-	SMBM,
-	SpaceSave,
-	t,g,h,i,x,tmp;
+	g,h,i,x,tmp;
 
 
-MDL:=arg[1];
-G:=MDL!.group;
-n:=arg[2]+1;
-if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
+G:=arg[1];
+n:=arg[2];
 tmp:=SSortedList(Factors(Order(G)));
 if Length(tmp)>1 then 
 Print("This function can only be applied to small prime-power groups. \n");
@@ -61,6 +49,7 @@ pcgens:=Pcgs(G);
 pcgens:=ReduceGenerators(pcgens,G);
 pcgens:=List(pcgens,x->Position(eltsG,x));
 
+DimList:=[];
 PseudoBoundary:=[];
 PseudoBoundaryAsVec:=[];
 for i in [1..n] do
@@ -71,24 +60,14 @@ od;
 #####################################################################
 Dimension:=function(i);
 if i<0 then return 0; fi;
-return Length(PseudoBoundaryAsVec[i]);
+if i=0 then return 1; fi;
+return DimList[i];
 end;
 #####################################################################
 
 #####################################################################
-CorrectedDimension:=function(t)
-local i;
-i:=t+1;
-if i<0 then return 0; fi;
-return Length(PseudoBoundaryAsVec[i]);
-end;
-#####################################################################
-
-#####################################################################
-Boundary:=function(t,j)
-local i;
-i:=t+1;
-if i<0 then return []; fi;
+Boundary:=function(i,j);
+if i<=0 then return []; fi;
 if j>0 then
 return PseudoBoundary[i][j]; 
 else return
@@ -113,12 +92,12 @@ return v mod prime;
 end;
 #####################################################################
 
-#for x in gensG do
-#Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
-#Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
-#( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
-#od;
-
+for x in gensG do
+Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
+Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
+( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
+od;
+DimList[1]:=Length(PseudoBoundary[1]);
 
 #####################################################################
 VectorListToWord:=function(v)
@@ -136,18 +115,6 @@ od;
 return w;
 end;
 #####################################################################
-
-Mgens:=GeneratorsOfFpGModule(MDL);
-for x in Mgens do
-tmp:=[];
-for i in [1..Length(x)/pp] do
-tmp[i]:=x{[1+(i-1)*pp..i*pp]};
-tmp[i]:=List(tmp[i],j->IntFFE(j));
-od;
-Add(PseudoBoundary[1], VectorListToWord(tmp));
-Add(PseudoBoundaryAsVec[1],x);
-od;
-
 
 
 #####################################################################
@@ -257,23 +224,27 @@ ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
 	Bcomp, BndMat;
 
-BndMat:=BoundaryMatrix(k); 
-
+BndMat:=BoundaryMatrix(k);
+PseudoBoundaryAsVec[k]:=0;
+PseudoBoundary[k]:=0;
 
 ConvertToMatrixRepNC(BndMat,prime); 
 NS:=SemiEchelonMat(NullspaceMat(BndMat));
 
 tB:=TransposedMat(NS.vectors);
 Bcomp:=ComplementaryBasis(NS.vectors);
-					
+
+
 for g in pcgens do     	 
 Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
 
 
+
 B1:=ComplementaryBasis(Bcomp,NS);
 NS:=0;
-B1:=List(B1,v->List(v,x->IntFFE(x)));
+#B1:=List(B1,v->List(v,x->IntFFE(x)));
+Apply(B1,v->List(v,x->IntFFE(x)));
 return B1;
 end;
 #####################################################################
@@ -285,127 +256,55 @@ for x in ZGbasisOfKernel(i-1) do
 Add(PseudoBoundary[i], VectorListToWord(InverseFlat(x))   );
 Add(PseudoBoundaryAsVec[i], x*one   );
 od;
+DimList[i]:=Length(PseudoBoundary[i]);
 od;
 
-
+#####################################################################
 #####################################################################
 
-#####################################################################
-
-#####################################################################
-
-
-#####################################################################
-Echelonize:=function()
-local i,  Mt, T;
-
-BoundaryMatrices:=[];
-for i in [1..n] do
-BoundaryMatrices[i]:=TransposedMat(BoundaryMatrix(i)*one);
-od;
-
-EchelonMatrices:=[];
-
-for i in [1..n] do
-#We want to solve XM=W, so work on (Mt)(Xt)=(Wt)
-# where
-ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
-T:=SemiEchelonMatTransformation(BoundaryMatrices[i]);
-EchelonMatrices[i]:=[T.coeffs,Reversed(T.heads),T.vectors];
-od;
-
-end;
-#####################################################################
-
-
-#####################################################################
-SolutionMatBoundaryMatrices:=function(m,w)
-local h,u,v,i,cnt,pos,col,row,diff;
-
-ConvertToVectorRep(w);
-v:=EchelonMatrices[m][1]*w;
-h:=StructuralCopy(EchelonMatrices[m][2]);
-u:=ListWithIdenticalEntries(Length(h),0*one);
-
-while not Sum(h)=0 do
-
-col:=PositionProperty(h,x->not x=0);
-row:=h[col];
-h[col]:=0;
-diff:=EchelonMatrices[m][3][row]*u;
-pos:=Length(u)+1-col;
-u[pos]:=v[row]-diff;
-ConvertToVectorRep(u);
-od;
-
-
-return u;
-end;
-#####################################################################
-
-
-Toggle:=true;
-#####################################################################
-SMBM:=function(m,w);
-
-if Toggle then Echelonize(); Toggle:=false; fi;
-
-return SolutionMatBoundaryMatrices(m,w);
-end;
-#####################################################################
-
-#####################################################################
-Homotopy:=function(k,w)         #assume w is in kernel d_n
-local u,v,s;
-
-if Toggle then Echelonize(); Toggle:=false; fi;
-
-v:=Flat(WordToVectorList([w],k))*one;
-ConvertToVectorRep(v,prime);
-if k=0 then 
-
-u:=StructuralCopy(v);
-Apply(u,i->IntFFE(i));
-s:=Sum(u);
-u:=ListWithIdenticalEntries(Length(v),zero);
-u[1]:=one*s;
-ConvertToVectorRep(u);
-v:=v-u;
-v:=SolutionMatBoundaryMatrices(k+1,v);
-
-else
-
-v:=v-SolutionMatBoundaryMatrices(k,BoundaryMatrices[k]*v);
-v:=SolutionMatBoundaryMatrices(k+1,v);
-
-fi;
-Apply(v,i->IntFFE(i));
-
-if not v=fail then v:=VectorListToWord(InverseFlat(v)); fi;
-return v;
-end;
-#####################################################################
-
-
-
-return Objectify(HapResolution,
-	        rec(
-		dimension:=CorrectedDimension,
-		boundary:=Boundary,
-		homotopy:=fail,
-		elts:=eltsG,
-		group:=G,
-		properties:=
-			[["length",n],
-			 ["reduced",true],
-			 ["type","resolution"],
-			 ["characteristic",prime],
-			 ["isMinimal",true]],
-		solutionMatBoundaryMatrices:=
-		  SMBM));
+return Dimension ;
 end);
 #####################################################################
 #####################################################################
 
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(EfficientNormalSubgroups,
+function(arg)
+local G, dim, EffSubgroups, N, x, R,S,T,D;
 
+###########################################################
+G:=arg[1];
+if Length(arg)>1 then dim:=arg[2]; else dim:=4; fi;
+###########################################################
+
+
+###########################################################
+if not IsPrimePowerInt(Order(G)) then
+Print("This function applies to prime-power groups only.");
+return fail;
+fi;
+###########################################################
+
+
+N:=NormalSubgroups(G);
+N:=Filtered(N,x->(Order(x)>1 and Order(x)<Order(G)));
+
+EffSubgroups:=[];
+R:=RankPrimeHomology(G,dim);;
+R:=List([0..dim],i->R(i));
+
+for x in N do
+S:=ResolutionPrimePowerGroup(x,dim);
+T:=ResolutionPrimePowerGroup(G/x,dim);
+D:=ResolutionDirectProduct(S,T);
+D:=List([0..dim],i->D!.dimension(i));
+
+if D=R then Add(EffSubgroups,x); fi;
+od;
+
+return EffSubgroups;
+end);
+#####################################################################
+#####################################################################

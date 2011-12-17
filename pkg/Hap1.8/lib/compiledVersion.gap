@@ -174,6 +174,9 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralHomology.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/integralHomologyObj.so"));
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/modularHomology.so"));
 
 LoadDynamicModule(
@@ -188,6 +191,9 @@ Concatenation(tmppath,"lib/Homology/Compiled/groupCohomology.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralCohomology.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/integralCohomologyObj.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/cohomology.so"));
