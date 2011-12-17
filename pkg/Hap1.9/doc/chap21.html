@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 21:  Simplicial Complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap20.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap22.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7AC76D657C578FEE" name="X7AC76D657C578FEE"></a></p>
+<div class="ChapSects"><a href="chap21.html#X7AC76D657C578FEE">21. <span class="Heading"> Simplicial Complexes</span></a>
+</div>
+
+<h3>21. <span class="Heading"> Simplicial Complexes</span></h3>
+
+<div class="pcenter"><table class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code"> Homology(T,n)</code> <code class="code"> Homology(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and a non-negative integer n. It returns the n-th integral homology of T as a list of torsion integers. If no value of n is input then the list of all homologies of T in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Bettinumbers(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T. The list of free ranks of the homology groups of T in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns the (often very large) cellular chain complex of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">CechComplexOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a d-dimensional pure cubical complex T and returns a simplicial complex S. The simplicial complex S has one vertex for each d-cube in T, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RipsChainComplex(S,epsilon)</code> <code class="code">RipsChainComplex(S,epsilon,true)</code></p>
+
+<p>Inputs an n x n symmetric matrix S with non-negative rational entries, together with a positive rational number epsilon. The matrix is interpreted as that arising from a set of n points in a metric space, the (i,j) entry representing the distance between the i-th and j-th points. (However, for the construction to work, there is no need for S to actually arise in this way.) The function constructs the simplicial complex X with n vertices and with one k-simplex for each subset of k points where any two elements in the subset are within a distance epsilon of each other. The function then returns the low dimensions of a chain complex C which is homotopy equivalent to the cellular chain complex C(X). With any luck C will be smaller than C(X).</p>
+
+<p>At present the function only returns C up to and including dimension 2. So it can be used to compute the first homology of X.</p>
+
+<p>If an optional third argument is set equal to true then the function returns a list of chain complexes whose direct sum is homotopy equivalent to C(X) in low dimensions. This option can be used to calculate the homology of C more efficiently.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">VectorsToSymmetricMatrix(M)</code> <code class="code">VectorsToSymmetricMatrix(M,distance)</code></p>
+
+<p>Inputs a matrix M of rational numbers and returns a symmetric matrix S whose (i,j) entry is the distance between the i-th row and j-th rows of M where distance is given by the sum of the absolute values of the coordinate differences.</p>
+
+<p>Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational vectors v,w of length Length(M[1]).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EulerCharacteristic(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns its Euler characteristic.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MaximalSimplicesToSimplicialComplex(L)</code></p>
+
+<p>Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex. The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SkeletonOfSimplicialComplex(S,k)</code></p>
+
+<p>Inputs a simplicial complex S and a positive integer k less than or equal to the dimension of S. It returns the truncated k-dimensional simplicial complex S^k (and leaves S unchanged).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">QuillenComplex(G)</code></p>
+
+<p>Inputs a finite group G and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of G.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap20.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap22.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102); width: 1009px; height: 2603px;"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutLieCovers.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Simplicial and cubical complexes<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutTDA.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;"><br>
+1. Simplicial Complexes<br>
+      <br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">A
+finite simplicial complex can be created in HAP by specifying its
+maximal simplices. For instance, the following commmands construct the
+simplicial projective plane <br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 316px; height: 323px;" alt="" src="projectiveplane.jpg"><br>
+      </div>
+      <br>
+and then calculate its integral homologies from the associated cellular
+chain complex.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+L:=[[1,2,6],[2,6,9],[2,3,9],[3,8,9],[3,4,8],[4,5,8],<br>
+&gt; [5,6,9],[5,9,10],[8,9,10],[7,8,10],[5,7,8],[5,6,7],<br>
+&gt; [4,5,10],[3,4,10],[3,7,10],[2,3,7],[2,6,7],[1,2,6]];;<br>
+      <br>
+gap&gt; ProjPlane:=MaximalSimplicesToSimplicialComplex(L);<br>
+Simplicial complex of dimension 2.<br>
+      <br>
+gap&gt; C:=ChainComplex(ProjPlane);<br>
+Chain complex of length 2 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,1);<br>
+[ 2 ]<br>
+gap&gt; Homology(C,2);<br>
+[&nbsp; ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute the low-dimensional integral homologies of a
+10-dimensional simplicial sphere.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+n:=10;;<br>
+gap&gt;
+n_Sphere:=MaximalSimplicesToSimplicialComplex(Combinations([0..n+1],n+1));<br>
+Simplicial complex of dimension 10.<br>
+      <br>
+gap&gt; C:=ChainComplex(n_Sphere);<br>
+Chain complex of length 10 in characteristic 0 .<br>
+      <br>
+gap&gt; List([0..n],m-&gt;Homology(C,m));<br>
+[ [ 0 ], [&nbsp; ], [&nbsp; ], [&nbsp; ], [&nbsp; ], [&nbsp; ], [&nbsp;
+], [&nbsp; ], [&nbsp; ], [&nbsp; ], [ 0 ], [&nbsp; ] ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+simplicial complex arising as the order complex of the poset of
+non-trivial elementary abelian p-subgroups of a finite group G has been
+studied by D. Quillen and others. The following commands contruct this
+simplicial complex for the Sylow 2-subgroup of the Mathieu group M<sub>12</sub>
+(with p=2), and then verify that in this case the simplicial complex is
+contractible.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Q:=QuillenComplex(SylowSubgroup(MathieuGroup(12),2),2);<br>
+Simplicial complex of dimension 2.<br>
+      <br>
+gap&gt; C:=ChainComplex(Q);<br>
+Chain complex of length 2 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,1);<br>
+[&nbsp; ]<br>
+gap&gt; Homology(C,2);<br>
+[&nbsp; ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">
+      <div style="text-align: center;"><big style="font-weight: bold;"><br>
+2. Cubical Complexes<br>
+      <br>
+      </big></div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">In
+HAP we us the term "pure cubical complex" to mean a subspace of
+d-dimensional euclidian space arising as a union of finitely many
+d-dimensional unit cubes whose vertices have integral coordinates. A
+pure cubical space can be created by specifying a d-dimensional array
+of 0s and 1s. For instance, the following commands construct a
+3-dimensional cubical 2-sphere and verify its homology in low
+dimensions. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+a:=[[1,1,1],[1,1,1],[1,1,1]];;<br>
+gap&gt; b:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
+gap&gt; c:=[[1,1,1],[1,1,1],[1,1,1]];;<br>
+gap&gt; array:=[a,b,c];;<br>
+gap&gt; 2_sphere:=PureCubicalComplex(array);<br>
+Pure cubical complex of dimension 3.<br>
+      <br>
+gap&gt; C:=ChainComplex(2_sphere);<br>
+Chain complex of length 3 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,1);<br>
+[&nbsp; ]<br>
+gap&gt; Homology(C,2);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,3);<br>
+[&nbsp; ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+Cech complex of a pure cubical complex is a simplicial complex&nbsp;
+such that the geometric realizations of the two complexes are homotopy
+equivalent. The following commands compute the Cech complex of the
+cubical 2-sphere and (again) verify the low dimensional homology of the
+2-sphere.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+S:=CechComplexOfPureCubicalComplex(2_sphere);<br>
+Simplicial complex of dimension 3.<br>
+      <br>
+gap&gt; C:=ChainComplex(S);<br>
+Chain complex of length 3 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,1);<br>
+[&nbsp; ]<br>
+gap&gt; Homology(C,2);<br>
+[ 0 ]<br>
+gap&gt; Homology(C,3);<br>
+[&nbsp; ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+above cubical 2-sphere has twenty-six 3-cells. The following commands
+compute a homotopy retract with just six 3-cells.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+new_sphere:=ContractedComplex(2_sphere);<br>
+Pure cubical complex of dimension 3.<br>
+      <br>
+gap&gt; C:=ChainComplex(2_sphere);;<br>
+gap&gt; D:=ChainComplex(new_sphere);;<br>
+gap&gt; C!.dimension(3);<br>
+26<br>
+gap&gt; D!.dimension(3);<br>
+6<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following command shows that the Cech complex of this smaller
+3-dimensional 2-sphere is actually a 2-dimensional simplicial complex.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+S:=CechComplexOfPureCubicalComplex(new_sphere);<br>
+Simplicial complex of dimension 2.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute a 3-dimensional simplicial complex which is
+homotopic to a torus.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Circle:=PureCubicalComplex([[1,1,1],[1,0,1],[1,1,1]]);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; Torus:=DirectProductOfPureCubicalComplexes(Circle,Circle);<br>
+Pure cubical complex of dimension 4.<br>
+      <br>
+gap&gt; ContractPureCubicalComplex(Torus);;<br>
+      <br>
+gap&gt; SimplicialTorus:=CechComplexOfPureCubicalComplex(Torus);<br>
+Simplicial complex of dimension 3.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+digital photograph can be represented as a 2-dimensional pure cubical
+complex. This is done by choosing an integer threshold and including a
+2-cell in the pure cubical complex for each pixel where the sum of the
+three RGB values iis less than the threshold.<br>
+      <br>
+The following commands use a threshold of 400 to represent the image<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 247px; height: 287px;" alt="" src="bw_image.bmp"><br>
+      <div style="text-align: left;"><br>
+as a pure cubical complex. The complex has 40949 2-dimensional cells.<br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+image:=ReadImageAsPureCubicalComplex("bw_image.bmp",400);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; C:=ChainComplex(image);<br>
+Chain complex of length 2 in characteristic 0 .<br>
+      <br>
+gap&gt; C!.dimension(0);<br>
+45664<br>
+gap&gt; C!.dimension(1);<br>
+86630<br>
+gap&gt; C!.dimension(2);<br>
+40949<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+number of cells in the above cubical complex makes it difficult to
+compute the homology of the associated cellular chain complex. One way
+around the difficulty is to:<br>
+      <ul>
+      </ul>
+      <ol>
+        <li>Find a homotopy retract R of the pure cubical complex.</li>
+        <li>Find a large contractible&nbsp; subcomplex&nbsp; S in R.</li>
+        <li>Construct the quotient&nbsp; C(R)/C(S) of the cellular
+chain complexes.</li>
+        <li>Use the fact that H<sub>n</sub>(R) =&nbsp; H<sub>n</sub>(
+C(R)/C(S) ) for n&gt;0 and that H<sub>0</sub>(R) is isomorphic to the
+direct sum H<sub>0</sub>(C(R)/C(S))+H<sub>0</sub>(S).</li>
+      </ol>
+      <ul>
+      </ul>
+The following commands apply Steps 1-4 in order to calculate that the
+above image has 3 path components and 20 1-cycles.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+image:=ReadImageAsPureCubicalComplex("bw_image.bmp",400);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; R:=ContractedComplex(image);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; S:=ContractibleSubcomplexOfPureCubicalComplex(R);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; C:=ChainComplexOfPair(R,S);<br>
+Chain complex of length 2 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0, 0 ]<br>
+      <br>
+gap&gt; Homology(C,1);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutLieCovers.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutTDA.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

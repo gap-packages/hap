@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 22: Cubical Complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap21.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap23.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7D67D5F3820637AD" name="X7D67D5F3820637AD"></a></p>
+<div class="ChapSects"><a href="chap22.html#X7D67D5F3820637AD">22. <span class="Heading">Cubical Complexes</span></a>
+</div>
+
+<h3>22. <span class="Heading">Cubical Complexes</span></h3>
+
+<div class="pcenter"><table class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code"> ArrayToPureCubicalComplexA,n)</code></p>
+
+<p>Inputs an integer array A of dimension d and an integer n. It returns a d-dimensional pure cubical complex corresponding to the black/white "image" determined by the threshold n and the values of the entries in A. (Integers below the threshold correspond to a black pixel, and higher integers correspond to a white pixel.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PureCubicalComplexA,n)</code></p>
+
+<p>Inputs a binary array A of dimension d. It returns the corresponding d-dimensional pure cubical complex.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PureCubicalComplexIntersection(S,T)</code></p>
+
+<p>Inputs two pure cubical complexes with common dimension and array size. It returns the intersection of the two complexes. (An entry in the binary array of the intersection has value 1 if and only if the corresponding entries in the binary arrays of S and T both have value 1.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PureCubicalComplexUnion(S,T)</code></p>
+
+<p>Inputs two pure cubical complexes with common dimension and array size. It returns the union of the two complexes. (An entry in the binary array of the union has value 1 if and only if at least one of the corresponding entries in the binary arrays of S and T has value 1.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PureCubicalComplexDifference(S,T)</code></p>
+
+<p>Inputs two pure cubical complexes with common dimension and array size. It returns the difference S-T. (An entry in the binary array of the difference has value 1 if and only if the corresponding entry in the binary array of S is 1 and the corresponding entry in the binary array of T is 0.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ReadImageAsPureCubicalComplex("file.png",n)</code></p>
+
+<p>Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer n between 0 and 765. It returns a 2-dimensional pure cubical complex based on the black/white version of the image determined by the threshold n.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ReadImageSequenceAsPureCubicalComplex("directory",n)</code></p>
+
+<p>Reads the name of a directory containing a sequence of image files (ordered alphanumerically), and an integer n between 0 and 765. It returns a 3-dimensional pure cubical complex based on the black/white version of the images determined by the threshold n.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Size(T)</code></p>
+
+<p>This returns the number of non-zero entries in the binary array of the pure cubical complex T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> WritePureCubicalComplexAsImage(T,"filename","ext")</code></p>
+
+<p>Inputs a 2-dimensional pure cubical complex T, and a filename followed by its extension (e.g. "myfile" followed by "png"). A black/white image is saved to the file.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ViewPureCubicalComplex(T)</code> <code class="code"> ViewPureCubicalComplex(T,"mozilla")</code></p>
+
+<p>Inputs a 2-dimensional pure cubical complex T, and optionally a command such as "mozilla" for viewing image files. A black/white image is displayed.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Homology(T,n)</code> <code class="code"> Homology(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and a non-negative integer n. It returns the n-th integral homology of T as a list of torsion integers. If no value of n is input then the list of all homologies of T in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Bettinumbers(T,n)</code> <code class="code"> Bettinumbers(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and a non-negative integer n. The free rank of the n-th integral homology group of T is returned. If no value for n is input then the list of Betti numbers in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">DirectProductOfPureCubicalComplexes(M,N)</code></p>
+
+<p>Inputs two cubical complexes M,N and returns their direct product D as a cubical complex. The dimension of D is the sum of the dimensions of M and N.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EulerCharacteristic(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns its Euler characteristic.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> PathComponentOfPureCubicalComplex(T,n)</code></p>
+
+<p>Inputs a pure cubical complex T and an integer n in the rane 1, ..., Bettinumbers(T)[1] . It returns the n-th path component of T as a pure cubical complex. The value n=0 is also allowed, in which case the number of path components is returned.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns the (often very large) cellular chain complex of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainComplexOfPair(T,S)</code></p>
+
+<p>Inputs a pure cubical complex or cubical complex T and contractible subcomplex S. It returns the quotient C(T)/C(S) of cellular chain complexes.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainInclusionOfPureCubicalPair(S,T)</code></p>
+
+<p>Inputs a pure cubical complex T and subcomplex S. It returns the chain inclusion C(S) -&gt; C(T) of cellular chain complexes.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainMapOfPureCubicalPairs(M,S,N,T)</code></p>
+
+<p>Inputs a pure cubical complex N and subcomplexes M, T and S in T. It returns the chain map C(M/S) -&gt; C(N/T) of quotient cellular chain complexes.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ContractPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T of dimension d and removes d-dimensional cells from T without changing the homotopy type of T. When the function has been applied, no further d-cells can be removed from T without changing its homotopy type. This function modifies T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ContractedComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns a structural copy of the complex obtained from T by applying the function ContractPureCubicalComplex(T).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ContractibleSubomplexOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns a maximal contractible subcomplex.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> AlmostContractibleSubomplexOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns a (not necessarily connected) subcomplex having trivial homology in all degrees greater than 0.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> HomotopyEquivalentMaximalPureCubicalSubcomplex(T,S)</code></p>
+
+<p>Inputs a pure cubical complex T together with a subcomplex S. It returns a subcomplex H of T which contains S and is maximal with respect to the property that it is homotopy equivalent to S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> HomotopyEquivalentMinimalPureCubicalSubcomplex(T,S)</code></p>
+
+<p>Inputs a pure cubical complex T together with a subcomplex S. It returns a subcomplex H of T which contains S and is minimal with respect to the property that it is homotopy equivalent to T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BoundaryOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns its boundary as a pure cubical complex. The boundary consists of all cubes which have one or more facets that lie in just the one cube.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SingularitiesOfPureCubicalComplex(T,radius,tolerance)</code></p>
+
+<p>Inputs a pure cubical complex T together with a positive integer "radius" and an integer "tolerance" in the range 1..100. It returns the subcomplex of those points in the boundary where the boundary is not differentiable. (The method for deciding differentiability at a point is crude/discrete, prone to errors and depends on the radius and tolerance.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ThickenedPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns a pure cubical complex S. If a euclidean cube is in T then this cube and all its neighbouring cubes are included in S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ComplementOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex T and returns a pure cubical complex S. A euclidean cube is in S precisely when the cube is not in T.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap21.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap23.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
