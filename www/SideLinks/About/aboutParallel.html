@@ -60,8 +60,6 @@ be assigned to different processors.<br>
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
 s:=ChildProcess();;<br>
 gap&gt; t:=ChildProcess();;<br>
-gap&gt; ChildCommand("LoadPackage(\"hap\");",s);<br>
-gap&gt; ChildCommand("LoadPackage(\"hap\");",t);<br>
       <br>
 gap&gt; ChildCommand("ODD:=Filtered([1..51],IsOddInt);",s);<br>
 gap&gt;
@@ -131,6 +129,42 @@ Group 49 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 8 ]<br>
 Group 50 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]<br>
 Group 51 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+possible problem with the above parallel computation is that the naive
+distribution of tasks over the two child processes might result in one
+process being finished long before the other.&nbsp; The command
+NextAvailableChild() can be used to overcome this problem.
+Alternatively, the function ParallelList() can be used.<br>
+      <br>
+The following commands, on a two-processor IBM laptop, show that
+parallel computation can halve the time to compute the second homology
+of the groups of order 128.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+s:=ChildProcess();;<br>
+gap&gt; t:=ChildProcess();;<br>
+gap&gt;&nbsp; fn:=function(i);return
+GroupHomology(SmallGroup(128,i),2);end;<br>
+gap&gt; ChildCommand( "fn:=function(i);return
+GroupHomology(SmallGroup(128,i),2);end;",&nbsp; s);<br>
+gap&gt; ChildCommand( "fn:=function(i);return
+GroupHomology(SmallGroup(128,i),2);end;",&nbsp; t);<br>
+      <br>
+gap&gt; Exec("date");<br>
+Sat Oct&nbsp; 6 23:52:55 IST 2007<br>
+gap&gt; Lparallel:=ParallelList([1..2328],"fn",[s,t]);;<br>
+gap&gt; Exec("date");<br>
+Sun Oct&nbsp; 7 00:00:37 IST 2007<br>
+gap&gt; L:=List([1..2328], fn);;<br>
+gap&gt; Exec("date");<br>
+Sun Oct&nbsp; 7 00:14:07 IST 2007<br>
       </td>
     </tr>
     <tr>

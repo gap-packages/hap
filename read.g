@@ -3,7 +3,7 @@
 ##  read.g                  HAP library               Graham Ellis 
 ##
 #####################################################################
-ReadPackage("HAP","lib/hap.gd");
+#ReadPackage("HAP","lib/hap.gd");
 
 
 HAPconstant:=2;	
