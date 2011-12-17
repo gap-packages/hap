@@ -215,6 +215,10 @@ ReadPackage("HAP","lib/LieAlgebras/chevalleyEilenberg.gi");
 ReadPackage("HAP","lib/LieAlgebras/isLieHom.gi");
 ReadPackage("HAP","lib/LieAlgebras/groupToLie.gi");
 ReadPackage("HAP","lib/LieAlgebras/leibniz.gi");
+ReadPackage("HAP","lib/LieAlgebras/LieTensorSquare.gi");
+ReadPackage("HAP","lib/LieAlgebras/LieCover.gi");
+ReadPackage("HAP","lib/LieAlgebras/LeibnizQuasiCover.gi");
+ReadPackage("HAP","lib/LieAlgebras/LieExteriorSquare.gi");
 
 if COMPILED=false then
 ################### MEAT AXE #######################################

@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 12:  Cocycles</title>
+<title>GAP (HAP) - Chapter 12:  Orbit polytopes and fundamental domains</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,23 +15,94 @@
 
 <p><a id="s0ss0" name="s0ss0"></a></p>
 
-<h3>12.  Cocycles</h3>
+<h3>12.  Orbit polytopes and fundamental domains</h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code"> CocycleCondition(R,n) </code></p>
+<td class="tdleft"><code class="code"> FundamentalDomainAffineCrystGroupOnRight(v,G)</code></p>
 
-<p>Inputs a resolution R and an integer n&gt;0. It returns an integer matrix M with the following property. Suppose d=R.dimension(n). An integer vector f=[f_1, ... , f_d] then represents a ZG-homomorphism R_n --&gt; Z_q which sends the ith generator of R_n to the integer f_i in the trivial ZG-module Z_q (where possibly q=0 ). The homomorphism f is a cocycle if and only if M^tf=0 mod q.</td>
+<p>Inputs a crystallographic group G (represented using AffineCrystGroupOnRight as in the GAP package Cryst). It also inputs a choice of vector v in the euclidean space R^n on which G acts. It returns the Dirichlet-Voronoi fundamental cell for the action of G on euclidean space corresponding to the vector v. The fundamental cell is a fundamental domain if G is Bieberbach. The fundamental cell/domain is returned as a "Polymake object". Currently the function only applies to certain crystallographic groups. See the manuals to HAPcryst and HAPpolymake for full details.</p>
+
+<p>This is a HAPcryst function and is thus only available if HAPcryst is loaded.</p>
+
+<p>The function requires the use of Polymake software.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> StandardCocycle(R,f,n) </code> <br /> <code class="code"> StandardCocycle(R,f,n,q) </code></p>
+<td class="tdleft"><code class="code"> OrbitPolytope(G,v,L) </code></p>
 
-<p>Inputs a ZG-resolution R (with contracting homotopy), a positive integer n and an integer vector f representing an n-cocycle R_n --&gt; Z_q where G acts trivially on Z_q. It is assumed q=0 unless a value for q is entered. The command returns a function F(g_1, ..., g_n) which is the standard cocycle G_n --&gt; Z_q corresponding to f. At present the command is implemented only for n=2 or 3.</td>
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The function also inputs a sublist L of the following list of strings:</p>
+
+<p>["dimension","vertex_degree", "visual_graph", "schlegel","visual"]</p>
+
+<p>Depending on the sublist, the function:</p>
+
+
+<ul>
+<li><p>prints the dimension of the orbit polytope P(G,v);</p>
+
+</li>
+<li><p>prints the degree of a vertex in the graph of P(G,v);</p>
+
+</li>
+<li><p>visualizes the graph of P(G,v);</p>
+
+</li>
+<li><p>visualizes the Schlegel diagram of P(G,v);</p>
+
+</li>
+<li><p>visualizes P(G,v) if the polytope is of dimension 2 or 3.</p>
+
+</li>
+</ul>
+<p>The function uses Polymake software.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> Syzygy(R,g) </code></p>
+<td class="tdleft"><code class="code"> PolytopalComplex(G,v) </code> <br /> <code class="code"> PolytopalComplex(G,v,n) </code></p>
 
-<p>Inputs a ZG-resolution R (with contracting homotopy) and a list g = [g[1], ..., g[n]] of elements in G. It returns a word w in R_n. The word w is the image of the n-simplex in the standard bar resolution corresponding to the n-tuple g. This function can be used to construct explicit standard n-cocycles. (Currently implemented only for n&lt;4.)</td>
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The cellular chain complex C_*=C_*(P(G,v)) is an exact sequence of (not necessarily free) ZG-modules. The function returns a component object R with components:</p>
+
+
+<ul>
+<li><p>R!.dimension(k) is a function which returns the number of G-orbits of the k-dimensional faces in P(G,v). If each k-face has trivial stabilizer subgroup in G then C_k is a free ZG-module of rank R.dimension(k).</p>
+
+</li>
+<li><p>R!.stabilizer(k,n) is a function which returns the stabilizer subgroup for a face in the n-th orbit of k-faces.</p>
+
+</li>
+<li><p>If all faces of dimension &lt;k+1 have trivial stabilizer group then the first k terms of C_* constitute part of a free ZG-resolution. The boundary map is described by the function boundary(k,n) . (If some faces have non-trivial stabilizer group then C_* is not free and no attempt is made to determine signs for the boundary map.)</p>
+
+</li>
+<li><p>R!.elements, R!.group, R!.properties are as in a ZG-resolution.</p>
+
+</li>
+</ul>
+<p>If an optional third input variable n is used, then only the first n terms of the resolution C_* will be computed.</p>
+
+<p>The function uses Polymake software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> PolytopalGenerators(G,v) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v, and the vector v must be chosen so that it has trivial stabilizer subgroup in G. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The function returns a record P with components:</p>
+
+
+<ul>
+<li><p>P.generators is a list of all those elements g in G such that g* v has an edge in common with v. The list is a generating set for G.</p>
+
+</li>
+<li><p>P.vector is the vector v.</p>
+
+</li>
+<li><p>P.hasseDiagram is the Hasse diagram of the cone at v.</p>
+
+</li>
+</ul>
+<p>The function uses Polymake software. The function is joint work with Seamus Kelly.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> VectorStabilizer(G,v) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector of degree n. In both cases there is a natural action of G on v and the function returns the group of elements in G that fix v.</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -42,7 +113,7 @@
 <br />
 
 
-<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
+<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
 
 </div>
 

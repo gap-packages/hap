@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 13:  Words in free ZG-modules </title>
+<title>GAP (HAP) - Chapter 13:  Cocycles</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,52 +15,23 @@
 
 <p><a id="s0ss0" name="s0ss0"></a></p>
 
-<h3>13.  Words in free ZG-modules </h3>
+<h3>13.  Cocycles</h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code"> AddFreeWords(v,w) </code></p>
+<td class="tdleft"><code class="code"> CocycleCondition(R,n) </code></p>
 
-<p>Inputs two words v,w in a free ZG-module and returns their sum v+w. If the characteristic of Z is greater than 0 then the next function might be more efficient.</td>
+<p>Inputs a resolution R and an integer n&gt;0. It returns an integer matrix M with the following property. Suppose d=R.dimension(n). An integer vector f=[f_1, ... , f_d] then represents a ZG-homomorphism R_n --&gt; Z_q which sends the ith generator of R_n to the integer f_i in the trivial ZG-module Z_q (where possibly q=0 ). The homomorphism f is a cocycle if and only if M^tf=0 mod q.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> AddFreeWordsModP(v,w,p) </code></p>
+<td class="tdleft"><code class="code"> StandardCocycle(R,f,n) </code> <br /> <code class="code"> StandardCocycle(R,f,n,q) </code></p>
 
-<p>Inputs two words v,w in a free ZG-module and the characteristic p of Z. It returns the sum v+w. If p=0 the previous function might be fractionally quicker.</td>
+<p>Inputs a ZG-resolution R (with contracting homotopy), a positive integer n and an integer vector f representing an n-cocycle R_n --&gt; Z_q where G acts trivially on Z_q. It is assumed q=0 unless a value for q is entered. The command returns a function F(g_1, ..., g_n) which is the standard cocycle G_n --&gt; Z_q corresponding to f. At present the command is implemented only for n=2 or 3.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> AlgebraicReduction(w) </code> <br /> <code class="code"> AlgebraicReduction(w,p) </code></p>
+<td class="tdleft"><code class="code"> Syzygy(R,g) </code></p>
 
-<p>Inputs a word w in a free ZG-module and returns a reduced version of the word in which all pairs of mutually inverse letters have been cancelled. The reduction is performed in a free abelian group unless the characteristic p of Z is entered.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> Multiply Word(n,w) </code></p>
-
-<p>Inputs a word w and integer n. It returns the scalar multiple n* w.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> Negate([i,j]) </code></p>
-
-<p>Inputs a pair [i,j] of integers and returns [-i,j].</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> NegateWord(w) </code></p>
-
-<p>Inputs a word w in a free ZG-module and returns the negated word -w.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> PrintZGword(w,elts) </code></p>
-
-<p>Inputs a word w in a free ZG-module and a (possibly partial but sufficient) listing elts of the elements of G. The function prints the word w to the screen in the form</p>
-
-<p>r_1E_1 + ... + r_nE_n</p>
-
-<p>where r_i are elements in the group ring ZG, and E_i denotes the i-th free generator of the module.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> TietzeReduction(S,w) </code></p>
-
-<p>Inputs a set S of words in a free ZG-module, and a word w in the module. The function returns a word w' such that {S,w'} generates the same abelian group as {S,w}. The word w' is possibly shorter (and certainly no longer) than w. This function needs to be improved!</td>
+<p>Inputs a ZG-resolution R (with contracting homotopy) and a list g = [g[1], ..., g[n]] of elements in G. It returns a word w in R_n. The word w is the image of the n-simplex in the standard bar resolution corresponding to the n-tuple g. This function can be used to construct explicit standard n-cocycles. (Currently implemented only for n&lt;4.)</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -71,7 +42,7 @@
 <br />
 
 
-<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
+<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
 
 </div>
 

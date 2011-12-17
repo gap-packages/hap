@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 10:  Generators and relators of groups</title>
+<title>GAP (HAP) - Chapter 10:  Lie commutators and nonabelian Lie tensors</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,49 +15,85 @@
 
 <p><a id="s0ss0" name="s0ss0"></a></p>
 
-<h3>10.  Generators and relators of groups</h3>
+<h3>10.  Lie commutators and nonabelian Lie tensors</h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code"> CayleyGraphDisplay(G,X) </code> <br /> <code class="code"> CayleyGraphDisplay(G,X,"mozilla") </code></p>
-
-<p>Inputs a finite group G together with a subset X of G. It displays the corresponding Cayley graph as a .gif file. It uses the Mozilla web browser as a default to view the diagram. An alternative browser can be set using a second argument.</p>
-
-<p>The argument G can also be a finite set of elements in a (possibly infinite) group containing X. The edges of the graph are coloured according to which element of X they are labelled by. The list X corresponds to the list of colours [blue, red, green, yellow, brown, black] in that order.</p>
-
-<p>This function requires Graphviz software.</td>
+<td class="tdleft">Functions on this page are joint work with Hamid Mohammadzadeh, and implemented by him.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> IsAspherical(F,R) </code></p>
+<td class="tdleft"><code class="code"> LieCoveringHomomorphism(L)</code></p>
 
-<p>Inputs a free group F and a set R of words in F. It performs a test on the 2-dimensional CW-space K associated to this presentation for the group G=F/&lt;R&gt;^F.</p>
-
-<p>The function returns "true" if K has trivial second homotopy group. In this case it prints: Presentation is aspherical.</p>
-
-<p>Otherwise it returns "fail" and prints: Presentation is NOT piece-wise Euclidean non-positively curved. (In this case K may or may not have trivial second homotopy group. But it is NOT possible to impose a metric on K which restricts to a Euclidean metric on each 2-cell.)</p>
-
-<p>The function uses Polymake software.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code"> PresentationOfResolution(R) </code></p>
-
-<p>Inputs at least two terms of a reduced ZG-resolution R and returns a record P with components</p>
+<p>Inputs a finite dimensional Lie algebra L over a field, and returns a surjective Lie homomorphism phi : C-&gt; L where:</p>
 
 
 <ul>
-<li><p>P.freeGroup is a free group F,</p>
+<li><p>the kernel of phi lies in both the centre of C and the derived subalgebra of C,</p>
 
 </li>
-<li><p>P.relators is a list S of words in F,</p>
+<li><p>the kernel of phi is a vector space of rank equal to the rank of the second Chevalley-Eilenberg homology of L.</p>
 
 </li>
 </ul>
-<p>where G is isomorphic to F modulo the normal closure of S. This presentation for G corresponds to the 2-skeleton of the classifying CW-space from which R was constructed. The resolution R requires no contracting homotopy.</td>
+</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> TorsionGeneratorsAbelianGroup(G) </code></p>
+<td class="tdleft"><code class="code"> LeibnizQuasiCoveringHomomorphism(L)</code></p>
 
-<p>Inputs an abelian group G and returns a generating set [x_1, ... ,x_n] where no pair of generators have coprime orders.</td>
+<p>Inputs a finite dimensional Lie algebra L over a field, and returns a surjective homomorphism phi : C-&gt; L of Leibniz algebras where:</p>
+
+
+<ul>
+<li><p>the kernel of phi lies in both the centre of C and the derived subalgebra of C,</p>
+
+</li>
+<li><p>the kernel of phi is a vector space of rank equal to the rank of the kernel J of the homomorphism L otimes L -&gt; L from the tensor square to L. (We note that, in general, J is NOT equal to the second Leibniz homology of L.)</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> LieEpiCentre(L)</code></p>
+
+<p>Inputs a finite dimensional Lie algebra L over a field, and returns an ideal Z^*(L) of the centre of L. The ideal Z^*(L) is trivial if and only if L is isomorphic to a quotient L=E/Z(E) of some Lie algebra E by the centre of E.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> LieExteriorSquare(L) </code></p>
+
+<p>Inputs a finite dimensional Lie algebra L over a field. It returns a record E with the following components.</p>
+
+
+<ul>
+<li><p>E.homomorphism is a Lie homomorphism µ : (L wedge L) --&gt; L from the nonabelian exterior square (L wedge L) to L. The kernel of µ is the Lie multiplier.</p>
+
+</li>
+<li><p>E.pairing(x,y) is a function which inputs elements x, y in L and returns (x wedge y) in the exterior square (L wedge L) .</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> LieTensorSquare(L) </code></p>
+
+<p>Inputs a finite dimensional Lie algebra L over a field and returns a record T with the following components.</p>
+
+
+<ul>
+<li><p>T.homomorphism is a Lie homomorphism µ : (L otimes L) --&gt; L from the nonabelian tensor square of L to L.</p>
+
+</li>
+<li><p>T.pairing(x,y) is a function which inputs two elements x, y in L and returns the tensor (x otimes y) in the tensor square (L otimes L) .</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> LieTensorCentre(L) </code></p>
+
+<p>Inputs a finite dimensional Lie algebra L over a field and returns the largest ideal N such that the induced homomorphism of nonabelian tensor squares (L otimes L) --&gt; (L/N otimes L/N) is an isomorphism.</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -68,7 +104,7 @@
 <br />
 
 
-<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
+<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
 
 </div>
 

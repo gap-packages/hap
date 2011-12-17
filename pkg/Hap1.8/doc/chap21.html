@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 21:  Pseudo lists</title>
+<title>GAP (HAP) - Chapter 21:  Topological Data Analysis</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -13,26 +13,83 @@
 <body>
 
 
-<div class="pcenter"><table class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
+<div class="pcenter"><table class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
 <p><a id="s0ss0" name="s0ss0"></a></p>
 
-<h3>21.  Pseudo lists</h3>
+<h3>21.  Topological Data Analysis</h3>
 
 <div class="pcenter"><table class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code"> Add(L,x)</code></p>
+<td class="tdleft"><code class="code"> MatrixToTopologicalSpace(A,n)</code></p>
 
-<p>Let L be a pseudo list of length n, and x an object compatible with the entries in L. If x is not in L then this operation converts L into a pseudo list of length n+1 by adding x as the final entry. If x is in L the operation has no effect on L.</td>
+<p>Inputs an integer matrix A and an integer n. It returns a 2-dimensional topological space corresponding to the black/white image determined by the threshold n and the values of the pixels in A.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> Append(L,K)</code></p>
+<td class="tdleft"><code class="code"> ReadImageAsTopologicalSpace("file.png",n)</code> <code class="code"> ReadImageAsTopologicalSpace("file.png",[m,n])</code></p>
 
-<p>Let L be a pseudo list and K a list whose objects are compatible with those in L. This operation applies Add(L,x) for each x in K.</td>
+<p>Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer n or pair [m,n] of integers between 0 and 765. It returns a topological space based on the black/white version of the image determined by the threshold n or threshold range [m,n].</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> ListToPseudoList(L)</code></p>
+<td class="tdleft"><code class="code"> ReadImageAsMatrix("file.png")</code></p>
 
-<p>Inputs a list L and returns the pseudo list representation of L.</td>
+<p>Reads an image file ("file.png", "file.eps", "file.bmp" etc) and returns an integer matrix whose entries are the sum of the RGB values of the pixels in the image.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> WriteTopologicalSpaceAsImage(T,"filename","ext")</code></p>
+
+<p>Inputs a 2-dimensional topological space T, and a filename followed by its extension (e.g. "myfile" followed by "png"). A black/white image is saved to the file.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ViewTopologicalSpace(T)</code> <code class="code"> ViewTopologicalSpace(T,"mozilla")</code></p>
+
+<p>Inputs a topological space T, and optionally a command such as "mozilla" for viewing image files. A black/white image is displayed.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BettiNumbers(T,n)</code> <code class="code"> BettiNumbers(T)</code></p>
+
+<p>Inputs a topological space T and a non-negative integer n. It returns the n-th betti number of T. If the integer n is not input then a list of all betti numbers is returned.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> PathComponent(T,n)</code></p>
+
+<p>Inputs a topological space T and an integer n in the rane 0, ..., BettiNumbers(T,0) . It returns the n-th path component of T as a topological space.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> SingularChainComplex(A)</code></p>
+
+<p>Inputs a topological space T and returns a (usually very large) integral chain complex that is homotopy equivalent to the singular chain complex of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ContractTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T of dimension d and removes d-dimensional cells from T without changing the homotopy type of T. When the function has been applied, no further d-cells can be removed from T without changing the homotopy type.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BoundaryTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T and returns its boundars as a topological space.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> BoundarySingularities(T)</code></p>
+
+<p>Inputs a topological space T and returns the subspace of points in the boundary where the boundary is not differentiable. (The method for deciding differentiability at a point is crude/discrete and prone to errors.) The zeroth betti number of the set of points is a measure of the number of "corners" in the boundary of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ThickenedTopologicalSpace(T)</code> <code class="code"> ThickenedTopologicalSpace(T,n)</code></p>
+
+<p>Inputs a topological space T and returns a topological space S. If a euclidean point is in T then this point and all its perpendicularly neighbouring euclidean points are included in S.</p>
+
+<p>If a positive integer n is input as a second argument then the thickening process is repeated n times.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ComplementTopologicalSpace(T)</code></p>
+
+<p>Inputs a topological space T and returns a topological space S. A euclidean point is in S precisely when the point is not in T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> ConcatenatedTopologicalSpace(L)</code></p>
+
+<p>Inputs a list L of topological spaces whose underlying arrays of numbers all have equal dimensions. It returns a topological space T got by juxtaposing the spaces L[1], L[2], ..., L[Length(L)].</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -43,7 +100,7 @@
 <br />
 
 
-<div class="pcenter"><table class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
+<div class="pcenter"><table class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
 
 </div>
 
