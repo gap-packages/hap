@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-HapConstantPolRing:=PolynomialRing(Rationals,["x"]);
+HapConstantPolRing:=PolynomialRing(Rationals,1);
 #Sloppy!!! Should tidy this up.
 
 #####################################################################
@@ -17,7 +17,6 @@ local
 	PolRing, x,
 	k,bool;
 
-#PolRing:=PolynomialRing(Rationals,["x"]);
 PolRing:=HapConstantPolRing;
 x:=GeneratorsOfAlgebra(PolRing)[2];
 

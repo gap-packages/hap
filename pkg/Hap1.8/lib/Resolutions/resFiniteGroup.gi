@@ -55,13 +55,28 @@ if Length(arg)>4 then saveSpace:=arg[5]; else saveSpace:=false; fi;
 
 G:=Group(Gens);
 N:=Order(G);
+
+Elts:=Elements(G);
+
+#############
+	##### If this piece of code is used then Elts will not be
+	##### strictly sorted and things may get slow!! I should fix this.
+	#####
+if not Elts[1]=Identity(G) then
 Elts:=[];
 for i in Elements(G) do
 Add(Elts,i);
 od;
+
 i:=Position(Elts,Identity(G));
 Elts[i]:=Elts[1];
 Elts[1]:=Identity(G);
+fi;
+	#####
+	#####
+#############
+
+
 RemoveSet(Gens,Identity(G));
 
 ExtendedElts:=List(Gens,g->Position(Elts,g));	

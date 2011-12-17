@@ -200,3 +200,6 @@ DeclareGlobalFunction("ChildFunction");
 DeclareGlobalFunction("ChildCommand");
 DeclareGlobalFunction("ChildRead");
 DeclareGlobalFunction("ChildReadEval");
+DeclareGlobalFunction("NextAvailableChild");
+DeclareGlobalFunction("ParallelList");
+
