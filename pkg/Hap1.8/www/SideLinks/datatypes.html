@@ -101,6 +101,7 @@ is a boolean valued function <tt> IsHapNameOfDataType(X) </tt>. </p>
 <br>
 <br>
 <h3> HAP Representations using existing GAP data types</h3>
+<br>
 <table style="width: 100%;" cellspacing="10">
   <tbody>
     <tr>
@@ -206,7 +207,6 @@ All modules in HAP are assumed to act on the left. (So care is needed
 because in GAP's standard meataxe functions the matrix action is
 assumed to be on the right. A left meataxe module can be converted to a
 right module by replacing generators with their transposes.) </td>
-      <br>
     </tr>
     <tr>
       <td>Coxeter
@@ -288,7 +288,9 @@ of an arbitrary word w in the kernel of&nbsp; M<sub>k</sub> ---&gt; M<sub>k-1&nb
       </li>
       <li> <tt>R!.elts</tt> is a (partial) list of (possibly
 duplicate)
-elements in G.</li>
+elements in G. In some cases <tt>R!.elts</tt> is a pseudo list (see
+below) and not a list.<br>
+      </li>
       <li><tt>R!.group</tt> is the group in question (and could be a
 permutation group, matrix group, finitely presented group etc.).</li>
       <li><tt>R!.properties</tt> is a list of pairs ["name", value]
@@ -436,6 +438,22 @@ function <tt>GeneratorsOfFpGModule(M)</tt>.</li>
 The operation <tt>IsHapFPGModuleHomomorphism(Phi)</tt> returns "true"
 for an
 FpG-module homomorphism Phi. </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Pseudo list<br>
+      </td>
+      <td style="vertical-align: top;">A pseudolist L has the same
+basic
+functionality as that of a list except that:<br>
+      <br>
+      <li>Position(L,x) uses a binary search rather than a linear
+search.</li>
+      <li>The elements in L must be distinct.<br>
+      </li>
+      <li>Add(L,x) returns a pseudolist with last entry equal to x.</li>
+      <li>Not all list functions and methods apply to L. <br>
+      </li>
+      </td>
     </tr>
   </tbody>
 </table>

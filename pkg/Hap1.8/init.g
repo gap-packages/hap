@@ -5,5 +5,7 @@
 ############################################################################
 
 ReadPackage("HAP","lib/hap.gd");
+ReadPackage("HAP","lib/Objectifications/types.gi");
+
 
 

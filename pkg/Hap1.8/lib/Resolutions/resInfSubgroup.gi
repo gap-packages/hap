@@ -30,6 +30,7 @@ GhomF:=GroupHomomorphismByImagesNC(G,F,GeneratorsOfGroup(G),
 	#############################################################
 
 EltsF:=List(EltsG,x->Image(GhomF,x));
+
 EltsK:=[];
 EltsKF:=[];
 if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;

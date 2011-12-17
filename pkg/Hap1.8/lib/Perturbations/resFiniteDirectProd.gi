@@ -19,6 +19,7 @@ local
 	Vector2Int,
 	Elts2Int,
 	HomotopyGradedGen,
+	HomotopyRec,
 	HomotopyOfWord,
 	FinalHomotopy,
 	HorizontalBoundaryGen,
@@ -395,12 +396,30 @@ return hty;
 end;
 #####################################################################
 
+HomotopyRec:=[];
+for i in [1..Lngth] do
+HomotopyRec[i]:=[];
+for j in [1..Dimension(i-1)] do
+HomotopyRec[i][j]:=[];
+od;od;
 
 #####################################################################
-FinalHomotopy:=function(n,x);
-return Homotopy(n,x,false);
+FinalHomotopy:=function(n,x)
+local a;
+
+a:=AbsInt(x[1]);
+if not IsBound(HomotopyRec[n+1][a][x[2]]) then
+HomotopyRec[n+1][a][x[2]]:=Homotopy(n,[a,x[2]],false);
+fi;
+
+if SignInt(x[1])=1 then
+return StructuralCopy(HomotopyRec[n+1][a][x[2]]);
+else
+return NegateWord(StructuralCopy(HomotopyRec[n+1][a][x[2]]));
+fi;
 end;
 #####################################################################
+
 
 if HomotopyR=fail or HomotopyS=fail then
 FinalHomotopy:=fail;

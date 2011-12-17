@@ -32,6 +32,8 @@ Exec( cn(VISCRIPT, cn(HAPDOC,"chap15.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap16.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap17.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap18.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap19.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap20.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chapInd.html")) );
 SetHelpViewer("mozilla");
 

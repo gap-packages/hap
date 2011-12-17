@@ -75,6 +75,9 @@ Concatenation(tmppath,"lib/Resolutions/Compiled/resAbGroup.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Resolutions/Compiled/resAspherical.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Resolutions/Compiled/pseudoLists.so"));
+
 if LoadPackage("aclib")=true then
 
 LoadDynamicModule(

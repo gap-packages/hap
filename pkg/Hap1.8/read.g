@@ -68,7 +68,7 @@ fi;
 ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 ################# OBJECTIFICATIONS ###############################
-ReadPackage("HAP", "lib/Objectifications/types.gi");
+#ReadPackage("HAP", "lib/Objectifications/types.gi");
 ReadPackage("HAP", "lib/Objectifications/basicMethods.gi");
 ################# OBJECTIFICATIONS DONE ##########################
 
@@ -107,6 +107,7 @@ ReadPackage("HAP", "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
+ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 
 if LoadPackage("aclib","0.0",false)=true then
 ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
@@ -216,3 +217,7 @@ if COMPILED=false then
 ################### MEAT AXE #######################################
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 fi;
+
+################## TDA #############################################
+ReadPackage("HAP","lib/TDA/tda.gi");
+ReadPackage("HAP","lib/TDA/cont.gi");

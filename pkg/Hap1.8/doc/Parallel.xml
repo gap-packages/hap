@@ -1,6 +1,42 @@
-<Chapter><Heading> Parallel Computation</Heading>
+<Chapter><Heading> Parallel Computation - Core Functions</Heading>
+
 
 <Table Align="|l|" >
+
+
+
+<Row>
+<Item>
+<Index> ChildProcess</Index>
+<C>ChildProcess()</C>
+<Br/>
+<C>ChildProcess("computer.ac.wales")</C>
+
+<P/>
+This starts a GAP session as a child process and returns a stream to the child process. If no argument is given then the child process is created on the local machine; otherwise the argument should be the address of a remote computer for which ssh has been configured to require no password from the user.
+
+<P/>
+(To configure ssh so that the user can login without a password prompt from "thishost" to "remotehost" either consult "man ssh" or
+<Br/>
+<Br/>
+- open a shell on thishost<Br/>
+- cd .ssh<Br/>
+- ls<Br/>
+-> if id_dsa, id_rsa etc exists,
+skip the next two steps!<Br/>
+- ssh-keygen -t rsa<Br/>
+- ssh-keygen -t dsa<Br/>
+- scp *.pub user@remotehost:~/<Br/>
+- ssh remotehost -l user<Br/>
+- cat id_rsa.pub >> .ssh/authorized_keys<Br/>
+- cat id_dsa.pub >> .ssh/authorized_keys<Br/>
+- rm id_rsa.pub id_dsa.pub<Br/>
+- exit<Br/>
+<Br/>
+You should now be able to connect from "thishost" to "remotehost"
+without a password prompt.)
+</Item>
+</Row>
 
 <Row>
 <Item>
@@ -8,7 +44,7 @@
 <C>ChildClose(s)</C>
 
 <P/>
-This closes the stream s to a child GAP process. 
+This closes the stream s to a child GAP process.
 </Item>
 </Row>
 
@@ -18,10 +54,63 @@ This closes the stream s to a child GAP process.
 <C>ChildCommand("cmd;",s)</C>
 
 <P/>
-This runs any GAP command "cmd;" on child process accessed by the stream s.
-No output from "cmd;" can be accessed via the stream. 
+This runs a GAP command "cmd;" on the child process accessed by the stream s.
+Here "cmd;" is a string representing the command. 
 </Item>
 </Row>
+
+<Row>
+<Item>
+<Index> NextAvailableChild</Index>
+<C> NextAvailableChild(L)</C>
+
+<P/>
+Inputs a list <M>L</M> of child processes and returns a child in <M>L</M>
+which is ready for computation (as soon as such a child is available).
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> IsAvailableChild</Index>
+<C> IsAvailableChild(s)</C>
+
+<P/>
+Inputs a child process  <M>s</M> and returns true if s is currently available
+for computations, and false otherwise.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> ChildPut</Index>
+<C> ChildPut(A,"B",s)</C>
+
+<P/> This copies a GAP object A on the parent process to an object B on the child process s. (The copying relies on the function PrintObj(A); )
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildGet</Index>
+<C> ChildGet("A",s)</C>
+
+<P/> This functions copies a GAP object A on the child process s and returns it on the parent process. (The copying relies on the function PrintObj(A); )
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+<Chapter>
+<Heading> Parallel Computation - Extra Functions</Heading>
+
+<Table Align="|l|" >
+
+
 
 <Row>
 <Item>
@@ -29,21 +118,9 @@ No output from "cmd;" can be accessed via the stream.
 <C>ChildFunction("function(arg);",s)</C>
 
 <P/>
-This runs the GAP function "function(arg);" 
-on a child process accessed by the stream s. 
+This runs the GAP function "function(arg);"
+on a child process accessed by the stream s.
 The  output from "func;" can be accessed via the stream.
-</Item>
-</Row>
-
-<Row>
-<Item>
-<Index> ChildProcess</Index>
-<C>ChildProcess()</C>
-<Br/>
-<C>ChildProcess("workspace")</C>
-
-<P/>
-This starts a GAP session as a child process and returns a stream to the child process. The child GAP session can be started with any given workspace.
 </Item>
 </Row>
 
@@ -67,16 +144,6 @@ This returns, as an evaluated string, the output of the last application of <M>C
 </Item>
 </Row>
 
-<Row>
-<Item>
-<Index> NextAvailableChild</Index>
-<C> NextAvailableChild(L)</C>
-
-<P/>
-Inputs a list <M>L</M> of child processes and returns a child in <M>L</M>
-which is ready for computation (as soon as such a child is available).
-</Item>
-</Row>
 
 <Row>
 <Item>
