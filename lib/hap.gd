@@ -189,6 +189,12 @@ DeclareGlobalFunction("LieAlgebraHomology");
 DeclareGlobalFunction("LowerCentralSeriesLieAlgebra");
 DeclareGlobalFunction("LeibnizComplex");
 DeclareGlobalFunction("LeibnizAlgebraHomology");
+DeclareGlobalFunction("LieTensorSquare");
+DeclareGlobalFunction("LieCoveringHomomorphism");
+DeclareGlobalFunction("LeibnizQuasiCoveringHomomorphism");
+DeclareGlobalFunction("LieExteriorSquare");
+DeclareGlobalFunction("LieEpiCentre");
+DeclareGlobalFunction("LieTensorCentre");
 
 ## MANUAL ###########################################################
 DeclareGlobalFunction("MakeHAPManual");

@@ -599,7 +599,57 @@ problem, an optional second variable $m$ can be set equal to $0$, and then the f
  }
 
  
-\chapter{\textcolor{Chapter }{ Generators and relators of groups}}\logpage{[ 10, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Lie commutators and nonabelian Lie tensors}}\logpage{[ 10, 0, 0 ]}
+{
+ \begin{center}
+\begin{tabular}{|l|} Functions on this page are joint work with Hamid Mohammadzadeh, and
+implemented by him. \\
+ \index{LieCoveringHomomorphism} \texttt{ LieCoveringHomomorphism(L)} 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field, and returns a surjective Lie homomorphism $phi : C\rightarrow L$ where: 
+\begin{itemize}
+\item the kernel of $phi$ lies in both the centre of $C$ and the derived subalgebra of $C$, 
+\item  the kernel of $phi$ is a vector space of rank equal to the rank of the second Chevalley-Eilenberg
+homology of $L$. 
+\end{itemize}
+ \\
+ \index{LeibnizQuasiCoveringHomomorphism} \texttt{ LeibnizQuasiCoveringHomomorphism(L)} 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field, and returns a surjective homomorphism $phi : C\rightarrow L$ of Leibniz algebras where: 
+\begin{itemize}
+\item the kernel of $phi$ lies in both the centre of $C$ and the derived subalgebra of $C$, 
+\item  the kernel of $phi$ is a vector space of rank equal to the rank of the kernel $J$ of the homomorphism $L \otimes L \rightarrow L$ from the tensor square to $L$. (We note that, in general, $J$ is NOT equal to the second Leibniz homology of $L$.) 
+\end{itemize}
+ \\
+ \index{LieEpiCentre} \texttt{ LieEpiCentre(L)} 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field, and returns an ideal $Z^\ast(L)$ of the centre of $L$. The ideal $Z^\ast(L)$ is trivial if and only if $L$ is isomorphic to a quotient $L=E/Z(E)$ of some Lie algebra $E$ by the centre of $E$. \\
+ \index{LieExteriorSquare} \texttt{ LieExteriorSquare(L) } 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field. It returns a record $E$ with the following components. 
+\begin{itemize}
+\item  $E.homomorphism$ is a Lie homomorphism $µ : (L \wedge L) \longrightarrow L$ from the nonabelian exterior square $(L \wedge L)$ to $L$. The kernel of $µ$ is the Lie multiplier. 
+\item  $E.pairing(x,y)$ is a function which inputs elements $x, y$ in $L$ and returns $(x \wedge y)$ in the exterior square $(L \wedge L)$ . 
+\end{itemize}
+ \\
+ \index{LieTensorSquare} \texttt{ LieTensorSquare(L) } 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field and returns a record $T$ with the following components. 
+\begin{itemize}
+\item  $T.homomorphism$ is a Lie homomorphism $µ : (L \otimes L) \longrightarrow L$ from the nonabelian tensor square of $L$ to $L$. 
+\item  $T.pairing(x,y)$ is a function which inputs two elements $x, y$ in $L$ and returns the tensor $(x \otimes y)$ in the tensor square $(L \otimes L)$ . 
+\end{itemize}
+ \\
+ \index{LieTensorCentre} \texttt{ LieTensorCentre(L) } 
+
+ Inputs a finite dimensional Lie algebra $L$ over a field and returns the largest ideal $N$ such that the induced homomorphism of nonabelian tensor squares $(L \otimes L) \longrightarrow (L/N \otimes L/N)$ is an isomorphism. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Generators and relators of groups}}\logpage{[ 11, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{CayleyGraphDisplay} \texttt{ CayleyGraphDisplay(G,X) } \\
@@ -642,7 +692,7 @@ impose a metric on K which restricts to a Euclidean metric on each 2-cell.)
  }
 
  
-\chapter{\textcolor{Chapter }{ Orbit polytopes and fundamental domains}}\logpage{[ 11, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Orbit polytopes and fundamental domains}}\logpage{[ 12, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{Fundamental domains (HAPcryst)} \texttt{ FundamentalDomainAffineCrystGroupOnRight(v,G)} 
@@ -705,7 +755,7 @@ Kelly. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Cocycles}}\logpage{[ 12, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Cocycles}}\logpage{[ 13, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{CocycleCondition} \texttt{ CocycleCondition(R,n) } 
@@ -724,7 +774,7 @@ Kelly. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Words in free $ZG$-modules }}\logpage{[ 13, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Words in free $ZG$-modules }}\logpage{[ 14, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{AddFreeWords} \texttt{ AddFreeWords(v,w) } 
@@ -765,7 +815,7 @@ of $G$. The function prints the word $w$ to the screen in the form
  }
 
  
-\chapter{\textcolor{Chapter }{ $FpG$-modules}}\logpage{[ 14, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ $FpG$-modules}}\logpage{[ 15, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{DirectSumOfFpGModules} \texttt{ DirectSumOfFpGModules(M,N) } \\
@@ -864,7 +914,7 @@ and simply returns the $FpG$-module homomorphism. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Meataxe modules}}\logpage{[ 15, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Meataxe modules}}\logpage{[ 16, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{DesuspensionMtxModule} \texttt{DesuspensionMtxModule(M)} 
@@ -885,7 +935,7 @@ mathematically by the existence of a short exact sequence $DM \longrightarrow FM
  }
 
  
-\chapter{\textcolor{Chapter }{ Coxeter diagrams and graphs of groups}}\logpage{[ 16, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Coxeter diagrams and graphs of groups}}\logpage{[ 17, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{CoxeterDiagramComponents} \texttt{ CoxeterDiagramComponents(D) } 
@@ -944,7 +994,7 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
  }
 
  
-\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 17, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 18, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{BoundaryMap} \texttt{ BoundaryMap(C) } 
@@ -984,7 +1034,7 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 18, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 19, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{ChildProcess} \texttt{ChildProcess()} \\
@@ -1042,7 +1092,7 @@ the parent process. (The copying relies on the function PrintObj(A); ) \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 19, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 20, 0, 0 ]}
 {
   \begin{center}
 \begin{tabular}{|l|} \index{ChildFunction} \texttt{ChildFunction("function(arg);",s)} 
@@ -1064,7 +1114,7 @@ stream s. The output from "func;" can be accessed via the stream. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Topological Data Analysis}}\logpage{[ 20, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Topological Data Analysis}}\logpage{[ 21, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{MatrixToTopologicalSpace} \texttt{ MatrixToTopologicalSpace(A,n)} 
@@ -1130,7 +1180,7 @@ dimensions. It returns a topological space $T$ got by juxtaposing the spaces $L[
  }
 
  
-\chapter{\textcolor{Chapter }{ Pseudo lists}}\logpage{[ 21, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Pseudo lists}}\logpage{[ 22, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{Add} \texttt{ Add(L,x)} 
@@ -1148,7 +1198,7 @@ dimensions. It returns a topological space $T$ got by juxtaposing the spaces $L[
  }
 
  
-\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 22, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 23, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{BigStepLCS} \texttt{ BigStepLCS(G,n) } 

@@ -6,7 +6,8 @@ function(C,n)
 local
         M1, M2,
         Dimension, Boundary,
-        i,j,ans,dim1,dim2,v,x;
+        dr, drtmp,
+	i,j,ans,dim1,dim2,v,x;
 
 if n <0 then return false; fi;
 if n=0 then return [0]; fi;  #THIS IS MATHEMATICALLY WRONG!!!
@@ -22,22 +23,25 @@ M1:=[];
 M2:=[];ans:=[];
 
 if IsInt(C!.snf[n]) then
-AppendTo("tmpHAP",Dimension(n)," ",Length(Boundary(n,1))," ","M \n");
+drtmp:=DirectoryTemporary();
+dr:=Filename(drtmp,"HAPtmp");
+AppendTo(dr,Dimension(n)," ",Length(Boundary(n,1))," ","M \n");
 for i in [1..Dimension(n)] do
 #M1[i]:=Boundary(n,i);
 v:=Boundary(n,i); 
 for x in [1..Length(v)] do
 if not v[x]=0 then
-AppendTo("tmpHAP",i," ",x," ",v[x], " \n");
+AppendTo(dr,i," ",x," ",v[x], " \n");
 fi;
 od;
 od;
 
-AppendTo("tmpHAP",0," ",0," ",0, " \n");
-M1:=SMInvariantFactors("tmpHAP");
+AppendTo(dr,0," ",0," ",0, " \n");
+M1:=SMInvariantFactors(dr);
 dim1:=M1[1]-Sum(List([3..Length(M1)-1],a->M1[a][2]));
 C!.snf[n]:=M1;
-Exec("rm tmpHAP");
+dr:=Filename(drtmp,"");
+Exec(Concatenation("rm -r ",dr));
 
 else
 M1:=C!.snf[n];
@@ -50,20 +54,23 @@ if IsInt(C!.snf[n+1]) then
 if Dimension(n+1)=0 then M2:=[0,0]; C!.snf[n+1]:=M2;
 
 else
-AppendTo("tmpHAP",Dimension(n+1)," ",Length(Boundary(n+1,1))," ","M \n");
+drtmp:=DirectoryTemporary();
+dr:=Filename(drtmp,"HAPtmp");
+AppendTo(dr,Dimension(n+1)," ",Length(Boundary(n+1,1))," ","M \n");
 for i in [1..Dimension(n+1)] do
 #M2[i]:=Boundary(n+1,i);
 v:=Boundary(n+1,i);
 for x in [1..Length(v)] do
 if not v[x]=0 then
-AppendTo("tmpHAP",i," ",x," ",v[x], " \n");
+AppendTo(dr,i," ",x," ",v[x], " \n");
 fi;
 od;
 od;
-AppendTo("tmpHAP",0," ",0," ",0, " \n");
+AppendTo(dr,0," ",0," ",0, " \n");
 
-M2:=SMInvariantFactors("tmpHAP");
-Exec("rm tmpHAP");
+M2:=SMInvariantFactors(dr);
+dr:=Filename(drtmp,"");
+Exec(Concatenation("rm -r ",dr));
 
 fi;
 C!.snf[n+1]:=M2;
