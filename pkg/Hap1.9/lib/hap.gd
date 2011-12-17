@@ -75,6 +75,7 @@ DeclareGlobalFunction("CayleyGraphDisplay");
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
 DeclareGlobalFunction("RankPrimeHomology");
 DeclareGlobalFunction("RankHomologyPGroup");
+DeclareGlobalFunction("NumberGeneratorsOfGroupHomology");
 DeclareGlobalFunction("PoincareSeries");
 DeclareGlobalFunction("PoincareSeries_alt");
 DeclareGlobalFunction("PoincareSeriesApproximation");
@@ -89,6 +90,7 @@ DeclareGlobalFunction("EvenSubgroup");
 DeclareGlobalFunction("EquivariantChainMap");
 DeclareGlobalFunction("ModularEquivariantChainMap");
 DeclareGlobalFunction("TensorWithIntegers");
+DeclareGlobalFunction("FilteredTensorWithIntegers");
 DeclareGlobalFunction("TensorWithIntegersModP");
 DeclareGlobalFunction("TensorWithTwistedIntegers");
 DeclareGlobalFunction("TensorWithTwistedIntegersModP");
@@ -119,9 +121,11 @@ DeclareGlobalFunction("ResolutionDirectProduct");
 DeclareGlobalFunction("ResolutionExtension");
 DeclareGlobalFunction("ResolutionFiniteDirectProduct");
 DeclareGlobalFunction("ResolutionSubnormalSeries");
-DeclareGlobalFunction("FreeResolution");
+DeclareGlobalFunction("FreeGResolution");
+DeclareGlobalFunction("ContractibleGcomplex");
 DeclareGlobalFunction("ExtendScalars");
 DeclareGlobalFunction("InduceScalars");
+DeclareGlobalFunction("TwistedResolution");
 DeclareGlobalFunction("CoxeterComplex");
 DeclareGlobalFunction("ResolutionCoxeterGroup");
 
@@ -153,6 +157,8 @@ DeclareGlobalFunction("NormalSeriesToQuotientHomomorphisms");
 DeclareGlobalFunction("LinearHomomorphismsPersistenceMat");
 DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries_Int");
 DeclareGlobalFunction("PersistentHomologyOfSubGroupSeries");
+DeclareGlobalFunction("UniversalBarCode");
+DeclareGlobalFunction("UniversalBarCodeEval");
 DeclareGlobalFunction("HomologyVectorSpace");
 DeclareGlobalFunction("IntegralHomology");
 DeclareGlobalFunction("ModularHomology");
@@ -345,6 +351,7 @@ DeclareGlobalFunction("ArrayIterate");
 DeclareGlobalFunction("IsContractibleCube_dim2");
 DeclareGlobalFunction("IsContractibleCube_higherdims");
 DeclareGlobalFunction("Array");
+DeclareGlobalFunction("BinaryArrayToTextFile");
 
 
 ## CAT ONE GROUPS ###################################################

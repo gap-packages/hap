@@ -138,7 +138,7 @@ function(file,threshold)
 # Inputs a string "file" that points either to a single image file, or 
 # to a list of suitable image files, and returns either a 2-dimensional 
 # or 3-dimensional cubical complex.
-local f,i,prog,A;
+local f,i,x,prog,B,A,AA;
 
 prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/PolyComplexes/prog");
 #MUST FIX THIS
@@ -154,16 +154,23 @@ Exec(i);
 Read("/tmp/im.g");
 Exec("rm /tmp/im.g");
 Exec("rm /tmp/im.txt");
-A:=StructuralCopy(HAPAAA);
+B:=StructuralCopy(HAPAAA);
 HAPAAA:=0;
 
+A:=[];
+for i in [1..B[1]] do
+A[i]:=List([1..B[2]],a->0);
+od;
+for x in B{[3..Length(B)-1]} do
+A[x[1]][x[2]]:=x[3];
+od;
 return ArrayToPureCubicalComplex(A,threshold);
 fi;
 #################################  
 
 ##################################
 if IsList(file) then
-A:=[];
+AA:=[];
 for f in file do
 i:=Concatenation("convert ",f," /tmp/im.txt");
 Exec(i);
@@ -173,11 +180,19 @@ Exec(i);
 Read("/tmp/im.g");
 Exec("rm /tmp/im.g");
 Exec("rm /tmp/im.txt");
-Add(A,StructuralCopy(HAPAAA));
+B:=StructuralCopy(HAPAAA);
+A:=[];
+for i in [1..B[1]] do
+A[i]:=List([1..B[2]],a->0);
+od;
+for x in B{[3..Length(B)-1]} do
+A[x[1]][x[2]]:=x[3];
+od;
+Add(AA,StructuralCopy(A));
 HAPAAA:=0;
 od;
 
-return ArrayToPureCubicalComplex(A,threshold);
+return ArrayToPureCubicalComplex(AA,threshold);
 fi;
 #################################
 

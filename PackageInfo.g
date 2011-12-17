@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.9",
-  Date    := "10/10/2009",
+  Version := "1.9.1",
+  Date    := "16/12/2009",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.9",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.9.1",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -67,7 +67,8 @@ SetPackageInfo( rec(
     		 	       [ "nq",         ">=1.1" ],
 			       [ "aclib",      ">=1.1" ],
 			       #[ "edim",      ">=1.2.2" ],
-			       [ "gapdoc",      ">=0.0" ]
+			       [ "gapdoc",      ">=0.0" ],
+			       [ "singular", ">06.07.23" ]
 			      ],
     ExternalConditions := [["Some optional functions require Polymake software",
     "http://www.math.tu-berlin.de/polymake/"],

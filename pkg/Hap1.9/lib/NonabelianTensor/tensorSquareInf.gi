@@ -84,7 +84,7 @@ GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 AFhomSSF:=IsomorphismSimplifiedFpGroup(AF);
 SSF:=Image(AFhomSSF);
 
-	    SSFhomSF:=NqEpimorphismNilpotentQuotient(SSF);
+	    SSFhomSF:=HAP_NqEpimorphismNilpotentQuotient(SSF);
 
 SF:=Range(SSFhomSF);
 

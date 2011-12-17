@@ -156,7 +156,7 @@ end);
 #####################################################################
 InstallGlobalFunction(PrankAlt,
 function(G)
-local S, p;
+local H,S,x, p;
 
 p:=SSortedList(Factors(Order(G)));
 
@@ -165,8 +165,14 @@ Print("G must be a finite p-group. \n");
 return fail;
 fi;
 
+H:=[];
+for x in G do
+if Order(x)=p then Add(H,x); fi;
+od;
+H:=Group(H);
+
 p:=p[1];
-S:=LatticeSubgroups(G);
+S:=LatticeSubgroups(H);
 S:=ConjugacyClassesSubgroups(S);
 S:=List(S,x->ClassElementLattice(x,1));
 S:=Filtered(S,x->IsElementaryAbelian(x));

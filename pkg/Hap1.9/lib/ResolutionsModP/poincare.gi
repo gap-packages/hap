@@ -169,7 +169,8 @@ Dcoeffs:=DenominatorOfRationalFunction(p);
 Dcoeffs:=CoefficientsOfUnivariatePolynomial(Dcoeffs);
 Dcoeffs:=MutableCopyMat([Dcoeffs])[1];
 
-for k in [1..deg-Length(Ncoeffs)+1] do
+#for k in [1..deg-Length(Ncoeffs)+1] do
+for k in [1..deg+2] do
 Append(Ncoeffs,[0]);
 Append(Dcoeffs,[0]);
 od;

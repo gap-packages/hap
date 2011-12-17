@@ -34,7 +34,7 @@ od;
 rels:=newrels;
 od;
 U:=F/rels;
-epi:=NqEpimorphismNilpotentQuotient(U);
+epi:=HAP_NqEpimorphismNilpotentQuotient(U);
 UU:=Image(epi);
 
 lowerUU:=LowerCentralSeries(UU);

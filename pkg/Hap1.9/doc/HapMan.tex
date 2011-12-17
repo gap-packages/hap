@@ -56,9 +56,9 @@
 \hyperdef{L}{X8735FC5E7BB5CE3A}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{FreeResolution} \texttt{ FreeResolution(P,n)} 
+\begin{tabular}{|l|} \index{FreeGResolution} \texttt{ FreeGResolution(P,n)} \texttt{ FreeGResolution(P,n,p)} 
 
- Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. \\
+ Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. If one requires only a mod $p$ resolution then the prime $p$ can be entered as an optional third argument. \\
  \index{ResolutionAbelianGroup} \texttt{ ResolutionAbelianGroup(L,n)} {\nobreakspace} \texttt{ ResolutionAbelianGroup(G,n)} 
 
  Inputs a list $L:=[m_1,m_2, ..., m_d]$ of nonnegative integers, and a positive integer $n$. It returns $n$ terms of a $ZG$-resolution for the abelian group $G=Z_L[1]+Z_L[2]+···+Z_L[d]$ . 
@@ -303,6 +303,12 @@ abelian then the function returns fail.
 
  Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$. It returns the chain complex or chain map obtained by tensoring with the
 trivial module of integers (characteristic 0). \\
+ \index{FilteredTensorWithIntegers} \texttt{ FilteredTensorWithIntegers(R) } 
+
+ Inputs a $ZG$-resolution $R$ for which "filteredDimension" lies in NamesOfComponents(R). (Such a resolution
+can be produced using TwisterTensorProduct(), ResolutionNormalSubgroups() or
+FreeGResolution().) It returns the filtered chain complex obtained by
+tensoring with the trivial module of integers (characteristic 0). \\
  \index{TensorWithTwistedIntegers} \texttt{ TensorWithTwistedIntegers(X,rho) } 
 
  Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$. It also inputs a function $rho\colon G\rightarrow \mathbb Z$ where the action of $g \in G$ on $\mathbb Z$ is such that $g.1 = rho(g)$. It returns the chain complex or chain map obtained by tensoring with the
@@ -932,6 +938,12 @@ impose a metric on K which restricts to a Euclidean metric on each 2-cell.)
 
  Inputs a Coxeter diagram $D$ of finite type. It returns a non-free ZW-resolution for the associated Coxeter
 group $W$. The non-free resolution is obtained from the permutahedron of type $W$. A positive integer $n$ can be entered as an optional second variable; just the first $n$ terms of the non-free resolution are then returned. \\
+ \index{ContractibleGcomplex} \texttt{ ContractibleGcomplex("PSL(4,Z)")} 
+
+ Inputs one of the following strings: "SL(3,Z)", "PSL(4,Z)",
+"PSL(4,Z){\textunderscore}b". It returns a non-free ZG-resolution for the
+group $G$ described by the string. The stabilizer groups of cells are finite. These
+non-free resolutions have been provided by Mathieu Dutour. \\
  \index{FundamentalDomainStandardSpaceGroup (HAPcryst)} \texttt{ FundamentalDomainStandardSpaceGroup(v,G)} 
 
  Inputs a crystallographic group G (represented using AffineCrystGroupOnRight
@@ -1650,6 +1662,14 @@ dimension $d$. \\
 
  Inputs a positive integer $d$ and returns a function ArrayIt(Dimensions,f). This function inputs a list
 Dimensions of $d$ positive integers and also a function $f(x)$. It applies the function $f(x)$ to each integer list $x$ of length $d$ with entries $x[i]$ in the range [1..Dimension[i]]. \\
+ \index{BinaryArrayToTextFile} \texttt{ BinaryArrayToTextFile(file,A)} 
+
+ Inputs a string containing the address of a file, and an array $A$ of 0s and 1s. The array represents a pure cubical complex. A representation of
+this complex is written to the file in a format that can be read by the CAPD
+(Computer Assisted Proofs in Dynamics) software developed by Marian Mrozek and
+others. 
+
+ The second input $A$ can also be a pure cubical complex. \\
  \index{FrameArray} \texttt{ FrameArray(A)} 
 
  Inputs an array $A$ and returns the array obtained by appending a 0 to the beginning and end of
