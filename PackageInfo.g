@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.5",
-  Date    := "11/06/2006",
+  Version := "1.6",
+  Date    := "15/08/2006",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.5",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.6",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -61,13 +61,16 @@ SetPackageInfo( rec(
 
 
   Dependencies := rec(
-    GAP := ">= 4.3",
+    GAP := ">= 4.4.7",
     NeededOtherPackages := [],
     SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ],
     		 	       [ "nq",         ">=1.1" ],
+			       [ "aclib",      ">=1.1" ],
 			      ],
-    ExternalConditions := [["Some functions require Polymake software",
-    "http://www.math.tu-berlin.de/polymake/"]]
+    ExternalConditions := [["Some optional functions require Polymake software",
+    "http://www.math.tu-berlin.de/polymake/"],
+    ["Some optional functions require Graphviz software",
+    "http://www.graphviz.org/"]]
   ),
 
 AvailabilityTest := ReturnTrue,

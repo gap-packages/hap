@@ -1,6 +1,59 @@
 #Graham Ellis, 2005-2006
 
 #####################################################################
+InstallGlobalFunction(CoxeterDiagramDisplay,
+function(arg)
+local D,V,M,i,j;
+
+D:=arg[1];
+V:=CoxeterDiagramVertices(D);
+M:=function(i,j);
+return CoxeterDiagramMatrix(D,i,j);
+end;
+
+################ WRITE TO TMPIN.LOG #################################
+
+AppendTo("/tmp/tmpIn.log"," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue,label=\" \"] \n edge [style=\"setlinewidth(5)\"] \n");
+
+for i in V do
+for j in V do
+
+if j>=i and M(i,j)=3 then 
+AppendTo("/tmp/tmpIn.log",i," -- ", j, "\n");
+fi;
+
+if j>=i and (M(i,j)>3 or M(i,j)<2) then
+AppendTo("/tmp/tmpIn.log",i," -- ", j, "[label=\" ",M(i,j), " \",fontsize=20 ] \n");
+fi;
+od;od;
+
+if CoxeterDiagramIsSpherical(D) then
+
+AppendTo("/tmp/tmpIn.log","10000 [label=\" Spherical Coxeter\\n Diagram \", color=white, fontsize=20,fontcolor=red,width=1.5 ]  \n");
+
+else
+AppendTo("/tmp/tmpIn.log","10000 [label=\" Non-spherical Coxeter\\n Diagram \", color=white, fontsize=20, fontcolor=red,width=1.5 ]  \n");
+
+ fi;
+AppendTo("/tmp/tmpIn.log","} \n");
+################ WRITTEN ############################################
+
+Exec("neato -Tgif /tmp/tmpIn.log > /tmp/basic.gif");
+
+if Length(arg)=1 then
+Exec("mozilla /tmp/basic.gif");
+Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif");
+
+else
+AppendTo("/tmp/tmpIn2.log", "Browser=",arg[2],"\n");
+AppendTo("/tmp/tmpIn2.log","$Browser /tmp/basic.gif");
+Exec("chmod a+x /tmp/tmpIn2.log; /tmp/tmpIn2.log");
+Exec("rm /tmp/tmpIn.log; rm /tmp/basic.gif; rm /tmp/tmpIn2.log;");
+fi;
+end);
+#####################################################################
+
+#####################################################################
 InstallGlobalFunction(CoxeterDiagramMatrix,
 function(D,i1,j1)              #Assume i<j
 local i,j,r,s,L;

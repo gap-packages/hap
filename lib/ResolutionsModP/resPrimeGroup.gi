@@ -99,7 +99,7 @@ w:=[];
 for x in [1..Length(v)] do
 for i in [1..Length(v[x])] do
 if not v[x][i]=0 then 
-Append(w, [ [x,i]   ]);
+Append(w, MultiplyWord(v[x][i],[ [x,i]   ]));
 fi;
 od;
 od;
@@ -122,12 +122,6 @@ end;
 #####################################################################
 GactZGlist:=function(g,w)
 local v,gw;
-#gw:=[];
-#for v in w do
-#Append(gw,[GactZG(g,v)]);
-#od;
-#return gw;
-
 return List(w,v->GactZG(g,v));
 end;
 #####################################################################
@@ -170,22 +164,35 @@ end;
 #####################################################################
 
 #####################################################################
-ComplementaryBasis:=function(B)
-local BC, heads,ln, i, v;
+ComplementaryBasis:=function(arg)
+local B, NS, BC, heads,ln, i, v;
 
-ConvertToMatrixRep(B);
+B:=arg[1];
+if Length(arg)>1 then
+NS:=arg[2];
+fi;
+
+ConvertToMatrixRepNC(B,prime); 
 heads:=SemiEchelonMat(B).heads;
 ln:=Length(B[1]);
 BC:=[];
 
-for i in [1..ln] do
-if heads[i]=0 then
-v:=List([1..ln], x->zero);
-v[i]:=one;
-#ConvertToVectorRep(v);
-Append(BC,[v]);
+if Length(arg)=1 then
+	for i in [1..ln] do
+	if heads[i]=0 then
+	v:=List([1..ln], x->zero);
+	v[i]:=one;
+	Append(BC,[v]);
+	fi;
+	od;
+else
+ 	for i in [1..ln] do
+        if heads[i]=0 then
+	v:=NS.vectors[NS.heads[i]];
+	Append(BC,[v]);
+	fi;
+	od;
 fi;
-od;
 
 return BC;
 end;
@@ -198,7 +205,7 @@ local  	i, v, g, h, b, ln, B, B1, B2,NS,
 
 IF:=InverseFlat;
 BndMat:=BoundaryMatrix(k);
-ConvertToMatrixRep(BndMat);
+ConvertToMatrixRepNC(BndMat,prime); 
 NS:=SemiEchelonMat(NullspaceMat(BndMat));
 B:=NS.vectors;
 Bcomp:=ComplementaryBasis(B);
@@ -211,7 +218,7 @@ Append(Bfrattini,[b-  Flat(GactZGlist(g,IF(b)))]);
 od;
 od;
 
-if prime>2 then 
+if  Length(arg)=1 and prime>2 then 
 ln:=Length(B[1]);
 for b in B do
 for g in [2..pp] do
@@ -220,7 +227,7 @@ v:=List([1..ln],x->0);
 for i in [1..prime] do
 v:=v+ Flat(GactZGlist(Position(eltsG,eltsG[g]^i),IF(b)));
 od;
-Append(Bfrattini,v);
+Append(Bfrattini,[v]);
 fi;
 od;
 od;
@@ -228,15 +235,15 @@ fi;
 
 BfrattComp:=Concatenation(Bfrattini,Bcomp);
 
-B1:=ComplementaryBasis(BfrattComp);
-B2:=[];
-for b in B1 do
-i:=PositionProperty(b,x->(not x= (zero)));
-Append(B2, [  B[NS.heads[i]] ]);
-od;
+B1:=ComplementaryBasis(BfrattComp,NS);
+#B2:=[];
+#for b in B1 do
+#i:=PositionProperty(b,x->(not IsZero(x)));
+#Append(B2, [  B[NS.heads[i]] ]);
+#od;
 
 BasInts:=[];
-for v in B2 do
+for v in B1 do
 Append(BasInts,[List(v,x->IntFFE(x))]);
 od;
 
@@ -252,18 +259,33 @@ od;
 od;
 
 
+#####################################################################
+Homotopy:=function(k,w)		#assume w is in kernel d_n
+local v;	
+
+v:=Flat(WordToVectorList(w,k));
+v:=SolutionMat((BoundaryMatrix(k+1)),v*one);
+Apply(v,i->IntFFE(i));
+
+if not v=fail then v:=VectorListToWord(InverseFlat(v)); fi;
+return v;
+end;
+#####################################################################
+
 return Objectify(HapResolution,
 	        rec(
 		dimension:=Dimension,
 		boundary:=Boundary,
 		homotopy:=fail,
+		partialHomotopy:=Homotopy,
 		elts:=eltsG,
 		group:=G,
 		properties:=
 			[["length",n],
 			 ["reduced",true],
 			 ["type","resolution"],
-			 ["characteristic",prime]]));
+			 ["characteristic",prime],
+			 ["isMinimal",true]]));
 end);
 #####################################################################
 #####################################################################

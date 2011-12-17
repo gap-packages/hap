@@ -17,9 +17,9 @@ local
 	Trans,
 	CrossedPairing, 
 	UpperBound,
-	i,v,w,x,y,z;
+	Todd,i,v,w,x,y,z;
 
-
+Todd:=32;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
 #####################################################################
 UpperBound:=function(AG)
 local Facts, p,P,hom,bnd;
@@ -44,10 +44,12 @@ end;
 AG:=arg[1];
 if Length(arg)>1 then SizeOrList:=arg[2]*Order(AG)^2; 
 else 
-	if IsSolvable(AG) and not IsNilpotent(AG) then
-	SizeOrList:=UpperBound(AG);
+	if not IsSolvable(AG) then SizeOrList:=0;
 	else
-	SizeOrList:=0;
+    		if not IsNilpotent(AG) and Size(AG)>Todd 
+		          then SizeOrList:=UpperBound(AG); fi;
+	   	if not IsNilpotent(AG) and Size(AG)<=Todd then SizeOrList:=0;fi;
+	    	if IsNilpotent(AG) then SizeOrList:=-1; fi;
 	fi;
 fi;
 
@@ -59,10 +61,10 @@ fi;
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
 
-
-gensAG:=GeneratorsOfGroup(AG);
+gensAG:=ReduceGenerators(GeneratorsOfGroup(AG),AG);
 AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
 G:=Image(AGhomG);
+
 gensG:=FreeGeneratorsOfFpGroup(G);
 relsG:=RelatorsOfFpGroup(G);
 BG:=Group(gensG);
@@ -84,7 +86,7 @@ AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AG,F,g->Image(G2homF,Image(AGhomG,g)));
 
 	if IsSolvable(AG) then 
-	NiceGensAG:=Pcgs(AG);
+	    NiceGensAG:=Pcgs(AG);
 	else
 	NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 	NiceGensAG[1]:=[Identity(AG)];
@@ -111,13 +113,7 @@ od;
 od;
 
 #####################################################################IF
-if 
-
-SizeOrList=0  
-or
-not ( (IsSolvable(AG) and IsInt(SizeOrList)) or IsNilpotent(AG))
-
-then
+if SizeOrList=0 then
 
 AF:=F/relsT;
 FhomAF:=
@@ -138,17 +134,18 @@ GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 AFhomSSF:=IsomorphismSimplifiedFpGroup(AF);
 SSF:=Image(AFhomSSF);
 
-	if IsNilpotent(AG) then
-	SSFhomSF:=EpimorphismNilpotentQuotient(SSF);
-	else
+	if SizeOrList=-1 then 		#if nilpotent
+	    SSFhomSF:=EpimorphismNilpotentQuotient(SSF);
+	#SSFhomSF:=IsomorphismPcGroup(SSF);
+	else				#if solvable and big
 	SSFhomSF:=EpimorphismSolvableQuotient(SSF,SizeOrList); 
 	fi;
 
-SF:=Image(SSFhomSF);
+SF:=Range(SSFhomSF);
+
 gensSF2:=List(GeneratorsOfGroup(AF),x->Image(SSFhomSF,Image(AFhomSSF,x)));
 
 AFhomSF:=GroupHomomorphismByImagesNC(AF,SF,GeneratorsOfGroup(AF),gensSF2);
-
 
 FhomSF:=
 GroupHomomorphismByFunction(F,SF,x->Image(AFhomSF,Image(FhomAF,x)) );
@@ -159,11 +156,15 @@ fi;
 AG1homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG1homF,x)));
 AG2homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG2homF,x)));
 
-TensorSquare:=Intersection(
+TensorSquare:=NormalIntersection(
 NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x)))),
 NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))))
 );
 
+
+#TensorSquare:=CommutatorSubgroup(
+#Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x))),
+#Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))));
 
 gensSF:=List(gensF,x->Image(FhomSF,x));
 gensSFG:=[];
@@ -205,3 +206,24 @@ fi;
 end);
 #####################################################################
 
+#####################################################################
+InstallGlobalFunction(TensorCentre,
+function(G)
+local x,g,TC,h,Boole;
+
+if IsTrivial(Centre(G)) then return Centre(G); fi;
+
+h:=NonabelianTensorSquare(G).pairing;
+
+TC:=[];
+
+for g in Center(G) do
+Boole:=true;
+for x in G do
+if not Order(h(g,x))=1  then Boole:=false; break; fi;
+od;
+if Boole then Append(TC,[g]); fi;
+od;
+
+return Group(Concatenation(TC,[Identity(G)]));
+end);

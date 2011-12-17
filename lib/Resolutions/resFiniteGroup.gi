@@ -39,7 +39,9 @@ local
 	AlgebraicRed,
 	i, ii;
 
+
 if IsGroup(arg[1]) then Gens:=GeneratorsOfGroup(arg[1]);
+if Length(Gens)=0 then Gens:=[Identity(arg[1])]; fi;
 else Gens:=arg[1]; fi;
 Gens:=SSortedList(StructuralCopy(Gens));
 K:=StructuralCopy(arg[2]);
@@ -72,7 +74,7 @@ else
 	end;
 fi;
 
-if Order(G)<4097 then
+if Order(G)<4096  then
 MT:=MultiplicationTable(Elts);
 
 #####################################################################
@@ -125,8 +127,9 @@ ComputedContractions:=[];
 
 #####################################################################
 Dimension:=function(i);
-if i=0 then return 1; else
-return Length(PseudoBoundary[i]); fi;
+if i<0 then return 0; fi;
+if i=0 then return 1; fi;
+return Length(PseudoBoundary[i]); 
 end;
 #####################################################################
 

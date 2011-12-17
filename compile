@@ -15,10 +15,10 @@ GACDIR=/usr/local/lib/gap4r4/bin/i686-pc-linux-gnu-gcc;
 #####################################################################
 
 
-LIB=$PKGDIR/Hap1.5/lib;
+LIB=$PKGDIR/Hap1.6/lib;
 
-rm $PKGDIR/Hap1.5/boolean;
-echo "COMPILED:=true;" > $PKGDIR/Hap1.5/boolean;
+rm $PKGDIR/Hap1.6/boolean;
+echo "COMPILED:=true;" > $PKGDIR/Hap1.6/boolean;
 
 
 $GACDIR/gac -d $LIB/ArtinCoxeter/*.gi; 
@@ -66,3 +66,6 @@ $GACDIR/gac -d $LIB/Rings/*.gi;
 mkdir $LIB/Rings/Compiled/;
 mv *.so $LIB/Rings/Compiled/;
 
+$GACDIR/gac -d $LIB/ModPRings/*.gi;
+mkdir $LIB/ModPRings/Compiled/;
+mv *.so $LIB/ModPRings/Compiled/;

@@ -27,6 +27,7 @@ local
 	F,FhomE,
 	gensE, gensE1, gensE2, 
 	AppendToElts, RappendToElts, SappendToElts,
+	Boole,
 	i,j,k,g,h,fn;
 
 R:=arg[1];
@@ -431,6 +432,13 @@ Append(T!.elts,[x]);
 end;
 #####################################################################
 
+Boole:=false;
+if EvaluateProperty(R,"reduced")=true
+and  EvaluateProperty(S,"reduced")=true
+then Boole:=true;
+fi;
+
+
 T:= rec(
             dimension:=Dimension,
 	    boundary:=Boundary,
@@ -442,7 +450,8 @@ T:= rec(
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],
-	    ["characteristic",Charact] ],
+	    ["characteristic",Charact],
+	    ["reduced",true]],
 	    appendToElts:=AppendToElts);
 
 

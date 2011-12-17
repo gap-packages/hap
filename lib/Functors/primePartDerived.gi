@@ -5,7 +5,7 @@ InstallGlobalFunction(PrimePartDerivedFunctor,
 function(G,R,F,n)
 local
 	C,P, DCRS, DCRS1, DCRSpruned,L,Y,GroupL,
-	X, K, gensK, S, f,fx,
+	X, K, gensK, S, f,fx, P1,
 	HP, HK, HPK, HKhomHPK, HPKhomHP, HKhomHP,
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
@@ -14,14 +14,20 @@ local
 
 C:=F(R);
 
-P:=R!.group;
+P:=StructuralCopy(R!.group);
+P1:=Normalizer(G,P);
 prime:=Factors(Order(P))[1];
 core:=[];
 for x in P do
 if Order(x)=prime then AddSet(core,x); fi;
 od;
 
-DCRS1:=List(DoubleCosetRepsAndSizes(G,P,P),x->x[1]);
+DCRS1:=List(DoubleCosetRepsAndSizes(G,P1,P1),x->x[1]);
+if Order(P1)>Order(P) then
+Append(DCRS1,Filtered(ReduceGenerators(GeneratorsOfGroup(P1),P1),
+x->not x in P));
+fi;
+
 
 DCRS:=[];
 for x in DCRS1 do

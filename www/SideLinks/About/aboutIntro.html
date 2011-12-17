@@ -60,7 +60,7 @@ gap&gt; GroupHomology(G,99);<br>
 [ 2, 3, 67 ]<br>
       <br>
 gap&gt; time;<br>
-11918<br>
+4845<br>
       </td>
     </tr>
     <tr>
@@ -88,14 +88,26 @@ alternating group A<sub>7</sub> (of order 2520) has H<sub>10</sub>(A<sub>7</sub>
 = Z<sub>6</sub>+(Z<sub>3</sub>)<sup>2</sup> , <br>
         </li>
         <li>the special linear group SL<sub>3</sub>(Z<sub>3</sub>) (of
-order 5616) has H<sub>8</sub>(SL<sub>3</sub>(Z<sub>3</sub>),Z)=Z<sub>6 ,</sub></li>
-        <li>the diherdral group D<sub>2048</sub> (of order 4096) has H<sub>8</sub>(D<sub>2048</sub>,Z)
-= (Z<sub>2</sub>)<sup>4</sup> ,</li>
-        <li>the group SL<sub>3</sub>(Z<sub>5</sub>) (of order 372000)
-has H<sub>3</sub>(SL<sub>3</sub>(Z<sub>5</sub>),Z) = Z<sub>24</sub> .</li>
+order 5616) has H<sub>8</sub>(SL<sub>3</sub>(Z<sub>3</sub>),Z) = Z<sub>6
+,</sub></li>
+        <li>the group K=Ker( SL<sub>2</sub>(Z<sub>5<sup>3</sup></sub>)
+&#8594; SL<sub>2</sub>(Z<sub>5</sub>) ) (of order 15625) has H<sub>3</sub>(K,Z)
+= (Z<sub>5</sub>)<sup>6</sup>+Z<sub>125</sub>.
+(This reproduces a calculation of W.Browder and J.Pakianathan which was
+used to&nbsp; produce a <a href="aboutExtensions.html#Adem">counter-example</a>
+to a conjecture of A. Adem.) <br>
+        </li>
         <li>the abelian group G=C<sub>2</sub>&times;C<sub>4</sub>&times;C<sub>6</sub>&times;C<sub>8</sub>&times;C<sub>10
-          </sub>&times;C<sub>12</sub> (of order 46080) has H<sub>6</sub>(G,Z)=(Z<sub>2</sub>)<sup>280</sup>+(Z<sub>4</sub>)<sup>12</sup>+(Z<sub>12</sub>)<sup>3</sup>
+          </sub>&times;C<sub>12</sub> (of order 46080) has H<sub>6</sub>(G,Z)
+= (Z<sub>2</sub>)<sup>280</sup>+(Z<sub>4</sub>)<sup>12</sup>+(Z<sub>12</sub>)<sup>3</sup>
 . <br>
+        </li>
+        <li>the Mathieu simple group M<sub>23</sub> (of order 10200960)
+has H<sub>2</sub>(M<sub>23</sub>,Z) = H<sub>3</sub>(M<sub>23</sub>,Z) =
+0. (This reproduces J. Milgram's <a target="_Loday"
+ href="aboutFunctorial.html#Milgram">counter-example</a> to a
+conjecture of
+J.-L. Loday.)<br>
         </li>
       </ul>
       </td>
@@ -105,23 +117,21 @@ has H<sub>3</sub>(SL<sub>3</sub>(Z<sub>5</sub>),Z) = Z<sub>24</sub> .</li>
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
 GroupHomology(AlternatingGroup(7),10);time;<br>
 [ 2, 3, 3, 3 ]<br>
-1090<br>
+1756<br>
       <br>
 gap&gt; S:=Image(IsomorphismPermGroup(SL(3,3)));;<br>
 gap&gt; GroupHomology(S,8);time;<br>
 [ 2, 3 ]<br>
-14704<br>
+6340<br>
+&nbsp;<br>
+gap&gt; K:=MaximalSubgroups(SylowSubgroup(SL(2,Integers mod
+5^3),5))[2]; <br>
+gap&gt; K:=Image(IsomorphismPcGroup(K));<br>
+gap&gt; GroupHomology(K,3);time;<br>
+[ 5, 5, 5, 5, 5, 5, 125 ]<br>
+3254<br>
       <br>
-gap&gt; GroupHomology(DihedralGroup(2^12),8);time;<br>
-[ 2, 2, 2, 2 ]<br>
-18139<br>
-      <br>
-gap&gt; S:=Image(IsomorphismPermGroup(SL(3,5)));;<br>
-gap&gt; GroupHomology(S,3);time;<br>
-[ 8, 3 ]<br>
-36003<br>
-      <br>
-gap&gt;G:=AbelianGroup([2,4,6,8,10,12]);;<br>
+gap&gt; G:=AbelianGroup([2,4,6,8,10,12]);;<br>
 gap&gt; GroupHomology(G,6);time;<br>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2,<br>
@@ -146,7 +156,14 @@ gap&gt; GroupHomology(G,6);time;<br>
 &nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2, 2, 2,<br>
 &nbsp; 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 12, 12, 12 ]<br>
-67193<br>
+23265<br>
+      <br>
+gap&gt; GroupHomology(MathieuGroup(23),2);time;<br>
+[&nbsp; ]<br>
+9395<br>
+gap&gt; GroupHomology(MathieuGroup(23),3);time;<br>
+[&nbsp; ]<br>
+157961<br>
       </td>
     </tr>
     <tr>
@@ -171,19 +188,34 @@ GroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 homology of certain infinite groups can also be calculated. The
-following shows that <br>
+following commands show that <br>
       <ul>
         <li>the classical braid group B on eight strings
 (represented by a linear Coxeter diagram D with seven vertices) has
 5-dimensional integral homology H<sub>5</sub>(B,Z) = Z<sub>3</sub> .</li>
+        <li>the amalgamated product G=S<sub>5</sub>*<sub>A</sub>S<sub>4</sub>
+of the symmetric groups S<sub>5</sub> and S<sub>4</sub> over the
+canonical subgroup A=S<sub>3 </sub>has 5-dimensional integral homology
+H<sub>5</sub>(G,Z) = (Z<sub>2</sub>)<sup>5</sup> . (The amalgamated
+product can be represented as a graph of groups.)<br>
+        </li>
+        <li>The 3-dimensional crystallographic space group S with
+Hermann-Mauguin symbol "P62" has 5-dimensional integral homology H<sub>5</sub>(S,Z)
+= Z<sub>2</sub>+Z<sub>2</sub>.<br>
+        </li>
         <li>the Heisenberg group H in five complex variables (a torsion
 free nilpotent group of class two) has 5-dimensional integral homology H<sub>5</sub>(H,Z)
 = (Z<sub>2</sub>)<sup>43</sup>+Z<sub>6</sub>+Z<sup>132</sup>.</li>
         <li>the free nilpotent group N of class 2 on four generators
-has 4-dimensional integral homology H<sub>4</sub>(N,Z) = (Z<sub>3</sub>)<sup>4</sup>+Z<sup>84</sup>.</li>
+has 4-dimensional integral homology H<sub>4</sub>(N,Z) = (Z<sub>3</sub>)<sup>4</sup>+Z<sup>84</sup>.
+(The <a href="aboutExtensions.html#Lambe">full range</a> of homology
+groups
+for N were first calculated in a paper by L. Lambe.)<br>
+        </li>
       </ul>
       <span style="font-family: helvetica,arial,sans-serif;"></span>(The
-second and third examples require the "Polycyclic" and "nq" packages.
+last three examples require the "AClib", "Polycyclic" and "nq"
+packages.
 HAP can be loaded without these packages if such examples are not
 required..)<br>
       </td>
@@ -193,9 +225,36 @@ required..)<br>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 D:=[&nbsp; [1,[2,3]],&nbsp; [2,[3,3]],&nbsp; [3,[4,3]],&nbsp;
 [4,[5,3]],&nbsp; [5,[6,3]],&nbsp; [6,[7,3]]&nbsp; ];;<br>
+gap&gt; CoxeterDiagramDisplay(D);;<br>
+      <div style="text-align: center;"><img alt="" src="cd.gif"
+ style="width: 150px; height: 115px;"><br>
+      </div>
 gap&gt; GroupHomology(D,5);time;<br>
 [ 3 ]<br>
-9885<br>
+13885<br>
+      <br>
+      <br>
+      <br>
+gap&gt; S5:=SymmetricGroup(5);SetName(S5,"S5");<br>
+gap&gt; S4:=SymmetricGroup(4);SetName(S4,"S4");<br>
+gap&gt; A:=SymmetricGroup(3);SetName(A,"S3");<br>
+gap&gt; AS5:=GroupHomomorphismByFunction(A,S5,x-&gt;x);<br>
+gap&gt; AS4:=GroupHomomorphismByFunction(A,S4,x-&gt;x);<br>
+gap&gt; D:=[S5,S4,[AS5,AS4]];<br>
+gap&gt; GraphOfGroupsDisplay(D);<br>
+      <div style="text-align: center;"><img alt="" src="graphgroups.gif"
+ style="width: 172px; height: 90px;"><br>
+      </div>
+gap&gt; GroupHomology(D,5);time;<br>
+[ 2, 2, 2, 2, 2 ]<br>
+22004<br>
+      <br>
+      <br>
+      <br>
+gap&gt; GroupHomology(SpaceGroupBBNWZ("P62"),5);time;<br>
+[ 2, 2 ]<br>
+4336<br>
+      <br>
       <br>
 gap&gt; GroupHomology(HeisenbergPcpGroup(5),5);time;<br>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -213,7 +272,8 @@ gap&gt; GroupHomology(HeisenbergPcpGroup(5),5);time;<br>
 &nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0,<br>
 &nbsp; 0 ]<br>
-114034<br>
+73765<br>
+      <br>
       <br>
 gap&gt; F:=FreeGroup(4);; N:=NilpotentQuotient(F,2);;<br>
 gap&gt; GroupHomology(N,4);time;<br>
@@ -224,7 +284,7 @@ gap&gt; GroupHomology(N,4);time;<br>
 &nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0,<br>
 &nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
-35967<br>
+41967<br>
       </td>
     </tr>
     <tr>
@@ -247,9 +307,58 @@ intending reader should be aware that many of the examples are intended
 to
 illustrate the full potential of HAP and&nbsp; consequently<span
  style="font-weight: bold;"> may take
-many minutes (and in one or two cases hours) to run. </span><br>
+many minutes (and in one or two cases hours) to run. </span><span
+ style="font-weight: bold;"><br>
+      </span>
       <ul>
       </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">We
+end this introduction by mentioning that HAP can also be used to make
+calculations such as:<br>
+      <ul>
+        <li>The mod 2 cohomology ring H<sup>*</sup>(D<sub>32</sub>,Z<sub>2</sub>)
+for the dihedral group of order 64 is generated by two elements of
+degree 1 and one element of degree 2 and possibly (though not very
+likely)
+some generators of degree greater than 15.<br>
+        </li>
+        <li>The Lie algebra M<sub>3</sub>(Z) of all integer 3&times;3
+matrices has 5-dimensional Lie homology H<sub>5</sub>(A,Z)=(Z<sub>2</sub>)<sup>8</sup>+Z.</li>
+        <li>The suspension X=SK(D<sub>16</sub>,1) of an Eilenberg-Mac
+Lane space for the dihedral group of order 32 has third homotopy group
+pi<sub>3</sub>X = (Z<sub>2</sub>)<sup>4</sup>.</li>
+        <li>The group presentation P = &lt;x,y,z,a,b,c, | a=xy,
+b=yz, c=zx, ax=ya, by=zb, cz=xc &gt; is aspherical.</li>
+      </ul>
+The following commands yield these four calculations.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+A:=ModPCohomologyRing(DihedralGroup(64),15);<br>
+&lt;algebra of dimension 136 over GF(2)&gt;<br>
+gap&gt; List(ModPRingGenerators(A),a-&gt;A!.degree(a));<br>
+[ 0, 1, 1, 2 ]<br>
+      <br>
+gap&gt;&nbsp;
+A:=MatLieAlgebra(Integers,3);;<br>
+gap&gt;&nbsp; LieAlgebraHomology(A,5);<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 0 ]<br>
+      <br>
+gap&gt; ThirdHomotopyGroupOfSuspensionB(DihedralGroup(32));<br>
+[ 2, 2, 2, 2 ]<br>
+      <br>
+gap&gt;
+F:=FreeGroup(6);;x:=F.1;;y:=F.2;;z:=F.3;;a:=F.4;;b:=F.5;;c:=F.6;;<br>
+gap&gt; rels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,
+b*y*(z*b)^-1, c*z*(x*c)^-1];;<br>
+gap&gt; IsAspherical(F,rels);;<br>
+Presentation is aspherical.<br>
       </td>
     </tr>
     <tr>

@@ -25,7 +25,7 @@ local
 	HorizontalBoundaryWord,
 	F,FhomE,
 	gensE, gensE1, gensE2, 
-	Count,
+	Boole,
 	i,j,k,g,h,fn;
 
 R:=arg[1];
@@ -412,6 +412,15 @@ g:=Boundary(i,j);
 od;
 od;
 
+
+
+Boole:=false;
+if EvaluateProperty(R,"reduced")=true
+and  EvaluateProperty(S,"reduced")=true
+then Boole:=true;
+fi;
+
+
 return Objectify(HapResolution,
 	    rec(
             dimension:=Dimension,
@@ -424,6 +433,7 @@ return Objectify(HapResolution,
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],
+	    ["reduced",Boole],
 	    ["characteristic",Charact] ]));
 
 end);

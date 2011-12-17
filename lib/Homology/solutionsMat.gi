@@ -13,17 +13,21 @@ InstallMethod( SolutionsMatDestructive,
     [ IsOrdinaryMatrix and IsMutable,
       IsOrdinaryMatrix and IsMutable],
         function( mat, matvec )
-    local i,ncols,sem, vno, z,x, row, sol,vec,solmat;
+    local i,ncols,sem, vno, z,x, row, sol,vec,solmat,z1,sol1,lngm;
 
-    sem := SemiEchelonMatTransformationDestructive(mat);
     solmat:=[];
+    z1 := Zero(mat[1][1]);
+    sol1:=ListWithIdenticalEntries(Length(mat),z1);
+    lngm:=Length(mat[1]);
+    sem := SemiEchelonMatTransformationDestructive(StructuralCopy(mat));
+    ncols := Length(matvec[1]);
+    
 
 for vec in matvec do
-    ncols := Length(vec);
-    z := Zero(mat[1][1]);
-    sol := ListWithIdenticalEntries(Length(mat),z);
+    z := StructuralCopy(z1);
+    sol := StructuralCopy(sol1);
     ConvertToVectorRepNC(sol);
-    if ncols <> Length(mat[1]) then
+    if ncols <> lngm then
         Error("SolutionMat: matrix and vector incompatible");
     fi;
     for i in [1..ncols] do

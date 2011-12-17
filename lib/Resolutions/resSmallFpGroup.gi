@@ -486,6 +486,7 @@ nf:=NormalFormIntMat(A,6);
 V:=nf.rowtrans{[nf.rank+1..Length(A)]};
 
 return LLLReducedBasis(V).basis;
+#return BaseIntMat(V);
 
 end;
 
@@ -546,7 +547,7 @@ else  Table(G);
       nf:=NormalFormIntMat(matrix,6);
       V:=nf.rowtrans{[nf.rank+1..Length(matrix)]};
       V:=LLLReducedBasis(V).basis;
- 
+      #V:=BaseIntMat(V);
       res[i]:=MinimalModuleGenerators(G,V);
 fi;
 

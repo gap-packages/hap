@@ -19,8 +19,8 @@
  cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><a
- href="aboutPolytopes.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            <td style="vertical-align: top;"><a href="aboutLie.html"><small
+ style="color: rgb(0, 0, 102);">Previous</small></a><br>
             </td>
             <td
  style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
@@ -76,7 +76,7 @@ timings (in milliseconds)</span><span
 P:=ResolutionFiniteGroup([(1,2),(1,2,3,4,5,6)],2);;time;</span><br
  style="font-family: serif; color: rgb(0, 0, 0);">
       <span style="font-family: serif;"><span
- style="color: rgb(0, 0, 0);">8144</span><br
+ style="color: rgb(0, 0, 0);">7599</span><br
  style="color: rgb(0, 0, 0);">
       <br style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">gap&gt;
@@ -291,7 +291,7 @@ PrimePartDerivedFunctor(G,R,T,2);time;</span><br
  style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">[&nbsp; ]</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">8077</span><br
+      <span style="color: rgb(0, 0, 0);">7764</span><br
  style="color: rgb(0, 0, 0);">
       <br style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">gap&gt;
@@ -299,26 +299,19 @@ PrimePartDerivedFunctor(G,S,T,2);time;</span><br
  style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">[&nbsp; ]</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">9594</span><br
+      <span style="color: rgb(0, 0, 0);">419</span><br
  style="color: rgb(0, 0, 0);">
       <br>
       <span style="color: rgb(0, 0, 102);">The discrepancy
-between the timings for the two approaches probably has two main
-causes: <br>
-(i) The function <span style="font-family: helvetica,arial,sans-serif;">PrimePartOfIntegralHomology()
-      <span style="font-family: serif;">needs to construct resolutions
-with contracting homotopies for various p-groups and it does this using
-the general purpose function <span
- style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteGroup(P)
-      </span>because the contracting homotopy has not yet been
-implemented for the more efficient function <span
- style="font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries(P)</span>.
-      <br>
-(ii) </span></span></span><span style="color: rgb(0, 0, 102);">The
-function <span style="font-family: helvetica,arial,sans-serif;">PrimePartOfIntegralHomology()</span></span><span
- style="color: rgb(0, 0, 102);"><span
+between the timings for the two approaches is probably because t<span
  style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">computes a resolution for large number of
+ style="font-family: serif;"></span></span></span><span
+ style="color: rgb(0, 0, 102);">he
+function <span style="font-family: helvetica,arial,sans-serif;">PrimePartOfIntegralHomology()
+      </span></span><span style="color: rgb(0, 0, 102);"><span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">computes a resolution for a large number
+of
 double coset representative of P in G. It should be possible to
 restrict the computations to a subset of these representatives. <br>
       <br>
@@ -346,9 +339,9 @@ AbelianInvariantsMultiplier(P); time;</span><br
  style="color: rgb(0, 0, 0);">
       <br style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">gap&gt;
-R:=ResolutionNormalSeries(LowerCentralSeries(P),3);; time;</span><br
+R:=ResolutionNormalSeries(BigStepLCS(P,8),3);; time;</span><br
  style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">33790<br>
+      <span style="color: rgb(0, 0, 0);">6882<br>
       <br>
 gap&gt; TR:=TensorWithIntegers(R);;time;<br>
 0<br style="color: rgb(0, 0, 0);">
@@ -357,7 +350,7 @@ gap&gt; TR:=TensorWithIntegers(R);;time;<br>
  style="color: rgb(0, 0, 0);">
       <span style="color: rgb(0, 0, 0);">[ 2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]</span><br style="color: rgb(0, 0, 0);">
-      <span style="color: rgb(0, 0, 0);">15700<br>
+      <span style="color: rgb(0, 0, 0);">2381<br>
       <br>
       <span style="color: rgb(0, 0, 102);">(In GAP version 4.4.6 the
 function <span style="font-family: helvetica,arial,sans-serif;">AbelianInvariantsMultiplier(G)
@@ -376,7 +369,7 @@ over an hour for G the Sylow 2-subgroup of S<sub>20</sub>.)</span></span></span>
         <tbody>
           <tr>
             <td style="vertical-align: top;"><a
- style="color: rgb(0, 0, 102);" href="aboutPolytopes.html">Previous
+ style="color: rgb(0, 0, 102);" href="aboutLie.html">Previous
 Page</a><br>
             </td>
             <td style="text-align: center; vertical-align: top;"><a

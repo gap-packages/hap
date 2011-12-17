@@ -188,7 +188,8 @@ gap&gt;&nbsp; Homology(R,6);<br>
     </tr>
     <tr>
       <td
- style="background-color: rgb(255, 255, 255); vertical-align: top;">For
+ style="background-color: rgb(255, 255, 255); vertical-align: top;"><a
+ name="Adem"></a>For
 an example involving a matrix group consider the group K arising as the
 kernel of the canonical homomorphism SL<sub>2</sub>(Z<sub>p<sup>3</sup></sub>)
 --&gt; SL<sub>2</sub>(Z<sub>p</sub>) with p an odd prime. This group
@@ -275,23 +276,26 @@ gap&gt;&nbsp; Homology(R,99);<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-Sylow 2-subgroup of the Symmetric group S<sub>16 </sub>has order 2<sup>15</sup>.
+Sylow 2-subgroup of the Symmetric group S<sub>20 </sub>has order 2<sup>18</sup>.
 The following commands show that this group G has third homology H<sub>3</sub>(G,Z)
-= (Z<sub>2</sub>)<sup>22</sup>+(Z<sub>4</sub>)<sup>6</sup>. </td>
+= (Z<sub>2</sub>)<sup>56</sup>+(Z<sub>4</sub>)<sup>7</sup>. </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;&nbsp;
-G:=SylowSubgroup(SymmetricGroup(16));;<br>
+G:=SylowSubgroup(SymmetricGroup(20));;<br>
       <br>
-gap&gt;&nbsp; L:=LowerCentralSeries(G);;<br>
-      <br>
-gap&gt;&nbsp; R:=ResolutionNormalSeries([L[1],L[3],Group( () )],4);;<br>
+gap&gt;&nbsp; R:=ResolutionNormalSeries(BigStepLCS(G,64),4);;<br>
       <br>
 gap&gt; TR:=TensorWithIntegers(R);;<br>
       <br>
 gap&gt;&nbsp; Homology(R,3);<br>
-[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4] </td>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2, 2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4 ]<br>
+      </td>
     </tr>
     <tr>
       <td
@@ -308,7 +312,8 @@ found using the function <span
  style="font-family: helvetica,arial,sans-serif;">ResolutionSubnormalSeries(L,n)</span>
       <span style="font-family: helvetica,arial,sans-serif;"></span>.<br>
       <br>
-The group G need not be finite. For example, the following commands use
+      <a name="Lambe"></a>The group G need not be finite. For example,
+the following commands use
 the divide-and-conquer technique to compute the
 integral homology of the free nilpotent group G of class two on four
 generators. The homology is trivial in dimensions greater than 10, and
@@ -321,7 +326,7 @@ torus when H<sup>*</sup>(BG,R) is polynomial", <span
       <br>
 (The integral cohomology ring structure for the free nilpotent group of
 class two on three generators is investigated on a <a
- href="aboutCohomologyRings.html">subsequent page</a>. )<span
+ href="aboutCohomologyRings.html#rankthree">subsequent page</a>. )<span
  style="font-family: helvetica,arial,sans-serif;"></span><br>
       <br>
 The group G is created using the GAP package "nq" by Werner Nickel.<br>
@@ -424,7 +429,8 @@ gap&gt; Homology(TR,4); time;<br>
     </tr>
     <tr>
       <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Note
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><a
+ name="time"></a>Note
 the time taken by GAP's Smith Normal Form
 algorithm to compute the homology in the last example! The 2-torsion
 can be detected more quickly using the universal coefficient exact

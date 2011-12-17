@@ -6,22 +6,25 @@ function(arg)
 local
 		G, gensG, N, p, D, 
 		Functor,
+		HomologyGraphOfGroups,
 		HomologyPrimePowerGroup,
 		HomologyGenericGroup,
 		HomologySmallGroup,
 		HomologyArtinGroup,
 		HomologyAbelianGroup,
-		HomologyNilpotentPcpGroup;
+		HomologyNilpotentPcpGroup,
+		HomologySpaceGroup;
 
 
 ############################### INPUT DATA ##########################
 if IsList(arg[1]) then D:=arg[1]; G:=false; 
 else
 	if IsGroup(arg[1]) then G:=arg[1]; 
-	gensG:=ReduceGenerators(GeneratorsOfGroup(G),G); 
+	if Order(G)<infinity then
+	gensG:=ReduceGenerators(GeneratorsOfGroup(G),G); fi; 
 	D:=false;
 	else
-	Print("ERROR: first variable must be a group or a Coxeter diagram. \n");
+	Print("ERROR: first variable must be a group or a Coxeter diagram or a graph of groups. \n");
 	fi;
 fi;
 
@@ -45,10 +48,39 @@ fi;
 
 #####################################################################
 #####################################################################
+HomologyGraphOfGroups:=function()
+local R;
+
+R:=ResolutionGraphOfGroups(D,N+1);
+return Homology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 HomologySmallGroup:=function()
 local R;
 
 R:=ResolutionFiniteGroup(gensG,N+1,false,p);
+return Homology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+HomologySpaceGroup:=function()
+local R, G1;
+
+if IsMatrixGroup(G) then
+G1:=Image(IsomorphismPcpGroup(G)); fi;
+
+R:=ResolutionAlmostCrystalGroup(G1,N+1);
 return Homology(Functor(R),N);
 
 end;
@@ -103,10 +135,16 @@ primes:= SSortedList(Factors(Order(G)));
 
 for q in primes do
 
+
 S:=SylowSubgroup(G,q);
+
+if Order(S)>=128 and N>2 then
+R:=ResolutionNormalSeries(LowerCentralSeries(S),N+1);
+else
 gens:=GeneratorsOfGroup(S);
 gens:=ReduceGenerators(gens,S);
 R:=ResolutionFiniteGroup(gens,N+1,false,p);
+fi;
 
 H:=Homology(Functor(R),N);
 if IsInt(H) then
@@ -153,10 +191,17 @@ end;
 #####################################################################
 #####################################################################
 
-
-
 if IsList(D) then
-return HomologyArtinGroup(); fi;
+if IsGraphOfGroups(D) then
+return HomologyGraphOfGroups();
+else
+return HomologyArtinGroup(); 
+fi;
+fi;
+
+if "CrystCatRecord" in KnownAttributesOfObject(G) or
+   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) then
+return HomologySpaceGroup(); fi;
 
 if IsPcpGroup(G) then
 	if IsNilpotentGroup(G) then
@@ -166,6 +211,8 @@ if IsPcpGroup(G) then
 	return fail;
 	fi;
 fi;
+
+if IsFinite(G) then
 
 if IsAbelian(G) then
 return HomologyAbelianGroup(); fi;
@@ -177,6 +224,6 @@ if Order(G)<16 then
 return HomologySmallGroup(); fi;
 
 return HomologyGenericGroup(); 
-
+fi;
 
 end);

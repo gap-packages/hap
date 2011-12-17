@@ -26,6 +26,7 @@ HeisenbergPcpGroup:=function(x);return fail; end;
 Pcp:=function(G,D); return fail; end;
 IsAlmostCrystallographic:=function(G); return fail; end;
 GeneratorsOfPcp:=function(G); return fail; end;
+IsomorphismPcpGroup:=function(G);return fail;end;
 fi;
 ################## POLYCICLIC COMMANDS DONE #########################
 
@@ -136,8 +137,25 @@ ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
 ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
 ReadPackage("HAP", "lib/Polycyclic/resNilpotentPcpGrp.gi");
 
+
+
+################### MOD P RINGS ####################################
+ReadPackage("HAP", "lib/ModPRings/record.gi");
+
 fi;
+
+################### GRAPHS OF GROUPS ###############################
+ReadPackage("HAP", "lib/GraphsOfGroups/graphs.gi");
+ReadPackage("HAP", "lib/GraphsOfGroups/resGraph.gi");
 
 ################### TEST ###########################################
 ReadPackage("HAP", "test/test.gap");
+
+################### RESOLUTIONS (CONTD) ############################
+ReadPackage("HAP","lib/Resolutions/cayley.gi");
+
+################### Lie Algebras ###################################
+ReadPackage("HAP","lib/LieAlgebras/chevalleyEilenberg.gi");
+ReadPackage("HAP","lib/LieAlgebras/isLieHom.gi");
+ReadPackage("HAP","lib/LieAlgebras/groupToLie.gi");
 

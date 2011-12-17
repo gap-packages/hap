@@ -19,6 +19,7 @@ DeclareGlobalFunction("RelativeSchurMultiplier");
 DeclareGlobalFunction("Epicentre");
 DeclareGlobalFunction("UpperEpicentralSeries");
 DeclareGlobalFunction("BaerInvariant");
+DeclareGlobalFunction("TensorCentre");
 
 
 ## RESOLUTIONS ######################################################
@@ -31,6 +32,7 @@ DeclareGlobalFunction("ResolutionAsphericalPresentation");
 DeclareGlobalFunction("ResolutionAbelianGroup");
 DeclareGlobalFunction("ResolutionAlmostCrystalGroup");
 DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
+DeclareGlobalFunction("CayleyGraphDisplay");
 
 ## RESOLUTIONS MOD P ################################################
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
@@ -76,6 +78,7 @@ DeclareGlobalFunction("CoxeterDiagramComponents");
 DeclareGlobalFunction("CoxeterDiagramDegree");
 DeclareGlobalFunction("CoxeterDiagramIsSpherical");
 DeclareGlobalFunction("ResolutionArtinGroup");
+DeclareGlobalFunction("CoxeterDiagramDisplay");
 
 ## HOMOLOGY #########################################################
 DeclareOperation("Homology",[IsObject,IsObject]);
@@ -104,6 +107,10 @@ DeclareGlobalFunction("CR_IntegralCocycleToClass");
 DeclareGlobalFunction("IntegralCupProduct");
 DeclareGlobalFunction("IntegralRingGenerators");
 
+## ModPRings ########################################################
+DeclareGlobalFunction("ModPCohomologyRing");
+DeclareGlobalFunction("ModPRingGenerators");
+
 ## CURVATURE ########################################################
 DeclareGlobalFunction("IsAspherical");
 DeclareGlobalFunction("PolytopalGenerators");
@@ -119,3 +126,16 @@ DeclareOperation("Target",[IsObject]);
 DeclareOperation("Map",[IsObject]);
 DeclareOperation("BoundaryMap",[IsObject]);
 DeclareOperation("GroupOfResolution",[IsObject]);
+
+## GRAPHS OF GROUPS #################################################
+DeclareGlobalFunction("GraphOfGroupsDisplay");
+DeclareGlobalFunction("ResolutionGraphOfGroups");
+DeclareGlobalFunction("IsGraphOfGroups");
+
+## LIE ALGEBRAS #####################################################
+DeclareGlobalFunction("ChevalleyEilenbergComplex");
+DeclareGlobalFunction("IsLieAlgebraHomomorphism");
+DeclareGlobalFunction("LieAlgebraHomology");
+DeclareGlobalFunction("LowerCentralSeriesLieAlgebra");
+
+

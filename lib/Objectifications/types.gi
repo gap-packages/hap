@@ -35,6 +35,10 @@ InstallMethod( ViewObj,
  if R!.homotopy=fail then
  Print("No contracting homotopy available. \n");
  fi;
+ if "partialHomotopy" in NamesOfComponents(R) then
+ Print("A partial contracting homotopy is available. \n");
+  fi;
+
  end);
 
 InstallMethod( PrintObj,
@@ -47,6 +51,10 @@ InstallMethod( PrintObj,
 if R!.homotopy=fail then
 Print("No contracting homotopy available. \n");
 fi;
+if "partialHomotopy" in NamesOfComponents(R) then
+ Print("A partial contracting homotopy is available. \n");
+   fi;
+
     end);
 #####################################################################
 #####################################################################

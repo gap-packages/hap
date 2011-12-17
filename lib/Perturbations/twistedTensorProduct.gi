@@ -27,6 +27,8 @@ local
 		HomotopyOfWord,
 		FinalHomotopy,
 		HorizontalPseudoBoundary;
+		
+
 
 DimensionR:=R!.dimension;
 DimensionS:=S!.dimension;

@@ -18,7 +18,7 @@ Homology_Obj:=function(C,n)
 local  
 	M1, M2, 
 	dim, 
-	BasisKerd1, BasisImaged2, 
+	BasisKerd1, BasisImaged2, BasisKerd1cp, BasisImaged2cp, 
 	Rels, Smith, TorsionCoefficients,
 	Dimension, Boundary,
 	i;
@@ -34,23 +34,36 @@ M2:=[];
 for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
-M1:=TransposedMat(M1);
-BasisKerd1:=LLLReducedBasis(TransposedMat(M1),"linearcomb").relations;
+ConvertToMatrixRep(M1);
+BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;
+#BasisKerd1:=NullspaceIntMat(M1);
 M1:=0;
 
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
-M2:=TransposedMat(M2);
 
-BasisImaged2:=LLLReducedBasis(TransposedMat(M2)).basis;
+ConvertToMatrixRep(M2);
+#BasisImaged2:=LLLReducedBasis(M2).basis;
+BasisImaged2:=BaseIntMat(M2);
 dim:=Length(BasisImaged2);
 M2:=0;
 
+#Rels:=[];
+#for i in [1..dim] do
+#	Rels[i]:=SolutionMat(BasisKerd1,BasisImaged2[i]);
+#od;
+
+#BasisKerd1:=MutableCopyMat(BasisKerd1);
+#ConvertToMatrixRep(BasisKerd1);
+BasisImaged2:=MutableCopyMat(List([1..dim],i->BasisImaged2[i]));
+#ConvertToMatrixRep(BasisImaged2);
+
+if Length(BasisImaged2)>0 then
+Rels:=SolutionsMatDestructive(BasisKerd1, BasisImaged2);
+else
 Rels:=[];
-for i in [1..dim] do
-	Rels[i]:=SolutionMat(BasisKerd1,BasisImaged2[i]);
-od;
+fi;
 
 Smith:= SmithNormalFormIntegerMat(Rels);
 

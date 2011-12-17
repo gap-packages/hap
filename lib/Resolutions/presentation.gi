@@ -14,6 +14,23 @@ local
 		start,
 		b, r, x;
 
+if not IsHapResolution(R) then
+Print("This function must be applied to a resolution. \n");
+return fail;
+fi;
+
+if not EvaluateProperty(R,"reduced")=true then
+if R!.dimension(0)>1 then
+Print("This function must be applied to a REDUCED resolution. \n");
+return fail; fi;
+fi;
+
+if not EvaluateProperty(R,"characteristic")=0 then
+Print("This function only works in characteristic 0. \n");
+return fail;
+fi;
+
+
 Dimension:=R!.dimension;
 Boundary:=R!.boundary;
 Elts:=R!.elts;

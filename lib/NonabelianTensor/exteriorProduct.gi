@@ -186,6 +186,8 @@ end);
 InstallGlobalFunction(RelativeSchurMultiplier,
 function(G,N);
 
+if G=N  then return GroupHomology(G,2); fi;
+
 return AbelianInvariants(Kernel
           (NonabelianExteriorProduct(G,N).homomorphism));
 
@@ -204,6 +206,9 @@ if IsNilpotent(G) and LoadPackage("nq")=true then
 return UpperEpicentralSeries(G,1); fi;
 
 N:=G; fi;
+
+if IsTrivial(Centre(N)) then return Centre(N); fi;
+
 gensG:=GeneratorsOfGroup(G);
 
 Pairing:=NonabelianExteriorProduct(G,N).pairing;

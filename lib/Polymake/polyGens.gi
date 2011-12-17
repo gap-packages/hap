@@ -79,16 +79,16 @@ for i in [1..Length(Points)] do
 Points[i]:=proj(Points[i]);	  
 od;
 
-AppendTo("tmpIn.log","POINTS","\n");
+AppendTo("/tmp/tmpIn.log","POINTS","\n");
 for p in Points do
-AppendTo("tmpIn.log",1);
+AppendTo("/tmp/tmpIn.log",1);
 	for i in [1..Length(p)] do
-	AppendTo("tmpIn.log"," ",p[i]);
+	AppendTo("/tmp/tmpIn.log"," ",p[i]);
 	od;
-AppendTo("tmpIn.log","\n");
+AppendTo("/tmp/tmpIn.log","\n");
 od;
 
-Exec("beneath_beyond tmpIn.log POINTS");
+Exec("beneath_beyond /tmp/tmpIn.log POINTS");
 ################# HULL CALCULATED ###################################
 
 #####################################################################
@@ -113,7 +113,7 @@ end;
 #####################################################################
 
 ################# READ VERTICES #####################################
-input:=InputTextFile("tmpIn.log");
+input:=InputTextFile("/tmp/tmpIn.log");
 tmp:="hello";
 while not tmp="VERTICES\n" do
 tmp:=ReadLine(input);
@@ -141,8 +141,8 @@ od;
 ################ EDGE GENERATORS RECOVERED ##########################
 
 ################ READ HASSE DIAGRAM #################################
-Exec("polymake tmpIn.log HASSE_DIAGRAM >tmp2In.log");
-Exec("rm tmpIn.log");
+Exec("polymake /tmp/tmpIn.log HASSE_DIAGRAM >/tmp/tmp2In.log");
+Exec("rm /tmp/tmpIn.log");
 
 Faces:=[];
 Index:=[];
@@ -185,7 +185,7 @@ Index:=[];
 	end;
 	############################################################
 
-input:=InputTextFile("tmp2In.log");
+input:=InputTextFile("/tmp/tmp2In.log");
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Index:= IndexFn(tmp);
@@ -196,7 +196,7 @@ while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-Exec("rm tmp2In.log");
+Exec("rm /tmp/tmp2In.log");
 
 if Length(Faces[1])=1 then
 

@@ -2,7 +2,8 @@
 
 #####################################################################
 TestHap:=function()
-local H0,H1,H2,H3,H4,H4a,H5,H6,H7,R,TR,Tensor,Tensor2,Bool;
+local H0,H1,H2,H3,H4,H4a,H5,H6,H7,H8,H9,R,TR,Tensor,Tensor2,
+S5,S4,A,AS5,AS4,D,Bool;
 
 H0:=GroupHomology(AlternatingGroup(5),2,2);;
 
@@ -35,7 +36,15 @@ else
 H5:=14;
 fi;
 
-
+S5:=SymmetricGroup(5);SetName(S5,"S5");
+S4:=SymmetricGroup(4);SetName(S4,"S4");
+A:=SymmetricGroup(3);SetName(A,"S3");
+AS5:=GroupHomomorphismByFunction(A,S5,x->x);
+AS4:=GroupHomomorphismByFunction(A,S4,x->x);
+D:=[S5,S4,[AS5,AS4]];
+R:=ResolutionGraphOfGroups(D,3);
+H8:=Homology(TensorWithIntegers(R),2);
+H9:=Homology(ChevalleyEilenbergComplex(SimpleLieAlgebra("A",2,Integers),3),2);
 Bool:=
 H0=[2]
 and
@@ -60,6 +69,10 @@ H5=14
 and H6[1]=0
 and
 H7=1
+and
+H8=[2,2]
+and
+H9=[ 3, 3, 3, 3, 3, 3 ]
 and
 IsSuperperfect(PerfectGroup(120,1));
 

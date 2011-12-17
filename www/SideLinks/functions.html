@@ -96,7 +96,14 @@ the element
 [[i,g]]&nbsp; in M<sub>k</sub>. (The elements [[i,g]] freely generate M<sub>k</sub>
 as an abelian group.) For some resolutions a contracting homotopy is
 not
-constructed, in which case R.homotopy is set equal to "fail". </li>
+constructed, in which case R!.homotopy is set equal to "fail". (For
+some
+resolutions a component <span
+ style="font-family: helvetica,arial,sans-serif;">R!.partialHomotopy(k,w)</span>
+is available. This is a function which returns the preimage in M<sub>k+1</sub>
+of an arbitrary word w in the kernel of&nbsp; M<sub>k</sub> &#8594; M<sub>k-1&nbsp;</sub>
+.)<br>
+        </li>
         <big> </big><li><span
  style="font-family: helvetica,arial,sans-serif;">R!.elts</span> is a
 (partial) list of (possibly
@@ -141,13 +148,13 @@ represented by a component object F with the following components.<br>
 is the ZG-resolution R.</li>
         <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
 is the ZG'-resolution S.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(k,[i,g])
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(w,k)
           </span>is a
 function which
 returns the image in S<sub>k</sub>,
 under the chain map, of
-the element
-[[i,g]]&nbsp; in R<sub>k</sub>.</li>
+the element w=[ [i<sub>1</sub>,g<sub>1</sub>], [i<sub>2</sub>,g<sub>2</sub>],
+..., [i<sub>k</sub>,g<sub>k</sub>] ]&nbsp; in R<sub>k</sub>.</li>
         <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
 is a list of pairs such as ["type", "equivariantChainMap"].</li>
       </ul>
@@ -175,11 +182,13 @@ following components.<br>
 is a function which returns the
 Z-rank of the module C<sub>k</sub>.</li>
         <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">C!.boundary(j, k) </span>is
+ style="font-family: helvetica,arial,sans-serif;">C!.boundary(k, j) </span>is
 a function which returns
 the image in C<sub>k-1</sub>
 of the
-j-th free generator of C<sub>k</sub>. <br>
+j-th free generator of C<sub>k</sub>. (Elements in C<sub>k-1</sub> are
+represented in the obvious was as vectors of length equal to the rank
+of C<sub>k-1</sub>.)<br>
         </li>
         <big> </big><big> </big><li><span
  style="font-family: helvetica,arial,sans-serif;">C!.properties</span>
@@ -219,12 +228,12 @@ following components.<br>
 is the chain complex C.</li>
         <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
 is the chain complex D.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(k,i)
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(v,k)
           </span>is a
 function which
 returns the image in D<sub>k</sub>,
 under the chain map, of
-the element i-th free generator of&nbsp; C<sub>k</sub>.</li>
+a vector v in C<sub>k</sub>.</li>
         <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
 is a list of pairs such as ["type", "chainMap"].</li>
       </ul>
@@ -287,6 +296,28 @@ vertices </span></span><span
  style="font-family: serif;">n<sub>kj</sub>=0 when</span></span><span
  style="font-family: helvetica,arial,sans-serif;"><span
  style="font-family: serif;"> the edge label is infinity. </span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Graph
+of Groups</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+graph of groups is a finite graph (with at most one edge between a pair
+of vertices) whose vertices are labelled by groups and whose edges are
+labelled by pairs [f,g] of group monomorphisms f:S&#8594;G, g:S&#8594;H with common
+source and with ranges G and H equal to the labels of the boundary
+vertices of the edge.<br>
+      <br>
+Such a graph is represented as a list D = [L<sub>1</sub>, ... L<sub>t</sub>]
+where each L<sub>i</sub> is either a group G or a pair of group
+monomorphisms [f,g]. Each group G arising as a term in the list, or as
+the range or source of a monomorphism in the list, must be such that
+HasName(G) is true. Furthermore, distinct groups must have dirrerent
+names.<br>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -403,6 +434,55 @@ boundary map of C as a matrix.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CayleyGraphDisplay(G,X)<br>
+      <br>
+CayleyGraphDisplay(G,X,"mozilla")<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G together with a subset X of G. It displays
+the corresponding Cayley graph&nbsp; as a .gif file. It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+The argument G can also be a finite set of elements in a (possibly
+infinite) group containing X. The edges of the graph are coloured
+according to which element of X they are labelled by. The list X
+corresponds to the list of colours [blue, red, green, yellow, brown,
+black] in that order.<br>
+      <br>
+This function requires Graphviz software.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ChevalleyEilenberg</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Complex(X,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a Lie algebra X=A (over the ring of integers Z or over a field
+K)
+or a homomorphism of Lie algebras X=(f:A&#8594;B), together with
+a positive integer n. It
+returns either the first n terms of the Chevalley-Eilenberg chain
+complex C(A), or the induced map of Chevalley-Eilenberg complexes
+C(f):C(A)&#8594;C(B).<br>
+      <br>
+(The homology of the Chevalley-Eilenberg complex C(A) is by
+definition the homology of the Lie algebra A with trivial coefficients
+in Z or K).<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Coclass(G)</span><br>
       </td>
       <td
@@ -469,6 +549,25 @@ Degree(D,v)</span></td>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a Coxeter diagram D and vertex v. It returns the degree of v (i.e. the
 number of edges incident with v).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagramDisplay(D)</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagramDisplay(D,"mozilla")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and displays it as a .gif file.&nbsp; It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+This function requires Graphviz software.<br>
       </td>
     </tr>
     <tr>
@@ -631,6 +730,22 @@ generated by all products xy where x and y range over the generating
 set for G stored by GAP. The subgroup is probably only meaningful when
 G is an Artin or Coxeter group.<br>
       </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsDisplay(D)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsDisplay(D,"mozilla")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a graph of groups D and displays it as a .gif file.&nbsp; It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+This function requires Graphviz software.</td>
     </tr>
     <tr>
       <td
@@ -855,6 +970,29 @@ The function uses Polymake software. <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsGraphOfGroups(D)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an object D and tests whether it is a Graph of Groups. However, it DOES
+NOT test the injectivity of any homomorphisms. It returns true if D
+passes the test, and false otherwise.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsLieAlgebraHomomorphism(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an object f and returns true if f is a homomorphism f:A&#8594;B of Lie
+algebras (preserving the Lie bracket).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsSuperperfect(G)</span><br>
       </td>
       <td
@@ -877,11 +1015,47 @@ that Hap has computed). <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span><br>
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">LieAlgebraHomology(A,n)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a word w and integer n. It returns the scalar multiple n&middot;w .<br>
+a Lie algebra A (over the integers or a field) and a positive integer
+n. It returns the homology H<sub>n</sub>(A,k)&nbsp; where&nbsp; k
+denotes the ground ring.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LowerCentralSeries</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LieAlgebra(G)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LowerCentralSeries</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LieAlgebra(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a pcp group G. If each quotient G<sub>c</sub>/G<sub>c+1 </sub>of the
+lower central series is free abelian or p-elementary abelian (for fixed
+prime p) then a Lie algebra&nbsp; L(G) is returned. The abelian group
+underlying L(G) is the direct sum of the quotients<sub> </sub>G<sub>c</sub>/G<sub>c+1</sub>
+. The Lie bracket on L(G) is induced by the commutator in G. (Here G<sub>1</sub>=G,
+G<sub>c+1</sub>=[G<sub>c</sub>,G] .) <br>
+      <br>
+The function can also be applied to a group homomorphism f:G&#8594;G' . In
+this case the induced homomorphism of Lie algebras L(f):L(G) &#8594; L(G') is
+returned.<br>
+      <br>
+If the quotients of the lower central series are not all free or
+p-elementary abelian then the function returns fail.<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span><br>
       </td>
     </tr>
     <tr>
@@ -893,6 +1067,50 @@ a word w and integer n. It returns the scalar multiple n&middot;w .<br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a chain map, or cochain map or equivariant chain map f and returns the
 mapping function (as opposed to the target or the source of f) .</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ModPCohomologyRing(G,n)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ModPCohomologyRing(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a p-group G and positive integer n, or else n terms of a minimal
+Z<sub>p</sub>G-resolution R of Z<sub>p</sub>. It returns the cohomology
+ring A=H<sup>*</sup>(G,Z<sub>p</sub>) modulo all elements in degree
+greater than n. <br>
+      <br>
+The ring is returned as a structure constant algebra A. <br>
+      <br>
+The ring A is graded. It has a component <span
+ style="font-family: helvetica,arial,sans-serif;">A!.degree(x)</span>
+which is a function returning the degree of each (homogeneous) element
+x in GeneratorsOfAlgebra(A).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ModPRingGenerators(A)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a mod p cohomology ring A (created using the preceeding function). It
+returns a minimal generating set for the ring A. Each generator is
+homogeneous.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a word w and integer n. It returns the scalar multiple n&middot;w .</td>
     </tr>
     <tr>
       <td
@@ -1240,8 +1458,10 @@ resolution generator is called, R.elts is updated to include elements
 of G involved in the boundary. <br>
       <br>
       <span style="color: rgb(255, 0, 0);">The contracting homotopy on
-R has not yet been implemented!</span><br>
-      </td>
+R has not yet been implemented! </span><span
+ style="color: rgb(255, 0, 0);">Furthermore, the group G is
+currently returned only as a finitely presented group (without any
+method for solving the word problem).</span> </td>
     </tr>
     <tr>
       <td
@@ -1437,10 +1657,47 @@ ZK-rank is |G:K| times the ZG-rank in each dimension. <br>
 Generating sets gensG, gensK for G and K can also be input to the
 function (though the method does not depend on a choice of generators).<br>
       <span style="color: rgb(255, 0, 0);"><br>
-      <span style="color: rgb(0, 0, 102);">This ZK-resolution has more
+      <span style="color: rgb(0, 0, 102);">This ZK-resolution is not
+reduced. ie.e it has more
 than one
-generator in dimension 0. So PresentationOfResolution() should not be
-applied to it!</span></span><big><span style="color: rgb(0, 0, 102);"> </span></big></td>
+generator in dimension 0.&nbsp;</span></span><big><span
+ style="color: rgb(0, 0, 102);"> </span></big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionGraphOfGroups(D,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionGraphOfGroups(D,n,L)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a graph of groups D and a positive integer n. It returns n terms of a
+free ZG-resolution for the fundamental group G of D.<br>
+      <br>
+An optional third argument L=[R<sub>1</sub> , ..., R<sub>t</sub>] can
+be used to list (in any order) free resolutions for some/all of the
+vertex and edge groups in D. If for some vertex or edge group no
+resolution is listed in L then the function <span
+ style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteGroup()</span>
+will be used to try to construct the resolution. &nbsp; <br>
+      <br>
+The ZG-resolution is usually not reduced. i.e. it has more than one
+generator in dimension 0.<br>
+      <br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
+the
+ZG-resolution has not yet been implemented!</span> <span
+ style="color: rgb(255, 0, 0);">Furthermore, the group G is currently
+returned only as a finitely presented group (without any method for
+solving the word problem).</span><br>
+      </td>
     </tr>
     <tr>
       <td
@@ -1529,13 +1786,12 @@ resolution is minimal - meaning that the number of generators
 of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). (I
 suspect this function could be implemented far more efficiently.)<br>
       <br>
-If an optional third variable is set equal to the strinf "non minimal"
+If an optional third variable is set equal to the string "non minimal"
 then the resolution should be computed more quickly but may be
 non-minimal.<br>
       <br>
-      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
-the
-ZG-resolution has not yet been implemented!</span><br>
+Only a partial contracting homotopy is available for this
+ZG-resolution. <span style="color: rgb(255, 0, 0);"></span><br>
       </td>
     </tr>
     <tr>
@@ -1586,10 +1842,11 @@ If G is finite then the function <span
 particular, resolutions from this function probably won't work with the
 function <span style="font-family: helvetica,arial,sans-serif;">EquivariantChainMap()</span>.</span></span><br>
       <span style="color: rgb(255, 0, 0);"><br>
-      <span style="color: rgb(0, 0, 102);">This ZK-resolution has more
+      <span style="color: rgb(0, 0, 102);">This ZK-resolution is not
+reduced. i.e. it has more
 than one
-generator in dimension 0. So PresentationOfResolution() should not be
-applied to it!</span></span><big><span style="color: rgb(0, 0, 102);"> </span></big></td>
+generator in dimension 0.&nbsp;</span></span><big><span
+ style="color: rgb(0, 0, 102);"> </span></big></td>
     </tr>
     <tr>
       <td
@@ -1623,7 +1880,8 @@ will possibly work more efficiently.<br>
 an m&times;n matrix M and a k&times;n matrix B over a field. It returns
 a k&times;m matrix S satisfying SM=B.<br>
       <br>
-The function will probably change the matrices M and B.<br>
+The function will leave matrix M unchanged but will probably change
+matrix B.<br>
       <br>
 (This is&nbsp; a trivial rewrite of the standard GAP function <span
  style="font-family: helvetica,arial,sans-serif;">SolutionMatDestructive(&lt;mat&gt;,&lt;vec&gt;)</span>
@@ -1685,6 +1943,20 @@ standard n-cocycles. (Currently implemented only for n&lt;4.)<br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a chain map, or cochain map or equivariant chain map f and returns its
 target.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorCentre(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and returns the largest central subgroup N such that the
+induced homomorphism of nonabelian tensor squares G (&times;) G &#8594; G/N
+(&times;) G/N is an isomorphism. Equivalently, N is the largest central
+subgroup such that pi<sub>3</sub>(SK(G,1)) &#8594; pi<sub>3</sub>(SK(G/N,1))
+is injective.<br>
+      </td>
     </tr>
     <tr>
       <td

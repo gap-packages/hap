@@ -16,6 +16,7 @@ local
 		k,p;
 
 GensE:=StructuralCopy(arg[1]);
+
 GensG:=StructuralCopy(arg[2]);
 R:=arg[3];
 n:=arg[4];
@@ -38,6 +39,8 @@ end;
 #####################################################################
 
 EhomGfirst:=GroupHomomorphismByImagesNC(E,G,GensE,GensG);
+
+if Order(E)<10^4 or n> 5 then
 EhomGsecond:=List([1..Size(E)],i->Position(EltsG,Image(EhomGfirst,EltsE[i])));
 
 #####################################################################
@@ -46,6 +49,18 @@ return EhomGsecond[i];
 end;
 #####################################################################
 
+else
+EhomGsecond:=List([1..Size(E)],i->0);
+
+#####################################################################
+EhomG:=function(i);
+if EhomGsecond[i]=0 then
+EhomGsecond[i]:= Position(EltsG,Image(EhomGfirst,EltsE[i]));
+fi;
+return EhomGsecond[i];
+end;
+#####################################################################
+fi;
 GmapEfirst:=GroupHomomorphismByImagesNC(G,E,GensG,GensE);
 GmapEsecond:=List([1..Size(G)],i->Position(EltsE,Image(GmapEfirst,EltsG[i])));
 

@@ -39,17 +39,18 @@ else
 for i in [1..Dimension(n)] do
 M2[i]:=Boundary(n,i);
 od;
-M2:=TransposedMat(M2);
+#M2:=TransposedMat(M2);
 fi;
 
 for i in [1..Dimension(n+1)] do
 M1[i]:=Boundary(n+1,i);
 od;
-M1:=TransposedMat(M1);
+#M1:=TransposedMat(M1);
 
 
-BasisKerd1:=LLLReducedBasis(TransposedMat(M1),"linearcomb").relations;
-BasisImaged2:=LLLReducedBasis(TransposedMat(M2)).basis;
+BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;
+#BasisImaged2:=LLLReducedBasis(M2).basis;
+BasisImaged2:=BaseIntMat(M2);
 dim:=Length(BasisImaged2);
 
 Rels:=[];
