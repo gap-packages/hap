@@ -1,7 +1,8 @@
   
-  [1m[4m[31m22. Pseudo lists[0m
+  [1X22. Parallel Computation - Extra Functions[0X
   
-      | [22m[32m Add(L,x)[0m Let L be a pseudo list of length n, and x an object compatible with the entries in L. If x is not in L then this operation converts L into a pseudo list of length n+1 by adding x as the final entry. If x is in L the operation has no effect on L. | 
-      | [22m[32m Append(L,K)[0m Let L be a pseudo list and K a list whose objects are compatible with those in L. This operation applies Add(L,x) for each x in K.                                                                                                                 | 
-      | [22m[32m ListToPseudoList(L)[0m Inputs a list L and returns the pseudo list representation of L.                                                                                                                                                                           | 
+      | [10XChildFunction("function(arg);",s)[0X This runs the GAP function "function(arg);" on a child process accessed by the stream s. The output from "func;" can be accessed via the stream.                                                                       | 
+      | [10XChildRead(s)[0X This returns, as a string, the output of the last application of ChildFunction("function(arg);",s).                                                                                                                                         | 
+      | [10XChildReadEval(s)[0X This returns, as an evaluated string, the output of the last application of ChildFunction("function(arg);",s).                                                                                                                          | 
+      | [10XParallelList(I,fn,L)[0X Inputs a list I, a function fn such that fn(x) is defined for all x in I, and a list of children L. It uses the children in L to compute List(I,x->fn(x)). (Obviously the function fn must be defined on all child processes in L.) | 
   

@@ -35,8 +35,12 @@ DeclareGlobalFunction("CompositionOfFpGModuleHomomorphisms");
 
 ## NONABELIAN TENSOR ################################################
 DeclareGlobalFunction("NonabelianTensorSquare");
+DeclareGlobalFunction("NonabelianSymmetricSquare");
+DeclareGlobalFunction("NonabelianSymmetricSquare_inf");
+DeclareGlobalFunction("SymmetricCentre");
 DeclareGlobalFunction("NonabelianTensorProduct");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
+DeclareGlobalFunction("NonabelianSymmetricKernel");
 DeclareGlobalFunction("NonabelianExteriorProduct");
 DeclareGlobalFunction("RelativeSchurMultiplier");
 DeclareGlobalFunction("EpiCentre");
@@ -44,6 +48,7 @@ DeclareGlobalFunction("UpperEpicentralSeries");
 DeclareGlobalFunction("BaerInvariant");
 DeclareGlobalFunction("TensorCentre");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB_alt");
+DeclareGlobalFunction("NonabelianSymmetricKernel_alt");
 DeclareGlobalFunction("NonabelianTensorSquare_inf");
 
 
@@ -172,7 +177,8 @@ DeclareGlobalFunction("ResolutionAbelianPcpGroup");
 DeclareGlobalFunction("ResolutionNilpotentGroup");
 
 ## OBJECTIFICATION ##################################################
-DeclareOperation("Target",[IsObject]);
+#DeclareOperation("Target",[IsObject]);
+DeclareAttribute("Target",IsObject);
 DeclareOperation("Map",[IsObject]);
 DeclareOperation("BoundaryMap",[IsObject]);
 DeclareOperation("GroupOfResolution",[IsObject]);
@@ -216,6 +222,8 @@ DeclareGlobalFunction("ParallelList");
 DeclareGlobalFunction("ChildPut");
 DeclareGlobalFunction("ChildGet");
 DeclareGlobalFunction("IsAvailableChild");
+DeclareOperation("HAPPrintTo",[IsString,IsObject]);
+DeclareOperation("HAPRead",[IsString]);
 
 
 
@@ -248,7 +256,7 @@ DeclareGlobalFunction("ViewTopologicalSpace");
 DeclareGlobalFunction("ConcatenatedTopologicalSpace");
 DeclareGlobalFunction("PathComponent");
 DeclareGlobalFunction("ZerothBettiNumber");
-DeclareOperation("BettiNumbers",[IsObject,IsInt]);
+DeclareOperation("Bettinumbers",[IsObject,IsInt]);
 DeclareGlobalFunction("ThickenedTopologicalSpace");
 DeclareGlobalFunction("ComplementTopologicalSpace");
 DeclareGlobalFunction("BoundaryTopologicalSpace");
@@ -257,3 +265,22 @@ DeclareGlobalFunction("EvalT");
 DeclareGlobalFunction("ContractTopologicalSpace");
 DeclareGlobalFunction("SingularChainComplex");
 DeclareGlobalFunction("BoundarySingularities");
+
+ReadPackage("HAP","lib/Objectifications/types.gi");
+
+## CAT ONE GROUPS ###################################################
+DeclareGlobalFunction("AutomorphismGroupAsCatOneGroup");
+DeclareGlobalFunction("GModuleAsCatOneGroup");
+DeclareOperation("HomotopyGroup",[IsHapCatOneGroup,IsInt]);
+DeclareOperation("HomotopyModule",[IsHapCatOneGroup,IsInt]);
+DeclareOperation("MooreComplex",[IsObject]);
+DeclareGlobalFunction("HasTrivialPostnikovInvariant");
+DeclareGlobalFunction("IdentityAmongRelatorsDisplay");
+DeclareGlobalFunction("IdentityAmongRelators");
+DeclareGlobalFunction("NormalSubgroupAsCatOneGroup");
+
+## OTHER ############################################################
+#ReadPackage("HAP","lib/Objectifications/types.gi");
+ReadPackage("HAP","lib/TopologicalSpaces/topTypes.gd");
+ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
+ReadPackage("HAP","lib/CategoryTheory/categories.gd");

@@ -466,15 +466,25 @@ for i in [1..n+m] do
 od;
 LS:=LieAlgebraByStructureConstants(K,SCTLStar1);
 
-
 bL1:=[];
-for i in [1..Length(BasisL)] do
-  Add(bL1,BasisL[i]);
+
+for i in [1..Length(bL)] do 
+ Add(bL1,bL[i]);
 od;
 
-for i in [1..(Length(bLTL)-p)] do
-  Add(bL1,0*BasisL[1]);
+for i in [1..n] do
+ Add(bL1,BJL[i]);
 od;
+
+
+#bL1:=[];
+#for i in [1..Length(BasisL)] do
+#  Add(bL1,BasisL[i]);
+#od;
+
+#for i in [1..(Length(bLTL)-p)] do
+#  Add(bL1,0*BasisL[1]);
+#od;
 
 g1:= AlgebraHomomorphismByImages( LS, L, Basis(LS) , bL1 );
 

@@ -5,11 +5,12 @@
 
 <Row>
 <Item> <Index> Cohomology </Index>
-<C>Cohomology(X) </C>
+<C>Cohomology(X,n) </C>
 <P/>
-Inputs either a cochain complex <M>X=C</M> 
+Inputs either a cochain complex <M>X=C</M>  (or G-cocomplex C) 
 or a cochain map <M>X=(C \longrightarrow
-D)</M> over the integers <M>Z</M>.
+D)</M> over the integers <M>Z</M> together with a non-negative intereg <M>n</M>.
+                                
 
 <List>
 <Item>If <M>X=C</M> then the torsion coefficients of <M>H^n(C)</M>
@@ -19,6 +20,22 @@ are retuned.</Item>
 	H^n(D)</M> is returned as a homomorphism 
 	of finitely presented groups. </Item>
 </List>
+</Item>
+</Row>
+
+<Row>
+<Item> <Index> CohomologyModule </Index>
+<C>CohomologyModule(C,n) </C>
+<P/>
+Inputs  a <M>G</M>-cocomplex <M>C</M>  
+ together with a non-negative integer <M>n</M>.
+ It returns the cohomology <M>H^n(C)</M> as a <M>G</M>-outer group.
+If <M>C</M> was constructed from a resolution <M>R</M> by homing to an abelian
+ <M>G</M>-outer group <M>A</M> then, for each x in H:=CohomologyModule(C,n),
+ there is a function f:=H!.representativeCocycle(x) which is a
+standard n-cocycle corresponding to the cohomology class x. (At present this  works only for n=1,2,3.)
+
+
 </Item>
 </Row>
 

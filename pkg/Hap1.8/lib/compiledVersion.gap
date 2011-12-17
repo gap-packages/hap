@@ -30,6 +30,9 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorSquare.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/symmetricSquare.so"));
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorPair.so"));
 
 LoadDynamicModule(
@@ -49,6 +52,8 @@ Concatenation(tmppath,"lib/NonabelianTensor/Compiled/multNilGrp.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/NonabelianTensor/Compiled/tensorSquareInf.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/NonabelianTensor/Compiled/symmetricSquareInf.so"));
 fi;
 
 

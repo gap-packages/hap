@@ -1,0 +1,60 @@
+
+
+
+#############################################################################
+##
+##  Install an abelian category sum method on "+". So f(x)+g(x) can be written
+##  (f+g)(x)
+##
+InstallOtherMethod( \+,
+    "addition of arrows in a category",
+    [ HasCategoryName and HasCategoryArrowStatus and IsGroupHomomorphism,
+      HasCategoryName and HasCategoryArrowStatus and IsGroupHomomorphism ],
+
+    function( Phi, Theta  )
+        local PhiPlusTheta;
+
+        if not IsAbelian(Target(Phi)) 
+               and
+               Target(Theta) = Target(Phi)
+               and
+               Source(Theta) = Target(Phi)
+               then
+       TryNextMethod(); 
+       fi;
+        PhiPlusTheta:=GroupHomomorphismByFunction(Source(Phi), Target(Phi),
+                     x->Image(Phi,x)*Image(Theta,x));
+        CategoricalEnrichment(PhiPlusTheta,CategoryName(Phi));
+    return PhiPlusTheta; end);
+
+#############################################################################
+##
+##  Install an abelian category sum method on "-". So f(x)-g(x) can be written
+##  (f-g)(x)
+##
+InstallOtherMethod( \-,
+    "subtraction of arrows in a category",
+    [ HasCategoryName and HasCategoryArrowStatus and IsGroupHomomorphism,
+      HasCategoryName and HasCategoryArrowStatus and IsGroupHomomorphism ],
+
+    function( Phi, Theta  )
+        local PhiPlusTheta;
+
+        if not IsAbelian(Target(Phi))
+               and
+               Target(Theta) = Target(Phi)
+               and
+               Source(Theta) = Target(Phi)
+               then
+       TryNextMethod();
+       fi;
+        PhiPlusTheta:=GroupHomomorphismByFunction(Source(Phi), Target(Phi),
+                     x->Image(Phi,x)*Image(Theta,x)^-1);
+        CategoricalEnrichment(PhiPlusTheta,CategoryName(Phi));
+    return PhiPlusTheta; end);
+
+
+
+
+
+

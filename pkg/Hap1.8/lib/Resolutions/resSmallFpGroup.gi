@@ -27,13 +27,18 @@ local
 	EltsG, OrderG, 
 	Int2Pair,
 	FoxM,
-	Charact; 
+	Charact,
+	FpToPerm,
+	pG; 
 
 G:=arg[1];
 n:=arg[2];
 if Length(arg)>2 then Charact:=arg[3]; else Charact:=0; fi;
 OrderG:=Order(G);
-EltsG:=Elements(G);
+FpToPerm:=IsomorphismPermGroup(G);
+pG:=Image(FpToPerm);
+
+EltsG:=List(Elements(pG),x->PreImagesRepresentative(FpToPerm,x));
 
 ########################START OF IRINA'S CODE #######################
 #####################################################################
@@ -90,12 +95,12 @@ Table:=function(G)
 #   represents g_i*z.
 
 
-local pG, 
+local #pG, 
       product, permutation, index,
       i, z, pg;
 
 table:=[];
-pG:=Image(IsomorphismPermGroup(G));
+#pG:=Image(IsomorphismPermGroup(G));
 
 for pg in Elements(pG) do
   product:=[];
@@ -164,12 +169,12 @@ WordsToIntegers:=function(G,zg)
 #   function returns the integer vector of length |G|
 #   corresponding to this element.
 
-local FpToPerm, pG,
+local #FpToPerm, #pG,
       position, l,
       d, i;
 
-FpToPerm:=IsomorphismPermGroup(G);
-pG:=Image(FpToPerm);
+#FpToPerm:=IsomorphismPermGroup(G);
+#pG:=Image(FpToPerm);
 
 l:=NullList(Size(pG));
 for d in zg do
@@ -292,11 +297,11 @@ VectorPermutations:=function(G, v)
 #   element g_i*v in this module (where {g_i | i=1,...,|G|}
 #   is the set of elements of G.
 
-local pG,
+local #pG,
       k, U, 
       Index, i, j;
 
-pG:=Image(IsomorphismPermGroup(G));
+#pG:=Image(IsomorphismPermGroup(G));
 k:=Size(v)/Size(pG);
 U:=[];
 
@@ -342,7 +347,7 @@ FoxMatrix:=function(G)
 #        C1 is the direct sum  ZG+ZG+...+ZG  (|X| copies of ZG).
 
 
-local pG,
+local #pG,
       der, row, r, i;
 
 Table(G);

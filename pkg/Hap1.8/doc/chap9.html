@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -6,16 +6,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <title>GAP (HAP) - Chapter 9:  Commutator and nonabelian tensor computations</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
 </head>
 <body><a href="../www/index.html"><small>HAP home</small></a>
 
 
-<p><a id="s0ss0" name="s0ss0"></a></p>
 
-<h3>9.  Commutator and nonabelian tensor computations</h3>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap8.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap10.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X86DE968B7B20BD48" name="X86DE968B7B20BD48"></a></p>
+<div class="ChapSects"><a href="chap9.html#X86DE968B7B20BD48">9. <span class="Heading"> Commutator and nonabelian tensor computations</span></a>
+</div>
+
+<h3>9. <span class="Heading"> Commutator and nonabelian tensor computations</span></h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
@@ -44,7 +49,7 @@
 
 
 <ul>
-<li><p>E.homomorphism is a group homomorphism µ : (G wedge N) --&gt; G from the nonabelian exterior product (G wedge N) to G. The kernel of µ is the relative Schur multiplier.</p>
+<li><p>E.homomorphism is a group homomorphism Âµ : (G wedge N) --&gt; G from the nonabelian exterior product (G wedge N) to G. The kernel of Âµ is the relative Schur multiplier.</p>
 
 </li>
 <li><p>E.pairing(x,y) is a function which inputs an element x in G and an element y in N and returns (x wedge y) in the exterior product (G wedge N) .</p>
@@ -54,13 +59,42 @@
 <p>This function should work for reasonably small nilpotent groups or extremely small non-nilpotent groups.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code"> NonabelianSymmetricKernel(G) </code> <br /> <code class="code"> NonabelianSymmetricKernel(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns the abelian invariants of the Fourth homotopy group SG of the double suspension SSK(G,1) of the Eilenberg-Mac Lane space K(G,1).</p>
+
+<p>For non-nilpotent groups the implementation of the function NonabelianSymmetricKernel(G) is far from optimal and will soon be improved. As a temporary solution to this problem, an optional second variable m can be set equal to 0, and then the function efficiently returns the abelian invariants of groups A and B such that there is an exact sequence 0 --&gt; B --&gt; SG --&gt; A --&gt; 0.</p>
+
+<p>Alternatively, the optional second varible m can be set equal to a positive multiple of the order of the symmetric square (G tildeotimes G). In this case the function returns the abelian invariants of SG. This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> NonabelianSymmetricSquare(G) </code> <br /> <code class="code"> NonabelianSymmetricSquare(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns a record T with the following components.</p>
+
+
+<ul>
+<li><p>T.homomorphism is a group homomorphism Âµ : (G tildeotimes G) --&gt; G from the nonabelian symmetric square of G to G. The kernel of Âµ is isomorphic to the fourth homotopy group of the double suspension SSK(G,1) of an Eilenberg-Mac Lane space.</p>
+
+</li>
+<li><p>T.pairing(x,y) is a function which inputs two elements x, y in G and returns the tensor (x otimes y) in the symmetric square (G otimes G) .</p>
+
+</li>
+</ul>
+<p>An optional second varible m can be set equal to a multiple of the order of the symmetric square (G tildeotimes G). This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate) as the bound is used in the solvable quotient algorithm.</p>
+
+<p>The optional second variable m can also be set equal to 0. In this case the Todd-Coxeter procedure will be used to enumerate the symmetric square even when G is solvable.</p>
+
+<p>This function should work for reasonably small solvable groups or extremely small non-solvable groups.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code"> NonabelianTensorProduct(G,N) </code></p>
 
 <p>Inputs a finite group G and normal subgroup N. It returns a record E with the following components.</p>
 
 
 <ul>
-<li><p>E.homomorphism is a group homomorphism µ : (G otimes N ) --&gt; G from the nonabelian exterior product (G otimes N) to G.</p>
+<li><p>E.homomorphism is a group homomorphism Âµ : (G otimes N ) --&gt; G from the nonabelian exterior product (G otimes N) to G.</p>
 
 </li>
 <li><p>E.pairing(x,y) is a function which inputs an element x in G and an element y in N and returns (x otimes y) in the tensor product (G otimes N) .</p>
@@ -76,7 +110,7 @@
 
 
 <ul>
-<li><p>T.homomorphism is a group homomorphism µ : (G otimes G) --&gt; G from the nonabelian tensor square of G to G. The kernel of µ is isomorphic to the third homotopy group of the suspension SK(G,1) of an Eilenberg-Mac Lane space.</p>
+<li><p>T.homomorphism is a group homomorphism Âµ : (G otimes G) --&gt; G from the nonabelian tensor square of G to G. The kernel of Âµ is isomorphic to the third homotopy group of the suspension SK(G,1) of an Eilenberg-Mac Lane space.</p>
 
 </li>
 <li><p>T.pairing(x,y) is a function which inputs two elements x, y in G and returns the tensor (x otimes y) in the tensor square (G otimes G) .</p>
@@ -125,14 +159,10 @@
 </div>
 
 
-<div class="pcenter">
-<table cellspacing="10"  class="chlink"><tr><td><a href="chap0.html">Top of Book</a></td><td><a href="chap8.html">Previous Chapter</a></td><td><a href="chap10.html">Next Chapter</a></td></tr></table>
-<br />
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap8.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap10.html">Next Chapter</a>&nbsp;  </div>
 
 
-<div class="pcenter"><table cellspacing="10"  class="chlink"><tr><td class="chlink1">Goto Chapter: </td><td><a href="chap0.html">Top</a></td><td><a href="chap1.html">1</a></td><td><a href="chap2.html">2</a></td><td><a href="chap3.html">3</a></td><td><a href="chap4.html">4</a></td><td><a href="chap5.html">5</a></td><td><a href="chap6.html">6</a></td><td><a href="chap7.html">7</a></td><td><a href="chap8.html">8</a></td><td><a href="chap9.html">9</a></td><td><a href="chap10.html">10</a></td><td><a href="chap11.html">11</a></td><td><a href="chap12.html">12</a></td><td><a href="chap13.html">13</a></td><td><a href="chap14.html">14</a></td><td><a href="chap15.html">15</a></td><td><a href="chap16.html">16</a></td><td><a href="chap17.html">17</a></td><td><a href="chap18.html">18</a></td><td><a href="chap19.html">19</a></td><td><a href="chap20.html">20</a></td><td><a href="chap21.html">21</a></td><td><a href="chap22.html">22</a></td><td><a href="chap23.html">23</a></td><td><a href="chapInd.html">Ind</a></td></tr></table><br /></div>
-
-</div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

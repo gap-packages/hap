@@ -440,6 +440,137 @@ for an
 FpG-module homomorphism Phi. </td>
     </tr>
     <tr>
+      <td style="vertical-align: top;">G-outer group</td>
+      <td style="vertical-align: top;">We'll say that a group N is a
+G-outer group if there is an associated function alpha:G
+---&gt; Aut(N) which<span style="font-style: italic;"></span> induces a
+homomorphism G
+---&gt; Out(N).&nbsp; <br>
+      <br>
+A G-outer group is represented as a component
+object A with the following components:
+      <ul>
+        <li><tt>A!.ActingGroup</tt>
+is the group G.</li>
+        <li><tt>A!.ActedGroup</tt> is the group N.</li>
+        <li><tt>A!.OuterAction</tt> is a function which, to each g in G
+and
+each n in N,
+returns an element <tt>A!.OuterAction(g,n) </tt>in N. The following
+two
+mathematical properties hold. (1) For each g in G the function <tt>A!.OuterAction(g,_)</tt>:N
+---&gt; N is an automorphism. (2)
+The function g---&gt; <tt>A!.OuterAction(g,_)</tt> induces a
+homomorphism G
+---&gt;
+Out(N).&nbsp;</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsGOuterGroup(M)</span>
+returns "true" for a G-outer group M.<br>
+      <br>
+Note that a G-module N can be viewed as a G-outer group N for which <tt>IsAbelian(N)</tt>
+returns the value <tt>True</tt>. For
+conveninece we'll often refer to an abelian G-outer group as a G-module.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">G-outer group homomorphism<br>
+      </td>
+      <td style="vertical-align: top;">A
+homomorphism Phi:M ---&gt; N of G-outer groups (over a common group
+G)&nbsp; is a component object with the following components:<br>
+      <br>
+      <ul>
+        <li><span style="font-family: monospace;">Phi!.Source</span> is
+the source G-outer group.</li>
+        <li><span style="font-family: monospace;">Phi!.Target</span> is
+the target G-outer group.</li>
+        <li><span style="font-family: monospace;">Phi!. Mapping </span>is
+a GAP group homomorphism from the underlying group of M to the
+underlying group of N.</li>
+      </ul>
+      <br>
+The operation <span style="font-family: monospace;">IsGOuterGroupHomomorphism(Phi)</span>
+returns "true" for a G-outer group homomorphism Phi.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">G-complex<br>
+      <br>
+(G-cocomplex)<br>
+      </td>
+      <td style="vertical-align: top;">A G-complex is a sequence ...
+---&gt; C<sub>n</sub> ---&gt; C<sub>n-1</sub>
+---&gt; ... ---&gt; C<sub>1</sub>
+---&gt; C<sub>0</sub> of G-outer group homomorphisms over a common
+group G such that Image(C<sub>n</sub> ---&gt; C<sub>n-1</sub>) is&nbsp;
+a normal G-invariant subgroup of Kernel(C<sub>n-1</sub> ---&gt; C<sub>n-2</sub>).
+In particular, when each C<sub>n</sub> is abelian it is a chain complex
+of G-modules. <br>
+      <br>
+It is represented by a component object C with the following components:<br>
+      <ul>
+        <li><span style="font-family: monospace;">C!.boundary(n)</span>
+is a function which returns the homomorphism C<sub>n</sub> ---&gt; C<sub>n-1</sub>
+for n&gt;0.</li>
+        <li><tt>C!.properties</tt> is a list of pairs ["name",value]
+where "name" is a string and value is a numerical or boolean value.
+Example pairs are:&nbsp; ["length", n] which would record that there
+are n terms in the chain complex.</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsHapGComplex(C)</span>
+returns "true" for a G-complex C.<br>
+      <br>
+(A G-cocomplex&nbsp; ... &lt;--- C<sub>n</sub> &lt;--- C<sub>n-1</sub>
+&lt;--- ... &lt;--- C<sub>1</sub>
+&lt;--- C<sub>0&nbsp; </sub>is represented by a similar record
+C.&nbsp; The difference is that <tt>C!.boundary(n)</tt> is a map C<sub>n</sub>
+--&gt; C<sub>n+1</sub>.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Standard N-cocycle<br>
+      </td>
+      <td style="vertical-align: top;">A standard N-cocycle
+f:G&times;G&times;...&times;G
+---&gt; M of a group G with coefficients in an abelian G-outer group M
+(i.e. a G-module M) is represented
+as a component object F with the following components:<br>
+      <ul>
+        <li><tt>F!.Module</tt> is the G-module M.</li>
+        <li><span style="font-family: monospace;">F!.Arity</span> is
+the integer N.<br>
+        </li>
+        <li><tt>F!.Mapping</tt> is a function
+which, for all g<sub>1</sub> ,...,, g<sub>N</sub> in G, returns an
+element <tt>F!.Mapping(g<sub>1</sub>,g<sub>2</sub>,...,g<sub>N</sub>) </tt>in
+M. The function
+satisfies the N-cocycle condition.</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsStandardNCocycle(F)</span>
+returns "true" for a standard N-cocycle.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Cat-1-group<br>
+      </td>
+      <td style="vertical-align: top;">A cat-1-group is a group endowed
+with a compatible category composition. It can be viewed as a group G
+with endomorphisms s,t:G--&gt;G satisfying ss=s, ts=s, tt=t, st=t and
+[Ker(s),Ker(t)]=1. It is represented as a component object C with the
+following components.<br>
+      <ul>
+        <li><span style="font-family: monospace;">C!.sourceMap</span>
+is
+the group homomorphism s:G--&gt;G.</li>
+        <li><span style="font-family: monospace;">C!.targetMap</span>
+is
+the group homomorphism t:G-&gt;G.</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsHapCatOneGroup(C)</span>
+returns "true" for a cat-1-group C. <br>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">Pseudo list<br>
       </td>
       <td style="vertical-align: top;">A pseudolist L has the same

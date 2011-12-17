@@ -9,8 +9,8 @@ local
         dr, drtmp,
 	i,j,ans,dim1,dim2,v,x;
 
-if n <0 then return false; fi;
-if n=0 then return [0]; fi;  #THIS IS MATHEMATICALLY WRONG!!!
+if n <=0 then return Homology(C,n); fi;
+#if n=0 then return [0]; fi;  #THIS IS MATHEMATICALLY WRONG!!!
 
 if not "snf" in NamesOfComponents(C) then
 C!.snf:=[1..EvaluateProperty(C,"length")];

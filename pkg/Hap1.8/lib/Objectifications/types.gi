@@ -351,3 +351,42 @@ Print("FpG-module homomorphism from ", M!.source, " to ", M!.target,
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapCatOneGroup",IsObject);
+
+DeclareRepresentation(  "IsHapCatOneGroupRep",
+                        IsComponentObjectRep,
+                        ["sourceMap",
+                         "targetMap"
+                         ]);
+
+HapCatOneGroupFamily:=NewFamily( "HapCatOneGroupFamily",
+                                          IsHapCatOneGroup,
+                                          IsHapCatOneGroup);
+
+HapCatOneGroup:=NewType(HapCatOneGroupFamily,
+                                IsHapCatOneGroupRep);
+
+
+InstallMethod( ViewObj,
+"for HapCatOneGroup",
+ [IsHapCatOneGroup],
+function(R)
+Print("Cat-1-group with underlying group ",
+Source(R!.sourceMap),
+ " . \n");
+end);
+
+InstallMethod( PrintObj,
+"for HapCatOneGroup",
+ [IsHapCatOneGroup],
+ function(R)
+Print("Cat-1-group with underlying group ",
+Source(R!.sourceMap),
+ " . \n");
+ end);
+#####################################################################
+#####################################################################
+

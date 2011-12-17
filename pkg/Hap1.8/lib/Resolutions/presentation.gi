@@ -39,9 +39,6 @@ Fgens:=GeneratorsOfGroup(F);
 Frels:=[];
 gens:=[];
 
-start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
-start:=SortedList(Intersection(start))[1];
-
 #####################################################################
 Mult:=function(g,h);
 return Position(Elts,Elts[g]*Elts[h]);
@@ -53,6 +50,25 @@ Inv:=function(g);
 return Position(Elts,Elts[g]^-1);
 end;
 #####################################################################
+
+
+start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+
+if Length(Intersection(start))=0 then
+###############################################
+Boundary:=function(n,k)
+local w;
+w:=Inv(R!.boundary(n,k)[1][2]) ;
+return
+List(R!.boundary(n,k),x->[x[1],Mult(w,x[2])]);
+end;
+##############################################
+
+start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+fi;
+
+start:=SortedList(Intersection(start))[1];
+
 
 #####################################################################
 FirstBoundaryHomomorphism:=function(x)
@@ -91,6 +107,7 @@ end;
 for r in [1..Dimension(2)] do
 Append(Frels,[Boundary2Relator(Boundary(2,r))]);
 od;
+
 
 for r in Frels do
 if (not Inv(r[2]) in gens) then AddSet(gens,r[2]);fi;
