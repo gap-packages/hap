@@ -1,0 +1,115 @@
+<Chapter><Heading> Cohomology ring structure</Heading>
+
+<Table Align="|l|" >
+
+<Row>
+<Item>
+<Index> IntegralCupProduct
+</Index>
+<C>IntegralCupProduct(R,u,v,p,q)
+</C>
+<Br/>
+<C>
+IntegralCupProduct(R,u,v,p,q,P,Q,N)
+</C>
+<P/>
+(Various functions used to construct the cup product
+are also <URL Text="available"> CR_functions.html</URL>.)
+<P/>
+
+Inputs a <M>ZG</M>-resolution <M>R</M>, a vector <M>u</M> representing an 
+element in <M>H^p(G,Z)</M>, a vector <M>v</M> representing an element in 
+<M>H^q(G,Z)</M> and the two integers <M>p,q</M> &tgt;<M> 0</M>. 
+It returns a vector <M>w</M> representing the cup product <M>u\cdot v</M>
+in <M>H^{p+q}(G,Z)</M>. This product is associative and 
+<M>u\cdot v = (-1)pqv\cdot u</M> .  
+It provides <M>H^\ast(G,Z)</M> with the structure of an 
+anti-commutative graded ring. This function implements the
+cup product for 
+characteristic 0 only.
+<P/>
+The resolution <M>R</M> needs a contracting homotopy.
+<P/>
+To save the function from having to calculate the abelian groups
+<M>H^n(G,Z)</M> additional input variables can be used in the form 
+<M>IntegralCupProduct(R,u,v,p,q,P,Q,N)</M> , where 
+
+<List>
+<Item>
+<M>P</M> is the output of the command <M>CR_CocyclesAndCoboundaries(R,p,true)</M>
+</Item>
+<Item>
+<M>Q</M> is the output of the command <M>CR_CocyclesAndCoboundaries(R,q,true)</M></Item>
+<Item><M>N</M> is the output of the command 
+<M>CR_CocyclesAndCoboundaries(R,p+q,true)</M> .
+</Item>
+</List>	    
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> IntegralRingGenerators</Index>
+<C>
+IntegralRingGenerators(R,n)
+</C>
+<P/>
+
+Inputs at least <M>n+1</M> terms of a <M>ZG</M>-resolution and integer 
+<M>n</M>&tgt; <M>0</M>. It returns a minimal list of cohomology classes in 
+<M>H^n(G,Z)</M> which, together with all cup products of lower degree 
+classes, generate the group <M>H^n(G,Z)</M> .
+<P/>
+(Let <M>a_i</M> be the <M>i</M>-th canonical generator of the 
+<M>d</M>-generator abelian group <M>H^n(G,Z)</M>. The cohomology class 
+<M>n_1a_1 + ... +n_da_d</M> is represented by the integer vector 
+<M>u=(n_1, ..., n_d)</M>. )
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ModPCohomologyRing</Index>
+<C>
+ModPCohomologyRing(G,n)
+</C>
+<Br/>
+<C>
+ModPCohomologyRing(R)
+</C>
+<P/>
+
+Inputs either a <M>p</M>-group <M>G</M> and positive integer <M>n</M>, or 
+else <M>n</M> terms of a minimal <M>Z_pG</M>-resolution <M>R</M> of <M>Z_p</M>.
+It returns the cohomology ring <M>A=H^*(G,Z_p)</M> modulo all elements 
+in degree greater than <M>n</M>.
+<P/>
+The ring is returned as a structure constant algebra <M>A</M>.
+<P/>
+The ring <M>A</M> is graded. It has a component <M>A!.degree(x)</M>
+which is a function returning the degree of each (homogeneous) element 
+<M>x</M> in <M>GeneratorsOfAlgebra(A)</M>.
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
+<Index> ModPRingGenerators</Index>
+<C>
+ModPRingGenerators(A)
+</C>
+<P/>
+
+Inputs a mod <M>p</M> cohomology ring <M>A</M> 
+(created using the preceeding function). It returns a generating set for the 
+ring <M>A</M>. Each generator is homogeneous.
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+

@@ -154,7 +154,7 @@ end);
 ####################################################################
 
 #####################################################################
-InstallGlobalFunction(Prank,
+InstallGlobalFunction(PrankAlt,
 function(G)
 local S, p;
 
@@ -176,4 +176,105 @@ return Log(Maximum(S),p);
 
 end);
 ####################################################################
+
+#####################################################################
+InstallGlobalFunction(Prank,
+function(G)
+local
+	pPowers,
+	xP,
+	x,y,
+	p,
+	AbSubGrps,
+	AbSubGrps1,
+	AbSubGrps2,
+	S, Sx,
+	A,
+	N,
+	N1,
+	reps,
+	toggle;
+
+###########################################################
+p:=SSortedList(Factors(Order(G)));
+if not Length(p)=1 then
+Print("G must be a finite p-group. \n");
+return fail;
+fi;
+###########################################################
+
+p:=PrimePGroup(G);
+
+###########################################################
+if IsAbelian(G) then return
+Length(AbelianInvariants(G)); fi;
+###########################################################
+
+pPowers:=[];
+xP:=[];
+
+
+
+AbSubGrps:=[];
+AbSubGrps1:=[GeneratorsOfGroup(Center(G))];
+AbSubGrps2:=[];
+reps:=[Center(G)];
+xP:=Concatenation(List(reps,x->Elements(x)));
+xP:=SSortedList(xP);
+
+for x in G do
+if Order(x)=p and not (x in xP)  then
+Add(pPowers,x);
+Append(xP,Elements(Group(x)));
+fi;
+od;
+
+
+toggle:=true;
+while toggle do
+toggle:=false;
+
+	for S in AbSubGrps1 do
+	for x in pPowers do
+	if not x in Group(S) then
+	Sx:=Concatenation(S,[x]);
+	A:=Group(Sx);
+	if IsAbelian(A) and not (A in reps) then
+	Add(AbSubGrps2,Sx); AddSet(reps,A); toggle:=true; fi;
+	fi;
+	od;
+	od;
+Append(AbSubGrps,AbSubGrps1);
+AbSubGrps1:=AbSubGrps2;
+AbSubGrps2:=[];
+
+od;
+
+
+Apply(AbSubGrps, x->Prank(Group(x)));
+
+return Maximum(AbSubGrps);
+end);
+#####################################################################
+
+####################################################################
+#####################################################################
+InstallMethod(Compose,
+"for group homomorphisms xoy=x(y)",
+[IsGroupHomomorphism,IsGroupHomomorphism],
+function(x,y)
+if not (Source(x)=Range(y)) then return fail; fi;
+return GroupHomomorphismByFunction(Source(y),Range(x),
+a->Image(x,Image(y,a)));
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod(Compose,
+"for FpG-module homomorphisms xoy=x(y)",
+[IsHapFPGModuleHomomorphism,IsHapFPGModuleHomomorphism],
+function(x,y)
+return CompositionOfFpGModuleHomomorphisms(x,y);
+end);
+#####################################################################
 

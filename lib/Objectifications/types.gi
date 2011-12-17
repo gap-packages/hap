@@ -307,22 +307,47 @@ InstallTrueMethod(IsHapChain,IsHapChainMap);
 #####################################################################
 IsHapFPGModule:=NewFilter("IsHapFPGModule");;
 HapFPGModule:=NewType(FamilyObj(rec()),
-                   IsHapFPGModule
-		   and IsComponentObjectRep);;
+IsHapFPGModule
+and IsComponentObjectRep);;
 InstallMethod( ViewObj,
 "for HapFPGModule",
 [IsHapFPGModule],
 function(M)
-Print("Module over the group ring of "); ViewObj(M!.group);
-Print(" in characteristic ", PrimePGroup(M!.group), " .\n");
-  end);
+Print("Module of dimension "); ViewObj(M!.dimension);
+Print(" over the group ring of "); ViewObj(M!.group);
+Print(" in characteristic ", (M!.characteristic), " \n");
+end);
   
 InstallMethod( PrintObj,
 "for HapFPGModule",
 [IsHapFPGModule],
 function(M)
-Print("Module over the group ring of ", M!.group, 
-" in characteristic ", PrimePGroup(M!.group), " .\n");
-  end);
+Print("Module of dimension ", M!.dimension, " over the group ring of ", M!.group, 
+" in characteristic ", M!.characteristic, " \n");
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+IsHapFPGModuleHomomorphism:=NewFilter("IsHapFPGModuleHomomorphism");;
+HapFPGModuleHomomorphism:=NewType(FamilyObj(rec()),
+IsHapFPGModuleHomomorphism
+and IsComponentObjectRep);;
+InstallMethod( ViewObj,
+"for HapFPGModuleHomomorphism",
+[IsHapFPGModuleHomomorphism],
+function(M)
+Print("FpG-module homomorphism  "); 
+end);
+
+InstallMethod( PrintObj,
+"for HapFPGModuleHomomorphism",
+[IsHapFPGModuleHomomorphism],
+function(M)
+Print("FpG-module homomorphism from ", M!.source, " to ", M!.target,
+ " \n");
+end);
 #####################################################################
 #####################################################################

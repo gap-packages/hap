@@ -4,12 +4,13 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionFpGModule,
-function(arg)
+function(arg) 
 local
 	MDL,G,n,
 	eltsG,
 	gensG,
 	Dimension,
+	CorrectedDimension,
 	Boundary,
 	PartialHomotopy,
 	Homotopy,
@@ -34,20 +35,17 @@ local
 	SolutionMatBoundaryMatrices,
 	Toggle,
 	SMBM,
-	SpaceSave,
-	g,h,i,x,tmp;
+	t,g,h,i,x,tmp;
 
 
 MDL:=arg[1];
 G:=MDL!.group;
-n:=arg[2];
-if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
+n:=arg[2]+1;
 tmp:=SSortedList(Factors(Order(G)));
-if Length(tmp)>1 then 
-Print("This function can only be applied to small prime-power groups. \n");
-return fail;
-fi;
-prime:=tmp[1];
+
+
+prime:=MDL!.characteristic;
+
 pp:=Order(G);
 one:=Identity(GaloisField(prime));
 zero:=0*one;
@@ -56,7 +54,7 @@ gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
 MT:=MultiplicationTable(eltsG);
 
-pcgens:=Pcgs(G);
+pcgens:=Pcgs(SylowSubgroup(G,prime));
 pcgens:=ReduceGenerators(pcgens,G);
 pcgens:=List(pcgens,x->Position(eltsG,x));
 
@@ -70,13 +68,23 @@ od;
 #####################################################################
 Dimension:=function(i);
 if i<0 then return 0; fi;
-if i=0 then return 1; fi;
 return Length(PseudoBoundaryAsVec[i]);
 end;
 #####################################################################
 
 #####################################################################
-Boundary:=function(i,j);
+CorrectedDimension:=function(t)
+local i;
+i:=t+1;
+if i<0 then return 0; fi;
+return Length(PseudoBoundaryAsVec[i]);
+end;
+#####################################################################
+
+#####################################################################
+Boundary:=function(t,j)
+local i;
+i:=t+1;
 if i<0 then return []; fi;
 if j>0 then
 return PseudoBoundary[i][j]; 
@@ -89,7 +97,7 @@ end;
 #####################################################################
 WordToVectorList:=function(w,k)	#w is a word in R_k. 
 local v,x,a;			#v is a list of vectors mod p.
-#v:=List([1..Dimension(k)],x->List([1..pp],y->0) );
+
 v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(pp,0) );
 
 
@@ -101,12 +109,6 @@ od;
 return v mod prime;
 end;
 #####################################################################
-
-#for x in gensG do
-#Add(PseudoBoundary[1], [[-1,1],[1,Position(eltsG,x)]]  );
-#Add(PseudoBoundaryAsVec[1], Flat(WordToVectorList
-#( [[-1,1],[1,Position(eltsG,x)]] ,0))*one);
-#od;
 
 
 #####################################################################
@@ -244,7 +246,7 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
-	Bcomp, BndMat;
+	Bcomp, BndMat, ReducedB1, rrb, rrb1;
 
 BndMat:=BoundaryMatrix(k); 
 
@@ -261,7 +263,33 @@ od;
 
 
 B1:=ComplementaryBasis(Bcomp,NS);
-NS:=0;
+NS:=Length(NS.vectors);
+
+if not IsPrimePowerInt(Order(G)) then
+        ReducedB1:=[];
+        rrb:=0;
+        rrb1:=0;
+                for v in B1 do
+                if rrb1=NS then break; fi;
+                rrb1:=FpGModule
+                (Concatenation(ReducedB1,[v]),G,prime)!.dimension;
+                if rrb1>rrb then
+                rrb:=rrb1;
+                ReducedB1:=Concatenation(ReducedB1,[v]);
+                fi;
+                od;
+
+
+B1:=StructuralCopy(ReducedB1);
+                for v in B1 do
+	        ReducedB1:=Filtered(ReducedB1,x->not x=v);
+	        rrb:=FpGModule
+	        (ReducedB1,G,prime)!.dimension;
+	        if rrb<NS then Add(ReducedB1,v); fi;
+	        od;
+B1:=ReducedB1;
+fi;
+
 B1:=List(B1,v->List(v,x->IntFFE(x)));
 return B1;
 end;
@@ -327,8 +355,6 @@ u[pos]:=v[row]-diff;
 ConvertToVectorRep(u);
 od;
 
-#return
-#SolutionMat((BoundaryMatrices[m]),w*one);
 
 return u;
 end;
@@ -381,9 +407,9 @@ end;
 
 return Objectify(HapResolution,
 	        rec(
-		dimension:=Dimension,
+		dimension:=CorrectedDimension,
 		boundary:=Boundary,
-		homotopy:=Homotopy,
+		homotopy:=fail,
 		elts:=eltsG,
 		group:=G,
 		properties:=

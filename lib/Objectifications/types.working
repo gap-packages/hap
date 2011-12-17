@@ -302,3 +302,28 @@ InstallTrueMethod(IsHapChain,IsHapChainComplex);
 InstallTrueMethod(IsHapChain,IsHapChainMap);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+IsHapFPGModule:=NewFilter("IsHapFPGModule");;
+HapFPGModule:=NewType(FamilyObj(rec()),
+                   IsHapFPGModule
+		   and IsComponentObjectRep);;
+InstallMethod( ViewObj,
+"for HapFPGModule",
+[IsHapFPGModule],
+function(M)
+Print("Module of dimension "); ViewObj(M!.dimension);
+Print(" over the group ring of "); ViewObj(M!.group);
+Print(" in characteristic ", PrimePGroup(M!.group), " .\n");
+  end);
+  
+InstallMethod( PrintObj,
+"for HapFPGModule",
+[IsHapFPGModule],
+function(M)
+Print("Module of dimension ", M!.dimension, " over the group ring of ", M!.group, 
+" in characteristic ", PrimePGroup(M!.group), " .\n");
+  end);
+#####################################################################
+#####################################################################

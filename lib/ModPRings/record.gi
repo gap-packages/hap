@@ -82,7 +82,10 @@ end;
 WordToVectorList:=function(w,k) #w is a word in R_k.
 local v,x,a;                    #v is a list of vectors mod p.
 
-v:=ListWithIdenticalEntries(R!.dimension(k),ListWithIdenticalEntries(pp,0) );
+#v:=ListWithIdenticalEntries(R!.dimension(k),ListWithIdenticalEntries(pp,0) );
+
+v:=List([1..R!.dimension(k)],x-> ListWithIdenticalEntries(pp,0)      );
+
 for x in w do
 a:=AbsInt(x[1]);
 v[a][x[2]]:=v[a][x[2]] + SignInt(x[1]);
@@ -305,25 +308,29 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ModPRingGenerators,
+InstallGlobalFunction(ModPRingGeneratorsAlt,
 function(A)
 local S, gens, gensA, x, dim, dimgensA;
+#I need to think about this. The following procedure is inefficient.
+
 
 S:=GeneratorsOfAlgebra(A);
 dim:=Dimension(A);
 gens:=[S[1]];
-gensA:=Subalgebra(A,gens);
+gensA:=Subalgebra(A,gens,"basis");
 dimgensA:= Dimension(gensA);
 
 for x in S do
 
 if not x in gensA then
 Append(gens,[x]);
-gensA:=Subalgebra(A,gens);
+gensA:=SubalgebraNC(A,gens);
 dimgensA:=Dimension(gensA);
+
 fi;
 
-if dimgensA=dim then return gens; fi;
+if dimgensA=dim then 
+return gens; fi;
 
 od;
 
@@ -331,3 +338,47 @@ od;
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ModPRingGenerators,
+function(A)
+local S, gradedgens, deg, mingens, i,j,n, vecs,V,x,y;
+
+S:=GeneratorsOfAlgebra(A);
+deg:=A!.degree(S[Length(S)]);
+gradedgens:=List([1..1+deg],i->[]);
+
+for i in [1..Length(S)] do
+Add(gradedgens[1+A!.degree(S[i])],S[i]);
+od;
+
+#gradedgens[i+1] contains generators of degree i.
+
+mingens:=Concatenation(gradedgens[1+0],gradedgens[1+1]);
+
+for n in [2..deg] do
+vecs:=[];
+
+   for i in [1..Int(n/2)] do
+ 	for x in gradedgens[1+i] do
+	for y in gradedgens[n+1-i] do
+	Add(vecs,x*y);
+	od;
+	od;
+   od;
+	V:=SubspaceNC(A,vecs);
+	for x in gradedgens[n+1] do
+	if not x in V then Add(mingens,x); 
+	Add(vecs,x);
+	V:=SubspaceNC(A,vecs);
+	fi;
+	od;
+
+od;
+
+return mingens;
+end);
+#####################################################################
+#####################################################################
+

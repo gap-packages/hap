@@ -19,6 +19,9 @@ local
 	One,
 	Charact;
 
+if "tensorWithIntModPRec" in NamesOfComponents(R) then
+return R!.tensorWithIntModPRec; fi;
+
 One:=Elements(GaloisField(prime))[2];
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
@@ -62,7 +65,7 @@ else
 Print("ERROR: You probably entered the wrong prime. \n");
 return fail; fi;
 
-return Objectify(HapChainComplex,
+R!.tensorWithIntModPRec:= Objectify(HapChainComplex,
 		rec(
 		dimension:=R!.dimension,
 		boundary:=BoundaryC,
@@ -72,6 +75,7 @@ return Objectify(HapChainComplex,
 		["type", "chainComplex"],
 		["characteristic", Charact]
 		 ]));
+return R!.tensorWithIntModPRec;
 end;
 #####################################################################
 #####################################################################

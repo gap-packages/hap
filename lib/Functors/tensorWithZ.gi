@@ -21,6 +21,10 @@ local
 	LengthC,
 	M;
 
+if "tensorWithIntRec" in NamesOfComponents(R) then
+return R!.tensorWithIntRec; fi;
+
+
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
 
@@ -56,7 +60,7 @@ return M[n][k];
 end;
 #####################################################################
 
-return Objectify(HapChainComplex,
+R!.tensorWithIntRec:= Objectify(HapChainComplex,
 		rec(
 		dimension:=R!.dimension,
 		boundary:=BoundaryC,
@@ -66,6 +70,7 @@ return Objectify(HapChainComplex,
 		["type", "chainComplex"],
 		["characteristic", 
 		EvaluateProperty(R,"characteristic")] ]));
+return R!.tensorWithIntRec;
 end;
 #####################################################################
 #####################################################################

@@ -1,9 +1,15 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
+#####################################################################
 InstallGlobalFunction(GroupHomology,
 function(arg)
 local
+        GroupCohomologyOriginal, answer;
+
+#####################################################################
+GroupCohomologyOriginal:=function()
+	local
 		G, gensG, N, p, D, 
 		Functor,
 		HomologyGraphOfGroups,
@@ -14,6 +20,7 @@ local
 		HomologyAbelianGroup,
 		HomologyNilpotentPcpGroup,
 		HomologySpaceGroup;
+		
 
 
 ############################### INPUT DATA ##########################
@@ -218,6 +225,11 @@ if IsFinite(G) then
 if IsAbelian(G) then
 return HomologyAbelianGroup(); fi;
 
+if IsPrime(p) and IsPrimePowerInt(Order(G)) and
+Order(G)<257 then
+return List([1..RankPrimeHomology(G,N)(N)],i->p);
+fi;
+
 if IsPrimePowerInt(Order(G)) then
 return HomologyPrimePowerGroup(); fi;
 
@@ -226,5 +238,16 @@ return HomologySmallGroup(); fi;
 
 return HomologyGenericGroup(); 
 fi;
+
+end;
+#####################################################################
+
+answer:= GroupCohomologyOriginal();
+
+if IsList(answer) then return answer; fi;
+
+if IsInt(answer) then return
+ListWithIdenticalEntries(answer,arg[3]); fi;
+
 
 end);

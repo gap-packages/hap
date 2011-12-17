@@ -1,0 +1,207 @@
+<Chapter><Heading> Homology and cohomology groups</Heading>
+
+<Table Align="|l|"> 
+
+
+<Row>
+<Item> <Index> Cohomology </Index>
+<C>Cohomology(X) </C>
+<P/>
+Inputs either a cochain complex <M>X=C</M> 
+or a cochain map <M>X=(C \longrightarrow
+D)</M> over the integers <M>Z</M>.
+
+<List>
+<Item>If <M>X=C</M> then the torsion coefficients of <M>H^n(C)</M>
+are retuned.</Item>
+ <Item>If <M>X=(C \longrightarrow
+	D)</M> then the induced homomorphism <M>H^n(C)\longrightarrow
+	H^n(D)</M> is returned as a homomorphism 
+	of finitely presented groups. </Item>
+</List>
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>GroupCohomology</Index>
+<C>GroupCohomology(X,n) </C>
+&nbsp;
+<C>GroupCohomology(X,n,p)</C>
+<P/>
+
+Inputs a positive integer <M>n</M> and either a finite group <M>X=G</M>
+or a Coxeter diagram <M>X=D</M> representing an infinite Artin group <M>G</M>.
+It returns the torsion coefficients of the integral cohomology <M>H^n(G,Z)</M>.
+<P/>
+
+There is an optional third argument which, when set equal to a prime <M>p</M>, 
+causes the function to return the the mod <M>p</M> cohomology <M>H^n(G,Z_p)</M>
+as a list of length equal to its rank.
+<P/>
+
+This function is a composite of more basic functions, and makes choices 
+for a number of parameters. For a particular group you would almost 
+certainly be better using the more basic functions and making the choices 
+yourself!
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>  GroupHomology</Index>
+<C>GroupHomology(X,n)</C>
+<Br/>
+<C>GroupHomology(X,n,p)</C>
+<P/>
+
+Inputs a positive integer <M>n</M> and either a finite group <M>X=G</M>
+or a Coxeter diagram <M>X=D</M> representing an infinite Artin group <M>G</M>.
+It returns the torsion coefficients of the integral homology <M>H_n(G,Z)</M>.
+<P/>
+There is an optional third argument which, when set equal to a prime <M>p</M>, 
+causes the function to return the mod <M>p</M> homology <M>H_n(G,Z_p)</M>
+as a list of lenth equal to its rank.
+<P/>
+This function is a composite of more basic functions, 
+and makes choices for a number of parameters. 
+For a particular group you would almost certainly be better 
+using the more basic functions and making the choices yourself!
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> Homology </Index>
+<C>Homology(X,n)</C>
+<P/>
+
+Inputs either a chain complex <M>X=C</M> or a chain map 
+<M>X=(C \longrightarrow D)</M>.
+<List>
+<Item>If <M>X=C</M> then the torsion coefficients of <M>H_n(C)</M>
+are retuned.</Item>
+<Item> If <M>X=(C \longrightarrow D)</M> then the induced homomorphism 
+<M>H_n(C) \longrightarrow  H_n(D)</M> is returned as a homomorphism of 
+finitely presented groups. </Item>
+</List>
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> HomologyPb </Index>
+<C>HomologyPb(C,n)</C>
+<P/>
+
+This is a back-up function which might work in some instances 
+where <M>Homology(C,n)</M> fails. 
+It is most useful for chain complexes whose boundary homomorphisms are sparse.
+<P/>
+It inputs a chain complex <M>C</M> in characteristic <M>0</M>
+and returns the torsion coefficients of <M>H_n(C)</M> . 
+There is a small probability that an incorrect answer could be returned. 
+The computation relies on probabilistic Smith Normal Form 
+algorithms implemented in the Simplicial Homology GAP package. 
+This package therefore needs to be loaded.
+<P/>
+The choice of probabalistic algorithm can be changed using the command
+
+<P/> SetHomologyAlgorithm(HomologyAlgorithm[i]);<P/>
+
+where i = 1,2,3 or 4. The upper limit for the probability of an 
+incorrect answer can be set to any rational number <M>0</M>&tlt;<M>e</M>&tlt;=
+<M>1</M> using the following command.
+
+<P/>SetUncertaintyTolerence(e);<P/>
+
+See the Simplicial Homology package manual for further details.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>  LeibnizAlgebraHomology</Index>
+<C>LeibnizAlgebraHomology(A,n)</C>
+<P/>
+
+Inputs a Lie or Leibniz algebra <M>X=A</M> 
+(over the ring of integers <M>Z</M> or over a field <M>K</M>), 
+together with a positive integer <M>n</M>. 
+It returns the <M>n</M>-dimensional Leibniz homology of <M>A</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> LieAlgebraHomology </Index>
+<C>LieAlgebraHomology(A,n)</C>
+<P/>
+
+Inputs a Lie algebra <M>A</M> (over the integers or a field) 
+and a positive integer <M>n</M>. 
+It returns the homology <M>H_n(A,k)</M>  where  <M>k</M>
+denotes the ground ring.
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> PrimePartDerivedFunctor </Index>
+<C>PrimePartDerivedFunctor(G,R,F,n)</C>
+<P/>
+
+Inputs a finite group <M>G</M>, a positive integer <M>n</M>, 
+at least <M>n+1</M> terms of a <M>ZP</M>-resolution for a Sylow subgroup 
+<M>P</M>&tlt;<M>G</M> and a "mathematically suitable" covariant additive functor 
+<M>F</M> such as TensorWithIntegers . It returns the abelian invariants of the 
+<M>p</M>-component of the  homology <M>H_n(F(R))</M> .
+<P/>
+Warning: All calculations are assumed to be in characteristic 0. 
+The function should not be used if the coefficient module is over the field of 
+<M>p</M> elements.
+<P/>
+"Mathematically suitable" means that the Cartan-Eilenberg double coset formula must hold.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> RankHomologyPGroup</Index>
+<C>RankHomologyPGroup(G,n)</C>
+&nbsp;
+<C>RankHomologyPGroup(R,n)</C>
+&nbsp;
+<C>RankHomologyPGroup(G,n,"empirical")</C>
+<P/>
+
+Inputs a (smallish) <M>p</M>-group <M>G</M>, or <M>n</M> 
+terms of a minimal <M>Z_pG</M>-resolution <M>R</M> of <M>Z_p</M> , 
+together with a positive integer <M>n</M>. It returns the minimal 
+number of generators of the integral homology group <M>H_n(G,Z)</M>.
+<P/>
+If an option third string argument "empirical" is included then an 
+empirical algorithm will be used. This is one which always seems 
+to yield the right answer but  which we can't prove yields the 
+correct answer.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> RankPrimeHomology</Index>
+<C>RankPrimeHomology(G,n)</C>
+<P/>
+
+Inputs a (smallish) <M>p</M>-group <M>G</M> 
+together with a positive integer <M>n</M>. 
+It returns a function <M>dim(k)</M> which gives the rank of the 
+vector space
+<M>H_k(G,Z_p)</M> for all <M>0</M> &tlt;= <M>k</M> &tlt;= <M>n</M>.
+</Item>
+</Row>
+</Table>
+</Chapter>
+
+

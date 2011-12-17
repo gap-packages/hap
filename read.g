@@ -10,6 +10,8 @@ SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 ReadPackage("HAP","boolean");
 #ReadPackage("HAP", "lib/TitlePage/title.gap");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
+ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
+
 
 ################### POLYCYLIC COMMANDS ##############################
 ## Most functions should work on pcp groups if the polycyclic package 
@@ -65,6 +67,7 @@ ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
 ##################### FP G MODULES ##################################
 ReadPackage("HAP", "lib/FpGmodules/fpgbasics.gi");
 ReadPackage("HAP", "lib/FpGmodules/resfpgmod.gi");
+ReadPackage("HAP", "lib/FpGmodules/homs.gi");
 
 ##################### NONABELIAN TENSOR #############################
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
@@ -95,6 +98,7 @@ fi;
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
+ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
 
 
@@ -124,6 +128,8 @@ ReadPackage("HAP", "lib/Homology/cocycleCondition.gi");
 ReadPackage("HAP", "lib/Homology/isSuperperfect.gi");
 ReadPackage("HAP", "lib/Homology/modularCohomology.gi");
 ReadPackage("HAP", "lib/Homology/solutionsMat.gi");
+ReadPackage("HAP", "lib/Homology/groupCohomology.gi");
+
 
 ##################### PERTURBATIONS #################################
 ReadPackage("HAP", "lib/Perturbations/resExtension.gi");
@@ -151,6 +157,7 @@ ReadPackage("HAP", "lib/Polymake/aspherical.gi");
 ReadPackage("HAP", "lib/Polymake/polyGens.gi");
 ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
+ReadPackage("HAP", "lib/Polymake/orbitPoly.gi");
 
 ################### POLYCYLIC ######################################
 ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
@@ -178,3 +185,6 @@ ReadPackage("HAP","lib/LieAlgebras/chevalleyEilenberg.gi");
 ReadPackage("HAP","lib/LieAlgebras/isLieHom.gi");
 ReadPackage("HAP","lib/LieAlgebras/groupToLie.gi");
 ReadPackage("HAP","lib/LieAlgebras/leibniz.gi");
+
+################### MEAT AXE #######################################
+ReadPackage("HAP","lib/FpGmodules/meataxe.gi");

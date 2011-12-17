@@ -56,3 +56,11 @@ function(R) return R!.group;
 end);
 #####################################################################
 
+#####################################################################
+InstallOtherMethod(Dimension,
+"Dimension of FpG module",
+[IsHapFPGModule],
+function(M) return M!.dimension;
+end);
+#####################################################################
+

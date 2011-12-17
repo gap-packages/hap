@@ -24,6 +24,10 @@ local
 	LengthC,
 	M;
 
+if "homToIntRec" in NamesOfComponents(R) then
+return R!.homToIntRec; fi;
+
+
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
 
@@ -77,7 +81,7 @@ return M[n][k];
 end;
 #####################################################################
 
-return Objectify(HapCochainComplex,
+R!.homToIntRec:= Objectify(HapCochainComplex,
 		rec(
 		dimension:=R!.dimension,
 		boundary:=BoundaryC,
@@ -87,6 +91,7 @@ return Objectify(HapCochainComplex,
 		["type", "cochainComplex"],
 		["characteristic", 
 		EvaluateProperty(R,"characteristic")] ]));
+return R!.homToIntRec;
 end;
 #####################################################################
 #####################################################################

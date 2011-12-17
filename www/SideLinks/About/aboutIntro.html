@@ -180,8 +180,8 @@ arising as the Sylow 2-subgroup of the Mathieu group M<sub>12 </sub>,
 has in dimension 1000 an integral
 homology
 group H<sub>1000</sub>(G,Z)
-equal to a direct sum of 501501 cyclic 2-groups. (A semi-automated
-proof of such computations can be attempted&nbsp; using techniques
+equal to a direct sum of 501501 cyclic 2-groups. (An automated
+proof of such computations can be attempted using the technique
 described <a href="aboutModPRings.html#proof">here</a>.)<br>
       </td>
     </tr>
@@ -210,7 +210,17 @@ two hours to complete.)<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 GroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);<br>
-143<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2, 2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2, 2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2, 2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2, 2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
       </td>
     </tr>
     <tr>
@@ -374,8 +384,13 @@ the ring of integers Z, has 3-dimensional Leibniz homology HL<sub>3</sub>(A,Z)=(
 + (Z<sub>6</sub>)<sup>16 </sup>+Z<sup>176</sup> .</li>
         <li>The group presentation P = &lt;x,y,z,a,b,c, | a=xy,
 b=yz, c=zx, ax=ya, by=zb, cz=xc &gt; is aspherical.</li>
+        <li>The 3-dimensional module M over the field F of two
+elements, arising from the canonical action of the group G=GL<sub>3</sub>(2)
+of 3&times;3 matrices (of order 168), has a one-dimensional third Ext
+module Ext<sup>3</sup><sub>FG</sub>(M,F)=F. <br>
+        </li>
       </ul>
-The following commands yield these six calculations.<br>
+The following commands yield these seven calculations.<br>
       </td>
     </tr>
     <tr>
@@ -427,6 +442,11 @@ gap&gt; rels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,
 b*y*(z*b)^-1, c*z*(x*c)^-1];;<br>
 gap&gt; IsAspherical(F,rels);;<br>
 Presentation is aspherical.<br>
+      <br>
+gap&gt; M:=GModuleByMats(GeneratorsOfGroup(GL(3,2)),GF(2));;<br>
+gap&gt; R:=ResolutionFpGModule(DesuspensionMtxModule(M),3);;<br>
+gap&gt; Cohomology(HomToIntegersModP(R,2),2);<br>
+1<br>
       </td>
     </tr>
     <tr>

@@ -9,354 +9,8 @@
  style="color: rgb(0, 0, 102); background-color: rgb(204, 255, 255);"
  alink="#000066" link="#000066" vlink="#000066">
 <div style="text-align: center;">
-<h2>DEFINITIONS OF SOME BASIC DATA TYPES <br>
-</h2>
-<table style="width: 100%; text-align: left;" border="0"
- cellpadding="10" cellspacing="10">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">In
-the following definitions we use Z to denote either the ring of
-integers, or the ring
-of integers modulo a prime p. (Elsewhere in these web pages we denote
-the latter by Z<sub>p</sub>
-.) A <span style="font-style: italic;">ZG-resolution</span> means a
-free
-ZG-resolution of the trivial
-ZG-module Z. A <span style="font-style: italic;">chain complex </span>means
-a chain complex of free Z-modules.<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center;"><span
- style="font-weight: bold;"><br>
-      <br>
-TYPE</span><br>
-      </td>
-      <td style="vertical-align: top; text-align: center;"><span
- style="font-weight: bold;"><br>
-      <br>
-DEFINITION</span><br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Free
-ZG-module</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
-eltsG be a (partial) listing of elements in some group G (which could
-be finite or infinite).&nbsp; In order
-to represent a word w in a free ZG-module M of rank n we use a
-list of integer pairs w=[ [i<sub>1</sub>,g<sub>1</sub>], [i<sub>2</sub>,g<sub>2</sub>],
-..., [i<sub>k</sub>,g<sub>k</sub>] ]. The
-integers i<sub>j</sub> lie in the range between -n and n and correspond
-to the
-free ZG-generators of M and their additive inverses. The integers g<sub>j</sub>
-are positive and correspond to the group element eltsG[g<sub>j</sub>].
-The (partial) listing eltsG may contain duplicate copies of
-elements of G.<br>
-      <big> </big></td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ZG-resolution</span><big><br>
-      </big></td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-ZG-resolution&nbsp; ... &#8594; M<sub>n</sub> &#8594; M<sub>n-1</sub> &#8594; ... &#8594; M<sub>1</sub>
-&#8594; M<sub>0</sub> &#8594; Z<big> </big>is represented by a component object R
-with the
-following components.<br>
-      <big> </big>
-      <ul>
-        <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R!.dimension(k)</span>
-is a function which returns the
-ZG-rank of the module
-M<sub>k</sub>.</li>
-        <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R!.boundary(k, j)</span>
-is a function which returns
-the image in M<sub>k-1</sub>
-of the
-j-th free generator of M<sub>k</sub>.</li>
-        <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R!.homotopy(k,[i,g]) </span>is
-a function which
-returns the image in M<sub>k+1</sub>,
-under a contracting homotopy M<sub>k</sub> &#8594; M<sub>k+1</sub>, of
-the element
-[[i,g]]&nbsp; in M<sub>k</sub>. (The elements [[i,g]] freely generate M<sub>k</sub>
-as an abelian group.) For some resolutions a contracting homotopy is
-not
-constructed, in which case R!.homotopy is set equal to "fail". (For
-some
-resolutions a component <span
- style="font-family: helvetica,arial,sans-serif;">R!.partialHomotopy(k,w)</span>
-is available. This is a function which returns the preimage in M<sub>k+1</sub>
-of an arbitrary word w in the kernel of&nbsp; M<sub>k</sub> &#8594; M<sub>k-1&nbsp;</sub>
-.)<br>
-        </li>
-        <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">R!.elts</span> is a
-(partial) list of (possibly
-duplicate) elements
-in G.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">R!.group</span>
-is the group in question (and could be a permutation
-group, matrix group, finitely presented group etc.).</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">R!.properties</span>
-is a list of pairs ["name", value] where
-"name"
-is a
-string and value is a numerical or boolean value. Example pairs
-are:&nbsp; ["length", n] which records that there are n terms in
-the resolution; ["characteristic", p] which records the
-characteristic of Z; ["reduced", true] which record that M<sub>0</sub>
-is isomorphic to ZG; ["type","resolution"] which records the type of
-the object R.</li>
-      </ul>
-The operation<span style="font-family: helvetica,arial,sans-serif;"></span>
-      <span style="font-family: helvetica,arial,sans-serif;">IsHapResoluton(R)</span>
-returns "true" for a resolution.<br>
-      <ul>
-        <big> </big>
-      </ul>
-      <big> </big> </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Equivariant<br>
-chain
-map</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">An
-equivariant
-chain mapping f : R &#8594; S from a ZG-resolution to a ZG'-resolution is
-represented by a component object F with the following components.<br>
-      <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.source</span>
-is the ZG-resolution R.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
-is the ZG'-resolution S.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(w,k)
-          </span>is a
-function which
-returns the image in S<sub>k</sub>,
-under the chain map, of
-the element w=[ [i<sub>1</sub>,g<sub>1</sub>], [i<sub>2</sub>,g<sub>2</sub>],
-..., [i<sub>k</sub>,g<sub>k</sub>] ]&nbsp; in R<sub>k</sub>.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
-is a list of pairs such as ["type", "equivariantChainMap"].</li>
-      </ul>
-The operation <span style="font-family: helvetica,arial,sans-serif;"></span><span
- style="font-family: helvetica,arial,sans-serif;">IsHapEquivariantChainMap(F)</span>
-returns "true" for an equivariant chain map F.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="color: rgb(0, 0, 0);">Chain complex<br>
-      <br>
-(Cochain<br>
-complex)<br>
-      </span></span> </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(0, 0, 102);">A
-chain complex&nbsp; ... &#8594; C<sub>n</sub> &#8594; C<sub>n-1</sub> &#8594; ... &#8594; C<sub>1</sub>
-&#8594; C<sub>0 </sub><big> </big>is represented by a record C with the
-following components.<br>
-      <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">C!.dimension(k)</span>
-is a function which returns the
-Z-rank of the module C<sub>k</sub>.</li>
-        <big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">C!.boundary(k, j) </span>is
-a function which returns
-the image in C<sub>k-1</sub>
-of the
-j-th free generator of C<sub>k</sub>. (Elements in C<sub>k-1</sub> are
-represented in the obvious was as vectors of length equal to the rank
-of C<sub>k-1</sub>.)<br>
-        </li>
-        <big> </big><big> </big><li><span
- style="font-family: helvetica,arial,sans-serif;">C!.properties</span>
-is a list of pairs
-["name",value] where "name"
-is a
-string and value is a numerical or boolean value. Example pairs
-are:&nbsp; ["length", n] which would record that there are n terms in
-the chain complex; ["characteristic", p] which would record the
-characteristic of Z.</li>
-      </ul>
-The operation <span style="font-family: helvetica,arial,sans-serif;"></span><span
- style="font-family: helvetica,arial,sans-serif;">IsHapChainComplex(C)</span>
-returns "true" for a chain complex C.<br>
-      <br>
-(A cochain complex&nbsp; ... &#8592; C<sub>n</sub> &#8592; C<sub>n-1</sub> &#8592; ... &#8592; C<sub>1</sub>
-&#8592; C<sub>0 </sub><big> </big>is represented by a similar record
-C.&nbsp; The difference is that <span
- style="font-family: helvetica,arial,sans-serif;">C!.boundary(k,j)</span>
-returns an element in C<sub>k+1</sub>.) </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Chain
-map<br>
-      <br>
-(Cochain map)<br>
-      </span></td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-chain mapping f : C &#8594; D between chain complexes is a component object F
-with the
-following components.<br>
-      <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.source</span>
-is the chain complex C.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.target</span>
-is the chain complex D.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.mapping(v,k)
-          </span>is a
-function which
-returns the image in D<sub>k</sub>,
-under the chain map, of
-a vector v in C<sub>k</sub>.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
-is a list of pairs such as ["type", "chainMap"].</li>
-      </ul>
-The operation<span style="font-family: helvetica,arial,sans-serif;"></span>
-      <span style="font-family: helvetica,arial,sans-serif;">IsHapEquivariantChainMap(F)</span>
-returns "true" for a chain map F.<br>
-      <br>
-(A cochain mapping is represented by a similar record.)<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Additive<br>
-Functor<br>
-      <br>
-(Additive<br>
-Contravariant<br>
-Functor)<br>
-      </span></td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-functor T(X) is a function which inputs either a ZG-resolution X=R,
-or else an equivariant chain map between resolutions X=(f: R&#8594;S) .<br>
-      <ul>
-        <li>If&nbsp; X=R then T(R) is a chain complex.</li>
-        <li>If X=(f:R&#8594;S) then T(X) is a Z-chain map T(R) &#8594; T(S).</li>
-      </ul>
-(A contavariant functor is similar, except that T(R) is a cochain
-complex and T(R&#8594;S) is a cochain map T(S) &#8594; T(R). ) <br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Coxeter
-diagram</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-Coxeter diagram is a finite graph (with at most one edge between a pair
-of vertices) whose edges are labelled by integers n&gt;2 or
-n = infinity. <span style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">The graph is represented as a list D = [L<sub>1</sub>,
-... L<sub>t</sub>] in which each term is itself a list L<sub>k</sub> =
-[v<sub>k</sub>,
-[u<sub>k1</sub>,n<sub>k1</sub>], </span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">[u<sub>k2</sub>,n<sub>k2</sub>], ... </span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">[u<sub>km</sub>,n<sub>km</sub>]] such that
-vertex v<sub>k</sub> is connected to vertex u<sub>kj</sub> by an edge
-with label n<sub>kj</sub>. It is sufficient to list just those
-vertices </span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">u<sub>kj</sub> &gt; v<sub>k</sub>.</span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;"> We set </span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;">n<sub>kj</sub>=0 when</span></span><span
- style="font-family: helvetica,arial,sans-serif;"><span
- style="font-family: serif;"> the edge label is infinity. </span></span></td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Graph
-of Groups</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-graph of groups is a finite graph (with at most one edge between a pair
-of vertices) whose vertices are labelled by groups and whose edges are
-labelled by pairs [f,g] of group monomorphisms f:S&#8594;G, g:S&#8594;H with common
-source and with ranges G and H equal to the labels of the boundary
-vertices of the edge.<br>
-      <br>
-Such a graph is represented as a list D = [L<sub>1</sub>, ... L<sub>t</sub>]
-where each L<sub>i</sub> is either a group G or a pair of group
-monomorphisms [f,g]. Each group G arising as a term in the list, or as
-the range or source of a monomorphism in the list, must be such that
-HasName(G) is true. Furthermore, distinct groups must have dirrerent
-names.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpG-module</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">For
-a finite p-group G, and the field F of p elements, a submodule of the
-free FG-module FG<sup>n</sup> is represented by a component object M
-with the following components:<br>
-      <ul>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M!.group</span>
-is the finite p-group G,</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M!.matrix</span>
-is an echelon matrix whose rows form a basis for the underlying vector
-space,</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M!.action(g,M)</span>
-is a function that inputs an element g in G and a matrix M whose rows
-are vectors in the vector space F<sup>n|G|</sup> of dimenion any
-multiple of |G|. It returns the matrix got from M by letting g act on
-columns.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M!.dimension</span>
-is the dimension of the underlying vector space.</li>
-        <li><span style="font-family: helvetica,arial,sans-serif;">M!.ambientDimension</span>
-is n|G| .</li>
-      </ul>
-The operation<span style="font-family: helvetica,arial,sans-serif;"></span>
-      <span style="font-family: helvetica,arial,sans-serif;">IsHapFPGModule(M)</span>
-returns "true" for an FpG-module M. </td>
-    </tr>
-  </tbody>
-</table>
-<small><br>
-</small></div>
-<div style="text-align: center;"><span style="font-weight: bold;"><br>
-</span>
-<h2 style="text-align: center;"><br>
-<span style="font-weight: bold;"></span></h2>
+<div style="text-align: left;"><a href="../index.html">HAP home</a><br>
+</div>
 <h2 style="text-align: center;"><span style="font-weight: bold;">ALPHABETICAL
 LIST OF HAP FUNCTIONS</span></h2>
 <span style="font-weight: bold;"></span></div>
@@ -560,6 +214,20 @@ groups. <br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Compose</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">(f,g)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-module homomorphisms f:M&#8594;N and g:L&#8594;M with Source(f)=Target(g) .
+It returns the composite homomorphism fg:L&#8594;N .<br>
+      <br>
+This also applies to group homomorphisms f,g.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
 Components(D)</span><br>
@@ -676,12 +344,18 @@ set of vertices.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Dimension(C)</span><br>
-      </td>
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Dimension(C)<br>
+      <br>
+Dimension(M)<br>
+      </span> </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a resolution, chain complex or cochain complex C and returns the
-function C!.dimension .</td>
+function C!.dimension .<br>
+      <br>
+Alternatively, inputs an FpG-module M and returns its dimension as a
+vector space over the field of p elements.<br>
+      </td>
     </tr>
     <tr>
       <td
@@ -804,18 +478,6 @@ a<sub>2</sub>x<sup>2</sup> + a<sub>3</sub>x<sup>3</sup> + ...&nbsp; .<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGCyclesModule(R,n)</span><br>
-      </td>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a positive integer n and at least n terms of an FG-resolution R, where
-G is a finite p-group and F is the field of p elements. It returns the
-kernel of the nth boundary homomorphism as an FpG-module.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule(A,G)</span><br>
       </td>
       <td
@@ -823,6 +485,68 @@ kernel of the nth boundary homomorphism as an FpG-module.<br>
 a p-group G and a matrix A whose rows have length a multiple of the
 order of G. It returns an FpG-module generated by the rows of A.<br>
       </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGModuleDualBasis(M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M. It returns a record R with two components:<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R.freeModule</span>
+is the free module FG of rank one.</li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R.basis</span>
+is a list representing an F-basis for the module Hom<sub>FG</sub>(M,FG).
+Each term in the list is a matrix A whose rows are vectors in FG such
+that&nbsp; M!.generators[i] &#8594; A[i]&nbsp; extends to a module
+homomorphism M&#8594;FG.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Homomorphism(M,N,A)</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HomomorphismNC(M,N,A)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+FpG-modules M and N over a common p-group G. Also inputs a list A
+of vectors in the vector space spanned by N!.matrix. It tests that
+the function<br>
+      <br>
+      <div style="text-align: center;">&nbsp;M!.generators[i] &#8594; A[i]<br>
+      </div>
+      <br>
+extends to a homomorphism of FpG-modules and, if the test is passed,
+returns the corresponding FpG-module homomorphism. If the test is
+failed it returns fail.<br>
+      <br>
+The "NC" version of the function assumes that the input defines a
+homomorphism and simply returns the FpG-module homomorphism.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGOmega(R,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and at least n terms of an FG-resolution R, where
+G is a finite p-group and F is the field of p elements. It returns the
+kernel of the nth boundary homomorphism as an FpG-module.</td>
     </tr>
     <tr>
       <td
@@ -874,6 +598,33 @@ passes the test, and false otherwise.</td>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupCohomology(X,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupCohomology(X,n,p)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and either a finite group X=G or a Coxeter diagram
+X=D representing an infinite Artin group G.&nbsp; It
+returns the torsion coefficients of the integral cohomology H<sup>n</sup>(G,Z).
+      <br>
+      <br>
+There is an optional third
+argument which, when set equal to a prime p, causes the<span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
+function to return the the mod p cohomology </span></span>H<sup>n</sup>(G,Z<sub>p</sub>)
+as a list of length equal to its rank. <br>
+      <span style="color: rgb(51, 0, 51);"><span
+ style="color: rgb(0, 0, 102);"> <br>
+This function is a composite of more basic functions, and makes choices
+for a number of parameters. For a particular group you would almost
+certainly be better using the more basic functions and making the
+choices yourself!</span></span> </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupHomology(X,n)</span><br
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
       <br>
@@ -894,8 +645,8 @@ returns the torsion coefficients of the integral homology H<sub>n</sub>(G,Z).
 There is an optional third
 argument which, when set equal to a prime p, causes the<span
  style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
-function to return the rank of the mod p homology </span></span>H<sub>n</sub>(G,Z<sub>p</sub>).
-      <br>
+function to return the mod p homology </span></span>H<sub>n</sub>(G,Z<sub>p</sub>)
+as a list of lenth equal to its rank.. <br>
       <span style="color: rgb(51, 0, 51);"><span
  style="color: rgb(0, 0, 102);"> <br>
 This function is a composite of more basic functions, and makes choices
@@ -1016,8 +767,22 @@ to the group of n&times;n invertible integer matrices. Here Z must have
 characteristic
 0. It returns the cochain complex obtained by applying Hom<sub>ZG</sub>(
 _ , A) where A is the ZG-module Z<sup>n</sup> with G action via f. (At
-present this function does handle
+present this function does not handle
 equivariant chain maps.) </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ImageOfFpGModule</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Homomorphism(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module homomorphism f:M&#8594;N and returns its image f(M) as an
+FpG-module.<br>
+      </td>
     </tr>
     <tr>
       <td
@@ -1101,6 +866,21 @@ the command <span style="font-family: helvetica,arial,sans-serif;">CR_CocyclesAn
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IntersectionOfFpG</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Modules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M, N arising as submodules in a common free module (FG)<sup>n</sup>
+where G is a p-group and F the field of p-elements. It returns the
+FpG-Module arising as the intersection of M and N.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">IsAspherical(F,R)</span><br>
       </td>
       <td
@@ -1128,14 +908,13 @@ The function uses Polymake software. <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsFpGModuleHomomorphism</span><br
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
-      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsFpGModule<br>
+Homomorphism</span><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Data(M,N,A)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-FpG-modules M and N over over a common p-group G. Also inputs a list A
+FpG-modules M and N over a common p-group G. Also inputs a list A
 of vectors in the vector space spanned by N!.matrix. It returns true if
 the function<br>
       <br>
@@ -1309,6 +1088,20 @@ homogeneous.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">MultipleOfFpGModule(w,M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and a list w:=[g<sub>1</sub> , ..., g<sub>t</sub>] of
+elements in the group G=M!.group. The list w can be thought of as
+representing the element w=g<sub>1</sub> + ...+ g<sub>t </sub>in the
+group algebra FG, and the function returns a semi-echelon matrix B
+which is a basis for the vector subspace wM .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span></td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -1433,6 +1226,34 @@ groups.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">OrbitPolytope(G,v,L)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group or matrix group G of degree n and a rational vector
+v of length n. In both cases there is a natural action of G on v. Let
+P(G,v) be the convex polytope arising as the convex hull of
+the Euclidean points in the orbit of v under the action of G. The
+function also inputs a sublist L of the following list of strings:<br>
+      <br>
+      <div style="text-align: center;">["dimension","vertex_degree",
+"visual_graph", "schlegel","visual"]<br>
+      <div style="text-align: left;"><br>
+Depending on the sublist, the function:
+      <ul>
+        <li>prints the dimension of the orbit polytope P(G,v);</li>
+        <li>prints the degree of a vertex in the graph of P(G,v);</li>
+        <li>visualizes the graph of P(G,v);</li>
+        <li>visualizes the Schlegel diagram of P(G,v);</li>
+        <li>visualizes P(G,v) if the polytope is of dimension 2 or 3.</li>
+      </ul>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">PermToMatrixGroup(G,n)</span><br>
       </td>
       <td
@@ -1468,8 +1289,6 @@ p resolution R for G.<br>
 Alternatively, the first input variable can be a list L of integers. In
 this case the coefficient of x<sup>k</sup> in f(x) is equal to the
 (k+1)st term in the list.<br>
-      <br>
-      <br>
       </td>
     </tr>
     <tr>
@@ -1641,6 +1460,50 @@ denotes the i-th free generator of the module. <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ProjectedFpGModule(M,k)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M of ambient dimension n|G|, and an integer k between 1
+and n. The module M is a submodule of the free module (FG)<sup>n</sup>
+. Let M<sub>k</sub> denote the intersection of M with the k-th summand
+of (FG)<sup>n</sup> . The function returns M<sub>k</sub> as an
+FpG-module with ambient diemnsio n|G|.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RandomHomomorphismOf</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGModules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M and N over a common group G. It returns a random
+matrix A whose rows are vectors in N such that
+the function<br>
+      <br>
+      <div style="text-align: center;">&nbsp;M!.generators[i] &#8594; A[i]<br>
+      </div>
+      <br>
+extends to a homomorphism M&#8594;N of FpG-modules.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Rank(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module homomorphism f:M&#8594;N and returns the dimension of the image
+of f as a vector space over the field F of p elements.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RankHomologyPGroup(G,n)</span><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><br
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
@@ -1657,7 +1520,7 @@ PGroup(G,n,"empirical")</span><br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
 a (smallish) p-group G, or n terms of a minimal Z<sub>p</sub>G-resolution
 R of Z<sub>p</sub> , together with a positive integer n. It returns the
-minimal number of generators of the finite abelian p-group H<sub>n</sub>(G,Z).<br>
+minimal number of generators of the integral homology group H<sub>n</sub>(G,Z).<br>
       <br>
 If an option third string argument "empirical" is included then an
 empirical algorithm will be used. This is one which always seems to
@@ -1667,7 +1530,19 @@ answer but&nbsp; which we can't prove yields the correct answer. </td>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
- style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">&nbsp;thenRelativeSchurMultiplierG,N)</span><br>
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">RankPrimeHomology(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a (smallish) p-group G together with a positive integer n. It returns a
+function dim(k) which gives the rank of the vector space<br>
+H<sub>k</sub>(G,Z<sub>p</sub>) for all 0 &lt;= k &lt;= n<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">&nbsp;RelativeSchurMultiplierG,N)</span><br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
@@ -2112,10 +1987,7 @@ of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). <br>
       <br>
 If an optional third variable is set equal to the string "save space"
 then the resolution will take a little longer to compute but less space
-will be needed.<br>
-      <br>
-Only a partial contracting homotopy is available for this
-ZG-resolution. <span style="color: rgb(255, 0, 0);"></span><br>
+will be needed.<span style="color: rgb(255, 0, 0);"></span><br>
       </td>
     </tr>
     <tr>
@@ -2218,7 +2090,8 @@ matrix B.<br>
       </td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a chain map, or cochain map or equivariant chain map f and returns it
+a chain map, or cochain map, or equivariant chain map, or FpG-module
+homomorphism f and returns it
 source.<br>
       </td>
     </tr>
@@ -2246,6 +2119,29 @@ or 3.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">SumOfFpGModules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M, N arising as submodules in a common free module (FG)<sup>n</sup>
+where G is a p-group and F the field of p-elements. It returns the
+FpG-Module arising as the sum of M and N.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">SumOp(f,g)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 102);">Inputs two FpG-module homomorphisms
+f,g:M&#8594;N with common sorce and common target. It returns the sum f+g:M&#8594;N
+. (This operation is also available using "+".</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
  style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Syzygy(R,g)</span><br>
       </td>
       <td
@@ -2264,7 +2160,8 @@ standard n-cocycles. (Currently implemented only for n&lt;4.)<br>
  style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Target(f)</td>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
-a chain map, or cochain map or equivariant chain map f and returns its
+a chain map, or cochain map, or equivariant chain map, or FpG-module
+homomorphism f and returns its
 target.</td>
     </tr>
     <tr>
@@ -2446,6 +2343,40 @@ This functions requires the NQ package.<br>
 a permutation group or matrix group G of degree n and a rational vector
 of degree n. In both cases there is a natural action of G on v and the
 function returns the group of elements in G that fix v. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">VectorsToFpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Words(M,L)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and a list L=[v<sub>1</sub>,...,v<sub>k</sub>] of
+vectors in M. It returns a list L'= [x<sub>1</sub>,...,x<sub>k</sub>] .
+Each x<sub>j</sub>=[[<span style="text-decoration: underline;">w</span><sub>1</sub>,<span
+ style="text-decoration: underline;">g</span><sub>1</sub>],...,[<span
+ style="text-decoration: underline;">w</span><sub>t</sub>,<span
+ style="text-decoration: underline;">g</span><sub>t</sub>]] is a list
+of integer pairs corresponding to an expression of v<sub>j</sub> as a
+word<br>
+&nbsp;<br>
+      <div style="text-align: center;">&nbsp;v<sub>j&nbsp; </sub>= g<sub>1*</sub>w<sub>1
+      </sub>+ g<sub>2*</sub>w<sub>1 </sub>+ ... + g<sub>t*</sub>w<sub>t<br>
+      </sub>
+      <div style="text-align: left;"><br>
+where <br>
+      <ul>
+        <li>&nbsp;g<sub>i</sub>=Elements(M!.group)[ <span
+ style="text-decoration: underline;">g</span><sub>i</sub>]</li>
+        <li>&nbsp;w<sub>i</sub>=GeneratorsOfFpGModule(M)[<span
+ style="text-decoration: underline;">w</span><sub>i</sub>] .</li>
+      </ul>
+      </div>
+      </div>
       </td>
     </tr>
   </tbody>

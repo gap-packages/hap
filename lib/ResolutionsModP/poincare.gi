@@ -9,7 +9,7 @@ InstallGlobalFunction(PoincareSeries,
 function(arg)
 local
 	G,dim,
-	R,
+	R,Rdim,
 	L, 
 	TrialPoly,
 	Dcoeffs,
@@ -25,6 +25,9 @@ if Length(arg)=1 then
 if IsGroup(arg[1]) then
 if IsPrimePowerInt(Order(arg[1])) then
 return PoincareSeriesApproximation(arg[1],x);
+else
+Print("The group is not a p-group.\n");
+return fail;
 fi;
 fi;
 fi;
@@ -35,13 +38,15 @@ dim:=arg[2];
 if IsGroup(arg[1]) then
 if IsPrimePowerInt(Order(arg[1])) then
 G:=arg[1];
-R:=ResolutionPrimePowerGroup(G,dim);
+#R:=ResolutionPrimePowerGroup(G,dim);
+Rdim:=RankPrimeHomology(G,dim);
 bool:=false;
 fi;
 fi;
 
 if IsHapResolution(arg[1]) then
 R:=arg[1];
+Rdim:=R!.dimension;
 G:=R!.group;
 if IsPrimeInt(EvaluateProperty(R,"characteristic")) then
 bool:=false;fi;
@@ -56,7 +61,7 @@ fi;
 if bool then return fail; fi;
 
 if Length(L)=0 then
-L:=List([0..dim],i->R!.dimension(i));
+L:=List([0..dim],i->Rdim(i));
 fi;
 
 ####################################################################

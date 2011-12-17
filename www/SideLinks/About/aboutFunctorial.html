@@ -274,6 +274,41 @@ gap&gt;&nbsp; PrimePartDerivedFunctor(S_5,R5,T,20);<br>
       </td>
     </tr>
     <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Induced
+homology homomorphisms can be composed in HAP. For example, the
+following commands illustrate the functorial property H<sub>n</sub>(gf)
+= H<sub>n</sub>(g)H<sub>n</sub>(f) for the inclusions f:A<sub>4</sub>&#8594;S<sub>4</sub>,
+g:S<sub>4</sub>&#8594;S<sub>5</sub> and n=2.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+A4:=AlternatingGroup(4);;<br>
+gap&gt; S4:=SymmetricGroup(4);;<br>
+gap&gt; S5:=SymmetricGroup(5);;<br>
+gap&gt;&nbsp; f:=GroupHomomorphismByFunction(A4,S4,x-&gt;x);;<br>
+gap&gt; g:=GroupHomomorphismByFunction(S4,S5,x-&gt;x);;<br>
+gap&gt; gf:=Compose(g,f);;<br>
+gap&gt; RA4:=ResolutionFiniteGroup(A4,3);;<br>
+gap&gt; RS4:=ResolutionFiniteGroup(S4,3);;<br>
+gap&gt; RS5:=ResolutionFiniteGroup(S5,3);;<br>
+gap&gt; ef:=EquivariantChainMap(RA4,RS4,f);;<br>
+gap&gt; eg:=EquivariantChainMap(RS4,RS5,g);;<br>
+gap&gt; egf:=EquivariantChainMap(RA4,RS5,gf);;<br>
+gap&gt;&nbsp; tf:=TensorWithIntegers(ef);;<br>
+gap&gt; tg:=TensorWithIntegers(eg);;<br>
+gap&gt; tgf:=TensorWithIntegers(egf);;<br>
+gap&gt; hf:=Homology(tf,2);;<br>
+gap&gt; hg:=Homology(tg,2);;<br>
+gap&gt; hgf:=Homology(tgf,2);;<br>
+gap&gt; elt:=Random(Source(hf));;<br>
+gap&gt; Image(hgf,elt)=Image(Compose(hg,hf),elt);<br>
+true<br>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">
       <table
  style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"

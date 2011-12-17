@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.7.4/");
+tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.8/");
 
 ########## FREE G MODULES ###########################################
 
@@ -16,6 +16,13 @@ Concatenation(tmppath,"lib/FpGmodules/Compiled/fpgbasics.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/FpGmodules/Compiled/resfpgmod.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/FpGmodules/Compiled/homs.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/FpGmodules/Compiled/meataxe.so"));
+
 
 
 ##################### NONABELIAN TENSOR #############################
@@ -87,6 +94,8 @@ Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/poincare.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ResolutionsModP/Compiled/ranksPrimeGroup.so"));
 ######### PERTURBATIONS #############################################
 
 LoadDynamicModule(
@@ -174,6 +183,10 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/groupHomology.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/groupCohomology.so"));
+
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralCohomology.so"));
 
 LoadDynamicModule(
@@ -222,6 +235,10 @@ Concatenation(tmppath,"lib/Polymake/Compiled/stabilizer.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Polymake/Compiled/polyFaces.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Polymake/Compiled/orbitPoly.so"));
+
 
 ################### POLYCYLIC ######################################
 LoadDynamicModule(

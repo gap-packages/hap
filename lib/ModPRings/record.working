@@ -13,9 +13,6 @@ local
 	VectorListToWord,
 	GactZG,
 	GactZGlist,
-	BoundaryMatrix,
-	BoundaryMatrices,
-	EchelonMatrices,
 	MT,
 	eltsG,
 	pp,
@@ -29,7 +26,6 @@ local
 	SCT,
 	dim,
 	SolutionMatBoundaryMatrices,
-	Echelonize,
 	M,n,i,j,k;
 
 if Length(arg)=1 then R:=arg[1]; 
@@ -79,10 +75,6 @@ end;
 PairToInt:=function(x);
 return Position(IntPairList,x);
 end;
-#####################################################################
-
-#####################################################################
-BoundaryMatrix:=R!.boundaryMatrix;
 #####################################################################
 
 
@@ -154,55 +146,8 @@ return w;
 end;
 #####################################################################
 
-BoundaryMatrices:=[];
-for i in [1..Length(R)] do
-BoundaryMatrices[i]:=TransposedMat(BoundaryMatrix(i)*one);
-od;
-
-EchelonMatrices:=[];
-
 #####################################################################
-Echelonize:=function()
-local i,  Mt, T;
-
-for i in [1..Length(R)] do
-#We want to solve XM=W, so work on (Mt)(Xt)=(Wt)
-# where 
-Mt:=(BoundaryMatrices[i]);
-ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
-ConvertToMatrixRepNC(Mt,prime);
-T:=SemiEchelonMatTransformation(Mt);
-#ConvertToMatrixRepNC(T.coeffs,prime);
-#ConvertToMatrixRepNC(T.vectors,prime);
-EchelonMatrices[i]:=[T.coeffs,Reversed(T.heads),T.vectors];
-od;
-
-end;
-#####################################################################
-Echelonize();
-
-#####################################################################
-SolutionMatBoundaryMatrices:=function(m,w)
-local h,u,v,i,cnt,pos,col,row,diff;
-
-ConvertToVectorRep(w);
-v:=EchelonMatrices[m][1]*w;
-h:=StructuralCopy(EchelonMatrices[m][2]);
-u:=ListWithIdenticalEntries(Length(h),0*one);
-
-while not Sum(h)=0 do
-
-col:=PositionProperty(h,x->not x=0);
-row:=h[col];
-h[col]:=0;
-diff:=EchelonMatrices[m][3][row]*u;
-pos:=Length(u)+1-col;
-u[pos]:=v[row]-diff;
-ConvertToVectorRep(u);
-od;
-
-return u;
-end;
+SolutionMatBoundaryMatrices:=R!.solutionMatBoundaryMatrices;
 #####################################################################
 
 GeneratorLifts:=[1..Length(R)];
@@ -360,25 +305,29 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ModPRingGenerators,
+InstallGlobalFunction(ModPRingGeneratorsAlt,
 function(A)
 local S, gens, gensA, x, dim, dimgensA;
+#I need to think about this. The following procedure is inefficient.
+
 
 S:=GeneratorsOfAlgebra(A);
 dim:=Dimension(A);
 gens:=[S[1]];
-gensA:=Subalgebra(A,gens);
+gensA:=Subalgebra(A,gens,"basis");
 dimgensA:= Dimension(gensA);
 
 for x in S do
 
 if not x in gensA then
 Append(gens,[x]);
-gensA:=Subalgebra(A,gens);
+gensA:=SubalgebraNC(A,gens);
 dimgensA:=Dimension(gensA);
+
 fi;
 
-if dimgensA=dim then return gens; fi;
+if dimgensA=dim then 
+return gens; fi;
 
 od;
 
@@ -386,3 +335,47 @@ od;
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ModPRingGenerators,
+function(A)
+local S, gradedgens, deg, mingens, i,j,n, vecs,V,x,y;
+
+S:=GeneratorsOfAlgebra(A);
+deg:=A!.degree(S[Length(S)]);
+gradedgens:=List([1..1+deg],i->[]);
+
+for i in [1..Length(S)] do
+Add(gradedgens[1+A!.degree(S[i])],S[i]);
+od;
+
+#gradedgens[i+1] contains generators of degree i.
+
+mingens:=Concatenation(gradedgens[1+0],gradedgens[1+1]);
+
+for n in [2..deg] do
+vecs:=[];
+
+   for i in [1..Int(n/2)] do
+ 	for x in gradedgens[1+i] do
+	for y in gradedgens[n+1-i] do
+	Add(vecs,x*y);
+	od;
+	od;
+   od;
+	V:=SubspaceNC(A,vecs);
+	for x in gradedgens[n+1] do
+	if not x in V then Add(mingens,x); 
+	Add(vecs,x);
+	V:=SubspaceNC(A,vecs);
+	fi;
+	od;
+
+od;
+
+return mingens;
+end);
+#####################################################################
+#####################################################################
+

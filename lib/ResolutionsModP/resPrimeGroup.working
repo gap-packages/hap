@@ -28,24 +28,33 @@ local
 	zero,
 	pcgens,
 	BoundaryMatrices,
+	BoundaryMatrices2,
 	Echelonize,
 	EchelonMatrices,
 	SolutionMatBoundaryMatrices,
 	Toggle,
 	SMBM,
-	SpaceSave,
+	SMBMhom,
+	ImageFBasis,
+	HomotopyRec,
+	InitHomotopyRec,
+	Toggle2,
 	g,h,i,x,tmp;
 
 
 G:=arg[1];
 n:=arg[2];
-if Length(arg)>2 then SpaceSave:=true; else SpaceSave:=false; fi;
 tmp:=SSortedList(Factors(Order(G)));
-if Length(tmp)>1 then 
-Print("This function can only be applied to small prime-power groups. \n");
+
+
+if Length(tmp)>1 and Length(arg)<3 then 
+Print("The third input variable must be a prime when this function is applied to non prime-power groups. \n");
 return fail;
 fi;
-prime:=tmp[1];
+
+if Length(arg)>2 then prime:=arg[3];
+else prime:=tmp[1]; fi;
+
 pp:=Order(G);
 one:=Identity(GaloisField(prime));
 zero:=0*one;
@@ -54,7 +63,7 @@ gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
 MT:=MultiplicationTable(eltsG);
 
-pcgens:=Pcgs(G);
+pcgens:=Pcgs(SylowSubgroup(G,prime));
 pcgens:=ReduceGenerators(pcgens,G);
 pcgens:=List(pcgens,x->Position(eltsG,x));
 
@@ -64,7 +73,7 @@ for i in [1..n] do
 PseudoBoundary[i]:=[];
 PseudoBoundaryAsVec[i]:=[];
 od;
-
+ImageFBasis:=[1..n];
 #####################################################################
 Dimension:=function(i);
 if i<0 then return 0; fi;
@@ -75,7 +84,7 @@ end;
 
 #####################################################################
 Boundary:=function(i,j);
-if i<0 then return []; fi;
+if i<=0 then return []; fi;
 if j>0 then
 return PseudoBoundary[i][j]; 
 else return
@@ -88,9 +97,10 @@ end;
 WordToVectorList:=function(w,k)	#w is a word in R_k. 
 local v,x,a;			#v is a list of vectors mod p.
 #v:=List([1..Dimension(k)],x->List([1..pp],y->0) );
-v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(pp,0) );
+#v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(pp,0) );
+#How many more times will I make this mistake?
 
-
+v:=List([1..Dimension(k)],x-> ListWithIdenticalEntries(pp,0)      );
 for x in w do
 a:=AbsoluteValue(x[1]);
 v[a][x[2]]:=v[a][x[2]] + SignInt(x[1]);
@@ -229,7 +239,7 @@ end;
 #####################################################################
 ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
-	Bcomp, BndMat;
+	Bcomp, BndMat, ReducedB1,rrb, rrb1;
 
 BndMat:=BoundaryMatrix(k); 
 
@@ -239,15 +249,45 @@ NS:=SemiEchelonMat(NullspaceMat(BndMat));
 
 tB:=TransposedMat(NS.vectors);
 Bcomp:=ComplementaryBasis(NS.vectors);
-					
+
+
 for g in pcgens do     	 
 Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
 
 
+
 B1:=ComplementaryBasis(Bcomp,NS);
-NS:=0;
-B1:=List(B1,v->List(v,x->IntFFE(x)));
+NS:=Length(NS.vectors);
+
+if not IsPrimePowerInt(Order(G)) then
+	ReducedB1:=[];
+	rrb:=0;
+	rrb1:=0;
+		for v in B1 do
+		if rrb1=NS then break; fi;
+		rrb1:=FpGModule
+		(Concatenation(ReducedB1,[v]),G,prime)!.dimension;
+		if rrb1>rrb then
+		rrb:=rrb1;
+		ReducedB1:=Concatenation(ReducedB1,[v]);
+		fi;
+		od;
+
+
+B1:=StructuralCopy(ReducedB1);
+		for v in B1 do
+		ReducedB1:=Filtered(ReducedB1,x->not x=v);
+		rrb:=FpGModule
+                (ReducedB1,G,prime)!.dimension;
+		if rrb<NS then Add(ReducedB1,v); fi;
+		od;
+
+B1:=ReducedB1;
+
+fi;
+
+Apply(B1,v->List(v,x->IntFFE(x)));
 return B1;
 end;
 #####################################################################
@@ -259,6 +299,7 @@ for x in ZGbasisOfKernel(i-1) do
 Add(PseudoBoundary[i], VectorListToWord(InverseFlat(x))   );
 Add(PseudoBoundaryAsVec[i], x*one   );
 od;
+
 od;
 
 
@@ -271,11 +312,15 @@ od;
 
 #####################################################################
 Echelonize:=function()
-local i,  Mt, T;
+local i, Mt, T;
 
 BoundaryMatrices:=[];
+BoundaryMatrices2:=[];
+
 for i in [1..n] do
-BoundaryMatrices[i]:=TransposedMat(BoundaryMatrix(i)*one);
+BoundaryMatrices2[i]:=one*BoundaryMatrix(i);
+ConvertToMatrixRep(BoundaryMatrices2[i],prime);
+BoundaryMatrices[i]:=TransposedMat(BoundaryMatrices2[i]);
 od;
 
 EchelonMatrices:=[];
@@ -283,9 +328,27 @@ EchelonMatrices:=[];
 for i in [1..n] do
 #We want to solve XM=W, so work on (Mt)(Xt)=(Wt)
 # where
-ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
+#ConvertToMatrixRepNC(BoundaryMatrices[i],prime);
 T:=SemiEchelonMatTransformation(BoundaryMatrices[i]);
 EchelonMatrices[i]:=[T.coeffs,Reversed(T.heads),T.vectors];
+od;
+
+end;
+#####################################################################
+
+#####################################################################
+InitHomotopyRec:=function()
+local i,j,k;
+
+HomotopyRec:=[];
+for i in [1..n] do
+HomotopyRec[i]:=[];
+for j in [1..Dimension(i-1)] do
+HomotopyRec[i][j]:=[];
+for k in [1..pp] do
+HomotopyRec[i][j][k]:=0;
+od;
+od;
 od;
 
 end;
@@ -313,7 +376,7 @@ ConvertToVectorRep(u);
 od;
 
 #return
-#SolutionMat((BoundaryMatrices[m]),w*one);
+#SolutionMat(BoundaryMatrices[m],w*one);
 
 return u;
 end;
@@ -321,6 +384,7 @@ end;
 
 
 Toggle:=true;
+Toggle2:=true;
 #####################################################################
 SMBM:=function(m,w);
 
@@ -331,33 +395,74 @@ end;
 #####################################################################
 
 #####################################################################
+SMBMhom:=function(m,w) #Need SMBH as a vector space homomorphism
+local coeffs, answer,i;
+
+return SMBM(m,w); #I think SMBH is alread a group homomorphism!!!!!!
+
+if IsInt(ImageFBasis[m]) then
+ImageFBasis[m]:=(SemiEchelonMat(BoundaryMatrices2[m]).vectors);
+ConvertToMatrixRep(ImageFBasis[m]);
+fi;
+
+coeffs:=SolutionMat(ImageFBasis[m],w);
+answer:=List([1..Dimension(m)*pp], a->zero);
+ConvertToVectorRep(answer);
+for i in [1..Length(coeffs)] do
+if not IsZero(coeffs[i]) then
+answer:=answer + coeffs[i]*SMBM(m,ImageFBasis[m][i]);
+fi;
+od;
+
+return answer;
+end;
+#####################################################################
+
+#####################################################################
 Homotopy:=function(k,w)         #assume w is in kernel d_n
 local u,v,s;
+
+if Toggle2 then InitHomotopyRec(); Toggle2:=false; fi;
+
+if not IsInt(HomotopyRec[k+1][AbsInt(w[1])][w[2]]) then
+if SignInt(w[1]) > 0 then
+return HomotopyRec[k+1][AbsInt(w[1])][w[2]]; 
+else
+return NegateWord(HomotopyRec[k+1][AbsInt(w[1])][w[2]]);
+fi;
+fi;
 
 if Toggle then Echelonize(); Toggle:=false; fi;
 
 v:=Flat(WordToVectorList([w],k))*one;
+
 ConvertToVectorRep(v,prime);
 if k=0 then 
 
-u:=StructuralCopy(v);
-Apply(u,i->IntFFE(i));
-s:=Sum(u);
+s:=Sum(v);
 u:=ListWithIdenticalEntries(Length(v),zero);
-u[1]:=one*s;
+u[1]:=s;
 ConvertToVectorRep(u);
 v:=v-u;
-v:=SolutionMatBoundaryMatrices(k+1,v);
+v:=SMBM(k+1,v);
 
 else
+v:=v-SMBM(k,
+ v*(BoundaryMatrices2[k]));
 
-v:=v-SolutionMatBoundaryMatrices(k,BoundaryMatrices[k]*v);
-v:=SolutionMatBoundaryMatrices(k+1,v);
+v:=SMBM(k+1,v);
 
 fi;
 Apply(v,i->IntFFE(i));
 
-if not v=fail then v:=VectorListToWord(InverseFlat(v)); fi;
+v:=VectorListToWord(InverseFlat(v)); 
+
+if SignInt(w[1])>0 then
+HomotopyRec[k+1][w[1]][w[2]]:=v;
+else
+HomotopyRec[k+1][-w[1]][w[2]]:=NegateWord(v);
+fi;
+
 return v;
 end;
 #####################################################################
@@ -378,7 +483,8 @@ return Objectify(HapResolution,
 			 ["characteristic",prime],
 			 ["isMinimal",true]],
 		solutionMatBoundaryMatrices:=
-		  SMBM));
+		  SMBM
+		  ));
 end);
 #####################################################################
 #####################################################################
@@ -403,6 +509,14 @@ if IsGroup(arg[1]) and Length(arg)=2 then
 G:=arg[1]; N:=arg[2];
 R:=ResolutionPrimePowerGroup(G,N);
 else
+
+if  IsGroup(arg[1]) and Length(arg)=3 then
+return
+ExpansionOfRationalFunction(PoincareSeries(arg[1]),arg[2])[1+arg[2]];
+fi;
+
+
+
 Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; fi;
 fi;
 

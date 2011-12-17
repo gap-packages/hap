@@ -77,21 +77,21 @@ G2homF:=GroupHomomorphismByFunction(H,F,x->Image(BG2homF,Image(HhomBH,x)));
 AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AH,F,g->Image(G2homF,Image(AHhomH,g)));
 
-if IsSolvable(AG) then #
- NiceGensAG:=Pcgs(AG); #Need to check the maths here!
-         else	       #
+#if IsSolvable(AG) then #
+# NiceGensAG:=Pcgs(AG); #Need to check the maths here!
+#         else	       #
 	 
 NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 NiceGensAG[1]:=[Identity(AG)];
 NiceGensAG:=Flat(NiceGensAG);
 Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
-fi;                    #
+#fi;                    #
 
 
-if IsSolvable(AG) then #
- NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
-          else         # the eight lines ending in #.
+#if IsSolvable(AG) then #
+# NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
+#          else         # the eight lines ending in #.
 	  
 NiceGensAH:=
 List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
@@ -100,7 +100,7 @@ NiceGensAH:=Flat(NiceGensAH);
 NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
-fi;                    #
+#fi;                    #
 
 relsT:=[];
 for x in relsG do

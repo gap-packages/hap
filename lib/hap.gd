@@ -12,7 +12,7 @@ DeclareGlobalFunction("MultiplyWord");
 DeclareGlobalFunction("WordModP");
 
 ## FpG MODULES#######################################################
-DeclareGlobalFunction("FpGCyclesModule");
+DeclareGlobalFunction("DesuspensionFpGModule");
 DeclareGlobalFunction("RadicalOfFpGModule");
 DeclareGlobalFunction("GeneratorsOfFpGModule");
 DeclareGlobalFunction("ComplementaryBasis");
@@ -20,7 +20,17 @@ DeclareGlobalFunction("FpGModule");
 DeclareGlobalFunction("DirectSumOfFpGModules");
 DeclareGlobalFunction("ResolutionFpGModule");
 DeclareGlobalFunction("IsFpGModuleHomomorphismData");
-
+DeclareGlobalFunction("FpGModuleDualBasis");
+DeclareGlobalFunction("MultipleOfFpGModule");
+DeclareGlobalFunction("IntersectionOfFpGModules");
+DeclareGlobalFunction("SumOfFpGModules");
+DeclareGlobalFunction("ProjectedFpGModule");
+DeclareGlobalFunction("RandomHomomorphismOfFpGModules");
+DeclareGlobalFunction("VectorsToFpGModuleWords");
+DeclareGlobalFunction("FpGModuleHomomorphismNC");
+DeclareGlobalFunction("FpGModuleHomomorphism");
+DeclareGlobalFunction("ImageOfFpGModuleHomomorphism");
+DeclareGlobalFunction("CompositionOfFpGModuleHomomorphisms");
 
 
 ## NONABELIAN TENSOR ################################################
@@ -51,11 +61,13 @@ DeclareGlobalFunction("CayleyGraphDisplay");
 
 ## RESOLUTIONS MOD P ################################################
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
+DeclareGlobalFunction("RankPrimeHomology");
 DeclareGlobalFunction("RankHomologyPGroup");
 DeclareGlobalFunction("PoincareSeries");
 DeclareGlobalFunction("PoincareSeriesApproximation");
 DeclareGlobalFunction("PoincareSeriesPrimePart");
 DeclareGlobalFunction("ExpansionOfRationalFunction");
+DeclareGlobalFunction("EfficientNormalSubgroups");
 
 
 ## FUNCTORS #########################################################
@@ -77,6 +89,8 @@ DeclareGlobalFunction("HomToIntegersModP");
 DeclareGlobalFunction("Coclass");
 DeclareGlobalFunction("BoundaryMatrix");
 DeclareGlobalFunction("Prank");
+DeclareGlobalFunction("PrankAlt");
+DeclareOperation("Compose",[IsGroupHomomorphism,IsGroupHomomorphism]);
 
 
 ## PERTURBATIONS ####################################################
@@ -120,6 +134,8 @@ DeclareGlobalFunction("ModularCohomology");
 DeclareOperation("SolutionsMatDestructive",
 			[IsOrdinaryMatrix,IsOrdinaryMatrix]);
 DeclareGlobalFunction("HomologyPb");
+DeclareGlobalFunction("GroupCohomology");
+
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -132,6 +148,7 @@ DeclareGlobalFunction("IntegralRingGenerators");
 
 ## ModPRings ########################################################
 DeclareGlobalFunction("ModPCohomologyRing");
+DeclareGlobalFunction("ModPRingGeneratorsAlt");
 DeclareGlobalFunction("ModPRingGenerators");
 
 ## CURVATURE ########################################################
@@ -139,6 +156,7 @@ DeclareGlobalFunction("IsAspherical");
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");
+DeclareGlobalFunction("OrbitPolytope");
 
 ## POLYCYLIC ########################################################
 DeclareGlobalFunction("ResolutionAbelianPcpGroup");
@@ -163,4 +181,9 @@ DeclareGlobalFunction("LowerCentralSeriesLieAlgebra");
 DeclareGlobalFunction("LeibnizComplex");
 DeclareGlobalFunction("LeibnizAlgebraHomology");
 
+## MANUAL ###########################################################
+DeclareGlobalFunction("MakeHAPManual");
 
+## MEAT AXE #########################################################
+DeclareGlobalFunction("GeneratorsOfMtxModule");
+DeclareGlobalFunction("DesuspensionMtxModule");
