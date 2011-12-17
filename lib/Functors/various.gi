@@ -44,7 +44,7 @@ newgens:=DifferenceLists(gens, [x]);
 if Group(Concatenation(newgens,[Identity(G)]))=G then
 return ReduceGenerators(newgens,G); fi;
 od;
-return gens;
+return SSortedList(gens);
 end);
 #####################################################################
 

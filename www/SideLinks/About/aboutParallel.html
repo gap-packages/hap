@@ -27,7 +27,8 @@
  style="font-weight: bold;">About HAP: Parallel Computation<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutPerformance.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+ href="aboutAbelianCategories.html"><small
+ style="color: rgb(0, 0, 102);">next</small></a><br>
             </td>
           </tr>
         </tbody>
@@ -188,6 +189,79 @@ Tue Nov 27 05:15:17 GMT 2007<br>
       </td>
     </tr>
     <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show how two processors could be used to compute H<sub>8</sub>(G,Z)
+for the group G=SmallGroup(512,1201). The commands begin with the
+definition of the function <br>
+      <br>
+      <div style="text-align: center;">ParallelResolution(G,N,n,t). <br>
+      </div>
+      <br>
+Unfortunately, this example is too naive: the loads on the two
+processors is extremely unbalanced.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">#################################################<br>
+ParallelResolution:=function(G,N,n,t)<br>
+local<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R,S,T,nat,iso;<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nat:=NaturalHomomorphismByNormalSubgroup(G,N);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+iso:=IsomorphismPermGroup(N);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#HAPPrintTo() and HAPRead() will only work with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildPut(n,"n",t);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#permutation or matrix groups.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChildPut(Image(iso),"N",t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildCommand("R:=ResolutionFiniteGroup(N,n);",t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildCommand("HAPPrintTo(\"/tmp/test\",R);",t);<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S:=ResolutionFiniteGroup(Image(nat),n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while not
+IsAvailableChild(t)
+do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#This should ensure that the next command is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+od;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#not processed too soon!<br>
+      <br>
+&nbsp; &nbsp; &nbsp; &nbsp; R:=HAPRead("/tmp/test");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R!.group:=N;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R!.elts:=List(R!.elts,x-&gt;PreImagesRepresentative(iso,x));<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; T:=ResolutionFiniteExtension(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+GeneratorsOfGroup(G),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+List(GeneratorsOfGroup(G),x-&gt;Image(nat,x)),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S,n,false,R);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return T;<br>
+end;<br>
+#################################################<br>
+      <br>
+      <br>
+G:=SmallGroup(512,1201);;<br>
+phi:=NaturalHomomorphismByNormalSubgroup(G,Centre(G));;<br>
+t:=ChildProcess();;<br>
+T:=ParallelResolution(G,Centre(G),9,t);;<br>
+C:=TensorWithIntegers(T);;<br>
+      <br>
+Homology(C,8);<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 8 ]<br>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">
       <table
  style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
@@ -202,7 +276,7 @@ Page</a><br>
  href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
             </td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutPerformance.html"><span style="color: rgb(0, 0, 102);">Next
+ href="aboutAbelianCategories.html"><span style="color: rgb(0, 0, 102);">Next
 page</span><br>
             </a> </td>
           </tr>

@@ -92,6 +92,8 @@ ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
 
 if LoadPackage("nq","0.0",false)=true then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
@@ -205,6 +207,10 @@ ReadPackage("HAP", "test/test.gap");
 
 ################### STREAMS ########################################
 ReadPackage("HAP","lib/Streams/streams.gi");
+ReadPackage("HAP","lib/Streams/HAPexport.gi");
+ReadPackage("HAP","lib/Streams/HAPimport.gi");
+
+
 
 
 ################### RESOLUTIONS (CONTD) ############################
@@ -232,3 +238,16 @@ ReadPackage("HAP","lib/TDA/contII.gi");
 
 ################## TOPOLOGICAL SPACES ##############################
 ReadPackage("HAP","lib/TopologicalSpaces/topology.gi");
+
+################## CATEGORY THEORY #################################
+ReadPackage("HAP","lib/CategoryTheory/categories.gi");
+
+################## CAT ONE GROUPS ##################################
+ReadPackage("HAP","lib/CatGroups/CatConstructions.gi");
+ReadPackage("HAP","lib/CatGroups/CatBasic.gi");
+ReadPackage("HAP","lib/CatGroups/identities.gi");
+ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
+
+################## G-OUTER GROUPS ##################################
+ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
+ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");

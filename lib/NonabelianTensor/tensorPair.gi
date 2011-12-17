@@ -136,7 +136,7 @@ if not IsSolvable(AG) then
 
 AF:=F/relsT;
 FhomAF:=
-GroupHomomorphismByImages(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
+GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
 AFhomSF:=IsomorphismSimplifiedFpGroup(AF);
 SF:=Image(AFhomSF);
@@ -148,7 +148,7 @@ else
 
 AF:=F/relsT;
 FhomAF:=
-GroupHomomorphismByImages(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
+GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
 if IsNilpotent(AG) then
 AFhomSF:=EpimorphismNilpotentQuotient(AF);
@@ -182,7 +182,7 @@ for i in [1..Length(gensAH)] do
 Append(gensSFG,[gensAH[i]]);
 od;
 
-SFhomAG:=GroupHomomorphismByImages(SF,AG,gensSF,gensSFG);
+SFhomAG:=GroupHomomorphismByImagesNC(SF,AG,gensSF,gensSFG);
 
 delta:=GroupHomomorphismByFunction(ExteriorProduct,AG,x->Image(SFhomAG,x));
 

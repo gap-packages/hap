@@ -126,6 +126,8 @@ fi;
 
 if IsFinite(G) then
 
+if p=0 and N=0 then return [0];fi;
+if p=0 and N=1 then return []; fi;
 if p=0 then return GroupHomology(G,N-1); fi;
 if IsPrimeInt(p) then return
 Length(Filtered(GroupHomology(G,N-1),i->GCD_INT(p,i)>1))  +

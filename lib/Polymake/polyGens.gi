@@ -21,7 +21,13 @@ Print("The group G must be a permutation or matrix group.\n");
 return fail;
 fi;
 
+if IsPermGroup(GG) then
+G:=RightTransversal(GG,Stabilizer(GG,v,Permuted));
+G:=Filtered(G,x->not x=Identity(GG));
+else
+
 G:=Filtered(Elements(GG),x->not x=Identity(GG));
+fi;
 D:=Length(v);
 CG:=List([1..D], i->0);   	#CG will eventually be the centre of gravity
 Points:=[];			#of the polytope.

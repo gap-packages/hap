@@ -40,7 +40,7 @@ upperZ:=upperZ[cls+1];
 
 if IsPcpGroup(G) then
 
-UUhomG := GroupHomomorphismByImages(
+UUhomG := GroupHomomorphismByImagesNC(
           UU,G,
           List(GeneratorsOfGroup(U), x->Image(epi,x)),
           List(GeneratorsOfGroup(FpG),x->Image(FpGhomG,x))

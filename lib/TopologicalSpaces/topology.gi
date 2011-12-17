@@ -252,7 +252,7 @@ end);
 
 ################################################################
 ################################################################
-InstallOtherMethod(BettiNumbers,
+InstallOtherMethod(Bettinumbers,
 "betti numbers of a topological space",
 [IsHapTopologicalSpace,IsInt],
 
@@ -270,7 +270,7 @@ end);
 
 ################################################################
 ################################################################
-InstallOtherMethod(BettiNumbers,
+InstallOtherMethod(Bettinumbers,
 "betti numbers of a topological space",
 [IsHapTopologicalSpace],
 

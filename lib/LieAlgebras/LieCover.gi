@@ -548,46 +548,34 @@ od;
 LS:=LieAlgebraByStructureConstants(K,SCTLStar1);
 
 bL1:=[];
-for i in [1..Length(BasisL)] do
-  Add(bL1,BasisL[i]);
+
+for i in [1..Length(bLV)] do 
+ Add(bL1,bLV[i]);
 od;
-for i in [1..(m-p)] do
-  Add(bL1,0*BasisL[1]);
+
+for i in [1..n] do
+ Add(bL1,BJL[i]);
 od;
+
+#for i in [1..Length(BasisL)] do
+#  Add(bL1,BasisL[i]);
+#od;
+#for i in [1..(m-p)] do
+#  Add(bL1,0*BasisL[1]);
+#od;
 
 g1:= AlgebraHomomorphismByImages( LS, L, Basis(LS) , bL1 );
 
-#kk1:=Source(g1);
-#ZStarL:=Image(g1,LieCenter(kk1));
-
 return g1;
 end);
-#####################################################################
-#####################################################################
+##################################################################
 
-#####################################################################
-#####################################################################
+##################################################################
 InstallGlobalFunction(LieEpiCentre,
 function(L)
-local C,h;
+local phi;
 
-h:=LieCoveringHomomorphism(L);
-
-return Image(h,LieCenter(Source(h)));
+phi:=LieCoveringHomomorphism(L);
+return Image(phi,LieCentre(Source(phi)));
 end);
-####################################################################
-####################################################################
-
-#####################################################################
-#####################################################################
-InstallGlobalFunction(LieTensorCentre,
-function(L)
-local C,h;
-
-h:=LeibnizQuasiCoveringHomomorphism(L);
-
-return Image(h,LieCenter(Source(h)));
-end);
-####################################################################
-####################################################################
-
+##################################################################

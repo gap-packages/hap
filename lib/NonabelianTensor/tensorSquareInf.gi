@@ -124,7 +124,7 @@ od;
 
 SFhomAG:=GroupHomomorphismByImagesNC(SF,AG,gensSF,gensSFG);
 
-delta:=GroupHomomorphismByImages(TensorSquare,AG,
+delta:=GroupHomomorphismByImagesNC(TensorSquare,AG,
 GeneratorsOfGroup(TensorSquare),
 List(GeneratorsOfGroup(TensorSquare),x->Image(SFhomAG,x)));
 

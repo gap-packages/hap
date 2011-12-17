@@ -93,6 +93,81 @@ in the exterior product <M>(G \wedge N)</M> .
 
 <Row>
 <Item>
+<Index> NonabelianSymmetricKernel</Index>
+<C>
+NonabelianSymmetricKernel(G)
+</C>
+<Br/>
+<C>
+NonabelianSymmetricKernel(G,m)
+</C>
+<P/>
+
+Inputs a finite or nilpotent infinite group <M>G</M>
+and returns the abelian invariants of the 
+Fourth homotopy group <M>SG</M>
+of the double suspension <M>SSK(G,1)</M> of the Eilenberg-Mac Lane space  <M>K(G,1)</M>.
+<P/>
+For non-nilpotent groups the implementation of the function
+<M>NonabelianSymmetricKernel(G)</M> is far from optimal and will
+soon be improved. As a temporary solution to this problem, an optional
+second variable <M>m</M> can be set equal to <M>0</M>, and then the
+function efficiently returns the abelian invariants of groups <M>A</M> and
+<M>B</M> such that there is an exact sequence <M>0 \longrightarrow B \longrightarrow SG \longrightarrow A \longrightarrow 0</M>.
+<P/>
+Alternatively, the optional second varible <M>m</M> can be set equal to a
+positive multiple of the order of the symmetric square <M>(G \tilde\otimes G)</M>.
+In this case the function returns the abelian invariants of <M>SG</M>.
+This might help when <M>G</M> is solvable but not nilpotent
+(especially if the estimated upper bound <M>m</M> is reasonable accurate).
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> NonabelianSymmetricSquare</Index>
+<C>
+NonabelianSymmetricSquare(G)
+</C>
+<Br/>
+<C>
+NonabelianSymmetricSquare(G,m)
+</C>
+<P/>
+
+Inputs a finite or nilpotent infinite group <M>G</M>
+and returns a record <M>T</M> with the following components.
+<List>
+<Item>
+   <M>T.homomorphism</M> is a group homomorphism
+   <M>µ : (G \tilde\otimes G) \longrightarrow G</M>
+   from the nonabelian symmetric square of <M>G</M> to <M>G</M>.
+   The kernel of <M>µ</M> is isomorphic to the fourth homotopy group of
+   the double suspension <M>SSK(G,1)</M> of  an Eilenberg-Mac Lane space.
+</Item>
+<Item>
+<M>T.pairing(x,y)</M> is a function which inputs two elements <M>x, y</M> in
+<M>G</M> and returns the tensor <M>(x \otimes y)</M> in the symmetric square
+<M>(G \otimes G)</M> .
+</Item>
+</List>
+An optional second varible <M>m</M> can be set equal to a
+multiple of the order of the symmetric square <M>(G \tilde\otimes G)</M>.
+This might help when <M>G</M> is solvable but not nilpotent
+(especially if the estimated upper bound <M>m</M> is reasonable accurate)
+as the bound is used in the solvable quotient algorithm.
+<P/>
+The optional second variable <M>m</M> can also be set equal to <M>0</M>.
+In this case the Todd-Coxeter procedure will be used to enumerate the
+symmetric square even when <M>G</M> is solvable.
+<P/>
+This function should work for reasonably small solvable groups or extremely small non-solvable groups.
+</Item>
+</Row>
+
+
+<Row>
+<Item>
 <Index> NonabelianTensorProduct</Index>
 <C>
 NonabelianTensorProduct(G,N)
