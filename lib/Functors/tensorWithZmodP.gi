@@ -232,7 +232,7 @@ end;
 
 
 
-if IsHapResolution(X) then 
+if IsHapResolution(X)  then 
 return Tensor_Obj(X,prime); fi;
 
 if IsHapEquivariantChainMap(X) then 

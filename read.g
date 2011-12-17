@@ -36,10 +36,16 @@ fi;
 ################## POLYCICLIC COMMANDS DONE #########################
 
 ################# NQ COMMANDS #######################################
-Bool:=LoadPackage("nq","0.0",false);
-if Bool=fail then
-#NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
-NqEpimorphismNilpotentQuotient:=EpimorphismNilpotentQuotient;
+LoadPackage("nq","0.0",false);
+if  IsBound(NqEpimorphismNilpotentQuotient) then
+HAP_NqEpimorphismNilpotentQuotient:=NqEpimorphismNilpotentQuotient;
+else
+LoadPackage("nql","0.0",false);
+if IsBound(NqEpimorphismNilpotentQuotientLpGroup) then
+HAP_NqEpimorphismNilpotentQuotient:=NqEpimorphismNilpotentQuotientLpGroup;
+else
+HAP_NqEpimorphismNilpotentQuotient:=EpimorphismNilpotentQuotient;
+fi;
 fi;
 ################# NQ COMMANDS DONE ###############################
 
@@ -180,6 +186,7 @@ ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
+ReadPackage("HAP", "lib/Perturbations/dutour.gi");
 
 
 
@@ -251,11 +258,8 @@ ReadPackage("HAP","lib/LieAlgebras/LieExteriorSquare.gi");
 if COMPILED=false then
 ################### MEAT AXE #######################################
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
-fi;
 
 ################## POLYTOPAL COMPLEXES #############################
-ReadPackage("HAP","lib/PolyComplexes/matrixOps.gi");
-if COMPILED=false then
 ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
@@ -264,6 +268,7 @@ fi;
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
+ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
 
 ################## CATEGORY THEORY #################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gi");
@@ -280,17 +285,18 @@ ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
 ################## HAP PRIME ##################################
-if LoadPackage("singular","1.0",false) then
+if not LoadPackage("singular","1.0",false)=fail then
 ReadPackage("HAP","lib/HapPrime/singular.gi");
-fi;
 ReadPackage("HAP","lib/HapPrime/rings.gi");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gi");
 ReadPackage("HAP","lib/HapPrime/gradedalgebra.gi");
 ReadPackage("HAP","lib/HapPrime/polynomials.gi");
-ReadPackage("HAP","lib/HapPrime/derivation.gi");
 ReadPackage("HAP","lib/HapPrime/happrime.gi");
+ReadPackage("HAP","lib/HapPrime/derivation.gi");
+fi;
 
 
+ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
 
 
 

@@ -170,3 +170,37 @@ end);
 
 
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(FilteredTensorWithIntegers,
+function(R)
+local
+	C, ln;
+
+if not IsBound(R!.filteredDimension) 
+   or 
+   not IsInt(EvaluateProperty(R,"filtration_length"))
+then Print("This function must be applied to a filtered resolution.\n");
+return fail;
+fi;
+
+
+C:=TensorWithIntegers(R);
+ln:=EvaluateProperty(R,"filtration_length");
+
+return Objectify(HapFilteredChainComplex,
+rec(
+                dimension:=C!.dimension,
+                filteredDimension:=R!.filteredDimension,
+                boundary:=C!.boundary,
+                properties:=
+                [["length",EvaluateProperty(R,"length")],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["filtration_length",ln],
+                ["characteristic",
+                EvaluateProperty(R,"characteristic")] ]));
+
+end);
+#####################################################################
+#####################################################################

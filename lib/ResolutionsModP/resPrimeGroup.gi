@@ -320,12 +320,13 @@ od;
 
 #####################################################################
 
+BoundaryMatrices:=[];
 
 #####################################################################
 Echelonize:=function()
 local i, Mt, T;
 
-BoundaryMatrices:=[];
+#BoundaryMatrices:=[];
 BoundaryMatrices2:=[];
 
 for i in [1..n] do
@@ -493,6 +494,7 @@ return Objectify(HapResolution,
 	        rec(
 		dimension:=Dimension,
 		boundary:=Boundary ,
+		boundaryMatrices:=BoundaryMatrices,
 		homotopy:=Homotopy,
 		elts:=eltsG,
 		group:=G,
@@ -549,6 +551,40 @@ Ranks[i]:=R!.dimension(i) - Ranks[i-1];
 od;
 
 return Ranks[N];
+
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(NumberGeneratorsOfGroupHomology,
+function(arg)
+local
+	G,p,n,N,pol,
+	Ranks,
+	expand,
+	i;
+
+G:=arg[1];
+p:=arg[2];
+n:=arg[3];
+if Length(arg)>3 then N:=arg[4];
+else N:=n; fi;
+
+pol:=PoincareSeriesPrimePart(G,p,n);
+
+Ranks:=[];
+Ranks[1]:=Length(AbelianInvariants(SylowSubgroup(G/DerivedSubgroup(G),p)));
+expand:=ExpansionOfRationalFunction(pol,N);
+
+for i in [2..N] do
+Ranks[i]:= expand[i+1]- Ranks[i-1];
+od;
+
+return Ranks;
+
+
 
 end);
 #####################################################################

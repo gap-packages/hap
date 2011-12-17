@@ -160,7 +160,7 @@ ExpH:=0;
 ExpH:=AbelianInvariants(HH);
   if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
 FhomHH:=GroupHomomorphismByImagesNC(F,HH,Fgens,GeneratorsOfGroup(HH));
-HHhomH:=NqEpimorphismNilpotentQuotient(HH,1);;
+HHhomH:=HAP_NqEpimorphismNilpotentQuotient(HH,1);;
 H:=Range(HHhomH);
 FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,
 List(Fgens,x->Image(HHhomH,Image(FhomHH,x)) ));

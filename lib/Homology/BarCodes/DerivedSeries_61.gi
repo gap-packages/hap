@@ -1,0 +1,2 @@
+HAPBARCODE:=[
+fail;
