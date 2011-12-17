@@ -5,30 +5,35 @@ HAPchildren:=[];
 ####################################################
 InstallGlobalFunction(ChildProcess,
 function(arg)
-local d,f,s,Name;
+local d,f,s,Name,Remote,Computer;
 d:= DirectoryCurrent();
-f := Filename(DirectoriesSystemPrograms(), "gap");
-if Length(arg)>0 then
-###
-###
-###
-#s := InputOutputLocalProcess(d,f,["-T","-q","-b",'-L arg[1] "]);
-###This does not work!!!!!!!!!
-###
-###
-else
-s := InputOutputLocalProcess(d,f,["-T","-q","-b"]);
-fi;
-WriteLine(s,"SizeScreen([255,24]);");
 
-Name:=Concatenation(["/tmp/HAPchild",String(1+Length(HAPchildren))]);
+if Length(arg)=0 then 
+Remote:=false;
+Computer:="localhost";
+f := Filename(DirectoriesSystemPrograms(), "gap");
+s := InputOutputLocalProcess(d,f,["-T","-q","-b"]);
+else
+Remote:=true;
+Computer:=arg[1];
+f:=Filename(DirectoriesSystemPrograms(),"ssh");
+s := InputOutputLocalProcess(d,f,[arg[1],"gap","-f","-T","-q","-b"]);
+fi;
+
+Name:=Concatenation("/tmp/",String(Random([1..100000])));
+while IsExistingFile(Name) do
+Name:=Concatenation("/tmp/",String(Random([1..100000])));
+od;
+
 Add(HAPchildren,Name);
 PrintTo(Name,"HAPchildToggle\:=true;");
 
 return rec(
 	stream:=s,
 	name:=Name,
-	number:=Length(HAPchildren));
+	number:=Length(HAPchildren),
+	remote:=Remote,
+	computer:=Computer);
 end);
 ####################################################
 ####################################################
@@ -43,6 +48,7 @@ end);
 ####################################################
 ####################################################
 
+HAPchildFunctionToggle:=true;
 ####################################################
 ####################################################
 InstallGlobalFunction(ChildFunction,
@@ -63,20 +69,34 @@ WriteLine(s.stream,i);;
 
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
+HAPchildFunctionToggle:=false;
 end);
 ####################################################
 ####################################################
+
 
 ####################################################
 ####################################################
 InstallGlobalFunction(ChildCommand,
 function(command,s)
 local i;
+
 PrintTo(s.name,"HAPchildToggle\:=false;");
+Append(command,";");
+
+if HAPchildFunctionToggle then
+while not ReadAllLine(s.stream)=fail do  #Flush stream
+od;
+fi;
 
 WriteLine(s.stream,command);;
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
+
+#if HAPchildFunctionToggle then
+#while not ReadAllLine(s.stream)=fail do  #Flush stream
+#od;
+#fi;
 
 end);
 ####################################################
@@ -94,7 +114,7 @@ if  i="\"START\"\n" then
 fi;break; 
 od;
 
-i:=(ReadAllLine(s.stream,true));
+if not s.remote then i:=(ReadAllLine(s.stream,true));fi;
 i:=(ReadAllLine(s.stream,true));
 
 output:="";
@@ -105,6 +125,7 @@ i:=(ReadAllLine(s.stream,true));
 else break; fi;
 od;
 
+HAPchildFunctionToggle:=true;
 return output;
 
 end);
@@ -119,6 +140,92 @@ return EvalString(ChildRead(s));
 end);
 #####################################################
 #####################################################
+
+
+#####################################################
+#####################################################
+InstallGlobalFunction(ChildPut,
+function(X,Name,s)
+local i,fle;
+
+NextAvailableChild([s]); #Don't start if s is busy.
+
+PrintTo(s.name,"HAPchildToggle\:=false;");
+
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+while IsExistingFile(fle) do
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+od;
+
+PrintTo(fle,Concatenation(Name,":="));
+AppendTo(fle,X);
+AppendTo(fle,";");
+
+if s!.remote then
+        i:=Concatenation(["sftp ",s!.computer," ",fle]);
+        Exec(i);
+	i:=Concatenation("rm ",fle);
+	Exec(i);
+        fi;
+
+i:=Concatenation("Read(\"",fle,"\");");
+ChildCommand(i,s);
+i:=Concatenation("Exec(\"rm ",fle,"\");");
+ChildCommand(i,s);
+
+end);
+#####################################################
+#####################################################
+
+HAP_XYXYXYXY:=0;
+#####################################################
+#####################################################
+InstallGlobalFunction(ChildGet,
+function(X,s)
+local i,fle;
+
+NextAvailableChild([s]); #Don't start if s is busy.
+
+PrintTo(s.name,"HAPchildToggle\:=false;");
+
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+while IsExistingFile(fle) do
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+od;
+
+i:=Concatenation("PrintTo(\"",fle,"\", \"HAP_XYXYXYXY:=\");");
+WriteLine(s.stream,i);
+
+i:=Concatenation("AppendTo(\"",fle,"\"," ,  X,");");
+
+ChildCommand(i,s);
+NextAvailableChild([s]);
+
+PrintTo(s.name,"HAPchildToggle\:=false;");
+
+if s!.remote then 
+i:=Concatenation(["ssh ",s!.computer," less ",fle," > ",fle]);
+ChildCommand(Concatenation("Exec(\"rm ",fle,"\");"),s);
+fi;
+
+AppendTo(fle,";");
+
+Read(fle);
+i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
+WriteLine(s.stream,i);;
+Exec(Concatenation("rm ",fle));
+
+return HAP_XYXYXYXY;
+
+end);
+#####################################################
+#####################################################
+
+
+
+
+
+
 HAPchildToggle:=false;
 
 #####################################################
@@ -126,11 +233,15 @@ HAPchildToggle:=false;
 InstallGlobalFunction(NextAvailableChild,
 function(L)
 local
-	s;
+	s,i;
 
 while true do
 
 	for s in L do
+	if s!.remote then 
+	i:=Concatenation(["ssh ",s!.computer," less ",s!.name," > ",s!.name]);
+	Exec(i);
+	fi;
 	Read(s!.name);
 	if HAPchildToggle=true then
 	return s; break; fi;
@@ -138,6 +249,22 @@ while true do
 
 	Exec("sleep 0.01");
 od;
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(IsAvailableChild,
+function(s)
+local x;
+
+Read(s!.name);
+
+if HAPchildToggle then return true;
+else return false;
+fi;
+
 end);
 #####################################################
 #####################################################

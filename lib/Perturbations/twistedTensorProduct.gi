@@ -14,7 +14,7 @@ local
 		PseudoBoundary,
 		Charact,
 		AddWrds,
-		i,j,k,l,n,p,q,r,rr,
+		i,j,k,l,n,p,q,r,rr,grp,
 				######Remaining variables are concerned
 				######with the contracting homotopy.
 		Int2Vector,
@@ -23,6 +23,7 @@ local
 		HorizontalBoundaryWord,
 		HomotopyGradedGen,
 		EmapN,
+		HomotopyRec,
 		Homtpy,
 		HomotopyOfWord,
 		FinalHomotopy,
@@ -444,6 +445,31 @@ return hty;
 end;
 #####################################################################
 
+#HomotopyRec:=[];
+#for i in [1..n] do  #n=Length
+#HomotopyRec[i]:=[];
+#for j in [1..Dimension(i-1)] do
+#HomotopyRec[i][j]:=[];
+#od;od;
+
+#####################################################################
+#FinalHomotopy:=function(n,x)
+#local a;
+
+#a:=AbsInt(x[1]);
+#if not IsBound(HomotopyRec[n+1][a][x[2]]) then
+#HomotopyRec[n+1][a][x[2]]:=Homtpy(n,[a,x[2]],false);
+#fi;
+
+#if SignInt(x[1])=1 then
+#return StructuralCopy(HomotopyRec[n+1][a][x[2]]);
+#else
+#return NegateWord(StructuralCopy(HomotopyRec[n+1][a][x[2]]));
+#fi;
+
+#end;
+#####################################################################
+
 #####################################################################
 FinalHomotopy:=function(n,x);
 return Homtpy(n,x,false);
@@ -455,7 +481,7 @@ FinalHomotopy:=fail;
 fi;
 
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
-
+grp:=Group(EltsE);
 
 return Objectify(HapResolution,
 	    rec(
@@ -463,7 +489,7 @@ return Objectify(HapResolution,
 	    boundary:=Boundary, 
 	    homotopy:=FinalHomotopy, 
 	    elts:=EltsE, 
-	    group:=Group(EltsE),
+	    group:=grp,
 	    properties:=
 	    [["type","resolution"],
 	     ["length",n],

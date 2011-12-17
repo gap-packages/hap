@@ -5,7 +5,7 @@ HAPchildren:=[];
 ####################################################
 InstallGlobalFunction(ChildProcess,
 function(arg)
-local d,f,s,Name,Remote,Computer;
+local d,f,s,Name,Remote,Computer,tmpdir;
 d:= DirectoryCurrent();
 
 if Length(arg)=0 then 
@@ -23,7 +23,9 @@ fi;
 #WriteLine(s,"SizeScreen([255,24]);");
 
 #Name:=Concatenation(["/tmp/HAPchild",String(1+Length(HAPchildren))]);
-Name:= Filename( DirectoryTemporary(), String(1+Length(HAPchildren)) );
+tmpdir := DirectoryTemporary();;
+Name:=Filename( tmpdir, String(1+Length(HAPchildren)) );
+
 
 Add(HAPchildren,Name);
 PrintTo(Name,"HAPchildToggle\:=true;");
@@ -79,7 +81,7 @@ function(command,s)
 local i;
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
-#Append(command,";");
+Append(command,";");
 
 WriteLine(s.stream,command);;
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
@@ -132,30 +134,23 @@ end);
 #####################################################
 InstallGlobalFunction(ChildPut,
 function(X,Name,s)
-local i,fle;
+local i;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
-fle:= Filename( DirectoryTemporary(), String(1+Length(HAPchildren)) );
-fle:=Concatenation(fle,"Put");
-PrintTo(fle,Concatenation(Name,":="));
-AppendTo(fle,X);
-AppendTo(fle,";");
+PrintTo("/tmp/tmpPut.txt",Concatenation(Name,":="));
+AppendTo("/tmp/tmpPut.txt",X);
+AppendTo("/tmp/tmpPut.txt",";");
 
 if s!.remote then
-        i:=Concatenation(["sftp ",s!.computer," ",fle]);
+        i:=Concatenation(["sftp ",s!.computer," /tmp/tmpPut.txt "]);
         Exec(i);
-	i:=Concatenation("rm ",fle);
-	Exec(i);
         fi;
 
-i:=Concatenation("Read(\"",fle,"\");");
+i:="Read(\"/tmp/tmpPut.txt\");";
 ChildCommand(i,s);
-i:=Concatenation("Exec(\"rm ",fle,"\");");
-ChildCommand(i,s);
-
 end);
 #####################################################
 #####################################################
@@ -165,18 +160,18 @@ HAP_XYXYXYXY:=0;
 #####################################################
 InstallGlobalFunction(ChildGet,
 function(X,s)
-local i,fle;
+local i;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
-fle:= Filename( DirectoryTemporary(), String(1+Length(HAPchildren)) );
-fle:=Concatenation(fle,"Get");
 
-i:=Concatenation("PrintTo(\"",fle,"\", \"HAP_XYXYXYXY:=\");");
+i:="PrintTo(\"/tmp/tmpGet.txt\", \"HAP_XYXYXYXY:=\");";
 WriteLine(s.stream,i);
+#ChildCommand(i,s);
+#NextAvailableChild([s]);
 
-i:=Concatenation("AppendTo(\"",fle,"\"," ,  X,");");
+i:=Concatenation("AppendTo(\"/tmp/tmpGet.txt\"," ,  X,");");
 
 ChildCommand(i,s);
 NextAvailableChild([s]);
@@ -184,16 +179,14 @@ NextAvailableChild([s]);
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
 if s!.remote then 
-i:=Concatenation(["ssh ",s!.computer," less /tmp/tmpGet.txt > ",fle]);
-ChildCommand(Concatenation("Exec(\"rm ",fle,"\");"),s);
+i:=Concatenation(["ssh ",s!.computer," less /tmp/tmpGet.txt > /tmp/tmpGet.txt"]);
 fi;
 
-AppendTo(fle,";");
+AppendTo("/tmp/tmpGet.txt",";");
 
-Read(fle);
+Read("/tmp/tmpGet.txt");
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
-Exec(Concatenation("rm ",fle));
 
 return HAP_XYXYXYXY;
 

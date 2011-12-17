@@ -71,6 +71,7 @@ gn:=Position(EltsE,Identity(E));
 EltsE[gn]:=EltsE[1];
 EltsE[1]:=Identity(E);
 
+
 	########################################################
 	AppendToElts:=function(x);
 	Append(EltsE,[x]);

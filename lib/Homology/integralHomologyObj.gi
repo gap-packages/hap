@@ -24,7 +24,11 @@ for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
 ConvertToMatrixRep(M1);
+if Length(M1)=0 then 
+DimKerd1:=0;
+else
 DimKerd1:=Length(M1)-Rank(M1);
+fi;
 M1:=0;
 
 fi;

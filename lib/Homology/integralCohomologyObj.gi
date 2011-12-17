@@ -30,8 +30,12 @@ for i in [1..Dimension(n+1)] do
 M1[i]:=Boundary(n+1,i);
 od;
 
-
+if Length(M1)=0 then
+DimKerd1:=0;
+else
 DimKerd1:=Length(M1)-Rank(M1);
+fi;
+
 Smith:= SmithNormalFormIntegerMat(M2);
 
 TorsionCoefficients:=[];

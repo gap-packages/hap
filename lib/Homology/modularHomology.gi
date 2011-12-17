@@ -24,18 +24,23 @@ local
         i;
 
 if n <0 then return false; fi;
-if n=0 then return [0]; fi;
+#if n=0 then return [0]; fi;
 
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 M1:=[];
 M2:=[];
-						
+
+if n>0 then
 for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
 M1:=MutableCopyMat(M1);
 ConvertToMatrixRep(M1);
+else
+M1:=[];
+fi;
+
 if Length(M1)=0 then RankM1:=0; else
 RankM1:=RankMatDestructive(M1);
 fi;

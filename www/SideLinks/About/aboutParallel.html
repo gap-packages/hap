@@ -19,7 +19,7 @@
  cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><a href="aboutLie.html"><small
+            <td style="vertical-align: top;"><a href="aboutTDA.html"><small
  style="color: rgb(0, 0, 102);">Previous</small></a><br>
             </td>
             <td
@@ -40,8 +40,7 @@
  style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">Homological
 computations can require much time and memory.&nbsp; In principle,
 many of the computations can be distributed in fairly obvious ways over
-several processors on a multiprocessor PC (or, using software such as
-Cluster Knoppix, over several processors on a network of&nbsp; PCs).
+several processors on one or more PCs.
 HAP contains a few basic functions for achieving this. <br>
       </td>
     </tr>
@@ -49,9 +48,12 @@ HAP contains a few basic functions for achieving this. <br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 following commands compute the third integral homology groups of the
-groups of order 32 using two child processes. This is an example of
+fourteen groups of order 16 using two child processes. The first child
+is on the
+local machine and the second child is on a remote machine for which ssh
+has been configured to require no password. This is an example of
 "trivial parallelism". On a multiprocessor
-machine (or Knoppix cluster) the processes would normally automatically
+machine distinct child processes would normally automatically
 be assigned to different processors.<br>
       </td>
     </tr>
@@ -59,82 +61,40 @@ be assigned to different processors.<br>
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
 s:=ChildProcess();;<br>
-gap&gt; t:=ChildProcess();;<br>
+gap&gt; t:=ChildProcess("alberti.vlan.nuigalway.ie");;<br>
       <br>
-gap&gt; ChildCommand("ODD:=Filtered([1..51],IsOddInt);",s);<br>
 gap&gt;
-ChildFunction("List(ODD,i-&gt;GroupHomology(SmallGroup(32,i),3));",s);<br>
-gap&gt; ChildCommand("Even:=Filtered([1..51],IsEvenInt);",t);<br>
+ChildCommand("Odd:=List([1,3,5,7,9,11,13],i-&gt;GroupHomology(SmallGroup(16,i),3));",s);<br>
 gap&gt;
-ChildFunction("List(Even,i-&gt;GroupHomology(SmallGroup(32,i),3));",t);<br>
+ChildCommand("Even:=List([2,4,6,8,10,12,14],i-&gt;GroupHomology(SmallGroup(16,i),3));",t);<br>
+gap&gt; ODD:=ChildGet("Odd",s);;<br>
+gap&gt; EVEN:=ChildGet("Even",t);;<br>
       <br>
-gap&gt; Odd:=ChildReadEval(s);;<br>
-gap&gt; Even:=ChildReadEval(t);;<br>
+gap&gt; for i in [1..7] do<br>
+gap&gt; Print("Group ",2*i-1," has third homology ",ODD[i],"\n");<br>
+gap&gt; Print("Group ",2*i," has third homology ",EVEN[i],"\n");<br>
+gap&gt; od;<br>
       <br>
-gap&gt; for i in [1..26] do<br>
-&gt; Print("Group ",2*i-1," has third homology ",Odd[i],"\n");<br>
-&gt; if i&lt;26 then Print("Group ",2*i," has third homology
-",Even[i],"\n"); fi;<br>
-&gt; od;<br>
-      <br>
-Group 1 has third homology [ 32 ]<br>
-Group 2 has third homology [ 4, 4, 4, 4 ]<br>
-Group 3 has third homology [ 4, 4, 8 ]<br>
-Group 4 has third homology [ 2, 4, 8 ]<br>
-Group 5 has third homology [ 2, 2, 4, 8 ]<br>
-Group 6 has third homology [ 2, 2, 4, 4 ]<br>
-Group 7 has third homology [ 2, 2, 2, 8 ]<br>
-Group 8 has third homology [ 2, 4, 4 ]<br>
-Group 9 has third homology [ 2, 2, 4, 8 ]<br>
-Group 10 has third homology [ 2, 4, 8 ]<br>
-Group 11 has third homology [ 2, 4, 8 ]<br>
-Group 12 has third homology [ 2, 4, 8 ]<br>
-Group 13 has third homology [ 2, 4, 8 ]<br>
-Group 14 has third homology [ 2, 4, 8 ]<br>
-Group 15 has third homology [ 2, 16 ]<br>
-Group 16 has third homology [ 2, 2, 16 ]<br>
-Group 17 has third homology [ 2, 16 ]<br>
-Group 18 has third homology [ 2, 2, 16 ]<br>
-Group 19 has third homology [ 2, 16 ]<br>
-Group 20 has third homology [ 32 ]<br>
-Group 21 has third homology [ 2, 2, 2, 2, 4, 4, 4 ]<br>
-Group 22 has third homology [ 2, 2, 2, 2, 2, 2, 2, 4, 4 ]<br>
-Group 23 has third homology [ 2, 2, 2, 2, 2, 4, 4 ]<br>
-Group 24 has third homology [ 2, 2, 2, 4, 8 ]<br>
-Group 25 has third homology [ 2, 2, 2, 2, 2, 4, 4 ]<br>
-Group 26 has third homology [ 2, 2, 4, 8 ]<br>
-Group 27 has third homology [ 2, 2, 2, 2, 2, 2, 2, 4, 4 ]<br>
-Group 28 has third homology [ 2, 2, 2, 2, 2, 4, 4 ]<br>
-Group 29 has third homology [ 2, 2, 2, 4, 8 ]<br>
-Group 30 has third homology [ 2, 2, 2, 2, 4, 4 ]<br>
-Group 31 has third homology [ 2, 2, 2, 4, 8 ]<br>
-Group 32 has third homology [ 2, 4, 8 ]<br>
-Group 33 has third homology [ 2, 2, 4, 4 ]<br>
-Group 34 has third homology [ 2, 2, 2, 2, 4, 4, 4 ]<br>
-Group 35 has third homology [ 2, 2, 4, 8 ]<br>
-Group 36 has third homology [ 2, 2, 2, 2, 2, 2, 8 ]<br>
-Group 37 has third homology [ 2, 2, 2, 2, 8 ]<br>
-Group 38 has third homology [ 2, 2, 2, 16 ]<br>
-Group 39 has third homology [ 2, 2, 2, 2, 2, 2, 8 ]<br>
-Group 40 has third homology [ 2, 2, 2, 2, 8 ]<br>
-Group 41 has third homology [ 2, 2, 2, 16 ]<br>
-Group 42 has third homology [ 2, 2, 2, 16 ]<br>
-Group 43 has third homology [ 2, 2, 2, 2, 8 ]<br>
-Group 44 has third homology [ 2, 2, 2, 8 ]<br>
-Group 45 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]<br>
-Group 46 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]<br>
-Group 47 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 8 ]<br>
-Group 48 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 8 ]<br>
-Group 49 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 8 ]<br>
-Group 50 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]<br>
-Group 51 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+Group 1 has third homology [ 16 ]<br>
+Group 2 has third homology [ 4, 4, 4 ]<br>
+Group 3 has third homology [ 2, 2, 4, 4 ]<br>
+Group 4 has third homology [ 2, 4, 4 ]<br>
+Group 5 has third homology [ 2, 2, 8 ]<br>
+Group 6 has third homology [ 2, 8 ]<br>
+Group 7 has third homology [ 2, 2, 8 ]<br>
+Group 8 has third homology [ 2, 8 ]<br>
+Group 9 has third homology [ 16 ]<br>
+Group 10 has third homology [ 2, 2, 2, 2, 2, 2, 4 ]<br>
+Group 11 has third homology [ 2, 2, 2, 2, 2, 2, 4 ]<br>
+Group 12 has third homology [ 2, 2, 2, 8 ]<br>
+Group 13 has third homology [ 2, 2, 2, 8 ]<br>
+Group 14 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-possible problem with the above parallel computation is that the naive
+weakness with the above parallel computation is that the naive
 distribution of tasks over the two child processes might result in one
 process being finished long before the other.&nbsp; The command
 NextAvailableChild() can be used to overcome this problem.
@@ -150,12 +110,10 @@ of the groups of order 128.<br>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 s:=ChildProcess();;<br>
 gap&gt; t:=ChildProcess();;<br>
-gap&gt;&nbsp; fn:=function(i);return
+gap&gt; fn:=function(i);return
 GroupHomology(SmallGroup(128,i),2);end;<br>
-gap&gt; ChildCommand( "fn:=function(i);return
-GroupHomology(SmallGroup(128,i),2);end;",&nbsp; s);<br>
-gap&gt; ChildCommand( "fn:=function(i);return
-GroupHomology(SmallGroup(128,i),2);end;",&nbsp; t);<br>
+gap&gt; ChildPut( fn, "fn", s);<br>
+gap&gt; ChildPut( fn, "fn", t);<br>
       <br>
 gap&gt; Exec("date");<br>
 Sat Oct&nbsp; 6 23:52:55 IST 2007<br>
@@ -168,6 +126,68 @@ Sun Oct&nbsp; 7 00:14:07 IST 2007<br>
       </td>
     </tr>
     <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands illustrate a naive parallel computation of the
+product A=M*N of two random matrices M and N. The computation involves
+just one child and takes 64% of the time needed for the standard
+sequential
+calculation of M*N. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+M:=RandomMat(2000,2000);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Two random matrices.<br>
+gap&gt; N:=RandomMat(2000,2000);;<br>
+      <br>
+gap&gt; s:=ChildProcess();;<br>
+      <br>
+gap&gt; Exec("date");<br>
+Tue Nov 27 05:17:55 GMT 2007<br>
+gap&gt;
+Mtop:=M{[1..1000]};;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Splitting the first matrix in two<br>
+gap&gt; Mbottom:=M{[1001..2000]};;<br>
+      <br>
+gap&gt;
+ChildPut(Mtop,"Mtop",s);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Transferring data to the child.<br>
+gap&gt; ChildPut(N,"N",s);<br>
+gap&gt; NextAvailableChild([s]);;<br>
+      <br>
+gap&gt;
+ChildCommand("Atop:=Mtop*N;;",s);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Matrix multiplication on child.<br>
+gap&gt;
+Abottom:=Mbottom*N;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Matrix multiplication on parent.<br>
+gap&gt; A:=ChildGet("Atop",s);;<br>
+gap&gt;
+Append(A,Abottom);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#A is the product M*N.<br>
+gap&gt; Exec("date");<br>
+Tue Nov 27 05:18:47 GMT 2007<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+parallel multiplication took 52 seconds on a two-processor IBM laptop,
+compared to 81 seconds below for multiplication on a single processor.
+This is a speedup factor of 0.64 .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Exec("date");M*N;;Exec("date");<br>
+Tue Nov 27 05:13:56 GMT 2007<br>
+Tue Nov 27 05:15:17 GMT 2007<br>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">
       <table
  style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
@@ -175,7 +195,7 @@ Sun Oct&nbsp; 7 00:14:07 IST 2007<br>
         <tbody>
           <tr>
             <td style="vertical-align: top;"><a
- style="color: rgb(0, 0, 102);" href="aboutLie.html">Previous
+ style="color: rgb(0, 0, 102);" href="aboutTDA.html">Previous
 Page</a><br>
             </td>
             <td style="text-align: center; vertical-align: top;"><a

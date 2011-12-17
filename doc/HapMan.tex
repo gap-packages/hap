@@ -966,34 +966,77 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation}}\logpage{[ 18, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 18, 0, 0 ]}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{ChildClose} \texttt{ChildClose(s)} 
+\begin{tabular}{|l|} \index{ChildProcess} \texttt{ChildProcess()} \\
+ \texttt{ChildProcess("computer.ac.wales")} 
+
+ This starts a GAP session as a child process and returns a stream to the child
+process. If no argument is given then the child process is created on the
+local machine; otherwise the argument should be the address of a remote
+computer for which ssh has been configured to require no password from the
+user. 
+
+ (To configure ssh so that the user can login without a password prompt from
+"thishost" to "remotehost" either consult "man ssh" or \\
+ \\
+ - open a shell on thishost\\
+ - cd .ssh\\
+ - ls\\
+ -> if id_dsa, id_rsa etc exists, skip the next two steps!\\
+ - ssh-keygen -t rsa\\
+ - ssh-keygen -t dsa\\
+ - scp *.pub user@remotehost:~/\\
+ - ssh remotehost -l user\\
+ - cat id_rsa.pub >> .ssh/authorized_keys\\
+ - cat id_dsa.pub >> .ssh/authorized_keys\\
+ - rm id_rsa.pub id_dsa.pub\\
+ - exit\\
+ \\
+ You should now be able to connect from "thishost" to "remotehost" without a
+password prompt.) \\
+ \index{ChildClose} \texttt{ChildClose(s)} 
 
  This closes the stream s to a child GAP process. \\
  \index{ChildCommand} \texttt{ChildCommand("cmd;",s)} 
 
- This runs any GAP command "cmd;" on child process accessed by the stream s. No
-output from "cmd;" can be accessed via the stream. \\
- \index{ChildFunction} \texttt{ChildFunction("function(arg);",s)} 
+ This runs a GAP command "cmd;" on the child process accessed by the stream s.
+Here "cmd;" is a string representing the command. \\
+ \index{NextAvailableChild} \texttt{ NextAvailableChild(L)} 
+
+ Inputs a list $L$ of child processes and returns a child in $L$ which is ready for computation (as soon as such a child is available). \\
+ \index{IsAvailableChild} \texttt{ IsAvailableChild(s)} 
+
+ Inputs a child process $s$ and returns true if s is currently available for computations, and false
+otherwise. \\
+ \index{ChildPut} \texttt{ ChildPut(A,"B",s)} 
+
+ This copies a GAP object A on the parent process to an object B on the child
+process s. (The copying relies on the function PrintObj(A); ) \\
+ \index{ChildGet} \texttt{ ChildGet("A",s)} 
+
+ This functions copies a GAP object A on the child process s and returns it on
+the parent process. (The copying relies on the function PrintObj(A); ) \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 19, 0, 0 ]}
+{
+  \begin{center}
+\begin{tabular}{|l|} \index{ChildFunction} \texttt{ChildFunction("function(arg);",s)} 
 
  This runs the GAP function "function(arg);" on a child process accessed by the
 stream s. The output from "func;" can be accessed via the stream. \\
- \index{ChildProcess} \texttt{ChildProcess()} \\
- \texttt{ChildProcess("workspace")} 
-
- This starts a GAP session as a child process and returns a stream to the child
-process. The child GAP session can be started with any given workspace. \\
  \index{ChildRead} \texttt{ChildRead(s)} 
 
  This returns, as a string, the output of the last application of $ChildFunction("function(arg);",s)$. \\
  \index{ChildReadEval} \texttt{ChildReadEval(s)} 
 
  This returns, as an evaluated string, the output of the last application of $ChildFunction("function(arg);",s)$. \\
- \index{NextAvailableChild} \texttt{ NextAvailableChild(L)} 
-
- Inputs a list $L$ of child processes and returns a child in $L$ which is ready for computation (as soon as such a child is available). \\
  \index{ParallelList} \texttt{ParallelList(I,fn,L)} 
 
  Inputs a list $I$, a function $fn$ such that $fn(x)$ is defined for all $x$ in $I$, and a list of children $L$. It uses the children in $L$ to compute $List(I,x->fn(x))$. (Obviously the function $fn$ must be defined on all child processes in $L$.) \\
@@ -1003,7 +1046,59 @@ process. The child GAP session can be started with any given workspace. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 19, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Topological Data Analysis}}\logpage{[ 20, 0, 0 ]}
+{
+ \begin{center}
+\begin{tabular}{|l|} \index{ReadImageFile} \texttt{ ReadImageFile("file.png",n)} 
+
+ Inputs an image file ("file.png", "file.eps", "file.bmp" etc) and an integer $n$ between 0 and 765. It returns a 1/0 integer matrix representing a black/white
+version of the image determined by the threshold $n$. \\
+ \index{BettiNumbersOfMatrix} \texttt{ BettiNumbersOfMatrix(A)} 
+
+ Inputs a 1/0 integer matrix $A$ representing a black/white version of an image. It returns a list $[b0,b1]$ where $b0$ is the zeroth betti number of the black image space, and $b1$ is the first betti number. All higher betti numbers will be zero as the space
+is $2$-dimensional. \\
+ \index{MatrixToChainComplex} \texttt{ MatrixToChainComplex(A)} 
+
+ Inputs a 1/0 integer matrix $A$ representing a black/white version of an image and returns the cellular chain
+complex of the black image space (in characteristic 0). \\
+ \index{ContractMatrix} \texttt{ ContractMatrix(A)} 
+
+ Inputs a 1/0 integer matrix $A$ representing a black/white version of an image and modifies $A$ so that it represents a homotopy equivalent image space hopefully with fewer
+black cells. Black cells are removed from the image to produce a homotopy
+equivalent image from which no further black cell can be removed without
+changing the homotopy type. The function returns true if it succeeds in
+reducing the number of cells of the original image; otherwise it returns
+false. \\
+ \index{ThickenedMatrix} \texttt{ ThickenedMatrix(A)} \texttt{ ThickenedMatrix(A,n)} 
+
+ Inputs a 1/0 integer matrix $A$ and returns a 1/0 matrix $B$. If an entry in $A$ is equal to 1 then the corresponding entry in $B$ and all eight neighbouring entries in $B$ are equal to 1. 
+
+ If a positive integer $n$ is input as a second argument then the thickening process is repeated $n$ times. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Pseudo lists}}\logpage{[ 21, 0, 0 ]}
+{
+ \begin{center}
+\begin{tabular}{|l|} \index{Add} \texttt{ Add(L,x)} 
+
+ Let $L$ be a pseudo list of length $n$, and $x$ an object compatible with the entries in $L$. If $x$ is not in $L$ then this operation converts $L$ into a pseudo list of length n+1 by adding $x$ as the final entry. If $x$ is in $L$ the operation has no effect on $L$. \\
+ \index{Append} \texttt{ Append(L,K)} 
+
+ Let $L$ be a pseudo list and $K$ a list whose objects are compatible with those in $L$. This operation applies Add(L,x) for each x in $K$. \\
+ \index{ListToPseudoList} \texttt{ ListToPseudoList(L)} 
+
+ Inputs a list $L$ and returns the pseudo list representation of $L$. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 22, 0, 0 ]}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{BigStepLCS} \texttt{ BigStepLCS(G,n) } 

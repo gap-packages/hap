@@ -1,9 +1,39 @@
-<Chapter><Heading> Parallel Computation - Core Functions</Heading>
-
+<Chapter><Heading> Parallel Computation</Heading>
 
 <Table Align="|l|" >
 
+<Row>
+<Item>
+<Index> ChildClose</Index>
+<C>ChildClose(s)</C>
 
+<P/>
+This closes the stream s to a child GAP process. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildCommand</Index>
+<C>ChildCommand("cmd;",s)</C>
+
+<P/>
+This runs any GAP command "cmd;" on child process accessed by the stream s.
+No output from "cmd;" can be accessed via the stream. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildFunction</Index>
+<C>ChildFunction("function(arg);",s)</C>
+
+<P/>
+This runs the GAP function "function(arg);" 
+on a child process accessed by the stream s. 
+The  output from "func;" can be accessed via the stream.
+</Item>
+</Row>
 
 <Row>
 <Item>
@@ -40,92 +70,6 @@ without a password prompt.)
 
 <Row>
 <Item>
-<Index> ChildClose</Index>
-<C>ChildClose(s)</C>
-
-<P/>
-This closes the stream s to a child GAP process.
-</Item>
-</Row>
-
-<Row>
-<Item>
-<Index> ChildCommand</Index>
-<C>ChildCommand("cmd;",s)</C>
-
-<P/>
-This runs a GAP command "cmd;" on the child process accessed by the stream s.
-Here "cmd;" is a string representing the command. 
-</Item>
-</Row>
-
-<Row>
-<Item>
-<Index> NextAvailableChild</Index>
-<C> NextAvailableChild(L)</C>
-
-<P/>
-Inputs a list <M>L</M> of child processes and returns a child in <M>L</M>
-which is ready for computation (as soon as such a child is available).
-</Item>
-</Row>
-
-<Row>
-<Item>
-<Index> IsAvailableChild</Index>
-<C> IsAvailableChild(s)</C>
-
-<P/>
-Inputs a child process  <M>s</M> and returns true if s is currently available
-for computations, and false otherwise.
-
-</Item>
-</Row>
-
-
-<Row>
-<Item>
-<Index> ChildPut</Index>
-<C> ChildPut(A,"B",s)</C>
-
-<P/> This copies a GAP object A on the parent process to an object B on the child process s. (The copying relies on the function PrintObj(A); )
-</Item>
-</Row>
-
-<Row>
-<Item>
-<Index> ChildGet</Index>
-<C> ChildGet("A",s)</C>
-
-<P/> This functions copies a GAP object A on the child process s and returns it on the parent process. (The copying relies on the function PrintObj(A); )
-</Item>
-</Row>
-
-
-</Table>
-</Chapter>
-
-<Chapter>
-<Heading> Parallel Computation - Extra Functions</Heading>
-
-<Table Align="|l|" >
-
-
-
-<Row>
-<Item>
-<Index> ChildFunction</Index>
-<C>ChildFunction("function(arg);",s)</C>
-
-<P/>
-This runs the GAP function "function(arg);"
-on a child process accessed by the stream s.
-The  output from "func;" can be accessed via the stream.
-</Item>
-</Row>
-
-<Row>
-<Item>
 <Index> ChildRead</Index>
 <C>ChildRead(s)</C>
 
@@ -144,6 +88,16 @@ This returns, as an evaluated string, the output of the last application of <M>C
 </Item>
 </Row>
 
+<Row>
+<Item>
+<Index> NextAvailableChild</Index>
+<C> NextAvailableChild(L)</C>
+
+<P/>
+Inputs a list <M>L</M> of child processes and returns a child in <M>L</M>
+which is ready for computation (as soon as such a child is available).
+</Item>
+</Row>
 
 <Row>
 <Item>

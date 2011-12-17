@@ -202,4 +202,23 @@ DeclareGlobalFunction("ChildRead");
 DeclareGlobalFunction("ChildReadEval");
 DeclareGlobalFunction("NextAvailableChild");
 DeclareGlobalFunction("ParallelList");
+DeclareGlobalFunction("ChildPut");
+DeclareGlobalFunction("ChildGet");
+DeclareGlobalFunction("IsAvailableChild");
 
+
+
+## PSEUDOLISTS ######################################################
+DeclareGlobalFunction("ListToPseudoList");
+DeclareCategory("IsPseudoList",IsObject);
+DeclareRepresentation(  "IsPseudoListRep",
+                        IsComponentObjectRep,
+                        ["elts",
+                         "pos" ]);
+
+## TOPOLOGICAL DATA ANALYSIS ########################################
+DeclareGlobalFunction("MatrixToChainComplex");
+DeclareGlobalFunction("ReadImageFile");
+DeclareGlobalFunction("ContractMatrix");
+DeclareGlobalFunction("BettiNumbersOfMatrix");
+DeclareGlobalFunction("ThickenedMatrix");

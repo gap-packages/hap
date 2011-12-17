@@ -9,7 +9,7 @@ local
         i,j,ans,dim1,dim2,v,x;
 
 if n <0 then return false; fi;
-if n=0 then return [0]; fi;
+if n=0 then return [0]; fi;  #THIS IS MATHEMATICALLY WRONG!!!
 
 if not "snf" in NamesOfComponents(C) then
 C!.snf:=[1..EvaluateProperty(C,"length")];
@@ -21,7 +21,6 @@ M1:=[];
 M2:=[];ans:=[];
 
 if IsInt(C!.snf[n]) then
-
 AppendTo("tmpHAP",Dimension(n)," ",Length(Boundary(n,1))," ","M \n");
 for i in [1..Dimension(n)] do
 #M1[i]:=Boundary(n,i);
@@ -32,6 +31,7 @@ AppendTo("tmpHAP",i," ",x," ",v[x], " \n");
 fi;
 od;
 od;
+
 #ConvertToMatrixRep(M1);
 #M1:=SmithNormalFormIntegerMat(TransposedMat(M1));
 #M1:=SMInvariantFactors(M1);
