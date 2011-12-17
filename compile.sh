@@ -15,10 +15,10 @@ GACDIR=/usr/local/lib/gap4r4/bin/i686-pc-linux-gnu-gcc;
 #####################################################################
 
 
-LIB=$PKGDIR/Hap1.8/lib;
+LIB=$PKGDIR/Hap1.9/lib;
 
-rm $PKGDIR/Hap1.8/boolean;
-echo "COMPILED:=true;" > $PKGDIR/Hap1.8/boolean;
+rm $PKGDIR/Hap1.9/boolean;
+echo "COMPILED:=true;" > $PKGDIR/Hap1.9/boolean;
 
 $GACDIR/gac -d $LIB/CompiledGAP/*.c;
 mkdir  $LIB/CompiledGAP/Compiled;
@@ -77,4 +77,8 @@ mv *.so $LIB/ModPRings/Compiled/;
 $GACDIR/gac -d $LIB/FpGmodules/*.gi;
 mkdir $LIB/FpGmodules/Compiled/;
 mv *.so $LIB/FpGmodules/Compiled/;
+
+$GACDIR/gac -d $LIB/PolyComplexes/*.gi;
+mkdir $LIB/PolyComplexes/Compiled/;
+mv *.so $LIB/PolyComplexes/Compiled/;
 

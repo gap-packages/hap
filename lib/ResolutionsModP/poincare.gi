@@ -189,14 +189,15 @@ end);
 
 #####################################################################
 #####################################################################
+if false then
 InstallGlobalFunction(PoincareSeriesPrimePart,
 function(G,p,n)
 local
 	P,R,L,F;
 
 P:=SylowSubgroup(G,p);
-R:=ResolutionFiniteGroup(P,n+1,false,p);
-#R:=ResolutionPrimePowerGroup(P,n+1);
+#R:=ResolutionFiniteGroup(P,n+1,false,p);
+R:=ResolutionPrimePowerGroup(P,n+1);
 
 ####################################################################
 F:=function(R);
@@ -212,5 +213,6 @@ L:=Reversed(L);
 return(PoincareSeries(L,n));
 
 end);
+fi;
 #####################################################################
 #####################################################################

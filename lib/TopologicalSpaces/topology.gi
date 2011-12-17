@@ -2,7 +2,7 @@
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(MatrixToTopologicalSpace,
+InstallGlobalFunction(MatrixToTopologicalManifold,
 function(AA,threshold)	
 local
 	rows,cols,
@@ -30,7 +30,7 @@ fi;
 
 
 
-return Objectify(HapTopologicalSpace,
+return Objectify(HapTopologicalManifold,
 	   rec(
 	   BinaryList:=A,
 	   properties:=[
@@ -46,11 +46,11 @@ end);
 HAPAAA:=0;
 #################################################################
 #################################################################
-InstallGlobalFunction(ReadImageAsTopologicalSpace,
+InstallGlobalFunction(ReadImageAsTopologicalManifold,
 function(file,threshold)
 local i,j,prog,A;
 
-prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.8/lib/TopologicalSpaces/prog");
+prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/TopologicalSpaces/prog");
 
 i:=Concatenation("convert ",file," /tmp/im.txt");
 Exec(i);
@@ -63,20 +63,20 @@ Exec("rm /tmp/im.txt");
 A:=StructuralCopy(HAPAAA);
 HAPAAA:=0;
 
-return MatrixToTopologicalSpace(A,threshold);
+return MatrixToTopologicalManifold(A,threshold);
 end);
 #################################################################
 #################################################################
 
 #################################################################
 #################################################################
-InstallGlobalFunction(WriteTopologicalSpaceAsImage,
+InstallGlobalFunction(WriteTopologicalManifoldAsImage,
 function(T,file,ext)
 local
         A,i,j,rows,cols,colour,filetxt;
 
 if not EvaluateProperty(T,"dimension")=2 then
-Print("There is no method for viewing a topological space of dimension ",
+Print("There is no method for viewing a topological manifold of dimension ",
 EvaluateProperty(T,"dimension"),".\n"); return fail; fi;
 
 A:=T!.BinaryList;
@@ -106,18 +106,18 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(ViewTopologicalSpace,
+InstallGlobalFunction(ViewTopologicalManifold,
 function(arg)
 local i,A,viewer,T;
 
 T:=arg[1];
 if not EvaluateProperty(T,"dimension")=2 then
-Print("There is no method for viewing a topological space of dimension ",
+Print("There is no method for viewing a topological maqnifold of dimension ",
 EvaluateProperty(T,"dimension"),".\n"); return fail; fi;
 
 if Length(arg)>1 then viewer:=arg[2];
 else viewer:="mozilla";fi;
-WriteTopologicalSpaceAsImage(T,"HAPtmpImage","png");
+WriteTopologicalManifoldAsImage(T,"HAPtmpImage","png");
 Exec(Concatenation(viewer," ","HAPtmpImage.png"));
 Sleep(2);
 Exec(Concatenation("rm  ","HAPtmpImage.png"));
@@ -128,7 +128,7 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(ConcatenatedTopologicalSpace,
+InstallGlobalFunction(ConcatenatedTopologicalManifold,
 function(L)
 local
 	S,
@@ -144,12 +144,12 @@ if not
 arraySize=EvaluateProperty(L[i],"arraySize")
 and genericCWtype=EvaluateProperty(L[i],"genericCWtype")
 then
-Print("The concatenated spaces must all have similar dimensions and CW-structures. \n");
+Print("The concatenated manifolds must all have similar dimensions and CW-structures. \n");
 return fail; fi;
 od;
 
 return
-Objectify(HapTopologicalSpace,
+Objectify(HapTopologicalManifold,
            rec(
 	        BinaryList:=List(L,T->StructuralCopy(T!.BinaryList)),
 	        properties:=[
@@ -253,13 +253,13 @@ end);
 ################################################################
 ################################################################
 InstallOtherMethod(Bettinumbers,
-"betti numbers of a topological space",
-[IsHapTopologicalSpace,IsInt],
+"betti numbers of a topological Manifold",
+[IsHapTopologicalManifold,IsInt],
 
 function(T,n);
 if n=0 then return ZerothBettiNumber(T); fi;
 if n=1 then return BettiNumbersOfMatrix(
-ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.BinaryList)[2]; fi;
+ComplementTopologicalManifold(ComplementTopologicalManifold(T))!.BinaryList)[2]; fi;
 if n>EvaluateProperty(T,"dimension") then return 0;fi;
 
 Print("Theis function is not yet defined for n= ",n,"\n");
@@ -271,15 +271,15 @@ end);
 ################################################################
 ################################################################
 InstallOtherMethod(Bettinumbers,
-"betti numbers of a topological space",
-[IsHapTopologicalSpace],
+"betti numbers of a topological Manifold",
+[IsHapTopologicalManifold],
 
 function(T);
 if EvaluateProperty(T,"dimension")=2 then
 return BettiNumbersOfMatrix(
-ComplementTopologicalSpace(ComplementTopologicalSpace(T))!.BinaryList); fi;
+ComplementTopologicalManifold(ComplementTopologicalManifold(T))!.BinaryList); fi;
 
-Print("This function is not yet defined for spaces if dimension >2.","\n");
+Print("This function is not yet defined for manifolds if dimension >2.","\n");
 return fail;
 end);
 ################################################################
@@ -310,7 +310,7 @@ fi;
 od;
 
 return 
-Objectify(HapTopologicalSpace,
+Objectify(HapTopologicalManifold,
            rec(
                 BinaryList:=A,
                 properties:=[
@@ -326,7 +326,7 @@ end);
 
 ######################################################################
 ######################################################################
-InstallGlobalFunction(ThickenedTopologicalSpace,
+InstallGlobalFunction(ThickenedTopologicalManifold,
 function(T)
 local 
         ArraySize,ArraySizePO,
@@ -366,7 +366,7 @@ fi;
 od;
 
 return
-Objectify(HapTopologicalSpace,
+Objectify(HapTopologicalManifold,
            rec(
                BinaryList:=RawData,
                properties:=[
@@ -381,7 +381,7 @@ end);
 
 ######################################################################
 ######################################################################
-InstallGlobalFunction(ComplementTopologicalSpace,
+InstallGlobalFunction(ComplementTopologicalManifold,
 function(T)
 local
         ArraySize,ArraySizePO,
@@ -404,7 +404,7 @@ else SetT(RawData,ArraySizePO,point,lp,0); fi;
 od;
 
 return
-Objectify(HapTopologicalSpace,
+Objectify(HapTopologicalManifold,
            rec(
 	       BinaryList:=RawData,
 	       properties:=[
@@ -457,7 +457,7 @@ end);
 
 ######################################################################
 ######################################################################
-InstallGlobalFunction(BoundaryTopologicalSpace,
+InstallGlobalFunction(BoundaryTopologicalManifold,
 function(T)
 local
 	C,
@@ -475,8 +475,8 @@ ArraySize:=EvaluateProperty(T,"arraySize");
 ArraySizePO:=ArraySize+List([1..Length(ArraySize)],i->1);
 Tarray:=Cartesian(List(ArraySize,x->[1..x]));
 
-C:=ComplementTopologicalSpace(T);
-C:=ThickenedTopologicalSpace(C);
+C:=ComplementTopologicalManifold(T);
+C:=ThickenedTopologicalManifold(C);
 RawData:=C!.BinaryList;
 
 for point in Tarray do
@@ -493,11 +493,11 @@ end);
 
 ######################################################################
 ######################################################################
-InstallGlobalFunction(ContractTopologicalSpace,
+InstallGlobalFunction(ContractTopologicalManifold,
 function(T);
 
 if not EvaluateProperty(T,"dimension")=2 then
-Print("This function is not yet implemented for spaces of dimension ",
+Print("This function is not yet implemented for manifolds of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
@@ -513,7 +513,7 @@ InstallGlobalFunction(SingularChainComplex,
 function(T);
 
 if not EvaluateProperty(T,"dimension")=2 then 
-Print("This function is not yet implemented for spaces of dimension ",
+Print("This function is not yet implemented for manifolds of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
@@ -530,14 +530,14 @@ function(T)
 local A;
 
 if not EvaluateProperty(T,"dimension")=2 then
-Print("This function is not yet implemented for spaces of dimension ",
+Print("This function is not yet implemented for manifolds of dimension ",
 EvaluateProperty(T,"dimension"),"\n");
 return fail; fi;
 
 A:=SingularityMatrix(T!.BinaryList);
 return 
 
-Objectify(HapTopologicalSpace,
+Objectify(HapTopologicalManifold,
           rec(
                BinaryList:=A,
                properties:=[

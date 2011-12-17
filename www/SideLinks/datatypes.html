@@ -229,7 +229,7 @@ n = infinity. The graph is represented as a list D = [L<sub>1</sub>,
 ... L<sub>t</sub>] in which each term is itself a list L<sub>k</sub> =
 [v<sub>k</sub>, [u<sub>k1</sub>,n<sub>k1</sub>], [u<sub>k2</sub>,n<sub>k2</sub>],
 ... [u<sub>km</sub>,n<sub>km</sub>]] such that vertex v<sub>k</sub> is
-connected to vertex u<sub>kj</sub> by an edge with label n<sub>kj</sub>.
+conneconcatenationted to vertex u<sub>kj</sub> by an edge with label n<sub>kj</sub>.
 It is necessary and sufficient to list just those vertices u<sub>kj</sub>
 &gt; v<sub>k</sub>. We set n<sub>kj</sub>=0 when the edge label is
 infinity. <br>
@@ -254,6 +254,19 @@ HasName(G) is true. Furthermore, distinct groups must have dirrerent
 names.<br>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: top;">Array<br>
+      </td>
+      <td style="vertical-align: top;">An array is defined recursively
+to be a list A=[A<sub>1</sub>,...,A<sub>n</sub>] of arrays with equal
+dimension and array size. A no entry A<sub>i</sub> is a list then the
+array is said to have dimension 1 and&nbsp; array size n. In general:<br>
+      <ul>
+        <li>Dimension(A) =1 + Dimension(A<sub>i</sub>).</li>
+        <li>Array_Size(A) = Concatenation(Array_size(A<sub>i</sub>),[n]).</li>
+      </ul>
+      </td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -265,8 +278,8 @@ names.<br>
   <tbody>
     <tr>
       <td>ZG-resolution </td>
-      <td>A <em>ZG-resolution</em> means a
-free
+      <td>A <em>ZG-resolution</em> means a <span
+ style="font-weight: bold;">free</span>
 ZG-resolution of the trivial
 ZG-module Z, where G is a group and Z is the ring of integers (or the
 ring of integers modulo p, or the ring of rationals). <br>
@@ -313,6 +326,75 @@ the object R.</li>
       <br>
 The operation <tt>IsHapResoluton(R)</tt>
 returns "true" for a resolution.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Non-free ZG-resolution<br>
+      </td>
+      <td style="vertical-align: top;">A non-free ZG-resolution is an
+exact sequence of ZG-modules ... ---&gt; A<sub>n</sub> ---&gt; A<sub>n-1</sub>
+---&gt; ... ---&gt; A<sub>1</sub>
+---&gt; A<sub>0</sub> &#8594; Z in which the modules are not necessarily
+free. We can represent such a sequence (non-uniquely) by first choosing
+free modules M<sub>k</sub> mapping onto the A<sub>k</sub>&nbsp; and
+then lifting the homomorphisms to a sequence ... ---&gt; M<sub>n</sub>
+---&gt; M<sub>n-1</sub>
+---&gt; ... ---&gt; M<sub>1</sub>
+---&gt; M<sub>0</sub>&nbsp; of homomorphisms of free ZG-modules. Note
+that in the lifted&nbsp; sequence homomorphisms will not in general
+square to zero.<br>
+      <br>
+      <br>
+A
+non-free ZG-resolution&nbsp; ... ---&gt; M<sub>n</sub> ---&gt; M<sub>n-1</sub>
+---&gt; ... ---&gt; M<sub>1</sub>
+---&gt; M<sub>0</sub> &#8594; Z<big> </big>is represented by a component
+object R
+with the
+following components.<br>
+      <br>
+      <li> <tt>R!.dimension(k)</tt> is a function which returns the
+ZG-rank of the module M<sub>k</sub>.</li>
+      <li> <tt>R!.boundary(k,j)</tt>
+is a function which returns
+the image in M<sub>k-1</sub> of the j-th free generator of M<sub>k</sub>.</li>
+      <li> <tt>R!.homotopy(k,[i,g]) </tt>is a function which returns
+the
+image in M<sub>k+1</sub>,
+under a contracting homotopy M<sub>k</sub> ---&gt; M<sub>k+1</sub>, of
+the element [[i,g]]&nbsp; in M<sub>k</sub>. (The elements [[i,g]]
+freely generate M<sub>k</sub> as an abelian group.) For most
+non-free resolutions a contracting homotopy is not constructed, in
+which case <tt>R!.homotopy</tt>
+is set equal to "fail". <br>
+      </li>
+      <li> <tt>R!.elts</tt> is a (partial) list of (possibly
+duplicate)
+elements in G. In some cases <tt>R!.elts</tt> is a pseudo list (see
+below) and not a list.<br>
+      </li>
+      <li><tt>R!.group</tt> is the group in question (and could be a
+permutation group, matrix group, finitely presented group etc.).</li>
+      <li><tt>R!.stabilizer(k,j)</tt> returns the subgroup of G
+consisting of those elements that fix, up to sign, the i-th free
+generator of M<sub>k</sub>.</li>
+      <li><tt>R!.action(k,j,g)</tt> is a function which returns +1 or
+-1
+according to how the group element Elts[g] acts on the "orientation" of
+the j-th
+free generator in dimension k.<br>
+      </li>
+      <li><tt>R!.properties</tt> is a list of pairs ["name", value]
+where "name" is a string and value is a numerical or boolean value.
+Example pairs are:&nbsp; ["length", n] which records that there are n
+terms in the resolution; ["characteristic", p] which records the
+characteristic of Z; ["reduced", true] which record that M<sub>0</sub>
+is isomorphic to ZG; ["type","resolution"] which records the type of
+the object R.</li>
+      <br>
+The operation <tt>IsHapNonFreeResoluton(R)</tt>
+returns "true" for a non-free resolution.<br>
+&nbsp;&nbsp; <br>
       </td>
     </tr>
     <tr>
@@ -581,41 +663,92 @@ returns "true" for a cat-1-group C. <br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">Topological Space<br>
+      <td style="vertical-align: top;">Pure Cubical Complex <br>
       </td>
       <td style="vertical-align: top;">In HAP we use the term
-"topological space" to mean a subspace of Euclidean n-space <span
+"pure cubical complex" to mean a subspace of Euclidean n-space <span
  style="font-weight: bold;">R</span><sup>n</sup> arising as a union of
 unit n-cubes whose vertices have integer coordinates. Such a space is
 represented by a component object T having two components:<br>
       <ul>
-        <li><span style="font-family: monospace;">T!.BinaryList</span>
+        <li><span style="font-family: monospace;">T!.binaryArray</span>
 is a list [b<sub>1</sub>, ... ,b<sub>n</sub>]
 where the b<sub>i</sub> are <span style="font-style: italic;">binary
-lists</span> with common <span style="font-style: italic;">ambient
-dimension</span> and common <span style="font-style: italic;">dimensions</span>.
+array</span> with common&nbsp; dimension and <span
+ style="font-style: italic;">array size</span><span
+ style="font-style: italic;"></span>.
 (See below for the definition of these terms.)</li>
         <li><span style="font-family: monospace;">T!.properties</span>
 is a list of pairs such as
-["AmbientDimension",2], ["IsContracted",true] .</li>
+["dimension",2], ["arraySize",[256,512] .</li>
       </ul>
-A <span style="font-style: italic;">binary list</span> of <span
- style="font-style: italic;">ambient dimension</span> 1 is just a list
+A <span style="font-style: italic;">binary array</span> of <span
+ style="font-style: italic;">dimension</span> 1 is just a list
 b=[x<sub>1</sub>, ..., x<sub>n</sub>] where each x<sub>i</sub> is
-either 0 or 1. The <span style="font-style: italic;">dimensions</span>
-of b are defined to be&nbsp; [n] . <br>
+either 0 or 1. The <span style="font-style: italic;">array size</span>
+of b is defined to be&nbsp; [n] . <br>
       <br>
-A <span style="font-style: italic;">binary list</span> of a<span
- style="font-style: italic;">mbient dimension</span> d&gt;1 is a list
+A <span style="font-style: italic;">binary array</span> of <span
+ style="font-style: italic;">dimension</span> d&gt;1 is a list
 b=[x<sub>1</sub>, ..., x<sub>n</sub>] where each x<sub>i</sub> is a
-binary list of ambient dimension d-1 and all x<sub>i</sub> have the
-same dimensions. The <span style="font-style: italic;">dimensions</span>
-of b are defined to be the list of integers got by appending n to the
-dimensions of x<sub>i</sub>.<br>
+binary array of dimension d-1 and all x<sub>i</sub> have the
+same array size. The <span style="font-style: italic;">array size</span>
+of b is defined to be the list of integers got by appending n to the
+array size of any x<sub>i</sub>.<br>
       <br>
-The operation <span style="font-family: monospace;">IsHapTopologicalSpace(T)</span>
-returns "true" for a topological space T. <br>
+The operation <span style="font-family: monospace;">IsHapPureCubicalComplex(T)</span>
+returns "true" for a pure cubical complex T. <br>
       </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Cubical Complex </td>
+      <td style="vertical-align: top;">In HAP we use the term
+"cubical complex" to mean a cellular subspace of Euclidean n-space <span
+ style="font-weight: bold;">R</span><sup>n</sup> arising as a union of
+open unit m-cubes of varying degrees whose centres have integer
+coordinates. Such a space is
+represented by a component object T having two components:<br>
+      <ul>
+        <li><span style="font-family: monospace;">T!.binaryArray</span>
+is a list [b<sub>1</sub>, ... ,b<sub>n</sub>]
+where the b<sub>i</sub> are <span style="font-style: italic;">binary
+array</span> with common&nbsp; dimension and <span
+ style="font-style: italic;">array size</span><span
+ style="font-style: italic;"></span>.
+(See above for the definition of these terms.)</li>
+        <li><span style="font-family: monospace;">T!.properties</span>
+is a list of pairs such as
+["dimension",2], ["arraySize",[256,512] .</li>
+      </ul>
+Each entry "1" in the array corresponds to a cell with centre
+represented by the entry's coordinates. If all coordinates are odd then
+the cell is a vertex. If all coordinates are even then the cell is an
+n-cube.<br>
+      <br>
+The operation <span style="font-family: monospace;">IsHapCubicalComplex(T)</span>
+returns "true" for a cubical complex T. </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Simplicial Complex </td>
+      <td style="vertical-align: top;">A simplicial complex is
+represented by a component object T with the following components:<br>
+      <ul>
+        <li><span style="font-family: monospace;">T!.vertices </span>is
+the list of vertices.</li>
+        <li><span style="font-family: monospace;">T!.simplices(n,i)</span>
+is a function that returns the list of vertices in the i-th n-simplex.</li>
+        <li><span style="font-family: monospace;">T!.nrSimplices(n)</span>
+is a function which returns the number of n-dimensional simplices.</li>
+        <li><span style="font-family: monospace;">T!.enumeratedSimplex(v)</span>
+is a function which inputs a list v of vertices representing an
+n-simplex and returns the position of this simplex in the list of all
+n-simplices.</li>
+        <li><span style="font-family: monospace;">T!.properties</span>&nbsp;
+is a list of pairs such as
+["dimension",2] .</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsHapSimplicialComplex(T)</span>
+returns "true" for a simplicial complex T.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">Pseudo list<br>

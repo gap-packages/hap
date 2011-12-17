@@ -11,9 +11,15 @@
 <C>ChildProcess()</C>
 <Br/>
 <C>ChildProcess("computer.ac.wales")</C>
+<Br/>
+<C>ChildProcess(["-m", "100000M", "-T"])</C>
+<Br/>
+<C>ChildProcess("computer.ac.wales", ["-m", "100000M", "-T"])</C>
+
+
 
 <P/>
-This starts a GAP session as a child process and returns a stream to the child process. If no argument is given then the child process is created on the local machine; otherwise the argument should be the address of a remote computer for which ssh has been configured to require no password from the user.
+This starts a GAP session as a child process and returns a stream to the child process. If no argument is given then the child process is created on the local machine; otherwise the argument should be: 1) the address of a remote computer for which ssh has been configured to require no password from the user; (2) or a list of GAP command line options; (3) or the address of a computer followed by a list of command line options.
 
 <P/>
 (To configure ssh so that the user can login without a password prompt from "thishost" to "remotehost" either consult "man ssh" or

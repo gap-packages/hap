@@ -51,7 +51,7 @@ od;
 
 
 if "DIMENSION" in Props or "dimension" in Props then
-Exec(Concatenation("polymake ", tmpIn," DIM > ", tmp2In));
+Exec(Concatenation(POLYMAKE_PATH, tmpIn," DIM > ", tmp2In));
 input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
@@ -60,7 +60,7 @@ Exec(Concatenation("rm ", tmp2In));
 fi;
 
 if "VERTREX_DEGREE" in Props or "vertex_degree" in Props then
-Exec(Concatenation("polymake ",tmpIn,  " VERTEX_DEGREES > ",tmp2In));
+Exec(Concatenation(POLYMAKE_PATH,tmpIn,  " VERTEX_DEGREES > ",tmp2In));
 input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
@@ -71,11 +71,11 @@ fi;
 
 
 if "VISUAL_GRAPH" in Props or "visual_graph" in Props then
-Exec(Concatenation("polymake ",tmpIn ," VISUAL_GRAPH"));
+Exec(Concatenation(POLYMAKE_PATH,tmpIn ," VISUAL_GRAPH"));
 fi;
 
 if "SCHLEGEL" in Props or "schlegel" in Props then
-Exec(Concatenation("polymake ",tmpIn ," SCHLEGEL"));
+Exec(Concatenation(POLYMAKE_PATH,tmpIn ," SCHLEGEL"));
 fi;
 
 
@@ -96,7 +96,7 @@ if IsPermGroup(G) and Length(v)=4 then
 	AppendTo (tmpIn,1," ",U, " ",V," ",W,  "\n");
 	od;
 fi;
-Exec(Concatenation("polymake ",tmpIn ," VISUAL"));
+Exec(Concatenation(POLYMAKE_PATH,tmpIn ," VISUAL"));
 fi;
 
 Exec(Concatenation("rm ",tmpIn));

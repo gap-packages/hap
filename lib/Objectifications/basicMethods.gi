@@ -9,6 +9,15 @@ end);
 #####################################################################
 
 #####################################################################
+InstallOtherMethod(Length,
+"length of a non-free resolution",
+[IsHapNonFreeResolution],
+function(R) return EvaluateProperty(R,"length");
+end);
+#####################################################################
+
+
+#####################################################################
 InstallOtherMethod(Source,
 "source of chain map",
 [IsHapMap],

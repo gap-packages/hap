@@ -5,7 +5,7 @@ HAPchildren:=[];
 ####################################################
 InstallGlobalFunction(ChildProcess,
 function(arg)
-local d,f,s,Name,Remote,Computer;
+local d,f,s,Name,Remote,Computer,ST;
 d:= DirectoryCurrent();
 
 if Length(arg)=0 then 
@@ -13,14 +13,39 @@ Remote:=false;
 Computer:="localhost";
 f := Filename(DirectoriesSystemPrograms(), "gap");
 s := InputOutputLocalProcess(d,f,["-T","-q","-b"]);
+fi;
+if Length(arg)=1 then
+if not IsString(arg[1]) then
+Remote:=false;
+Computer:="localhost";
+f := Filename(DirectoriesSystemPrograms(), "gap");
+
+s := InputOutputLocalProcess(d,f,Concatenation(["-T","-q","-b"],arg[1]));
 else
 Remote:=true;
 Computer:=arg[1];
 f:=Filename(DirectoriesSystemPrograms(),"ssh");
 s := InputOutputLocalProcess(d,f,[arg[1],"gap","-f","-T","-q","-b"]);
+fi;fi;
+
+if Length(arg)=2 then
+Remote:=true;
+Computer:=arg[1];
+f:=Filename(DirectoriesSystemPrograms(),"ssh");
+s := InputOutputLocalProcess(d,f,Concatenation([arg[1],"gap","-f","-T","-q","-b"],arg[2]));
 fi;
 
+if not Remote then
 Name:=Filename(DirectoryTemporary(),"name");
+else
+ST:=String(Random([1..100000]));
+Name:=Concatenation("/tmp/",ST);
+while IsExistingFile(Name) do
+ST:=String(Random([1..100000]));
+Name:=Concatenation("/tmp/",ST);
+od;
+Name:=Filename(Directory("/tmp"),ST);
+fi;
 
 Add(HAPchildren,Name);
 PrintTo(Name,"HAPchildToggle\:=true;");
@@ -38,9 +63,17 @@ end);
 ####################################################
 ####################################################
 InstallGlobalFunction(ChildClose,
-function(s);
+function(s)
+local i;
 CloseStream(s.stream);
-PrintTo(s.name,"HAPchildToggle\:=false;");
+if not s!.remote then
+i:=Concatenation("rm -r ",s!.name{[1..Length(s!.name)-4]});
+else
+i:=Concatenation(["rm ",s!.name]);
+fi;
+
+Exec(i);
+
 end);
 ####################################################
 ####################################################
@@ -111,7 +144,7 @@ if  i="\"START\"\n" then
 fi;break; 
 od;
 
-if not s.remote then i:=(ReadAllLine(s.stream,true));fi;
+if not s!.remote then i:=(ReadAllLine(s.stream,true));fi;
 i:=(ReadAllLine(s.stream,true));
 
 output:="";
@@ -143,29 +176,51 @@ end);
 #####################################################
 InstallGlobalFunction(ChildPut,
 function(X,Name,s)
-local i,fle;
+local i,fle,flebatch,fleRemote;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
+if not s!.remote then
 fle:=Filename(DirectoryTemporary(),"fle");
+else
+
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+while IsExistingFile(fle) do
+fle:=Concatenation("/tmp/",String(Random([1..100000])));
+od;
+fleRemote:=Concatenation(fle,"Remote");
+flebatch:=Concatenation(fle,"Batch");
+PrintTo(flebatch,Concatenation(["put ",fle, " ",fleRemote ]) );
+fi;
+
 
 PrintTo(fle,Concatenation(Name,":="));
 AppendTo(fle,X);
 AppendTo(fle,";");
 
+
 if s!.remote then
-        i:=Concatenation(["sftp ",s!.computer," ",fle]);
+        i:=Concatenation(["sftp -b ",flebatch," ",s!.computer]);
         Exec(i);
-	i:=Concatenation("rm ",fle);
-	Exec(i);
+	i:=Concatenation(["Exec(\"mv ",fleRemote," ",fle," \")"]);
+        ChildCommand(i,s);
         fi;
 
 i:=Concatenation("Read(\"",fle,"\");");
 ChildCommand(i,s);
+if not s!.remote then
+i:=Concatenation("Exec(\"rm -r ",fle{[1..Length(fle)-4]},"\");");
+else 
 i:=Concatenation("Exec(\"rm ",fle,"\");");
+fi;
 ChildCommand(i,s);
+if s!.remote then 
+i:=Concatenation("Exec(\"rm ",flebatch,"\");");
+ChildCommand(i,s);
+fi;
+
 
 end);
 #####################################################
@@ -176,13 +231,29 @@ HAP_XYXYXYXY:=0;
 #####################################################
 InstallGlobalFunction(ChildGet,
 function(X,s)
-local i,fle;
+local i,ST, fle, fleLocal, batchfile;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
+
+if not s!.remote then
 fle:=Filename(DirectoryTemporary(),"fle");
+else
+
+ST:=String(Random([1..100000]));
+fle:=Concatenation("/tmp/",ST);
+while IsExistingFile(fle) do
+ST:=String(Random([1..100000]));
+fle:=Concatenation("/tmp/",ST);
+od;
+#fle:=Filename(Directory("/tmp"),ST);
+fleLocal:=Concatenation(fle,"Local");
+batchfile:=Concatenation(fle,"Batch");
+PrintTo(batchfile,Concatenation(["get ",fle, " ",fleLocal," ; rm", fle]) );
+
+fi;
 
 
 i:=Concatenation("PrintTo(\"",fle,"\", \"HAP_XYXYXYXY:=\");");
@@ -196,8 +267,12 @@ NextAvailableChild([s]);
 PrintTo(s.name,"HAPchildToggle\:=false;");
 
 if s!.remote then 
-i:=Concatenation(["ssh ",s!.computer," less ",fle," > ",fle]);
-ChildCommand(Concatenation("Exec(\"rm ",fle,"\");"),s);
+i:=Concatenation(["sftp -b ",batchfile," ",s!.computer]);
+Exec(i);
+i:=Concatenation(["rm ",batchfile]);
+Exec(i);
+i:=Concatenation(["Exec(\"mv ",fleLocal," ",fle," \");"]);
+ChildCommand(i,s);
 fi;
 
 AppendTo(fle,";");
@@ -205,7 +280,12 @@ AppendTo(fle,";");
 Read(fle);
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
-Exec(Concatenation("rm ",fle));
+if s!.remote then
+Exec(Concatenation(["rm ",fle]));
+else
+Exec(Concatenation("rm -r ",fle{[1..Length(fle)-4]}));
+fi;
+
 
 return HAP_XYXYXYXY;
 
@@ -225,14 +305,16 @@ HAPchildToggle:=false;
 InstallGlobalFunction(NextAvailableChild,
 function(L)
 local
-	s,i;
+	s,i,localname;
 
 while true do
 
 	for s in L do
 	if s!.remote then 
-	i:=Concatenation(["ssh ",s!.computer," less ",s!.name," > ",s!.name]);
+        localname:=Concatenation(s!.name,"Local");
+	i:=Concatenation(["ssh ",s!.computer," less ",s!.name," > ",localname]);
 	Exec(i);
+        Exec(Concatenation("mv ",localname," ",s!.name));
 	fi;
 	Read(s!.name);
 	if HAPchildToggle=true then

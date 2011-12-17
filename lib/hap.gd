@@ -87,8 +87,11 @@ DeclareGlobalFunction("EfficientNormalSubgroups");
 DeclareGlobalFunction("EvaluateProperty");
 DeclareGlobalFunction("EvenSubgroup");
 DeclareGlobalFunction("EquivariantChainMap");
+DeclareGlobalFunction("ModularEquivariantChainMap");
 DeclareGlobalFunction("TensorWithIntegers");
 DeclareGlobalFunction("TensorWithIntegersModP");
+DeclareGlobalFunction("TensorWithTwistedIntegers");
+DeclareGlobalFunction("TensorWithTwistedIntegersModP");
 DeclareGlobalFunction("PrimePartDerivedFunctor");
 DeclareGlobalFunction("ReduceGenerators");
 DeclareGlobalFunction("HomToIntegers");
@@ -103,6 +106,8 @@ DeclareGlobalFunction("Coclass");
 DeclareGlobalFunction("BoundaryMatrix");
 DeclareGlobalFunction("Prank");
 DeclareGlobalFunction("PrankAlt");
+DeclareGlobalFunction("PCentre");
+DeclareGlobalFunction("PUpperCentralSeries");
 DeclareOperation("Compose",[IsGroupHomomorphism,IsGroupHomomorphism]);
 
 
@@ -114,7 +119,11 @@ DeclareGlobalFunction("ResolutionDirectProduct");
 DeclareGlobalFunction("ResolutionExtension");
 DeclareGlobalFunction("ResolutionFiniteDirectProduct");
 DeclareGlobalFunction("ResolutionSubnormalSeries");
-
+DeclareGlobalFunction("FreeResolution");
+DeclareGlobalFunction("ExtendScalars");
+DeclareGlobalFunction("InduceScalars");
+DeclareGlobalFunction("CoxeterComplex");
+DeclareGlobalFunction("ResolutionCoxeterGroup");
 
 
 ## ARTIN COXETER ####################################################
@@ -129,10 +138,22 @@ DeclareGlobalFunction("CoxeterDiagramIsSpherical");
 DeclareGlobalFunction("ResolutionArtinGroup");
 DeclareGlobalFunction("CoxeterDiagramDisplay");
 DeclareGlobalFunction("NoncrossingPartitionsLatticeDisplay");
+DeclareGlobalFunction("CoxeterWythoffComplex");
 
 ## HOMOLOGY #########################################################
 DeclareOperation("Homology",[IsObject,IsObject]);
-#DeclareGlobalFunction("Homology");
+DeclareOperation("PersistentHomology",[IsList,IsInt, IsInt]);
+DeclareGlobalFunction("BarCode");
+DeclareGlobalFunction("BarCodeDisplay");
+DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex");
+DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex_Alt");
+DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries");
+DeclareGlobalFunction("PersistentCohomologyOfQuotientGroupSeries");
+DeclareGlobalFunction("NormalSeriesToQuotientHomomorphisms");
+DeclareGlobalFunction("LinearHomomorphismsPersistenceMat");
+DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries_Int");
+DeclareGlobalFunction("PersistentHomologyOfSubGroupSeries");
+DeclareGlobalFunction("HomologyVectorSpace");
 DeclareGlobalFunction("IntegralHomology");
 DeclareGlobalFunction("ModularHomology");
 DeclareGlobalFunction("GroupHomology");
@@ -173,12 +194,13 @@ DeclareGlobalFunction("ModPRingGenerators");
 DeclareGlobalFunction("ModPCohomologyGenerators");
 
 
-## CURVATURE ########################################################
+## CURVATURE & POLYTOPES ############################################
 DeclareGlobalFunction("IsAspherical");
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");
 DeclareGlobalFunction("OrbitPolytope");
+
 
 ## POLYCYLIC ########################################################
 DeclareGlobalFunction("ResolutionAbelianPcpGroup");
@@ -243,38 +265,87 @@ DeclareRepresentation(  "IsPseudoListRep",
                         ["elts",
                          "pos" ]);
 
-## TOPOLOGICAL DATA ANALYSIS ########################################
-DeclareGlobalFunction("MatrixToChainComplex");
-DeclareGlobalFunction("ReadImageAsMatrix");
-DeclareGlobalFunction("ContractMatrix");
-DeclareGlobalFunction("BettiNumbersOfMatrix");
-DeclareGlobalFunction("ThickenedMatrix");
-DeclareGlobalFunction("ComplementedMatrix");
-DeclareGlobalFunction("WriteImageFile");
-DeclareGlobalFunction("ViewMatrix");
-DeclareGlobalFunction("DeleteAndContract");
-DeclareGlobalFunction("BoundaryOfMatrix");
-DeclareGlobalFunction("SingularityMatrix");
+ReadPackage("HAP","lib/Objectifications/types.gd");
 
-## TOPOLOGICAL SPACES ###############################################
-DeclareGlobalFunction("MatrixToTopologicalSpace");
-DeclareGlobalFunction("ReadImageAsTopologicalSpace");
-DeclareGlobalFunction("WriteTopologicalSpaceAsImage");
-DeclareGlobalFunction("ViewTopologicalSpace");
-DeclareGlobalFunction("ConcatenatedTopologicalSpace");
-DeclareGlobalFunction("PathComponent");
-DeclareGlobalFunction("ZerothBettiNumber");
+
+## POLYTOPAL COMPLEXES  ###############################################
+DeclareGlobalFunction("ContractibleSubcomplexOfPureCubicalComplex");
+DeclareGlobalFunction("AlmostContractibleSubcomplexOfPureCubicalComplex");
+DeclareGlobalFunction("HomotopyEquivalentMaximalPureCubicalSubcomplex");
+DeclareGlobalFunction("HomotopyEquivalentMinimalPureCubicalSubcomplex");
+#DeclareOperation("EulerCharacteristic",[IsObject]);
+#DeclareAttribute("EulerCharacteristic",IsObject);
+ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
+DeclareAttribute("EulerCharacteristic",IsHapPureCubicalComplex);
+DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
+DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
+DeclareOperation("ContractedComplex",[IsObject]);
+DeclareGlobalFunction("ReadImageAsPureCubicalComplex");
+DeclareGlobalFunction("ReadImageSequenceAsPureCubicalComplex");
+DeclareGlobalFunction("WritePureCubicalComplexAsImage");
+DeclareGlobalFunction("ViewPureCubicalComplex");
+DeclareGlobalFunction("PureCubicalComplex");
+DeclareGlobalFunction("PureCubicalComplexUnion");
+DeclareGlobalFunction("PureCubicalComplexDifference");
+DeclareGlobalFunction("PureCubicalComplexIntersection");
+DeclareGlobalFunction("PureCubicalComplexToCubicalComplex");
+DeclareOperation("ChainComplex",[IsObject]);
+DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
+DeclareGlobalFunction("ChainComplexOfCubicalComplex");
+DeclareGlobalFunction("ChainComplexOfCubicalPair");
+DeclareGlobalFunction("ChainMapOfCubicalPairs");
+DeclareGlobalFunction("ChainComplexOfSimplicialComplex");
+DeclareGlobalFunction("SkeletonOfSimplicialComplex");
+DeclareGlobalFunction("CechComplexOfPureCubicalComplex");
+DeclareGlobalFunction("QuillenComplex");
+DeclareGlobalFunction("MaximalSimplicesToSimplicialComplex");
+DeclareGlobalFunction("PathComponentOfPureCubicalComplex");
 DeclareOperation("Bettinumbers",[IsObject,IsInt]);
-DeclareGlobalFunction("ThickenedTopologicalSpace");
-DeclareGlobalFunction("ComplementTopologicalSpace");
-DeclareGlobalFunction("BoundaryTopologicalSpace");
-DeclareGlobalFunction("SetT");
-DeclareGlobalFunction("EvalT");
-DeclareGlobalFunction("ContractTopologicalSpace");
-DeclareGlobalFunction("SingularChainComplex");
-DeclareGlobalFunction("BoundarySingularities");
+DeclareGlobalFunction("BettinumbersOfPureCubicalComplex_dim_2");
+DeclareGlobalFunction("ThickenedPureCubicalComplex");
+DeclareGlobalFunction("ThickenedPureCubicalComplex_dim2");
+DeclareGlobalFunction("BoundaryOfPureCubicalComplex");
+DeclareGlobalFunction("ContractPureCubicalComplex");
+#DeclareGlobalFunction("SingularChainComplex");
+DeclareGlobalFunction("ComplementOfPureCubicalComplex");
+DeclareGlobalFunction("SingularitiesOfPureCubicalComplex");
+DeclareGlobalFunction("ChainInclusionOfPureCubicalPair");
+DeclareGlobalFunction("DirectProductOfPureCubicalComplexes");
+DeclareGlobalFunction("PureCubicalComplexToFile");
+DeclareGlobalFunction("CoreducedChainComplex");
+DeclareGlobalFunction("2CoreducedChainComplex");
+DeclareGlobalFunction("SuspendedChainComplex");
+DeclareGlobalFunction("ReducedSuspendedChainComplex");
+DeclareGlobalFunction("RipsChainComplex");
+DeclareGlobalFunction("ChainComplexFromSymmetricMat");
+DeclareGlobalFunction("VectorsToSymmetricMatrix");
 
-ReadPackage("HAP","lib/Objectifications/types.gi");
+
+########################## ARRAYS ################################
+DeclareGlobalFunction("ArrayValue");
+DeclareGlobalFunction("ArrayValueFunctions");
+DeclareGlobalFunction("ArrayValueKD");
+DeclareGlobalFunction("ArrayToPureCubicalComplex");
+DeclareGlobalFunction("FrameArray");
+DeclareGlobalFunction("UnframeArray");
+DeclareGlobalFunction("ArraySum");
+DeclareGlobalFunction("ArrayDimension");
+DeclareGlobalFunction("ArrayDimensions");
+DeclareGlobalFunction("ContractArray");
+DeclareGlobalFunction("ContractMatrix");
+DeclareGlobalFunction("ContractibleSubArray");
+DeclareGlobalFunction("HomotopyEquivalentLargerSubArray");
+DeclareGlobalFunction("HomotopyEquivalentSmallerSubArray");
+DeclareGlobalFunction("ContractibleSubMatrix");
+DeclareGlobalFunction("HomotopyEquivalentLargerSubMatrix");
+DeclareGlobalFunction("HomotopyEquivalentSmallerSubMatrix");
+DeclareGlobalFunction("ArrayAssign");
+DeclareGlobalFunction("ArrayAssignFunctions");
+DeclareGlobalFunction("ArrayIterate");
+DeclareGlobalFunction("IsContractibleCube_dim2");
+DeclareGlobalFunction("IsContractibleCube_higherdims");
+DeclareGlobalFunction("Array");
+
 
 ## CAT ONE GROUPS ###################################################
 DeclareGlobalFunction("AutomorphismGroupAsCatOneGroup");
@@ -287,8 +358,26 @@ DeclareGlobalFunction("IdentityAmongRelatorsDisplay");
 DeclareGlobalFunction("IdentityAmongRelators");
 DeclareGlobalFunction("NormalSubgroupAsCatOneGroup");
 
+## COMMUTATIVE DIAGRAMS #############################################
+DeclareGlobalFunction("HomomorphismChainToCommutativeDiagram");
+DeclareGlobalFunction("NerveOfCommutativeDiagram");
+DeclareGlobalFunction("GroupHomologyOfCommutativeDiagram");
+DeclareGlobalFunction("PersistentHomologyOfCommutativeDiagramOfPGroups");
+DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
+
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");
 ReadPackage("HAP","lib/TopologicalSpaces/topTypes.gd");
+#ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/CategoryTheory/categories.gd");
+ReadPackage("HAP","lib/CategoryTheory/commutativeDiagrams.gd");
+ReadPackage("HAP","lib/HapPrime/derivation.gd");
+ReadPackage("HAP","lib/HapPrime/singular.gd");
+ReadPackage("HAP","lib/HapPrime/gradedalgebra.gd");
+ReadPackage("HAP","lib/HapPrime/polynomials.gd");
+ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
+ReadPackage("HAP","lib/HapPrime/rings.gd");
+ReadPackage("HAP","lib/HapPrime/happrime.gd");
+
+

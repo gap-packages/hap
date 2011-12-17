@@ -152,7 +152,7 @@ od;
 ################ EDGE GENERATORS RECOVERED ##########################
 
 ################ READ HASSE DIAGRAM #################################
-Exec(Concatenation("polymake ",tmpInlog," HASSE_DIAGRAM >",tmp2Inlog));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog," HASSE_DIAGRAM >",tmp2Inlog));
 Exec(Concatenation("rm ",tmpInlog));
 
 Faces:=[];

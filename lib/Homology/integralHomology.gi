@@ -150,11 +150,13 @@ H:=F/Frels;
 SetIsAbelian(H,true);
 ExpH:=AbelianInvariants(H);
   if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
+ExpH:=0;
 FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
 ################################
 else
 ################################
 HH:=F/Frels;
+ExpH:=0;
 ExpH:=AbelianInvariants(HH);
   if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
 FhomHH:=GroupHomomorphismByImagesNC(F,HH,Fgens,GeneratorsOfGroup(HH));
@@ -171,15 +173,27 @@ return BasisKerd1[w];
 end;
 #####################################################################
 
+if Length(BasisKerd1)=0 then
+#####################################################################
+ChomH:=function(v)  #Am I sure about this fix?
+return Identity(H);
+end;
+#####################################################################
+else
 #####################################################################
 ChomH:=function(v)
 local w;
 
+if ExpH>0 then
 w:=SolutionMat(BasisKerd1,v) mod ExpH; #Am I sure about this?
+else
+w:=SolutionMat(BasisKerd1,v);
+fi;
 w:=Vector2Word(w) ; 
 return Image(FhomH,w);
 end;
 #####################################################################
+fi;
 
 C!.fpIntHom[n]:=rec(
 	    fpgroup:=H,

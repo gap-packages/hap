@@ -109,10 +109,10 @@ od;
 AppendTo(tmpInlog,"} \n");
 ################ WRITTEN ############################################
 
-Exec(Concatenation("neato -Tgif ",tmpInlog ," > ",basicgif));
+Exec(Concatenation(NEATO_PATH,"-Tgif ",tmpInlog ," > ",basicgif));
 
 if Length(arg)=1 then
-Exec(Concatenation("mozilla ", basicgif));
+Exec(Concatenation(DISPLAY_PATH, basicgif));
 Sleep(2);
 Exec(Concatenation("rm ",tmpInlog, "; rm ",basicgif));
 

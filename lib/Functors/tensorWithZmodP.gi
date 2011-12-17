@@ -7,7 +7,9 @@ InstallGlobalFunction(TensorWithIntegersModP,
 function(X,prime)
 local 		
 		Tensor_Obj,
-		Tensor_Arr;
+		Tensor_Arr,
+		TensorChainComplex,
+	        TensorChainMap;
 
 #####################################################################
 #####################################################################
@@ -171,12 +173,76 @@ end;
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+TensorChainComplex:=function(C,prime)
+local D, pos, oldboundary, newboundary, newproperties, one;
 
-if EvaluateProperty(X,"type")="resolution" then
+if not EvaluateProperty(C,"characteristic") in [0,prime] then
+Print("Only characteristic 0 or p chain complexes can be tensored with a prime p field.\n");
+return fail;
+fi;
+
+D:=rec();
+D!.dimension:=StructuralCopy(C!.dimension);
+D!.properties:=List(C!.properties,a->StructuralCopy(a));
+pos:=PositionProperty(C!.properties,a->"characteristic" in a);
+D!.properties[pos][2]:=prime;
+
+one:=One(GF(prime));
+oldboundary:=StructuralCopy(C!.boundary);
+#############################
+newboundary:=function(n,i);
+return oldboundary(n,i)*one;
+end;
+#############################
+D!.boundary:=newboundary;
+
+return 
+Objectify(HapChainComplex, D);
+end;
+####################################################################
+####################################################################
+
+####################################################################
+####################################################################
+TensorChainMap:=function(M,prime)
+local N, Mapping,oldmapping,one,pos;
+
+N:=rec();
+N.source:=TensorWithIntegersModP(M!.source,prime);
+N.target:=TensorWithIntegersModP(M!.target,prime);
+N!.properties:=List(M!.properties,a->StructuralCopy(a));
+pos:=PositionProperty(M!.properties,a->"characteristic" in a);
+N!.properties[pos][2]:=prime;
+
+one:=One(GF(prime));
+oldmapping:=StructuralCopy(M!.mapping);
+####################################
+Mapping:=function(v,n);
+return oldmapping(v,n)*one;
+end;
+####################################
+N!.mapping:=Mapping;
+
+return Objectify(HapChainMap,N);
+end;
+####################################################################
+####################################################################
+
+
+
+if IsHapResolution(X) then 
 return Tensor_Obj(X,prime); fi;
 
-if EvaluateProperty(X,"type")="equivariantChainMap" then
+if IsHapEquivariantChainMap(X) then 
 return Tensor_Arr(X,prime); fi;
+
+if IsHapChainComplex(X) then
+return TensorChainComplex(X,prime); fi;
+
+if IsHapChainMap(X) then
+return TensorChainMap(X,prime); fi;
 
 
 return fail;

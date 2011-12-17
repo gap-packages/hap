@@ -27,7 +27,8 @@ Contents</small></a><br>
             </td>
             <td
  style="text-align: center; vertical-align: top; font-weight: bold; color: rgb(0, 0, 102);"><big>About
-HAP: Introduction</big></td>
+HAP: Overview<br>
+            </big></td>
             <td
  style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><a
  href="aboutDefinitions.html"><small>Next</small></a><br>
@@ -86,11 +87,18 @@ be computed in low dimensions. The following commands show that:<br>
       <ul>
         <li>the
 alternating group A<sub>7</sub> (of order 2520) has H<sub>10</sub>(A<sub>7</sub>,Z)
-= Z<sub>6</sub>+(Z<sub>3</sub>)<sup>2</sup> , <br>
-        </li>
+= Z<sub>6</sub>+(Z<sub>3</sub>)<sup>2</sup> ,</li>
+      </ul>
+      <ul>
         <li>the special linear group SL<sub>3</sub>(Z<sub>3</sub>) (of
 order 5616) has H<sub>8</sub>(SL<sub>3</sub>(Z<sub>3</sub>),Z) = Z<sub>6
 ,</sub></li>
+      </ul>
+      <ul>
+        <li>the Coxeter group B<sub>5</sub> (of order&nbsp; 3840),
+represented by a Coxeter diagram on 5 vertices, has H<sub>4</sub>(B<sub>5</sub>,Z)
+= (Z<sub>2</sub>)<sup>12</sup>
+.</li>
         <li>the group K=Ker( SL<sub>2</sub>(Z<sub>5<sup>3</sup></sub>)
 &#8594; SL<sub>2</sub>(Z<sub>5</sub>) ) (of order 15625) has H<sub>3</sub>(K,Z)
 = (Z<sub>5</sub>)<sup>6</sup>+Z<sub>125</sub>.
@@ -114,8 +122,8 @@ J.-L. Loday. Furthermore, we get the new result that H<sub>5</sub>(M<sub>23</sub
         </li>
         <li>The Mathieu simple group M<sub>24</sub> (of order
 244823040)
-has H<sub>3</sub>(M<sub>24</sub>,Z) = Z<sub>12</sub> .&nbsp; <br>
-        </li>
+has H<sub>3</sub>(M<sub>24</sub>,Z) = Z<sub>12</sub> and H<sub>4</sub>(M<sub>24</sub>,Z)
+= 0. </li>
       </ul>
       </td>
     </tr>
@@ -130,7 +138,12 @@ gap&gt; S:=Image(IsomorphismPermGroup(SL(3,3)));;<br>
 gap&gt; GroupHomology(S,8);time;<br>
 [ 2, 3 ]<br>
 6340<br>
-&nbsp;<br>
+      <br>
+gap&gt; B5:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,4]]];;<br>
+gap&gt; GroupHomology(["Coxeter",D],4);time;<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+56240<br>
+      <br>
 gap&gt; K:=MaximalSubgroups(SylowSubgroup(SL(2,Integers mod
 5^3),5))[2]; <br>
 gap&gt; K:=Image(IsomorphismPcGroup(K));<br>
@@ -173,8 +186,7 @@ gap&gt; GroupHomology(MathieuGroup(23),3);time;<br>
 157961<br>
 gap&gt; GroupHomology(MathieuGroup(23),4);time;<br>
 [&nbsp; ]<br>
-276853
-      <br>
+276853 <br>
 gap&gt; GroupHomology(MathieuGroup(23),5);time;<br>
 [ 7 ]<br>
 20639802<br>
@@ -182,35 +194,9 @@ gap&gt; GroupHomology(MathieuGroup(23),5);time;<br>
 gap&gt; GroupHomology(MathieuGroup(24),3);time;<br>
 [ 4, 3 ]<br>
 3205565<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Partial
-information on high-dimensional integral homology of a finite group can
-be
-obtained if one is prepared to use an "empirical method" for Poincare
-series which always seems to yield the right answer
-but for which we have no guaranteed proof of correctness. For
-example,
-the following suggests that the group G of order 64,
-arising as the Sylow 2-subgroup of the Mathieu group M<sub>12 </sub>,
-has in dimension 1000 an integral
-homology
-group H<sub>1000</sub>(G,Z)
-equal to a direct sum of 501501 cyclic 2-groups. (An automated
-proof of such computations can be attempted using the technique
-described <a href="aboutModPRings.html#proof">here</a>.)<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-G:=SylowSubgroup(MathieuGroup(12),2);;<br>
-gap&gt; RankHomologyPGroup(G,1000,"empirical method");<br>
-501501<br>
-gap&gt; time;<br>
-3832<br>
+      <br>
+gap&gt; GroupHomology(MathieuGroup(24),4);<br>
+[&nbsp; ]<br>
       </td>
     </tr>
     <tr>
@@ -244,6 +230,48 @@ GroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+mod 2 cohomology ring H<sup>*</sup>(G,Z<sub>2</sub>) can be calculated
+for smallish 2-groups G using the HAPprime extension package (which
+uses the Singular system for commutative algebra). For instance, the
+following commands compute a presentation and Poincare series for this
+ring when G is the Sylow 2-subgroup of the Mathieu group M<sub>12 </sub>.
+The commands use the Lyndon-Hochschild-Serre spectral sequence and
+Groebner bases to verify that the computations are correct.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SylowSubgroup(MathieuGroup(12),2);;<br>
+      <br>
+gap&gt; Mod2CohomologyRingPresentation(G);<br>
+Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] /<br>
+[ x_2*x_3, x_1*x_3, x_3*x_4, x_1*x_2^2+x_2^3+x_2*x_5,
+x_1*x_2*x_5+x_2*x_6,<br>
+&nbsp; x_1^2*x_4+x_2^2*x_4+x_2^2*x_5+x_1*x_6+x_4^2+x_4*x_5,<br>
+&nbsp;
+x_1^3*x_2+x_2^4+x_1*x_2*x_4+x_2^2*x_4+x_2^2*x_5+x_1*x_6+x_2*x_6+x_4*x_5,<br>
+&nbsp; x_1*x_4*x_5+x_4*x_6, x_2^3*x_5+x_2^2*x_6+x_2*x_5^2,<br>
+&nbsp; x_1*x_5*x_6+x_3^2*x_7+x_3*x_5*x_6+x_6^2,<br>
+&nbsp;
+x_2^2*x_4*x_5+x_2^2*x_5^2+x_1*x_4*x_6+x_3^2*x_7+x_3*x_5*x_6+x_4^2*x_5+x_4*x_\<br>
+5^2+x_6^2, x_2^2*x_4^2+x_2^2*x_5^2+x_2*x_4*x_6+x_2*x_5*x_6,<br>
+&nbsp;
+x_1^2*x_2*x_6+x_2^3*x_6+x_2^2*x_5^2+x_1*x_4*x_6+x_2*x_4*x_6+x_2*x_5*x_6+x_4^\<br>
+2*x_5 ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]<br>
+gap&gt; time;<br>
+19685<br>
+      <br>
+gap&gt; G:=SylowSubgroup(MathieuGroup(12),2);;<br>
+gap&gt; PoincareSeriesLHS(G);<br>
+(1)/(-x_1^3+3*x_1^2-3*x_1+1)<br>
+gap&gt; time;<br>
+11757<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 homology of certain infinite groups can also be calculated. The
 following commands show that <br>
       <ul>
@@ -256,10 +284,6 @@ canonical subgroup A=S<sub>3 </sub>has 5-dimensional integral homology
 H<sub>5</sub>(G,Z) = (Z<sub>2</sub>)<sup>5</sup> . (The amalgamated
 product can be represented as a graph of groups.)<br>
         </li>
-        <li>The 3-dimensional crystallographic space group S with
-Hermann-Mauguin symbol "P62" has 5-dimensional integral homology H<sub>5</sub>(S,Z)
-= Z<sub>2</sub>+Z<sub>2</sub>.<br>
-        </li>
         <li>the Heisenberg group H in five complex variables (a torsion
 free nilpotent group of class two) has 5-dimensional integral homology H<sub>5</sub>(H,Z)
 = (Z<sub>2</sub>)<sup>43</sup>+Z<sub>6</sub>+Z<sup>132</sup>.</li>
@@ -267,8 +291,10 @@ free nilpotent group of class two) has 5-dimensional integral homology H<sub>5</
 has 4-dimensional integral homology H<sub>4</sub>(N,Z) = (Z<sub>3</sub>)<sup>4</sup>+Z<sup>84</sup>.
 (The <a href="aboutExtensions.html#Lambe">full range</a> of homology
 groups
-for N were first calculated in a paper by L. Lambe.)<br>
-        </li>
+for N were first calculated in a paper by L. Lambe.)</li>
+        <li>The 3-dimensional crystallographic space group S with
+Hermann-Mauguin symbol "P62" has 5-dimensional integral homology H<sub>5</sub>(S,Z)
+= Z<sub>2</sub>+Z<sub>2</sub>.</li>
       </ul>
       <span style="font-family: helvetica,arial,sans-serif;"></span>(The
 last three examples require the "AClib", "Polycyclic" and "nq"
@@ -307,12 +333,6 @@ gap&gt; GroupHomology(D,5);time;<br>
 22004<br>
       <br>
       <br>
-      <br>
-gap&gt; GroupHomology(SpaceGroupBBNWZ("P62"),5);time;<br>
-[ 2, 2 ]<br>
-4336<br>
-      <br>
-      <br>
 gap&gt; GroupHomology(HeisenbergPcpGroup(5),5);time;<br>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2,<br>
@@ -342,11 +362,16 @@ gap&gt; GroupHomology(N,4);time;<br>
 0, 0, 0, 0,<br>
 &nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
 41967<br>
+      <br>
+      <br>
+gap&gt; GroupHomology(SpaceGroupBBNWZ("P62"),5);time;<br>
+[ 2, 2 ]<br>
+4336<br>
       </td>
     </tr>
     <tr>
       <td
- style="background-color: rgb(255, 255, 255); vertical-align: top;">The
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 command <span style="font-family: helvetica,arial,sans-serif;">GroupHomology(G,n)</span>
 is a composite of several more basic HAP functions <span
  style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">and
@@ -364,11 +389,29 @@ intending reader should be aware that many of the examples are intended
 to
 illustrate the full potential of HAP and&nbsp; consequently<span
  style="font-weight: bold;"> may take
-many minutes (and in one or two cases hours) to run. </span><span
- style="font-weight: bold;"><br>
-      </span>
-      <ul>
-      </ul>
+many minutes (and in one or two cases hours) to run. </span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">For
+a given crystallographic space group S the HAPcryst extension (which
+uses the Cryst GAP package and the Polymake computational geometry
+system) can be used to compute a fundamental cell which tiles euclidean
+space in such a way that the tiling is respected by the action of S.
+For instance, the following commands compute a fundamental cell for the
+3-dimensional space group S with
+Hermann-Mauguin symbol "P62" and exhibit the 1-skeleton of this cell.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+fd:=FundamentalDomainStandardSpaceGroup([1/2,1/3,1/5],SpaceGroupBBNWZ("P62"));;<br>
+gap&gt;&nbsp; Polymake(fd,"VISUAL_GRAPH");<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 300px; height: 300px;" alt="" src="Fundom.png"><br>
+      </div>
       </td>
     </tr>
     <tr>

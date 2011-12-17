@@ -28,37 +28,6 @@ return R!.tensorWithIntRec; fi;
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
 
-#####################################################################
-#BoundaryC:=function(n,k)
-#local
-#	row, Mt, i, j, x, sum;
-
-#if n <0 then return false; fi;
-#if n=0 then return [0]; fi;
-
-#if M[n]=n then 
-#   Mt:=[];
-
-#   for i in [1..R!.dimension(n-1)] do
-#   row:=[];
-#        for j in [1..R!.dimension(n)] do
-#        sum:=0;
-#                for x in R!.boundary(n,j) do
-#                if AbsoluteValue(x[1])=i then
-#                sum := sum + SignInt(x[1]);
-#                fi;
-#                od;
-#        row[j]:=sum;
-#        od;
-#   Mt[i]:=row;
-#   od;
-
-#   M[n]:=TransposedMat(Mt);
-#fi;
-
-#return M[n][k];
-#end;
-#####################################################################
 
 #####################################################################
 BoundaryC:=function(n,k)
@@ -154,15 +123,10 @@ end;
 SmapD:=function(w,n)
 local i,x,v;
 
-v:=[];
-for i in [1..DimensionS(n)] do
-v[i]:=0;
-od;
+v:=List([1..DimensionS(n)],x->0);
 
 for x in w do
 v[x[2]]:=v[x[2]]+x[1];
-
-
 od;
 
 return v;

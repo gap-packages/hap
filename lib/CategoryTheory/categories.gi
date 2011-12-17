@@ -11,9 +11,9 @@
 ## of this category will increase! 
 ##
 Category_Of_Groups:="Category_Of_Groups";
-type:= NewType(NewFamily("category_of_groups"),
-                       IsString 
-                       and HasInitialObject
+type:= NewType(NewFamily("Category_Of_Groups"),
+                       IsString  and 
+                       HasInitialObject
 		       and HasTerminalObject);
 ObjectifyWithAttributes(Category_Of_Groups,type);
 MakeReadOnlyGlobal("Category_Of_Groups");
@@ -118,14 +118,14 @@ InstallMethod( ViewObj,
         "for category Objects",
         [IsCategoryObject],
     function(X)
-    Print("Object in  ", CategoryName(X), "\n");
+    Print("Object in ", FamilyObj(CategoryName(X))!.NAME, "\n");
 end);
 
 InstallMethod( PrintObj,
         "for category Objects",
         [IsCategoryObject],
     function(X)
-    Print("Object in  ", CategoryName(X), "\n");
+    Print("Object in ", FamilyObj(CategoryName(X))!.NAME, "\n");
 end);
 
 
@@ -163,14 +163,14 @@ InstallMethod( ViewObj,
         "for category arrows",
         [IsCategoryArrow],
     function(Phi)
-    Print("Arrow * -----> * in  ", CategoryName(Phi), "\n");
+    Print("Arrow in ", FamilyObj(CategoryName(Phi))!.NAME, "\n");
 end);
 
 InstallMethod( PrintObj,
         "for category arrows",
         [IsCategoryArrow],
     function(Phi)
-    Print("Arrow * -----> * in  ", CategoryName(Phi), "\n");
+    Print("Arrow in ", FamilyObj(CategoryName(Phi))!.NAME, "\n");
 end);
 
 

@@ -4,6 +4,21 @@
 
 <Row>
 <Item>
+<Index>ExtendScalars </Index>
+<C> ExtendScalars(R,G,EltsG)
+</C>
+<P/>
+
+Inputs  a <M>ZH</M>-resolution <M>R</M>,
+a group <M>G</M> containing <M>H</M> as a subgroup, and a list <M>EltsG</M>
+of elements of <M>G</M>. It returns the free <M>ZG</M>-resolution
+ <M>(R  \otimes_{ZH} ZG)</M>. The returned resolution <M>S</M> has S!.elts:=EltsG. This is a resolution of the <M>ZG</M>-module
+<M>(Z \otimes_{ZH} ZG)</M>. (Here <M>\otimes_{ZH}</M> means tensor over <M>ZH</M>.)
+</Item>
+</Row>
+
+<Row>
+<Item>
 <Index>HomToIntegers </Index>
 <C> HomToIntegers(X)
 </C>
@@ -70,6 +85,20 @@ It returns the G-cocomplex obtained by applying
 
 <Row>
 <Item>
+<Index>InduceScalars </Index>
+<C> InduceScalars(R,hom)
+</C>
+<P/>
+
+Inputs  a <M>ZQ</M>-resolution <M>R</M> and a surjective group homomorphism
+<M>hom:G\rightarrow Q</M>.
+ It returns the unduced non-free  <M>ZG</M>-resolution.
+ 
+</Item>
+</Row>
+
+<Row>
+<Item>
 <Index>LowerCentralSeriesLieAlgebra</Index>
 <C> LowerCentralSeriesLieAlgebra(G)
 </C>
@@ -118,17 +147,52 @@ trivial module of integers (characteristic 0).
 
 <Row>
 <Item>
+<Index> TensorWithTwistedIntegers </Index>
+<C> TensorWithTwistedIntegers(X,rho)
+</C>
+<P/>
+
+Inputs either a <M>ZG</M>-resolution <M>X=R</M>,
+or an equivariant chain map <M>X = (F:R
+\longrightarrow S)</M>. It also inputs a function <M>rho\colon G\rightarrow \mathbb Z</M> where the action of <M>g \in G</M> on <M>\mathbb Z</M> is such that <M>g.1 = rho(g)</M>. It returns the
+chain complex or chain map obtained by tensoring with the
+(twisted) module of integers (characteristic 0).
+</Item>
+</Row>
+
+
+<Row>
+<Item>
 <Index> TensorWithIntegersModP</Index>
 <C>
 TensorWithIntegersModP(X,p)
 </C>
 <P/>
 
-Inputs either a <M>ZG</M>-resolution <M>X=R</M>, or 
+Inputs either a <M>ZG</M>-resolution <M>X=R</M>, or a characteristics 0 chain complex, or 
 an equivariant chain map <M>X = (F:R
 \longrightarrow
-S)</M>, and a prime <M>p</M>. It returns the chain 
+S)</M>, or a chain map between characteristic 0 chain complexes, together with
+ a prime <M>p</M>. 
+ It returns the chain 
 complex or chain map obtained by tensoring with the 
+trivial module of integers modulo <M>p</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> TensorWithTwistedIntegersModP</Index>
+<C>
+TensorWithTwistedIntegersModP(X,p,rho)
+</C>
+<P/>
+
+Inputs either a <M>ZG</M>-resolution <M>X=R</M>, or
+an equivariant chain map <M>X = (F:R
+\longrightarrow
+S)</M>, and a prime <M>p</M>. It also inputs a function <M>rho\colon G\rightarrow \mathbb Z</M> where the action of <M>g \in G</M> on <M>\mathbb Z</M> is such that <M>g.1 = rho(g)</M>. It returns the chain
+complex or chain map obtained by tensoring with the
 trivial module of integers modulo <M>p</M>.
 </Item>
 </Row>

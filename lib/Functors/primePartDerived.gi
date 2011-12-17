@@ -10,7 +10,7 @@ local
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	HPrels, x, y, i,prime, core, conjs, conjelt,CentP,
-	HPpres,G1,epi,HPP;
+	HPpres,G1,epi,HPP,rho;
 
 C:=F(R);
 
@@ -79,11 +79,21 @@ S:=ResolutionFiniteGroup(gensK,n+1);
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
 fi;
+#S:=ResolutionPrimePowerGroup(G1,n+1);
+
 if not (Homology(F(S),n)=[]) then
 
 f:=GroupHomomorphismByFunction(K,P,x->x);
 
 HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
+
+#################################rho##################
+if "twist" in NamesOfComponents(F(R)) then
+rho:=F(R)!.twist; 
+else
+rho:=function(x) return 1; end;
+fi;
+#################################rho done#############
 
 HK:=Source(HKhomHPK);
 
@@ -101,7 +111,7 @@ HPKx:=Parent(Range(HKxhomHPKx));
 HPKxhomHP:=GroupHomomorphismByImagesNC(HPKx,HP,GeneratorsOfGroup(HPKx),
                                                   GeneratorsOfGroup(HP));
 HKxhomHP:=GroupHomomorphismByFunction(HKx,HP,x->
-Image(HPKxhomHP, Image(HKxhomHPKx,x) ) );
+Image(HPKxhomHP, Image(HKxhomHPKx,x) )^rho(X) );
 HKhomHKx:=GroupHomomorphismByImagesNC(HK,HKx,GeneratorsOfGroup(HK),GeneratorsOfGroup(HKx));
 HKhomHP2:=GroupHomomorphismByFunction(HK,HP,a->
 Image(HKxhomHP, Image(HKhomHKx,a)));

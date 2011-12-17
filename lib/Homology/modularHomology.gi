@@ -15,44 +15,58 @@ local
 #####################################################################
 FasterHomology_Obj:=function(C,n)
 local
+
         M1, M2,
         dim,
         rankM1, rankM2,
         Dimension, Boundary,
         BasisKerd1, BasisImaged2, Rels, Rank, RankM1, RankM2,
-	LengthM1,LengthM2,
+        LengthM1,LengthM2,
+        prime,
         i;
 
-if n <0 then return 0; fi;
-
+prime:=EvaluateProperty(C,"characteristic");
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
-M1:=[];
-M2:=[];
 
-if n>0 then
-for i in [1..Dimension(n)] do
-M1[i]:=Boundary(n,i);
-od;
-M1:=MutableCopyMat(M1);
-ConvertToMatrixRep(M1);
-else
+if n <0 then return 0; fi;
+if Dimension(n)=0 then return 0; fi;
+
+########################
+if n=0 then
+#BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
 M1:=[];
 fi;
+
+if n>0 then
+M1:=[];
+ if Dimension(n-1)=0 then BasisKerd1:=Basis(GF(prime)^Dimension(n));
+ else
+
+ for i in [1..Dimension(n)] do
+ M1[i]:=Boundary(n,i);
+ od;
+ M1:=MutableCopyMat(M1);
+ ConvertToMatrixRep(M1);
+# BasisKerd1:=NullspaceMatDestructive(M1);
+ fi;
+fi;
+#######################
+
 
 if Length(M1)=0 then RankM1:=0; else
 RankM1:=RankMatDestructive(M1);
 fi;
-#LengthM1:=Length(M1);
 LengthM1:=Dimension(n);
 M1:=0;
 
+M2:=[];
 for i in [1..Dimension(n+1)] do
 M2[i]:=Boundary(n+1,i);
 od;
+if Length(M2)=0 then RankM2:=0; else
 M2:=MutableCopyMat(M2);
 ConvertToMatrixRep(M2);
-if Length(M2)=0 then RankM2:=0; else
 RankM2:=RankMatDestructive(M2);fi;
 M2:=0;
 
@@ -68,40 +82,61 @@ end;
 #####################################################################
 Homology_Obj:=function(C,n)
 local
-	M1, M2, 
-	dim, 
-	rankM1, rankM2, 
-	Dimension, Boundary,
-	BasisKerd1, BasisImaged2, Rels, Rank, 
-	i,k,tmp;
 
-if n <0 then return false; fi;
-if n=0 then return [1]; fi;  #This is in general WRONG!!!
+        M1, M2,
+        dim,
+        rankM1, rankM2,
+        Dimension, Boundary,
+        BasisKerd1, BasisImaged2, Rels, Rank,
+        prime,
+        i,k,tmp;
 
+prime:=EvaluateProperty(C,"characteristic");
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
+
+if n <0 then return false; fi;
+
+########################
+if n=0 then
+BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
+fi;
+
+if n>0 then
+
 M1:=[];
-M2:=[];
 
-for i in [1..Dimension(n)] do
-M1[i]:=Boundary(n,i);
-od;
-M1:=MutableCopyMat(M1);
-BasisKerd1:=NullspaceMatDestructive(M1);
-
+if Dimension(n-1)=0 then
+  for i in [1..Dimension(n)] do
+  M1[i]:=[Zero(GF(prime))];
+  od;
+else
+  for i in [1..Dimension(n)] do
+  M1[i]:=Boundary(n,i);
+  od;
+fi;
+ConvertToMatrixRep(M1);
+#BasisKerd1:=NullspaceMatDestructive(M1);
+BasisKerd1:=NullspaceMat(M1);
 M1:=0;
+
+fi;
+#######################
+
+M2:=[];
 tmp:=[];
 k:=0;
 
-while k<Dimension(n+1) do
-M2:=[];
-for i in [k+1..Minimum(Dimension(n+1),k+100)] do
-M2[i-k]:=Boundary(n+1,i);
-od;
-k:=Minimum(Dimension(n+1),k+100);
-Append(tmp,BaseMat(M2));
-od;
-Append(tmp,[M2[1]]);
+ while k<Dimension(n+1) do
+ M2:=[];
+ for i in [k+1..Minimum(Dimension(n+1),k+100)] do
+ M2[i-k]:=Boundary(n+1,i);
+ od;
+
+ k:=Minimum(Dimension(n+1),k+100);
+ Append(tmp,BaseMat(M2));
+ od;
+ Add(tmp,[1..Dimension(n)]*Zero(GF(prime)) );
 
 BasisImaged2:=BaseMat(tmp); tmp:=0;
 dim:=Length(BasisImaged2);

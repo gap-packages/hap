@@ -108,7 +108,7 @@ InstallGlobalFunction(ReadImageAsMatrix,
 function(file)
 local i,j,prog,A;
 
-prog:=Filename(DirectoriesLibrary("")[1],"pkg/Hap1.8/lib/TDA/prog");
+prog:=Filename(DirectoriesLibrary("")[1],"pkg/Hap1.9/lib/TDA/prog");
 
 i:=Concatenation("convert ",file," /tmp/im.txt");
 Exec(i);

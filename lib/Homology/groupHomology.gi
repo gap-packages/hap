@@ -16,6 +16,7 @@ GroupCohomologyOriginal:=function()
 		HomologyPrimePowerGroup,
 		HomologyGenericGroup,
 		HomologySmallGroup,
+		HomologyCoxeterGroup,
 		HomologyArtinGroup,
 		HomologyAbelianGroup,
 		HomologyNilpotentPcpGroup,
@@ -24,7 +25,9 @@ GroupCohomologyOriginal:=function()
 
 
 ############################### INPUT DATA ##########################
-if IsList(arg[1]) then D:=arg[1]; G:=false; 
+if IsList(arg[1]) then 
+   if IsString(arg[1][1]) then D:=arg[1][2]; G:=false; 
+   else D:=arg[1]; G:=false; fi; 
 else
 	if IsGroup(arg[1]) then G:=arg[1]; 
 	if Order(G)<infinity then
@@ -179,6 +182,24 @@ end;
 
 #####################################################################
 #####################################################################
+HomologyCoxeterGroup:=function()
+local R;
+
+if N+1>Length(GeneratorsOfGroup(CoxeterDiagramFpArtinGroup(D)[1])) then
+Print("At present this function only works in dimensions < ",Length(GeneratorsOfGroup(CoxeterDiagramFpArtinGroup(D)[1]))," for the given Coxeter group.\n");
+return fail;
+fi;
+
+R:=ResolutionCoxeterGroup(D,N+1);;
+return Homology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 HomologyArtinGroup:=function()
 local R;
 
@@ -204,9 +225,12 @@ end;
 if IsList(D) then
 if GraphOfGroupsTest(D) then
 return HomologyGraphOfGroups();
-else
-return HomologyArtinGroup(); 
 fi;
+if IsString(arg[1][1])   then
+   if ('c' in arg[1][1]) or ('C' in arg[1][1]) then
+   return HomologyCoxeterGroup(); fi;
+fi;
+return HomologyArtinGroup();
 fi;
 
 if "CrystCatRecord" in KnownAttributesOfObject(G) or
@@ -230,7 +254,11 @@ return HomologyAbelianGroup(); fi;
 
 if IsPrime(p) and IsPrimePowerInt(Order(G)) and
 Order(G)<257 then
+if p=PrimePGroup(G) then
 return List([1..RankPrimeHomology(G,N)(N)],i->p);
+else
+return [];
+fi;
 fi;
 
 if IsPrimePowerInt(Order(G)) then

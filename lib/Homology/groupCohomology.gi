@@ -14,12 +14,15 @@ local
 		Functor,
 		CoHomologyGraphOfGroups,
 		CoHomologyArtinGroup,
+		CoHomologyCoxeterGroup,
 		CoHomologyNilpotentPcpGroup,
 		CoHomologySpaceGroup;
 
 
 ############################### INPUT DATA ##########################
-if IsList(arg[1]) then D:=arg[1]; G:=false; 
+if IsList(arg[1]) then 
+   if IsString(arg[1][1]) then D:=arg[1][2]; G:=false;
+   else D:=arg[1]; G:=false; fi;
 else
 	if IsGroup(arg[1]) then G:=arg[1]; 
 	if Order(G)<infinity then
@@ -76,6 +79,23 @@ end;
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+CoHomologyCoxeterGroup:=function()
+local R;
+
+if N+1>Length(GeneratorsOfGroup(CoxeterDiagramFpArtinGroup(D)[1])) then
+Print("At present this function only works in dimensions < ",Length(GeneratorsOfGroup(CoxeterDiagramFpArtinGroup(D)[1]))," for the given Coxeter group.\n");
+return fail;
+fi;
+
+R:=ResolutionCoxeterGroup(D,N+1);;
+return Cohomology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################
@@ -105,9 +125,12 @@ end;
 if IsList(D) then
 if GraphOfGroupsTest(D) then
 return CoHomologyGraphOfGroups();
-else
-return CoHomologyArtinGroup(); 
 fi;
+if IsString(arg[1][1])   then
+   if ('c' in arg[1][1]) or ('C' in arg[1][1]) then
+   return CoHomologyCoxeterGroup(); fi;
+fi;
+return CoHomologyArtinGroup();
 fi;
 
 if "CrystCatRecord" in KnownAttributesOfObject(G) or

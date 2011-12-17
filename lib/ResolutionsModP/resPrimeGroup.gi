@@ -451,6 +451,7 @@ return NegateWord(HomotopyRec[k+1][Ab][w[2]]);
 fi;
 fi;
 
+
 if Toggle then Echelonize(); Toggle:=false; fi;
 
 v:=Flat(WordToVectorList([w],k))*one;

@@ -43,10 +43,10 @@ AppendTo(tmpInlog,"10000 [label=\" Non-spherical Coxeter\\n Diagram \", color=wh
 AppendTo(tmpInlog,"} \n");
 ################ WRITTEN ############################################
 
-Exec(Concatenation("neato -Tgif ",tmpInlog," > ",basicgif));
+Exec(Concatenation(NEATO_PATH,"-Tgif ",tmpInlog," > ",basicgif));
 
 if Length(arg)=1 then
-Exec(Concatenation("mozilla ",basicgif));
+Exec(Concatenation(DISPLAY_PATH,basicgif));
 Exec(Concatenation("rm ",tmpInlog,"; rm ",basicgif));
 
 else
@@ -60,9 +60,25 @@ end);
 
 #####################################################################
 InstallGlobalFunction(CoxeterDiagramMatrix,
-function(D,i1,j1)              #Assume i<j
-local i,j,r,s,L;
+function(arg)              #Assume i<j
+local i,j,r,s,L, D, i1,j1;
 
+D:=arg[1];
+############################################
+if Length(arg)=1 then     #This is unnecessarily clumsy!
+L:=[];
+for i in CoxeterDiagramVertices(D) do
+L[i]:=[];
+for j in CoxeterDiagramVertices(D) do
+L[i][j]:=CoxeterDiagramMatrix(D,i,j);
+od;
+od;
+
+return L;
+fi;
+############################################
+
+D:=arg[1];i1:=arg[2];j1:=arg[3];
 if i1<j1 then i:=i1; j:=j1; else i:=j1;j:=i1;fi;
 
 r:=PositionProperty(D,x->(x[1]=i));
@@ -258,6 +274,7 @@ Components:=CoxeterDiagramComponents(D);
 ComponentIsSpherical:=function(C)
 local
 	Vertices,
+	Verts,
 	Degrees,
 	Labels,
 	LargeLabels,
@@ -304,6 +321,19 @@ if (not Length(Degrees)=0) then
 # no edge label is > 5 (and so no label is infinity=0);
 # at most one edge label is >3.
 # So now its just a case by case slog! 
+
+# Case A0 (Forgot this in initia versions of HAP)
+if Length(LargeDegrees)>0 then
+
+Verts:=Filtered(Vertices,v->not v=
+Vertices[Position(Degrees,LargeDegrees[1])]);
+Verts:=List(
+CoxeterDiagramComponents(CoxeterSubDiagram(D,Verts)),
+x->Length(CoxeterDiagramVertices(x)));
+Verts:=Filtered(Verts,x->x>1);
+if Length(Verts)>2 then return false; fi;
+fi;
+
 
 # Case A
 if Maximum(Labels)=3 and Maximum(Degrees)=2 then return true; fi;

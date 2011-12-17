@@ -4,11 +4,11 @@
 InstallGlobalFunction(PolytopalComplex,
 function(arg)
 local
-	G,StartVector,
+	G,StartVector, Gev,
 	PG,
 	GG,
 	Action,
-	VertexToVector,
+	VertexToVector, VVRecord,
 	FaceToVertices,
 	Hasse,
 	p,x,
@@ -23,7 +23,8 @@ local
 	EltsG,
 	PseudoBoundary,
 	OrbitReps,
-	StabSum;
+	StabSum,
+	StabAction;
 
 G:=arg[1];
 StartVector:=arg[2];
@@ -45,13 +46,15 @@ if IsPermGroup(G) then
 #####################################################################
 Action:=function(g,V)
 local i,gV;
-gV:=[];
 
-for i in [1..Length(V)] do
-gV[i]:=V[i^g];
-od;
+return OnTuples(V,g);  
+#gV:=[];
 
-return gV;
+#for i in [1..Length(V)] do
+#gV[i]:=V[i^g];
+#od;
+
+#return gV;
 end;
 #####################################################################
 else
@@ -76,15 +79,21 @@ return Action(PG.generators[v+1],StartVector) - StartVector;
 end;
 #####################################################################
 
+VVRecord:=[SSortedList(Points),[]];
 #####################################################################
-VectorToGroupElt:=function(v)  #This is the clumsiest possible implementation!
-local g;
+VectorToGroupElt:=function(v) #This is still clumsy and slow!
+local i,g;
+
+i:=Position(VVRecord[1],v);
+if not IsBound(VVRecord[2][i]) then;
 for g in G do
-if Action(g,StartVector)=v then return g; fi;
+if Action(g,StartVector)=v then VVRecord[2][i]:=g; break; fi;
 od;
+fi;
+
+return VVRecord[2][i];
 end;
 #####################################################################
-
 
 #####################################################################
 FaceToVertices:=function(F)
@@ -277,6 +286,21 @@ fi;
 PseudoBoundary[k][m]:=bnd;
 return Boundary(k,mm);
 end;
+
+if IsPermGroup(G) then
+Gev:=EvenSubgroup(G);
+###############################################################
+# This describes how the group G acts on the orientation.
+StabAction:=function(h);
+if
+EltsG[h] in Gev then return 1;
+else return -1; fi;
+end;
+###############################################################
+else
+StabAction:=fail;
+fi;
+
 #####################################################################
 return Objectify(HapNonFreeResolution,
 	   rec(
@@ -286,6 +310,7 @@ return Objectify(HapNonFreeResolution,
             elts:=EltsG,
             group:=G,
 	    stabilizer:=StabilizerSubgroup,
+	    action:=StabAction,
 	    hasse:=Hasse,
             properties:=
              [["type","resolution"],

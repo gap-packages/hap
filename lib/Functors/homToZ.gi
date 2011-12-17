@@ -7,14 +7,7 @@ InstallGlobalFunction(HomToIntegers,
 function(X)
 local 	HomToZ_Obj,
 	HomToZ_Arr;
-
 	
-#if EvaluateProperty(X,"characteristic")>0 then
-
-#Print("ERROR: You should use the function HomToIntegersModP(). But 
-#you'll first have to wright it! \n"); 
-
-#return fail; fi;
 
 #####################################################################
 #####################################################################
@@ -65,10 +58,7 @@ if M[n]=n then
 
    else
 
-   row:=[];
-   for j in [1..R!.dimension(n-1)] do
-   row[j]:=0;
-   od;
+   row:=List([1..R!.dimension(n-1)],a->0);
    for i in [1..R!.dimension(n-1)] do
    Append(Mt,[row]);
    od;
@@ -122,13 +112,9 @@ DimensionD:=D!.dimension;
 DhomC:=function(v,n)
 local
 		u, i,j,temp,x;
-u:=[];
-for j in [1..DimensionC(n)] do
-u[j]:=0;
-od;
+u:=List([1..DimensionC(n)],x->0);
 
 for i in [1..DimensionD(n)] do
-
 	for j in [1..DimensionC(n)] do
 	temp:=0;
 	for x in List(RhomS([[j,1]],n),y->y[1]) do

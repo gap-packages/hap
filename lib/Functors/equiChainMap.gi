@@ -7,10 +7,12 @@ local
 	HomotopyS, EltsQ, 
 	DimensionR,BoundaryR, EltsG, Mult,
 	GhomQ, 			#Let f:G-->Q
+	GhomQlst,
 	Charact,
 	map, mapgens, ChainMap, mapgensRec, 
 	QisFinite,
-	N,m,i,g;
+	Multmat,
+	N,m,i,j,g,AlgRed;
 
 N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
 HomotopyS:=S!.homotopy;
@@ -21,7 +23,7 @@ if IsFinite(S!.group) then
 fi;
 if QisFinite then
 	for g in S!.group do
-	if not g in EltsQ then Append(EltsQ,[g]);fi;
+	if not g in EltsQ then Add(EltsQ,g);fi;
 	od;
 fi;
 DimensionR:=R!.dimension;
@@ -45,13 +47,21 @@ GhomQ:=function(i);
 return Position(EltsQ,Image(f,EltsG[i]));
 end;
 #####################################################################
+if IsFinite(R!.group) then
+GhomQlst:=List([1..Order(R!.group)],GhomQ);
+#####################################################################
+GhomQ:=function(i);
+return GhomQlst[i];
+end;
+#####################################################################
+fi;
 else
 #####################################################################
 GhomQ:=function(i)
 local p,Eltq;
 Eltq:=Image(f,EltsG[i]);
 p:= Position(EltsQ,Eltq);
-if p=fail then Append(EltsQ,Eltq);
+if p=fail then Add(EltsQ,Eltq); ##Changed!
 p:=Length(EltsQ); fi;
 return p;
 end;
@@ -64,13 +74,27 @@ Mult:=function(i,j);
 return Position(EltsQ,EltsQ[i]*EltsQ[j]);
 end;
 #####################################################################
+if Order(S!.group)<1000 then
+Multmat:=[];
+for i in [1..Order(S!.group)] do
+Multmat[i]:=[];
+for j in [1..Order(S!.group)] do
+Multmat[i][j]:=Mult(i,j);
+od;
+od;
+#####################################################################
+Mult:=function(i,j);
+return Multmat[i][j];
+end;
+#####################################################################
+fi;
 else
 #####################################################################
 Mult:=function(i,j)
 local p,Eltq;
 Eltq:=EltsQ[i]*EltsQ[j];
 p:= Position(EltsQ,Eltq);
-if p=fail then Append(EltsQ,Eltq);
+if p=fail then Add(EltsQ,Eltq); ##changed!
 p:=Length(EltsQ); fi;
 return p;
 end;
@@ -79,6 +103,11 @@ fi;
 
 Charact:=Maximum(EvaluateProperty(R,"characteristic"),
                  EvaluateProperty(S,"characteristic"));
+
+if not IsPrime(Charact) then AlgRed:=AlgebraicReduction;
+else
+AlgRed:=function(v); return AlgebraicReduction(v,Charact); end;
+fi;
 
 #####################################################################
 mapgens:=function(x,m)
@@ -124,6 +153,7 @@ List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
       od;
 fi;
 #########################
+u:=AlgRed(u);
       if x[1]>0 then
             mapgensRec[m+1][x[1]][x[2]]:=u;
       else
@@ -150,7 +180,9 @@ else
 Apply(v,x->MultiplyWord(x[2] mod Charact,  mapgens(x[1],m)));
 fi;
 v:= Concatenation(v);
-return v;
+
+
+return AlgRed(v);
 end;
 #####################################################################
 

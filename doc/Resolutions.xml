@@ -1,6 +1,19 @@
 <Chapter><Heading>Resolutions of the ground ring</Heading>
 
 <Table Align="|l|" >
+<Row>
+<Item>
+<Index>FreeResolution</Index>
+<C> FreeResolution(P,n)</C>
+<P/>
+
+Inputs a non-free <M>ZG</M>-resolution <M>P</M> with finite stabilizer groups, 
+and   
+ a positive integer <M>n</M>. It returns  a free 
+<M>ZG</M>-resolution of length equal to the minimum of n and the length of <M>P</M>.
+</Item>
+</Row>
+
 
 <Row>
 <Item>
@@ -70,7 +83,7 @@ Inputs a Coxeter diagram <M>D</M> and an integer  <M>n>1</M>.  It returns
 the Artin monoid associated to <M>D</M>.  It is conjectured that 
 <M>R</M> is also a free resolution for the Artin group <M>G</M>. 
 The conjecture is known to hold in 
-<URL Text="certain cases">About/aboutArtinGroups.html</URL>.<P/>
+<URL Text="certain cases">../www/SideLinks/About/aboutArtinGroups.html</URL>.<P/>
 
 <M>G=R.group</M> is infinite and returned as a finitely presented group. 
 The list <M>R.elts</M> is a partial listing of the elements of <M>G</M> 
@@ -108,9 +121,9 @@ No contracting homotopy on
 <Br/>
 <C> ResolutionBieberbachGroup( G, v ) </C>
 <P/>
-Inputs a Bieberbach group <M>G</M> (represented using
+Inputs a torsion free crystallographic group <M>G</M>, also known as a Bieberbach group, represented using
 AffineCrystGroupOnRight as 
-in the GAP package Cryst). It also optionally inputs a choice of 
+in the GAP package Cryst. It also optionally inputs a choice of 
 vector <M>v</M> in the euclidean space <M>R^n</M> 
 on which <M>G</M> acts freely. The function returns <M>n+1</M> terms of 
 the free <M>ZG</M>-resolution of <M>Z</M> arising as the 
@@ -118,11 +131,27 @@ cellular chain complex of the tesselation of <M>R^n</M>
 by the Dirichlet-Voronoi fundamental domain determined by <M>v</M>.
 
 <P/>
-This is a HAPcryst function and is thus only available if HAPcryst is loaded.
+This function is part of the   
+HAPcryst package written by Marc Roeder and thus requires the HAPcryst package to be loaded.
 
 
 <P/>
 The function requires the use of Polymake software.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>ResolutionCoxeterGroup</Index>
+<C> ResolutionCoxeterGroup(D,n)</C>
+<P/>
+Inputs a Coxeter diagram <M>D</M> and an integer  <M>n>1</M>.  It returns
+<M>k</M> terms of a free <M>ZG</M>-resolution <M>R</M> where <M>G</M> is
+the Coxeter group associated to <M>D</M>. Here  <M>k</M>
+ is the maximum of n and the number of vertices in the Coxeter diagram.   
+ At present the implementation is only for finite Coxeter groups and the group <M>G</M> is returned as a permutation group.
+
+The contracting homotopy on <M>R</M> has not yet been implemented!
 </Item>
 </Row>
 

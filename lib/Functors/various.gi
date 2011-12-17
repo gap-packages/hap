@@ -278,3 +278,76 @@ return CompositionOfFpGModuleHomomorphisms(x,y);
 end);
 #####################################################################
 
+####################################################################
+#####################################################################
+InstallGlobalFunction(PCentre,
+function(arg)
+local
+	G,prime, gens, gensp, C, hom;
+
+G:=arg[1];
+
+if not IsPGroup(G) and Length(arg)=1 then
+Print("Error: input must be a p-group or a group and a prime.\n");
+return fail;
+fi;
+
+if Length(arg)=2 then
+prime:=arg[2];
+else
+prime:=PrimePGroup(G);
+fi;
+
+if Order(G)=1 then return G; fi;
+
+C:=Centre(G);
+gens:=GeneratorsOfGroup(C);
+gensp:=List(gens,x->x^prime);
+hom:=GroupHomomorphismByImages(C,C,gens,gensp);
+
+return Kernel(hom);
+end);
+####################################################################
+#####################################################################
+
+
+
+####################################################################
+#####################################################################
+InstallGlobalFunction(PUpperCentralSeries,
+function(arg)
+local
+        G,Q,S,U,P,prime, hom, sz;
+
+G:=arg[1];
+
+if not IsPGroup(G) and Length(arg)=1 then
+Print("Error: input must be a p-group or a group and a prime.\n");
+return fail;
+fi;
+
+if Length(arg)=2 then
+prime:=arg[2];
+else
+prime:=PrimePGroup(G);
+fi;
+
+
+U:=[Group(Identity(G))];
+P:=U[Length(U)];
+sz:=0;
+while Order(P)>sz do
+sz:=Order(P);
+hom:=NaturalHomomorphismByNormalSubgroup(G,P);
+Q:=Image(hom);
+P:=PreImagesSet(hom,PCentre(Q,prime));
+if Order(P)>sz then
+Add(U,P);
+fi;
+od;
+
+return Reversed(U);
+end);
+####################################################################
+#####################################################################
+

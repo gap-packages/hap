@@ -149,113 +149,53 @@ gap&gt; Cohomology(TS,3);<br>
     </tr>
     <tr>
       <td
- style="text-align: left; background-color: rgb(255, 255, 255); vertical-align: top;">Such
-commands can be used, for instance, to produce strong evidence in
-support of the following. <br>
-      <br>
-      <table
- style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
- border="0" cellpadding="10" cellspacing="2">
-        <tbody>
-          <tr>
-            <td
- style="width: 80%; vertical-align: top; background-color: rgb(204, 255, 255);">
-            <h3><span style="color: rgb(0, 0, 102);"><span
- style="font-weight: bold;">Conjecture:</span></span></h3>
-            <span style="color: rgb(0, 0, 102);">Let Z</span><sup
- style="color: rgb(0, 0, 102);">(n) </sup><span
- style="color: rgb(0, 0, 102);">denote the free abelian group of rank n
-endowed with the canonical permutation action of the symmetric group S<sub>n</sub>.
-Let Z be the free abelian group of rank 1 with trivial action of S<sub>n</sub>.
-There is an isomorphism<br>
-            <br>
-            </span>
-            <div style="text-align: center;"><span
- style="color: rgb(0, 0, 102);">H<sup>k</sup>(S<sub>n</sub>, Z<sup>(n)</sup>)
-= H<sup>k</sup>(S<sub>n-1</sub>, Z)</span><br>
-            <span style="color: rgb(0, 0, 102);"></span></div>
-            <span style="color: rgb(0, 0, 102);"><br>
-for all n&gt;1 and for all k.</span><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-The following commands support the conjecture. (It might be possible to
-use the techniques of [M. Salvetti, "Cohomology of Coxeter groups",
-Topology and its Applications 118 (2002), 199-208] to prove the
-conjecture.) </td>
+ style="text-align: left; background-color: rgb(255, 255, 255); vertical-align: top;">A
+group G can act non-trivially on the integers Z. For example, a
+permutation group G can act on Z according to the formula <br>
+      <div style="text-align: center;">g.n= -n&nbsp;&nbsp;&nbsp; if g
+is an odd permutation,<br>
+      </div>
+      <div style="text-align: center;">&nbsp;g.n=&nbsp; n&nbsp; &nbsp;
+if g is an even permutation.<br>
+      <div style="text-align: left;"><br>
+The following commands show that, with this twisted action of S<sub>6</sub>
+on Z, we have third twisted integral homology&nbsp; H<sub>3</sub>(S<sub>6</sub>,Z)=Z<sub>2</sub>+Z<sub>10</sub>
+.<br>
+      </div>
+      </div>
+      </td>
     </tr>
     <tr>
       <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-R:=[];;C:=[];;D:=[];;<br>
-gap&gt; for n in [2..5] do<br>
-&gt; R[n]:=ResolutionFiniteGroup(SymmetricGroup(n),6);<br>
-&gt;
-C[n]:=HomToIntegralModule(R[n],PermToMatrixGroup(SymmetricGroup(n),n));<br>
-&gt; D[n]:=HomToIntegers(R[n]);<br>
-&gt; od;<br>
-gap&gt; for k in [0..5] do<br>
-&gt; for n in [2..4] do<br>
-&gt; Print("Twisted Cohomology:&nbsp; H",k,"(S",n+1,") =
-",Cohomology(C[n+1],k),"\n");<br>
-&gt; Print("Integral Cohomology: H",k,"(S",n,") =
-",Cohomology(D[n],k),"\n\n");<br>
-&gt; od;od;<br>
-Twisted Cohomology:&nbsp; H0(S3) = [ 0 ]<br>
-Integral Cohomology: H0(S2) = [ 0 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H0(S4) = [ 0 ]<br>
-Integral Cohomology: H0(S3) = [ 0 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H0(S5) = [ 0 ]<br>
-Integral Cohomology: H0(S4) = [ 0 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H1(S3) = [&nbsp; ]<br>
-Integral Cohomology: H1(S2) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H1(S4) = [&nbsp; ]<br>
-Integral Cohomology: H1(S3) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H1(S5) = [&nbsp; ]<br>
-Integral Cohomology: H1(S4) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H2(S3) = [ 2 ]<br>
-Integral Cohomology: H2(S2) = [ 2 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H2(S4) = [ 2 ]<br>
-Integral Cohomology: H2(S3) = [ 2 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H2(S5) = [ 2 ]<br>
-Integral Cohomology: H2(S4) = [ 2 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H3(S3) = [&nbsp; ]<br>
-Integral Cohomology: H3(S2) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H3(S4) = [&nbsp; ]<br>
-Integral Cohomology: H3(S3) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H3(S5) = [ 2 ]<br>
-Integral Cohomology: H3(S4) = [ 2 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H4(S3) = [ 2 ]<br>
-Integral Cohomology: H4(S2) = [ 2 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H4(S4) = [ 6 ]<br>
-Integral Cohomology: H4(S3) = [ 6 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H4(S5) = [ 2, 12 ]<br>
-Integral Cohomology: H4(S4) = [ 2, 12 ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H5(S3) = [&nbsp; ]<br>
-Integral Cohomology: H5(S2) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H5(S4) = [&nbsp; ]<br>
-Integral Cohomology: H5(S3) = [&nbsp; ]<br>
-      <br>
-Twisted Cohomology:&nbsp; H5(S5) = [ 2 ]<br>
-Integral Cohomology: H5(S4) = [ 2 ]<br>
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;&nbsp;
+G:=SymmetricGroup(6);;<br>
+gap&gt;&nbsp; R:=ResolutionFiniteGroup(G,4);;<br>
+gap&gt;&nbsp; C:=TensorWithTwistedIntegers(R,SignPerm);;<br>
+gap&gt;&nbsp; Homology(C,3);<br>
+[ 2, 10 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">With
+the analogous twisted action of S<sub>6</sub> on Z<sub>5</sub>, the
+following commands show that the twelvth homology&nbsp; is H<sub>12</sub>(S<sub>6</sub>,Z<sub>5</sub>)=Z<sub>5</sub>
+. (The calculation relies on the fact that H<sub>n</sub>(G,Z<sub>p</sub>)&nbsp;
+is equal to its p-primary part H<sub>n</sub>(G,Z<sub>p</sub>)<sub>(p)</sub>&nbsp;
+.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;&nbsp;
+G:=SymmetricGroup(6);;<br>
+gap&gt;&nbsp;
+P:=SylowSubgroup(G,5);;<br>
+gap&gt;&nbsp; R:=ResolutionFiniteGroup(P,15);;<br>
+gap&gt;&nbsp; F:=function(R);return
+TensorWithTwistedIntegersModP(R,5,SignPerm);end;;<br>
+gap&gt;&nbsp; PrimePartDerivedFunctor(G,R,F,12);<br>
+[ 5 ]<br>
       </td>
     </tr>
     <tr>

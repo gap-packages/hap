@@ -1,0 +1,143 @@
+<Chapter><Heading> Simplicial Complexes</Heading>
+
+<Table Align="|l|" >
+
+<Row>
+<Item>
+<C> Homology(T,n)</C>
+<C> Homology(T)</C>
+
+<P/>
+Inputs a pure cubical complex, or cubical complex, or simplicial complex <M>T</M>
+and a non-negative integer <M>n</M>. It returns the n-th integral homology of <M>T</M> as a list of torsion integers.
+ If no value of <M>n</M> is input then the list of all homologies of <M>T</M>
+in dimensions 0 to Dimension(T)  is returned .
+</Item>
+</Row>
+
+<Row>
+<Item>
+<C> Bettinumbers(T)</C> 
+<P/>
+Inputs a pure cubical complex, or cubical complex, or simplicial complex <M>T</M>.
+ The list of free ranks of the  homology groups of <M>T</M>
+in dimensions 0 to Dimension(T)  is returned .
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+
+<C>ChainComplex(T)</C>
+
+<P/>
+Inputs a  pure cubical complex, or cubical complex, or simplicial complex
+ <M>T</M>
+and returns the (often very large) cellular chain complex of <M>T</M>. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>CechComplexOfPureCubicalComplex</Index>
+<C>CechComplexOfPureCubicalComplex(T)</C>
+
+<P/>
+Inputs a d-dimensional pure cubical complex 
+ <M>T</M>
+and returns  a simplicial complex <M>S</M>. The simplicial complex <M>S</M> has one vertex for each d-cube in <M>T</M>, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>RipsChainComplex</Index>
+<C>RipsChainComplex(S,epsilon)</C>
+<C>RipsChainComplex(S,epsilon,true)</C>
+<P/>
+Inputs an <M>n \times n</M>  symmetric matrix <M>S</M>
+with non-negative rational entries, together with  a positive rational number epsilon. The matrix is interpreted as that
+arising from a set of <M>n</M> points in a metric space, the (i,j) entry representing the distance between the i-th and j-th points. (However, for the construction to work, there is no need for <M>S</M> to actually arise in this way.)
+
+The function constructs the simplicial complex <M>X</M>
+with <M>n</M> vertices and with one <M>k</M>-simplex for each subset of <M>k</M> points where any two elements in the subset are within a distance epsilon of each other. The function then returns the low dimensions of
+a chain complex <M>C</M> which is homotopy equivalent to the cellular chain complex <M>C(X)</M>. With any luck <M>C</M> will be smaller than <M>C(X)</M>.
+
+<P/>
+At present the function only returns   <M>C</M> up to and including dimension 2. So it can be used to compute the first homology of <M>X</M>.
+
+<P/>
+If an optional third argument is set equal to true then the function returns a list of chain complexes whose direct sum is homotopy equivalent to <M>C(X)</M> in low dimensions. 
+ This option can be used to calculate the homology of <M>C</M> more efficiently.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>VectorsToSymmetricMatrix</Index>
+<C>VectorsToSymmetricMatrix(M)</C>
+<C>VectorsToSymmetricMatrix(M,distance)</C>
+
+<P/>
+Inputs a  matrix <M>M</M> of rational numbers and returns a symmetric matrix <M>S</M> whose <M>(i,j)</M> entry is the distance between the <M>i</M>-th row and <M>j</M>-th rows of <M>M</M> where distance is given by the sum of the absolute values of the coordinate differences.
+
+<P/>
+Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational 
+vectors <M>v,w</M> of length Length(M[1]). 
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>EulerCharacteristic</Index>
+<C>EulerCharacteristic(T)</C>
+
+<P/>
+Inputs a  pure cubical complex, or cubical complex, or simplicial complex
+ <M>T</M>
+and returns its Euler characteristic.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>MaximalSimplicesToSimplicialComplex</Index>
+<C>MaximalSimplicesToSimplicialComplex(L)</C>
+
+<P/>
+Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex.
+The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>SkeletonOfSimplicialComplex</Index>
+<C>SkeletonOfSimplicialComplex(S,k)</C>
+
+<P/>
+Inputs a simplicial complex <M>S</M> and a positive integer <M>k</M> less than or equal to the dimension of <M>S</M>. It returns the truncated <M>k</M>-dimensional simplicial complex <M>S^k</M> (and leaves <M>S</M> unchanged).
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
+<Index>QuillenComplex</Index>
+<C>QuillenComplex(G)</C>
+
+<P/>
+Inputs a finite group  
+ <M>G</M>
+and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of <M>G</M>. 
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+

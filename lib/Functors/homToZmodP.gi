@@ -7,7 +7,6 @@ InstallGlobalFunction(HomToIntegersModP,
 function(X,prime)
 local 	HomToZ_Obj,
 	HomToZ_Arr;
-
 	
 
 #####################################################################
@@ -33,7 +32,8 @@ n:=N+1;
 if n <0 then return false; fi;
 
 if n=0 then
-return List([1..R!.dimesnion(1)],x->0); fi;		
+#return List([1..R!.dimesnion(1)],x->0); fi;		
+return [1..R!.dimesnion(1)]*0; fi;
 
 if M[n]=n then 
    Mt:=[];
@@ -98,45 +98,40 @@ end;
 
 
 
-
-
 #####################################################################
 #####################################################################
 HomToZ_Arr:=function(F)
 local
-		R,S,RhomS,        	#R->S is an equivariant chain
-			 		#map. C<-D is the chain map
-		C,D,DhomC,		#got by Homing.
-		DimensionC,		
-		DimensionD,		#Throughout the program we
-		x;			#identify R and S with their
-R:=F!.source;				#duals Hom(R,Z).
+                R,S,RhomS,              #R->S is an equivariant chain
+                                        #map. C<-D is the chain map
+                C,D,DhomC,              #got by Homing.
+                DimensionC,
+                DimensionD,             #Throughout the program we
+                x;                      #identify R and S with their
+R:=F!.source;                           #duals Hom(R,Z).
 S:=F!.target;
 RhomS:=F!.mapping;
 C:=HomToZ_Obj(R);
 D:=HomToZ_Obj(S);
-DimensionC:=C.dimension;
-DimensionD:=D.dimension;
+DimensionC:=C!.dimension;
+DimensionD:=D!.dimension;
 
 #####################################################################
 DhomC:=function(v,n)
 local
-		u, i,j,temp,x;
-u:=[];
-for j in [1..DimensionC(n)] do
-u[j]:=0;
-od;
+                u, i,j,temp,x;
+#u:=List([1..DimensionC(n)],x->0);
+u:=[1..DimensionC(n)]*0;
 
 for i in [1..DimensionD(n)] do
-
-	for j in [1..DimensionC(n)] do
-	temp:=0;
-	for x in List(RhomS([[j,1]],n),y->y[1]) do
-	if x=i then temp:=temp+1;fi;
-	if x=-i then temp:=temp-1; fi;
-	od;
-	u[j]:=u[j]+temp*v[i];
-	od;
+        for j in [1..DimensionC(n)] do
+        temp:=0;
+        for x in List(RhomS([[j,1]],n),y->y[1]) do
+        if x=i then temp:=temp+1;fi;
+        if x=-i then temp:=temp-1; fi;
+        od;
+        u[j]:=u[j]+temp*v[i];
+        od;
 od;
 
 return u;
@@ -144,28 +139,32 @@ end;
 #####################################################################
 
 
+
 return Objectify(HapCochainMap,
-	   rec(
-	   source:=D,
-	   target:=C,
-	   mapping:=DhomC,
-	   properties:=[ ["type","cochainMap"],
-	   ["characteristic", Maximum( 
-	   EvaluateProperty(X!.source,"characteristic"),
-	   EvaluateProperty(X!.target,"characteristic"))]
-	   ]));
+        rec(
+           source:=D,
+           target:=C,
+           mapping:=DhomC,
+           properties:=[ ["type","cochainMap"],
+           ["characteristic", prime
+           ]
+           ]));
 end;
 #####################################################################
 #####################################################################
+
+
+
+
 
 if EvaluateProperty(X,"type") = "resolution" then
 return HomToZ_Obj(X); fi;
 
 if EvaluateProperty(X,"type") = "equivariantChainMap" then
-#return HomToZ_Arr(X); fi;
+return HomToZ_Arr(X); fi;
 Print("This functor is not yet applicable to morphisms. \n");
 return fail;
-fi;
+#fi;
 
 Print("ERROR: Input should be a resolution or equivariant map between resolutions. \n");
 

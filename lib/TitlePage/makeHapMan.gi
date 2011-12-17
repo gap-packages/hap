@@ -7,8 +7,8 @@ cn:=Concatenation;
 ############################################################
 #IF NECESSARY, CHANGE "VISCRIPT" AND "HAPDOC" TO THE CORRECT PATHS 
 #
-VISCRIPT:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.8/lib/TitlePage/viscript ");
-HAPDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.8/doc/");
+VISCRIPT:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/TitlePage/viscript ");
+HAPDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/doc/");
 #
 ############################################################
 
@@ -35,6 +35,6 @@ Exec( cn(VISCRIPT, cn(HAPDOC,"chap18.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap19.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap20.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chapInd.html")) );
-SetHelpViewer("mozilla");
+#SetHelpViewer("BROWSER_PATH");
 
 end) ;

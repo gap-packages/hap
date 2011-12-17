@@ -38,8 +38,8 @@ fi;
 ################# NQ COMMANDS #######################################
 Bool:=LoadPackage("nq","0.0",false);
 if Bool=fail then
-NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
-NilpotentQuotient:=function(G); return fail; end;
+#NqEpimorphismNilpotentQuotient:=function(G); return fail; end;
+NqEpimorphismNilpotentQuotient:=EpimorphismNilpotentQuotient;
 fi;
 ################# NQ COMMANDS DONE ###############################
 
@@ -129,15 +129,20 @@ fi;
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
-
+fi;
+ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
+if COMPILED=false then
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
 ReadPackage("HAP", "lib/Functors/homToZmodule.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithZ.gi");
+ReadPackage("HAP", "lib/Functors/tensorWithTwistedZ.gi");
+ReadPackage("HAP", "lib/Functors/tensorWithTwistedZmodP.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithZmodP.gi");
 ReadPackage("HAP", "lib/Functors/various.gi");
 ReadPackage("HAP", "lib/Functors/equiChainMap.gi");
+ReadPackage("HAP", "lib/Functors/modularEquiChainMap.gi");
 ReadPackage("HAP", "lib/Functors/primePartDerived.gi");
 ReadPackage("HAP", "lib/Functors/homToZ.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithRationals.gi");
@@ -147,6 +152,7 @@ ReadPackage("HAP", "lib/Functors/homToZmodP.gi");
 ##################### HOMOLOGY ######################################
 ReadPackage("HAP", "lib/Homology/integralHomology.gi");
 ReadPackage("HAP", "lib/Homology/modularHomology.gi");
+ReadPackage("HAP", "lib/Homology/modularHomologyVectSpace.gi");
 ReadPackage("HAP", "lib/Homology/homology.gi");
 ReadPackage("HAP", "lib/Homology/groupHomology.gi");
 ReadPackage("HAP", "lib/Homology/integralCohomology.gi");
@@ -160,6 +166,7 @@ ReadPackage("HAP", "lib/Homology/solutionsMat.gi");
 ReadPackage("HAP", "lib/Homology/groupCohomology.gi");
 ReadPackage("HAP", "lib/Homology/integralHomologyObj.gi");
 ReadPackage("HAP", "lib/Homology/integralCohomologyObj.gi");
+ReadPackage("HAP", "lib/Homology/persistent.gi");
 
 
 
@@ -172,12 +179,14 @@ ReadPackage("HAP", "lib/Perturbations/resFiniteExt.gi");
 ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
+ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
 
 
 
 #################### ARTIN COXETER ##################################
 ReadPackage("HAP", "lib/ArtinCoxeter/diagrams.gi");
 ReadPackage("HAP", "lib/ArtinCoxeter/resArtin.gi");
+ReadPackage("HAP", "lib/ArtinCoxeter/coxeterWythoff.gi");
 ReadPackage("HAP", "lib/ArtinCoxeter/noncrossing.gi");
 
 
@@ -244,16 +253,21 @@ if COMPILED=false then
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 fi;
 
-################## TDA #############################################
-ReadPackage("HAP","lib/TDA/tda.gi");
-ReadPackage("HAP","lib/TDA/cont.gi");
-ReadPackage("HAP","lib/TDA/contII.gi");
-
-################## TOPOLOGICAL SPACES ##############################
-ReadPackage("HAP","lib/TopologicalSpaces/topology.gi");
+################## POLYTOPAL COMPLEXES #############################
+ReadPackage("HAP","lib/PolyComplexes/matrixOps.gi");
+if COMPILED=false then
+ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
+ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
+fi;
+ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
 
 ################## CATEGORY THEORY #################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gi");
+ReadPackage("HAP","lib/CategoryTheory/commutativeDiagrams.gi");
 
 ################## CAT ONE GROUPS ##################################
 ReadPackage("HAP","lib/CatGroups/CatConstructions.gi");
@@ -264,6 +278,20 @@ ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
 ################## G-OUTER GROUPS ##################################
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
+
+################## HAP PRIME ##################################
+if LoadPackage("singular","1.0",false) then
+ReadPackage("HAP","lib/HapPrime/singular.gi");
+fi;
+ReadPackage("HAP","lib/HapPrime/rings.gi");
+ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gi");
+ReadPackage("HAP","lib/HapPrime/gradedalgebra.gi");
+ReadPackage("HAP","lib/HapPrime/polynomials.gi");
+ReadPackage("HAP","lib/HapPrime/derivation.gi");
+ReadPackage("HAP","lib/HapPrime/happrime.gi");
+
+
+
 
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

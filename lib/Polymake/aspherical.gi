@@ -165,7 +165,7 @@ od;
 AppendTo(tmpin,"\n");
 od;
 
-Exec(Concatenation("polymake ", tmpin, " FEASIBLE > ",tmpout));
+Exec(Concatenation(POLYMAKE_PATH, tmpin, " FEASIBLE > ",tmpout));
 Exec(Concatenation("rm ",tmpin));
 input := InputTextFile(tmpout);
 x:=ReadLine(input);

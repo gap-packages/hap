@@ -56,7 +56,10 @@
 \hyperdef{L}{X8735FC5E7BB5CE3A}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{ResolutionAbelianGroup} \texttt{ ResolutionAbelianGroup(L,n)} {\nobreakspace} \texttt{ ResolutionAbelianGroup(G,n)} 
+\begin{tabular}{|l|} \index{FreeResolution} \texttt{ FreeResolution(P,n)} 
+
+ Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. \\
+ \index{ResolutionAbelianGroup} \texttt{ ResolutionAbelianGroup(L,n)} {\nobreakspace} \texttt{ ResolutionAbelianGroup(G,n)} 
 
  Inputs a list $L:=[m_1,m_2, ..., m_d]$ of nonnegative integers, and a positive integer $n$. It returns $n$ terms of a $ZG$-resolution for the abelian group $G=Z_L[1]+Z_L[2]+···+Z_L[d]$ . 
 
@@ -79,7 +82,7 @@ central series by setting $T_1=T$ and $T_{i+1}=[T_i,G]$.
 to test whether $Q$ is finite and a "more canonical" resolution is constructed. \\
  \index{ResolutionArtinGroup} \texttt{ ResolutionArtinGroup(D,n)} 
 
- Inputs a Coxeter diagram $D$ and an integer $n>1$. It returns $n$ terms of a free $ZG$-resolution $R$ where $G$ is the Artin monoid associated to $D$. It is conjectured that $R$ is also a free resolution for the Artin group $G$. The conjecture is known to hold in \href{About/aboutArtinGroups.html} {certain cases}.
+ Inputs a Coxeter diagram $D$ and an integer $n>1$. It returns $n$ terms of a free $ZG$-resolution $R$ where $G$ is the Artin monoid associated to $D$. It is conjectured that $R$ is also a free resolution for the Artin group $G$. The conjecture is known to hold in \href{../www/SideLinks/About/aboutArtinGroups.html} {certain cases}.
 
  $G=R.group$ is infinite and returned as a finitely presented group. The list $R.elts$ is a partial listing of the elements of $G$ which grows as $R$ is used. Initially $R.elts$ is empty and then, any time the boundary of a resolution generator is called, $R.elts$ is updated to include elements of $G$ involved in the boundary.
 
@@ -94,12 +97,17 @@ on $R$ will be returned. \\
  \index{ResolutionBieberbachGroup (HAPcryst)} \texttt{ ResolutionBieberbachGroup( G ) } \\
  \texttt{ ResolutionBieberbachGroup( G, v ) } 
 
- Inputs a Bieberbach group $G$ (represented using AffineCrystGroupOnRight as in the GAP package Cryst). It
-also optionally inputs a choice of vector $v$ in the euclidean space $R^n$ on which $G$ acts freely. The function returns $n+1$ terms of the free $ZG$-resolution of $Z$ arising as the cellular chain complex of the tesselation of $R^n$ by the Dirichlet-Voronoi fundamental domain determined by $v$. 
+ Inputs a torsion free crystallographic group $G$, also known as a Bieberbach group, represented using AffineCrystGroupOnRight
+as in the GAP package Cryst. It also optionally inputs a choice of vector $v$ in the euclidean space $R^n$ on which $G$ acts freely. The function returns $n+1$ terms of the free $ZG$-resolution of $Z$ arising as the cellular chain complex of the tesselation of $R^n$ by the Dirichlet-Voronoi fundamental domain determined by $v$. 
 
- This is a HAPcryst function and is thus only available if HAPcryst is loaded. 
+ This function is part of the HAPcryst package written by Marc Roeder and thus
+requires the HAPcryst package to be loaded. 
 
  The function requires the use of Polymake software. \\
+ \index{ResolutionCoxeterGroup} \texttt{ ResolutionCoxeterGroup(D,n)} 
+
+ Inputs a Coxeter diagram $D$ and an integer $n>1$. It returns $k$ terms of a free $ZG$-resolution $R$ where $G$ is the Coxeter group associated to $D$. Here $k$ is the maximum of n and the number of vertices in the Coxeter diagram. At
+present the implementation is only for finite Coxeter groups and the group $G$ is returned as a permutation group. The contracting homotopy on $R$ has not yet been implemented! \\
  \index{ResolutionDirectProduct} \texttt{ ResolutionDirectProduct(R,S) } {\nobreakspace} \texttt{ ResolutionDirectProduct(R,S,"internal")} 
 
  Inputs a $ZG$-resolution $R$ and $ZH$-resolution $S$. It outputs a $ZD$-resolution for the direct product $D=G x H$.
@@ -260,7 +268,10 @@ probably won't work with the function $EquivariantChainMap()$. This $ZK$-resolut
 \hyperdef{L}{X78D1062D78BE08C1}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{HomToIntegers} \texttt{ HomToIntegers(X) } 
+\begin{tabular}{|l|} \index{ExtendScalars} \texttt{ ExtendScalars(R,G,EltsG) } 
+
+ Inputs a $ZH$-resolution $R$, a group $G$ containing $H$ as a subgroup, and a list $EltsG$ of elements of $G$. It returns the free $ZG$-resolution $(R \otimes_{ZH} ZG)$. The returned resolution $S$ has S!.elts:=EltsG. This is a resolution of the $ZG$-module $(Z \otimes_{ZH} ZG)$. (Here $\otimes_{ZH}$ means tensor over $ZH$.) \\
+ \index{HomToIntegers} \texttt{ HomToIntegers(X) } 
 
  Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$. It returns the cochain complex or cochain map obtained by applying $HomZG( _ , Z)$ where $Z$ is the trivial module of integers (characteristic 0). \\
  \index{HomToIntegersModP} \texttt{ HomToIntegersModP(R) } 
@@ -274,6 +285,9 @@ applying $HomZG( _ , A)$ where $A$ is the $ZG$-module $Z_n$ with $G$ action via 
 
  Inputs a $ZG$-resolution $R$ and an abelian G-outer group A. It returns the G-cocomplex obtained by
 applying $HomZG( _ , A)$. (At present this function does not handle equivariant chain maps.) \\
+ \index{InduceScalars} \texttt{ InduceScalars(R,hom) } 
+
+ Inputs a $ZQ$-resolution $R$ and a surjective group homomorphism $hom:G\rightarrow Q$. It returns the unduced non-free $ZG$-resolution. \\
  \index{LowerCentralSeriesLieAlgebra} \texttt{ LowerCentralSeriesLieAlgebra(G) } {\nobreakspace} \texttt{ LowerCentralSeriesLieAlgebra(f) } 
 
  Inputs a pcp group $G$. If each quotient $G_c/G_{c+1}$ of the lower central series is free abelian or p-elementary abelian (for fixed
@@ -289,9 +303,18 @@ abelian then the function returns fail.
 
  Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$. It returns the chain complex or chain map obtained by tensoring with the
 trivial module of integers (characteristic 0). \\
+ \index{TensorWithTwistedIntegers} \texttt{ TensorWithTwistedIntegers(X,rho) } 
+
+ Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$. It also inputs a function $rho\colon G\rightarrow \mathbb Z$ where the action of $g \in G$ on $\mathbb Z$ is such that $g.1 = rho(g)$. It returns the chain complex or chain map obtained by tensoring with the
+(twisted) module of integers (characteristic 0). \\
  \index{TensorWithIntegersModP} \texttt{ TensorWithIntegersModP(X,p) } 
 
- Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$, and a prime $p$. It returns the chain complex or chain map obtained by tensoring with the
+ Inputs either a $ZG$-resolution $X=R$, or a characteristics 0 chain complex, or an equivariant chain map $X = (F:R \longrightarrow S)$, or a chain map between characteristic 0 chain complexes, together with a
+prime $p$. It returns the chain complex or chain map obtained by tensoring with the
+trivial module of integers modulo $p$. \\
+ \index{TensorWithTwistedIntegersModP} \texttt{ TensorWithTwistedIntegersModP(X,p,rho) } 
+
+ Inputs either a $ZG$-resolution $X=R$, or an equivariant chain map $X = (F:R \longrightarrow S)$, and a prime $p$. It also inputs a function $rho\colon G\rightarrow \mathbb Z$ where the action of $g \in G$ on $\mathbb Z$ is such that $g.1 = rho(g)$. It returns the chain complex or chain map obtained by tensoring with the
 trivial module of integers modulo $p$. \\
  \index{TensorWithRationals} \texttt{ TensorWithRationals(R) } 
 
@@ -307,7 +330,13 @@ rational numbers. \\
 \hyperdef{L}{X7A06103979B92808}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{ChevalleyEilenbergComplex} \texttt{ ChevalleyEilenbergComplex(X,n) } 
+\begin{tabular}{|l|} \index{ChainComplex} \texttt{ChainComplex(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns the (often very large) cellular chain complex of $T$. \\
+ \index{ChainComplexOfPair} \texttt{ChainComplexOfPair(T,S)} 
+
+ Inputs a pure cubical complex or cubical complex $T$ and contractible subcomplex $S$. It returns the quotient $C(T)/C(S)$ of cellular chain complexes. \\
+ \index{ChevalleyEilenbergComplex} \texttt{ ChevalleyEilenbergComplex(X,n) } 
 
  Inputs either a Lie algebra $X=A$ (over the ring of integers $Z$ or over a field $K$) or a homomorphism of Lie algebras $X=(f:A \longrightarrow B)$, together with a positive integer $n$. It returns either the first $n$ terms of the Chevalley-Eilenberg chain complex $C(A)$, or the induced map of Chevalley-Eilenberg complexes $C(f):C(A) \longrightarrow C(B)$. 
 
@@ -322,6 +351,16 @@ rational numbers. \\
 of the algebra $A$). 
 
  This function was written by Pablo Fernandez Ascariz \\
+ \index{SuspendedChainComplex} \texttt{SuspendedChainComplex(C)} 
+
+ Inputs a chain complex $C$ and returns the chain complex $S$ defined by applying the degree shift $S_n = C_{n-1}$ to chain groups and boundary homomorphisms. \\
+ \index{ReducedSuspendedChainComplex} \texttt{ReducedSuspendedChainComplex(C)} 
+
+ Inputs a chain complex $C$ and returns the chain complex $S$ defined by applying the degree shift $S_n = C_{n-1}$ to chain groups and boundary homomorphisms for all $n > 0$. The chain complex $S$ has trivial homology in degree $0$ and $S_0=\mathbb Z$. \\
+ \index{CoreducedChainComplex} \texttt{CoreducedChainComplex(C)} \texttt{CoreducedChainComplex(C,2)} 
+
+ Inputs a chain complex $C$ and returns a quasi-isomorphic chain complex $D$. In many cases the complex $D$ should be smaller than $C$. If an optional second input argument is set equal to 2 then an alternative
+method is used for reducing the size of the chain complex. \\
 \end{tabular}\\[2mm]
 \end{center}
 
@@ -334,9 +373,9 @@ of the algebra $A$).
  \begin{center}
 \begin{tabular}{|l|} \index{Cohomology} \texttt{Cohomology(X,n) } 
 
- Inputs either a cochain complex $X=C$ (or G-cocomplex C) or a cochain map $X=(C \longrightarrow D)$ over the integers $Z$ together with a non-negative intereg $n$. 
+ Inputs either a cochain complex $X=C$ (or G-cocomplex C) or a cochain map $X=(C \longrightarrow D)$ in characteristic $p$ together with a non-negative intereg $n$. 
 \begin{itemize}
-\item If $X=C$ then the torsion coefficients of $H^n(C)$ are retuned.
+\item If $X=C$ and $p=0$ then the torsion coefficients of $H^n(C)$ are retuned. If $X=C$ and $p$ is prime then the dimension of $H^n(C)$ are retuned. 
 \item If $X=(C \longrightarrow D)$ then the induced homomorphism $H^n(C)\longrightarrow H^n(D)$ is returned as a homomorphism of finitely presented groups. 
 \end{itemize}
  \\
@@ -350,7 +389,16 @@ the cohomology class x. (At present this works only for n=1,2,3.) \\
  Inputs a cochain complex $C$ in characteristic 0, a positive integer $n$, and a prime $p$. It returns a list of those torsion coefficients of $H^n(C)$ that are positive powers of $p$. The function uses the EDIM package by Frank Luebeck. \\
  \index{GroupCohomology} \texttt{GroupCohomology(X,n) } {\nobreakspace} \texttt{GroupCohomology(X,n,p)} 
 
- Inputs a positive integer $n$ and either a finite group $X=G$ or a Coxeter diagram $X=D$ representing an infinite Artin group $G$. It returns the torsion coefficients of the integral cohomology $H^n(G,Z)$. 
+ Inputs a positive integer $n$ and either 
+\begin{itemize}
+\item  a finite group $X=G$ 
+\item  or a nilpotent Pcp-group $X=G$ 
+\item  or a space group $X=G$ 
+\item  or a list $X=D$ representing a graph of groups
+\item or a pair $X=["Artin",D]$ where $D$ is a Coxeter diagram representing an infinite Artin group $G$.
+\item or a pair $X=["Coxeter",D]$ where $D$ is a Coxeter diagram representing a finite Coxeter group $G$.
+\end{itemize}
+ It returns the torsion coefficients of the integral cohomology $H^n(G,Z)$. 
 
  There is an optional third argument which, when set equal to a prime $p$, causes the function to return the the mod $p$ cohomology $H^n(G,Z_p)$ as a list of length equal to its rank. 
 
@@ -360,13 +408,84 @@ better using the more basic functions and making the choices yourself! \\
  \index{GroupHomology} \texttt{GroupHomology(X,n)} \\
  \texttt{GroupHomology(X,n,p)} 
 
- Inputs a positive integer $n$ and either a finite group $X=G$ or a Coxeter diagram $X=D$ representing an infinite Artin group $G$. It returns the torsion coefficients of the integral homology $H_n(G,Z)$. 
+ Inputs a positive integer $n$ and either 
+\begin{itemize}
+\item  a finite group $X=G$ 
+\item  or a nilpotent Pcp-group $X=G$ 
+\item  or a space group $X=G$ 
+\item  or a list $X=D$ representing a graph of groups
+\item or a pair $X=["Artin",D]$ where $D$ is a Coxeter diagram representing an infinite Artin group $G$.
+\item or a pair $X=["Coxeter",D]$ where $D$ is a Coxeter diagram representing a finite Coxeter group $G$.
+\end{itemize}
+ It returns the torsion coefficients of the integral homology $H_n(G,Z)$. 
 
  There is an optional third argument which, when set equal to a prime $p$, causes the function to return the mod $p$ homology $H_n(G,Z_p)$ as a list of lenth equal to its rank. 
 
  This function is a composite of more basic functions, and makes choices for a
 number of parameters. For a particular group you would almost certainly be
 better using the more basic functions and making the choices yourself! \\
+ \index{PersistentHomologyOfQuotientGroupSeries} \texttt{PersistentHomologyOfQuotientGroupSeries(S,n)} \\
+ \texttt{PersistentHomologyOfQuotientGroupSeries(S,n,p,Resolution{\textunderscore}Algorithm)} 
+
+ Inputs a positive integer $n$ and a decreasing chain $S=[S_1, S_2, ..., S_k]$ of normal subgroups in a finite $p$-group $G=S_1$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of quotient homomorphisms $G \rightarrow G/S_k \rightarrow G/S_{k-1} \rightarrow ... \rightarrow G/S_2 $. The bar code is returned as a matrix containing the dimensions of the images
+of the induced homology maps. 
+
+ If one sets $p=0$ then the integral persitent homology bar code is returned. This is a matrix
+whose entries are pairs of the lists: the list of abelian invariants of the
+images of the induced homology maps and the cokernels of the induced homology
+maps. (The matrix probably does not uniquely determine the induced homology
+maps.) 
+
+ Non prime-power (and possibly infinite) groups $G$ can also be handled; in this case the prime must be entered as a third
+argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be
+entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup,
+so this must be changed for infinite groups.) \\
+ \index{PersistentCohomologyOfQuotientGroupSeries} \texttt{PersistentCohomologyOfQuotientGroupSeries(S,n)} \\
+ \texttt{PersistentCohomologyOfQuotientGroupSeries(S,n,p,Resolution{\textunderscore}Algorithm)} 
+
+ Inputs a positive integer $n$ and a decreasing chain $S=[S_1, S_2, ..., S_k]$ of normal subgroups in a finite $p$-group $G=S_1$. It returns the bar code of the persistent mod $p$ cohomology in degree $n$ of the sequence of quotient homomorphisms $G \rightarrow G/S_k \rightarrow G/S_{k-1} \rightarrow ... \rightarrow G/S_2 $. The bar code is returned as a matrix containing the dimensions of the images
+of the induced homology maps. 
+
+ If one sets $p=0$ then the integral persitent cohomology bar code is returned. This is a matrix
+whose entries are pairs of the lists: the list of abelian invariants of the
+images of the induced cohomology maps and the cokernels of the induced
+cohomology maps. (The matrix probably does not uniquely determine the induced
+homology maps.) 
+
+ Non prime-power (and possibly infinite) groups $G$ can also be handled; in this case the prime must be entered as a third
+argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be
+entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup,
+so this must be changed for infinite groups.) 
+
+ (The implementation is possibly a little less efficient than that of the
+corresponding persistent homology function.) \\
+ \index{PersistentHomologyOfSubGroupSeries} \texttt{PersistentHomologyOfSubGroupSeries(S,n)} \\
+ \texttt{PersistentHomologyOfSubGroupSeries(S,n,p,Resolution{\textunderscore}Algorithm)} 
+
+ Inputs a positive integer $n$ and a decreasing chain $S=[S_1, S_2, ..., S_k]$ of subgroups in a finite $p$-group $G=S_1$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion homomorphisms $S_k \rightarrow S_{k-1} \rightarrow ... \rightarrow S_1=G $. The bar code is returned as a binary matrix. 
+
+ Non prime-power (and possibly infinite) groups $G$ can also be handled; in this case the prime must be entered as a third
+argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) must be
+entered as a fourth argument. \\
+ \texttt{ PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) } 
+
+ Inputs a commutative diagram $D$ of finite $p$-groups and a positive integer $n$. It returns a list containing, for each homomorphism in the nerve of $D$, a triple $[k,l,m]$ where $k$ is the dimension of the source of the induced mod $p$ homology map in degree $n$, $l$ is the dimension of the image, and $m$ is the dimension of the cokernel. \\
+ \index{PersistentHomologyOfPureCubicalComplex} \texttt{PersistentHomologyOfPureCubicalComplex(L,n,p)} \\
+ \texttt{PersistentHomologyOfPureCubicalComplex(M,n,p)} 
+
+ Inputs a positive integer $n$, a prime $p$ and an increasing chain $L=[L_1, L_2, ..., L_k]$ of subcomplexes in a pure cubical complex $L_k$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion maps. The bar code is returned as a binary
+matrix. 
+
+ Alternatively, the list $L$ can be replaced by a single cubical complex $M$. The function then constructs an increasing chain $L$ with first term $M$ and final term a contracible complex. \\
+ \index{BarCode} \texttt{BarCode(P)} 
+
+ Inputs an integer persistence matrix P and returns the same information in the
+form of a binary matrix (corresponding to the usual bar code). \\
+ \index{BarCodeDisplay} \texttt{BarCodeDisplay(P)} \texttt{BarCodeDisplay(P,"mozilla")} 
+
+ Inputs an integer persistence matrix P, and an optional string specifying a
+viewer/browser. It displays a picture of the bar code (using GraphViz
+software). \\
  \index{Homology} \texttt{Homology(X,n)} 
 
  Inputs either a chain complex $X=C$ or a chain map $X=(C \longrightarrow D)$. 
@@ -395,6 +514,14 @@ answer can be set to any rational number $0${\textless}$e${\textless}= $1$ using
 SetUncertaintyTolerence(e);
 
  See the Simplicial Homology package manual for further details. \\
+ \index{HomologyVectorSpace} \texttt{HomologyVectorSpace(X,n)} 
+
+ Inputs either a chain complex $X=C$ or a chain map $X=(C \longrightarrow D)$ in prime characteristic. 
+\begin{itemize}
+\item If $X=C$ then $H_n(C)$ is retuned as a vector space.
+\item  If $X=(C \longrightarrow D)$ then the induced homomorphism $H_n(C) \longrightarrow H_n(D)$ is returned as a homomorphism of vector spaces. 
+\end{itemize}
+ \\
  \index{HomologyPrimePart} \texttt{HomologyPrimePart(C,n,p)} 
 
  Inputs a chain complex $C$ in characteristic 0, a positive integer $n$, and a prime $p$. It returns a list of those torsion coefficients of $H_n(C)$ that are positive powers of $p$. The function uses the EDIM GAP package by Frank Luebeck. \\
@@ -447,7 +574,7 @@ answer but which we can't prove yields the correct answer. \\
  \texttt{ PoincareSeries(G) } 
 
  Inputs a finite $p$-group $G$ and a positive integer $n$. It returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_p)$ for all $k$ in the range $k=1$ to $k=n$. (The second input variable can be omitted, in which case the function tries
-to choose a "reasonable" value for $n$.) 
+to choose a "reasonable" value for $n$. For $2$-groups the function PoincareSeriesLHS(G) can be used to produce an $f(x)$ that is correct in all degrees.) 
 
  In place of the group $G$ the function can also input (at least $n$ terms of) a minimal mod $p$ resolution $R$ for $G$. 
 
@@ -457,6 +584,12 @@ to choose a "reasonable" value for $n$.)
  Inputs a finite group $G$, a prime $p$, and a positive integer $n$. It returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_p)$ for all $k$ in the range $k=1$ to $k=n$. 
 
  The efficiency of this function needs to be improved. \\
+ \texttt{PoincareSeriesLHS(G) } 
+
+ Inputs a finite $2$-group $G$ and returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_2)$ for all $k$. 
+
+ This function was written by Paul Smith. It use the Singular system for
+commutative algebra. \\
  \index{Prank} \texttt{ Prank(G) } 
 
  Inputs a $p$-group $G$ and returns the rank of the largest elementary abelian subgroup. \\
@@ -523,13 +656,60 @@ setting is "medium".
 
  Inputs a mod $p$ cohomology ring $A$ (created using the preceeding function). It returns a minimal generating set
 for the ring $A$. Each generator is homogeneous. \\
+ \texttt{ Mod2CohomologyRingPresentation(G) } \\
+ \texttt{ Mod2CohomologyRingPresentation(G,n) } \\
+ \texttt{ Mod2CohomologyRingPresentation(A) } \\
+ \texttt{ Mod2CohomologyRingPresentation(R) } 
+
+ When applied to a finite $2$-group $G$ this function returns a presentation for the mod 2 cohomology ring $H^*(G,Z_2)$. The Lyndon-Hochschild-Serre spectral sequence is used to prove that the
+presentation is correct. 
+
+ When the function is applied to a $2$-group $G$ and positive integer $n$ the function first constructs $n$ terms of a free $Z_2G$-resolution $R$, then constructs the finite-dimensional graded algebra $A=H^(*\le n)(G,Z_2)$, and finally uses $A$ to approximate a presentation for $H^*(G,Z_2)$. For "sufficiently large" the approximation will be a correct presentation
+for $H^*(G,Z_2)$. 
+
+ Alternatively, the function can be applied directly to either the resolution $R$ or graded algebra $A$. 
+
+This function was written by Paul Smith. It uses the Singular commutative
+algebra package to handle the Lyndon-Hochschild-Serre spectral sequence. \\
 \end{tabular}\\[2mm]
 \end{center}
 
  }
 
  
-\chapter{\textcolor{Chapter }{ Commutator and nonabelian tensor computations}}\logpage{[ 9, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Cohomology rings of $p$-groups (mainly $p=2)$}}\logpage{[ 9, 0, 0 ]}
+\hyperdef{L}{X8731E02A82226A55}{}
+{
+ The functions on this page were written by Paul Smith. (They are included in
+HAP but they are also independently included in Paul Smiths HAPprime package.) \begin{center}
+\begin{tabular}{|l|} \index{Mod2CohomologyRingPresentation (HAPprime)} \texttt{ Mod2CohomologyRingPresentation(G) } \\
+ \texttt{ Mod2CohomologyRingPresentation(G,n) } \\
+ \texttt{ Mod2CohomologyRingPresentation(A) } \\
+ \texttt{ Mod2CohomologyRingPresentation(R) } 
+
+ When applied to a finite $2$-group $G$ this function returns a presentation for the mod 2 cohomology ring $H^*(G,Z_2)$. The Lyndon-Hochschild-Serre spectral sequence is used to prove that the
+presentation is correct. 
+
+ When the function is applied to a $2$-group $G$ and positive integer $n$ the function first constructs $n$ terms of a free $Z_2G$-resolution $R$, then constructs the finite-dimensional graded algebra $A=H^(*\le n)(G,Z_2)$, and finally uses $A$ to approximate a presentation for $H^*(G,Z_2)$. For "sufficiently large" the approximation will be a correct presentation
+for $H^*(G,Z_2)$. 
+
+ Alternatively, the function can be applied directly to either the resolution $R$ or graded algebra $A$. 
+
+This function was written by Paul Smith. It uses the Singular commutative
+algebra package to handle the Lyndon-Hochschild-Serre spectral sequence. \\
+ \index{PoincareSeriesLHS (HAPprime)} \texttt{PoincareSeriesLHS(G) } 
+
+ Inputs a finite $2$-group $G$ and returns a quotient of polynomials $f(x)=P(x)/Q(x)$ whose coefficient of $x^k$ equals the rank of the vector space $H_k(G,Z_2)$ for all $k$. 
+
+ This function was written by Paul Smith. It use the Singular system for
+commutative algebra. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Commutator and nonabelian tensor computations}}\logpage{[ 10, 0, 0 ]}
 \hyperdef{L}{X86DE968B7B20BD48}{}
 {
  \begin{center}
@@ -640,7 +820,7 @@ problem, an optional second variable $m$ can be set equal to $0$, and then the f
  }
 
  
-\chapter{\textcolor{Chapter }{ Lie commutators and nonabelian Lie tensors}}\logpage{[ 10, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Lie commutators and nonabelian Lie tensors}}\logpage{[ 11, 0, 0 ]}
 \hyperdef{L}{X7A3DC9327EE1BE6C}{}
 {
  \begin{center}
@@ -691,7 +871,7 @@ homology of $L$.
  }
 
  
-\chapter{\textcolor{Chapter }{ Generators and relators of groups}}\logpage{[ 11, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Generators and relators of groups}}\logpage{[ 12, 0, 0 ]}
 \hyperdef{L}{X7A2144518112F830}{}
 {
  \begin{center}
@@ -744,18 +924,23 @@ impose a metric on K which restricts to a Euclidean metric on each 2-cell.)
  }
 
  
-\chapter{\textcolor{Chapter }{ Orbit polytopes and fundamental domains}}\logpage{[ 12, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Orbit polytopes and fundamental domains}}\logpage{[ 13, 0, 0 ]}
 \hyperdef{L}{X7CD67FEA7A1B6345}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{Fundamental domains (HAPcryst)} \texttt{ FundamentalDomainAffineCrystGroupOnRight(v,G)} 
+\begin{tabular}{|l|} \index{CoxeterComplex} \texttt{ CoxeterComplex(D)} {\nobreakspace} \texttt{ CoxeterComplex(D,n)} 
+
+ Inputs a Coxeter diagram $D$ of finite type. It returns a non-free ZW-resolution for the associated Coxeter
+group $W$. The non-free resolution is obtained from the permutahedron of type $W$. A positive integer $n$ can be entered as an optional second variable; just the first $n$ terms of the non-free resolution are then returned. \\
+ \index{FundamentalDomainStandardSpaceGroup (HAPcryst)} \texttt{ FundamentalDomainStandardSpaceGroup(v,G)} 
 
  Inputs a crystallographic group G (represented using AffineCrystGroupOnRight
 as in the GAP package Cryst). It also inputs a choice of vector v in the
 euclidean space $R^n$ on which $G$ acts. It returns the Dirichlet-Voronoi fundamental cell for the action of $G$ on euclidean space corresponding to the vector $v$. The fundamental cell is a fundamental domain if $G$ is Bieberbach. The fundamental cell/domain is returned as a ``Polymake object''. Currently the function only applies to certain crystallographic groups. See
 the manuals to HAPcryst and HAPpolymake for full details. 
 
- This is a HAPcryst function and is thus only available if HAPcryst is loaded. 
+ This function is part of the HAPcryst package written by Marc Roeder and is
+thus only available if HAPcryst is loaded. 
 
  The function requires the use of Polymake software. \\
  \index{OrbitPolytope} \texttt{ OrbitPolytope(G,v,L) } 
@@ -809,7 +994,7 @@ Kelly. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Cocycles}}\logpage{[ 13, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Cocycles}}\logpage{[ 14, 0, 0 ]}
 \hyperdef{L}{X85A9B66278AF63D9}{}
 {
  \begin{center}
@@ -835,7 +1020,7 @@ returned as a CcGroup.
  }
 
  
-\chapter{\textcolor{Chapter }{ Words in free $ZG$-modules }}\logpage{[ 14, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Words in free $ZG$-modules }}\logpage{[ 15, 0, 0 ]}
 \hyperdef{L}{X8276B4377D092A80}{}
 {
  \begin{center}
@@ -878,7 +1063,7 @@ of $G$. The function prints the word $w$ to the screen in the form
  }
 
  
-\chapter{\textcolor{Chapter }{ $FpG$-modules}}\logpage{[ 15, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ $FpG$-modules}}\logpage{[ 16, 0, 0 ]}
 \hyperdef{L}{X81A2A3C97C09685E}{}
 {
  \begin{center}
@@ -993,7 +1178,7 @@ and simply returns the $FpG$-module homomorphism. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Meataxe modules}}\logpage{[ 16, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Meataxe modules}}\logpage{[ 17, 0, 0 ]}
 \hyperdef{L}{X85B05BBA78ED7BE2}{}
 {
  \begin{center}
@@ -1015,7 +1200,7 @@ mathematically by the existence of a short exact sequence $DM \longrightarrow FM
  }
 
  
-\chapter{\textcolor{Chapter }{ G-Outer Groups}}\logpage{[ 17, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ G-Outer Groups}}\logpage{[ 18, 0, 0 ]}
 \hyperdef{L}{X7D02CE0A83211FB7}{}
 {
  \begin{center}
@@ -1066,7 +1251,7 @@ functions Embedding(D,i) and Projection(D,i). \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Cat-1-groups}}\logpage{[ 18, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Cat-1-groups}}\logpage{[ 19, 0, 0 ]}
 \hyperdef{L}{X7B54B8CA841C517B}{}
 {
  \begin{center}
@@ -1095,7 +1280,7 @@ C. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Coxeter diagrams and graphs of groups}}\logpage{[ 19, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Coxeter diagrams and graphs of groups}}\logpage{[ 20, 0, 0 ]}
 \hyperdef{L}{X79D0502085B6734A}{}
 {
  \begin{center}
@@ -1155,59 +1340,354 @@ the injectivity of any homomorphisms. It returns true if $D$ passes the test, an
  }
 
  
-\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 20, 0, 0 ]}
-\hyperdef{L}{X7AE3B902812A10B0}{}
+\chapter{\textcolor{Chapter }{ Simplicial Complexes}}\logpage{[ 21, 0, 0 ]}
+\hyperdef{L}{X7AC76D657C578FEE}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{BoundaryMap} \texttt{ BoundaryMap(C) } 
+\begin{tabular}{|l|} \texttt{ Homology(T,n)} \texttt{ Homology(T)} 
 
- Inputs a resolution, chain complex or cochain complex $C$ and returns the function $C!.boundary$. \\
- \index{BoundaryMatrix} \texttt{ BoundaryMatrix(C,n) } 
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. It returns the n-th integral homology of $T$ as a list of torsion integers. If no value of $n$ is input then the list of all homologies of $T$ in dimensions 0 to Dimension(T) is returned . \\
+ \texttt{ Bettinumbers(T)} 
 
- Inputs a chain or cochain complex $C$ and integer $n${\textgreater}$0$. It returns the $n$-th boundary map of $C$ as a matrix. \\
- \index{Dimension} \texttt{ Dimension(C) } \\
- \texttt{ Dimension(M) } 
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$. The list of free ranks of the homology groups of $T$ in dimensions 0 to Dimension(T) is returned . \\
+ \texttt{ChainComplex(T)} 
 
- Inputs a resolution, chain complex or cochain complex $C$ and returns the function $C!.dimension$ . 
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns the (often very large) cellular chain complex of $T$. \\
+ \index{CechComplexOfPureCubicalComplex} \texttt{CechComplexOfPureCubicalComplex(T)} 
 
- Alternatively, inputs an $FpG$-module $M$ and returns its dimension as a vector space over the field of $p$ elements. \\
- \index{EvaluateProperty} \texttt{ EvaluateProperty(X,"name") } 
+ Inputs a d-dimensional pure cubical complex $T$ and returns a simplicial complex $S$. The simplicial complex $S$ has one vertex for each d-cube in $T$, and an n-simplex for each collection of n+1 d-cubes with non-trivial common
+intersection. \\
+ \index{RipsChainComplex} \texttt{RipsChainComplex(S,epsilon)} \texttt{RipsChainComplex(S,epsilon,true)} 
 
- Inputs a component object $X$ (such as a $ZG$-resolution or chain map) and a string "name" (such as "characteristic" or
-"type"). It searches $X.property$ for the pair ["name",value] and returns value. If $X.property$ does not exist, or if ["name",value] does not exist, it returns fail. \\
- \index{GroupOfResolution} \texttt{ GroupOfResolution(R) } 
+ Inputs an $n \times n$ symmetric matrix $S$ with non-negative rational entries, together with a positive rational number
+epsilon. The matrix is interpreted as that arising from a set of $n$ points in a metric space, the (i,j) entry representing the distance between
+the i-th and j-th points. (However, for the construction to work, there is no
+need for $S$ to actually arise in this way.) The function constructs the simplicial complex $X$ with $n$ vertices and with one $k$-simplex for each subset of $k$ points where any two elements in the subset are within a distance epsilon of
+each other. The function then returns the low dimensions of a chain complex $C$ which is homotopy equivalent to the cellular chain complex $C(X)$. With any luck $C$ will be smaller than $C(X)$. 
 
- Inputs a $ZG$-resolution $R$ and returns the group $G$. \\
- \index{Length} \texttt{ Length(R) } 
+ At present the function only returns $C$ up to and including dimension 2. So it can be used to compute the first
+homology of $X$. 
 
- Inputs a resolution $R$ and returns its length (i.e. the number of terms of $R$ that HAP has computed). \\
- \index{Map} \texttt{ Map(f) } 
+ If an optional third argument is set equal to true then the function returns a
+list of chain complexes whose direct sum is homotopy equivalent to $C(X)$ in low dimensions. This option can be used to calculate the homology of $C$ more efficiently. \\
+ \index{VectorsToSymmetricMatrix} \texttt{VectorsToSymmetricMatrix(M)} \texttt{VectorsToSymmetricMatrix(M,distance)} 
 
- Inputs a chain map, or cochain map or equivariant chain map $f$ and returns the mapping function (as opposed to the target or the source of $f$) . \\
- \index{Source} \texttt{ Source(f) } 
+ Inputs a matrix $M$ of rational numbers and returns a symmetric matrix $S$ whose $(i,j)$ entry is the distance between the $i$-th row and $j$-th rows of $M$ where distance is given by the sum of the absolute values of the coordinate
+differences. 
 
- Inputs a chain map, or cochain map, or equivariant chain map, or $FpG$-module homomorphism $f$ and returns it source. \\
- \index{Target} \texttt{ Target(f) } 
+ Optionally, a function distance(v,w) can be entered as a second argument. This
+function has to return a rational number for each pair of rational vectors $v,w$ of length Length(M[1]). \\
+ \index{EulerCharacteristic} \texttt{EulerCharacteristic(T)} 
 
- Inputs a chain map, or cochain map, or equivariant chain map, or $FpG$-module homomorphism $f$ and returns its target. \\
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns its Euler characteristic. \\
+ \index{MaximalSimplicesToSimplicialComplex} \texttt{MaximalSimplicesToSimplicialComplex(L)} 
+
+ Inputs a list L whose entries are lists of vertices representing the maximal
+simplices of a simplicial complex. The simplicial complex is returned. Here a
+"vertex" is a GAP object such as an integer or a subgroup. \\
+ \index{SkeletonOfSimplicialComplex} \texttt{SkeletonOfSimplicialComplex(S,k)} 
+
+ Inputs a simplicial complex $S$ and a positive integer $k$ less than or equal to the dimension of $S$. It returns the truncated $k$-dimensional simplicial complex $S^k$ (and leaves $S$ unchanged). \\
+ \index{QuillenComplex} \texttt{QuillenComplex(G)} 
+
+ Inputs a finite group $G$ and returns, as a simplicial complex, the order complex of the poset of
+non-trivial elementary abelian subgroups of $G$. \\
 \end{tabular}\\[2mm]
 \end{center}
 
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 21, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Cubical Complexes}}\logpage{[ 22, 0, 0 ]}
+\hyperdef{L}{X7D67D5F3820637AD}{}
+{
+ \begin{center}
+\begin{tabular}{|l|} \index{ArrayToPureCubicalComplex} \texttt{ ArrayToPureCubicalComplexA,n)} 
+
+ Inputs an integer array $A$ of dimension $d$ and an integer $n$. It returns a d-dimensional pure cubical complex corresponding to the
+black/white "image" determined by the threshold $n$ and the values of the entries in $A$. (Integers below the threshold correspond to a black pixel, and higher
+integers correspond to a white pixel.) \\
+ \index{PureCubicalComplex} \texttt{PureCubicalComplexA,n)} 
+
+ Inputs a binary array $A$ of dimension $d$. It returns the corresponding d-dimensional pure cubical complex. \\
+ \index{PureCubicalComplexIntersection} \texttt{PureCubicalComplexIntersection(S,T)} 
+
+ Inputs two pure cubical complexes with common dimension and array size. It
+returns the intersection of the two complexes. (An entry in the binary array
+of the intersection has value 1 if and only if the corresponding entries in
+the binary arrays of S and T both have value 1.) \\
+ \index{PureCubicalComplexUnion} \texttt{PureCubicalComplexUnion(S,T)} 
+
+ Inputs two pure cubical complexes with common dimension and array size. It
+returns the union of the two complexes. (An entry in the binary array of the
+union has value 1 if and only if at least one of the corresponding entries in
+the binary arrays of S and T has value 1.) \\
+ \index{PureCubicalComplexDifference} \texttt{PureCubicalComplexDifference(S,T)} 
+
+ Inputs two pure cubical complexes with common dimension and array size. It
+returns the difference S-T. (An entry in the binary array of the difference
+has value 1 if and only if the corresponding entry in the binary array of S is
+1 and the corresponding entry in the binary array of T is 0.) \\
+ \index{ReadImageAsPureCubicalComplex} \texttt{ ReadImageAsPureCubicalComplex("file.png",n)} 
+
+ Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer $n$ between 0 and 765. It returns a 2-dimensional pure cubical complex based on
+the black/white version of the image determined by the threshold $n$. \\
+ \index{ReadImageSequenceAsPureCubicalComplex} \texttt{ ReadImageSequenceAsPureCubicalComplex("directory",n)} 
+
+ Reads the name of a directory containing a sequence of image files (ordered
+alphanumerically), and an integer $n$ between 0 and 765. It returns a 3-dimensional pure cubical complex based on
+the black/white version of the images determined by the threshold $n$. \\
+ \texttt{ Size(T)} 
+
+ This returns the number of non-zero entries in the binary array of the pure
+cubical complex T. \\
+ \index{WritePureCubicalComplexAsImage} \texttt{ WritePureCubicalComplexAsImage(T,"filename","ext")} 
+
+ Inputs a 2-dimensional pure cubical complex T, and a filename followed by its
+extension (e.g. "myfile" followed by "png"). A black/white image is saved to
+the file. \\
+ \index{ViewPureCubicalComplex} \texttt{ ViewPureCubicalComplex(T)} \texttt{ ViewPureCubicalComplex(T,"mozilla")} 
+
+ Inputs a 2-dimensional pure cubical complex T, and optionally a command such
+as "mozilla" for viewing image files. A black/white image is displayed. \\
+ \index{Homology} \texttt{ Homology(T,n)} \texttt{ Homology(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. It returns the n-th integral homology of $T$ as a list of torsion integers. If no value of $n$ is input then the list of all homologies of $T$ in dimensions 0 to Dimension(T) is returned . \\
+ \index{Bettinumbers} \texttt{ Bettinumbers(T,n)} \texttt{ Bettinumbers(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and a non-negative integer $n$. The free rank of the n-th integral homology group of $T$ is returned. If no value for n is input then the list of Betti numbers in
+dimensions 0 to Dimension(T) is returned . \\
+ \index{DirectProductOfPureCubicalComplexes} \texttt{DirectProductOfPureCubicalComplexes(M,N)} 
+
+ Inputs two cubical complexes $M,N$ and returns their direct product $D$ as a cubical complex. The dimension of $D$ is the sum of the dimensions of $M$ and $N$. \\
+ \texttt{EulerCharacteristic(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns its Euler characteristic. \\
+ \index{PathComponentOfPureCubicalComplex} \texttt{ PathComponentOfPureCubicalComplex(T,n)} 
+
+ Inputs a pure cubical complex $T$ and an integer $n$ in the rane 1, ..., Bettinumbers(T)[1] . It returns the n-th path component of $T$ as a pure cubical complex. The value $n=0$ is also allowed, in which case the number of path components is returned. \\
+ \texttt{ChainComplex(T)} 
+
+ Inputs a pure cubical complex, or cubical complex, or simplicial complex $T$ and returns the (often very large) cellular chain complex of $T$. \\
+ \texttt{ChainComplexOfPair(T,S)} 
+
+ Inputs a pure cubical complex or cubical complex $T$ and contractible subcomplex $S$. It returns the quotient $C(T)/C(S)$ of cellular chain complexes. \\
+ \index{ChainInclusionOfPureCubicalPair} \texttt{ChainInclusionOfPureCubicalPair(S,T)} 
+
+ Inputs a pure cubical complex $T$ and subcomplex $S$. It returns the chain inclusion $C(S) \rightarrow C(T)$ of cellular chain complexes. \\
+ \index{ChainMapOfPureCubicalPairs} \texttt{ChainMapOfPureCubicalPairs(M,S,N,T)} 
+
+ Inputs a pure cubical complex $N$ and subcomplexes $M$, $T$ and $S$ in $T$. It returns the chain map $C(M/S) \rightarrow C(N/T)$ of quotient cellular chain complexes. \\
+ \index{ContractPureCubicalComplex} \texttt{ ContractPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ of dimension $d$ and removes $d$-dimensional cells from $T$ without changing the homotopy type of $T$. When the function has been applied, no further $d$-cells can be removed from $T$ without changing its homotopy type. This function modifies $T$. \\
+ \index{ContractedComplex} \texttt{ ContractedComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns a structural copy of the complex obtained from $T$ by applying the function ContractPureCubicalComplex(T). \\
+ \index{ContractibleSubomplexOfPureCubicalComplex} \texttt{ ContractibleSubomplexOfPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns a maximal contractible subcomplex. \\
+ \index{AlmostContractibleSubomplexOfPureCubicalComplex} \texttt{ AlmostContractibleSubomplexOfPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns a (not necessarily connected) subcomplex having trivial homology
+in all degrees greater than $0$. \\
+ \index{HomotopyEquivalentMaximalPureCubicalSubcomplex} \texttt{ HomotopyEquivalentMaximalPureCubicalSubcomplex(T,S)} 
+
+ Inputs a pure cubical complex $T$ together with a subcomplex $S$. It returns a subcomplex $H$ of $T$ which contains $S$ and is maximal with respect to the property that it is homotopy equivalent to $S$. \\
+ \index{HomotopyEquivalentMinimalPureCubicalSubcomplex} \texttt{ HomotopyEquivalentMinimalPureCubicalSubcomplex(T,S)} 
+
+ Inputs a pure cubical complex $T$ together with a subcomplex $S$. It returns a subcomplex $H$ of $T$ which contains $S$ and is minimal with respect to the property that it is homotopy equivalent to $T$. \\
+ \index{BoundaryOfPureCubicalComplex} \texttt{ BoundaryOfPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns its boundary as a pure cubical complex. The boundary consists of
+all cubes which have one or more facets that lie in just the one cube. \\
+ \index{SingularitiesOfPureCubicalComplex} \texttt{SingularitiesOfPureCubicalComplex(T,radius,tolerance)} 
+
+ Inputs a pure cubical complex $T$ together with a positive integer "radius" and an integer "tolerance" in the
+range 1..100. It returns the subcomplex of those points in the boundary where
+the boundary is not differentiable. (The method for deciding differentiability
+at a point is crude/discrete, prone to errors and depends on the radius and
+tolerance.) \\
+ \index{ThickenedPureCubicalComplex} \texttt{ ThickenedPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns a pure cubical complex $S$. If a euclidean cube is in $T$ then this cube and all its neighbouring cubes are included in $S$. \\
+ \index{ComplementOfPureCubicalComplex} \texttt{ ComplementOfPureCubicalComplex(T)} 
+
+ Inputs a pure cubical complex $T$ and returns a pure cubical complex $S$. A euclidean cube is in $S$ precisely when the cube is not in $T$. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Commutative diagrams and abstract categories}}\logpage{[ 23, 0, 0 ]}
+\hyperdef{L}{X83AAC8367CC7686F}{}
+{
+ \\
+\textsc{COMMUTATIVE DIAGRAMS} \\
+\\
+ \begin{center}
+\begin{tabular}{|l|} \index{HomomorphismChainToCommutativeDiagram} \texttt{ HomomorphismChainToCommutativeDiagram(H) } 
+
+ Inputs a list $H=[h_1,h_2,...,h_n]$ of mappings such that the composite $h_1h_2...h_n$ is defined. It returns the list of composable homomorphism as a commutative
+diagram. \\
+ \index{NormalSeriesToQuotientDiagram} \texttt{ NormalSeriesToQuotientDiagram(L) } \texttt{NormalSeriesToQuotientDiagram(L,M)} 
+
+ Inputs an increasing (or decreasing) list $L=[L_1,L_2,...,L_n]$ of normal subgroups of a group $G$ with $G=L_n$. It returns the chain of quotient homomorphisms $G/L_i \rightarrow G/L_{i+1}$ as a commutative diagram. 
+
+ Optionally a subseries $M$ of $L$ can be entered as a second variable. Then the resulting diagram of quotient
+groups has two rows of horizontal arrows and one row of vertical arrows. \\
+ \index{NerveOfCommutativeDiagram} \texttt{ NerveOfCommutativeDiagram(D) } 
+
+ Inputs a commutative diagram $D$ and returns the commutative diagram $ND$ consisting of all possible composites of the arrows in $D$. \\
+ \index{GroupHomologyOfCommutativeDiagram} \texttt{ GroupHomologyOfCommutativeDiagram(D,n) } \texttt{ GroupHomologyOfCommutativeDiagram(D,n,prime) } \texttt{ GroupHomologyOfCommutativeDiagram(D,n,prime,Resolution{\textunderscore}Algorithm) } 
+
+ Inputs a commutative diagram $D$ of $p$-groups and positive integer $n$. It returns the commutative diagram of vector spaces obtained by applying mod
+p homology. 
+
+ Non-prime power groups can also be handled if a prime $p$ is entered as the third argument. Integral homology can be obtained by setting $p=0$. For $p=0$ the result is a diagram of groups. 
+
+ A particular resolution algorithm, such as ResolutionNilpotentGroup, can be
+entered as a fourth argument. For positive $p$ the default is ResolutionPrimePowerGroup. For $p=0$ the default is ResolutionFiniteGroup. \\
+ \index{PersistentHomologyOfCommutativeDiagramOfPGroups} \texttt{ PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) } 
+
+ Inputs a commutative diagram $D$ of finite $p$-groups and a positive integer $n$. It returns a list containing, for each homomorphism in the nerve of $D$, a triple $[k,l,m]$ where $k$ is the dimension of the source of the induced mod $p$ homology map in degree $n$, $l$ is the dimension of the image, and $m$ is the dimension of the cokernel. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ \textsc{ABSTRACT CATEGORIES} \\
+\\
+ \begin{center}
+\begin{tabular}{|l|} \index{CategoricalEnrichment} \texttt{ CategoricalEnrichment(X,Name) } 
+
+ Inputs a structure $X$ such as a group or group homomorphism, together with the name of some existing
+category such as Name:=Category{\textunderscore}of{\textunderscore}Groups or
+Category{\textunderscore}of{\textunderscore}Abelian{\textunderscore}Groups. It
+returns, as appropriate, an object or arrow in the named category. \\
+ \index{IdentityArrow} \texttt{ IdentityArrow(X) } 
+
+ Inputs an object $X$ in some category, and returns the identity arrow on the object $X$. \\
+ \index{InitialArrow} \texttt{ InitialArrow(X) } 
+
+ Inputs an object $X$ in some category, and returns the arrow from the initial object in the
+category to $X$. \\
+ \index{TerminalArrow} \texttt{ TerminalArrow(X) } 
+
+ Inputs an object $X$ in some category, and returns the arrow from $X$ to the terminal object in the category. \\
+ \index{HasInitialObject} \texttt{ HasInitialObject(Name) } 
+
+ Inputs the name of a category and returns true or false depending on whether
+the category has an initial object. \\
+ \index{HasTerminalObject} \texttt{ HasTerminalObject(Name) } 
+
+ Inputs the name of a category and returns true or false depending on whether
+the category has a terminal object. \\
+ \index{Source} \texttt{ Source(f) } 
+
+ Inputs an arrow $f$ in some category, and returns its source. \\
+ \index{Target} \texttt{ Target(f) } 
+
+ Inputs an arrow $f$ in some category, and returns its target. \\
+ \index{CategoryName} \texttt{ CategoryName(X) } 
+
+ Inputs an object or arrow $X$ in some category, and returns the name of the category. \\
+ \texttt{ "*", "=", "+", "-" } 
+
+ Composition of suitable arrows $f,g$ is given by $f*g$ when the source of $f$ equals the target of $g$. (Warning: this differes to the standard GAP convention.) 
+
+ Equality is tested using $f=g$. 
+
+In an additive category the sum and difference of suitable arrows is given by $f+g$ and $f-g$. \\
+ \index{Object} \texttt{ Object(X) } 
+
+ Inputs an object $X$ in some category, and returns the GAP structure $Y$ such that $X=CategoricalEnrichment(Y,CategoryName(X))$. \\
+ \index{Mapping} \texttt{ Mapping(X) } 
+
+ Inputs an arrow $f$ in some category, and returns the GAP structure $Y$ such that $f=CategoricalEnrichment(Y,CategoryName(X))$. \\
+ \index{IsCategoryObject} \texttt{ IsCategoryObject(X) } 
+
+ Inputs $X$ and returns true if $X$ is an object in some category. \\
+ \index{IsCategoryArrow} \texttt{ IsCategoryArrow(X) } 
+
+ Inputs $X$ and returns true if $X$ is an arrow in some category. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Arrays and Pseudo lists}}\logpage{[ 24, 0, 0 ]}
+\hyperdef{L}{X7B71D3EA7B30ADAB}{}
+{
+ \begin{center}
+\begin{tabular}{|l|} \index{Array} \texttt{ Array(A,f)} 
+
+ Inputs an array $A$ and a function $f$. It returns the the array obtained by applying $f$ to each entry of $A$ (and leaves $A$ unchanged). \\
+ \index{ArrayDimension} \texttt{ ArrayDimension(A)} 
+
+ Inputs an array $A$ and returns its dimension. \\
+ \index{ArrayDimensions} \texttt{ ArrayDimensions(A)} 
+
+ Inputs an array $A$ and returns its dimensions. \\
+ \index{ArraySum} \texttt{ ArraySum(A)} 
+
+ Inputs an array $A$ and returns the sum of its entries. \\
+ \index{ArrayValue} \texttt{ ArrayValue(A,x)} 
+
+ Inputs an array $A$ and a coordinate vector $x$. It returns the value of the entry in $A$ with coordinate $x$. \\
+ \index{ArrayValueFunctions} \texttt{ ArrayValueFunctions(d)} 
+
+ Inputs a positive integer $d$ and returns an efficient version of the function ArrayValue for arrays of
+dimension $d$. \\
+ \index{ArrayAssign} \texttt{ ArrayAssign(A,x,n)} 
+
+ Inputs an array $A$ and a coordinate vector $x$ and an integer $n$. It sets the entry of $A$ with coordinate $x$ equal to $n$. \\
+ \index{ArrayAssignFunctions} \texttt{ ArrayAssign(d)} 
+
+ Inputs a positive integer $d$ and returns an efficient version of the function ArrayAssign for arrays of
+dimension $d$. \\
+ \index{ArrayIterate} \texttt{ ArrayIterate(d)} 
+
+ Inputs a positive integer $d$ and returns a function ArrayIt(Dimensions,f). This function inputs a list
+Dimensions of $d$ positive integers and also a function $f(x)$. It applies the function $f(x)$ to each integer list $x$ of length $d$ with entries $x[i]$ in the range [1..Dimension[i]]. \\
+ \index{FrameArray} \texttt{ FrameArray(A)} 
+
+ Inputs an array $A$ and returns the array obtained by appending a 0 to the beginning and end of
+each "row" of the array. \\
+ \index{UnframeArray} \texttt{ UnframeArray(A)} 
+
+ Inputs an array $A$ and returns the array obtained by removing the first and last entry in each
+"row" of the array. \\
+ \index{Add} \texttt{ Add(L,x)} 
+
+ Let $L$ be a pseudo list of length $n$, and $x$ an object compatible with the entries in $L$. If $x$ is not in $L$ then this operation converts $L$ into a pseudo list of length n+1 by adding $x$ as the final entry. If $x$ is in $L$ the operation has no effect on $L$. \\
+ \index{Append} \texttt{ Append(L,K)} 
+
+ Let $L$ be a pseudo list and $K$ a list whose objects are compatible with those in $L$. This operation applies Add(L,x) for each x in $K$. \\
+ \index{ListToPseudoList} \texttt{ ListToPseudoList(L)} 
+
+ Inputs a list $L$ and returns the pseudo list representation of $L$. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 25, 0, 0 ]}
 \hyperdef{L}{X85F9DF1985B88C37}{}
 {
  \begin{center}
 \begin{tabular}{|l|} \index{ChildProcess} \texttt{ChildProcess()} \\
- \texttt{ChildProcess("computer.ac.wales")} 
+ \texttt{ChildProcess("computer.ac.wales")} \\
+ \texttt{ChildProcess(["-m", "100000M", "-T"])} \\
+ \texttt{ChildProcess("computer.ac.wales", ["-m", "100000M", "-T"])} 
 
  This starts a GAP session as a child process and returns a stream to the child
 process. If no argument is given then the child process is created on the
-local machine; otherwise the argument should be the address of a remote
+local machine; otherwise the argument should be: 1) the address of a remote
 computer for which ssh has been configured to require no password from the
-user. 
+user; (2) or a list of GAP command line options; (3) or the address of a
+computer followed by a list of command line options. 
 
  (To configure ssh so that the user can login without a password prompt from
 "thishost" to "remotehost" either consult "man ssh" or \\
@@ -1267,7 +1747,7 @@ Currently this is only implemented for R equal to a resolution. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 22, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 26, 0, 0 ]}
 \hyperdef{L}{X85B21D56816A1B39}{}
 {
   \begin{center}
@@ -1290,93 +1770,48 @@ stream s. The output from "func;" can be accessed via the stream. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Topological Data Analysis}}\logpage{[ 23, 0, 0 ]}
-\hyperdef{L}{X7B7E077887694A9F}{}
+\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 27, 0, 0 ]}
+\hyperdef{L}{X7AE3B902812A10B0}{}
 {
  \begin{center}
-\begin{tabular}{|l|} \index{MatrixToTopologicalSpace} \texttt{ MatrixToTopologicalSpace(A,n)} 
+\begin{tabular}{|l|} \index{BoundaryMap} \texttt{ BoundaryMap(C) } 
 
- Inputs an integer matrix $A$ and an integer $n$. It returns a 2-dimensional topological space corresponding to the
-black/white image determined by the threshold $n$ and the values of the pixels in $A$. \\
- \index{ReadImageAsTopologicalSpace} \texttt{ ReadImageAsTopologicalSpace("file.png",n)} \texttt{ ReadImageAsTopologicalSpace("file.png",[m,n])} 
+ Inputs a resolution, chain complex or cochain complex $C$ and returns the function $C!.boundary$. \\
+ \index{BoundaryMatrix} \texttt{ BoundaryMatrix(C,n) } 
 
- Reads an image file ("file.png", "file.eps", "file.bmp" etc) and an integer $n$ or pair $[m,n]$ of integers between 0 and 765. It returns a topological space based on the
-black/white version of the image determined by the threshold $n$ or threshold range $[m,n]$. \\
- \index{ReadImageAsMatrix} \texttt{ ReadImageAsMatrix("file.png")} 
+ Inputs a chain or cochain complex $C$ and integer $n${\textgreater}$0$. It returns the $n$-th boundary map of $C$ as a matrix. \\
+ \index{Dimension} \texttt{ Dimension(C) } \\
+ \texttt{ Dimension(M) } 
 
- Reads an image file ("file.png", "file.eps", "file.bmp" etc) and returns an
-integer matrix whose entries are the sum of the RGB values of the pixels in
-the image. \\
- \index{WriteTopologicalSpaceAsImage} \texttt{ WriteTopologicalSpaceAsImage(T,"filename","ext")} 
+ Inputs a resolution, chain complex or cochain complex $C$ and returns the function $C!.dimension$ . 
 
- Inputs a 2-dimensional topological space T, and a filename followed by its
-extension (e.g. "myfile" followed by "png"). A black/white image is saved to
-the file. \\
- \index{ViewTopologicalSpace} \texttt{ ViewTopologicalSpace(T)} \texttt{ ViewTopologicalSpace(T,"mozilla")} 
+ Alternatively, inputs an $FpG$-module $M$ and returns its dimension as a vector space over the field of $p$ elements. \\
+ \index{EvaluateProperty} \texttt{ EvaluateProperty(X,"name") } 
 
- Inputs a topological space T, and optionally a command such as "mozilla" for
-viewing image files. A black/white image is displayed. \\
- \index{Bettinumbers} \texttt{ Bettinumbers(T,n)} \texttt{ Bettinumbers(T)} 
+ Inputs a component object $X$ (such as a $ZG$-resolution or chain map) and a string "name" (such as "characteristic" or
+"type"). It searches $X.property$ for the pair ["name",value] and returns value. If $X.property$ does not exist, or if ["name",value] does not exist, it returns fail. \\
+ \index{GroupOfResolution} \texttt{ GroupOfResolution(R) } 
 
- Inputs a topological space $T$ and a non-negative integer $n$. It returns the n-th betti number of $T$. If the integer $n$ is not input then a list of all betti numbers is returned. \\
- \index{PathComponent} \texttt{ PathComponent(T,n)} 
+ Inputs a $ZG$-resolution $R$ and returns the group $G$. \\
+ \index{Length} \texttt{ Length(R) } 
 
- Inputs a topological space $T$ and an integer $n$ in the rane 0, ..., Bettinumbers(T,0) . It returns the n-th path component of $T$ as a topological space. \\
- \index{SingularChainComplex} \texttt{ SingularChainComplex(T)} 
+ Inputs a resolution $R$ and returns its length (i.e. the number of terms of $R$ that HAP has computed). \\
+ \index{Map} \texttt{ Map(f) } 
 
- Inputs a topological space $T$ and returns a (usually very large) integral chain complex that is homotopy
-equivalent to the singular chain complex of $T$. \\
- \index{ContractTopologicalSpace} \texttt{ ContractTopologicalSpace(T)} 
+ Inputs a chain map, or cochain map or equivariant chain map $f$ and returns the mapping function (as opposed to the target or the source of $f$) . \\
+ \index{Source} \texttt{ Source(f) } 
 
- Inputs a topological space $T$ of dimension $d$ and removes $d$-dimensional cells from $T$ without changing the homotopy type of $T$. When the function has been applied, no further $d$-cells can be removed from $T$ without changing the homotopy type. \\
- \index{BoundaryTopologicalSpace} \texttt{ BoundaryTopologicalSpace(T)} 
+ Inputs a chain map, or cochain map, or equivariant chain map, or $FpG$-module homomorphism $f$ and returns it source. \\
+ \index{Target} \texttt{ Target(f) } 
 
- Inputs a topological space $T$ and returns its boundars as a topological space. \\
- \index{BoundarySingularities} \texttt{ BoundarySingularities(T)} 
-
- Inputs a topological space $T$ and returns the subspace of points in the boundary where the boundary is not
-differentiable. (The method for deciding differentiability at a point is
-crude/discrete and prone to errors.) The zeroth betti number of the set of
-points is a measure of the number of "corners" in the boundary of $T$. \\
- \index{ThickenedTopologicalSpace} \texttt{ ThickenedTopologicalSpace(T)} \texttt{ ThickenedTopologicalSpace(T,n)} 
-
- Inputs a topological space $T$ and returns a topological space $S$. If a euclidean point is in $T$ then this point and all its perpendicularly neighbouring euclidean points are
-included in $S$. 
-
- If a positive integer $n$ is input as a second argument then the thickening process is repeated $n$ times. \\
- \index{ComplementTopologicalSpace} \texttt{ ComplementTopologicalSpace(T)} 
-
- Inputs a topological space $T$ and returns a topological space $S$. A euclidean point is in $S$ precisely when the point is not in $T$. \\
- \index{ConcatenatedTopologicalSpace} \texttt{ ConcatenatedTopologicalSpace(L)} 
-
- Inputs a list $L$ of topological spaces whose underlying arrays of numbers all have equal
-dimensions. It returns a topological space $T$ got by juxtaposing the spaces $L[1], L[2], ..., L[Length(L)]$. \\
+ Inputs a chain map, or cochain map, or equivariant chain map, or $FpG$-module homomorphism $f$ and returns its target. \\
 \end{tabular}\\[2mm]
 \end{center}
 
  }
 
  
-\chapter{\textcolor{Chapter }{ Pseudo lists}}\logpage{[ 24, 0, 0 ]}
-\hyperdef{L}{X87FE4ABB83AF131C}{}
-{
- \begin{center}
-\begin{tabular}{|l|} \index{Add} \texttt{ Add(L,x)} 
-
- Let $L$ be a pseudo list of length $n$, and $x$ an object compatible with the entries in $L$. If $x$ is not in $L$ then this operation converts $L$ into a pseudo list of length n+1 by adding $x$ as the final entry. If $x$ is in $L$ the operation has no effect on $L$. \\
- \index{Append} \texttt{ Append(L,K)} 
-
- Let $L$ be a pseudo list and $K$ a list whose objects are compatible with those in $L$. This operation applies Add(L,x) for each x in $K$. \\
- \index{ListToPseudoList} \texttt{ ListToPseudoList(L)} 
-
- Inputs a list $L$ and returns the pseudo list representation of $L$. \\
-\end{tabular}\\[2mm]
-\end{center}
-
- }
-
- 
-\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 25, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 28, 0, 0 ]}
 \hyperdef{L}{X7C5563A37D566DA5}{}
 {
  \begin{center}
@@ -1417,6 +1852,14 @@ classifies the objects of $L$ according to the invariant.. \\
  The function will leave matrix $M$ unchanged but will probably change matrix $B$. 
 
  (This is a trivial rewrite of the standard GAP function $SolutionMatDestructive(${\textless}$mat${\textgreater},{\textless}$vec${\textgreater}) .) \\
+ \index{LinearHomomorphismsPersistenceMat} \texttt{ LinearHomomorphismsPersistenceMat(L) } 
+
+ Inputs a composable sequence $L$ of vector space homomorphisms. It returns an integer matrix containing the
+dimensions of the images of the various composites. The sequence $L$ is determined up to isomorphism by this matrix. \\
+ \index{NormalSeriesToQuotientHomomorphisms} \texttt{ NormalSeriesToQuotientHomomorphisms(L) } 
+
+ Inputs an (increasing or decreasing) chain $L$ of normal subgroups in some group $G$. This $G$ is the largest group in the chain. It returns the sequence of composable group
+homomorphisms $G/L[i] \rightarrow G/L[i+/-1]$. \\
  \index{TestHap} \texttt{ TestHap() } 
 
  This runs a representative sample of HAP functions and checks to see that they

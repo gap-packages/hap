@@ -85,7 +85,7 @@ AppendTo(Loggeddot,"}\n");
 
 Exec(Concatenation("dot -Tpng ",Loggeddot," -o ",Loggedpng));
 Exec(Concatenation("rm ",Loggeddot));
-Exec(Concatenation("mozilla ",Loggedpng));
+Exec(Concatenation(DISPLAY_PATH,Loggedpng));
 Exec(Concatenation("rm ",Loggedpng));
 
 end);

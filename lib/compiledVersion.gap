@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.8/");
+tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/");
 
 ########## COMPILED GAP FUNCTIONS ###################################
 LoadDynamicModule(
@@ -109,6 +109,10 @@ Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/poincare.so"));
 
+#LoadDynamicModule(
+#Concatenation(tmppath,"lib/ResolutionsModP/Compiled/primepart.so"));
+
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/ranksPrimeGroup.so"));
 ######### PERTURBATIONS #############################################
@@ -134,6 +138,9 @@ Concatenation(tmppath,"lib/Perturbations/Compiled/resExtension.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/resSubNormSeries.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Perturbations/Compiled/freeRes.so"));
+
 
 
 #################### ARTIN COXETER ##################################
@@ -143,6 +150,9 @@ Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/diagrams.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/resArtin.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/coxeterWythoff.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/noncrossing.so"));
@@ -155,6 +165,9 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/equiChainMap.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Functors/Compiled/modularEquiChainMap.so"));
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/homToZ.so"));
 
 LoadDynamicModule(
@@ -162,6 +175,13 @@ Concatenation(tmppath,"lib/Functors/Compiled/primePartDerived.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZmodP.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithTwistedZmodP.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Functors/Compiled/tensorWithTwistedZ.so"));
+
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZ.so"));
@@ -199,6 +219,10 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/modularHomology.so"));
 
 LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/modularHomologyVectSpace.so"));
+
+
+LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/homology.so"));
 
 LoadDynamicModule(
@@ -231,6 +255,10 @@ Concatenation(tmppath,"lib/Homology/Compiled/modularCohomology.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/solutionsMat.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Homology/Compiled/persistent.so"));
+
 
 ######### COHOMOLOGY RINGS ##########################################
 
@@ -279,3 +307,13 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/recordPart1.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/recordPartII.so"));
+
+################## TOPOLOGY ########################################
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/arrayOps.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/pureCubicalComplexes.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/chainComplexes.so"));
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/twoDimensional.so"));

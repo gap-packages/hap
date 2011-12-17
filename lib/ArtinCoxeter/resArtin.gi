@@ -144,6 +144,7 @@ return Objectify(HapResolution,
 	    homotopy:=fail,
 	    elts:=EltsG1,
 	    group:=G1,
+	    resGens:=ResGens,
 	    properties:=
 	    [["length",n],
 	     ["characteristic",0],
