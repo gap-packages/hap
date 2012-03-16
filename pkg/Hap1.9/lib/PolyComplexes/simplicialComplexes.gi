@@ -723,15 +723,21 @@ PC:=PathComponentsOfGraph(G,0);;
 if n=0 and bool then return PC; fi;
 if n=0 and not bool then return [1..PC]*0; fi;
 
-
 for i in [1..PC] do
 P:=PathComponentsOfGraph(G,i);
 ContractGraph(P);
 
 if bool then
-answer:=answer+Homology(SimplicialNerveOfGraph(P,n+1),n,p);
+  if n=1 then answer:=answer+Homology(TensorWithIntegersModP(
+                    RipsChainComplex(P,n),p),n);
+  else
+     answer:=answer+Homology(SimplicialNerveOfGraph(P,n+1),n,p);
+  fi;
 else
-answer:=Concatenation(answer,Homology(SimplicialNerveOfGraph(P,n+1),n));
+  if n=1 then answer:=Concatenation(answer,Homology( RipsChainComplex(P,n),n));
+  else 
+  answer:=Concatenation(answer,Homology(SimplicialNerveOfGraph(P,n+1),n));
+  fi;
 fi;
 od;
 

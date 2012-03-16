@@ -9,13 +9,11 @@ local
         S,T,
         Lngth,
         NewBoundary,
-        Bnd,
         FinalBoundary,
         NewDimension,
         n,i,pp;
 
 C:=arg[1];
-Bnd:=[];
 
 ##########################
 if Length(arg)=2 then
@@ -49,19 +47,9 @@ end;
 ############################
 
 ############################
-FinalBoundary:=function(n,i) local j;
+FinalBoundary:=function(n,i);
 
-if not IsBound(Bnd[n]) then Bnd[n]:=[]; fi;
-if not IsBound(Bnd[n][i]) then
-Bnd[n][i]:= NewBoundary(n,S[n+1][i]); 
-for j in T[n] do
-Bnd[n][i][j]:=true;
-od;
-Bnd[n][i]:=Filtered(Bnd[n][i],a->not a=true);
-
-fi;
-
-return Bnd[n][i];
+return NewBoundary(n,S[n+1][i]);
 
 end;
 ############################

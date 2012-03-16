@@ -786,6 +786,30 @@ The operation <span style="font-family: monospace;">IsHapCubicalComplex(T)</span
 returns "true" for a cubical complex T. </td>
     </tr>
     <tr>
+      <td style="vertical-align: top;">Cubical Complex&nbsp; with
+Vector Field<br>
+      </td>
+      <td style="vertical-align: top;">A discret vector field on a
+cubical complex T is represented by adding the following two components
+to T:<br>
+      <ul>
+        <li><span style="font-family: monospace;">T!.vectors</span> is
+an array with the same dimensions as T!.binaryArray. Let x be&nbsp; the
+coordinate vector of an array position. We set T!.vectors[x]=0 iif the
+cell with coordinate vector x is critical.&nbsp; We set T!.vectors[x]=y
+if there is a vector starting at the cell with coordinates x and ending
+at the cell with coordinates y.<br>
+        </li>
+        <li><span style="font-family: monospace;">T!.rewrite</span>(w)
+is a function which inputs a list w=[x<sub>1</sub>, ..., x<sub>k</sub>]
+of coordinate vectors of cells. It returns a list [y<sub>1</sub>, ..., y<sub>m</sub>]
+of the coordinate vectors of those critical cells to which the input
+cells w get&nbsp; homotopied. <br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">Simplicial Complex </td>
       <td style="vertical-align: top;">A simplicial complex is
 represented by a component object T with the following components:<br>
@@ -806,6 +830,34 @@ is a list of pairs such as
       </ul>
 The operation <span style="font-family: monospace;">IsHapSimplicialComplex(T)</span>
 returns "true" for a simplicial complex T.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Regular CW-Space<br>
+      </td>
+      <td style="vertical-align: top;">A regular CW-space is
+represented by a component object Y with the following components:<br>
+      <ul>
+        <li><span style="font-family: monospace;">Y!.boundaries[n][k]</span>
+is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>,b<sub>1</sub>,...,b<sub>t</sub>]
+where a<sub>i</sub> denote the (n-1)-dimensional cells in the boundary
+of the k-th cell of dimension n.&nbsp; Each b<sub>i</sub>=1 is the
+number of times cell a<sub>i</sub> occurs in the boundary. (For regular
+CW-spaces these incidence numbers are all 1.)<br>
+        </li>
+        <li><span style="font-family: monospace;">Y!.coboundaries[n+1][k]</span>
+is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>,b<sub>1</sub>,...,b<sub>t</sub>]
+where a<sub>i</sub> denote the (n+1)-dimensional cells in the boundary
+of the k-th cell of dimension n.&nbsp; Each b<sub>i</sub>=1 is the
+number of times cell a<sub>i</sub> occurs in the boundary.</li>
+        <li><span style="font-family: monospace;">Y!.nrCells(n)</span>
+is a function returning the number of cells in dimension n.<br>
+        </li>
+        <li><span style="font-family: monospace;">Y!.properties</span>
+is a list of properties.<br>
+        </li>
+      </ul>
+The operation <span style="font-family: monospace;">IsHapRegularCWSpace(Y)</span>
+returns "true" for a regular CW-space Y.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">Pseudo list<br>

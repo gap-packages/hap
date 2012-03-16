@@ -1,109 +1,70 @@
-
-
-## Input : w =[[m1,g11,g12,g13,..,g1n],...[mk,gk1,..,gk]]
-## Output: image of w under d_n
-InstallGlobalFunction(BarComplexBoundary,
-function(w)
-	local n,i,j,sign,
-	temp,iw,Dw;
-	Dw:=[];
-	for iw in w do 
-		n:=Length(iw)-1;
-	## Creat 0	 
-		temp:=[iw[1]];
-		for j in [2..n] do
-			Add(temp,iw[j+1]);
-		od;
-		Add(Dw,temp);
-	## Creat 1 --> n 
-		sign:=-1;
-		for i in [1..n-1] do
-		   temp:=[sign*iw[1]];
-		   for j in [1..i-1]	do
-			   Add(temp,iw[j+1]);
-		   od;
-		   Add(temp,iw[i+1]*iw[i+2]);
-		   for j in [i+2..n]do
-				Add(temp,iw[j+1]);
-		   od;
-		   Add(Dw,temp);
-		   sign:=-sign;  
-		od;
-	## Creat n+1
-		temp:=[sign*iw[1]];
-		for j in [1..n-1] do
-			Add(temp,iw[j+1]);
-		od;
-		Add(Dw,temp);
-	od;
-return Dw;
-end);
-
 #################################################################################
 #################################################################################
 InstallGlobalFunction(BarComplexEquivalence,
 function(R)
-
 local 
-	e,dim,Elts,
+	e,dim,lenR,
 	BHe,Phi,Psi,Equiv,
-	CPhi,CPsi,CEquiv;
-	Elts:=R!.elts;
+	CPhi,CPsi,CEquiv;	
+
 	e:=Identity(R!.group);
 	dim:=R!.dimension;
 	BHe:=BarResolutionEquivalence(R);
 	Phi:=BHe!.phi;
 	Psi:=BHe!.psi;
 	Equiv:=BHe!.equiv;
+	lenR:=EvaluateProperty(R,"length");
 #################################################	
 CPhi:=function(n,w)  ###w:=[[m1,g11..,g1n],[mk,gk1,..gkn]]
-	local ew,iw,temp,phiw,i,Zw;
-	ew:=[];
+	local Ew,iw,tmp,phiw,i,Rew;
+	
+	Ew:=[];  
 	for iw in w do  
-		temp:=[iw[1],e]; #### add indentity element
+		tmp:=[iw[1],e]; #### add indentity element
 		for i in [2..n+1] do
-			Add(temp,iw[i]);
+			Add(tmp,iw[i]);
 		od;
-		Add(ew,temp);
+		Add(Ew,tmp);
 	od;
-    phiw:=Phi(n,ew);
-    Zw:= 0 * [ 1 ..dim(n)];
-	for temp in phiw do
-		i:=temp[2];
-		Zw[i]:=Zw[i]+temp[1];
+    phiw:=Phi(n,Ew);
+    Rew:= List([ 1..dim(n)],x->0);
+	for tmp in phiw do
+		i:=tmp[2];
+		Rew[i]:=Rew[i]+tmp[1];
     od;
-return Zw;
+return Rew;
 end;	
 #######################################################
 CPsi:=function(n,w)  ###w:=[[m1,e1],..,[m1,ek]] with k:=dim(n); ex w:=[[-2,1],[4,2]...]
-local 
-    psiw,temp;
-	for temp in w do
-		Add(temp,1);
+local Rew,tmp;
+	for tmp in w do
+		Add(tmp,1);
 	od;
-	psiw:=Psi(n,w);
-	for temp in psiw do
-		Remove(temp,2);
+	Rew:=Psi(n,w);
+	for tmp in Rew do
+		Remove(tmp,2);
 	od;
-return psiw;
+return Rew;
 end;	
 ########################################################		
 CEquiv:=function(n,w) ######w:=[[m1,g11..,g1n],[mk,gk1,..gkn]
-	local ew,iw,i,temp,equivw;
+	local ew,iw,i,tmp,Rew;
+	
 	ew:=[];
 	for iw in w do  
-		temp:=[iw[1],e]; #### add indentity element
+		tmp:=[iw[1],e]; #### add indentity element
 		for i in [2..n+1] do
-			Add(temp,iw[i]);
+			Add(tmp,iw[i]);
 		od;
-		Add(ew,temp);
+		Add(ew,tmp);
 	od;
-    equivw:=Equiv(n,ew);
-	for temp in equivw do
-		Remove(temp,2);
+    Rew:=Equiv(n,ew);
+	for tmp in Rew do
+		Remove(tmp,2);
 	od;
-	return equivw;
+	return Rew;
 end;
+############################################################
 #############################################################
 return rec(
             phi:=CPhi,

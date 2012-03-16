@@ -634,6 +634,17 @@ method is used for reducing the size of the chain complex. \\
  \\
  \\
  \\
+ \index{TensorProductOfChainComplexes}::::::::::::::::::::::::\\
+ \texttt{TensorProductOfChainComplexes(C,D)}\\
+ 
+
+ Inputs two chain complexes $C$ and $D$ of the same characteristic and returns their tensor product as a chain
+complex. 
+
+ This function was written by \textsc{ Le Van Luyen}. \\
+ \\
+ \\
+ \\
  \index{LefschetzNumber}::::::::::::::::::::::::\\
  \texttt{LefschetzNumber(F)}\\
  
@@ -2189,7 +2200,9 @@ C. \\
  \texttt{QuasiIsomorph(C)}\\
  
 
- Inputs a cat-1-group $C$ and returns a cat-1-group $D$ for which there exists some homomorphism $C\rightarrow D$ that induces isomorphisms on homotopy groups. \\
+ Inputs a cat-1-group $C$ and returns a cat-1-group $D$ for which there exists some homomorphism $C\rightarrow D$ that induces isomorphisms on homotopy groups. 
+
+ This function was implemented by \textsc{Le Van Luyen}. \\
  \\
  \\
  \\
@@ -2244,6 +2257,16 @@ considered as 1-outer groups). \\
  \\
  This function applies both to cat-1-groups for which IsHapCatOneGroup(G) is
 true, and to cat-1-groups produced using the Xmod package. \\
+ \\
+ This function was implemented by \textsc{Van Luyen Le}. \\
+ \\
+ \\
+ \\
+ \index{EilenbergMacLaneSimplicialGroup}::::::::::::::::::::::::\\
+ \texttt{EilenbergMacLaneSimplicialGroup(G,n,dim)}\\
+ 
+
+ Inputs a group $G$, a positive integer $n$, and a positive integer $dim $. The function returns the first $1+dim$ terms of a simplicial group with $n-1$st homotopy group equal to $G$ and all other homotopy groups equal to zero. \\
  \\
  This function was implemented by \textsc{Van Luyen Le}. \\
  \\
@@ -2384,6 +2407,34 @@ g_{2n}] + ... + [+1, h_k,g_{k1} , g_{k2} , ... , g_{kn}] $. \\
  satisfying 
 \[w - \psi ( \phi (w)) = d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) . \]
  where $d(n,-)\colon BC_n(G) \rightarrow BC_{n-1}(G)$ is the boundary homomorphism in the bar complex. \\
+ \\
+ This function was implemented by \textsc{Van Luyen Le}. \\
+ \\
+ \\
+ \\
+ \index{Bar Cocomplex}::::::::::::::::::::::::\\
+ \texttt{Representation of elements in the bar cocomplex}\\
+ 
+
+ For a group G we denote by $BC^n(G)$ the free abelian group with basis the lists $[g_1 | g_2 | ... | g_n]$ where the $g_i$ range over $G$. \\
+ \\
+ We represent a word \\
+ \\
+ $w = [g_{11} | g_{12} | ... | g_{1n}] - [g_{21} | g_{22} | ... | g_{2n}] + ...
++ [g_{k1} | g_{k2} | ... | g_{kn}] $ \\
+ \\
+ in $BC^n(G)$ as a list of lists: \\
+ \\
+ $ [ [+1,g_{11} , g_{12} , ... , g_{1n}] , [-1, g_{21} , g_{22} , ... | g_{2n}] +
+... + [+1, g_{k1} , g_{k2} , ... , g_{kn}] $. \\
+ \\
+ \\
+ \\
+ \index{BarCocomplexCoboundary}::::::::::::::::::::::::\\
+ \texttt{BarCocomplexCoboundary(w)}\\
+ 
+
+ This function inputs a word $w$ in the n-th term of the bar cocomplex $BC^n(G)$ and returns its image under the coboundary homomorphism $d^n\colon BC^n(G) \rightarrow BC^{n+1}(G)$ in the bar cocomplex. \\
  \\
  This function was implemented by \textsc{Van Luyen Le}. \\
  \\
@@ -2953,6 +3004,22 @@ dimensions 0 to Dimension(T) is returned . \\
 vector field. 
 
  At present this function only works for cubical complexes of dimension 2 or 3. \\
+ \\
+ \\
+ \\
+ \index{DVFReducedCubicalComplex}::::::::::::::::::::::::\\
+ \texttt{DVFReducedCubicalComplex(T)}\\
+ 
+
+ Inputs a cubical complex $T$ and returns a non-regular cubical complex $R$ by constructing a discrete vector field. The vector field is designed to
+minimize the number of critical cells in $R$ at the cost of allowing cell attaching maps that are not homeomorphisms on
+boundaries. 
+
+ At present this function works only for 2- and 3-dimensional cubical
+complexes. 
+
+ The function ChainComplex(R) can be used to obtain the cellular chain complex
+of $R$. \\
  \\
  \\
  \\

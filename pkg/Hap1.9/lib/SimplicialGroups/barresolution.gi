@@ -1,105 +1,100 @@
 ## Input : w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]]
 ## Output: image of w under d_n
 #############################################
-##############################################
-######################################################################
-InstallGlobalFunction(ReduceAlg,
-function(w)
-	local Compare,len,iw,L,i,nL,flag;
-##############################	
-Compare:=function(w,v)
-	local n,i;
-	n:=Length(w);
-	for i in [2..n] do
-		if w[i]<>v[i] then
-			return 0;
-		fi;
-	od;
-	return 1;
-end;	
-######################	
-	len:=Length(w);
-	L:=[];
-	for iw in w do
-		flag:=0;
-		nL:=Length(L);
-		for i in [1..nL] do
-			if Compare(L[i],iw)=1 then
-				flag:=1;
-				L[i][1]:=L[i][1]+iw[1];
-					if L[i][1]=0 then 
-						Remove(L,i);
-					fi;
-				break;
+InstallGlobalFunction(AddWord,
+function(L,iw)
+	local Compare,i,nL,flag;
+	##############################	
+	Compare:=function(w,v)
+		local n,i;
+		n:=Length(w);
+		for i in [2..n] do
+			if w[i]<>v[i] then
+				return 0;
 			fi;
 		od;
-		if flag=0 then
-			Add(L,iw);
+		return 1;
+	end;	
+	#########################
+	flag:=0;
+	nL:=Length(L);
+	for i in [1..nL] do
+		if Compare(L[i],iw)=1 then
+			flag:=1;
+			L[i][1]:=L[i][1]+iw[1];
+			if L[i][1]=0 then
+				Remove(L,i);
+			fi;
+			break;
 		fi;
 	od;
-return L;	
+	if flag=0 then
+		Add(L,iw);
+	fi;
+	return;
 end);
-#######################################################################
+######################################################################
 #######################################################################
 InstallGlobalFunction(BarResolutionBoundary,    ### w:=[[m1,h1,g1,g2,...]... ]
-function(w)
-	local n,i,j,len,sign,
-	temp,iw,Dw;
+function(n,w)
+	local i,j,sign,
+	tmp,iw,Dw;
 	Dw:=[];
 	for iw in w do 
-		n:=Length(iw)-2;
 	## Creat 0	 
-		temp:=[iw[1],iw[2]*iw[3]];
+		tmp:=[iw[1],iw[2]*iw[3]];
 		for j in [2..n] do
-			Add(temp,iw[j+2]);
+			Add(tmp,iw[j+2]);
 		od;
-		Add(Dw,temp);
-	## Creat 1 --> n 
+		AddWord(Dw,tmp);
+	## Creat 1 --> n-1
 		sign:=-1;
 		for i in [1..n-1] do
-		   temp:=[sign*iw[1],iw[2]];
+		   tmp:=[sign*iw[1],iw[2]];
 		   for j in [1..i-1]	do
-			   Add(temp,iw[j+2]);
+			   Add(tmp,iw[j+2]);
 		   od;
-		   Add(temp,iw[i+2]*iw[i+3]);
+		   Add(tmp,iw[i+2]*iw[i+3]);
 		   for j in [i+2..n]do
-				Add(temp,iw[j+2]);
+				Add(tmp,iw[j+2]);
 		   od;
-		   Add(Dw,temp);
+		   AddWord(Dw,tmp);
 		   sign:=-sign;  
 		od;
-	## Creat n+1
-		temp:=[sign*iw[1],iw[2]];
+	## Creat n
+		tmp:=[sign*iw[1],iw[2]];
 		for j in [1..n-1] do
-			Add(temp,iw[j+2]);
+			Add(tmp,iw[j+2]);
 		od;
-		Add(Dw,temp);
+		AddWord(Dw,tmp);
 	od;
 return Dw;
 end);
+
 #######################################################################
 #######################################################################
 InstallGlobalFunction(BarResolutionEquivalence,
 	function(R)
-	local lenE,Elts,e,n,
+	local lenE,Elts,e,lenR,
 	hoto,dim,bound,
-	g,i,j,Psibase,tmppsi,temp,Boundbase,Jtemp,tmp,sign,baseelt,
 	SearchPos,HotoR,BarResolutionHomotopy,
-	Phi,Psi,Equiv,TPsi,
-	ReEquiv,RePhi,RePsi,ReTPsi;
-	
+	PsiBase,BoundaryBase,i,j,TmpPsi,tmp1,tmp2,sign,base,g,Jtmp,
+	Phi,Psi,Equiv;
+
 	Elts:=R!.elts;
 	lenE:=Length(Elts);
 	e:=Identity(R!.group);
 	hoto:=R!.homotopy;
 	dim:=R!.dimension;
 	bound:=R!.boundary;
-	n:=EvaluateProperty(R,"length");
+	lenR:=EvaluateProperty(R,"length");
 	
 ####################################################
+####################################################
 SearchPos:=function(g)
-   local j;
-   for j in [1..lenE] do
+   local n,j;
+   n:=Length(Elts);
+   for j in [1..n] do
 		if Elts[j]=g then
 		    return j;
 		fi;	
@@ -107,134 +102,149 @@ SearchPos:=function(g)
    Add(Elts,g);           #These two lines added by Graham
    return Length(Elts);   #
 end;
-####################################################
+######################################################
+######################################################
 HotoR:=function(n,w)  ### w:=[[m1,e1,pos1],...[mk,ek,posk]]
 	local
-		ReH, iw, Hw,jHw,m;
-	ReH:=[];
-	for iw in w do
-	    m:=iw[1];
-		Hw:=hoto(n,[iw[2],iw[3]]);
+		Rew, u, Hw,jHw,m;
+	Rew:=[];
+	for u in w do
+	    m:=u[1];
+		Hw:=hoto(n,[u[2],u[3]]);
 		for jHw in Hw do
 			if jHw[1]>0 then 
-				Add(ReH,[m,jHw[1],jHw[2]]);
+				AddWord(Rew,[m,jHw[1],jHw[2]]);
 			else
-				Add(ReH,[-m,-jHw[1],jHw[2]]);
+				AddWord(Rew,[-m,-jHw[1],jHw[2]]);
 			fi;
 		od;
 	od;
-	return ReH;
+	return Rew;
 end;
+
+###########################################################
 ############################################################
-BarResolutionHomotopy:=function(w) #######Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]]
-	local i,iw,len,Hw,iHw;
+BarResolutionHomotopy:=function(n,w) #######Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]]
+	local i,iw,Hw,iHw;
 	Hw:=[];
 	for iw in w do
-		len:=Length(iw);
 		iHw:=[iw[1],e,iw[2]];
-		for i in [3..len] do
-			Add(iHw,iw[i]);
+		for i in [1..n] do
+			Add(iHw,iw[i+2]);
 		od;
-		Add(Hw,iHw);
+		AddWord(Hw,iHw);
 	od;	
 	return Hw;
 end;
-
 #############################################################
-	Psibase:=List([0..n],x->[]);
-	Psibase[1][1]:=[[1,e]];  ##################[0][1]
-	for i in [1..n] do
+#############################################################
+PsiBase:=List([0..lenR],x->[]);
+	PsiBase[1][1]:=[[1,e]];  ##################[0][1]
+	for i in [1..lenR] do
 		for j in [1..dim(i)] do
-			tmppsi:=[];
-			Boundbase:=bound(i,j);
-			for temp in Boundbase do
-				if temp[1]<0 then 
+			TmpPsi:=[];
+			BoundaryBase:=bound(i,j); 			###ex:[[2,3],[-3,5]]
+			for tmp1 in BoundaryBase do
+				if tmp1[1]<0 then 
 					sign:=-1;
-					baseelt:=-temp[1];
+					base:=-tmp1[1];
 				else
 					sign:=1;
-					baseelt:=temp[1];	
+					base:=tmp1[1];	
 				fi;
-				g:=Elts[temp[2]];
-				Jtemp:= StructuralCopy(Psibase[i][baseelt]);
-				for tmp in Jtemp do
-					tmp[1]:=sign*tmp[1];
-					tmp[2]:=g*tmp[2];	
+				g:=Elts[tmp1[2]];
+				Jtmp:=StructuralCopy(PsiBase[i][base]);
+				for tmp2 in Jtmp do
+					tmp2[1]:=sign*tmp2[1];
+					tmp2[2]:=g*tmp2[2];	
 				od;
-				tmppsi:=Concatenation(tmppsi,Jtemp);
+				Append(TmpPsi,Jtmp);
 			od;
-			Psibase[i+1][j]:=BarResolutionHomotopy(tmppsi);
+			PsiBase[i+1][j]:=BarResolutionHomotopy(i-1,TmpPsi);
 		od;	
 	od;	
-#############################################################
+####################################################################
+####################################################################
 Psi:= function(n,w)        ## w:=[[m1,e1,pos1],...,[mk,ek,posk]]	ex: [[-2,1,5],...[5,4,27]]
-	local Rew,iw,m,h,psiw,temp;
+	local Rew,m,h,iw,u,Jiw;	
 	Rew:=[];
 	for iw in w do
 		m:=iw[1];
 		h:=Elts[iw[3]];
-		psiw:=StructuralCopy(Psibase[n+1][iw[2]]);
-		for temp in psiw do
-			temp[1]:=m*temp[1];
-			temp[2]:=h*temp[2];
-			Add(Rew,temp);
+		Jiw:=StructuralCopy(PsiBase[n+1][iw[2]]);
+		for u in Jiw do
+			u[1]:=m*u[1];
+			u[2]:=h*u[2];
+			AddWord(Rew,u);
 		od;
 	od;
-	return ReduceAlg(Rew);
+	return Rew;
 end;
 
-################################################
+######################################################################	
 Phi:=function(n,w)  ###### Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]]
-	local     ### Output:  [[l,order,postion],...]
-	Rew,iw,m,h,Biw,phiBiw,HphiBiw,temp;						
+	local       ### Output:  [[m,order,postion],...]
+	   iw,Rew,Reiw,m,h,u,cw;
+	cw:=StructuralCopy(w);
+	Rew:=[];	
 	if n=0 then  		#### w:=[[m1,h1],...[mk,hk]]
-	   Rew:=[];
-	   for iw in w do
-			Add(Rew,[iw[1],1,SearchPos(iw[2])]);
+	   for iw in cw do
+			AddWord(Rew,[iw[1],1,SearchPos(iw[2])]);
 	   od;
 	   return Rew;
 	fi;
-	#############
-	Rew:=[];
-	for iw in w do
-		m:=iw[1]; 
+	for iw in cw do
+		m:=iw[1];
 		iw[1]:=1;
-		h:=iw[2]; 
+		h:=iw[2];
 		iw[2]:=e;
-		Biw:=BarResolutionBoundary([iw]);  #first: We find image of a element of basis [1,e,g1,g2,...gn]
-		phiBiw:=Phi(n-1,Biw);
-		HphiBiw:=HotoR(n-1,phiBiw);
-		for temp in HphiBiw do
-			Add(Rew,[m*temp[1],temp[2],SearchPos(h*Elts[temp[3]])]);
+		Reiw:=HotoR(n-1,Phi(n-1,BarResolutionBoundary(n,[iw])));
+		for u in Reiw do
+			u[1]:=m*u[1];
+			u[3]:=SearchPos(h*Elts[u[3]]);
+			AddWord(Rew,u);
 		od;
-	od;
-	return ReduceAlg(Rew);
+	od; 
+	return Rew;
 end;
-############################################
-Equiv:=function(n,w)         ### Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]]
-    local PsiPhiw,HBw,HLw,temp;
+#########################################################################
+Equiv:=function(n,w)         ### Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]
+    local cw,m,h,iw,PsiPhiiw,HBiw,HLiw,tmp,Reiw,Rew,u,L;
+    cw:=StructuralCopy(w);
     if n = 0 then 
 		return [];
-    fi;		
-	PsiPhiw:=Psi(n,Phi(n,w));
-	HBw:= Equiv(n-1,BarResolutionBoundary(w));
-	HLw:= Concatenation(PsiPhiw,HBw);
-	for temp in HLw do
-		temp[1]:=-temp[1];
+    fi;	
+	Rew:=[];
+	for iw in cw do
+		m:=iw[1];
+		iw[1]:=1;
+		h:=iw[2];
+		iw[2]:=e;
+		HBiw:=Equiv(n-1,BarResolutionBoundary(n,[iw]));
+		AddWord(HBiw,iw);
+		for tmp in HBiw do
+			tmp[1]:=-tmp[1];
+		od;
+		PsiPhiiw:= Psi(n,Phi(n,[iw]));
+		HLiw:= Concatenation(PsiPhiiw,HBiw);
+		Reiw:=BarResolutionHomotopy(n,HLiw);
+		for u in Reiw do
+			u[1]:=m*u[1];
+			u[2]:=h*u[2];
+			AddWord(Rew,u);
+		od;	
 	od;
-	HLw:=Concatenation(w,HLw);
-    return ReduceAlg(BarResolutionHomotopy(HLw));
+    return Rew;
 end;
-##########################################
-
+######################################################################
+######################################################################
 return rec(
             phi:=Phi,
 			psi:=Psi,
 			equiv:=Equiv
           );
 end);	
-					
-
+				
 #############################################
 #############################################
 

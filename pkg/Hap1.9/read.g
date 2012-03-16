@@ -41,7 +41,7 @@ GeneratorsOfPcp:=function(G); return fail; end;
 IsomorphismPcpGroup:=function(G);return fail;end;
 AbelianPcpGroup:=function(G);return fail;end;
 fi;
-################## POLYCICLIC COMMANDS DONE #########################
+################## POLYCYCLIC COMMANDS DONE #########################
 
 ################# NQ COMMANDS #######################################
 if  IsPackageMarkedForLoading("nq","1.1") then 
@@ -301,9 +301,13 @@ ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/chaincomplexofsimplicalgroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
+ReadPackage("HAP","lib/SimplicialGroups/eilen_mac.gi");
+ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
 
 ################## REGULAR CW_SPACES ###############################
 ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
+ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
 
 
 ################## HAP PRIME ##################################
