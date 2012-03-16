@@ -8,7 +8,6 @@ end);
 
 ###########################################################
 ###########################################################
-
 InstallGlobalFunction(NerveOfCatOneGroup,
 function(CC,number)
 local 
@@ -23,20 +22,12 @@ local
 	ElementsOfSemiDirect,BoundaryElement,CreatElement,DegenElement,
 	GroupsList,BoundariesList,DegeneraciesList;
 
-C:=XmodToHAP(CC);
+C:=XmodToHAP(CC);  
 	
 if not IsHapCatOneGroup(C) then
 	Print("This function must be applied to a cat-1-group.\n");
 	return fail;
 fi;
-
-
-
-#############################
-## function return Generators and Components of them. 
-## Input semidirect group H and n is  number of summand
-
-
 
 #################
 ListGroups:=[];
@@ -58,7 +49,7 @@ H:=SemidirectProduct(G,phi,M);
 Add(ListGroups,H);
 
 ##   Create [m1,m2, ...mn] --> semidirect product of n elements
-########################################################################
+####################################
 CreatElement:=function(ListM)  
 local i,G,
     m,len;
@@ -75,9 +66,7 @@ if len>1 then
 fi;
 return m;
 end;
-
-############################################################################
-
+########################################
 ElementsOfSemiDirect:= function(H,n)  
 local 
     gens,componentsofgens,tempL,
@@ -113,7 +102,7 @@ local
 	return [gens,componentsofgens];
 end;
 
-#################################################################################
+####################################
 BoundaryElement:=function(ListM)
 local n,i,j,tempB,Bound;
 n:=Length(ListM); 
@@ -283,8 +272,4 @@ return Nerve;
 end);
 
 ###########################################################
-###########################################################
-
-
-
 

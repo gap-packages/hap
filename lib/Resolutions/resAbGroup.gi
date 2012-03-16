@@ -104,10 +104,23 @@ end;
 ResolutionAbGroup:=function(G,n)
 local gens, C, head, tail, R, hom, OriginalElts,OriginalGroup ;
 
+if Order(G)=1 then
+   if not IsPcpGroup(G) then
+   R:=ResolutionFiniteGroup(Group(Identity(G)),n);
+   return R;
+   fi;
+#The following code gets around the bug that Elements(G) does not
+#work for a pcp group G
+R:=ResolutionFiniteGroup(Group(()),n);
+R!.group:=G;
+R!.elts:=[Identity(G)];
+return R;
+fi;
+
 gens:=TorsionGeneratorsAbelianGroup(G); 
 
-if Length(gens)=0 then return
-ResolutionFiniteGroup([Identity(G)],n); fi;
+#if Length(gens)=0 then return
+#ResolutionFiniteGroup([Identity(G)],n); fi;
 
 if Length(gens)=1 then
 C:=Group(gens[1]);

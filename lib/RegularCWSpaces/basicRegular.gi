@@ -6,12 +6,12 @@ InstallGlobalFunction(SimplicialComplexToRegularCWSpace,
 function(K)
 local
 	NrCells,Boundaries,tmp,TMP,Coboundaries,VectorField,Properties,
-        cnt,b,bb,k,n,s,x,i,dim;
+        cnt,b,bb,k,n,s,x,i,j,dim;
 
 ####################
 NrCells:=function(n);
 if n>dim then return 0; fi;
-return Length(List(Boundaries[n+1],x->not x[1]=0));
+return Length(Filtered(Boundaries[n+1],x->not x[1]=0));
 end;
 ####################
 
@@ -39,13 +39,8 @@ for n in [1..dim] do
  for k in [1..K!.nrSimplices(n)] do
  bb:=K!.simplices(n,k);
 
- b:=List(bb,x-> Difference(bb,[x])    );
- b:=List(b,x->   TMP[x[1]][Position(tmp[x[1]],x)] );
-
- ####
- #The above should have the same effect as
- #b:=List(bb,x->K!.enumeratedSimplex(Difference(bb,[x]))); 
- ####
+ b:=List(bb,x->  Difference(bb,[x]) );
+ Apply(b,x->   TMP[x[1]][Position(tmp[x[1]],x)] );
 
  Boundaries[n+1][k]:=Concatenation([Length(b)],b,List(b,j->1));
  od;
@@ -56,25 +51,18 @@ Boundaries[dim+2]:=[];
 ### COBOUNDARIES BEGIN ######################
 Coboundaries:=[];; #Coboundaries[n+1] contains the info on n-cells.
 for n in [0..dim] do
-
-  Coboundaries[n+1]:=[];
-  tmp:=List(Boundaries[1],x->[]);
-  TMP:=List(Boundaries[1],x->[]);
-  cnt:=0;
-  for s in K!.simplicesLst[n+2] do
-    cnt:=cnt+1;
-    for i in [1..Length(s)] do
-       Add(tmp[s[i]],s);
-       Add(TMP[s[i]],cnt);
-    od; 
+  k:=n+3;
+  Coboundaries[n+1]:=List(Boundaries[n+1],i->[0]);
+  for j in [1..Length(Boundaries[n+2])] do
+    b:=Boundaries[n+2][j]; 
+    for i in b{[2..k]} do
+      Coboundaries[n+1][i][1]:=Coboundaries[n+1][i][1]+1;
+      Add(Coboundaries[n+1][i],j);
+    od;
   od;
- for k in [1..K!.nrSimplices(n)] do
- bb:=K!.simplices(n,k);
- b:=List(bb,i->tmp[i]);
- b:=Intersection(b);
- b:=List(b,x->TMP[x[1]][Position(tmp[x[1]],x)]);
- Coboundaries[n+1][k]:=Concatenation([Length(b)],b,List(b,j->1));
- od;
+  for b in Coboundaries[n+1] do
+  Append(b,List([1..Length(b)-1],a->1)); 
+  od;
 od;
 Coboundaries[dim+1]:=List(Boundaries[dim+1],a->[0]);
 ### COBOUNDARIES END ###############################
@@ -120,7 +108,15 @@ if n>0 then
   LCoboundaries:=Y!.coboundaries[n];
 fi;
 C:=Length(MCoboundaries);
+
+#######################
+#######################THIS TAKES ALL THE TIME
 Free:=Filtered([1..C],i->MCoboundaries[i][1]=1);
+if Length(Free)=0 then return false;fi;
+#######################
+#######################
+
+
 
 for i in Free do
 if MCoboundaries[i][1]=1 then
@@ -142,6 +138,7 @@ if MCoboundaries[i][1]=1 then
     for j in StructuralCopy(b{[2..1+b[1]]}) do
      t:=MCoboundaries[j][1];
      MCoboundaries[j][1]:=MCoboundaries[j][1]-1;
+if t=2 then Add(Free,j);fi;############################ADDED
      cob:=MCoboundaries[j];
      pos:=Position(cob{[2..t+1]},U);
      MCoboundaries[j]:=Concatenation(cob{[1..pos]},cob{[2+pos..t+pos]},
@@ -194,6 +191,107 @@ od;
 end);
 ############################################
 ############################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Size,
+"Volume of a regular CW-space",
+[IsHapRegularCWSpace],
+function(Y) return Sum(List( [1..Length(Y!.boundaries)],i->Y!.nrCells(i-1)));
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(RemoveCellFromRegularCWSpace,
+function(Y,dim,n)
+local  bnd, x,tmp;
+
+#Remove the n-th cell in dimension dim
+
+dim:=dim+1;
+
+if dim=1 then Y!.boundaries[1][n]:=[0]; return [dim-1,n]; fi;
+
+bnd:=Y!.boundaries[dim][n];
+bnd:=bnd{[2..(Length(bnd)+1)/2]};
+Y!.boundaries[dim][n]:=[0];
+
+if dim>1 then
+for x in bnd do
+tmp:=Y!.coboundaries[dim-1][x];
+tmp[1]:=tmp[1]-1;
+tmp[Length(tmp)]:=-42;
+tmp[Position(tmp{[2..Length(tmp)]},n)+1]:=-42;
+
+tmp:=Filtered(tmp,i->not i = -42);
+
+Y!.coboundaries[dim-1][x]:=tmp;
+if IsBound(Y!.free) then
+if IsBound(Y!.free[dim-1]) then
+if tmp[1]=1 then AddSet(Y!.free[dim-1],x); fi;
+fi;
+fi;
+od;
+fi;
+
+return [dim-1,n];
+
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallGlobalFunction(CriticalCellsOfRegularCWSpace,
+function(arg)
+local Y,ContractSpace,cells,dim,c,pos,ppos;
+
+Y:=arg[1];
+if Length(arg)>1 then
+   ContractSpace:=ContractRegularCWSpace_Alt;
+else
+   ContractSpace:=ContractRegularCWSpace;
+fi;
+
+#######
+dim:=0;
+while true do
+if Y!.nrCells(dim)=0 then break; fi;
+dim:=dim+1;
+od;
+dim:=dim-1;
+#######
+
+cells:=[];
+ContractSpace(Y);
+
+while true do
+
+  if Size(Y)=0  then  return cells; fi;
+
+  pos:=0;
+
+  while true do
+    pos:=pos+1;
+    ppos:=PositionProperty(Y!.boundaries[dim+1]{[pos..Length(Y!.boundaries[dim+1])]},                          x->x[1]>0);    if ppos=fail then dim:=dim-1; break; fi;
+
+  pos:=pos+ppos-1;
+
+    c:=RemoveCellFromRegularCWSpace(Y,dim,pos);
+
+    Add(cells,c);
+
+    ContractSpace(Y);
+
+  od;
+od;
+
+return cells;
+end);
+##########################################################
+##########################################################
 
 
 

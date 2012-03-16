@@ -1,57 +1,55 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
-InstallGlobalFunction(ResolutionFiniteSubgroup,
-function(arg)
+InstallGlobalFunction(ResolutionSubgroup,
+function(R,gensK)
 local 
-		R,gensG,gensK,
 		DimensionR, BoundaryR, HomotopyR, EltsG,
-		Dimension, Boundary, Homotopy, EltsK,
-		G, K, TransK, sK,
+		Dimension, Boundary, Homotopy, 
+		EltsK, K, sK, TransK,
+		F, GhomF, EltsF, EltsKF, i, j,  
 		Gword2Kword, G2K, Pair2Int, Int2Pair,
-		Mult, FIN;
-		
-if Length(arg)=3 then
-R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
-fi;
-if Length(arg)=2 then
-R:=arg[1]; gensG:=R!.group; gensK:=arg[2];
-fi;
-				#gensG and gensK originally had to be
-				#generating sets. Later I allowed them to be
-				#the groups G, K themselves. Sloppy!
+		Mult,N,G;
+
+N:=EvaluateProperty(R,"length");
 DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 HomotopyR:=R!.homotopy;
 EltsG:=R!.elts;
+G:=R!.group;
+F:=FreeGroup(Length(GeneratorsOfGroup(G)));
+GhomF:=GroupHomomorphismByImagesNC(G,F,GeneratorsOfGroup(G),
+						GeneratorsOfGroup(F));
 
-if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
-if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
-if Size(G)=Length(EltsG) then FIN:=true; else FIN:= false; fi;
-if FIN then EltsK:=Elements(K);
-else
+	#############################################################
+	#Let's make sure all boundaries in R have been computed.
+	for i in [1..N] do
+	for j in [1..DimensionR(i)] do
+	BoundaryR(i,j);
+	od; od;
+	#############################################################
+
+EltsF:=List(EltsG,x->Image(GhomF,x));
+
 EltsK:=[];
-fi;
-
+EltsKF:=[];
+if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
 TransK:=RightTransversal(G,K);
 sK:=Size(TransK);
 
-if FIN then
 #####################################################################
-Mult:=function(i,j);
-return Position(EltsG,TransK[i]*EltsG[j]);
-end;
-#####################################################################
+Mult:=function(i,j)
+local r,x;
+x:=Image(GhomF,TransK[i]*EltsG[j]);
+r:=Position(EltsF,x);
+if not r=fail then return r;
 else
-#####################################################################
-Mult:=function(i,j) local x,r;
-x:=TransK[i]*EltsG[j];
-r:=Position(EltsG,x);
-if r=fail then Add(EltsG,x); r:=Length(EltsG); fi;
-return r;
+Append(EltsF,[x]);
+Append(EltsG,[TransK[i]*EltsG[j]]);
+return Length(EltsG);
+fi;
 end;
 #####################################################################
-fi;
 
 #####################################################################
 Dimension:=function(n);
@@ -59,27 +57,21 @@ return sK*DimensionR(n);
 end;
 #####################################################################
 
-if FIN then
 #####################################################################
 G2K:=function(g)
-local t,k;
+local t,k,r,x;
 t:=PositionCanonical(TransK,EltsG[g]);
-k:=Position(EltsK,EltsG[g]*TransK[t]^-1);
-return [k,t];
-end;
-#####################################################################
+x:=Image(GhomF,EltsG[g]*TransK[t]^-1);
+r:=Position(EltsKF,x);
+if not r=fail then k:=r;
 else
-#####################################################################
-G2K:=function(g)
-local t,k,x;
-t:=PositionCanonical(TransK,EltsG[g]);
-x:=EltsG[g]*TransK[t]^-1;
-k:=Position(EltsK,x);
-if k=fail then Add(EltsK,x); k:=Length(EltsK); fi;
+Append(EltsKF,[x]);
+Append(EltsK,[EltsG[g]*TransK[t]^-1]);
+k:=Length(EltsK);				
+fi;
 return [k,t];
 end;
 #####################################################################
-fi;
 
 #####################################################################
 Pair2Int:=function(x)
@@ -120,35 +112,23 @@ local x, w;
 
 x:=Int2Pair(i);
 w:=StructuralCopy(BoundaryR(n,x[1]));
-#Apply(w, y->[y[1],Mult(x[2],y[2])]);
-Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]);
-
+Apply(w, y->[y[1],Mult(x[2],y[2])]);
 return Gword2Kword(w);
 end;
 #####################################################################
 
-######################
-Homotopy:=function(n,e)
-local x,g;
-x:=Int2Pair(e[1]);
-g:=TransK[x[2]]*EltsK[e[2]];
-g:=Position(EltsG,g);
-return Gword2Kword( R!.homotopy(n,[x[1],g]));
-end;
-######################
-
 return Objectify(HapResolution,
-	     rec(
-	     dimension:=Dimension,
-	     boundary:=Boundary,
-	     homotopy:=Homotopy,
-	     elts:=EltsK,
-	     group:=K,
-	     properties:=
-	     [["length",EvaluateProperty(R,"length")],
-	      ["characteristic",EvaluateProperty(R,"characteristic")],
-	      ["reduced",false],
-	      ["type","resolution"] ]));
+	  rec(
+	   dimension:=Dimension,
+	   boundary:=Boundary,
+	   homotopy:=fail,
+	   elts:=EltsK,
+	   group:=K,
+	   properties:=
+	   [["length",EvaluateProperty(R,"length")],
+	    ["characteristic",EvaluateProperty(R,"characteristic")],
+	    ["type","resolution"],
+	    ["reduced",false] ]));
 end);
 #####################################################################
 

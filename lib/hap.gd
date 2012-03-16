@@ -439,6 +439,8 @@ DeclareGlobalFunction("IdentityAmongRelatorsDisplay");
 DeclareGlobalFunction("IdentityAmongRelators");
 DeclareGlobalFunction("NormalSubgroupAsCatOneGroup");
 DeclareGlobalFunction("QuasiIsomorph");
+DeclareGlobalFunction("QuotientQuasiIsomorph");
+DeclareGlobalFunction("SubQuasiIsomorph");
 DeclareGlobalFunction("SylowSubgroupOfCatOneGroup");
 
 ## COMMUTATIVE DIAGRAMS #############################################
@@ -455,13 +457,21 @@ DeclareGlobalFunction("BarResolutionEquivalence");
 DeclareGlobalFunction("BarComplexBoundary");
 DeclareGlobalFunction("BarComplexEquivalence");
 DeclareGlobalFunction("ReduceAlg");
+DeclareGlobalFunction("AddWord");
 DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
+DeclareGlobalFunction("TensorProductOfChainComplexes");
+
 
 ## REGULAR CW-SPACES ################################################
 DeclareGlobalFunction("SimplicialComplexToRegularCWSpace");
 DeclareGlobalFunction("GraphOfRegularCWSpace");#Not yet implemented
 DeclareGlobalFunction("CubicalComplexToRegularCWSpace");#Not yet implemented
 DeclareGlobalFunction("ContractRegularCWSpace");
+DeclareGlobalFunction("RemoveCellFromRegularCWSpace");
+DeclareGlobalFunction("CriticalCellsOfRegularCWSpace");
+DeclareGlobalFunction("ContractRegularCWSpace_Alt");
 
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");

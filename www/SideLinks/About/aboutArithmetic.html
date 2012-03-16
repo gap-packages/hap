@@ -121,7 +121,8 @@ gap&gt; Homology(TensorWithIntegers(R),4);<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-cohomology of finite index subgroups of G=SL<sub>3</sub>(Z) can be
+cohomology of an arbitrary finite index subgroups of G=SL<sub>3</sub>(Z)
+can be
 investigated by first converting the resolution for the matrix group G
 into a resolution for an isomorphic finitely presented group. This
 convertion can be done using the command
@@ -173,6 +174,39 @@ No contracting homotopy available.<br>
       <br>
 gap&gt; Homology(TensorWithIntegers(S),4);<br>
 [ 2, 2 ]</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+homology of a congruence subgroup H in SL(2,Z) can be computed as
+follows. In the example the congruence subgroup H is the subgroup
+H=Gamma<sub>0</sub>(197) of integer matrices of the form<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ [
+p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , q ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [
+197r , s ]
+]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      <br>
+with ps-197rq = 1, and is constructed using the prototype "Congruence"
+package being developed by&nbsp; Ann Dooms, Eric Jespers, Alexander
+Konovalov and Helena Verrill.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ContractibleGcomplex("SL(2,Z)");;<br>
+gap&gt; R:=FreeGResolution(C,5);;<br>
+gap&gt; H:=CongruenceSubgroupGamma0(197);;<br>
+gap&gt; S:=ResolutionFiniteSubgroup(R,H);;<br>
+gap&gt; D:=TensorWithIntegers(S);;<br>
+gap&gt; Homology(D,4);<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+      </td>
     </tr>
     <tr>
       <td

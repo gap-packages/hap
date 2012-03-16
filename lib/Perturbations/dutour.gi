@@ -154,6 +154,8 @@ return ActionRecord[n+1][abk][g];
 end;
 ####################
 
+if name="SL2Z" then G:=SL(2,Integers); fi;
+
 return Objectify(HapNonFreeResolution,
             rec(
             dimension:=Dimension,

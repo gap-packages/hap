@@ -508,6 +508,7 @@ return Position(SimplicesLst[Length(v)],v);
 end;
 #########################
 
+Add(SimplicesLst,[]);
 
 return
 Objectify(HapSimplicialComplex,

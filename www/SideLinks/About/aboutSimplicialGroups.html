@@ -47,38 +47,72 @@ groups.<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">To
 obtain an interesting example of a simplicial group let us consider the
-dihedral group G of order 32, and the canonical homomorphism &micro;:G
+dihedral group G of order 16, and the canonical homomorphism &micro;:G
 --&gt; Aut(G) from G to its automorphism group which sends an element g
 to the inner automorphism x--&gt; gxg<sup>-1</sup> . The homomorphism
 &micro; is an example of a <span style="font-style: italic;">crossed
 module</span> and, as such, is equivalent to a cat-1-group C. The
-following command constructs this cat-1-group.<br>
+following commands construct this cat-1-group and show that C has order
+512, has fundamental group C<sub>2</sub>xC<sub>2</sub> and second
+homotopy group C<sub>2</sub>.<br>
       </td>
     </tr>
     <tr>
       <td
- style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
-C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(32));;<br>
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
+C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(16));<br>
 Cat-1-group with underlying group Group( [ f1, f2, f3, f4, f5, f6, f7,
-f8,<br>
-&nbsp; f9, f10, f11, f12 ] ) .<br>
+f8, f9<br>
+&nbsp;] ) .<br>
+      <br>
+gap&gt; Size(C);<br>
+512<br>
+      <br>
+gap&gt; Pi_1:=HomotopyGroup(C,1);;<br>
+gap&gt; Pi_2:=HomotopyGroup(C,2);;<br>
+gap&gt; StructureDescription(Pi_1);<br>
+"C2 x C2"<br>
+gap&gt; StructureDescription(Pi_2);<br>
+"C2"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+morphism C-&gt;Q of cat-1-groups is called a <span
+ style="font-style: italic;">quasi-isomorphism</span> if it induces
+isomorphisms of homotopy groups. Quasi-isomorphic cat-1-groups have the
+same homology and cohomology.<br>
+      <br>
+The following commands construct a quasi-isomorphic cat-1-group Q of
+order 32.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Q:=QuasiIsomorph(C);<br>
+Cat-1-group with underlying group Group( [ f5, f9, f1, f2*f3, f8 ] ) .<br>
+      <br>
+gap&gt; Size(Q);<br>
+32<br>
       </td>
     </tr>
     <tr>
       <td
  style="background-color: rgb(255, 255, 255); vertical-align: top;">Now
-a cat-1-group C can be regarded as a category endowed with a
+a cat-1-group Q can be regarded as a category endowed with a
 "compatible" group operation (i.e. it is a category object in the
-category of groups). The classical nerve of the category C will be a
-simplicial group. The following command constructs the nerve of C (up
-to degree 4).<br>
+category of groups). The classical nerve of the category Q will be a
+simplicial group. The following command constructs the nerve of Q (up
+to degree 6).<br>
       </td>
     </tr>
     <tr>
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
-N:=NerveOfCatOneGroup(C,4);<br>
-Simplicial group of length 4<br>
+N:=NerveOfCatOneGroup(Q,6);<br>
+Simplicial group of length 6<br>
       </td>
     </tr>
     <tr align="center">
@@ -124,7 +158,7 @@ perturbation theory.) <br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 K:=ChainComplexOfSimplicialGroup(N);<br>
-Chain complex of length 4 in characteristic 0 .<br>
+Chain complex of length 6 in characteristic 0 .<br>
       </td>
     </tr>
     <tr>
@@ -138,11 +172,15 @@ integral homology groups of our original crossed module &micro; .<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 Homology(K,1);<br>
-[ 2, 4 ]<br>
+[ 2, 2 ]<br>
 gap&gt; Homology(K,2);<br>
 [ 2 ]<br>
 gap&gt; Homology(K,3);<br>
-[ 2, 2, 4 ]<br>
+[ 2, 2, 2 ]<br>
+gap&gt; Homology(K,4);<br>
+[ 2, 2, 2 ]<br>
+gap&gt; Homology(K,5);<br>
+[ 2, 2, 2, 2, 2, 2 ]<br>
       </td>
     </tr>
     <tr>
@@ -168,6 +206,146 @@ gap&gt; C:=Cat1Select(8,5,3);<br>
       <br>
 gap&gt; N:=NerveOfCatOneGroup(C,4);<br>
 Simplicial group of length 4<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Other
+examples of simplicial groups are the Eilenberg-MacLane simplicial
+groups K(G,n) with (n-1)-st homotopy group equal to G and all other
+homotopy groups equal to 0. The group G must be abelian when n&gt;0. <br>
+      <br>
+The following computes the first eleven terms of the chain complex CK
+of the Eilenberg-MacLane space K(Z,2) and shows that in dimension d the
+number of free generators of this complex is the d-th Fibonacci number.
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+ZZ:=AbelianPcpGroup(1,[0]);;&nbsp; #ZZ is the infinite cyclic group<br>
+gap&gt; K:=EilenbergMacLaneSimplicialGroup(ZZ,2,10);;<br>
+gap&gt; CK:=ChainComplexOfSimplicialGroup(K);;<br>
+      <br>
+gap&gt; List([0..10],CK!.dimension);<br>
+[ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following produces a chain complex D which is quasi-isomorphic to CK
+and which has just one generator in each odd dimension. (This
+corresponds to the standard CW-structure on complex projective
+space&nbsp;
+involving just one cell in each even dimension.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+D:=CoreducedChainComplex(CK);;<br>
+gap&gt; List([0..9],D!.dimension);<br>
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following analogous commands produce a chain complex for K(Z/2Z,2) in
+which the number of free generators in degree d+2 is the d-th Fibonacci
+number.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+K:=EilenbergMacLaneSimplicialGroup(CyclicGroup(2),2,10);;<br>
+gap&gt; CK:=ChainComplexOfSimplicialGroup(K);;<br>
+gap&gt; List([0..10],CK!.dimension);<br>
+[ 1, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 ]<br>
+gap&gt; D:=CoreducedChainComplex(CK);;<br>
+gap&gt; List([0..9],D!.dimension);<br>
+[ 1, 0, 1, 1, 2, 3, 5, 8, 13, 21 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Many
+homotopy 2-types are direct products of Eilenberg-MacLane spaces. For
+instance, if a 2-type is represented by a cat-1-group whose underlying
+group is abelian, then the 2-type is a product of Eilenberg-MacLane
+spaces.<br>
+      <br>
+For a non-ableian example let us consider the automorphism cat-1-group
+C of the 5-th small group of order 36. By definition the fundamental
+group of C acts trivially on the second homotopy group. Moreover, the
+following commands show that the order of C is equal to the product of
+the orders of its homotopy groups. This implies that C is a direct
+product of a K(G,1) and a K(A,2).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SmallGroup(36,5);;<br>
+gap&gt; C:=AutomorphismGroupAsCatOneGroup(G);;<br>
+gap&gt; Order(HomotopyGroup(C,1))*;Order(HomotopyGroup(C,2)) = Size(C);<br>
+true<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands imply that C is quasi-isomorphic to the product of
+Eilenberg-MacLane spaces K(Z/2Z,2) x K(Z/2Z,2) x K(Z/9Z,2) x K(C<sub>6</sub>,1)
+x
+K(S<sub>3</sub>,1) .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+StructureDescription(HomotopyGroup(C,2));<br>
+"C18 x C2"<br>
+gap&gt; StructureDescription(HomotopyGroup(C,1));<br>
+"C6 x S3"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute the homology of the cat-1-group C in degree
+4.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C1:=TensorWithIntegers(ResolutionFiniteGroup(SymmetricGroup(3),5));;<br>
+gap&gt;
+C2:=TensorWithIntegers(ResolutionFiniteGroup(CyclicGroup(6),5));;<br>
+gap&gt; G3:=EilenbergMacLaneSimplicialGroup(CyclicGroup(9),2,5);;<br>
+gap&gt; C3:=ChainComplexOfSimplicialGroup(G3);;<br>
+gap&gt; G4:=EilenbergMacLaneSimplicialGroup(CyclicGroup(2),2,5);;<br>
+gap&gt; C4:=ChainComplexOfSimplicialGroup(G3);;<br>
+gap&gt; C5:=C4;;<br>
+      <br>
+gap&gt; D1:=CoreducedChainComplex(C1);;<br>
+gap&gt; D2:=CoreducedChainComplex(C2);;<br>
+gap&gt; D3:=CoreducedChainComplex(C3);;<br>
+gap&gt; D4:=CoreducedChainComplex(C4);;<br>
+gap&gt; D5:=D4;;<br>
+      <br>
+gap&gt; T:=TensorProductOfChainComplexes(D1,D2);;<br>
+gap&gt; T:=TensorProductOfChainComplexes(D3,T);;<br>
+gap&gt; T:=TensorProductOfChainComplexes(D4,T);;<br>
+gap&gt; T:=TensorProductOfChainComplexes(D5,T);;<br>
+      <br>
+      <br>
+gap&gt; Homology(T,4);<br>
+[ 3, 3, 3, 3, 9, 9, 9, 9, 18, 18 ]<br>
       </td>
     </tr>
     <tr>
