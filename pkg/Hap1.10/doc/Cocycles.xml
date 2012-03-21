@@ -1,0 +1,78 @@
+<Chapter><Heading> Cocycles</Heading>
+
+<Table Align="|l|" >
+
+<Row>
+<Item>
+<Index> CcGroup (HAPcocyclic)</Index>
+<C>CcGroup(A,f) </C>
+<P/>
+
+Inputs a <M>G</M>-module <M>A</M> (i.e. an abelian <M>G</M>-outer group) and a
+standard 2-cocycle f <M>G x G ---> A</M>. It returns the extension group determined by the cocycle. The group is returned as a CcGroup.
+
+<P/> This is a HAPcocyclic function and thus only works when HAPcocyclic is loaded.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> CocycleCondition</Index>
+<C>CocycleCondition(R,n) </C>
+<P/>
+
+Inputs a resolution <M>R</M> and an integer <M>n</M>&tgt;<M>0</M>. 
+It returns an integer matrix <M>M</M> 
+with the following property. Suppose <M>d=R.dimension(n)</M>. 
+An integer vector <M>f=[f_1, \ldots , f_d]</M> 
+then represents a <M>ZG</M>-homomorphism <M>R_n \longrightarrow Z_q</M> 
+which sends the <M>i</M>th generator of <M>R_n</M> to the integer 
+<M>f_i</M> in the trivial <M>ZG</M>-module <M>Z_q</M> (where possibly <M>q=0</M>
+). The homomorphism <M>f</M> is a cocycle if and only if <M>M^tf=0</M>
+mod <M>q</M>. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> StandardCocycle</Index>
+<C>StandardCocycle(R,f,n) </C>
+<Br/>
+<C>StandardCocycle(R,f,n,q) </C>
+<P/>
+
+Inputs a <M>ZG</M>-resolution <M>R</M> (with contracting homotopy), 
+a positive integer <M>n</M> and an integer vector <M>f</M> 
+representing an <M>n</M>-cocycle <M>R_n \longrightarrow Z_q</M> 
+where <M>G</M> acts trivially on <M>Z_q</M>. It is assumed <M>q=0</M>
+unless a value for <M>q</M> is entered. The command returns a function 
+<M>F(g_1, ..., g_n)</M> 
+which is the standard cocycle  <M>G_n \longrightarrow Z_q</M>
+corresponding to <M>f</M>. At present the command is implemented only for 
+<M>n=2</M> or <M>3</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> Syzygy</Index>
+<C>Syzygy(R,g) </C>
+<P/>
+
+Inputs a <M>ZG</M>-resolution <M>R</M> 
+(with contracting homotopy) and a list 
+<M>g = [g[1], ..., g[n]]</M> of elements in <M>G</M>. 
+It returns a word <M>w</M> in <M>R_n</M>. 
+The word <M>w</M> is the image of the <M>n</M>-simplex in the 
+standard bar resolution corresponding to the <M>n</M>-tuple <M>g</M>. 
+This function can be used to construct explicit standard <M>n</M>-cocycles. 
+(Currently implemented only for n&tlt;4.)
+</Item>
+</Row>
+
+</Table>
+</Chapter>
+
+

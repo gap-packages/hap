@@ -1,0 +1,164 @@
+  
+  [1X22 Simplicial Complexes[0X
+  
+  [10XHomology(T,n)[0m
+  [10XHomology(T)[0m
+  
+  Inputs  a  pure cubical complex, or cubical complex, or simplicial complex T
+  and  a non-negative integer n. It returns the n-th integral homology of T as
+  a  list  of torsion integers. If no value of n is input then the list of all
+  homologies of T in dimensions 0 to Dimension(T) is returned .
+  [10XRipsHomology(G,n)[0m
+  [10XRipsHomology(G,n,p)[0m
+  
+  Inputs  a  graph  G, a non-negative integer n (and optionally a prime number
+  p).  It returns the integral homology (or mod p homology) in degree n of the
+  Rips complex of G.
+  ::::::::::::::::::::::::
+  [10X Bettinumbers(T,n)[0m
+  [10X Bettinumbers(T)[0m
+  
+  Inputs  a  pure  cubical  complex, or cubical complex, simplicial complex or
+  chain  complex T and a non-negative integer n. The rank of the n-th rational
+  homology  group  H_n(T,  Q) is returned. If no value for n is input then the
+  list of Betti numbers in dimensions 0 to Dimension(T) is returned .
+  [10XChainComplex(T)[0m
+  
+  Inputs  a  pure cubical complex, or cubical complex, or simplicial complex T
+  and returns the (often very large) cellular chain complex of T.
+  ::::::::::::::::::::::::
+  [10XCechComplexOfPureCubicalComplex(T)[0m
+  
+  Inputs  a  d-dimensional  pure  cubical  complex  T and returns a simplicial
+  complex S. The simplicial complex S has one vertex for each d-cube in T, and
+  an  n-simplex  for  each  collection  of n+1 d-cubes with non-trivial common
+  intersection. The homotopy types of T and S are equal.
+  ::::::::::::::::::::::::
+  [10XPureComplexToSimplicialComplex(T,k)[0m
+  
+  Inputs either a d-dimensional pure cubical complex T or a d-dimensional pure
+  permutahedral  complex  T together with a non-negative integer k. It returns
+  the  first  k dimensions of a simplicial complex S. The simplicial complex S
+  has one vertex for each d-cell in T, and an n-simplex for each collection of
+  n+1  d-cells  with  non-trivial common intersection. The homotopy types of T
+  and S are equal.
+  
+  For a pure cubical complex T this uses a slightly different algorithm to the
+  function   CechComplexOfPureCubicalComplex(T)   but   constructs   the  same
+  simplicial complex.
+  ::::::::::::::::::::::::
+  [10XRipsChainComplex(G,n)[0m
+  
+  Inputs  a  graph  G  and a non-negative integer n. It returns n+1 terms of a
+  chain  complex  whose homology is that of the nerve (or Rips complex) of the
+  graph in degrees up to n.
+  ::::::::::::::::::::::::
+  [10XVectorsToSymmetricMatrix(M)[0m
+  [10XVectorsToSymmetricMatrix(M,distance)[0m
+  
+  Inputs a matrix M of rational numbers and returns a symmetric matrix S whose
+  (i,j)  entry  is  the distance between the i-th row and j-th rows of M where
+  distance  is  given  by  the  sum  of  the absolute values of the coordinate
+  differences.
+  
+  Optionally,  a  function  distance(v,w) can be entered as a second argument.
+  This  function  has  to  return  a rational number for each pair of rational
+  vectors v,w of length Length(M[1]).
+  ::::::::::::::::::::::::
+  [10XEulerCharacteristic(T)[0m
+  
+  Inputs  a  pure cubical complex, or cubical complex, or simplicial complex T
+  and returns its Euler characteristic.
+  ::::::::::::::::::::::::
+  [10XMaximalSimplicesToSimplicialComplex(L)[0m
+  
+  Inputs a list L whose entries are lists of vertices representing the maximal
+  simplices  of a simplicial complex. The simplicial complex is returned. Here
+  a "vertex" is a GAP object such as an integer or a subgroup.
+  ::::::::::::::::::::::::
+  [10XSkeletonOfSimplicialComplex(S,k)[0m
+  
+  Inputs a simplicial complex S and a positive integer k less than or equal to
+  the  dimension  of  S.  It  returns  the  truncated k-dimensional simplicial
+  complex S^k (and leaves S unchanged).
+  ::::::::::::::::::::::::
+  [10XGraphOfSimplicialComplex(S)[0m
+  
+  Inputs a simplicial complex S and returns the graph of S.
+  ::::::::::::::::::::::::
+  [10XContractibleSubcomplexOfSimplicialComplex(S)[0m
+  
+  Inputs  a simplicial complex S and returns a (probably maximal) contractible
+  subcomplex of S.
+  ::::::::::::::::::::::::
+  [10XPathComponentsOfSimplicialComplex(S,n)[0m
+  
+  Inputs a simplicial complex S and a nonnegative integer n. If n=0 the number
+  of  path  components  of S is returned. Otherwise the n-th path component is
+  returned (as a simplicial complex).
+  ::::::::::::::::::::::::
+  [10XQuillenComplex(G)[0m
+  
+  Inputs  a  finite  group  G  and returns, as a simplicial complex, the order
+  complex of the poset of non-trivial elementary abelian subgroups of G.
+  ::::::::::::::::::::::::
+  [10XSymmetricMatrixToIncidenceMatrix(S,t)[0m
+  [10XSymmetricMatrixToIncidenceMatrix(S,t,d)[0m
+  
+  Inputs  a symmetric integer matrix S and an integer t. It returns the matrix
+  M with M_ij=1 if I_ij is less than t and I_ij=1 otherwise.
+  
+  An  optional  integer  d  can be given as a third argument. In this case the
+  incidence  matrix  should  have  roughly  at  most  d  entries  in  each row
+  (corresponding to the $d$ smallest entries in each row of S).
+  ::::::::::::::::::::::::
+  [10XIncidenceMatrixToGraph(M)[0m
+  
+  Inputs  a  symmetric  0/1 matrix M. It returns the graph with one vertex for
+  each  row of M and an edges between vertices i and j if the (i,j) entry in M
+  equals 1.
+  ::::::::::::::::::::::::
+  [10XCayleyGraphOfGroup(G,A)[0m
+  
+  Inputs a group G and a set A of generators. It returns the Cayley graph.
+  ::::::::::::::::::::::::
+  [10XPathComponentsOfGraph(G,n)[0m
+  
+  Inputs  a  graph  G  and  a nonnegative integer n. If n=0 the number of path
+  components  is returned. Otherwise the n-th path component is returned (as a
+  graph).
+  ::::::::::::::::::::::::
+  [10XContractGraph(G)[0m
+  
+  Inputs a graph G and tries to remove vertices and edges to produce a smaller
+  graph  G'  such that the indlusion G' -> G induces a homotopy equivalence RG
+  ->  RG'  of  Rips complexes. If the graph G is modified the function returns
+  true, and otherwise returns false.
+  ::::::::::::::::::::::::
+  [10XGraphDisplay(G)[0m
+  
+  This function uses GraphViz software to display a graph G.
+  ::::::::::::::::::::::::
+  ::::::::::::::::::::::::
+  [10XSimplicialMap(K,L,f)[0m
+  [10XSimplicialMapNC(K,L,f)[0m
+  
+  Inputs  simplicial  complexes  K  ,  L  and  a  function  f:  K!.vertices ->
+  L!.vertices  representing a simplicial map. It returns a simplicial map K ->
+  L.   If   f   does   not   happen   to   represent  a  simplicial  map  then
+  SimplicialMap(K,L,f)  will  return  fail; SimplicialMapNC(K,L,f) will not do
+  any check and always return something of the data type "simplicial map".
+  ::::::::::::::::::::::::
+  [10XChainMapOfSimplicialMap(f)[0m
+  
+  Inputs  a  simplicial  map f: K -> L and returns the corresponding chain map
+  C_*(f) : C_*(K) -> C_*(L) of the simplicial chain complexes..
+  ::::::::::::::::::::::::
+  [10XSimplicialNerveOfGraph(G,d)[0m
+  
+  Inputs  a  graph  G  and  returns a d-dimensional simplicial complex K whose
+  1-skeleton is equal to G. There is a simplicial inclusion K -> RG where: (i)
+  the  inclusion  induces  isomorphisms  on homotopy groups in dimensions less
+  than d; (ii) the complex RG is the Rips complex (with one n-simplex for each
+  complete subgraph of G on n+1 vertices).
+  

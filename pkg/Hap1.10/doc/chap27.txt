@@ -1,0 +1,26 @@
+  
+  [1X27 Parallel Computation - Extra Functions[0X
+  
+  ::::::::::::::::::::::::
+  [10XChildFunction("function(arg);",s)[0m
+  
+  This  runs  the GAP function "function(arg);" on a child process accessed by
+  the stream s. The output from "func;" can be accessed via the stream.
+  ::::::::::::::::::::::::
+  [10XChildRead(s)[0m
+  
+  This   returns,  as  a  string,  the  output  of  the  last  application  of
+  ChildFunction("function(arg);",s).
+  ::::::::::::::::::::::::
+  [10XChildReadEval(s)[0m
+  
+  This  returns, as an evaluated string, the output of the last application of
+  ChildFunction("function(arg);",s).
+  ::::::::::::::::::::::::
+  [10XParallelList(I,fn,L)[0m
+  
+  Inputs  a  list  I, a function fn such that fn(x) is defined for all x in I,
+  and   a  list  of  children  L.  It  uses  the  children  in  L  to  compute
+  List(I,x->fn(x)).  (Obviously  the  function fn must be defined on all child
+  processes in L.)
+  

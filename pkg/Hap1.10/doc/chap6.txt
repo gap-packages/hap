@@ -1,0 +1,296 @@
+  
+  [1X6 Homology and cohomology groups[0X
+  
+  ::::::::::::::::::::::::
+  [10XCohomology(X,n) [0m
+  
+  Inputs either a cochain complex X=C (or G-cocomplex C) or a cochain map X=(C
+  --> D) in characteristic p together with a non-negative intereg n.
+  If  X=C  and p=0 then the torsion coefficients of H^n(C) are retuned. If X=C
+  and p is prime then the dimension of H^n(C) are retuned.
+  If X=(C --> D) then the induced homomorphism H^n(C)--> H^n(D) is returned as
+  a homomorphism of finitely presented groups.
+  A  G-cocomplex  C can also be input. The cohomology groups of such a complex
+  may  not  be  abelian.  [12XWarning:[0m  in  this  case Cohomology(C,n) returns the
+  abelian invariants of the n-th cohomology group of C.
+  ::::::::::::::::::::::::
+  [10XCohomologyModule(C,n) [0m
+  
+  Inputs  a  G-cocomplex  C together with a non-negative integer n. It returns
+  the  cohomology  H^n(C)  as  a  G-outer  group.  If C was constructed from a
+  resolution  R  by  homing  to an abelian G-outer group A then, for each x in
+  H:=CohomologyModule(C,n), there is a function f:=H!.representativeCocycle(x)
+  which  is  a standard n-cocycle corresponding to the cohomology class x. (At
+  present this works only for n=1,2,3.)
+  ::::::::::::::::::::::::
+  [10XCohomologyPrimePart(C,n,p)[0m
+  
+  Inputs  a cochain complex C in characteristic 0, a positive integer n, and a
+  prime  p. It returns a list of those torsion coefficients of H^n(C) that are
+  positive powers of p. The function uses the EDIM package by Frank Luebeck.
+  ::::::::::::::::::::::::
+  [10XGroupCohomology(X,n) [0m
+  [10XGroupCohomology(X,n,p)[0m
+  
+  Inputs a positive integer n and either
+  a finite group X=G
+  or a nilpotent Pcp-group X=G
+  or a space group X=G
+  or a list X=D representing a graph of groups
+  or  a  pair  X=["Artin",D]  where  D  is  a  Coxeter diagram representing an
+  infinite Artin group G.
+  or a pair X=["Coxeter",D] where D is a Coxeter diagram representing a finite
+  Coxeter group G.
+  It returns the torsion coefficients of the integral cohomology H^n(G,Z).
+  
+  There  is  an  optional  third  argument which, when set equal to a prime p,
+  causes  the function to return the the mod p cohomology H^n(G,Z_p) as a list
+  of length equal to its rank.
+  
+  This  function is a composite of more basic functions, and makes choices for
+  a number of parameters. For a particular group you would almost certainly be
+  better using the more basic functions and making the choices yourself!
+  ::::::::::::::::::::::::
+  [10XGroupHomology(X,n)[0m
+  [10XGroupHomology(X,n,p)[0m
+  
+  Inputs a positive integer n and either
+  a finite group X=G
+  or a nilpotent Pcp-group X=G
+  or a space group X=G
+  or a list X=D representing a graph of groups
+  or  a  pair  X=["Artin",D]  where  D  is  a  Coxeter diagram representing an
+  infinite Artin group G.
+  or a pair X=["Coxeter",D] where D is a Coxeter diagram representing a finite
+  Coxeter group G.
+  It returns the torsion coefficients of the integral homology H_n(G,Z).
+  
+  There  is  an  optional  third  argument which, when set equal to a prime p,
+  causes  the  function  to  return the mod p homology H_n(G,Z_p) as a list of
+  lenth equal to its rank.
+  
+  This  function is a composite of more basic functions, and makes choices for
+  a number of parameters. For a particular group you would almost certainly be
+  better using the more basic functions and making the choices yourself!
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfQuotientGroupSeries(S,n)[0m
+  [10XPersistentHomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[0m
+  
+  Inputs a positive integer n and a decreasing chain S=[S_1, S_2, ..., S_k] of
+  normal  subgroups  in a finite p-group G=S_1. It returns the bar code of the
+  persistent  mod  p  homology  in  degree  n  of  the  sequence  of  quotient
+  homomorphisms  G  ->  G/S_k  ->  G/S_k-1  ->  ...  -> G/S_2. The bar code is
+  returned  as a matrix containing the dimensions of the images of the induced
+  homology maps.
+  
+  If  one  sets p=0 then the integral persitent homology bar code is returned.
+  This  is  a matrix whose entries are pairs of the lists: the list of abelian
+  invariants  of  the images of the induced homology maps and the cokernels of
+  the  induced homology maps. (The matrix probably does not uniquely determine
+  the induced homology maps.)
+  
+  Non  prime-power  (and  possibly  infinite) groups G can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  can  be  entered  as  a  fourth
+  argument.  (The  default algorithm is ResolutionFiniteGroup, so this must be
+  changed for infinite groups.)
+  ::::::::::::::::::::::::
+  [10XPersistentCohomologyOfQuotientGroupSeries(S,n)[0m
+  [10XPersistentCohomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[0m
+  
+  Inputs a positive integer n and a decreasing chain S=[S_1, S_2, ..., S_k] of
+  normal  subgroups  in a finite p-group G=S_1. It returns the bar code of the
+  persistent  mod  p  cohomology  in  degree  n  of  the  sequence of quotient
+  homomorphisms  G  ->  G/S_k  ->  G/S_k-1  ->  ...  -> G/S_2. The bar code is
+  returned  as a matrix containing the dimensions of the images of the induced
+  homology maps.
+  
+  If one sets p=0 then the integral persitent cohomology bar code is returned.
+  This  is  a matrix whose entries are pairs of the lists: the list of abelian
+  invariants of the images of the induced cohomology maps and the cokernels of
+  the  induced  cohomology  maps.  (The  matrix  probably  does  not  uniquely
+  determine the induced homology maps.)
+  
+  Non  prime-power  (and  possibly  infinite) groups G can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  can  be  entered  as  a  fourth
+  argument.  (The  default algorithm is ResolutionFiniteGroup, so this must be
+  changed for infinite groups.)
+  
+  (The  implementation  is  possibly  a little less efficient than that of the
+  corresponding persistent homology function.)
+  ::::::::::::::::::::::::
+  [10XUniversalBarCode("UpperCentralSeries",n,d)[0m
+  [10XUniversalBarCode("UpperCentralSeries",n,d,k)[0m
+  
+  Inputs  integers  n,d  that  identify a prime power group G=SmallGroup(n,d),
+  together  with one of the strings "UpperCentralSeries", LowerCentralSeries",
+  "DerivedSeries",  "UpperPCentralSeries", "LowerPCentralSeries". The function
+  returns  a  matrix  of  rational functions; the coefficients of x^k in their
+  expansions  yield  the  persistence  matrix  for  the degree k homology with
+  trivial  mod p coefficients associated to the quotients of G by the terms of
+  the given series.
+  
+  If  the  additional integer argument k is supplied then the function returns
+  the degree k homology persistence matrix.
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfSubGroupSeries(S,n)[0m
+  [10XPersistentHomologyOfSubGroupSeries(S,n,p,Resolution_Algorithm)[0m
+  
+  Inputs a positive integer n and a decreasing chain S=[S_1, S_2, ..., S_k] of
+  subgroups  in  a  finite  p-group  G=S_1.  It  returns  the  bar code of the
+  persistent  mod  p  homology  in  degree  n  of  the  sequence  of inclusion
+  homomorphisms  S_k  ->  S_k-1 -> ... -> S_1=G. The bar code is returned as a
+  binary matrix.
+  
+  Non  prime-power  (and  possibly  infinite) groups G can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  must  be  entered  as  a fourth
+  argument.
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfFilteredChainComplex(C,n,p) [0m
+  
+  Inputs a filtered chain complex C (of characteristic 0 or p) together with a
+  positive  integer  n  and prime p. It returns the bar code of the persistent
+  mod  p  homology in degree n of the filtered chain complex C. (This function
+  needs   a   more  efficient  implementation.  Its  fine  as  it  stands  for
+  investigation  in  group  homology,  but  not sufficiently efficient for the
+  homology of large complexes arising in applied topology.)
+  [10XPersistentHomologyOfCommutativeDiagramOfPGroups(D,n) [0m
+  
+  Inputs  a commutative diagram D of finite p-groups and a positive integer n.
+  It  returns  a  list  containing, for each homomorphism in the nerve of D, a
+  triple  [k,l,m]  where k is the dimension of the source of the induced mod p
+  homology  map  in  degree  n,  l is the dimension of the image, and m is the
+  dimension of the cokernel.
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfPureCubicalComplex(L,n,p)[0m
+  
+  Inputs  a positive integer n, a prime p and an increasing chain L=[L_1, L_2,
+  ...,  L_k] of subcomplexes in a pure cubical complex L_k. It returns the bar
+  code  of  the  persistent  mod  p  homology  in  degree n of the sequence of
+  inclusion maps. The bar code is returned as a matrix.
+  
+  ::::::::::::::::::::::::
+  [10XZZPersistentHomologyOfPureCubicalComplex(L,n,p)[0m
+  
+  Inputs  a  positive  integer n, a prime p and any sequence L=[L_1, L_2, ...,
+  L_k]  of  subcomplexes of some pure cubical complex. It returns the bar code
+  of the zig-zag persistent mod p homology in degree n of the sequence of maps
+  L_1  -> L_1 cup L_2 <- L_2 -> L_2 cup L_3 <- L_4 -> ... <- L_k. The bar code
+  is returned as a matrix.
+  
+  ::::::::::::::::::::::::
+  [10XRipsHomology(G,n)[0m
+  [10XRipsHomology(G,n,p)[0m
+  
+  Inputs  a  graph  G, a non-negative integer n (and optionally a prime number
+  p).  It returns the integral homology (or mod p homology) in degree n of the
+  Rips complex of G.
+  ::::::::::::::::::::::::
+  [10XBarCode(P)[0m
+  
+  Inputs  an  integer persistence matrix P and returns the same information in
+  the form of a binary matrix (corresponding to the usual bar code).
+  ::::::::::::::::::::::::
+  [10XBarCodeDisplay(P)[0m
+  [10XBarCodeDisplay(P,"mozilla")[0m
+  
+  Inputs  an integer persistence matrix P, and an optional string specifying a
+  viewer/browser.  It  displays  a  picture  of  the  bar code (using GraphViz
+  software).
+  ::::::::::::::::::::::::
+  [10XHomology(X,n)[0m
+  
+  Inputs either a chain complex X=C or a chain map X=(C --> D).
+  If X=C then the torsion coefficients of H_n(C) are retuned.
+  If  X=(C  --> D) then the induced homomorphism H_n(C) --> H_n(D) is returned
+  as a homomorphism of finitely presented groups.
+  A  G-complex  C can also be input. The homology groups of such a complex may
+  not  be  abelian.  [12XWarning:[0m  in  this case Homology(C,n) returns the abelian
+  invariants of the n-th homology group of C.
+  ::::::::::::::::::::::::
+  [10XHomologyPb(C,n)[0m
+  
+  This  is  a  back-up  function  which  might  work  in  some instances where
+  Homology(C,n)  fails.  It  is most useful for chain complexes whose boundary
+  homomorphisms are sparse.
+  
+  It  inputs  a  chain  complex  C in characteristic 0 and returns the torsion
+  coefficients  of  H_n(C)  .  There  is a small probability that an incorrect
+  answer  could  be  returned.  The  computation relies on probabilistic Smith
+  Normal  Form  algorithms implemented in the Simplicial Homology GAP package.
+  This  package  therefore  needs to be loaded. The computation is stored as a
+  component  of  C  so,  when  called  a  second time for a given C and n, the
+  calculation is recalled without rerunning the algorithm.
+  
+  The choice of probabalistic algorithm can be changed using the command
+  
+  SetHomologyAlgorithm(HomologyAlgorithm[i]);
+  
+  where  i  =  1,2,3 or 4. The upper limit for the probability of an incorrect
+  answer  can  be  set  to  any  rational  number  0<e<= 1 using the following
+  command.
+  
+  SetUncertaintyTolerence(e);
+  
+  See the Simplicial Homology package manual for further details.
+  ::::::::::::::::::::::::
+  [10XHomologyVectorSpace(X,n)[0m
+  
+  Inputs  either  a  chain  complex  X=C  or  a chain map X=(C --> D) in prime
+  characteristic.
+  If X=C then H_n(C) is retuned as a vector space.
+  If  X=(C  --> D) then the induced homomorphism H_n(C) --> H_n(D) is returned
+  as a homomorphism of vector spaces.
+  ::::::::::::::::::::::::
+  [10XHomologyPrimePart(C,n,p)[0m
+  
+  Inputs  a  chain  complex C in characteristic 0, a positive integer n, and a
+  prime  p. It returns a list of those torsion coefficients of H_n(C) that are
+  positive  powers  of  p.  The  function  uses  the EDIM GAP package by Frank
+  Luebeck.
+  ::::::::::::::::::::::::
+  [10XLeibnizAlgebraHomology(A,n)[0m
+  
+  Inputs  a  Lie or Leibniz algebra X=A (over the ring of integers Z or over a
+  field  K),  together with a positive integer n. It returns the n-dimensional
+  Leibniz homology of A.
+  ::::::::::::::::::::::::
+  [10XLieAlgebraHomology(A,n)[0m
+  
+  Inputs a Lie algebra A (over the integers or a field) and a positive integer
+  n. It returns the homology H_n(A,k) where k denotes the ground ring.
+  ::::::::::::::::::::::::
+  [10XPrimePartDerivedFunctor(G,R,F,n)[0m
+  
+  Inputs  a  finite  group  G,  a  positive integer n, at least n+1 terms of a
+  ZP-resolution  for  a  Sylow  subgroup  P<G  and a "mathematically suitable"
+  covariant  additive  functor  F  such as TensorWithIntegers . It returns the
+  abelian invariants of the p-component of the homology H_n(F(R)) .
+  
+  Warning:  All  calculations  are  assumed  to  be  in  characteristic 0. The
+  function should not be used if the coefficient module is over the field of p
+  elements.
+  
+  "Mathematically  suitable"  means  that  the  Cartan-Eilenberg  double coset
+  formula must hold.
+  ::::::::::::::::::::::::
+  [10XRankHomologyPGroup(G,n)[0m
+  [10XRankHomologyPGroup(R,n)[0m
+  [10XRankHomologyPGroup(G,n,"empirical")[0m
+  
+  Inputs  a (smallish) p-group G, or n terms of a minimal Z_pG-resolution R of
+  Z_p  ,  together with a positive integer n. It returns the minimal number of
+  generators of the integral homology group H_n(G,Z).
+  
+  If an option third string argument "empirical" is included then an empirical
+  algorithm  will  be  used. This is one which always seems to yield the right
+  answer but which we can't prove yields the correct answer.
+  ::::::::::::::::::::::::
+  [10XRankPrimeHomology(G,n)[0m
+  
+  Inputs a (smallish) p-group G together with a positive integer n. It returns
+  a  function  dim(k)  which gives the rank of the vector space H_k(G,Z_p) for
+  all 0 <= k <= n.
+  

@@ -1,0 +1,316 @@
+<Chapter><Heading> Simplicial Complexes</Heading>
+
+<Table Align="|l|" >
+
+
+<Row>
+<Item>
+<C>Homology(T,n)</C>
+<C>Homology(T)</C>
+
+<P/>
+Inputs a pure cubical complex, or cubical complex, or simplicial complex <M>T</M>
+and a non-negative integer <M>n</M>. It returns the n-th integral homology of <M>T</M> as a list of torsion integers.
+ If no value of <M>n</M> is input then the list of all homologies of <M>T</M>
+in dimensions 0 to Dimension(T)  is returned .
+</Item>
+</Row>
+
+<Row>
+<Item>
+<C>RipsHomology(G,n)</C>
+<C>RipsHomology(G,n,p)</C>
+
+<P/>
+Inputs a graph <M>G</M>, a non-negative integer <M>n</M> (and optionally a prime number <M>p</M>). It returns the integral  homology (or mod p homology) in degree <M>n</M> of the Rips complex of <M>G</M>. 
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>Bettinumbers</Index>
+<C> Bettinumbers(T,n)</C>
+<C> Bettinumbers(T)</C>
+
+<P/>
+Inputs a pure cubical complex, or cubical complex,  simplicial complex or chain complex <M>T</M> and a non-negative integer <M>n</M>.
+ The   rank of the  n-th rational homology group  <M>H_n(T,\mathbb Q)</M> is returned. If no value for n is input then the list of Betti numbers
+in dimensions 0 to Dimension(T)  is returned .
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+
+<C>ChainComplex(T)</C>
+
+<P/>
+Inputs a  pure cubical complex, or cubical complex, or simplicial complex
+ <M>T</M>
+and returns the (often very large) cellular chain complex of <M>T</M>. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>CechComplexOfPureCubicalComplex</Index>
+<C>CechComplexOfPureCubicalComplex(T)</C>
+
+<P/>
+Inputs a d-dimensional pure cubical complex 
+ <M>T</M>
+and returns  a simplicial complex <M>S</M>. The simplicial complex <M>S</M> has one vertex for each d-cube in <M>T</M>, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection.
+ The homotopy types of <M>T</M> and <M>S</M> are equal.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>PureComplexToSimplicialComplex</Index>
+<C>PureComplexToSimplicialComplex(T,k)</C>
+
+<P/>
+Inputs either a d-dimensional pure cubical complex
+ <M>T</M> or a d-dimensional pure permutahedral complex <M>T</M> together with
+a non-negative integer <M>k</M>. It 
+returns the first <M>k</M> dimensions of
+  a simplicial complex <M>S</M>. The simplicial complex <M>S</M> has one vertex for each d-cell in <M>T</M>, and an n-simplex for each collection of n+1 d-cells with non-trivial common intersection.
+ The homotopy types of <M>T</M> and <M>S</M> are equal.
+
+
+<P/> For a pure cubical complex <M>T</M> this uses a slightly different algorithm to the function CechComplexOfPureCubicalComplex(T) but constructs the same simplicial complex.
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
+<Index>RipsChainComplex</Index>
+<C>RipsChainComplex(G,n)</C>
+<P/>
+Inputs a graph <M>G</M>  and a non-negative integer <M>n</M>. It returns  
+ <M>n+1</M> terms of a chain complex whose homology is that of the nerve (or Rips complex) of
+the graph in degrees up to <M>n</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>VectorsToSymmetricMatrix</Index>
+<C>VectorsToSymmetricMatrix(M)</C>
+<C>VectorsToSymmetricMatrix(M,distance)</C>
+
+<P/>
+Inputs a  matrix <M>M</M> of rational numbers and returns a symmetric matrix <M>S</M> whose <M>(i,j)</M> entry is the distance between the <M>i</M>-th row and <M>j</M>-th rows of <M>M</M> where distance is given by the sum of the absolute values of the coordinate differences.
+
+<P/>
+Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational 
+vectors <M>v,w</M> of length Length(M[1]). 
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>EulerCharacteristic</Index>
+<C>EulerCharacteristic(T)</C>
+
+<P/>
+Inputs a  pure cubical complex, or cubical complex, or simplicial complex
+ <M>T</M>
+and returns its Euler characteristic.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>MaximalSimplicesToSimplicialComplex</Index>
+<C>MaximalSimplicesToSimplicialComplex(L)</C>
+
+<P/>
+Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex.
+The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>SkeletonOfSimplicialComplex</Index>
+<C>SkeletonOfSimplicialComplex(S,k)</C>
+
+<P/>
+Inputs a simplicial complex <M>S</M> and a positive integer <M>k</M> less than or equal to the dimension of <M>S</M>. It returns the truncated <M>k</M>-dimensional simplicial complex <M>S^k</M> (and leaves <M>S</M> unchanged).
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>GraphOfSimplicialComplex</Index>
+<C>GraphOfSimplicialComplex(S)</C>
+
+<P/>
+Inputs a simplicial complex <M>S</M> and returns the graph
+of <M>S</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>ContractibleSubcomplexOfSimplicialComplex</Index>
+<C>ContractibleSubcomplexOfSimplicialComplex(S)</C>
+
+<P/>
+Inputs a simplicial complex <M>S</M> and returns a (probably maximal)
+contractible subcomplex 
+of <M>S</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>PathComponentsOfSimplicialComplex</Index>
+<C>PathComponentsOfSimplicialComplex(S,n)</C>
+
+<P/>
+Inputs a simplicial complex <M>S</M> and a nonnegative integer <M>n</M>. If <M>n=0</M> the number of path components of <M>S</M> is returned. Otherwise the n-th path component is returned (as a simplicial complex).
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
+<Index>QuillenComplex</Index>
+<C>QuillenComplex(G)</C>
+
+<P/>
+Inputs a finite group  
+ <M>G</M>
+and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of <M>G</M>. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>SymmetricMatrixToIncidenceMatrix</Index>
+<C>SymmetricMatrixToIncidenceMatrix(S,t)</C>
+<C>SymmetricMatrixToIncidenceMatrix(S,t,d)</C>
+
+<P/>
+Inputs a symmetric integer matrix S and an integer t. It
+ returns the matrix  <M>M</M> with <M>M_{ij}=1</M> if <M>I_{ij}</M> is less than <M> t</M>
+and <M>I_{ij}=1</M> otherwise. 
+
+<P/> 
+An optional integer <M>d</M> can be given as a third argument. In this case 
+the incidence matrix should have roughly at most <M>d</M> entries in each row (corresponding to the $d$ smallest entries in each row of <M>S</M>). 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>IncidenceMatrixToGraph</Index>
+<C>IncidenceMatrixToGraph(M)</C>
+
+<P/>
+Inputs a symmetric 0/1 matrix M. It
+ returns the 
+graph with one vertex for each row of <M>M</M> and an edges between vertices <M>i</M> and <M>j</M> if the <M>(i,j)</M> entry in <M>M</M> equals 1.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>CayleyGraphOfGroup</Index>
+<C>CayleyGraphOfGroup(G,A)</C>
+
+<P/>
+Inputs a group <M>G</M> and a set <M>A</M> of generators. It returns the Cayley graph.
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>PathComponentsOfGraph</Index>
+<C>PathComponentsOfGraph(G,n)</C>
+
+<P/>
+Inputs a graph <M>G</M> and a nonnegative integer <M>n</M>. If <M>n=0</M> the number of path components is returned. Otherwise the n-th path component is returned (as a graph).
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>ContractGraph</Index>
+<C>ContractGraph(G)</C>
+
+<P/>
+Inputs a graph <M>G</M> and tries to remove vertices and edges to produce a smaller graph <M>G'</M>
+such that the indlusion <M>G' \rightarrow G</M> induces a homotopy equivalence
+ <M>RG \rightarrow RG'</M> of Rips complexes. If the graph <M>G</M> is modified the function returns true, and otherwise returns false. 
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>GraphDisplay</Index>
+<C>GraphDisplay(G)</C>
+
+<P/>
+This function uses GraphViz software to display a graph <M>G</M>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>SimplicialMap</Index>
+<Index>SimplicialMapNC</Index>
+<C>SimplicialMap(K,L,f)</C>
+<C>SimplicialMapNC(K,L,f)</C>
+
+<P/>
+Inputs simplicial complexes <M>K</M> , <M>L</M> and a 
+function <M>f\colon K!.vertices \rightarrow L!.vertices</M> 
+representing a simplicial map. It returns a simplicial 
+map <M>K \rightarrow L</M>. If <M>f</M> does not happen to represent a 
+simplicial map then SimplicialMap(K,L,f) will return fail; SimplicialMapNC(K,L,f)
+will not do any check and always return something of the data type "simplicial map".
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>ChainMapOfSimplicialMap</Index>
+<C>ChainMapOfSimplicialMap(f)</C>
+
+<P/>
+Inputs a simplicial map  <M>f\colon K \rightarrow L</M> and returns the 
+corresponding chain map  <M>C_\ast(f) \colon C_\ast(K) \rightarrow C_\ast(L)</M> of the simplicial chain complexes..
+</Item>
+</Row>
+
+
+
+<Row>
+<Item>
+<Index>SimplicialNerveOfGraph</Index>
+<C>SimplicialNerveOfGraph(G,d)</C>
+
+<P/>
+Inputs a graph <M>G</M> and returns a <M>d</M>-dimensional
+simplicial complex <M>K</M> whose 1-skeleton is equal to <M>G</M>. There is a simplicial inclusion <M>K \rightarrow RG</M> where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions less than <M>d</M>; (ii) the complex <M>RG</M> is the Rips complex (with  one <M>n</M>-simplex for each complete subgraph of <M>G</M> on  <M>n+1</M> vertices).
+</Item>
+</Row>
+
+
+
+
+</Table>
+</Chapter>
+
+

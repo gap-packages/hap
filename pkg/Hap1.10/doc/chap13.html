@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 13:  Orbit polytopes and fundamental domains</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body><a href="../www/index.html"><small>HAP home</small></a>
+
+
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap12.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap14.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7CD67FEA7A1B6345" name="X7CD67FEA7A1B6345"></a></p>
+<div class="ChapSects"><a href="chap13.html#X7CD67FEA7A1B6345">13 <span class="Heading"> Orbit polytopes and fundamental domains</span></a>
+</div>
+
+<h3>13 <span class="Heading"> Orbit polytopes and fundamental domains</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">CoxeterComplex(D)</code> <code class="code">CoxeterComplex(D,n)</code></p>
+
+<p>Inputs a Coxeter diagram D of finite type. It returns a non-free ZW-resolution for the associated Coxeter group W. The non-free resolution is obtained from the permutahedron of type W. A positive integer n can be entered as an optional second variable; just the first n terms of the non-free resolution are then returned.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ContractibleGcomplex("PSL(4,Z)")</code></p>
+
+<p>Inputs one of the following strings: <br /> <br /> "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" , "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)" <br /> <br /> or one of the following strings <br /> <br /> "SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" , "SL(2,Z[sqrt(-19)])" , "SL(2,Z[sqrt(-43)])" , "SL(2,Z[sqrt(-67)])" , "SL(2,Z[sqrt(-163)])" <br /> <br /> It returns a non-free ZG-resolution for the group G described by the string. The stabilizer groups of cells are finite. (Subscripts _b , _c , _d denote alternative non-free ZG-resolutions for a given group G.)<br /> <br /> Data for the first list of non-free resolutions was provided provided by <strong class="button">Mathieu Dutour</strong>. Data for the second list was provided by <strong class="button">Alexander Rahm</strong>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">QuotientOfContractibleGcomplex(C,D)</code></p>
+
+<p>Inputs a non-free ZG-resolution C and a finite subgroup D of G which is a subgroup of each cell stabilizer group for C. Each element of D must preserves the orientation of any cell stabilized by it. It returns the corresponding non-free Z(G/D)-resolution. (So, for instance, from the SL(2,O) complex C=ContractibleGcomplex("SL(2,O-2)"); we can construct a PSL(2,O)-complex using this function.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">TruncatedGComplex(R,m,n)</code></p>
+
+<p>Inputs a non-free ZG-resolution R and two positive integers m and n. It returns the non-free ZG-resolution consisting of those modules in R of degree at least m and at most n.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">FundamentalDomainStandardSpaceGroup(v,G)</code></p>
+
+<p>Inputs a crystallographic group G (represented using AffineCrystGroupOnRight as in the GAP package Cryst). It also inputs a choice of vector v in the euclidean space R^n on which G acts. It returns the Dirichlet-Voronoi fundamental cell for the action of G on euclidean space corresponding to the vector v. The fundamental cell is a fundamental domain if G is Bieberbach. The fundamental cell/domain is returned as a "Polymake object". Currently the function only applies to certain crystallographic groups. See the manuals to HAPcryst and HAPpolymake for full details.</p>
+
+<p>This function is part of the HAPcryst package written by <strong class="button">Marc Roeder</strong> and is thus only available if HAPcryst is loaded.</p>
+
+<p>The function requires the use of Polymake software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">OrbitPolytope(G,v,L) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The function also inputs a sublist L of the following list of strings:</p>
+
+<p>["dimension","vertex_degree", "visual_graph", "schlegel","visual"]</p>
+
+<p>Depending on the sublist, the function:</p>
+
+
+<ul>
+<li><p>prints the dimension of the orbit polytope P(G,v);</p>
+
+</li>
+<li><p>prints the degree of a vertex in the graph of P(G,v);</p>
+
+</li>
+<li><p>visualizes the graph of P(G,v);</p>
+
+</li>
+<li><p>visualizes the Schlegel diagram of P(G,v);</p>
+
+</li>
+<li><p>visualizes P(G,v) if the polytope is of dimension 2 or 3.</p>
+
+</li>
+</ul>
+<p>The function uses Polymake software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PolytopalComplex(G,v) </code> <code class="code">PolytopalComplex(G,v,n) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The cellular chain complex C_*=C_*(P(G,v)) is an exact sequence of (not necessarily free) ZG-modules. The function returns a component object R with components:</p>
+
+
+<ul>
+<li><p>R!.dimension(k) is a function which returns the number of G-orbits of the k-dimensional faces in P(G,v). If each k-face has trivial stabilizer subgroup in G then C_k is a free ZG-module of rank R.dimension(k).</p>
+
+</li>
+<li><p>R!.stabilizer(k,n) is a function which returns the stabilizer subgroup for a face in the n-th orbit of k-faces.</p>
+
+</li>
+<li><p>If all faces of dimension &lt;k+1 have trivial stabilizer group then the first k terms of C_* constitute part of a free ZG-resolution. The boundary map is described by the function boundary(k,n) . (If some faces have non-trivial stabilizer group then C_* is not free and no attempt is made to determine signs for the boundary map.)</p>
+
+</li>
+<li><p>R!.elements, R!.group, R!.properties are as in a ZG-resolution.</p>
+
+</li>
+</ul>
+<p>If an optional third input variable n is used, then only the first n terms of the resolution C_* will be computed.</p>
+
+<p>The function uses Polymake software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PolytopalGenerators(G,v) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector v of length n. In both cases there is a natural action of G on v, and the vector v must be chosen so that it has trivial stabilizer subgroup in G. Let P(G,v) be the convex polytope arising as the convex hull of the Euclidean points in the orbit of v under the action of G. The function returns a record P with components:</p>
+
+
+<ul>
+<li><p>P.generators is a list of all those elements g in G such that g* v has an edge in common with v. The list is a generating set for G.</p>
+
+</li>
+<li><p>P.vector is the vector v.</p>
+
+</li>
+<li><p>P.hasseDiagram is the Hasse diagram of the cone at v.</p>
+
+</li>
+</ul>
+<p>The function uses Polymake software. The function is joint work with Seamus Kelly.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">VectorStabilizer(G,v) </code></p>
+
+<p>Inputs a permutation group or matrix group G of degree n and a rational vector of degree n. In both cases there is a natural action of G on v and the function returns the group of elements in G that fix v.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap12.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap14.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

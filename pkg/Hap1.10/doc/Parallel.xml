@@ -1,0 +1,189 @@
+<Chapter><Heading> Parallel Computation - Core Functions</Heading>
+
+
+<Table Align="|l|" >
+
+
+
+<Row>
+<Item>
+<Index> ChildProcess</Index>
+<C>ChildProcess()</C>
+<C>ChildProcess("computer.ac.wales")</C>
+<C>ChildProcess(["-m", "100000M", "-T"])</C>
+<C>ChildProcess("computer.ac.wales", ["-m", "100000M", "-T"])</C>
+
+
+
+<P/>
+This starts a GAP session as a child process and returns a stream to the child process. If no argument is given then the child process is created on the local machine; otherwise the argument should be: 1) the address of a remote computer for which ssh has been configured to require no password from the user; (2) or a list of GAP command line options; (3) or the address of a computer followed by a list of command line options.
+
+<P/>
+(To configure ssh so that the user can login without a password prompt from "thishost" to "remotehost" either consult "man ssh" or
+<Br/>
+<Br/>
+- open a shell on thishost<Br/>
+- cd .ssh<Br/>
+- ls<Br/>
+-> if id_dsa, id_rsa etc exists,
+skip the next two steps!<Br/>
+- ssh-keygen -t rsa<Br/>
+- ssh-keygen -t dsa<Br/>
+- scp *.pub user@remotehost:~/<Br/>
+- ssh remotehost -l user<Br/>
+- cat id_rsa.pub >> .ssh/authorized_keys<Br/>
+- cat id_dsa.pub >> .ssh/authorized_keys<Br/>
+- rm id_rsa.pub id_dsa.pub<Br/>
+- exit<Br/>
+<Br/>
+You should now be able to connect from "thishost" to "remotehost"
+without a password prompt.)
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildClose</Index>
+<C>ChildClose(s)</C>
+
+<P/>
+This closes the stream s to a child GAP process.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildCommand</Index>
+<C>ChildCommand("cmd;",s)</C>
+
+<P/>
+This runs a GAP command "cmd;" on the child process accessed by the stream s.
+Here "cmd;" is a string representing the command. 
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> NextAvailableChild</Index>
+<C>NextAvailableChild(L)</C>
+
+<P/>
+Inputs a list <M>L</M> of child processes and returns a child in <M>L</M>
+which is ready for computation (as soon as such a child is available).
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> IsAvailableChild</Index>
+<C>IsAvailableChild(s)</C>
+
+<P/>
+Inputs a child process  <M>s</M> and returns true if s is currently available
+for computations, and false otherwise.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> ChildPut</Index>
+<C>ChildPut(A,"B",s)</C>
+
+<P/> This copies a GAP object A on the parent process to an object B on the child process s. (The copying relies on the function PrintObj(A); )
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildGet</Index>
+<C>ChildGet("A",s)</C>
+
+<P/> This functions copies a GAP object A on the child process s and returns it on the parent process. (The copying relies on the function PrintObj(A); )
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> HAPPrintTo</Index>
+<C>HAPPrintTo("file",R)</C>
+
+<P/>
+Inputs a  name "file" of a new text file and a HAP object R. It writes the object R to  "file".
+ Currently this is only implemented for R equal to a resolution.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> HAPRead</Index>
+<C>HAPRead("file",R)</C>
+
+<P/>
+Inputs a  name "file" containing a HAP object R 
+and returns the object. 
+ Currently this is only implemented for R equal to a resolution.
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+<Chapter>
+<Heading> Parallel Computation - Extra Functions</Heading>
+
+<Table Align="|l|" >
+
+
+
+<Row>
+<Item>
+<Index> ChildFunction</Index>
+<C>ChildFunction("function(arg);",s)</C>
+
+<P/>
+This runs the GAP function "function(arg);"
+on a child process accessed by the stream s.
+The  output from "func;" can be accessed via the stream.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> ChildRead</Index>
+<C>ChildRead(s)</C>
+
+<P/>
+This returns, as a string, the output of the last application of <M>ChildFunction("function(arg);",s)</M>.
+</Item>
+</Row> 
+
+<Row>
+<Item>
+<Index> ChildReadEval</Index>
+<C>ChildReadEval(s)</C>
+
+<P/>
+This returns, as an evaluated string, the output of the last application of <M>ChildFunction("function(arg);",s)</M>.
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> ParallelList</Index>
+<C>ParallelList(I,fn,L)</C>
+
+<P/>
+Inputs a list <M>I</M>, a function <M>fn</M> such that <M>fn(x)</M> is defined for all <M>x</M> in <M>I</M>, and a list of children <M>L</M>. It uses the children in <M>L</M> to compute <M>List(I,x->fn(x))</M>. (Obviously 
+the function <M>fn</M> must be defined on all child processes in <M>L</M>.)
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+

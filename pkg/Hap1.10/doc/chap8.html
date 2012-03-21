@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 8:  Cohomology ring structure</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body><a href="../www/index.html"><small>HAP home</small></a>
+
+
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap7.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap9.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7A9561E47A4994F5" name="X7A9561E47A4994F5"></a></p>
+<div class="ChapSects"><a href="chap8.html#X7A9561E47A4994F5">8 <span class="Heading"> Cohomology ring structure</span></a>
+</div>
+
+<h3>8 <span class="Heading"> Cohomology ring structure</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">IntegralCupProduct(R,u,v,p,q) </code> <code class="code"> IntegralCupProduct(R,u,v,p,q,P,Q,N) </code></p>
+
+<p>(Various functions used to construct the cup product are also <span class="URL"><a href=" CR_functions.html">available</a></span>.)</p>
+
+<p>Inputs a ZG-resolution R, a vector u representing an element in H^p(G,Z), a vector v representing an element in H^q(G,Z) and the two integers p,q &gt;0. It returns a vector w representing the cup product u* v in H^p+q(G,Z). This product is associative and u* v = (-1)pqv* u . It provides H^*(G,Z) with the structure of an anti-commutative graded ring. This function implements the cup product for characteristic 0 only.</p>
+
+<p>The resolution R needs a contracting homotopy.</p>
+
+<p>To save the function from having to calculate the abelian groups H^n(G,Z) additional input variables can be used in the form IntegralCupProduct(R,u,v,p,q,P,Q,N) , where</p>
+
+
+<ul>
+<li><p>P is the output of the command CR_CocyclesAndCoboundaries(R,p,true)</p>
+
+</li>
+<li><p>Q is the output of the command CR_CocyclesAndCoboundaries(R,q,true)</p>
+
+</li>
+<li><p>N is the output of the command CR_CocyclesAndCoboundaries(R,p+q,true) .</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IntegralRingGenerators(R,n) </code></p>
+
+<p>Inputs at least n+1 terms of a ZG-resolution and integer n&gt; 0. It returns a minimal list of cohomology classes in H^n(G,Z) which, together with all cup products of lower degree classes, generate the group H^n(G,Z) .</p>
+
+<p>(Let a_i be the i-th canonical generator of the d-generator abelian group H^n(G,Z). The cohomology class n_1a_1 + ... +n_da_d is represented by the integer vector u=(n_1, ..., n_d). )</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ModPCohomologyGenerators(G,n) </code> <code class="code">ModPCohomologyGenerators(R) </code></p>
+
+<p>Inputs either a p-group G and positive integer n, or else n terms of a minimal Z_pG-resolution R of Z_p. It returns a pair whose first entry is a minimal set of homogeneous generators for the cohomology ring A=H^*(G,Z_p) modulo all elements in degree greater than n. The second entry of the pair is a function deg which, when applied to a minimal generator, yields its degree.</p>
+
+<p>WARNING: the following rule must be applied when multiplying generators x_i together. Only products of the form x_1*(x_2*(x_3*(x_4*...))) with deg(x_i) le deg(x_i+1) should be computed (since the x_i belong to a structure constant algebra with only a partially defined structure constants table).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ModPCohomologyRing(G,n) </code> <code class="code">ModPCohomologyRing(G,n,level) </code> <code class="code">ModPCohomologyRing(R) </code> <code class="code">ModPCohomologyRing(R,level)</code></p>
+
+<p>Inputs either a p-group G and positive integer n, or else n terms of a minimal Z_pG-resolution R of Z_p. It returns the cohomology ring A=H^*(G,Z_p) modulo all elements in degree greater than n.</p>
+
+<p>The ring is returned as a structure constant algebra A.</p>
+
+<p>The ring A is graded. It has a component A!.degree(x) which is a function returning the degree of each (homogeneous) element x in GeneratorsOfAlgebra(A).</p>
+
+<p>An optional input variable "level" can be set to one of the strings "medium" or "high". These settings determine parameters in the algorithm. The default setting is "medium".</p>
+
+<p>When "level" is set to "high" the ring A is returned with a component A!.niceBasis. This component is a pair [Coeff,Bas]. Here Bas is a list of integer lists; a "nice" basis for the vector space A can be constructed using the command List(Bas,x-&gt;Product(List(x,i-&gt;Basis(A)[i])). The coefficients of the canonical basis element Basis(A)[i] are stored as Coeff[i].</p>
+
+<p>If the ring A is computed using the setting "level"="medium" then the component A!.niceBasis can be added to A using the command A:=ModPCohomologyRing_part_2(A).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ModPRingGenerators(A) </code></p>
+
+<p>Inputs a mod p cohomology ring A (created using the preceeding function). It returns a minimal generating set for the ring A. Each generator is homogeneous.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Mod2CohomologyRingPresentation(G) </code> <code class="code">Mod2CohomologyRingPresentation(G,n) </code> <code class="code">Mod2CohomologyRingPresentation(A) </code> <code class="code">Mod2CohomologyRingPresentation(R)</code></p>
+
+<p>When applied to a finite 2-group G this function returns a presentation for the mod 2 cohomology ring H^*(G,Z_2). The Lyndon-Hochschild-Serre spectral sequence is used to prove that the presentation is correct.</p>
+
+<p>When the function is applied to a 2-group G and positive integer n the function first constructs n terms of a free Z_2G-resolution R, then constructs the finite-dimensional graded algebra A=H^(*le n)(G,Z_2), and finally uses A to approximate a presentation for H^*(G,Z_2). For "sufficiently large" the approximation will be a correct presentation for H^*(G,Z_2).</p>
+
+<p>Alternatively, the function can be applied directly to either the resolution R or graded algebra A.</p>
+
+<p>This function was written by <strong class="button">Paul Smith</strong>. It uses the Singular commutative algebra package to handle the Lyndon-Hochschild-Serre spectral sequence.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap7.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap9.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

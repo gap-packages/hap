@@ -1,0 +1,173 @@
+  
+  [1X10 Commutator and nonabelian tensor computations[0X
+  
+  ::::::::::::::::::::::::
+  [10XBaerInvariant(G,c) [0m
+  
+  Inputs  a  nilpotent  group G and integer c>0. It returns the Baer invariant
+  M^(c)(G)  defined as follows. For an arbitrary group G let L^*_c+1(G) be the
+  (c+1)-st  term  of  the upper central series of the group U=F/[[[R,F],F]...]
+  (with  c  copies of F in the denominator) where F/R is any free presentation
+  of  G.  This is an invariant of G and we define M^(c)(G) to be the kernel of
+  the  canonical  homomorphism  M^(c)(G)  -->  G.  For  c=1 the Baer invariant
+  M^(1)(G) is isomorphic to the second integral homology H_2(G,Z).
+  
+  This function requires the NQ package.
+  ::::::::::::::::::::::::
+  [10XCoclass(G) [0m
+  
+  Inputs  a  group  G  of prime-power order p^n and nilpotency class c say. It
+  returns the integer r=n-c .
+  ::::::::::::::::::::::::
+  [10XEpiCentre(G,N) [0m
+  [10XEpiCentre(G)[0m
+  
+  Inputs  a  finite  group  G  and  normal  subgroup  N and returns a subgroup
+  Z^*(G,N)  of  the  centre of N. The group Z^*(G,N) is trivial if and only if
+  there is a crossed module d:E --> G with N=Image(d) and with Ker(d) equal to
+  the subgroup of E consisting of those elements on which G acts trivially.
+  
+  If  no  value for N is entered then it is assumed that N=G. In this case the
+  group  Z^*(G,G)  is  trivial  if  and  only if G is isomorphic to a quotient
+  G=E/Z(E)  of  some  group  E  by  the  centre  of  E.  (See also the command
+  UpperEpicentralSeries(G,c). )
+  ::::::::::::::::::::::::
+  [10XNonabelianExteriorProduct(G,N) [0m
+  
+  Inputs  a  finite  group G and normal subgroup N. It returns a record E with
+  the following components.
+  E.homomorphism  is  a  group  homomorphism  µ  :  (G wedge N) --> G from the
+  nonabelian  exterior  product  (G  wedge  N)  to  G.  The kernel of µ is the
+  relative Schur multiplier.
+  E.pairing(x,y) is a function which inputs an element x in G and an element y
+  in N and returns (x wedge y) in the exterior product (G wedge N) .
+  This function should work for reasonably small nilpotent groups or extremely
+  small non-nilpotent groups.
+  ::::::::::::::::::::::::
+  [10XNonabelianSymmetricKernel(G) [0m
+  [10XNonabelianSymmetricKernel(G,m) [0m
+  
+  Inputs  a  finite  or  nilpotent  infinite  group  G and returns the abelian
+  invariants of the Fourth homotopy group SG of the double suspension SSK(G,1)
+  of the Eilenberg-Mac Lane space K(G,1).
+  
+  For    non-nilpotent    groups    the   implementation   of   the   function
+  NonabelianSymmetricKernel(G)  is far from optimal and will soon be improved.
+  As  a  temporary solution to this problem, an optional second variable m can
+  be  set  equal  to  0, and then the function efficiently returns the abelian
+  invariants  of  groups  A and B such that there is an exact sequence 0 --> B
+  --> SG --> A --> 0.
+  
+  Alternatively,  the optional second varible m can be set equal to a positive
+  multiple  of  the  order  of the symmetric square (G tildeotimes G). In this
+  case the function returns the abelian invariants of SG. This might help when
+  G  is  solvable but not nilpotent (especially if the estimated upper bound m
+  is reasonable accurate).
+  ::::::::::::::::::::::::
+  [10XNonabelianSymmetricSquare(G) [0m
+  [10XNonabelianSymmetricSquare(G,m) [0m
+  
+  Inputs  a  finite  or nilpotent infinite group G and returns a record T with
+  the following components.
+  T.homomorphism  is a group homomorphism µ : (G tildeotimes G) --> G from the
+  nonabelian  symmetric square of G to G. The kernel of µ is isomorphic to the
+  fourth  homotopy group of the double suspension SSK(G,1) of an Eilenberg-Mac
+  Lane space.
+  T.pairing(x,y) is a function which inputs two elements x, y in G and returns
+  the tensor (x otimes y) in the symmetric square (G otimes G) .
+  An  optional second varible m can be set equal to a multiple of the order of
+  the  symmetric  square (G tildeotimes G). This might help when G is solvable
+  but  not  nilpotent (especially if the estimated upper bound m is reasonable
+  accurate) as the bound is used in the solvable quotient algorithm.
+  
+  The  optional second variable m can also be set equal to 0. In this case the
+  Todd-Coxeter  procedure  will be used to enumerate the symmetric square even
+  when G is solvable.
+  
+  This  function should work for reasonably small solvable groups or extremely
+  small non-solvable groups.
+  ::::::::::::::::::::::::
+  [10XNonabelianTensorProduct(G,N) [0m
+  
+  Inputs  a  finite  group G and normal subgroup N. It returns a record E with
+  the following components.
+  E.homomorphism  is  a  group  homomorphism  µ : (G otimes N ) --> G from the
+  nonabelian exterior product (G otimes N) to G.
+  E.pairing(x,y) is a function which inputs an element x in G and an element y
+  in N and returns (x otimes y) in the tensor product (G otimes N) .
+  This function should work for reasonably small nilpotent groups or extremely
+  small non-nilpotent groups.
+  ::::::::::::::::::::::::
+  [10XNonabelianTensorSquare(G) [0m
+  [10XNonabelianTensorSquare(G,m) [0m
+  
+  Inputs  a  finite  or nilpotent infinite group G and returns a record T with
+  the following components.
+  T.homomorphism  is  a  group  homomorphism  µ  : (G otimes G) --> G from the
+  nonabelian  tensor  square  of  G to G. The kernel of µ is isomorphic to the
+  third  homotopy  group  of  the  suspension SK(G,1) of an Eilenberg-Mac Lane
+  space.
+  T.pairing(x,y) is a function which inputs two elements x, y in G and returns
+  the tensor (x otimes y) in the tensor square (G otimes G) .
+  An  optional second varible m can be set equal to a multiple of the order of
+  the  tensor  square (G otimes G). This might help when G is solvable but not
+  nilpotent (especially if the estimated upper bound m is reasonable accurate)
+  as the bound is used in the solvable quotient algorithm.
+  
+  The  optional second variable m can also be set equal to 0. In this case the
+  Todd-Coxeter procedure will be used to enumerate the tensor square even when
+  G is solvable.
+  
+  This  function should work for reasonably small solvable groups or extremely
+  small non-solvable groups.
+  ::::::::::::::::::::::::
+  [10XRelativeSchurMultiplier(G,N) [0m
+  
+  Inputs a finite group G and normal subgroup N. It returns the homology group
+  H_2(G,N,Z) that fits into the exact sequence
+  
+  ...-->  H_3(G,Z)  -->  H_3(G/N,Z) --> H_2(G,N,Z) --> H_3(G,Z) --> H_3(G/N,Z)
+  --> ....
+  
+  This  function  should  work  for  reasonably  small  nilpotent  groups G or
+  extremely small non-nilpotent groups.
+  ::::::::::::::::::::::::
+  [10XTensorCentre(G) [0m
+  
+  Inputs  a  group  G and returns the largest central subgroup N such that the
+  induced  homomorphism  of  nonabelian  tensor  squares (G otimes G) --> (G/N
+  otimes  G/N)  is  an  isomorphism.  Equivalently,  N  is the largest central
+  subgroup such that pi_3(SK(G,1)) --> pi_3(SK(G/N,1)) is injective.
+  ::::::::::::::::::::::::
+  [10XThirdHomotopyGroupOfSuspensionB(G) [0m
+  [10XThirdHomotopyGroupOfSuspensionB(G,m) [0m
+  
+  Inputs  a  finite  or  nilpotent  infinite  group  G and returns the abelian
+  invariants  of  the third homotopy group JG of the suspension SK(G,1) of the
+  Eilenberg-Mac Lane space K(G,1).
+  
+  For    non-nilpotent    groups    the   implementation   of   the   function
+  ThirdHomotopyGroupOfSuspensionB(G)  is  far  from  optimal  and will soon be
+  improved.  As  a  temporary  solution  to  this  problem, an optional second
+  variable  m can be set equal to 0, and then the function efficiently returns
+  the  abelian  invariants  of  groups  A  and  B  such that there is an exact
+  sequence 0 --> B --> JG --> A --> 0.
+  
+  Alternatively,  the optional second varible m can be set equal to a positive
+  multiple  of  the  order of the tensor square (G otimes G). In this case the
+  function  returns  the  abelian  invariants of JG. This might help when G is
+  solvable  but  not  nilpotent  (especially if the estimated upper bound m is
+  reasonable accurate).
+  ::::::::::::::::::::::::
+  [10XUpperEpicentralSeries(G,c) [0m
+  
+  Inputs a nilpotent group G and an integer c. It returns the c-th term of the
+  upper epicentral series 1 < Z_1^*(G) < Z_2^*(G) < ....
+  
+  The  upper  epicentral series is defined for an arbitrary group G. The group
+  Z_c^*  (G)  is  the  image in G of the c-th term Z_c(U) of the upper central
+  series  of  the  group  U=F/[[[R,F],F]  ...  ]  (with  c  copies of F in the
+  denominator) where F/R is any free presentation of G.
+  
+  This functions requires the NQ package.
+  

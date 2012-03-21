@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 22:  Simplicial Complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body><a href="../www/index.html"><small>HAP home</small></a>
+
+
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap21.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap23.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7AC76D657C578FEE" name="X7AC76D657C578FEE"></a></p>
+<div class="ChapSects"><a href="chap22.html#X7AC76D657C578FEE">22 <span class="Heading"> Simplicial Complexes</span></a>
+</div>
+
+<h3>22 <span class="Heading"> Simplicial Complexes</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">Homology(T,n)</code> <code class="code">Homology(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and a non-negative integer n. It returns the n-th integral homology of T as a list of torsion integers. If no value of n is input then the list of all homologies of T in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RipsHomology(G,n)</code> <code class="code">RipsHomology(G,n,p)</code></p>
+
+<p>Inputs a graph G, a non-negative integer n (and optionally a prime number p). It returns the integral homology (or mod p homology) in degree n of the Rips complex of G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> Bettinumbers(T,n)</code> <code class="code"> Bettinumbers(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, simplicial complex or chain complex T and a non-negative integer n. The rank of the n-th rational homology group H_n(T, Q) is returned. If no value for n is input then the list of Betti numbers in dimensions 0 to Dimension(T) is returned .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainComplex(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns the (often very large) cellular chain complex of T.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">CechComplexOfPureCubicalComplex(T)</code></p>
+
+<p>Inputs a d-dimensional pure cubical complex T and returns a simplicial complex S. The simplicial complex S has one vertex for each d-cube in T, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection. The homotopy types of T and S are equal.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PureComplexToSimplicialComplex(T,k)</code></p>
+
+<p>Inputs either a d-dimensional pure cubical complex T or a d-dimensional pure permutahedral complex T together with a non-negative integer k. It returns the first k dimensions of a simplicial complex S. The simplicial complex S has one vertex for each d-cell in T, and an n-simplex for each collection of n+1 d-cells with non-trivial common intersection. The homotopy types of T and S are equal.</p>
+
+<p>For a pure cubical complex T this uses a slightly different algorithm to the function CechComplexOfPureCubicalComplex(T) but constructs the same simplicial complex.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RipsChainComplex(G,n)</code></p>
+
+<p>Inputs a graph G and a non-negative integer n. It returns n+1 terms of a chain complex whose homology is that of the nerve (or Rips complex) of the graph in degrees up to n.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">VectorsToSymmetricMatrix(M)</code> <code class="code">VectorsToSymmetricMatrix(M,distance)</code></p>
+
+<p>Inputs a matrix M of rational numbers and returns a symmetric matrix S whose (i,j) entry is the distance between the i-th row and j-th rows of M where distance is given by the sum of the absolute values of the coordinate differences.</p>
+
+<p>Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational vectors v,w of length Length(M[1]).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EulerCharacteristic(T)</code></p>
+
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex T and returns its Euler characteristic.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MaximalSimplicesToSimplicialComplex(L)</code></p>
+
+<p>Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex. The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SkeletonOfSimplicialComplex(S,k)</code></p>
+
+<p>Inputs a simplicial complex S and a positive integer k less than or equal to the dimension of S. It returns the truncated k-dimensional simplicial complex S^k (and leaves S unchanged).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GraphOfSimplicialComplex(S)</code></p>
+
+<p>Inputs a simplicial complex S and returns the graph of S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ContractibleSubcomplexOfSimplicialComplex(S)</code></p>
+
+<p>Inputs a simplicial complex S and returns a (probably maximal) contractible subcomplex of S.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PathComponentsOfSimplicialComplex(S,n)</code></p>
+
+<p>Inputs a simplicial complex S and a nonnegative integer n. If n=0 the number of path components of S is returned. Otherwise the n-th path component is returned (as a simplicial complex).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">QuillenComplex(G)</code></p>
+
+<p>Inputs a finite group G and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SymmetricMatrixToIncidenceMatrix(S,t)</code> <code class="code">SymmetricMatrixToIncidenceMatrix(S,t,d)</code></p>
+
+<p>Inputs a symmetric integer matrix S and an integer t. It returns the matrix M with M_ij=1 if I_ij is less than t and I_ij=1 otherwise.</p>
+
+<p>An optional integer d can be given as a third argument. In this case the incidence matrix should have roughly at most d entries in each row (corresponding to the $d$ smallest entries in each row of S).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IncidenceMatrixToGraph(M)</code></p>
+
+<p>Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each row of M and an edges between vertices i and j if the (i,j) entry in M equals 1.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">CayleyGraphOfGroup(G,A)</code></p>
+
+<p>Inputs a group G and a set A of generators. It returns the Cayley graph.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PathComponentsOfGraph(G,n)</code></p>
+
+<p>Inputs a graph G and a nonnegative integer n. If n=0 the number of path components is returned. Otherwise the n-th path component is returned (as a graph).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ContractGraph(G)</code></p>
+
+<p>Inputs a graph G and tries to remove vertices and edges to produce a smaller graph G' such that the indlusion G' -&gt; G induces a homotopy equivalence RG -&gt; RG' of Rips complexes. If the graph G is modified the function returns true, and otherwise returns false.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GraphDisplay(G)</code></p>
+
+<p>This function uses GraphViz software to display a graph G.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SimplicialMap(K,L,f)</code> <code class="code">SimplicialMapNC(K,L,f)</code></p>
+
+<p>Inputs simplicial complexes K , L and a function f: K!.vertices -&gt; L!.vertices representing a simplicial map. It returns a simplicial map K -&gt; L. If f does not happen to represent a simplicial map then SimplicialMap(K,L,f) will return fail; SimplicialMapNC(K,L,f) will not do any check and always return something of the data type "simplicial map".</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ChainMapOfSimplicialMap(f)</code></p>
+
+<p>Inputs a simplicial map f: K -&gt; L and returns the corresponding chain map C_*(f) : C_*(K) -&gt; C_*(L) of the simplicial chain complexes..</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SimplicialNerveOfGraph(G,d)</code></p>
+
+<p>Inputs a graph G and returns a d-dimensional simplicial complex K whose 1-skeleton is equal to G. There is a simplicial inclusion K -&gt; RG where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions less than d; (ii) the complex RG is the Rips complex (with one n-simplex for each complete subgraph of G on n+1 vertices).</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap21.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap23.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

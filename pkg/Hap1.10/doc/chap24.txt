@@ -1,0 +1,125 @@
+  
+  [1X24 Commutative diagrams and abstract categories[0X
+  
+  [12XCOMMUTATIVE DIAGRAMS[0m
+  ::::::::::::::::::::::::
+  [10XHomomorphismChainToCommutativeDiagram(H) [0m
+  
+  Inputs  a  list  H=[h_1,h_2,...,h_n]  of  mappings  such  that the composite
+  h_1h_2...h_n is defined. It returns the list of composable homomorphism as a
+  commutative diagram.
+  ::::::::::::::::::::::::
+  [10XNormalSeriesToQuotientDiagram(L) [0m
+  [10XNormalSeriesToQuotientDiagram(L,M)[0m
+  
+  Inputs  an  increasing  (or  decreasing)  list L=[L_1,L_2,...,L_n] of normal
+  subgroups  of  a  group  G  with  G=L_n.  It  returns  the chain of quotient
+  homomorphisms G/L_i -> G/L_i+1 as a commutative diagram.
+  
+  Optionally  a subseries M of L can be entered as a second variable. Then the
+  resulting  diagram  of quotient groups has two rows of horizontal arrows and
+  one row of vertical arrows.
+  ::::::::::::::::::::::::
+  [10XNerveOfCommutativeDiagram(D) [0m
+  
+  Inputs  a  commutative  diagram  D  and  returns  the commutative diagram ND
+  consisting of all possible composites of the arrows in D.
+  ::::::::::::::::::::::::
+  [10XGroupHomologyOfCommutativeDiagram(D,n) [0m
+  [10XGroupHomologyOfCommutativeDiagram(D,n,prime) [0m
+  [10XGroupHomologyOfCommutativeDiagram(D,n,prime,Resolution_Algorithm) [0m
+  
+  Inputs  a  commutative  diagram  D  of  p-groups  and positive integer n. It
+  returns  the commutative diagram of vector spaces obtained by applying mod p
+  homology.
+  
+  Non-prime  power  groups  can also be handled if a prime p is entered as the
+  third  argument.  Integral  homology can be obtained by setting p=0. For p=0
+  the result is a diagram of groups.
+  
+  A  particular resolution algorithm, such as ResolutionNilpotentGroup, can be
+  entered   as   a   fourth   argument.   For   positive   p  the  default  is
+  ResolutionPrimePowerGroup. For p=0 the default is ResolutionFiniteGroup.
+  ::::::::::::::::::::::::
+  [10XPersistentHomologyOfCommutativeDiagramOfPGroups(D,n) [0m
+  
+  Inputs  a commutative diagram D of finite p-groups and a positive integer n.
+  It  returns  a  list  containing, for each homomorphism in the nerve of D, a
+  triple  [k,l,m]  where k is the dimension of the source of the induced mod p
+  homology  map  in  degree  n,  l is the dimension of the image, and m is the
+  dimension of the cokernel.
+  [12XABSTRACT CATEGORIES[0m
+  ::::::::::::::::::::::::
+  [10XCategoricalEnrichment(X,Name) [0m
+  
+  Inputs  a  structure  X such as a group or group homomorphism, together with
+  the  name  of  some  existing  category  such as Name:=Category_of_Groups or
+  Category_of_Abelian_Groups.  It  returns, as appropriate, an object or arrow
+  in the named category.
+  ::::::::::::::::::::::::
+  [10XIdentityArrow(X) [0m
+  
+  Inputs  an  object X in some category, and returns the identity arrow on the
+  object X.
+  ::::::::::::::::::::::::
+  [10XInitialArrow(X) [0m
+  
+  Inputs  an object X in some category, and returns the arrow from the initial
+  object in the category to X.
+  ::::::::::::::::::::::::
+  [10XTerminalArrow(X) [0m
+  
+  Inputs  an  object  X  in some category, and returns the arrow from X to the
+  terminal object in the category.
+  ::::::::::::::::::::::::
+  [10XHasInitialObject(Name) [0m
+  
+  Inputs the name of a category and returns true or false depending on whether
+  the category has an initial object.
+  ::::::::::::::::::::::::
+  [10XHasTerminalObject(Name) [0m
+  
+  Inputs the name of a category and returns true or false depending on whether
+  the category has a terminal object.
+  ::::::::::::::::::::::::
+  [10XSource(f) [0m
+  
+  Inputs an arrow f in some category, and returns its source.
+  ::::::::::::::::::::::::
+  [10XTarget(f) [0m
+  
+  Inputs an arrow f in some category, and returns its target.
+  ::::::::::::::::::::::::
+  [10XCategoryName(X) [0m
+  
+  Inputs  an  object  or arrow X in some category, and returns the name of the
+  category.
+  [10X"*", "=", "+", "-" [0m
+  
+  Composition  of  suitable  arrows  f,g  is given by f*g when the source of f
+  equals  the  target  of  g.  (Warning:  this  differes  to  the standard GAP
+  convention.)
+  
+  Equality is tested using f=g.
+  
+  In  an  additive category the sum and difference of suitable arrows is given
+  by f+g and f-g.
+  ::::::::::::::::::::::::
+  [10XObject(X) [0m
+  
+  Inputs  an  object  X in some category, and returns the GAP structure Y such
+  that X=CategoricalEnrichment(Y,CategoryName(X)).
+  ::::::::::::::::::::::::
+  [10XMapping(X) [0m
+  
+  Inputs  an  arrow  f  in some category, and returns the GAP structure Y such
+  that f=CategoricalEnrichment(Y,CategoryName(X)).
+  ::::::::::::::::::::::::
+  [10XIsCategoryObject(X) [0m
+  
+  Inputs X and returns true if X is an object in some category.
+  ::::::::::::::::::::::::
+  [10XIsCategoryArrow(X) [0m
+  
+  Inputs X and returns true if X is an arrow in some category.
+  

@@ -1,0 +1,108 @@
+  
+  [1X8 Cohomology ring structure[0X
+  
+  ::::::::::::::::::::::::
+  [10XIntegralCupProduct(R,u,v,p,q) [0m
+  [10X IntegralCupProduct(R,u,v,p,q,P,Q,N) [0m
+  
+  (Various  functions  used  to  construct  the cup product are also available
+  ([7XCR_functions.html[0m).)
+  
+  Inputs  a ZG-resolution R, a vector u representing an element in H^p(G,Z), a
+  vector v representing an element in H^q(G,Z) and the two integers p,q >0. It
+  returns  a  vector  w  representing the cup product u* v in H^p+q(G,Z). This
+  product is associative and u* v = (-1)pqv* u . It provides H^*(G,Z) with the
+  structure  of  an anti-commutative graded ring. This function implements the
+  cup product for characteristic 0 only.
+  
+  The resolution R needs a contracting homotopy.
+  
+  To  save  the  function from having to calculate the abelian groups H^n(G,Z)
+  additional     input     variables    can    be    used    in    the    form
+  IntegralCupProduct(R,u,v,p,q,P,Q,N) , where
+  P is the output of the command CR_CocyclesAndCoboundaries(R,p,true)
+  Q is the output of the command CR_CocyclesAndCoboundaries(R,q,true)
+  N is the output of the command CR_CocyclesAndCoboundaries(R,p+q,true) .
+  ::::::::::::::::::::::::
+  [10XIntegralRingGenerators(R,n) [0m
+  
+  Inputs  at least n+1 terms of a ZG-resolution and integer n> 0. It returns a
+  minimal  list of cohomology classes in H^n(G,Z) which, together with all cup
+  products of lower degree classes, generate the group H^n(G,Z) .
+  
+  (Let  a_i  be  the i-th canonical generator of the d-generator abelian group
+  H^n(G,Z).  The  cohomology  class n_1a_1 + ... +n_da_d is represented by the
+  integer vector u=(n_1, ..., n_d). )
+  ::::::::::::::::::::::::
+  [10XModPCohomologyGenerators(G,n) [0m
+  [10XModPCohomologyGenerators(R) [0m
+  
+  Inputs  either  a  p-group  G  and  positive integer n, or else n terms of a
+  minimal  Z_pG-resolution  R of Z_p. It returns a pair whose first entry is a
+  minimal  set  of homogeneous generators for the cohomology ring A=H^*(G,Z_p)
+  modulo  all  elements in degree greater than n. The second entry of the pair
+  is  a  function  deg  which, when applied to a minimal generator, yields its
+  degree.
+  
+  WARNING:  the following rule must be applied when multiplying generators x_i
+  together.  Only products of the form x_1*(x_2*(x_3*(x_4*...))) with deg(x_i)
+  le  deg(x_i+1)  should  be  computed  (since  the  x_i belong to a structure
+  constant algebra with only a partially defined structure constants table).
+  ::::::::::::::::::::::::
+  [10XModPCohomologyRing(G,n) [0m
+  [10XModPCohomologyRing(G,n,level) [0m
+  [10XModPCohomologyRing(R) [0m
+  [10XModPCohomologyRing(R,level)[0m
+  
+  Inputs  either  a  p-group  G  and  positive integer n, or else n terms of a
+  minimal   Z_pG-resolution   R   of  Z_p.  It  returns  the  cohomology  ring
+  A=H^*(G,Z_p) modulo all elements in degree greater than n.
+  
+  The ring is returned as a structure constant algebra A.
+  
+  The  ring  A  is graded. It has a component A!.degree(x) which is a function
+  returning    the    degree    of    each    (homogeneous)   element   x   in
+  GeneratorsOfAlgebra(A).
+  
+  An optional input variable "level" can be set to one of the strings "medium"
+  or "high". These settings determine parameters in the algorithm. The default
+  setting is "medium".
+  
+  When  "level"  is  set  to  "high"  the  ring A is returned with a component
+  A!.niceBasis.  This  component  is a pair [Coeff,Bas]. Here Bas is a list of
+  integer  lists;  a  "nice"  basis  for the vector space A can be constructed
+  using    the    command   List(Bas,x->Product(List(x,i->Basis(A)[i])).   The
+  coefficients  of  the  canonical  basis  element  Basis(A)[i]  are stored as
+  Coeff[i].
+  
+  If  the  ring  A  is  computed  using  the setting "level"="medium" then the
+  component   A!.niceBasis   can   be   added   to   A   using   the   command
+  A:=ModPCohomologyRing_part_2(A).
+  ::::::::::::::::::::::::
+  [10XModPRingGenerators(A) [0m
+  
+  Inputs a mod p cohomology ring A (created using the preceeding function). It
+  returns  a  minimal  generating  set  for  the  ring  A.  Each  generator is
+  homogeneous.
+  [10XMod2CohomologyRingPresentation(G) [0m
+  [10XMod2CohomologyRingPresentation(G,n) [0m
+  [10XMod2CohomologyRingPresentation(A) [0m
+  [10XMod2CohomologyRingPresentation(R)[0m
+  
+  When  applied to a finite 2-group G this function returns a presentation for
+  the  mod  2 cohomology ring H^*(G,Z_2). The Lyndon-Hochschild-Serre spectral
+  sequence is used to prove that the presentation is correct.
+  
+  When  the  function  is  applied  to  a 2-group G and positive integer n the
+  function  first  constructs  n  terms  of  a  free  Z_2G-resolution  R, then
+  constructs  the  finite-dimensional  graded  algebra A=H^(*le n)(G,Z_2), and
+  finally   uses   A   to  approximate  a  presentation  for  H^*(G,Z_2).  For
+  "sufficiently  large"  the  approximation will be a correct presentation for
+  H^*(G,Z_2).
+  
+  Alternatively, the function can be applied directly to either the resolution
+  R or graded algebra A.
+  
+  This  function  was  written by [12XPaul Smith[0m. It uses the Singular commutative
+  algebra package to handle the Lyndon-Hochschild-Serre spectral sequence.
+  

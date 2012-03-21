@@ -1,0 +1,56 @@
+  
+  [1X11 Lie commutators and nonabelian Lie tensors[0X
+  
+  Functions  on  this  page  are  joint  work  with  [12XHamid  Mohammadzadeh[0m, and
+  implemented by him.
+  ::::::::::::::::::::::::
+  [10XLieCoveringHomomorphism(L)[0m
+  
+  Inputs  a  finite  dimensional  Lie  algebra  L  over a field, and returns a
+  surjective Lie homomorphism phi : C-> L where:
+  the kernel of phi lies in both the centre of C and the derived subalgebra of
+  C,
+  the  kernel of phi is a vector space of rank equal to the rank of the second
+  Chevalley-Eilenberg homology of L.
+  ::::::::::::::::::::::::
+  [10XLeibnizQuasiCoveringHomomorphism(L)[0m
+  
+  Inputs  a  finite  dimensional  Lie  algebra  L  over a field, and returns a
+  surjective homomorphism phi : C-> L of Leibniz algebras where:
+  the kernel of phi lies in both the centre of C and the derived subalgebra of
+  C,
+  the  kernel of phi is a vector space of rank equal to the rank of the kernel
+  J  of the homomorphism L otimes L -> L from the tensor square to L. (We note
+  that, in general, J is NOT equal to the second Leibniz homology of L.)
+  ::::::::::::::::::::::::
+  [10XLieEpiCentre(L)[0m
+  
+  Inputs a finite dimensional Lie algebra L over a field, and returns an ideal
+  Z^*(L)  of  the centre of L. The ideal Z^*(L) is trivial if and only if L is
+  isomorphic to a quotient L=E/Z(E) of some Lie algebra E by the centre of E.
+  ::::::::::::::::::::::::
+  [10XLieExteriorSquare(L) [0m
+  
+  Inputs  a finite dimensional Lie algebra L over a field. It returns a record
+  E with the following components.
+  E.homomorphism  is  a  Lie  homomorphism  µ  :  (L  wedge  L) --> L from the
+  nonabelian  exterior  square  (L  wedge  L) to L. The kernel of µ is the Lie
+  multiplier.
+  E.pairing(x,y)  is a function which inputs elements x, y in L and returns (x
+  wedge y) in the exterior square (L wedge L) .
+  ::::::::::::::::::::::::
+  [10XLieTensorSquare(L) [0m
+  
+  Inputs  a finite dimensional Lie algebra L over a field and returns a record
+  T with the following components.
+  T.homomorphism  is  a  Lie  homomorphism  µ  :  (L  otimes L) --> L from the
+  nonabelian tensor square of L to L.
+  T.pairing(x,y) is a function which inputs two elements x, y in L and returns
+  the tensor (x otimes y) in the tensor square (L otimes L) .
+  ::::::::::::::::::::::::
+  [10XLieTensorCentre(L) [0m
+  
+  Inputs  a  finite  dimensional  Lie  algebra  L over a field and returns the
+  largest  ideal  N  such  that  the induced homomorphism of nonabelian tensor
+  squares (L otimes L) --> (L/N otimes L/N) is an isomorphism.
+  

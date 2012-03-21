@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 10:  Commutator and nonabelian tensor computations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body><a href="../www/index.html"><small>HAP home</small></a>
+
+
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap9.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap11.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X86DE968B7B20BD48" name="X86DE968B7B20BD48"></a></p>
+<div class="ChapSects"><a href="chap10.html#X86DE968B7B20BD48">10 <span class="Heading"> Commutator and nonabelian tensor computations</span></a>
+</div>
+
+<h3>10 <span class="Heading"> Commutator and nonabelian tensor computations</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">BaerInvariant(G,c) </code></p>
+
+<p>Inputs a nilpotent group G and integer c&gt;0. It returns the Baer invariant M^(c)(G) defined as follows. For an arbitrary group G let L^*_c+1(G) be the (c+1)-st term of the upper central series of the group U=F/[[[R,F],F]...] (with c copies of F in the denominator) where F/R is any free presentation of G. This is an invariant of G and we define M^(c)(G) to be the kernel of the canonical homomorphism M^(c)(G) --&gt; G. For c=1 the Baer invariant M^(1)(G) is isomorphic to the second integral homology H_2(G,Z).</p>
+
+<p>This function requires the NQ package.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Coclass(G) </code></p>
+
+<p>Inputs a group G of prime-power order p^n and nilpotency class c say. It returns the integer r=n-c .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EpiCentre(G,N) </code> <code class="code">EpiCentre(G)</code></p>
+
+<p>Inputs a finite group G and normal subgroup N and returns a subgroup Z^*(G,N) of the centre of N. The group Z^*(G,N) is trivial if and only if there is a crossed module d:E --&gt; G with N=Image(d) and with Ker(d) equal to the subgroup of E consisting of those elements on which G acts trivially.</p>
+
+<p>If no value for N is entered then it is assumed that N=G. In this case the group Z^*(G,G) is trivial if and only if G is isomorphic to a quotient G=E/Z(E) of some group E by the centre of E. (See also the command UpperEpicentralSeries(G,c). )</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NonabelianExteriorProduct(G,N) </code></p>
+
+<p>Inputs a finite group G and normal subgroup N. It returns a record E with the following components.</p>
+
+
+<ul>
+<li><p>E.homomorphism is a group homomorphism µ : (G wedge N) --&gt; G from the nonabelian exterior product (G wedge N) to G. The kernel of µ is the relative Schur multiplier.</p>
+
+</li>
+<li><p>E.pairing(x,y) is a function which inputs an element x in G and an element y in N and returns (x wedge y) in the exterior product (G wedge N) .</p>
+
+</li>
+</ul>
+<p>This function should work for reasonably small nilpotent groups or extremely small non-nilpotent groups.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NonabelianSymmetricKernel(G) </code> <code class="code">NonabelianSymmetricKernel(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns the abelian invariants of the Fourth homotopy group SG of the double suspension SSK(G,1) of the Eilenberg-Mac Lane space K(G,1).</p>
+
+<p>For non-nilpotent groups the implementation of the function NonabelianSymmetricKernel(G) is far from optimal and will soon be improved. As a temporary solution to this problem, an optional second variable m can be set equal to 0, and then the function efficiently returns the abelian invariants of groups A and B such that there is an exact sequence 0 --&gt; B --&gt; SG --&gt; A --&gt; 0.</p>
+
+<p>Alternatively, the optional second varible m can be set equal to a positive multiple of the order of the symmetric square (G tildeotimes G). In this case the function returns the abelian invariants of SG. This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NonabelianSymmetricSquare(G) </code> <code class="code">NonabelianSymmetricSquare(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns a record T with the following components.</p>
+
+
+<ul>
+<li><p>T.homomorphism is a group homomorphism µ : (G tildeotimes G) --&gt; G from the nonabelian symmetric square of G to G. The kernel of µ is isomorphic to the fourth homotopy group of the double suspension SSK(G,1) of an Eilenberg-Mac Lane space.</p>
+
+</li>
+<li><p>T.pairing(x,y) is a function which inputs two elements x, y in G and returns the tensor (x otimes y) in the symmetric square (G otimes G) .</p>
+
+</li>
+</ul>
+<p>An optional second varible m can be set equal to a multiple of the order of the symmetric square (G tildeotimes G). This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate) as the bound is used in the solvable quotient algorithm.</p>
+
+<p>The optional second variable m can also be set equal to 0. In this case the Todd-Coxeter procedure will be used to enumerate the symmetric square even when G is solvable.</p>
+
+<p>This function should work for reasonably small solvable groups or extremely small non-solvable groups.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NonabelianTensorProduct(G,N) </code></p>
+
+<p>Inputs a finite group G and normal subgroup N. It returns a record E with the following components.</p>
+
+
+<ul>
+<li><p>E.homomorphism is a group homomorphism µ : (G otimes N ) --&gt; G from the nonabelian exterior product (G otimes N) to G.</p>
+
+</li>
+<li><p>E.pairing(x,y) is a function which inputs an element x in G and an element y in N and returns (x otimes y) in the tensor product (G otimes N) .</p>
+
+</li>
+</ul>
+<p>This function should work for reasonably small nilpotent groups or extremely small non-nilpotent groups.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NonabelianTensorSquare(G) </code> <code class="code">NonabelianTensorSquare(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns a record T with the following components.</p>
+
+
+<ul>
+<li><p>T.homomorphism is a group homomorphism µ : (G otimes G) --&gt; G from the nonabelian tensor square of G to G. The kernel of µ is isomorphic to the third homotopy group of the suspension SK(G,1) of an Eilenberg-Mac Lane space.</p>
+
+</li>
+<li><p>T.pairing(x,y) is a function which inputs two elements x, y in G and returns the tensor (x otimes y) in the tensor square (G otimes G) .</p>
+
+</li>
+</ul>
+<p>An optional second varible m can be set equal to a multiple of the order of the tensor square (G otimes G). This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate) as the bound is used in the solvable quotient algorithm.</p>
+
+<p>The optional second variable m can also be set equal to 0. In this case the Todd-Coxeter procedure will be used to enumerate the tensor square even when G is solvable.</p>
+
+<p>This function should work for reasonably small solvable groups or extremely small non-solvable groups.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RelativeSchurMultiplier(G,N) </code></p>
+
+<p>Inputs a finite group G and normal subgroup N. It returns the homology group H_2(G,N,Z) that fits into the exact sequence</p>
+
+<p>...--&gt; H_3(G,Z) --&gt; H_3(G/N,Z) --&gt; H_2(G,N,Z) --&gt; H_3(G,Z) --&gt; H_3(G/N,Z) --&gt; ....</p>
+
+<p>This function should work for reasonably small nilpotent groups G or extremely small non-nilpotent groups.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">TensorCentre(G) </code></p>
+
+<p>Inputs a group G and returns the largest central subgroup N such that the induced homomorphism of nonabelian tensor squares (G otimes G) --&gt; (G/N otimes G/N) is an isomorphism. Equivalently, N is the largest central subgroup such that pi_3(SK(G,1)) --&gt; pi_3(SK(G/N,1)) is injective.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ThirdHomotopyGroupOfSuspensionB(G) </code> <code class="code">ThirdHomotopyGroupOfSuspensionB(G,m) </code></p>
+
+<p>Inputs a finite or nilpotent infinite group G and returns the abelian invariants of the third homotopy group JG of the suspension SK(G,1) of the Eilenberg-Mac Lane space K(G,1).</p>
+
+<p>For non-nilpotent groups the implementation of the function ThirdHomotopyGroupOfSuspensionB(G) is far from optimal and will soon be improved. As a temporary solution to this problem, an optional second variable m can be set equal to 0, and then the function efficiently returns the abelian invariants of groups A and B such that there is an exact sequence 0 --&gt; B --&gt; JG --&gt; A --&gt; 0.</p>
+
+<p>Alternatively, the optional second varible m can be set equal to a positive multiple of the order of the tensor square (G otimes G). In this case the function returns the abelian invariants of JG. This might help when G is solvable but not nilpotent (especially if the estimated upper bound m is reasonable accurate).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">UpperEpicentralSeries(G,c) </code></p>
+
+<p>Inputs a nilpotent group G and an integer c. It returns the c-th term of the upper epicentral series 1 &lt; Z_1^*(G) &lt; Z_2^*(G) &lt; ....</p>
+
+<p>The upper epicentral series is defined for an arbitrary group G. The group Z_c^* (G) is the image in G of the c-th term Z_c(U) of the upper central series of the group U=F/[[[R,F],F] ... ] (with c copies of F in the denominator) where F/R is any free presentation of G.</p>
+
+<p>This functions requires the NQ package.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap9.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap11.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

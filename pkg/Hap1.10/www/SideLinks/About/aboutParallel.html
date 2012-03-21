@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutPersistent.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Parallel Computation<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutAbelianCategories.html"><small
+ style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">Homological
+computations can require much time and memory.&nbsp; In principle,
+many of the computations can be distributed in fairly obvious ways over
+several processors on one or more PCs.
+HAP contains a few basic functions for achieving this. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute the third integral homology groups of the
+fourteen groups of order 16 using two child processes. The first child
+is on the
+local machine and the second child is on a remote machine for which ssh
+has been configured to require no password. This is an example of
+"trivial parallelism". On a multiprocessor
+machine distinct child processes would normally automatically
+be assigned to different processors.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+s:=ChildProcess();;<br>
+gap&gt; t:=ChildProcess("alberti.vlan.nuigalway.ie");;<br>
+      <br>
+gap&gt;
+ChildCommand("Odd:=List([1,3,5,7,9,11,13],i-&gt;GroupHomology(SmallGroup(16,i),3));",s);<br>
+gap&gt;
+ChildCommand("Even:=List([2,4,6,8,10,12,14],i-&gt;GroupHomology(SmallGroup(16,i),3));",t);<br>
+gap&gt; ODD:=ChildGet("Odd",s);;<br>
+gap&gt; EVEN:=ChildGet("Even",t);;<br>
+      <br>
+gap&gt; for i in [1..7] do<br>
+gap&gt; Print("Group ",2*i-1," has third homology ",ODD[i],"\n");<br>
+gap&gt; Print("Group ",2*i," has third homology ",EVEN[i],"\n");<br>
+gap&gt; od;<br>
+      <br>
+Group 1 has third homology [ 16 ]<br>
+Group 2 has third homology [ 4, 4, 4 ]<br>
+Group 3 has third homology [ 2, 2, 4, 4 ]<br>
+Group 4 has third homology [ 2, 4, 4 ]<br>
+Group 5 has third homology [ 2, 2, 8 ]<br>
+Group 6 has third homology [ 2, 8 ]<br>
+Group 7 has third homology [ 2, 2, 8 ]<br>
+Group 8 has third homology [ 2, 8 ]<br>
+Group 9 has third homology [ 16 ]<br>
+Group 10 has third homology [ 2, 2, 2, 2, 2, 2, 4 ]<br>
+Group 11 has third homology [ 2, 2, 2, 2, 2, 2, 4 ]<br>
+Group 12 has third homology [ 2, 2, 2, 8 ]<br>
+Group 13 has third homology [ 2, 2, 2, 8 ]<br>
+Group 14 has third homology [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+weakness with the above parallel computation is that the naive
+distribution of tasks over the two child processes might result in one
+process being finished long before the other.&nbsp; The command
+NextAvailableChild() can be used to overcome this problem.
+Alternatively, the function ParallelList() can be used.<br>
+      <br>
+The following commands, on a two-processor IBM laptop, show that
+parallel computation can halve the time to compute the second homology
+of the groups of order 128.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+s:=ChildProcess();;<br>
+gap&gt; t:=ChildProcess();;<br>
+gap&gt; fn:=function(i);return
+GroupHomology(SmallGroup(128,i),2);end;<br>
+gap&gt; ChildPut( fn, "fn", s);<br>
+gap&gt; ChildPut( fn, "fn", t);<br>
+      <br>
+gap&gt; Exec("date");<br>
+Sat Oct&nbsp; 6 23:52:55 IST 2007<br>
+gap&gt; Lparallel:=ParallelList([1..2328],"fn",[s,t]);;<br>
+gap&gt; Exec("date");<br>
+Sun Oct&nbsp; 7 00:00:37 IST 2007<br>
+gap&gt; L:=List([1..2328], fn);;<br>
+gap&gt; Exec("date");<br>
+Sun Oct&nbsp; 7 00:14:07 IST 2007<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands illustrate a naive parallel computation of the
+product A=M*N of two random matrices M and N. The computation involves
+just one child and takes 64% of the time needed for the standard
+sequential
+calculation of M*N. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+M:=RandomMat(2000,2000);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Two random matrices.<br>
+gap&gt; N:=RandomMat(2000,2000);;<br>
+      <br>
+gap&gt; s:=ChildProcess();;<br>
+      <br>
+gap&gt; Exec("date");<br>
+Tue Nov 27 05:17:55 GMT 2007<br>
+gap&gt;
+Mtop:=M{[1..1000]};;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Splitting the first matrix in two<br>
+gap&gt; Mbottom:=M{[1001..2000]};;<br>
+      <br>
+gap&gt;
+ChildPut(Mtop,"Mtop",s);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Transferring data to the child.<br>
+gap&gt; ChildPut(N,"N",s);<br>
+gap&gt; NextAvailableChild([s]);;<br>
+      <br>
+gap&gt;
+ChildCommand("Atop:=Mtop*N;;",s);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Matrix multiplication on child.<br>
+gap&gt;
+Abottom:=Mbottom*N;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#Matrix multiplication on parent.<br>
+gap&gt; A:=ChildGet("Atop",s);;<br>
+gap&gt;
+Append(A,Abottom);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#A is the product M*N.<br>
+gap&gt; Exec("date");<br>
+Tue Nov 27 05:18:47 GMT 2007<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+parallel multiplication took 52 seconds on a two-processor IBM laptop,
+compared to 81 seconds below for multiplication on a single processor.
+This is a speedup factor of 0.64 .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Exec("date");M*N;;Exec("date");<br>
+Tue Nov 27 05:13:56 GMT 2007<br>
+Tue Nov 27 05:15:17 GMT 2007<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show how two processors could be used to compute H<sub>8</sub>(G,Z)
+for the group G=SmallGroup(512,1201). The commands begin with the
+definition of the function <br>
+      <br>
+      <div style="text-align: center;">ParallelResolution(G,N,n,t). <br>
+      </div>
+      <br>
+Unfortunately, this example is too naive: the loads on the two
+processors is extremely unbalanced.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">#################################################<br>
+ParallelResolution:=function(G,N,n,t)<br>
+local<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R,S,T,nat,iso;<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nat:=NaturalHomomorphismByNormalSubgroup(G,N);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+iso:=IsomorphismPermGroup(N);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#HAPPrintTo() and HAPRead() will only work with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildPut(n,"n",t);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#permutation or matrix groups.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChildPut(Image(iso),"N",t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildCommand("R:=ResolutionFiniteGroup(N,n);",t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ChildCommand("HAPPrintTo(\"/tmp/test\",R);",t);<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S:=ResolutionFiniteGroup(Image(nat),n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while not
+IsAvailableChild(t)
+do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#This should ensure that the next command is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+od;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#not processed too soon!<br>
+      <br>
+&nbsp; &nbsp; &nbsp; &nbsp; R:=HAPRead("/tmp/test");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R!.group:=N;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R!.elts:=List(R!.elts,x-&gt;PreImagesRepresentative(iso,x));<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; T:=ResolutionFiniteExtension(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+GeneratorsOfGroup(G),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+List(GeneratorsOfGroup(G),x-&gt;Image(nat,x)),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S,n,false,R);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return T;<br>
+end;<br>
+#################################################<br>
+      <br>
+      <br>
+G:=SmallGroup(512,1201);;<br>
+phi:=NaturalHomomorphismByNormalSubgroup(G,Centre(G));;<br>
+t:=ChildProcess();;<br>
+T:=ParallelResolution(G,Centre(G),9,t);;<br>
+C:=TensorWithIntegers(T);;<br>
+      <br>
+Homology(C,8);<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 8 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutPersistent.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutAbelianCategories.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

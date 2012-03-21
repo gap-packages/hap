@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a href="aboutGouter.html"><small
+ style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Homotopy 2-types and third
+cohomology<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutSimplicialGroups.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">
+      <div style="text-align: center;"></div>
+      <div style="text-align: center;">
+      <h3>Some classical theory</h3>
+      </div>
+      <p>The third <a href="aboutTwistedCoefficients.html">cohomology</a>
+H<sup>3</sup>(G,A) of G with coefficients in a G-module A, together
+with the corresponding 3-<a href="aboutCocycles.html">cocycles</a>, can
+be used to classify homotopy 2-types. <br>
+      </p>
+A <span style="font-style: italic;">2-type</span> is a CW-space whose
+homotopy groups are trivial in dimensions n=0 and n&gt;2. There is an
+equivalence of categories<br>
+      <br>
+      <table
+ style="text-align: left; width: 70%; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; color: rgb(0, 0, 102);">(Homotopy
+category of<br>
+connected CW-spaces X <br>
+with trivial homotopy <br>
+groups pi_n(X) for n&gt;2)</td>
+            <td style="vertical-align: top; color: rgb(0, 0, 102);"><br>
+            <br>
+&lt;----------&gt;<br>
+            </td>
+            <td style="vertical-align: top; color: rgb(0, 0, 102);">(Localisation
+of the
+category <br>
+of simplicial groups with <br>
+Moore complex of length<br>
+1, where the localisation is<br>
+with respect to homomorphisms<br>
+inducing isomorphisms on<br>
+homotopy groups)<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+which reduces the homotopy theory of 2-types to a "computable"
+algebraic theory. Furthermore, a simplicial group with Moore complex of
+length 1 can be represented by a group H with two endomorphisms
+s:H--&gt;H and t:H--&gt;H satisfying the axioms<br>
+      <ul style="text-align: left;">
+        <li>ss = s,&nbsp; ts = s,</li>
+        <li>tt = t, st = t,</li>
+        <li>[Ker(s),Ker(t)] = 1.</li>
+      </ul>
+Ths data {H,s,t} was termed a <span style="font-style: italic;">cat</span><sup
+ style="font-style: italic;">1</sup><span style="font-style: italic;">-group</span>
+by J.-L. Loday since it can be regarded as a group H endowed with one
+compatible category structure.<br>
+      <br>
+The homotopy groups of a cat<sup>1</sup>-group H are defined as<br>
+      <ul>
+        <li>pi_1(H) = Image(s)/ t( Kernel(s) ),</li>
+      </ul>
+      <ul>
+        <li>pi_2(H) = Intersection( Kernel(s) , Kernel(t) ),</li>
+      </ul>
+      <ul>
+        <li>pi_n(H) = 0 for n&gt;2 or n=0.</li>
+      </ul>
+Note that pi_2(H) is a pi_1(H)-module where the action is induced by
+conjugation in H. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+number of standard group-theoretic constructions can be viewed
+naturally as a cat<sup>1</sup>-group.<br>
+      <ol>
+        <li>A ZG-module A can be viewed as a cat<sup>1</sup>-group
+(H,s,t) where H is the semi-direct product Ax|G and s(a,g)=(1,g),
+t(a,g)=(1,g). Here pi_1(H)=G and p_2(H)=A.</li>
+        <li>A group G with normal subgroup N can be viewed as a cat<sup>1</sup>-group
+(H,s,t) where H is the semi-direct product Nx|G and s(n,g)=(1,g),
+t(n,g)=(1,ng). Here pi_1(H)=G/N and pi_2(H)=0.</li>
+        <li>The homomorphism j:G---&gt;Aut(G) which sends elements of G
+to the corresponding inner automorphism can be viewed as a cat<sup>1</sup>-group
+(H,s,t) where H is the semi-direct product Gx|Aut(G) and s(g,a)=(1,a),
+t(g,a)=(1,j(g)a). Here pi_1(H)=Out(G) is the outer automorphism group
+of G and pi_2(H)=Z(G) is the centre of G.</li>
+      </ol>
+These three examples are implemented in HAP. <br>
+      <br>
+For instance, the following commands begin by constructing the cat<sup>1</sup>-group
+of the last example for the group G=SmallGroup(64,134). They then
+construct the fundamental group of H and then the second homotopy group
+of H as a pi_1-module. These have orders 8 and 2 respectively.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SmallGroup(64,134);;<br>
+gap&gt; H:=AutomorphismGroupAsCatOneGroup(G);;<br>
+      <br>
+gap&gt; pi_1:=HomotopyGroup(H,1);;<br>
+      <br>
+gap&gt; pi_2:=HomotopyModule(H,2);;<br>
+      <br>
+gap&gt; Order(pi_1)<br>
+8<br>
+      <br>
+gap&gt; Order(ActedGroup(pi_2));<br>
+2<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">The
+third cohomology H<sup>3</sup>(pi_1,pi_2) classifies those cat<sup>1</sup>-groups
+H with fundamental group equal to pi_1 and second homotopy module equal
+to pi_2. The classification is up to a Yoneda equivalence. <br>
+      <br>
+The following additional commands show that there are 1024 Yoneda
+equivalence classes of cat<sup>1</sup>-groups with homotopy group pi_1
+and homotopy module pi_2 equal to that in our example.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+R:=ResolutionFiniteGroup(pi_1,4);;<br>
+gap&gt; C:=HomToGModule(R,pi_2);;<br>
+gap&gt; CH:=CohomologyModule(C,3);;<br>
+      <br>
+gap&gt; AbelianInvariants(ActedGroup(CH));<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+3-cocycle&nbsp; f : pi_1 &times; pi_1 &times; pi_1 -----&gt; pi_2
+corresponding to the second cohomology class in H<sup>3</sup>(pi_1,pi_2)
+can be produced using the following command, </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+x:=Elements(ActedGroup(CH))[2];;<br>
+      <br>
+gap&gt; f:=CH!.representativeCocycle(x);<br>
+Standard 3-cocycle<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutGouter.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutSimplicialGroups.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,73 @@
+  
+  [1X26 Parallel Computation - Core Functions[0X
+  
+  ::::::::::::::::::::::::
+  [10XChildProcess()[0m
+  [10XChildProcess("computer.ac.wales")[0m
+  [10XChildProcess(["-m", "100000M", "-T"])[0m
+  [10XChildProcess("computer.ac.wales", ["-m", "100000M", "-T"])[0m
+  
+  This  starts  a  GAP  session as a child process and returns a stream to the
+  child  process. If no argument is given then the child process is created on
+  the  local  machine;  otherwise  the argument should be: 1) the address of a
+  remote  computer  for  which  ssh has been configured to require no password
+  from the user; (2) or a list of GAP command line options; (3) or the address
+  of a computer followed by a list of command line options.
+  
+  (To  configure ssh so that the user can login without a password prompt from
+  "thishost" to "remotehost" either consult "man ssh" or
+  - open a shell on thishost
+  - cd .ssh
+  - ls
+  -> if id_dsa, id_rsa etc exists, skip the next two steps!
+  - ssh-keygen -t rsa
+  - ssh-keygen -t dsa
+  - scp *.pub user@remotehost:~/
+  - ssh remotehost -l user
+  - cat id_rsa.pub >> .ssh/authorized_keys
+  - cat id_dsa.pub >> .ssh/authorized_keys
+  - rm id_rsa.pub id_dsa.pub
+  - exit
+  You  should now be able to connect from "thishost" to "remotehost" without a
+  password prompt.)
+  ::::::::::::::::::::::::
+  [10XChildClose(s)[0m
+  
+  This closes the stream s to a child GAP process.
+  ::::::::::::::::::::::::
+  [10XChildCommand("cmd;",s)[0m
+  
+  This  runs  a GAP command "cmd;" on the child process accessed by the stream
+  s. Here "cmd;" is a string representing the command.
+  ::::::::::::::::::::::::
+  [10XNextAvailableChild(L)[0m
+  
+  Inputs  a  list L of child processes and returns a child in L which is ready
+  for computation (as soon as such a child is available).
+  ::::::::::::::::::::::::
+  [10XIsAvailableChild(s)[0m
+  
+  Inputs  a  child  process s and returns true if s is currently available for
+  computations, and false otherwise.
+  ::::::::::::::::::::::::
+  [10XChildPut(A,"B",s)[0m
+  
+  This copies a GAP object A on the parent process to an object B on the child
+  process s. (The copying relies on the function PrintObj(A); )
+  ::::::::::::::::::::::::
+  [10XChildGet("A",s)[0m
+  
+  This  functions  copies a GAP object A on the child process s and returns it
+  on the parent process. (The copying relies on the function PrintObj(A); )
+  ::::::::::::::::::::::::
+  [10XHAPPrintTo("file",R)[0m
+  
+  Inputs  a  name  "file" of a new text file and a HAP object R. It writes the
+  object  R  to  "file".  Currently  this is only implemented for R equal to a
+  resolution.
+  ::::::::::::::::::::::::
+  [10XHAPRead("file",R)[0m
+  
+  Inputs  a  name  "file"  containing  a  HAP object R and returns the object.
+  Currently this is only implemented for R equal to a resolution.
+  

@@ -1,0 +1,109 @@
+  
+  [1X4 Functors[0X
+  
+  ::::::::::::::::::::::::
+  [10XExtendScalars(R,G,EltsG)[0m
+  
+  Inputs  a  ZH-resolution R, a group G containing H as a subgroup, and a list
+  EltsG  of elements of G. It returns the free ZG-resolution (R otimes_ZH ZG).
+  The  returned  resolution  S has S!.elts:=EltsG. This is a resolution of the
+  ZG-module (Z otimes_ZH ZG). (Here otimes_ZH means tensor over ZH.)
+  ::::::::::::::::::::::::
+  [10XHomToIntegers(X) [0m
+  
+  Inputs  either a ZG-resolution X=R, or an equivariant chain map X = (F:R -->
+  S).  It  returns  the  cochain  complex  or cochain map obtained by applying
+  HomZG( _ , Z) where Z is the trivial module of integers (characteristic 0).
+  ::::::::::::::::::::::::
+  [10XHomToIntegersModP(R) [0m
+  
+  Inputs  a  ZG-resolution  R  and  returns  the  cochain  complex obtained by
+  applying  HomZG( _ , Z_p) where Z_p is the trivial module of integers mod p.
+  (At present this functor does not handle equivariant chain maps.)
+  ::::::::::::::::::::::::
+  [10XHomToIntegralModule(R,f) [0m
+  
+  Inputs  a  ZG-resolution  R  and a group homomorphism f:G --> GL_n(Z) to the
+  group of n×n invertible integer matrices. Here Z must have characteristic 0.
+  It returns the cochain complex obtained by applying HomZG( _ , A) where A is
+  the  ZG-module  Z^n  with G action via f. (At present this function does not
+  handle equivariant chain maps.)
+  ::::::::::::::::::::::::
+  [10XTensorWithIntegralModule(R,f) [0m
+  
+  Inputs  a  ZG-resolution  R  and a group homomorphism f:G --> GL_n(Z) to the
+  group of n×n invertible integer matrices. Here Z must have characteristic 0.
+  It  returns  the  chain  complex  obtained  by  tensoring  over  ZG with the
+  ZG-module  A=Z^n  with  G  action  via f. (At present this function does not
+  handle equivariant chain maps.)
+  ::::::::::::::::::::::::
+  [10XHomToGModule(R,A) [0m
+  
+  Inputs  a  ZG-resolution  R  and  an abelian G-outer group A. It returns the
+  G-cocomplex  obtained  by  applying HomZG( _ , A). (At present this function
+  does not handle equivariant chain maps.)
+  ::::::::::::::::::::::::
+  [10XInduceScalars(R,hom) [0m
+  
+  Inputs  a  ZQ-resolution R and a surjective group homomorphism hom:G-> Q. It
+  returns the unduced non-free ZG-resolution.
+  ::::::::::::::::::::::::
+  [10XLowerCentralSeriesLieAlgebra(G) [0m
+  [10XLowerCentralSeriesLieAlgebra(f) [0m
+  
+  Inputs a pcp group G. If each quotient G_c/G_c+1 of the lower central series
+  is  free  abelian  or  p-elementary  abelian  (for fixed prime p) then a Lie
+  algebra  L(G)  is  returned. The abelian group underlying L(G) is the direct
+  sum  of  the quotients G_c/G_c+1 . The Lie bracket on L(G) is induced by the
+  commutator in G. (Here G_1=G, G_c+1=[G_c,G] .)
+  
+  The  function  can  also be applied to a group homomorphism f: G --> G' . In
+  this  case  the  induced homomorphism of Lie algebras L(f):L(G) --> L(G') is
+  returned.
+  
+  If  the  quotients  of  the  lower  central  series  are  not  all  free  or
+  p-elementary abelian then the function returns fail.
+  
+  This function was written by Pablo Fernandez Ascariz
+  ::::::::::::::::::::::::
+  [10XTensorWithIntegers(X) [0m
+  
+  Inputs  either a ZG-resolution X=R, or an equivariant chain map X = (F:R -->
+  S). It returns the chain complex or chain map obtained by tensoring with the
+  trivial module of integers (characteristic 0).
+  ::::::::::::::::::::::::
+  [10XFilteredTensorWithIntegers(R) [0m
+  
+  Inputs   a   ZG-resolution   R   for   which   "filteredDimension"  lies  in
+  NamesOfComponents(R).   (Such   a   resolution   can   be   produced   using
+  TwisterTensorProduct(),  ResolutionNormalSubgroups()  or FreeGResolution().)
+  It returns the filtered chain complex obtained by tensoring with the trivial
+  module of integers (characteristic 0).
+  ::::::::::::::::::::::::
+  [10XTensorWithTwistedIntegers(X,rho) [0m
+  
+  Inputs  either a ZG-resolution X=R, or an equivariant chain map X = (F:R -->
+  S).  It also inputs a function rho: G-> Z where the action of g in G on Z is
+  such  that  g.1 = rho(g). It returns the chain complex or chain map obtained
+  by tensoring with the (twisted) module of integers (characteristic 0).
+  ::::::::::::::::::::::::
+  [10XTensorWithIntegersModP(X,p) [0m
+  
+  Inputs  either a ZG-resolution X=R, or a characteristics 0 chain complex, or
+  an  equivariant  chain  map  X  =  (F:R  -->  S),  or  a  chain  map between
+  characteristic  0  chain  complexes, together with a prime p. It returns the
+  chain  complex or chain map obtained by tensoring with the trivial module of
+  integers modulo p.
+  ::::::::::::::::::::::::
+  [10XTensorWithTwistedIntegersModP(X,p,rho)[0m
+  
+  Inputs  either a ZG-resolution X=R, or an equivariant chain map X = (F:R -->
+  S),  and a prime p. It also inputs a function rho: G-> Z where the action of
+  g in G on Z is such that g.1 = rho(g). It returns the chain complex or chain
+  map obtained by tensoring with the trivial module of integers modulo p.
+  ::::::::::::::::::::::::
+  [10XTensorWithRationals(R)[0m
+  
+  Inputs a ZG-resolution R and returns the chain complex obtained by tensoring
+  with the trivial module of rational numbers.
+  

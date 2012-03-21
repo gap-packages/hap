@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutFunctorial.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Second Homotopy Groups of
+Presentations And A Periodic Resolution<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutAspherical.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">There
+is a standard way of associating to any group presentation P = &lt; <span
+ style="text-decoration: underline;">x</span> | <span
+ style="text-decoration: underline;">r</span> &gt; a 2-dimensional
+connected CW-space&nbsp; K<sub>P</sub>&nbsp; whose fundamental group is
+isomorphic to the group G defined by the presentation. The space K<sub>P</sub>
+has a single 0-cell, one
+1-cell for each generator in <span style="text-decoration: underline;">x</span>,
+and one 2-cell for each relator in <span
+ style="text-decoration: underline;">r</span> (attached to the
+1-skeleton of K<sub>P</sub> in such a way that its boundary spells the
+relator).&nbsp; Quite a number of papers have been written on the
+problem of
+calculating the second homotopy group Pi<sub>2</sub>(K<sub>P</sub>).
+This homotopy group is a torsion free ZG-module and is called the <span
+ style="font-style: italic;">module of identities</span> of P.
+Good introductions to the topic are given in <br>
+      <ul>
+        <li>W. Bogley and S.J. Pride, "Calculating generators of Pi<sub>2</sub>",
+in T<span style="font-style: italic;">wo-dimensional homotopy and
+combinatorial group theory (edited by C. Hog-Angeloni, W. Metzler and
+A.J. Sieradski)</span>, LMS Lecture Note Series 197 (1993), 157-188.<br>
+        </li>
+        <li>R. Brown and J. Huebschmann, "Identities among relations",
+in <span style="font-style: italic;">Low dimensional topology (edited
+by
+R. Brown and T.L. Thickstun)</span>, LMS Lecture Note Series 48
+(1982), 153-202.</li>
+      </ul>
+      <br>
+For presentations P defining a small group G the structure of the
+module Pi<sub>2</sub>(K<sub>P</sub>) can be determined using the HAP
+function <span style="font-family: helvetica,arial,sans-serif;">ResolutionSmallFpGroup(G,n)</span>
+. This function inputs a finitely presented group G and integer n&gt;2.
+It returns n terms of a ZG-resolution R arising as the cellular chain
+complex of a space X where: X is contractible;&nbsp; X admits a free
+cellular action of G; the 2-skeleton X<sup>2</sup> is the universal
+cover of the space K<sub>P</sub>. Standard properties of the universal
+cover and the Hurewicz Theorem yield ZG-isomorphisms<br>
+      <br>
+      <table
+ style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td
+ style="text-align: center; vertical-align: top; background-color: rgb(204, 255, 255);"><span
+ style="color: rgb(0, 0, 102);"><br>
+Pi</span><sub style="color: rgb(0, 0, 102);">2</sub><span
+ style="color: rgb(0, 0, 102);">(K<sub>P</sub>) = Pi<sub>2</sub>(X<sup>2</sup>)
+= H<sub>2</sub>(X<sup>2</sup>,Z) = Image( R<sub>3</sub> &#8594; R<sub>2</sub>
+).<br>
+            <br>
+            </span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+The article by Bogley and Pride mentioned above explains how the theory
+of Igusa's pictures can be used to find generators for the module of
+identities of the standard presentation P = &lt; x,y | x<sup>2</sup>, y<sup>4</sup>,&nbsp;
+xyxy &gt; of the dihedral group D<sub>4</sub>. This example can also be
+handled using the following commands. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
+F:=FreeGroup("x", "y");; x:=F.1;; y:=F.2;;<br>
+      <br>
+gap&gt;&nbsp; D_4:= F / [ x^2, y^4, (x*y)^2 ];; <br>
+      <br>
+gap&gt;&nbsp; R:=ResolutionSmallFpGroup(D_4,3);; <br>
+      <br>
+gap&gt; RankOfIdentityModuleOverZ:= <br>
+( R!.dimension(2) - R!.dimension(1) + R!.dimension(0)
+)*Order(D_4) -
+1;<br>
+15<br>
+      <br>
+gap&gt;&nbsp; NumberOfGeneratorsOfIdentityModuleOverZG:=R!.dimension(3);<br>
+4<br>
+      <br>
+gap&gt;&nbsp; #The four ZG-module generators are:<br>
+      <br>
+gap&gt; for i in [1..4] do<br>
+&gt; Print("\n Generator ", i, "=\n&nbsp; ");
+PrintZGword(R!.boundary(3,i),R!.elts); <br>
+&gt;od;<br>
+      <br>
+&nbsp;Generator 1=<br>
+&nbsp; ( - x*y^2 + y^2 )E1<br>
+      <br>
+&nbsp;Generator 2=<br>
+&nbsp; ( - x + x*y )E2<br>
+      <br>
+&nbsp;Generator 3=<br>
+&nbsp; ( - &lt;identity ...&gt; + x*y )E3<br>
+      <br>
+&nbsp;Generator 4=<br>
+&nbsp; ( - &lt;identity ...&gt; - x*y - y - x*y^2 )E1 +&nbsp; ( -
+&lt;identity ...&gt; - x )E2 + <br>
+&nbsp;( + &lt;identity ...&gt; + x + x*y*x + y*x )E3<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 255); vertical-align: top;">The
+generators for the module of identities are here expressed as elements
+in the free ZG-module R<sub>3</sub> with basis E<sub>1</sub>, E<sub>2</sub>,
+E<sub>3</sub>. An element in R<sub>3</sub> of the form (1-g)E<sub>i</sub>
+is called a <span style="font-style: italic;">dipole </span>by Bogley
+and Pride. As in their paper we see that the module of identities is
+generated by three dipoles and a fourth more complicated element. The
+fourth element can be viewed as a map from the 2-sphere to the space K<sub>p</sub>
+using the following command.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+IdentityAmongRelatorsDisplay(R,4);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 328px; height: 225px;" alt="" src="d4pic.gif"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+function <span style="font-family: helvetica,arial,sans-serif;">ResolutionSmallFpGroup(G,n)</span>
+is based on a fairly naive use of the standard LLL and Smith Normal
+Form algorithms. It works only for groups of fairly low order but tends
+to produce smaller resolutions than the function <span
+ style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteGroup(gens,n)</span>.
+The method is described in [G. Ellis and I. Kholodna,
+"Three--dimensional presentations for the groups of order at most 30", <span
+ style="font-style: italic;">LMS J. Math. Comp.</span> Vol. 2 (1999),
+93-117] and the function was implemented by Irina Kholodna. <br>
+      <br>
+The function certainly works for groups larger than D<sub>4</sub>. For
+instance, the following commands take a couple of minutes to show that
+the standard presentation of the dihedral group D<sub>200</sub> of
+order 400 also has a module of identities generated by four elements.
+(No doubt there's a theorem here!)</td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
+F:=FreeGroup(2);; x:=F.1;; y:=F.2;;<br>
+gap&gt;&nbsp; D_200:= F / [ x^2, y^200, (x*y)^2 ];;<br>
+      <br>
+gap&gt;&nbsp; R:=ResolutionSmallFpGroup(D_200,3);; <br>
+      <br>
+gap&gt;&nbsp; R!.dimension(3);<br>
+4<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+approach to modules of identities can yield interesting results for
+some surprisingly small groups. We give two examples.<br>
+      <ol>
+        <li>The presentation P = &lt; x,y | x<sup>2</sup>, y<sup>3</sup>,
+(xy)<sup>2</sup> &gt; of the symmetric group S<sub>3</sub> was
+considered in [R. Brown and A. Razak Salleh, "Free crossed resolutions
+of groups and presentations of modules of identities among relations", <span
+ style="font-style: italic;">LMS J.&nbsp; Comput. Math.</span>, (1999),
+28-61] where covering groupoid techniques were used to show that the
+ZG-module Pi<sub>2</sub>(K<sub>P</sub>) can be generated by four
+elements. The following commands show that, in fact, it can be
+generated by three elements.&nbsp; (Subsequent commands will show that
+the module can even be generated by two elements.)<br>
+        </li>
+        <li>A conjecture of Salvetti (mentioned on a <a
+ href="aboutTopology.html">previous page</a>) would imply that the
+module of identities Pi<sub>2</sub>(K<sub>P</sub>) for the Coxeter
+presentation P = &lt; x,y,z, | x<sup>2</sup>, y<sup>2</sup>, z<sup>2</sup>,
+(xy)<sup>3</sup>, (yz)<sup>3</sup>, (xz)<sup>2</sup> &gt; of S<sub>4</sub>
+can be generated by no fewer than 10 elements. The following commands
+show that, in fact, it can be generated by six elements.</li>
+      </ol>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+#EXAMPLE 1<br>
+      <br>
+gap&gt; F:=FreeGroup(2);;x:=F.1;;y:=F.2;;<br>
+      <br>
+gap&gt; S_3:=F/[ x^2, y^3, (x*y)^2 ];;<br>
+      <br>
+gap&gt; R:=ResolutionSmallFpGroup(S_3,3);; <br>
+      <br>
+gap&gt; R!.dimension(3);<br>
+3<br>
+      <br>
+      <br>
+gap&gt; #EXAMPLE 2<br>
+      <br>
+gap&gt; F:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;<br>
+      <br>
+gap&gt; S_4:=F/[x^2, y^2, z^2, (x*z)^2, (y*z)^3, (x*y)^3];;<br>
+      <br>
+gap&gt; R:=ResolutionSmallFpGroup(S_4,3);; <br>
+      <br>
+gap&gt; R!.dimension(3);<br>
+6<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+table listing presentations for the nonabelian groups of order at most
+30, together with explicit generators for the corresponding modules of
+identities, can&nbsp; be found <a href="table/help.html">here</a>. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
+us now reconsider the symmetric group S<sub>3</sub> with the unusual
+presentation P'=&lt; x, y |&nbsp; x<sup>2</sup>, xyx<sup>-1</sup>y<sup>-2</sup>
+&gt;. The following
+commands establish the existence of an infinite&nbsp; periodic ZS<sub>3</sub>-resolution
+R of period 4 (meaning R<sub>n</sub> = R<sub>n+4</sub> for all n)
+which, in any given dimension, has either one or two
+generators.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+F:=FreeGroup(2);; x:=F.1;; y:=F.2;;<br>
+      <br>
+gap&gt; G:=F/[ x^2, x*y*x^-1*y^-2 ];;<br>
+      <br>
+gap&gt; Order(G); IsAbelian(G);&nbsp;&nbsp;&nbsp; #Test that G really
+is isomorphic to S_3.<br>
+6<br>
+false<br>
+      <br>
+gap&gt; R:=ResolutionSmallFpGroup(G,9);; <br>
+      <br>
+gap&gt; for i in [1..9] do Print(R!.dimension(i),"\n"); od;<br>
+2<br>
+2<br>
+1<br>
+1<br>
+2<br>
+2<br>
+1<br>
+1<br>
+2<br>
+      <br>
+gap&gt; R!.boundary(5,1)=R!.boundary(9,1);<br>
+true<br>
+      <br>
+gap&gt; R!.boundary(5,2)=R!.boundary(9,2);<br>
+true<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+existence of such a periodic ZS<sub>3</sub>-resolution of Z
+is originally due to J. Milnor and was first published as an appendix
+to the paper&nbsp; [R.G. Swan, "Periodic resolutions for finite
+groups", <span style="font-style: italic;">Annals of Mathematics (2)</span>,
+72 (1960), 267-291]. Swan proved that if a group G acts fixed-point
+freely on a sphere then there is a periodic ZG-resolution of Z. The
+interest in the group S<sub>3</sub> is that it does not act freely on a
+sphere. <br>
+      <br>
+The periodic ZS<sub>3</sub>-resolution arises as the cellular chain
+complex of a contractible CW-space X on which S<sub>3</sub> acts
+freely. An analysis of the boundary maps in the resolution yield the
+following explicit description of the orbit space B=X/S<sub>3</sub> in
+low dimensions.<br>
+      <br>
+This classifying space B has a unique 0-cell and two 1-cells which we
+label by x and y. It has two 2-cells which are attached to the
+1-skeleton according to the following pictures.<br>
+      <div style="text-align: center;"><img alt="" src="relators.jpg"
+ style="width: 479px; height: 194px;"><br>
+      <div style="text-align: left;"><br>
+The space B has one 3-cell attached to the 2-skeleton according to the
+following picture.<br>
+      <br>
+      <div style="text-align: center;"><img alt="" src="syzygy.jpg"
+ style="width: 277px; height: 277px;"><br>
+      <div style="text-align: left;"><br>
+This last picture corresponds to an <span style="font-style: italic;">identity</span>
+between the relators&nbsp; r:=x<sup>2</sup> and s:=xyx<sup>-1</sup>y<sup>-2</sup>
+and represents a map S<sup>2</sup> &#8594; B<sup>2</sup> from the 2-sphere to
+the 2-skeleton of B. This kind of map is called a <span
+ style="font-style: italic;">homotopical syzygy</span> in the paper
+[J.-L. Loday, "Homotopical sysygies", <span style="font-style: italic;">Contemp.
+Math.</span> 265 (2000), 99-127].<br>
+      <br>
+Note that S<sub>3</sub> can be regarded as the dihedral group D<sub>3</sub>.
+It is well known that the dihedral groups D<sub>n</sub> admit periodic
+ZD<sub>n</sub>-resolutions if and only if n is odd, say=2k+1 . The
+period is always 4. One could attempt to construct periodic ZD<sub>2k+1</sub>-resolutions
+using a presentation such as &lt; x,y | x<sup>2</sup>, y<sup>-k-1</sup>xyx<sup>-1</sup>&gt;
+for D<sub>2k+1</sub>. For example, with k=20 the following commands can
+be used to construct an infinite periodic resolution for the diherdral
+group D<sub>41</sub> of order 82. <br>
+      </div>
+      </div>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+F:=FreeGroup(2);;x:=F.1;; y:=F.2;;<br>
+      <br>
+gap&gt; k:=20;; G:=F/[x^2,y^(-k-1)*x*y^k*x^-1];;<br>
+      <br>
+gap&gt; R:=ResolutionSmallFpGroup(G,5);; <br>
+      <br>
+gap&gt; for i in [1..5] do; Print(R!.dimension(i),"\n"); od;<br>
+2<br>
+2<br>
+1<br>
+1<br>
+2</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
+us now return to the module of identities of the presentation P = &lt;
+x,y | x<sup>2</sup>, y<sup>3</sup>, (xy)<sup>2</sup> &gt;. This defines
+the same group as the presentation P' = &lt; x, y |&nbsp; x<sup>2</sup>,
+xyx<sup>-1</sup>y<sup>-2</sup>
+&gt; and we have seen that the module Pi<sub>2</sub>(K<sub>P'</sub>) is
+generated by a single element.&nbsp; It is not difficult to
+establish&nbsp; (by an easy theoretical argument) that Pi<sub>2</sub>(K<sub>P</sub>)
+= ZS<sub>3</sub> + Pi<sub>2</sub>(K<sub>P'</sub>) and that the Z-rank
+of Pi<sub>2</sub>(K<sub>P'</sub>) is equal to 1. In particular, Pi<sub>2</sub>(K<sub>P</sub>)
+is generated by just two elements.&nbsp;&nbsp; </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutFunctorial.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutAspherical.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

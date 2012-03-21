@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 12:  Generators and relators of groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body><a href="../www/index.html"><small>HAP home</small></a>
+
+
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap11.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap13.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7A2144518112F830" name="X7A2144518112F830"></a></p>
+<div class="ChapSects"><a href="chap12.html#X7A2144518112F830">12 <span class="Heading"> Generators and relators of groups</span></a>
+</div>
+
+<h3>12 <span class="Heading"> Generators and relators of groups</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">CayleyGraphOfGroupDisplay(G,X) </code> <code class="code">CayleyGraphOfGroupDisplay(G,X,"mozilla") </code></p>
+
+<p>Inputs a finite group G together with a subset X of G. It displays the corresponding Cayley graph as a .gif file. It uses the Mozilla web browser as a default to view the diagram. An alternative browser can be set using a second argument.</p>
+
+<p>The argument G can also be a finite set of elements in a (possibly infinite) group containing X. The edges of the graph are coloured according to which element of X they are labelled by. The list X corresponds to the list of colours [blue, red, green, yellow, brown, black] in that order.</p>
+
+<p>This function requires Graphviz software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IdentityAmongRelatorsDisplay(R,n) </code> <code class="code">IdentityAmongRelatorsDisplay(R,n,"mozilla") </code></p>
+
+<p>Inputs a free ZG-resolution R and an integer n. It displays the boundary R!.boundary(3,n) as a tessellation of a sphere. It displays the tessellation as a .gif file and uses the Mozilla web browser as a default display mechanism. An alternative browser can be set using a second argument. (The resolution R should be reduced and, preferably, in dimension 1 it should correspond to a Cayley graph for G. )</p>
+
+<p>This function uses GraphViz software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IsAspherical(F,R) </code></p>
+
+<p>Inputs a free group F and a set R of words in F. It performs a test on the 2-dimensional CW-space K associated to this presentation for the group G=F/&lt;R&gt;^F.</p>
+
+<p>The function returns "true" if K has trivial second homotopy group. In this case it prints: Presentation is aspherical.</p>
+
+<p>Otherwise it returns "fail" and prints: Presentation is NOT piece-wise Euclidean non-positively curved. (In this case K may or may not have trivial second homotopy group. But it is NOT possible to impose a metric on K which restricts to a Euclidean metric on each 2-cell.)</p>
+
+<p>The function uses Polymake software.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PresentationOfResolution(R) </code></p>
+
+<p>Inputs at least two terms of a reduced ZG-resolution R and returns a record P with components</p>
+
+
+<ul>
+<li><p>P.freeGroup is a free group F,</p>
+
+</li>
+<li><p>P.relators is a list S of words in F,</p>
+
+</li>
+<li><p>P.gens is a list of positive integers such that the i-th generator of the presentation corresponds to the group element R!.elts[P[i]] .</p>
+
+</li>
+</ul>
+<p>where G is isomorphic to F modulo the normal closure of S. This presentation for G corresponds to the 2-skeleton of the classifying CW-space from which R was constructed. The resolution R requires no contracting homotopy.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">TorsionGeneratorsAbelianGroup(G) </code></p>
+
+<p>Inputs an abelian group G and returns a generating set [x_1, ... ,x_n] where no pair of generators have coprime orders.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap11.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap13.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

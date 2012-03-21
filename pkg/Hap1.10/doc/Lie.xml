@@ -1,0 +1,135 @@
+<Chapter><Heading> Lie commutators and nonabelian Lie tensors</Heading>
+
+<Table Align="|l|" >
+
+<Row>
+<Item>
+Functions on this page are joint work with <B>Hamid Mohammadzadeh</B>, and implemented by him.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> LieCoveringHomomorphism</Index>
+<C>LieCoveringHomomorphism(L)</C>
+<P/>
+
+Inputs a finite dimensional Lie algebra  <M>L</M> over a field,
+ and returns a surjective Lie homomorphism <M>phi : C\rightarrow L</M>
+ where:
+ <List>
+ <Item>the kernel of <M>phi</M> lies in both the centre of <M>C</M> and the
+ derived subalgebra of <M>C</M>,
+ </Item>
+ <Item>
+ the kernel of <M>phi</M> is a vector space of rank equal to the rank of the second Chevalley-Eilenberg homology of <M>L</M>.
+ </Item>
+ </List>
+  </Item>
+  </Row>
+
+<Row>
+<Item>
+<Index> LeibnizQuasiCoveringHomomorphism</Index>
+<C>LeibnizQuasiCoveringHomomorphism(L)</C>
+<P/>
+
+Inputs a finite dimensional Lie algebra  <M>L</M> over a field,
+ and returns a surjective  homomorphism <M>phi : C\rightarrow L</M>
+  of Leibniz algebras where:
+   <List>
+    <Item>the kernel of <M>phi</M> lies in both the centre of <M>C</M> and the
+     derived subalgebra of <M>C</M>,
+      </Item>
+       <Item>
+        the kernel of <M>phi</M> is a vector space of rank equal to the rank of the kernel <M>J</M> of the homomorphism <M>L \otimes L \rightarrow L</M> 
+	from the tensor square to <M>L</M>. (We note that, in general, <M>J</M> is NOT equal to the second Leibniz homology of <M>L</M>.)
+	 </Item>
+	  </List>
+	    </Item>
+	      </Row>
+
+
+
+
+<Row>
+<Item>
+<Index> LieEpiCentre</Index>
+<C>LieEpiCentre(L)</C>
+<P/>
+
+Inputs a finite dimensional Lie algebra  <M>L</M> over a field,
+ and returns 
+an ideal <M>Z^\ast(L)</M> of the centre of <M>L</M>. The ideal 
+ <M>Z^\ast(L)</M> is trivial if and only if 
+<M>L</M> is isomorphic to a quotient <M>L=E/Z(E)</M> of some Lie algebra  
+<M>E</M> by the centre of <M>E</M>.  
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> LieExteriorSquare</Index>
+<C>LieExteriorSquare(L) </C>
+<P/>
+
+Inputs a finite dimensional Lie algebra <M>L</M> over a field. 
+It returns a record <M>E</M> with the following components.
+<List>
+<Item>
+<M>E.homomorphism</M> is a Lie homomorphism <M>µ : (L \wedge L) \longrightarrow L</M> from the nonabelian exterior square <M>(L \wedge L)</M> to <M>L</M>. 
+The kernel of <M>µ</M> is the Lie multiplier.
+</Item>
+<Item>
+<M>E.pairing(x,y)</M> is a function which inputs  elements <M>x, y</M> in <M>L</M> and returns  <M>(x \wedge y)</M>
+in the exterior square <M>(L \wedge L)</M> .
+</Item>
+</List>
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> LieTensorSquare</Index>
+<C>LieTensorSquare(L) </C>
+<P/>
+
+Inputs a finite dimensional Lie algebra <M>L</M> over a field  
+and returns a record <M>T</M> with the following components.
+<List>
+<Item>
+   <M>T.homomorphism</M> is a Lie homomorphism 
+   <M>µ : (L \otimes L) \longrightarrow L</M>
+   from the nonabelian tensor square of <M>L</M> to <M>L</M>. 
+</Item>
+<Item>
+<M>T.pairing(x,y)</M> is a function which inputs two elements <M>x, y</M> in 
+<M>L</M> and returns the tensor <M>(x \otimes y)</M> in the tensor square 
+<M>(L \otimes L)</M> .
+</Item>
+</List>
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> LieTensorCentre</Index>
+<C>LieTensorCentre(L) </C>
+<P/>
+
+Inputs a finite dimensional 
+Lie algebra <M>L</M> over a field and returns the largest ideal <M>N</M>
+such that the induced homomorphism of nonabelian tensor squares 
+<M>(L \otimes L) \longrightarrow (L/N \otimes L/N)</M>
+is an isomorphism. 
+</Item>
+</Row>
+
+
+</Table>
+</Chapter>
+
+
