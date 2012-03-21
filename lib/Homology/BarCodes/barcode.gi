@@ -2,8 +2,12 @@ HAPBARCODE:=0;
 
 #############################################################
 InstallGlobalFunction(UniversalBarCode,
-function(str,n,d)
-local B, i, j, M, file,PolRing,x;
+function(arg)
+local str, n, d, B, i, j, M, file,PolRing,x;
+
+str:=arg[1];
+n:=arg[2];
+d:=arg[3];
 
 if not str in
 ["DerivedSeries", "LowerCentralSeries", "UpperCentralSeries", "PCentralSeries",
@@ -28,6 +32,10 @@ for j in [1..Length(M[i])] do
 B[i][j]:=ValuePol(M[i][j][1],x)/ValuePol(M[i][j][2],x);
 od;
 od;
+
+if Length(arg)=4 then
+return UniversalBarCodeEval(B,arg[4]);
+fi;
 
 return B;
 end);

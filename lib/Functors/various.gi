@@ -357,3 +357,115 @@ end);
 ####################################################################
 #####################################################################
 
+####################################################################
+#####################################################################
+InstallGlobalFunction(CanonicalRightCountableCosetElement,
+function(U,g)
+local x, h;
+
+if IsFinite(U) then return CanonicalRightCosetElement(U,g); fi;
+
+if g in U then return g; fi;
+
+if not IsBound(U!.ccelts) then U!.ccelts:=[]; fi;
+
+h:=g^-1;
+for x in U!.ccelts do
+if x*h in U then return x; fi;
+od;
+
+Add(U!.ccelts,g);
+return g;
+
+end);
+####################################################################
+#####################################################################
+
+####################################################################
+#####################################################################
+InstallGlobalFunction( SL2Z,
+    function(g)
+    local p,S, F, T, G,P,gens;
+
+S:=[[0,-1],[1,0]];
+T:=[[1,0],[1,1]];
+
+if IsInt(g) then
+############################
+if (not IsPrime(g)) and (not g=1) then
+Print("SL2Z(p) is not yet implemented for non primes p.\n");
+return fail; fi;
+
+P:=[[1,0],[0,g]];
+G:=Group([P*S*P^-1,P*T*P^-1]);
+SetName(G,Concatenation("SL(2,Z)^",String(P))  );
+G!.mat:=P;
+SetIsHAPRationalMatrixGroup(G,true);
+SetIsHAPRationalSpecialLinearGroup(G,true);
+    
+return G;
+############################
+fi;
+
+############################
+gens:=[S,T];
+F:=DenominatorRat(g); 
+F:=Factors(F);
+if Length(F)>Length(SSortedList(F)) then
+Print("SL(Z[1/m]) is implemented only for m a square free integer.\n");
+return fail;
+fi;
+
+for p in F do
+P:=[[1,0],[0,p]];
+Add(gens,P*S*P^-1);
+Add(gens,P*T*P^-1);
+od;
+G:=Group(gens);
+SetName(G,Concatenation("SL(2,Z[1/",String(DenominatorRat(g)),"])")  );
+G!.primes:=F[1];
+SetIsHAPRationalMatrixGroup(G,true);
+SetIsHAPRationalSpecialLinearGroup(G,true);
+
+return G;
+############################
+
+        end);
+####################################################################
+#####################################################################
+
+
+######################
+InstallMethod( \in,
+               "for SL(2,Z)_p",
+              [ IsMatrix,  IsHAPRationalSpecialLinearGroup ],
+function ( g, G )
+local P,n,d,facs;
+
+if IsBound(G!.mat) then
+###############
+P:=G!.mat;
+return 
+P^-1*g*P in SL(2,Integers);
+###############
+fi;
+
+if IsBound(G!.primes) then
+###############
+facs:=SSortedList(Factors(G!.primes));
+AddSet(facs,1);
+for n in Flat(g) do
+d:=SSortedList(Factors(DenominatorRat(n)));
+if not IsSubset(facs,d) and n>1 then
+return false; fi;
+od;
+
+if  Determinant(g)=1 then return true; fi;
+return false; 
+###############
+fi;
+
+end );
+######################
+
+

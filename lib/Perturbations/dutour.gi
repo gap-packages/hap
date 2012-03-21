@@ -21,6 +21,9 @@ local
 
 groupname:=Filtered(groupname,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
 name:=groupname;
+
+if name="SL2Z" then return ContractibleSL2ZComplex(); fi;
+
 groupname:=Concatenation("lib/Perturbations/Gcomplexes/",groupname);
 bool:=ReadPackage("HAP",groupname);
 
@@ -57,7 +60,7 @@ return dims[n+1];
 end;
 ###################
 
-Elts:=[];
+Elts:=[Identity(C[1][1].TheMatrixStab)];   ##Modified 8 Feb 2012
 StabilizerGroups:=[];
 RotSubGroups:=[];
 boundaryList:=[];
@@ -302,7 +305,7 @@ return Objectify(HapNonFreeResolution,
             [["length",EvaluateProperty(C,"length")],
              ["characteristic",0],
              ["type","resolution"],
-             ["reduced",true]]  ));
+             ["reduced",C!.dimension(0)=1]]  ));
 
 end);
 ################################################

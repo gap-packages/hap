@@ -142,7 +142,7 @@ local
         left,top,right,bottom,topleft,topright,bottomleft,bottomright;
 
 if HAP_MOVES_DIM_2=0 then 
-ReadPackage("HAP","lib/PolyComplexes/hapMovesDim2.txt"); 
+ReadPackage("HAP","lib/PolyComplexes/hapMovesDim2B.txt"); 
 fi;
 
 A:=FrameArray(AA);
@@ -167,7 +167,7 @@ topright:=A[i-1][j+1];
 bottomleft:=A[i+1][j-1];
 bottomright:=A[i+1][j+1];
 if 
-HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]=1
+HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]
 then A[i][j]:=0; tog:=true;
 fi;
 fi;
@@ -188,7 +188,7 @@ topright:=A[i-1][j+1];
 bottomleft:=A[i+1][j-1];
 bottomright:=A[i+1][j+1];
 if 
-HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]=1
+HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]
 then A[i][j]:=0; tog:=true;
 fi;
 fi;
@@ -228,7 +228,7 @@ local
         left,top,right,bottom,topleft,topright,bottomleft,bottomright;
 
 if HAP_MOVES_DIM_2=0 then 
-ReadPackage("HAP","lib/PolyComplexes/hapMovesDim2.txt"); 
+ReadPackage("HAP","lib/PolyComplexes/hapMovesDim2B.txt"); 
 fi;
 
 A:=FrameArray(AA);
@@ -273,7 +273,7 @@ topright:=B[i-1][j+1];
 bottomleft:=B[i+1][j-1];
 bottomright:=B[i+1][j+1];
 if 
-HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]=1
+HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]
 then B[i][j]:=1; tog:=true;
 fi;
 fi;
@@ -295,7 +295,7 @@ topright:=B[i-1][j+1];
 bottomleft:=B[i+1][j-1];
 bottomright:=B[i+1][j+1];
 if 
-HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]=1
+HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]
 then B[i][j]:=1; tog:=true;
 fi;
 fi;

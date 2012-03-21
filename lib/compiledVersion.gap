@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/");
+tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.10/");
 
 ########## COMPILED GAP FUNCTIONS ###################################
 LoadDynamicModule(
@@ -27,6 +27,7 @@ Concatenation(tmppath,"lib/FpGmodules/Compiled/resfpgmod.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/FpGmodules/Compiled/homs.so"));
 
+######### MEATAXE ##################################################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/FpGmodules/Compiled/meataxe.so"));
 
@@ -70,7 +71,7 @@ LoadDynamicModule(
 Concatenation(tmppath,"lib/Resolutions/Compiled/resFiniteGroup.so"));
 
 LoadDynamicModule(
-Concatenation(tmppath,"lib/Resolutions/Compiled/resGenericGroup.so"));
+Concatenation(tmppath,"lib/Resolutions/Compiled/resGeneric.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Resolutions/Compiled/presentation.so"));
@@ -104,7 +105,7 @@ Concatenation(tmppath,"lib/Resolutions/Compiled/resACquotient.so"));
 fi;
 
 
-######### RESOLUTIONS MOD P #########################################
+########## RESOLUTIONS MOD P #########################################
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
@@ -112,13 +113,10 @@ Concatenation(tmppath,"lib/ResolutionsModP/Compiled/resPrimeGroup.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/poincare.so"));
 
-#LoadDynamicModule(
-#Concatenation(tmppath,"lib/ResolutionsModP/Compiled/primepart.so"));
-ReadPackage("hap","lib/ResolutionsModP/primepart.gi");
-
-
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ResolutionsModP/Compiled/ranksPrimeGroup.so"));
+
+
 ######### PERTURBATIONS #############################################
 
 LoadDynamicModule(
@@ -148,6 +146,8 @@ Concatenation(tmppath,"lib/Perturbations/Compiled/freeRes.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/dutour.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/Perturbations/Compiled/contractibleSL2Zcomplex.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Perturbations/Compiled/filteredChainComplex.so"));
@@ -159,7 +159,6 @@ Concatenation(tmppath,"lib/Perturbations/Compiled/filteredChainComplex.so"));
 #################### ARTIN COXETER ##################################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/diagrams.so"));
-
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ArtinCoxeter/Compiled/resArtin.so"));
@@ -189,8 +188,8 @@ Concatenation(tmppath,"lib/Functors/Compiled/primePartDerived.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZmodP.so"));
 
-LoadDynamicModule(
-Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZModule.so"));
+#LoadDynamicModule( Concatenation(tmppath,"lib/Functors/Compiled/tensorWithZModule.so"));
+ReadPackage("HAP", "lib/Functors/Compiled/tensorWithZModule.gi");
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Functors/Compiled/tensorWithTwistedZmodP.so"));
@@ -231,7 +230,6 @@ Concatenation(tmppath,"lib/Homology/Compiled/integralHomology.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/lefschetz.so"));
 
-
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralHomologyObj.so"));
 
@@ -241,7 +239,6 @@ Concatenation(tmppath,"lib/Homology/Compiled/modularHomology.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/modularHomologyVectSpace.so"));
 
-
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/homology.so"));
 
@@ -250,7 +247,6 @@ Concatenation(tmppath,"lib/Homology/Compiled/groupHomology.so"));
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/groupCohomology.so"));
-
 
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Homology/Compiled/integralCohomology.so"));
@@ -320,38 +316,91 @@ Concatenation(tmppath,"lib/Polycyclic/Compiled/resAbPcpGroup.so"));
 LoadDynamicModule(
 Concatenation(tmppath,"lib/Polycyclic/Compiled/resNilpotentPcpGrp.so"));
 
+
 ################## MOD P RINGS #####################################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/record.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/recordPart1.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/ModPRings/Compiled/recordPartII.so"));
 
-################## TOPOLOGY ########################################
+################### GRAPHS OF GROUPS ###############################
+LoadDynamicModule(
+Concatenation(tmppath, "lib/GraphsOfGroups/Compiled/graphs.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/GraphsOfGroups/Compiled/resGraph.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/GraphsOfGroups/Compiled/graphOfResolutions.so"));
+
+################### SIMPLICIAL GROUPS ##############################
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/nerveCat1Group.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/mooreComplex.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/barresolution.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/chaincomplexofsimplicialgroup.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/Kpin.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/eilen_mac.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/tensor2chains.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath, "lib/SimplicialGroups/Compiled/barcomplex.so"));
+
+################## POLYTOPAL COMPLEXES ################################
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/arrayOps.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/pureCubicalComplexes.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/chainComplexes.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/twoDimensional.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/threeDimensional.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/dvf.so"));
+
 LoadDynamicModule(
 Concatenation(tmppath,"lib/PolyComplexes/Compiled/rips.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/simplicialComplexes.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/groupComplexes.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/cluster.so"));
+
+LoadDynamicModule(
+Concatenation(tmppath,"lib/PolyComplexes/Compiled/hap2chomp.so"));
 
 
-################# SIMPLICIAL GROUPS ################################
+#####################REGULAR CW SPACES ##############################
 LoadDynamicModule(
-Concatenation(tmppath,"lib/SimplicialGroups/Compiled/mooreComplex.so"));
-LoadDynamicModule(
-Concatenation(tmppath,"lib/SimplicialGroups/Compiled/nerveCat1Group.so"));
-LoadDynamicModule(
-Concatenation(tmppath,"lib/SimplicialGroups/Compiled/barresolution.so"));
-Concatenation(tmppath,"lib/SimplicialGroups/Compiled/barcomplex.so"));
-Concatenation(tmppath,"lib/SimplicialGroups/Compiled/chaincomplexofsimplicalgroup.so"));
+Concatenation(tmppath,"lib/RegularCWSpaces/Compiled/basicRegular.so"));
 
+LoadDynamicModule(
+Concatenation(tmppath,"lib/RegularCWSpaces/Compiled/contractAlt.so"));
 

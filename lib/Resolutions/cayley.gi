@@ -1,7 +1,29 @@
 #(C) Graham Ellis 2005-2006
 
+#################################################
+InstallGlobalFunction(CayleyGraphOfGroup,
+function(G,A)
+local M, g, h, Elts;
+
+M:=IdentityMat(Order(G))*0;
+Elts:=Elements(G);
+
+for g in [1..Order(G)] do
+for h in [1..Order(G)] do
+if Elts[g]*Elts[h]^-1 in A then M[g][h]:=1; fi;
+if Elts[h]*Elts[g]^-1 in A then M[g][h]:=1; fi;
+
+od;
+od;
+
+return IncidenceMatrixToGraph(M);
+
+end);
+#################################################
+
+
 #####################################################################
-InstallGlobalFunction(CayleyGraphDisplay,
+InstallGlobalFunction(CayleyGraphOfGroupDisplay,
 function(arg)
 local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log;
 

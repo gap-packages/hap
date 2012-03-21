@@ -75,6 +75,7 @@ NiceGensAG:=Flat(NiceGensAG);
 Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
 
+NiceGensAG:=Elements(AG);   ##THIS IS OVERKILL!! BUT IT FIXES A SLIP
 
 
 NiceGensAH:=
@@ -85,6 +86,7 @@ NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
 
+NiceGensAH:=Elements(AH);   ##THIS IS OVERKILL!! BUT IT FIXES A SLIP
 
 relsT:=[];
 for x in relsG do

@@ -59,6 +59,16 @@ end);
 #############################################################
 
 #############################################################
+InstallOtherMethod(ELM_LIST,
+"for PseudoLists with functions",
+[IsPseudoListWithFunction,IsInt],
+function(PL,i)
+return PL!.eltfun(i);
+end);
+#############################################################
+
+
+#############################################################
 InstallOtherMethod(Position,
 "for PseudoLists",
 [IsPseudoList,IsObject,IsInt],
@@ -74,6 +84,29 @@ end);
 #############################################################
 
 #############################################################
+InstallOtherMethod(Position,
+"for PseudoLists",
+[IsPseudoListWithFunction and IsPseudoList,IsObject,IsInt],
+function(PL,g,i)
+local p,A;
+A:=List([1..Length(PL)],j->PL!.eltfun(j));
+return Position(A,g,i);
+end);
+#############################################################
+
+#############################################################
+InstallOtherMethod(Position,
+"for PseudoLists",
+[IsPseudoListWithFunction and IsPseudoList,IsObject],
+function(PL,g)
+local p;
+return PL!.posfun(g);
+end);
+#############################################################
+
+
+
+#############################################################
 InstallOtherMethod(Length,
 "for PseudoLists",
 [IsPseudoList],
@@ -83,6 +116,16 @@ end);
 #############################################################
 
 #############################################################
+InstallOtherMethod(Length,
+"for PseudoLists",
+[IsPseudoListWithFunction],
+function(PL)
+return PL!.lnthfun();
+end);
+#############################################################
+
+
+#############################################################
 InstallOtherMethod(IN,
 "for PseudoLists",
 [IsObject,IsPseudoList],
@@ -90,6 +133,16 @@ function(x,PL)
 return x in PL!.sslst;
 end);
 #############################################################
+
+#############################################################
+InstallOtherMethod(IN,
+"for PseudoLists",
+[IsObject,IsPseudoListWithFunction],
+function(x,PL)
+return not fail = PL!.posfun(x);
+end);
+#############################################################
+
 
 #############################################################
 InstallOtherMethod(Add,
@@ -108,6 +161,16 @@ Append(L!.pos,shft);
 fi;
 end);
 #############################################################
+
+#############################################################
+InstallOtherMethod(Add,
+"for PseudoLists",
+[IsPseudoListWithFunction,IsObject],
+function(L,x)
+L!.addfun(x);
+end);
+#############################################################
+
 
 #############################################################
 InstallOtherMethod(Append,
@@ -138,4 +201,14 @@ function(L,f)
 return ListOp(L!.lst,f);
 end);
 #############################################################
+
+#############################################################
+InstallOtherMethod(ListOp,
+"for PseudoLists",
+[IsPseudoListWithFunction,IsObject],
+function(L,f)
+return List(List([1..Length(L)],i->L!.eltfun(i)) , f);
+end);
+#############################################################
+
 

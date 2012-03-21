@@ -3,8 +3,6 @@
 ##  read.g                  HAP library               Graham Ellis 
 ##
 #####################################################################
-#ReadPackage("HAP","lib/hap.gd");
-
 
 HAPconstant:=2;	
 SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
@@ -18,13 +16,11 @@ if not CompareVersionNumbers(VERSION,"4.5") then
 fi;
 
 ReadPackage("HAP","boolean");
-#ReadPackage("HAP", "lib/TitlePage/title.gap");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
-#ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 
 ################### POLYCYLIC COMMANDS ##############################
-## Most functions should work on pcp groups if the polycyclic package 
+## Most HAP functions should work on pcp groups if the polycyclic package 
 ## is installed. Otherwise we need to give a meaning to certain commands
 ## defined in the polycyclic package.
 if not IsPackageMarkedForLoading("polycyclic","1.1") then 
@@ -79,7 +75,6 @@ fi;
 ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 ################# OBJECTIFICATIONS ###############################
-#ReadPackage("HAP", "lib/Objectifications/types.gi");
 ReadPackage("HAP", "lib/Objectifications/basicMethods.gi");
 ################# OBJECTIFICATIONS DONE ##########################
 
@@ -87,8 +82,21 @@ if COMPILED=true then
 ReadPackage("HAP","lib/compiledVersion.gap");
 fi;
 
-
 if COMPILED=false then
+
+################# ACLIB & NQ COMMANDS #####################################
+if IsPackageMarkedForLoading("aclib","1.1") then
+ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
+ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
+fi;
+if IsPackageMarkedForLoading("nq","1.1") then
+ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
+fi;
+
+################# ACLIB DONE #########################################
 
 ##################### RENAME GAP FUNCTIONS ##########################
 AbsInt_HAP:=AbsInt;
@@ -100,7 +108,7 @@ MakeReadOnlyGlobal("SignInt_HAP");
 ReadPackage("HAP", "lib/FreeGmodules/wordOperations.gi");
 ReadPackage("HAP", "lib/FreeGmodules/tietze.gi");
 
-##################### FP G MODULES ##################################
+##################### FPG MODULES ##################################
 ReadPackage("HAP", "lib/FpGmodules/fpgbasics.gi");
 ReadPackage("HAP", "lib/FpGmodules/resfpgmod.gi");
 ReadPackage("HAP", "lib/FpGmodules/homs.gi");
@@ -111,13 +119,7 @@ ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
-ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
-
-if IsPackageMarkedForLoading("nq","1.1") then
-ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
-ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
-ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
-fi;
+#ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
 
 ##################### RESOLUTIONS ###################################
 ReadPackage("HAP", "lib/Resolutions/resAspherical.gi");
@@ -131,18 +133,11 @@ ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 
-if IsPackageMarkedForLoading("aclib","1.1") then
-ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
-ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
-fi;
-
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
-#fi;
 #ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
-#if COMPILED=false then
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
@@ -181,9 +176,6 @@ ReadPackage("HAP", "lib/Homology/integralHomologyObj.gi");
 ReadPackage("HAP", "lib/Homology/integralCohomologyObj.gi");
 ReadPackage("HAP", "lib/Homology/persistent.gi");
 
-
-
-
 ##################### PERTURBATIONS #################################
 ReadPackage("HAP", "lib/Perturbations/resExtension.gi");
 ReadPackage("HAP", "lib/Perturbations/resDirectProd.gi");
@@ -194,6 +186,7 @@ ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
+ReadPackage("HAP", "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
 
 
@@ -209,9 +202,6 @@ ReadPackage("HAP", "lib/ArtinCoxeter/noncrossing.gi");
 ReadPackage("HAP", "lib/Rings/intCoh.gi");
 ReadPackage("HAP", "lib/Rings/cocycleChainMap.gi");
 ReadPackage("HAP", "lib/Rings/cupProduct.gi");
-
-
-
 ReadPackage("HAP", "lib/Rings/integralGens.gi");
 
 ################### POLYMAKE #######################################
@@ -233,11 +223,12 @@ ReadPackage("HAP", "lib/ModPRings/recordPart1.gi");
 ReadPackage("HAP", "lib/ModPRings/recordPartII.gi");
 
 
-fi;
-
 ################### GRAPHS OF GROUPS ###############################
 ReadPackage("HAP", "lib/GraphsOfGroups/graphs.gi");
 ReadPackage("HAP", "lib/GraphsOfGroups/resGraph.gi");
+ReadPackage("HAP", "lib/GraphsOfGroups/graphOfResolutions.gi");
+
+fi;
 
 ################### TEST ###########################################
 ReadPackage("HAP", "test/test.gap");
@@ -246,9 +237,6 @@ ReadPackage("HAP", "test/test.gap");
 ReadPackage("HAP","lib/Streams/streams.gi");
 ReadPackage("HAP","lib/Streams/HAPexport.gi");
 ReadPackage("HAP","lib/Streams/HAPimport.gi");
-
-
-
 
 ################### RESOLUTIONS (CONTD) ############################
 ReadPackage("HAP","lib/Resolutions/cayley.gi");
@@ -275,11 +263,12 @@ ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
 ReadPackage("HAP","lib/PolyComplexes/dvf.gi");
 ReadPackage("HAP","lib/PolyComplexes/rips.gi");
-fi;
+
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
+fi;
 
 ################## CATEGORY THEORY #################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gi");
@@ -295,19 +284,21 @@ ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
+if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
 ReadPackage("HAP","lib/SimplicialGroups/nerveCat1Group.gi");
 ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
-ReadPackage("HAP","lib/SimplicialGroups/chaincomplexofsimplicalgroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/chaincomplexofsimplicialgroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
-ReadPackage("HAP","lib/SimplicialGroups/eilen_mac.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
+
 
 ################## REGULAR CW_SPACES ###############################
 ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
+fi;
 
 
 ################## HAP PRIME ##################################
@@ -323,7 +314,5 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
-
-
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

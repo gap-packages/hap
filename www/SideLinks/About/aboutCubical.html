@@ -24,7 +24,8 @@
             </td>
             <td
  style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
- style="font-weight: bold;">About HAP: Simplicial and cubical complexes<br>
+ style="font-weight: bold;">About HAP: Simplicial, Cubical,
+Permutahedral and Regular CW-Complexes<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
  href="aboutTDA.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
@@ -38,9 +39,7 @@
     <tr align="center">
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
- style="font-weight: bold;"><br>
-1. Simplicial Complexes<br>
-      <br>
+ style="font-weight: bold;">1. Simplicial Complexes<br>
       </big></td>
     </tr>
     <tr>
@@ -65,10 +64,10 @@ L:=[[1,2,6],[2,6,9],[2,3,9],[3,8,9],[3,4,8],[4,5,8],<br>
 &gt; [5,6,9],[5,9,10],[8,9,10],[7,8,10],[5,7,8],[5,6,7],<br>
 &gt; [4,5,10],[3,4,10],[3,7,10],[2,3,7],[2,6,7],[1,2,6]];;<br>
       <br>
-gap&gt; ProjPlane:=MaximalSimplicesToSimplicialComplex(L);<br>
+gap&gt; P:=MaximalSimplicesToSimplicialComplex(L);<br>
 Simplicial complex of dimension 2.<br>
       <br>
-gap&gt; C:=ChainComplex(ProjPlane);<br>
+gap&gt; C:=ChainComplex(P);<br>
 Chain complex of length 2 in characteristic 0 .<br>
       <br>
 gap&gt; Homology(C,0);<br>
@@ -91,10 +90,10 @@ following commands compute the low-dimensional integral homologies of a
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 n:=10;;<br>
 gap&gt;
-n_Sphere:=MaximalSimplicesToSimplicialComplex(Combinations([0..n+1],n+1));<br>
+S:=MaximalSimplicesToSimplicialComplex(Combinations([0..n+1],n+1));<br>
 Simplicial complex of dimension 10.<br>
       <br>
-gap&gt; C:=ChainComplex(n_Sphere);<br>
+gap&gt; C:=ChainComplex(S);<br>
 Chain complex of length 10 in characteristic 0 .<br>
       <br>
 gap&gt; List([0..n],m-&gt;Homology(C,m));<br>
@@ -127,27 +126,26 @@ gap&gt; Homology(C,0);<br>
 gap&gt; Homology(C,1);<br>
 [&nbsp; ]<br>
 gap&gt; Homology(C,2);<br>
-[&nbsp; ]<br>
-      </td>
+[&nbsp; ] </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">
-      <div style="text-align: center;"><big style="font-weight: bold;"><br>
-2. Cubical Complexes<br>
-      <br>
+      <div style="text-align: center;"><big style="font-weight: bold;">2.
+Pure Cubical Complexes<br>
       </big></div>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">In
-HAP we us the term "pure cubical complex" to mean a subspace of
-d-dimensional euclidian space arising as a union of finitely many
+HAP we us the term <span style="font-style: italic;">pure cubical
+complex</span> to mean a subspace of
+d-dimensional Euclidian space arising as a union of finitely many
 d-dimensional unit cubes whose vertices have integral coordinates. A
-pure cubical space can be created by specifying a d-dimensional array
+pure cubical complex can be created by specifying a d-dimensional array
 of 0s and 1s. For instance, the following commands construct a
-3-dimensional cubical 2-sphere and verify its homology in low
+3-dimensional cubical 2-sphere and determine its homology in low
 dimensions. <br>
       </td>
     </tr>
@@ -158,10 +156,10 @@ a:=[[1,1,1],[1,1,1],[1,1,1]];;<br>
 gap&gt; b:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
 gap&gt; c:=[[1,1,1],[1,1,1],[1,1,1]];;<br>
 gap&gt; array:=[a,b,c];;<br>
-gap&gt; 2_sphere:=PureCubicalComplex(array);<br>
+gap&gt; S2:=PureCubicalComplex(array);<br>
 Pure cubical complex of dimension 3.<br>
       <br>
-gap&gt; C:=ChainComplex(2_sphere);<br>
+gap&gt; C:=ChainComplex(S2);<br>
 Chain complex of length 3 in characteristic 0 .<br>
       <br>
 gap&gt; Homology(C,0);<br>
@@ -176,21 +174,35 @@ gap&gt; Homology(C,3);<br>
     </tr>
     <tr>
       <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-Cech complex of a pure cubical complex is a simplicial complex&nbsp;
-such that the geometric realizations of the two complexes are homotopy
-equivalent. The following commands compute the Cech complex of the
-cubical 2-sphere and (again) verify the low dimensional homology of the
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">There
+is a functor<br>
+      <br>
+      <div style="text-align: center;"><span style="font-weight: bold;">N</span>:
+(Pure Cubical Complexes)&nbsp; ------&gt;&nbsp; (Simplicial Complexes)<br>
+      </div>
+      <br>
+that sends a pure cubical complex X to a simplicial complex <span
+ style="font-weight: bold;">N</span>X of the same homotopy type. If X
+is d-dimensional then we refer to the d-dimensional cells in X as <span
+ style="font-style: italic;">facets</span>. The vertices of <span
+ style="font-weight: bold;">N</span>X are the facets of X, and the
+dimensional simplices of <span style="font-weight: bold;">N</span>X
+are the subsets of this vertex set having a non-trivial common
+intersection. We refer to <span style="font-weight: bold;">N</span>X&nbsp;
+as the <span style="font-style: italic;">Cech complex</span> of X. The
+following commands compute the Cech complex of the
+above cubical 2-sphere and (again) determine the low dimensional
+homology of the
 2-sphere.<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-S:=CechComplexOfPureCubicalComplex(2_sphere);<br>
+NS2:=CechComplexOfPureCubicalComplex(S2);<br>
 Simplicial complex of dimension 3.<br>
       <br>
-gap&gt; C:=ChainComplex(S);<br>
+gap&gt; C:=ChainComplex(NS2);<br>
 Chain complex of length 3 in characteristic 0 .<br>
       <br>
 gap&gt; Homology(C,0);<br>
@@ -213,11 +225,11 @@ compute a homotopy retract with just six 3-cells.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-new_sphere:=ContractedComplex(2_sphere);<br>
+R:=ContractedComplex(S2);<br>
 Pure cubical complex of dimension 3.<br>
       <br>
-gap&gt; C:=ChainComplex(2_sphere);;<br>
-gap&gt; D:=ChainComplex(new_sphere);;<br>
+gap&gt; C:=ChainComplex(S2);;<br>
+gap&gt; D:=ChainComplex(R);;<br>
 gap&gt; C!.dimension(3);<br>
 26<br>
 gap&gt; D!.dimension(3);<br>
@@ -234,30 +246,8 @@ following command shows that the Cech complex of this smaller
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-S:=CechComplexOfPureCubicalComplex(new_sphere);<br>
+S:=CechComplexOfPureCubicalComplex(R);<br>
 Simplicial complex of dimension 2.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-following commands compute a 3-dimensional simplicial complex which is
-homotopic to a torus.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-Circle:=PureCubicalComplex([[1,1,1],[1,0,1],[1,1,1]]);<br>
-Pure cubical complex of dimension 2.<br>
-      <br>
-gap&gt; Torus:=DirectProductOfPureCubicalComplexes(Circle,Circle);<br>
-Pure cubical complex of dimension 4.<br>
-      <br>
-gap&gt; ContractPureCubicalComplex(Torus);;<br>
-      <br>
-gap&gt; SimplicialTorus:=CechComplexOfPureCubicalComplex(Torus);<br>
-Simplicial complex of dimension 3.<br>
       </td>
     </tr>
     <tr>
@@ -338,6 +328,355 @@ gap&gt; Homology(C,0);<br>
       <br>
 gap&gt; Homology(C,1);<br>
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">3. Cubical Complexes</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">We
+us the term <span style="font-style: italic;">cubcial complex</span>
+to mean any cellular subcomplex of a pure cubcial complex. This
+slightly more general notion allows us to work with smaller homotopy
+retracts when making homology computations.<br>
+      <br>
+The following commands produce a pure cubical homotopy retract R, and
+then a cubcial retract K, of the above black and white image.
+Considered as CW-complexes, R involves a total of 16975 cells while K
+involves a total
+of 7005 cells<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+image:=ReadImageAsPureCubicalComplex("bw_image.bmp",400);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; R:=ContractedComplex(image);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; K:=PureCubicalComplexToCubicalComplex(R);<br>
+Cubical complex of dimension 2.<br>
+      <br>
+gap&gt; Size(K);<br>
+16975<br>
+      <br>
+gap&gt; ContractCubicalComplex(K);<br>
+      <br>
+gap&gt; Size(K);<br>
+7005<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">By
+working with arbitrary (non-regular) CW-complexes we can further reduce
+the number of cells in the cubical complex K.&nbsp; The following
+commands use an algorithm, based on the notion of a discrete vector
+field,&nbsp; to find a CW-complex L of the homotopy type of K but
+involving a total of just 25 cells. (Since H<sub>0</sub>(K) = Z<sup>3</sup>
+and H<sup>1</sup>(K) = Z<sup>20</sup> this is close to the minimum
+possible number of cells in any CW-complex having the homotopy type of
+K.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+L:=DVFReducedCubicalComplex(K);<br>
+Non-regular cubical complex of dimension 2 with discrete vector field.<br>
+      <br>
+gap&gt; Size(L);<br>
+25<br>
+      <br>
+gap&gt; C:=ChainComplex(L);<br>
+Chain complex of length 2 in characteristic 0 .<br>
+      <br>
+gap&gt; Homology(C,0);<br>
+[ 0, 0, 0 ]<br>
+      <br>
+gap&gt; Homology(C,1);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">4. Permutahedral Complexes</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Euclidean
+n-space can be tessellated by regular n-dimensional permutahedra. By a <span
+ style="font-style: italic;">pure permutahedral complex</span> we mean
+a union of finitely many of the permutahedra in this tessellation.
+Using the HAPPermutahedral package written by Fintan Hegarty we can
+represent the above black an white image as a pure permutahedral
+complex P. Although we are not guaranteed that the homotopy type of the
+pure permutahedral complex P is identical to that of the above pure
+cubcial complex representing the image, though we would hope that the
+homotopy types of the two complexes are not too dissimilar. <br>
+      <br>
+The following commands construct a homotopy retract of P, and then
+construct the Cech complex <span style="font-weight: bold;">N</span>P
+(which is defined as in the case of pure cubical complexes). An
+advantage of pure permutahedral complexes over pure cubical complexes
+is that a pure permutahedral complex of dimension n has Cech complex of
+the same dimension.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P:=PurePermutahedralComplex(image!.binaryArray);<br>
+Pure Permutahedral Complex of dimension 2.<br>
+      <br>
+gap&gt; ContractPurePermutahedralComplex(P);<br>
+      <br>
+gap&gt; NP:=PureComplexToSimplicialComplex(P,5);<br>
+Simplicial complex of dimension 2.<br>
+      <br>
+gap&gt; Homology(D,0);<br>
+[ 0, 0, 0 ]<br>
+      <br>
+gap&gt; Homology(NP,1);<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">By
+contrast, the Cech complex of the pure cubical representation of the
+black and white image is a simplicial complex of dimension&nbsp;
+3. <br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">5. Regular CW-complexes</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Simplicial,
+cubical and permutahedral complexes are all examples of regular
+CW-spaces. Since some homotopical algorithms are best implemented in
+the general setting of regular CW-spaces the HAP package proides a data
+type for this general setting.<br>
+      <br>
+The following example creates a 4-dimensional pure cubical complex T
+representing a standard torus.&nbsp; It then&nbsp; computes the Cech
+complex NT which is a 15-dimensional simplicial complex. It then
+converts the data type of NT into that of a regular CW-somplex. This
+CW-complex Y involves a total of 1172776 cells.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Circle:=PureCubicalComplex([[1,1,1,1,1],[1,1,0,1,1],[1,1,1,1,1]]);<br>
+Pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; T:=DirectProductOfPureCubicalComplexes(Circle,Circle);<br>
+Pure cubical complex of dimension 4.<br>
+      <br>
+gap&gt; NT:=CechComplexOfPureCubicalComplex(T);<br>
+Simplicial complex of dimension 15.<br>
+      <br>
+gap&gt; Y:=SimplicialComplexToRegularCWSpace(NT);<br>
+Regular CW-space of dimension 15<br>
+      <br>
+gap&gt; Size(Y);<br>
+1172776<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+15-dimensional CW-space Y has 1172776 cells. However, we know from its
+construction that it has the homotopy type of a torus. The following
+commands compute a set of "critical cells" for Y which can be used to
+build a smaller non-regular CW-complex of the same homotopy type. The
+computation shows that there is a CW-complex of the same homotopy type
+involving just one 0-cell, two 1-cells and one 2-cell. &nbsp; <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+CriticalCellsOfRegularCWSpace(Y);<br>
+[ [ 2, 5872 ], [ 1, 1116 ], [ 1, 2017 ], [ 0, 196 ] ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">6. Homotopy Equivalent Pure Cubical
+Complexes</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">It
+often happens that, for a given pure cubical complex X, any pure
+cubical homotopy retract R of X is necessarily quite large. Smaller
+homotopy equivalent pure cubical complexes ZR can often be obtained by
+allowing zig-zag sequences of homotopy retracts.<br>
+      <br>
+      <div style="text-align: center;">X ----&gt; Y1 &lt;---- Y2
+----&gt; Y3 &lt;---- Y4 ----&gt; ... &lt;--- ZR<br>
+      </div>
+      <div style="text-align: left;"><br>
+To illustrate the benefit of this approach we consisder the suspension
+S of the above black and white image. The pure complex S has 182727
+facets. Our algorithm for finding a homotopy retract of S produces a
+homotopy retract R with 29809 facets. Our algorithm for finding a
+zig-zag homotopy equivalent complex produces a homotopy equivalent pure
+cubcial complex ZR with just 304 facets.<br>
+      <br>
+Finally, we produce the cellular chain complex of a non-regular
+CW-complex V of the homotopy type of S. The CW-complex V has one
+0-cell, two 1-cells and twenty 2-cells. This is the minimum possible
+number of cells for any CW-complex of the homotopy type of S.<br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+image:=ReadImageAsPureCubicalComplex("bw_image.bmp",400);<br>
+      <br>
+gap&gt; X:=SuspensionOfPureCubicalComplex(image);<br>
+Pure cubical complex of dimension 3.<br>
+      <br>
+gap&gt; Size(X);<br>
+182727<br>
+      <br>
+gap&gt; R:=ContractedComplex(X);<br>
+Pure cubical complex of dimension 3.<br>
+      <br>
+gap&gt; Size(R);<br>
+29809<br>
+      <br>
+gap&gt; ZR:=ZigZagContractedPureCubicalComplex(S);<br>
+Pure cubical complex of dimension 3.<br>
+      <br>
+gap&gt; Size(ZR);<br>
+304<br>
+      <br>
+gap&gt;
+V:=DVFReducedCubicalComplex(PureCubicalComplexToCubicalComplex(ZR));<br>
+Non-regular cubical complex of dimension 3 with discrete vector field.<br>
+      <br>
+gap&gt; C:=ChainComplex(V);<br>
+Chain complex of length 3 in characteristic 0 .<br>
+      <br>
+gap&gt; C!.dimension(0);<br>
+1<br>
+gap&gt; C!.dimension(1);<br>
+2<br>
+gap&gt; C!.dimension(2);<br>
+20<br>
+gap&gt; C!.dimension(3);<br>
+0<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">7. The shape of data</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+first of the following commands loads a file <span
+ style="font-style: italic;"><a href="data.txt">data.txt</a> </span>containing
+a list L of
+coordinates of 400 points randomly sampled from some unknown manifold
+in Euclidean 3-space. The second command&nbsp; constructs a 400x400
+symmetric matrix of distances between the points.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Read("data.txt");<br>
+gap&gt; Length(L);<br>
+400<br>
+gap&gt; S:=VectorsToSymmetricMatrix(L);;<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">For
+any threshold n&gt;0 we can construct the graph G(n) whose vertices are
+the 400 data points, and where two vertices are connected by an edge if
+and only if the two data points are within a distance n of each other.
+We can then construct the simplicial complex NG(n) whose 1-skeleton is
+the graph G(n), and where the simplices are those subsets of vertices
+that generate a complete graph in G(n). The simplicial complex NG(n) is
+often called the <span style="font-style: italic;">Vietoris-Rips
+complex</span> of the graph G(n). The topology of NG(n) should
+hopefully reflect the "shape" of L.<br>
+      <br>
+The following commands compute the mod 2 homology of NG(n) for n=2,4,6,
+..., 70. The results suggest that the data points in L were sampled
+from a manifold with two path components and second mod 2 homology of
+rank 2. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+for n in 2*[0..35] do<br>
+&gt; G:=SymmetricMatrixToGraph(S,n);<br>
+&gt; Print("H_0= ",RipsHomology(G,0,2),"&nbsp; H_1=
+",RipsHomology(G,1,2),"\n");<br>
+&gt; od;<br>
+H_0= 400&nbsp; H_1= 0<br>
+H_0= 328&nbsp; H_1= 0<br>
+H_0= 152&nbsp; H_1= 4<br>
+H_0= 32&nbsp; H_1= 22<br>
+H_0= 8&nbsp; H_1= 22<br>
+H_0= 6&nbsp; H_1= 10<br>
+H_0= 6&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 0<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 4<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 54<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 70<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 2<br>
+H_0= 2&nbsp; H_1= 90<br>
+H_0= 1&nbsp; H_1= 2<br>
+H_0= 1&nbsp; H_1= 2<br>
+H_0= 1&nbsp; H_1= 2<br>
+H_0= 1&nbsp; H_1= 8<br>
+H_0= 1&nbsp; H_1= 0<br>
+H_0= 1&nbsp; H_1= 0<br>
+H_0= 1&nbsp; H_1= 0<br>
+H_0= 1&nbsp; H_1= 0<br>
+H_0= 1&nbsp; H_1= 0<br>
+H_0= 1&nbsp; H_1= 0<br>
       </td>
     </tr>
     <tr>

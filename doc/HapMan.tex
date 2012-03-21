@@ -361,6 +361,14 @@ probably won't work with the function $EquivariantChainMap()$. This $ZK$-resolut
  \\
  \\
  \\
+ \index{ConjugatedResolution}::::::::::::::::::::::::\\
+ \texttt{ConjugatedResolution(R,x)}\\
+ 
+
+ Inputs a ZG-resoluton $R$ and an element $x$ from some group containing $G$. It returns a $ZG^x$-resolution $S$ where the group $G^x$ is the conjugate of $G$ by $x$. (The component $S!.elts$ will be a pseudolist rather than a list.) \\
+ \\
+ \\
+ \\
  \index{RecalculateIncidenceNumbers}::::::::::::::::::::::::\\
  \texttt{RecalculateIncidenceNumbers(R)}\\
  
@@ -795,6 +803,21 @@ so this must be changed for infinite groups.)
 
  (The implementation is possibly a little less efficient than that of the
 corresponding persistent homology function.) \\
+ \\
+ \\
+ \\
+ \index{UniversalBarCode}::::::::::::::::::::::::\\
+ \texttt{UniversalBarCode("UpperCentralSeries",n,d)}\\
+ \texttt{UniversalBarCode("UpperCentralSeries",n,d,k)}\\
+ 
+
+ Inputs integers $n,d$ that identify a prime power group G=SmallGroup(n,d), together with one of the
+strings "UpperCentralSeries", LowerCentralSeries", "DerivedSeries",
+"UpperPCentralSeries", "LowerPCentralSeries". The function returns a matrix of
+rational functions; the coefficients of $x^k$ in their expansions yield the persistence matrix for the degree $k$ homology with trivial mod p coefficients associated to the quotients of $G$ by the terms of the given series. 
+
+ If the additional integer argument $k$ is supplied then the function returns the degree k homology persistence
+matrix. \\
  \\
  \\
  \\
@@ -1473,9 +1496,9 @@ the kernel of $phi$ lies in both the centre of $C$ and the derived subalgebra of
  \\
  \\
  \\
- \index{CayleyGraphDisplay}::::::::::::::::::::::::\\
- \texttt{CayleyGraphDisplay(G,X) }\\
- \texttt{CayleyGraphDisplay(G,X,"mozilla") }\\
+ \index{CayleyGraphOfGroupDisplay}::::::::::::::::::::::::\\
+ \texttt{CayleyGraphOfGroupDisplay(G,X) }\\
+ \texttt{CayleyGraphOfGroupDisplay(G,X,"mozilla") }\\
  
 
  Inputs a finite group $G$ together with a subset $X$ of $G$. It displays the corresponding Cayley graph as a .gif file. It uses the
@@ -2547,6 +2570,33 @@ argument.
  \\
  \\
  \\
+ \index{GraphOfResolutions}::::::::::::::::::::::::\\
+ \texttt{ GraphOfResolutions(D,n) }\\
+ 
+
+ Inputs a graph of groups $D$ and a positive integer $n$. It returns a graph of resolutions, each resolution being of length $n$. It uses the function ResolutionGenericGroup() to produce the resolutions. \\
+ \\
+ \\
+ \\
+ \index{GraphOfGroups}::::::::::::::::::::::::\\
+ \texttt{ GraphOfGroups(D) }\\
+ 
+
+ Inputs a graph of resolutions $D$ and returns the corresponding graph of groups. \\
+ \\
+ \\
+ \\
+ \index{GraphOfResolutionsDisplay}::::::::::::::::::::::::\\
+ \texttt{ GraphOfResolutionsDisplay(D) }\\
+ 
+
+ Inputs a graph of resolutions $D$ and displays it as a .gif file. It uses the Mozilla web browser as a default
+to view the diagram. 
+
+ This function requires Graphviz software. \\
+ \\
+ \\
+ \\
  \index{GraphOfGroupsTest}::::::::::::::::::::::::\\
  \texttt{GraphOfGroupsTest(D) }\\
  
@@ -2555,6 +2605,25 @@ argument.
 the injectivity of any homomorphisms. It returns true if $D$ passes the test, and false otherwise. 
 
  Note that there is no function $IsHapGraphOfGroups()$ because no special data type has been created for these graphs. \\
+ \\
+ \\
+ \\
+ \index{TreeOfGroupsToContractibleGcomplex}::::::::::::::::::::::::\\
+ \texttt{TreeOfGroupsToContractibleGcomplex(D,G) }\\
+ 
+
+ Inputs a graph of groups $D$ which is a tree, and also inputs the fundamental group $G$ of the tree in a form which contains each of the groups in the graph as
+subgroups. It returns a corresponding contractible G-complex. \\
+ \\
+ \\
+ \\
+ \index{TreeOfResolutionsToContractibleGcomplex}::::::::::::::::::::::::\\
+ \texttt{TreeOfResolutionsToContractibleGcomplex(D,G) }\\
+ 
+
+ Inputs a graph of resolutions $D$ which is a tree, and also inputs the fundamental group $G$ of the tree in a form which contains each of the groups in the graph as
+subgroups. It returns a corresponding contractible G-complex. The resolutions
+are stored as a component of the contractible $G$-complex. \\
  \\
  \\
  }
@@ -2722,6 +2791,14 @@ of $S$). \\
 
  Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each
 row of $M$ and an edges between vertices $i$ and $j$ if the $(i,j)$ entry in $M$ equals 1. \\
+ \\
+ \\
+ \\
+ \index{CayleyGraphOfGroup}::::::::::::::::::::::::\\
+ \texttt{CayleyGraphOfGroup(G,A)}\\
+ 
+
+ Inputs a group $G$ and a set $A$ of generators. It returns the Cayley graph. \\
  \\
  \\
  \\
@@ -2916,7 +2993,15 @@ dimensions 0 to Dimension(T) is returned . \\
  \texttt{DirectProductOfPureCubicalComplexes(M,N)}\\
  
 
- Inputs two cubical complexes $M,N$ and returns their direct product $D$ as a cubical complex. The dimension of $D$ is the sum of the dimensions of $M$ and $N$. \\
+ Inputs two pure cubical complexes $M,N$ and returns their direct product $D$ as a pure cubical complex. The dimension of $D$ is the sum of the dimensions of $M$ and $N$. \\
+ \\
+ \\
+ \\
+ \index{SuspensionOfPureCubicalComplex}::::::::::::::::::::::::\\
+ \texttt{SuspensionOfPureCubicalComplex(M)}\\
+ 
+
+ Inputs a pure cubical complex $M$ and returns a pure cubical complex with the homotopy type of the suspension of $M$. \\
  \\
  \\
  \\
@@ -3725,6 +3810,15 @@ stream s. The output from "func;" can be accessed via the stream. \\
 \chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 29, 0, 0 ]}
 \hyperdef{L}{X7C5563A37D566DA5}{}
 {
+ \\
+ \\
+ \\
+ \index{SL2Z}::::::::::::::::::::::::\\
+ \texttt{SL2Z(p) }\\
+ \texttt{SL2Z([m]) }\\
+ 
+
+ Inputs a prime $p$ or the reciprocal $1/m$ of a square free integer $m$. In the first case the function returns the conjugate $SL(2,Z)^P$ of the special linear group $SL(2,Z)$ by the matrix $P=[[1,0],[0,p]]$. In the second case it returns the group $SL(2,Z[1/m])$. \\
  \\
  \\
  \\

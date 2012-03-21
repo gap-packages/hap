@@ -7,10 +7,10 @@ cn:=Concatenation;
 ############################################################
 #IF NECESSARY, CHANGE "VISCRIPT" AND "HAPDOC" TO THE CORRECT PATHS 
 #
-VISCRIPT:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/TitlePage/viscript ");
-VIS:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/TitlePage/vis ");
-HAPDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/doc/");
-HAPPDFDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.9/pdfdoc/");
+VISCRIPT:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/TitlePage/viscript ");
+VIS:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/TitlePage/vis ");
+HAPDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/doc/");
+HAPPDFDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/pdfdoc/");
 #
 ############################################################
 

@@ -24,8 +24,11 @@ Boole:=true;
 Append(VertexNames,[Name(x)]);fi;
 if IsList(x) then
         if Length(x)=2 then 
-        	if IsGroupHomomorphism(x[1])
-		and IsGroupHomomorphism(x[2]) then
+        	#if IsGroupHomomorphism(x[1])
+		#and IsGroupHomomorphism(x[2]) then
+                if HasSource(x[1])
+                and HasSource(x[2]) then
+
 			if HasName(Range(x[1])) 
 	       		and HasName(Source(x[1]))
 			and HasName(Source(x[2]))

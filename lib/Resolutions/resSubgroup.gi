@@ -120,8 +120,8 @@ local x, w;
 
 x:=Int2Pair(i);
 w:=StructuralCopy(BoundaryR(n,x[1]));
-#Apply(w, y->[y[1],Mult(x[2],y[2])]);
-Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]);
+Apply(w, y->[y[1],Mult(x[2],y[2])]);
+#Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]); #Changed this back but forgot why this line was ever here!!
 
 return Gword2Kword(w);
 end;
@@ -129,11 +129,13 @@ end;
 
 ######################
 Homotopy:=function(n,e)
-local x,g;
+local x,g,pos;
 x:=Int2Pair(e[1]);
-g:=TransK[x[2]]*EltsK[e[2]];
-g:=Position(EltsG,g);
-return Gword2Kword( R!.homotopy(n,[x[1],g]));
+#g:=TransK[x[2]]*EltsK[e[2]];
+g:=EltsK[e[2]]*TransK[x[2]]; #Need to chack the maths again here!
+pos:=Position(EltsG,g);
+if pos =fail then Add(EltsG,g); pos:=Length(EltsG);fi;
+return Gword2Kword( R!.homotopy(n,[x[1],pos]));
 end;
 ######################
 

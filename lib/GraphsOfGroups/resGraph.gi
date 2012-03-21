@@ -75,7 +75,8 @@ resVertices:=[];
 for x in Vertices do
 pos:=Position(List(L,r->r!.group),x);
 if pos=fail then
-R:=ResolutionFiniteGroup(x,N);
+#R:=ResolutionFiniteGroup(x,N);
+R:=ResolutionGenericGroup(x,N);
 else
 R:=L[pos];
 fi;
@@ -87,7 +88,8 @@ resEdgeGroups:=[];
 for x in EdgeGroups do
 pos:=Position(List(L,r->r!.group),x);
 if pos=fail then
-R:= ResolutionFiniteGroup(x,N-1);
+#R:= ResolutionFiniteGroup(x,N-1);
+R:= ResolutionGenericGroup(x,N-1);
 else
 R:=L[pos];
 fi;
@@ -298,7 +300,8 @@ fi;
 	 b:=List( g!.mapping([[i,1]],k-1),a->
 	 [
          SignInt(a[1])*(AbsoluteValue(a[1])+dim2),
-         Position(Elts,Image(hom1,T!.elts[a[2]]))
+#        Position(Elts,Image(hom1,T!.elts[a[2]]))  #Typo found Jan 2012
+         Position(Elts,Image(hom2,T!.elts[a[2]]))
          ]);
 if IsOddInt(k) then
 Append(bnd,NegateWord(b));
@@ -326,7 +329,8 @@ FillPseudoBoundary();
 #####################################################################
 Boundary:=function(k,i);
 if k<1 then return 0; fi;
-return PseudoBoundary[k][i];
+if i>0 then return PseudoBoundary[k][i];fi;
+return NegateWord(PseudoBoundary[k][-i]);
 end;
 ####################################################################
 

@@ -30,7 +30,7 @@ local
         RT,L,R,LB,B,RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF, LST;
 
 if HAP_MOVES_DIM_3=0 then
-ReadPackage("HAP","lib/PolyComplexes/hapMovesDim3.txt");
+ReadPackage("HAP","lib/PolyComplexes/hapMovesDim3B.txt");
 fi;
 
 LST:=HAP_MOVES_DIM_3;
@@ -79,8 +79,8 @@ LBF:=A[i+1][j+1][k-1];
 BF:=A[i+1][j+1][k];
 RBF:=A[i+1][j+1][k+1];
 
-if LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,
-RT,L,R,LB,B,RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]=0
+if  LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,
+RT,L,R,LB,B,RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]
 then A[i][j][k]:=0; tog:=true;
 fi;
 
@@ -125,8 +125,8 @@ LBF:=A[i-1][j+1][k+1];
 BF:=A[i][j+1][k+1];
 RBF:=A[i+1][j+1][k+1];
 
-if LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,RT,L,R,LB,B,
-RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]=0
+if  LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,RT,L,R,LB,B,
+RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]
 then A[i][j][k]:=0; tog:=true;
 fi;
 
@@ -162,7 +162,7 @@ local
         LST ;
 
 if HAP_MOVES_DIM_3=0 then
-ReadPackage("HAP","lib/PolyComplexes/hapMovesDim3.txt");
+ReadPackage("HAP","lib/PolyComplexes/hapMovesDim3B.txt");
 fi;
 LST:=HAP_MOVES_DIM_3;
 
@@ -233,8 +233,8 @@ LBF:=B[i+1][j+1][k-1];
 BF:=B[i+1][j+1][k];
 RBF:=B[i+1][j+1][k+1];
 
-if LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,
-RT,L,R,LB,Bk,RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]=0
+if  LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,
+RT,L,R,LB,Bk,RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]
 then B[i][j][k]:=1; tog:=true;
 fi;
 
@@ -286,8 +286,8 @@ LBF:=B[i+1][j+1][k-1];
 BF:=B[i+1][j+1][k];
 RBF:=B[i+1][j+1][k+1];
 
-if LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,RT,L,R,LB,Bk,
-RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]=0
+if  LST[HAP_Binlisttoint([LTP,TP,RTP,LP,P,RP,LBP,BP,RBP,LT,T,RT,L,R,LB,Bk,
+RB,LTF,TF,RTF,LF,F,RF,LBF,BF,RBF])+1]
 then B[i][j][k]:=1; tog:=true;
 fi;
 

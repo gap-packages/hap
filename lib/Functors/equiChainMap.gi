@@ -12,6 +12,7 @@ local
 	map, mapgens, ChainMap, mapgensRec, 
 	QisFinite,
 	Multmat,
+        IDEL,
 	N,m,i,j,g,AlgRed;
 
 N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
@@ -35,16 +36,17 @@ for m in [0..N] do
 mapgensRec[m+1]:=[];
 for i in [1..DimensionR(m)] do
 mapgensRec[m+1][i]:=[];
-for g in [1..Length(R!.elts)] do
-mapgensRec[m+1][i][g]:=0;
-od;
+#for g in [1..Length(R!.elts)] do
+#mapgensRec[m+1][i][g]:=0;
+#od;
 od;
 od;
 
 if QisFinite then
 #####################################################################
 GhomQ:=function(i);
-return Position(EltsQ,Image(f,EltsG[i]));
+#return Position(EltsQ,Image(f,EltsG[i]));
+return Position(EltsQ,ImageElm(f,EltsG[i]));   #Added Jan 2012
 end;
 #####################################################################
 if IsFinite(R!.group) then
@@ -59,7 +61,8 @@ else
 #####################################################################
 GhomQ:=function(i)
 local p,Eltq;
-Eltq:=Image(f,EltsG[i]);
+#Eltq:=Image(f,EltsG[i]);
+Eltq:=ImageElm(f,EltsG[i]);   #Added Jan 2012
 p:= Position(EltsQ,Eltq);
 if p=fail then Add(EltsQ,Eltq); ##Changed!
 p:=Length(EltsQ); fi;
@@ -109,14 +112,19 @@ else
 AlgRed:=function(v); return AlgebraicReduction(v,Charact); end;
 fi;
 
+IDEL:=Position(EltsG,Identity(R!.group));   ##8/02/2012
+if IDEL=fail then Add(EltsG,Identity(R!.group)); IDEL:=Length(EltsG);fi;
 #####################################################################
 mapgens:=function(x,m)
 local z,u,a,y;
 
-if mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]=0 then
+if not IsBound(mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]) then
 
-if x[2]>1 then
-y:=ShallowCopy(mapgens([x[1],1],m));
+#if x[2]>1 then
+if not x[2]=IDEL then
+#y:=ShallowCopy(mapgens([x[1],1],m));
+y:=ShallowCopy(mapgens([x[1],IDEL],m));
+#y:=StructuralCopy(mapgens([x[1],IDEL],m));
 Apply(y,b->[b[1],Mult(GhomQ(x[2]),b[2])]);
 
 	if x[1]>0 then mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]:=y;
@@ -201,6 +209,7 @@ return Objectify(HapEquivariantChainMap,
 	    source:=R,
 	    target:=S,
 	    mapping:=map,
+            originalHom:=f,
 	    properties:=
 	    [["type","equivariantChainMap"],
 	     ["characteristic",Charact]  ]));

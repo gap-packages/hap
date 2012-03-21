@@ -85,7 +85,8 @@ DeclareGlobalFunction("ResolutionAsphericalPresentation");
 DeclareGlobalFunction("ResolutionAbelianGroup");
 DeclareGlobalFunction("ResolutionAlmostCrystalGroup");
 DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
-DeclareGlobalFunction("CayleyGraphDisplay");
+DeclareGlobalFunction("CayleyGraphOfGroupDisplay");
+DeclareGlobalFunction("CayleyGraphOfGroup");
 DeclareGlobalFunction("TietzeReducedResolution");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
 
@@ -131,6 +132,10 @@ DeclareGlobalFunction("PrankAlt");
 DeclareGlobalFunction("PCentre");
 DeclareGlobalFunction("PUpperCentralSeries");
 DeclareOperation("Compose",[IsGroupHomomorphism,IsGroupHomomorphism]);
+DeclareGlobalFunction("CanonicalRightCountableCosetElement");
+DeclareProperty("IsHAPRationalMatrixGroup",IsMatrixGroup);
+DeclareProperty("IsHAPRationalSpecialLinearGroup",IsMatrixGroup);
+DeclareGlobalFunction("SL2Z");
 
 
 ## PERTURBATIONS ####################################################
@@ -143,6 +148,7 @@ DeclareGlobalFunction("ResolutionFiniteDirectProduct");
 DeclareGlobalFunction("ResolutionSubnormalSeries");
 DeclareGlobalFunction("FreeGResolution");
 DeclareGlobalFunction("ContractibleGcomplex");
+DeclareGlobalFunction("ContractibleSL2ZComplex");
 DeclareGlobalFunction("QuotientOfContractibleGcomplex");
 DeclareGlobalFunction("ExtendScalars");
 DeclareGlobalFunction("InduceScalars");
@@ -257,6 +263,14 @@ DeclareOperation("GroupOfResolution",[IsObject]);
 DeclareGlobalFunction("GraphOfGroupsDisplay");
 DeclareGlobalFunction("ResolutionGraphOfGroups");
 DeclareGlobalFunction("GraphOfGroupsTest");
+DeclareGlobalFunction("GraphOfResolutionsTest");
+DeclareGlobalFunction("GraphOfGroups");
+DeclareGlobalFunction("GraphOfResolutions");
+DeclareGlobalFunction("GraphOfResolutionsDisplay");
+DeclareGlobalFunction("TreeOfResolutionsToContractibleGcomplex");
+DeclareGlobalFunction("TreeOfGroupsToContractibleGcomplex");
+DeclareGlobalFunction("ConjugatedResolution");
+
 
 ## LIE ALGEBRAS #####################################################
 DeclareGlobalFunction("ChevalleyEilenbergComplex");
@@ -304,8 +318,8 @@ DeclareRepresentation(  "IsPseudoListRep",
                         IsComponentObjectRep,
                         ["elts",
                          "pos" ]);
+DeclareProperty("IsPseudoListWithFunction",IsPseudoList);
 
-#ReadPackage("HAP","lib/Objectifications/types.gd");
 
 
 ## POLYTOPAL COMPLEXES  ###############################################
@@ -315,9 +329,6 @@ DeclareGlobalFunction("AcyclicSubcomplexOfPureCubicalComplex");
 DeclareGlobalFunction("IntegerSimplicialComplex");
 DeclareGlobalFunction("HomotopyEquivalentMaximalPureCubicalSubcomplex");
 DeclareGlobalFunction("HomotopyEquivalentMinimalPureCubicalSubcomplex");
-#DeclareOperation("EulerCharacteristic",[IsObject]);
-#DeclareAttribute("EulerCharacteristic",IsObject);
-#ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 DeclareAttribute("EulerCharacteristic",IsHapPureCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
@@ -392,7 +403,7 @@ DeclareGlobalFunction("ContractCubicalComplex_dim3");
 DeclareGlobalFunction("ContractCubicalComplex");
 DeclareGlobalFunction("DVFReducedCubicalComplex");
 DeclareGlobalFunction("BoundingPureCubicalComplex");
-
+DeclareGlobalFunction("SuspensionOfPureCubicalComplex");
 
 
 ########################## ARRAYS ################################

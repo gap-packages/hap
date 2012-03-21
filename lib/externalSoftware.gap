@@ -6,7 +6,7 @@ if not IsBound(POLYMAKE_PATH)
 if POLYMAKE_PATH=fail
    or not IsExecutableFile(POLYMAKE_PATH)
    then
-    Info(InfoWarning,1,"polymake command not found. Please set POLYMAKE_PATH by hand if you need to use HAP functions that rely on polymake.");
+    Info(InfoWarning,1,"HAP warning: Set POLYMAKE_PATH manually if needed. ");
 else
 POLYMAKE_PATH:=Concatenation(POLYMAKE_PATH," ");
     MakeReadOnlyGlobal("POLYMAKE_PATH");
@@ -22,7 +22,7 @@ if not IsBound(NEATO_PATH)
 if NEATO_PATH=fail
    or not IsExecutableFile(NEATO_PATH)
    then
-    Info(InfoWarning,1,"neato command not found. Please set NEATO_PATH by hand if you need to use HAP functions that rely on the GraphViz function neato.");
+    Info(InfoWarning,1,"HAP warning: Set NEATO_PATH manually if needed.");
 else
 NEATO_PATH:=Concatenation(NEATO_PATH," ");
     MakeReadOnlyGlobal("NEATO_PATH");
@@ -38,7 +38,7 @@ if not IsBound(DISPLAY_PATH)
 if DISPLAY_PATH=fail
    or not IsExecutableFile(DISPLAY_PATH)
    then
-    Info(InfoWarning,1,"display command not found. Please set DISPLAY_PATH by hand if you intend to use HAP functions that display images.");
+    Info(InfoWarning,1,"HAP warning: Set DISPLAY_PATH manually if needed.");
 else
 DISPLAY_PATH:=Concatenation(DISPLAY_PATH," ");
     MakeReadOnlyGlobal("DISPLAY_PATH");
@@ -54,7 +54,7 @@ if not IsBound(BROWSER_PATH)
 if BROWSER_PATH=fail
    or not IsExecutableFile(BROWSER_PATH)
    then
-    Info(InfoWarning,1,"mozilla command not found. Please set BROWSER_PATH by hand if you intend to use HAP functions that require a web browser.");
+    Info(InfoWarning,1,"HAP warning: Set BROWSER_PATH manually if needed.");
 else
 BROWSER_PATH:=Concatenation(BROWSER_PATH," ");
     MakeReadOnlyGlobal("BROWSER_PATH");

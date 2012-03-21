@@ -12,10 +12,10 @@ function(G,NN,number)
 		GroupsList,FaciesList,DegeneraciesList,
 		CreateSurjective,FindComposite,CoDegeneracies,CoFaces,SearchPos;
  
-if NN<3 and IsPcpGroup(G) then
-return 
-EilenbergMacLaneSimplicialGroup_alt(G,NN,number);
-fi;
+#if NN<3 and IsPcpGroup(G) then
+#return 
+#EilenbergMacLaneSimplicialGroup_alt(G,NN,number);
+#fi;
 
 
 nn:=NN-1;
@@ -153,7 +153,7 @@ end;
 		Surjection[i+1]:=CreateSurjective(i,nn); 			###[i+1]
 		LenOfSur[i+1]:=Length(Surjection[i+1]);      ##[i+1]
 	od;
-	TriGroup:=TrivialGroup();
+	TriGroup:=Group(Identity(G));
 	ListGroups:=[];
 	for i in [0..nn-1] do
 		ListGroups[i+1]:=TriGroup;               

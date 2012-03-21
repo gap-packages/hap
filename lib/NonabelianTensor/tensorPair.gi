@@ -88,6 +88,7 @@ Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
 #fi;                    #
 
+ NiceGensAG:=Elements(AG);   #OVERKILL!!!
 
 #if IsSolvable(AG) then #
 # NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
@@ -101,6 +102,8 @@ NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
 #fi;                    #
+
+ NiceGensAH:=Elements(AH);   #OVERKILL!!!
 
 relsT:=[];
 for x in relsG do

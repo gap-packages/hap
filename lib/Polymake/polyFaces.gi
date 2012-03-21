@@ -291,7 +291,7 @@ if IsPermGroup(G) then
 Gev:=EvenSubgroup(G);
 ###############################################################
 # This describes how the group G acts on the orientation.
-StabAction:=function(h);
+StabAction:=function(n,k,h);
 if
 EltsG[h] in Gev then return 1;
 else return -1; fi;

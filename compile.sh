@@ -15,10 +15,10 @@ GACDIR=/usr/local/lib/gap4r4/bin/i686-pc-linux-gnu-gcc;
 #####################################################################
 
 
-LIB=$PKGDIR/Hap1.9/lib;
+LIB=$PKGDIR/Hap1.10/lib;
 
-rm $PKGDIR/Hap1.9/boolean;
-echo "COMPILED:=true;" > $PKGDIR/Hap1.9/boolean;
+rm $PKGDIR/Hap1.10/boolean;
+echo "COMPILED:=true;" > $PKGDIR/Hap1.10/boolean;
 
 $GACDIR/gac -d $LIB/CompiledGAP/*.c;
 mkdir  $LIB/CompiledGAP/Compiled;
@@ -83,6 +83,14 @@ mkdir $LIB/PolyComplexes/Compiled/;
 mv *.so $LIB/PolyComplexes/Compiled/;
 
 $GACDIR/gac -d $LIB/SimplicialGroups/*.gi;
-mkdir $LIB/SImplicialGroups/Compiled/;
-mv *.so $LIB/SImplicialGroups/Compiled/;
+mkdir $LIB/SimplicialGroups/Compiled/;
+mv *.so $LIB/SimplicialGroups/Compiled/;
 
+$GACDIR/gac -d $LIB/RegularCWSpaces/*.gi;
+mkdir $LIB/RegularCWSpaces/Compiled/;
+mv *.so $LIB/RegularCWSpaces/Compiled/;
+
+
+$GACDIR/gac -d $LIB/GraphsOfGroups/*.gi;
+mkdir $LIB/GraphsOfGroups/Compiled/;
+mv *.so $LIB/GraphsOfGroups/Compiled/;

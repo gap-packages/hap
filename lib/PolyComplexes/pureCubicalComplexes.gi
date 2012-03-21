@@ -226,7 +226,7 @@ function(file,threshold)
 # or 3-dimensional cubical complex.
 local f,i,x,prog,B,A,AA;
 
-prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.9/lib/PolyComplexes/prog");
+prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/PolyComplexes/prog");
 #MUST FIX THIS
 
 ##################################
@@ -1051,6 +1051,13 @@ end;
 PermutahedralBall:=function(dim)
 local  n,i,B,U,A;
 
+if dim=2 then return [[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0]]; fi; 
+if dim=3 then return [[0,0,-1],[1,0,-1],[0,1,-1],[1,1,-1],[0,-1,0],[1,-1,0],
+[-1,0,0],[1,0,0],[-1,1,0],[0,1,0],[-1,-1,1],[0,-1,1],
+[-1,0,1],[0,0,1]]; fi; 
+if dim=4 then return [[0,0,0,1],[0,0,1,1],[0,1,1,1],[0,1,0,1],[1,0,0,0], [1,-1,0,0],[1,0,-1,0], [1,-1,-1,0],[1,-1,-1,-1],[1,0,-1,-1],[1,-1,0,-1], [0,-1,-1,-1],[1,0,0,-1],[0,0,-1,-1], [0,-1,0,-1],[0,-1,-1,0],[0,0,0,-1], [0,0,-1,0],[0,-1,0,0],[0,1,0,0],[0,1,1,0],[-1,1,0,0], [-1,1,1,0],[-1,1,0,1], [0,0,1,0],[-1,0,1,0],[-1,0,0,0],[-1,0,0,1],[-1,0,1,1],[-1,1,1,1]]; fi; 
+#dim>4 do the following 
+
 n:=dim+1;
 
 A:=List([1..n],i->List([1..n],j->1));
@@ -1081,7 +1088,7 @@ for t in [2..DIM] do
   if t>2 then
     Balls[t]:=List(Balls[t],x->Concatenation(x[1],[x[2]]));
   fi;
-  Balls[t]:=Filtered(Balls[t],x->x[t-1]<x[t]);
+  Balls[t]:=Filtered(Balls[t],x->x[t-1]>x[t]);
   for i in [1..t-1] do
     Balls[t]:=Filtered(Balls[t],x->x[i]-x[t] in Ball);
   od;
@@ -1112,6 +1119,7 @@ for v in Vertices do
   od;
 od;
 fi;
+
 
 if DIM>=2 then
 for j in [2..DIM] do
@@ -1429,6 +1437,7 @@ T.binaryArray:=StructuralCopy(M!.binaryArray);
 T.properties:=StructuralCopy(M!.properties);
 T:=Objectify(HapPureCubicalComplex,T);
 ContractPureCubicalComplex(T);
+T:=CropPureCubicalComplex(T);
 
 
 b:=PathComponentOfPureCubicalComplex(T,0);
@@ -2352,3 +2361,20 @@ end);
 ##########################################
 ##########################################
 
+####################################################
+####################################################
+InstallGlobalFunction(SuspensionOfPureCubicalComplex,
+function(M)
+local
+	A,B,C;
+
+A:=M!.binaryArray;
+B:=0*A;
+B:=1+B;
+C:=[B,A,B];
+Apply(C,a->StructuralCopy(a));
+
+return PureCubicalComplex(C);
+end);
+####################################################
+####################################################
