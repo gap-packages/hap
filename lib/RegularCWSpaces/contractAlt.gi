@@ -2,7 +2,7 @@
 
 #############################################
 #############################################
-InstallGlobalFunction(ContractRegularCWSpace_Alt,
+InstallGlobalFunction(HAPContractRegularCWSpace_Alt,
 function(Y)
 local
       Contract, ii, nn, dim, bool, BOOL;

@@ -343,6 +343,60 @@ end);
 
 #####################################################################
 #####################################################################
+InstallGlobalFunction(ThickenedHEPureCubicalComplex,
+function(M)
+local
+        A,B,rows,cols,ball,x,i,j,left,right,top,bottom,topleft,topright,bottomleft, bottomright;
+
+A:=FrameArray(M!.binaryArray);
+A:=FrameArray(A);
+B:=A*1;
+rows:=Length(B);
+cols:=Length(B[1]);
+ball:=Cartesian([-1,0,1],[-1,0,1]);
+#RemoveSet(ball,[0,0]);
+
+if HAP_MOVES_DIM_2=0 then
+ReadPackage("HAP","lib/PolyComplexes/hapMovesDim2B.txt");
+fi;
+
+
+for i in [2..rows-1] do
+for j in [2..cols-1] do
+if A[i][j]=1 then
+  for x in ball do
+  if B[i+x[1]][j+x[2]]=0 then
+###
+left:=B[i+x[1]][j-1+x[2]];
+right:=B[i+x[1]][j+1+x[2]];
+top:=B[i-1+x[1]][j+x[2]];
+bottom:=B[i+1+x[1]][j+x[2]];
+topleft:=B[i-1+x[1]][j-1+x[2]];
+topright:=B[i-1+x[1]][j+1+x[2]];
+bottomleft:=B[i+1+x[1]][j-1+x[2]];
+bottomright:=B[i+1+x[1]][j+1+x[2]];
+    if
+    HAP_MOVES_DIM_2[1+left+2*topleft+4*top+8*topright+16*right+32*bottomright+64*bottom+128*bottomleft]
+    then; B[i+x[1]][j+x[2]]:=1;
+    fi;
+###
+  fi;
+  od;
+fi;
+od;
+od;
+
+B:=UnframeArray(B);
+B:=UnframeArray(B);
+return PureCubicalComplex(B);
+
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 InstallGlobalFunction(ExcisedPureCubicalPair_dim_2,
 function(M,S)
 local

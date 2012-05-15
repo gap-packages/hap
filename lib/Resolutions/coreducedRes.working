@@ -18,27 +18,15 @@ local
 	triple,
 	HmtpyNminus1, HmtpyN, NewHmtpyN, HmtpyNplus1,
 	hmtpyrec,tmp,
-        newb,bool,i,j,b,e,g,x,w,D,D2;;
+        newb,bool,i,j,b,e,g,x,w;
 
 
 ##############################################
 ##############################################
 #####
 if Length(arg)=1 then R:=StructuralCopy(arg[1]);
-D:=List([0..Length(R)],R!.dimension);
-
 for i in [1..Length(R)-1] do
 R:=TietzeReducedResolution(R,i);
-od;
-
-D2:=List([0..Length(R)],R!.dimension);
-
-while D2<D do
-  D:=D2;
-  for i in [1..Length(R)-1] do
-    R:=TietzeReducedResolution(R,i);
-  od;
-  D2:=List([0..Length(R)],R!.dimension);
 od;
 
 return R;

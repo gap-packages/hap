@@ -4,10 +4,6 @@ InstallOtherMethod(Dimension,
 "Dimension of  simplicial complex",
 [IsHapSimplicialComplex],
 function(f) return EvaluateProperty(f,"dimension");
-#function(f) local i;
-#for i in [1..EvaluateProperty(f,"dimension")] do
-#if f!.nrSimplices=0 then return i; break; fi;
-#od;
 return EvaluateProperty(f,"dimension");
 end);
 #####################################################################

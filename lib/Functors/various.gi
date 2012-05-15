@@ -365,7 +365,7 @@ local x, h;
 
 if IsFinite(U) then return CanonicalRightCosetElement(U,g); fi;
 
-if g in U then return g; fi;
+if g in U then return One(U); fi;
 
 if not IsBound(U!.ccelts) then U!.ccelts:=[]; fi;
 

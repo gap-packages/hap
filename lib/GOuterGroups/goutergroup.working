@@ -57,41 +57,6 @@ InstallMethod( GOuterGroup,
         return N;
      end);
 
-#############################################################################
-##
-##  Creation of a G-Outer A group from a group G assumed to be acting 
-##  trivially on an abelian group A.
-##
-##
-InstallMethod( TrivialGModuleAsGOuterGroup,
-    "basic method for creating a GOuterGroup",
-    [ IsGroup, IsGroup ],
-
-    function( G, A )
-        local
-              N, 
-              alpha;     ## Action of G on A
-              
-
-        if not (IsGroup(G) and IsGroup(A) and IsAbelian(A)) then
-            Error("A must be abelian");
-        fi;
-
-       ######################################################
-        alpha := function(g,a);
-            return a;
-        end;
-       ######################################################
-
-        N:=GOuterGroup();
-               SetActingGroup(N,G);
-               SetActedGroup(N,A);
-               SetOuterAction(N,alpha);
-        return N;
-    end);
-
-
-
 
 #############################################################################
 ##

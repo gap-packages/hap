@@ -66,12 +66,65 @@
  \\
  \\
  \\
+ \index{ResolutionArithmeticGroup}::::::::::::::::::::::::\\
+ \texttt{ResolutionArithmeticGroup("PSL(4,Z)",n)}\\
+ 
+
+ Inputs a positive integer $n$ and one of the following strings: \\
+\\
+ "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" ,
+"PGL(3,Eisenstein{\textunderscore}Integers)" , "PSL(4,Z)" ,
+"PSL(4,Z){\textunderscore}b" , "PSL(4,Z){\textunderscore}c" ,
+"PSL(4,Z){\textunderscore}d" , "Sp(4,Z)" \\
+\\
+ or one of the following strings \\
+\\
+ "SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" ,
+"SL(2,Z[sqrt(-19)])" , "SL(2,Z[sqrt(-43)])" , "SL(2,Z[sqrt(-67)])" ,
+"SL(2,Z[sqrt(-163)])" \\
+\\
+ It returns $n$ terms of a free ZG-resolution for the group $G$ described by the string. (Subscripts {\textunderscore}b , {\textunderscore}c ,
+{\textunderscore}d denote alternative non-free ZG-resolutions for a given
+group G.)\\
+\\
+ Data for the first list of resolutions was provided provided by \textsc{Mathieu Dutour}. Data for the second list was provided by \textsc{Alexander Rahm}.\\
+ \\
+ \\
+ \\
  \index{FreeGResolution}::::::::::::::::::::::::\\
  \texttt{FreeGResolution(P,n)}\\
  \texttt{FreeGResolution(P,n,p)}\\
  
 
- Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. If one requires only a mod $p$ resolution then the prime $p$ can be entered as an optional third argument. \\
+ Inputs a non-free $ZG$-resolution $P$ with finite stabilizer groups, and a positive integer $n$. It returns a free $ZG$-resolution of length equal to the minimum of n and the length of $P$. If one requires only a mod $p$ resolution then the prime $p$ can be entered as an optional third argument. 
+
+ The free resolution is returned without a contracting homotopy. \\
+ \\
+ \\
+ \\
+ \index{ResolutionGTree}::::::::::::::::::::::::\\
+ \texttt{ResolutionGTree(P,n)}\\
+ 
+
+ Inputs a non-free $ZG$-resolution $P$ of dimension 1 (i.e. a G-tree) with finite stabilizer groups, and a positive
+integer $n$. It returns a free $ZG$-resolution of length equal to n. 
+
+ If $P$ has a contracting homotopy then the free resolution is returned with a
+contracting homotopy. 
+
+ This function was written by \textsc{ Bui Anh Tuan}. \\
+ \\
+ \\
+ \\
+ \index{ResolutionSL2Z}::::::::::::::::::::::::\\
+ \texttt{ResolutionSL2Z(p,n)}\\
+ 
+
+ Inputs non-negative integers $p, n$ with $p$ a prime or equal to 0. It returns $n$ terms of a $ZG$-resolution for the group $G=SL(2,Z[1/p])$ or $G=SL(2,Z)$ if $p=0$ . 
+
+ 
+
+ This function is joint work with \textsc{Bui Anh Tuan}. \\
  \\
  \\
  \\
@@ -2295,6 +2348,16 @@ true, and to cat-1-groups produced using the Xmod package. \\
  \\
  \\
  \\
+ \index{EilenbergMacLaneSimplicialGroupMap}::::::::::::::::::::::::\\
+ \texttt{EilenbergMacLaneSimplicialGroupMap(f,n,dim)}\\
+ 
+
+ Inputs a group homomorphism $f:G\rightarrow Q$, a positive integer $n$, and a positive integer $dim $. The function returns the first $1+dim$ terms of a simplicial group homomorphism $f:K(G,n) \rightarrow K(Q,n)$ of Eilenberg-MacLane simplicial groups. \\
+ \\
+ This function was implemented by \textsc{Van Luyen Le}. \\
+ \\
+ \\
+ \\
  \index{MooreComplex}::::::::::::::::::::::::\\
  \texttt{MooreComplex(G)}\\
  
@@ -2311,6 +2374,17 @@ true, and to cat-1-groups produced using the Xmod package. \\
 
  Inputs a simplicial group $G$ and returns the cellular chain complex $C$ of a CW-space $X$ represented by the homotopy type of the simplicial group. Thus the homology
 groups of $C$ are the integral homology groups of $X$. \\
+ \\
+ This function was implemented by \textsc{Van Luyen Le}. \\
+ \\
+ \\
+ \\
+ \index{SimplicialGroupMap}::::::::::::::::::::::::\\
+ \texttt{SimplicialGroupMap(f)}\\
+ 
+
+ Inputs a homomorphism $f:G\rightarrow Q$ of simplicial groups. The function returns an induced map $f:C(G) \rightarrow C(Q)$ of chain complexes whose homology is the integral homology of the simplicial
+group G and Q respectively. \\
  \\
  This function was implemented by \textsc{Van Luyen Le}. \\
  \\
@@ -3815,7 +3889,7 @@ stream s. The output from "func;" can be accessed via the stream. \\
  \\
  \index{SL2Z}::::::::::::::::::::::::\\
  \texttt{SL2Z(p) }\\
- \texttt{SL2Z([m]) }\\
+ \texttt{SL2Z(1/m) }\\
  
 
  Inputs a prime $p$ or the reciprocal $1/m$ of a square free integer $m$. In the first case the function returns the conjugate $SL(2,Z)^P$ of the special linear group $SL(2,Z)$ by the matrix $P=[[1,0],[0,p]]$. In the second case it returns the group $SL(2,Z[1/m])$. \\

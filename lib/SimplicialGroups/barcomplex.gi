@@ -17,7 +17,6 @@ local
 #################################################	
 CPhi:=function(n,w)  ###w:=[[m1,g11..,g1n],[mk,gk1,..gkn]]
 	local Ew,iw,tmp,phiw,i,Rew;
-	
 	Ew:=[];  
 	for iw in w do  
 		tmp:=[iw[1],e]; #### add indentity element
@@ -36,11 +35,12 @@ return Rew;
 end;	
 #######################################################
 CPsi:=function(n,w)  ###w:=[[m1,e1],..,[m1,ek]] with k:=dim(n); ex w:=[[-2,1],[4,2]...]
-local Rew,tmp;
-	for tmp in w do
+local Rew,tmp,cw;	
+	cw:=StructuralCopy(w);  
+	for tmp in cw do
 		Add(tmp,1);
 	od;
-	Rew:=Psi(n,w);
+	Rew:=Psi(n,cw);
 	for tmp in Rew do
 		Remove(tmp,2);
 	od;
@@ -49,10 +49,9 @@ end;
 ########################################################		
 CEquiv:=function(n,w) ######w:=[[m1,g11..,g1n],[mk,gk1,..gkn]
 	local ew,iw,i,tmp,Rew;
-	
 	ew:=[];
 	for iw in w do  
-		tmp:=[iw[1],e]; #### add indentity element
+		tmp:=[-iw[1],e]; #### add indentity element and minus
 		for i in [2..n+1] do
 			Add(tmp,iw[i]);
 		od;

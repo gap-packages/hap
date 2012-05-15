@@ -1,14 +1,5 @@
 #(C) 2012 Graham Ellis
 
-#A:=Group([[0,-1],[1,0]]);SetName(A,"C4");
-#B:=Group([[0,-1],[1,1]]);SetName(B,"C6");
-#C:=Group([[-1,0],[0,-1]]);SetName(C,"C2");
-#CA:=GroupHomomorphismByFunction(C,A,x->x);
-#CB:=GroupHomomorphismByFunction(C,B,x->x);
-#D:=[A,B,[CA,CB]];
-#G:=Group([[0,-1],[1,0]],[[0,-1],[1,1]]);
-
-
 ##############################################
 InstallGlobalFunction(GraphOfResolutions,
 function(D,N)
@@ -47,7 +38,7 @@ end);
 ##############################################
 
 ##############################################
-InstallGlobalFunction(GraphOfGroups,
+InstallGlobalFunction(GraphOfResolutionsToGroups,
 function(D)
 local G,v,e;
 
@@ -81,7 +72,7 @@ then return false;
 fi;
 od;
 
-return GraphOfGroupsTest(GraphOfGroups(D));
+return GraphOfGroupsTest(GraphOfResolutionsToGroups(D));
 
 end);
 ##############################################
@@ -95,7 +86,7 @@ Print("Input is not a graph of resolutions.\n");
 return fail;
 fi;
 
-GraphOfGroupsDisplay(GraphOfGroups(D));
+GraphOfGroupsDisplay(GraphOfResolutionsToGroups(D));
 
 end);
 ###############################################
@@ -110,7 +101,7 @@ Vertices:=Filtered(D,x->IsGroup(x));
 VerticesNames:=List(Vertices,x->Name(x));
 Edges:=Filtered(D,x->IsList(x));
 ID:=Group(One(G));
-Elts:=[];
+Elts:=[One(G)];
 
 #######################
 Dimension:=function(n);
@@ -176,7 +167,7 @@ InstallGlobalFunction(TreeOfResolutionsToContractibleGcomplex,
 function(R,G)
 local D, C, v,s, NamesOfGroups, Resolutions;
 
-D:=GraphOfGroups(R);
+D:=GraphOfResolutionsToGroups(R);
 C:=TreeOfGroupsToContractibleGcomplex(D,G);
 
 NamesOfGroups:=[];
@@ -216,7 +207,7 @@ newelts!.lnthfun:=function(); return Length(R!.elts); end;
 newelts!.posfun:=function(g); return Position(R!.elts,p^-1*g*p); end;
 
 G:=R!.group^(p^-1);
-SetName(G,String(Random([1..10000])) );
+SetName(G,String(Random([1..1000000])) );
 return Objectify(HapResolution,
                 rec(
                 dimension:=R!.dimension,

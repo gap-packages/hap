@@ -276,11 +276,11 @@ G:=Group(Elts);
 Action:=function(a,b,c) return 1; end;
 
 #####################
-Action:=function(n,k,g)
-local gg;
-gg:=Position(C!.elts,Elts[g][1]);
-return C!.action(n,k,gg);
-end;
+#Action:=function(n,k,g)
+#local gg;
+#gg:=Position(C!.elts,Elts[g][1]);
+#return C!.action(n,k,gg);
+#end;
 #####################
 
 #####################

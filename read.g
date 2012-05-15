@@ -72,6 +72,13 @@ MakeGAPDocDoc:=function(G); return fail; end;
 fi;
 ################# GAPDOC COMMANDS DONE ###############################
 
+################# CONGRUENE COMMANDS #######################################
+if not IsPackageMarkedForLoading("congruence","0.0") then
+CongruenceGamma0:=function(m); return fail; end;
+fi;
+################# CONGRUENCE COMMANDS DONE ###############################
+
+
 ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
 
 ################# OBJECTIFICATIONS ###############################
@@ -132,6 +139,7 @@ ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
+ReadPackage("HAP", "lib/Resolutions/resSL2Z.gi");
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
@@ -185,6 +193,7 @@ ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
+ReadPackage("HAP", "lib/Perturbations/resGTree.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
 ReadPackage("HAP", "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
@@ -286,6 +295,9 @@ ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
+ReadPackage("HAP","lib/SimplicialGroups/Kpinmap.gi");
+ReadPackage("HAP","lib/SimplicialGroups/eilen_mac.gi");
+ReadPackage("HAP","lib/SimplicialGroups/simplicialmap.gi");
 ReadPackage("HAP","lib/SimplicialGroups/nerveCat1Group.gi");
 ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
@@ -299,6 +311,10 @@ ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
 fi;
+
+
+################## SPARSE ##########################################
+ReadPackage("HAP","lib/Sparse/sparse.gi");
 
 
 ################## HAP PRIME ##################################

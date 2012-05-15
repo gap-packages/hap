@@ -9,7 +9,7 @@
 InstallMethod(HomToGModule,
 [IsHapResolution,IsInt,IsGOuterGroup,IsGOuterGroup,IsGOuterGroup],
 function(R,n,A,M,N)
-local phi,UM,UN, act, MAT,i,x,b,fn,s;
+local phitmp,phi,UM,UN, act, MAT,i,x,b,fn,s;
 
 #M:=DirectProductGog(List([1..R!.dimension(n)],i->A));
 #N:=DirectProductGog(List([1..R!.dimension(n+1)],i->A));
@@ -40,9 +40,13 @@ od;
 	end;
 	##########################################################
 
-phi:=GroupHomomorphismByFunction(UM,UN,x->
+phitmp:=GroupHomomorphismByFunction(UM,UN,x->
 Product(List([1..R!.dimension(n)],j->fn(j,Image(Projection(UM,j),x))))
 );
+
+phi:=GroupHomomorphismByImagesNC(UM,UN,   #ADDED 02/04/2012
+GeneratorsOfGroup(UM),
+List(GeneratorsOfGroup(UM),a->Image(phitmp,a)));
 
 return GOuterGroupHomomorphism(M,N,phi);
 end);
