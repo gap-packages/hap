@@ -6,6 +6,7 @@ ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
 ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
+ReadPackage("HAP","lib/Sparse/sparse.gd");
 
 
 
@@ -73,6 +74,7 @@ DeclareGlobalFunction("NonabelianTensorSquare_inf");
 
 
 ## RESOLUTIONS ######################################################
+DeclareGlobalFunction("ResolutionArithmeticGroup");
 DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareGlobalFunction("ResolutionFiniteGroup");
 DeclareGlobalFunction("ResolutionSmallFpGroup");
@@ -157,6 +159,8 @@ DeclareGlobalFunction("CoxeterComplex");
 DeclareGlobalFunction("ResolutionCoxeterGroup");
 DeclareGlobalFunction("CyclesOfFilteredChainComplex");
 DeclareGlobalFunction("BoundariesOfFilteredChainComplex");
+DeclareGlobalFunction("ResolutionGTree");
+DeclareGlobalFunction("ResolutionSL2Z");
 
 
 ## ARTIN COXETER ####################################################
@@ -220,6 +224,7 @@ DeclareGlobalFunction("IntegralHomologyOfChainComplex");
 DeclareGlobalFunction("IntegralCohomologyOfCochainComplex");
 DeclareGlobalFunction("LefschetzNumberOfChainMap");
 DeclareOperation("LefschetzNumber",[IsObject]);
+DeclareGlobalFunction("HomologyOfPureCubicalComplex");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -264,7 +269,7 @@ DeclareGlobalFunction("GraphOfGroupsDisplay");
 DeclareGlobalFunction("ResolutionGraphOfGroups");
 DeclareGlobalFunction("GraphOfGroupsTest");
 DeclareGlobalFunction("GraphOfResolutionsTest");
-DeclareGlobalFunction("GraphOfGroups");
+DeclareGlobalFunction("GraphOfResolutionsToGroups");
 DeclareGlobalFunction("GraphOfResolutions");
 DeclareGlobalFunction("GraphOfResolutionsDisplay");
 DeclareGlobalFunction("TreeOfResolutionsToContractibleGcomplex");
@@ -367,6 +372,7 @@ DeclareGlobalFunction("PathComponentOfPureCubicalComplex");
 DeclareOperation("Bettinumbers",[IsObject,IsInt]);
 DeclareGlobalFunction("BettinumbersOfPureCubicalComplex_dim_2");
 DeclareGlobalFunction("ThickenedPureCubicalComplex");
+DeclareGlobalFunction("ThickenedHEPureCubicalComplex");
 DeclareGlobalFunction("ThickenedPureCubicalComplex_dim2");
 DeclareGlobalFunction("BoundaryOfPureCubicalComplex");
 DeclareGlobalFunction("ContractPureCubicalComplex");
@@ -432,6 +438,7 @@ DeclareGlobalFunction("ArrayAssign");
 DeclareGlobalFunction("UnboundedArrayAssign");
 DeclareGlobalFunction("ArrayAssignFunctions");
 DeclareGlobalFunction("ArrayIterate");
+DeclareGlobalFunction("ArrayIterateBreak");
 DeclareGlobalFunction("IsContractibleCube_higherdims");
 DeclareGlobalFunction("Array");
 DeclareGlobalFunction("BinaryArrayToTextFile");
@@ -462,6 +469,8 @@ DeclareGlobalFunction("PersistentHomologyOfCommutativeDiagramOfPGroups");
 DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
 
 ## SIMPLICIAL GROUPS ################################################
+DeclareGlobalFunction("SimplicialGroupMap");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
 DeclareGlobalFunction("NerveOfCatOneGroup");
 DeclareGlobalFunction("BarResolutionBoundary");
 DeclareGlobalFunction("BarResolutionEquivalence");
@@ -478,11 +487,23 @@ DeclareGlobalFunction("TensorProductOfChainComplexes");
 ## REGULAR CW-SPACES ################################################
 DeclareGlobalFunction("SimplicialComplexToRegularCWSpace");
 DeclareGlobalFunction("GraphOfRegularCWSpace");#Not yet implemented
-DeclareGlobalFunction("CubicalComplexToRegularCWSpace");#Not yet implemented
-DeclareGlobalFunction("ContractRegularCWSpace");
-DeclareGlobalFunction("RemoveCellFromRegularCWSpace");
+DeclareGlobalFunction("CubicalComplexToRegularCWSpace");
+DeclareGlobalFunction("HAPContractRegularCWSpace");
+DeclareGlobalFunction("HAPRemoveCellFromRegularCWSpace");
 DeclareGlobalFunction("CriticalCellsOfRegularCWSpace");
-DeclareGlobalFunction("ContractRegularCWSpace_Alt");
+DeclareGlobalFunction("HAPContractRegularCWSpace_Alt");
+DeclareGlobalFunction("ChainComplexOfRegularCWSpace");
+DeclareGlobalFunction("ChainComplexOfRegularCWSpaceWithVectorField");
+
+
+## SPARSE ###########################################################
+DeclareGlobalFunction("SparseMat");
+DeclareGlobalFunction("SparseRowMult");
+DeclareGlobalFunction("SparseRowInterchange");
+DeclareGlobalFunction("SparseRowAdd");
+DeclareGlobalFunction("SparsePivot");
+DeclareGlobalFunction("SparsePivots");
+DeclareGlobalFunction("SemiEchelonSMat");
 
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");

@@ -45,6 +45,13 @@ BinGp:=Image(RegularActionHomomorphism(BinGp));
 ResolutionFG:=function(G,n)
 local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
 
+##Added Jan 2012
+if IsBound(P!.resolutions) and HasName(G) then
+x:=Position(P!.resolutions[2], Name(G));
+if not x=fail then return P!.resolutions[1][x]; fi;
+fi;
+##
+
 ###
 if Order(G)=infinity and IsAbelian(G) then
 #This will only be correct if G is abelian of "rank" equal
@@ -154,7 +161,7 @@ local pos;
 if not IsBound(MultRecord[g]) then MultRecord[g]:=[]; fi;
 if not IsBound(MultRecord[g][h]) then
     pos:= Position(EltsG,EltsG[g]*EltsG[h]);
-    if pos=fail then Add(EltsG,EltsG[g]*EltsG[h]); 
+    if pos=fail then Add(EltsG,EltsG[g]*EltsG[h]);  
     MultRecord[g][h]:= Length(EltsG);
     else MultRecord[g][h]:= pos; 
     fi;
@@ -446,7 +453,6 @@ end;
 ###################################################################
 Boundary:=function(k,n)
 local q,s,r,t,x,y,z,i;
-
 y:=Pair2Quad(k,n); q:=y[1];s:=y[3];r:=y[2];t:=y[4];
 
 y:=[];
@@ -454,7 +460,9 @@ y:=[];
 for i in [0..k] do
 #for i in [0..1] do
 if q>=i then
+
 z:=DelGen(i,q,s,r,t);
+
 Append(y,
 List(z,x->[Quad2Pair(q-i,x[1],s+i-1,x[2])[2],x[3]])  );
 else break;
@@ -472,14 +480,12 @@ od;
 #######################################
 FinalBoundary:=function(n,k)
 local  pk;
-
 pk:=AbsInt(k);
 if  not IsBound(PseudoBoundary[n+1][pk]) then
 PseudoBoundary[n+1][pk]:= Boundary(n,pk);
 fi;
-
-if k>0 then return PseudoBoundary[n+1][k];
-else return NegateWord(PseudoBoundary[n+1][pk]); fi;
+if k>0 then  return PseudoBoundary[n+1][k];
+else  return NegateWord(PseudoBoundary[n+1][pk]); fi;
 end;
 #######################################
 
@@ -560,7 +566,7 @@ HomotopyS:=S!.homotopy;
 HhomG:=function(i)
 local pos;
 pos:= Position(EltsG,EltsH[i]);
-if pos=fail then Add(EltsG,EltsH[i]); return Length(EltsG);
+if pos=fail then Add(EltsG,EltsH[i]);   return Length(EltsG); 
 else return pos; fi;
 end;
 #######################################
@@ -587,12 +593,11 @@ end;
 GmapTH:=function(g)    #ht=g^-1 ==> g=t^-1 h^-1
 local t,h,gg,pos1,pos2;
 
-
 gg:=EltsG[g]^-1;
-t:=CanonicalRightCosetElement(H,gg)^-1;
+#t:=CanonicalRightCosetElement(H,gg)^-1;
+t:=CanonicalRightCountableCosetElement(H,gg)^-1;
+
 h:=(gg*t)^-1;
-
-
 
 pos1:=Position(EltsG,t);
 if pos1=fail then Add(EltsG,t); pos1:=Length(EltsG);fi;
@@ -678,7 +683,9 @@ local
 
 G:=Source(hom);
 N:=Kernel(hom);
+
 EltsG:=Elements(G);
+
 EltsQ:=S!.elts;
 BoundaryS:=S!.boundary;
 

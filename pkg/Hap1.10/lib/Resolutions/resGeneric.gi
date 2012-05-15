@@ -5,7 +5,7 @@
 InstallGlobalFunction(ResolutionGenericGroup,
 function(G,N)
 
-    local L, M, GG, A, R, fn, epi, F, FhomG, AhomG;
+    local L, M, GG, A, R, fn, epi, F, FhomG, AhomG, Tz;
 
 #This function will try to return an efficient resolution, 
 #and any resolution returned will have a contracting homotopy.
@@ -13,16 +13,17 @@ function(G,N)
 ####FINITE################
 if Order(G)<infinity then 
 
+Tz:=TietzeReducedResolution;
    if IsAbelian(G) then
    return ResolutionAbelianGroup(G,N);
    fi;
 
    if Order(G)<32 then
-   return ResolutionFiniteGroup(G,N);
+   return Tz(ResolutionFiniteGroup(G,N));
    fi;
 
    if IsPGroup(G) and Order(G)<256 then
-   return ResolutionNormalSeries(LowerCentralSeries(G),N);
+   return Tz(ResolutionNormalSeries(LowerCentralSeries(G),N));
    fi;
 
    if IsNilpotent(G) then
@@ -34,7 +35,7 @@ if Order(G)<infinity then
    fi;
 
    #And is all else fails on a finite group:
-   return ResolutionFiniteGroup(G,N);
+   return Tz(ResolutionFiniteGroup(G,N));
 
 fi;
 ####FINITE DONE###########
@@ -92,6 +93,21 @@ fi;
 ####MATRIX DONE###########
 
 return fail;
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ResolutionArithmeticGroup,
+function(string, N)
+local C, R;
+
+C:=ContractibleGcomplex(string);
+R:=FreeGResolution(C,N);
+return R;
+
 end);
 #####################################################################
 #####################################################################

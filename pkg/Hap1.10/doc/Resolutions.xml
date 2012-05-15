@@ -14,6 +14,27 @@ Inputs a <M>\mathbb ZG</M>-resolution <M>R</M> and returns a <M>\mathbb ZG</M>-r
 
 <Row>
 <Item>
+<Index> ResolutionArithmeticGroup</Index>
+<C>ResolutionArithmeticGroup("PSL(4,Z)",n)</C>
+<P/>
+Inputs a positive integer <M>n</M> and one of the following strings: <Br/><Br/>
+"SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" ,
+ "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" ,
+ "Sp(4,Z)"
+<Br/><Br/>
+or one of the following strings <Br/><Br/>
+"SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" ,
+ "SL(2,Z[sqrt(-19)])" , "SL(2,Z[sqrt(-43)])" , "SL(2,Z[sqrt(-67)])" ,
+ "SL(2,Z[sqrt(-163)])"  <Br/><Br/>
+ It
+returns <M>n</M> terms of a free ZG-resolution for the group <M>G</M> described by the string. (Subscripts _b , _c , _d  denote alternative non-free ZG-resolutions for a given group G.)<Br/><Br/>
+
+Data for the first list of   resolutions was provided provided by <B>Mathieu Dutour</B>. Data for the second list was provided by <B>Alexander Rahm</B>.</Item>
+</Row>
+
+
+<Row>
+<Item>
 <Index>FreeGResolution</Index>
 <C>FreeGResolution(P,n)</C>
 <C>FreeGResolution(P,n,p)</C>
@@ -24,8 +45,45 @@ and
  a positive integer <M>n</M>. It returns  a free 
 <M>ZG</M>-resolution of length equal to the minimum of n and the length of <M>P</M>.
  If one requires only a mod <M>p</M> resolution then the prime <M>p</M> can be entered as an optional third argument. 
+
+<P/> The free resolution is returned without a contracting homotopy. 
 </Item>
 </Row>
+
+<Row>
+<Item>
+<Index>ResolutionGTree</Index>
+<C>ResolutionGTree(P,n)</C>
+<P/>
+
+Inputs a non-free <M>ZG</M>-resolution <M>P</M> of dimension 1 (i.e. a G-tree)
+ with finite stabilizer groups,
+and
+ a positive integer <M>n</M>. It returns  a free
+<M>ZG</M>-resolution of length equal to  n.
+
+ <P/> If <M>P</M> has a contracting homotopy then the free resolution is returned with a contracting homotopy. 
+
+<P/> This function was written by <B> Bui Anh Tuan</B>.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>ResolutionSL2Z</Index>
+<C>ResolutionSL2Z(p,n)</C>
+<P/>
+
+Inputs  non-negative integers <M>p, n</M> with <M>p</M> a prime or equal to 0.
+It returns <M>n</M> terms of a
+<M>ZG</M>-resolution for the  group <M>G=SL(2,Z[1/p])</M> or <M>G=SL(2,Z)</M> if <M>p=0</M> .
+<P/>
+
+<P/> This function is joint work with <B>Bui Anh Tuan</B>.
+</Item>
+</Row>
+
+
 
 
 <Row>

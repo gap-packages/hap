@@ -517,8 +517,8 @@ od;
 
 Apply(poscells,x->ArrayValueDim(BinLst,x));
 Apply(negcells,x->ArrayValueDim(BinLst,x));
-nn:=List([1..faces[n]],i->0);
-#nn:=(LF[n]);
+#nn:=List([1..faces[n]],i->0);
+nn:=(LF[n]);
 Apply(nn,x->0);
 
 for x in poscells do
@@ -885,7 +885,7 @@ end);
 ######################################################################
 InstallGlobalFunction(AcyclicSubcomplexOfPureCubicalComplex,
 function(T)
-local A,P,x;
+local A,P,mx,i,K;
 
 if not IsHapPureCubicalComplex(T) then
 Print("This function can only be applied to pure cubical complexes.\n");
@@ -893,14 +893,15 @@ return fail;
 fi;
 
 P:=PathComponentOfPureCubicalComplex(T,0);
-A:=0*T!.binaryArray;
+#P:=List([1..P],x->PathComponentOfPureCubicalComplex(T,x));
+#Apply(P,p->ContractibleSubcomplexOfPureCubicalComplex(p));
 
-for x in T!.pathReps do
-ArrayAssign(A,x,1);
+A:=PathComponentOfPureCubicalComplex(T,1);
+for i in [2..P] do
+K:=PathComponentOfPureCubicalComplex(T,i);
+K:=ContractibleSubcomplexOfPureCubicalComplex(K);
+A:=PureCubicalComplexUnion(A,K);
 od;
-
-A:=PureCubicalComplex(A);;
-A:=HomotopyEquivalentMaximalPureCubicalSubcomplex(T,A);
 
 return A;
 
@@ -1331,9 +1332,8 @@ ArrayItBreak:=ArrayIterateBreak(dim);
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  #
 PathCompBinList:=function()
 local B,ColourNeighbours,ColourComponent,cart,CART,
-NEWLYCOLOURED,GetStart,start,colour,ONE;
+NEWLYCOLOURED,GetStart,start,colour;
 
-ONE:=List([1..Dimension(M)],i->1);
 B:=StructuralCopy(FrameArray(M!.binaryArray));
 cart:=Cartesian(List([1..Dimension(M)],i->[-1,0,1]));
 RemoveSet(cart,List([1..Dimension(M)],i->0));
@@ -1394,7 +1394,7 @@ x:=ArrayItBreak(revdimsSet,Fun);
 
 if not x=fail then revdimsSet[1]:=Reversed([2..x[1]]); fi;
 
-if not start=fail then Add(M!.pathReps,x - ONE); fi;
+if not start=fail then Add(M!.pathReps,x); fi;
 
 return start;
 end;
@@ -1465,8 +1465,7 @@ T:=Objectify(HapPureCubicalComplex,T);
 #T:=ZigZagContractedPureCubicalComplex(T);
 #T:=CropPureCubicalComplex(T);
 
-#S:=ContractibleSubcomplexOfPureCubicalComplex(T);
-S:=AcyclicSubcomplexOfPureCubicalComplex(T);
+S:=ContractibleSubcomplexOfPureCubicalComplex(T);
 C:=ChainComplexOfPair(T,S);
 
 #####################

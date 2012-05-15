@@ -310,7 +310,7 @@ while true do
 
   if 
 #Size(Y)=0  
-Sum(List( [1..Length(Y!.bnd)],i->Y!.nrCells(i-1)))=0
+Sum(List( [1..Length(Y!.boundaries)],i->Y!.nrCells(i-1)))=0
 then  
 Y!.criticalCells:=cells; 
 Y!.nrCells:=function(k);
@@ -339,13 +339,6 @@ return cells; fi;
 od;
 
 Y!.criticalCells:=cells;
-Y!.nrCells:=function(k);
-            if k>EvaluateProperty(Y,"dimension") then return 0; fi;
-            return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
-            end;
-Unbind(Y!.bnd);
-Unbind(Y!.cobnd);
-
 return cells;
 end);
 ##########################################################
@@ -413,7 +406,7 @@ Boundaries[n+1]:=[];
 Orientation[n+1]:=[];
 for i in [1..C!.dimension(n)] do
 v:=StructuralCopy(Boundary(n,i));
-bnd:=Concatenation([Length(v[1])+Length(v[2])],Flat(v));
+bnd:=Concatenation([Length(v)],Flat(v));
 Add(Boundaries[n+1],bnd);
 Add(Orientation[n+1],
 Concatenation(List([1..Length(v[1])],a->1),List([1..Length(v[2])],a->-1)));
@@ -426,11 +419,10 @@ Boundaries[dim+2]:=[];
 ### COBOUNDARIES BEGIN ######################
 Coboundaries:=[];; #Coboundaries[n+1] contains the info on n-cells.
 for n in [0..dim] do
-  k:=2*(n+1)+1;#k:=1+2^(n+1);
+  k:=1+2^(n+1);
   Coboundaries[n+1]:=List(Boundaries[n+1],i->[0]);
   for j in [1..Length(Boundaries[n+2])] do
     b:=Boundaries[n+2][j];
-    #k:=Length(b);
     for i in b{[2..k]} do
       Coboundaries[n+1][i][1]:=Coboundaries[n+1][i][1]+1;
       Add(Coboundaries[n+1][i],j);
@@ -517,99 +509,6 @@ Objectify(HapChainComplex,
            rec(
            dimension:=Dimension,
            boundary:=Boundary,
-           properties:=[
-           ["length",dim],
-           ["type","chainComplex"],
-           ["characteristic",characteristic]]
-           ));
-
-
-end);
-##########################################################
-##########################################################
-
-##########################################################
-##########################################################
-InstallGlobalFunction(ChainComplexOfRegularCWSpaceWithVectorField,
-function(Y)
-local
-        C, Dimension, Boundary, one, zero, n, dim, characteristic, DeformCell;
-
-Dimension:=Y!.nrCells;
-dim:=EvaluateProperty(Y,"dimension");
-
-zero:=[];
-for n in [1..dim+1] do
-zero[n]:=List([1..Dimension(n-1)],i->0);
-od;
-
-
-###############################
-###############################
-DeformCell:=function(n,k)
-local x,f,bnd,def;            #This will return a list of n-cells 
-                              #into which the k-th n-cell is deromed.
-
-if [n,k] in Y!.criticalCells then
-return [k];
-fi;
-
-f:=Y!.inverseVectorField[n+1][k];
-bnd:=Y!.boundaries[n+2][f];
-def:=[];
-for x in bnd do
-if not x=k then
-Append(def,DeformCell(n,x));
-fi;
-od;
-
-return def;
-end;
-###############################
-###############################
-
-if not IsBound(Y!.orientation) then
-characteristic:=2;
-one:=One(GF(2));
-######################
-Boundary:=function(n,k)
-local b,i,j,B;
-
-b:=StructuralCopy(zero[n]);
-B:=Y!.boundaries[n+1][k];
-
-for i in [2..Length(B)] do
-b[B[i]]:=1;
-od;
-
-return one*b;
-end;
-######################
-else
-characteristic:=0;
-######################
-Boundary:=function(n,k)
-local b,i,j,B,sn;
-
-b:=StructuralCopy(zero[n]);
-B:=Y!.boundaries[n+1][k];
-sn:=Y!.orientation[n+1][k];
-
-for i in [2..Length(B)] do
-b[B[i]]:=sn[i-1];
-od;
-
-return b;
-end;
-######################
-fi;
-
-return
-Objectify(HapChainComplex,
-           rec(
-           dimension:=Dimension,
-           boundary:=Boundary,
-           deform:=DeformCell,
            properties:=[
            ["length",dim],
            ["type","chainComplex"],

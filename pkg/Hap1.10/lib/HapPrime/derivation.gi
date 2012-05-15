@@ -401,7 +401,8 @@ InstallMethod(ImageOfDerivation,
 
 
 
-if LoadPackage("singular") = true then
+#if LoadPackage("singular") = true then
+if IsPackageMarkedForLoading("singular","0") then
   #####################################################################
   ##  <#GAPDoc Label="KernelOfDerivation_DTmanDerivation_Hom">
   ##  <ManSection>

@@ -35,4 +35,38 @@ Print("Simplicial group of length ",EvaluateProperty(R,"length"),  "\n");
 ###################################################################
 #####################################################################
 
+DeclareCategory("IsHapSimplicialGroupMap",IsObject);
+
+DeclareRepresentation(  "IsHapSimplicialGroupMapRep",
+                        IsComponentObjectRep,
+                        ["sourceMap",
+                         "targetMap"
+                         ]);
+
+HapSimplicialGroupMapFamily:=NewFamily( "HapSimplicialGroupMapFamily",
+                                          IsHapSimplicialGroupMap,
+                                          IsHapSimplicialGroupMap);
+
+HapSimplicialGroupMap:=NewType(HapSimplicialGroupMapFamily,
+                                IsHapSimplicialGroupMapRep);
+
+
+InstallMethod( ViewObj,
+"for HapSimplicialGroupMap",
+ [IsHapSimplicialGroupMap],
+ function(R)
+ Print("Simplicial group map of length ",EvaluateProperty(R,"length"),  "\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapSimplicialGroupMap",
+ [IsHapSimplicialGroupMap],
+ function(R)
+Print("Simplicial group map of length ",EvaluateProperty(R,"length"),  "\n");
+ end);
+ 
+###################################################################
+#####################################################################
+
+
  

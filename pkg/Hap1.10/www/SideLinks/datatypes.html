@@ -838,22 +838,43 @@ returns "true" for a simplicial complex T.</td>
 represented by a component object Y with the following components:<br>
       <ul>
         <li><span style="font-family: monospace;">Y!.boundaries[n][k]</span>
-is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>,b<sub>1</sub>,...,b<sub>t</sub>]
+is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>]
 where a<sub>i</sub> denote the (n-1)-dimensional cells in the boundary
-of the k-th cell of dimension n.&nbsp; Each b<sub>i</sub>=1 is the
-number of times cell a<sub>i</sub> occurs in the boundary. (For regular
-CW-spaces these incidence numbers are all 1.)<br>
+of the k-th cell of dimension n. <br>
         </li>
         <li><span style="font-family: monospace;">Y!.coboundaries[n+1][k]</span>
-is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>,b<sub>1</sub>,...,b<sub>t</sub>]
+is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>]
 where a<sub>i</sub> denote the (n+1)-dimensional cells in the boundary
-of the k-th cell of dimension n.&nbsp; Each b<sub>i</sub>=1 is the
-number of times cell a<sub>i</sub> occurs in the boundary.</li>
+of the k-th cell of dimension n. <br>
+        </li>
         <li><span style="font-family: monospace;">Y!.nrCells(n)</span>
 is a function returning the number of cells in dimension n.<br>
         </li>
         <li><span style="font-family: monospace;">Y!.properties</span>
-is a list of properties.<br>
+is a list of properties.</li>
+      </ul>
+The following optional components may also be present (or else present
+but set equal to fail):<br>
+      <ul>
+        <li><span style="font-family: monospace;">Y!.vectorField[n][k]</span>
+is either unbound or equal to an
+integer k' . The latter case represents a "flow" from the k-th cell of
+dimension n to the k'-th cell of dimension n-1. <br>
+        </li>
+        <li><span style="font-family: FreeMono;"><span
+ style="font-family: monospace;">Y!.inverseVectorField[n][k']</span> </span>is
+either unbound or equal
+to an integer k . The latter case represents
+a "flow" from the k-th cell of dimension n to the k'-th cell of
+dimension n-1.</li>
+        <li><span style="font-family: monospace;">Y!.criticalCells</span>
+is a list of pairs [n,k] representing the fact that the k-th cell in
+dimension n is <span style="font-style: italic;">critical</span> (i.e.
+is not involved in any flow).</li>
+        <li><span style="font-family: monospace;">Y!.orientation[n][k]</span>
+is a list of the incidence numbers of the cells in the boundary of the
+k-th cell of dimension n. So Y!.orientation[n][k][j] is the incidence
+number (+1 or -1) of the j-th cell in the boundary.<br>
         </li>
       </ul>
 The operation <span style="font-family: monospace;">IsHapRegularCWSpace(Y)</span>

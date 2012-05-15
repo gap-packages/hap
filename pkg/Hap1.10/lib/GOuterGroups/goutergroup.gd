@@ -66,6 +66,13 @@ DeclareOperation("GOuterGroup", []);
 DeclareOperation("GOuterGroupHomomorphism", []);
 DeclareOperation("StandardNCocycle",[]);
 
+#############################################################################
+##
+##  Constructor for G-outer group from abelian group A (module) and
+##  group G (assumed to act triviall on A.
+##
+DeclareOperation("TrivialGModuleAsGOuterGroup", [IsGroup,IsGroup]);
+
 
 #############################################################################
 ##

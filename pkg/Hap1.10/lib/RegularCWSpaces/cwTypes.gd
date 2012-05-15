@@ -25,11 +25,11 @@ InstallMethod( ViewObj,
  [IsHapRegularCWSpace],
  function(R)
  Print("Regular CW-space of dimension ",EvaluateProperty(R,"dimension"));
-if IsList(R!.vectorField) then
- Print(" with discrete vector field\n");
-else 
+#if IsList(R!.vectorField) then
+# Print(" with discrete vector field\n");
+#else 
  Print("\n");
-fi;
+#fi;
 end);
 
 InstallMethod( PrintObj,
@@ -37,11 +37,11 @@ InstallMethod( PrintObj,
  [IsHapRegularCWSpace],
  function(R)
  Print("Regular CW-space of dimension ",EvaluateProperty(R,"dimension"));
-if IsList(R!.vectorField) then
- Print(" with discrete vector field\n");
-else
+#if IsList(R!.vectorField) then
+# Print(" with discrete vector field\n");
+#else
  Print("\n");
-fi;
+#fi;
 end);
 
  

@@ -8,9 +8,12 @@ DeclareGlobalFunction("QuasiIsomorph2");
 DeclareGlobalFunction("SubQuasiIsomorph");
 DeclareGlobalFunction("QuotientQuasiIsomorph");
 DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
+DeclareGlobalFunction("ChainComplexOfAbelianSimplicialGroup");
 DeclareGlobalFunction("SylowSubgroupOfCatOneGroup2");
 DeclareGlobalFunction("TensorProductOfChainComplexes");
 DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
-DeclareGlobalFunction("EilenbergMacLaneSpace");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
+DeclareGlobalFunction("SimplicialGroupMap");
 
 

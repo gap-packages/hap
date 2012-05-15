@@ -29,9 +29,32 @@
 <p>Inputs a ZG-resolution R and returns a ZG-resolution S which is obtained from R by applying "Tietze like operations" in each dimension. The hope is that S has fewer free generators than R.</td>
 </tr>
 <tr>
+<td class="tdleft"><code class="code">ResolutionArithmeticGroup("PSL(4,Z)",n)</code></p>
+
+<p>Inputs a positive integer n and one of the following strings: <br /> <br /> "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" , "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)" <br /> <br /> or one of the following strings <br /> <br /> "SL(2,Z[sqrt(-2)])" , "SL(2,Z[sqrt(-7)])" , "SL(2,Z[sqrt(-11)])" , "SL(2,Z[sqrt(-19)])" , "SL(2,Z[sqrt(-43)])" , "SL(2,Z[sqrt(-67)])" , "SL(2,Z[sqrt(-163)])" <br /> <br /> It returns n terms of a free ZG-resolution for the group G described by the string. (Subscripts _b , _c , _d denote alternative non-free ZG-resolutions for a given group G.)<br /> <br /> Data for the first list of resolutions was provided provided by <strong class="button">Mathieu Dutour</strong>. Data for the second list was provided by <strong class="button">Alexander Rahm</strong>.</td>
+</tr>
+<tr>
 <td class="tdleft"><code class="code">FreeGResolution(P,n)</code> <code class="code">FreeGResolution(P,n,p)</code></p>
 
-<p>Inputs a non-free ZG-resolution P with finite stabilizer groups, and a positive integer n. It returns a free ZG-resolution of length equal to the minimum of n and the length of P. If one requires only a mod p resolution then the prime p can be entered as an optional third argument.</td>
+<p>Inputs a non-free ZG-resolution P with finite stabilizer groups, and a positive integer n. It returns a free ZG-resolution of length equal to the minimum of n and the length of P. If one requires only a mod p resolution then the prime p can be entered as an optional third argument.</p>
+
+<p>The free resolution is returned without a contracting homotopy.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ResolutionGTree(P,n)</code></p>
+
+<p>Inputs a non-free ZG-resolution P of dimension 1 (i.e. a G-tree) with finite stabilizer groups, and a positive integer n. It returns a free ZG-resolution of length equal to n.</p>
+
+<p>If P has a contracting homotopy then the free resolution is returned with a contracting homotopy.</p>
+
+<p>This function was written by <strong class="button"> Bui Anh Tuan</strong>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ResolutionSL2Z(p,n)</code></p>
+
+<p>Inputs non-negative integers p, n with p a prime or equal to 0. It returns n terms of a ZG-resolution for the group G=SL(2,Z[1/p]) or G=SL(2,Z) if p=0 .</p>
+
+<p>This function is joint work with <strong class="button">Bui Anh Tuan</strong>.</td>
 </tr>
 <tr>
 <td class="tdleft"><code class="code">ResolutionAbelianGroup(L,n)</code> <code class="code">ResolutionAbelianGroup(G,n)</code></p>

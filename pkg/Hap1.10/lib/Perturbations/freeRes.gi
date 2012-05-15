@@ -596,6 +596,7 @@ local t,h,gg,pos1,pos2;
 gg:=EltsG[g]^-1;
 #t:=CanonicalRightCosetElement(H,gg)^-1;
 t:=CanonicalRightCountableCosetElement(H,gg)^-1;
+#t:=CanonicalRightCosetElement(H,gg)^-1;
 
 h:=(gg*t)^-1;
 

@@ -903,7 +903,8 @@ end);
 ##  </ManSection>
 ##  <#/GAPDoc>
 #####################################################################
-if LoadPackage("singular") = true then
+#if LoadPackage("singular") = true then
+if IsPackageMarkedForLoading("singular","0") then
   InstallGlobalFunction(HAPPRIME_SingularGroebnerBasis,
     function(pols, O)
       local gbasis, ideal, fam;

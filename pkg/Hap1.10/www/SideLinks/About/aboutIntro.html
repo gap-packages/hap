@@ -275,6 +275,11 @@ gap&gt; time;<br>
 homology of certain infinite groups can also be calculated. The
 following commands show that <br>
       <ul>
+        <li>the 99-dimensional integral homology of SL2(Z[1/7]) is
+H<sub>99</sub>(SL<sub>2</sub>(Z[1/7]),Z) = Z<sub>4</sub> + Z<sub>12</sub>.
+(This homology was first calculated by <a
+ href="http://arxiv.org/abs/math/9503230">A. Adem and N. Naffah</a>).<br>
+        </li>
         <li>the 4-dimensional integral homology of SL<sub>3</sub>(Z) is
 H<sub>4</sub>(SL<sub>3</sub>(Z),Z) = Z<sub>2</sub>.&nbsp;</li>
         <li>the 6-dimensional integral homology of the Bianchi group SL<sub>2</sub>(Z[w])
@@ -314,6 +319,14 @@ required..)<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+R:=ResolutionSL2Z(7,100);<br>
+Resolution of length 100 in characteristic 0 for SL(2,Z[1/7]) .<br>
+No contracting homotopy available.<br>
+gap&gt;&nbsp; Homology(TensorWithIntegers(R),99);<br>
+[ 4, 12 ]<br>
+      <br>
+      <br>
+gap&gt;
 C:=ContractibleGcomplex("SL(3,Z)");;<br>
 gap&gt; R:=FreeGResolution(C,5);;<br>
 gap&gt; Homology(TensorWithIntegers(R),4);<br>
