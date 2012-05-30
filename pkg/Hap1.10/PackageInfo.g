@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.10.1",
-  Date    := "16/03/2012",
+  Version := "1.10.2",
+  Date    := "29/05/2012",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.10.1",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.10.2",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -62,14 +62,13 @@ SetPackageInfo( rec(
 
   Dependencies := rec(
     GAP := ">= 4.4.7",
-    NeededOtherPackages := [],
-    SuggestedOtherPackages := [[ "polycyclic", ">=1.1" ],
-    		 	       [ "nq",         ">=1.1" ],
+    NeededOtherPackages := [[ "polycyclic", ">=1.1" ],
+                            [ "aclib",      ">=1.1" ],
+                            [ "gapdoc",      ">=0.0" ]],
+    SuggestedOtherPackages := [[ "nq",         ">=1.1" ],
                                ["nql",         ">=0.0" ],
-                               ["homology",    ">=0.0"   ],
-			       [ "aclib",      ">=1.1" ],
+                               ["homology",    ">=0.0"   ], 
 			       [ "edim",      ">=1.2.2" ],
-			       [ "gapdoc",      ">=0.0" ],
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ]
 			      ],

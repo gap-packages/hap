@@ -1,4 +1,4 @@
-InstallGlobalFunction(SylowSubgroupOfCatOneGroup_alt,
+InstallGlobalFunction(SylowSubgroupOfCatOneGroup2,
 function(CC,p)
 local
     C,G,P,gens,s,t,sp,tp,
