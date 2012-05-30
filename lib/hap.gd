@@ -5,6 +5,7 @@ ReadPackage("HAP","lib/Objectifications/types.gd");
 ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
+ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 
@@ -161,6 +162,7 @@ DeclareGlobalFunction("CyclesOfFilteredChainComplex");
 DeclareGlobalFunction("BoundariesOfFilteredChainComplex");
 DeclareGlobalFunction("ResolutionGTree");
 DeclareGlobalFunction("ResolutionSL2Z");
+DeclareGlobalFunction("ResolutionSL2Z_alt");
 
 
 ## ARTIN COXETER ####################################################
@@ -470,18 +472,18 @@ DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
 
 ## SIMPLICIAL GROUPS ################################################
 DeclareGlobalFunction("SimplicialGroupMap");
-DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
-DeclareGlobalFunction("NerveOfCatOneGroup");
-DeclareGlobalFunction("BarResolutionBoundary");
-DeclareGlobalFunction("BarResolutionEquivalence");
-DeclareGlobalFunction("BarComplexBoundary");
-DeclareGlobalFunction("BarComplexEquivalence");
-DeclareGlobalFunction("ReduceAlg");
-DeclareGlobalFunction("AddWord");
-DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
-DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
-DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
-DeclareGlobalFunction("TensorProductOfChainComplexes");
+#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
+#DeclareGlobalFunction("NerveOfCatOneGroup");
+#DeclareGlobalFunction("BarResolutionBoundary");
+#DeclareGlobalFunction("BarResolutionEquivalence");
+#DeclareGlobalFunction("BarComplexBoundary");
+#DeclareGlobalFunction("BarComplexEquivalence");
+#DeclareGlobalFunction("ReduceAlg");
+#DeclareGlobalFunction("AddWord");
+#DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
+#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
+#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
+#DeclareGlobalFunction("TensorProductOfChainComplexes");
 
 
 ## REGULAR CW-SPACES ################################################

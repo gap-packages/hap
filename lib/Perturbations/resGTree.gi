@@ -1,7 +1,3 @@
-#(C) Bui Anh Tuan
-
-
-
 InstallGlobalFunction(ResolutionGTree,
 function(arg)
 local 
@@ -9,7 +5,7 @@ local
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
 	Dimension,Hmap,pos,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
-	StRes,hmap,Action,
+	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy,
 	HmapRec,p,q,r,s,HtpyRec,k,g;
 R:=arg[1];
 n:=arg[2];
@@ -141,9 +137,12 @@ if not IsBound(HmapRec[p+1][q+1][r][ps]) then
 	else
 		l:=[];m:=[];
 		d0:=List(StabRes[p+1][r]!.boundary(q,ps),x->[Action(p,r,x[2])*x[1],x[2]]);
-		d1d0:=AlgRed(CorrectList(List(d0,x->Mult(x[2],Hmap(p,q-1,r,x[1])))));
-		Apply(d1d0,x->[Triple2Pair(p-1,q-1,x[1]),x[2]]);
-		for w in d1d0 do
+		#d1d0:=AlgRed(CorrectList(List(d0,x->Mult(x[2],Hmap(p,q-1,r,x[1])))));
+		for w in d0 do
+			Append(m,Mult(w[2],Hmap(p,q-1,r,w[1])));
+		od;
+		Apply(m,x->[Triple2Pair(p-1,q-1,x[1]),x[2]]);
+		for w in m do
 			Append(l,List(StabRes[p][w[1][1]]!.homotopy(q-1,[w[1][2],w[2]]),y->[Quad2One(p-1,q,w[1][1],y[1]),y[2]]));
 		od;
 		HmapRec[p+1][q+1][r][ps]:=AlgRed(l);
@@ -196,11 +195,18 @@ od;
 n:=n+AbsInt(s);
 return [k,SignInt(s)*n];
 end;
+#############################################
+PseudoBoundary:=[];
+for k in [1..n] do
+    PseudoBoundary[k]:=[];
+od;
 ##############################################
 Boundary:=function(k,n)
 local
-	d,l,p,q,r,s,w;
-w:=Pair2Quad(k,n);
+	d,l,p,q,r,s,w,pn;
+pn:=AbsInt(n);
+if not IsBound(PseudoBoundary[k+1][pn]) then
+w:=Pair2Quad(k,pn);
 p:=w[1];q:=w[2];r:=w[3];s:=w[4];
 d:=[];
 if q<>0 then 
@@ -212,7 +218,12 @@ if IsEvenInt(q) then
 else
 	Append(d,StructuralCopy(NegateWord(Hmap(p,q,r,s))));
 fi;
-return AlgRed(d);	
+PseudoBoundary[k+1][pn]:=AlgRed(d);	
+fi;
+if SignInt(n)=1 then 
+    return PseudoBoundary[k+1][pn];
+else return NegateWord(PseudoBoundary[k+1][pn]);
+fi;
 end;
 ##############################################
 Dimension:=function(n)
@@ -239,7 +250,7 @@ Homotopy:=function(n,w)
 local 
 	t,g,h0,h11,e,h,dh,
 	p,q,r,s,v,m,pt,
-	h1,d1h1,x,k;
+	h1,d1h1,x,k,y,ps;
 t:=w[1];
 g:=w[2];
 e:=[];
@@ -250,33 +261,50 @@ v:=Pair2Quad(n,pt);#Print(v);
 p:=v[1];q:=v[2];r:=v[3];s:=v[4];
 if not IsBound(HtpyRec[n+1][pt][g]) then
 if n=0 then
-	h1:=R!.homotopy(n,w);
-	d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,r,x[1])))));
+	h1:=R!.homotopy(n,[pt,g]);
+	#Apply(h1,w->[Action(1,1,w[2])*w[1],w[2]]);
+	#d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,r,x[1])))));   #need to fix 'r'
+	d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,1,x[1])))));
 	for x in d1h1 do
 	    k:=Pair2Quad(n,x[1]);
-	    Append(e,StabRes[k[1]+1][k[3]]!.homotopy(q,[k[4],x[2]]));
+	    y:=StructuralCopy(StabRes[k[1]+1][k[3]]!.homotopy(q,[k[4],x[2]]));
+	    Apply(y,w->[Quad2Pair(k[1],k[2]+1,k[3],w[1])[2],w[2]]);
+	    Append(e,y);
 	od;
-	h0:=StabRes[p+1][r]!.homotopy(0,[s,g]);
+	h0:=StructuralCopy(StabRes[p+1][r]!.homotopy(0,[s,g]));
+	Apply(h0,w->[Quad2Pair(p,q+1,r,w[1])[2],w[2]]);
 	h11:=List(h1,x->[Quad2Pair(p+1,q,Triple2Pair(p+1,q,x[1])[1],Triple2Pair(p+1,q,x[1])[2])[2],x[2]]);
+	#Print("e=   ",e,"\n");
+	#Print("h0=   ",h0,"\n");
+	#Print("h11=   ",h11,"\n");
 	Append(h,NegateWord(e));
 	Append(h,h0);
 	Append(h,h11);
 	HtpyRec[n+1][pt][g]:=AlgRed(h);
 else
 	if p=0 then 
-	  h0:=StabRes[p+1][r]!.homotopy(q,[s,g]);
+	  h0:=StructuralCopy(StabRes[p+1][r]!.homotopy(q,[s,g]));
+	  Apply(h0,w->[Quad2Pair(p,q+1,r,w[1])[2],w[2]]);
 	  Append(h,h0);
 	else
-	s:=Action(1,1,g)*s;
-	m:=StabRes[p+1][r]!.homotopy(q,[s,g]);
+	ps:=Action(1,1,g)*s;
+	m:=StructuralCopy(StabRes[p+1][r]!.homotopy(q,[ps,g]));
+	#Print("m=",m,"\n");
 	Apply(m,x->[Action(1,1,x[2])*x[1],x[2]]);
 	h0:=List(m,x->[Quad2Pair(p,q+1,r,x[1])[2],x[2]]);
+	#Print("h=",h0,"\n");
 	Append(h,h0);
-	dh:=AlgRed(CorrectList(List(m,x->Mult(x[2],Hmap(p,q+1,r,x[1])))));
+	#dh:=AlgRed(CorrectList(List(m,x->Mult(x[2],Hmap(p,q+1,r,x[1])))));
+	dh:=AlgRed(CorrectList(List(m,x->Mult(x[2],Hmap(p,q+1,1,x[1])))));
 	for x in dh do
 	   k:=Pair2Quad(n,x[1]);
-	   Append(e,StabRes[k[1]+1][k[3]]!.homotopy(k[2],[k[4],x[2]]));
+	   y:=StructuralCopy(StabRes[k[1]+1][k[3]]!.homotopy(k[2],[k[4],x[2]]));
+	   Apply(y,w->[Quad2Pair(k[1],k[2]+1,k[3],w[1])[2],w[2]]);
+	   Append(e,y);
+	   #k:=Pair2Quad(n,x[1]);
+	   #Append(e,StabRes[k[1]+1][k[3]]!.homotopy(k[2],[k[4],x[2]]));
 	od;
+	#Print("e=",e,"\n");
 	if IsEvenInt(q) then 
 	  Append(h,e);
 	else Append(h,NegateWord(e));fi;
@@ -296,6 +324,10 @@ if R!.homotopy=fail then
 else return Homotopy(n,g);
 fi;
 end;
+####ADDED MAY##############################################
+StRes:=function(n,k)
+return StabRes[n+1][k];
+end;
 ##############################################
 return Objectify(HapResolution,
                 rec(
@@ -304,6 +336,7 @@ return Objectify(HapResolution,
                 homotopy:=FinalHomotopy,
                 elts:=R!.elts,
                 group:=R!.group,
+                stabres:=StRes,
                 properties:=
                    [["length",n],
                     ["initial_inclusion",true],

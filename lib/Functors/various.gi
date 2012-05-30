@@ -423,7 +423,8 @@ Add(gens,P*T*P^-1);
 od;
 G:=Group(gens);
 SetName(G,Concatenation("SL(2,Z[1/",String(DenominatorRat(g)),"])")  );
-G!.primes:=F[1];
+#G!.primes:=F[1];
+G!.primes:=DenominatorRat(g);
 SetIsHAPRationalMatrixGroup(G,true);
 SetIsHAPRationalSpecialLinearGroup(G,true);
 
@@ -456,7 +457,7 @@ facs:=SSortedList(Factors(G!.primes));
 AddSet(facs,1);
 for n in Flat(g) do
 d:=SSortedList(Factors(DenominatorRat(n)));
-if not IsSubset(facs,d) and n>1 then
+if not IsSubset(facs,d) then # and n>1 then
 return false; fi;
 od;
 
@@ -468,4 +469,21 @@ fi;
 end );
 ######################
 
+
+
+######################
+InstallMethod( \in,
+               "for CongruenceSubgroupGamma0(p)",
+              [ IsMatrix,  IsCongruenceSubgroupGamma0 ],
+function ( g, G )
+local p;
+p:=G!.LevelOfCongruenceSubgroup;
+if g in SL(2,Integers) then
+if Determinant(g)=1 then
+if IsInt(g[2][1]/p) then return true;fi;
+fi;
+fi;
+############################
+return false;
+end );
 
