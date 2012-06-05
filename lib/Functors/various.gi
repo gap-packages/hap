@@ -470,7 +470,7 @@ end );
 ######################
 
 
-
+if IsPackageMarkedForLoading("congruence","0.0") then
 ######################
 InstallMethod( \in,
                "for CongruenceSubgroupGamma0(p)",
@@ -486,4 +486,4 @@ fi;
 ############################
 return false;
 end );
-
+fi;
