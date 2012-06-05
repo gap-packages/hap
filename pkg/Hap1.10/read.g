@@ -67,14 +67,14 @@ fi;
 ################# EDIM COMMANDS DONE ###############################
 
 ################# GAPDOC COMMANDS #######################################
-#if not IsPackageMarkedForLoading("gapdoc","0.0") then 
-#MakeGAPDocDoc:=function(G); return fail; end;
-#fi;
+if not IsPackageMarkedForLoading("gapdoc","0.0") then 
+MakeGAPDocDoc:=function(G); return fail; end;
+fi;
 ################# GAPDOC COMMANDS DONE ###############################
 
 ################# CONGRUENE COMMANDS #######################################
 if not IsPackageMarkedForLoading("congruence","0.0") then
-CongruenceGamma0:=function(m); return fail; end;
+CongruenceSubgroupGamma0:=function(m); return fail; end;
 fi;
 ################# CONGRUENCE COMMANDS DONE ###############################
 
@@ -92,10 +92,12 @@ fi;
 if COMPILED=false then
 
 ################# ACLIB & NQ COMMANDS #####################################
-#if IsPackageMarkedForLoading("aclib","1.1") then
+if IsPackageMarkedForLoading("aclib","1.1") then
 ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
-#fi;
+else
+IsAlmostCrystallographic:=function(G); return fail; end;
+fi;
 if IsPackageMarkedForLoading("nq","1.1") then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
