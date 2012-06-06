@@ -1,4 +1,5 @@
 #Decompose a element in SL(2,Z[1/p*n]) into product of elements in SL(2,Z[1/n]) and its conjugation by P=[[1,0],[0,p]]
+
 SL2ZmElementsDecomposition:=function(g,p)
 local 
   i,j,q,k,d,
@@ -193,4 +194,6 @@ fi;
 return d;
 fi;
 end;
-T:=[[1,0],[1,1]];S:=[[0,1],[-1,0]];Up1:=[[2,0],[0,2^-1]];Up2:=[[3,0],[0,3^-1]];Y:=[[0,-1],[1,1]];Up3:=[[5,0],[0,5^-1]];
+
+
+#T:=[[1,0],[1,1]];S:=[[0,1],[-1,0]];Up1:=[[2,0],[0,2^-1]];Up2:=[[3,0],[0,3^-1]];Y:=[[0,-1],[1,1]];Up3:=[[5,0],[0,5^-1]];
