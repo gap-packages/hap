@@ -191,22 +191,22 @@ end);
 ############################################
 InstallGlobalFunction(ConjugatedResolution,
 function(R,p)
-local newelts, update,G;
+local newelts, update,G,pinv;
 
-
+pinv:=p^-1;
 newelts:=[];
 newelts:=ListToPseudoList(newelts);
 SetIsPseudoListWithFunction(newelts,true);
 newelts!.eltfun:= function(i) local g;
-              return p*R!.elts[i]*p^-1;
+              return p*R!.elts[i]*pinv;
               end;
 newelts!.addfun:=function(g);
-                 Add(R!.elts,p^-1*g*p);
+                 Add(R!.elts,pinv*g*p);
                  end;
 newelts!.lnthfun:=function(); return Length(R!.elts); end;
-newelts!.posfun:=function(g); return Position(R!.elts,p^-1*g*p); end;
+newelts!.posfun:=function(g); return Position(R!.elts,pinv*g*p); end;
 
-G:=R!.group^(p^-1);
+G:=R!.group^(pinv);
 SetName(G,String(Random([1..1000000])) );
 return Objectify(HapResolution,
                 rec(

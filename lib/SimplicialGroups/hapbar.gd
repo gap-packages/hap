@@ -11,5 +11,5 @@ DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
 DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
 DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
 DeclareGlobalFunction("HomotopyLowerCentralSeries");
-
+DeclareGlobalFunction("SimplicialGroupMap");
 

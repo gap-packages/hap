@@ -11,11 +11,11 @@
 ## of this category will increase! 
 ##
 Category_Of_Groups:="Category_Of_Groups";
-type:= NewType(NewFamily("Category_Of_Groups"),
+HAP_type:= NewType(NewFamily("Category_Of_Groups"),
                        IsString  and 
                        HasInitialObject
 		       and HasTerminalObject);
-ObjectifyWithAttributes(Category_Of_Groups,type);
+ObjectifyWithAttributes(Category_Of_Groups,HAP_type);
 MakeReadOnlyGlobal("Category_Of_Groups");
 
 

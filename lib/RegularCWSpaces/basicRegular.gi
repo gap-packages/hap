@@ -533,10 +533,27 @@ end);
 InstallGlobalFunction(ChainComplexOfRegularCWSpaceWithVectorField,
 function(Y)
 local
-        C, Dimension, Boundary, one, zero, n, dim, characteristic, DeformCell;
+        basis, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn;
 
-Dimension:=Y!.nrCells;
 dim:=EvaluateProperty(Y,"dimension");
+
+basis:=[];
+bij:=[];
+for n in [0..dim] do
+basis[n+1]:=Filtered(CriticalCellsOfRegularCWSpace(Y),x->x[1]=n);
+Apply(basis[n+1],x->x[2]);
+bij[n+1]:=[];
+for b in [1..Length(basis[n+1])] do
+bij[n+1][basis[n+1][b]]:=b;
+od;
+od;
+
+###############################
+Dimension:=function(n);
+return Length(basis[n+1]);
+end;
+###############################
+
 
 zero:=[];
 for n in [1..dim+1] do
@@ -548,18 +565,21 @@ od;
 ###############################
 DeformCell:=function(n,k)
 local x,f,bnd,def;            #This will return a list of n-cells 
-                              #into which the k-th n-cell is deromed.
+                              #into which the k-th n-cell is deformed.
 
 if [n,k] in Y!.criticalCells then
 return [k];
 fi;
-
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+ 
 f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
 def:=[];
-for x in bnd do
-if not x=k then
-Append(def,DeformCell(n,x));
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Append(def,DeformCell(n,bnd[x]));
 fi;
 od;
 
@@ -567,6 +587,43 @@ return def;
 end;
 ###############################
 ###############################
+
+###############################
+###############################
+DeformCellSgn:=function(n,kk)
+local x,f,k,sgnk,bnd,def,sn,tog;            
+		        	#This will return a list of signed n-cells
+                                #into which the k-th n-cell is deformed.
+
+k:=AbsInt(kk);
+sgnk:=SignInt(kk);
+if [n,k] in Y!.criticalCells then
+return [kk];
+fi;
+
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+bnd:=Y!.boundaries[n+2][f];
+sn:=Y!.orientation[n+2][f];
+
+def:=[];
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Append(def,DeformCellSgn(n,sn[x-1]*bnd[x]));
+else
+sgnk:=-sgnk*sn[x-1];
+fi;
+
+od;
+
+return sgnk*def;
+end;
+###############################
+###############################
+
 
 if not IsBound(Y!.orientation) then
 characteristic:=2;
@@ -576,10 +633,14 @@ Boundary:=function(n,k)
 local b,i,j,B;
 
 b:=StructuralCopy(zero[n]);
-B:=Y!.boundaries[n+1][k];
+B:=Y!.boundaries[n+1][basis[n+1][k]];
+B:=B{[2..Length(B)]};
+Apply(B,x->DeformCell(n-1,x));
+B:=Concatenation(B);
+Apply(B,i->bij[n][i]);
 
-for i in [2..Length(B)] do
-b[B[i]]:=1;
+for i in B do
+b[i]:=b[i]+1;
 od;
 
 return one*b;
@@ -592,11 +653,18 @@ Boundary:=function(n,k)
 local b,i,j,B,sn;
 
 b:=StructuralCopy(zero[n]);
-B:=Y!.boundaries[n+1][k];
-sn:=Y!.orientation[n+1][k];
+B:=Y!.boundaries[n+1][basis[n+1][k]];
+B:=B{[2..Length(B)]};
+sn:=Y!.orientation[n+1][basis[n+1][k]];
+B:=List([1..Length(B)],i->sn[i]*B[i]);
 
-for i in [2..Length(B)] do
-b[B[i]]:=sn[i-1];
+Apply(B,x->DeformCellSgn(n-1,x));
+B:=Concatenation(B);
+Apply(B,i->SignInt(i)*bij[n][AbsInt(i)]);
+
+
+for i in B do
+b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i)*sn[AbsInt(i)];
 od;
 
 return b;
@@ -610,6 +678,8 @@ Objectify(HapChainComplex,
            dimension:=Dimension,
            boundary:=Boundary,
            deform:=DeformCell,
+           basis:=basis,
+           bij:=bij,
            properties:=[
            ["length",dim],
            ["type","chainComplex"],
@@ -620,4 +690,32 @@ Objectify(HapChainComplex,
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallMethod( ChainComplex,
+"for regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWSpace],
+ function(Y)
+ CriticalCellsOfRegularCWSpace(Y);
+ return ChainComplexOfRegularCWSpaceWithVectorField(Y);
+ end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod( Homology,
+"Homology of a regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWSpace,IsInt],
+ function(Y,n) local C;
+ if not IsBound(Y!.orientation) then
+ Print("Can only compute the mod 2 homology as no orientation is available.\n");
+ fi;
+ C:=ChainComplex(Y);
+ return Homology(C,n);
+ end);
+##########################################################
+##########################################################
+
 

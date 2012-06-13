@@ -5,7 +5,7 @@ local
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
 	Dimension,Hmap,pos,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
-	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy,
+	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy,ZeroDimensionHmap,ZeroDimensionHtpy,
 	HmapRec,p,q,r,s,HtpyRec,k,g;
 R:=arg[1];
 n:=arg[2];
@@ -49,8 +49,8 @@ end;
 GrpsRes:=function(G,n) # Resolutions of Group
 local 
 	iso,Q,res,x;
-if IsBound(R!.resolutions) and HasName(G) then
-x:=Position(R!.resolutions[2], Name(G));
+if IsBound(R!.resolutions) and HasName(G) then 
+x:=Position(R!.resolutions[2], Name(G)); 
 if not x=fail then return R!.resolutions[1][x]; fi;
 fi;
 iso:=RegularActionHomomorphism(G);
@@ -58,6 +58,7 @@ Q:=Image(iso);
 res:=ResolutionFiniteGroup(Q,n);
 res!.group:=G;
 res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
+
 return res;
 end;
 #############################################
@@ -69,7 +70,9 @@ for L in StabGrps do
 Add(StabRes,List(L,	
 g->ExtendScalars(GrpsRes(g,n),G,EltsG))
 );
+
 od;
+
 #############################################
 CorrectList:=function(list)
 local 
@@ -125,6 +128,18 @@ for p in [1..2] do
   od;
 od;
 ############################################
+ZeroDimensionHmap:=function(k)
+local i,j,pk;
+pk:=AbsInt(k);
+j:=0;
+for i in [1..pk-1] do
+j:=j+StabRes[1][i]!.dimension(0);
+od;
+j:=j+1;
+if k>0 then return j;
+else return -j;fi;
+end;
+############################################
 Hmap:=function(p,q,r,s)     #Horiziontal map Hmap:A(p,q)->A(p-1,q), acts on the (r,s) th-generator of A(p,q)
 local 
 	i,l,d0,m,bdr,ps,d1d0,w;
@@ -132,11 +147,15 @@ ps:=AbsInt(s);
 if p<>1 then return [];
 else
 if not IsBound(HmapRec[p+1][q+1][r][ps]) then
-	if q=0 then bdr:=R!.boundary(1,Quad2One(p,q,r,ps)); 
+	#if q=0 then bdr:=R!.boundary(1,Quad2One(p,q,r,ps)); 
+	if q=0 then bdr:=StructuralCopy(R!.boundary(1,1));
+		#Print("bdr",bdr);
+		Apply(bdr,w->[ZeroDimensionHmap(w[1]),w[2]]);
+		#Print("bdr",bdr);
 		HmapRec[p+1][q+1][r][ps]:=bdr;
 	else
 		l:=[];m:=[];
-		d0:=List(StabRes[p+1][r]!.boundary(q,ps),x->[Action(p,r,x[2])*x[1],x[2]]);
+		d0:=StructuralCopy(List(StabRes[p+1][r]!.boundary(q,ps),x->[Action(p,r,x[2])*x[1],x[2]]));
 		#d1d0:=AlgRed(CorrectList(List(d0,x->Mult(x[2],Hmap(p,q-1,r,x[1])))));
 		for w in d0 do
 			Append(m,Mult(w[2],Hmap(p,q-1,r,w[1])));
@@ -197,7 +216,7 @@ return [k,SignInt(s)*n];
 end;
 #############################################
 PseudoBoundary:=[];
-for k in [1..n] do
+for k in [1..n+1] do
     PseudoBoundary[k]:=[];
 od;
 ##############################################
@@ -246,10 +265,23 @@ for k in [1..n] do
   od;
 od;
 ##############################################
+ZeroDimensionHtpy:=function(k)
+local i,j,r;
+i:=0;
+#r:=i;
+#k:=k-StabRes[1][i]!.dimension(0);
+while k>0 do
+  i:=i+1;
+  k:=k-StabRes[1][i]!.dimension(0);
+  r:=i;
+od;
+return r;
+end;
+##############################################
 Homotopy:=function(n,w)
 local 
 	t,g,h0,h11,e,h,dh,
-	p,q,r,s,v,m,pt,
+	p,q,r,s,v,m,pt,ppt,
 	h1,d1h1,x,k,y,ps;
 t:=w[1];
 g:=w[2];
@@ -261,10 +293,12 @@ v:=Pair2Quad(n,pt);#Print(v);
 p:=v[1];q:=v[2];r:=v[3];s:=v[4];
 if not IsBound(HtpyRec[n+1][pt][g]) then
 if n=0 then
-	h1:=R!.homotopy(n,[pt,g]);
+	ppt:=ZeroDimensionHtpy(pt);
+	h1:=StructuralCopy(R!.homotopy(n,[ppt,g]));
+	#Print("h1=",h1,"\n");
 	#Apply(h1,w->[Action(1,1,w[2])*w[1],w[2]]);
 	#d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,r,x[1])))));   #need to fix 'r'
-	d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,1,x[1])))));
+	d1h1:=StructuralCopy(AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,1,x[1]))))));
 	for x in d1h1 do
 	    k:=Pair2Quad(n,x[1]);
 	    y:=StructuralCopy(StabRes[k[1]+1][k[3]]!.homotopy(q,[k[4],x[2]]));

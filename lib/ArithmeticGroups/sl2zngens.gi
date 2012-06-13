@@ -1,6 +1,6 @@
 #Decompose a element in SL(2,Z[1/p*n]) into product of elements in SL(2,Z[1/n]) and its conjugation by P=[[1,0],[0,p]]
-
-SL2ZmElementsDecomposition:=function(g,p)
+InstallGlobalFunction(SL2ZmElementsDecomposition,
+function(g,p)
 local 
   i,j,q,k,d,
   S,T,Y,Spr,Tpr,A,B,C,
@@ -101,6 +101,8 @@ while g[1][2]<>0 do
 	g:=g*S;
 	fi;
 od;
+#Print("t=",t,"\n");
+#Print("g=",g,"\n");
 t:=InverseOfMatricesList(t);
 if g[1][1]>0 then 
 	q:=g[2][1];
@@ -191,9 +193,15 @@ else
       d[1]:=l*d[1];
    fi;
 fi;
-return d;
+r:=[d[1]];
+for i in [2..Length(d)] do
+    if d[i]*d[i-1] in H or d[i]*d[i-1] in K then
+	r[Length(r)]:=r[Length(r)]*d[i];
+    else
+	Add(r,d[i]);
+    fi;
+od;
+return r;
 fi;
-end;
-
-
+end);
 #T:=[[1,0],[1,1]];S:=[[0,1],[-1,0]];Up1:=[[2,0],[0,2^-1]];Up2:=[[3,0],[0,3^-1]];Y:=[[0,-1],[1,1]];Up3:=[[5,0],[0,5^-1]];

@@ -158,7 +158,7 @@ gens:=GeneratorsOfGroup(S);
 gens:=ReduceGenerators(gens,S);
 R:=ResolutionFiniteGroup(gens,N+1,false,p);
 fi;
-
+#R:=TietzeReducedResolution(R);
 H:=Homology(Functor(R),N);
 if IsInt(H) then
 	if H=0 then H:=[]; else H:=[H]; fi;

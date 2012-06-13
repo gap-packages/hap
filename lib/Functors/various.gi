@@ -441,7 +441,7 @@ InstallMethod( \in,
                "for SL(2,Z)_p",
               [ IsMatrix,  IsHAPRationalSpecialLinearGroup ],
 function ( g, G )
-local P,n,d,facs;
+local P,n,d,facs,   m,p,H,K;
 
 if IsBound(G!.mat) then
 ###############
@@ -465,6 +465,24 @@ if  Determinant(g)=1 then return true; fi;
 return false; 
 ###############
 fi;
+
+
+########
+if IsBound(G!.coprimes) then
+m:=G!.coprimes[1];
+p:=G!.coprimes[2];
+P:=[[1,0],[0,p]];
+return P^-1*g*P in SL2Z(1/m);
+fi;
+###############
+if IsBound(G!.levels) then
+m:=G!.levels[1];
+p:=G!.levels[2];
+H:=SL2Z(1/m);
+K:=ConjugateSL2ZGroup(H,[[1,0],[0,p]]);
+return (g in H and g in K);
+fi;
+##############################
 
 end );
 ######################

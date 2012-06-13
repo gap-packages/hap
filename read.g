@@ -142,7 +142,6 @@ ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 ReadPackage("HAP", "lib/Resolutions/resSL2Z.gi");
-ReadPackage("HAP", "lib/Resolutions/sl2zres.gi");
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
@@ -173,6 +172,7 @@ ReadPackage("HAP", "lib/Homology/lefschetz.gi");
 ReadPackage("HAP", "lib/Homology/modularHomology.gi");
 ReadPackage("HAP", "lib/Homology/modularHomologyVectSpace.gi");
 ReadPackage("HAP", "lib/Homology/homology.gi");
+ReadPackage("HAP", "lib/Homology/cat1homology.gi");
 ReadPackage("HAP", "lib/Homology/groupHomology.gi");
 ReadPackage("HAP", "lib/Homology/integralCohomology.gi");
 ReadPackage("HAP", "lib/Homology/cohomology.gi");
@@ -196,7 +196,6 @@ ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
-ReadPackage("HAP", "lib/Perturbations/resGTree.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
 ReadPackage("HAP", "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
@@ -316,6 +315,13 @@ ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
 fi;
 
+############### ARITHMETIC GROUPS#########################
+ ReadPackage("HAP","lib/ArithmeticGroups/arithVarious.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/arithmeticOps.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/sl2zngens.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
