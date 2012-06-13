@@ -315,6 +315,7 @@ ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
 fi;
 
+if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################
  ReadPackage("HAP","lib/ArithmeticGroups/arithVarious.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/arithmeticOps.gi");
@@ -322,6 +323,8 @@ fi;
  ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
+######################################################
+fi;
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
