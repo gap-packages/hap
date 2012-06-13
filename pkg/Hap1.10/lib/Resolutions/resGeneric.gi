@@ -23,7 +23,7 @@ Tz:=TietzeReducedResolution;
    fi;
 
    if IsPGroup(G) and Order(G)<256 then
-   return Tz(ResolutionNormalSeries(LowerCentralSeries(G),N));
+   return ResolutionNormalSeries(LowerCentralSeries(G),N);
    fi;
 
    if IsNilpotent(G) then

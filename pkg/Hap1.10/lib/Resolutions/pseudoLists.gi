@@ -88,9 +88,18 @@ InstallOtherMethod(Position,
 "for PseudoLists",
 [IsPseudoListWithFunction and IsPseudoList,IsObject,IsInt],
 function(PL,g,i)
-local p,A;
-A:=List([1..Length(PL)],j->PL!.eltfun(j));
-return Position(A,g,i);
+#local p,A;
+#A:=List([1..Length(PL)],j->PL!.eltfun(j));
+#return Position(A,g,i);
+local j;
+for j in [i+1..Length(PL)] do
+if PL!.eltfun(j)=g then return j; fi;
+od;
+return fail;
+#local p;
+#p:=PositionProperty([i+1..Length(PL)],j->PL!.eltfun(j)=g);
+#if p=fail then return p;
+#else return i+p; fi;
 end);
 #############################################################
 

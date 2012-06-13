@@ -79,7 +79,8 @@ S:=ResolutionFiniteGroup(gensK,n+1);
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
 fi;
-#S:=ResolutionPrimePowerGroup(G1,n+1);
+#S:=TietzeReducedResolution(S);
+
 
 if not (Homology(F(S),n)=[]) then
 

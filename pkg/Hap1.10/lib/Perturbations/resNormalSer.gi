@@ -51,7 +51,6 @@ Res:=[];
 Res[2]:=ResolutionFiniteGroup(GensQ[2],n,tietze,Charact);
 
 
-
 for i in [3..L] do
 Res[i]:=ResolutionFiniteExtension(GensQ[i],GensQ[i-1],Res[i-1],n,tietze);
 od;

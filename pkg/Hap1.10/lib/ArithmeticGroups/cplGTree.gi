@@ -1,7 +1,9 @@
-SL2ZTree:=function(m,p)
-local Elts,H,K,G,Gamma,
-      Id,ID,Idcoset,
-      Boundary,Dimension,Action,Stabilizer,Homotopy,StabGrps,pos;
+InstallGlobalFunction(SL2ZTree,
+function(m,p)
+local t1,t2,
+      Elts,H,K,G,Gamma,
+      Id,ID,Idcoset,BoundaryList,
+      Boundary,Dimension,Action,Stabilizer,Homotopy,StabGrps,pos,RemoveLoops,HtpyRec;
 Elts:=[[[1,0],[0,1]]];
 #StabGrps:=[];
 if p=0 then
@@ -15,11 +17,16 @@ if p=0 then
   Elts:=SSortedList(Elts);
 else
 if m=1 then H:=SL(2,Integers);
-else H:=SL2Z(1/m);fi;
 K:=SL2Z(p);
+Gamma:=CongruenceSubgroupGamma0(p);
+else H:=SL2Z(1/m);
+#K:=SL2Z(p);
+K:=ConjugateSL2ZGroup(H,[[1,0],[0,p]]);
+Gamma:=CongruenceSubgroup(m,p);
+fi;
 G:=SL2Z(1/(m*p));
 ID:=Group(One(G));
-Gamma:=CongruenceSubgroupGamma0(p);
+#Gamma:=CongruenceSubgroupGamma0(p);
 Append(Elts,GeneratorsOfGroup(H));
 Append(Elts,GeneratorsOfGroup(K));
 Append(Elts,GeneratorsOfGroup(Gamma));
@@ -28,11 +35,22 @@ fi;
 SetName(Gamma,"Gamma");
 Id:=Position(Elts,[[1,0],[0,1]]);
 #######################
+pos:=function(Elts,g)
+if Position(Elts,g)=fail then Add(Elts,g);return Position(Elts,g);
+else return Position(Elts,g);
+fi;
+end;
+######################
+BoundaryList:=[];
+t1:=pos(Elts,CanonicalRightCountableCosetElement(H,Elts[Id]^-1)^-1); 
+t2:=pos(Elts,CanonicalRightCountableCosetElement(K,Elts[Id]^-1)^-1);
+Append(BoundaryList,[[[1,t1],[-2,t2]]]);
+#######################
 Boundary:=function(n,k)
-local w,t;
+local w;
 if not n=1 then return [];fi;
-t:=pos(Elts,CanonicalRightCountableCosetElement(Gamma,Elts[Id]^-1)^-1); 
-w:=[[1,t],[-2,t]];
+w:=BoundaryList[AbsInt(k)];
+#w:=[[1,Id],[-2,Id]];
 if k>0 then return w;
 else return NegateWord(w);
 fi;
@@ -58,20 +76,39 @@ Stabilizer:=function(n,k);
 return StabGrps[n+1][k];
 end;
 #######################
-pos:=function(Elts,g)
-if Position(Elts,g)=fail then Add(Elts,g);return Position(Elts,g);
-else return Position(Elts,g);
-fi;
-end;
+
 Idcoset:=pos(Elts,CanonicalRightCountableCosetElement(Gamma,Elts[Id]^-1)^-1);
+###########################
+RemoveLoops:=function(d)
+local i,h,j,l;
+l:=StructuralCopy(d);
+h:=[[1,0],[0,1]];
+i:=1;
+while i<Length(d) do
+h:=h*d[i];
+if h in H or h in K then
+    for j in [1..i-1] do
+	Remove(l,1);
+    od;
+    l[1]:=h;
+fi;
+i:=i+1;
+od;
+return l;
+end;
+############################
+HtpyRec:=[];
+HtpyRec[1]:=[];
+HtpyRec[2]:=[];
 #######################
 Homotopy:=function(n,w)
 local d,path,i,h,k,g,pk,r,t;
 k:=w[1];
 g:=w[2];
 pk:=AbsInt(k);
+if not IsBound(HtpyRec[pk][g]) then
 d:=SL2ZmElementsDecomposition(Elts[g],p);
-if p=0 then
+#if p=0 then
 r:=[];
 Add(r,d[1]);
 for i in [2..Length(d)] do
@@ -92,9 +129,14 @@ for i in [2..Length(d)] do
     fi;
 od;
 d:=StructuralCopy(r);
-fi;
+#fi;
+###########################
+
 #Print("d=",d,"\n");
-if d[1] in K and not d[1] in Gamma then 
+d:=RemoveLoops(d);
+#Print("d=",d,"\n");
+if (d[1] in K) and (not d[1] in Gamma) then
+#Print("test"); 
 r:=[[[1,0],[0,1]]];
 Append(r,d);
 d:=StructuralCopy(r);
@@ -110,6 +152,7 @@ if pk=1 then
     if d[Length(d)] in H then Remove(d,Length(d));fi;
     for i in [1..Length(d)] do
 	#d[i]:=CanonicalRightCosetElement(Gamma,d[i]^-1)^-1;
+	#if h in H then h:=[[1,0],[0,1]];path:=[];fi;
 	h:=h*d[i];
 	t:=CanonicalRightCountableCosetElement(Gamma,h^-1)^-1;
 	Add(path,[(-1)^(i),pos(Elts,t)]);
@@ -129,11 +172,15 @@ else
 	#if h in K and i<Length(d) then path:=[];fi;
     od;
 fi;
+HtpyRec[pk][g]:=path;
+fi;
 if k>0 then
-return path;
-else return NegateWord(path);
+return HtpyRec[pk][g];
+else return NegateWord(HtpyRec[pk][g]);
 fi;
 end;
+#######################
+
 #######################
 
 
@@ -147,13 +194,14 @@ return Objectify(HapNonFreeResolution,
             stabilizer:=Stabilizer,
             action:=Action,
             properties:=
-            [["length",10000],
+            [["length",100],
              ["characteristic",0],
              ["type","resolution"]]  ));
 
-end;
+end);
 ###################################################################
-TreeOfResolutionsToSL2Zcomplex:=function(D,G)
+InstallGlobalFunction(TreeOfResolutionsToSL2Zcomplex,
+function(D,G)
 local RH,RK,RGamma,
       H,K,Gamma,
       NameH,
@@ -166,17 +214,19 @@ H:=RH!.group;
 K:=RK!.group;
 Gamma:=RGamma!.group;
 NameH:=H!.Name;
-if H=SL(2,Integers) then m:=1;
+if H=SL(2,Integers) then 
+m:=1;
+p:=Gamma!.LevelOfCongruenceSubgroup;
 else
 i:=Position(NameH,'/');
 j:=Position(NameH,']');
 m:=Int(NameH{[i+1..j-1]});
+p:=Gamma!.levels[2];
 fi;
-p:=Gamma!.LevelOfCongruenceSubgroup;
-C:=SL2ZTree(m,p);
 NamesOfGroups:=[Name(H),Name(K),Name(Gamma)];
 Resolutions:=[RH,RK,RGamma];
+C:=SL2ZTree(m,p);
 C!.resolutions:=[Resolutions,NamesOfGroups];
 return C;
-end;
+end);
 ####################################################################

@@ -3,14 +3,15 @@
 ################################################
 ################################################
 InstallGlobalFunction(ResolutionSL2Z,
-function(p,n)
+function(pp,n)
 
-local C, Rsl, Rsl2, RH, G, H, sl, sl2, 
+local C, p, Rsl, Rsl2, RH, G, H, sl, sl2, 
       Hhomsl, Hhomsl2, RHRsl, RHRsl2, D, K; 
 
-if not IsPrime(p) and not p=0 then
-Print("At present this function is only defined for SL(2,Z[1/p]) with p prime or SL(2,Z) with p=0.\n\n");
-return fail;
+p:=Product(SSortedList(Factors(pp)));
+
+if not IsPrime(p) and not p=1 then
+return SL2ZResolution(p,n);
 fi;
 
 ##################################
@@ -20,7 +21,7 @@ Rsl!.group:=SL(2,Integers);
 sl:=Rsl!.group;
 ##################################
 
-if p=0 then return
+if p=1 then return
 ResolutionGTree(C,n);
 fi;
 

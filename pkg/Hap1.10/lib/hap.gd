@@ -8,6 +8,7 @@ ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
 ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
+ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
 
 
 
@@ -160,7 +161,7 @@ DeclareGlobalFunction("CoxeterComplex");
 DeclareGlobalFunction("ResolutionCoxeterGroup");
 DeclareGlobalFunction("CyclesOfFilteredChainComplex");
 DeclareGlobalFunction("BoundariesOfFilteredChainComplex");
-DeclareGlobalFunction("ResolutionGTree");
+#DeclareGlobalFunction("ResolutionGTree");
 DeclareGlobalFunction("ResolutionSL2Z");
 DeclareGlobalFunction("ResolutionSL2Z_alt");
 
@@ -469,22 +470,6 @@ DeclareGlobalFunction("NerveOfCommutativeDiagram");
 DeclareGlobalFunction("GroupHomologyOfCommutativeDiagram");
 DeclareGlobalFunction("PersistentHomologyOfCommutativeDiagramOfPGroups");
 DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
-
-## SIMPLICIAL GROUPS ################################################
-DeclareGlobalFunction("SimplicialGroupMap");
-#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroupMap");
-#DeclareGlobalFunction("NerveOfCatOneGroup");
-#DeclareGlobalFunction("BarResolutionBoundary");
-#DeclareGlobalFunction("BarResolutionEquivalence");
-#DeclareGlobalFunction("BarComplexBoundary");
-#DeclareGlobalFunction("BarComplexEquivalence");
-#DeclareGlobalFunction("ReduceAlg");
-#DeclareGlobalFunction("AddWord");
-#DeclareGlobalFunction("ChainComplexOfSimplicialGroup");
-#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup");
-#DeclareGlobalFunction("EilenbergMacLaneSimplicialGroup_alt");
-#DeclareGlobalFunction("TensorProductOfChainComplexes");
-
 
 ## REGULAR CW-SPACES ################################################
 DeclareGlobalFunction("SimplicialComplexToRegularCWSpace");

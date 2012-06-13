@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.10.4",
-  Date    := "03/06/2012",
+  Version := "1.10.5",
+  Date    := "12/06/2012",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.10.4",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.10.5",
   ArchiveFormats 
           := ".tar.gz",
 
