@@ -20,7 +20,6 @@ H4a:=IntegralRingGenerators(R,4);;
 
 Tensor:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3));;
 Tensor2:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3),12);;
-
 P:=PresentationOfResolution(ResolutionAbelianGroup([0,2,4],3)).relators;
 P:=Length(P);
 

@@ -1,5 +1,5 @@
 #(C) 2009 Graham Ellis
-RT:=0;
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayToPureCubicalComplex,
@@ -224,10 +224,11 @@ function(file,threshold)
 # Inputs a string "file" that points either to a single image file, or 
 # to a list of suitable image files, and returns either a 2-dimensional 
 # or 3-dimensional cubical complex.
-local f,i,x,prog,B,A,AA;
+local f,i,x,prog,B,A,AA,pth;
 
-prog:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/PolyComplexes/prog");
-#MUST FIX THIS
+pth:=HAP_ROOT;
+prog:=Concatenation(pth,"PolyComplexes/prog");
+
 
 ##################################
 if IsString(file) then
@@ -1009,7 +1010,7 @@ local i,A,viewer,T;
 
 T:=arg[1];
 if not Dimension(T)=2 then
-Print("There is no method for viewing a topological maqnifold of dimension ",
+Print("There is no method for viewing a pure cubical complex of dimension ",
 Dimension(T),".\n"); return fail; fi;
 T!.binaryArray:=FrameArray(T!.binaryArray);
 T!.binaryArray:=FrameArray(T!.binaryArray);
@@ -2460,3 +2461,49 @@ return PureCubicalComplex(C);
 end);
 ####################################################
 ####################################################
+
+####################################################
+####################################################
+InstallGlobalFunction(ReadLinkImageAsPureCubicalComplex,
+function(arg)
+local file,thk,M, arcs, S, T, K;
+
+file:=arg[1];
+if Length(arg)>1 then thk:=arg[2]; else thk:=10; fi;
+ 
+M:=ReadImageAsPureCubicalComplex(file,590);
+M:=PureCubicalComplex(FrameArray(M!.binaryArray));
+M:=PureCubicalComplex(FrameArray(M!.binaryArray));
+arcs:=PathComponentOfPureCubicalComplex(M,0);
+S:=SingularitiesOfPureCubicalComplex(M,thk,50);
+while PathComponentOfPureCubicalComplex(S,0)>2*arcs or
+Length(Homology(S,1))>0 do
+S:=ThickenedPureCubicalComplex(S);
+od;
+
+#Sanity check
+if not PathComponentOfPureCubicalComplex(S,0)=2*arcs then return fail; fi;
+
+T:=ThickenedPureCubicalComplex(S);
+while PathComponentOfPureCubicalComplex(T,0)>arcs or
+Length(Homology(T,1))>0 do
+T:=ThickenedPureCubicalComplex(T);
+od;
+
+#Sanity check
+if not PathComponentOfPureCubicalComplex(T,0)=arcs then return fail; fi;
+
+K:=PureCubicalComplex(
+   FrameArray([T!.binaryArray,S!.binaryArray,S!.binaryArray,M!.binaryArray])
+   );
+
+K:=PureCubicalComplex(FrameArray(K!.binaryArray));
+
+
+return K;
+end);
+####################################################
+####################################################
+
+
+

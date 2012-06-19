@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-tmppath:=Concatenation(GAP_ROOT_PATHS[1],"pkg/Hap1.10/");
+tmppath:=HAP_ROOT{[1..Length(HAP_ROOT)-4]};
 
 ########## COMPILED GAP FUNCTIONS ###################################
 LoadDynamicModule(
