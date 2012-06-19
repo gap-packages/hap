@@ -1,123 +1,13 @@
   
-  [1X13 Orbit polytopes and fundamental domains[0X
+  [1X13 [33X[0;0YOrbit polytopes and fundamental domains[133X[101X
   
-  ::::::::::::::::::::::::
-  [10XCoxeterComplex(D)[0m
-  [10XCoxeterComplex(D,n)[0m
-  
-  Inputs   a  Coxeter  diagram  D  of  finite  type.  It  returns  a  non-free
-  ZW-resolution for the associated Coxeter group W. The non-free resolution is
-  obtained  from  the  permutahedron  of  type  W. A positive integer n can be
-  entered  as  an  optional  second  variable;  just  the first n terms of the
-  non-free resolution are then returned.
-  ::::::::::::::::::::::::
-  [10XContractibleGcomplex("PSL(4,Z)")[0m
-  
-  Inputs one of the following strings:
-  "SL(2,Z)"  ,  "SL(3,Z)"  ,  "PGL(3,Z[i])"  ,  "PGL(3,Eisenstein_Integers)" ,
-  "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)"
-  or one of the following strings
-  "SL(2,Z[sqrt(-2)])"   ,   "SL(2,Z[sqrt(-7)])"   ,   "SL(2,Z[sqrt(-11)])"   ,
-  "SL(2,Z[sqrt(-19)])"   ,   "SL(2,Z[sqrt(-43)])"   ,  "SL(2,Z[sqrt(-67)])"  ,
-  "SL(2,Z[sqrt(-163)])"
-  It returns a non-free ZG-resolution for the group G described by the string.
-  The  stabilizer  groups of cells are finite. (Subscripts _b , _c , _d denote
-  alternative non-free ZG-resolutions for a given group G.)
-  Data  for  the  first  list of non-free resolutions was provided provided by
-  [12XMathieu Dutour[0m. Data for the second list was provided by [12XAlexander Rahm[0m.
-  ::::::::::::::::::::::::
-  [10XQuotientOfContractibleGcomplex(C,D)[0m
-  
-  Inputs  a  non-free  ZG-resolution C and a finite subgroup D of G which is a
-  subgroup  of  each  cell  stabilizer  group  for  C.  Each element of D must
-  preserves  the  orientation  of  any  cell  stabilized by it. It returns the
-  corresponding  non-free  Z(G/D)-resolution.  (So,  for  instance,  from  the
-  SL(2,O)  complex  C=ContractibleGcomplex("SL(2,O-2)");  we  can  construct a
-  PSL(2,O)-complex using this function.)
-  ::::::::::::::::::::::::
-  [10XTruncatedGComplex(R,m,n)[0m
-  
-  Inputs  a  non-free  ZG-resolution  R  and two positive integers m and n. It
-  returns  the  non-free  ZG-resolution  consisting  of  those modules in R of
-  degree at least m and at most n.
-  ::::::::::::::::::::::::
-  [10XFundamentalDomainStandardSpaceGroup(v,G)[0m
-  
-  Inputs a crystallographic group G (represented using AffineCrystGroupOnRight
-  as  in  the  GAP  package Cryst). It also inputs a choice of vector v in the
-  euclidean  space  R^n  on  which  G  acts.  It returns the Dirichlet-Voronoi
-  fundamental cell for the action of G on euclidean space corresponding to the
-  vector  v.  The fundamental cell is a fundamental domain if G is Bieberbach.
-  The  fundamental  cell/domain  is returned as a "Polymake object". Currently
-  the  function  only  applies  to  certain  crystallographic  groups. See the
-  manuals to HAPcryst and HAPpolymake for full details.
-  
-  This  function is part of the HAPcryst package written by [12XMarc Roeder[0m and is
-  thus only available if HAPcryst is loaded.
-  
-  The function requires the use of Polymake software.
-  ::::::::::::::::::::::::
-  [10XOrbitPolytope(G,v,L) [0m
-  
-  Inputs  a  permutation  group  or  matrix group G of degree n and a rational
-  vector v of length n. In both cases there is a natural action of G on v. Let
-  P(G,v)  be  the  convex polytope arising as the convex hull of the Euclidean
-  points  in  the orbit of v under the action of G. The function also inputs a
-  sublist L of the following list of strings:
-  
-  ["dimension","vertex_degree", "visual_graph", "schlegel","visual"]
-  
-  Depending on the sublist, the function:
-  prints the dimension of the orbit polytope P(G,v);
-  prints the degree of a vertex in the graph of P(G,v);
-  visualizes the graph of P(G,v);
-  visualizes the Schlegel diagram of P(G,v);
-  visualizes P(G,v) if the polytope is of dimension 2 or 3.
-  The function uses Polymake software.
-  ::::::::::::::::::::::::
-  [10XPolytopalComplex(G,v) [0m
-  [10XPolytopalComplex(G,v,n) [0m
-  
-  Inputs  a  permutation  group  or  matrix group G of degree n and a rational
-  vector v of length n. In both cases there is a natural action of G on v. Let
-  P(G,v)  be  the  convex polytope arising as the convex hull of the Euclidean
-  points  in  the orbit of v under the action of G. The cellular chain complex
-  C_*=C_*(P(G,v))  is  an exact sequence of (not necessarily free) ZG-modules.
-  The function returns a component object R with components:
-  R!.dimension(k)  is  a  function which returns the number of G-orbits of the
-  k-dimensional  faces  in  P(G,v).  If  each  k-face  has  trivial stabilizer
-  subgroup in G then C_k is a free ZG-module of rank R.dimension(k).
-  R!.stabilizer(k,n) is a function which returns the stabilizer subgroup for a
-  face in the n-th orbit of k-faces.
-  If  all faces of dimension <k+1 have trivial stabilizer group then the first
-  k  terms of C_* constitute part of a free ZG-resolution. The boundary map is
-  described  by  the  function boundary(k,n) . (If some faces have non-trivial
-  stabilizer  group  then  C_* is not free and no attempt is made to determine
-  signs for the boundary map.)
-  R!.elements, R!.group, R!.properties are as in a ZG-resolution.
-  If  an  optional third input variable n is used, then only the first n terms
-  of the resolution C_* will be computed.
-  
-  The function uses Polymake software.
-  ::::::::::::::::::::::::
-  [10XPolytopalGenerators(G,v) [0m
-  
-  Inputs  a  permutation  group  or  matrix group G of degree n and a rational
-  vector v of length n. In both cases there is a natural action of G on v, and
-  the vector v must be chosen so that it has trivial stabilizer subgroup in G.
-  Let  P(G,v)  be  the  convex  polytope  arising  as  the  convex hull of the
-  Euclidean  points  in  the  orbit  of  v under the action of G. The function
-  returns a record P with components:
-  P.generators  is  a  list of all those elements g in G such that g* v has an
-  edge in common with v. The list is a generating set for G.
-  P.vector is the vector v.
-  P.hasseDiagram is the Hasse diagram of the cone at v.
-  The  function uses Polymake software. The function is joint work with Seamus
-  Kelly.
-  ::::::::::::::::::::::::
-  [10XVectorStabilizer(G,v) [0m
-  
-  Inputs  a  permutation  group  or  matrix group G of degree n and a rational
-  vector  of  degree  n. In both cases there is a natural action of G on v and
-  the function returns the group of elements in G that fix v.
+      │ [10XCoxeterComplex(D)[110X [10XCoxeterComplex(D,n)[110X           │ 
+      │ [10XContractibleGcomplex("PSL(4,Z)")[110X                │ 
+      │ [10XQuotientOfContractibleGcomplex(C,D)[110X             │ 
+      │ [10XTruncatedGComplex(R,m,n)[110X                        │ 
+      │ [10XFundamentalDomainStandardSpaceGroup(v,G)[110X        │ 
+      │ [10XOrbitPolytope(G,v,L) [110X                           │ 
+      │ [10XPolytopalComplex(G,v) [110X [10XPolytopalComplex(G,v,n) [110X │ 
+      │ [10XPolytopalGenerators(G,v) [110X                       │ 
+      │ [10XVectorStabilizer(G,v) [110X                          │ 
   

@@ -1,16 +1,18 @@
 InstallGlobalFunction(MakeHAPManual,
 function()
-local  VISCRIPT,  VIS, HAPDOC, HAPPDFDOC, cn;
+local  grp, VISCRIPT,  VIS, HAPDOC, HAPPDFDOC, cn;
 
 cn:=Concatenation;
+
+grp:=HAP_ROOT;
 
 ############################################################
 #IF NECESSARY, CHANGE "VISCRIPT" AND "HAPDOC" TO THE CORRECT PATHS 
 #
-VISCRIPT:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/TitlePage/viscript ");
-VIS:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/lib/TitlePage/vis ");
-HAPDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/doc/");
-HAPPDFDOC:=cn(GAP_ROOT_PATHS[1],"pkg/Hap1.10/pdfdoc/");
+VISCRIPT:=cn(grp,"TitlePage/viscript ");
+VIS:=cn(grp,"pkg/Hap1.10/lib/TitlePage/vis ");
+HAPDOC:=cn(grp{[1..Length(grp)-4]},"doc/");
+HAPPDFDOC:=cn(grp{[1..Length(grp)-4]},"pdfdoc/");
 #
 ############################################################
 

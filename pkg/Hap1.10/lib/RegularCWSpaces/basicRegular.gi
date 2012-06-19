@@ -591,7 +591,7 @@ end;
 ###############################
 ###############################
 DeformCellSgn:=function(n,kk)
-local x,f,k,sgnk,bnd,def,sn,tog;            
+local sgnn,x,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2;            
 		        	#This will return a list of signed n-cells
                                 #into which the k-th n-cell is deformed.
 
@@ -609,17 +609,34 @@ f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
 sn:=Y!.orientation[n+2][f];
 
-def:=[];
+def:=[]; def1:=[];def2:=[];
+
 for x in [2..Length(bnd)] do
 if not bnd[x]=k then
-Append(def,DeformCellSgn(n,sn[x-1]*bnd[x]));
+Add(def1,sn[x-1]*bnd[x]);
 else
-sgnk:=-sgnk*sn[x-1];
+sgnn:=sn[x-1];
+break;
 fi;
+od;
+cnt:=x+1;
 
+for x in [cnt..Length(bnd)] do
+Add(def2,sn[x-1]*bnd[x]);
 od;
 
-return sgnk*def;
+if sgnn=1 then 
+def:=-Concatenation(Reversed(def1),Reversed(def2));
+else
+def:=Concatenation(def2,def1);
+fi;
+
+Apply(def,x->DeformCellSgn(n,x));
+
+if sgnk=1 then return Flat(def);
+else
+return -Reversed(Flat(def));
+fi;
 end;
 ###############################
 ###############################
@@ -672,6 +689,7 @@ end;
 ######################
 fi;
 
+if IsBound(Y!.orientation) then DeformCell:=DeformCellSgn; fi;
 return
 Objectify(HapChainComplex,
            rec(

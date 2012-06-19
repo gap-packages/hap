@@ -1,163 +1,20 @@
   
-  [1X20 Simplicial groups[0X
+  [1X20 [33X[0;0YSimplicial groups[133X[101X
   
-  ::::::::::::::::::::::::
-  [10XNerveOfCatOneGroup(G,n)[0m
-  
-  Inputs   a   cat-1-group  G  and  a  positive  integer  n.  It  returns  the
-  low-dimensional part of the nerve of G as a simplicial group of length n.
-  This  function applies both to cat-1-groups for which IsHapCatOneGroup(G) is
-  true, and to cat-1-groups produced using the Xmod package.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XEilenbergMacLaneSimplicialGroup(G,n,dim)[0m
-  
-  Inputs  a  group  G,  a  positive integer n, and a positive integer dim. The
-  function  returns  the  first  1+dim  terms of a simplicial group with n-1st
-  homotopy group equal to G and all other homotopy groups equal to zero.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XEilenbergMacLaneSimplicialGroupMap(f,n,dim)[0m
-  
-  Inputs  a  group  homomorphism f:G-> Q, a positive integer n, and a positive
-  integer  dim.  The  function  returns  the first 1+dim terms of a simplicial
-  group  homomorphism  f:K(G,n)  ->  K(Q,n)  of  Eilenberg-MacLane  simplicial
-  groups.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XMooreComplex(G)[0m
-  
-  Inputs a simplicial group G and returns its Moore complex as a G-complex.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XChainComplexOfSimplicialGroup(G)[0m
-  
-  Inputs  a  simplicial  group G and returns the cellular chain complex C of a
-  CW-space  X  represented  by the homotopy type of the simplicial group. Thus
-  the homology groups of C are the integral homology groups of X.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XSimplicialGroupMap(f)[0m
-  
-  Inputs  a homomorphism f:G-> Q of simplicial groups. The function returns an
-  induced map f:C(G) -> C(Q) of chain complexes whose homology is the integral
-  homology of the simplicial group G and Q respectively.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XHomotopyGroup(G,n)[0m
-  
-  Inputs  a simplicial group G and a positive integer n. The integer n must be
-  less than the length of G. It returns, as a group, the (n)-th homology group
-  of  its  Moore  complex.  Thus  HomotopyGroup(G,0)  returns the "fundamental
-  group" of G.
-  ::::::::::::::::::::::::
-  [10XRepresentation of elements in the bar resolution[0m
-  
-  For  a  group  G we denote by B_n(G) the free ZG-module with basis the lists
-  [g_1 | g_2 | ... | g_n] where the g_i range over G.
-  We represent a word
-  w  = h_1.[g_11 | g_12 | ... | g_1n] - h_2.[g_21 | g_22 | ... | g_2n] + ... +
-  h_k.[g_k1 | g_k2 | ... | g_kn]
-  in B_n(G) as a list of lists:
-  [  [+1,h_1,g_11  , g_12 , ... , g_1n] , [-1, h_2,g_21 , g_22 , ... | g_2n] +
-  ... + [+1, h_k,g_k1 , g_k2 , ... , g_kn].
-  ::::::::::::::::::::::::
-  [10XBarResolutionBoundary(w)[0m
-  
-  This  function  inputs  a  word  w  in  the bar resolution module B_n(G) and
-  returns its image under the boundary homomorphism d_n: B_n(G) -> B_n-1(G) in
-  the bar resolution.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XBarResolutionHomotopy(w)[0m
-  
-  This  function  inputs  a  word  w  in  the bar resolution module B_n(G) and
-  returns  its image under the contracting homotopy h_n: B_n(G) -> B_n+1(G) in
-  the bar resolution.
-  This function is currently being implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XRepresentation of elements in the bar complex[0m
-  
-  For  a  group  G  we denote by BC_n(G) the free abelian group with basis the
-  lists [g_1 | g_2 | ... | g_n] where the g_i range over G.
-  We represent a word
-  w  = [g_11 | g_12 | ... | g_1n] - [g_21 | g_22 | ... | g_2n] + ... + [g_k1 |
-  g_k2 | ... | g_kn]
-  in BC_n(G) as a list of lists:
-  [  [+1,g_11  ,  g_12  , ... , g_1n] , [-1, g_21 , g_22 , ... | g_2n] + ... +
-  [+1, g_k1 , g_k2 , ... , g_kn].
-  ::::::::::::::::::::::::
-  [10XBarComplexBoundary(w)[0m
-  
-  This  function  inputs  a word w in the n-th term of the bar complex BC_n(G)
-  and  returns  its  image  under  the  boundary  homomorphism d_n: BC_n(G) ->
-  BC_n-1(G) in the bar complex.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XBarResolutionEquivalence(R)[0m
-  
-  This  function  inputs a free ZG-resolution R. It returns a component object
-  HE with components
-  HE!.phi(n,w)  is a function which inputs a non-negative integer n and a word
-  w in B_n(G). It returns the image of w in R_n under a chain equivalence phi:
-  B_n(G) -> R_n.
-  HE!.psi(n,w)  is a function which inputs a non-negative integer n and a word
-  w in R_n. It returns the image of w in B_n(G) under a chain equivalence psi:
-  R_n -> B_n(G).
-  HE!.equiv(n,w)  is  a  function  which inputs a non-negative integer n and a
-  word  w  in  B_n(G).  It  returns  the  image  of  w  in  B_n+1(G)  under  a
-  ZG-equivariant homomorphism
-  equiv(n,-) : B_n(G) -> B_n+1(G)
-  satisfying
-  
-  
-       w - \psi ( \phi (w)) = d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .
-  
-  
-  where  d(n,-):  B_n(G)  ->  B_n-1(G) is the boundary homomorphism in the bar
-  resolution.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XBarComplexEquivalence(R)[0m
-  
-  This  function  inputs a free ZG-resolution R. It first constructs the chain
-  complex T=TensorWithIntegerts(R). The function returns a component object HE
-  with components
-  HE!.phi(n,w)  is a function which inputs a non-negative integer n and a word
-  w  in  BC_n(G).  It  returns the image of w in T_n under a chain equivalence
-  phi: BC_n(G) -> T_n.
-  HE!.psi(n,w)  is  a  function  which  inputs a non-negative integer n and an
-  element  w  in  T_n.  It  returns  the  image  of w in BC_n(G) under a chain
-  equivalence psi: T_n -> BC_n(G).
-  HE!.equiv(n,w)  is  a  function  which inputs a non-negative integer n and a
-  word  w  in  BC_n(G).  It  returns  the  image  of  w  in  BC_n+1(G) under a
-  homomorphism
-  equiv(n,-) : BC_n(G) -> BC_n+1(G)
-  satisfying
-  
-  
-       w - \psi ( \phi (w)) = d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .
-  
-  
-  where  d(n,-):  BC_n(G) -> BC_n-1(G) is the boundary homomorphism in the bar
-  complex.
-  This function was implemented by [12XVan Luyen Le[0m.
-  ::::::::::::::::::::::::
-  [10XRepresentation of elements in the bar cocomplex[0m
-  
-  For  a  group  G  we denote by BC^n(G) the free abelian group with basis the
-  lists [g_1 | g_2 | ... | g_n] where the g_i range over G.
-  We represent a word
-  w  = [g_11 | g_12 | ... | g_1n] - [g_21 | g_22 | ... | g_2n] + ... + [g_k1 |
-  g_k2 | ... | g_kn]
-  in BC^n(G) as a list of lists:
-  [  [+1,g_11  ,  g_12  , ... , g_1n] , [-1, g_21 , g_22 , ... | g_2n] + ... +
-  [+1, g_k1 , g_k2 , ... , g_kn].
-  ::::::::::::::::::::::::
-  [10XBarCocomplexCoboundary(w)[0m
-  
-  This  function inputs a word w in the n-th term of the bar cocomplex BC^n(G)
-  and  returns  its  image  under  the coboundary homomorphism d^n: BC^n(G) ->
-  BC^n+1(G) in the bar cocomplex.
-  This function was implemented by [12XVan Luyen Le[0m.
+      │ [10XNerveOfCatOneGroup(G,n)[110X                          │ 
+      │ [10XEilenbergMacLaneSimplicialGroup(G,n,dim)[110X         │ 
+      │ [10XEilenbergMacLaneSimplicialGroupMap(f,n,dim)[110X      │ 
+      │ [10XMooreComplex(G)[110X                                  │ 
+      │ [10XChainComplexOfSimplicialGroup(G)[110X                 │ 
+      │ [10XSimplicialGroupMap(f)[110X                            │ 
+      │ [10XHomotopyGroup(G,n)[110X                               │ 
+      │ [10XRepresentation of elements in the bar resolution[110X │ 
+      │ [10XBarResolutionBoundary(w)[110X                         │ 
+      │ [10XBarResolutionHomotopy(w)[110X                         │ 
+      │ [10XRepresentation of elements in the bar complex[110X    │ 
+      │ [10XBarComplexBoundary(w)[110X                            │ 
+      │ [10XBarResolutionEquivalence(R)[110X                      │ 
+      │ [10XBarComplexEquivalence(R)[110X                         │ 
+      │ [10XRepresentation of elements in the bar cocomplex[110X  │ 
+      │ [10XBarCocomplexCoboundary(w)[110X                        │ 
   

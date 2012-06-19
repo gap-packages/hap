@@ -342,6 +342,7 @@ DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
 DeclareOperation("ContractedComplex",[IsObject]);
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");
+DeclareGlobalFunction("ReadLinkImageAsPureCubicalComplex");
 DeclareGlobalFunction("ReadMatrixAsPureCubicalComplex");
 DeclareGlobalFunction("ReadImageSequenceAsPureCubicalComplex");
 DeclareGlobalFunction("WritePureCubicalComplexAsImage");
@@ -481,6 +482,9 @@ DeclareGlobalFunction("CriticalCellsOfRegularCWSpace");
 DeclareGlobalFunction("HAPContractRegularCWSpace_Alt");
 DeclareGlobalFunction("ChainComplexOfRegularCWSpace");
 DeclareGlobalFunction("ChainComplexOfRegularCWSpaceWithVectorField");
+DeclareGlobalFunction("FundamentalGroupOfRegularCWSpace");
+DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace]);
+DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace,IsInt]);
 
 
 ## SPARSE ###########################################################
