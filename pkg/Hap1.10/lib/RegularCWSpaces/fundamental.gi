@@ -5,7 +5,7 @@
 ##########################################################
 InstallGlobalFunction(FundamentalGroupOfRegularCWSpace,
 function(arg)
-local Y,base,e,bool, b, vertices,edges,F, r,x,w, gens, rels, 
+local P,Y,base,e,bool, b, vertices,edges,F, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform;
 
 Y:=arg[1];
@@ -67,9 +67,10 @@ od;
 Add(rels,w);
 od;
 
-return F/rels;
+P:=PresentationFpGroup(F/rels);
+SimplifyPresentation(P);;
+return FpGroupPresentation(P);
 
-return [0cells,1cells,2boundaries];
 end);
 ##########################################################
 ##########################################################

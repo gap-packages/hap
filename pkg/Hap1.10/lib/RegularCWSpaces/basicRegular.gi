@@ -681,7 +681,8 @@ Apply(B,i->SignInt(i)*bij[n][AbsInt(i)]);
 
 
 for i in B do
-b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i)*sn[AbsInt(i)];
+#b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i)*sn[AbsInt(i)];
+b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i);
 od;
 
 return b;

@@ -187,30 +187,9 @@ fundamental group of the link complement Y.<br>
 F:=FundamentalGroup(Y);<br>
 &lt;fp group on the generators [ f1, f2, f3 ]&gt;<br>
       <br>
-gap&gt; RelatorsOfFpGroup(F);[
-f2^-1*f3^-1*f1*f3*f1^-1*f2*f1*f3^-1*f1^-1*f3,<br>
-&nbsp; f1^-1*f2^-1*f1*f3^-1*f2*f1*f3*f1^-1*f2^-1*f1*f3^-1*f1^-1*f3^2*f1^<br>
-&nbsp;&nbsp;&nbsp; -1*f2*f1*f3^-1,
-f3^-1*f2^-1*f3*f1^-1*f2*f1*f3*f1^-1*f2^-1*f1*f3^-1*f2 ]<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-following standard GAP commands simplify the presentation of F slightly.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-P:=PresentationFpGroup(F);;<br>
-gap&gt; SimplifyPresentation(P);;<br>
-gap&gt; simplifiedF:=FpGroupPresentation(P);<br>
-&lt;fp group of size infinity on the generators [ f1, f2, f3 ]&gt;<br>
-      <br>
 gap&gt; RelatorsOfFpGroup(simplifiedF);<br>
 [ f3^-1*f2^-1*f3*f1^-1*f2*f3*f2^-1*f3^-1*f1*f2,<br>
-&nbsp; f2^-1*f3^-1*f1*f3*f1^-1*f2*f1*f3^-1*f1^-1*f3 ]&nbsp;<br>
+&nbsp; f2^-1*f3^-1*f1*f3*f1^-1*f2*f1*f3^-1*f1^-1*f3 ] <br>
       </td>
     </tr>
     <tr>
@@ -237,6 +216,35 @@ gap&gt; GroupHomology(G,3);<br>
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0,<br>
 &nbsp; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute the same homological invariant for the
+following link<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 310px; height: 215px;" alt="" src="link.jpg"> <br>
+      <div style="text-align: left;"><br>
+and, as the value of the invariant is different in this case, the
+computations prove that
+the Borromean rings are not ambient isotopic to this second link.<br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+L:=ReadLinkImageAsPureCubicalComplex("link.jpg");;<br>
+gap&gt; C:=ComplementOfPureCubicalComplex(L);;<br>
+gap&gt; C:=ZigZagContractedPureCubicalComplex(C);;<br>
+gap&gt; Y:=CubicalComplexToRegularCWSpace(C);;<br>
+gap&gt; F:=FundamentalGroup(Y);<br>
+gap&gt; G:=NilpotentQuotient(F,3);;<br>
+gap&gt; GroupHomology(G,3);<br>
+[ 0, 0, 0, 0, 0, 0 ]<br>
       </td>
     </tr>
     <tr>
