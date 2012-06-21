@@ -347,5 +347,6 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
+#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

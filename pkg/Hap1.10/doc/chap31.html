@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 31:  Miscellaneous</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap31"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap30.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p><a id="X7C5563A37D566DA5" name="X7C5563A37D566DA5"></a></p>
+<div class="ChapSects"><a href="chap31.html#X7C5563A37D566DA5">31 <span class="Heading"> Miscellaneous</span></a>
+</div>
+
+<h3>31 <span class="Heading"> Miscellaneous</span></h3>
+
+<div class="pcenter"><table class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">SL2Z(p) </code> <code class="code">SL2Z(1/m) </code></p>
+
+<p>Inputs a prime <span class="SimpleMath">p</span> or the reciprocal <span class="SimpleMath">1/m</span> of a square free integer <span class="SimpleMath">m</span>. In the first case the function returns the conjugate <span class="SimpleMath">SL(2,Z)^P</span> of the special linear group <span class="SimpleMath">SL(2,Z)</span> by the matrix <span class="SimpleMath">P=[[1,0],[0,p]]</span>. In the second case it returns the group <span class="SimpleMath">SL(2,Z[1/m])</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">BigStepLCS(G,n) </code></p>
+
+<p>Inputs a group <span class="SimpleMath">G</span> and a positive integer <span class="SimpleMath">n</span>. It returns a subseries <span class="SimpleMath">G=L_1</span>&gt;<span class="SimpleMath">L_2</span>&gt;<span class="SimpleMath">... L_k=1</span> of the lower central series of <span class="SimpleMath">G</span> such that <span class="SimpleMath">L_i/L_i+1</span> has order greater than <span class="SimpleMath">n</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Classify(L,Inv) </code></p>
+
+<p>Inputs a list of objects <span class="SimpleMath">L</span> and a function <span class="SimpleMath">Inv</span> which computes an invariant of each object. It returns a list of lists which classifies the objects of <span class="SimpleMath">L</span> according to the invariant..</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RefineClassification(C,Inv) </code></p>
+
+<p>Inputs a list <span class="SimpleMath">C:=Classify(L,OldInv)</span> and returns a refined classification according to the invariant <span class="SimpleMath">Inv</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Compose(f,g) </code></p>
+
+<p>Inputs two <span class="SimpleMath">FpG</span>-module homomorphisms <span class="SimpleMath">f:M ⟶ N</span> and <span class="SimpleMath">g:L ⟶ M</span> with <span class="SimpleMath">Source(f)=Target(g)</span> . It returns the composite homomorphism <span class="SimpleMath">fg:L ⟶ N</span> .</p>
+
+<p>This also applies to group homomorphisms <span class="SimpleMath">f,g</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">HAPcopyright() </code></p>
+
+<p>This function provides details of HAP'S GNU public copyright licence.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IsLieAlgebraHomomorphism(f) </code></p>
+
+<p>Inputs an object <span class="SimpleMath">f</span> and returns true if <span class="SimpleMath">f</span> is a homomorphism <span class="SimpleMath">f:A ⟶ B</span> of Lie algebras (preserving the Lie bracket).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IsSuperperfect(G) </code></p>
+
+<p>Inputs a group <span class="SimpleMath">G</span> and returns "true" if both the first and second integral homology of <span class="SimpleMath">G</span> is trivial. Otherwise, it returns "false".</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MakeHAPManual()</code></p>
+
+<p>This function creates the manual for HAP from an XML file.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PermToMatrixGroup(G,n) </code></p>
+
+<p>Inputs a permutation group <span class="SimpleMath">G</span> and its degree <span class="SimpleMath">n</span>. Returns a bijective homomorphism <span class="SimpleMath">f:G ⟶ M</span> where <span class="SimpleMath">M</span> is a group of permutation matrices.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SolutionsMatDestructive(M,B) </code></p>
+
+<p>Inputs an <span class="SimpleMath">m×n</span> matrix <span class="SimpleMath">M</span> and a <span class="SimpleMath">k×n</span> matrix <span class="SimpleMath">B</span> over a field. It returns a k×m matrix <span class="SimpleMath">S</span> satisfying <span class="SimpleMath">SM=B</span>.</p>
+
+<p>The function will leave matrix <span class="SimpleMath">M</span> unchanged but will probably change matrix <span class="SimpleMath">B</span>.</p>
+
+<p>(This is a trivial rewrite of the standard GAP function <span class="SimpleMath">SolutionMatDestructive(</span>&lt;<span class="SimpleMath">mat</span>&gt;,&lt;<span class="SimpleMath">vec</span>&gt;) .)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">LinearHomomorphismsPersistenceMat(L) </code></p>
+
+<p>Inputs a composable sequence <span class="SimpleMath">L</span> of vector space homomorphisms. It returns an integer matrix containing the dimensions of the images of the various composites. The sequence <span class="SimpleMath">L</span> is determined up to isomorphism by this matrix.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">NormalSeriesToQuotientHomomorphisms(L) </code></p>
+
+<p>Inputs an (increasing or decreasing) chain <span class="SimpleMath">L</span> of normal subgroups in some group <span class="SimpleMath">G</span>. This <span class="SimpleMath">G</span> is the largest group in the chain. It returns the sequence of composable group homomorphisms <span class="SimpleMath">G/L[i] → G/L[i+/-1]</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">TestHap() </code></p>
+
+<p>This runs a representative sample of HAP functions and checks to see that they produce the correct output.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap30.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

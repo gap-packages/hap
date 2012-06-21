@@ -9,6 +9,7 @@ ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
+#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
 
 
 
