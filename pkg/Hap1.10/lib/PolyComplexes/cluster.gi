@@ -297,11 +297,15 @@ M:=G!.incidenceMatrix;
 AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
 
 for i in [1..Length(M)] do
+AppendTo(tmpInlog,i, " \n");
+od;
+
+for i in [1..Length(M)] do
 for j in [i+1..Length(M)] do
 
-if  M[i][j]=0 then
-AppendTo(tmpInlog,i, " \n");
-else
+if not M[i][j]=0 then
+#AppendTo(tmpInlog,i, " \n");
+#else
 AppendTo(tmpInlog,i," -- ", j, " \n");
 fi;
 
@@ -551,4 +555,81 @@ B:=B{F};
 return B;
 end);
 ####################################################
+
+
+##########################################################
+##########################################################
+InstallGlobalFunction(BarCodeOfSymmetricMatrix,
+#function(M, N, m)
+function(arg)
+local M, N, m, F, G, D, t, step, B, bettis, i, j;
+
+M:=arg[1];
+F:=Maximum(Flat(M));
+if Length(arg)>1 then N:=arg[2];
+else N:=F; fi;
+if Length(arg)>2 then m:=arg[3];
+else m:=0; fi;
+
+step:= Int(F/N);
+
+t:=0;
+bettis:=[];
+
+while t<F do
+G:=SymmetricMatrixToGraph(M,t);
+Add(bettis,RipsHomology(G,0,2));
+t:=t+step;
+od;
+
+B:=NullMat(Length(bettis),Length(bettis));
+for j in [1..Length(bettis)] do
+for i in [1..j] do
+B[i][j]:=bettis[j];
+od;
+od;
+
+return B;
+
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallGlobalFunction(BarCodeOfFilteredCubicalComplex,
+function(arg)
+local M, T, F, m, t, bettis, B, i, j;
+
+M:=arg[1];
+if IsBound(M!.filtrationLength) then
+F:=M!.filtrationLength;
+else
+F:=Maximum(Flat(M!.filtration));
+fi;
+if Length(arg)>2 then m:=arg[3];
+else m:=0; fi;
+
+t:=1;
+bettis:=[];
+
+while t<F do
+T:=FiltrationTerm(M,t);;
+Add(bettis,PathComponentOfPureCubicalComplex(T,0));
+t:=t+1;
+od;
+
+B:=NullMat(Length(bettis),Length(bettis));
+for j in [1..Length(bettis)] do
+for i in [1..j] do
+B[i][j]:=bettis[j];
+od;
+od;
+
+return B;
+
+
+end);
+##########################################################
+##########################################################
 

@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.10.8",
-  Date    := "19/06/2012",
+  Version := "1.10.9",
+  Date    := "02/01/2013",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.10.8",
+          := "http://hamilton.nuigalway.ie/Hap/hap1.10.9",
   ArchiveFormats 
           := ".tar.gz",
 
@@ -76,7 +76,8 @@ SetPackageInfo( rec(
                                ["homology",    ">=0.0"   ], 
 			       [ "edim",      ">=1.2.2" ],
 			       [ "singular", ">=06.07.23" ],
-                               [ "congruence", ">=0,0" ]
+                               [ "congruence", ">=0,0" ],
+                               [ "HAPcryst", ">0.0" ]
 			      ],
 
     ExternalConditions := [["Some optional functions require Polymake software",

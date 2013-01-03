@@ -2,11 +2,15 @@
 
 ##################################################################
 ##################################################################
-InstallGlobalFunction(SimplicialComplexToRegularCWSpace,
-function(K)
+InstallGlobalFunction(SimplicialComplexToRegularCWComplex,
+function(arg)
 local
-	NrCells,Boundaries,tmp,TMP,Coboundaries,Properties,
+	K,DM,NrCells,Boundaries,tmp,TMP,Coboundaries,Properties,
+        Orientation, 
         cnt,b,bb,k,n,s,x,i,j,dim ;
+
+K:=arg[1];
+if Length(arg)>1 then dim:=arg[2]; else dim:=Dimension(K); fi; 
 
 ####################
 NrCells:=function(n);
@@ -15,9 +19,21 @@ return Length(Filtered(Boundaries[n+1],x->not x[1]=0));
 end;
 ####################
 
-dim:=Dimension(K);
+#dim:=Dimension(K);
 Properties:=[["dimension",dim]];
 
+#############################
+Orientation:=[];
+Orientation[1]:=ListWithIdenticalEntries(K!.nrSimplices(0),[1]);
+for n in [1..dim] do
+  tmp:=[];  
+  for i in [1..n+1] do
+  Add(tmp,(-1)^(i+1));
+  od;
+Orientation[n+1]:=ListWithIdenticalEntries(K!.nrSimplices(n),tmp);
+od;
+
+#############################
 
 ### BOUNDARIES BEGIN ######################
 Boundaries:=[]; #Boundaries[n+1] contains the info on n-cells
@@ -38,6 +54,7 @@ for n in [1..dim] do
   od;
  for k in [1..K!.nrSimplices(n)] do
  bb:=K!.simplices(n,k);
+ bb:=SSortedList(bb);
 
  b:=List(bb,x->  Difference(bb,[x]) );
  Apply(b,x->   TMP[x[1]][Position(tmp[x[1]],x)] );
@@ -68,11 +85,12 @@ Coboundaries[dim+1]:=List(Boundaries[dim+1],a->[0]);
 ### COBOUNDARIES END ###############################
 
 
-return Objectify(HapRegularCWSpace,
+return Objectify(HapRegularCWComplex,
        rec(
            nrCells:=NrCells,
            boundaries:=Boundaries,
            coboundaries:=Coboundaries,
+           orientation:=Orientation,
            vectorField:=fail,
            inverseVectorField:=fail,
            criticalCells:=fail,
@@ -85,8 +103,8 @@ end);
 #############################################
 #############################################
 InstallOtherMethod(Dimension,
-"Dimension of  regular CW-space",
-[IsHapRegularCWSpace],
+"Dimension of  regular CW-complex",
+[IsHapRegularCWComplex],
 function(f) return EvaluateProperty(f,"dimension");
 return EvaluateProperty(f,"dimension");
 end);
@@ -95,7 +113,7 @@ end);
 
 #############################################
 #############################################
-InstallGlobalFunction(HAPContractRegularCWSpace,
+InstallGlobalFunction(HAPContractRegularCWComplex,
 function(Y)
 local
       Contract, nn, dim, bool, BOOL;
@@ -217,8 +235,8 @@ end);
 #####################################################################
 #####################################################################
 InstallOtherMethod(Size,
-"Volume of a regular CW-space",
-[IsHapRegularCWSpace],
+"Volume of a regular CW-complex",
+[IsHapRegularCWComplex],
 function(Y) return Sum(List( [1..Length(Y!.boundaries)],i->Y!.nrCells(i-1)));
 end);
 #####################################################################
@@ -226,9 +244,9 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(HAPRemoveCellFromRegularCWSpace,
+InstallGlobalFunction(HAPRemoveCellFromRegularCWComplex,
 function(Y,dim,n)
-local  bnd, x,tmp;
+local  bnd, x,tmp, cobnd;
 
 #Remove the n-th cell in dimension dim
 
@@ -246,17 +264,26 @@ fi;
 
 dim:=dim+1;
 
-if dim=1 then Y!.bnd[1][n]:=[0]; return [dim-1,n]; fi;
-
 bnd:=Y!.bnd[dim][n];
 bnd:=bnd{[2..Length(bnd)]};
 Y!.bnd[dim][n]:=[0];
 
-if dim>1 then
+cobnd:=Y!.cobnd[dim][n];          ####Added this loop July 2012
+cobnd:=cobnd{[2..Length(cobnd)]};                             #
+for x in cobnd do                                             # 
+tmp:=Y!.bnd[dim+1][x];                                        #
+tmp[1]:=tmp[1]-1;                                             #
+tmp[Position(tmp{[2..Length(tmp)]},n)+1]:=-42;                #
+tmp:=Filtered(tmp,i->not i = -42);                            #
+Y!.bnd[dim+1][x]:=tmp;                                        #
+od;                                              ############## 
+
+
+if dim=1 then  return [dim-1,n]; fi;
+
 for x in bnd do
 tmp:=Y!.cobnd[dim-1][x];
 tmp[1]:=tmp[1]-1;
-#tmp[Length(tmp)]:=-42;
 tmp[Position(tmp{[2..Length(tmp)]},n)+1]:=-42;
 
 tmp:=Filtered(tmp,i->not i = -42);
@@ -268,7 +295,6 @@ if tmp[1]=1 then AddSet(Y!.free[dim-1],x); fi;
 fi;
 fi;
 od;
-fi;
 
 return [dim-1,n];
 
@@ -278,7 +304,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(CriticalCellsOfRegularCWSpace,
+InstallGlobalFunction(CriticalCellsOfRegularCWComplex,
 function(arg)
 local Y,ContractSpace,cells,dim,c,pos,ppos;
 
@@ -287,11 +313,17 @@ if not Y!.criticalCells=fail then
 return Y!.criticalCells;
 fi;
 
-if Length(arg)>1 then
-   ContractSpace:=HAPContractRegularCWSpace_Alt;
-else
-   ContractSpace:=HAPContractRegularCWSpace;
+##############################
+if Length(arg)>1 then 
+cells:=CocriticalCellsOfRegularCWComplex(Y,arg[2]);
+if arg[2]<EvaluateProperty(Y,"dimension") then 
+Y!.criticalCells:=fail;  fi;
+return cells;
 fi;
+##############################
+
+
+   ContractSpace:=HAPContractRegularCWComplex;
 
 
 #######
@@ -309,7 +341,6 @@ ContractSpace(Y);
 while true do
 
   if 
-#Size(Y)=0  
 Sum(List( [1..Length(Y!.bnd)],i->Y!.nrCells(i-1)))=0
 then  
 Y!.criticalCells:=cells; 
@@ -329,7 +360,7 @@ return cells; fi;
 
   pos:=pos+ppos-1;
 
-    c:=HAPRemoveCellFromRegularCWSpace(Y,dim,pos);
+    c:=HAPRemoveCellFromRegularCWComplex(Y,dim,pos);
 
     Add(cells,c);
 
@@ -351,16 +382,21 @@ end);
 ##########################################################
 ##########################################################
 
+
 ##########################################################
 ##########################################################
-InstallGlobalFunction(CubicalComplexToRegularCWSpace,
-function(M)
-local C, Properties, Boundaries, Coboundaries, BinLst, 
-      LstBin, dim,  bnd,  Boundary, ArrayValueDim, Orientation, 
+InstallGlobalFunction(CubicalComplexToRegularCWComplex,
+function(arg)
+local M,dim,C, Properties, Boundaries, Coboundaries, BinLst, 
+      LstBin,   bnd,  Boundary, ArrayValueDim, Orientation, 
       Dimension,   n, i, j, k, b, v;
 
+M:=arg[1];
+if Length(arg)>1 then dim:=arg[2];
+else
 dim:=EvaluateProperty(M,"dimension");
-ArrayValueDim:=ArrayValueFunctions(dim);
+fi;
+ArrayValueDim:=ArrayValueFunctions(EvaluateProperty(M,"dimension"));
 
 C:=ChainComplex(M);
 BinLst:=C!.coordinateToPosition;
@@ -368,7 +404,16 @@ LstBin:=C!.positionToCoordinate;
 
 Properties:=[["dimension",dim]];
 
+if Length(arg)=1 then
 Dimension:=C!.dimension;
+else
+###
+Dimension:=function(n);
+  if n<dim then return C!.dimension(n);
+  else return 0; fi;
+end;
+#######
+fi;
 
 
 #######################################
@@ -444,7 +489,7 @@ Coboundaries[dim+1]:=List(Boundaries[dim+1],a->[0]);
 ### COBOUNDARIES END ###############################
 
 
-return Objectify(HapRegularCWSpace,
+return Objectify(HapRegularCWComplex,
        rec(
            nrCells:=Dimension,
            boundaries:=Boundaries,
@@ -463,12 +508,19 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(ChainComplexOfRegularCWSpace,
+InstallGlobalFunction(ChainComplexOfRegularCWComplex,
 function(Y)
 local
 	C, Dimension, Boundary, one, zero, n, dim, characteristic;
 
-Dimension:=Y!.nrCells;
+#Dimension:=Y!.nrCells;
+##########################
+Dimension:=function(n);
+if n<0 then return 0; fi;
+return Length(Y!.boundaries[n+1]);
+end;
+##########################
+
 dim:=EvaluateProperty(Y,"dimension");
 
 zero:=[];
@@ -530,7 +582,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(ChainComplexOfRegularCWSpaceWithVectorField,
+InstallGlobalFunction(ChainComplexOfRegularCWComplexWithVectorField,
 function(Y)
 local
         basis, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn;
@@ -540,7 +592,7 @@ dim:=EvaluateProperty(Y,"dimension");
 basis:=[];
 bij:=[];
 for n in [0..dim] do
-basis[n+1]:=Filtered(CriticalCellsOfRegularCWSpace(Y),x->x[1]=n);
+basis[n+1]:=Filtered(CriticalCellsOfRegularCWComplex(Y),x->x[1]=n);
 Apply(basis[n+1],x->x[2]);
 bij[n+1]:=[];
 for b in [1..Length(basis[n+1])] do
@@ -714,19 +766,32 @@ end);
 ##########################################################
 InstallMethod( ChainComplex,
 "for regular CW spaces, using discrete vector fields",
- [IsHapRegularCWSpace],
+ [IsHapRegularCWComplex],
  function(Y)
- CriticalCellsOfRegularCWSpace(Y);
- return ChainComplexOfRegularCWSpaceWithVectorField(Y);
+ CriticalCellsOfRegularCWComplex(Y);
+ return ChainComplexOfRegularCWComplexWithVectorField(Y);
  end);
 ##########################################################
 ##########################################################
 
 ##########################################################
 ##########################################################
+InstallMethod( SparseChainComplex,
+"for regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWComplex],
+ function(Y)
+ CriticalCellsOfRegularCWComplex(Y);
+ return SparseChainComplexOfRegularCWComplexWithVectorField(Y);
+ end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
 InstallOtherMethod( Homology,
 "Homology of a regular CW spaces, using discrete vector fields",
- [IsHapRegularCWSpace,IsInt],
+ [IsHapRegularCWComplex,IsInt],
  function(Y,n) local C;
  if not IsBound(Y!.orientation) then
  Print("Can only compute the mod 2 homology as no orientation is available.\n");
@@ -734,6 +799,279 @@ InstallOtherMethod( Homology,
  C:=ChainComplex(Y);
  return Homology(C,n);
  end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallGlobalFunction(SparseChainComplexOfRegularCWComplex,
+function(Y)
+local
+        C, Dimension, Boundary, one,  n, dim, characteristic;
+
+#Dimension:=Y!.nrCells;
+##########################
+Dimension:=function(n);
+if n<0 then return 0; fi;
+return Length(Y!.boundaries[n+1]);
+end;
+##########################
+
+dim:=EvaluateProperty(Y,"dimension");
+
+
+if not IsBound(Y!.orientation) then
+characteristic:=2;
+one:=One(GF(2));
+######################
+Boundary:=function(n,k)
+local b,i,j,B;
+
+b:=[];
+B:=Y!.boundaries[n+1][k];
+
+for i in [2..Length(B)] do
+Add(b,[B[i],one]);
+od;
+
+return b;
+end;
+######################
+else
+characteristic:=0;
+######################
+Boundary:=function(n,k)
+local b,i,j,B,sn;
+
+b:=[];
+B:=Y!.boundaries[n+1][k];
+sn:=Y!.orientation[n+1][k];
+
+for i in [2..Length(B)] do
+Add(b,[B[i],sn[i-1]]);
+od;
+
+return b;
+end;
+######################
+fi;
+
+return
+Objectify(HapSparseChainComplex,
+           rec(
+           dimension:=Dimension,
+           boundary:=Boundary,
+           properties:=[
+           ["length",dim],
+           ["type","chainComplex"],
+           ["characteristic",characteristic]]
+           ));
+
+
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallGlobalFunction(SparseChainComplexOfRegularCWComplexWithVectorField,
+function(Y)
+local
+        basis, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn;
+
+dim:=EvaluateProperty(Y,"dimension");
+
+basis:=[];
+bij:=[];
+for n in [0..dim] do
+basis[n+1]:=Filtered(CriticalCellsOfRegularCWComplex(Y),x->x[1]=n);
+Apply(basis[n+1],x->x[2]);
+bij[n+1]:=[];
+for b in [1..Length(basis[n+1])] do
+bij[n+1][basis[n+1][b]]:=b;
+od;
+od;
+
+###############################
+Dimension:=function(n);
+return Length(basis[n+1]);
+end;
+###############################
+
+
+zero:=[];
+for n in [1..dim+1] do
+zero[n]:=List([1..Dimension(n-1)],i->0);
+od;
+
+
+###############################
+###############################
+DeformCell:=function(n,k)
+local x,f,bnd,def;            #This will return a list of n-cells
+                              #into which the k-th n-cell is deformed.
+
+if [n,k] in Y!.criticalCells then
+return [k];
+fi;
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+bnd:=Y!.boundaries[n+2][f];
+def:=[];
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Append(def,DeformCell(n,bnd[x]));
+fi;
+od;
+
+return def;
+end;
+###############################
+###############################
+
+###############################
+###############################
+DeformCellSgn:=function(n,kk)
+local sgnn,x,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2;
+                                #This will return a list of signed n-cells
+                                #into which the k-th n-cell is deformed.
+
+k:=AbsInt(kk);
+sgnk:=SignInt(kk);
+if [n,k] in Y!.criticalCells then
+return [kk];
+fi;
+
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+bnd:=Y!.boundaries[n+2][f];
+sn:=Y!.orientation[n+2][f];
+
+def:=[]; def1:=[];def2:=[];
+
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Add(def1,sn[x-1]*bnd[x]);
+else
+sgnn:=sn[x-1];
+break;
+fi;
+od;
+cnt:=x+1;
+
+for x in [cnt..Length(bnd)] do
+Add(def2,sn[x-1]*bnd[x]);
+od;
+
+if sgnn=1 then
+def:=-Concatenation(Reversed(def1),Reversed(def2));
+else
+def:=Concatenation(def2,def1);
+fi;
+
+Apply(def,x->DeformCellSgn(n,x));
+
+if sgnk=1 then return Flat(def);
+else
+return -Reversed(Flat(def));
+fi;
+end;
+###############################
+###############################
+
+
+if not IsBound(Y!.orientation) then
+characteristic:=2;
+one:=One(GF(2));
+######################
+Boundary:=function(n,k)
+local b,i,j,B;
+
+b:=[];
+B:=Y!.boundaries[n+1][basis[n+1][k]];
+B:=B{[2..Length(B)]};
+Apply(B,x->DeformCell(n-1,x));
+B:=Concatenation(B);
+Apply(B,i->bij[n][i]);
+
+for i in B do
+Add(b,[i,one]);
+#b[i]:=b[i]+1;
+od;
+
+b:=SortedList(b);
+for i in [1..Length(b)-1] do
+if b[i][1]=b[i+1][1] then
+b[i+1][2]:=b[i+1][2]+b[i][2];
+b[i][2]:=0;
+fi;
+od;
+b:=Filtered(b,x->not IsZero(x[2]));
+
+return b;
+end;
+######################
+else
+characteristic:=0;
+######################
+Boundary:=function(n,k)
+local b,i,j,B,sn;
+
+b:=[];
+B:=Y!.boundaries[n+1][basis[n+1][k]];
+B:=B{[2..Length(B)]};
+sn:=Y!.orientation[n+1][basis[n+1][k]];
+B:=List([1..Length(B)],i->sn[i]*B[i]);
+
+Apply(B,x->DeformCellSgn(n-1,x));
+B:=Concatenation(B);
+Apply(B,i->SignInt(i)*bij[n][AbsInt(i)]);
+
+
+
+for i in B do
+#b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i);
+Add(b,[AbsInt(i),SignInt(i)]);
+od;
+
+b:=SortedList(b);
+for i in [1..Length(b)-1] do
+if b[i][1]=b[i+1][1] then 
+b[i+1][2]:=b[i+1][2]+b[i][2];
+b[i][2]:=0;
+fi;
+od;
+b:=Filtered(b,x->not IsZero(x[2]));
+
+return b;
+end;
+######################
+fi;
+
+if IsBound(Y!.orientation) then DeformCell:=DeformCellSgn; fi;
+return
+Objectify(HapSparseChainComplex,
+           rec(
+           dimension:=Dimension,
+           boundary:=Boundary,
+           deform:=DeformCell,
+           basis:=basis,
+           bij:=bij,
+           properties:=[
+           ["length",dim],
+           ["type","chainComplex"],
+           ["characteristic",characteristic]]
+           ));
+
+
+end);
 ##########################################################
 ##########################################################
 

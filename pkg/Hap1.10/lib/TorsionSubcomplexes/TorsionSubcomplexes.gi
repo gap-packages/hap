@@ -11,15 +11,24 @@
 
 ###############################################################################
 # HAP subpackage by Alexander D. Rahm for extracting torsion subcomplexes     #
-# from cellular complexes with group actions. Version 1.0 of June 19th, 2012. # # The syntax is TorsionSubcomplex(groupName,p);                               #
+# from cellular complexes with group actions. Version 1.3 of June 21st, 2012. #
+# In the following, whenever we talk about cell complexes, we mean a set of   #
+# representatives for the action of the group,                                # 
+# i.e. a strict fundamental domain.                                           #
+# The syntax is TorsionSubcomplex(groupName,p);                               #
 #  where p is the prime for which to extract the p-torsion subcomplex,        #
-# and groupName must be a string holding between \"quotes\" an entry of the   # # HAP library of cellular complexes with group actions,                       # 
+# and groupName must be a string holding between \"quotes\" an entry of the   #
+# HAP library of cellular complexes with group actions,                       # 
 # which admits the entries displayed with the following command.              #
 # DisplayAvailableCellComplexes();					      #
-# The incidence matrix of the 1-skeleton of the p-torsion subcomplex          # # is returned by this function. To visualize this 1-skeleton as a graph,      # # type instead VisualizeTorsionSkeleton(groupName,p).                         #
-# If the cell complex is admissible in the sense of Brown,                    # # the Farrell cohomology of the group equals the equivariant Farrell cohomology
-# of the reduced torsion subcomplex.  The syntax is 
-# ReduceTorsionSubcomplex(groupName,p); 
+# The incidence matrix of the 1-skeleton of the p-torsion subcomplex          # 
+# is returned by this function. To visualize this 1-skeleton as a graph,      # 
+# type instead VisualizeTorsionSkeleton(groupName,p).                         #
+# If the cell complex is admissible in the sense of Brown,                    # 
+# the Farrell cohomology of the group equals                                  #
+# the equivariant Farrell cohomology                                          #
+# of the reduced torsion subcomplex.  The syntax is                           #
+# ReduceTorsionSubcomplex(groupName,p);                                       #
 # and it returns us the cells which are to merge in the torsion subcomplex.   #
 ###############################################################################
 
@@ -69,7 +78,8 @@ admissibilityCheck := function(celldata)
 ## Additionally,				       ##
 ## we gather the cardinalities of the stabilizers.     ##
 #########################################################
-local stabilizerCardinalities, G, card, n, j, R, vcd;
+local stabilizerCardinalities, G, card, n, j, R, vcd, warned;
+   warned := false;
    stabilizerCardinalities := [];
    vcd := Length(celldata)-1;
 
@@ -83,15 +93,16 @@ local stabilizerCardinalities, G, card, n, j, R, vcd;
 	      ## *** Now we have to compare              *** ##
 	      ## *** with the order of "TheRotSubgroup"  *** ##	
 	      R := celldata[n+1][j]!.TheRotSubgroup;
-	      if card > Order(R) then
+	      if card > Order(R) and warned = false then
 		Print("****Warning: cell complex not admissible ",
-			"in the sense of Brown!****",
-		" Torsion subcomplex reduction requires cell subdivision.");
+			"in the sense of Brown!****\n",
+		" Torsion subcomplex reduction requires cell subdivision.\n");
+		warned := true;
 	      fi;	
 	   fi;
 	od;
    od;
-   return stabilizerCardinalities;
+   return [stabilizerCardinalities, warned];
 end;	   
 
 
@@ -108,7 +119,7 @@ local incidenceMatrix, j, k, q, endpoints, inverseIndex, ORIGIN, END;
      		incidenceMatrix[j][k] := 0;
       	od;
    od;
-   Print("The 1-skeleton of the torsion subcomplex is: ");
+   Print("The edges in the quotient by the action on the torsion subcomplex are: ");
    ## Record the indices in the torsion subcomplex of vertices in  ##
    ## the cell complex, in order to assign the endpoints of an edge##
    inverseIndex := [];
@@ -130,7 +141,6 @@ local incidenceMatrix, j, k, q, endpoints, inverseIndex, ORIGIN, END;
 	incidenceMatrix[END][ORIGIN] := incidenceMatrix[END][ORIGIN] +1;
    od;
    Print(".\n");
-   Print("The incidence matrix of the 1-skeleton of the p-torsion subcomplex is \n");
    return incidenceMatrix;
 end;
 
@@ -188,6 +198,8 @@ local vcd, pMultipleTorsionCells, numberOfPmultipleTorsionCells, Pmultiples, Pmu
       for cell in torsionCells[n+1] do
 
  	## Check if the stabilizer contains p-torsion of multiple m ##
+
+
 	if stabilizerCardinalities[n+1][cell[2]] = m then	
 	 
 	  numberOfPmultipleTorsionCells[n+1] :=	
@@ -483,14 +495,19 @@ getTorsionSubcomplex := function(groupName, p)
 ## We extract the cells the stabilizer of which contains p-torsion.##
 #####################################################################
 local vcd, stabilizerCardinalities, celldata,
-torsionCells, numberOfTorsionCells, n, j;
+torsionCells, numberOfTorsionCells, n, j, returnedData, warned, groupname;
+   groupname := Filtered( groupName, function ( x )
+            return not (x = '(' or x = ')' or x = ',' or x = '[' or x = ']');
+   end );
    Read(Concatenation( DirectoriesPackageLibrary("HAP")[1]![1], 
-			"Perturbations/Gcomplexes/",groupName));
+			"Perturbations/Gcomplexes/",groupname));
    celldata := StructuralCopy(HAP_GCOMPLEX_LIST);
    vcd := Length(celldata) -1;
    Print("Extracting the ",p,"-torsion subcomplex of the ",
 		vcd,"-dimensional ",groupName,"-cell complex ... \n");
-   stabilizerCardinalities := admissibilityCheck(celldata);
+   returnedData := admissibilityCheck(celldata);
+   stabilizerCardinalities := returnedData[1];
+   warned := returnedData[2];
    torsionCells := [];
    numberOfTorsionCells := [];
    for n in [0..vcd] do
@@ -510,29 +527,52 @@ torsionCells, numberOfTorsionCells, n, j;
 	od;
    od;
    return
-     [torsionCells, numberOfTorsionCells, celldata, stabilizerCardinalities];
+     [torsionCells, numberOfTorsionCells, celldata, stabilizerCardinalities, warned];
 end;
 
 
 InstallGlobalFunction("TorsionSubcomplex", function(groupName, p)
 ############################################
-local torsionCells, numberOfTorsionCells, celldata, sortedData;
+local torsionCells, numberOfTorsionCells, celldata, sortedData, warned;
 
 	sortedData := getTorsionSubcomplex(groupName, p);
 	torsionCells := sortedData[1];
 	numberOfTorsionCells := sortedData[2];
 	celldata := sortedData[3];
+	warned := sortedData[5];
+	if IsPrime(p) then 
+	  sortedData := [computeIncidenceMatrix(torsionCells, numberOfTorsionCells, celldata), warned];
+	else
+	  sortedData := "The number p must be prime in order to compute the incidence matrix.";
+	fi;
    return
-     computeIncidenceMatrix(torsionCells, numberOfTorsionCells, celldata);
+     sortedData;
 end);
 
 InstallGlobalFunction("VisualizeTorsionSkeleton", function(groupName, p)
 ##################################################
-local incidenceMatrix, graphData;
-incidenceMatrix := TorsionSubcomplex(groupName, p);
-graphData := StructuralCopy(IncidenceMatrixToGraph(incidenceMatrix));
-Print("displayed in a separate window on screen now.\n");
-GraphDisplay(graphData);
+local incidenceMatrix, graphData, returnedData, warned;
+    returnedData := TorsionSubcomplex(groupName, p);
+    if IsPrime(p) then
+	incidenceMatrix := returnedData[1];
+	warned := returnedData[2];
+	if warned = false then
+	    Print("The quotient by the action on the 1-skeleton of the p-torsion subcomplex is ");
+	else
+	    Print("As the cell stabilizers do not fix the cells pointwise, \n",
+		"we do not obtain the quotient by the action on the 1-skeleton of the p-torsion subcomplex.\n",
+		" We obtain just some graph, and the latter is ");
+	fi;
+	if Size(incidenceMatrix) = 0 then
+		Print("empty.\n");
+	fi;
+	if Size(incidenceMatrix) > 0 then
+		Print("displayed in a separate window on screen now.\n");
+		graphData := StructuralCopy(IncidenceMatrixToGraph(incidenceMatrix));
+		GraphDisplay(graphData);
+	fi;
+   else Print("The number p must be prime in order to compute the incidence matrix.\n");
+   fi;
 end);
 
 printIsotropyGroups := function(reducedTorsionCells, celldata) 
@@ -647,14 +687,16 @@ end;
 InstallGlobalFunction("ReduceTorsionSubcomplex", function(groupName, p)
 ###################################################
 local torsionCells, numberOfTorsionCells, celldata, sortedData, stabilizerCardinalities, fusionCandidates, reducedTorsionCells,
-terminalVertices;
+terminalVertices, warned;
 
    sortedData := getTorsionSubcomplex(groupName, p);
    torsionCells := sortedData[1];
    numberOfTorsionCells := sortedData[2];
    celldata := sortedData[3];
    stabilizerCardinalities := sortedData[4];
-
+   warned := sortedData[5];
+ 
+ if warned = false then
    sortedData := extractPmultipleTorsionCells(torsionCells, 
 		numberOfTorsionCells, celldata,stabilizerCardinalities, p);
    fusionCandidates := pairsIntersection(sortedData, celldata);
@@ -668,5 +710,6 @@ terminalVertices;
    terminalVertices := checkGruenSwan( terminalVertices, celldata, p); 
 Print("\n At the following terminal vertices, the adjacent edge can be cut off without changing the equivariant Farrell cohomology : ",terminalVertices,"\n");  
    printIsotropyGroups(reducedTorsionCells, celldata);
+ fi;
    # return reducedTorsionCells;
 end);

@@ -39,6 +39,7 @@ H:=S!.group;
 if Length(arg)=2 then
 
 E:=DirectProduct(G,H);
+if Size(G)=infinity or Size(H)=infinity then SetSize(E,infinity);fi;
 GhomE:=Embedding(E,1);
 HhomE:=Embedding(E,2);
 EhomG:=Projection(E,1);

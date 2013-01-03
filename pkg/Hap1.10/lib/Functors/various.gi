@@ -505,3 +505,17 @@ fi;
 return false;
 end );
 fi;
+
+
+############################################
+InstallGlobalFunction(KernelWG,
+function(phi)
+local K;
+
+K:=Kernel(phi);
+if Length(GeneratorsOfGroup(K))=0 then
+K:=Group(One(K));
+fi;
+return K;
+end);
+############################################

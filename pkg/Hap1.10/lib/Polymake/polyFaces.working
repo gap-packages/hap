@@ -1,0 +1,322 @@
+#(C) Graham Ellis 2005-2006
+
+#####################################################################
+InstallGlobalFunction(PolytopalComplex,
+function(arg)
+local
+	G,StartVector, Gev,
+	PG,
+	GG,
+	Action,
+	VertexToVector, VVRecord,
+	FaceToVertices,
+	Hasse,
+	p,x,
+	Points,
+	Dimension,
+	Boundary,
+	lngth,
+	StabilizerSubgroup,
+	StabilizerRecord,
+	VectorToGroupElt,
+	BoundaryComponent,
+	EltsG,
+	PseudoBoundary,
+	OrbitReps,
+	StabSum,
+	StabAction;
+
+G:=arg[1];
+StartVector:=arg[2];
+PG:=PolytopalGenerators(G,StartVector);
+if Length(arg)>2 then lngth:=arg[3]; else lngth:=Length(PG.hasseDiagram); fi;
+Points:=[];
+GG:=Filtered(Elements(G),x->not x=Identity(G));
+EltsG:=Elements(G);
+
+#####################################################################
+Dimension:=function(k);
+if k<0 then return 0; fi;
+if k=0 then return 1; fi;
+return Length(Hasse[k]);
+end;
+#####################################################################
+
+if IsPermGroup(G) then
+#####################################################################
+Action:=function(g,V)
+local i,gV;
+
+#return OnTuples(V,g);  
+gV:=[];
+
+for i in [1..Length(V)] do
+gV[i]:=V[i^(g^-1)];
+od;
+
+return gV;
+end;
+#####################################################################
+else
+#####################################################################
+Action:=function(g,V) ;
+return g*V;    
+end;
+#####################################################################
+fi;
+
+
+#########################CREATE POINTS###############################
+for x in G do
+Append(Points, [Action(x,StartVector)]);
+od;
+#####################################################################
+
+
+#####################################################################
+VertexToVector:=function(v);
+return Action(PG.generators[v+1],StartVector) - StartVector;
+end;
+#####################################################################
+
+VVRecord:=[SSortedList(Points),[]];
+#####################################################################
+VectorToGroupElt:=function(v) #This is still clumsy and slow!
+local i,g;
+
+i:=Position(VVRecord[1],v);
+if not IsBound(VVRecord[2][i]) then;
+for g in G do
+if Action(g,StartVector)=v then VVRecord[2][i]:=g; break; fi;
+od;
+fi;
+
+return VVRecord[2][i];
+end;
+#####################################################################
+
+#####################################################################
+FaceToVertices:=function(F)
+local W,v,w,bool,V;
+V:=[];
+W:=BaseOrthogonalSpaceMat(List(F,x->VertexToVector(x)));
+
+for p in Points do
+bool:=true;
+for w in W do
+if not (p - StartVector)*w=0 then bool :=false; break; fi;
+od;
+if bool then Append(V,[p]); fi;
+od;
+
+return V;
+end;
+#####################################################################
+
+
+Hasse:=[];
+for x in [1..lngth] do
+Append(Hasse,[List(PG.hasseDiagram[x],y->FaceToVertices(y))     ]);
+od;
+
+#####################################################################
+OrbitReps:=function(L)  #L=Hasse[i]
+local g,R,S, T,Reps,bool,count;
+
+Reps:=[];
+for S in L do
+bool:=true;
+count:=0;
+for g in G do
+count:=count+1;
+T:=List(S,x->Action(g,x));
+for R in Reps do
+if Length(T)=Length(Intersection(T,R)) then
+bool:=false; break; fi;
+od;
+if bool =false then break;fi;
+if count=Order(G) then Append(Reps,[S]); fi;
+od;
+od;
+
+return Reps;
+end;
+#####################################################################
+
+Hasse:=List(Hasse,x->OrbitReps(x));
+StabilizerRecord:=List([1..lngth],i->[1..Dimension(i)]);
+
+
+#####################################################################
+StabilizerSubgroup:=function(k,n)
+local S,T,verts,StabGroup,x;
+
+if k=0 then return VectorStabilizer(G,StartVector); fi;
+
+if not IsInt(StabilizerRecord[k][n]) then
+return StabilizerRecord[k][n]; fi;
+
+if k=Length(PG.hasseDiagram) then return G; fi;
+
+StabGroup:=[];
+S:=Hasse[k][n];
+T:=List(S, i->VectorToGroupElt(i));
+for x in T do
+if Length(Intersection(x*T,T))=Length(T) then Append(StabGroup,[x]); fi;
+od;
+
+StabGroup:=Concatenation(StabGroup,
+	GeneratorsOfGroup(VectorStabilizer(G,StartVector)));
+StabGroup:=ReduceGenerators(StabGroup,Group(StabGroup));
+if Length(StabGroup)=0 then StabGroup:=[Identity(G)]; fi;
+
+StabilizerRecord[k][n]:=Group(StabGroup);
+return StabilizerRecord[k][n];
+end;
+#####################################################################
+
+StabSum:=List([1..lngth],k->
+Sum(List([1..Dimension(k-1)],j->Order(StabilizerSubgroup(k-1,j)))-1));
+
+#####################################################################
+BoundaryComponent:=function(k,m,n)  	#Let Fm be the m-th face in 
+					#dimension k, and Fn the n-th
+					#face in dimension k-1. Return 
+					#a list [g1,...,gd] of the elements
+					#gi in G such that gi.Fn lies in the
+					#boundary of Fn. The list is maximal
+					#with respect to the property that
+					#gi*gj^-1 is not in the stabilizer
+					#of Fn.
+local 	Fm,Fn, Stab, FmElts, Component,test,
+	g, gFn;
+
+Fm:=Hasse[k][m];
+if k>1 then Fn:=Hasse[k-1][n];
+else Fn:=[StartVector]; fi;
+Stab:=StabilizerSubgroup(k-1,n);
+FmElts:=List(Fm,x->VectorToGroupElt(x));
+Component:=[];
+
+	#############################################################
+	test:=function(g)
+	local x,bool;
+	bool:=true;
+	for x in Component do
+	if g*x^-1 in Stab then bool:=false; break; fi;
+	od;
+	return bool;
+	end;
+	#############################################################
+
+for g in FmElts do
+if test(g) then
+gFn:=List(Fn,x->Action(g,x));
+if Size(gFn) = Size(Intersection(gFn,Fm)) then
+Append(Component,[g]); fi;
+fi;
+od;
+
+return Component;
+end;
+#####################################################################
+
+PseudoBoundary:=List([1..lngth],i->[1..Dimension(i)]);
+
+#####################################################################
+Boundary:=function(k,mm)
+local b,bb,x,n, bnd,signedbnd,bndbnd,tmp,m;
+
+m:=AbsoluteValue(mm);
+
+if not IsInt(PseudoBoundary[k][m]) then 
+if mm>0 then return PseudoBoundary[k][m]; 
+else return NegateWord(PseudoBoundary[k][m]);fi;
+fi;
+
+bnd:=[];
+for n in [1..Dimension(k-1)] do
+tmp:=BoundaryComponent(k,m,n);
+tmp:=List(tmp, x->Position(EltsG,x));
+tmp:=List(tmp, x->[n,x]);
+Append(bnd,tmp);
+od;
+
+
+
+	######Inserting the signs#########
+if k=1 then
+bnd[1][1]:=-bnd[1][1];
+fi;
+if k>1 and StabSum[k-1]=0 then
+bndbnd:=[];
+bnd:=SSortedList(bnd);
+signedbnd:=[bnd[1]]; RemoveSet(bnd,bnd[1]);
+for x in signedbnd do
+b:=Boundary(k-1,x[1]);
+b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+Append(bndbnd,b);
+od;
+
+while Length(bnd)>0 do
+x:=Random(bnd);
+b:=Boundary(k-1,x[1]);
+b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+if Length(Intersection(b,bndbnd))>0 then
+Append(signedbnd, [[-x[1],x[2]]]);
+Append(bndbnd,NegateWord(b));
+RemoveSet(bnd,x);
+
+else
+
+if Length(Intersection(NegateWord(b),bndbnd))>0 then
+Append(signedbnd, [[x[1],x[2]]]);
+Append(bndbnd,b);
+RemoveSet(bnd,x);
+fi;
+
+fi;
+od;
+
+bnd:=signedbnd;
+fi;
+	######Signs inserted##############
+
+
+PseudoBoundary[k][m]:=bnd;
+return Boundary(k,mm);
+end;
+
+if IsPermGroup(G) then
+Gev:=EvenSubgroup(G);
+###############################################################
+# This describes how the group G acts on the orientation.
+StabAction:=function(n,k,h);
+if
+EltsG[h] in Gev then return 1;
+else return -1; fi;
+end;
+###############################################################
+else
+StabAction:=fail;
+fi;
+
+#####################################################################
+return Objectify(HapNonFreeResolution,
+	   rec(
+            dimension:=Dimension,
+            boundary:=Boundary,
+            homotopy:=fail,
+            elts:=EltsG,
+            group:=G,
+	    stabilizer:=StabilizerSubgroup,
+	    action:=StabAction,
+	    hasse:=Hasse,
+            properties:=
+             [["type","resolution"],
+              ["length",lngth],
+              ["characteristic", 0] ]));
+
+end);
+#####################################################################
+

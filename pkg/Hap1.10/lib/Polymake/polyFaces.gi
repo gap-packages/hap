@@ -47,14 +47,14 @@ if IsPermGroup(G) then
 Action:=function(g,V)
 local i,gV;
 
-return OnTuples(V,g);  
-#gV:=[];
+#return OnTuples(V,g);  
+gV:=[];
 
-#for i in [1..Length(V)] do
-#gV[i]:=V[i^g];
-#od;
+for i in [1..Length(V)] do
+gV[i]:=V[i^(g^-1)];
+od;
 
-#return gV;
+return gV;
 end;
 #####################################################################
 else
@@ -184,7 +184,7 @@ BoundaryComponent:=function(k,m,n)  	#Let Fm be the m-th face in
 					#face in dimension k-1. Return 
 					#a list [g1,...,gd] of the elements
 					#gi in G such that gi.Fn lies in the
-					#boundary of Fn. The list is maximal
+					#boundary of Fm. The list is maximal
 					#with respect to the property that
 					#gi*gj^-1 is not in the stabilizer
 					#of Fn.
@@ -237,7 +237,8 @@ fi;
 bnd:=[];
 for n in [1..Dimension(k-1)] do
 tmp:=BoundaryComponent(k,m,n);
-tmp:=List(tmp, x->Position(EltsG,x));
+#tmp:=List(tmp, x->Position(EltsG,x));    ##########
+tmp:=List(tmp, x->Position(EltsG,x^-1));  #Changed this August 20121
 tmp:=List(tmp, x->[n,x]);
 Append(bnd,tmp);
 od;

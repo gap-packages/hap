@@ -36,6 +36,42 @@ end);
 
 #####################################################################
 #####################################################################
+DeclareCategory("IsHapFilteredPureCubicalComplex",IsObject);
+
+DeclareRepresentation(  "IsHapFilteredPureCubicalComplexRep",
+                        IsComponentObjectRep and
+                        IsHapPureCubicalComplex,
+                        ["binaryArray",
+                         "filtration",
+                         "properties"]);
+
+HapFilteredPureCubicalComplexFamily:=NewFamily( "HapFilteredPureCubicalComplexFamily",
+                                 IsHapFilteredPureCubicalComplex,
+                                 IsHapFilteredPureCubicalComplex);
+
+HapFilteredPureCubicalComplex:=NewType(HapFilteredPureCubicalComplexFamily,IsHapFilteredPureCubicalComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapFilteredPureCubicalComplex",
+[IsHapFilteredPureCubicalComplex],
+function(T)
+Print("Filtered pure cubical complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapFilteredPureCubicalComplex",
+[IsHapFilteredPureCubicalComplex],
+function(T)
+Print("Filtered pure cubical complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
 DeclareCategory("IsHapCubicalComplex",IsObject);
 
 DeclareRepresentation(  "IsHapCubicalComplexRep",
@@ -88,6 +124,43 @@ end);
 
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapFilteredCubicalComplex",IsObject);
+
+DeclareRepresentation(  "IsHapFilteredCubicalComplexRep",
+                        IsComponentObjectRep and
+                        IsHapCubicalComplex,
+                        ["binaryArray",
+                         "filtration",
+                         "properties"]);
+
+HapFilteredCubicalComplexFamily:=NewFamily( "HapFilteredCubicalComplexFamily",
+                                 IsHapFilteredCubicalComplex,
+                                 IsHapFilteredCubicalComplex);
+
+HapFilteredCubicalComplex:=NewType(HapFilteredCubicalComplexFamily,IsHapFilteredCubicalComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapFilteredCubicalComplex",
+[IsHapFilteredCubicalComplex],
+function(T)
+Print("Filtered pure cubical complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapFilteredCubicalComplex",
+[IsHapFilteredCubicalComplex],
+function(T)
+Print("Filtered pure cubical complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################

@@ -19,7 +19,7 @@ CPhi:=function(n,w)  ###w:=[[m1,g11..,g1n],[mk,gk1,..gkn]]
 	local Ew,iw,tmp,phiw,i,Rew;
 	Ew:=[];  
 	for iw in w do  
-		tmp:=[iw[1],e]; #### add indentity element
+		tmp:=[iw[1],e];
 		for i in [2..n+1] do
 			Add(tmp,iw[i]);
 		od;
@@ -51,7 +51,7 @@ CEquiv:=function(n,w) ######w:=[[m1,g11..,g1n],[mk,gk1,..gkn]
 	local ew,iw,i,tmp,Rew;
 	ew:=[];
 	for iw in w do  
-		tmp:=[-iw[1],e]; #### add indentity element and minus
+		tmp:=[iw[1],e]; 
 		for i in [2..n+1] do
 			Add(tmp,iw[i]);
 		od;

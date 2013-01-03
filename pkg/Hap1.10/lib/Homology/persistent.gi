@@ -85,9 +85,11 @@ Resol:=arg[4]; else
 fi;
 ###########################
 
+
 HOMS:=NormalSeriesToQuotientHomomorphisms(S);;
+
 if Order(Range(HOMS[Length(HOMS)]))=1 then
-HOMS:=HOMS{[1..Length(HOMS)-1]};
+#HOMS:=HOMS{[1..Length(HOMS)-1]};
 fi;
 RESLST:=[];
 
@@ -673,6 +675,10 @@ fi;
 
 B:=BarCode(P);
 
+if Length(arg)>2 then
+B:=Filtered(B,x->Sum(x)>arg[3]);
+fi;
+
 tmpDir:=DirectoryTemporary();
 barcodedot:=Filename(tmpDir,"tmpIn.log");
 barcodegif:=Filename(tmpDir,"basic.gif");
@@ -713,6 +719,77 @@ Exec(Concatenation("rm -r ",barcodegif{[1..Length(barcodegif)-9]}));
 end);
 #################################################################
 #################################################################
+
+###########################################################
+###########################################################
+InstallGlobalFunction(BarCodeCompactDisplay,
+function(arg)
+local P,B,i,j,Disp,tmpDir,barcodedot,barcodegif, lb;
+
+###############
+P:=arg[1];
+if Length(arg)=2 then
+Disp:=arg[2];
+else
+Disp:=DISPLAY_PATH;
+fi;
+###############
+
+B:=BarCode(P);
+B:=Collected(B);
+
+tmpDir:=DirectoryTemporary();
+barcodedot:=Filename(tmpDir,"tmpIn.log");
+barcodegif:=Filename(tmpDir,"basic.gif");
+
+
+PrintTo(barcodedot,"digraph finite_state_machine {\n\n");
+AppendTo(barcodedot, "rankdir=LR;\n\n");
+AppendTo(barcodedot,
+"node [style=filled,shape=point]\n\n");
+
+lb:=Length(B[1][1]);
+for i in [1..Length(B)] do
+for j in [1..Length(B[1][1])] do
+if B[i][1][j]>0 then
+AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,".",j,"\n");
+else
+AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,".",j,"\n");
+fi;
+od;
+od;
+
+
+for i in [1..Length(B)] do
+for j in [1..Length(B[1][1])-1] do
+if B[i][1][j]>0 and B[i][1][j+1]>0 then
+  if j=Position(B[i][1],1) or (Position(B[i][1],1)=lb and j=lb-1) then
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [label =\"",B[i][2]," \",color=black,arrowhead=none];\n");
+  else
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=black,arrowhead=none];\n");
+  fi;
+else
+  if j=Position(B[i][1],1) or (Position(B[i][1],1)=lb and j=lb-1) then
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [label =\"",B[i][2]," \",color=white,arrowhead=none];\n");
+  else
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=white,arrowhead=none];\n");
+  fi;
+fi;
+od;
+od;
+
+AppendTo(barcodedot,"}");
+
+Exec(Concatenation("dot -Tgif ",barcodedot ,">", barcodegif));
+Exec(Concatenation(Disp," ",barcodegif));
+Sleep(2);
+Exec(Concatenation("rm -r ",barcodegif{[1..Length(barcodegif)-9]}));
+
+end);
+#################################################################
+#################################################################
+
+
 
 
 ############################################################

@@ -245,3 +245,53 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(TensorWithIntegersSparse,
+function(R)
+local
+        BoundaryC,
+        LengthC,
+        M;
+
+
+
+LengthC:=EvaluateProperty(R,"length");
+M:=[1..LengthC];
+
+
+#####################################################################
+BoundaryC:=function(n,k)
+local  bound, x, i;
+
+if n <0 then return false; fi;
+if n=0 then return []; fi;
+
+bound:=StructuralCopy(R!.boundary(n,k));
+Apply(bound,x->[x[1],1]);
+bound:=AlgebraicReduction(bound);
+Apply(bound,x->[AbsInt(x[1]),SignInt(x[1])]);
+bound:=Collected(bound);
+Apply(bound,x->[x[1][1],x[1][2]*x[2]]);
+
+return bound;
+end;
+#####################################################################
+
+
+return  Objectify(HapSparseChainComplex,
+                rec(
+                dimension:=R!.dimension,
+                boundary:=BoundaryC,
+                properties:=
+                [["length",LengthC],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["characteristic",
+                EvaluateProperty(R,"characteristic")] ]));
+
+end);
+#####################################################################
+#####################################################################
+
+

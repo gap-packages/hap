@@ -1,34 +1,25 @@
-if VERSION<"4.5" then
-########################################################################
-########################################################################
-InstallOtherMethod( GroupHomomorphismByImagesNC, 
-"for group with no generators",
+InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
     [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
-    function(g,h,gg,gh)
-    return 
-    GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g)); 
+        function(g,h,gg,gh)
+    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
 end);
-########################################################################
-########################################################################
-fi;
-
 
 ########################################################################
 ########################################################################
 InstallGlobalFunction(NerveOfCatOneGroup,
 function(X,n)
 local NerveOfCatOneGroup_Homopre,
-	  NerveOfCatOneGroup_Obj,
+	  C,NerveOfCatOneGroup_Obj,
 	  NerveOfCatOneGroup_Homo,
 	  NerveOfCatOneGroup_Seq;
 	  
 #####################################################################
 #####################################################################
-NerveOfCatOneGroup_Obj:=function(CC,number)
+NerveOfCatOneGroup_Obj:=function(C,number)
 local 
     ListGroups,Boundaries, Degeneracies, Nerve,
     smap,tmap,e,
-	C,G,M,H,
+	G,M,H,
 	AutM,phi,
 	g,m,tempprod,ConjugatorOfProd,tempBound,tempDegen,
 	ComposOfGens,Gens,TempB,ImageOfGens,TempL,
@@ -37,7 +28,6 @@ local
 	ElementsOfSemiDirect,BoundaryElement,CreatElement,DegenElement,
 	GroupsList,BoundariesList,DegeneraciesList;
 
-C:=XmodToHAP(CC);  
 	
 if not IsHapCatOneGroup(C) then
 	Print("This function must be applied to a cat-1-group.\n");
@@ -122,7 +112,7 @@ BoundaryElement:=function(ListM)
 local n,i,j,tempB,Bound;
 n:=Length(ListM); 
 if n=2 then 
-	Bound:=[[Image(tmap,ListM[1])*ListM[2]],[Image(tmap,ListM[1])*ListM[2]*Image(tmap,ListM[1]^(-1))*ListM[1]],[ListM[1]]];	
+	Bound:=[[Image(tmap,ListM[1])*ListM[2]],[ListM[1]*ListM[2]],[ListM[1]]];	
 fi;
 
 if n>2 then
@@ -139,7 +129,7 @@ if n>2 then
 		for j in [1..i-2] do
 			tempB[j]:=ListM[j];
 			od;
-		tempB[i-1]:=Image(tmap,ListM[i-1])*ListM[i]*Image(tmap,ListM[i-1]^(-1))*ListM[i-1];
+		tempB[i-1]:= ListM[i-1]*ListM[i];
 		for j in [i..n-1] do
 			tempB[j]:=ListM[j+1];
 		od;
@@ -412,12 +402,18 @@ end;
 ####################################################################
 ####################################################################
 
+if IsComponentObjectRep( X )  then
+        if "TailMap" in NamesOfComponents( X ) and "HeadMap" in NamesOfComponents( X )  then
+            C := Objectify( HapCatOneGroup, rec(
+                  sourceMap := X!.TailMap,
+                  targetMap := X!.HeadMap ) );
+            return NerveOfCatOneGroup_Obj(C,n);
+        fi;
+    fi;
+
+
 if IsHapCatOneGroup(X) then
 	return NerveOfCatOneGroup_Obj(X,n);
-fi;
-
-if IsBound(X!.TailMap) then
-        return NerveOfCatOneGroup_Obj(XmodToHAP(X),n);
 fi;
 
 if IsHapCatOneGroupHomomorphism(X) then

@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 23:  Simplicial Complexes</title>
+<title>GAP (HAP) - Chapter 23: Torsion subcomplexes</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -14,142 +14,44 @@
 </head>
 <body class="chap23"  onload="jscontent()">
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap22.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap24.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X7AC76D657C578FEE" name="X7AC76D657C578FEE"></a></p>
-<div class="ChapSects"><a href="chap23.html#X7AC76D657C578FEE">23 <span class="Heading"> Simplicial Complexes</span></a>
+<p><a id="X8213E6467969C33F" name="X8213E6467969C33F"></a></p>
+<div class="ChapSects"><a href="chap23.html#X8213E6467969C33F">23 <span class="Heading">Torsion subcomplexes</span></a>
 </div>
 
-<h3>23 <span class="Heading"> Simplicial Complexes</span></h3>
+<h3>23 <span class="Heading">Torsion subcomplexes</span></h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code">Homology(T,n)</code> <code class="code">Homology(T)</code></p>
-
-<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns the n-th integral homology of <span class="SimpleMath">T</span> as a list of torsion integers. If no value of <span class="SimpleMath">n</span> is input then the list of all homologies of <span class="SimpleMath">T</span> in dimensions 0 to Dimension(T) is returned .</td>
+<td class="tdleft">The torsion subcomplexes subpackage has been conceived and implemented by <strong class="button">Alexander D. Rahm</strong>.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">RipsHomology(G,n)</code> <code class="code">RipsHomology(G,n,p)</code></p>
+<td class="tdleft"><code class="code">IsPnormal( G, p)</code></p>
 
-<p>Inputs a graph <span class="SimpleMath">G</span>, a non-negative integer <span class="SimpleMath">n</span> (and optionally a prime number <span class="SimpleMath">p</span>). It returns the integral homology (or mod p homology) in degree <span class="SimpleMath">n</span> of the Rips complex of <span class="SimpleMath">G</span>.</td>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and a prime <span class="SimpleMath">p</span>. Checks if the group G is p-normal for the prime p. Zassenhaus defines a finite group to be p-normal if the center of one of its Sylow p-groups is the center of every Sylow p-group in which it is contained.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code"> Bettinumbers(T,n)</code> <code class="code"> Bettinumbers(T)</code></p>
+<td class="tdleft"><code class="code">TorsionSubcomplex( groupName, p)</code></p>
 
-<p>Inputs a pure cubical complex, or cubical complex, simplicial complex or chain complex <span class="SimpleMath">T</span> and a non-negative integer <span class="SimpleMath">n</span>. The rank of the n-th rational homology group <span class="SimpleMath">H_n(T, Q)</span> is returned. If no value for n is input then the list of Betti numbers in dimensions 0 to Dimension(T) is returned .</td>
+<p>Inputs a cell complex with action of a group. In HAP, presently the following cell complexes with stabilisers fixing their cells pointwise are available, specified by the following "groupName" strings: <br /> <br /> "SL(2,O-2)" , "SL(2,O-7)" , "SL(2,O-11)" , "SL(2,O-19)" , "SL(2,O-43)" , "SL(2,O-67)" , "SL(2,O-163)", <br /> <br /> where the symbol O[-m] stands for the ring of integers in the imaginary quadratic number field Q(sqrt(-m)), the latter being the extension of the field of rational numbers by the square root of minus the square-free positive integer m. The additive structure of this ring O[-m] is given as the module Z[omega] over the natural integers Z with basis {1, omega}, and omega being the square root of minus m if m is congruent to 1 or 2 modulo four; else, in the case m congruent 3 modulo 4, the element omega is the arithmetic mean with 1, namely <span class="SimpleMath">(1+sqrt(-m))/2</span>. <br /> <br /> The function TorsionSubcomplex prints the cells with p-torsion in their stabilizer on the screen and returns the incidence matrix of the 1-skeleton of this cellular subcomplex, as well as a Boolean value on whether the cell complex has its cell stabilisers fixing their cells pointwise. <br /> <br /> It is also possible to input the cell complexes <br /> <br /> "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" , "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)" <br /> <br /> provided by <strong class="button">Mathieu Dutour</strong>.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">ChainComplex(T)</code></p>
+<td class="tdleft"><code class="code">DisplayAvailableCellComplexes();</code></p>
 
-<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and returns the (often very large) cellular chain complex of <span class="SimpleMath">T</span>.</td>
+<p>Displays the cell complexes that are available in HAP.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">CechComplexOfPureCubicalComplex(T)</code></p>
+<td class="tdleft"><code class="code">VisualizeTorsionSkeleton( groupName, p)</code></p>
 
-<p>Inputs a d-dimensional pure cubical complex <span class="SimpleMath">T</span> and returns a simplicial complex <span class="SimpleMath">S</span>. The simplicial complex <span class="SimpleMath">S</span> has one vertex for each d-cube in <span class="SimpleMath">T</span>, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection. The homotopy types of <span class="SimpleMath">T</span> and <span class="SimpleMath">S</span> are equal.</td>
+<p>Executes the function TorsionSubcomplex( groupName, p) and visualizes its output, namely the incidence matrix of the 1-skeleton of the p-torsion subcomplex, as a graph.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">PureComplexToSimplicialComplex(T,k)</code></p>
+<td class="tdleft"><code class="code">ReduceTorsionSubcomplex( groupName, p)</code></p>
 
-<p>Inputs either a d-dimensional pure cubical complex <span class="SimpleMath">T</span> or a d-dimensional pure permutahedral complex <span class="SimpleMath">T</span> together with a non-negative integer <span class="SimpleMath">k</span>. It returns the first <span class="SimpleMath">k</span> dimensions of a simplicial complex <span class="SimpleMath">S</span>. The simplicial complex <span class="SimpleMath">S</span> has one vertex for each d-cell in <span class="SimpleMath">T</span>, and an n-simplex for each collection of n+1 d-cells with non-trivial common intersection. The homotopy types of <span class="SimpleMath">T</span> and <span class="SimpleMath">S</span> are equal.</p>
-
-<p>For a pure cubical complex <span class="SimpleMath">T</span> this uses a slightly different algorithm to the function CechComplexOfPureCubicalComplex(T) but constructs the same simplicial complex.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">RipsChainComplex(G,n)</code></p>
-
-<p>Inputs a graph <span class="SimpleMath">G</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns <span class="SimpleMath">n+1</span> terms of a chain complex whose homology is that of the nerve (or Rips complex) of the graph in degrees up to <span class="SimpleMath">n</span>.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">VectorsToSymmetricMatrix(M)</code> <code class="code">VectorsToSymmetricMatrix(M,distance)</code></p>
-
-<p>Inputs a matrix <span class="SimpleMath">M</span> of rational numbers and returns a symmetric matrix <span class="SimpleMath">S</span> whose <span class="SimpleMath">(i,j)</span> entry is the distance between the <span class="SimpleMath">i</span>-th row and <span class="SimpleMath">j</span>-th rows of <span class="SimpleMath">M</span> where distance is given by the sum of the absolute values of the coordinate differences.</p>
-
-<p>Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational vectors <span class="SimpleMath">v,w</span> of length Length(M[1]).</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">EulerCharacteristic(T)</code></p>
-
-<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and returns its Euler characteristic.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">MaximalSimplicesToSimplicialComplex(L)</code></p>
-
-<p>Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex. The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">SkeletonOfSimplicialComplex(S,k)</code></p>
-
-<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and a positive integer <span class="SimpleMath">k</span> less than or equal to the dimension of <span class="SimpleMath">S</span>. It returns the truncated <span class="SimpleMath">k</span>-dimensional simplicial complex <span class="SimpleMath">S^k</span> (and leaves <span class="SimpleMath">S</span> unchanged).</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">GraphOfSimplicialComplex(S)</code></p>
-
-<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and returns the graph of <span class="SimpleMath">S</span>.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">ContractibleSubcomplexOfSimplicialComplex(S)</code></p>
-
-<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and returns a (probably maximal) contractible subcomplex of <span class="SimpleMath">S</span>.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">PathComponentsOfSimplicialComplex(S,n)</code></p>
-
-<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and a nonnegative integer <span class="SimpleMath">n</span>. If <span class="SimpleMath">n=0</span> the number of path components of <span class="SimpleMath">S</span> is returned. Otherwise the n-th path component is returned (as a simplicial complex).</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">QuillenComplex(G)</code></p>
-
-<p>Inputs a finite group <span class="SimpleMath">G</span> and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of <span class="SimpleMath">G</span>.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">SymmetricMatrixToIncidenceMatrix(S,t)</code> <code class="code">SymmetricMatrixToIncidenceMatrix(S,t,d)</code></p>
-
-<p>Inputs a symmetric integer matrix S and an integer t. It returns the matrix <span class="SimpleMath">M</span> with <span class="SimpleMath">M_ij=1</span> if <span class="SimpleMath">I_ij</span> is less than <span class="SimpleMath">t</span> and <span class="SimpleMath">I_ij=1</span> otherwise.</p>
-
-<p>An optional integer <span class="SimpleMath">d</span> can be given as a third argument. In this case the incidence matrix should have roughly at most <span class="SimpleMath">d</span> entries in each row (corresponding to the $d$ smallest entries in each row of <span class="SimpleMath">S</span>).</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">IncidenceMatrixToGraph(M)</code></p>
-
-<p>Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each row of <span class="SimpleMath">M</span> and an edges between vertices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> if the <span class="SimpleMath">(i,j)</span> entry in <span class="SimpleMath">M</span> equals 1.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">CayleyGraphOfGroup(G,A)</code></p>
-
-<p>Inputs a group <span class="SimpleMath">G</span> and a set <span class="SimpleMath">A</span> of generators. It returns the Cayley graph.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">PathComponentsOfGraph(G,n)</code></p>
-
-<p>Inputs a graph <span class="SimpleMath">G</span> and a nonnegative integer <span class="SimpleMath">n</span>. If <span class="SimpleMath">n=0</span> the number of path components is returned. Otherwise the n-th path component is returned (as a graph).</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">ContractGraph(G)</code></p>
-
-<p>Inputs a graph <span class="SimpleMath">G</span> and tries to remove vertices and edges to produce a smaller graph <span class="SimpleMath">G'</span> such that the indlusion <span class="SimpleMath">G' → G</span> induces a homotopy equivalence <span class="SimpleMath">RG → RG'</span> of Rips complexes. If the graph <span class="SimpleMath">G</span> is modified the function returns true, and otherwise returns false.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">GraphDisplay(G)</code></p>
-
-<p>This function uses GraphViz software to display a graph <span class="SimpleMath">G</span>.</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">SimplicialMap(K,L,f)</code> <code class="code">SimplicialMapNC(K,L,f)</code></p>
-
-<p>Inputs simplicial complexes <span class="SimpleMath">K</span> , <span class="SimpleMath">L</span> and a function <span class="SimpleMath">f: K!.vertices → L!.vertices</span> representing a simplicial map. It returns a simplicial map <span class="SimpleMath">K → L</span>. If <span class="SimpleMath">f</span> does not happen to represent a simplicial map then SimplicialMap(K,L,f) will return fail; SimplicialMapNC(K,L,f) will not do any check and always return something of the data type "simplicial map".</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">ChainMapOfSimplicialMap(f)</code></p>
-
-<p>Inputs a simplicial map <span class="SimpleMath">f: K → L</span> and returns the corresponding chain map <span class="SimpleMath">C_∗(f) : C_∗(K) → C_∗(L)</span> of the simplicial chain complexes..</td>
-</tr>
-<tr>
-<td class="tdleft"><code class="code">SimplicialNerveOfGraph(G,d)</code></p>
-
-<p>Inputs a graph <span class="SimpleMath">G</span> and returns a <span class="SimpleMath">d</span>-dimensional simplicial complex <span class="SimpleMath">K</span> whose 1-skeleton is equal to <span class="SimpleMath">G</span>. There is a simplicial inclusion <span class="SimpleMath">K → RG</span> where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions less than <span class="SimpleMath">d</span>; (ii) the complex <span class="SimpleMath">RG</span> is the Rips complex (with one <span class="SimpleMath">n</span>-simplex for each complete subgraph of <span class="SimpleMath">G</span> on <span class="SimpleMath">n+1</span> vertices).</td>
+<p>This function start with the same operations as the function TorsionSubcomplex( groupName, p), and if the cell stabilisers are fixing their cells pointwise, it continues as follows. <br /> <br /> It prints on the screen which cells to merge and which edges to cut off in order to reduce the p-torsion subcomplex without changing the equivariant Farrell cohomology. Finally, it prints the representative cells, their stabilizers and the Abelianization of the latter.</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -158,7 +60,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap22.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap24.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -1,17 +1,23 @@
-#M:=PureCubicalComplex([[1,1,1],[1,0,1],[1,1,1]]);; T:=DirectProductOfPureCubicalComplexes(M,M);; T:=DirectProductOfPureCubicalComplexes(T,M);; Y:=CubicalComplexToRegularCWSpace(T);; F:=FundamentalGroup(Y);; RelatorsOfFpGroup(F);
-
+#(C) Graham Ellis
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(FundamentalGroupOfRegularCWSpace,
+InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
 local P,Y,base,e,bool, b, vertices,edges,F, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform;
 
 Y:=arg[1];
+
 if Length(arg)>1 then base:=arg[2]; else base:=1; fi;
 
-cells:=CriticalCellsOfRegularCWSpace(Y);
+
+if Dimension(Y)<4 then
+cells:=CriticalCellsOfRegularCWComplex(Y);
+else
+cells:=CocriticalCellsOfRegularCWComplex(Y,3);
+fi;
+Y!.criticalCells:=cells;
 0cells:=Filtered(cells,x->x[1]=0);
 Apply(0cells,x->x[2]);
 1cells:=Filtered(cells,x->x[1]=1);
@@ -50,12 +56,16 @@ od;
 od;
 
 1cells:=Difference(1cells,edges);
+
+1cells:=Filtered(1cells,e->deform(0,Y!.boundaries[2][e][2]) in vertices);
+2cells:=Filtered(2cells,e->deform(1,Y!.boundaries[3][e][2]) in 1cells);
 fi;
 ###################################
 ###################################
 
 F:=FreeGroup(Length(1cells));
 gens:=GeneratorsOfGroup(F);
+if Length(gens)=0 then return F; fi;
 rels:=[];
 for r in 2boundaries do
 w:=Identity(F);
@@ -69,6 +79,8 @@ od;
 
 P:=PresentationFpGroup(F/rels);
 SimplifyPresentation(P);;
+
+
 return FpGroupPresentation(P);
 
 end);
@@ -78,10 +90,12 @@ end);
 ##########################################################
 ##########################################################
 InstallMethod(FundamentalGroup,
-"for regular CW-spaces",
-[IsHapRegularCWSpace],
+"for regular CW-complexes",
+[IsHapRegularCWComplex],
 function(Y)
-return FundamentalGroupOfRegularCWSpace(Y);
+local F;
+F:= FundamentalGroupOfRegularCWComplex(Y);
+return F;
 end);
 ##########################################################
 ##########################################################
@@ -89,12 +103,65 @@ end);
 ##########################################################
 ##########################################################
 InstallMethod(FundamentalGroup,
-"for regular CW-spaces",
-[IsHapRegularCWSpace,IsInt],
+"for regular CW-complex",
+[IsHapRegularCWComplex,IsInt],
 function(Y,n)
-return FundamentalGroupOfRegularCWSpace(Y,n);
+local bool,F;
+F:= FundamentalGroupOfRegularCWComplex(Y,n);
+return F;
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
+"for simplicial complexes",
+[IsHapSimplicialComplex],
+function(K)
+local Y,c;
+Y:=SimplicialComplexToRegularCWComplex(K,3);;
+c:=CocriticalCellsOfRegularCWComplex(Y,3);
+return FundamentalGroup(Y);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
+"for  pure cubical complexes",
+[IsHapPureCubicalComplex],
+function(M)
+local Y,c;
+Y:=CubicalComplexToRegularCWComplex(M,3);;
+if Dimension(Y)<4 then 
+c:=CriticalCellsOfRegularCWComplex(Y);
+else
+c:=CocriticalCellsOfRegularCWComplex(Y,3);
+fi;
+return FundamentalGroup(Y);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
+"for cubical complexes",
+[IsHapCubicalComplex],
+function(M)
+local Y,c;
+Y:=CubicalComplexToRegularCWComplex(M,3);;
+if Dimension(Y)<4 then
+c:=CriticalCellsOfRegularCWComplex(Y);
+else
+c:=CocriticalCellsOfRegularCWComplex(Y,3);
+fi;
+return FundamentalGroup(Y);
+end);
+##########################################################
+##########################################################
+
 
 
