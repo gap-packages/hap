@@ -24,14 +24,14 @@ Zassenhaus defines a finite group to be p-normal if the center of one of its Syl
 <C>TorsionSubcomplex(  groupName, p)</C>
 <P/>
 Inputs a cell complex with action of a group. In HAP, presently the following cell complexes with stabilisers fixing their cells pointwise are available, specified by the following "groupName" strings: <Br/><Br/> 
-"SL(2,O[-2])" , "SL(2,O[-7])" , "SL(2,O[-11])" ,
- "SL(2,O[-19])" , "SL(2,O[-43])" , "SL(2,O[-67])" ,
- "SL(2,O[-163])",  <Br/><Br/>
+"SL(2,O-2)" , "SL(2,O-7)" , "SL(2,O-11)" ,
+ "SL(2,O-19)" , "SL(2,O-43)" , "SL(2,O-67)" ,
+ "SL(2,O-163)",  <Br/><Br/>
 where the symbol O[-m] stands for the ring of integers in the imaginary quadratic number field Q(sqrt(-m)), the latter being the extension of the field of rational numbers by the square root of minus the square-free positive integer m.
 The additive structure of this ring O[-m] is given as the module Z[omega] over the natural integers Z with basis {1, omega}, and omega being the square root of minus m if m is congruent to 1 or 2 modulo four; else, in the case m congruent 3 modulo 4, the element omega is the arithmetic mean with 1, 
 namely  <M>(1+sqrt(-m))/2</M>. 
  <Br/><Br/>
-The function TorsionSubcomplex prints the cells with p-torsion in their stabilizer on the screen and returns the incidence matrix of the 1-skeleton of this cellular subcomplex.
+The function TorsionSubcomplex prints the cells with p-torsion in their stabilizer on the screen and returns the incidence matrix of the 1-skeleton of this cellular subcomplex, as well as a Boolean value on whether the cell complex has its cell stabilisers fixing their cells pointwise.
  <Br/><Br/> 
 It is also possible to input the cell complexes
  <Br/><Br/> 
@@ -39,7 +39,7 @@ It is also possible to input the cell complexes
  "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" ,
  "Sp(4,Z)" 
 <Br/><Br/>
-provided by <B>Mathieu Dutour</B>, only there will be some warnings printed on the screen regarding the function reduceTorsionSubcomplex, which assumes the cell stabilisers fixing their cells pointwise. A complete list of available cell complexes is obtained with the following command.
+provided by <B>Mathieu Dutour</B>.
 </Item>
 </Row>
 
@@ -68,7 +68,9 @@ Executes the function TorsionSubcomplex(  groupName, p) and visualizes its outpu
 <Index>ReduceTorsionSubcomplex</Index>
 <C>ReduceTorsionSubcomplex( groupName, p)</C>
 <P/>
-This function may be applied to the cell complexes for which the function TorsionSubcomplex(  groupName, p) has produced no warning. It prints on the screen which cells to merge and which edges to cut off in order to reduce the p-torsion subcomplex without changing the equivariant Farrell cohomology.
+This function start with the same operations as the function TorsionSubcomplex(  groupName, p), and if the cell stabilisers are fixing their cells pointwise, it continues as follows.
+ <Br/><Br/> 
+ It prints on the screen which cells to merge and which edges to cut off in order to reduce the p-torsion subcomplex without changing the equivariant Farrell cohomology.
 Finally, it prints the representative cells, their stabilizers and the Abelianization of the latter. 
 </Item>
 </Row>

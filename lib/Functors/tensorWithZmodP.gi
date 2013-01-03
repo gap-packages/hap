@@ -291,3 +291,129 @@ end);
 
 
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(TensorWithIntegersModPSparse,
+function(R,prime)
+local TensorResolution, TensorChainComplex;
+
+#########################################################
+#########################################################
+TensorResolution:=function(R,prime)
+local
+        BoundaryC,
+        LengthC,
+        M,
+        One,
+        Charact;
+
+if "tensorWithIntModPRec" in NamesOfComponents(R) then
+return R!.tensorWithIntModPRec; fi;
+
+One:=Elements(GaloisField(prime))[2];
+LengthC:=EvaluateProperty(R,"length");
+M:=[1..LengthC];
+
+
+#####################################################################
+BoundaryC:=function(n,k)
+local  bound, x, i;
+
+if n <0 then return false; fi;
+if n=0 then return []; fi;
+
+bound:=StructuralCopy(R!.boundary(n,k));
+Apply(bound,x->[x[1],One]);
+bound:=AlgebraicReduction(bound);
+Apply(bound,x->[AbsInt(x[1]),SignInt(x[1])]);
+bound:=Collected(bound);
+Apply(bound,x->[x[1][1],x[1][2]*x[2]]);
+
+return bound;
+end;
+#####################################################################
+
+
+
+if EvaluateProperty(R,"characteristic")=0
+or EvaluateProperty(R,"characteristic")=prime
+then Charact:=prime;
+else
+Print("ERROR: You probably entered the wrong prime. \n");
+return fail; fi;
+
+return       Objectify(HapSparseChainComplex,
+                rec(
+                dimension:=R!.dimension,
+                boundary:=BoundaryC,
+                properties:=
+                [["length",LengthC],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["characteristic", Charact]
+                 ]));
+end;
+###############################################
+###############################################
+
+###############################################
+###############################################
+TensorChainComplex:=function(C,prime)
+local D, pos, oldboundary, newboundary, newproperties, one;
+
+if not EvaluateProperty(C,"characteristic") in [0,prime] then
+Print("Only characteristic 0 or p chain complexes can be tensored with a prime p field.\n");
+return fail;
+fi;
+
+D:=rec();
+D!.dimension:=StructuralCopy(C!.dimension);
+D!.properties:=List(C!.properties,a->StructuralCopy(a));
+pos:=PositionProperty(C!.properties,a->"characteristic" in a);
+D!.properties[pos][2]:=prime;
+
+##############
+if not IsPrimeInt(prime) then
+D!.boundary:=StructuralCopy(C!.boundary);
+return
+Objectify(HapSparseChainComplex, D);
+fi;
+##############
+
+one:=One(GF(prime));
+oldboundary:=StructuralCopy(C!.boundary);
+#############################
+newboundary:=function(n,i)
+local L;
+L:=List(oldboundary(n,i), x->[x[1],x[2]*one]);
+L:=Filtered(L,x->not IsZero(x[2]));
+return L;
+end;
+#############################
+D!.boundary:=newboundary;
+
+
+if not IsHapFilteredChainComplex(C) then
+return
+Objectify(HapSparseChainComplex, D);
+fi;
+
+D!.filteredDimension:=C!.filteredDimension;
+return
+Objectify(HapFilteredChainComplex, D);
+
+end;
+#################################################
+#################################################
+
+
+
+if IsHapResolution(R) then return TensorResolution(R,prime); fi;
+if IsHapSparseChainComplex(R) then return TensorChainComplex(R,prime); fi;
+
+
+end);
+#####################################################################
+#####################################################################
+
+

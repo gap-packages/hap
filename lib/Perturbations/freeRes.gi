@@ -593,6 +593,7 @@ end;
 GmapTH:=function(g)    #ht=g^-1 ==> g=t^-1 h^-1
 local t,h,gg,pos1,pos2;
 
+#RT:=RT-Runtime();
 gg:=EltsG[g]^-1;
 #t:=CanonicalRightCosetElement(H,gg)^-1;
 t:=CanonicalRightCountableCosetElement(H,gg)^-1;
@@ -604,6 +605,7 @@ pos1:=Position(EltsG,t);
 if pos1=fail then Add(EltsG,t); pos1:=Length(EltsG);fi;
 pos2:=Position(EltsH,h);
 if pos2=fail then Add(EltsH,h); pos2:=Length(EltsH);fi;
+#RT:=RT+Runtime();
 return [pos1,pos2];
 end;
 #######################################

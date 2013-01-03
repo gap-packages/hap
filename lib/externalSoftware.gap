@@ -49,7 +49,7 @@ fi;
 #############################################################
 if not IsBound(BROWSER_PATH)
    then
-    BROWSER_PATH:=Filename( DirectoriesSystemPrograms( ), "mozilla" );
+    BROWSER_PATH:=Filename( DirectoriesSystemPrograms( ), "firefox" );
 
 if BROWSER_PATH=fail
    or not IsExecutableFile(BROWSER_PATH)

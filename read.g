@@ -60,6 +60,7 @@ SMInvariantFactors:=function(M); return fail; end;
 InfoHomology:=function(M); return fail; end;
 else SetInfoLevel(InfoHomology,0);
 ReadPackage("HAP", "lib/Homology/probHomology.gi");
+ReadPackage("HAP", "lib/Homology/sparseprobHomology.gi");
 fi;
 ################ SIMPHOM COMMANDS DONR ##############################
 
@@ -80,6 +81,19 @@ if not IsPackageMarkedForLoading("congruence","0.0") then
 CongruenceSubgroupGamma0:=function(m); return fail; end;
 fi;
 ################# CONGRUENCE COMMANDS DONE ###############################
+
+################# POLYMAKING COMMANDS ####################################
+if IsPackageMarkedForLoading("polymaking","0.0") then
+ReadPackage("HAP", "lib/Polymake/convexCWspace.gi");
+fi;
+################# POLYMAKING COMMANDS DONE #################################
+
+################# HAPCRYST COMMANDS ####################################
+if IsPackageMarkedForLoading("HAPcryst","0.0") then
+ReadPackage("HAP", "lib/RegularCWComplexes/equivariantCW.gi");
+fi;
+################# POLYMAKING COMMANDS DONE #################################
+
 
 
 ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
@@ -282,7 +296,9 @@ ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
+ReadPackage("HAP","lib/PolyComplexes/filteredCubical.gi");
 fi;
+
 
 ################## CATEGORY THEORY #################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gi");
@@ -310,13 +326,15 @@ ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
-ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
 
 
-################## REGULAR CW_SPACES ###############################
-ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
-ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
-ReadPackage("HAP","lib/RegularCWSpaces/fundamental.gi");
+################## REGULAR CW_COMPLEXES ###############################
+ReadPackage("HAP","lib/RegularCWComplexes/basicRegular.gi");
+#ReadPackage("HAP","lib/RegularCWComplexes/contractAlt.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/fundamental.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/cocontract.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -329,6 +347,10 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
 ######################################################
 fi;
+
+################## KNOTS ##########################################
+ReadPackage("HAP","/lib/Knots/knotdata.gi");
+ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
@@ -347,6 +369,6 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
-#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
+ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

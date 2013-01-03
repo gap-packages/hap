@@ -21,6 +21,9 @@ end;
 AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue,label=\" \"] \n edge [style=\"setlinewidth(5)\"] \n");
 
 for i in V do
+
+AppendTo(tmpInlog,i, " \n");
+
 for j in V do
 
 if j>=i and M(i,j)=3 then 

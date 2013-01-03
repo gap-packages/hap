@@ -205,6 +205,7 @@ for rel in Rels do
 Append(Frels,[Vector2Word(rel)]);
 od;
 
+if Dimension(F)=0 then Frels:=[]; fi;
 FhomH:=NaturalHomomorphismBySubspace(F,Subspace(F,Frels));
 H:=Range(FhomH);
 Bas:=List(CanonicalBasis(H),a->a);

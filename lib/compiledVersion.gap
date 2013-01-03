@@ -399,8 +399,8 @@ Concatenation(tmppath,"lib/PolyComplexes/Compiled/hap2chomp.so"));
 
 #####################REGULAR CW SPACES ##############################
 LoadDynamicModule(
-Concatenation(tmppath,"lib/RegularCWSpaces/Compiled/basicRegular.so"));
+Concatenation(tmppath,"lib/RegularCWComplexes/Compiled/basicRegular.so"));
 
 LoadDynamicModule(
-Concatenation(tmppath,"lib/RegularCWSpaces/Compiled/contractAlt.so"));
+Concatenation(tmppath,"lib/RegularCWComplexes/Compiled/contractAlt.so"));
 

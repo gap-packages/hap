@@ -30,13 +30,15 @@ InstallMethod(MooreComplex,
 [IsHapCatOneGroup],
 
 function(C)
-local M,N,d,fn,ans;
+local M,N,d,fn,ans, gensM;
 
 if not "mooreComplex" in NamesOfComponents(C) then 
 M:=Kernel(C!.sourceMap);
 N:=Image(C!.sourceMap);
-d:=GroupHomomorphismByImagesNC(M,N,GeneratorsOfGroup(M),
-List(GeneratorsOfGroup(M),x->Image(C!.targetMap,x)));
+gensM:=GeneratorsOfGroup(M);
+if Length(gensM)=0 then gensM:=[One(M)]; fi;
+d:=GroupHomomorphismByImagesNC(M,N,gensM,
+List(gensM,x->Image(C!.targetMap,x)));
 
 #########
 fn:=function(i);

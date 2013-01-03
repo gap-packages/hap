@@ -86,9 +86,9 @@ $GACDIR/gac -d $LIB/SimplicialGroups/*.gi;
 mkdir $LIB/SimplicialGroups/Compiled/;
 mv *.so $LIB/SimplicialGroups/Compiled/;
 
-$GACDIR/gac -d $LIB/RegularCWSpaces/*.gi;
-mkdir $LIB/RegularCWSpaces/Compiled/;
-mv *.so $LIB/RegularCWSpaces/Compiled/;
+$GACDIR/gac -d $LIB/RegularCWComplexes/*.gi;
+mkdir $LIB/RegularCWComplexes/Compiled/;
+mv *.so $LIB/RegularCWComplexes/Compiled/;
 
 
 $GACDIR/gac -d $LIB/GraphsOfGroups/*.gi;

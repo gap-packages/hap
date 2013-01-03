@@ -1,35 +1,42 @@
-<Chapter><Heading>Regular CW-Spaces</Heading>
+<Chapter><Heading>Regular CW-Complexes</Heading>
 
 <Table Align="|l|" >
 
 <Row>
 <Item>
-<Index>SimplicialComplexToRegularCWSpace</Index>
-<C>SimplicialComplexToRegularCWSpace(K)</C>
+<Index>SimplicialComplexToRegularCWComplex</Index>
+<C>SimplicialComplexToRegularCWComplex(K)</C>
 
 <P/>
-Inputs a simplicial complex <M>K</M> and returns the corresponding regular CW-space. 
+Inputs a simplicial complex <M>K</M> and returns the corresponding regular CW-complex. 
 </Item>
 </Row>
 
 
 <Row>
 <Item>
-<Index>CubicalComplexToRegularCWSpace</Index>
-<C>CubicalComplexToRegularCWSpace(K)</C>
+<Index>CubicalComplexToRegularCWComplex</Index>
+<C>CubicalComplexToRegularCWComplex(K)</C>
+<C>CubicalComplexToRegularCWComplex(K,n)</C>
 
 <P/>
-Inputs a pure cubical complex (or cubical complex) <M>K</M> and returns the corresponding regular CW-space.
+Inputs a pure cubical complex (or cubical complex) <M>K</M> and returns the corresponding regular CW-complex. If a positive integer <M>n</M> is entered as an optional second argument, then just the <M>n</M>-skeleton of <M>K</M> is returned.
 </Item>
 </Row>
 
 <Row>
 <Item>
-<Index>CriticalCellsOfRegularCWSpace</Index>
-<C>CriticalCellsOfRegularCWSpace(Y)</C>
+<Index>CriticalCellsOfRegularCWComplex</Index>
+<C>CriticalCellsOfRegularCWComplex(Y)</C>
+<C>CriticalCellsOfRegularCWComplex(Y,n)</C>
 
 <P/>
-Inputs a  regular CW-space <M>Y</M> and returns the critical cells of <M>Y</M> with respect to some discrete vector field. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
+Inputs a  regular CW-complex <M>Y</M> and returns the critical cells of <M>Y</M> with respect to some discrete vector field. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
+
+<P/> If a positive integer <M>n</M> is given as a second optional input, then just the critical cells in dimensions up to and including <M>n</M> are returned.
+
+<P/> The function <M>CriticalCellsOfRegularCWComplex(Y)</M> works by homotopy
+reducing cells starting at the top dimension. The function <M>CriticalCellsOfRegularCWComplex(Y,n)</M> works by homotopy coreducing cells starting at  dimension 0. The two methods may well return different numbers of cells.
 </Item>
 </Row>
 
@@ -39,17 +46,17 @@ Inputs a  regular CW-space <M>Y</M> and returns the critical cells of <M>Y</M> w
 <C>ChainComplex(Y)</C>
 
 <P/>
-Inputs a  regular CW-space <M>Y</M> and returns the cellular chain complex of a CW-space W whose cells correspond to the critical cells of <M>Y</M> with respect to some discrete vector field. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
+Inputs a  regular CW-complex <M>Y</M> and returns the cellular chain complex of a CW-complex W whose cells correspond to the critical cells of <M>Y</M> with respect to some discrete vector field. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
 </Item>
 </Row>
 
 <Row>
 <Item>
-<Index>ChainComplexOfRegularCWSpace</Index>
-<C>ChainComplexOfRegularCWSpace(Y)</C>
+<Index>ChainComplexOfRegularCWComplex</Index>
+<C>ChainComplexOfRegularCWComplex(Y)</C>
 
 <P/>
-Inputs a  regular CW-space <M>Y</M> and returns the cellular chain complex of <M>Y</M>. 
+Inputs a  regular CW-complex <M>Y</M> and returns the cellular chain complex of <M>Y</M>. 
 </Item>
 </Row>
 
@@ -57,12 +64,12 @@ Inputs a  regular CW-space <M>Y</M> and returns the cellular chain complex of <M
 <Row>
 <Item>
 <Index>FundamentalGroup</Index>
-<Index>FundamentalGroupOfRegularCWSpace</Index>
+<Index>FundamentalGroupOfRegularCWComplex</Index>
 <C>FundamentalGroup(Y)</C>
 <C>FundamentalGroup(Y,n)</C>
 
 <P/>
-Inputs a  regular CW-space <M>Y</M> and, optionally, the number of some 0-cell. It returns the fundamental group of <M>Y</M> based at the 0-cell <M>n</M>. The group is returned as a finitely presented group. If <M>n</M> is not specified then it is set <M>n=1</M>. The algorithm requires a discrete vector field on <M>Y</M>. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
+Inputs a  regular CW-complex <M>Y</M> and, optionally, the number of some 0-cell. It returns the fundamental group of <M>Y</M> based at the 0-cell <M>n</M>. The group is returned as a finitely presented group. If <M>n</M> is not specified then it is set <M>n=1</M>. The algorithm requires a discrete vector field on <M>Y</M>. If <M>Y</M> does not initially have a discrete vector field then one is constructed.
 
 </Item>
 </Row>

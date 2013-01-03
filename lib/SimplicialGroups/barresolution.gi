@@ -3,7 +3,8 @@
 #############################################
 InstallGlobalFunction(AddWord,
 function(L,iw)
-	local Compare,i,nL,flag;
+	local Compare,i,siw,nL,flag;
+	siw:=StructuralCopy(iw);
 	##############################	
 	Compare:=function(w,v)
 		local n,i;
@@ -19,9 +20,9 @@ function(L,iw)
 	flag:=0;
 	nL:=Length(L);
 	for i in [1..nL] do
-		if Compare(L[i],iw)=1 then
+		if Compare(L[i],siw)=1 then
 			flag:=1;
-			L[i][1]:=L[i][1]+iw[1];
+			L[i][1]:=L[i][1]+siw[1];
 			if L[i][1]=0 then
 				Remove(L,i);
 			fi;
@@ -29,7 +30,7 @@ function(L,iw)
 		fi;
 	od;
 	if flag=0 then
-		Add(L,iw);
+		Add(L,siw);
 	fi;
 	return;
 end);
@@ -211,9 +212,21 @@ end;
 Equiv:=function(n,w)         ### Input w =[[m1,h1,g11,g12,g13,..,g1n],...[mk,hk,gk1,...gk]
     local cw,m,h,iw,PsiPhiiw,HBiw,HLiw,tmp,Reiw,Rew,u,L;
     cw:=StructuralCopy(w);
-    if n = 0 then 
-		return [];
-    fi;	
+    if n = 0 then
+		Rew:=[];
+		for iw in cw do
+		    m:=iw[1];
+			h:=iw[2];
+			Reiw:=BarResolutionHomotopy(0,[[-1,e]]);
+			for u in Reiw do
+				u[1]:=m*u[1];
+				u[2]:=h*u[2];
+				AddWord(Rew,u);
+			od;	
+		od;	
+		return Rew;
+    fi;
+	
 	Rew:=[];
 	for iw in cw do
 		m:=iw[1];

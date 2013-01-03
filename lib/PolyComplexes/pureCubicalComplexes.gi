@@ -251,6 +251,7 @@ od;
 for x in B{[3..Length(B)-1]} do
 A[x[1]][x[2]]:=x[3];
 od;
+if not IsInt(threshold) then return A; fi;
 return ArrayToPureCubicalComplex(A,threshold);
 fi;
 #################################  
@@ -322,6 +323,9 @@ function(M)
 # Converts a pure cubical complex to a cubical complex
 local A,x,i,dim,dim1,dims,ball,b,dimsM,ArrayValueDim, ArrayValueDim1,
 ArrayAssignDim,ArrayIt,dimsSet,Fun;
+
+if IsHapFilteredPureCubicalComplex(M) then return
+FilteredPureCubicalComplexToCubicalComplex(M); fi;
   
 dim:=Dimension(M);
 dim1:=dim-1;
@@ -1063,9 +1067,14 @@ PermutahedralBall:=function(dim)
 local  n,i,B,U,A;
 
 if dim=2 then return [[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0]]; fi; 
-if dim=3 then return [[0,0,-1],[1,0,-1],[0,1,-1],[1,1,-1],[0,-1,0],[1,-1,0],
+if dim=3 then return 
+#[[0,0,-1],[1,0,-1],[0,1,-1],[1,1,-1],[0,-1,0],[1,-1,0], [-1,0,0],[1,0,0],[-1,1,0],[0,1,0],[-1,-1,1],[0,-1,1], [-1,0,1],[0,0,1]]; 
+
+[[0,0,-1],[1,0,-1],[0,1,-1],[1,1,-1],[0,-1,0],[1,-1,0],
 [-1,0,0],[1,0,0],[-1,1,0],[0,1,0],[-1,-1,1],[0,-1,1],
-[-1,0,1],[0,0,1]]; fi; 
+[-1,0,1],[0,0,1]];
+
+fi; 
 if dim=4 then return [[0,0,0,1],[0,0,1,1],[0,1,1,1],[0,1,0,1],[1,0,0,0], [1,-1,0,0],[1,0,-1,0], [1,-1,-1,0],[1,-1,-1,-1],[1,0,-1,-1],[1,-1,0,-1], [0,-1,-1,-1],[1,0,0,-1],[0,0,-1,-1], [0,-1,0,-1],[0,-1,-1,0],[0,0,0,-1], [0,0,-1,0],[0,-1,0,0],[0,1,0,0],[0,1,1,0],[-1,1,0,0], [-1,1,1,0],[-1,1,0,1], [0,0,1,0],[-1,0,1,0],[-1,0,0,0],[-1,0,0,1],[-1,0,1,1],[-1,1,1,1]]; fi; 
 #dim>4 do the following 
 
@@ -2506,4 +2515,136 @@ end);
 ####################################################
 
 
+
+##########################################
+##########################################
+#HenonOrbit:=function(x,A,B,K,M,L)
+InstallGlobalFunction(HenonOrbit,
+function(arg)
+local x,A,B,K,M,L,henon, Henon, Roundoff,P,N,DIMS;
+
+x:=arg[1];
+A:=arg[2];
+B:=arg[3];
+if Length(arg)>3 then K:=arg[4];
+else K:=10^6;fi;
+if Length(arg)>4 then M:=arg[5];
+else M:=1800;fi;
+if Length(arg)>5 then L:=arg[6];
+else L:=20;fi;
+N:=10^L;
+
+#############################
+henon:=function(x)
+local z;
+z:=[];
+z[1]:=x[2]+1-A*x[1]^2;
+z[2]:=B*x[1];
+return z;
+end;
+#############################
+
+
+#############################
+Roundoff:=function(x)
+local r1,r2;
+r1:=N*x[1];
+r1:=Int(r1);
+r1:=r1/N;
+
+r2:=N*x[2];
+r2:=Int(r2);
+r2:=r2/N;
+
+return [r1,r2];
+end;
+#############################
+
+#############################
+DIMS:=function(xx,k)
+local Xmax, Ymax, Xmin, Ymin, x,i;
+
+x:=Roundoff(xx);
+Xmax:=Int(M*(x[1]+2));
+Xmin:=Int(M*(x[1]-2));
+Ymax:=Int(M*(x[2]+2));
+Ymin:=Int(M*(x[2]-2));
+for i in [1..k] do
+x:=Roundoff(henon(x));
+Xmax:=Maximum(Xmax,Int(M*(x[1]+2)));
+Ymax:=Maximum(Ymax,Int(M*(x[2]+2)));
+Xmin:=Minimum(Xmin,Int(M*(x[1]-2)));
+Ymin:=Minimum(Ymin,Int(M*(x[2]-2)));
+od;
+return [Xmin,Xmax,Ymin,Ymax];
+end;
+#############################
+
+if Length(arg)<=6 then
+#############################
+Henon:=function(x,k)
+local z,i,A, D;
+
+D:=DIMS(x,k);
+A:=NullMat(D[2]-D[1]+10,D[4]-D[3]+10);
+
+x:=Roundoff(x);
+
+for i in [1..2000] do
+x:=Roundoff(henon(x));
+od;
+
+for i in [1..k] do
+x:=Roundoff(henon(x));
+
+A[Int(M*(x[1]+2))-D[1]+1][Int(D[4]-M*(x[2]+2))+1]:=1;
+od;
+
+return A;
+end;
+#############################
+else
+#############################
+Henon:=function(x,k)
+local z,i,A, D, DD;
+
+DD:=arg[7];
+D:=[];
+D[2]:=Int(M*(DD[2]+2));
+D[4]:=Int(M*(DD[4]+2));
+D[1]:=Int(M*(DD[1]-2));
+D[3]:=Int(M*(DD[3]-2));
+
+A:=NullMat(D[2]-D[1]+10,D[4]-D[3]+10);
+
+x:=Roundoff(x);
+
+for i in [1..2000] do
+x:=Roundoff(henon(x));
+od;
+
+for i in [1..k] do
+x:=Roundoff(henon(x));
+if x[1]>DD[1] and x[1]<DD[2] and x[2]>DD[3] and x[2]<DD[4] then
+
+A[Int(M*(x[1]+2))-D[1]+1][Int(D[4]-M*(x[2]+2))+1]:=1;
+
+fi;
+od;
+
+return A;
+end;
+#############################
+fi;
+P:=Henon(x,K);
+P:=PureCubicalComplex(P);
+P:=CropPureCubicalComplex(P);
+P:=FrameArray(P!.binaryArray);
+P:=PureCubicalComplex(P);
+
+return P;
+
+end);
+##############################################
+##############################################
 

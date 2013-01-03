@@ -6,10 +6,10 @@ ReadPackage("HAP","lib/PolyComplexes/complexTypes.gd");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
 ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
-ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
+ReadPackage("HAP","lib/RegularCWComplexes/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
-#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
+ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
 
 
 
@@ -93,6 +93,7 @@ DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
 DeclareGlobalFunction("CayleyGraphOfGroupDisplay");
 DeclareGlobalFunction("CayleyGraphOfGroup");
 DeclareGlobalFunction("TietzeReducedResolution");
+DeclareGlobalFunction("TietzeReducedResolution_alt");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
 
 ## RESOLUTIONS MOD P ################################################
@@ -114,9 +115,11 @@ DeclareGlobalFunction("EvenSubgroup");
 DeclareGlobalFunction("EquivariantChainMap");
 DeclareGlobalFunction("ModularEquivariantChainMap");
 DeclareGlobalFunction("TensorWithIntegers");
+DeclareGlobalFunction("TensorWithIntegersSparse");
 DeclareGlobalFunction("FilteredTensorWithIntegers");
 DeclareGlobalFunction("FilteredTensorWithIntegersModP");
 DeclareGlobalFunction("TensorWithIntegersModP");
+DeclareGlobalFunction("TensorWithIntegersModPSparse");
 DeclareGlobalFunction("TensorWithTwistedIntegers");
 DeclareGlobalFunction("TensorWithTwistedIntegersModP");
 DeclareGlobalFunction("PrimePartDerivedFunctor");
@@ -141,6 +144,7 @@ DeclareGlobalFunction("CanonicalRightCountableCosetElement");
 DeclareProperty("IsHAPRationalMatrixGroup",IsMatrixGroup);
 DeclareProperty("IsHAPRationalSpecialLinearGroup",IsMatrixGroup);
 DeclareGlobalFunction("SL2Z");
+DeclareGlobalFunction("KernelWG");
 
 
 ## PERTURBATIONS ####################################################
@@ -188,6 +192,7 @@ DeclareOperation("Homology",[IsHapGComplex,IsInt]);
 DeclareOperation("PersistentHomology",[IsList,IsInt, IsInt]);
 DeclareGlobalFunction("BarCode");
 DeclareGlobalFunction("BarCodeDisplay");
+DeclareGlobalFunction("BarCodeCompactDisplay");
 DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex");
 DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex_Alt");
 DeclareGlobalFunction("ZZPersistentHomologyOfPureCubicalComplex");
@@ -221,6 +226,7 @@ DeclareGlobalFunction("ModularCohomology");
 DeclareOperation("SolutionsMatDestructive",
 			[IsOrdinaryMatrix,IsOrdinaryMatrix]);
 DeclareGlobalFunction("HomologyPb");
+DeclareGlobalFunction("HomologyPbs");
 DeclareGlobalFunction("HomologyPrimePart");
 DeclareGlobalFunction("CohomologyPrimePart");
 DeclareGlobalFunction("GroupCohomology");
@@ -255,6 +261,8 @@ DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");
 DeclareGlobalFunction("OrbitPolytope");
+DeclareGlobalFunction("RegularCWOrbitPolytope");
+DeclareGlobalFunction("RegularCWPolytope");
 
 
 ## POLYCYLIC ########################################################
@@ -343,6 +351,7 @@ DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
 DeclareOperation("ContractedComplex",[IsObject]);
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");
+DeclareGlobalFunction("ReadImageAsFilteredCubicalComplex");
 DeclareGlobalFunction("ReadLinkImageAsPureCubicalComplex");
 DeclareGlobalFunction("ReadMatrixAsPureCubicalComplex");
 DeclareGlobalFunction("ReadImageSequenceAsPureCubicalComplex");
@@ -353,6 +362,7 @@ DeclareGlobalFunction("PureCubicalComplexUnion");
 DeclareGlobalFunction("PureCubicalComplexDifference");
 DeclareGlobalFunction("PureCubicalComplexIntersection");
 DeclareGlobalFunction("PureCubicalComplexToCubicalComplex");
+DeclareGlobalFunction("FilteredPureCubicalComplexToCubicalComplex");
 DeclareOperation("ChainComplex",[IsObject]);
 DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
 DeclareGlobalFunction("ChainComplexOfCubicalComplex");
@@ -415,6 +425,15 @@ DeclareGlobalFunction("ContractCubicalComplex");
 DeclareGlobalFunction("DVFReducedCubicalComplex");
 DeclareGlobalFunction("BoundingPureCubicalComplex");
 DeclareGlobalFunction("SuspensionOfPureCubicalComplex");
+DeclareGlobalFunction("ThickeningFiltration");
+DeclareGlobalFunction("Dendrogram");
+DeclareGlobalFunction("FiltrationTerm");
+DeclareGlobalFunction("DendrogramDisplay");
+DeclareGlobalFunction("ComplementOfFilteredCubicalComplex");
+DeclareGlobalFunction("DendrogramToPersistenceMat");
+DeclareGlobalFunction("BarCodeOfSymmetricMatrix");
+DeclareGlobalFunction("BarCodeOfFilteredCubicalComplex");
+DeclareGlobalFunction("HenonOrbit");
 
 
 ########################## ARRAYS ################################
@@ -473,29 +492,46 @@ DeclareGlobalFunction("GroupHomologyOfCommutativeDiagram");
 DeclareGlobalFunction("PersistentHomologyOfCommutativeDiagramOfPGroups");
 DeclareGlobalFunction("NormalSeriesToQuotientDiagram");
 
-## REGULAR CW-SPACES ################################################
-DeclareGlobalFunction("SimplicialComplexToRegularCWSpace");
-DeclareGlobalFunction("GraphOfRegularCWSpace");#Not yet implemented
-DeclareGlobalFunction("CubicalComplexToRegularCWSpace");
-DeclareGlobalFunction("HAPContractRegularCWSpace");
-DeclareGlobalFunction("HAPRemoveCellFromRegularCWSpace");
-DeclareGlobalFunction("CriticalCellsOfRegularCWSpace");
-DeclareGlobalFunction("HAPContractRegularCWSpace_Alt");
-DeclareGlobalFunction("ChainComplexOfRegularCWSpace");
-DeclareGlobalFunction("ChainComplexOfRegularCWSpaceWithVectorField");
-DeclareGlobalFunction("FundamentalGroupOfRegularCWSpace");
-DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace]);
-DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace,IsInt]);
+## REGULAR CW-COMPLEXES ################################################
+DeclareGlobalFunction("SimplicialComplexToRegularCWComplex");
+DeclareGlobalFunction("GraphOfRegularCWComplex");#Not yet implemented
+DeclareGlobalFunction("CubicalComplexToRegularCWComplex");
+DeclareGlobalFunction("HAPContractRegularCWComplex");
+DeclareGlobalFunction("HAPCocontractRegularCWComplex");
+DeclareGlobalFunction("HAPRemoveCellFromRegularCWComplex");
+DeclareGlobalFunction("CriticalCellsOfRegularCWComplex");
+DeclareGlobalFunction("CocriticalCellsOfRegularCWComplex");
+DeclareGlobalFunction("HAPContractRegularCWComplex_Alt");
+DeclareGlobalFunction("ChainComplexOfRegularCWComplex");
+DeclareGlobalFunction("ChainComplexOfRegularCWComplexWithVectorField");
+DeclareGlobalFunction("FundamentalGroupOfRegularCWComplex");
+DeclareOperation("FundamentalGroup",[IsHapRegularCWComplex]);
+DeclareOperation("FundamentalGroup",[IsHapRegularCWComplex,IsInt]);
+DeclareGlobalFunction("ResolutionAffineCrystGroup");
+DeclareGlobalFunction("EquivariantEuclideanSpace");
+DeclareGlobalFunction("HAPRemoveVectorField");
 
+## KNOTS ############################################################
+DeclareGlobalFunction("PureCubicalKnot");
+DeclareGlobalFunction("ViewPureCubicalKnot");
+DeclareGlobalFunction("KnotGroup");
+DeclareGlobalFunction("KnotSum");
+DeclareGlobalFunction("AlexanderMatrix");
+DeclareGlobalFunction("AlexanderPolynomial");
+DeclareGlobalFunction("ReadPDBfileAsPureCubicalComplex");
+DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
 
 ## SPARSE ###########################################################
 DeclareGlobalFunction("SparseMat");
 DeclareGlobalFunction("SparseRowMult");
 DeclareGlobalFunction("SparseRowInterchange");
 DeclareGlobalFunction("SparseRowAdd");
-DeclareGlobalFunction("SparsePivot");
-DeclareGlobalFunction("SparsePivots");
-DeclareGlobalFunction("SemiEchelonSMat");
+DeclareGlobalFunction("SparseSemiEchelon");
+DeclareGlobalFunction("SparseRowReduce");
+DeclareGlobalFunction("SparseChainComplexOfRegularCWComplex");
+DeclareGlobalFunction("SparseChainComplexOfRegularCWComplexWithVectorField");
+DeclareGlobalFunction("SparseBoundaryMatrix");
+DeclareOperation("SparseChainComplex",[IsHapRegularCWComplex]);
 
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");
@@ -504,6 +540,7 @@ DeclareGlobalFunction("SemiEchelonSMat");
 #ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/CategoryTheory/categories.gd");
 ReadPackage("HAP","lib/CategoryTheory/commutativeDiagrams.gd");
+ReadPackage("HAP","lib/Knots/knots.gd");
 ReadPackage("HAP","lib/HapPrime/derivation.gd");
 ReadPackage("HAP","lib/HapPrime/singular.gd");
 ReadPackage("HAP","lib/HapPrime/gradedalgebra.gd");
@@ -511,5 +548,6 @@ ReadPackage("HAP","lib/HapPrime/polynomials.gd");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
+
 
 

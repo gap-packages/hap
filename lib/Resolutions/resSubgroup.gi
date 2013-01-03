@@ -6,10 +6,10 @@ function(arg)
 local 
 		R,gensG,gensK,
 		DimensionR, BoundaryR, HomotopyR, EltsG,
-		Dimension, Boundary, Homotopy, EltsK,
+		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK,
 		Gword2Kword, G2K, Pair2Int, Int2Pair,
-		Mult, FIN;
+		Mult, FIN, i;
 		
 if Length(arg)=3 then
 R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
@@ -114,16 +114,26 @@ return v;
 end;
 #####################################################################
 
+BoundaryRec:=[];
+for i in [1..EvaluateProperty(R,"length")] do
+BoundaryRec[i]:=[];
+od;
+
 #####################################################################
 Boundary:=function(n,i)
-local x, w;
+local x, w, nn;
 
+nn:=AbsInt(n);
+if not IsBound(BoundaryRec[nn][i]) then
 x:=Int2Pair(i);
-w:=StructuralCopy(BoundaryR(n,x[1]));
+w:=StructuralCopy(BoundaryR(nn,x[1]));
 Apply(w, y->[y[1],Mult(x[2],y[2])]);
 #Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]); #Changed this back but forgot why this line was ever here!!
+BoundaryRec[nn][i]:= Gword2Kword(w);
+fi;
 
-return Gword2Kword(w);
+if n>0 then return BoundaryRec[nn][i]; fi;
+return NegateWord(BoundaryRec[nn][i]);
 end;
 #####################################################################
 

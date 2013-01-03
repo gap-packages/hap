@@ -98,14 +98,15 @@ end);
 ##################################################################
 InstallGlobalFunction(QuotientQuasiIsomorph,
 function(C)
-local fn,D,G,s,t,L,bool,x, LL, K, M, Pi2, gens, newG, news, newt, epi;
+local fn,D,G,s,t,L,bool,x, LL, K, M, Pi2, gens, newG, news, newt, epi,
+newGgens;
 
 
 s:=C!.sourceMap;
 t:=C!.targetMap;
 G:=Source(s);
-M:=Kernel(s);
-Pi2:=Intersection(M,Kernel(t));
+M:=KernelWG(s);
+Pi2:=Intersection(M,KernelWG(t));
 
 L:=NormalSubgroups(M);;
 L:=Filtered(L,x->IsNormal(G,x));
@@ -133,10 +134,14 @@ K:=L[Position(LL,Maximum(LL))];
 
    epi:=NaturalHomomorphismByNormalSubgroup(G,K);
    newG:=Image(epi);
-   news:=GroupHomomorphismByFunction(newG,newG,x->
-         Image(epi,Image(s,PreImagesRepresentative(epi,x)))    );
-   newt:=GroupHomomorphismByFunction(newG,newG,x->
-         Image(epi,Image(t,PreImagesRepresentative(epi,x)))    );
+   newGgens:=GeneratorsOfGroup(newG);
+   if Length(newGgens)=0 then newGgens:=[Identity(newG)]; fi;
+   news:=GroupHomomorphismByImagesNC(newG,newG,newGgens,
+         List(newGgens, x->
+         Image(epi,Image(s,PreImagesRepresentative(epi,x))))    );
+   newt:=GroupHomomorphismByImagesNC(newG,newG,newGgens,
+         List(newGgens,x->
+         Image(epi,Image(t,PreImagesRepresentative(epi,x))))    );
 
    D:= Objectify(HapCatOneGroup,
          rec( sourceMap:=news,
@@ -155,7 +160,7 @@ end);
 InstallGlobalFunction(SubQuasiIsomorph,
 function(C)
 local n,s,t,G,L,LS,CC,c,g,Kers,K,H,news,newt,D,
-SortOrder,CheckConditions;
+SortOrder,CheckConditions,newHgens;
 ########################
 SortOrder:=function(H,G)
         return Order(G)>Order(H);
@@ -170,7 +175,7 @@ CheckConditions:=function(H)
         return IsSubgroup(H,Image(t,H)) and IsSubgroup(H,Image(s,H)) and IsSubgroup(H,Intersection(Kernel(t),Kernel(s)));
 end;
 #######################
-Kers:=Kernel(s);
+Kers:=KernelWG(s);
 #L:=NormalSubgroups(G);
 LS:=LatticeSubgroups(G);;
 CC:=ConjugacyClassesSubgroups(LS);;
@@ -192,8 +197,12 @@ for K in L do
         fi;
    fi;
 od;
-news:=GroupHomomorphismByFunction(H,H,function(x) return Image(s,x); end);
-newt:=GroupHomomorphismByFunction(H,H,function(x) return Image(t,x); end);
+newHgens:=GeneratorsOfGroup(H);
+if Length(newHgens)=0 then newHgens:=[Identity(H)]; fi;
+news:=GroupHomomorphismByImagesNC(H,H,newHgens, 
+  List(newHgens, x-> Image(s,x))   );
+newt:=GroupHomomorphismByImagesNC(H,H,newHgens, 
+  List(newHgens, x-> Image(t,x))   );
 
 D:=Objectify(HapCatOneGroup, rec(
         sourceMap:=news,

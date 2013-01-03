@@ -36,6 +36,7 @@ od;
 
 T:=R;
 for k in [2..d] do
+
 if HAPconstant>49 then
 T:=ResolutionDirectProduct(R,T);
 else

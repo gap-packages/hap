@@ -3,7 +3,7 @@
 #####################################################################
 InstallGlobalFunction(VectorStabilizer,
 function(G,v)
-local	S,toggle,g,i;
+local	S,g;
 
 
 if IsPermGroup(G) then

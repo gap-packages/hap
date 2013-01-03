@@ -3,7 +3,7 @@ function(arg)
 local 
 	R,n,EltsG,G,i,L,
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
-	Dimension,Hmap,pos,Mult,AlgRed,CorrectList,Boundary,
+	Dimension,Hmap,pos,Gmult,Gmultrec,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
 	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy,ZeroDimensionHmap,ZeroDimensionHtpy,
 	HmapRec,p,q,r,s,HtpyRec,k,g;
@@ -18,11 +18,14 @@ fi;
 end;
 #############################################
 pos:=function(g)   #return the position of gth - element in EltsG, 
-		    # if not then add to EltsG
-if Position(R!.elts,g)=fail then 
+	           # if not then add to EltsG
+local posit;
+posit:=Position(R!.elts,g);
+if posit=fail then 
 	Add(R!.elts,g); 
+        return Length(R!.elts);
 fi;
-return Position(R!.elts,g);
+return posit;
 end;
 #############################################
 AlgRed:=function(g) #Algebraic Reduction
@@ -37,13 +40,33 @@ od;
 return l;
 end;
 #############################################
+AlgRed:=AlgebraicReduction;
+#############################################
+Gmultrec:=[];
+
+#############################################
+Gmult:=function(i,j);
+if not IsBound(Gmultrec[i]) then
+Gmultrec[i]:=[];
+fi;
+if not IsBound(Gmultrec[i][j]) then
+Gmultrec[i][j]:=pos(R!.elts[i]*R!.elts[j]);
+fi;
+
+return Gmultrec[i][j];
+end;
+#############################################
 Mult:=function(g,w) # Multiply gth-element with a word
 local 
 	l,x;
-l:=[];
+#l:=[];
+l:=StructuralCopy(w);
 if R!.elts[g]=[] then return [];fi;
-Append(l,List(w,y->[y[1],pos(R!.elts[g]*R!.elts[y[2]])]));
-return AlgRed(l);
+#Append(l,List(w,y->[y[1],pos(R!.elts[g]*R!.elts[y[2]])]));
+#Apply(l,y->[y[1],pos(R!.elts[g]*R!.elts[y[2]])]);
+Apply(l,y->[y[1],Gmult(g,y[2])]);
+return l;
+#return AlgRed(l);
 end;
 ##############################################
 GrpsRes:=function(G,n) # Resolutions of Group

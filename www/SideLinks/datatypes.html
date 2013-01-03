@@ -88,7 +88,7 @@ p elements with trivial action of G. </p>
  style="font-weight: bold;">R</span><sup>n</sup> arising as a union of
 unit n-cubes whose vertices have integer coordinates. The subspace X
 might arise as a topological model of experimental data (such as a
-medical image) or it might be the more traditional kind of CW-space
+medical image) or it might be the more traditional kind of CW-complex
 studied in classical algebraic topology. How can we efficiently compute
 the cohomology groups (and possibly even some homotopy groups) of X ?<br>
 </p>
@@ -758,6 +758,22 @@ returns "true" for a pure cubical complex T. <br>
       </td>
     </tr>
     <tr>
+      <td style="vertical-align: top;">Filtered pure cubical complex<br>
+      </td>
+      <td style="vertical-align: top;">A filtered pure cubical complex
+is a pure cubical complex M with an additional component<br>
+      <ul>
+        <li><span style="font-family: monospace;">M!.filtration</span>
+is an array of non-negative integers of the same dimension as <span
+ style="font-family: monospace;">M!.binaryArray</span>. The entry
+M!.filtration[x] is less than or equal to t if and only if the t-th
+term Mt of the filtration on M has Mt!.binaryArray[x]=1 .</li>
+      </ul>
+The operations <span style="font-family: monospace;">IsHapPureCubicalComplex(M)
+and&nbsp;</span><span style="font-family: monospace;">IsHapFilteredPureCubicalComplex(M)</span>
+returns "true" for a pure cubical complex M.</td>
+    </tr>
+    <tr>
       <td style="vertical-align: top;">Cubical Complex </td>
       <td style="vertical-align: top;">In HAP we use the term
 "cubical complex" to mean a cellular subspace of Euclidean n-space <span
@@ -784,6 +800,21 @@ n-cube.<br>
       <br>
 The operation <span style="font-family: monospace;">IsHapCubicalComplex(T)</span>
 returns "true" for a cubical complex T. </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Filtered cubical complex</td>
+      <td style="vertical-align: top;">A filtered cubical complex
+is a cubical complex M with an additional component<br>
+      <ul>
+        <li><span style="font-family: monospace;">M!.filtration</span>
+is an array of non-negative integers of the same dimension as <span
+ style="font-family: monospace;">M!.binaryArray</span>. The entry
+M!.filtration[x] is less than or equal to t if and only if the t-th
+term Mt of the filtration on M has Mt!.binaryArray[x]=1 .</li>
+      </ul>
+The operations <span style="font-family: monospace;">IsHapCubicalComplex(M)
+and&nbsp;</span><span style="font-family: monospace;">IsHapFilteredCubicalComplex(M)</span>
+returns "true" for a cubical complex M.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">Cubical Complex&nbsp; with
@@ -832,19 +863,20 @@ The operation <span style="font-family: monospace;">IsHapSimplicialComplex(T)</s
 returns "true" for a simplicial complex T.</td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">Regular CW-Space<br>
+      <td style="vertical-align: top;">Regular CW-Complex<br>
       </td>
-      <td style="vertical-align: top;">A regular CW-space is
+      <td style="vertical-align: top;">A regular CW-complex is
 represented by a component object Y with the following components:<br>
       <ul>
-        <li><span style="font-family: monospace;">Y!.boundaries[n][k]</span>
+        <li><span style="font-family: monospace;">Y!.boundaries[n+1][k]</span>
 is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>]
 where a<sub>i</sub> denote the (n-1)-dimensional cells in the boundary
 of the k-th cell of dimension n. <br>
         </li>
         <li><span style="font-family: monospace;">Y!.coboundaries[n+1][k]</span>
 is a list of integers [t,a<sub>1</sub>,...,a<sub>t</sub>]
-where a<sub>i</sub> denote the (n+1)-dimensional cells in the boundary
+where a<sub>i</sub> denote the (n+1)-dimensional cells in the
+coboundary
 of the k-th cell of dimension n. <br>
         </li>
         <li><span style="font-family: monospace;">Y!.nrCells(n)</span>
@@ -877,8 +909,8 @@ k-th cell of dimension n. So Y!.orientation[n][k][j] is the incidence
 number (+1 or -1) of the j-th cell in the boundary.<br>
         </li>
       </ul>
-The operation <span style="font-family: monospace;">IsHapRegularCWSpace(Y)</span>
-returns "true" for a regular CW-space Y.</td>
+The operation <span style="font-family: monospace;">IsHapRegularCWComplex(Y)</span>
+returns "true" for a regular CW-complex Y.</td>
     </tr>
     <tr>
       <td style="vertical-align: top;">Pseudo list<br>
@@ -894,6 +926,56 @@ search.</li>
       <li>Add(L,x) returns a pseudolist with last entry equal to x.</li>
       <li>Not all list functions and methods apply to L. <br>
       </li>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Sparse matrix<br>
+      <br>
+      </td>
+      <td style="vertical-align: top;">A sparse matrix is a component
+object M with the following components:<br>
+      <ul>
+        <li><span style="font-family: monospace;">M!.mat</span> is a
+list of lists. The entries in <span style="font-family: monospace;">M!.mat[i]</span>
+are pairs of integers [j,k] denoting that the represented matrix has
+entry k in the i-th row and j-th column.</li>
+        <li><span style="font-family: monospace;">M!.characteristic</span>
+denotes the characteristic of the field from which the matrix entries
+are taken</li>
+        <li><span style="font-family: monospace;">M!.rows</span> is the
+integer number of rows in the matrix.</li>
+        <li><span style="font-family: monospace;">M!.cols</span> is the
+integer number of columns in the matrix.</li>
+      </ul>
+The operation <span style="font-family: monospace;">IsHapSparseMat(M)</span>
+returns "true" for a sparse matrix M.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Sparse chain complex<br>
+      </td>
+      <td style="vertical-align: top;">A <em>sparse chain complex </em>means
+a chain complex of free Z-modules.<br>
+      <br>
+A sparse chain complex&nbsp; ... ---&gt; C<sub>n</sub> ---&gt; C<sub>n-1</sub>
+---&gt; ... ---&gt; C<sub>1</sub>
+---&gt; C<sub>0&nbsp; </sub>is represented by a record C with the
+following components.<br>
+      <br>
+      <li><tt>C!.dimension(k)</tt> is a function which returns the
+Z-rank of the module C<sub>k</sub>.</li>
+      <li><tt>C!.boundary(k,j) </tt>is a function which returns the
+image in C<sub>k-1</sub> of the j-th free generator of C<sub>k</sub>.
+(Elements in C<sub>k-1</sub> are represented in the obvious way as
+sparse vectors of length equal to the rank of C<sub>k-1</sub>.)<br>
+      </li>
+      <li><tt>C!.properties</tt> is a list of pairs ["name",value]
+where "name" is a string and value is a numerical or boolean value.
+Example pairs are:&nbsp; ["length", n] which would record that there
+are n terms in the chain complex; ["characteristic", p] which would
+record the characteristic of Z.</li>
+      <br>
+The operation <tt>IsHapSparseChainComplex(C)</tt>
+returns "true" for a sparse chain complex C.<br>
       </td>
     </tr>
   </tbody>

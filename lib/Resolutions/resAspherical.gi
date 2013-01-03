@@ -3,9 +3,9 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionAsphericalPresentation,
-function(F,rels,N)
+function(arg)
 local
-	Dimension,
+	F,rels,N,Dimension,
 	Boundary, PseudoBoundary,
 	Homotopy, HomotopyRecord,
 	G,
@@ -13,7 +13,16 @@ local
 	gensF, gensG,
 	FhomG,
 	toggle,
-	i,R,B,w,x;
+	i,R,B,w,ww,x;
+
+if Length(arg)=3 then
+F:=arg[1]; rels:=arg[2]; N:=arg[3];
+fi;
+if Length(arg)=2 then
+G:=arg[1]; 
+F:=FreeGroupOfFpGroup(G);
+rels:=RelatorsOfFpGroup(G); N:=arg[2];
+fi;
 
 toggle:=false;
 gensF:=GeneratorsOfGroup(F);
@@ -55,9 +64,16 @@ w:=Identity(F);
 
 for x in R do
 Append(EltsG,[Image(FhomG,w)]);
-Append(B,[[x,Length(EltsG)]]);
+#Append(B,[[x,Length(EltsG)]]);
 w:=w*gensF[AbsoluteValue(x)]^SignInt(x);
+if SignInt(x)=1 then
+Append(B,[[x,Length(EltsG)]]);
+else
+Append(B,[[x,Length(EltsG)+1]]);
+fi;
+
 od;
+Append(EltsG,[Image(FhomG,w)]);
 
 Append(PseudoBoundary[2],[B]);
 
