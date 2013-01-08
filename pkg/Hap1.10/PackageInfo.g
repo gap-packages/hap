@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.10.9",
+  Version := "1.10.9.1",
   Date    := "02/01/2013",
   ArchiveURL 
           := "http://hamilton.nuigalway.ie/Hap/hap1.10.9",
@@ -61,7 +61,7 @@ SetPackageInfo( rec(
 
 
   Dependencies := rec(
-    GAP := ">= 4.4.7",
+    GAP := ">= 4.5.6",
     NeededOtherPackages := [
                              [ "polycyclic", ">=1.1" ],
                             #[ "aclib",      ">=1.1" ],
