@@ -16,23 +16,74 @@ end);
 
 #####################################################################
 InstallGlobalFunction(AlgebraicReduction,
-function(arg)      
+function(arg)
 local w,p,v,x,j,k,pos;
 
 w:=arg[1];
 if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 
 if p= 0  then
-	v:=[];
-	for x in w do
-	k:=Position(v,[-x[1],x[2]]);
-	if (k=fail) then Add(v,x); else
-        Remove(v,k);
-	#v[k]:=0;
-	fi;
-	od;
-        return v;
-	#return Filtered(v,y->(not y=0));
+        v:=Filtered(w,x->x[1]>0);
+        for x in w do
+if x[1]<0 then
+        k:=Position(v,[-x[1],x[2]]);
+        if (k=fail) then Add(v,x); else
+        #Remove(v,k);
+        Unbind(v[k]);
+        fi;
+fi;
+        od;
+        #return v;
+        return Filtered(v,a->IsBound(a));
+fi;
+
+
+        v:=Collected(w);
+        Apply(v,x->[x[1],x[2] mod p]);
+        Apply(v, x->MultiplyWord(x[2],[x[1]]));
+        v:=Collected(Concatenation(v));
+        Apply(v,x->[x[1],x[2] mod p]);
+        Apply(v, x->MultiplyWord(x[2],[x[1]]));
+
+        return Concatenation(v);
+
+
+end);
+#####################################################################
+
+
+#####################################################################
+InstallGlobalFunction(AlgebraicReduction_alt,
+function(arg)      
+local ww,y,s,w,p,v,x,j,k,pos;
+
+w:=arg[1];
+if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
+
+if p= 0  then
+        s:=StructuralCopy(w);
+        Apply(s,x->[AbsInt(x[1]),x[2]]);
+        s:=SSortedList(s);
+        v:=[1..Length(s)]*0; 
+        for x in w do
+        y:=[AbsInt(x[1]),x[2]];
+        pos:=Position(s,y);
+        v[pos]:=v[pos]+SignInt(x[1]); 
+        od;
+        ww:=[];
+        for j in [1..Length(v)] do
+        if v[j]>0 then 
+        for k in [1..v[j]] do
+        Add(ww,s[j]);
+        od;
+        else
+        for k in [1..-v[j]] do
+        Add(ww,[-s[j][1],s[j][2]]);
+        od;
+        fi;
+
+        od;
+        return ww;
 fi;
 
 

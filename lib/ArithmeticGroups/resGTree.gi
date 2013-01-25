@@ -1,21 +1,27 @@
+
 InstallGlobalFunction(ResolutionGTree,
 function(arg)
 local 
-	R,n,EltsG,G,i,L,
+	R,n,G,i,L,
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
 	Dimension,Hmap,pos,Gmult,Gmultrec,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
-	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy,ZeroDimensionHmap,ZeroDimensionHtpy,
-	HmapRec,p,q,r,s,HtpyRec,k,g;
+	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy, ZeroDimensionHmap, 
+        ZeroDimensionHtpy,
+	HmapRec,p,q,r,s,HtpyRec,k,g, ZeroDimensionHmapRec, Pair2QuadRec,
+        DimensionRec;
 R:=arg[1];
 n:=arg[2];
-EltsG:=R!.elts;
 G:=R!.group;
+
+#############################################
 Action:=function(p,r,g)
 if not IsBound(R!.action) then return 1;
 else return R!.action(p,r,g);
 fi;
 end;
+#############################################
+
 #############################################
 pos:=function(g)   #return the position of gth - element in EltsG, 
 	           # if not then add to EltsG
@@ -25,19 +31,8 @@ if posit=fail then
 	Add(R!.elts,g); 
         return Length(R!.elts);
 fi;
+
 return posit;
-end;
-#############################################
-AlgRed:=function(g) #Algebraic Reduction
-local l,x;
-l:=[];
-for x in g do
-	if Position(l,[-x[1],x[2]])=fail then Add(l,x); 
-	else 
-		Remove(l,Position(l,[-x[1],x[2]]));
-	fi;
-od;
-return l;
 end;
 #############################################
 AlgRed:=AlgebraicReduction;
@@ -59,14 +54,10 @@ end;
 Mult:=function(g,w) # Multiply gth-element with a word
 local 
 	l,x;
-#l:=[];
 l:=StructuralCopy(w);
 if R!.elts[g]=[] then return [];fi;
-#Append(l,List(w,y->[y[1],pos(R!.elts[g]*R!.elts[y[2]])]));
-#Apply(l,y->[y[1],pos(R!.elts[g]*R!.elts[y[2]])]);
 Apply(l,y->[y[1],Gmult(g,y[2])]);
 return l;
-#return AlgRed(l);
 end;
 ##############################################
 GrpsRes:=function(G,n) # Resolutions of Group
@@ -90,20 +81,16 @@ StabGrps:= List([0..Length(R)],n->
            List([1..R!.dimension(n)], k->R!.stabilizer(n,k))); 
 StabRes:=[];
 for L in StabGrps do
-Add(StabRes,List(L,	
-g->ExtendScalars(GrpsRes(g,n),G,EltsG))
-);
-
+Add(StabRes,List(L,g->ExtendScalars(GrpsRes(g,n),G,R!.elts))  ); 
 od;
-
 #############################################
 CorrectList:=function(list)
 local 
 	l,i;
 if list=[] then return [];fi;
 l:=StructuralCopy(list[1]);
-for i in [2..Length(list)] do
-		Append(l,StructuralCopy(list[i]));
+	for i in [2..Length(list)] do
+	Append(l,StructuralCopy(list[i]));
 	od;
 return l;
 end;
@@ -150,17 +137,22 @@ for p in [1..2] do
     od;
   od;
 od;
+ZeroDimensionHmapRec:=[];
 ############################################
 ZeroDimensionHmap:=function(k)
 local i,j,pk;
 pk:=AbsInt(k);
+if not IsBound(ZeroDimensionHmapRec[pk]) then
+
 j:=0;
 for i in [1..pk-1] do
 j:=j+StabRes[1][i]!.dimension(0);
 od;
 j:=j+1;
-if k>0 then return j;
-else return -j;fi;
+ZeroDimensionHmapRec[pk]:=j;
+fi;
+if k>0 then return ZeroDimensionHmapRec[pk];
+else return -ZeroDimensionHmapRec[pk];fi;
 end;
 ############################################
 Hmap:=function(p,q,r,s)     #Horiziontal map Hmap:A(p,q)->A(p-1,q), acts on the (r,s) th-generator of A(p,q)
@@ -170,7 +162,6 @@ ps:=AbsInt(s);
 if p<>1 then return [];
 else
 if not IsBound(HmapRec[p+1][q+1][r][ps]) then
-	#if q=0 then bdr:=R!.boundary(1,Quad2One(p,q,r,ps)); 
 	if q=0 then bdr:=StructuralCopy(R!.boundary(1,1));
 		#Print("bdr",bdr);
 		Apply(bdr,w->[ZeroDimensionHmap(w[1]),w[2]]);
@@ -179,7 +170,6 @@ if not IsBound(HmapRec[p+1][q+1][r][ps]) then
 	else
 		l:=[];m:=[];
 		d0:=StructuralCopy(List(StabRes[p+1][r]!.boundary(q,ps),x->[Action(p,r,x[2])*x[1],x[2]]));
-		#d1d0:=AlgRed(CorrectList(List(d0,x->Mult(x[2],Hmap(p,q-1,r,x[1])))));
 		for w in d0 do
 			Append(m,Mult(w[2],Hmap(p,q-1,r,w[1])));
 		od;
@@ -194,20 +184,28 @@ fi;
 if SignInt(s)=1 then return HmapRec[p+1][q+1][r][ps];
 else return NegateWord(HmapRec[p+1][q+1][r][ps]);fi;
 end;
+
+Pair2QuadRec:=[];
 ##############################################
-Pair2Quad:=function(k,n)
+Pair2Quad:=function(k,nn)
 local 
-	p,q,r,s,i,temp,j1,j2;
+	x,n,nnn, p,q,r,s,i,temp,j1,j2;
+i:=SignInt(nn);
+n:=AbsInt(nn);
+nnn:=n;
+
+if not IsBound(Pair2QuadRec[k+1]) then Pair2QuadRec[k+1]:=[]; fi;
+
+if not IsBound(Pair2QuadRec[k+1][n]) then 
+
 temp:=0;
 for j1 in [0..k] do
 	for j2 in [1..R!.dimension(j1)] do
 		temp:=temp+StabRes[j1+1][j2]!.dimension(k-j1);
 	od;
 od;
-if n>temp then return "generator does not exist";fi;
+#if n>temp then return "generator does not exist";fi;
 p:=-1;
-i:=SignInt(n);
-n:=AbsInt(n);
 while n>0 do;
 	p:=p+1;
 	r:=0;
@@ -218,7 +216,13 @@ while n>0 do;
 	od;
 od;
 q:=k-p;
-return [p,q,r,i*s];
+Pair2QuadRec[k+1][nnn]:=[p,q,r,s];
+
+fi;
+
+x:=Pair2QuadRec[k+1][nnn];
+return [x[1],x[2],x[3],i*x[4]];
+
 end;
 ##############################################
 Quad2Pair:=function(p,q,r,s)
@@ -267,17 +271,25 @@ if SignInt(n)=1 then
 else return NegateWord(PseudoBoundary[k+1][pn]);
 fi;
 end;
+
+DimensionRec:=[]; 
 ##############################################
 Dimension:=function(n)
 local
 	dim,p,i;
+ 
+if not IsBound(DimensionRec[n+1]) then
+
 dim:=0;
 for p in [0..n] do
 	for i in [1..R!.dimension(p)] do
 		dim:=dim+StabRes[p+1][i]!.dimension(n-p);
 	od;
 od;
-return dim;
+DimensionRec[n+1]:= dim;
+fi;
+
+return DimensionRec[n+1];
 end;
 ##############################################
 HtpyRec:=[];
@@ -291,8 +303,6 @@ od;
 ZeroDimensionHtpy:=function(k)
 local i,j,r;
 i:=0;
-#r:=i;
-#k:=k-StabRes[1][i]!.dimension(0);
 while k>0 do
   i:=i+1;
   k:=k-StabRes[1][i]!.dimension(0);
@@ -318,9 +328,6 @@ if not IsBound(HtpyRec[n+1][pt][g]) then
 if n=0 then
 	ppt:=ZeroDimensionHtpy(pt);
 	h1:=StructuralCopy(R!.homotopy(n,[ppt,g]));
-	#Print("h1=",h1,"\n");
-	#Apply(h1,w->[Action(1,1,w[2])*w[1],w[2]]);
-	#d1h1:=AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,r,x[1])))));   #need to fix 'r'
 	d1h1:=StructuralCopy(AlgRed(CorrectList(List(h1,x->Mult(x[2],Hmap(p+1,q,1,x[1]))))));
 	for x in d1h1 do
 	    k:=Pair2Quad(n,x[1]);
@@ -331,9 +338,6 @@ if n=0 then
 	h0:=StructuralCopy(StabRes[p+1][r]!.homotopy(0,[s,g]));
 	Apply(h0,w->[Quad2Pair(p,q+1,r,w[1])[2],w[2]]);
 	h11:=List(h1,x->[Quad2Pair(p+1,q,Triple2Pair(p+1,q,x[1])[1],Triple2Pair(p+1,q,x[1])[2])[2],x[2]]);
-	#Print("e=   ",e,"\n");
-	#Print("h0=   ",h0,"\n");
-	#Print("h11=   ",h11,"\n");
 	Append(h,NegateWord(e));
 	Append(h,h0);
 	Append(h,h11);
@@ -346,22 +350,16 @@ else
 	else
 	ps:=Action(1,1,g)*s;
 	m:=StructuralCopy(StabRes[p+1][r]!.homotopy(q,[ps,g]));
-	#Print("m=",m,"\n");
 	Apply(m,x->[Action(1,1,x[2])*x[1],x[2]]);
 	h0:=List(m,x->[Quad2Pair(p,q+1,r,x[1])[2],x[2]]);
-	#Print("h=",h0,"\n");
 	Append(h,h0);
-	#dh:=AlgRed(CorrectList(List(m,x->Mult(x[2],Hmap(p,q+1,r,x[1])))));
 	dh:=AlgRed(CorrectList(List(m,x->Mult(x[2],Hmap(p,q+1,1,x[1])))));
 	for x in dh do
 	   k:=Pair2Quad(n,x[1]);
 	   y:=StructuralCopy(StabRes[k[1]+1][k[3]]!.homotopy(k[2],[k[4],x[2]]));
 	   Apply(y,w->[Quad2Pair(k[1],k[2]+1,k[3],w[1])[2],w[2]]);
 	   Append(e,y);
-	   #k:=Pair2Quad(n,x[1]);
-	   #Append(e,StabRes[k[1]+1][k[3]]!.homotopy(k[2],[k[4],x[2]]));
 	od;
-	#Print("e=",e,"\n");
 	if IsEvenInt(q) then 
 	  Append(h,e);
 	else Append(h,NegateWord(e));fi;

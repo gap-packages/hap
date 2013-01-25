@@ -45,9 +45,24 @@ be
 realized
 as
 3-dimensional
-pure cubical complexes. For
-instance, the following commands construct the 10th prime knot on 9
-crossings and then display the knot. (Data on prime knots with low
+pure
+cubical
+complexes.
+For
+instance,
+the
+following
+commands
+construct
+the
+10th
+prime
+knot
+on
+9
+crossings
+and
+then display the knot. (Data on prime knots with low
 crossing number has been taken from the <a
  href="http://katlas.math.toronto.edu/wiki/The_Rolfsen_Knot_Table">Knot
 Atlas</a>.)<br>
@@ -108,8 +123,23 @@ x_1^10-7*x_1^9+77/4*x_1^8-137/4*x_1^7+191/4*x_1^6-215/4*x_1^5+191/4*x_1^4-137/4*
 ambient
 isotopy
 and
-mirror image there are 84 prime
-knots with 9 or fewer crossings. These 84 knots yield 74 distinct
+mirror
+image
+there
+are
+84
+prime
+knots
+with
+9
+or
+fewer
+crossings.
+These
+84
+knots
+yield
+74 distinct
 Alexander polynomials.<br>
       <br>
 The
@@ -132,6 +162,21 @@ crossings (up to ambient isotopy and mirror image).<br>
 G:=KnotGroup(M);;<br>
 gap&gt;
 Invariants:=List(LowIndexSubgroupsFpGroup(G,5),AbelianInvariants);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -177,8 +222,23 @@ C:=[[5,
 2],[8,
 6],[4,
 7],[3,
-5],[2, 4],[6,
-1]];;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+5],[2,
+4],[6,
+1]];;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <br>
 gap&gt; N:=PureCubicalKnot(C);<br>
 Pure cubical link.<br>
       <br>
@@ -196,8 +256,9 @@ f2*f3^-1*f1^-1*f2*f3*f2^-1*f1^2*f2^-1*f1^-1 ]<br>
     </tr>
     <tr>
       <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-      <a href="http://www.pdb.org/pdb/home/home.do">Protein Data Base</a>
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><a
+ name="proteins"></a>The <a href="http://www.pdb.org/pdb/home/home.do">Protein
+Data Base</a>
 contains a wealth of data which can be investigated with respect to
 knottedness. Information on a particular protein can be downloaded as a
 pdb file. Each protein consists of one or more chains of amino acids
@@ -207,7 +268,8 @@ the pdb file). A simple path can be constructed through the sequence of
 alpha carbon atoms. By joining the ends of this path one obtains a
 simple closed
 curve in Euclidean 3-space. For instance, the <a href="1V2X.pdb">pdb
-file</a> of the 1V2X protein, which consists of a single chain of amino
+file</a> of the T.thermophilus 1V2X protein, which consists of a single
+chain of amino
 acids, can be read as a 3-dimensional pure
 cubical complex (of the homotopy type of a circle) using the following
 commands.&nbsp; <br>
@@ -273,6 +335,262 @@ that of the trefoil group.<br>
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 AlexanderPolynomial(G);<br>
 x_1^2-x_1+1<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><a
+ name="1xd3"></a>The
+H.sapiens <a href="1XD3.pdb">1XD3</a> protein contains a more
+complicated knot, as the following commands show. This pdb file needs
+to be read at a "resolution" value of 5 or greater in order for the
+successful representation of it as a pure cubical complex of the
+homotopy type of a circle..<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Kprotein2:=ReadPDBfileAsPureCubicalComplex("1XD3.pdb",5);;<br>
+Reading chain containing 243 atoms.<br>
+      <br>
+gap&gt;
+K:=ContractedComplex(Kprotein2);;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <br>
+gap&gt; P:=ProjectionOfPureCubicalComplex(K);;<br>
+gap&gt; ViewPureCubicalComplex(P);&nbsp;&nbsp; <br>
+      <div style="text-align: center;"><img
+ style="width: 691px; height: 691px;" alt="" src="1xd3.png"><br>
+      </div>
+      <br>
+gap&gt; C:=ComplementOfPureCubicalComplex(Kprotein2);;<br>
+gap&gt; C:=ZigZagContractedPureCubicalComplex(C);;<br>
+gap&gt; G:=FundamentaGroup(C);;<br>
+#I&nbsp; there are 2 generators and 1 relator of total length 16<br>
+gap&gt; AlexanderPolynomial(G);<br>
+x_1^2-3/2*x_1+1<br>
+      <br>
+      <br>
+gap&gt; AlexanderPolynomial(PureCubicalKnot(5,2));<br>
+x_1^2-3/2*x_1+1<br>
+      <br>
+gap&gt; ViewPureCubicalKnot(PureCubicalKnot(5,2));; <br>
+      <div style="text-align: center;"><img
+ style="width: 313px; height: 313px;" alt="" src="primeknot5_2.png"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">We
+remark that this prime knot on five crossings has unknotting number
+equal to 1. It is thus possible to convert the knot to the trivial knot
+by changing one over crossing to an under crossing or vice-versa.&nbsp;
+      <br>
+      <br>
+There may be slight errors in the coordinates of atoms in the pdb file
+for a protein. To test the robustness of the knottedness of a protein
+we can thicken the protein knot and see if its homotopy type changes.
+If the homotopy type does change then we can investigate whether the
+thickening has removed any knottedness.&nbsp; <br>
+      <br>
+The
+following commands show that by thickening the Kprotein2 knot slightly
+we change its homotopy type to that of a wedge of two
+circles Sp v Sq, but that a further three thickenings contribute no
+further change of homotopy
+type. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Kprotein2:=FramedPureCubicalComplex(Kprotein2);;<br>
+gap&gt; Kprotein2:=FramedPureCubicalComplex(Kprotein2);;<br>
+gap&gt; Kprotein2:=FramedPureCubicalComplex(Kprotein2);; #This creates
+some space to perform thickenings<br>
+      <br>
+gap&gt; T1:=ThickenedPureCubicalComplex(Kprotein2);;<br>
+gap&gt; L:=ContractedComplex(T1);;&nbsp; <br>
+gap&gt; Y:=CubicalComplexToRegularCWComplex(L);;<br>
+gap&gt;
+CriticalCellsOfRegularCWComplex(Y); <br>
+[ [ 1, 571 ], [ 1, 601 ], [ 0, 6877 ] ]<br>
+      <br>
+gap&gt;
+T2:=ThickenedPureCubicalComplex(T1);;&nbsp; <br>
+gap&gt; T3:=ThickenedPureCubicalComplex(T2);; <br>
+gap&gt; T4:=ThickenedPureCubicalComplex(T3);;&nbsp;&nbsp; <br>
+gap&gt; L:=ContractedComplex(T4);;<br>
+gap&gt; Y:=CubicalComplexToRegularCWComplex(L);;<br>
+gap&gt; CriticalCellsOfRegularCWComplex(Y);<br>
+[ [ 1, 380 ], [ 1, 468 ], [ 0, 9436 ] ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following
+commands
+show
+that
+the
+complement of the thickened space
+T3 has the homotopy type of a wedge of two circles and one 2-sphere. In
+particular, this is quite different to the homotopy type of the
+complement of the wedge of circles obtained from the unknot by
+squeezing diagonally opposite points together.&nbsp; <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ComplementOfPureCubicalComplex(T3);;<br>
+gap&gt; C:=ZigZagContractedPureCubicalComplex(C);;<br>
+gap&gt; Y:=CubicalComplexToRegularCWComplex(C);;<br>
+gap&gt; CriticalCellsOfRegularCWComplex(Y);<br>
+[ [ 2, 68 ], [ 1, 88018 ], [ 1, 113335 ], [ 0, 49422 ] ]<br>
+      <br>
+gap&gt; G:=FundamentalGroup(Y);<br>
+&lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
+gap&gt; RelatorsOfFpGroup(G);<br>
+[&nbsp; ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show that the first circle Sp of the wedge T3
+is unknotted.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P:=RandomCubeOfPureCubicalComplex(T3);;<br>
+gap&gt; P:=ThickenedPureCubicalComplex(P);;<br>
+gap&gt; P:=ThickenedPureCubicalComplex(P);;<br>
+gap&gt; P:=ThickenedPureCubicalComplex(P);;<br>
+gap&gt; P:=ThickenedPureCubicalComplex(P);;<br>
+gap&gt; Sp:=PureCubicalComplexDifference(T3,P);;<br>
+gap&gt; ContractPureCubicalComplex(Sp);;<br>
+gap&gt; Sp:=ThickenedPureCubicalComplex(Sp);; #Makes Sp into a topology
+manifold again<br>
+gap&gt; Cp:=ComplementOfPureCubicalComplex(Sp);;<br>
+gap&gt; Cp:=ZigZagContractedPureCubicalComplex(Cp);;<br>
+gap&gt; Yp:=CubicalComplexToRegularCWComplex(Cp);;<br>
+gap&gt; CriticalCellsOfRegularCWComplex(Yp);<br>
+[ [ 1, 14 ], [ 0, 28 ] ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show that the second crice&nbsp; Sq of the wedge T3
+is again unknotted. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Q:=RandomCubeOfPureCubicalComplex(Sp);;<br>
+gap&gt; Q:=ThickenedPureCubicalComplex(Q);;<br>
+gap&gt; Q:=ThickenedPureCubicalComplex(Q);;<br>
+gap&gt; Q:=ThickenedPureCubicalComplex(Q);;<br>
+gap&gt; Q:=ThickenedPureCubicalComplex(Q);;<br>
+gap&gt;
+Sq:=PureCubicalComplexDifference(T3,Q);;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+gap&gt; ContractPureCubicalComplex(Sq);;<br>
+gap&gt; Sq:=ThickenedPureCubicalComplex(Sq);; #Makes Sq into a topology
+manifold again<br>
+gap&gt; Cq:=ComplementOfPureCubicalComplex(Sq);;<br>
+gap&gt; Cq:=ZigZagContractedPureCubicalComplex(Cq);;<br>
+gap&gt; Yq:=CubicalComplexToRegularCWComplex(Cq);;<br>
+gap&gt; CriticalCellsOfRegularCWComplex(Yq);<br>
+[ [ 1, 27 ], [ 0, 19 ] ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands determine the relative sizes of the two circles Sp
+and Sq, showing that Sp is about four times longer than Sq.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+ContractPureCubicalComplex(Sp);;<br>
+gap&gt; Size(Sp);<br>
+2839<br>
+      <br>
+gap&gt; ContractPureCubicalComplex(Sq);;<br>
+gap&gt; Size(Sq);<br>
+747<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Thus
+a
+slight
+thickening
+of
+the
+protein
+knot
+of
+1XD3
+significantly
+changes its homotopy
+type and knottedness. Further commands can be used establish that the
+thickened protein knot and complement have the same homotopy types as a
+space such as <br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 234px; height: 234px;" alt="" src="proteinwedge.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+      <img style="width: 358px; height: 249px;" alt=""
+ src="proteinwedge2.png"><br>
+      <div style="text-align: left;">and its complement.<br>
+      </div>
+      </div>
+      <br>
+However, a further three
+thickenings of the 1XD3 protein knot contribute no further&nbsp;
+changes to homotopy
+type.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">In
+conclusion, the nature of the knot in the
+protein 1XD3 is very
+sensetive to the accuracy of the Euclidean coordinates of its alpha
+carbon atoms given in the pdb file. A slight change in the coordinates
+of certain atoms can change the ambient isotopy of the knot in the
+protein to a knot such as the trefoil knot:<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 275px; height: 208px;" alt="" src="proteinmod.png"><br>
+      <br>
+      </div>
+but not to the trivial protein knot.&nbsp; <br>
       </td>
     </tr>
     <tr>

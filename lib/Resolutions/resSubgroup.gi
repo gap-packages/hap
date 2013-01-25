@@ -7,9 +7,9 @@ local
 		R,gensG,gensK,
 		DimensionR, BoundaryR, HomotopyR, EltsG,
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
-		G, K, TransK, sK,
-		Gword2Kword, G2K, Pair2Int, Int2Pair,
-		Mult, FIN, i;
+		G, K, TransK, sK, 
+		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
+		Mult, MultRec, FIN, i;
 		
 if Length(arg)=3 then
 R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
@@ -43,12 +43,21 @@ return Position(EltsG,TransK[i]*EltsG[j]);
 end;
 #####################################################################
 else
+MultRec:=List([1..Length(TransK)],i->[]);
 #####################################################################
 Mult:=function(i,j) local x,r;
+if not IsBound(MultRec[i][j]) then
+
 x:=TransK[i]*EltsG[j];
+
 r:=Position(EltsG,x);
+
 if r=fail then Add(EltsG,x); r:=Length(EltsG); fi;
 return r;
+MultRec[i][j]:= r;
+fi;
+
+return MultRec[i][j];
 end;
 #####################################################################
 fi;
@@ -69,14 +78,21 @@ return [k,t];
 end;
 #####################################################################
 else
+G2KRec:=[];
 #####################################################################
 G2K:=function(g)
 local t,k,x;
+if not IsBound(G2KRec[g]) then 
+
 t:=PositionCanonical(TransK,EltsG[g]);
 x:=EltsG[g]*TransK[t]^-1;
 k:=Position(EltsK,x);
 if k=fail then Add(EltsK,x); k:=Length(EltsK); fi;
-return [k,t];
+
+G2KRec[g]:= [k,t];
+
+fi;
+return G2KRec[g];
 end;
 #####################################################################
 fi;
@@ -108,7 +124,7 @@ v:=[];
 for x in w do
 y:=G2K(x[2]);
 y:=[Pair2Int([x[1],y[2]]),y[1]];
-Append(v,[y]);
+Add(v,y);
 od;
 return v;
 end;
@@ -137,15 +153,19 @@ return NegateWord(BoundaryRec[nn][i]);
 end;
 #####################################################################
 
+
 ######################
 Homotopy:=function(n,e)
 local x,g,pos;
+
 x:=Int2Pair(e[1]);
-#g:=TransK[x[2]]*EltsK[e[2]];
 g:=EltsK[e[2]]*TransK[x[2]]; #Need to chack the maths again here!
+
 pos:=Position(EltsG,g);
+
 if pos =fail then Add(EltsG,g); pos:=Length(EltsG);fi;
 return Gword2Kword( R!.homotopy(n,[x[1],pos]));
+
 end;
 ######################
 
