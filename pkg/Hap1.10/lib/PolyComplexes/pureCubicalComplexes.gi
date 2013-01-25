@@ -2647,3 +2647,53 @@ end);
 ##############################################
 ##############################################
 
+###################################################
+###################################################
+InstallGlobalFunction(RandomCubeOfPureCubicalComplex,
+function(M)
+local
+        B,
+        cart, CART, dim,dims,
+        ArrayValueDim,
+        ArrayAssignDim,
+        x,z,cnt, ran;
+
+#############################################
+if not IsHapPureCubicalComplex(M) then
+Print("This function must be applied to a pure cubical complex.\n");
+return fail;
+fi;
+#############################################
+
+dim:=Dimension(M);
+ran:=Random([1..Size(M)]);
+cnt:=0;
+
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayAssignDim:=ArrayAssignFunctions(dim);
+dims:=EvaluateProperty(M,"arraySize");
+B:=0*M!.binaryArray;
+CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+cart:=Cartesian(List([1..dim],a->[-1,0,1]));
+
+for x in CART  do
+if ArrayValueDim(M!.binaryArray,x)=1 then cnt:=cnt+1; fi;
+if cnt=ran then ArrayAssignDim(B,x,1); break;fi;
+od;
+
+return PureCubicalComplex(B);
+
+end);
+#################################################################
+#################################################################
+
+#################################################################
+#################################################################
+InstallGlobalFunction(FramedPureCubicalComplex,
+function(M);
+
+return PureCubicalComplex(FrameArray(M!.binaryArray));
+
+end);
+#################################################################
+#################################################################

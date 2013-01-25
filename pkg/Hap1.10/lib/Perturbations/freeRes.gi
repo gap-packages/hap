@@ -188,7 +188,7 @@ else
 ##################################
 for L in StabGrps do
 Add(StabResls,List(L,
-g->ExtendScalars(ResolutionFG(g,i,false,prime),G,EltsG))
+g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG))
 );
 i:=Maximum(0,AbsInt(i-1));
 od;

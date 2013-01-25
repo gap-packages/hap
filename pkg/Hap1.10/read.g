@@ -345,6 +345,7 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
+# ReadPackage("HAP","lib/ArithmeticGroups/resDirectProd.gi");
 ######################################################
 fi;
 

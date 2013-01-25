@@ -17,6 +17,7 @@ ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
 DeclareGlobalFunction("Negate");
 DeclareGlobalFunction("NegateWord");
 DeclareGlobalFunction("AlgebraicReduction");
+DeclareGlobalFunction("AlgebraicReduction_alt");
 DeclareGlobalFunction("AddFreeWords");
 DeclareGlobalFunction("AppendFreeWord");
 DeclareGlobalFunction("AddFreeWordsModP");
@@ -434,6 +435,7 @@ DeclareGlobalFunction("DendrogramToPersistenceMat");
 DeclareGlobalFunction("BarCodeOfSymmetricMatrix");
 DeclareGlobalFunction("BarCodeOfFilteredCubicalComplex");
 DeclareGlobalFunction("HenonOrbit");
+DeclareGlobalFunction("RandomCubeOfPureCubicalComplex");
 
 
 ########################## ARRAYS ################################
@@ -442,6 +444,7 @@ DeclareGlobalFunction("ArrayValueFunctions");
 DeclareGlobalFunction("ArrayValueKD");
 DeclareGlobalFunction("ArrayToPureCubicalComplex");
 DeclareGlobalFunction("FrameArray");
+DeclareGlobalFunction("FramedPureCubicalComplex");
 DeclareGlobalFunction("UnframeArray");
 DeclareGlobalFunction("PermuteArray");
 DeclareGlobalFunction("ArraySum");

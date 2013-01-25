@@ -1,29 +1,4 @@
 
-#######################################################
-############################
-# InstallMethod( \in,
-#                "for SL(2,Z)_p",
-#               [ IsMatrix,  IsHAPRationalSpecialLinearGroup],
-# function ( g, G )
-# local P,n,d,facs,m,p,H,K;
-# if IsBound(G!.coprimes) then
-# m:=G!.coprimes[1];
-# p:=G!.coprimes[2];
-# P:=[[1,0],[0,p]];
-# return P^-1*g*P in SL2Z(1/m);
-# fi;
-# ##############
-# if IsBound(G!.levels) then
-# m:=G!.levels[1];
-# p:=G!.levels[2];
-# H:=SL2Z(1/m);
-# K:=ConjugateSL2ZGroup(H,[[1,0],[0,p]]);
-# return (g in H and g in K);
-# fi;
-# end );
-# #################################
-
-
 InstallOtherMethod(RightTransversal,
 "Right Transversal for SL2Z(1/m) and its congruence subgroup",
 [IsHAPRationalSpecialLinearGroup,IsMatrixGroup],
@@ -67,29 +42,4 @@ enum:=EnumeratorByFunctions(CollectionsFamily( FamilyObj( G ) ),rec(
 SetIsSSortedList( enum, true );
 return enum;
 end);
-##########################
-InstallOtherMethod(PositionCanonical,
-"Position Canonical connects to Right Transversal for SL2Z(1/m) and its congruence subgroup",
-[IsFinite,IsDuplicateFree],
-function(trans,g)
-if IsHAPRationalSpecialLinearGroup(trans!.group) then
-return Position(trans,CanonicalRightCountableCosetElement(trans!.subgroup,g));
-fi;
-end);
-##########################
-InstallMethod( \in,
-               "for CongruenceSubgroupGamma0(p)",
-              [ IsMatrix,  IsCongruenceSubgroupGamma0 ],
-function ( g, G )
-local p;
-p:=G!.LevelOfCongruenceSubgroup;
-if g in SL(2,Integers) then
-if Determinant(g)=1 then
-if IsInt(g[2][1]/p) then return true;fi;
-fi; 
-fi;
-############################
-return false; 
-end );
-
 ###################################################################
