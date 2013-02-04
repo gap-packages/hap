@@ -233,7 +233,7 @@ M:=[];
 #hom:=GroupHomomorphismByImagesNC(GG,F,GeneratorsOfGroup(GG),
 #List(GeneratorsOfGroup(GG),i->xx));
 
-hom:=NqEpimorphismNilpotentQuotient(GG,1);
+hom:=HAP_NqEpimorphismNilpotentQuotient(GG,1);
 F:=Image(hom);
 if not IsCyclic(F) then return fail; fi;
 xx:=MinimalGeneratingSet(F)[1];

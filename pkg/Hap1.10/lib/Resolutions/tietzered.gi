@@ -1,10 +1,9 @@
 #(C)2009 Graham Ellis
 
 #########################################################
-InstallGlobalFunction(TietzeReducedResolution,
-function(arg)
+InstallGlobalFunction(HAPTietzeReduction_OneStep,
+function(R,N,bound)
 local
-        R,N,
 	CR,
         Dimension,
         Boundary,
@@ -16,47 +15,9 @@ local
 	Action, ActionInv, Elts,
  	modN, modNplus1,
 	triple,
-	HmtpyNminus1, HmtpyN, NewHmtpyN, HmtpyNplus1,
-	hmtpyrec,tmp,
+	tmp,
         newb,bool,i,j,b,e,g,x,w,D,D2;;
 
-
-##############################################
-##############################################
-#####
-if Length(arg)=1 then R:=StructuralCopy(arg[1]);
-
-####No homotopy present########
-if R!.homotopy=fail then
-return HAPTietzeReduction_Inf(R);
-fi;
-####No homotopy case done######
-
-
-D:=List([0..Length(R)],R!.dimension);
-
-for i in [1..Length(R)-1] do
-R:=TietzeReducedResolution(R,i);
-od;
-
-D2:=List([0..Length(R)],R!.dimension);
-
-while D2<D do
-  D:=D2;
-  for i in [1..Length(R)-1] do
-    R:=TietzeReducedResolution(R,i);
-  od;
-  D2:=List([0..Length(R)],R!.dimension);
-od;
-
-return R;
-fi;
-#####
-##############################################
-##############################################
-
-R:=arg[1];
-N:=arg[2];
 Elts:=R!.elts;
 modN:=[];
 modNplus1:=[];
@@ -71,44 +32,32 @@ PseudoBoundaryNplus2:=List([1..R!.dimension(N+2)],i->
 fi;
 
 ###################################################################################
-HmtpyNminus1:=[];
-for i in [1..R!.dimension(N-1)] do
-HmtpyNminus1[i]:=[];
-for g in [1..Length(Elts)] do
-HmtpyNminus1[i][g]:=StructuralCopy(R!.homotopy(N-1,[i,g]));
-od;
-od;
-
-hmtpyrec:=List([1..R!.dimension(N+1)],x->[]);;
-
-if Length(R)>N+1 then
-HmtpyN:=[];
-NewHmtpyN:=[];
-for i in [1..R!.dimension(N)] do
-HmtpyN[i]:=[];
-NewHmtpyN[i]:=[];
-od;
-fi;
-
-if Length(R)>N+2 then
-HmtpyNplus1:=[];
-for i in [1..R!.dimension(N+1)] do
-HmtpyNplus1[i]:=[];
-od;
-fi;
-########################################################################################
-
 
 
 #####################################################################
-Action:=function(g,l);
-return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
+Action:=function(g,l)
+local pos, h;
+h:=Elts[g]*Elts[l[2]];
+pos:=Position(Elts,h);
+if pos=fail then
+Add(Elts, h);
+pos:=Length(Elts);
+fi;
+return [l[1],pos];
 end;
 #####################################################################
 
 #####################################################################
-ActionInv:=function(g,l);
-return [l[1],Position(Elts,Elts[g]^-1*Elts[l[2]])];
+ActionInv:=function(g,l)
+local pos, h;
+h:=Elts[g]^-1*Elts[l[2]];
+pos:=Position(Elts,h);
+if pos=fail then
+Add(Elts, h);
+pos:=Length(Elts);
+fi;
+return [l[1],pos];
+
 end;
 #####################################################################
 
@@ -124,7 +73,7 @@ b:=List(PseudoBoundary[i],x->AbsInt(x[1]));
 b:=Collected(b);
 pos:=PositionProperty(b,x->x[2]=1);
 
-if IsInt(pos) then
+if IsInt(pos) and Length(b)<=bound then
 y:=b[pos][1];
 b:=StructuralCopy(PseudoBoundary[i]);
 pos:=PositionProperty(b,x->AbsInt(x[1]) =y); 
@@ -164,7 +113,6 @@ for i in [1..Length(b)] do
    Add(newb,StructuralCopy(b[i]));
    else
    w:=StructuralCopy(triple[2]);
-   Add(hmtpyrec[j],[-SignInt(b[i][1])*triple[3],b[i][2],triple[4]]);
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
@@ -177,28 +125,6 @@ od;
 ######################
 
 
-######################
-for j in [1..R!.dimension(N-1)] do
-for g in [1..Length(Elts)] do
-b:=HmtpyNminus1[j][g];
-newb:=[];
-for i in [1..Length(b)] do
-   if not AbsInt(b[i][1])=e then
-   Add(newb,StructuralCopy(b[i]));
-   else
-   w:=StructuralCopy(triple[2]);
-   if b[i][1]<0 then
-   w:=NegateWord(w);
-   fi;
-   w:=List(w,x->Action(b[i][2],x));
-   Append(newb,w);
-   fi;
-od;
-HmtpyNminus1[j][g]:=AlgebraicReduction(newb);
-
-od;
-od;
-##################################
 
 od;
 ##############################
@@ -214,38 +140,10 @@ for b in PseudoBoundary do
 for x in b do
 x[1]:=SignInt(x[1])*Position(modN,AbsInt(x[1]));
 od;od;
-
-for j in [1..R!.dimension(N-1)] do
-for g in [1..Length(Elts)] do
-w:=HmtpyNminus1[j][g];
-for  i in [1..Length(w)] do
-w[i][1]:=SignInt(w[i][1])*Position(modN,AbsInt(w[i][1]));
-od;
-od;od;
-
 #####################################
+
 
 PseudoBoundaryN:=PseudoBoundaryN{modN};
-
-#####################################
-if Length(R)>N+2 then
-for i in [1..Length(modNplus1)] do
-for g in [1..Length(Elts)] do
-HmtpyNplus1[i][g]:=StructuralCopy(R!.homotopy(N+1, [modNplus1[i],g]));
-od;
-od;
-
-for i in [1..Length(modNplus1)] do
-tmp:=[];
-for g in [1..Length(Elts)] do
-for x in hmtpyrec[modNplus1[i]] do
-Append(HmtpyNplus1[i][g],R!.homotopy(N+1,[x[1],
-               Position(Elts,Elts[g]*Elts[x[2]]*Elts[x[3]]^-1)]));
-od;
-od;
-od;
-fi;
-#####################################
 
 #####################################
 if Length(R)>N+1 then
@@ -260,28 +158,6 @@ od;
 PseudoBoundaryNplus2[j]:=newb;
 
 od;
-
-
-for j in modN do
-for g in [1..Length(Elts)] do
-b:=R!.homotopy(N,[j,g]);
-newb:=[];
-for x in b do
-if  AbsInt(x[1]) in modNplus1 then
-Add(newb,[SignInt(x[1])*Position(modNplus1,AbsInt(x[1])),x[2]]);
-fi;
-od;
-HmtpyN[j][g]:=newb;
-od;
-od;
-
-for j in [1..Length(modN)] do
-for g in [1..Length(Elts)] do
-NewHmtpyN[j][g]:=HmtpyN[modN[j]][g];
-od;
-od;
-HmtpyN:=NewHmtpyN;
-
 
 fi;
 #####################################
@@ -313,31 +189,11 @@ fi;
 end;
 ####################################################
 
-
-
-####################################################
-Homotopy:=function(n,x);
-if not n in [N-1,N,N+1] then return R!.homotopy(n,x); fi;
-if x[1]>0 then 
-if n=N-1 then return HmtpyNminus1[x[1]][x[2]]; fi;
-if n=N then return HmtpyN[x[1]][x[2]]; fi;
-if n=N+1 then return HmtpyNplus1[x[1]][x[2]]; fi;
-fi;
-if x[1]<0 then
-if n=N-1 then return NegateWord(HmtpyNminus1[AbsInt(x[1])][x[2]]); fi;
-if n=N then return NegateWord(HmtpyN[AbsInt(x[1])][x[2]]); fi;
-if n=N+1 then return NegateWord(HmtpyNplus1[AbsInt(x[1])][x[2]]); fi;
-fi;
-
-end;
-####################################################
-
-
 CR:=Objectify(HapResolution,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
-                homotopy:=Homotopy,
+                homotopy:=fail,
                 elts:=R!.elts,
                 group:=R!.group,
                 properties:=
@@ -349,3 +205,43 @@ CR:=Objectify(HapResolution,
 return CR;
 end);
 #########################################################
+
+
+
+
+
+#########################################################
+InstallGlobalFunction(HAPTietzeReduction_OneLevel,
+function(R,i,bound)
+local T, s;
+
+
+s:=R!.dimension(i);
+T:=HAPTietzeReduction_OneStep(R,i,bound);
+
+while s>T!.dimension(i) do
+s:=T!.dimension(i);
+T:=HAPTietzeReduction_OneStep(T,i,bound);
+od;
+
+return T;
+
+end);
+#########################################################
+
+#########################################################
+InstallGlobalFunction(HAPTietzeReduction_Inf,
+function(arg)
+local R,bound, T, s;
+R:=arg[1];
+if Length(arg)=2 then bound:=arg[2]; else bound:=infinity; fi;
+
+T:=R;
+for s in Reversed([0..Length(R)-1]) do
+T:=HAPTietzeReduction_OneLevel(T,s,bound);
+od;
+
+return T;
+end);
+#########################################################
+

@@ -559,13 +559,58 @@ local
 	BoundaryS,Boundary,
 	HomotopyS,Homotopy,
 	PseudoBoundary,n,k,PseudoHomotopy,FinalHomotopy,
-	PosG;
+	PosG, POS, SL2Zpos;
 
 S:=arg[1];
 G:=arg[2];
 EltsG:=arg[3];
 
-PosG:=Position;
+
+
+#############################################
+POS:=[];
+PosG:=function(L,g)
+local i,d,lcm,p,h;
+#h:=Flat(g);
+d:=[];
+
+d[1]:=DenominatorRat(g[1][1]);
+d[2]:=DenominatorRat(g[1][2]);
+d[3]:=DenominatorRat(g[2][1]);
+d[4]:=DenominatorRat(g[2][2]);
+
+
+lcm:=Lcm(d);
+d:=lcm*g;
+p:=[];
+
+if d[1][1]<0 then p[1]:=2*(-d[1][1])-1;
+else p[1]:=2*d[1][1]+2;
+fi;
+
+if d[1][2]<0 then p[2]:=2*(-d[1][2])-1;
+else p[2]:=2*d[1][2]+2;
+fi;
+if d[2][1]<0 then p[3]:=2*(-d[2][1])-1;
+else p[3]:=2*d[2][1]+2;
+fi;
+if d[2][2]<0 then p[4]:=2*(-d[2][2])-1;
+else p[4]:=2*d[2][2]+2;
+fi;
+
+
+if not IsBound(POS[p[1]]) then POS[p[1]]:=[];fi;
+if not IsBound(POS[p[1]][p[2]]) then POS[p[1]][p[2]]:=[];fi;
+if not IsBound(POS[p[1]][p[2]][p[3]]) then POS[p[1]][p[2]][p[3]]:=[];fi;
+if not IsBound(POS[p[1]][p[2]][p[3]][p[4]]) then POS[p[1]][p[2]][p[3]][p[4]]:=[];fi;
+Add(L,g);
+POS[p[1]][p[2]][p[3]][p[4]]:=Length(L);
+return POS[p[1]][p[2]][p[3]][p[4]];
+end;
+############################################
+
+#PosG:=function(L,g) return Position(L,g); end;;
+#PosG:=Position;
 
 H:=S!.group;
 EltsH:=S!.elts;
@@ -634,16 +679,14 @@ end;
 THmapGrec:=[];
 #######################################
 THmapG:=function(t,h)
-local pos, g;
+local pos,g;
 
 if not IsBound(THmapGrec[t]) then THmapGrec[t]:=[]; fi;
 
 if IsBound( THmapGrec[t][h] ) then return THmapGrec[t][h]; fi;
 
 g:=EltsG[t]*EltsG[HhomG(h)];
-
 pos:= PosG(EltsG,g);
-
 
 if pos=fail then Add(EltsG, g);
 

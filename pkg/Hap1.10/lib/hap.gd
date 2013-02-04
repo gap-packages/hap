@@ -94,7 +94,10 @@ DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
 DeclareGlobalFunction("CayleyGraphOfGroupDisplay");
 DeclareGlobalFunction("CayleyGraphOfGroup");
 DeclareGlobalFunction("TietzeReducedResolution");
-DeclareGlobalFunction("TietzeReducedResolution_alt");
+DeclareGlobalFunction("HAPTietzeReduction_OneLevel");
+DeclareGlobalFunction("HAPTietzeReduction_OneStep");
+DeclareGlobalFunction("HAPTietzeReduction_Inf");
+#DeclareGlobalFunction("TietzeReducedResolution_alt");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
 
 ## RESOLUTIONS MOD P ################################################
@@ -551,6 +554,7 @@ ReadPackage("HAP","lib/HapPrime/polynomials.gd");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
+ReadPackage("HAP","lib/CrystallographicGroups/crystTypes.gd");
 
 
 

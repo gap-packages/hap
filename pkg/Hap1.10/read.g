@@ -156,6 +156,7 @@ ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
+ReadPackage("HAP", "lib/Resolutions/tietzered.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 ReadPackage("HAP", "lib/Resolutions/resSL2Z.gi");
@@ -355,6 +356,11 @@ ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
+
+################# CRYSTALLOGRAPHIC GROUPS #####################
+ReadPackage("HAP","lib/CrystallographicGroups/crystGbasis.gi");
+ReadPackage("HAP","lib/CrystallographicGroups/crystVarious.gi");
+ReadPackage("HAP","lib/CrystallographicGroups/crystGcomplex.gi");
 
 
 ################## HAP PRIME ##################################
