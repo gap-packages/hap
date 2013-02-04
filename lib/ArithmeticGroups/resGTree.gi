@@ -4,12 +4,12 @@ function(arg)
 local 
 	R,n,G,i,L,
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
-	Dimension,Hmap,pos,Gmult,Gmultrec,Mult,AlgRed,CorrectList,Boundary,
+	Dimension,Hmap,Gmult,Gmultrec,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
 	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy, ZeroDimensionHmap, 
         ZeroDimensionHtpy,
 	HmapRec,p,q,r,s,HtpyRec,k,g, ZeroDimensionHmapRec, Pair2QuadRec,
-        DimensionRec;
+        QuadToPairRec,DimensionRec;
 R:=arg[1];
 n:=arg[2];
 G:=R!.group;
@@ -22,30 +22,26 @@ fi;
 end;
 #############################################
 
-#############################################
-pos:=function(g)   #return the position of gth - element in EltsG, 
-	           # if not then add to EltsG
-local posit;
-posit:=Position(R!.elts,g);
-if posit=fail then 
-	Add(R!.elts,g); 
-        return Length(R!.elts);
-fi;
-
-return posit;
-end;
-#############################################
 AlgRed:=AlgebraicReduction;
 #############################################
 Gmultrec:=[];
 
 #############################################
-Gmult:=function(i,j);
+Gmult:=function(i,j)
+local posit,g;
 if not IsBound(Gmultrec[i]) then
 Gmultrec[i]:=[];
 fi;
 if not IsBound(Gmultrec[i][j]) then
-Gmultrec[i][j]:=pos(R!.elts[i]*R!.elts[j]);
+#Gmultrec[i][j]:=pos(R!.elts[i]*R!.elts[j]);
+g:=R!.elts[i]*R!.elts[j];
+posit:=Position(R!.elts,g);
+if posit=fail then
+        Add(R!.elts,g);
+        posit:= Length(R!.elts);
+fi;
+Gmultrec[i][j]:=posit;
+
 fi;
 
 return Gmultrec[i][j];
@@ -224,10 +220,18 @@ x:=Pair2QuadRec[k+1][nnn];
 return [x[1],x[2],x[3],i*x[4]];
 
 end;
+
+QuadToPairRec:=[];
 ##############################################
 Quad2Pair:=function(p,q,r,s)
 local
-	k,n,i,j;
+	k,n,i,j,p1,q1,r1,s1;
+
+p1:=p+1;q1:=q+1;r1:=r+1;s1:=AbsInt(s)+1;
+if not IsBound(QuadToPairRec[p1]) then QuadToPairRec[p1]:=[]; fi;
+if not IsBound(QuadToPairRec[p1][q1]) then QuadToPairRec[p1][q1]:=[]; fi;
+if not IsBound(QuadToPairRec[p1][q1][r1]) then QuadToPairRec[p1][q1][r1]:=[]; fi;
+if not IsBound(QuadToPairRec[p1][q1][r1][s1]) then 
 k:=p+q;
 n:=0;
 for i in [0..p-1] do
@@ -239,7 +243,11 @@ for i in [1..r-1] do
 	n:=n+StabRes[p+1][i]!.dimension(k-p);
 od;
 n:=n+AbsInt(s);
-return [k,SignInt(s)*n];
+QuadToPairRec[p+1][q+1][r+1][AbsInt(s)+1]:=[k,n];
+
+fi;
+k:=QuadToPairRec[p1][q1][r1][s1];
+return [k[1],SignInt(s)*k[2]];
 end;
 #############################################
 PseudoBoundary:=[];

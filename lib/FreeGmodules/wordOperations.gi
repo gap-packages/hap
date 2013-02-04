@@ -61,13 +61,14 @@ w:=arg[1];
 if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 
 if p= 0  then
-        s:=StructuralCopy(w);
+
+        s:=SSortedList(w);
         Apply(s,x->[AbsInt(x[1]),x[2]]);
         s:=SSortedList(s);
         v:=[1..Length(s)]*0; 
         for x in w do
         y:=[AbsInt(x[1]),x[2]];
-        pos:=Position(s,y);
+        pos:=PositionSorted(s,y);
         v[pos]:=v[pos]+SignInt(x[1]); 
         od;
         ww:=[];
@@ -83,6 +84,7 @@ if p= 0  then
         fi;
 
         od;
+
         return ww;
 fi;
 

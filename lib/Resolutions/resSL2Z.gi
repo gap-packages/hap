@@ -29,6 +29,7 @@ fi;
 H:=CongruenceSubgroupGamma0(p);
 SetName(H,"Gamma");
 RH:=ResolutionFiniteSubgroup(Rsl,H);
+RH:=HAPTietzeReduction_Inf(RH,infinity);
 RH!.group:=H;
 ##################################
 

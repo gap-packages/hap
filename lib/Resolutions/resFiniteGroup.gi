@@ -159,7 +159,7 @@ end;
 
 #####################################################################
 Boundary:=function(i,j);
-if i=0 then return []; else 
+if i<=0 then return []; else 
 return ChangeSign(j,PseudoBoundary[i][AbsInt(j)]); fi;
 end;
 #####################################################################

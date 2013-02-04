@@ -86,7 +86,9 @@ if not IsBound(G2KRec[g]) then
 
 t:=PositionCanonical(TransK,EltsG[g]);
 x:=EltsG[g]*TransK[t]^-1;
+
 k:=Position(EltsK,x);
+
 if k=fail then Add(EltsK,x); k:=Length(EltsK); fi;
 
 G2KRec[g]:= [k,t];
@@ -139,7 +141,9 @@ od;
 Boundary:=function(n,i)
 local x, w, nn;
 
-nn:=AbsInt(n);
+nn:=n;
+if nn<=0 then return []; fi;
+#nn:=AbsInt(n);
 if not IsBound(BoundaryRec[nn][i]) then
 x:=Int2Pair(i);
 w:=StructuralCopy(BoundaryR(nn,x[1]));
@@ -161,7 +165,9 @@ local x,g,pos;
 x:=Int2Pair(e[1]);
 g:=EltsK[e[2]]*TransK[x[2]]; #Need to chack the maths again here!
 
+
 pos:=Position(EltsG,g);
+
 
 if pos =fail then Add(EltsG,g); pos:=Length(EltsG);fi;
 return Gword2Kword( R!.homotopy(n,[x[1],pos]));

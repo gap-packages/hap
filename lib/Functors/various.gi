@@ -284,6 +284,25 @@ return CompositionOfFpGModuleHomomorphisms(x,y);
 end);
 #####################################################################
 
+#####################################################################
+InstallOtherMethod(Size,
+"for free ZG-resolutions",
+[IsHapResolution],
+function(R) local n,i,s,L;
+L:=[];
+
+for n in [1..Length(R)] do
+s:=0;
+for i in [1..R!.dimension(n)] do
+s:=s+Length(R!.boundary(n,i));
+od;
+Add(L,s);
+od;
+return L;
+end);
+#####################################################################
+
+
 ####################################################################
 #####################################################################
 InstallGlobalFunction(PCentre,
