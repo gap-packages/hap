@@ -16,7 +16,7 @@ local
 	StabResls, 
         ResolutionFG,
 	Action,
-        AlgRed,  AlgRed2,
+        AlgRed,  
 	EltsG, G, Mult, MultRecord,
 	DelGen, DelWord, DelGenRec,
 	PseudoBoundary,FinalBoundary,
@@ -451,6 +451,7 @@ Append(y,List(DelGen(k,q,s,x[1],x[2]),
 a->[a[1],a[2],Mult(x[3],a[3])]));
 od;
 
+return y;  #Added Jan 2013. Speeds up the calculation in some(!!) examples.
 return AlgRed(y);
 
 end;

@@ -566,6 +566,7 @@ G:=arg[2];
 EltsG:=arg[3];
 
 PosG:=Position;
+
 H:=S!.group;
 EltsH:=S!.elts;
 
@@ -633,15 +634,18 @@ end;
 THmapGrec:=[];
 #######################################
 THmapG:=function(t,h)
-local pos;
+local pos, g;
 
 if not IsBound(THmapGrec[t]) then THmapGrec[t]:=[]; fi;
 
 if IsBound( THmapGrec[t][h] ) then return THmapGrec[t][h]; fi;
 
-pos:= PosG(EltsG,EltsG[t]*EltsG[HhomG(h)]);
+g:=EltsG[t]*EltsG[HhomG(h)];
 
-if pos=fail then Add(EltsG, EltsG[t]*EltsG[HhomG(h)]);
+pos:= PosG(EltsG,g);
+
+
+if pos=fail then Add(EltsG, g);
 
  THmapGrec[t][h]:= Length(EltsG);
 else  THmapGrec[t][h]:= pos; fi;

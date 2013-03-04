@@ -792,12 +792,25 @@ InstallMethod( SparseChainComplex,
 InstallOtherMethod( Homology,
 "Homology of a regular CW spaces, using discrete vector fields",
  [IsHapRegularCWComplex,IsInt],
- function(Y,n) local C;
+ function(Y,n) local C, H, m, bool;
  if not IsBound(Y!.orientation) then
  Print("Can only compute the mod 2 homology as no orientation is available.\n");
  fi;
+ m:=Minimum(n+1,Dimension(Y));
+ bool:=Y!.vectorField=fail or Y!.criticalCells=fail;
+ if bool then 
+    if m=Dimension(Y) then CriticalCellsOfRegularCWComplex(Y); 
+    else
+    CocriticalCellsOfRegularCWComplex(Y,m); fi;
+ fi;
  C:=ChainComplex(Y);
- return Homology(C,n);
+ H:=Homology(C,n);
+ if m<Dimension(Y) and bool then 
+ Y!.vectorField:=fail; 
+ Y!.criticalCells:=fail; 
+ Y!.properties:=Filtered(Y!.properties,x->not x[1]="codim");
+ fi;
+return H;
  end);
 ##########################################################
 ##########################################################

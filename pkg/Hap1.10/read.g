@@ -287,6 +287,7 @@ ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 ################## POLYTOPAL COMPLEXES #############################
 ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/sparseCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
@@ -346,6 +347,7 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/sl2zresalt.gi");
 # ReadPackage("HAP","lib/ArithmeticGroups/resDirectProd.gi");
 ######################################################
 fi;
@@ -357,10 +359,12 @@ ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
 
+
 ################# CRYSTALLOGRAPHIC GROUPS #####################
-ReadPackage("HAP","lib/CrystallographicGroups/crystGbasis.gi");
-ReadPackage("HAP","lib/CrystallographicGroups/crystVarious.gi");
-ReadPackage("HAP","lib/CrystallographicGroups/crystGcomplex.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
+
 
 
 ################## HAP PRIME ##################################
