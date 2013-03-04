@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
   <meta http-equiv="content-type"
@@ -7,7 +7,7 @@
 </head>
 <body
  style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
- alink="#000066" link="#000066" vlink="#000066">
+ link="#000066" vlink="#000066" alink="#000066">
 <br>
 <table
  style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
@@ -19,7 +19,7 @@
  cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><a href="aboutTDA.html"><small
+            <td style="vertical-align: top;"><a href="aboutKnots.html"><small
  style="color: rgb(0, 0, 102);">Previous</small></a><br>
             </td>
             <td
@@ -27,7 +27,7 @@
  style="font-weight: bold;">About HAP: Persistent Homology<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutParallel.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+ href="aboutTDA.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
             </td>
           </tr>
         </tbody>
@@ -45,19 +45,31 @@ Complexes</span></big><br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">An
-inclusion of pure cubical complexes X<sub>1</sub> --&gt; X<sub>2</sub>
+inclusion
+of
+pure
+cubical
+complexes X<sub>1</sub> --&gt; X<sub>2</sub>
 induces a natural homology homomorphism H<sub>n</sub>(X<sub>1</sub>,F)
 --&gt; H<sub>n</sub>(X<sub>2</sub>,F) for each positive n and any
 coefficient module F. Taking F to be a field, the induced homomorphism
 is a homomorphism of vector spaces and is completely determined by its
-rank R<sub>1,2</sub>.<br>
+rank P<sub>1,2</sub>.<br>
       <br>
 A sequence of inclusions X<sub>1</sub> --&gt; X<sub>2 </sub>--&gt; X<sub>3</sub>
 --&gt; ... --&gt; X<sub>k</sub> induces a sequence of homology
-homomorphisms which, in each degree n, determine a kxk matrix of ranks R<sub>i,j</sub>&nbsp;
-(where for i&gt;j we define R<sub>i,j</sub>=0). This matrix is referred
+homomorphisms which, in each degree n, determine a kxk matrix of ranks P<sub>i,j</sub>&nbsp;
+(where
+for
+i&gt;j
+we
+define P<sub>i,j</sub>=0). This matrix is referred
 to as the n-th <span style="font-style: italic;">persistence matrix</span>,
-over the field F, for the sequence of pure cubical complexes.<br>
+over
+the
+field
+F,
+for the sequence of pure cubical complexes.<br>
       <br>
 A possible scenario is that X<sub>1</sub> is a sample from an unknown
 manifold M, and that each space X<sub>i+1</sub> is obtained by
@@ -69,7 +81,11 @@ was sampled.&nbsp; <br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Persistence
-matrices are particularly useful when analysing high-dimensional data
+matrices
+are
+particularly
+useful
+when analysing high-dimensional data
 since the shape of such data is hard to visualize. However, as a toy
 example let us consider the
 2-dimensional <a href="datacloud.eps">data cloud</a><br>
@@ -77,12 +93,13 @@ example let us consider the
       <div style="text-align: center;"><img alt=""
  src="sample_from_circle.gif" style="width: 406px; height: 311px;"><br>
       <div style="text-align: left;"><br>
-which, as we can see, was sampled from an annulus.
+which, as we can see, was sampled (possibly with error) from an
+annulus.
 The following computations agree with this observation. <br>
       <br>
 The following commands produce a sequence of thickenings for this data
 cloud and then compute the degree 1 persistence matrix over the field
-of two elements.<br>
+of rational numbers.<br>
       </div>
       </div>
       </td>
@@ -93,21 +110,20 @@ of two elements.<br>
 M:=ReadImageAsPureCubicalComplex("datacloud.eps",300);<br>
 Pure cubical complex of dimension 2.<br>
       <br>
-gap&gt; T:=[];;<br>
-gap&gt; for i in [1..10] do<br>
-&gt; for k in [1..5] do<br>
-&gt; M:=ThickenedPureCubicalComplex(M);<br>
-&gt; od;<br>
-&gt; Add(T,M);<br>
-&gt; od;<br>
+gap&gt;
+T:=ThickeningFiltration(M,10);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
       <br>
-gap&gt; R:=PersistentHomologyOfPureCubicalComplex(T,1,2);;<br>
+Filtered pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; P:=PersistentHomologyOfFilteredCubicalComplex(T,1);;<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-persistence matrix R can be viewed as a barcode. The following command
+persistence matrix P can be viewed as a barcode. The following command
 displays this barcode. The single horizontal line at the bottom of the
 barcode corresponds to a single persistent 1-dimensional homology. This
 is consistent with the data having been sampled from an annulus - a
@@ -119,12 +135,55 @@ thickening process.<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-BarCodeDisplay(R);<br>
+BarCodeDisplay(P);<br>
       <br>
       <div style="text-align: center;"><img
- style="width: 496px; height: 2245px;" alt="" src="brcd.gif"><br>
+ style="width: 496px; height: 1086px;" alt="" src="brcd.gif"><br>
       </div>
       <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+second scenario for the use of persitent homology of pure cubical
+complexes is in the analysis of digital images. As a second toy example
+consider the digital photo.<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 499px; height: 376px;" alt="" src="nb.png"><br>
+      <div style="text-align: left;"><br>
+The 20 longish lines in the following barcode for the degree 0
+persistent homology correspond to the 20 objects in the photo. The 14
+longish lines in the following barcode for the degree 1 persistent
+homology correspond to the fact that 14 of the objects have holes in
+them. We view the barcodes in compact form, where a line with label n
+is used to denote n lines which start at the same point in
+the filtration and end at the same point in the filtration. <br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+F:=ReadImageAsFilteredCubicalComplex("nb.png",20);<br>
+Filtered pure cubical complex of dimension 2.<br>
+      <br>
+gap&gt; P0:=PersistentHomologyOfFilteredCubicalComplex(F,0);;<br>
+gap&gt; BarCodeCompactDisplay(P0);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 467px; height: 304px;" alt="" src="perhom0.gif"><br>
+      <div style="text-align: left;"><br>
+gap&gt; P1:=PersistentHomologyOfFilteredCubicalComplex(F,1);;<br>
+gap&gt; BarCodeCompactDisplay(P1);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 567px; height: 572px;" alt="" src="perhom1.gif"><br>
+      </div>
+      </div>
+      </div>
       </td>
     </tr>
     <tr align="center">
@@ -146,6 +205,10 @@ homomorphisms. <br>
 For a finite p-group we take homology coefficients in the field of p
 elements. The following commands compute and display the degree 3
 homology barcode for the Sylow 2-subgroup of the Mathieu group M<sub>12</sub>.
+
+
+
+
       <br>
       </td>
     </tr>
@@ -210,14 +273,14 @@ gap&gt; BarCodeDisplay(P);<br>
         <tbody>
           <tr>
             <td style="vertical-align: top;"><a
- style="color: rgb(0, 0, 102);" href="aboutTDA.html">Previous
+ style="color: rgb(0, 0, 102);" href="aboutKnots.html">Previous
 Page</a><br>
             </td>
             <td style="text-align: center; vertical-align: top;"><a
  href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
             </td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutParallel.html"><span style="color: rgb(0, 0, 102);">Next
+ href="aboutTDA.html"><span style="color: rgb(0, 0, 102);">Next
 page</span><br>
             </a> </td>
           </tr>

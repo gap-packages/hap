@@ -202,12 +202,14 @@ DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex_Alt");
 DeclareGlobalFunction("ZZPersistentHomologyOfPureCubicalComplex");
 DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries");
 DeclareGlobalFunction("PersistentCohomologyOfQuotientGroupSeries");
+DeclareGlobalFunction("PersistentHomologyOfFilteredCubicalComplex");
+DeclareGlobalFunction("PersistentHomologyOfFilteredCubicalComplex_alt");
+DeclareGlobalFunction("PersistentHomologyOfFilteredChainComplex");
 DeclareGlobalFunction("NormalSeriesToQuotientHomomorphisms");
 DeclareGlobalFunction("LinearHomomorphismsPersistenceMat");
 DeclareGlobalFunction("LinearHomomorphismsZZPersistenceMat");
 DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries_Int");
 DeclareGlobalFunction("PersistentHomologyOfSubGroupSeries");
-DeclareGlobalFunction("PersistentHomologyOfFilteredChainComplex");
 DeclareGlobalFunction("TruncatedGComplex");
 DeclareGlobalFunction("UniversalBarCode");
 DeclareGlobalFunction("UniversalBarCodeEval");
@@ -367,14 +369,20 @@ DeclareGlobalFunction("PureCubicalComplexDifference");
 DeclareGlobalFunction("PureCubicalComplexIntersection");
 DeclareGlobalFunction("PureCubicalComplexToCubicalComplex");
 DeclareGlobalFunction("FilteredPureCubicalComplexToCubicalComplex");
+DeclareGlobalFunction("ContractedFilteredPureCubicalComplex");
 DeclareOperation("ChainComplex",[IsObject]);
 DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
+DeclareOperation("SparseChainComplexOfPair",[IsObject,IsObject]);
 DeclareGlobalFunction("ChainComplexOfCubicalComplex");
+DeclareGlobalFunction("SparseChainComplexOfCubicalComplex");
+DeclareGlobalFunction("SparseFilteredChainComplexOfFilteredCubicalComplex");
 DeclareGlobalFunction("ChainComplexOfCubicalPair");
+DeclareGlobalFunction("SparseChainComplexOfCubicalPair");
 DeclareGlobalFunction("ExcisedPureCubicalPair");
 DeclareGlobalFunction("ExcisedPureCubicalPair_dim_2");
 DeclareGlobalFunction("ChainComplexOfSimplicialPair");
 DeclareGlobalFunction("ChainMapOfCubicalPairs");
+DeclareGlobalFunction("SparseChainMapOfCubicalPairs");
 DeclareGlobalFunction("ChainComplexOfSimplicialComplex");
 DeclareGlobalFunction("ChainMapOfSimplicialMap");
 DeclareGlobalFunction("SkeletonOfSimplicialComplex");
@@ -396,6 +404,7 @@ DeclareGlobalFunction("ThickenedPureCubicalComplex_dim2");
 DeclareGlobalFunction("BoundaryOfPureCubicalComplex");
 DeclareGlobalFunction("ContractPureCubicalComplex");
 DeclareGlobalFunction("ZigZagContractedPureCubicalComplex");
+DeclareGlobalFunction("ZigZagContractedFilteredPureCubicalComplex");
 DeclareGlobalFunction("CropPureCubicalComplex");
 #DeclareGlobalFunction("SingularChainComplex");
 DeclareGlobalFunction("ComplementOfPureCubicalComplex");
@@ -538,6 +547,12 @@ DeclareGlobalFunction("SparseChainComplexOfRegularCWComplex");
 DeclareGlobalFunction("SparseChainComplexOfRegularCWComplexWithVectorField");
 DeclareGlobalFunction("SparseBoundaryMatrix");
 DeclareOperation("SparseChainComplex",[IsHapRegularCWComplex]);
+DeclareGlobalFunction("NullspaceSparseMatDestructive");
+DeclareGlobalFunction("TransposedSparseMat");
+DeclareGlobalFunction("ReverseSparseMat");
+DeclareGlobalFunction("PersistentHomologyOfFilteredSparseChainComplex");
+
+
 
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");
@@ -554,7 +569,8 @@ ReadPackage("HAP","lib/HapPrime/polynomials.gd");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
-ReadPackage("HAP","lib/CrystallographicGroups/crystTypes.gd");
+ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
+
 
 
 

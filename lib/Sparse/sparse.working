@@ -72,25 +72,30 @@ M!.mat[j]:=x;
 end);
 ####################################################
 ####################################################
-
+RT:=0;
 ####################################################
 ####################################################
 InstallGlobalFunction(SparseRowAdd,
 function(M,i,j,k)
-local x,z,r, pos;
+local x,z,r;
 
 #Adds k times the j-th row to the i-th row of a sparse matrix M.
 
-Sort(M!.mat[i]);
 
-z:=List(M!.mat[i],a->a[1]);
+RT:=RT-Runtime();
+
+z:=[];
+for r in [1..Length(M!.mat[i])] do
+z[M!.mat[i][r][1]]:=r;
+od;
+
+RT:=RT+Runtime();
 
 for x in M!.mat[j] do
-pos:=PositionSet(z,x[1]);
-if  pos=fail then
-Add(M!.mat[i],[x[1],k*x[2]]);
+if IsBound(z[x[1]]) then 
+M!.mat[i][z[x[1]]][2]:= M!.mat[i][z[x[1]]][2]+k*x[2];
 else
-M!.mat[i][pos][2]:=M!.mat[i][pos][2]+k*x[2];
+Add(M!.mat[i],[x[1],k*x[2]]);
 fi;
 od;
 

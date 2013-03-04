@@ -140,3 +140,84 @@ end);
 #####################################################################
 #####################################################################
 
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapSparseChainMap",IsObject);
+
+DeclareRepresentation(  "IsHapSparseChainMapRep",
+                        IsComponentObjectRep,
+                        ["source",
+                        "target",
+                        "mapping",
+                        "properties"]);
+
+HapSparseChainMapFamily:=NewFamily( "HapSparseChainMapFamily",
+                               IsHapSparseChainMap,
+                               IsHapSparseChainMap);
+
+HapSparseChainMap:=NewType(HapSparseChainMapFamily, IsHapSparseChainMapRep);
+
+
+InstallMethod( ViewObj,
+"for HapSparseChainMap",
+ [IsHapSparseChainMap],
+ function(R)
+  Print("Sparse Chain Map between complexes of length ",
+   Minimum(EvaluateProperty(R!.source,"length"),
+    EvaluateProperty(R!.target,"length")), " . \n");
+
+ end);
+
+InstallMethod( PrintObj,
+"for HapSparseChainMap",
+ [IsHapSparseChainMap],
+ function(R)
+ Print("Sparse Chain Map between complexes of length ",
+ Minimum(EvaluateProperty(R!.source,"length"),
+ EvaluateProperty(R!.target,"length")), " . \n");
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapFilteredSparseChainComplex",IsObject);
+
+DeclareRepresentation( "IsHapFilteredSparseChainComplexRep",
+                        IsComponentObjectRep
+                        and IsHapComplex and IsHapChain and
+                        IsHapSparseChainComplex,
+                        ["dimension",
+                         "filteredDimension",
+                         "boundary",
+                         "properties"]);
+
+HapFilteredSparseChainComplexFamily:=NewFamily( "HapFilteredSparseChainComplexFamily",
+                                   IsHapFilteredSparseChainComplex,
+                                   IsHapFilteredSparseChainComplex);
+
+HapFilteredSparseChainComplex:=NewType(HapFilteredSparseChainComplexFamily,IsHapFilteredSparseChainComplexRep);
+
+InstallMethod( ViewObj,
+"for HapFilteredSparseChainComplex",
+[IsHapFilteredSparseChainComplex],
+ function(R)
+Print("Filtered sparse chain complex of length ",
+EvaluateProperty(R,"length"), " in characteristic ",
+EvaluateProperty(R,"characteristic"), " . \n");
+ end);
+
+InstallMethod( PrintObj,
+"for HapFilteredSparseChainComplex",
+[IsHapFilteredSparseChainComplex],
+function(R)
+Print("Filtered sparse chain complex of length ",
+EvaluateProperty(R,"length"), " in characteristic ",
+EvaluateProperty(R,"characteristic"), " . \n");
+
+
+end);
+#####################################################################
+#####################################################################
+

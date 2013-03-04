@@ -1083,7 +1083,7 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex,
+InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex_alt,
 function(F,n)
 local FF, C, D;
 
@@ -1113,9 +1113,9 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex_alt,
+InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex,
 function(FF,deg)
-local flen, HEMin, HEMax, FT, PH, D, PHfirst, Pmat, PB, F, r, s,n;
+local flen, PH, Pmat, PB, F, r, s,n;
 
 #############################
 if IsBound(FF!.persistentHomology) then
@@ -1126,101 +1126,81 @@ fi;
 ############################
 
 
-############################
-if deg=0 then 
-D:=Dendrogram(FF);
-FF!.persistentHomology:= [DendrogramToPersistenceMat(D)];;
-return FF!.persistentHomology[1];
-fi;
-############################
-
-
+if deg=0 then F:=FF;
+else
 F:=ZigZagContractedFilteredPureCubicalComplex(FF);
-
+fi;
 
 PB:=Dendrogram(F);
 PB:=[DendrogramToPersistenceMat(PB)];
-for r in [1..deg] do
-Add(PB,PB[1]*0);
-od;
+
 
 flen:=F!.filtrationLength;
-
-HEMin:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
-HEMax:=HomotopyEquivalentMaximalPureCubicalSubcomplex;
-FT:=[];
-
-
-###############################################################
-###############################################################
-PHfirst:= function(F,deg,r)
-local
-        Fr,Fs, S, C, s, n;
-
-Fr:=FiltrationTerm(F,r);
-ContractPureCubicalComplex(Fr);   
-
-S:=AcyclicSubcomplexOfPureCubicalComplex(Fr);
-FT[r]:=[Fr];
-
-C:=SparseChainComplexOfPair(Fr,S);
-
-for n in [1..deg] do
-#if not IsBound(PB[n+1][r][r]) then
-Pmat[r][r][n]:=Bettinumbers(C,n);
-PB[n+1][r][r]:=Pmat[r][r][n];
-#fi;
-od;
-
-end;
-###############################################################
-###############################################################
-
+#flen:=Maximum(Flat(F!.filtration));
 
 ###############################################################
 ###############################################################
 PH:= function(F,deg,r)
 local
-        Fr,Fs, S, C, s, n;
+        Fr,Fs, HEMin, HEMax, S, C, s, n, Bettis;
 
-Fr:=FT[r][1];
+Fr:=FiltrationTerm(F,r);
+ContractPureCubicalComplex(Fr);
+
+HEMin:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
+HEMax:=HomotopyEquivalentMaximalPureCubicalSubcomplex;
+S:=AcyclicSubcomplexOfPureCubicalComplex(Fr);
+
+C:=SparseChainComplexOfPair(Fr,S);
+#Bettis:=[1..flen]*0;;
+Bettis:=List([1..flen],i->List([1..deg],j->0));
+
+Bettis[r]:=[];
+for n in [1..deg] do
+Add(Bettis[r],Bettinumbers(C,n));
+od;
 
 for s in [r+1..flen] do
-
+Bettis[s]:=[];
 Fs:=FiltrationTerm(F,s);
 Fs:=HEMin(Fs,Fr);
 S:=HEMax(Fs,Fr);
-
 C:=SparseChainComplexOfPair(Fs,S);
 
 for n in [1..deg] do
-#if not IsBound(PB[n+1][r][s]) then 
-Pmat[r][s][n]:=Bettinumbers(C,n);
-PB[n+1][r][s]:=Pmat[s][s][n]-Pmat[r][s][n]+PB[n][r][r]-PB[n][r][s];
-#fi;
+Add(Bettis[s],Bettinumbers(C,n));
 od;
 
-if Sum(List([1..deg],n->PB[n+1][r][s]))=0 then break; fi;
 od;
+
+return Bettis;
 
 end;
 ###############################################################
 ###############################################################
 
 Pmat:=[];
-for r in [1..flen] do
-Pmat[r]:=[];
-for s in [1..flen] do
-Pmat[r][s]:=[];
-od;
-od;
 
 for r in [1..flen] do
-PHfirst(F,deg,r);
+Pmat[r]:=PH(F,deg,r);
 od;
 
+
+for n in [1..deg] do
+PB[n+1]:=PB[1]*0;
 for r in [1..flen] do
-PH(F,deg,r);
+for s in [r..flen] do
+if r=s then
+PB[n+1][r][s]:=Pmat[r][s][n];
+else
+if n>1 then
+PB[n+1][r][s]:=Pmat[s][s][n]-Pmat[r][s][n]+Pmat[r][r][n-1]-PB[n][r][s];
+else
+PB[n+1][r][s]:=Pmat[s][s][n]-Pmat[r][s][n]+PB[n][r][r]-PB[n][r][s];
+fi;
+fi;
+od;
+od;
 od;
 
 FF!.persistentHomology:=PB;

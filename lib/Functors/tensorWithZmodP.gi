@@ -393,14 +393,14 @@ end;
 D!.boundary:=newboundary;
 
 
-if not IsHapFilteredChainComplex(C) then
+if not IsHapFilteredSparseChainComplex(C) then
 return
 Objectify(HapSparseChainComplex, D);
 fi;
 
 D!.filteredDimension:=C!.filteredDimension;
 return
-Objectify(HapFilteredChainComplex, D);
+Objectify(HapFilteredSparseChainComplex, D);
 
 end;
 #################################################

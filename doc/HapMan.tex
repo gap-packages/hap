@@ -485,6 +485,12 @@ degree). \\
 \begin{tabular}{|l|} \index{SparseMat} \texttt{SparseMat(A)} 
 
  Inputs a matrix $A$ and returns the matrix in sparse format. \\
+ \index{TransposedSparseMat} \texttt{TransposedSparseMat(A)} 
+
+ Inputs a sparse matrix $A$ and returns its transpose sparse format. \\
+ \index{ReverseSparseMat} \texttt{ReverseSparseMat(A)} 
+
+ Inputs a sparse matrix $A$ and modifies it by reversing the order of the columns. This function modifies $A$ and returns no value. \\
  \index{SparseRowMult} \texttt{SparseRowMult(A,i,k)} 
 
  Multiplies the i-th row of a sparse matrix $A$ by $k$. The sparse matrix $A$ is modified but nothing is returned. \\
@@ -638,9 +644,14 @@ homology of large complexes arising in applied topology.) \\
  \texttt{PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) } 
 
  Inputs a commutative diagram $D$ of finite $p$-groups and a positive integer $n$. It returns a list containing, for each homomorphism in the nerve of $D$, a triple $[k,l,m]$ where $k$ is the dimension of the source of the induced mod $p$ homology map in degree $n$, $l$ is the dimension of the image, and $m$ is the dimension of the cokernel. \\
+ \index{PersistentHomologyOfFilteredCubicalComplex} \texttt{PersistentHomologyOfFilteredCubicalComplex(M,n)} 
+
+ Inputs a filtered pure cubical complex $M$ and a non-negative integer $n$. It returns the degree $n$ persistent homology of $ M$ with rational coefficients. \\
  \index{PersistentHomologyOfPureCubicalComplex} \texttt{PersistentHomologyOfPureCubicalComplex(L,n,p)} 
 
- Inputs a positive integer $n$, a prime $p$ and an increasing chain $L=[L_1, L_2, ..., L_k]$ of subcomplexes in a pure cubical complex $L_k$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion maps. The bar code is returned as a matrix. 
+ Inputs a positive integer $n$, a prime $p$ and an increasing chain $L=[L_1, L_2, ..., L_k]$ of subcomplexes in a pure cubical complex $L_k$. It returns the bar code of the persistent mod $p$ homology in degree $n$ of the sequence of inclusion maps. The bar code is returned as a matrix. (This
+function is extremely inefficient and it is better to use
+PersistentHomologyOFilteredfPureCubicalComplex. 
 
  \\
  \index{ZZPersistentHomologyOfPureCubicalComplex} \texttt{ZZPersistentHomologyOfPureCubicalComplex(L,n,p)} 
@@ -2054,7 +2065,7 @@ describing how path components are born and then merge during the filtration. \\
 
  Inputs a filtered pure cubical complex $M$, or alternatively inputs the out from the command Dendrogram(M), and then
 uses GraphViz software to display the path component dendrogram of $M$. \\
- \index{DendrogramToPersistenceMat} \texttt{DendrogramToPersistentceMat(D)} 
+ \index{DendrogramToPersistenceMat} \texttt{DendrogramToPersistenceMat(D)} 
 
  Inputs the output of the function Dendrogram(M) and returns the corresponding
 degree 0 Betti bar code. \\
@@ -2065,6 +2076,9 @@ integer n. It returns a filtered pure cubical complex of filtration length $n$. 
  \index{ComplementOfFilteredCubicalComplex} \texttt{ComplementOfFilteredCubicalComplex(M)} 
 
  Inputs a filtered pure cubical complex $M$ and returns the complement as a filtered pure cubical complex. \\
+ \index{PersistentHomologyOfFilteredCubicalComplex} \texttt{PersistentHomologyOfFilteredCubicalComplex(M,n)} 
+
+ Inputs a filtered pure cubical complex $M$ and a non-negative integer $n$. It returns the degree $n$ persistent homology of $ M$ with rational coefficients. \\
 \end{tabular}\\[2mm]
 \end{center}
 

@@ -94,7 +94,6 @@ local
         Opp,
         ArrayValueDim,
         ArrayValueDim1,
-        dimSet, ArrayIt,
         x,z;
 
 
@@ -118,7 +117,7 @@ dims:=EvaluateProperty(M,"arraySize");
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
 B:=0*M!.binaryArray;
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 #######################
 Opp:=function(y)
@@ -131,13 +130,9 @@ fi;
 end;
 ########################
 
-#for x in CART do
-#Opp(x);
-#od;
-
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
-ArrayIt(dimSet,Opp);
+for x in CART do
+Opp(x);
+od;
 
 return Objectify(obj,
            rec(
@@ -218,9 +213,9 @@ D:=Int(3*255/N);
 A:=ReadImageAsPureCubicalComplex(file,"matrix");
 for i in [1..Length(A)] do
 for j in [1..Length(A[1])] do
-A[i][j]:=1+Int(A[i][j]/D);
+A[i][j]:=Int(A[i][j]/D);
 od;od;
-#F:=Maximum(Flat(A));
+F:=Maximum(Flat(A));
 
 C:=A*0;
 C:=C+1;
@@ -383,7 +378,7 @@ function(M)
 local
         LM, F, i, flen, A,
         dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
-        Opp, x,t, dimSet, ArrayIt;
+        Opp, x,t;
 
 LM:=[];
 flen:=Maximum(Flat(M!.filtration));
@@ -408,7 +403,7 @@ dim1:=dim-1;
 dims:=EvaluateProperty(M,"arraySize");
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 #######################
 Opp:=function(y)
@@ -425,14 +420,10 @@ end;
 
 B:=StructuralCopy(LM[1]!.binaryArray);
 
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
-
 for t in [2..Length(LM)] do
-#for x in CART do
-#Opp(x);
-#od;
-ArrayIt(dimSet,Opp);
+for x in CART do
+Opp(x);
+od;
 od;
 
 return Objectify(HapFilteredPureCubicalComplex,
@@ -452,7 +443,7 @@ function(M)
 local
         LM, F, i, flen, A, G,
         dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
-        Opp, x,t, CM, sz1, sz2, maxB, dimSet, ArrayIt;
+        Opp, Opp2, x,t, CM, sz1, sz2, maxB;
 
 LM:=[];
 flen:=Maximum(Flat(M!.filtration));
@@ -492,7 +483,7 @@ dim1:=dim-1;
 dims:=EvaluateProperty(M,"arraySize");
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 
 
@@ -510,16 +501,30 @@ fi;
 end;
 ########################
 
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
+#######################
+Opp2:=function(y)
+local z;
+z:=ArrayValueDim1(B,y{[2..Length(y)]});
+if ArrayValueDim(B,y)=maxB
+ then
+z[y[1]]:=flen;
+fi;
+end;
+########################
+
 
 for t in [2..Length(LM)] do
-#for x in CART do
-#Opp(x);
-#od;
-ArrayIt(dimSet,Opp);
+for x in CART do
+Opp(x);
+od;
 od;
 
+#maxB:=Maximum(Flat(B));
+#if maxB<flen then
+#for x in CART do
+#Opp2(x);
+#od;
+#fi;
 
 return Objectify(HapFilteredPureCubicalComplex,
                  rec(binaryArray:=LM[flen]!.binaryArray,

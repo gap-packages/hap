@@ -233,7 +233,7 @@ prog:=Concatenation(pth,"PolyComplexes/prog");
 ##################################
 if IsString(file) then
 
-i:=Concatenation("convert ",file," /tmp/im.txt");
+i:=Concatenation("convert -colorspace RGB -depth 8  ",file," /tmp/im.txt");
 Exec(i);
 i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
 Exec(i);
@@ -1741,6 +1741,7 @@ local
         Thicken,
 	ArrayValueDim,
 	ArrayValueDim1,
+        dimSet, ArrayIt,
         x,z;
 
 #############################################
@@ -1759,7 +1760,7 @@ ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
 dims:=EvaluateProperty(M,"arraySize");
 B:=StructuralCopy(M!.binaryArray);
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 cart:=Cartesian(List([1..dim],a->[-1,0,1]));
 
 ########################
@@ -1779,9 +1780,15 @@ od;
 end;
 ########################
 
-for x in CART do
-Thicken(x);
-od;
+
+#for x in CART do
+#Thicken(x);
+#od;
+
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,Thicken);
+
 
 return Objectify(HapPureCubicalComplex,
            rec(
@@ -1805,6 +1812,7 @@ local
         Opp,
 	ArrayValueDim,
 	ArrayValueDim1,
+        dimSet,ArrayIt,
         x,z;
 
 #############################################
@@ -1820,7 +1828,7 @@ dims:=EvaluateProperty(M,"arraySize");
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
 B:=StructuralCopy(M!.binaryArray);
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 ########################
 Opp:=function(y)
@@ -1834,9 +1842,13 @@ fi;
 end;
 ########################
 
-for x in CART do
-Opp(x);
-od;
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,Opp);
+
+#for x in CART do
+#Opp(x);
+#od;
 
 return Objectify(HapPureCubicalComplex,
            rec(
@@ -1974,6 +1986,7 @@ local
 	CART,
 	ArrayValueDim,
 	ArrayValueDim1,
+        dimSet,ArrayIt, Opp,
 	x,w,d;
 
 ###################################
@@ -1999,14 +2012,30 @@ dim:=Dimension(D);
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim-1);
 dims:=EvaluateProperty(D,"arraySize");
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
-for x in CART do
+#for x in CART do
+#if ArrayValueDim(N!.binaryArray,x)=1 then
+#w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
+#w[x[1]]:=0;
+#fi;
+#od;
+
+#####################
+Opp:=function(x)
+local w;
 if ArrayValueDim(N!.binaryArray,x)=1 then
 w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
 w[x[1]]:=0;
 fi;
-od;
+end;
+#####################
+
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,Opp);
+
+
 
 return D;
 end);
