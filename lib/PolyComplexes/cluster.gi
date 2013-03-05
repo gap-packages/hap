@@ -95,6 +95,121 @@ end);
 
 #########################################################
 #########################################################
+InstallGlobalFunction(SymmetricMatrixToFilteredGraph,
+function(S,T,M)
+local A,  i,j;
+
+A:=StructuralCopy(S);;
+#M:=Maximum(Maximum(A));
+
+for i in [1..Length(A)] do
+for j in [1..Length(A)] do
+A[i][j]:=Int(T*A[i][j]/M);
+if A[i][j]>T then A[i][j]:=0; fi;
+od;
+A[i][i]:=1;
+od;
+
+return Objectify(HapFilteredGraph,
+                rec(
+		incidenceMatrix:=A,
+		filtrationLength:=T,
+                properties:=
+                [
+                ["numberofvertices",Length(A)]
+                ]));
+ 
+end);
+#########################################################
+#########################################################
+
+#########################################################
+#########################################################
+InstallGlobalFunction(GroupToFilteredGraph,
+function(H)
+local S,F,i,j, KendallTauMetric,GroupToSymmetricMat;
+
+##########################################
+KendallTauMetric:=function(g,h,N)
+local S, i,j;
+S:=0;
+
+for i in [1..N] do
+for j in [i+1..N] do
+if (i^g-j^g)*(i^h-j^h)<0 then S:=S+1; fi;
+od;od;
+
+return S;
+end;
+##########################################
+
+##########################################
+GroupToSymmetricMat:=function(GG)
+local S,x,y, elts,N,G,F;
+
+G:=Image(RegularActionHomomorphism(GG));
+elts:=Elements(G);
+N:=Order(G);
+
+S:=[];
+
+for x in [1..Length(elts)] do
+S[x]:=[];
+for y in [1..Length(elts)] do
+S[x][y]:=KendallTauMetric(elts[x],elts[y],N);
+od;od;
+
+
+return S;
+end;
+
+##########################################
+
+
+
+S:=GroupToSymmetricMat(H);
+F:=SSortedList(Flat(S));;
+
+for i in [1..Length(S)] do
+for j in [1..Length(S)] do
+S[i][j]:=PositionSorted(F,S[i][j]);
+od;
+od;
+
+return SymmetricMatrixToFilteredGraph(S,Length(F),Length(F));
+
+
+end);
+#########################################################
+#########################################################
+
+
+
+#########################################################
+#########################################################
+InstallGlobalFunction(FiltrationTermOfGraph,
+function(G,t)
+local
+	A,i,j;
+
+A:=G!.incidenceMatrix*1;;
+
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+if A[i][j]<=t then A[i][j]:=1; else A[i][j]:=0; fi;
+od;
+A[i][i]:=0;
+od;
+
+return IncidenceMatrixToGraph(A);
+end);
+#########################################################
+#########################################################
+
+
+
+#########################################################
+#########################################################
 InstallGlobalFunction(PathComponentsOfGraph,
 function(G,n)
 local  MaximalConnectedGraph, BettiZero, COLOUR,singletons, FindOne, bool, c, i, j, v, M, A;
@@ -508,7 +623,7 @@ end;
 
 #########################
 EnumeratedSimplex:=function(v);
-return Position(SimplicesLst[Length(v)],v);
+return PositionSet(SimplicesLst[Length(v)],v);
 end;
 #########################
 
@@ -632,4 +747,206 @@ return B;
 end);
 ##########################################################
 ##########################################################
+
+
+#######################################
+#######################################
+InstallGlobalFunction(SimplicialNerveOfFilteredGraph,
+function(G,dim)
+local  A, T, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
+       bool, s, VL,x, y, d, i,j,k,l,m,n,FilteredDims,FilteredDimension, t, mx,mn;
+
+A:=G!.incidenceMatrix;
+T:=G!.filtrationLength;
+
+Vertices:=[1..EvaluateProperty(G,"numberofvertices")];
+VL:=Length(Vertices);
+
+SimplicesLst:=List([1..dim+1],i->List([1..T],j->[]));
+FilteredDims:=[];
+
+##########################
+if dim>=0 then
+for i in Vertices do
+Add(SimplicesLst[1][A[i][i]],[i]);
+od;
+for t in [1..T] do
+SimplicesLst[1][t]:=SSortedList(SimplicesLst[1][t]);
+od;
+FilteredDims[1]:=List(SimplicesLst[1],x->Length(x));
+FilteredDims[1]:=List([1..T],t->Sum(FilteredDims[1]{[1..t]}));
+SimplicesLst[1]:=Concatenation(SimplicesLst[1]);
+fi;
+
+if dim>=1 then
+for i in Vertices do
+for j in [i+1..VL] do
+if A[i][j]>0 then Add(SimplicesLst[2][A[i][j]],[i,j]); fi;
+od;od;
+for t in [1..T] do
+SimplicesLst[2][t]:=SSortedList(SimplicesLst[2][t]);
+od;
+FilteredDims[2]:=List(SimplicesLst[2],x->Length(x));
+FilteredDims[2]:=List([1..T],t->Sum(FilteredDims[2]{[1..t]}));
+SimplicesLst[2]:=Concatenation(SimplicesLst[2]);
+fi;
+
+if dim>=2 then
+for s in SimplicesLst[2] do
+i:=s[1];j:=s[2];
+for k in [j+1..VL] do
+mn:=Minimum([ A[i][j],A[i][k],A[j][k] ]);
+if mn>0 then 
+mx:=Maximum([ A[i][j],A[i][k],A[j][k] ]);
+Add(SimplicesLst[3][mx],[i,j,k]); fi;
+od;od;
+for t in [1..T] do
+SimplicesLst[3][t]:=SSortedList(SimplicesLst[3][t]);
+od;
+FilteredDims[3]:=List(SimplicesLst[3],x->Length(x));
+FilteredDims[3]:=List([1..T],t->Sum(FilteredDims[3]{[1..t]}));
+SimplicesLst[3]:=Concatenation(SimplicesLst[3]);
+
+fi;
+
+if dim>=3 then
+for s in SimplicesLst[3] do
+i:=s[1];j:=s[2];k:=s[3];
+for l in [k+1..VL] do
+mn:=Minimum([ A[i][j], A[i][k], A[i][l], A[j][k], A[j][l], A[k][l]]);
+if mn>0 then 
+mx:=Maximum([ A[i][j], A[i][k], A[i][l], A[j][k], A[j][l], A[k][l]]);
+Add(SimplicesLst[4][mx],[i,j,k,l]); fi;
+od;od;
+for t in [1..T] do
+SimplicesLst[4][t]:=SSortedList(SimplicesLst[4][t]);
+od;
+FilteredDims[4]:=List(SimplicesLst[4],x->Length(x));
+FilteredDims[4]:=List([1..T],t->Sum(FilteredDims[4]{[1..t]}));
+SimplicesLst[4]:=Concatenation(SimplicesLst[4]);
+
+fi;
+
+if dim>=4 then
+for s in SimplicesLst[4] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];
+for m in [l+1..VL] do
+mn:=Minimum([ A[i][j], A[i][k], A[i][l], A[i][m], A[j][k], A[j][l], A[j][m], A[k][l], A[k][m],  A[l][m]]);
+if mn>0 then 
+mx:=Maximum([ A[i][j], A[i][k], A[i][l], A[i][m], A[j][k], A[j][l], A[j][m], A[k][l], A[k][m],  A[l][m]]);
+Add(SimplicesLst[5][mx],[i,j,k,l,m]); fi;
+od;od;
+for t in [1..T] do
+SimplicesLst[5][t]:=SSortedList(SimplicesLst[5][t]);
+od;
+FilteredDims[5]:=List(SimplicesLst[5],x->Length(x));
+FilteredDims[5]:=List([1..T],t->Sum(FilteredDims[5]{[1..t]}));
+SimplicesLst[5]:=Concatenation(SimplicesLst[5]);
+
+fi;
+
+if dim>=5 then
+for s in SimplicesLst[5] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];
+for n in [m+1..VL] do
+mn:=Minimum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[m][m], A[l][n], A[m][n]]);
+if mn>0 then 
+mx:=Maximum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[m][m], A[l][n], A[m][n]]);
+Add(SimplicesLst[6][mx],[i,j,k,l,m,n]); fi;
+od;od;
+for t in [1..T] do
+SimplicesLst[6][t]:=SSortedList(SimplicesLst[6][t]);
+od;
+FilteredDims[6]:=List(SimplicesLst[6],x->Length(x));
+FilteredDims[6]:=List([1..T],t->Sum(FilteredDims[6]{[1..t]}));
+SimplicesLst[6]:=Concatenation(SimplicesLst[6]);
+
+fi;
+
+
+
+for d in [6..dim] do
+SimplicesLst[d+1]:=[];
+for y in Combinations(Vertices,d+1) do
+mn:=0;
+mx:=0;
+for x in Combinations(y,2) do
+if A[x[1]][x[2]]=0 then mn:=0; break;
+else
+mx:=Maximum(bool,A[x[1]][x[2]]); fi;
+od;
+if mx>0 then Add(SimplicesLst[d][mx],y); fi;
+od;
+for t in [1..T] do
+SimplicesLst[d+1][t]:=SSortedList(SimplicesLst[d+1][t]);
+od;
+FilteredDims[d+1]:=List(SimplicesLst[d+1],x->Length(x));
+FilteredDims[d+1]:=List([1..T],t->Sum(FilteredDims[d+1]{[1..t]}));
+SimplicesLst[d+1]:=Concatenation(SimplicesLst[d+1]);
+
+od;
+##########################
+##########################
+Simplices:=function(d,k);
+return SimplicesLst[d+1][k];
+end;
+#########################
+
+
+##########################
+NrSimplices:=function(d);
+return Length(SimplicesLst[d+1]);
+end;
+#########################
+
+#########################
+EnumeratedSimplex:=function(v)
+local s,t,n,i,pos;
+n:=Length(v);
+s:=1;
+for i in [1..T] do
+t:=FilteredDimension(i,n-1);
+pos:=
+PositionSet(SimplicesLst[n]{[s..t]},v);
+if IsInt(pos) then return pos;
+else s:=t+1; fi;
+od;
+end;
+#########################
+
+#########################
+EnumeratedSimplex:=function(v);
+return Position(SimplicesLst[Length(v)],v);
+end;
+#########################
+
+
+##########################
+FilteredDimension:=function(t,d);
+return FilteredDims[d+1][t];
+end;
+#########################
+
+
+Add(SimplicesLst,[]);
+
+return
+Objectify(HapFilteredSimplicialComplex,
+           rec(
+           vertices:=Vertices,
+           nrSimplices:=NrSimplices,
+           simplices:=Simplices,
+           filteredDimension:=FilteredDimension,
+           simplicesLst:=SimplicesLst,
+           enumeratedSimplex:=EnumeratedSimplex,
+           filtrationLength:=T,
+           properties:=[
+           ["dimension",dim]]
+           ));
+
+
+
+end);
+#####################################################################
+
 

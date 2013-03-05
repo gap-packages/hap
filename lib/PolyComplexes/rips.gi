@@ -27,7 +27,8 @@ if N>2 then
 F:=IncidenceMatrixToGraph(G!.incidenceMatrix);
 ContractGraph(F);
 C:=SimplicialNerveOfGraph(F,N);
-C:=ChainComplex(C);
+C:=SimplicialComplexToRegularCWComplex(C);
+C:=SparseChainComplex(C);
 return C;
 fi;
 #######################
@@ -126,6 +127,7 @@ end;
 
 ###################
 Boundary:=function(n,i);
+if n=0 then return []; fi;
 return PseudoBoundary[n][i];
 end;
 ###################
@@ -135,7 +137,7 @@ FACEBOUNDARIES:=[];
 PseudoBoundary:=[[],[]];;
  
 ###################
-C:=Objectify(HapChainComplex,
+C:=Objectify(HapSparseChainComplex,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
@@ -192,21 +194,21 @@ od;od;
 v:=List([1..Length(CRITICALVERTICES)],i->0);
 
 for b in EDGEBOUNDARIES do
-vv:=StructuralCopy(v);;
+vv:=[];;
 for i in b do
-vv[i]:=1;
+Add(vv,[AbsInt(i),SignInt(i)]);
 od;
-Add(PseudoBoundary[1],v);
+Add(PseudoBoundary[1],vv);
 od;
 
 v:=List([1..Length(CRITICALEDGES)],i->0);
 
 for b in FACEBOUNDARIES do
-vv:=StructuralCopy(v);;
+vv:=[];;
 for i in b do
-vv[i]:=1;
+Add(vv, [AbsInt(i), SignInt(i)]);
 od;
-Add(PseudoBoundary[2],v);
+Add(PseudoBoundary[2],vv);
 od;
 
 if N=2 then return C; fi;
