@@ -143,14 +143,38 @@ return S;
 end;
 ##########################################
 
+if true then
+##########################################
+KendallTauMetric:=function(g,h,N)
+local S,T,R,i,a;
+
+a:=h*g^-1;
+S:=CycleStructurePerm(a);
+R:=0;
+for i in [1..Length(S)] do
+if IsOddInt(i) and IsBound(S[i]) then R:=R+S[i]; fi;
+od;
+T:=0;;
+for i in [1..N] do
+if i=i^a then T:=T+1; fi;
+od;
+
+return
+N-R-T;
+
+end;
+##########################################
+fi;
+
+
 ##########################################
 GroupToSymmetricMat:=function(GG)
 local S,x,y, elts,N,G,F;
 
 G:=Image(RegularActionHomomorphism(GG));
-elts:=Elements(G);
 N:=Order(G);
-
+#G:=G^Random(SymmetricGroup(N));
+elts:=Elements(G);;
 S:=[];
 
 for x in [1..Length(elts)] do
@@ -158,7 +182,6 @@ S[x]:=[];
 for y in [1..Length(elts)] do
 S[x][y]:=KendallTauMetric(elts[x],elts[y],N);
 od;od;
-
 
 return S;
 end;

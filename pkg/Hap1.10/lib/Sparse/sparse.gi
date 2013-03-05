@@ -231,7 +231,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(TransposedSparseMat,
+InstallGlobalFunction(TransposeOfSparseMat,
 function(A)
 local
         M, entry, r;
@@ -262,7 +262,7 @@ if M!.cols>=M!.rows then
 SparseSemiEchelon(M);
 return Length(Flat(M!.heads));
 else
-T:=TransposedSparseMat(M);
+T:=TransposeOfSparseMat(M);
 SparseSemiEchelon(T);
 return Length(Flat(T!.heads));
 fi;

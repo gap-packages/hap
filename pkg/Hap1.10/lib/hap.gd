@@ -554,7 +554,7 @@ DeclareGlobalFunction("SparseChainComplexOfRegularCWComplexWithVectorField");
 DeclareGlobalFunction("SparseBoundaryMatrix");
 DeclareOperation("SparseChainComplex",[IsHapRegularCWComplex]);
 DeclareGlobalFunction("NullspaceSparseMatDestructive");
-DeclareGlobalFunction("TransposedSparseMat");
+DeclareGlobalFunction("TransposeOfSparseMat");
 DeclareGlobalFunction("ReverseSparseMat");
 DeclareGlobalFunction("PersistentHomologyOfFilteredSparseChainComplex");
 
