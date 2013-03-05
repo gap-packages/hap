@@ -162,111 +162,6 @@ end);
 #################################################################
 #################################################################
 
-#####################################################################
-#####################################################################
-InstallGlobalFunction(SparseChainComplexOfSimplicialComplex,
-function(M)
-local
-        Dimsn,Boundary,i;
-
-#############################
-Dimsn:=function(n);
-return M!.nrSimplices(n);
-end;
-#############################
-
-
-#############################
-Boundary:=function(n,i)
-local V,Vhat, j, bnd;
-V:=M!.simplices(n,i);
-
-bnd:=[];
-
-for j in [1..Length(V)] do
-Vhat:=StructuralCopy(V);
-RemoveSet(Vhat,V[j]);
-if IsOddInt(j) then
-Add(bnd,[M!.enumeratedSimplex(Vhat),1]);
-else
-Add(bnd,[M!.enumeratedSimplex(Vhat),-1]);
-fi;
-od;
-
-return bnd;
-end;
-#############################
-
-
-return
-Objectify(HapSparseChainComplex,
-           rec(
-           dimension:=Dimsn,
-           boundary:=Boundary,
-           properties:=[
-           ["length",EvaluateProperty(M,"dimension")],
-           ["type","chainComplex"],
-           ["characteristic",0]]
-           ));
-
-end);
-#################################################################
-#################################################################
-
-#####################################################################
-#####################################################################
-InstallGlobalFunction(SparseFilteredChainComplexOfFilteredSimplicialComplex,
-function(M)
-local
-        Dimsn,Boundary,i;
-
-#############################
-Dimsn:=function(n);
-return M!.nrSimplices(n);
-end;
-#############################
-
-
-#############################
-Boundary:=function(n,i)
-local V,Vhat, j, bnd;
-V:=M!.simplices(n,i);
-
-bnd:=[];
-
-for j in [1..Length(V)] do
-Vhat:=StructuralCopy(V);
-RemoveSet(Vhat,V[j]);
-if IsOddInt(j) then
-Add(bnd,[M!.enumeratedSimplex(Vhat),1]);
-else
-Add(bnd,[M!.enumeratedSimplex(Vhat),-1]);
-fi;
-od;
-
-return bnd;
-end;
-#############################
-
-return
-Objectify(HapFilteredSparseChainComplex,
-           rec(
-           dimension:=Dimsn,
-           boundary:=Boundary,
-           filteredDimension:=M!.filteredDimension,
-           properties:=[
-           ["length",EvaluateProperty(M,"dimension")],
-           ["type","chainComplex"],
-           ["characteristic",0],
-	   ["filtration_length",M!.filtrationLength]]
-           ));
-
-end);
-#################################################################
-#################################################################
-
-
-
 #################################################################
 #################################################################
 InstallGlobalFunction(SimplicesToSimplicialComplex,
@@ -305,7 +200,7 @@ end;
 
 #####################
 EnumeratedSimplex:=function(v);
-return PositionSet(SimplicesLst[Length(v)],v);
+return Position(SimplicesLst[Length(v)],v);
 end;
 #####################
 

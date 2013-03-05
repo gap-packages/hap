@@ -38,8 +38,8 @@
     <tr align="center">
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
- style="font-weight: bold;">1. Persistent Homology of Pure Cubical
-Complexes</span></big><br>
+ style="font-weight: bold;">1. Persistent Homology of Cubical and </span></big><big><span
+ style="font-weight: bold;">Simplicial Complexes</span></big><br>
       </td>
     </tr>
     <tr>
@@ -49,7 +49,8 @@ inclusion
 of
 pure
 cubical
-complexes X<sub>1</sub> --&gt; X<sub>2</sub>
+complexes
+X<sub>1</sub> --&gt; X<sub>2</sub>
 induces a natural homology homomorphism H<sub>n</sub>(X<sub>1</sub>,F)
 --&gt; H<sub>n</sub>(X<sub>2</sub>,F) for each positive n and any
 coefficient module F. Taking F to be a field, the induced homomorphism
@@ -63,13 +64,15 @@ homomorphisms which, in each degree n, determine a kxk matrix of ranks P<sub>i,j
 for
 i&gt;j
 we
-define P<sub>i,j</sub>=0). This matrix is referred
+define
+P<sub>i,j</sub>=0). This matrix is referred
 to as the n-th <span style="font-style: italic;">persistence matrix</span>,
 over
 the
 field
 F,
-for the sequence of pure cubical complexes.<br>
+for
+the sequence of pure cubical complexes.<br>
       <br>
 A possible scenario is that X<sub>1</sub> is a sample from an unknown
 manifold M, and that each space X<sub>i+1</sub> is obtained by
@@ -85,7 +88,8 @@ matrices
 are
 particularly
 useful
-when analysing high-dimensional data
+when
+analysing high-dimensional data
 since the shape of such data is hard to visualize. However, as a toy
 example let us consider the
 2-dimensional <a href="datacloud.eps">data cloud</a><br>
@@ -112,6 +116,7 @@ Pure cubical complex of dimension 2.<br>
       <br>
 gap&gt;
 T:=ThickeningFiltration(M,10);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
       <br>
@@ -145,8 +150,157 @@ BarCodeDisplay(P);<br>
     </tr>
     <tr>
       <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">As
+a more realistic illustration of this approach to topological data
+analysis let us suppose that we have made 400 experimental observations
+v<sub>1</sub>, ..., v<sub>400</sub> and that we are able to estimate
+some metric distance d(v<sub>i</sub>,v<sub>j</sub>) between each pair
+of observations. For instance, the observations might be vectors of a
+given length and&nbsp; d(v<sub>i</sub>,v<sub>j</sub>) could be the
+Euclidean distance. We could then build a filtered simplicial complex
+K={K<sub>1</sub>&lt;K<sub>2</sub>&lt;...&lt;K<sub>T</sub>} from an
+increasing sequence of thresholds d<sub>1</sub>&lt;...&lt;d<sub>T</sub>.
+Each term in the filtration has 400 vertices v<sub>1</sub>, ..., v<sub>400,</sub>
+and&nbsp; K<sub>t</sub> is determined by the threshold d<sub>t</sub>: a
+simplex belongs to K<sub>t</sub> is and only if each pair of vertices
+in the simplex satisfies d(v<sub>i</sub>,v<sub>j</sub>) &lt; d<sub>t </sub>.
+The persistent homology of the filtered simplicial complex K could
+provide information on the space from which our data was selected.<br>
+      <br>
+The following data <br>
+      <table
+ style="text-align: left; width: 400px; margin-left: auto; margin-right: auto; height: 178px;"
+ border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">v<sub>1</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">v<sub>2</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">&nbsp;
+...<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">v<sub>399</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">v<sub>400</sub><br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">v<sub>1</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">66<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">191<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">137<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">v<sub>2</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">66<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">125<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">71<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">...<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">v<sub>399</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">191<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">125<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">54<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">v<sub>400</sub><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">137<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">71<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">54<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <sub>&nbsp;<br>
+      </sub>is contained in a symmetric matrix in the file <a
+ href="symmetricMatrix.txt">symmetricMatrix.txt</a> . The following
+commands read this matrix, compute the filtered simplicial complex, and
+then compute the barcodes for 0-dimensional and 1-dimensional homology.
+These barcodes suggest that the data points were samples from a space
+with the homology of a disjoint union of two circles.<br>
+      <br>
+We view the barcodes in compact form, where a line with label n
+is used to denote n lines which start at the same point in
+the filtration and end at the same point in the filtration. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+Read("symmetricMatrix.txt");<br>
+gap&gt; S:=SymmetricMat;;<br>
+gap&gt; G:=SymmetricMatrixToFilteredGraph(S,10,30);; #Take a filtration
+with length T=10, and discard any distances greater than 30.<br>
+gap&gt; N:=SimplicialNerveOfFilteredGraph(G,2);;<br>
+gap&gt; C:=SparseFilteredChainComplexOfFilteredSimplicialComplex(N);;<br>
+gap&gt; P0:=PersistentHomologyOfFilteredSparseChainComplex(C,0);;<br>
+gap&gt; P1:=PersistentHomologyOfFilteredSparseChainComplex(C,1);;<br>
+      <br>
+gap&gt; BarCodeCompactDisplay(P0);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 549px; height: 201px;" alt="" src="percyl0.gif"><br>
+      </div>
+      <br>
+gap&gt;BarCodeCompactDisplay(P1);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 547px; height: 169px;" alt="" src="percyl1.gif"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">A
-second scenario for the use of persitent homology of pure cubical
+different scenario for the use of persitent homology of pure cubical
 complexes is in the analysis of digital images. As a second toy example
 consider the digital photo.<br>
       <br>
@@ -157,7 +311,8 @@ The 20 longish lines in the following barcode for the degree 0
 persistent homology correspond to the 20 objects in the photo. The 14
 longish lines in the following barcode for the degree 1 persistent
 homology correspond to the fact that 14 of the objects have holes in
-them. We view the barcodes in compact form, where a line with label n
+them. We again view the barcodes in compact form, where a line with
+label n
 is used to denote n lines which start at the same point in
 the filtration and end at the same point in the filtration. <br>
       </div>
@@ -205,6 +360,7 @@ homomorphisms. <br>
 For a finite p-group we take homology coefficients in the field of p
 elements. The following commands compute and display the degree 3
 homology barcode for the Sylow 2-subgroup of the Mathieu group M<sub>12</sub>.
+
 
 
 

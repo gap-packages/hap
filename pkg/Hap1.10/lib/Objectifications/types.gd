@@ -462,6 +462,40 @@ Print("Graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
 #####################################################################
 #####################################################################
 
+#####################################################################
+DeclareCategory("IsHapFilteredGraph",IsObject);
+
+DeclareRepresentation(  "IsHapFilteredGraphRep",
+                        IsComponentObjectRep,
+                        ["incidenceMatrix",
+                         ]);
+
+HapFilteredGraphFamily:=NewFamily( "HapFilteredGraphFamily",
+                                          IsHapFilteredGraph,
+                                          IsHapFilteredGraph);
+
+HapFilteredGraph:=NewType(HapFilteredGraphFamily,
+                                IsHapFilteredGraphRep);
+
+
+InstallMethod( ViewObj,
+"for HapFilteredGraph",
+ [IsHapFilteredGraph],
+function(R)
+Print("Filtered graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapFilteredGraph",
+ [IsHapFilteredGraph],
+ function(R)
+Print("Filtered graph on ", EvaluateProperty(R,"numberofvertices")," vertices.\n");
+ end);
+#####################################################################
+#####################################################################
+
+
+
 
 #####################################################################
 DeclareCategory("IsHapOppositeElement",IsMultiplicativeElementWithInverse);
