@@ -1,8 +1,8 @@
-InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
-    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
-        function(g,h,gg,gh)
-    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
-end);
+#InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
+#    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
+#        function(g,h,gg,gh)
+#    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
+#end);
 
 ########################################################################
 ########################################################################

@@ -426,7 +426,7 @@ DeclareGlobalFunction("DensityMat");
 DeclareGlobalFunction("IncidenceMatrixToGraph");
 DeclareGlobalFunction("SymmetricMatrixToGraph");
 DeclareGlobalFunction("SymmetricMatrixToFilteredGraph");
-DeclareGlobalFunction("GroupToFilteredGraph");
+DeclareGlobalFunction("PermGroupToFilteredGraph");
 DeclareGlobalFunction("GraphOfSimplicialComplex");
 DeclareGlobalFunction("PathComponentsOfGraph");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex");
@@ -541,6 +541,11 @@ DeclareGlobalFunction("AlexanderMatrix");
 DeclareGlobalFunction("AlexanderPolynomial");
 DeclareGlobalFunction("ReadPDBfileAsPureCubicalComplex");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
+
+## METRICS #########################################################
+DeclareGlobalFunction("CayleyMetric");
+DeclareGlobalFunction("KendallMetric");
+DeclareGlobalFunction("HammingMetric");
 
 ## SPARSE ###########################################################
 DeclareGlobalFunction("SparseMat");

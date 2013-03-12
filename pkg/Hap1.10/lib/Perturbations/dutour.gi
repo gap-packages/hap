@@ -194,7 +194,7 @@ for n in [1..Length(R)] do
 NewBoundaryList[n]:=[];
 for i in [1..R!.dimension(n)] do
 b:=StructuralCopy(R!.boundary(n,i));
-#b:=List(b,x->[AbsInt(x[1]),x[2]]);
+b:=List(b,x->[AbsInt(x[1]),x[2]]);
 Add(NewBoundaryList[n],b);
 od;
 od;
@@ -243,8 +243,7 @@ for e in NewBoundaryList[N] do
              else Add(b,[v[1],v[2]]); 
           fi;
           pos:=Position(V,v);
-          V[pos]:=0;
-          V:=Filtered(V,v->not v=0); 
+          Remove(V,pos);
           break; 
         fi;
       od;
