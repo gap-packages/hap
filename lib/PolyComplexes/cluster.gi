@@ -125,62 +125,22 @@ end);
 
 #########################################################
 #########################################################
-InstallGlobalFunction(GroupToFilteredGraph,
-function(H)
-local S,F,i,j, KendallTauMetric,GroupToSymmetricMat;
+InstallGlobalFunction(PermGroupToFilteredGraph,
+function(H,N,Metric)
+local S,F,i,j, GroupToSymmetricMat;
 
 ##########################################
-KendallTauMetric:=function(g,h,N)
-local S, i,j;
-S:=0;
+GroupToSymmetricMat:=function(G)
+local S,x,y, elts,F;
 
-for i in [1..N] do
-for j in [i+1..N] do
-if (i^g-j^g)*(i^h-j^h)<0 then S:=S+1; fi;
-od;od;
-
-return S;
-end;
-##########################################
-
-if true then
-##########################################
-KendallTauMetric:=function(g,h,N)
-local S,T,R,i,a;
-
-a:=h*g^-1;
-S:=CycleStructurePerm(a);
-R:=0;
-for i in [1..Length(S)] do
-if IsOddInt(i) and IsBound(S[i]) then R:=R+S[i]; fi;
-od;
-T:=0;;
-for i in [1..N] do
-if i=i^a then T:=T+1; fi;
-od;
-
-return
-N-R-T;
-
-end;
-##########################################
-fi;
-
-
-##########################################
-GroupToSymmetricMat:=function(GG)
-local S,x,y, elts,N,G,F;
-
-G:=Image(RegularActionHomomorphism(GG));
-N:=Order(G);
-#G:=G^Random(SymmetricGroup(N));
+G:=G^Random(G);
 elts:=Elements(G);;
 S:=[];
 
 for x in [1..Length(elts)] do
 S[x]:=[];
 for y in [1..Length(elts)] do
-S[x][y]:=KendallTauMetric(elts[x],elts[y],N);
+S[x][y]:=Metric(elts[x],elts[y],N);
 od;od;
 
 return S;
