@@ -362,7 +362,7 @@ ReadPackage("HAP","lib/Sparse/sparse.gi");
 
 
 ################# CRYSTALLOGRAPHIC GROUPS #####################
-if IsPackageMarkedForLoading("cryst","0.0") then
+if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
