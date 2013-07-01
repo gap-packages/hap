@@ -16,16 +16,16 @@ local
 	lenR:=EvaluateProperty(R,"length");
 #################################################	
 CPhi:=function(n,w)  ###w:=[[m1,g11..,g1n],[mk,gk1,..gkn]]
-	local Ew,iw,tmp,phiw,i,Rew;
-	Ew:=[];  
+	local Zw,iw,tmp,phiw,i,Rew;
+	Zw:=[];  
 	for iw in w do  
-		tmp:=[iw[1],e];
+		tmp:=[iw[1],e]; #### add indentity element
 		for i in [2..n+1] do
 			Add(tmp,iw[i]);
 		od;
-		Add(Ew,tmp);
+		Add(Zw,tmp);
 	od;
-    phiw:=Phi(n,Ew);
+    phiw:=Phi(n,Zw);
     Rew:= List([ 1..dim(n)],x->0);
 	for tmp in phiw do
 		i:=tmp[2];
@@ -47,17 +47,17 @@ local Rew,tmp,cw;
 return Rew;
 end;	
 ########################################################		
-CEquiv:=function(n,w) ######w:=[[m1,g11..,g1n],[mk,gk1,..gkn]
-	local ew,iw,i,tmp,Rew;
-	ew:=[];
+CEquiv:=function(n,w) ######w:=[[m1,g11..,g1n],[mk,gk1,..gkn]]
+	local Zw,iw,i,tmp,Rew;
+	Zw:=[];
 	for iw in w do  
 		tmp:=[iw[1],e]; 
 		for i in [2..n+1] do
 			Add(tmp,iw[i]);
 		od;
-		Add(ew,tmp);
+		Add(Zw,tmp);
 	od;
-    Rew:=Equiv(n,ew);
+    Rew:=Equiv(n,Zw);
 	for tmp in Rew do
 		Remove(tmp,2);
 	od;

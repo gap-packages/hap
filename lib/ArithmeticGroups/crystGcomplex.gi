@@ -118,12 +118,12 @@ if Order(H)=infinity then ActionRecord[m+1][abk][g]:=1;
 else
 ######
 id:=CanonicalRightCosetElement(H,Identity(H));
-#  r:=CanonicalRightCosetElement(H,Elts[g]^-1);
-#  r:=id^-1*r;
-#  u:=r*Elts[g];
-r:=CanonicalRightCosetElement(H,Elts[g]);
-r:=id^-1*r;
-u:=Elts[g]*r^-1;
+ r:=CanonicalRightCosetElement(H,Elts[g]^-1);
+ r:=id^-1*r;
+ u:=r*Elts[g];
+# r:=CanonicalRightCosetElement(H,Elts[g]);
+ #r:=id^-1*r;
+# u:=r*Elts[g]^-1*id;
 ########
 
 if u in RotSubGroupList[m+1][abk] then  ans:= 1;
@@ -135,6 +135,7 @@ fi;
 fi;
 
 return ActionRecord[m+1][abk][g];
+
 end;
 #######################
 PseudoBoundary:=function(k,s)
@@ -162,20 +163,42 @@ return bdry;
 end;
 #######################
 Sign:=function(m,k,g)
-local CF,Ce,Ne,x,v,h;
+local x,h,p,r,c,i,y,f,s,kk,e,B1,B2,w;
+kk:=AbsInt(k);
 if m=0 then return 1;fi;
-Ce:=VectorToCrystMatrix(L[m+1][k]);
-#Print(Ce);
 h:=Elts[g];
-CF:=VectorToCrystMatrix(Sum(B)/2);
-Ne:=CF^-1*Ce;
-x:=Ne*h;
-v:=(CF)^-1*Ce*h;
-x:=Flat(x[n+1]);
-v:=Flat(v[n+1]);
-Remove(x);
-Remove(v);
-return SignRat(x*v);
+p:=CrystFinitePartOfMatrix(h);
+e:=L[m+1][kk];
+x:=e*B^-1;
+r:=[];
+for i in [1..Length(x)] do
+if not IsInt(x[i]) then
+Add(r,i);
+fi;
+od;
+B1:=B{r};
+B1:=B1*p;
+
+e:=Flat(e);
+Add(e,1);
+f:=e*h;
+Remove(f);
+y:=f*B^-1;
+c:=[];
+for i in [1..Length(y)] do
+if not IsInt(y[i]) then
+Add(c,i);
+fi;
+od;
+
+B2:=B{c};
+s:=[];
+for i in [1..Length(B2)] do
+Add(s,SolutionMat(B1,B2[i]));
+od;
+#Print(s);
+
+return SignRat(Determinant(s));
 end;
 #######################
 Boundary:=function(k,s)
@@ -184,7 +207,8 @@ psbdry:=PseudoBoundary(k,s);
 bdry:=[];
 for j in [1..Length(psbdry)] do
 w:=psbdry[j];
-if (j mod 4 =0) or (j mod 4 =1) then
+if (j mod 4 = 3) or (j mod 4 = 2) then
+#if IsEvenInt(j) then
 Add(bdry,Negate([Sign(k-1,w[1],w[2])*w[1],w[2]]));
 else Add(bdry,[Sign(k-1,w[1],w[2])*w[1],w[2]]);
 fi;
@@ -209,7 +233,7 @@ od;
 #######################
 FinalBoundary:=function(n,k)
 if k>0 then return BoundaryList[n][k];
-else return NegateWord(BoundaryList[n][k]);
+else return NegateWord(BoundaryList[n][AbsInt(k)]);
 fi;
 end;
 
@@ -239,39 +263,25 @@ od;
 ###
 
 Stabilizer:=function(m,k)
+local kk;
+kk:=AbsInt(k);
 return StabGrp[m+1][k];
 end;
-# for i in [1..n+1] do
-# for j in [1..Length(L[i])] do
-# Append(Elts,Elements(StabGrp[i][j]));
-# od;
-# od;
-#######################
+##########################
 PseudoRotSubGroup:=function(m,k)
-local bdry,RotSbGrp,i,K,H,A;
-if m=0 then 
-#Print([m,k],StabGrp[m+1][k]);
-return StabGrp[m+1][k];
-else
-bdry:=PseudoBoundary(m,k);
-#Print([m,k],bdry,"\n");
-bdry:=StructuralCopy(List(bdry,w->ConjugateGroup(RotSubGroupList[m][w[1]],Elts[w[2]])));
-#Print([m,k],bdry,"\n");
-RotSbGrp:=bdry[1];
-#Print([m,k],RotSbGrp,"\n");
-for i in [2..Length(bdry)] do
-#H:=bdry[i];
-#Print([m,k],H,"\n");
-#K:=StructuralCopy(RotSbGrp);
-#Print([m,k],K,"\n");
-RotSbGrp:=Group(Intersection(Elements(RotSbGrp),Elements(bdry[i])));
-#A:=Group(Intersection(Elements(H),Elements(K)));
-#Print([m,k],A,"\n");
+local x,kk,l,h,i,w,r,y,H,id,eltsH,g,RotSbGrp;
+kk:=AbsInt(k);
+RotSbGrp:=[];
+H:=StabGrp[m+1][k];
+eltsH:=Elements(H);
+
+for g in eltsH do
+if Sign(m,k,pos(g))=1 then Add(RotSbGrp,g);fi;
 od;
-return RotSbGrp;
-fi;
+RotSubGroupList[m+1][kk]:=Group(RotSbGrp);
+return Group(RotSbGrp);
 end;
-#####
+#######################
 RotSubGroupList:=[];
 for i in [1..(n+1)] do
 RotSubGroupList[i]:=[];
@@ -279,20 +289,21 @@ for j in [1..Length(L[i])] do
 RotSubGroupList[i][j]:=PseudoRotSubGroup(i-1,j);
 od;
 od;
-#####
-RotSubGroup:=function(m,k)
-return RotSubGroupList[m+1][k];
-end;
 #######################
-
-
+RotSubGroup:=function(m,k)
+local kk;
+kk:=AbsInt(k);
+return RotSubGroupList[m+1][kk];
+end;
+###########################################
 
 return Objectify(HapNonFreeResolution,
             rec(
             dimension:=Dimension,
             boundary:=FinalBoundary,
 	    PseudoBoundary:=PseudoBoundary,
-	    RotSubGroupList:=RotSubGroupList,
+#	    RotSubGroupList:=RotSubGroupList,
+	    CellList:=L,
 	    Sign:=Sign,
             homotopy:=fail,
             elts:=Elts,
@@ -310,83 +321,3 @@ end);
 
 ###############################################################
 
-# 
-# InstallGlobalFunction(RecalculateIncidenceNumbers,
-# function(R)
-# local
-#         NewBoundaryList,
-#         NewBoundary,
-#         S,N,pos,
-#         cnt,n,i,b,e,V,v,L,LL,x,xx;
-# R!.elts:=List(R!.elts,x->x^-1);
-# 
-# NewBoundaryList:=[];
-# for n in [1..Length(R)] do
-# NewBoundaryList[n]:=[];
-# for i in [1..R!.dimension(n)] do
-# b:=StructuralCopy(R!.boundary(n,i));
-# #b:=List(b,x->[AbsInt(x[1]),x[2]]);
-# Add(NewBoundaryList[n],b);
-# od;
-# od;
-# 
-# 
-# ##############################
-# NewBoundary:=function(n,i);
-# if i>0 then
-# return NewBoundaryList[n][i];
-# else
-# return NegateWord(NewBoundaryList[n][-i]);
-# fi;
-# end;
-# ##############################
-# 
-# ########First Incidence Numbers###########
-# for b in NewBoundaryList[1] do
-# if b[1][1]*b[2][1]>0 then
-# b[1][1]:=-1*b[1][1];
-# fi;
-# od;
-# ##########################################
-# 
-# 
-# R!.oldBoundary:=R!.boundary;
-# R!.boundary:=NewBoundary;
-# 
-# for N in [2..Length(NewBoundaryList)] do
-# ######## N-th Incidence Numbers##########
-# cnt:=0;
-# for e in NewBoundaryList[N] do
-#   cnt:=cnt+1;
-#   #########################
-#   if Length(ResolutionBoundaryOfWord(R,N-1,e))>0 then
-#   #########################
-#     V:=List(e,x->[AbsInt(x[1]),x[2]]);
-#     b:=[V[1]]; V:=V{[2..Length(V)]}; 
-#     while Length(V)>0 do
-#       L:=ResolutionBoundaryOfWord(R,N-1,b);
-#       LL:=List(L,x->[AbsInt(x[1]),x[2]]);
-#       for v in V do
-#         x:=ResolutionBoundaryOfWord(R,N-1,[v]);
-#         xx:=List(x,a->[AbsInt(a[1]),a[2]]);  
-#         if Length(Intersection(xx,LL))>0 then
-#           if Length(Intersection(x,L))>0 then Add(b,[-v[1],v[2]]); 
-#              else Add(b,[v[1],v[2]]); 
-#           fi;
-#           pos:=Position(V,v);
-#           V[pos]:=0;
-#           V:=Filtered(V,v->not v=0); 
-#           break; 
-#         fi;
-#       od;
-#     od;
-#     NewBoundaryList[N][cnt]:=b;
-#   #########################
-#   fi;
-#   #########################
-# od;
-# ##########################################
-# od;
-# 
-# end);
-# ################################################

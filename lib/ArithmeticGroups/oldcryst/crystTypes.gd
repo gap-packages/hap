@@ -1,0 +1,14 @@
+DeclareProperty("IsCrystTranslationSubGroup",IsMatrixGroup);
+DeclareGlobalFunction("FactorizationNParts");
+DeclareGlobalFunction("CrystGFullBasis");
+DeclareGlobalFunction("VectorToCrystMatrix");
+DeclareGlobalFunction("TranslationSubGroup");
+DeclareGlobalFunction("CrystTranslationMatrixToVector");
+DeclareGlobalFunction("IsIntList");
+DeclareGlobalFunction("IsCrystSameOrbit");
+DeclareGlobalFunction("AddFirst");
+DeclareGlobalFunction("CombinationDisjointSets");
+DeclareGlobalFunction("IsCrystSufficientLattice");
+DeclareGlobalFunction("CrystGcomplex");
+DeclareGlobalFunction("ResolutionBoundaryOfWordOnRight");
+DeclareGlobalFunction("CrystFinitePartOfMatrix");

@@ -49,6 +49,24 @@ end);
 #####################################################################
 
 #####################################################################
+InstallGlobalFunction(ReduceGenerators_alt,
+function(gens,G)             
+                              
+local x,newgens;
+
+newgens:=[gens[1]];
+
+for x in gens do
+if not x in Group(newgens) then Add(newgens,x); fi;
+if Order(Group(newgens))=Order(G) then break; fi;
+od;
+
+return newgens;
+end);
+#####################################################################
+
+
+#####################################################################
 InstallGlobalFunction(AbelianInvariantsToTorsionCoefficients,
 function(L)
 local

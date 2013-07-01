@@ -25,6 +25,7 @@ gens:=List([1..Length(PcpG)],i->PcpG[i]);
 if Length(gens)=1 then
 
 if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
+#if Order(Group(gens))<1000 then return ResolutionFiniteGroup(gens,n);
 else
 
 

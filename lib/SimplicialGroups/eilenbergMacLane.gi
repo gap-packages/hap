@@ -1,5 +1,12 @@
 InstallGlobalFunction(EilenbergMacLaneSimplicialGroup,
-function(G,NN,number)
+function(X,NN,number)
+
+local
+	EilenbergMacLane_Obj,
+	EilenbergMacLane_Map;
+
+#########################################################
+EilenbergMacLane_Obj:= function(G,NN,number)
 	local 
 		nn,i,j,n,k,pos,len1,len2,temp,x,y,
 		CoF,CoD,MN,T,N,H1,H2,GensH2,lengensH2,Prj,
@@ -373,15 +380,12 @@ return Objectify(HapSimplicialGroup,
             degeneraciesList:=DegeneraciesList,
             properties:=[["length",number]]
           ));
-end);		
-
+end;		
 
 
 ###############################################################
 ###############################################################
-
-InstallGlobalFunction(EilenbergMacLaneSimplicialGroupMap,
-function(f,n,len)
+EilenbergMacLane_Map:=function(f,n,len)
 	local 
 		H,G,KH,KG,
 		Mapf,Mapping,HH,GG,
@@ -391,8 +395,8 @@ function(f,n,len)
 		
 H:=f!.Source;
 G:=f!.Range;
-KH:=EilenbergMacLaneSimplicialGroup(H,n,len);
-KG:=EilenbergMacLaneSimplicialGroup(G,n,len);
+KH:=EilenbergMacLane_Obj(H,n,len);
+KG:=EilenbergMacLane_Obj(G,n,len);
 Mapf:=[];
 for i in [0..n-2] do
 	Mapf[i+1]:=GroupHomomorphismByImages(Group(Identity(H)),Group(Identity(G)),[],[]);
@@ -433,4 +437,14 @@ return Objectify(HapSimplicialGroupMap,
             mapping:=Mapping,
             properties:=[["length",len]]
           ));
-end);		
+end;		
+
+############################################
+if IsGroup(X) then
+	return EilenbergMacLane_Obj(X,NN,number);
+fi;
+
+if IsGroupHomomorphism(X) then
+	return EilenbergMacLane_Map(X,NN,number);
+fi;	
+end);

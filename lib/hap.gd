@@ -75,6 +75,15 @@ DeclareGlobalFunction("TensorCentre");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB_alt");
 DeclareGlobalFunction("NonabelianSymmetricKernel_alt");
 DeclareGlobalFunction("NonabelianTensorSquare_inf");
+DeclareGlobalFunction("BogomolovMultiplier");
+DeclareGlobalFunction("BogomolovMultiplier_viaTensorSquare");
+DeclareGlobalFunction("Bogomology");
+DeclareGlobalFunction("AreIsoclinic");
+DeclareGlobalFunction("PartialIsoclinismClasses");
+DeclareGlobalFunction("IsoclinismClasses");
+DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup");
+DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup_alt");
+
 
 
 ## RESOLUTIONS ######################################################
@@ -128,6 +137,7 @@ DeclareGlobalFunction("TensorWithTwistedIntegers");
 DeclareGlobalFunction("TensorWithTwistedIntegersModP");
 DeclareGlobalFunction("PrimePartDerivedFunctor");
 DeclareGlobalFunction("ReduceGenerators");
+DeclareGlobalFunction("ReduceGenerators_alt");
 DeclareGlobalFunction("HomToIntegers");
 DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
@@ -369,6 +379,7 @@ DeclareGlobalFunction("PureCubicalComplexDifference");
 DeclareGlobalFunction("PureCubicalComplexIntersection");
 DeclareGlobalFunction("PureCubicalComplexToCubicalComplex");
 DeclareGlobalFunction("FilteredPureCubicalComplexToCubicalComplex");
+DeclareGlobalFunction("ConcentricallyFilteredPureCubicalComplex");
 DeclareGlobalFunction("ContractedFilteredPureCubicalComplex");
 DeclareOperation("ChainComplex",[IsObject]);
 DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
@@ -435,6 +446,7 @@ DeclareGlobalFunction("ContractGraph");
 DeclareGlobalFunction("SimplicialNerveOfGraph");
 DeclareGlobalFunction("SimplicialNerveOfFilteredGraph");
 DeclareGlobalFunction("GraphDisplay");
+DeclareGlobalFunction("SymmetricMatDisplay");
 DeclareGlobalFunction("SkeletonOfCubicalComplex");
 DeclareGlobalFunction("MorseFiltration");
 DeclareGlobalFunction("ContractCubicalComplex_dim2");
@@ -543,9 +555,15 @@ DeclareGlobalFunction("ReadPDBfileAsPureCubicalComplex");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
 
 ## METRICS #########################################################
-DeclareGlobalFunction("CayleyMetric");
-DeclareGlobalFunction("KendallMetric");
-DeclareGlobalFunction("HammingMetric");
+DeclareOperation("CayleyMetric",[IsPerm,IsPerm,IsInt]);
+DeclareOperation("CayleyMetric",[IsPerm,IsPerm]);
+DeclareOperation("KendallMetric",[IsPerm,IsPerm,IsInt]);
+DeclareOperation("KendallMetric",[IsPerm,IsPerm]);
+DeclareOperation("HammingMetric",[IsPerm,IsPerm,IsInt]);
+DeclareOperation("HammingMetric",[IsPerm,IsPerm]);
+DeclareOperation("EuclideanSquaredMetric",[IsVector,IsVector]);
+DeclareOperation("ManhattanMetric",[IsVector,IsVector]);
+DeclareOperation("EuclideanApproximatedMetric",[IsVector,IsVector]);
 
 ## SPARSE ###########################################################
 DeclareGlobalFunction("SparseMat");

@@ -146,6 +146,7 @@ ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
 #ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/bogomolov.gi");
 
 ##################### RESOLUTIONS ###################################
 ReadPackage("HAP", "lib/Resolutions/resAspherical.gi");
@@ -298,6 +299,7 @@ ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
 ReadPackage("HAP","lib/PolyComplexes/metrics.gi");
+ReadPackage("HAP","lib/PolyComplexes/graphviz.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
 ReadPackage("HAP","lib/PolyComplexes/filteredCubical.gi");
 fi;
@@ -331,6 +333,7 @@ ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
 #ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
+ReadPackage("HAP","lib/SimplicialGroups/quasiIsomorph.gi");
 
 
 ################## REGULAR CW_COMPLEXES ###############################
@@ -364,8 +367,10 @@ ReadPackage("HAP","lib/Sparse/sparse.gi");
 ################# CRYSTALLOGRAPHIC GROUPS #####################
 if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystGbasisnew.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
 fi;
 
 

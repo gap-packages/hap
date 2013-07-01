@@ -145,7 +145,7 @@ fi;break;
 od;
 
 if not s!.remote then i:=(ReadAllLine(s.stream,true));fi;
-i:=(ReadAllLine(s.stream,true));
+#i:=(ReadAllLine(s.stream,true));
 
 output:="";
 while true do

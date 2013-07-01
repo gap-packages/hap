@@ -233,7 +233,7 @@ M:=[];
 #hom:=GroupHomomorphismByImagesNC(GG,F,GeneratorsOfGroup(GG),
 #List(GeneratorsOfGroup(GG),i->xx));
 
-hom:=NqEpimorphismNilpotentQuotient(GG,1);
+hom:=HAP_NqEpimorphismNilpotentQuotient(GG,1);
 F:=Image(hom);
 if not IsCyclic(F) then return fail; fi;
 xx:=MinimalGeneratingSet(F)[1];
@@ -326,14 +326,14 @@ local  S,T,i,j,char,atoms, acids, cnt,
  file, scl,  instr, f, avg,  v, A, x1,x2,y1,y2,z1,z2, L, M , B,b;
 
 file:=arg[1];
-scl:=5; char:="A"; 
+scl:=2; char:="A"; 
 
 if Length(arg)>1 then 
-if IsInt(arg[2]) then scl:=arg[2];  else char:=arg[2]; fi; 
+if IsRat(arg[2]) then scl:=arg[2];  else char:=arg[2]; fi; 
 fi;
 
 if Length(arg)>2 then 
-if IsInt(arg[3]) then scl:=arg[3];  else char:=arg[3]; fi;
+if IsRat(arg[3]) then scl:=arg[3];  else char:=arg[3]; fi;
 fi;
 
 
@@ -344,15 +344,17 @@ f:=ReadLine(instr);
 while not f=fail do
 f:=ReadLine(instr);
 if f=fail then break; fi;
-if f{[1,2,3,4]}="ATOM" then  
+if Length(f)<4 then break; fi;
+if f{[1,2,3,4]}="ATOM" and 
+(f{[14,15]}="CA" or f{[15,16]}="CA") then  
 if  f{[22]}=char then
-v:=[f{[23,24,25,26]},f{[32,33,34,36,37,38]}, f{[40,41,42,44,45,46]}, f{[48,49,50,52,53,54]}]; 
-Apply(v,EvalString);
+v:=[f{[32,33,34,36,37,38]}, f{[40,41,42,44,45,46]}, f{[48,49,50,52,53,54]}]; 
+Apply(v,EvalString); 
+v[1]:=(scl*v[1]/1000);
 v[2]:=(scl*v[2]/1000);
 v[3]:=(scl*v[3]/1000);
-v[4]:=(scl*v[4]/1000);
 
-Add(A,v);
+Add(A,v); 
 fi;
 fi;
 od;
@@ -361,25 +363,10 @@ atoms:=Length(A);
 
 if atoms=0 then return fail; fi;
 
-cnt:=0;
-B:=[];
-for v in A do
-if v[1]>cnt then
-if IsBound(b) then 
-b[1]:=b[1]/avg; 
-b[2]:=b[2]/avg;
-b[3]:=b[3]/avg;
-Add(B,StructuralCopy(b));  fi;
-cnt:=cnt+1;; avg:=1; b:=v{[2,3,4]}; 
-else b:=b+v{[2,3,4]}; avg:=avg+1;
-fi;
-od;
 
-A:=StructuralCopy(B);
+Print("Reading chain containing ",atoms," atoms.\n");
 
-Print("Read chain of ",Length(A)," amino acids containing ",atoms," atoms.\n");
-
-for j in [1..14] do
+for j in [1..13] do
 B:=[];
 for i in [1..Length(A)-1] do
 B[2*i-1]:=A[i];

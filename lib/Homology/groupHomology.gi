@@ -109,7 +109,7 @@ local
 
 if Order(G)<32 then R:=ResolutionFiniteGroup(gensG,N+1,false,p); 
 else
-#L:=LowerCentralSeries(G);
+L:=LowerCentralSeries(G);
 L:=BigStepLCS(G,9);
 
 R:=ResolutionNormalSeries(L,N+1,false,p);

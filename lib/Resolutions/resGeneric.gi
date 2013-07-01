@@ -18,11 +18,11 @@ Tz:=TietzeReducedResolution;
    return ResolutionAbelianGroup(G,N);
    fi;
 
-   if Order(G)<32 then
+   if Order(G)<33 then
    return Tz(ResolutionFiniteGroup(G,N));
    fi;
 
-   if IsPGroup(G) and Order(G)<256 then
+   if IsPGroup(G) then
    return ResolutionNormalSeries(LowerCentralSeries(G),N);
    fi;
 

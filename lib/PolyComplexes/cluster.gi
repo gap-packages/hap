@@ -126,8 +126,15 @@ end);
 #########################################################
 #########################################################
 InstallGlobalFunction(PermGroupToFilteredGraph,
-function(H,N,Metric)
-local S,F,i,j, GroupToSymmetricMat;
+function(H,Metric)
+local N,S,F,i,j, GroupToSymmetricMat;
+
+if not IsPermGroup(H) then
+Print("This function must be applied to a permutation group.\n");
+return fail;
+fi;
+
+N:=Maximum(MovedPoints(H));
 
 ##########################################
 GroupToSymmetricMat:=function(G)

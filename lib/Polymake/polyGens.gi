@@ -6,20 +6,23 @@ InstallGlobalFunction(PolytopalGenerators,
 function(GG,v)
 local
 	Points, Vertices, 
+        Action,
 	G, D, CG, N, 
 	proj, 
 	StringToVector,
 	input,
 	EdgeGenerators,
 	Faces, FacesFinal, FacesFn,
-	Index, IndexFn,
+	Index, IndexFn, tmplst,
 	Count,
 	tmp, x, w, i, y, p,
-	tmpInlog, tmp2Inlog,tmpDir;
+	tmpInlog, tmp2Inlog,tmp3Inlog, tmp4Inlog, tmpDir;
 
 tmpDir:=DirectoryTemporary();
 tmpInlog:=Filename(tmpDir,"tmpIn.log");
 tmp2Inlog:=Filename(tmpDir,"tmp2In.log");
+tmp3Inlog:=Filename(tmpDir,"tmp3In.log");
+tmp4Inlog:=Filename(tmpDir,"tmp4In.log");
 
 if not (IsPermGroup(GG) or IsMatrixGroup(GG)) then 
 Print("The group G must be a permutation or matrix group.\n");
@@ -27,12 +30,39 @@ return fail;
 fi;
 
 if IsPermGroup(GG) then
-G:=RightTransversal(GG,Stabilizer(GG,v,Permuted));
-G:=Filtered(G,x->not x=Identity(GG));
-else
+#####################################################################
+Action:=function(g,V)
+local i,gV;
 
-G:=Filtered(Elements(GG),x->not x=Identity(GG));
+gV:=[];
+
+for i in [1..Length(V)] do
+gV[i]:=V[i^(g^-1)];
+od;
+
+return gV;
+end;
+#####################################################################
+else
+#####################################################################
+Action:=function(g,V) ;
+return g*V;
+end;
+#####################################################################
 fi;
+
+G:=[];
+tmplst:=[];
+
+for x in GG do
+w:=Action(x,v);
+if not w in tmplst and not w=v then
+Add(G,x);
+Add(tmplst,w);
+fi;
+od;
+
+
 D:=Length(v);
 CG:=List([1..D], i->0);   	#CG will eventually be the centre of gravity
 Points:=[];			#of the polytope.
@@ -40,38 +70,24 @@ Vertices:=[];
 EdgeGenerators:=[];
 
 ###################### CALCULATE CENTRE OF GRAVITY ##################
-if IsPermGroup(GG) then
-
 for x in G do
-w:=[];
-	for i in [1..D] do
-	Append(w,[v[i^x]]);
-	od;
-Append(Points, [w]); 
-      	for i in [1..D] do
-        CG[i]:=CG[i]+w[i];
-      	od;
+Add(Points, Action(x,v)); 
 od;
 
-for i in [1..D] do
-CG[i]:=CG[i]/Order(GG);
+Points:=SSortedList(Points);
+
+G:=[];
+for w in Points do
+for x in GG do
+if Action(x,v)=w then Add(G,x); break; fi;
+od;
 od;
 
-else
-
-for x in G do
-	w:=x*v;
-	Append(Points, [w]);
-        for i in [1..D] do
-        CG[i]:=CG[i]+w[i];
-        od;
+for w in Points do
+    CG:=CG+w;
 od;
 
-for i in [1..D] do
-CG[i]:=CG[i]/Order(GG);
-od;
-
-fi;
+CG:=CG/Size(Points);
 ##################### CENTRE OF GRAVITY DONE ########################
 
 
@@ -99,7 +115,8 @@ AppendTo(tmpInlog,1);
 AppendTo(tmpInlog,"\n");
 od;
 
-Exec(Concatenation("beneath_beyond ",tmpInlog,"  POINTS"));
+#Exec(Concatenation("beneath_beyond ",tmpInlog,"  POINTS"));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog,"  VERTICES > ",tmp3Inlog));
 ################# HULL CALCULATED ###################################
 
 #####################################################################
@@ -116,20 +133,14 @@ fi;
 od;
 Append(V,[Rat(Chomp(y))]);
 
-
-V[1]:='G';
-V:=Filtered(V,x->not x='G');
-return V;
+return V{[2..Length(V)]};
 end;
 #####################################################################
 
 ################# READ VERTICES #####################################
-input:=InputTextFile(tmpInlog);
-tmp:="hello";
-while not tmp="VERTICES\n" do
-tmp:=ReadLine(input);
-od;
+input:=InputTextFile(tmp3Inlog);
 
+tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 i:=1;
 while tmp[1]='1' do
@@ -139,11 +150,13 @@ i:=i+1;
 od;
 
 Apply(Vertices, s->StringToVector(s));
+RemoveFile(tmp3Inlog);
+
 ################ VERTICES READ ######################################
 
 ################ RECOVER THE EDGE GENERATORS ########################
 for w in Points do
-p:=proj(w);
+p:=w;
 if p in Vertices then
 x:=G[Position(Points,w)];
 EdgeGenerators[Position(Vertices,p)]:=x;
@@ -152,8 +165,11 @@ od;
 ################ EDGE GENERATORS RECOVERED ##########################
 
 ################ READ HASSE DIAGRAM #################################
-Exec(Concatenation(POLYMAKE_PATH,tmpInlog," HASSE_DIAGRAM >",tmp2Inlog));
-Exec(Concatenation("rm ",tmpInlog));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"HASSE_DIAGRAM -> FACES\" >",tmp2Inlog));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"HASSE_DIAGRAM -> DIMS\" >",tmp4Inlog));
+RemoveFile(tmpInlog);
+Filename(tmpDir,tmp);
+RemoveFile(tmp);
 
 Faces:=[];
 Index:=[];
@@ -196,18 +212,23 @@ Index:=[];
 	end;
 	############################################################
 
-input:=InputTextFile(tmp2Inlog);
+input:=InputTextFile(tmp4Inlog);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Index:= IndexFn(tmp);
+RemoveFile(tmp4Inlog);
 
+
+input:=InputTextFile(tmp2Inlog);
+tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 
 while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-Exec(Concatenation("rm ",tmp2Inlog));
+RemoveFile(tmp2Inlog);
+RemoveFile(tmp2Inlog);
 
 if Length(Faces[1])=1 then
 
@@ -228,13 +249,11 @@ else
 	
 fi;
 
-
 ############### HASSE DIAGRAM READ ##################################
 return rec(
              generators:=EdgeGenerators,
              hasseDiagram:=FacesFinal,
 	     vector:=v);
 	     
-
 end);
 #####################################################################
