@@ -535,5 +535,73 @@ end);
 ###############################################################
 ###############################################################
 
+##########################################################
+##########################################################
+InstallGlobalFunction(ConcentricallyFilteredPureCubicalComplex,
+function(M,N)
+local CentreOfGravity, Radius, rad, cen, F, B, x,y,z;
+
+##############################
+if not IsHapPureCubicalComplex(M) then
+Print("Function must be applied to a pure cubical complex.\n");
+return fail;
+fi;
+
+if not Dimension(M)=3 then
+Print("At present this function is only implemented for 3-dimensional pure cubical complexes.\n");
+return fail;
+fi;
+############################
+
+
+#########################################
+CentreOfGravity:=function(M)
+local B,x,y,z,V;
+
+V:=[];
+B:=M!.binaryArray;
+
+for x in [1..Length(B)] do
+for y in [1..Length(B[1])] do
+for z in [1..Length(B[1][1])] do
+if B[x][y][z]=1 then Add(V,[x,y,z]); fi;
+od;od;od;
+
+V:= (1/Length(V))*Sum(V);
+V:=[Int(V[1]),Int(V[2]),Int(V[3])];
+return V;
+end;
+#########################################
+
+#########################################
+Radius:=function(M)
+local B;
+
+B:=M!.binaryArray;
+return Maximum(ArrayDimensions(B))/2;
+end;
+#########################################
+
+rad:=Radius(M);
+cen:=CentreOfGravity(M);
+F:=M!.binaryArray*0;
+B:=M!.binaryArray;
+
+for x in [1..Length(B)] do
+for y in [1..Length(B[1])] do
+for z in [1..Length(B[1][1])] do
+if B[x][y][z]=1 then
+F[x][y][z]:= 1+Int(N*EuclideanApproximatedMetric(cen, [x,y,z])/rad) ;  fi;
+od;od;od;
+
+return   Objectify(HapFilteredPureCubicalComplex,
+                 rec(binaryArray:=M!.binaryArray,
+                     filtration:=F,
+                     properties:=M!.properties));
+
+end);
+########################################################
+########################################################
+
 
 

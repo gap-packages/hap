@@ -115,13 +115,35 @@ end);
 ###############################################
 InstallGlobalFunction(IsCrystSufficientLattice,
 function(B,S)
-local v,x,w;
-v:=Sum(B)/2;
+local v,x,w,B1,c,i,A,Origin,S1,S2;
+Origin:=0*B[1];
+Origin:=Flat(Origin);
+Add(Origin,1);
+A:=StructuralCopy(B);
+v:=Sum(A)/2;
 v:=Flat(v);
 Add(v,1);
 for x in S do
 w:=Flat(v*x-v);
-if not IsIntList(w*B^-1) then return false;fi;
+if not IsIntList(w*A^-1) then return false;fi;
+od;
+for i in [1..Length(A)] do
+A[i]:=Flat(A[i]);
+Add(A[i],1);
+od;
+for x in S do
+
+B1:=List(A,w->w*x);
+c:=Flat(Origin*x-Origin);
+B1:=List(B1,w->w-c);
+for x in B1 do
+Remove(x);
+od;
+#S1:=Set(A);
+S2:=Set(B1);
+for x in B do
+if not ((x in S2) or (-x in S2)) then return false;fi;
+od;
 od;
 return true;
 end);
@@ -149,6 +171,7 @@ Elts:=R!.elts;
 DW:=[];
 
 for x in W do
+x:=[R!.action(n,x[1],x[2])*x[1],x[2]];
 ans:=Boundary(n,x[1]);
 ans:=List(ans, a->[a[1],Elts[a[2]]]);
 ans:=List(ans, a->[a[1],a[2]*Elts[x[2]]]);
@@ -173,3 +196,80 @@ return DW;
 
 end);
 ###############################################################
+InstallGlobalFunction(CrystCubicalTiling,
+function(n)
+local combin,x,w,Til,i;
+combin:=Combinations([1..n],2);
+Til:=[];
+Add(Til,IdentityMat(n));
+for i in [1..Length(combin)] do
+w:=combin[i];
+x:=IdentityMat(n);
+x[w[1]][w[1]]:=-1/2;
+x[w[1]][w[2]]:=-1/2;
+x[w[2]][w[1]]:=1;
+x[w[2]][w[2]]:=-1;
+Add(Til,x);
+od;
+return Til;
+end);
+
+################################################################
+InstallGlobalFunction(AverageInnerProduct,
+function(G,u,v)
+local i,sum,n,Elts;
+n:=Order(G);
+Elts:=Elements(G);
+sum:=0;
+for i in [1..n] do
+sum:=sum+(u*Elts[i])*(v*Elts[i]);
+od;
+sum:=sum/n;
+return sum;
+end);
+#########
+InstallGlobalFunction(OrthogonalizeBasisByAverageInnerProduct,
+function(B,G)
+local Project,i,j,A,n;
+A:=StructuralCopy(B);
+n:=Length(B);
+if not RankMat(B)=Length(B) then 
+Print("Input is not a basis");
+return fail;
+fi;
+###
+Project:=function(u,v)    #This operator projects the vector v orthogonally 
+                          #onto the line spanned by vector u
+return (AverageInnerProduct(G,u,v)/AverageInnerProduct(G,u,u))*u;
+end;
+###
+for i in [2..n] do
+for j in [1..(i-1)] do
+B[i]:=B[i]-Project(B[j],A[i]);
+od;od;
+for i in [1..n] do
+B[i]:=(1/Sqrt(AverageInnerProduct(G,B[i],B[i])))*B[i];
+od;
+return B;
+
+
+
+end);
+###################################
+InstallGlobalFunction(CrystMatrix,
+function(M)
+local i,n,x,N;
+N:=StructuralCopy(M);
+if IsMatrix(N) then
+n:=Length(N);
+x:=0*N[1];
+Add(x,1);
+for i in [1..n] do
+Add(N[i],0);
+od;
+Add(N,x);
+else
+N:=VectorToCrystMatrix(N);
+fi;
+return N;
+end);

@@ -86,7 +86,9 @@ NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
 
-NiceGensAH:=Elements(AH);   ##THIS IS OVERKILL!! BUT IT FIXES A SLIP
+NiceGensAH:=Elements(AH);     ##THIS IS OVERKILL!! 
+                              ## BUT IT FIXES A SLIP AND 
+                              ##SLOWS THINGS UP TO AN UNACCEPTABLE POINT.
 
 relsT:=[];
 for x in relsG do

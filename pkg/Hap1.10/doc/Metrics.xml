@@ -1,0 +1,155 @@
+<Chapter><Heading> Finite metric spaces and their filtered complexes </Heading>
+
+<Table Align="|l|" >
+
+<Row>
+<Item>
+<Index> CayleyMetric</Index>
+<C>CayleyMetric(g,h,N) </C>
+<C>CayleyMetric(g,h) </C>
+<P/>
+
+Inputs two permutations <M>g,h</M> and optionally the degree <M>N</M> of a symmetric group containing them. It returns the minimum number of transpositions needed to 
+ express <M>g*h^-1</M> as a product of transpositions. 
+
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> HammingMetric</Index>
+<C>HammingMetric(g,h,N) </C>
+<C>HammingMetric(g,h) </C>
+<P/>
+
+Inputs two permutations <M>g,h</M> and optionally the degree <M>N</M> of a symmetric group containing them. It returns the  number of integers moved by the permutation 
+  <M>g*h^-1</M>.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> KendallMetric</Index>
+<C>KendallMetric(g,h,N) </C>
+<C>KendallMetric(g,h) </C>
+<P/>
+
+Inputs two permutations <M>g,h</M> and optionally the degree <M>N</M> of a symmetric group containing them. It returns the minimum number of adjacent transpositions needed to express <M>g*h^-1</M> as a product of adjacent transpositions. An adjacent transposition has the for <M>(i,i+1)</M>.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> EuclideanSquaredMetric</Index>
+<C>EuclideanSquaredMetric(v,w) </C>
+<P/>
+
+Inputs two vectors <M>v,w</M> of equal length and returns 
+the sum of the squares of the components of <M>v-w</M>. In other words, it returns the square of the Euclidean distance between <M>v</M> and <M>w</M>.
+
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> EuclideanApproximatedMetric</Index>
+<C>EuclideanApproximatedMetric(v,w) </C>
+<P/>
+
+Inputs two vectors <M>v,w</M> of equal length and returns
+a rational approximation to the square root of the sum of the squares of the components of <M>v-w</M>. In other words, it returns an approximation to the Euclidean distance between <M>v</M> and <M>w</M>.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> ManhattanMetric</Index>
+<C>ManhattanMetric(v,w) </C>
+<P/>
+
+Inputs two vectors <M>v,w</M> of equal length and returns
+the sum of the absolute values of the components of <M>v-w</M>. 
+ This is often referred to as the taxi-cab distance between <M>v</M> and <M>w</M>.
+
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index> VectorsToSymmetricMatrix</Index>
+<C>VectorsToSymmetricMatrix(L) </C>
+<C>VectorsToSymmetricMatrix(L,D) </C>
+<P/>
+
+Inputs a list <M>L</M> of  vectors and optionally a metric <M>D</M>. The default is <M>D=ManhattanMetric</M>. It returns the symmetric matrix whose i-j-entry is <M>S[i][j]=D(L[i],L[j])</M>.  
+
+
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> SymmetricMatDisplay</Index>
+<C>SymmetricMatDisplay(S) </C>
+<C>SymmetricMatDisplay(L,V) </C>
+<P/>
+
+Inputs an <M>n \times n</M>
+ symmetric matrix  <M>S</M> of non-negative integers and an integer <M>t</M> in <M>[0 .. 100]</M>. Optionally it inputs a list <M>V=[V_1, ... , V_k]</M>
+of disjoint subsets of <M>[1 .. n]</M>.  It displays the graph with vertex set <M>[1 .. n]</M> and with an edge between <M>i</M> and <M>j</M> if <M>S[i][j] &lt; t</M>. If the optional list <M>V</M> is input then the vertices in <M>V_i</M> will be given a common colour distinct from other vertices.
+
+
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> SymmetricMatrixToFilteredGraph</Index>
+<C>SymmetricMatrixToFilteredGraph(S,t,m) </C>
+<P/>
+
+Inputs an integer symmetric matrix <M>S</M>, a positive 
+integer <M>t</M> and a positive integer <M>m</M>. The function returns a 
+filtered graph of filtration length <M>t</M>.  The <M>k</M>-th term of the 
+filtration is a graph with one vertex for each row of <M>S</M>. There is an edge in this graph between the <M>i</M>-th and <M>j</M>-th vertices if the entry
+<M>S[i][j]</M> is less than or equal to <M>k*m/t</M>.
+
+
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index> PermGroupToFilteredGraph</Index>
+<C>PermGroupToFilteredGraph(S,D) </C>
+<P/>
+
+Inputs a permutation group <M>G</M>  and  a metric <M>D</M> defined 
+on permutations.
+ The function returns a 
+filtered graph.  The <M>k</M>-th term of the 
+filtration is a graph with one vertex for each element of the group
+ <M>G</M>. There is an edge in this graph between vertices 
+ <M>g</M> and <M>h</M> if 
+<M>D(g,h)</M> is less than some integer threshold <M>t_k</M>. The thresholds
+<M>t_1 &lt; t_2 &lt; ... &lt; t_N</M> are chosen to form as long a sequence as possible subject to  each term of the filtration being a distinct graph.
+
+
+</Item>
+</Row>
+
+
+
+
+</Table>
+</Chapter>
+
+
+

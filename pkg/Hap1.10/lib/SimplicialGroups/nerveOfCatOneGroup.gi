@@ -1,8 +1,8 @@
-#InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
-#    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
-#        function(g,h,gg,gh)
-#    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
-#end);
+InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
+    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
+        function(g,h,gg,gh)
+    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
+end);
 
 ########################################################################
 ########################################################################
@@ -41,7 +41,7 @@ Degeneracies:=[];
 
 smap:=C!.sourceMap;
 tmap:=C!.targetMap;
-Add(Boundaries,[smap,tmap]);
+Add(Boundaries,[tmap,smap]);
 G:=smap!.Source;
 M:=Kernel(smap);
 e:=Identity(M);
@@ -370,7 +370,7 @@ return Objectify(HapSimplicialGroupMap,
           ));
 end;	
 
-
+################################################################################################################
 NerveOfCatOneGroup_Homo:=function(Nf,n)
 local 
     NG,NH,f, RewL;

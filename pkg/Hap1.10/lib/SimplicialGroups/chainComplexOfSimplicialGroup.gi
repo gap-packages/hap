@@ -14,14 +14,14 @@ InstallGlobalFunction(ChainComplexOfSimplicialGroup,
 
 ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 				local 
-					BoundHap,Phi,Psi,Equiv,Dim,MapBar,tmp,
-					LDim,LowDim,
+					BoundHap,Phi,Psi,Equiv,DimHap,MapBar,tmp,
+					Dim,BelowDim,
 					i,j,k,n,Psiw,ImageBase,t,
 					SearchPos,Dimension,Boundary,
-					M,ReD,m,ii,jj,DM,BoundChain,
+					M,m,ii,jj,BoundChain,
 					d0,dm;
-			#################
-			##################
+			####################
+			####################
 				BoundHap:= function(i,j,k)  ###input position [i,j] and order element k
 					return Hap[i+1]!.boundary(j,k);
 				end;
@@ -38,25 +38,24 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 					return Bar[i+1]!.equiv(j,w);
 				end;
 				###########################
-				Dim:=function(i,j) ###input position [i,j] 
+				DimHap:=function(i,j) ###input position [i,j] 
 					return Hap[i+1]!.dimension(j);
 				end;	
 			#################################################################################	
-			MapBar:=function(i,j,w)  ##input position [n] and word w=[[m,h1..hn]..] of columB{n} ouput: w of columB{n-1}
-				local Rew,sign,k,t,iw,d,n,tmp;
+			MapBar:=function(i,j,w)  ##input position [n] and word w=[[m,g1..gj]..] of columB{n} ouput: image of w of columB{n-1}
+				local Rew,sign,ii,jj,iw,d,tmp;
 				if j mod 2 = 0 then
 					sign:=1;
 				else
 					sign:=-1;
 				fi;
 				Rew:=[];
-				n:=j+1;
-				for k in [0..i] do
-					d:=Maps(i,k);
+				for ii in [0..i] do
+					d:=Maps(i,ii);
 					for iw in w do;
 						tmp:=[sign*iw[1]];
-						for t in [2..n] do
-							Add(tmp,Image(d,iw[t]));
+						for jj in [1..j] do
+							Add(tmp,Image(d,iw[jj+1]));
 						od;
 						AddWord(Rew,tmp);
 					od;
@@ -66,40 +65,41 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 			end;
 
 			##################################################################################
-				LDim:=[];
-				for i in [0..N] do
-					k:=0;
-					for j in [0..i] do;
-						k:=k+Dim(j,i-j);
-					od;
-					LDim[i+1]:=k;
+			######### Dimesion of K_i########################################
+			Dim:=[];
+			for i in [0..N] do
+				k:=0;
+				for j in [0..i] do;
+					k:=k+DimHap(j,i-j);
 				od;
-				################  lower (i,j);
-				LowDim:=List([0..N],n->[]);  ###i+1,j+1
-				for i in [0..N] do
-					for j in [0..N-i] do
-						n:=i+j;
-						tmp:=0;
-						for k in [0..j-1] do
-							tmp:=tmp+Dim(n-k,k);
-						od;
-						LowDim[i+1][j+1]:=tmp;
-					od;	
-				od;
+				Dim[i+1]:=k;
+			od;
 			######################################################
 			Dimension:=function(n)
-				return LDim[n+1];
+				return Dim[n+1];
 			end;
+			
+			#####################  sum of dimension of Hap below the position (i,j);
+			BelowDim:=List([0..N],n->[]);  ###i+1,j+1
+			for i in [0..N] do
+				for j in [0..N-i] do
+					n:=i+j;
+					tmp:=0;
+					for k in [0..j-1] do
+						tmp:=tmp+DimHap(n-k,k);
+					od;
+					BelowDim[i+1][j+1]:=tmp;
+				od;	
+			od;
+
 			############################################################
 			SearchPos:=function(n,t)  ### n: element Chaincomplex of Totalcomplex, k is order element basis, output: [i,j]
 				local count,j,k; 
-				if t>Dimension(n) then
-					return fail;
-				fi;
+
 				count:=0;
 				for j in [0..n] do
 					k:=t-count;
-					count:=count+Dim(n-j,j);
+					count:=count+DimHap(n-j,j);
 					if t <= count then
 						return [n-j,j,k];
 						break;
@@ -117,9 +117,9 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 				if j=0 then 
 					return Rew;
 				fi;
-				beg:=LowDim[i+1][j];
+				beg:=BelowDim[i+1][j];   ###below(i,j-1)
 				Bound:=BoundHap(i,j,k);
-				for t in [1..Dim(i,j-1)] do
+				for t in [1..DimHap(i,j-1)] do
 					Rew[beg+t]:=Bound[t];
 				od;
 			return Rew;
@@ -138,7 +138,7 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 			#####Create ImageBase[i][j+1][1][k]
 			for i in [1..N] do
 				for j in [0..N-i] do
-					for k in [1..Dim(i,j)] do
+					for k in [1..DimHap(i,j)] do
 						ImageBase[i][j+1][1][k]:=MapBar(i,j,Psi(i,j,[[1,k]]));
 					od;
 				od;
@@ -147,7 +147,7 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 			for i in [2..N]do
 				for j in [0..N-i]do
 					for m in [2..i] do
-						for k in [1..Dim(i,j)] do
+						for k in [1..DimHap(i,j)] do
 							tmp:=StructuralCopy(ImageBase[i][j+1][m-1][k]);
 							ImageBase[i][j+1][m][k]:=MapBar(i-m+1,j+m-1,Equiv(i-m+1,j+m-2,tmp));		
 						od;
@@ -167,8 +167,8 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 					return Rew;
 				fi;
 				Phiw:= Phi(i-m,j+(m-1),ImageBase[i][j+1][m][k]);
-				beg:=LowDim[(i-m)+1][j+(m-1)+1];
-				for t in [1..Dim(i-m,j+(m-1))] do
+				beg:=BelowDim[(i-m)+1][j+(m-1)+1];
+				for t in [1..DimHap(i-m,j+(m-1))] do
 					Rew[beg+t]:=Phiw[t];
 				od;
 			return Rew;
@@ -182,12 +182,11 @@ ChainComplexOfSimplicialGroup_Objpre:=function(N,Maps,Bar,Hap)
 					i:=M[1];
 					j:=M[2];
 					k:=M[3];
-					ReD:=d0(i,j,k);
-					for ii in [1..i] do
-						DM:=dm(i,j,ii,k);  #compute d_ii
-						ReD:=ReD+DM;
+					tmp:=d0(i,j,k);
+					for m in [1..i] do
+						tmp:=tmp+dm(i,j,m,k);  #compute d_ii
 					od;
-				BoundChain[n+1][t]:=ReD;
+				BoundChain[n+1][t]:=tmp;
 				od;
 			od;
 			##################
@@ -208,14 +207,14 @@ end;
 #########################################################################
 ChainComplexOfSimplicialGroup_Obj:=function(G)
 local 
-		N,Maps,Grps,Bar,Hap,R;
+		N,Maps,Grps,Bar,Hap,Res;
 		
 	N:=EvaluateProperty(G,"length");
 	Maps:=G!.boundariesList;
 	Grps:=G!.groupsList;
-	R:=List([0..N],i->ResolutionGenericGroup(Grps(i),N-i));
-	Bar:=List([0..N],i->BarComplexEquivalence(R[i+1]));
-    Hap:=List([0..N],i->TensorWithIntegers(R[i+1]));
+	Res:=List([0..N],i->ResolutionGenericGroup(Grps(i),N-i));
+	Bar:=List([0..N],i->BarComplexEquivalence(Res[i+1]));
+    Hap:=List([0..N],i->TensorWithIntegers(Res[i+1]));
 	return ChainComplexOfSimplicialGroup_Objpre(N,Maps,Bar,Hap);
 end;
 

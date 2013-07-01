@@ -12,3 +12,11 @@ DeclareGlobalFunction("IsCrystSufficientLattice");
 DeclareGlobalFunction("CrystGcomplex");
 DeclareGlobalFunction("ResolutionBoundaryOfWordOnRight");
 DeclareGlobalFunction("CrystFinitePartOfMatrix");
+
+DeclareGlobalFunction("CrystGFullBasis_alt");
+DeclareGlobalFunction("CrystGcomplex_alt");
+DeclareGlobalFunction("CrystCubicalTiling");
+DeclareGlobalFunction("ResolutionCubicalCrystGroup");
+DeclareGlobalFunction("AverageInnerProduct");
+DeclareGlobalFunction("OrthogonalizeBasisByAverageInnerProduct");
+DeclareGlobalFunction("CrystMatrix");

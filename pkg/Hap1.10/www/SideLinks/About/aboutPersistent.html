@@ -27,7 +27,7 @@
  style="font-weight: bold;">About HAP: Persistent Homology<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutTDA.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+ href="aboutMetrics.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
             </td>
           </tr>
         </tbody>
@@ -72,7 +72,10 @@ the
 field
 F,
 for
-the sequence of pure cubical complexes.<br>
+the
+sequence
+of
+pure cubical complexes.<br>
       <br>
 A possible scenario is that X<sub>1</sub> is a sample from an unknown
 manifold M, and that each space X<sub>i+1</sub> is obtained by
@@ -89,8 +92,11 @@ are
 particularly
 useful
 when
-analysing high-dimensional data
-since the shape of such data is hard to visualize. However, as a toy
+analysing
+high-dimensional
+data
+since
+the shape of such data is hard to visualize. However, as a toy
 example let us consider the
 2-dimensional <a href="datacloud.eps">data cloud</a><br>
       <br>
@@ -116,6 +122,9 @@ Pure cubical complex of dimension 2.<br>
       <br>
 gap&gt;
 T:=ThickeningFiltration(M,10);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
 
 
 
@@ -160,11 +169,17 @@ given length and&nbsp; d(v<sub>i</sub>,v<sub>j</sub>) could be the
 Euclidean distance. We could then build a filtered simplicial complex
 K={K<sub>1</sub>&lt;K<sub>2</sub>&lt;...&lt;K<sub>T</sub>} from an
 increasing sequence of thresholds d<sub>1</sub>&lt;...&lt;d<sub>T</sub>.
-Each term in the filtration has 400 vertices v<sub>1</sub>, ..., v<sub>400,</sub>
+Each
+term
+in
+the filtration has 400 vertices v<sub>1</sub>, ..., v<sub>400,</sub>
 and&nbsp; K<sub>t</sub> is determined by the threshold d<sub>t</sub>: a
 simplex belongs to K<sub>t</sub> is and only if each pair of vertices
 in the simplex satisfies d(v<sub>i</sub>,v<sub>j</sub>) &lt; d<sub>t </sub>.
-The persistent homology of the filtered simplicial complex K could
+The
+persistent
+homology
+of the filtered simplicial complex K could
 provide information on the space from which our data was selected.<br>
       <br>
 The following data <br>
@@ -344,7 +359,66 @@ gap&gt; BarCodeCompactDisplay(P1);<br>
     <tr align="center">
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
- style="font-weight: bold;">2. Persistent Homology of Groups</span></big><br>
+ style="font-weight: bold;"><a name="proteins"></a>2. Persistent
+Homology of Proteins</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Given
+a
+pure cubical complex K, let us denote its centre of gravity by c(K).
+Given an increasing sequence of positive numbers 0 &lt; t<sub>1&nbsp; </sub>&lt;
+t<sub>2</sub> &lt; ... , &nbsp; let us denote by FK<sub>n</sub> the
+intersection of K with the Euclidean ball of radius t<sub>n</sub>
+centred at c(K). This gives rise to a filtered pure cubical complex FK<sub>1</sub>
+&lt; FK<sub>2</sub> &lt; ... which we refer to as the <span
+ style="font-style: italic;">concetric filtration</span> on K.<br>
+      <br>
+For a protein backbone K, the degree 0 persistent homology of FK should
+contain useful
+information on the geometric shape of K.<br>
+      <br>
+The following commands compute this shape descriptor for the
+T.thermophilus 1V2X protein and the H.sapiens <a>1XD3</a> protein
+pictured on the <a href="aboutKnots.html#proteins">previous page</a>.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+K:=ReadPDBfileAsPureCubicalComplex("1V2X.pdb");;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <br>
+Reading chain containing 191 atoms.<br>
+gap&gt; FK:=ConcentricallyFilteredPureCubicalComplex(K,10);;<br>
+gap&gt; P:=PersistentHomologyOfFilteredCubicalComplex(FK,0);;<br>
+gap&gt; BarCodeCompactDisplay(P);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 595px; height: 446px;" alt="" src="bck1.gif"><br>
+      <div style="text-align: left;"><br>
+      <br>
+      </div>
+      </div>
+gap&gt;
+K:=ReadPDBfileAsPureCubicalComplex("1XD3.pdb");;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <br>
+Reading chain containing 243 atoms.<br>
+gap&gt; FK:=ConcentricallyFilteredPureCubicalComplex(K,10);;<br>
+gap&gt; P:=PersistentHomologyOfFilteredCubicalComplex(FK,0);;<br>
+gap&gt; BarCodeCompactDisplay(P);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 679px; height: 584px;" alt="" src="bck2.gif"><br>
+      </div>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">3. Persistent Homology of Groups</span></big><br>
       </td>
     </tr>
     <tr>
@@ -360,6 +434,9 @@ homomorphisms. <br>
 For a finite p-group we take homology coefficients in the field of p
 elements. The following commands compute and display the degree 3
 homology barcode for the Sylow 2-subgroup of the Mathieu group M<sub>12</sub>.
+
+
+
 
 
 
@@ -388,7 +465,7 @@ gap&gt; BarCodeDisplay(P);<br>
     <tr align="center">
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
- style="font-weight: bold;">3. Persistent Homology of Filtered Chain
+ style="font-weight: bold;">4. Persistent Homology of Filtered Chain
 Complexes</span></big><br>
       </td>
     </tr>
@@ -436,7 +513,7 @@ Page</a><br>
  href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
             </td>
             <td style="text-align: right; vertical-align: top;"><a
- href="aboutTDA.html"><span style="color: rgb(0, 0, 102);">Next
+ href="aboutMetrics.html"><span style="color: rgb(0, 0, 102);">Next
 page</span><br>
             </a> </td>
           </tr>
