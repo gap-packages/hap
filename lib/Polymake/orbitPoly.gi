@@ -59,7 +59,7 @@ Print("Dimension of orbit polytope is: ", tmp, "\n");
 Exec(Concatenation("rm ", tmp2In));
 fi;
 
-if "VERTREX_DEGREE" in Props or "vertex_degree" in Props then
+if "VERTEX_DEGREES" in Props or "vertex_degrees" in Props then
 Exec(Concatenation(POLYMAKE_PATH,tmpIn,  " VERTEX_DEGREES > ",tmp2In));
 input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);

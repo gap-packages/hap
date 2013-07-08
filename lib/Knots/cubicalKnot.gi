@@ -448,3 +448,70 @@ A:=ArrayToPureCubicalComplex(A,0);
 return A;
 end);
 #######################################################
+
+############################################################
+############################################################
+InstallGlobalFunction(ViewPDBfile,
+function(File)
+local  S,T,i,j,char,atoms, acids, cnt, tmpdir, file,
+ scl, instr, f, avg,  v, A, x1,x2,y1,y2,z1,z2, L, M , B,b;
+
+scl:=2; char:="A";
+
+A:=[];
+instr:=InputTextFile(File);
+f:=ReadLine(instr);
+while not f=fail do
+f:=ReadLine(instr);
+if f=fail then break; fi;
+if Length(f)<4 then break; fi;
+if f{[1,2,3,4]}="ATOM" and
+(f{[14,15]}="CA" or f{[15,16]}="CA") then
+if  f{[22]}=char then
+v:=[f{[32,33,34,36,37,38]}, f{[40,41,42,44,45,46]}, f{[48,49,50,52,53,54]}];
+Apply(v,EvalString);
+v[1]:=(scl*v[1]/1000);
+v[2]:=(scl*v[2]/1000);
+v[3]:=(scl*v[3]/1000);
+
+Add(A,v);
+fi;
+fi;
+od;
+
+A:=List(A,a->[Int(a[1]),Int(a[2]),Int(a[3])]);
+
+M:=Maximum(List(Flat(A), x->AbsInt(x)));
+M:=Concatenation( "(", String(M), "," , String(M), "," ,String(M), ")");
+A:=List(A,a->Concatenation("(",String(a[1]),",",String(a[2]),",",String(a[3]),")"));
+
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "tmp.asy" );
+
+PrintTo(file, "import three;\n\n");
+AppendTo(file, "size(500);\n\n");
+AppendTo(file, "defaultpen(1.0);\n\n");
+
+AppendTo(file,"path3 g=", A[1]);
+for i in [2..Length(A)] do
+AppendTo(file, "..",A[i]);
+od;
+AppendTo(file,";\n\n");
+
+AppendTo(file,"draw(g);\n");
+
+AppendTo(file,"dot(g,red);");
+
+AppendTo( file , "draw(" , A[1] , "..",M,".." , A[Length(A)] , ", blue);" );
+
+
+Exec( Concatenation( "asy -V ", file) );
+
+RemoveFile(file);
+file:=Filename(tmpdir,"");
+RemoveFile(file);
+
+end);
+#############################################################
+#############################################################
+

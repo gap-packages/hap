@@ -6,7 +6,6 @@ function(arg)
 local
 	G,StartVector, Gev,
 	PG,
-	GG,
 	Action,
 	VertexToVector, VVRecord,
 	FaceToVertices,
@@ -20,7 +19,6 @@ local
 	StabilizerRecord,
         StabilizerBasisRecord,
         StabilizerBasis,
-	VectorToGroupElt,
 	BoundaryComponent,
 	EltsG,
 	PseudoBoundary,
@@ -30,11 +28,14 @@ local
 	VSGS;
 
 G:=arg[1];
+if IsPermGroup(G) then
+G:=Image(PermToMatrixGroup(G));
+fi;
+
 StartVector:=arg[2];
 PG:=PolytopalGenerators(G,StartVector);
 if Length(arg)>2 then lngth:=arg[3]; else lngth:=Length(PG.hasseDiagram); fi;
 Points:=[];
-GG:=Filtered(Elements(G),x->not x=Identity(G));
 EltsG:=Elements(G);
 VSGS:=VectorStabilizer(G,StartVector);
 
@@ -46,27 +47,11 @@ return Length(Hasse[k]);
 end;
 #####################################################################
 
-if IsPermGroup(G) then
-#####################################################################
-Action:=function(g,V)
-local i,gV;
-
-gV:=[];
-
-for i in [1..Length(V)] do
-gV[i]:=V[i^(g^-1)];
-od;
-
-return gV;
-end;
-#####################################################################
-else
 #####################################################################
 Action:=function(g,V) ;
 return g*V;    
 end;
 #####################################################################
-fi;
 
 
 #########################CREATE POINTS###############################
@@ -83,27 +68,16 @@ return Action(PG.generators[v+1],StartVector) - StartVector;
 end;
 #####################################################################
 
-VVRecord:=[Points,[]];
-#####################################################################
-VectorToGroupElt:=function(v) #This is still clumsy and slow!
-local i,g;
-
-i:=Position(VVRecord[1],v);
-if not IsBound(VVRecord[2][i]) then;
-for g in G do
-if Action(g,StartVector)=v then VVRecord[2][i]:= g; break; fi;
-od;
-fi;
-
-return VVRecord[2][i];
-end;
-#####################################################################
 
 #####################################################################
 FaceToVertices:=function(F)
 local W,v,w,V;
 V:=[];
 W:=BaseOrthogonalSpaceMat(List(F,x->VertexToVector(x)));
+
+if W=[] then
+W:=[Points[1]*0];
+fi;
 
 for p in Points do
 
@@ -270,34 +244,49 @@ Append(bnd,tmp);
 od;
 
 
-PseudoBoundary[k][m]:=bnd;  ##WARNING: REMOVE THIS
-return Boundary(k,mm);
+#PseudoBoundary[k][m]:=bnd;  ##WARNING: REMOVE THIS
+#return Boundary(k,mm);
 
 
 	######Inserting the signs#########
 if k=1 then
 bnd[1][1]:=-bnd[1][1];
 fi;
-#if k>1 and StabSum[k-1]=0 then
+
 if k>1  then
+#################################
 bndbnd:=[];
-bnd:=SSortedList(bnd);
-signedbnd:=[bnd[1]]; RemoveSet(bnd,bnd[1]);
-for x in signedbnd do
+bnd:=SortedList(bnd);
+signedbnd:=[bnd[1]]; 
+x:=bnd[1]; 
 b:=Boundary(k-1,x[1]);
 b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+
+b:=List(b,y->[StabAction(k-2,y[1],y[2])*y[1], CanonicalRightCosetElement(StabilizerSubgroup(k-2,AbsInt(y[1])), EltsG[y[2]]^-1)^-1]);
+
+if StabAction(k-1,x[1],x[2])<0 then
+b:=NegateWord(b);
+fi;
+
 Append(bndbnd,b);
-od;
+RemoveSet(bnd,bnd[1]);
 
 while Length(bnd)>0 do
 x:=Random(bnd);
 b:=Boundary(k-1,x[1]);
 b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
+
+b:=List(b,y->[StabAction(k-2,y[1],y[2])*y[1], CanonicalRightCosetElement(StabilizerSubgroup(k-2,AbsInt(y[1])), EltsG[y[2]]^-1)^-1]);
+
+if StabAction(k-1,x[1],x[2])<0 then
+b:=NegateWord(b);
+fi;
+
+
 if Length(Intersection(b,bndbnd))>0 then
 Append(signedbnd, [[-x[1],x[2]]]);
 Append(bndbnd,NegateWord(b));
 RemoveSet(bnd,x);
-
 else
 
 if Length(Intersection(NegateWord(b),bndbnd))>0 then
@@ -310,21 +299,25 @@ fi;
 od;
 
 bnd:=signedbnd;
+########################################
 fi;
 	######Signs inserted##############
 
 
 PseudoBoundary[k][m]:=bnd;
-return Boundary(k,mm);
+
+if mm>0 then return PseudoBoundary[k][m];
+else return NegateWord(PseudoBoundary[k][m]);fi;
+
+
 end;
 
-if IsPermGroup(G) then
 ###############################################################
 # This describes how the group G acts on the orientation.
-StabAction:=function(nn,k,h)
-local bas, Gbas, mat,n,id,r,u,H; 
+StabAction:=function(n,k,h)
+local bas, Gbas, mat,id,r,u,H; 
 
-n:=AbsInt(nn);
+#n:=AbsInt(nn);
 
 if n=0 then return 1; fi;
 
@@ -341,19 +334,19 @@ bas:=StabilizerBasis(n,k);
 Gbas:=List(bas,V->Action(u,V));
 mat:=List(Gbas, b->SolutionMat(bas,b));
 
-
-return SignInt(nn)*SignInt(k)*SignInt(Determinant(mat));
+return SignInt(Determinant(mat));
 end;
 ###############################################################
-else
-StabAction:=function(n,kk,h); return 1; end;
-fi;
 
 for n in [1..lngth] do
 for i in [1..Dimension(n)] do
 Boundary(n,i);
 od;od;
-EltsG:=List(EltsG,x->x^-1);
+
+
+
+
+#EltsG:=List(EltsG,x->x^-1);
 
 #####################################################################
 return Objectify(HapNonFreeResolution,

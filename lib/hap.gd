@@ -552,6 +552,7 @@ DeclareGlobalFunction("KnotSum");
 DeclareGlobalFunction("AlexanderMatrix");
 DeclareGlobalFunction("AlexanderPolynomial");
 DeclareGlobalFunction("ReadPDBfileAsPureCubicalComplex");
+DeclareGlobalFunction("ViewPDBfile");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
 
 ## METRICS #########################################################
