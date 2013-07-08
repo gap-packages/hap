@@ -11,7 +11,7 @@ A:=AutomorphismGroup(G);
 C:=SemidirectProduct(A,G);
 Smap:=GroupHomomorphismByImagesNC(C,C,GeneratorsOfGroup(C),
 List(GeneratorsOfGroup(C),x->
-  Image( Embedding(C,1), Image( Projection(C),x)   )));
+  ImageElm( Embedding(C,1), ImageElm( Projection(C),x)   )));
 
 ############################
 CmapG:=function(x);

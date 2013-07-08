@@ -26,6 +26,11 @@ Tz:=TietzeReducedResolution;
    return ResolutionNormalSeries(LowerCentralSeries(G),N);
    fi;
 
+L:=LowerCentralSeries(G);
+if Maximum(List(L,Order)) <1000 then
+return  ResolutionNormalSeries(LowerCentralSeries(G),N);
+fi;
+
    if IsNilpotent(G) then
    return ResolutionNilpotentGroup(G,N);
    fi;

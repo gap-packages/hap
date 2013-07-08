@@ -2,10 +2,14 @@
 
 #####################################################################
 InstallGlobalFunction(PermToMatrixGroup,
-function(G,n)
+function(arg)
 local
-	gensG, gensA, A, GhomA, M, g, row, i,j;
+	G, n, gensG, gensA, A, GhomA, M, g, row, i,j;
 
+G:=arg[1];
+if Length(arg)=2 then n:=arg[2];
+else n:=Maximum(MovedPoints(G));
+fi;
 gensG:=GeneratorsOfGroup(G);
 gensA:=[];
 

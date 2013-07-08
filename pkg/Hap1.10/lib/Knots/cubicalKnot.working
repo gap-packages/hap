@@ -2,7 +2,7 @@
 ########################################
 InstallGlobalFunction(PureCubicalKnot,
 function(arg)
-local L,dim,K,col,row,i,j,x,y,F,bool,name;
+local L,dim,K,col,row,i,j,x,y,yy,F,bool,name;
 
 if Length(arg)=1 then
 if not IsList(arg[1]) then
@@ -50,7 +50,8 @@ for i in [1..Length(L)] do
 col:=3*i-2;
 F:=Filtered(L,a->i in a);
 x:=Position(L,F[1]);
-y:=Position(L,F[2]);
+yy:=Positions(L,F[2]);
+y:=yy[Length(yy)];
 for j in [3*x-2..3*y-2] do
 K[1][col][j]:=1;
 od;

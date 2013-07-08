@@ -30,26 +30,14 @@ return fail;
 fi;
 
 if IsPermGroup(GG) then
-#####################################################################
-Action:=function(g,V)
-local i,gV;
+GG:=Image(PermToMatrixGroup(GG));
+fi;
 
-gV:=[];
-
-for i in [1..Length(V)] do
-gV[i]:=V[i^(g^-1)];
-od;
-
-return gV;
-end;
-#####################################################################
-else
 #####################################################################
 Action:=function(g,V) ;
 return g*V;
 end;
 #####################################################################
-fi;
 
 G:=[];
 tmplst:=[];
@@ -219,6 +207,7 @@ Index:= IndexFn(tmp);
 RemoveFile(tmp4Inlog);
 
 
+
 input:=InputTextFile(tmp2Inlog);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
@@ -227,7 +216,6 @@ while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-RemoveFile(tmp2Inlog);
 RemoveFile(tmp2Inlog);
 
 if Length(Faces[1])=1 then
@@ -242,13 +230,18 @@ if Length(Faces[1])=1 then
 else
 
 	FacesFinal:=[[1..Index[1]]];
-	for i in [2..Length(Index)-1] do
+	for i in [1..Length(Index)-1] do
 	Append(FacesFinal,[[Index[i]+1..Index[i+1]]]);
 	od;
 	FacesFinal:=Reversed(List(FacesFinal,x->List(x,i->Faces[i])));
 	
 fi;
 
+RemoveFile(tmpInlog);
+RemoveFile(tmp2Inlog);
+RemoveFile(tmp4Inlog);
+RemoveFile(tmp3Inlog);
+RemoveFile(Filename(tmpDir," "));
 ############### HASSE DIAGRAM READ ##################################
 return rec(
              generators:=EdgeGenerators,

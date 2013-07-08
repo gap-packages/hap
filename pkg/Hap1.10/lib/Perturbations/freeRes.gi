@@ -64,6 +64,7 @@ fi;
 iso:=RegularActionHomomorphism(G);
 Q:=Image(iso);
 
+if Order(Image(iso))=24 then
 if IdGroup(Image(iso))=[24,3] then 
 iso1:=IsomorphismGroups(Q,BinGp); 
 res:=ResolutionFiniteGroup(BinGp,n);
@@ -72,8 +73,10 @@ res!.elts:=List(res!.elts,x->
 PreImagesRepresentative(iso,PreImagesRepresentative(iso1,x)));
 return res;
 fi;
+fi;
 
-res:=ResolutionFiniteGroup(Q,n);
+#res:=ResolutionFiniteGroup(Q,n);
+res:=ResolutionGenericGroup(Q,n);
 res!.group:=G;
 res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
 return res;
@@ -194,8 +197,8 @@ else
 ##################################
 for L in StabGrps do
 Add(StabResls,List(L,
-g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG))
-);
+#g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG)));
+g->ExtendScalars(ResolutionGenericGroup(g,i,false,prime),G,EltsG)));
 i:=Maximum(0,AbsInt(i-1));
 od;
 #################################
