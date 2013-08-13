@@ -1,7 +1,6 @@
 InstallGlobalFunction(HomotopyLowerCentralSeries,
 function(C)
 
-
 	local  	sC,tC,Kers,M,P,GensM,GensP,AutM,
 			nOne, nTwo,
 			PiOne,PiOnes,
@@ -25,6 +24,7 @@ function(C)
 
 	################### Pi One #####################
 	################################################
+	nOne:=0;
 	CatMapOnes:=[];
 	if Order(Image(tC,M))=1 then
 		NatHomOne:=IdentityMapping(P);
@@ -33,7 +33,6 @@ function(C)
 		NatHomOne:=NaturalHomomorphismByNormalSubgroup(P,Image(tC,M));
 		PiOne:=NatHomOne!.Range;
 	fi;
-	nOne:=0;
 	if Order(PiOne)>1 then
 		PiOnes:=[];
 		PiOnes[1]:=PiOne;
@@ -41,6 +40,9 @@ function(C)
 		while Order(PiOnes[nOne])>1 do
 			nOne:=nOne+1;
 			PiOnes[nOne]:=CommutatorSubgroup(PiOnes[nOne-1],PiOne); 
+			if PiOnes[nOne-1] = PiOnes[nOne] then
+				return fail;
+			fi;
 		od;
 		PiOnes:=Reversed(PiOnes);
 		Ps:=[];
@@ -143,6 +145,9 @@ function(C)
 		while Order(Ns[nTwo])>1 do
 			nTwo:=nTwo+1;
 			Ns[nTwo]:=CommutatorSubgroup(Ns[nTwo-1],P);
+			if Ns[nTwo-1] = Ns[nTwo] then
+				return fail;
+			fi;
 		od;
 		Ns:=Reversed(Ns);
 		NatHomTwos:=[];
@@ -295,21 +300,51 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(PersistentHomologyOfCatOneGroup,
-function(C,n,p)
-local  Maps;
-
-	Maps:=HomotopyLowerCentralSeries(C);
-	if Length(Maps)=0 then
-	    Maps:=NerveOfCatOneGroup(C,n+1);
-		Maps:=ChainComplexOfSimplicialGroup(Maps);
-		Maps:=TensorWithIntegersModP(Maps,p);
-		return [Homology(Maps,n)];
+function(arg)
+local  C,n,p,Maps,
+	   PrimeOne,PrimeTwo,PrimeOneTwo,
+	   LenOne,LenTwo,LenOneTwo;
+	   
+	C:=arg[1];
+	n:=arg[2];
+	PrimeOne:=PrimeDivisors(Size(HomotopyGroup(C,1)));
+	PrimeTwo:=PrimeDivisors(Size(HomotopyGroup(C,2)));
+	LenOne:=Length(PrimeOne);
+	LenTwo:=Length(PrimeTwo);
+	if LenOne >1 or LenTwo >1 then
+		Print("Homotopy groups have not order of prime power");
+		return;
 	fi;
-	Maps:=NerveOfCatOneGroup(Maps,n+1);
-	Maps:=ChainComplexOfSimplicialGroup(Maps);
-	Maps:=List(Maps,f->TensorWithIntegersModP(f,p));
-	Maps:=List(Maps,f->HomologyVectorSpace(f,n));
-	return LinearHomomorphismsPersistenceMat(Maps);
+	PrimeOneTwo:=Set(Concatenation(PrimeOne,PrimeTwo));
+	LenOneTwo:=Length(PrimeOneTwo);
+	if LenOneTwo=0 then
+		Maps:=HomotopyLowerCentralSeries(C);
+		Maps:=NerveOfCatOneGroup(C,n+1);
+		Maps:=ChainComplexOfSimplicialGroup(Maps);
+		if Length(arg)=3 then
+			p:=arg[3];
+			Maps:=TensorWithIntegersModP(Maps,p);
+		fi;
+		return [Homology(Maps,n)];
+	fi;	
+	
+	if LenOneTwo =1 then
+		p:=PrimeOneTwo[1];	
+		if Length(arg)=3 then
+			p:=arg[3];
+		fi;
+		Maps:=HomotopyLowerCentralSeries(C);
+		Maps:=NerveOfCatOneGroup(Maps,n+1);
+		Maps:=ChainComplexOfSimplicialGroup(Maps);
+		Maps:=List(Maps,f->TensorWithIntegersModP(f,p));
+		Maps:=List(Maps,f->HomologyVectorSpace(f,n));
+		return LinearHomomorphismsPersistenceMat(Maps);
+	fi;		
+	
+	if LenOneTwo=2 then
+		Print("Prime divisors of homotopy groups are not the same");
+		return;
+	fi;
 end);
 
 

@@ -94,6 +94,12 @@ ReadPackage("HAP", "lib/RegularCWComplexes/equivariantCW.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
+################# XMOD COMMANDS ############################################
+if IsPackageMarkedForLoading("xmod","0.0") then
+ReadPackage("HAP", "lib/SimplicialGroups/identity.gi");
+fi;
+################# XMOD COMMANDS DONE #######################################
+
 
 
 ReadPackage("HAP", "lib/TitlePage/makeHapMan.gi");
@@ -285,13 +291,19 @@ if COMPILED=false then
 ################### MEAT AXE #######################################
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 
+################## PURE COMPLEXES #############################
+ReadPackage("HAP","lib/PureComplexes/pureComplexes.gi");
+
+
 ################## POLYTOPAL COMPLEXES #############################
 ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/sparseCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/twoDimensionalPerm.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/threeDimensionalPerm.gi");
 ReadPackage("HAP","lib/PolyComplexes/dvf.gi");
 ReadPackage("HAP","lib/PolyComplexes/rips.gi");
 
@@ -302,6 +314,7 @@ ReadPackage("HAP","lib/PolyComplexes/metrics.gi");
 ReadPackage("HAP","lib/PolyComplexes/graphviz.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
 ReadPackage("HAP","lib/PolyComplexes/filteredCubical.gi");
+ReadPackage("HAP","lib/PolyComplexes/purePermutahedralComplexes.gi");
 fi;
 
 

@@ -527,7 +527,7 @@ for n in [m+1..VL] do
 if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and A[i][m]>0 and A[i][n]>0
 and A[j][k]>0 and A[j][l]>0 and A[j][m]>0  and A[j][n]>0
 and A[k][l]>0 and A[k][m]>0 and   A[k][n]>0
-and A[m][m]>0 and   A[l][n]>0
+and A[l][m]>0 and   A[l][n]>0
 and   A[m][n]>0
 then Add(SimplicesLst[6],[i,j,k,l,m,n]); fi;
 od;od;#od;od;od;od;

@@ -4,8 +4,8 @@
 ##########################################################
 InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
-local P,Y,base,e,bool, b, vertices,edges,F, r,x,w, gens, rels, 
-      cells, 0cells,1cells, 2cells, 2boundaries, deform;
+local P,Y,base,e,bool, b, vertices,edges,F, G, r,x,w, gens, rels, 
+      cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord;
 
 Y:=arg[1];
 
@@ -27,7 +27,7 @@ Apply(2cells,x->x[2]);
 2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.orientation[3][x]]);
 Apply(2boundaries,x->[x[1]{[2..Length(x[1])]},x[2]]);
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
-deform:=ChainComplex(Y)!.deform;
+deform:=ChainComplex(Y)!.homotopicalDeform;
 Apply(2boundaries,x->Flat(List(x,a->deform(1,a))));
 
 vertices:=[deform(0,base)];
@@ -80,8 +80,29 @@ od;
 P:=PresentationFpGroup(F/rels);
 SimplifyPresentation(P);;
 
+##############################################
+EdgeToWord:=function(e)
+local r, x, w;
 
-return FpGroupPresentation(P);
+r:=Flat(deform(1,e));
+
+w:=Identity(F);
+for x in r do
+if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
+w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x));
+fi;
+od;
+
+return w;
+
+end;
+##############################################
+
+G:=FpGroupPresentation(P);
+
+G!.edgeToWord:=EdgeToWord;
+
+return G;
 
 end);
 ##########################################################
@@ -120,6 +141,9 @@ InstallOtherMethod(FundamentalGroup,
 [IsHapSimplicialComplex],
 function(K)
 local Y,c;
+if Dimension(K)=2 then
+return FundamentalGroupSimplicialTwoComplex(K);
+fi;
 Y:=SimplicialComplexToRegularCWComplex(K,3);;
 c:=CocriticalCellsOfRegularCWComplex(Y,3);
 return FundamentalGroup(Y);

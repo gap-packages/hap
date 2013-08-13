@@ -535,3 +535,62 @@ InstallOtherMethod( DirectProductGog,
 	return D;
   end);
 
+
+#############################################################################
+##
+##
+InstallOtherMethod( GDerivedSubgroup,
+    "method for returning the G-derived subgroup of a G-outer group as a G-outer group.",
+    [ IsGOuterGroup ],
+
+    function( N )
+    local C, type, A, G, phi, x, g, a, GD;
+
+        C:=GOuterGroup();
+               GD:=[];
+               A:=Center(ActedGroup(N));
+               G:=ActingGroup(N);
+               phi:=OuterAction(N);
+               for a in GeneratorsOfGroup(A) do   #
+               for g in GeneratorsOfGroup(G) do   #
+               x:=phi(g,a)*a^-1;                  #
+               Add(GD,x);                         #
+               od;                                #
+               od;                                #
+               if Length(GD)=0 then GD:=[One(A)]; fi;
+               GD:=Group(GD);
+               GD:=NormalClosure(A,GD);
+               SetActingGroup(C,G);
+               SetActedGroup(C,GD);
+               SetOuterAction(C,phi);
+        return C;
+    end );
+
+
+
+#############################################################################
+
+#############################################################################
+##
+##
+InstallOtherMethod( LowerGCentralSeries,
+    "method for returning the G-central series of a G-outer group.",
+    [ IsGOuterGroup ],
+
+    function( N )
+    local L, D, bool, M;
+
+                L:=[N];
+                bool:=true;
+
+                while bool do
+                M:=L[Length(L)];
+                D:=GDerivedSubgroup(M);
+                bool:= not Size(M!.ActedGroup)=Size(D!.ActedGroup);
+                if bool then Add(L,D); fi;
+                od;
+    return L;
+    end);
+
+#############################################################################
+

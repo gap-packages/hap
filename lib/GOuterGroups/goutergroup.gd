@@ -187,3 +187,6 @@ InstallMethod( PrintObj,
 #####################################################################
 
 
+DeclareOperation("GDerivedSubgroup",[IsGOuterGroup]);
+DeclareOperation("LowerGCentralSeries",[IsGOuterGroup]);
+DeclareGlobalFunction("AbelianGOuterGroupToCatOneGroup");

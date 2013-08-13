@@ -17,5 +17,9 @@ DeclareGlobalFunction("XmodToHAP_alt");
 DeclareGlobalFunction("SubQuasiIsomorph_alt");
 DeclareGlobalFunction("QuotientQuasiIsomorph_alt");
 DeclareGlobalFunction("QuasiIsomorph_alt");
+DeclareGlobalFunction("IsomorphismCatOneGroups");
+DeclareGlobalFunction("HAPHomotopyTuple");
+DeclareGlobalFunction("IdCatOneGroup");
+DeclareGlobalFunction("SmallCatOneGroup");
 
 

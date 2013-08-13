@@ -307,6 +307,26 @@ end);
 
 ##############################################################
 ##############################################################
+InstallGlobalFunction(ContractPermArray,
+function(AA);
+
+if ArrayDimension(AA)=2 then return
+HomotopyEquivalentSmallerSubPermMatrix(AA,AA*0);
+fi;
+
+if ArrayDimension(AA)=3 then return
+HomotopyEquivalentSmallerSubPermArray3D(AA,AA*0);
+fi;
+
+#return HomotopyEquivalentSmallerSubPermArray(AA,AA*0);
+
+end);
+##############################################################
+##############################################################
+
+
+##############################################################
+##############################################################
 InstallGlobalFunction(HomotopyEquivalentSmallerSubArray,
 function(AA,SS)
 local
@@ -409,6 +429,21 @@ return AA;
 end);
 ##############################################################
 ##############################################################
+
+##############################################################
+##############################################################
+InstallGlobalFunction(HomotopyEquivalentSmallerSubPermArray,
+function(AA,SS);
+
+if ArrayDimension(AA)=2 then  return
+HomotopyEquivalentSmallerSubPermMatrix(AA,SS); fi;
+if ArrayDimension(AA)=3 then  return
+HomotopyEquivalentSmallerSubPermArray3D(AA,SS); fi;
+end);
+##############################################################
+##############################################################
+
+
 
 ##############################################################
 ##############################################################
@@ -518,6 +553,21 @@ return UnframeArray(S);
 end);
 ##############################################################
 ##############################################################
+
+##############################################################
+##############################################################
+InstallGlobalFunction(HomotopyEquivalentLargerSubPermArray,
+function(AAA,SSS);
+
+if ArrayDimension(AAA)=2 then
+return HomotopyEquivalentLargerSubPermMatrix(AAA,SSS);fi;
+
+if ArrayDimension(AAA)=3 then
+return HomotopyEquivalentLargerSubPermArray3D(AAA,SSS);fi;
+end);
+##############################################################
+##############################################################
+
 
 
 ##############################################################
