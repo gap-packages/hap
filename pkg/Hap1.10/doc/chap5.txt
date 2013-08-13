@@ -1,13 +1,72 @@
   
   [1X5 [33X[0;0YChain complexes[133X[101X
   
-      │ [10XChainComplex(T)[110X                                     │ 
-      │ [10XChainComplexOfPair(T,S)[110X                             │ 
-      │ [10X ChevalleyEilenbergComplex(X,n) [110X                    │ 
-      │ [10X LeibnizComplex(X,n) [110X                               │ 
-      │ [10XSuspendedChainComplex(C)[110X                            │ 
-      │ [10XReducedSuspendedChainComplex(C)[110X                     │ 
-      │ [10XCoreducedChainComplex(C)[110X [10XCoreducedChainComplex(C,2)[110X │ 
-      │ [10XTensorProductOfChainComplexes(C,D)[110X                  │ 
-      │ [10XLefschetzNumber(F)[110X                                  │ 
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChainComplex(T)[110X[133X
+  
+  [33X[0;0YInputs  a  pure cubical complex, or cubical complex, or simplicial complex [22XT[122X
+  and returns the (often very large) cellular chain complex of [22XT[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChainComplexOfPair(T,S)[110X[133X
+  
+  [33X[0;0YInputs  a  pure  cubical  complex  or  cubical  complex  [22XT[122X  and contractible
+  subcomplex [22XS[122X. It returns the quotient [22XC(T)/C(S)[122X of cellular chain complexes.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10X ChevalleyEilenbergComplex(X,n) [110X[133X
+  
+  [33X[0;0YInputs either a Lie algebra [22XX=A[122X (over the ring of integers [22XZ[122X or over a field
+  [22XK[122X)  or  a homomorphism of Lie algebras [22XX=(f:A ⟶ B)[122X, together with a positive
+  integer  [22Xn[122X.  It  returns either the first [22Xn[122X terms of the Chevalley-Eilenberg
+  chain  complex  [22XC(A)[122X,  or  the  induced map of Chevalley-Eilenberg complexes
+  [22XC(f):C(A) ⟶ C(B)[122X.[133X
+  
+  [33X[0;0Y(The  homology  of the Chevalley-Eilenberg complex [22XC(A)[122X is by definition the
+  homology of the Lie algebra [22XA[122X with trivial coefficients in [22XZ[122X or [22XK[122X).[133X
+  
+  [33X[0;0YThis function was written by [12XPablo Fernandez Ascariz[112X[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10X LeibnizComplex(X,n) [110X[133X
+  
+  [33X[0;0YInputs  either  a Lie or Leibniz algebra [22XX=A[122X (over the ring of integers [22XZ[122X or
+  over  a  field  [22XK[122X) or a homomorphism of Lie or Leibniz algebras [22XX=(f:A ⟶ B)[122X,
+  together  with  a positive integer [22Xn[122X. It returns either the first [22Xn[122X terms of
+  the  Leibniz  chain  complex  [22XC(A)[122X,  or the induced map of Leibniz complexes
+  [22XC(f):C(A) ⟶ C(B)[122X.[133X
+  
+  [33X[0;0Y(The  Leibniz  complex  [22XC(A)[122X  was  defined by J.-L.Loday. Its homology is by
+  definition the Leibniz homology of the algebra [22XA[122X).[133X
+  
+  [33X[0;0YThis function was written by [12XPablo Fernandez Ascariz[112X[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XSuspendedChainComplex(C)[110X[133X
+  
+  [33X[0;0YInputs a chain complex [22XC[122X and returns the chain complex [22XS[122X defined by applying
+  the degree shift [22XS_n = C_n-1[122X to chain groups and boundary homomorphisms.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XReducedSuspendedChainComplex(C)[110X[133X
+  
+  [33X[0;0YInputs a chain complex [22XC[122X and returns the chain complex [22XS[122X defined by applying
+  the  degree shift [22XS_n = C_n-1[122X to chain groups and boundary homomorphisms for
+  all [22Xn > 0[122X. The chain complex [22XS[122X has trivial homology in degree [22X0[122X and [22XS_0= Z[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XCoreducedChainComplex(C)[110X[133X
+  [33X[0;0Y[10XCoreducedChainComplex(C,2)[110X[133X
+  
+  [33X[0;0YInputs  a chain complex [22XC[122X and returns a quasi-isomorphic chain complex [22XD[122X. In
+  many  cases  the  complex  [22XD[122X should be smaller than [22XC[122X. If an optional second
+  input  argument  is  set  equal  to 2 then an alternative method is used for
+  reducing the size of the chain complex.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTensorProductOfChainComplexes(C,D)[110X[133X
+  
+  [33X[0;0YInputs  two  chain  complexes [22XC[122X and [22XD[122X of the same characteristic and returns
+  their tensor product as a chain complex.[133X
+  
+  [33X[0;0YThis function was written by [12X Le Van Luyen[112X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XLefschetzNumber(F)[110X[133X
+  
+  [33X[0;0YInputs  a  chain  map  [22XF: C→ C[122X with common source and target. It returns the
+  Lefschetz  number  of the map (that is, the alternating sum of the traces of
+  the homology maps in each degree).[133X
   

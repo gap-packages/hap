@@ -84,7 +84,6 @@ end);
 #####################################################################
 
 
-
 #####################################################################
 #####################################################################
 InstallOtherMethod(Size,
@@ -805,55 +804,6 @@ end);
 #####################################################################
 ##################################################################### 
 
-######################################################################
-######################################################################
-InstallGlobalFunction(ContractPureCubicalComplex,
-function(T);
-
-if not IsHapPureCubicalComplex(T) then 
-Print("This contraction can only be applied to pure cubical complexes.\n");
-return fail;
-fi;
- 
-if EvaluateProperty(T,"contracted")=true then return T; fi;
-
-T!.binaryArray:=ContractArray(T!.binaryArray);
-Add(T!.properties,["contracted",true]);
-return T;
-
-end);
-######################################################################
-######################################################################
-
-
-#####################################################################
-#####################################################################
-InstallMethod(ContractedComplex,
-"Contracted complex of a pure cubical complex",
-[IsHapPureCubicalComplex],
-function(M) local  C,A;
-
-if not IsHapPureCubicalComplex(M) then
-Print("This contraction can only be applied to pure cubical complexes.\n");
-return fail;
-fi;
-
-A:=StructuralCopy(M!.binaryArray);;
-C:=rec();
-C.properties:=StructuralCopy(M!.properties);
-C:=Objectify(HapPureCubicalComplex,C);
-
-if not EvaluateProperty(M,"contracted")=true then 
-A:=ContractArray(A);
-Add(C!.properties,["contracted",true]);
-fi;
-
-C!.binaryArray:=A;
-return C;
-end);
-#####################################################################
-#####################################################################
-
 
 ######################################################################
 ######################################################################
@@ -914,59 +864,6 @@ end);
 ######################################################################
 
 
-######################################################################
-######################################################################
-InstallGlobalFunction(HomotopyEquivalentMaximalPureCubicalSubcomplex,
-function(T,S)
-local A;
-
-if (not IsHapPureCubicalComplex(T))
-and
-(not IsHapPureCubicalComplex(S))
-then
-Print("This function can only be applied to pure cubical complexes.\n");
-return fail;
-fi;
-
-A:=HomotopyEquivalentLargerSubArray(T!.binaryArray,S!.binaryArray);
-
-return Objectify(HapPureCubicalComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
-
-end);
-######################################################################
-######################################################################
-
-######################################################################
-######################################################################
-InstallGlobalFunction(HomotopyEquivalentMinimalPureCubicalSubcomplex,
-function(T,S)
-local A;
-
-if (not IsHapPureCubicalComplex(T))
-and
-(not IsHapPureCubicalComplex(S))
-then
-Print("This function can only be applied to pure cubical complexes.\n");
-return fail;
-fi;
-
-A:=HomotopyEquivalentSmallerSubArray(T!.binaryArray,S!.binaryArray);
-
-return Objectify(HapPureCubicalComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
-
-end);
-######################################################################
-######################################################################
-
-
 #################################################################
 #################################################################
 InstallGlobalFunction(WritePureCubicalComplexAsImage,
@@ -1013,9 +910,17 @@ local i,A,viewer,T;
 # Function for viewing 2-dimensional pure cubical complexes.
 
 T:=arg[1];
-if not Dimension(T)=2 then
+
+if not (Dimension(T)=2 or Dimension(T)=3) then
 Print("There is no method for viewing a pure cubical complex of dimension ",
 Dimension(T),".\n"); return fail; fi;
+
+if Dimension(T)=3 then
+
+View3dPureCubicalComplex(T);
+
+else
+
 T!.binaryArray:=FrameArray(T!.binaryArray);
 T!.binaryArray:=FrameArray(T!.binaryArray);
 
@@ -1026,169 +931,10 @@ Exec(Concatenation(viewer," ","/tmp/HAPtmpImage.png"));
 Sleep(2);
 Exec(Concatenation("rm  ","/tmp/HAPtmpImage.png"));
 
+fi;
 end);
 #################################################################
 #################################################################
-
-##################################################
-##################################################
-InstallGlobalFunction(PureComplexToSimplicialComplex,
-function(M,DIM)
-local AO,A,dim,dims,
-      ArrayValueDim,
-      CartProd,
-      Vertices, VertexCoordinates,ArrayValueDim1,
-      CubicalBall, PermutahedralBall,
-      Ball, Balls,
-      SimplicesLst, Simplices, NrSimplices, EnumeratedSimplex,
-       b, i, j, t, t1, t2, v, x, y;
-
-AO:=FrameArray(M!.binaryArray);
-A:=StructuralCopy(AO);
-dim:=ArrayDimension(A);
-dims:=ArrayDimensions(A);
-Vertices:=0;
-VertexCoordinates:=[];
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim-1);
-CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
-
-
-#############################
-CubicalBall:=function(dim) local Ball;
-Ball:=Cartesian(List([1..dim],i->[-1,0,1]));
-RemoveSet(Ball,List([1..dim],i->0));
-return Ball;
-end;
-#############################
-
-#############################
-PermutahedralBall:=function(dim)
-local  n,i,B,U,A;
-
-if dim=2 then return [[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0]]; fi; 
-if dim=3 then return 
-[[0,0,-1],[1,0,-1],[0,1,-1],[1,1,-1],[0,-1,0],[1,-1,0], [-1,0,0],[1,0,0],[-1,1,0],[0,1,0],[-1,-1,1],[0,-1,1], [-1,0,1],[0,0,1]]; 
-
-#[[-1,0,0],[-1,0,1],[-1,1,0],[-1,1,1], [0,-1,0],[0,-1,1],[0,0,-1],[0,0,1],[0,1,-1],[0,1,0], [1,-1,-1],[1,-1,0],[1,0,-1],[1,0,0]];;
-
-fi; 
-if dim=4 then return [[0,0,0,1],[0,0,1,1],[0,1,1,1],[0,1,0,1],[1,0,0,0], [1,-1,0,0],[1,0,-1,0], [1,-1,-1,0],[1,-1,-1,-1],[1,0,-1,-1],[1,-1,0,-1], [0,-1,-1,-1],[1,0,0,-1],[0,0,-1,-1], [0,-1,0,-1],[0,-1,-1,0],[0,0,0,-1], [0,0,-1,0],[0,-1,0,0],[0,1,0,0],[0,1,1,0],[-1,1,0,0], [-1,1,1,0],[-1,1,0,1], [0,0,1,0],[-1,0,1,0],[-1,0,0,0],[-1,0,0,1],[-1,0,1,1],[-1,1,1,1]]; fi; 
-#dim>4 do the following 
-
-n:=dim+1;
-
-A:=List([1..n],i->List([1..n],j->1));
-for i in [1..n] do
-A[i][i]:=-n+1;
-od;
-
-U:=Filtered(Combinations(A),x->not Length(x) in [0,n]);;
-U:=List(U,x->Sum(x));
-
-U:=SolutionsMatDestructive(A,U);
-U:=List(U,x->x{[1..n-1]});
-return U;
-end;
-#############################
-
-if IsHapPureCubicalComplex(M) then
-Ball:=CubicalBall(dim); 
-else
-Ball:=PermutahedralBall(dim); fi;
-
-
-#############################
-Balls:=[];
-Balls[1]:=Ball;
-for t in [2..DIM] do
-  Balls[t]:=Cartesian(Balls[t-1],Ball);
-  if t>2 then
-    Balls[t]:=List(Balls[t],x->Concatenation(x[1],[x[2]]));
-  fi;
-  Balls[t]:=Filtered(Balls[t],x->x[t-1]>x[t]);
-  for i in [1..t-1] do
-    Balls[t]:=Filtered(Balls[t],x->x[i]-x[t] in Ball);
-  od;
-od;
-#############################
-
-for x in CartProd do
-  if ArrayValueDim(AO,x)=1 then Vertices:=Vertices+1;
-    y:=ArrayValueDim1(A,x{[2..dim]});
-    y[x[1]]:=Vertices;
-    VertexCoordinates[Vertices]:=x;
-  fi;
-od;
-
-Vertices:=[1..Vertices];
-SimplicesLst:=List([1..1000],i->[]);  #VERY SLOPPY!!!
-
-if DIM>=0 then
-  SimplicesLst[1]:=List(Vertices,i->[i]);
-fi;
-
-if DIM>=1 then
-for v in Vertices do
-  x:=VertexCoordinates[v];
-  for b in Ball do
-    t:= ArrayValueDim(A,b+x);
-    if t>v then Add(SimplicesLst[2],[v,t]); fi;
-  od;
-od;
-fi;
-
-
-if DIM>=2 then
-for j in [2..DIM] do
-
-for v in Vertices do
-  x:=VertexCoordinates[v];
-  for b in Balls[j] do
-    t:=List([1..j],i->ArrayValueDim(A,b[i]+x));
-    if not 0 in t then
-       Add(SimplicesLst[j+1],SortedList(Concatenation([v],t)));
-    fi;
-  od;
-od;
-SimplicesLst[j+1]:=SSortedList(SimplicesLst[j+1]);
-od;
-fi;
-
-#################################################################
-NrSimplices:=function(n);
-return Length(SimplicesLst[n+1]);
-end;
-#################################################################
-
-#################################################################
-Simplices:=function(n,i);
-return SimplicesLst[n+1][i];
-end;
-#################################################################
-
-#############################################
-EnumeratedSimplex:=function(v);
-return Position(SimplicesLst[Length(v)],v);
-end;
-#############################################
-
-return
-Objectify(HapSimplicialComplex,
-           rec(
-           vertices:=Vertices,
-           simplices:=Simplices,
-           simplicesLst:=SimplicesLst,
-           nrSimplices:=NrSimplices,
-           enumeratedSimplex:=EnumeratedSimplex,
-           properties:=[
-           ["dimension",PositionProperty(SimplicesLst,IsEmpty)-2]
-           ]
-           ));
-
-end);
-##################################################
-##################################################
 
 
 #################################################################
@@ -1658,211 +1404,6 @@ end);
 #################################################################
 #################################################################
 
-
-#################################################################
-#################################################################
-InstallGlobalFunction(BoundaryOfPureCubicalComplex,
-function(M)
-local
-	B,
-	cart,dim,dims,
-	InBoundary,
-	ArrayValueDim,
-	ArrayAssignDim,ArrayIt, 
-	Fun,
-	dimsSet,
-	x,z;
-
-#############################################
-if not IsHapPureCubicalComplex(M) then
-Print("This function must be applied to a pure cubical complex.\n");
-return fail;
-fi;
-#############################################
-
-dim:=Dimension(M);
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayAssignDim:=ArrayAssignFunctions(dim);
-ArrayIt:=ArrayIterate(dim);
-dims:=EvaluateProperty(M,"arraySize");
-B:=M!.binaryArray*0;
-
-dimsSet:=List([1..dim],a->[1..dims[a]]);
-cart:=Cartesian(List([1..dim],a->[-1,0,1]));
-
-########################
-InBoundary:=function(y)
-local  x, z;
-
-if ArrayValueDim(M!.binaryArray,y)=0 then return false;fi;
-
-for x in cart do
-z:=x+y;
-if (not 0 in z) and (not -1 in dims - z) then
-   if ArrayValueDim(M!.binaryArray,z)=0 then return true; fi; 
-fi;
-od;
-
-return false;
-end;
-########################
-
-
-####################
-Fun:=function(x);
-if InBoundary(x) then 
-ArrayAssignDim(B,x,1);
-fi;
-end;
-####################
-
-ArrayIt(dimsSet,Fun);
-
-return Objectify(HapPureCubicalComplex,
-           rec(
-           binaryArray:=B,
-           properties:=[
-           ["dimension",Dimension(M)],
-           ["arraySize",dims]]
-           ));
-
-end);
-#################################################################
-#################################################################
-
-
-#################################################################
-#################################################################
-InstallGlobalFunction(ThickenedPureCubicalComplex,
-function(M)
-local
-        B,
-        cart, CART, dim,dim1,dims,
-        Thicken,
-	ArrayValueDim,
-	ArrayValueDim1,
-        dimSet, ArrayIt,
-        x,z;
-
-#############################################
-if not IsHapPureCubicalComplex(M) then
-Print("This function must be applied to a pure cubical complex.\n");
-return fail;
-fi;
-#############################################
-
-dim:=Dimension(M);
-
-if dim=2 then return ThickenedPureCubicalComplex_dim2(M); fi;
-
-dim1:=dim-1;
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim1);
-dims:=EvaluateProperty(M,"arraySize");
-B:=StructuralCopy(M!.binaryArray);
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
-cart:=Cartesian(List([1..dim],a->[-1,0,1]));
-
-########################
-Thicken:=function(y)
-local  x, z, w;
-
-if ArrayValueDim(M!.binaryArray,y)=0 then return false;fi;
-
-for x in cart do
-z:=x+y;
-if (not 0 in z) and (not -1 in dims - z) then
-  w:=ArrayValueDim1(B,z{[2..Length(z)]});
-w[z[1]]:=1;
-fi;
-od;
-
-end;
-########################
-
-
-#for x in CART do
-#Thicken(x);
-#od;
-
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
-ArrayIt(dimSet,Thicken);
-
-
-return Objectify(HapPureCubicalComplex,
-           rec(
-           binaryArray:=B,
-           properties:=[
-           ["dimension",Dimension(M)],
-           ["arraySize",dims]]
-           ));
-
-end);
-#################################################################
-#################################################################
-
-#################################################################
-#################################################################
-InstallGlobalFunction(ComplementOfPureCubicalComplex,
-function(M)
-local
-        B,
-        CART, dim,dim1,dims,
-        Opp,
-	ArrayValueDim,
-	ArrayValueDim1,
-        dimSet,ArrayIt,
-        x,z;
-
-#############################################
-if not IsHapPureCubicalComplex(M) then
-Print("This function must be applied to a pure cubical complex.\n");
-return fail;
-fi;
-#############################################
-
-dim:=Dimension(M);
-dim1:=dim-1;
-dims:=EvaluateProperty(M,"arraySize");
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim1);
-B:=StructuralCopy(M!.binaryArray);
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
-
-########################
-Opp:=function(y)
-local z;
-z:=ArrayValueDim1(B,y{[2..Length(y)]});
-if ArrayValueDim(M!.binaryArray,y)=0 then 
-z[y[1]]:=1;
-else
-z[y[1]]:=0;
-fi;
-end;
-########################
-
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
-ArrayIt(dimSet,Opp);
-
-#for x in CART do
-#Opp(x);
-#od;
-
-return Objectify(HapPureCubicalComplex,
-           rec(
-           binaryArray:=B,
-           properties:=[
-           ["dimension",Dimension(M)],
-           ["arraySize",dims]]
-           ));
-
-end);
-#################################################################
-#################################################################
-
-
 #################################################################
 ################################################################
 InstallGlobalFunction(SingularitiesOfPureCubicalComplex,
@@ -1971,175 +1512,6 @@ return Objectify(HapPureCubicalComplex,
            ["arraySize",dims]]
            ));
 
-end);
-#################################################################
-#################################################################
-
-
-#################################################################
-#################################################################
-InstallGlobalFunction(PureCubicalComplexDifference,
-function(M,N)
-local
-	D,
-	dim,dims,
-	CART,
-	ArrayValueDim,
-	ArrayValueDim1,
-        dimSet,ArrayIt, Opp,
-	x,w,d;
-
-###################################
-if not
-IsHapPureCubicalComplex(M)
-and
-IsHapPureCubicalComplex(N)
-then 
-Print("This function must be applied to a pair of pure cubical complexes.\n");
-return fail;
-fi;
-if not
-EvaluateProperty(M,"arraySize")=
-EvaluateProperty(N,"arraySize")
-then 
-Print("The pure cubical complexes have different array sizes.\n");
-return fail;
-fi;
-###################################
-
-D:=PureCubicalComplex(M!.binaryArray);
-dim:=Dimension(D);
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim-1);
-dims:=EvaluateProperty(D,"arraySize");
-#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
-
-#for x in CART do
-#if ArrayValueDim(N!.binaryArray,x)=1 then
-#w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
-#w[x[1]]:=0;
-#fi;
-#od;
-
-#####################
-Opp:=function(x)
-local w;
-if ArrayValueDim(N!.binaryArray,x)=1 then
-w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
-w[x[1]]:=0;
-fi;
-end;
-#####################
-
-dimSet:=List([1..dim],x->[1..dims[x]]);
-ArrayIt:=ArrayIterate(dim);
-ArrayIt(dimSet,Opp);
-
-
-
-return D;
-end);
-#################################################################
-#################################################################
-
-
-#################################################################
-#################################################################
-InstallGlobalFunction(PureCubicalComplexUnion,
-function(M,N)
-local
-        D,
-        dim,dims,
-        CART,
-	ArrayValueDim,
-	ArrayValueDim1,
-        x,w,d;
-
-###################################
-if not
-IsHapPureCubicalComplex(M)
-and
-IsHapPureCubicalComplex(N)
-then
-Print("This function must be applied to a pair of pure cubical complexes.\n");
-return fail;
-fi;
-if not
-EvaluateProperty(M,"arraySize")=
-EvaluateProperty(N,"arraySize")
-then
-Print("The pure cubical complexes have different array sizes.\n");
-return fail;
-fi;
-###################################
-
-D:=PureCubicalComplex(M!.binaryArray);
-dim:=Dimension(D);
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim-1);
-dims:=EvaluateProperty(D,"arraySize");
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
-
-
-for x in CART do
-if ArrayValueDim(N!.binaryArray,x)=1 then
-w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
-w[x[1]]:=1;
-fi;
-od;
-
-return D;
-end);
-#################################################################
-#################################################################
-
-
-#################################################################
-#################################################################
-InstallGlobalFunction(PureCubicalComplexIntersection,
-function(M,N)
-local
-        D,
-        dim,dims,
-        CART,
-	ArrayValueDim,
-	ArrayValueDim1,
-
-        x,w,d;
-
-###################################
-if not
-IsHapPureCubicalComplex(M)
-and
-IsHapPureCubicalComplex(N)
-then
-Print("This function must be applied to a pair of pure cubical complexes.\n");
-return fail;
-fi;
-if not
-EvaluateProperty(M,"arraySize")=
-EvaluateProperty(N,"arraySize")
-then
-Print("The pure cubical complexes have different array sizes.\n");
-return fail;
-fi;
-###################################
-
-D:=PureCubicalComplex(M!.binaryArray*0);
-dim:=Dimension(D);
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim-1);
-dims:=EvaluateProperty(D,"arraySize");
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
-
-for x in CART do
-if ArrayValueDim(N!.binaryArray,x)=1 and ArrayValueDim(M!.binaryArray,x)=1 then
-w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
-w[x[1]]:=1;
-fi;
-od;
-
-return D;
 end);
 #################################################################
 #################################################################
@@ -2412,75 +1784,6 @@ end);
 ##########################################
 ##########################################
 
-##########################################
-##########################################
-InstallGlobalFunction(ZigZagContractedPureCubicalComplex,
-function(MM)
-local A,B,M,N,i,d,dim;
-
-if not IsHapPureCubicalComplex(MM) then
-Print("This functions must be applied to a pure cubical complex.\n");
-return fail;
-fi;
-
-dim:=Dimension(MM);
-M:=ContractedComplex(MM);
-M:=CropPureCubicalComplex(M);
-
-   #########################
-   A:=M!.binaryArray;
-   for i in [2..Length(A)] do
-      if A[i]=A[i-1] then A[i-1]:=0; fi;
-   od;
-   A:=Filtered(A,x-> not x=0);
-
-   for d in [2..dim] do
-   A:=PermuteArray(A,(1,d));
-   for i in [2..Length(A)] do
-      if A[i]=A[i-1] then A[i-1]:=0; fi;
-   od;
-   A:=Filtered(A,x-> not x=0);
-   od;
-   #########################
-
-
-M:=PureCubicalComplex(A);
-B:=BoundingPureCubicalComplex(M);
-N:=HomotopyEquivalentMaximalPureCubicalSubcomplex(B,M);
-N:=ContractedComplex(N);
-
-while Size(N) < Size(M) do
-
-   M:=CropPureCubicalComplex(N);
-   B:=BoundingPureCubicalComplex(M);
-   N:=HomotopyEquivalentMaximalPureCubicalSubcomplex(B,M);
-
-   #########################
-   A:=N!.binaryArray;
-   for i in [2..Length(A)] do
-      if A[i]=A[i-1] then A[i-1]:=0; fi;
-   od;
-   A:=Filtered(A,x-> not x=0);
-
-   for d in [2..dim] do
-   A:=PermuteArray(A,(1,d));
-   for i in [2..Length(A)] do
-      if A[i]=A[i-1] then A[i-1]:=0; fi;
-   od;
-   A:=Filtered(A,x-> not x=0);
-   od;
-   #########################
-
-
-   N:=PureCubicalComplex(A);
-   ContractPureCubicalComplex(N);
-od;
-
-return M;
-end);
-##########################################
-##########################################
-
 ####################################################
 ####################################################
 InstallGlobalFunction(SuspensionOfPureCubicalComplex,
@@ -2726,3 +2029,66 @@ return PureCubicalComplex(FrameArray(M!.binaryArray));
 end);
 #################################################################
 #################################################################
+
+############################################################
+############################################################
+InstallGlobalFunction(View3dPureCubicalComplex,
+function(M)
+local A, AA, B, squares, i, j, k, s, t,  VtoS, tmpdir, file;
+
+B:=M!.binaryArray;
+A:=[];
+AA:=[];
+
+for i in [1..Length(B)] do
+for j in [1..Length(B[1])] do
+for k in [1..Length(B[1][1])] do
+if B[i][j][k]>0 then Add(A,[i,j,k]); fi;
+od;od;od;
+
+##############
+VtoS:=function(V);
+return Concatenation("(" , String(V[1]) , "," , String(V[2]) , "," , String(V[3]) , ")");
+end;
+##############
+
+squares:=[];
+squares[1]:=[ [0,0,0], [1,0,0], [1,1,0], [0,1,0] ];
+squares[2]:=[ [0,0,1], [1,0,1], [1,1,1], [0,1,1] ];
+squares[3]:=[ [0,0,0], [1,0,0], [1,0,1], [0,0,1] ];
+squares[4]:=[ [0,1,0], [1,1,0], [1,1,1], [0,1,1] ];
+squares[5]:=[ [0,0,0], [0,1,0], [0,1,1], [0,0,1] ];
+squares[6]:=[ [1,0,0], [1,1,0], [1,1,1], [1,0,1] ];
+
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "tmp.asy" );
+
+PrintTo(file, "import three;\n\n");
+AppendTo(file, "size(500);\n\n");
+AppendTo(file, "defaultpen(0.2);\n\n");
+
+for i in [1..Length(A)] do
+AA:=A[i]+[1,1,1];
+AppendTo(file, "path3[] g=box(", VtoS(A[i]) , "," , VtoS(AA), ");\n draw(g,black);\n");
+
+for j in [1..6] do
+s:=  A[i]+squares[j];
+AA:=Concatenation("path3[] g=", VtoS(s[1]),"--" , VtoS(s[2]),"--" ,VtoS(s[3]),"--" ,VtoS(s[4]), "--cycle;\n");
+AppendTo(file, AA);
+AppendTo(file, "draw(surface(g),green+opacity(0.2));\n");
+
+
+od;
+od;
+
+
+Exec( Concatenation( "asy -V ", file) );
+
+#RemoveFile(file);
+#file:=Filename(tmpdir,"");
+#RemoveFile(file);
+
+end);
+#############################################################
+#############################################################
+

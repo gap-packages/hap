@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
   <meta http-equiv="content-type"
@@ -7,7 +7,7 @@
 </head>
 <body
  style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
- alink="#000066" link="#000066" vlink="#000066">
+ link="#000066" vlink="#000066" alink="#000066">
 <br>
 <table
  style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
@@ -38,12 +38,20 @@
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">A
+
+
+
+
       <span style="font-style: italic;">2-type</span> is a CW-space X
 whose
 homotopy groups are trivial in dimensions n=0 and n&gt;2. As explained
 in a <a href="aboutCrossedMods.html">previous page</a> the homotopy
 type of such a space can be captured algebraically by a cat<sup>1</sup>-group
-G. <br>
+G.
+
+
+
+      <br>
       <br>
 Let us consider two 2-types X, Y represented by cat<sup>1</sup>-groups
 G, H. If X and Y are homotopy equivalent then there exists a sequence
@@ -71,7 +79,11 @@ following result.<br>
  style="text-align: left; background-color: rgb(204, 255, 255);">The
 2-types X and Y
 are homotopy equivalent if and only if the&nbsp; associated cat<sup>1</sup>-groups
-G and H are quasi-isomorphic.<br>
+G
+and
+H
+are
+quasi-isomorphic.<br>
             </div>
             </td>
           </tr>
@@ -81,7 +93,11 @@ G and H are quasi-isomorphic.<br>
       </div>
 We mention that<span style="font-style: italic;"> crossed modules</span>
 are a well-known alternative algebraic formulation of cat<sup>1</sup>-groups.
-There is a categorical equivalence between these two algebraic notions.
+There
+is
+a
+categorical
+equivalence between these two algebraic notions.
 We have opted to work through the language of cat<sup>1</sup>-groups.<br>
       </td>
     </tr>
@@ -161,26 +177,102 @@ gap&gt; Length(C);<br>
     </tr>
     <tr>
       <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Similar
-commands can be used to prove that there are exactly 6 distinct
-quasi-isomorphism types of cat<sup>1</sup>-group of order 4. There is
-obviously just one quasi-isomorphism types of cat<sup>1</sup>-groups of
-order 1. Hence the following commands show that the above list L
-contains <span style="font-weight: bold;">at most</span> 52 (=6+1+45)
-distinct quasi-isomorphism types.</td>
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show that the above list L
+contains <span style="font-weight: bold;">at most</span> 51 distinct
+quasi-isomorphism types.</td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
 Q:=List(L,QuasiIsomorph);;<br>
-gap&gt; List(Q,Size);<br>
-[ 16, 16, 16, 16, 16, 16, 1, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 4,
-16,<br>
-&nbsp; 4, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 4, 4, 16, 4, 16, 4,
-16, 4, 4,<br>
-&nbsp; 16, 16, 16, 16, 4, 16, 4, 16, 4, 16, 16, 4, 16, 16, 16, 16, 16,
-4, 16, 4,<br>
-&nbsp; 1, 16, 4 ]<br>
+gap&gt; M:=[];;<br>
+      <br>
+gap&gt; for q in Q do<br>
+&gt; bool:=true;;<br>
+&gt; for m in M do<br>
+&gt; if not IsomorphismCatOneGroups(m,q)=fail then bool:=false; break;
+fi;<br>
+&gt; od;<br>
+&gt; if bool then Add(M,q); fi;<br>
+&gt; od;<br>
+      <br>
+gap&gt; Length(M);<br>
+51<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;">Identification of homotopy 2-types of low
+order</big><br>
+      <div style="text-align: left;"><br>
+Let us define the "order" of a cat-1-group to be the order of its
+underlying group.<span style="font-weight: bold;"> Le Van Luyen</span>&nbsp;
+has
+incorporated
+the
+above techniques into a function <big style="font-weight: bold;"><span
+ style="font-family: monospace;">IdCatOneGroup(C)</span></big>
+which inputs a cat-1-group C of "low order" and returns an integer pair
+[n,k] that uniquely idenifies the quasi-isomorphism type of C. The
+integer n is the order of a smallest cat-1-group quasi-isomorphic to C.
+The integer k identifies a particular cat-1-group of order n.<br>
+      <br>
+The following commands use this function to show that there are in fact
+precisely 49 distinct quasi-isomorphism types of cat-1-groups of order
+16. <br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+M:=List(L,IdCatOneGroup);<br>
+[ [ 16, 1 ], [ 16, 2 ], [ 16, 3 ], [ 16, 4 ], [ 1, 1 ], [ 4, 4 ], [ 16,
+6 ], [ 16, 7 ], [ 16, 8 ], [ 16, 5 ], [ 16, 9 ], [ 16, 10 ], [ 16, 5 ],
+      <br>
+&nbsp; [ 16, 11 ], [ 16, 12 ], [ 16, 13 ], [ 4, 1 ], [ 16, 14 ], [ 4, 2
+], [ 16, 15 ], [ 16, 16 ], [ 16, 17 ], [ 16, 18 ], [ 16, 19 ], [ 16, 20
+], <br>
+&nbsp; [ 16, 21 ], [ 16, 22 ], [ 16, 23 ], [ 16, 24 ], [ 4, 1 ], [ 4, 3
+], [ 16, 25 ], [ 4, 4 ], [ 16, 26 ], [ 4, 4 ], [ 16, 27 ], [ 4, 2 ], [
+4, 5 ], <br>
+&nbsp; [ 16, 28 ], [ 16, 29 ], [ 16, 30 ], [ 16, 31 ], [ 4, 4 ], [ 16,
+32 ], [ 4, 4 ], [ 16, 33 ], [ 4, 5 ], [ 16, 34 ], [ 16, 35 ], [ 4, 5 ],
+      <br>
+&nbsp; [ 16, 36 ], [ 16, 37 ], [ 16, 38 ], [ 16, 39 ], [ 16, 40 ], [ 4,
+3 ], [ 16, 41 ], [ 4, 4 ], [ 1, 1 ], [ 16, 42 ], [ 4, 5 ], [ 16, 43 ] ]<br>
+gap&gt; Length(SSortedList(M));<br>
+49<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following command identify the order and then quasi-isomorphism type of
+the cat-1-group C associated to the crossed module <br>
+      <br>
+      <div style="text-align: center;">G ---&gt; Aut(G)<br>
+      </div>
+&nbsp;<br>
+for G equal to the dihedral group of order 10. They then realize a
+smallest possible cat-1-group D of this quasi-isomorphism type. (The
+realization of the quasi-isomorphism type depends on the XMod package.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(10));<br>
+Cat-1-group with underlying group Group( [ f1, f2, f3, f4, f5 ] ) . <br>
+      <br>
+gap&gt; Order(C);<br>
+200<br>
+gap&gt; IdCatOneGroup(C);<br>
+[ 2, 2 ]<br>
+      <br>
+gap&gt; D:=SmallCatOneGroup(2,2);<br>
+Cat-1-group with underlying group C2 . <br>
       </td>
     </tr>
     <tr>

@@ -10,7 +10,7 @@ grp:=HAP_ROOT;
 #IF NECESSARY, CHANGE "VISCRIPT" AND "HAPDOC" TO THE CORRECT PATHS 
 #
 VISCRIPT:=cn(grp,"TitlePage/viscript ");
-VIS:=cn(grp,"pkg/Hap1.10/lib/TitlePage/vis ");
+VIS:=cn(grp,"TitlePage/vis ");
 HAPDOC:=cn(grp{[1..Length(grp)-4]},"doc/");
 HAPPDFDOC:=cn(grp{[1..Length(grp)-4]},"pdfdoc/");
 #
@@ -78,6 +78,7 @@ Exec( cn(VIS, cn(HAPPDFDOC,"Pseudolists.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"Parallel.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"Access.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"Miscellaneous.xml")) );
+Exec( cn(VIS, cn(HAPPDFDOC,"Sparse.xml")) );
 MakeGAPDocDoc(HAPPDFDOC,"HapMan.xml",[],"HAP");
 Exec( cn("rm ",HAPPDFDOC,"*.xml "));
 Exec( cn("rm ",HAPPDFDOC,"*.html "));

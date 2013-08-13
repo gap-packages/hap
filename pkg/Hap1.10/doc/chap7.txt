@@ -1,30 +1,306 @@
   
   [1X7 [33X[0;0YHomology and cohomology groups[133X[101X
   
-      │ [10XCohomology(X,n) [110X                                                                                                     │ 
-      │ [10XCohomologyModule(C,n) [110X                                                                                               │ 
-      │ [10XCohomologyPrimePart(C,n,p)[110X                                                                                           │ 
-      │ [10XGroupCohomology(X,n) [110X [10XGroupCohomology(X,n,p)[110X                                                                         │ 
-      │ [10XGroupHomology(X,n)[110X [10XGroupHomology(X,n,p)[110X                                                                              │ 
-      │ [10XPersistentHomologyOfQuotientGroupSeries(S,n)[110X [10XPersistentHomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[110X     │ 
-      │ [10XPersistentCohomologyOfQuotientGroupSeries(S,n)[110X [10XPersistentCohomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[110X │ 
-      │ [10XUniversalBarCode("UpperCentralSeries",n,d)[110X [10XUniversalBarCode("UpperCentralSeries",n,d,k)[110X                              │ 
-      │ [10XPersistentHomologyOfSubGroupSeries(S,n)[110X [10XPersistentHomologyOfSubGroupSeries(S,n,p,Resolution_Algorithm)[110X               │ 
-      │ [10XPersistentHomologyOfFilteredChainComplex(C,n,p) [110X                                                                     │ 
-      │ [10XPersistentHomologyOfCommutativeDiagramOfPGroups(D,n) [110X                                                                │ 
-      │ [10XPersistentHomologyOfFilteredCubicalComplex(M,n)[110X                                                                      │ 
-      │ [10XPersistentHomologyOfPureCubicalComplex(L,n,p)[110X                                                                        │ 
-      │ [10XZZPersistentHomologyOfPureCubicalComplex(L,n,p)[110X                                                                      │ 
-      │ [10XRipsHomology(G,n)[110X [10XRipsHomology(G,n,p)[110X                                                                                │ 
-      │ [10XBarCode(P)[110X                                                                                                           │ 
-      │ [10XBarCodeDisplay(P)[110X [10XBarCodeDisplay(P,"mozilla")[110X [10XBarCodeCompactDisplay(P)[110X [10XBarCodeCompactDisplay(P,"mozilla")[110X            │ 
-      │ [10XHomology(X,n)[110X                                                                                                        │ 
-      │ [10XHomologyPb(C,n)[110X                                                                                                      │ 
-      │ [10XHomologyVectorSpace(X,n)[110X                                                                                             │ 
-      │ [10XHomologyPrimePart(C,n,p)[110X                                                                                             │ 
-      │ [10XLeibnizAlgebraHomology(A,n)[110X                                                                                          │ 
-      │ [10XLieAlgebraHomology(A,n)[110X                                                                                              │ 
-      │ [10XPrimePartDerivedFunctor(G,R,F,n)[110X                                                                                     │ 
-      │ [10XRankHomologyPGroup(G,n)[110X [10XRankHomologyPGroup(R,n)[110X [10XRankHomologyPGroup(G,n,"empirical")[110X                                  │ 
-      │ [10XRankPrimeHomology(G,n)[110X                                                                                               │ 
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XCohomology(X,n) [110X[133X
+  
+  [33X[0;0YInputs either a cochain complex [22XX=C[122X (or G-cocomplex C) or a cochain map [22XX=(C
+  ⟶ D)[122X in characteristic [22Xp[122X together with a non-negative intereg [22Xn[122X.[133X
+  [33X[0;0YIf  [22XX=C[122X  and [22Xp=0[122X then the torsion coefficients of [22XH^n(C)[122X are retuned. If [22XX=C[122X
+  and [22Xp[122X is prime then the dimension of [22XH^n(C)[122X are retuned.[133X
+  [33X[0;0YIf  [22XX=(C  ⟶ D)[122X then the induced homomorphism [22XH^n(C)⟶ H^n(D)[122X is returned as a
+  homomorphism of finitely presented groups.[133X
+  [33X[0;0YA  [22XG[122X-cocomplex  [22XC[122X can also be input. The cohomology groups of such a complex
+  may  not  be  abelian.  [12XWarning:[112X  in  this  case Cohomology(C,n) returns the
+  abelian invariants of the [22Xn[122X-th cohomology group of [22XC[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XCohomologyModule(C,n) [110X[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-cocomplex  [22XC[122X together with a non-negative integer [22Xn[122X. It returns
+  the  cohomology  [22XH^n(C)[122X  as  a  [22XG[122X-outer  group.  If [22XC[122X was constructed from a
+  resolution  [22XR[122X  by  homing  to an abelian [22XG[122X-outer group [22XA[122X then, for each x in
+  H:=CohomologyModule(C,n), there is a function f:=H!.representativeCocycle(x)
+  which  is  a standard n-cocycle corresponding to the cohomology class x. (At
+  present this works only for n=1,2,3.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XCohomologyPrimePart(C,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a cochain complex [22XC[122X in characteristic 0, a positive integer [22Xn[122X, and a
+  prime  [22Xp[122X. It returns a list of those torsion coefficients of [22XH^n(C)[122X that are
+  positive powers of [22Xp[122X. The function uses the EDIM package by Frank Luebeck.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XGroupCohomology(X,n) [110X[133X
+  [33X[0;0Y[10XGroupCohomology(X,n,p)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and either[133X
+  [33X[0;0Ya finite group [22XX=G[122X[133X
+  [33X[0;0Yor a nilpotent Pcp-group [22XX=G[122X[133X
+  [33X[0;0Yor a space group [22XX=G[122X[133X
+  [33X[0;0Yor a list [22XX=D[122X representing a graph of groups[133X
+  [33X[0;0Yor  a  pair  [22XX=["Artin",D][122X  where  [22XD[122X  is  a  Coxeter diagram representing an
+  infinite Artin group [22XG[122X.[133X
+  [33X[0;0Yor a pair [22XX=["Coxeter",D][122X where [22XD[122X is a Coxeter diagram representing a finite
+  Coxeter group [22XG[122X.[133X
+  [33X[0;0YIt returns the torsion coefficients of the integral cohomology [22XH^n(G,Z)[122X.[133X
+  
+  [33X[0;0YThere  is  an  optional  third  argument which, when set equal to a prime [22Xp[122X,
+  causes  the function to return the the mod [22Xp[122X cohomology [22XH^n(G,Z_p)[122X as a list
+  of length equal to its rank.[133X
+  
+  [33X[0;0YThis  function is a composite of more basic functions, and makes choices for
+  a number of parameters. For a particular group you would almost certainly be
+  better using the more basic functions and making the choices yourself![133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XGroupHomology(X,n)[110X[133X
+  [33X[0;0Y[10XGroupHomology(X,n,p)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and either[133X
+  [33X[0;0Ya finite group [22XX=G[122X[133X
+  [33X[0;0Yor a nilpotent Pcp-group [22XX=G[122X[133X
+  [33X[0;0Yor a space group [22XX=G[122X[133X
+  [33X[0;0Yor a list [22XX=D[122X representing a graph of groups[133X
+  [33X[0;0Yor  a  pair  [22XX=["Artin",D][122X  where  [22XD[122X  is  a  Coxeter diagram representing an
+  infinite Artin group [22XG[122X.[133X
+  [33X[0;0Yor a pair [22XX=["Coxeter",D][122X where [22XD[122X is a Coxeter diagram representing a finite
+  Coxeter group [22XG[122X.[133X
+  [33X[0;0YIt returns the torsion coefficients of the integral homology [22XH_n(G,Z)[122X.[133X
+  
+  [33X[0;0YThere  is  an  optional  third  argument which, when set equal to a prime [22Xp[122X,
+  causes  the  function  to  return the mod [22Xp[122X homology [22XH_n(G,Z_p)[122X as a list of
+  lenth equal to its rank.[133X
+  
+  [33X[0;0YThis  function is a composite of more basic functions, and makes choices for
+  a number of parameters. For a particular group you would almost certainly be
+  better using the more basic functions and making the choices yourself![133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentHomologyOfQuotientGroupSeries(S,n)[110X[133X
+  [33X[0;0Y[10XPersistentHomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and a decreasing chain [22XS=[S_1, S_2, ..., S_k][122X of
+  normal  subgroups  in a finite [22Xp[122X-group [22XG=S_1[122X. It returns the bar code of the
+  persistent  mod  [22Xp[122X  homology  in  degree  [22Xn[122X  of  the  sequence  of  quotient
+  homomorphisms [22XG → G/S_k → G/S_k-1 → ... → G/S_2[122X. The bar code is returned as
+  a  matrix  containing  the  dimensions of the images of the induced homology
+  maps.[133X
+  
+  [33X[0;0YIf  one  sets [22Xp=0[122X then the integral persitent homology bar code is returned.
+  This  is  a matrix whose entries are pairs of the lists: the list of abelian
+  invariants  of  the images of the induced homology maps and the cokernels of
+  the  induced homology maps. (The matrix probably does not uniquely determine
+  the induced homology maps.)[133X
+  
+  [33X[0;0YNon  prime-power  (and  possibly  infinite) groups [22XG[122X can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  can  be  entered  as  a  fourth
+  argument.  (The  default algorithm is ResolutionFiniteGroup, so this must be
+  changed for infinite groups.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentCohomologyOfQuotientGroupSeries(S,n)[110X[133X
+  [33X[0;0Y[10XPersistentCohomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and a decreasing chain [22XS=[S_1, S_2, ..., S_k][122X of
+  normal  subgroups  in a finite [22Xp[122X-group [22XG=S_1[122X. It returns the bar code of the
+  persistent  mod  [22Xp[122X  cohomology  in  degree  [22Xn[122X  of  the  sequence of quotient
+  homomorphisms [22XG → G/S_k → G/S_k-1 → ... → G/S_2[122X. The bar code is returned as
+  a  matrix  containing  the  dimensions of the images of the induced homology
+  maps.[133X
+  
+  [33X[0;0YIf one sets [22Xp=0[122X then the integral persitent cohomology bar code is returned.
+  This  is  a matrix whose entries are pairs of the lists: the list of abelian
+  invariants of the images of the induced cohomology maps and the cokernels of
+  the  induced  cohomology  maps.  (The  matrix  probably  does  not  uniquely
+  determine the induced homology maps.)[133X
+  
+  [33X[0;0YNon  prime-power  (and  possibly  infinite) groups [22XG[122X can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  can  be  entered  as  a  fourth
+  argument.  (The  default algorithm is ResolutionFiniteGroup, so this must be
+  changed for infinite groups.)[133X
+  
+  [33X[0;0Y(The  implementation  is  possibly  a little less efficient than that of the
+  corresponding persistent homology function.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XUniversalBarCode("UpperCentralSeries",n,d)[110X[133X
+  [33X[0;0Y[10XUniversalBarCode("UpperCentralSeries",n,d,k)[110X[133X
+  
+  [33X[0;0YInputs  integers  [22Xn,d[122X  that  identify a prime power group G=SmallGroup(n,d),
+  together  with one of the strings "UpperCentralSeries", LowerCentralSeries",
+  "DerivedSeries",  "UpperPCentralSeries", "LowerPCentralSeries". The function
+  returns  a  matrix  of  rational functions; the coefficients of [22Xx^k[122X in their
+  expansions  yield  the  persistence  matrix  for  the degree [22Xk[122X homology with
+  trivial  mod p coefficients associated to the quotients of [22XG[122X by the terms of
+  the given series.[133X
+  
+  [33X[0;0YIf  the  additional integer argument [22Xk[122X is supplied then the function returns
+  the degree k homology persistence matrix.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentHomologyOfSubGroupSeries(S,n)[110X[133X
+  [33X[0;0Y[10XPersistentHomologyOfSubGroupSeries(S,n,p,Resolution_Algorithm)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and a decreasing chain [22XS=[S_1, S_2, ..., S_k][122X of
+  subgroups  in  a  finite  [22Xp[122X-group  [22XG=S_1[122X.  It  returns  the  bar code of the
+  persistent  mod  [22Xp[122X  homology  in  degree  [22Xn[122X  of  the  sequence  of inclusion
+  homomorphisms  [22XS_k  →  S_k-1  →  ...  → S_1=G[122X. The bar code is returned as a
+  binary matrix.[133X
+  
+  [33X[0;0YNon  prime-power  (and  possibly  infinite) groups [22XG[122X can also be handled; in
+  this  case the prime must be entered as a third argument, and the resolution
+  algorithm  (e.g.  ResolutionNilpotentGroup)  must  be  entered  as  a fourth
+  argument.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentHomologyOfFilteredChainComplex(C,n,p) [110X[133X
+  
+  [33X[0;0YInputs a filtered chain complex [22XC[122X (of characteristic [22X0[122X or [22Xp[122X) together with a
+  positive  integer  [22Xn[122X  and prime [22Xp[122X. It returns the bar code of the persistent
+  mod  [22Xp[122X  homology in degree [22Xn[122X of the filtered chain complex [22XC[122X. (This function
+  needs   a   more  efficient  implementation.  Its  fine  as  it  stands  for
+  investigation  in  group  homology,  but  not sufficiently efficient for the
+  homology of large complexes arising in applied topology.)[133X
+  [33X[0;0Y[10XPersistentHomologyOfCommutativeDiagramOfPGroups(D,n) [110X[133X
+  
+  [33X[0;0YInputs  a commutative diagram [22XD[122X of finite [22Xp[122X-groups and a positive integer [22Xn[122X.
+  It  returns  a  list  containing, for each homomorphism in the nerve of [22XD[122X, a
+  triple  [22X[k,l,m][122X  where [22Xk[122X is the dimension of the source of the induced mod [22Xp[122X
+  homology  map  in  degree  [22Xn[122X,  [22Xl[122X is the dimension of the image, and [22Xm[122X is the
+  dimension of the cokernel.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentHomologyOfFilteredCubicalComplex(M,n)[110X[133X
+  
+  [33X[0;0YInputs  a  filtered  pure cubical complex [22XM[122X and a non-negative integer [22Xn[122X. It
+  returns the degree [22Xn[122X persistent homology of [22XM[122X with rational coefficients.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPersistentHomologyOfPureCubicalComplex(L,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a positive integer [22Xn[122X, a prime [22Xp[122X and an increasing chain [22XL=[L_1, L_2,
+  ...,  L_k][122X of subcomplexes in a pure cubical complex [22XL_k[122X. It returns the bar
+  code  of  the  persistent  mod  [22Xp[122X  homology  in  degree [22Xn[122X of the sequence of
+  inclusion  maps.  The  bar  code  is returned as a matrix. (This function is
+  extremely      inefficient      and      it     is     better     to     use
+  PersistentHomologyOFilteredfPureCubicalComplex.[133X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XZZPersistentHomologyOfPureCubicalComplex(L,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a  positive  integer [22Xn[122X, a prime [22Xp[122X and any sequence [22XL=[L_1, L_2, ...,
+  L_k][122X  of  subcomplexes of some pure cubical complex. It returns the bar code
+  of the zig-zag persistent mod [22Xp[122X homology in degree [22Xn[122X of the sequence of maps
+  [22XL_1  →  L_1  ∪  L_2  ←  L_2  →  L_2 ∪ L_3 ← L_4 → ... ← L_k[122X. The bar code is
+  returned as a matrix.[133X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XRipsHomology(G,n)[110X[133X
+  [33X[0;0Y[10XRipsHomology(G,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a  graph  [22XG[122X, a non-negative integer [22Xn[122X (and optionally a prime number
+  [22Xp[122X).  It returns the integral homology (or mod p homology) in degree [22Xn[122X of the
+  Rips complex of [22XG[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XBarCode(P)[110X[133X
+  
+  [33X[0;0YInputs  an  integer persistence matrix P and returns the same information in
+  the form of a binary matrix (corresponding to the usual bar code).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XBarCodeDisplay(P)[110X[133X
+  [33X[0;0Y[10XBarCodeDisplay(P,"mozilla")[110X[133X
+  [33X[0;0Y[10XBarCodeCompactDisplay(P)[110X[133X
+  [33X[0;0Y[10XBarCodeCompactDisplay(P,"mozilla")[110X[133X
+  
+  [33X[0;0YInputs  an integer persistence matrix P, and an optional string specifying a
+  viewer/browser.  It  displays  a  picture  of  the  bar code (using GraphViz
+  software). The compact display is better for large bar codes.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHomology(X,n)[110X[133X
+  
+  [33X[0;0YInputs either a chain complex [22XX=C[122X or a chain map [22XX=(C ⟶ D)[122X.[133X
+  [33X[0;0YIf [22XX=C[122X then the torsion coefficients of [22XH_n(C)[122X are retuned.[133X
+  [33X[0;0YIf  [22XX=(C ⟶ D)[122X then the induced homomorphism [22XH_n(C) ⟶ H_n(D)[122X is returned as a
+  homomorphism of finitely presented groups.[133X
+  [33X[0;0YA  [22XG[122X-complex  [22XC[122X can also be input. The homology groups of such a complex may
+  not  be  abelian.  [12XWarning:[112X  in  this case Homology(C,n) returns the abelian
+  invariants of the [22Xn[122X-th homology group of [22XC[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHomologyPb(C,n)[110X[133X
+  
+  [33X[0;0YThis  is  a  back-up  function  which  might  work  in  some instances where
+  [22XHomology(C,n)[122X  fails.  It  is most useful for chain complexes whose boundary
+  homomorphisms are sparse.[133X
+  
+  [33X[0;0YIt  inputs  a  chain  complex  [22XC[122X in characteristic [22X0[122X and returns the torsion
+  coefficients  of  [22XH_n(C)[122X  .  There  is a small probability that an incorrect
+  answer  could  be  returned.  The  computation relies on probabilistic Smith
+  Normal  Form  algorithms implemented in the Simplicial Homology GAP package.
+  This  package  therefore  needs to be loaded. The computation is stored as a
+  component  of  [22XC[122X  so,  when  called  a  second time for a given [22XC[122X and [22Xn[122X, the
+  calculation is recalled without rerunning the algorithm.[133X
+  
+  [33X[0;0YThe choice of probabalistic algorithm can be changed using the command[133X
+  
+  [33X[0;0YSetHomologyAlgorithm(HomologyAlgorithm[i]);[133X
+  
+  [33X[0;0Ywhere  i  =  1,2,3 or 4. The upper limit for the probability of an incorrect
+  answer  can  be  set  to  any  rational  number  [22X0[122X<[22Xe[122X<= [22X1[122X using the following
+  command.[133X
+  
+  [33X[0;0YSetUncertaintyTolerence(e);[133X
+  
+  [33X[0;0YSee the Simplicial Homology package manual for further details.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHomologyVectorSpace(X,n)[110X[133X
+  
+  [33X[0;0YInputs  either  a  chain  complex  [22XX=C[122X  or  a  chain  map [22XX=(C ⟶ D)[122X in prime
+  characteristic.[133X
+  [33X[0;0YIf [22XX=C[122X then [22XH_n(C)[122X is retuned as a vector space.[133X
+  [33X[0;0YIf  [22XX=(C ⟶ D)[122X then the induced homomorphism [22XH_n(C) ⟶ H_n(D)[122X is returned as a
+  homomorphism of vector spaces.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHomologyPrimePart(C,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a  chain  complex [22XC[122X in characteristic 0, a positive integer [22Xn[122X, and a
+  prime  [22Xp[122X. It returns a list of those torsion coefficients of [22XH_n(C)[122X that are
+  positive  powers  of  [22Xp[122X.  The  function  uses  the EDIM GAP package by Frank
+  Luebeck.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XLeibnizAlgebraHomology(A,n)[110X[133X
+  
+  [33X[0;0YInputs  a  Lie or Leibniz algebra [22XX=A[122X (over the ring of integers [22XZ[122X or over a
+  field  [22XK[122X),  together with a positive integer [22Xn[122X. It returns the [22Xn[122X-dimensional
+  Leibniz homology of [22XA[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XLieAlgebraHomology(A,n)[110X[133X
+  
+  [33X[0;0YInputs a Lie algebra [22XA[122X (over the integers or a field) and a positive integer
+  [22Xn[122X. It returns the homology [22XH_n(A,k)[122X where [22Xk[122X denotes the ground ring.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPrimePartDerivedFunctor(G,R,F,n)[110X[133X
+  
+  [33X[0;0YInputs  a  finite  group  [22XG[122X,  a  positive integer [22Xn[122X, at least [22Xn+1[122X terms of a
+  [22XZP[122X-resolution  for  a  Sylow  subgroup  [22XP[122X<[22XG[122X  and a "mathematically suitable"
+  covariant  additive  functor  [22XF[122X  such as TensorWithIntegers . It returns the
+  abelian invariants of the [22Xp[122X-component of the homology [22XH_n(F(R))[122X .[133X
+  
+  [33X[0;0YWarning:  All  calculations  are  assumed  to  be  in  characteristic 0. The
+  function should not be used if the coefficient module is over the field of [22Xp[122X
+  elements.[133X
+  
+  [33X[0;0Y"Mathematically  suitable"  means  that  the  Cartan-Eilenberg  double coset
+  formula must hold.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XRankHomologyPGroup(G,n)[110X[133X
+  [33X[0;0Y[10XRankHomologyPGroup(R,n)[110X[133X
+  [33X[0;0Y[10XRankHomologyPGroup(G,n,"empirical")[110X[133X
+  
+  [33X[0;0YInputs  a (smallish) [22Xp[122X-group [22XG[122X, or [22Xn[122X terms of a minimal [22XZ_pG[122X-resolution [22XR[122X of
+  [22XZ_p[122X  ,  together with a positive integer [22Xn[122X. It returns the minimal number of
+  generators of the integral homology group [22XH_n(G,Z)[122X.[133X
+  
+  [33X[0;0YIf an option third string argument "empirical" is included then an empirical
+  algorithm  will  be  used. This is one which always seems to yield the right
+  answer but which we can't prove yields the correct answer.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XRankPrimeHomology(G,n)[110X[133X
+  
+  [33X[0;0YInputs a (smallish) [22Xp[122X-group [22XG[122X together with a positive integer [22Xn[122X. It returns
+  a  function  [22Xdim(k)[122X  which gives the rank of the vector space [22XH_k(G,Z_p)[122X for
+  all [22X0[122X <= [22Xk[122X <= [22Xn[122X.[133X
   
