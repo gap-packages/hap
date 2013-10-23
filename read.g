@@ -354,6 +354,7 @@ ReadPackage("HAP","lib/RegularCWComplexes/basicRegular.gi");
 #ReadPackage("HAP","lib/RegularCWComplexes/contractAlt.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/fundamental.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/cocontract.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/piZero.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -380,10 +381,10 @@ ReadPackage("HAP","lib/Sparse/sparse.gi");
 ################# CRYSTALLOGRAPHIC GROUPS #####################
 if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
-ReadPackage("HAP","lib/ArithmeticGroups/crystGbasisnew.gi");
+#ReadPackage("HAP","lib/ArithmeticGroups/crystGbasisnew.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
-ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
+#ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
 fi;
 
 

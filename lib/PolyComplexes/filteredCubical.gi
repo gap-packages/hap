@@ -169,7 +169,7 @@ D:=Dendrogram(M);
 fi;
 if IsList(M) then D:=M; fi;
 if not ( IsList(M) or IsHapFilteredPureCubicalComplex(M) ) then
-Print("The function must be applied to a filtered pure cubical complex or a list representing a denrogram.\n");
+Print("The function must be applied to a filtered pure cubical complex or a list representing a dendrogram.\n");
 return fail;
 fi;
 

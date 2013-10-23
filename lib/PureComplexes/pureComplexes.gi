@@ -23,7 +23,7 @@ function(M,A)
 local       record;
 
 record:=   rec(
-           binaryArray:=A,
+           binaryArray:=A*1,
            properties:=[
            ["dimension",ArrayDimension(A)],
            ["arraySize",ArrayDimensions(A)]]
@@ -89,12 +89,47 @@ InstallGlobalFunction(UnitBall,
 function(M);
 if IsHapPureCubicalComplex(M) then return UnitCubicalBall(Dimension(M));fi;
 if IsHapPurePermutahedralComplex(M) then return 
-UnitPermutahedralBall(Dimension(M)); fi;
+SSortedList(UnitPermutahedralBall(Dimension(M))); fi;
 return UnitPermutahedralBall(Dimension(M)); 	#This is so Fintan's 
 						#package still works!
 end);
 #############################
 #############################
+
+#####################################################################
+#####################################################################
+InstallMethod(Nerve,
+"Nerve of lattice complex",
+[IsHapPureCubicalComplex],
+function(M);
+return PureComplexToSimplicialComplex(M);
+end);
+
+InstallMethod(Nerve,
+"Nerve of lattice complex",
+[IsHapPureCubicalComplex,IsInt],
+function(M,n);
+return PureComplexToSimplicialComplex(M,n);
+end); 
+
+InstallMethod(Nerve,
+"Nerve of lattice complex",
+[IsHapPurePermutahedralComplex],
+function(M);
+return PureComplexToSimplicialComplex(M);
+end); 
+
+InstallMethod(Nerve,
+"Nerve of lattice complex",
+[IsHapPurePermutahedralComplex,IsInt],
+function(M,n);
+return PureComplexToSimplicialComplex(M,n);
+end);
+
+
+#####################################################################
+#####################################################################
+
 
 
 
@@ -661,7 +696,7 @@ if
 ((not IsHapPureCubicalComplex(T))
 and
 (not IsHapPureCubicalComplex(S)))
-or
+and 
 ((not IsHapPurePermutahedralComplex(T))
 and
 (not IsHapPurePermutahedralComplex(S)))
@@ -701,7 +736,7 @@ end);
 ######################################################################
 InstallGlobalFunction(HomotopyEquivalentMinimalPureCubicalSubcomplex,
 function(T,S);
-return HomotopyEquivalentMinimalPureCubicalSubcomplex(T,S);
+return HomotopyEquivalentMinimalPureSubcomplex(T,S);
 end);
 ######################################################################
 ######################################################################
@@ -1090,4 +1125,284 @@ return ZigZagContractedPureComplex(T);
 end);
 ######################################################################
 ######################################################################
+
+
+############################################################
+############################################################
+InstallGlobalFunction(View3dPureComplex,
+function(M)
+local a1,a2,a3,A,  B, BB, squares, T, i, j, k, s, t,  VtoS, tmpdir, file;
+
+B:=M!.binaryArray;
+A:=[];
+
+for i in [1..Length(B)] do
+for j in [1..Length(B[1])] do
+for k in [1..Length(B[1][1])] do
+if B[i][j][k]>0 then Add(A,[i,j,k]); fi;
+od;od;od;
+
+##############
+VtoS:=function(V);
+return Concatenation("(" , String(V[1]) , "," , String(V[2]) , "," , String(V[3]) , ")");
+end;
+##############
+
+if IsHapPurePermutahedralComplex(M) then
+################################
+squares:=[];
+squares[1]:=[ [1,0,2], [2,0,1], [2,-1,0], [1,-2,0], [0,-2,1], [0,-1,2] ];
+squares[2]:=[ [0,1,2], [1,0,2], [0,-1,2], [-1,0,2] ];
+squares[3]:=[ [-1,-2,0], [0,-2,-1], [1,-2,0], [0,-2,1] ];
+squares[4]:=[ [-1,2,0], [0,2,-1], [0,1,-2], [-1,0,-2], [-2,0,-1], [-2,1,0] ];
+squares[5]:=[ [0,-1,-2], [-1,0,-2], [-2,0,-1], [-2,-1,0], [-1,-2,0], [0,-2,-1]];
+squares[6]:=[ [-2,-1,0], [-2,0,-1], [-2,1,0], [-2,0,1] ];
+squares[7]:=[ [0,-1,2], [-1,0,2], [-2,0,1], [-2,-1,0], [-1,-2,0], [0,-2,1] ];
+squares[8]:=[ [0,1,2], [0,2,1], [-1,2,0], [-2,1,0], [-2,0,1], [-1,0,2] ];
+squares[9]:=[ [0,-1,-2], [-1,0,-2], [0,1,-2], [1,0,-2] ];
+squares[10]:=[ [1,2,0], [0,2,1], [-1,2,0], [0,2,-1] ];
+squares[11]:=[ [2,-1,0], [2,0,-1], [1,0,-2], [0,-1,-2], [0,-2,-1], [1,-2,0] ];
+squares[12]:=[ [1,2,0], [2,1,0], [2,0,-1], [1,0,-2], [0,1,-2], [0,2,-1] ];
+squares[13]:=[ [2,1,0], [2,0,1], [2,-1,0], [2,0,-1] ];
+squares[14]:=[ [0,1,2], [1,0,2], [2,0,1], [2,1,0], [1,2,0], [0,2,1] ];
+a1:=[1,1,-1];
+a2:=[1,1,1];
+a3:=[2,0,0];
+T:=2*[a1,a2,a3];
+######################################
+fi;
+if IsHapPureCubicalComplex(M) then
+######################################
+squares:=[];
+squares[1]:=[ [0,0,0], [1,0,0], [1,1,0], [0,1,0] ];
+squares[2]:=[ [0,0,1], [1,0,1], [1,1,1], [0,1,1] ];
+squares[3]:=[ [0,0,0], [1,0,0], [1,0,1], [0,0,1] ];
+squares[4]:=[ [0,1,0], [1,1,0], [1,1,1], [0,1,1] ];
+squares[5]:=[ [0,0,0], [0,1,0], [0,1,1], [0,0,1] ];
+squares[6]:=[ [1,0,0], [1,1,0], [1,1,1], [1,0,1] ];
+
+T:=[[1,0,0],[0,1,0],[0,0,1]];;
+######################################
+fi;
+
+
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "tmp.asy" );
+
+PrintTo(file, "import three;\n\n");
+AppendTo(file, "size(500);\n\n");
+AppendTo(file, "defaultpen(0.2);\n\n");
+
+for i in [1..Length(A)] do
+BB:=A[i][1]*T[1]+A[i][2]*T[2]+A[i][3]*T[3];
+
+for j in [1..Length(squares)] do
+s:=  BB+squares[j];
+AppendTo(file,"path3[] g=");
+AppendTo(file,VtoS(s[1]));
+AppendTo(file,"--" );
+AppendTo(file, VtoS(s[2]));
+AppendTo(file,"--");
+AppendTo(file,VtoS(s[3]));
+AppendTo(file,"--");
+AppendTo(file,VtoS(s[4]));
+if Length(s)>4 then
+AppendTo(file,"--");
+AppendTo(file,VtoS(s[5]));
+AppendTo(file,"--");
+AppendTo(file,VtoS(s[6]));
+fi;
+AppendTo(file,"--cycle;\n");
+
+AppendTo(file, "draw(surface(g),green+opacity(0.2));\n");
+AppendTo(file, "draw(g,black);\n");
+
+od;
+od;
+
+Exec( Concatenation( "asy -V ", file) );
+
+#RemoveFile(file);
+#file:=Filename(tmpdir,"");
+#RemoveFile(file);
+
+end);
+#############################################################
+
+#############################################################
+#############################################################
+InstallGlobalFunction(ViewPureComplex,
+function(M);
+
+if IsHapPureCubicalComplex(M) then
+if Dimension(M)=3 then View3dPureComplex(M); fi;
+if Dimension(M)=2 then ViewPureCubicalComplex(M); fi;
+fi;
+
+if IsHapPurePermutahedralComplex(M) then
+if Dimension(M)=3 then View3dPureComplex(M); fi;
+#if Dimension(M)=2 then ViewPurePermutahedralComplex(M); fi;
+fi;
+
+end);
+#############################################################
+#############################################################
+
+
+#################################################################
+#################################################################
+InstallGlobalFunction(PathComponentOfPureComplex,
+function(M,N)
+local
+        PathCompBinList,dim,dims, dimsSet,
+        ArrayValueDim,ArrayValueDim1, ArrayAssignDim,
+        ArrayIt, ArrayItBreak, revdimsSet,Fun,
+        w,P,x,z,i,n;
+n:=N+1;
+dims:=EvaluateProperty(M,"arraySize");
+revdimsSet:=List(dims,d->Reversed([2..d+1]));
+dim:=Dimension(M);
+
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayValueDim1:=ArrayValueFunctions(dim-1);
+ArrayAssignDim:=ArrayAssignFunctions(dim);
+ArrayIt:=ArrayIterate(dim);
+ArrayItBreak:=ArrayIterateBreak(dim);
+
+#############################################
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  #
+PathCompBinList:=function()
+local B,ColourNeighbours,ColourComponent,cart,CART,
+NEWLYCOLOURED,GetStart,start,colour,ONE;
+
+ONE:=List([1..Dimension(M)],i->1);
+B:=StructuralCopy(FrameArray(M!.binaryArray));
+#cart:=Cartesian(List([1..Dimension(M)],i->[-1,0,1]));
+cart:=UnitBall(M);
+RemoveSet(cart,List([1..Dimension(M)],i->0));
+
+M!.pathReps:=[];
+
+################################
+ColourNeighbours:=function(x,j)
+local w,y,z,bool;
+bool:=false;
+if ArrayValueDim(B,x)=j then
+        for y in cart do
+        z:=x+y;
+
+        if ArrayValueDim(B,z)=1 then
+        ArrayAssignDim(B,z,j);
+        bool:=true;
+        Add(NEWLYCOLOURED,z);
+        fi;
+        od;
+fi;
+
+return bool;
+end;
+################################
+
+################################
+ColourComponent:=function(j)
+local bool,x,CPNC;
+bool:=true;
+
+while bool do
+bool:=false;
+CPNC:=ShallowCopy(NEWLYCOLOURED);
+for x in CPNC do
+if ColourNeighbours(x,j) then bool:=true; fi;;
+Unbind(NEWLYCOLOURED[Position(NEWLYCOLOURED,x)]);
+od;
+NEWLYCOLOURED:=SSortedList(NEWLYCOLOURED);
+od;
+
+return bool;
+end;
+################################
+
+################################
+GetStart:=function()
+local Fun,start,x;
+
+start:=fail;
+
+Fun:=function(x);
+if ArrayValueDim(B,x)=1 then start:=x; return true; else return false;  fi;
+end;
+
+x:=ArrayItBreak(revdimsSet,Fun);
+
+if not x=fail then revdimsSet[1]:=Reversed([2..x[1]]); fi;
+
+if not start=fail then Add(M!.pathReps,x - ONE); fi;
+
+return start;
+end;
+################################
+
+colour:=1;
+start:=GetStart();
+while not start=fail do
+colour:=colour+1;
+ArrayAssignDim(B,start,colour);
+NEWLYCOLOURED:=[start];
+ColourComponent(colour);
+start:=GetStart();
+
+
+od;
+
+M!.pathCompBinList:=UnframeArray(B);
+M!.zeroBetti:=colour-1;
+end;
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  #
+#############################################
+
+if not "pathCompBinList" in NamesOfComponents(M) then
+PathCompBinList();
+fi;
+
+######################################
+if N=0 then return M!.zeroBetti;fi;###
+######################################
+
+Fun:=function(z); if z=n then return 1;else return 0;fi;end;
+P:=Array(M!.pathCompBinList,Fun);
+
+if IsHapPureCubicalComplex(M) then
+return Objectify(HapPureCubicalComplex,
+           rec(
+           binaryArray:=P,
+           properties:=[
+           ["dimension",Dimension(M)],
+           ["arraySize",dims]]
+           ));
+fi;
+if IsHapPurePermutahedralComplex(M) then
+return Objectify(HapPurePermutahedralComplex,
+           rec(
+           binaryArray:=P,
+           properties:=[
+           ["dimension",Dimension(M)],
+           ["arraySize",dims]]
+           ));
+fi;
+
+
+end);
+#################################################################
+#################################################################
+
+#################################################################
+#################################################################
+InstallGlobalFunction(PathComponentOfPureCubicalComplex,
+function(M,N);
+
+return PathComponentOfPureComplex(M,N);
+
+end);
+#################################################################
+#################################################################
 

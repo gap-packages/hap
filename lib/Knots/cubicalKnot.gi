@@ -1,3 +1,18 @@
+########################################
+InstallGlobalFunction(PurePermutahedralKnot,
+function(arg)
+local K;
+
+if Length(arg)=2 then
+K:=PureCubicalKnot(arg[1],arg[2]);
+fi;
+if Length(arg)=1 then
+K:=PureCubicalKnot(arg[1]);
+fi;
+K:= ContractedComplex(PurePermutahedralComplex(K!.binaryArray));
+return PurePermutahedralComplex(FrameArray(K!.binaryArray));
+end);
+########################################
 
 ########################################
 InstallGlobalFunction(PureCubicalKnot,
@@ -22,12 +37,12 @@ Print("There are no knots on ",arg[1]," crossings.\n");
 return fail;
 fi;
 if arg[1]>9 then 
-Print("So far only prime knots with fewer than 10 crossings have been stored in HAP.\n");
+Print("So far only knots with fewer than 10 crossings have been stored in HAP.\n");
 return fail;
 fi;
 
 L:=HAP_Knots[arg[1]-2][arg[2]];
-name:=Concatenation("prime knot ",String(arg[2])," with ",String(arg[1])," crossings");
+name:=Concatenation(" knot ",String(arg[2])," with ",String(arg[1])," crossings");
 fi;
 
 L:=Reversed(L);
@@ -78,10 +93,23 @@ end);
 ########################################
 InstallGlobalFunction(KnotGroup,
 function(K)
-local C,Y,G;
+local C,Y,G, PureComp, PureCompToReg;
 
-C:=ComplementOfPureCubicalComplex(K);
-Y:=CubicalComplexToRegularCWComplex(C);
+if IsHapPureCubicalComplex(K) then
+C:=PureCubicalComplex(FrameArray(K!.binaryArray));
+PureCompToReg:=CubicalComplexToRegularCWComplex;
+PureComp:=PureCubicalComplex; fi;
+
+if IsHapPurePermutahedralComplex(K) then
+C:=PurePermutahedralComplex(FrameArray(K!.binaryArray));
+PureCompToReg:=PermutahedralComplexToRegularCWComplex;
+PureComp:=PurePermutahedralComplex; fi;
+
+C:=ComplementOfPureComplex(C);
+C:=ZigZagContractedPureComplex(C);
+Y:=PureCompToReg(C);
+Unbind(C);
+Y:=ContractedComplex(Y);
 CriticalCellsOfRegularCWComplex(Y);
 G:=FundamentalGroup(Y);
 return G;
@@ -315,9 +343,37 @@ A:=A{C};
 Add(dets,Determinant(A));
 od;
 
+#return dets;
 return Gcd(dets);
 end);
 #############################################
+
+############################################################
+InstallGlobalFunction(ReadPDBfileAsPurePermutahedralComplex,
+function(arg)
+local   K;
+
+if Length(arg)=1 then
+K:=ReadPDBfileAsPureCubicalComplex(arg[1]);
+fi;
+if Length(arg)=2 then
+K:=ReadPDBfileAsPureCubicalComplex(arg[1],arg[2]);
+fi;
+if Length(arg)=3 then
+K:=ReadPDBfileAsPureCubicalComplex(arg[3]);
+fi;
+if Length(arg)=4 then
+K:=ReadPDBfileAsPureCubicalComplex(arg[4]);
+fi;
+
+K:=PurePermutahedralComplex(K!.binaryArray);
+K:=ContractedComplex(K);
+K:=PurePermutahedralComplex(FrameArray(K!.binaryArray));
+
+return K;
+end);
+############################################################
+
 
 
 ############################################################

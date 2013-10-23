@@ -71,21 +71,17 @@ the T.thermophilus 1V2X protein knot illustrated on the <a
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-following commands first read the protein knot as a pure cubical
+following commands first read the protein knot as a pure permutahedrall
 complex from a <a
  href="file:///home/graham/pkg/Hap1.10/www/SideLinks/About/1V2X.pdb">pdb
-file</a> and then re-represent the knot as a pure permutahedral
-complex.&nbsp; <br>
+file</a> .&nbsp; <br>
       </td>
     </tr>
     <tr>
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
-K:=ReadPDBfileAsPureCubicalComplex("1V2X.pdb");<br>
+K:=ReadPDBfileAsPurePermutahedralComplex("1V2X.pdb");<br>
 Reading chain containing 191 atoms.<br>
-Pure cubical complex of dimension 3.<br>
-      <br>
-gap&gt; K:=PurePermutahedralComplex(K!.binaryArray);<br>
 Pure permutahedral complex of dimension 3.<br>
       </td>
     </tr>
@@ -139,27 +135,29 @@ Regular CW-complex of dimension 3<br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">(The
 next
 commands
-are not needed for the computation of the homomorphism &#960;<sub>1</sub>(&#948;M<sub>K</sub>)
+are
+not needed for the computation of the homomorphism &#960;<sub>1</sub>(&#948;M<sub>K</sub>)
 --&gt;
 &#960;<sub>1</sub>(M<sub>K</sub>) . They produce a regular CW-complex W
 which is
-homeomorphic to Y but has fewer cells than Y. The manifold Y has a
-total of 189339 cells. The manifold W has 11361 cells.<br>
+homeomorphic to Y but has fewer cells than Y. The manifold Y has a 4433
+3-dimensional cells. The manifold W has just 32 cells of dimension 3.<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-Size(Y);<br>
-189339<br>
+Y!.nrCells(3);<br>
+4433<br>
       <br>
 gap&gt; W:=SimplifiedRegularCWComplex(Y);<br>
 Regular CW-complex of dimension 3<br>
       <br>
-gap&gt; Size(W);<br>
-11361<br>
+gap&gt; W!.nrCells(3);<br>
+32<br>
       <br>
-gap&gt;#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+gap&gt;#
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 )<br>
       </td>
     </tr>
@@ -184,32 +182,11 @@ gap&gt; CriticalCellsOfRegularCWComplex(B);<br>
 [ [ 2, 1 ], [ 2, 1089 ], [ 1, 3575 ], [ 1, 58055 ], [ 0, 29938 ], [ 0,
 35296 ] ]<br>
       <br>
-gap&gt; F_29938:=FundamentalGroup(B,29938);<br>
-&lt;free group on the generators [&nbsp; ]&gt;<br>
+gap&gt; F:=FundamentalGroup(f,29938);<br>
+[ &lt;identity ...&gt; ] -&gt; [ &lt;identity ...&gt; ]<br>
       <br>
-gap&gt; F_35296:=FundamentalGroup(B,35296);<br>
-#I&nbsp; there are 2 generators and 1 relator of total length 4<br>
-&lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Observe
-that
-the
-two critical 1-cells of B numbered 3575 and&nbsp; 58055 must
-correspond to the generators of the fundamental group of the torus. The
-following commands show that these generators correspond to the 1-cells
-of Y numbered&nbsp; 3733 and 68760.&nbsp; <br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-Position(B!.perm[2],3575);<br>
-3733<br>
-gap&gt; Position(B!.perm[2],58055);<br>
-68760<br>
+gap&gt; F:=FundamentalGroup(f,35296);<br>
+[ f1, f2 ] -&gt; [ f1^-1*f2^3*f1, f2^-1 ]<br>
       </td>
     </tr>
     <tr>
@@ -221,27 +198,11 @@ next commands compute a finite presentation for &#960;<sub>1</sub>Y .<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-F:=FundamentalGroup(Y);<br>
+pi:=FundamentalGroup(Y);<br>
 &lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
       <br>
-gap&gt; RelatorsOfFpGroup(F);<br>
+gap&gt; RelatorsOfFpGroup(pi);<br>
 [ f1*f2*f1^-1*f2*f1 ]<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-next command produces the image in &#960;<sub>1</sub>Y of each of the two
-generators of the group &#960;<sub>1</sub>B. </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-F!.edgeToWord(3733);<br>
-f2^2*f1<br>
-      <br>
-gap&gt; F!.edgeToWord(68760);<br>
-&lt;identity ...&gt;<br>
       </td>
     </tr>
     <tr>
@@ -260,8 +221,10 @@ y&nbsp; |&nbsp; xyx<sup>-1</sup>yx &gt;<br>
 &#960;<sub>1</sub>B = &lt; u, v&nbsp; |&nbsp; uvu<sup>-1</sup>v<sup>-1</sup>
 &gt;<br>
             <br>
-&#960;<sub>1</sub>B ----&gt;&nbsp; &#960;<sub>1</sub>Y,&nbsp; u --&gt; y<sup>2</sup>x
-,&nbsp; v -&gt; 1</td>
+&#960;<sub>1</sub>B ----&gt;&nbsp; &#960;<sub>1</sub>Y,&nbsp; u --&gt; x<sup>-1</sup>y<sup>3</sup>x
+,&nbsp;
+v -&gt; y<sup>-1</sup><br>
+            </td>
           </tr>
         </tbody>
       </table>

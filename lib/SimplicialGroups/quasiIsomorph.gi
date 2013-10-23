@@ -1,7 +1,7 @@
  InstallGlobalFunction(SubQuasiIsomorph_alt,
     function (C)
-    local  s,t,G,H,Kers,Kert,Kersnt,tKers,OrdPiOne,OrdPiTwo,OrdPi,
-	LS,Lx,x,sx,Ordsx,flag,
+    local  s,t,G,H,Kers,Kert,Kersnt,tKers,OrdPi1,OrdPi2,OrdPi,
+	LS,Lx,x,sx,flag,
     newGens,news,newt,D;
 	
 	s:= C!.sourceMap;
@@ -11,10 +11,10 @@
 	Kert:=Kernel( t );
 	Kersnt:=Intersection( Kers , Kert );
 	tKers:=Image( t , Kers );
-	OrdPiOne:=Order( HomotopyGroup( C , 1 ) );
-	OrdPiTwo:=Order( HomotopyGroup( C , 2 ) );
-	OrdPi:=OrdPiOne*OrdPiTwo;
-	LS:=ConjugacyClassesSubgroups(LatticeSubgroups( G ));
+	OrdPi1:=Order( HomotopyGroup( C , 1 ) );
+	OrdPi2:=Order( HomotopyGroup( C , 2 ) );
+	OrdPi:=OrdPi1*OrdPi2;
+	LS:=LatticeSubgroups( G )!.conjugacyClassesSubgroups;
 	if not IsMutable(LS) then
 	    LS:= ShallowCopy(LS);
 	fi;
@@ -29,9 +29,8 @@
 				if  IsSubgroup( x , Image( s , x ) ) then
 				if  IsSubgroup( x , Image( t , x ) ) then
 					sx:=Image( s , x );
-					Ordsx:=Order( sx );
-					if  Ordsx = Order( Image( t , Intersection( Kers , x ) ) ) * OrdPiOne then
-					if  Ordsx = Order( Intersection( sx , tKers ) ) * OrdPiOne then
+					if  Order( sx ) / Order( Image( t , Intersection( Kers , x ) ) ) = OrdPi1 then
+					if  Order( sx ) / Order( Intersection( sx , tKers ) ) = OrdPi1 then
 						H:=x;
 						flag:=1;
 						break;
@@ -46,10 +45,6 @@
 			break;
 		fi;
 	od;
-	if H=G then 
-		return C;
-	fi;
-		
     newGens:=GeneratorsOfGroup( H );
     news:=GroupHomomorphismByImagesNC( H , H , newGens , List( newGens , function ( x )
               return Image( s , x );
@@ -65,11 +60,10 @@ end);
 ###############################################
 InstallGlobalFunction(QuotientQuasiIsomorph_alt,
     function (C)
-    local  s,t,G,H,Kers,Kert,Kersnt,Ims,OrdIms,Imt,OrdPiOne,OrdPiTwo,Ord,
+    local  s,t,G,H,Kers,Kert,Kersnt,Ims,OrdIms,Imt,OrdPi1,OrdPi2,Ord,
 	LN,x,n,i,
-	OrderPiOneGx,OrderPiTwoGx,
-	epi,newG,newGens,news,newt,D;
-	
+	epi,newG,newGens,news,newt,D,
+	OrderPiOne,OrderPiTwo;
 	
 	s:=C!.sourceMap;
     t:=C!.targetMap;
@@ -80,18 +74,18 @@ InstallGlobalFunction(QuotientQuasiIsomorph_alt,
 	Imt:=Image( t );
 	Kert:=Kernel( t );
 	Kersnt:=Intersection( Kers , Kert );
-	OrdPiOne:= Order( HomotopyGroup( C , 1 ) );
-	OrdPiTwo:= Order( HomotopyGroup( C , 2 ) );
-	Ord:=Order(G)/(OrdPiOne*OrdPiTwo);
+	OrdPi1:= Order( HomotopyGroup( C , 1 ) );
+	OrdPi2:= Order( HomotopyGroup( C , 2 ) );
+	Ord:=Order(G)/(OrdPi1*OrdPi2);
 	
 	#################
-	OrderPiOneGx:=function( x )
+	OrderPiOne:=function( x )
 	    local tsx;
 	    tsx:=Image( t , PreImages( s , Intersection( Ims , x ) ) );
 		return ( OrdIms*Order( Intersection( tsx , x ) ) )/( Order( Intersection( Ims , x ) )*Order( tsx ) );
 	end;	
 	#################	
-	OrderPiTwoGx:=function( x )
+	OrderPiTwo:=function( x )
 	    local f;
 	    f:=NaturalHomomorphismByNormalSubgroup( G , x );
 	    return Order( Intersection( Image( f , PreImages( s , Intersection( Ims , x ) ) ) , Image( f , PreImages( t , Intersection( Imt , x ) ) ) ) );
@@ -110,9 +104,9 @@ InstallGlobalFunction(QuotientQuasiIsomorph_alt,
 		if IsSubgroup( x , Image( s , x ) ) then
 		if IsSubgroup( x , Image( t , x ) ) then
 		if IsSubgroup( x , CommutatorSubgroup( PreImages( s , Intersection( Ims , x ) ) , PreImages( t , Intersection( Imt , x ) ) ) ) then
-		if Order( Kersnt ) = Order( Intersection( Kersnt , x ) ) * OrdPiTwo then
-		if OrderPiTwoGx( x ) = OrdPiTwo then
-		if OrderPiOneGx( x ) = OrdPiOne then
+		if Order( Kersnt )/Order( Intersection( Kersnt , x ) )=OrdPi2 then
+		if OrderPiTwo( x ) = OrdPi2 then
+		if OrderPiOne( x ) = OrdPi1 then
 				H:=x;
 				break;
 		fi;
@@ -182,7 +176,7 @@ InstallGlobalFunction(XmodToHAP_alt,
     return fail;
 end);
 ##################################################################################
-##################################################################################
+################################################################################
 InstallGlobalFunction(IsomorphismCatOneGroups,
 	function(C,D)
 	local sC,tC,GC,AutGC,g,Gens,
@@ -221,67 +215,6 @@ InstallGlobalFunction(IsomorphismCatOneGroups,
 		od;
 		return fail;
 	fi;
-end);
-##################################################################################
-##################################################################################
-InstallGlobalFunction(IsQuasiMorphismCatOneGroups,
-function(C,D)
-		local 
-		PiOneC,PiTwoC,PiOneD,PiTwoD,
-		sC,GC,tC,KertC,KersC,ImsC,KersntC,
-		sD,GD,tD,tDKerD,OrdPiOneD,OrdPiTwoD,
-		Homs,Gens,AllHoms,f,g,flag;
-		
-		PiOneC:=HomotopyGroup(C,1);
-		PiTwoC:=HomotopyGroup(C,2);
-		PiOneD:=HomotopyGroup(D,1);
-		PiTwoD:=HomotopyGroup(D,2);
-		if IdGroup(PiOneC)<>IdGroup(PiOneD) then
-			return fail;
-		fi;
-		if IdGroup(PiTwoC)<>IdGroup(PiTwoD) then
-			return fail;
-		fi;
-		
-		sC:=C!.sourceMap;
-		GC:=Source(sC);
-		tC:=C!.targetMap;
-		KertC:=Kernel(tC);
-		KersC:=Kernel(sC);
-		ImsC:=Image(sC);
-		KersntC:=Intersection(KertC,KersC);
-
-		sD:=D!.sourceMap;
-		GD:=Source(sD);
-		tD:=D!.targetMap; 
-		OrdPiOneD:=Order(PiOneD);
-		OrdPiTwoD:=Order(PiTwoD);
-		tDKerD:=Image(tD,Kernel(sD));
-				
-		Homs:=[];
-		Gens:=SmallGeneratingSet(GC);
-		AllHoms:=AllHomomorphisms(GC,GD);
-		for f in AllHoms do
-			flag:=1;
-			for g in Gens do
-				if ( Image(f,(Image(sC,g))) <> Image(sD,(Image(f,g))) ) or ( Image(f,(Image(tC,g))) <> Image(tD,(Image(f,g))) ) then
-					flag:=0;
-					break;
-				fi;
-			od;
-			if flag=1 then
-				Add(Homs,f);
-			fi;
-		od;
-		
-		for f in Homs do
-			if Order(Image(f,KersntC))= OrdPiTwoD then
-				if Order(tDKerD)=Order(Intersection(tDKerD,Image(f,ImsC)))*OrdPiOneD then
-					return f;
-				fi;
-			fi;
-		od;
-	return fail;
 end);
 
 	

@@ -135,6 +135,63 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallOtherMethod(EulerCharacteristic,
+"Euler characteristic  of a chain complex",
+[IsHapChainComplex],
+function(C);
+
+return
+Sum(List([0..Length(C)],i->((-1)^i)*C!.dimension(i)));
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Length,
+"Length of a chain complex",
+[IsHapChainComplex],
+function(C);
+
+return
+EvaluateProperty(C,"length");
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Length,
+"Length of a sparse chain complex",
+[IsHapSparseChainComplex],
+function(C);
+
+return
+EvaluateProperty(C,"length");
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(EulerCharacteristic,
+"Euler characteristic  of a sparse chain complex",
+[IsHapSparseChainComplex],
+function(C);
+
+return
+Sum(List([0..Length(C)],i->((-1)^i)*C!.dimension(i)));
+end);
+#####################################################################
+#####################################################################
+
+
+
+
+
 #################################################################
 #################################################################
 InstallGlobalFunction(ReadMatrixAsPureCubicalComplex,
@@ -917,7 +974,7 @@ Dimension(T),".\n"); return fail; fi;
 
 if Dimension(T)=3 then
 
-View3dPureCubicalComplex(T);
+View3dPureComplex(T);
 
 else
 
@@ -1061,139 +1118,6 @@ end);
 #################################################################
 
 
-#################################################################
-#################################################################
-InstallGlobalFunction(PathComponentOfPureCubicalComplex,
-function(M,N)
-local
-	PathCompBinList,dim,dims, dimsSet,
-	ArrayValueDim,ArrayValueDim1, ArrayAssignDim,
-	ArrayIt, ArrayItBreak, revdimsSet,Fun, 
-	w,P,x,z,i,n;
-n:=N+1;
-dims:=EvaluateProperty(M,"arraySize");
-revdimsSet:=List(dims,d->Reversed([2..d+1]));
-dim:=Dimension(M);
-
-ArrayValueDim:=ArrayValueFunctions(dim);
-ArrayValueDim1:=ArrayValueFunctions(dim-1);
-ArrayAssignDim:=ArrayAssignFunctions(dim);
-ArrayIt:=ArrayIterate(dim);
-ArrayItBreak:=ArrayIterateBreak(dim);
-
-#############################################
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  #
-PathCompBinList:=function()
-local B,ColourNeighbours,ColourComponent,cart,CART,
-NEWLYCOLOURED,GetStart,start,colour,ONE;
-
-ONE:=List([1..Dimension(M)],i->1);
-B:=StructuralCopy(FrameArray(M!.binaryArray));
-cart:=Cartesian(List([1..Dimension(M)],i->[-1,0,1]));
-RemoveSet(cart,List([1..Dimension(M)],i->0));
-
-M!.pathReps:=[];
-
-################################
-ColourNeighbours:=function(x,j)
-local w,y,z,bool;
-bool:=false;
-
-if ArrayValueDim(B,x)=j then
-	for y in cart do
-	z:=x+y;
-
-	if ArrayValueDim(B,z)=1 then
-	ArrayAssignDim(B,z,j);
-	bool:=true;
-	Add(NEWLYCOLOURED,z);
-  	fi;
-	od;
-fi;
-
-return bool;
-end;
-################################
-
-################################
-ColourComponent:=function(j)
-local bool,x,CPNC;
-bool:=true;
-
-while bool do
-bool:=false;
-CPNC:=ShallowCopy(NEWLYCOLOURED);
-for x in CPNC do
-if ColourNeighbours(x,j) then bool:=true; fi;;
-Unbind(NEWLYCOLOURED[Position(NEWLYCOLOURED,x)]);
-od;
-NEWLYCOLOURED:=SSortedList(NEWLYCOLOURED);
-od;
-
-return bool;
-end;
-################################
-
-################################
-GetStart:=function()
-local Fun,start,x;
-
-start:=fail;
-
-Fun:=function(x);
-if ArrayValueDim(B,x)=1 then start:=x; return true; else return false;  fi;
-end;
-
-x:=ArrayItBreak(revdimsSet,Fun);
-
-if not x=fail then revdimsSet[1]:=Reversed([2..x[1]]); fi;
-
-if not start=fail then Add(M!.pathReps,x - ONE); fi;
-
-return start;
-end;
-################################
-
-colour:=1;
-start:=GetStart();
-while not start=fail do
-colour:=colour+1;
-ArrayAssignDim(B,start,colour);
-NEWLYCOLOURED:=[start];
-ColourComponent(colour);
-start:=GetStart();
-
-
-od;
-
-M!.pathCompBinList:=UnframeArray(B);
-M!.zeroBetti:=colour-1;
-end;
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  #
-#############################################
-
-if not "pathCompBinList" in NamesOfComponents(M) then 
-PathCompBinList();
-fi;
-
-######################################
-if N=0 then return M!.zeroBetti;fi;###
-######################################
-
-Fun:=function(z); if z=n then return 1;else return 0;fi;end;
-P:=Array(M!.pathCompBinList,Fun);
-
-return Objectify(HapPureCubicalComplex,
-           rec(
-           binaryArray:=P,
-           properties:=[
-           ["dimension",Dimension(M)],
-           ["arraySize",dims]]
-           ));
-
-end);
-#################################################################
-#################################################################
 
 #################################################################
 #################################################################
@@ -2030,65 +1954,4 @@ end);
 #################################################################
 #################################################################
 
-############################################################
-############################################################
-InstallGlobalFunction(View3dPureCubicalComplex,
-function(M)
-local A, AA, B, squares, i, j, k, s, t,  VtoS, tmpdir, file;
-
-B:=M!.binaryArray;
-A:=[];
-AA:=[];
-
-for i in [1..Length(B)] do
-for j in [1..Length(B[1])] do
-for k in [1..Length(B[1][1])] do
-if B[i][j][k]>0 then Add(A,[i,j,k]); fi;
-od;od;od;
-
-##############
-VtoS:=function(V);
-return Concatenation("(" , String(V[1]) , "," , String(V[2]) , "," , String(V[3]) , ")");
-end;
-##############
-
-squares:=[];
-squares[1]:=[ [0,0,0], [1,0,0], [1,1,0], [0,1,0] ];
-squares[2]:=[ [0,0,1], [1,0,1], [1,1,1], [0,1,1] ];
-squares[3]:=[ [0,0,0], [1,0,0], [1,0,1], [0,0,1] ];
-squares[4]:=[ [0,1,0], [1,1,0], [1,1,1], [0,1,1] ];
-squares[5]:=[ [0,0,0], [0,1,0], [0,1,1], [0,0,1] ];
-squares[6]:=[ [1,0,0], [1,1,0], [1,1,1], [1,0,1] ];
-
-tmpdir := DirectoryTemporary();;
-file:=Filename( tmpdir , "tmp.asy" );
-
-PrintTo(file, "import three;\n\n");
-AppendTo(file, "size(500);\n\n");
-AppendTo(file, "defaultpen(0.2);\n\n");
-
-for i in [1..Length(A)] do
-AA:=A[i]+[1,1,1];
-AppendTo(file, "path3[] g=box(", VtoS(A[i]) , "," , VtoS(AA), ");\n draw(g,black);\n");
-
-for j in [1..6] do
-s:=  A[i]+squares[j];
-AA:=Concatenation("path3[] g=", VtoS(s[1]),"--" , VtoS(s[2]),"--" ,VtoS(s[3]),"--" ,VtoS(s[4]), "--cycle;\n");
-AppendTo(file, AA);
-AppendTo(file, "draw(surface(g),green+opacity(0.2));\n");
-
-
-od;
-od;
-
-
-Exec( Concatenation( "asy -V ", file) );
-
-#RemoveFile(file);
-#file:=Filename(tmpdir,"");
-#RemoveFile(file);
-
-end);
-#############################################################
-#############################################################
 

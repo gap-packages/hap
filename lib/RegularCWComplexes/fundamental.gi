@@ -5,7 +5,8 @@
 InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
 local P,Y,base,e,bool, b, vertices,edges,F, G, r,x,w, gens, rels, 
-      cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord;
+      cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
+      EdgeToLoop, VertexToPath, loops;
 
 Y:=arg[1];
 
@@ -27,8 +28,11 @@ Apply(2cells,x->x[2]);
 2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.orientation[3][x]]);
 Apply(2boundaries,x->[x[1]{[2..Length(x[1])]},x[2]]);
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
+
+
 deform:=ChainComplex(Y)!.homotopicalDeform;
 Apply(2boundaries,x->Flat(List(x,a->deform(1,a))));
+
 
 vertices:=[deform(0,base)];
 edges:=[];
@@ -72,13 +76,16 @@ w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
 w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x));
+#Print(gens[Position(1cells,AbsInt(x))]^(SignInt(x)),"  ");
 fi;
+#Print("\n");
 od;
+
 Add(rels,w);
 od;
 
 P:=PresentationFpGroup(F/rels);
-SimplifyPresentation(P);;
+if Length(arg)<3 then SimplifyPresentation(P);; fi;
 
 ##############################################
 EdgeToWord:=function(e)
@@ -101,6 +108,44 @@ end;
 G:=FpGroupPresentation(P);
 
 G!.edgeToWord:=EdgeToWord;
+loops:=StructuralCopy(1cells);
+
+########################
+VertexToPath:=function(v)
+local path, e, pos;
+
+path:=[];
+
+while true do
+if [v] in vertices then return path; 
+else
+e:=Y!.inverseVectorField[1][v];
+w:=Y!.boundaries[2][e];
+w:=w{[2,3]};
+pos:=Position(w,v);
+if pos=2 then v:=w[1]; Add(path,e); else v:=w[2]; Add(path,-e); fi;
+fi;
+od;
+
+end;
+########################
+
+########################
+EdgeToLoop:=function(e)
+local loop, b;
+
+b:=Y!.boundaries[2][e];
+loop:=-Reversed(VertexToPath(b[2]));
+Add(loop,e);
+Append(loop,VertexToPath(b[3]));
+return loop;
+end;
+########################
+
+if Length(arg)>2 then
+Apply(loops,EdgeToLoop);
+G!.loops:=loops;
+fi;
 
 return G;
 
@@ -172,6 +217,29 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(FundamentalGroup,
+"for  pure Regular CW-Maps",
+[IsHapRegularCWMap],
+function(map);
+return FundamentalGroupOfRegularCWMap(map);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
+"for  pure Regular CW-Maps with specified base-point",
+[IsHapRegularCWMap,IsInt],
+function(map,base);
+return FundamentalGroupOfRegularCWMap(map,base);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
 "for cubical complexes",
 [IsHapCubicalComplex],
 function(M)
@@ -187,5 +255,98 @@ end);
 ##########################################################
 ##########################################################
 
+
+
+#################################################
+#################################################
+InstallGlobalFunction(BoundaryPairOfPureRegularCWComplex,
+function(Y)
+local B, map, perm,invperm, x, pm, cnt;
+
+B:=BoundaryOfPureRegularCWComplex(Y);
+perm:=B!.perm;
+invperm:=List([1..Length(perm)],i->[]);
+for x in [1..Length(perm)] do
+pm:=perm[x];
+cnt:=0;
+while cnt<Length(pm) do
+cnt:=cnt+1;
+if IsBound(pm[cnt]) then invperm[x][pm[cnt]]:=cnt; fi;
+od;
+od;
+
+#########################
+map:=function(n,i);
+return invperm[n+1][i];
+end;
+#########################
+
+return Objectify(HapRegularCWMap,
+       rec(
+           source:=B,
+           target:=Y,
+           mapping:=map));
+end);
+#################################################
+#################################################
+
+#################################################
+#################################################
+InstallOtherMethod(Source,
+"Source of a RegularCWMap",
+[IsHapRegularCWMap],
+function(map)
+return map!.source;
+end);
+#################################################
+#################################################
+
+#################################################
+#################################################
+InstallOtherMethod(Target,
+"Target of a RegularCWMap",
+[IsHapRegularCWMap],
+function(map)
+return map!.target;
+end);
+#################################################
+#################################################
+
+
+#################################################
+#################################################
+InstallGlobalFunction(FundamentalGroupOfRegularCWMap,
+function(arg)
+local map, pntS, pntT,GS, GT, S, T, mapfn, loops,gensS, x, w;
+
+map:=arg[1];
+S:=Source(map);
+T:=Target(map);
+mapfn:=map!.mapping;
+
+if Length(arg)>1 then pntS:=arg[2]; else pntS:=1; fi;
+pntT:=mapfn(0,pntS);
+
+GS:=FundamentalGroupOfRegularCWComplex(S,pntS,"nosimplify");
+GT:=FundamentalGroupOfRegularCWComplex(T,pntT,"nosimplify");
+
+gensS:=GeneratorsOfGroup(GS);
+
+if Length(gensS)=0 then return
+GroupHomomorphismByImagesNC(Group(Identity(GT)),GT,[Identity(GT)],[Identity(GT)]); fi;
+
+loops:=[];
+for x in GS!.loops do
+w:= List(x,i->SignInt(i)*mapfn(1,AbsInt(i))) ;
+
+Apply(w,i->GT!.edgeToWord(AbsInt(i))^SignInt(i));
+
+Add(loops, Product(w));
+od;
+
+return GroupHomomorphismByImagesNC(GS,GT,gensS,loops);;
+end);
+#################################################
+#################################################
 
 

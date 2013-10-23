@@ -556,3 +556,64 @@ fi;
 return K;
 end);
 ############################################
+
+############################################
+InstallGlobalFunction(ScatterPlot,
+function(LL)
+local L, tmpdir, file, colour, i, x, xmax, xmin, ymax, ymin, xscale, yscale,
+xminnew, yminnew, xmaxnew, ymaxnew;
+
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "tmp.asy" );
+
+
+xmax:=Maximum(List(LL,x->x[1]));
+xmin:=Minimum(List(LL,x->x[1]));
+ymax:=Maximum(List(LL,x->x[2]));
+ymin:=Minimum(List(LL,x->x[2]));
+
+xscale:=200/(xmax-xmin);
+yscale:=200/(ymax-ymin);
+
+L:=List(LL,x->[x[1]-xmin,x[2]-ymin]);
+L:=List(L,x->[x[1]*xscale,x[2]*yscale]);
+for i in [1..Length(LL)] do
+if Length(LL[i])=3 then Add(L[i],LL[i][3]); fi;
+od;
+
+xminnew:=0;
+yminnew:=0;
+xmaxnew:=200;
+ymaxnew:=200;
+
+PrintTo(file,"import math; size(200,200);");
+
+AppendTo(file,"draw((", xminnew, ",", yminnew,")--(",xmaxnew,",",yminnew,"),blue+linewidth(0.5));");
+
+AppendTo(file,"draw((", xminnew, ",", yminnew,")--(",xminnew,",",ymaxnew,"),blue+linewidth(0.5));");
+
+AppendTo(file,"label(\"$" , xmin , "$\" , (" , xminnew , ",", yminnew-20, "),blue);");
+
+AppendTo(file,"label(\"$" , xmax , "$\" , (" , xmaxnew , ",", yminnew-20, "),blue);");
+
+AppendTo(file,"label(\"$" , ymin , "$\" , (" , xminnew-20 , ",", yminnew, "),blue);");
+
+AppendTo(file,"label(\"$" , ymax , "$\" , (" , xminnew-20 , ",", ymaxnew, "),blue);");
+
+
+for x in L do
+if Length(x)=3 then  colour:=x[3]; else colour:="blue"; fi;
+AppendTo(file, "dot((", x[1], ",", x[2], "),",colour, "+linewidth(4));");
+od;
+
+
+
+Exec( Concatenation( "asy -V ", file) );
+
+RemoveFile(file);
+file:=Filename(tmpdir,"");
+RemoveFile(file);
+
+end);
+##########################################################
+

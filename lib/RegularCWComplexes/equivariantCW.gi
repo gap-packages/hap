@@ -34,20 +34,22 @@ end);
 
 #############################################################
 #############################################################
-InstallGlobalFunction("EquivariantEuclideanSpace",
-function(G,V)
-local R,Y,dim, Stabilizer, T;
+InstallGlobalFunction("ResolutionToEquivariantCWComplex",
+function(R)
+local Stabilizer,T,dim;
 
-R:=ResolutionAffineCrystGroup(G,V);
+dim:=Position(List([0..Length(R)],R!.dimension),0);
+if dim=fail then
+dim:=Length(R);
+fi;
 
-T:=Group(Identity(G));
+T:=Group(Identity(R!.group));
 ##########
 Stabilizer:=function(n,k);
 return T;
 end;
 ##########
 
-dim:=Position(List([0..Length(R)],R!.dimension),0)-2;
 
 return Objectify(HapEquivariantCWComplex,
             rec(
@@ -60,8 +62,119 @@ return Objectify(HapEquivariantCWComplex,
             [["dimension",dim],
             ]  ));
 
+end);
+#############################################################
+#############################################################
+
+#############################################################
+#############################################################
+InstallGlobalFunction("EquivariantCWComplexToResolution",
+function(Y)
+local Stabilizer,T,dim,n,i;
+
+for n in [0..EvaluateProperty(Y,"dimension")] do
+for i in [1..Y!.dimension(n)] do
+#if Order(Y!.stabilizer(n,i))>1 then
+#Print("EquivariantCWComplex is not free.\n");
+#return fail;
+#fi;
+od;
+od;
+dim:=EvaluateProperty(Y,"dimension");
 
 
+return Objectify(HapResolution,
+            rec(
+            dimension:=Y!.dimension,
+            boundary:=Y!.boundary,
+            elts:=Y!.elts,
+            group:=Y!.group,
+            homotopy:=fail,
+            properties:=
+            [["length",dim],
+             ["characteristic",0]
+            ]  ));
+
+end);
+#############################################################
+#############################################################
+
+
+#############################################################
+#############################################################
+InstallGlobalFunction("EquivariantEuclideanSpace",
+function(G,V)
+local R,Y,dim, Stabilizer, T;
+
+R:=ResolutionAffineCrystGroup(G,V);
+
+return ResolutionToEquivariantCWComplex(R);
+
+end);
+#############################################################
+#############################################################
+
+#############################################################
+#############################################################
+InstallGlobalFunction("EquivariantOrbitPolytope",
+function(arg)
+local G,V,R,Y,dim, Stabilizer;
+
+G:=arg[1];
+V:=arg[2];
+if Length(arg)=2 then
+R:=PolytopalComplex(G,V);
+else
+R:=PolytopalComplex(G,V,arg[3]);
+fi;
+
+return ResolutionToEquivariantCWComplex(R);
+
+end);
+#############################################################
+#############################################################
+
+#############################################################
+#############################################################
+InstallGlobalFunction(EquivariantTwoComplex,
+function(G)
+local R,Stabilizer,T,F,S;
+
+if IsFpGroup(G) then
+R:=ResolutionAsphericalPresentation(G,2);
+else
+R:=ResolutionFiniteGroup(G,2);;
+fi;
+
+return ResolutionToEquivariantCWComplex(R);
+
+end);
+#############################################################
+#############################################################
+
+#############################################################
+#############################################################
+InstallMethod(FundamentalGroupOfQuotient,
+"presentation of fundamental group of equivariant CW-complex",
+[IsHapEquivariantCWComplex],
+
+function(Y) local R, P;
+R:=EquivariantCWComplexToResolution(Y);
+P:=PresentationOfResolution(R);
+return P.freeGroup/P.relators;
+end);
+#############################################################
+#############################################################
+
+#############################################################
+#############################################################
+InstallGlobalFunction(RestrictedEquivariantCWComplex,
+function(Y,H)
+local R, X;
+
+R:=EquivariantCWComplexToResolution(Y);
+R:=ResolutionSubgroup(R,H);
+return ResolutionToEquivariantCWComplex(R);
 
 end);
 #############################################################
