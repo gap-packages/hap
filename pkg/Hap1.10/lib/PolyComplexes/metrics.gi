@@ -161,3 +161,43 @@ return Rat(Sqrt(Float(Sum(List(u-v,x->x^2)))));
 end);
 ##########################################
 
+####################################################
+####################################################
+InstallGlobalFunction(IsMetricMatrix,
+function(A)
+local x,y,z,N;
+
+N:=Length(A);
+
+#Is square matrix?
+if not Length(A)=Length(A[1]) then return false; fi;
+
+#d(x,x)=0?
+for x in [1..N] do
+if not A[x][x]=0 then return false;fi;
+od;
+
+#Symmetric? And d(x,y)>=0 and =0 only when x=y
+for x in [1..N] do
+for y in [x+1..N] do
+if A[x][y]<=0 then return false; fi;
+if not A[x][y]=A[y][x] then return false; fi;
+od;
+od;
+
+#Triangle inequality?
+for x in [1..N] do
+for y in [x+1..N] do
+for z in [y+1..N] do
+if A[x][y]+A[y][z] <A[x][z] then return false; fi;
+if A[x][z]+A[z][y] <A[x][y] then return false; fi;
+if A[y][x]+A[x][z] <A[y][z] then return false; fi;
+od;
+od;
+od;
+
+return true;
+end);
+####################################################
+####################################################
+

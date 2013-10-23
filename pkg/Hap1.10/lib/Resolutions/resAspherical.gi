@@ -26,8 +26,8 @@ fi;
 
 toggle:=false;
 gensF:=GeneratorsOfGroup(F);
-if Length(rels)>0 then G:=F/rels;
-else G:=F; fi;
+#if Length(rels)>0 then G:=F/rels;
+#else G:=F; fi;
 gensG:=GeneratorsOfGroup(G);
 FhomG:=GroupHomomorphismByImagesNC(F,G,gensF,gensG);
 EltsG:=[Identity(G)];

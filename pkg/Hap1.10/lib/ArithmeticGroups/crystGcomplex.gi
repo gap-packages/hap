@@ -1,11 +1,16 @@
 InstallGlobalFunction(CrystGcomplex,
 function(gens,basis)
-local i,x,k,combin,n,j,r,m,
+local i,x,k,combin,n,j,r,m,vect,c,
       B,G,T,S,Bt,Action,Sign,FinalBoundary,BoundaryList,
       L,kcells,cells,w,StabGrp,ActionRecord,lnth,PseudoRotSubGroup,RotSubGroupList,
       Dimension,SearchOrbit,pos,StabilizerOfPoint,PseudoBoundary,RotSubGroup,
-      Elts,Boundary,Stabilizer;
-B:=basis;
+      Elts,Boundary,Stabilizer,DVF,DVFRec,Homotopy;
+B:=basis[1];
+c:=basis[2];
+vect:=c-Sum(B)/2;
+
+vect:=0*vect;
+
 G:=AffineCrystGroup(gens);
 T:=TranslationSubGroup(G);
 Bt:=T!.TranslationBasis;
@@ -31,9 +36,9 @@ for x in combin do
     fi;
   od;
   cells:=Cartesian(w);
-  Append(kcells,cells*B);
+  Append(kcells,cells*B+vect);
 od;
-###  search for k-orbits
+###  search for k-orbits 
 Add(L[k+1],kcells[1]);
 for i in [2..Length(kcells)] do
 r:=0;
@@ -143,7 +148,8 @@ local f,x,bdry,i,Fnt,Bck,j,ss;
 ss:=AbsInt(s);
 f:=L[k+1][ss];
 if k=0 then return [];fi;
-x:=f*B^-1;
+#x:=f*B^-1;
+x:=(f-vect)*B^-1;
 bdry:=[];
 j:=0;
 for i in [1..n] do
@@ -153,9 +159,13 @@ if not IsInt(x[i]) then
 j:=j+1;
 Fnt[i]:=Fnt[i]-1/2;
 Bck[i]:=Bck[i]+1/2;
-Fnt:=Fnt*B;
-Bck:=Bck*B;
+#Fnt:=Fnt*B;
+#Bck:=Bck*B;
+
+Fnt:=Fnt*B+vect;
+Bck:=Bck*B+vect;
 Append(bdry,[SearchOrbit(Fnt,k-1),SearchOrbit(Bck,k-1)]);
+#Append(bdry,[SearchOrbit(Fnt,k-1),SearchOrbit(Bck,k-1)]);
 
 fi;
 od;
@@ -169,6 +179,7 @@ if m=0 then return 1;fi;
 h:=Elts[g];
 p:=CrystFinitePartOfMatrix(h);
 e:=L[m+1][kk];
+#x:=e*B^-1;
 x:=e*B^-1;
 r:=[];
 for i in [1..Length(x)] do
@@ -295,6 +306,71 @@ local kk;
 kk:=AbsInt(k);
 return RotSubGroupList[m+1][kk];
 end;
+######################
+DVFRec:=[];
+for k in [1..n+1] do
+DVFRec[k]:=[];
+for i in [1..Length(L[k])] do
+DVFRec[k][i]:=[];
+od;od;
+######################
+DVF:=function(k,w)    #input an n-cell acts like the starting point of an arrow
+		    # the function returns n+1-cell acts like the end point of the above arrow
+		    #those cell presented by its center
+local f,x,g,i,y,ww;
+ww:=[AbsInt(w[1]),w[2]];
+if not IsBound(DVFRec[k+1][ww[1]][ww[2]]) then
+
+x:=StructuralCopy(L[k+1][ww[1]]);
+Add(x,1);
+x:=x*Elts[ww[2]];
+Remove(x);
+
+f:=(x-vect)*B^-1;
+#Print("test  ",f);
+for i in [1..n] do
+  if not f[i]=0 then
+    if not IsInt(f[i]) then 
+    DVFRec[k+1][ww[1]][ww[2]]:=[];
+    return DVFRec[k+1][ww[1]][ww[2]];
+    else f[i]:=f[i]-SignRat(f[i])*1/2;
+	x:=f*B;
+	y:=SearchOrbit(x,k+1);
+	y[2]:=pos(CanonicalRightCosetElement(StabGrp[k+2][y[1]],Elts[y[2]]));
+	y[1]:=Sign(k+1,y[1],y[2])*y[1];
+	DVFRec[k+1][ww[1]][ww[2]]:=Negate(y);
+    return DVFRec[k+1][ww[1]][ww[2]];
+    fi;
+  fi;
+od;
+DVFRec[k+1][ww[1]][ww[2]]:=[];
+return DVFRec[k+1][ww[1]][ww[2]];
+else
+return DVFRec[k+1][ww[1]][ww[2]];
+fi;
+end;
+########
+Homotopy:=function(k,w)
+local h,d,x,y,i,ww;
+d:=[];
+ww:=[AbsInt(w[1]),w[2]];
+h:=StructuralCopy(DVF(k,ww));
+if h=[] then return [];fi;
+Add(d,h);
+x:=PseudoBoundary(k+1,h[1]);
+y:=List(x,e->[e[1],pos(Elts[e[2]]*Elts[h[2]])]);
+y:=List(y,e->[e[1],pos(CanonicalRightCosetElement(StabGrp[k+1][e[1]],Elts[e[2]]))]);
+y:=Set(y);
+ww[2]:=pos(CanonicalRightCosetElement(StabGrp[k+1][ww[1]],Elts[ww[2]]));
+SubtractSet(y,Set([ww]));
+for i in [1..Length(y)] do
+Append(d,Homotopy(k,y[i]));
+od;
+if w[1]<0 then return NegateWord(d);
+else
+return d;
+fi;
+end;
 ###########################################
 
 return Objectify(HapNonFreeResolution,
@@ -302,10 +378,10 @@ return Objectify(HapNonFreeResolution,
             dimension:=Dimension,
             boundary:=FinalBoundary,
 	    PseudoBoundary:=PseudoBoundary,
-#	    RotSubGroupList:=RotSubGroupList,
+	    dvf:=DVF,
 	    CellList:=L,
 	    Sign:=Sign,
-            homotopy:=fail,
+            homotopy:=Homotopy,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
@@ -321,3 +397,26 @@ end);
 
 ###############################################################
 
+
+
+
+InstallGlobalFunction(ResolutionCubicalCrystGroup,
+function(G,n)
+local gens,B,C,R,Gram;
+Gram:=GramianOfAverageScalarProductFromFiniteMatrixGroup(PointGroup(G));
+if Gram=IdentityMat(DimensionOfMatrixGroup(PointGroup(G))) then
+gens:=GeneratorsOfGroup(G);
+G:=AffineCrystGroup(gens);
+B:=CrystGFullBasis(G);
+if IsList(B) then
+C:=CrystGcomplex(gens,B);
+Apply(C!.elts,x->x^-1);
+R:=FreeGResolution(C,n);
+return R;
+else return fail;
+fi;
+else 
+Print("Gramian matrix is not identity");
+return fail;
+fi;
+end);

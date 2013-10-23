@@ -80,7 +80,7 @@ CG:=CG/Size(Points);
 
 
 	################# PROJECTION ################################
-	N:=CG-v;
+	N:=CG-v;    #This might be parallel to an edge!!! 
 	proj:=function(w)
 	local k, m  ;
 	m:=(w-v)*N;

@@ -18,7 +18,7 @@ local
 	PseudoBoundary,
 	FillPseudoBoundary,
 	Boundary,
-	hom,
+	hom, quohom,
 	pos,e,f,g,x,P,R,S,T;
 	
 ####################################READ INPUT DATA##################
@@ -170,7 +170,12 @@ od;
 fi;
 od;
 
-FundGroup:=F/Frels;
+FundGroup:=F/Frels;  					     ###Added Aug 2013
+quohom:= 
+GroupHomomorphismByImages(F,FundGroup,                       ###
+                            GeneratorsOfGroup(F),            ###
+                            GeneratorsOfGroup(FundGroup));   ###
+FundGroup:=F;                                                ###
 
 x:=0;
 FpHoms:=[];
@@ -334,13 +339,15 @@ return NegateWord(PseudoBoundary[k][-i]);
 end;
 ####################################################################
 
+Apply(Elts,x->Image(quohom,x));
+
 return Objectify(HapResolution,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
                 homotopy:=fail,
                 elts:=Elts,
-                group:=FundGroup,
+                group:=Range(quohom),
                 properties:=
                 [["length",N],
                  ["reduced",true],

@@ -9,7 +9,7 @@ local
         Orientation, 
         cnt,b,bb,k,n,s,x,i,j,dim ;
 
-K:=arg[1];
+K:=IntegerSimplicialComplex(arg[1]);
 if Length(arg)>1 then dim:=arg[2]; else dim:=Dimension(K); fi; 
 
 ####################
@@ -1353,6 +1353,73 @@ end);
 #######################################################
 #######################################################
 
+################################################
+################################################
+InstallGlobalFunction(VerticesOfRegularCWCell,
+function(Y,n,k)
+local V, U, N, tmp, v ;
+
+if n=0 then return [k]; fi;
+
+N:=n+1;
+V:=StructuralCopy(Y!.boundaries[N][k]);
+V:=V{[2..Length(V)]};
+V:=SSortedList(V);
+N:=N-1;
+
+while N>1 do
+tmp:=[];
+for v in V do
+U:=StructuralCopy(Y!.boundaries[N][v]);
+U:=U{[2..Length(U)]};
+Append(tmp,U);
+od;
+tmp:=SSortedList(tmp);
+V:=tmp;
+N:=N-1;
+od;
+
+return V;
+end);
+################################################
+################################################
+
+################################################
+################################################
+InstallGlobalFunction(BoundaryOfRegularCWCell,
+function(Y,n,k)
+local V, U, N, tmp, v , cells;
+
+if n=0 then return []; fi;
+
+N:=n+1;
+V:=StructuralCopy(Y!.boundaries[N][k]);
+V:=V{[2..Length(V)]};
+V:=SSortedList(V);
+cells:=List(V,i->[N-1,i]);
+N:=N-1;
+
+while N>1 do
+tmp:=[];
+for v in V do
+U:=StructuralCopy(Y!.boundaries[N][v]);
+U:=U{[2..Length(U)]};
+Append(tmp,U);
+Append(cells,List(U,i->[N-1,i]));
+od;
+tmp:=SSortedList(tmp);
+cells:=SSortedList(cells);
+V:=tmp;
+N:=N-1;
+od;
+
+return cells;
+end);
+################################################
+################################################
+
+
+
 #######################################################
 #######################################################
 InstallGlobalFunction(SimplifiedRegularCWComplex,
@@ -1384,64 +1451,111 @@ cobnd:=Y!.coboundaries;
 JoinCells:=function(d1,n)
                                  #The n-th cell in dimension d=d1-1 is removed
                                  #assuming it has a coboundary of size 2.
-local cob, d, a, b, d2,d3, m, s, t, pos, poss ;
+local V1,V2,V3,cob, d, a, b, d2,d3, m, s, t, pos, poss ;
+
+##
+##CHECK IF REMOVAL SHOULD TAKE PLACE
+
+V1:=BoundaryOfRegularCWCell(Y,d1-1,n);
+V2:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][2]);
+V3:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][3]);
+#if not Size(V1)=Size(Intersection(V1,V2,V3)) then Print([d1-1,n],V1,V2,V3,"\n\n");
+# fi;
+if 
+not (
+cobnd[d1][n][1] =2 
+and bnd[d1][n][1]>0  
+and 1+Size(V1)=Size(Intersection(V2,V3)) )
+then return false; fi;
+##
+##CHECK DONE
 
 d2:=d1+1;
 d3:=d2+1;
-cob:=cobnd[d1][n];
-s:=bnd[d2][cob[2]];
-s:=s{[2..Length(s)]};
-t:=bnd[d2][cob[3]];
+cob:=StructuralCopy(cobnd[d1][n]);
+if not SortedList(cobnd[d2][cob[2]])= SortedList(cobnd[d2][cob[3]]) then return false; fi;
 
-t:=t{[2..Length(t)]};
-if not Intersection(s,t)=[n] then return false; fi;
-
+##
+##REDUCE COBOUNDARIES OF BOUNDARIES OF nTH CELL
 if d1>1 then
 d:=d1-1;
 for m in bnd[d1][n]{[2..Length(bnd[d1][n])]} do
-s:=cobnd[d][m][1]-1;  t:=cobnd[d][m]{[2..Length(cobnd[d][m])]};
+t:=cobnd[d][m]{[2..Length(cobnd[d][m])]};
 poss:=Position(t,n);
-
-if poss=fail then return false; fi; #THIS WORRIES ME. I SHOULD NOT NEED THIS LINE!
-
 Remove(t,poss);
-cobnd[d][m]:=Concatenation([s],t);
+cobnd[d][m]:=Concatenation([Length(t)],t);
 od;
 
 fi;
+##
+##COBOUNDARIES OF BOUNDARIES REDUCED
 
+##
+##REMOVE nTH CELL, ITS COBOUNDARY, AND ADJUST ITS PRESENCE IN BOUNDARIES
+##OF ITS COBOUNDARIES
 bnd[d1][n]:=[0];
 cobnd[d1][n]:=[0];
 
 s:=bnd[d2][cob[2]];
-
 s:=s{[2..Length(s)]};
 pos:=Position(s,n);
 Remove(s,pos);
+
 if bool then a:=orien[d2][cob[2]][pos]; Remove(orien[d2][cob[2]],pos); fi;
 
 t:=bnd[d2][cob[3]];
-
 t:=t{[2..Length(t)]};
 pos:=Position(t,n);
 Remove(t,pos);
+
 if bool then b:=orien[d2][cob[3]][pos]; Remove(orien[d2][cob[3]],pos); fi;
 
 bnd[d2][cob[2]]:=Concatenation([Length(s)+Length(t)],s,t);
+
 if bool then orien[d2][cob[2]]:=Concatenation(orien[d2][cob[2]],-a*b*orien[d2][cob[3]]); fi;
-bnd[d2][cob[3]]:=[0];
+##
+##nTH CELL AND ITS PRESENCE REMOVED
+
+
+##
+##FOR SECOND CELL OF DIMENSION n+1  REDUCE THE BOUNDARIES OF ITS 
+##COBOUNDARIES
 
 for m in cobnd[d2][cob[3]]{[2..Length(cobnd[d2][cob[3]])]} do
-s:=bnd[d3][m][1]-1;
 t:=bnd[d3][m]{[2..Length(bnd[d3][m])]};
-if Position(t,cob[2])=fail then Print("HEY!\n"); fi;
+
 pos:=Position(t,cob[3]);
 Remove(t,pos);
-bnd[d3][m]:=Concatenation([s],t);
+bnd[d3][m]:=Concatenation([Length(t)],t);
 if bool then Remove(orien[d3][m],pos); fi;
 od;
+
+
+##
+##SECOND CELL  BOUNDARIES OF ITS COBOUNDARIES REDUCED
+
+##
+##REMOVE PRESENCE OF SECOND CELL IN COBOUNDARIES OF ITS BOUNDARIES
+for m in bnd[d2][cob[3]]{[2..Length(bnd[d2][cob[3]])]} do
+if cobnd[d1][m][1]>0 then
+
+t:=cobnd[d1][m]{[2..Length(cobnd[d1][m])]};
+
+pos:=Position(t,cob[3]);
+t[pos]:=cob[2];
+t:=SSortedList(t);
+cobnd[d1][m]:=Concatenation([Length(t)],t);
+
+fi;
+od;
+
+
+
+bnd[d2][cob[3]]:=[0];
 cobnd[d2][cob[3]]:=[0];
 end;
+
+
 ###################################################
 ###################################################
 
@@ -1451,8 +1565,11 @@ end;
 for d in [0..Dimension(Y)-1] do
 d1:=d+1;
 for n in [1..Length(bnd[d1])] do
-if cobnd[d1][n][1] =2 and bnd[d1][n][1]>0 then JoinCells(d1,n);  fi;
+if cobnd[d1][n][1] =2 and bnd[d1][n][1]>0 then 
+JoinCells(d1,n);  
+fi;
 od;
+
 od;
 
 
@@ -1498,6 +1615,7 @@ end;
 
 
 W:=OnceSimplifiedRegularCWComplex(Y);
+#return W;
 
 a:=Size(Y);
 b:=Size(W);
@@ -1733,4 +1851,98 @@ od;
 end);
 #############################################
 #############################################
+
+############################################
+InstallGlobalFunction(CubicalComplex,
+function(A)
+local dim, dims;
+
+dim:=ArrayDimension(A);
+dims:=ArrayDimensions(A);
+
+
+return Objectify(HapCubicalComplex,
+           rec(
+           binaryArray:=A,
+           properties:=[
+           ["dimension",dim],
+           ["arraySize",dims]]
+           ));
+
+end);
+############################################
+############################################
+############################################
+InstallGlobalFunction(ReadImageAsWeightFunction,
+function(file,f)
+local MM,F, M, A, B, C, Y, k,k1, i,j,W, weight, coord, x1;
+
+MM:=ReadImageAsFilteredCubicalComplex(file,f);
+A:=PureCubicalComplexToCubicalComplex(MM);;
+A:=0*A!.binaryArray;
+
+for i in [1..f] do
+F:=FiltrationTerm(MM,i);
+F:=PureCubicalComplexToCubicalComplex(F);
+A:=A+F!.binaryArray;
+od;
+
+
+B:=A*0;;
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+if A[i][j]>0 then B[i][j]:=1; fi;
+od;od;
+
+M:=CubicalComplex(B);
+C:=ChainComplex(M);
+
+W:=[];
+for k in [1..1+Dimension(M)] do
+W[k]:=[];k1:=k-1;
+for i in [1..C!.dimension(k1)] do
+coord:=C!.positionToCoordinate[k][i];
+W[k][i]:=A[coord[2]][coord[1]];
+od;
+od;
+
+Unbind(C);
+Y:=CubicalComplexToRegularCWComplex(M);
+Unbind(M);
+
+#####################
+weight:=function(k,i);
+return W[k+1][i];
+end;
+#####################
+
+
+return [Y, weight];
+
+end);
+#######################################################
+#######################################################
+
+
+######################################################
+#######################################################
+InstallGlobalFunction(EulerIntegral,
+function(Y,weight)
+local k, i, eulint, alpha, sn;
+
+eulint:=0;
+for k in [0..Dimension(Y)] do
+sn:=(-1)^k;
+alpha:=0;
+for i in [1..Y!.nrCells(k)] do
+alpha:=alpha+weight(k,i);
+od;
+eulint:=eulint+sn*alpha;
+od;
+
+return eulint;
+
+end);
+######################################################
+######################################################
 

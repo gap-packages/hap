@@ -1,6 +1,6 @@
 DeclareProperty("IsCrystTranslationSubGroup",IsMatrixGroup);
 DeclareGlobalFunction("FactorizationNParts");
-DeclareGlobalFunction("CrystGFullBasis");
+
 DeclareGlobalFunction("VectorToCrystMatrix");
 DeclareGlobalFunction("TranslationSubGroup");
 DeclareGlobalFunction("CrystTranslationMatrixToVector");
@@ -9,12 +9,12 @@ DeclareGlobalFunction("IsCrystSameOrbit");
 DeclareGlobalFunction("AddFirst");
 DeclareGlobalFunction("CombinationDisjointSets");
 DeclareGlobalFunction("IsCrystSufficientLattice");
-DeclareGlobalFunction("CrystGcomplex");
+
 DeclareGlobalFunction("ResolutionBoundaryOfWordOnRight");
 DeclareGlobalFunction("CrystFinitePartOfMatrix");
 
-DeclareGlobalFunction("CrystGFullBasis_alt");
-DeclareGlobalFunction("CrystGcomplex_alt");
+DeclareGlobalFunction("CrystGFullBasis");
+DeclareGlobalFunction("CrystGcomplex");
 DeclareGlobalFunction("CrystCubicalTiling");
 DeclareGlobalFunction("ResolutionCubicalCrystGroup");
 DeclareGlobalFunction("AverageInnerProduct");

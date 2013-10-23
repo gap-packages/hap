@@ -16,8 +16,9 @@ local
 	Rot,Stab,
         RotSubGroups,Action, ActionRecord,
         TransMat,
-        InfGrps,
-        x, lstMathieu, lstAlexander,n,k,s,BI,SGN,tmp, LstEl , bool, name;
+        #InfGrps,
+        x, lstMathieu, lstAlexanderSebastianSL, lstSebastianGL, lstAlexanderSebastianAlt,
+        n,k,s,BI,SGN,tmp, LstEl , bool, name;
 
 groupname:=Filtered(groupname,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
 name:=groupname;
@@ -27,7 +28,7 @@ if name="SL2Z" then return ContractibleSL2ZComplex(); fi;
 groupname:=Concatenation("lib/Perturbations/Gcomplexes/",groupname);
 bool:=ReadPackage("HAP",groupname);
 
-InfGrps:=["SL2O-5"];
+#InfGrps:=["SL2O-5"];
 
 if HAP_GCOMPLEX_SETUP[1] then 
 TransMat:=function(x); return x^-1; end;
@@ -39,11 +40,21 @@ fi;
 if bool = false then 
 Print("G-complexes are implemented for the following groups only:  \n\n");
 
-lstMathieu:="  SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) , \n  PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d , \n  Sp(4,Z) \n"; 
+lstMathieu:=" SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) ,  PSL(4,Z) , Sp(4,Z) , \n\n PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d \n"; 
 
-lstAlexander:=" SL(2,O-d) , d=2, 7, 11, 19, 43, 67, 163  \n";
+lstAlexanderSebastianAlt:=" SL(2,O-d)_a , d=2, 7, 11, 19  \n";
 
-Print(lstMathieu,"\n(where subscripts _b etc denote alternative complexes for a given group) and \n\n", lstAlexander, "\nwhere O-d denotes the ring of integers of the number field Q(\sqrt(-d)).\n\n");
+lstSebastianGL:=" GL(2,O-d) , d=1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43  \n";
+
+lstAlexanderSebastianSL:=" SL(2,O-d) , d=2, 3, 5, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43, 67, 163 \n"; 
+Print(lstMathieu,
+"\n\n",
+lstSebastianGL, 
+"\n\n",
+lstAlexanderSebastianSL,
+"\n\n",
+lstAlexanderSebastianAlt,
+"\n\nwhere subscripts _a, _b,  etc denote alternative complexes for a given group and  O-d denotes the ring of integers of the number field Q(\sqrt(-d)).\n\n");
 return fail;
 fi;
 
@@ -72,9 +83,9 @@ boundaryList[n]:=[];
 StabilizerGroups[n]:=[];
 RotSubGroups[n]:=[];
   for k in [1..Dimension(n-1)] do
-  if not name in InfGrps then
+  #if not name in InfGrps then
   Append(Elts,Elements(C[n][k].TheMatrixStab));
-  fi;
+  #fi;
   Add(StabilizerGroups[n],C[n][k].TheMatrixStab);
   Add(RotSubGroups[n],C[n][k].TheRotSubgroup);
   od;

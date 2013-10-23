@@ -440,6 +440,10 @@ fi;
 end);
 #####################################################################
 
+#####################################################################
+InstallValue(ViewGraph,GraphDisplay);
+#####################################################################
+
 #######################################
 #######################################
 InstallGlobalFunction(SimplicialNerveOfGraph,
@@ -466,6 +470,7 @@ for j in [i+1..VL] do
 if A[i][j]>0 then Add(SimplicesLst[2],[i,j]); fi;
 od;od;
 SimplicesLst[2]:=SSortedList(SimplicesLst[2]);
+if Length(SimplicesLst[2])=0 then dim:=0; fi;
 fi;
 
 if dim>=2 then
@@ -479,6 +484,7 @@ if A[i][j]>0 and A[i][k]>0 and A[j][k]>0
 then Add(SimplicesLst[3],[i,j,k]); fi;
 od;od;#od;
 SimplicesLst[3]:=SSortedList(SimplicesLst[3]);
+if Length(SimplicesLst[3])=0 then dim:=1; fi;
 fi;
 
 if dim>=3 then
@@ -494,6 +500,7 @@ A[j][k]>0 and A[j][l]>0 and A[k][l]>0
 then Add(SimplicesLst[4],[i,j,k,l]); fi;
 od;od;#od;od;
 SimplicesLst[4]:=SSortedList(SimplicesLst[4]);
+if Length(SimplicesLst[4])=0 then dim:=2; fi;
 fi;
 
 if dim>=4 then
@@ -512,6 +519,7 @@ and A[l][m]>0
 then Add(SimplicesLst[5],[i,j,k,l,m]); fi;
 od;od;#od;od;od;
 SimplicesLst[5]:=SSortedList(SimplicesLst[5]);
+if Length(SimplicesLst[5])=0 then dim:=3; fi;
 fi;
 
 if dim>=5 then
@@ -532,8 +540,8 @@ and   A[m][n]>0
 then Add(SimplicesLst[6],[i,j,k,l,m,n]); fi;
 od;od;#od;od;od;od;
 SimplicesLst[6]:=SSortedList(SimplicesLst[6]);
+if Length(SimplicesLst[6])=0 then dim:=4; fi;
 fi;
-
 
 
 for d in [6..dim] do
@@ -546,6 +554,7 @@ od;
 if bool then Add(SimplicesLst[d],y); fi;
 od;
 SimplicesLst[d+1]:=SSortedList(SimplicesLst[d+1]);
+if Length(SimplicesLst[d+1])=0 then dim:=d-1; fi;
 od;
 ##########################
 

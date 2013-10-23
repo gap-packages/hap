@@ -3,11 +3,26 @@
 InstallOtherMethod(Dimension,
 "Dimension of  simplicial complex",
 [IsHapSimplicialComplex],
-function(f) return EvaluateProperty(f,"dimension");
-return EvaluateProperty(f,"dimension");
+function(K) return EvaluateProperty(K,"dimension");
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Size,
+"Size of  simplicial complex",
+[IsHapSimplicialComplex],
+function(K) local n,s;
+s:=0;
+for n in [0..Dimension(K)] do
+s:=s+K!.nrSimplices(n);
+od;
+return s;
+end);
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################
@@ -43,7 +58,7 @@ if Dimension(M)=2 and n=1 then
 return FirstHomologySimplicialTwoComplex(M);
 fi;
 P:=PathComponentsOfSimplicialComplex(M,0);
-if n=0 then return P;fi;
+if n=0 then return [1..P]*0;fi;
 answer:=[];
 for i in [1..P] do
 PM:=PathComponentsOfSimplicialComplex(M,i);
@@ -1012,6 +1027,7 @@ end);
 ############################################
 ############################################
 
+InstallValue(PathComponentOfSimplicialComplex,PathComponentsOfSimplicialComplex);
 
 
 #################################################################
@@ -1157,7 +1173,7 @@ den:=DenominatorRat(p);
 P:=[1..den];
 
 
-Edges:=[];
+Edges:=List([1..N],i->[i]);
 
 for i in [1..N] do
 for j in [i+1..N] do

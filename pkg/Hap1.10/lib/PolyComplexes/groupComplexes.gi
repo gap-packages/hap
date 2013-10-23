@@ -3,62 +3,71 @@
 InstallGlobalFunction(QuillenComplex,
 function(G,p)
 local
-	S,Subs,ElAb,cl,MaxSimps,i,dim,arrows,simp,IsComp,s,t,x,P,P1;
+	SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, s,t,x,m,mm,tmp;
 
 
-S:=LatticeSubgroups(G);
-S:=ConjugacyClassesSubgroups(S);
+SubsCl:=ConjugacyClassesSubgroups(LatticeByCyclicExtension(G, 
+      IsElementaryAbelian, true));;
+
+SubsCl:=Filtered(SubsCl,cl->
+        IsElementaryAbelianPGroup(ClassElementLattice(cl,1),p));
+SubsCl:=Filtered(SubsCl,cl->Order(ClassElementLattice(cl,1))>1);
 Subs:=[];
+for cl in SubsCl do
+for x in [1..Size(cl)] do
+Add(Subs,ClassElementLattice(cl,x));
+od;
+od;
 
-#####Create list of all elementary abelian subgroups#####
-for cl in S do
-ElAb:=[];
-for i in [1..Size(cl)] do
-Add(ElAb,ClassElementLattice(cl,i));
-od;
-ElAb:=Filtered(ElAb,x->IsElementaryAbelian(x) and p in PrimePowersInt(Order(x)) );
-Append(Subs,ElAb);
-od;
-#####Created#############################################
+Unbind(SubsCl);
+
+###################
+fn:=function(A,B);
+return Order(A)>=Order(B);
+end;
+###################
+
+Sort(Subs,fn);
 
 MaxSimps:=[];
-dim:=Prank(SylowSubgroup(G,p));
-arrows:=[];
+for s in Subs do
+bool:=true;
+for t in MaxSimps do
+if IsSubgroup(t,s) then bool:=false; break; fi;
+od;
+if bool then Add(MaxSimps,s); fi;
+od;
 
-######################Loops##############################
-for i in [1..dim-1] do
-arrows[i]:=[]; 
-P:=p^i; P1:=p*P;
-for s in Filtered(Subs,x->Size(x)=P) do
-for t in Filtered(Subs,x->Size(x)=P1) do
-if IsSubgroup(t,s) then Add(arrows[i],[s,t]); fi;
-od;
-od;
-od;
-#####################Loops done###########################
+Unbind(Subs);
+MaxSimps:=List(MaxSimps,s->[s]);
 
-#########################
-IsComp:=function(x)
-local i,bool;
 bool:=true;
 
-for i in [1..Length(x)-1] do
-if not IsSubgroup(x[i+1][1],x[i][2]) then bool:=false; break; fi;
+while bool do
+bool:=false;
+
+for x in [1..Length(MaxSimps)] do
+if IsBound(MaxSimps[x]) then
+
+m:=MaxSimps[x];
+if Order(m[Length(m)])>p then 
+for t in MaximalSubgroups(m[Length(m)]) do
+mm:=Concatenation(m,[t]);
+Add(MaxSimps,mm); if Order(t)>p then bool:=true; fi;
+Unbind(MaxSimps[x]);
+od;
+fi;
+
+fi;
+od;
 od;
 
-return bool;
-end;
-#########################
-
-#########Final loop#########################
-for x in Cartesian(List([1..Length(arrows)],i->arrows[i])) do
-if IsComp(x) then 
-simp:=List(x,a->a[1]);
-Add(simp,x[Length(x)][2]);
-Add(MaxSimps,simp); fi;
+tmp:=MaxSimps;
+MaxSimps:=[];
+for m in tmp do
+Add(MaxSimps,m);
 od;
-############################################
-
+Unbind(tmp);
 return MaximalSimplicesToSimplicialComplex(MaxSimps);
 
 end);
