@@ -280,6 +280,7 @@ DeclareGlobalFunction("PolytopalComplex");
 DeclareGlobalFunction("OrbitPolytope");
 DeclareGlobalFunction("RegularCWOrbitPolytope");
 DeclareGlobalFunction("RegularCWPolytope");
+DeclareGlobalFunction("PolymakeFaceLattice");
 
 
 ## POLYCYLIC ########################################################

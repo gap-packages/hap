@@ -246,6 +246,7 @@ ReadPackage("HAP", "lib/Polymake/polyGens.gi");
 ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
 ReadPackage("HAP", "lib/Polymake/orbitPoly.gi");
+ReadPackage("HAP", "lib/Polymake/fix.gi");
 
 ################### POLYCYLIC ######################################
 ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
