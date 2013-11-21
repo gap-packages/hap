@@ -641,6 +641,7 @@ end;
 
 AlgRed:=AlgebraicReduction;
 
+
 dim:=EvaluateProperty(Y,"dimension");
 
 basis:=[];

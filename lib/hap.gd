@@ -475,6 +475,7 @@ DeclareGlobalVariable("PathComponentOfSimplicialComplex");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex_alt");
 DeclareGlobalFunction("ContractGraph");
 DeclareGlobalFunction("SimplicialNerveOfGraph");
+DeclareOperation("CliqueComplex",[IsHapSimplicialComplex, IsInt]);
 DeclareGlobalFunction("SimplicialNerveOfFilteredGraph");
 DeclareGlobalFunction("GraphDisplay");
 DeclareGlobalVariable("ViewGraph");
