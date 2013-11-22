@@ -16,7 +16,9 @@ local
 	i,R,B,w,ww,x;
 
 if Length(arg)=3 then
-F:=arg[1]; rels:=arg[2]; N:=arg[3];
+F:=arg[1]; rels:=arg[2]; N:=arg[3]; 
+         if Length(rels)>0 then G:=F/rels;
+         else G:=F; fi;
 fi;
 if Length(arg)=2 then
 G:=arg[1]; 

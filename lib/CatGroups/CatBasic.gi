@@ -1,27 +1,3 @@
-############################################################
-############################################################
-InstallGlobalFunction(XmodToHAP,
-function(X)
-local   C;
-
-if IsHapCatOneGroup(X) then return X; fi;
-
-if IsComponentObjectRep(X) then
-if "TailMap" in NamesOfComponents(X)  and "HeadMap" in NamesOfComponents(X)
-then
-     C:=Objectify(HapCatOneGroup,rec(
-             sourceMap:=X!.TailMap,
-             targetMap:=X!.HeadMap));
-     return C;
-fi;
-fi;
-
-Print("Argument is not a cat-1-group from the Xmod package.\n");
-return fail;
-
-end);
-############################################################
-############################################################
 
 ############################################################
 ############################################################
