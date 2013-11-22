@@ -336,19 +336,32 @@ ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
-#ReadPackage("HAP","lib/SimplicialGroups/Kpinmap.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/eilenbergMacLane.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/nerveOfCatOneGroup.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/quasiIsomorph.gi");
+
 ReadPackage("HAP","lib/SimplicialGroups/eilenbergMacLane.gi");
-#ReadPackage("HAP","lib/SimplicialGroups/simplicialmap.gi");
 ReadPackage("HAP","lib/SimplicialGroups/nerveOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
-ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
-ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barResolutionEquivalence.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barComplexEquivalence.gi");
 ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
-ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
-#ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
+ReadPackage("HAP","lib/SimplicialGroups/crossedModule.gi");
 ReadPackage("HAP","lib/SimplicialGroups/quasiIsomorph.gi");
+ReadPackage("HAP","lib/SimplicialGroups/homology.gi");
+ReadPackage("HAP","lib/SimplicialGroups/persistentHomology.gi");
+ReadPackage("HAP","lib/SimplicialGroups/dataCatOneGroups.gi");
+ReadPackage("HAP","lib/SimplicialGroups/catOneGroupsByGroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/quasiCatOneGroup.gi");
 
 
 ################## REGULAR CW_COMPLEXES ###############################
