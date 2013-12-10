@@ -308,6 +308,8 @@ Tree:=List(Tree,x->x[3]);
 Verts:=SSortedList(Verts);
 ###############################
 
+
+
 NTree:=SSortedList(NTree);
 NNTree:=[];
 
@@ -317,35 +319,51 @@ RemoveSet(NTree,a);
 AddSet(NNTree,a);
 
 while Length(NTree)>0 do
-a:=NTree[1];
-RemoveSet(NTree,a);
+a:=1*Random(NTree);
 
-for x in NTree do
+for x in NNTree do
 
 if AbsInt(x[1][1])=AbsInt(a[1][1]) then
-a[1][2]:=x[1][2]; a[2][2]:= Mult( x[1][2], Mult(Inv(a[1][2]),a[2][2]));
+RemoveSet(NTree,a);
+g:=a[1][2]*1;
+a[1][2]:=x[1][2]*1; a[2][2]:= Mult( x[1][2], Mult(Inv(g),a[2][2]))*1;
+AddSet(NNTree,a);
+
 break; fi;
 
 if AbsInt(x[1][1])=AbsInt(a[2][1]) then
-a[2][2]:=x[1][2]; a[1][2]:= Mult( x[1][2], Mult(Inv(a[2][2]),a[2][2]));
+RemoveSet(NTree,a);
+g:=a[2][2]*1;
+a[2][2]:=x[1][2]*1; a[1][2]:= Mult( x[1][2], Mult(Inv(g),a[1][2]))*1;
+AddSet(NNTree,a);
+
 break; fi;
 
 if AbsInt(x[2][1])=AbsInt(a[1][1]) then
-a[1][2]:=x[2][2]; a[2][2]:= Mult( x[2][2], Mult(Inv(a[1][2]),a[2][2]));
+RemoveSet(NTree,a);
+g:=a[1][2]*1;
+a[1][2]:=x[2][2]*1; a[2][2]:= Mult( x[2][2], Mult(Inv(g),a[2][2]))*1;
+AddSet(NNTree,a);
+
 break; fi;
 
 if AbsInt(x[2][1])=AbsInt(a[2][1]) then
-a[2][2]:=x[2][2]; a[1][2]:= Mult( x[2][2], Mult(Inv(a[2][2]),a[2][2]));
+RemoveSet(NTree,a);
+g:=a[2][2]*1;
+a[2][2]:=x[2][2]*1; a[1][2]:= Mult( x[2][2], Mult(Inv(g),a[1][2]))*1;
+AddSet(NNTree,a);
+
 break; fi;
 
 od;
-AddSet(NNTree,a);
+
 od;
 fi;
 
 NTree:=NNTree;
-Print(Tree,"\n\n");
-Print(NTree,"\n\n");
+
+
+
 
 VertElts:=[];
 if Length(NTree)=0 then VertElts[1]:=1;fi;
@@ -354,7 +372,7 @@ VertElts[AbsInt(x[1][1])]:=x[1][2];
 VertElts[AbsInt(x[2][1])]:=x[2][2];
 od;
 
-Print(VertElts,"\n\n");
+
 
 ##########################
 #HRels will be a list of relators given as ordered edges of a polygon.
@@ -396,11 +414,11 @@ if not i in Tree then cnt:=cnt+1; index[i]:=cnt; Add(Gens,HGens[i]);fi;
 od;
 
 #Gens contains the information needed to return gens
-#Gens:=List(Gens,x->Mult(Inv(x[1][2]),x[2][2])); #IMPORTANT: NEEDS FIXING    
 Gens:=List(Gens,x->
-Mult(Inv(VertElts[AbsInt(x[2][1])]),  
-Mult(
-Mult(VertElts[AbsInt(x[1][1])],Inv(x[1][2])),x[2][2])));
+[   [x[1][1],VertElts[AbsInt(x[1][1])]]  ,  
+    [x[2][1],Mult( Mult(VertElts[AbsInt(x[1][1])],Inv(x[1][2])) ,x[2][2])]  ]   );
+Gens:=List(Gens,x-> Mult(x[2][2], Inv(VertElts[AbsInt(x[2][1])])));
+
 
 
 HRels1:=[];

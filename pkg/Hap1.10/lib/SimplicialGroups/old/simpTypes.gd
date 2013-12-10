@@ -1,13 +1,17 @@
 #C Ellis & Le
 
-#1####################################################################
+
+#1##################################################################
 #####################################################################
+
 DeclareCategory("IsHapSimplicialGroup",IsObject);
 
 DeclareRepresentation(  "IsHapSimplicialGroupRep",
                         IsComponentObjectRep,
-                        ["sourceMap",
-                         "targetMap"
+                        ["groupsList",
+                         "boundariesList",
+						 "degeneraciesList", 
+						 "properties"
                          ]);
 
 HapSimplicialGroupFamily:=NewFamily( "HapSimplicialGroupFamily",
@@ -31,74 +35,145 @@ InstallMethod( PrintObj,
  function(R)
 Print("Simplicial group of length ",EvaluateProperty(R,"length"),  "\n");
  end);
- 
 #2##################################################################
 #####################################################################
 
-DeclareCategory("IsHapSimplicialGroupMap",IsObject);
+DeclareCategory("IsHapSimplicialGroupMorphism",IsObject);
 
-DeclareRepresentation(  "IsHapSimplicialGroupMapRep",
+DeclareRepresentation(  "IsHapSimplicialGroupMorphismRep",
                         IsComponentObjectRep,
-                        ["sourceMap",
-                         "targetMap",
-						 "mapping"
+                        ["source",
+                         "target",
+						 "mapping", 
+						 "properties"
                          ]);
 
-HapSimplicialGroupMapFamily:=NewFamily( "HapSimplicialGroupMapFamily",
-                                          IsHapSimplicialGroupMap,
-                                          IsHapSimplicialGroupMap);
+HapSimplicialGroupMorphismFamily:=NewFamily( "HapSimplicialGroupMorphismFamily",
+                                          IsHapSimplicialGroupMorphism,
+                                          IsHapSimplicialGroupMorphism);
 
-HapSimplicialGroupMap:=NewType(HapSimplicialGroupMapFamily,
-                                IsHapSimplicialGroupMapRep);
+HapSimplicialGroupMorphism:=NewType(HapSimplicialGroupMorphismFamily,
+                                IsHapSimplicialGroupMorphismRep);
 
 
 InstallMethod( ViewObj,
-"for HapSimplicialGroupMap",
- [IsHapSimplicialGroupMap],
+"for HapSimplicialGroupMorphism",
+ [IsHapSimplicialGroupMorphism],
  function(R)
- Print("Simplicial group map of length ",EvaluateProperty(R,"length"),  "\n");
+ Print("Morphism of simplicial groups of length ",EvaluateProperty(R,"length"),  "\n");
 end);
 
 InstallMethod( PrintObj,
-"for HapSimplicialGroupMap",
- [IsHapSimplicialGroupMap],
+"for HapSimplicialGroupMorphism",
+ [IsHapSimplicialGroupMorphism],
  function(R)
-Print("Simplicial group map of length ",EvaluateProperty(R,"length"),  "\n");
+Print("Morphism of simplicial groups of length ",EvaluateProperty(R,"length"),  "\n");
  end);
  
 #3##################################################################
 #####################################################################
 
-DeclareCategory("IsHapCatOneGroupHomomorphism",IsObject);
+DeclareCategory("IsHapCatOneGroupMorphism",IsObject);
 
-DeclareRepresentation(  "IsHapCatOneGroupHomomorphismRep",
+DeclareRepresentation(  "IsHapCatOneGroupMorphismRep",
                         IsComponentObjectRep,
                         ["source",
                          "target",
 						 "mapping"
                          ]);
 
-HapCatOneGroupHomomorphismFamily:=NewFamily( "HapCatOneGroupHomomorphismFamily",
-                                          IsHapCatOneGroupHomomorphism,
-                                          IsHapCatOneGroupHomomorphism);
+HapCatOneGroupMorphismFamily:=NewFamily( "HapCatOneGroupMorphismFamily",
+                                          IsHapCatOneGroupMorphism,
+                                          IsHapCatOneGroupMorphism);
 
-HapCatOneGroupHomomorphism:=NewType(HapCatOneGroupHomomorphismFamily,
-                                IsHapCatOneGroupHomomorphismRep);
+HapCatOneGroupMorphism:=NewType(HapCatOneGroupMorphismFamily,
+                                IsHapCatOneGroupMorphismRep);
 
 
 InstallMethod( ViewObj,
-"for HapCatOneGroupHomomorphism",
- [IsHapCatOneGroupHomomorphism],
+"for HapCatOneGroupMorphism",
+ [IsHapCatOneGroupMorphism],
  function(R)
- Print("Homormophism of two cat one groups",  "\n");
+ Print("Morphism of two cat one groups",  "\n");
 end);
 
 InstallMethod( PrintObj,
-"for HapCatOneGroupHomomorphism",
- [IsHapCatOneGroupHomomorphism],
+"for HapCatOneGroupMorphism",
+ [IsHapCatOneGroupMorphism],
  function(R)
- Print("Homormophism of two cat one groups",  "\n");
+ Print("Morphism of two cat one groups",  "\n");
  end);
+ 
+#4##################################################################
+#####################################################################
+
+DeclareCategory("IsHapCrossedModule",IsObject);
+
+DeclareRepresentation(  "IsHapCrossedModuleRep",
+                        IsComponentObjectRep,
+                        ["map",
+                         "action"
+                         ]);
+
+HapCrossedModuleFamily:=NewFamily( "HapCrossedModuleFamily",
+                                          IsHapCrossedModule,
+                                          IsHapCrossedModule);
+
+HapCrossedModule:=NewType(HapCrossedModuleFamily,
+                                IsHapCrossedModuleRep);
+
+
+InstallMethod( ViewObj,
+"for HapCrossedModule",
+ [IsHapCrossedModule],
+ function(R)
+ Print("Crossed module with group homomorphism ",R!.map,"\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapCrossedModule",
+ [IsHapCrossedModule],
+ function(R)
+ Print("Crossed module with group homomorphism ",R!.map,"\n");
+end);
+ 
+#5##################################################################
+#####################################################################
+
+DeclareCategory("IsHapCrossedModuleMorphism",IsObject);
+
+DeclareRepresentation(  "IsHapCrossedModuleMorphismRep",
+                        IsComponentObjectRep,
+                        ["source",
+                         "target",
+						 "mapping"
+                         ]);
+
+HapCrossedModuleMorphismFamily:=NewFamily( "HapCrossedModuleMorphismFamily",
+                                          IsHapCrossedModuleMorphism,
+                                          IsHapCrossedModuleMorphism);
+
+HapCrossedModuleMorphism:=NewType(HapCrossedModuleMorphismFamily,
+                                IsHapCrossedModuleMorphismRep);
+
+
+InstallMethod( ViewObj,
+"for HapCrossedModuleMorphism",
+ [IsHapCrossedModuleMorphism],
+ function(R)
+ Print("Morphism of two crossed modules",  "\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapCrossedModuleMorphism",
+ [IsHapCrossedModuleMorphism],
+ function(R)
+ Print("Morphism of two crossed modules",  "\n");
+ end);
+ 
+ 
+ 
+ 
  
 
 

@@ -94,14 +94,14 @@ InstallMethod( ViewObj,
 "for HapCatOneGroupMorphism",
  [IsHapCatOneGroupMorphism],
  function(R)
- Print("Morphism of two cat one groups",  "\n");
+ Print("Morphism of two cat-1-groups",  "\n");
 end);
 
 InstallMethod( PrintObj,
 "for HapCatOneGroupMorphism",
  [IsHapCatOneGroupMorphism],
  function(R)
- Print("Morphism of two cat one groups",  "\n");
+ Print("Morphism of two cat-1-groups",  "\n");
  end);
  
 #4##################################################################

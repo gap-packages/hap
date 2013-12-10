@@ -308,6 +308,8 @@ Tree:=List(Tree,x->x[3]);
 Verts:=SSortedList(Verts);
 ###############################
 
+
+
 NTree:=SSortedList(NTree);
 NNTree:=[];
 
@@ -345,12 +347,16 @@ fi;
 
 NTree:=NNTree;
 
+Print("\n",NTree,"\n");
+
+
 VertElts:=[];
 if Length(NTree)=0 then VertElts[1]:=1;fi;
 for x in NTree do
 VertElts[AbsInt(x[1][1])]:=x[1][2];
 VertElts[AbsInt(x[2][1])]:=x[2][2];
 od;
+
 
 
 ##########################
@@ -391,12 +397,15 @@ Gens:=[];
 for i in [1..Length(HGens)] do
 if not i in Tree then cnt:=cnt+1; index[i]:=cnt; Add(Gens,HGens[i]);fi;
 od;
+
 #Gens contains the information needed to return gens
 #Gens:=List(Gens,x->Mult(Inv(x[1][2]),x[2][2])); #IMPORTANT: NEEDS FIXING    
 Gens:=List(Gens,x->
 Mult(Inv(VertElts[AbsInt(x[2][1])]),  
 Mult(
 Mult(VertElts[AbsInt(x[1][1])],Inv(x[1][2])),x[2][2])));
+
+
 
 HRels1:=[];
 for x in HRels do

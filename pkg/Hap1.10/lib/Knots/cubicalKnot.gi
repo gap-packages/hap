@@ -36,13 +36,13 @@ if arg[1]<3 then
 Print("There are no knots on ",arg[1]," crossings.\n");
 return fail;
 fi;
-if arg[1]>9 then 
-Print("So far only knots with fewer than 10 crossings have been stored in HAP.\n");
+if arg[1]>11 then 
+Print("So far only knots with fewer than 12 crossings have been stored in HAP.\n");
 return fail;
 fi;
 
 L:=HAP_Knots[arg[1]-2][arg[2]];
-name:=Concatenation(" knot ",String(arg[2])," with ",String(arg[1])," crossings");
+name:=Concatenation("prime knot ",String(arg[2])," with ",String(arg[1])," crossings");
 fi;
 
 L:=Reversed(L);
@@ -106,7 +106,7 @@ PureCompToReg:=PermutahedralComplexToRegularCWComplex;
 PureComp:=PurePermutahedralComplex; fi;
 
 C:=ComplementOfPureComplex(C);
-C:=ZigZagContractedPureComplex(C);
+C:=ZigZagContractedPureComplex(C,"one iteration only");
 Y:=PureCompToReg(C);
 Unbind(C);
 Y:=ContractedComplex(Y);
@@ -258,9 +258,6 @@ local R,M,i,j,b,w, F,xx,hom,GG, poly, ExponentSumWord;
 R:=ResolutionAsphericalPresentation(G,2);
 GG:=R!.group;
 M:=[];
-#F:=FreeGroup(1); xx:=F.1;
-#hom:=GroupHomomorphismByImagesNC(GG,F,GeneratorsOfGroup(GG),
-#List(GeneratorsOfGroup(GG),i->xx));
 
 hom:=HAP_NqEpimorphismNilpotentQuotient(GG,1);
 F:=Image(hom);
@@ -270,7 +267,7 @@ xx:=MinimalGeneratingSet(F)[1];
 #################
 ExponentSumWord:=function(g,xx)
 local i;
-for i in [0..10000] do
+for i in [0..1000000] do
 if xx^i=g then return i; fi;
 if xx^-i=g then return -i; fi;
 od;
@@ -294,12 +291,6 @@ w:=List(w,x->[SignInt(x[1]),Image(hom,R!.elts[x[2]])]);
 w:=List(w,x->[x[1],ExponentSumWord(x[2],xx)]);
 w:=List(w,x-> x[1]*poly(x[2]));
 w:=Sum(w);
-if w=0 then
-w:=[[0],1];
-else
-w:=CoefficientsOfLaurentPolynomial(w);
-fi;
-w:=LaurentPolynomialByCoefficients(FamilyObj(1),w[1],0);
 
 Add(M[i],StructuralCopy(w));
 od;
@@ -312,7 +303,9 @@ end);
 #############################################
 InstallGlobalFunction(AlexanderPolynomial,
 function(GG)
-local M, row, col, Combs, C,G, dets, A, i, j;
+local M, row, col, Cols, Rows, Combs, C,R,G, dets, gen, A, i, j;
+
+gen:=LaurentPolynomialByCoefficients(FamilyObj(1),[1],1);
 
 if IsHapPureCubicalLink(GG) then
 if PathComponentOfPureCubicalComplex(GG,0)=1 then
@@ -325,26 +318,36 @@ fi;
 
 if IsGroup(GG) then G:=GG; fi;
 
-M:=AlexanderMatrix(G);
+if Length(GeneratorsOfGroup(G))=1 and Length(RelatorsOfFpGroup(G))=0
+then return 1;
+fi;
+
+M:=(gen^0)*AlexanderMatrix(G);
 if M=fail then return fail; fi;
 
-if Length(M) > Length(M[1]) then
-M:=TransposedMat(M);
-fi;
 
 row:=Length(M);
 col:=Length(M[1]);
-Combs:=Combinations([1..col], row);
+Cols:=Combinations([1..col], col-1);
+Rows:=Combinations([1..row], col-1);
 dets:=[];
 
-for C in Combs do
-A:=TransposedMat(M);
+for C in Cols do
+for R in Rows do
+A:=StructuralCopy(M);
+A:=A{R};
+A:=TransposedMat(A);
 A:=A{C};
+if Length(A)>0 then
 Add(dets,Determinant(A));
+fi;
+od;
 od;
 
-#return dets;
-return Gcd(dets);
+Apply(dets,w->w*gen^-CoefficientsOfLaurentPolynomial(w)[2]);
+A:=Gcd(dets);
+return
+A*Lcm(List(Flat(CoefficientsOfLaurentPolynomial(A)),x->DenominatorRat(x)));
 end);
 #############################################
 
@@ -570,4 +573,64 @@ RemoveFile(file);
 end);
 #############################################################
 #############################################################
+
+
+###########################################
+###########################################
+InstallGlobalFunction(ReflectedCubicalKnot,
+function(K)
+local A;
+
+A:=1*K!.binaryArray;
+A:=Reversed(A);
+Apply(A,a->Reversed(TransposedMat(a)));
+A:=ArcPresentation(PureCubicalComplex(A),"anything");
+
+return PureCubicalKnot(A);
+end);
+################################################
+################################################
+
+###########################################
+###########################################
+InstallGlobalFunction(ArcPresentation,
+function(arg)
+local K,A, P, L,i, row, m, n;
+
+K:=arg[1];
+
+if Length(arg)=1 and not IsHapPureCubicalLink(K) then
+Print("This function applied only to pure cubical knots and links.\n");
+return fail;
+fi;
+
+
+A:=K!.binaryArray[4];
+A:=TransposedMat(A);
+
+P:=[];
+
+
+for i in [1..Length(A)] do
+row:=A[i];
+m:=Position(row, 1);
+if not m=fail then
+    n:=m;
+    while not row[n+1]=0 do
+    n:=n+1;
+    od;
+Add(P,[m,n]);
+fi;
+od;
+
+P:= DuplicateFreeList(P);
+L:=SSortedList(Flat(P));
+
+Apply(P,a->[Position(L,a[1]),Position(L,a[2])]);
+
+return Reversed(P);
+
+end);
+################################################
+################################################
 

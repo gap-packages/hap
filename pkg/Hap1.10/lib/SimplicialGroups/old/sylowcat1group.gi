@@ -1,9 +1,9 @@
 InstallGlobalFunction(SylowSubgroupOfCatOneGroup_alt,
-function(CC,p)
+function(C,p)
 local
-    C,G,P,gens,s,t,sp,tp,
+    G,P,Gens,s,t,sp,tp,
 	Num,i,k;
-    C:=XmodToHAP(CC);
+	
     s:=C!.sourceMap;
     t:=C!.targetMap;
     G:=Source(s);
@@ -18,12 +18,16 @@ local
     while Order(P)<k do
         P:=SylowSubgroup(Normalizer(G,P),p);
     od;
-	gens:=GeneratorsOfGroup(P);
-    sp:=GroupHomomorphismByImages(P,P,gens,List(gens,x->Image(s,x)));
+	Gens:=GeneratorsOfGroup(P);
+    sp:=GroupHomomorphismByImages(P,P,Gens,List(Gens,x->Image(s,x)));
     tp:=GroupHomomorphismByImages(P,P,
-    gens,List(gens,x->Image(t,x)));
+    Gens,List(Gens,x->Image(t,x)));
     return Objectify(HapCatOneGroup, rec(
                          sourceMap:=sp,
                          targetMap:=tp,
                          ));
 end);
+
+
+
+

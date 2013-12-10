@@ -1,450 +1,449 @@
-InstallGlobalFunction(EilenbergMacLaneSimplicialGroup,
-function(X,NN,number)
-
+#############################################################################
+#0
+#F	EilenbergMacLaneSimplicialGroup
+##	Input:	An abelian group A or a homomorphism of abelian groups f
+##			and a positive integer n, and a positive integer dim 
+##	Output:	The first 1+dim terms of K(A,n) or K(f,n) under functor 
+##				K(-,n): (abelian groups)->(simplicial abelian groups)
+##	
+InstallGlobalFunction(EilenbergMacLaneSimplicialGroup, function(X,n,dim)
 local
 	EilenbergMacLane_Obj,
 	EilenbergMacLane_Map;
 
-#########################################################
-EilenbergMacLane_Obj:= function(G,NN,number)
+	######################################################################
+	#1
+	#F	EilenbergMacLane_Obj
+	##	Input:	
+	EilenbergMacLane_Obj:= function(A,NN,nK)
 	local 
-		nn,i,j,n,k,pos,len1,len2,temp,x,y,
-		CoF,CoD,MN,T,N,H1,H2,GensH2,lengensH2,Prj,
-		ListGensH2,GensH1,lengensH1,ListGensH1,Emb,
-		NumberFace,NumberDegener,ImageGens,
-		IdTri,GensG,ListId,TriGroup,
-		HomoTriToTri,HomoGToTri,HomoTriToG,HomoIdG,
-		Surjection,LenOfSur,
-		Faces,Degeners,ListGroups,
+		nn,zero,i,j,n,k,pos,tmp,x,y,
+		GensA,ZeroGrp,CoF,CoD,MN,
+		ListGensG,T,N,G,H,GensG,nG,Pro,Emb,nNumG,nNumH,
+		NumberFace,NumberDegen,ImgGens,
+		ZeroToZero,AToZero,ZeroToA,IdA,
+		Surjection,NumOfSur,
+		Faces,Degens,ListGroups,
 		GroupsList,FaciesList,DegeneraciesList,
-		CreateSurjective,FindComposite,CoDegeneracies,CoFaces,SearchPos;
- 
-#if NN<3 and IsPcpGroup(G) then
-#return 
-#EilenbergMacLaneSimplicialGroup_alt(G,NN,number);
-#fi;
-
-
-nn:=NN-1;
-##############Find all surjection from [m] to [n]#############
-##############Output: List of list couples [i,j]##############
-CreateSurjective:=function(m,n)
-local
-	CreatCouple,Rew,y,M;
-	
-	if m<n then
-		return fail;
-	fi;
-	if m=0 then
-		return [[[0,0]]];
-	fi;
-##############################################	
-	CreatCouple:=function(m,n)
-	local 
-		A,B,M,x,i;
-		if n=0 then
-			M:=[];
-			for i in [0..m] do
-				Add(M,[i,0]);
+		AllSurjections,CompositeOfMaps,CoDegeneracies,CoFaces;
+		
+		nn:=NN-1;
+		
+		#################################################################
+		#2
+		#F	AllSurjections
+		##	Input:	Two numbers m, n and m>=n
+		##	Output:	All surjections from [m] to [n]
+		AllSurjections:=function(m,n)
+		local
+			CreatCouple,Res,y,M;
+			
+			if m<n then
+				return fail;
+			fi;
+			if m=0 then
+				return [[[0,0]]];
+			fi;
+			########################################################
+			#3
+			#F
+			##
+			CreatCouple:=function(m,n)
+			local 
+				LA,LB,M,x,i;
+				if n=0 then
+					M:=[];
+					for i in [0..m] do
+						Add(M,[i,0]);
+					od;
+					return [M];
+				fi;
+				if m=n-1 then
+					M:=[];
+					for i in [0..m] do
+						Add(M,[i,i]);
+					od;
+					return [M];
+				fi;
+				LA:=CreatCouple(m-1,n-1);
+					for x in LA do
+						Add(x,[m,n-1]);
+					od;
+				
+				LB:=CreatCouple(m-1,n);
+					for x in LB do
+						Add(x,[m,n]);
+					od;
+				
+				return Concatenation(LA,LB);		
+			end;
+			##
+			########################################################
+			Res:=CreatCouple(m-1,n);
+			for y in Res do
+				Add(y,[m,n]);
 			od;
-			return [M];
-		fi;
-		if m=n-1 then
-			M:=[];
-			for i in [0..m] do
+			return Res;
+		end;
+
+		#################################################################
+		#2
+		#F	CoFaces
+		##	Input:	A integer number n>=0
+		##	Output:	All cofaces: [n]->[n+1]
+		##
+		CoFaces:=function(n)
+		local	i,k,M,Res;
+		
+			Res:=[];
+			for i in [0..n+1] do
+				M:=[];
+				for k in [0..i-1] do
+					Add(M,[k,k]);
+				od;
+				for k in [i..n] do
+					Add(M,[k,k+1]);
+				od;
+				Add(Res,M);
+			od;
+			return Res;
+		end;
+		##
+		########## end of CoFaces ###################################
+		
+		#############################################################
+		#2
+		#F	CoDegeneracies
+		##	Input:	A integer number n>=0
+		##	Output:	All codegeneracies:[n]-->[n-1]
+		##
+		CoDegeneracies:=function(n)
+		local	i,k,M,Res;
+		
+			Res:=[];
+			for i in [0..n-1] do
+				M:=[];
+				for k in [0..i-1] do
+					Add(M,[k,k]);
+				od;
 				Add(M,[i,i]);
+				for k in [i+1..n] do
+					Add(M,[k,k-1]);
+				od;
+				Add(Res,M);
 			od;
-			return [M];
-		fi;
-		A:=CreatCouple(m-1,n-1);
-			for x in A do
-				Add(x,[m,n-1]);
-			od;
+			return Res;
+		end;
+		##
+		########## end of CoDegeneracies ############################
 		
-		B:=CreatCouple(m-1,n);
-			for x in B do
-				Add(x,[m,n]);
+		#############################################################
+		#2
+		#F	CompositeOfMaps
+		##	Input:	Two maps m]->[n] and [n]->>[k]
+		##	Output:	The map [m]->>[k] if it exists or 0 for other else
+		##
+		CompositeOfMaps:=function(M,N)
+		local Res,k,m,Temp,i,x,y;
+			k:=nn;
+			m:=Length(M)-1;
+			x:=M[m+1][2];
+			y:=N[x+1][2];
+			if y<>k then
+				return 0;
+			fi;
+			Res:=[];
+			Temp:=[];
+			for i in [0..m] do
+				x:=M[i+1][2];
+				y:=N[x+1][2];
+				Add(Res,[i,y]);
+				Add(Temp,y);
 			od;
+			if Length(Set(Temp))<k+1 then
+				return 0;
+			fi;
+			return Res;
+		end;
+		##
+		########## end of CompositeOfMaps ###########################
+			
+		Surjection:=[];
+		NumOfSur:=[];
+		for i in [nn..nK] do
+			Surjection[i+1]:=AllSurjections(i,nn); 	 ##[i+1]
+			NumOfSur[i+1]:=Length(Surjection[i+1]);      ##[i+1]
+		od;
 		
-		return Concatenation(A,B);		
-	end;
-##################################################
-	Rew:=CreatCouple(m-1,n);
-	for y in Rew do
-		Add(y,[m,n]);
-	od;
-	return Rew;
-end;
-
-###########Create CoFaces:[n]-->[n+1]########################
-###########Outout: List of list od couples ##################
-CoFaces:=function(n)
-local i,k,M,Rew;
-	Rew:=[];
-	for i in [0..n+1] do
-		M:=[];
-		for k in [0..i-1] do
-			Add(M,[k,k]);
+		zero:=Identity(A);
+		ZeroGrp:=Group(zero);
+		ListGroups:=[];
+		for i in [0..nn-1] do
+			ListGroups[i+1]:=ZeroGrp;               
 		od;
-		for k in [i..n] do
-			Add(M,[k,k+1]);
+		ListGroups[nn+1]:=A;
+		for i in [nn+1..nK] do
+			ListGroups[i+1]:=DirectProduct(List([1..NumOfSur[i+1]],x->A));
 		od;
-		Add(Rew,M);
-	od;
-	return Rew;
-end;
-
-#############Create CoDegeneracies:[n]-->[n-1]################
-###########Output: List of list od couples ##################
-CoDegeneracies:=function(n)
-local i,k,M,Rew;
-	Rew:=[];
-	for i in [0..n-1] do
-		M:=[];
-		for k in [0..i-1] do
-			Add(M,[k,k]);
-		od;
-		Add(M,[i,i]);
-		for k in [i+1..n] do
-			Add(M,[k,k-1]);
-		od;
-		Add(Rew,M);
-	od;
-	return Rew;
-end;
-
-###############Find the composite of [m]->[n]->>[k] ##################
-###############Output:[m]->>[k] if it exist or 0 if not exist#########
-FindComposite:=function(M,N)
-local Rew,k,m,Temp,i,x,y;
-	k:=nn;
-	m:=Length(M)-1;
-	x:=M[m+1][2];
-	y:=N[x+1][2];
-	if y<>k then
-		return 0;
-	fi;
-	Rew:=[];
-	Temp:=[];
-	for i in [0..m] do
-		x:=M[i+1][2];
-		y:=N[x+1][2];
-		Add(Rew,[i,y]);
-		Add(Temp,y);
-	od;
-	if Length(Set(Temp))<k+1 then
-		return 0;
-	fi;
-	return Rew;
-end;
-
-############Find the position of M in List L##################
-############If yes return pos, no return 0####################
-SearchPos:=function(M,L)
-	local
-		i,n;
-	n:=Length(L);
-	for i in [1..n] do	
-		if M=L[i] then
-			return i;
-		fi;
-	od;
-	return 0;
-end;
-
-######################################################
-######################################################			
-	Surjection:=[];
-	LenOfSur:=[];
-	for i in [nn..number] do
-		Surjection[i+1]:=CreateSurjective(i,nn); 			###[i+1]
-		LenOfSur[i+1]:=Length(Surjection[i+1]);      ##[i+1]
-	od;
-	TriGroup:=Group(Identity(G));
-	ListGroups:=[];
-	for i in [0..nn-1] do
-		ListGroups[i+1]:=TriGroup;               
-	od;
-	ListGroups[nn+1]:=G;
-	for i in [nn+1..number] do
-		ListGroups[i+1]:=DirectProduct(List([1..LenOfSur[i+1]],x->G));  ##[i+1]
-	od;
-	HomoTriToTri:=GroupHomomorphismByImages(TriGroup,TriGroup,[],[]);
-	IdTri:=Identity(TriGroup);
-	GensG:=GeneratorsOfGroup(G);
-	ListId:=[];
-	for i in [1..Length(GensG)] do
-		ListId[i]:=IdTri;
-	od;
-	HomoGToTri:=GroupHomomorphismByImages(G,TriGroup,GensG,ListId);
-	HomoTriToG:=GroupHomomorphismByImages(TriGroup,G,[],[]);
-	HomoIdG:=GroupHomomorphismByImages(G,G,GensG,GensG);
+		
+		GensA:=GeneratorsOfGroup(A);
+		ZeroToZero:=GroupHomomorphismByImages(ZeroGrp,ZeroGrp,[],[]);
+		AToZero:=GroupHomomorphismByImages(A,ZeroGrp,GensA,List(GensA,x->zero));
+		ZeroToA:=GroupHomomorphismByImages(ZeroGrp,A,[],[]);
+		IdA:=GroupHomomorphismByImages(A,A,GensA,GensA);
+		
+		########## Compute the faces map: K_n-->K_{n-1}##############
 	
-	##########################################
-	########Create Faces #####################
-	Faces:=[];             ####[i][j+1]
-	for i in [1..number] do
-		Faces[i]:=[];
-	od;
-	for i in [1..nn-1] do
-		for j in [0..i] do
-			Faces[i][j+1]:=HomoTriToTri;
-		od;
-	od;
-	##########Create Faces at position nn-->####
-	if nn>0 then
-		for j in [0..nn] do
-			Faces[nn][j+1]:=HomoGToTri;
-		od;
-	fi;
-    ############### [n-1]->[n]->>[nn] with n,i([n-1] ->>[n]),k (pos [n]->>[nn]find pos in [n-1]->>[nn]
-	############### Output: pos if exist or 0 if not exist###################################
-	NumberFace:=[];
-	for n in [1..number] do
-		NumberFace[n]:=[];
-		for i in [0..n] do
-			NumberFace[n][i+1]:=[];
-		od;
-	od;
-	
-	for n in [nn+1..number] do
-		CoF:=CoFaces(n-1);
-		MN:=Surjection[n];
-		for i in [0..n] do
-			for k in [1..LenOfSur[n+1]] do
-				N:=Surjection[n+1][k];
-				T:=FindComposite(CoF[i+1],N);
-				if T=0 then
-					NumberFace[n][i+1][k]:=0;
-				else
-					NumberFace[n][i+1][k]:=SearchPos(T,MN);  ##i+1
-				fi;
+		Faces:=List([1..nK],i->[]); 
+		
+		########### Compute the face maps d_k^i with k<n ############
+		for i in [1..nn-1] do
+			for j in [0..i] do
+				Faces[i][j+1]:=ZeroToZero;
 			od;
 		od;
-	od;
-	
-   ###########################################
-	for n in [nn+1..number] do
-		H2:=ListGroups[n+1];
-		H1:=ListGroups[n];
-		len2:=LenOfSur[n+1];
-		len1:=LenOfSur[n];
-		GensH2:=GeneratorsOfGroup(H2);
-		lengensH2:=Length(GensH2);
-		Prj:=[];
-		for k in [1..len2] do
-			Prj[k]:=Projection(H2,k);
-		od;
-		ListGensH2:=[];
-		for k in [1..lengensH2] do
-			x:=GensH2[k];
-			temp:=[];
-			for j in [1..len2] do
-				temp[j]:=Image(Prj[j],x);
-			od;
-			Add(ListGensH2,temp);
-		od;
-		######
-		Emb:=[];
-		if n=nn+1 then      ## at position nn, there is only G
-				Emb[1]:=HomoIdG;
-		else
-			for k in [1..len1] do
-				Emb[k]:=Embedding(H1,k);
+		
+		########### Compute the face maps d_nn^i ####################
+		if nn>0 then
+			for j in [0..nn] do
+				Faces[nn][j+1]:=AToZero;
 			od;
 		fi;
-	########Find Faces n i##########################
-		for i in [0..n] do
-			ImageGens:=[];
-			for j in [1..lengensH2] do	
-				x:=Identity(H1);
-				for k in [1..len2] do
-					pos:=NumberFace[n][i+1][k];
-					if pos<>0 then
-						x:=x*Image(Emb[pos],ListGensH2[j][k]);
+		
+		########### Compute the face map d_n^i ######################
+		NumberFace:=[];
+		for n in [1..nK] do
+			NumberFace[n]:=[];
+			for i in [0..n] do
+				NumberFace[n][i+1]:=[];
+			od;
+		od;
+		
+		for n in [nn+1..nK] do
+			CoF:=CoFaces(n-1);
+			MN:=Surjection[n];
+			for i in [0..n] do
+				for k in [1..NumOfSur[n+1]] do
+					N:=Surjection[n+1][k];
+					T:=CompositeOfMaps(CoF[i+1],N);
+					if T=0 then
+						NumberFace[n][i+1][k]:=0;
+					else
+						NumberFace[n][i+1][k]:=Position(MN,T);  
 					fi;
 				od;
-			    ImageGens[j]:=x;
-			od; 
-		    Faces[n][i+1]:=GroupHomomorphismByImages(H2,H1,GensH2,ImageGens);
-		od;
-	od;							
-	################################################
-	########Create Degeneracies#####################
-	Degeners:=[];             ####[i+1][j+1]
-	for i in [0..number-1] do
-		Degeners[i+1]:=[];
-	od;
-	for i in [0..nn-2] do
-		for j in [0..i] do
-			Degeners[i+1][j+1]:=HomoTriToTri;
-		od;
-	od;
-	########Create Degeneracies at position nn-1#####################
-	if nn>1 then
-		for j in [0..nn-1] do
-			Degeners[nn][j+1]:=HomoTriToG;
-		od;
-	fi;
-	
-	############### [n+1]->[n]->>[nn] with n,i([n+1]->>[n]),k (pos [n]->>[nn]find pos in [n+1]->>[nn]
-	############### Output: pos if exist or 0 if not exist###################################
-	NumberDegener:=[];  ####[n+1][i+1][k]
-	for n in [0..number-1] do
-		NumberDegener[n+1]:=[];       
-		for i in [0..n] do
-			NumberDegener[n+1][i+1]:=[];
-		od;
-	od;
-	
-	for n in [nn..number-1] do
-		CoD:=CoDegeneracies(n+1);
-		MN:=Surjection[n+2];
-		for i in [0..n] do
-			for k in [1..LenOfSur[n+1]] do
-				N:=Surjection[n+1][k];
-				T:=FindComposite(CoD[i+1],N);
-				if T=0 then
-					NumberDegener[n+1][i+1][k]:=0;
-				else
-					NumberDegener[n+1][i+1][k]:=SearchPos(T,MN);  ##i+1
-				fi;
 			od;
 		od;
-	od;
-   ###########################################
-	for n in [nn..number-1] do
-		H1:=ListGroups[n+1];
-		H2:=ListGroups[n+2];
-		len1:=LenOfSur[n+1];
-		len2:=LenOfSur[n+2];
-		GensH1:=GeneratorsOfGroup(H1);
-		lengensH1:=Length(GensH1);
-		Prj:=[];
-		if n=nn then   ## at position nn, there is only G
-				Prj[1]:=HomoIdG;
-		else
-			for k in [1..len1] do
-				Prj[k]:=Projection(H1,k);
+		
+		for n in [nn+1..nK] do
+			G:=ListGroups[n+1];
+			H:=ListGroups[n];
+			nNumG:=NumOfSur[n+1];
+			nNumH:=NumOfSur[n];
+			GensG:=GeneratorsOfGroup(G);
+			nG:=Length(GensG);
+			Pro:=List([1..nNumG],k->Projection(G,k));
+			ListGensG:=[];
+			for i in [1..nG] do
+				x:=GensG[i];
+				tmp:=List([1..nNumG],k->Image(Pro[k],x));
+				Add(ListGensG,tmp);
+			od;
+	
+			if n=nn+1 then      ## at position nn, there is only A
+				Emb:=[IdA];
+			else
+				Emb:=List([1..nNumH],k->Embedding(H,k));
+			fi;
+			
+			for i in [0..n] do
+				ImgGens:=[];
+				for j in [1..nG] do	
+					x:=Identity(H);
+					for k in [1..nNumG] do
+						pos:=NumberFace[n][i+1][k];
+						if pos<>0 then
+							x:=x*Image(Emb[pos],ListGensG[j][k]);
+						fi;
+					od;
+					ImgGens[j]:=x;
+				od; 
+				Faces[n][i+1]:=GroupHomomorphismByImages(G,H,GensG,ImgGens);
+			od;
+		od;				
+		
+		########### Compute the degeneracy map s_n^i ################
+		Degens:=List([0..nK-1],i->[]); 		
+
+		########### Compute the degeneracy maps s_k^i with k<n-1 ####
+		for i in [0..nn-2] do
+			for j in [0..i] do
+				Degens[i+1][j+1]:=ZeroToZero;
+			od;
+		od;
+
+		########## Compute the degeneracy maps at s_{n-1}^i #########
+		if nn>1 then
+			for j in [0..nn-1] do
+				Degens[nn][j+1]:=ZeroToA;
 			od;
 		fi;
-		ListGensH1:=[];
-		for k in [1..lengensH1] do
-			x:=GensH1[k];
-			temp:=[];
-			for j in [1..len1] do
-				temp[j]:=Image(Prj[j],x);
+		
+		NumberDegen:=[];  ####[n+1][i+1][k]
+		for n in [0..nK-1] do
+			NumberDegen[n+1]:=[];       
+			for i in [0..n] do
+				NumberDegen[n+1][i+1]:=[];
 			od;
-			Add(ListGensH1,temp);
-		od;
-		######
-		Emb:=[];	
-		for k in [1..len2] do
-			Emb[k]:=Embedding(H2,k);
 		od;
 		
-		########Find Faces n i##########################
-		for i in [0..n] do
-			ImageGens:=[];
-			for j in [1..lengensH1] do	
-				x:=Identity(H2);
-				for k in [1..len1] do
-					pos:=NumberDegener[n+1][i+1][k];
-					if pos<>0 then
-						x:=x*Image(Emb[pos],ListGensH1[j][k]);
+		for n in [nn..nK-1] do
+			CoD:=CoDegeneracies(n+1);
+			MN:=Surjection[n+2];
+			for i in [0..n] do
+				for k in [1..NumOfSur[n+1]] do
+					N:=Surjection[n+1][k];
+					T:=CompositeOfMaps(CoD[i+1],N);
+					if T=0 then
+						NumberDegen[n+1][i+1][k]:=0;
+					else
+						NumberDegen[n+1][i+1][k]:=Position(MN,T);  ##i+1
 					fi;
 				od;
-			    ImageGens[j]:=x;
-			od; 
-		    Degeners[n+1][i+1]:=GroupHomomorphismByImages(H1,H2,GensH1,ImageGens);
+			od;
 		od;
-    od;						
-		
-#######################################################
-GroupsList:=function(i)
-	return ListGroups[i+1];
-end;
-#######################################################
-FaciesList:=function(i,j)
-	return Faces[i][j+1];
-end;
-#######################################################
-DegeneraciesList:=function(i,j)
-	return Degeners[i+1][j+1];
-end;
-###########################################################
-return Objectify(HapSimplicialGroup,
-       rec(
-            groupsList:=GroupsList,
-            boundariesList:=FaciesList,
-            degeneraciesList:=DegeneraciesList,
-            properties:=[["length",number]]
-          ));
-end;		
-
-
-###############################################################
-###############################################################
-EilenbergMacLane_Map:=function(f,n,len)
+	   ###########################################
+		for n in [nn..nK-1] do
+			G:=ListGroups[n+1];
+			H:=ListGroups[n+2];
+			nNumG:=NumOfSur[n+1];
+			nNumH:=NumOfSur[n+2];
+			GensG:=GeneratorsOfGroup(G);
+			nG:=Length(GensG);
+			
+			if n=nn then   
+					Pro:=[IdA];
+			else
+				Pro:=List([1..nNumG],k->Projection(G,k));
+			fi;
+			ListGensG:=[];
+			for i in [1..nG] do
+				x:=GensG[i];
+				tmp:=List([1..nNumG],k->Image(Pro[k],x));
+				Add(ListGensG,tmp);
+				
+			od;
+			Emb:=List([1..nNumH],k->Embedding(H,k));
+			
+			for i in [0..n] do
+				ImgGens:=[];
+				for j in [1..nG] do	
+					x:=Identity(H);
+					for k in [1..nNumG] do
+						pos:=NumberDegen[n+1][i+1][k];
+						if pos<>0 then
+							x:=x*Image(Emb[pos],ListGensG[j][k]);
+						fi;
+					od;
+					ImgGens[j]:=x;
+				od; 
+				Degens[n+1][i+1]:=GroupHomomorphismByImages(G,H,GensG,ImgGens);
+			od;
+		od;						
+			
+		#######################################################
+		GroupsList:=function(i)
+			return ListGroups[i+1];
+		end;
+		#######################################################
+		FaciesList:=function(i,j)
+			return Faces[i][j+1];
+		end;
+		#######################################################
+		DegeneraciesList:=function(i,j)
+			return Degens[i+1][j+1];
+		end;
+		###########################################################
+		return Objectify(HapSimplicialGroup,
+			   rec(
+					groupsList:=GroupsList,
+					boundariesList:=FaciesList,
+					degeneraciesList:=DegeneraciesList,
+					properties:=[["length",nK]]
+				  ));
+	end;		
+	##
+	############### end of EilenbergMacLane_Obj ##########################
+	
+	######################################################################
+	#1
+	#F	EilenbergMacLane_Map
+	##	Input:	A homomorphism of abelian groups f:A->B and n, nK
+	##	Output:	The morphism fK:K(A,n)->K(B,n)
+	##
+	EilenbergMacLane_Map:=function(f,n,nK)
 	local 
-		H,G,KH,KG,
-		Mapf,Mapping,HH,GG,
-		GensH,Prj,Emb,ImgsH,
-		i,j,k,t,lengens,
+		A,B,KA,KB,
+		Maps,Mapping,GrpKA,GrpKB,
+		Gens,Pro,Emb,ImgGens,
+		i,j,k,t,nGens,
 		h,g;
-		
-H:=f!.Source;
-G:=f!.Range;
-KH:=EilenbergMacLane_Obj(H,n,len);
-KG:=EilenbergMacLane_Obj(G,n,len);
-Mapf:=[];
-for i in [0..n-2] do
-	Mapf[i+1]:=GroupHomomorphismByImages(Group(Identity(H)),Group(Identity(G)),[],[]);
-od;
-Mapf[n]:=f;  ##n-1
-for i in [n..len] do
-	HH:=KH!.groupsList(i);
-	GG:=KG!.groupsList(i);
-	GensH:=GeneratorsOfGroup(HH);
-	Prj:=[];
-	Emb:=[];
-	k:=Length(HH!.DirectProductInfo!.groups);	
-	for j in [1..k] do
-		Prj[j]:=Projection(HH,j);
-		Emb[j]:=Embedding(GG,j);
+			
+	A:=f!.Source;
+	B:=f!.Range;
+	KA:=EilenbergMacLane_Obj(A,n,nK);
+	KB:=EilenbergMacLane_Obj(B,n,nK);
+	Maps:=[];
+	for i in [0..n-2] do
+		Maps[i+1]:=GroupHomomorphismByImages(Group(Identity(A)),Group(Identity(B)),[],[]);
 	od;
-	ImgsH:=[];
-	lengens:=Length(GensH);
-    for j in [1..lengens] do
-		h:=GensH[j];
-		g:=Identity(GG);
-		for t in [1..k] do
-			g:=g*Image(Emb[t],Image(f,Image(Prj[t],h)));
+	Maps[n]:=f;  	##n-1
+	for i in [n..nK] do
+		GrpKA:=KA!.groupsList(i);
+		GrpKB:=KB!.groupsList(i);
+		Gens:=GeneratorsOfGroup(GrpKA);
+		Pro:=[];
+		Emb:=[];
+		k:=Length(GrpKA!.DirectProductInfo!.groups);	
+		for j in [1..k] do
+			Pro[j]:=Projection(GrpKA,j);
+			Emb[j]:=Embedding(GrpKB,j);
 		od;
-		ImgsH[j]:=g;
+		ImgGens:=[];
+		nGens:=Length(Gens);
+		for j in [1..nGens] do
+			h:=Gens[j];
+			g:=Identity(GrpKB);
+			for t in [1..k] do
+				g:=g*Image(Emb[t],Image(f,Image(Pro[t],h)));
+			od;
+			ImgGens[j]:=g;
+		od;
+		Maps[i+1]:=GroupHomomorphismByImages(GrpKA,GrpKB,Gens,ImgGens);
 	od;
-	Mapf[i+1]:=GroupHomomorphismByImages(HH,GG,GensH,ImgsH);
-od;
-###################
-Mapping:=function(i)
-	return Mapf[i+1];
-end;
-###################
-return Objectify(HapSimplicialGroupMap,
-       rec(
-            source:=KH,
-            target:=KG,
-            mapping:=Mapping,
-            properties:=[["length",len]]
-          ));
-end;		
+	###################
+	Mapping:=function(i)
+		return Maps[i+1];
+	end;
+	###################
+	return Objectify(HapSimplicialGroupMorphism,
+		   rec(
+				source:=KA,
+				target:=KB,
+				mapping:=Mapping,
+				properties:=[["length",nK]]
+			  ));
+	end;		
+	##
+	############### end of EilenbergMacLane_Map ##########################
+	
+	if IsGroup(X) then
+		return EilenbergMacLane_Obj(X,n,dim);
+	fi;
 
-############################################
-if IsGroup(X) then
-	return EilenbergMacLane_Obj(X,NN,number);
-fi;
-
-if IsGroupHomomorphism(X) then
-	return EilenbergMacLane_Map(X,NN,number);
-fi;	
+	if IsGroupHomomorphism(X) then
+		return EilenbergMacLane_Map(X,n,dim);
+	fi;	
 end);
+##
+################### end of EilenbergMacLaneSimplicialGroup ##################

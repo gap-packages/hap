@@ -562,7 +562,7 @@ DeclareGlobalFunction("IdentityAmongRelatorsDisplay");
 DeclareGlobalFunction("IdentityAmongRelators");
 DeclareGlobalFunction("NormalSubgroupAsCatOneGroup");
 DeclareGlobalFunction("QuasiIsomorph");
-DeclareGlobalFunction("IsQuasiMorphismCatOneGroups");
+#DeclareGlobalFunction("IsQuasiMorphismCatOneGroups");
 DeclareGlobalFunction("QuotientQuasiIsomorph");
 DeclareGlobalFunction("SubQuasiIsomorph");
 DeclareGlobalFunction("SylowSubgroupOfCatOneGroup");
@@ -620,6 +620,8 @@ DeclareGlobalFunction("BoundaryOfRegularCWCell");
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");
+DeclareGlobalFunction("ReflectedCubicalKnot");
+DeclareGlobalFunction("ArcPresentation");
 DeclareGlobalFunction("PurePermutahedralKnot");
 DeclareGlobalFunction("ViewPureCubicalKnot");
 DeclareGlobalFunction("KnotGroup");
