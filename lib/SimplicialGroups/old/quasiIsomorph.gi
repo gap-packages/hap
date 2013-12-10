@@ -1,36 +1,50 @@
- InstallGlobalFunction(SubQuasiIsomorph_alt,
-    function (C)
-    local  s,t,G,H,Kers,Kert,Kersnt,tKers,OrdPi1,OrdPi2,OrdPi,
-	LS,Lx,x,sx,flag,
-    newGens,news,newt,D;
+###################################################
+##	SubQuasiIsomorph
+##	QuotientQuasiIsomorph
+##	QuasiIsomorph
+###################################################
+
+
+
+#############################################################################
+#0
+#F	SubQuasiIsomorph
+##	Input:	A finite cat-1-group C
+##	Output: A quasi-isomorphic sub cat-1-group of C
+##
+InstallGlobalFunction(SubQuasiIsomorph,function(C)
+local  
+	s,t,G,H,Kers,Kert,Kersnt,tKers,OrdPiOne,OrdPiTwo,OrdPi,
+	LS,Lx,x,sx,Ordsx,flag,
+    newGens,news,newt;
 	
 	s:= C!.sourceMap;
     t:= C!.targetMap;
-    G:=Source( s );
-    Kers:=Kernel( s );
-	Kert:=Kernel( t );
-	Kersnt:=Intersection( Kers , Kert );
-	tKers:=Image( t , Kers );
-	OrdPi1:=Order( HomotopyGroup( C , 1 ) );
-	OrdPi2:=Order( HomotopyGroup( C , 2 ) );
-	OrdPi:=OrdPi1*OrdPi2;
-	LS:=LatticeSubgroups( G )!.conjugacyClassesSubgroups;
+    G:=Source(s);
+    Kers:=Kernel(s);
+	Kert:=Kernel(t);
+	Kersnt:=Intersection(Kers,Kert);
+	tKers:=Image(t,Kers);
+	OrdPiOne:=Order(HomotopyGroup(C,1));
+	OrdPiTwo:=Order(HomotopyGroup(C,2));
+	OrdPi:=OrdPiOne*OrdPiTwo;
+	LS:=ConjugacyClassesSubgroups(LatticeSubgroups(G));
 	if not IsMutable(LS) then
 	    LS:= ShallowCopy(LS);
 	fi;
-	Sort(LS, function(x,y) return Size(x[1])<Size(y[1]); 
-	    end);
+	Sort(LS,function(x,y) return Size(x[1])<Size(y[1]); end);
 	flag:=0;
 	for Lx in LS do
 	    x:=Lx[1];
 		if Order(x)>= OrdPi then
-	    if IsSubgroup( x , Kersnt ) then
+	    if IsSubgroup(x,Kersnt) then
 			for x in Lx do
-				if  IsSubgroup( x , Image( s , x ) ) then
-				if  IsSubgroup( x , Image( t , x ) ) then
-					sx:=Image( s , x );
-					if  Order( sx ) / Order( Image( t , Intersection( Kers , x ) ) ) = OrdPi1 then
-					if  Order( sx ) / Order( Intersection( sx , tKers ) ) = OrdPi1 then
+				if  IsSubgroup(x,Image(s,x)) then
+				if  IsSubgroup(x,Image(t,x)) then
+					sx:=Image(s,x);
+					Ordsx:=Order(sx);
+					if  Ordsx = Order(Image(t,Intersection(Kers,x)))*OrdPiOne then
+					if  Ordsx = Order(Intersection(sx,tKers))*OrdPiOne then
 						H:=x;
 						flag:=1;
 						break;
@@ -45,70 +59,85 @@
 			break;
 		fi;
 	od;
-    newGens:=GeneratorsOfGroup( H );
-    news:=GroupHomomorphismByImagesNC( H , H , newGens , List( newGens , function ( x )
-              return Image( s , x );
-          end ) );
-    newt:=GroupHomomorphismByImagesNC( H , H , newGens , List( newGens , function ( x )
-              return Image( t , x );
-          end ) );
-    D:= Objectify( HapCatOneGroup , rec(  
-          sourceMap:=news , 
-          targetMap:=newt ) );
-    return D;
+	if H=G then 
+		return C;
+	fi;
+    newGens:=GeneratorsOfGroup(H);
+    news:=GroupHomomorphismByImagesNC(H,H,newGens,List(newGens,x->Image(s,x)));
+    newt:=GroupHomomorphismByImagesNC(H,H,newGens,List(newGens,x->Image(t,x)));
+    return Objectify(HapCatOneGroup,rec( 
+				sourceMap:=news,
+				targetMap:=newt));
 end);
-###############################################
-InstallGlobalFunction(QuotientQuasiIsomorph_alt,
-    function (C)
-    local  s,t,G,H,Kers,Kert,Kersnt,Ims,OrdIms,Imt,OrdPi1,OrdPi2,Ord,
+##
+#################### end of SubQuasiIsomorph ################################
+
+#############################################################################
+#0
+#F	QuotientQuasiIsomorph
+##	Input:	A finite cat-1-group C
+##	Output:	A quasi-isomorphic quotient cat-1-group of C
+##
+InstallGlobalFunction(QuotientQuasiIsomorph,function (C)
+local 	
+	s,t,G,H,Kers,Kert,Kersnt,Ims,OrdIms,Imt,OrdPiOne,OrdPiTwo,Ord,
 	LN,x,n,i,
-	epi,newG,newGens,news,newt,D,
-	OrderPiOne,OrderPiTwo;
-	
+	OrderPiOneGx,OrderPiTwoGx,
+	epi,newG,newGens,news,newt;
+
 	s:=C!.sourceMap;
     t:=C!.targetMap;
-    G:=Source( s );
-    Kers:=Kernel( s );
-	Ims:=Image( s );
-	OrdIms:=Order( Ims );
-	Imt:=Image( t );
-	Kert:=Kernel( t );
-	Kersnt:=Intersection( Kers , Kert );
-	OrdPi1:= Order( HomotopyGroup( C , 1 ) );
-	OrdPi2:= Order( HomotopyGroup( C , 2 ) );
-	Ord:=Order(G)/(OrdPi1*OrdPi2);
+    G:=Source(s);
+    Kers:=Kernel(s);
+	Ims:=Image(s);
+	OrdIms:=Order(Ims);
+	Imt:=Image(t);
+	Kert:=Kernel(t);
+	Kersnt:=Intersection(Kers,Kert);
+	OrdPiOne:= Order(HomotopyGroup(C,1));
+	OrdPiTwo:= Order(HomotopyGroup(C,2));
+	Ord:=Order(G)/(OrdPiOne*OrdPiTwo);
 	
-	#################
-	OrderPiOne:=function( x )
-	    local tsx;
-	    tsx:=Image( t , PreImages( s , Intersection( Ims , x ) ) );
-		return ( OrdIms*Order( Intersection( tsx , x ) ) )/( Order( Intersection( Ims , x ) )*Order( tsx ) );
-	end;	
-	#################	
-	OrderPiTwo:=function( x )
-	    local f;
-	    f:=NaturalHomomorphismByNormalSubgroup( G , x );
-	    return Order( Intersection( Image( f , PreImages( s , Intersection( Ims , x ) ) ) , Image( f , PreImages( t , Intersection( Imt , x ) ) ) ) );
-	end;;
-	##################
-	LN:=NormalSubgroups( G );
+    ######################################################################
+	#1
+	OrderPiOneGx:=function(x)
+	local tsx;
+		
+	    tsx:=Image(t,PreImages(s,Intersection(Ims,x)));
+		return (OrdIms*Order(Intersection(tsx,x)))/
+				(Order(Intersection(Ims,x))*Order(tsx));
+	end;
+    ##	
+	######################################################################
+	#1
+	OrderPiTwoGx:=function(x)
+	local f;
+		
+	    f:=NaturalHomomorphismByNormalSubgroup(G,x);
+	    return Order(Intersection(Image(f,PreImages(s,Intersection(Ims,x))),
+				Image(f,PreImages(t,Intersection(Imt,x)))));
+	end;
+	##
+	######################################################################
+	
+	LN:=NormalSubgroups(G);
 	if not IsMutable(LN) then
 	    LN:= ShallowCopy(LN);
 	fi;
-	Sort(LN, function(x,y) return Size(x)>Size(y); 
-	    end);
-	n:=Length( LN );
+	Sort(LN,function(x,y) return Size(x)>Size(y); end);
+	n:=Length(LN);
 	for i in [1..n] do
 		x:=LN[i];
 		if Order(x) <= Ord then
-		if IsSubgroup( x , Image( s , x ) ) then
-		if IsSubgroup( x , Image( t , x ) ) then
-		if IsSubgroup( x , CommutatorSubgroup( PreImages( s , Intersection( Ims , x ) ) , PreImages( t , Intersection( Imt , x ) ) ) ) then
-		if Order( Kersnt )/Order( Intersection( Kersnt , x ) )=OrdPi2 then
-		if OrderPiTwo( x ) = OrdPi2 then
-		if OrderPiOne( x ) = OrdPi1 then
-				H:=x;
-				break;
+		if IsSubgroup(x,Image(s,x)) then
+		if IsSubgroup(x,Image(t,x)) then
+		if IsSubgroup(x,CommutatorSubgroup(PreImages(s,Intersection(Ims,x)),
+				PreImages(t,Intersection(Imt,x)))) then
+		if Order(Kersnt) = Order(Intersection(Kersnt,x))*OrdPiTwo then
+		if OrderPiTwoGx(x) = OrdPiTwo then
+		if OrderPiOneGx(x) = OrdPiOne then
+			H:=x;
+			break;
 		fi;
 		fi;
 		fi;
@@ -117,104 +146,82 @@ InstallGlobalFunction(QuotientQuasiIsomorph_alt,
 		fi;
 		fi;
 	od;
-	if Order( H )=1 then
+	if Order(H)=1 then
 		return C;
 	fi;
-	epi:=NaturalHomomorphismByNormalSubgroup( G ,  H );
-    newG :=Image( epi );
-    newGens:=GeneratorsOfGroup( newG );
-    news:=GroupHomomorphismByImagesNC( newG ,  newG ,  newGens , 
-       List( newGens ,  function ( x )
-              return Image( epi ,  Image( s ,  PreImagesRepresentative( epi ,  x ) ) );
-          end ) );
-    newt:=GroupHomomorphismByImagesNC( newG ,  newG ,  newGens , 
-       List( newGens ,  function ( x )
-              return Image( epi ,  Image( t ,  PreImagesRepresentative( epi ,  x ) ) );
-          end ) );
-    D:= Objectify( HapCatOneGroup ,  rec( 
-          sourceMap:=news , 
-          targetMap:=newt ) );
-    return D;
+	
+	epi:=NaturalHomomorphismByNormalSubgroup(G,H);
+    newG :=Image(epi);
+    newGens:=GeneratorsOfGroup(newG);
+    news:=GroupHomomorphismByImagesNC(newG,newG,newGens,
+		List(newGens,x->Image(epi,Image(s,PreImagesRepresentative(epi,x)))));
+    newt:=GroupHomomorphismByImagesNC(newG,newG,newGens,
+		List(newGens,x->Image(epi,Image(t,PreImagesRepresentative(epi,x)))));
+    return Objectify(HapCatOneGroup,rec(
+          sourceMap:=news,
+          targetMap:=newt));
 end);
-###########################################################
-InstallGlobalFunction(QuasiIsomorph_alt,
-    function (C)
-	local D;
-	D:=QuotientQuasiIsomorph_alt(C);
-	D:=SubQuasiIsomorph_alt(D);
-	while Size( D ) < Size( C )  do
-        C:=D;
-        D:=QuotientQuasiIsomorph_alt( C );
-		if Size(D) < Size(C) then
-			D:=SubQuasiIsomorph_alt( D );
-		fi;
-    od;
-return D;
-end);
-##################################################################################
-################################################################################
-InstallGlobalFunction(XmodToHAP_alt,
-   function ( X )
-    local  G,Gens,s,t;
-    if IsHapCatOneGroup( X )  then
-        return X;
-    fi;
-    if IsComponentObjectRep( X )  then
-        if "TailMap" in NamesOfComponents( X ) and "HeadMap" in NamesOfComponents( X )  then
-		    G:=X!.Source;
-			Gens:=GeneratorsOfGroup(G);
-			s:=X!.TailMap;
-			t:=X!.HeadMap;
-            return Objectify( HapCatOneGroup, rec(
-                  sourceMap:=GroupHomomorphismByImagesNC(G,G,Gens,List(Gens,g->Image(s,g))),
-                  targetMap:=GroupHomomorphismByImagesNC(G,G,Gens,List(Gens,g->Image(t,g))) 
-				  ) );
-            
-        fi;
-    fi;
-    Print( "Argument is not a cat-1-group from the Xmod package.\n" );
-    return fail;
-end);
-##################################################################################
-################################################################################
-InstallGlobalFunction(IsomorphismCatOneGroups,
-	function(C,D)
-	local sC,tC,GC,AutGC,g,Gens,
-		  sD,tD,GD,
-		  m,x,f,flag;
+##
+#################### end of QuotientQuasiIsomorph ###########################
+
+#############################################################################
+#0
+#F	QuasiIsomorph
+##	Input:	A finite cat-1-group or a finite crossed module X
+##	Output:	A quasi-isomorphism of X
+##
+InstallGlobalFunction(QuasiIsomorph,function (X)
+local QuasiIsomorphOfCat, QuasiIsomorphOfCross;
 		
-	sC:=C!.sourceMap;
-	GC:=Source(sC);
-	tC:=C!.targetMap;
-	sD:=D!.sourceMap;
-	tD:=D!.targetMap;
-	GD:=Source(sD);
-	m:=IsomorphismGroups(GC,GD);
-	if m = fail then
-		return fail;
-	else
-		Gens:=GeneratorsOfGroup(GC);
-		AutGC:= AutomorphismGroup(GC);
-		for x in AutGC do
-			f:=x*m;
-			flag:=1;
-			for g in Gens do
-				if ( Image(f,(Image(sC,g))) <> Image(sD,(Image(f,g))) ) or ( Image(f,(Image(tC,g))) <> Image(tD,(Image(f,g))) )then
-					flag:=0;
-					break;
-				fi;
-			od;
-			if flag =1 then
-				return Objectify(HapCatOneGroupHomomorphism,
-				   rec(
-						source:= C,
-						target:= D,
-						mapping:=f
-					  ));
+	######################################################################	  
+	#1
+    #F	QuasiIsomorphOfCat
+	##	Input:	A finite cat-1-group C
+	##	Output:	A quasi-isomorphism of C
+	##
+	QuasiIsomorphOfCat:=function(C)
+	local D;
+	
+		D:=QuotientQuasiIsomorph(C);
+		D:=SubQuasiIsomorph(D);
+		while Size(D) < Size(C)  do
+			C:=D;
+			D:=QuotientQuasiIsomorph(C);
+			if Size(D) < Size(C) then
+				D:=SubQuasiIsomorph(D);
 			fi;
 		od;
-		return fail;
+		return D;
+	end;
+	##
+	############### end of QuasiIsomorphOfCat ############################
+
+	######################################################################	
+	#1
+    #F	QuasiIsomorphOfCross
+	##	Input:	A finite crossed module XC
+	##	Output:	A quasi-isomorphism of XC
+	##
+	QuasiIsomorphOfCross:=function(XC)
+		local C,D;
+		
+		C:=CatOneGroupByCrossedModule(XC);
+		D:=QuasiIsomorphOfCat(C);
+		return CrossedModuleByCatOneGroup(D);
+	end;
+	##
+	############### end of QuasiIsomorphOfCross ##########################
+	
+	if IsHapCatOneGroup(X) then
+		return QuasiIsomorphOfCat(X);
+	fi;
+	if  IsHapCrossedModule(X) then
+		return QuasiIsomorphOfCross(X);
 	fi;
 end);
+##	
+#################### end of QuasiIsomorph ###################################
 
+
+	
 	

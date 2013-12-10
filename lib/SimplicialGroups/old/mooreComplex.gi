@@ -14,7 +14,7 @@ local
 	ListGroups:=[];
 	
 	if not IsHapSimplicialGroup(N) then
-		Print("This function must be applied to a HapSimplicialGroup.\n");
+		Print("This function must be applied to a simplicial group.\n");
 		return fail;
 	fi;
 	ListG:=N!.groupsList;

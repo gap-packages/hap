@@ -1,3 +1,17 @@
+###########################################################
+##	HomotopyGroup
+##	Size
+##	Order
+##	CrossedModuleByAutomorphismGroup
+##	CrossedModuleByNormalSubgroup
+##	CrossedModuleByCatOneGroup
+##	HomotopyCrossedModule
+##	NumberSmallCrossedModules
+##	SmallCrossedModule
+##	IdCrossedModule
+##	IsomorphismCrossedModules
+############################################################
+
 #############################################################################
 #0
 #O	HomotopyGroup
@@ -98,191 +112,8 @@ end);
 
 #############################################################################
 #0
-##	HomotopyCrossedModule
-##
-InstallGlobalFunction(HomotopyCrossedModule, function(X)
-local	phi,act,P,A,nat,G,Gens,alpha;
-
-	phi:=X!.map;
-	act:=X!.action;
-	P:=Range(phi);
-	A:=Kernel(phi);
-	nat:=NaturalHomomorphismByNormalSubgroup(P,Image(phi));
-	G:=Range(nat);
-	#################################################################
-	#1
-	alpha:=function(g,a)
-	local x;
-		
-		x:=PreImagesRepresentative(nat,g);
-		return act(x,a);
-	end;
-	##
-	#################################################################
-	Gens:=GeneratorsOfGroup(A);
-	return Objectify(HapCrossedModule,rec(
-				map:=GroupHomomorphismByImages(A,G,Gens,List(Gens,x->One(G))),
-				action:=alpha
-			));
-end);
-##
-################### end of HomotopyCrossedModule ############################
-#############################################################################
-#0
-#F	CatOneGroupByCrossedModule
-##	Input:	A crossed module or a morphism of crossed modules or 
-##			a sequence of morphisms of crossed modules
-##	Output:	The image of the input under the functor 
-##				(crossed modules)->(cat-1-groups).
-##
-InstallGlobalFunction(CatOneGroupByCrossedModule, function(X)
-local
-	CMToCat1_Obj,
-	CMToCat1_Morpre,
-	CMToCat1_Mor,
-	CMToCat1_Seq;
-	
-	######################################################################
-	#1
-	##	CMToCat1_Obj
-	##	Input:	A crossed module X
-	##	Output:	The cat-1-group corresponds to X
-	##
-	CMToCat1_Obj:=function(XC)
-	local 
-		d,act,p,m,M,P,AutM,GensM,GensP,alpha,
-		G,GensG,pro,emb1,emb2,Elts,Eltt,g,pg,s,t;
-	
-		d:=XC!.map;
-		act:=XC!.action;
-		M:=Source(d);
-		P:=Range(d);
-
-		AutM:=AutomorphismGroup(M);
-		GensM:=GeneratorsOfGroup(M);
-		GensP:=GeneratorsOfGroup(P);
-		alpha:=GroupHomomorphismByImages(P,AutM,GensP,List(GensP,p->
-				GroupHomomorphismByImages(M,M,GensM,List(GensM,m->act(p,m)))));
-		G:=SemidirectProduct(P,alpha,M);
-		GensG:=GeneratorsOfGroup(G);
-		pro:=Projection(G);
-		emb1:=Embedding(G,1);
-		emb2:=Embedding(G,2);
-		Elts:=[];
-		Eltt:=[];
-		for g in GensG do
-			p:=Image(pro,g);
-			pg:=Image(emb1,p);
-			Add(Elts,pg);
-			m:=PreImagesRepresentative(emb2,pg^(-1)*g);
-			Add(Eltt,Image(emb1,p*Image(d,m)));
-		od;
-		s:=GroupHomomorphismByImages(G,G,GensG,Elts);
-		t:=GroupHomomorphismByImages(G,G,GensG,Eltt);
-		return Objectify(HapCatOneGroup,
-					rec(sourceMap:=s,
-					targetMap:=t
-					));
-
-	end;
-	##
-	############### end of CMToCat1_Obj ##################################
-	
-	######################################################################
-	#1
-	##	CMToCat1_Morpre
-	##	
-	CMToCat1_Morpre:=function(CC,CD,map)
-	local 
-		GC,GensGC,proC,emb1C,emb2C,g,
-		GD,fM,fP,p,m,emb1D,emb2D,ImGensGC;
-	
-		GC:=Source(CC!.sourceMap);
-		GensGC:=GeneratorsOfGroup(GC);
-		GD:=Source(CD!.sourceMap);
-		fM:=map(1);
-		fP:=map(2);
-		
-		proC:=Projection(GC);
-		emb1C:=Embedding(GC,1);
-		emb2C:=Embedding(GC,2);
-		emb1D:=Embedding(GD,1);
-		emb2D:=Embedding(GD,2);
-		ImGensGC:=[];
-		for g in GensGC do
-			p:=Image(proC,g);
-			m:=PreImagesRepresentative(emb2C,(Image(emb1C,p))^(-1)*g);
-			Add(ImGensGC,Image(emb1D,Image(fP,p))*Image(emb2D,Image(fM,m)));
-		od;
-		return Objectify(HapCatOneGroupMorphism,
-					   rec(
-							source:= CC,
-							target:= CD,
-							mapping:= GroupHomomorphismByImages(GC,
-									GD,GensGC,ImGensGC)
-						  ));
-	end;
-	##
-	############### end of CMToCat1_Morpre ###############################
-	
-	######################################################################
-	#1
-	##	CMToCat1_Mor
-	##	Input:	An morphism of crossed modules fX
-	##	Output:	The morphism of cat-1-groups corresponds to fX
-	##
-	CMToCat1_Mor:=function(fX)
-	local CC,CD,map;
-	
-		CC:=CMToCat1_Obj(fX!.source);
-		CD:=CMToCat1_Obj(fX!.target);
-		map:=fX!.mapping;
-		return CMToCat1_Morpre(CC,CD,map);
-	end;
-	##
-	############### end of CMToCat1_Mor ##################################
-	
-	######################################################################
-	#1
-	##	CMToCat1_Seq
-	##	Input:	An sequence of morphisms of crossed modules LfX
-	##	Output:	The sequence of morphisms of cat-1-groups corresponds to fX
-	##	
-	CMToCat1_Seq:=function(LfX)
-		local n,i,GC,Res;
-
-		n:=Length(LfX);
-		GC:=[];
-		for i in [1..n] do
-			GC[i]:=CMToCat1_Obj(LfX[i]!.source);
-		od;
-		GC[n+1]:=CMToCat1_Obj(LfX[i]!.target);
-		Res:=[];
-		for i in [1..n] do
-			Res[i]:=CMToCat1_Morpre(GC[i],GC[i+1],LfX[i]!.mapping);
-		od;
-		return Res;
-	end;
-	##
-	############### end of CMToCat1_Seq ##################################
-
-	if IsHapCrossedModule(X) then
-		return CMToCat1_Obj(X);
-	fi;
-	if IsHapCrossedModuleMorphism(X) then
-		return CMToCat1_Mor(X);
-	fi;
-	if IsList(X) then
-		return CMToCat1_Seq(X);
-	fi;
-end);
-##
-#################### end of CatOneGroupByCrossedModule ######################
-
-#############################################################################
-#0
 #F	CrossedModuleByCatOneGroup
-##	Input:	A cat-1-group or a morphism of cat-1-groups or 
+##	Input:	Either a cat-1-group, or a morphism of cat-1-groups, or 
 ##			a sequence of morphisms of cat-1-groups
 ##	Output:	The image of the input under the functor 
 ##				(cat-1-groups)->(crossed modules)
@@ -369,7 +200,7 @@ local
 	######################################################################
 	#1
 	#F	Cat1ToCM_Mor
-	##	Input:	A morphism of cat-1-groups fC
+	##	Input:	A morphism fC of cat-1-groups 
 	##	Output:	The morphism of crossed modules corresponds to fC
 	##
 	Cat1ToCM_Mor:=function(fC)
@@ -386,7 +217,7 @@ local
 	######################################################################
 	#1
 	#F	Cat1ToCM_Seq
-	##	Input:	A sequence of morphisms of cat-1-groups LfC
+	##	Input:	A sequence LfC of morphisms of cat-1-groups 
 	##	Output:	The sequence of morphisms of crossed modules corresponds to LfC
 	##	
 	Cat1ToCM_Seq:=function(LfC)
@@ -419,6 +250,174 @@ local
 end);
 ##
 ################### end of CrossedModuleByCatOneGroup #######################
+
+#############################################################################
+#0
+##	HomotopyCrossedModule
+##	Input: A crossed module X
+##	Output: The crossed module 0:A->G
+##
+InstallGlobalFunction(HomotopyCrossedModule, function(X)
+local	phi,act,P,A,nat,G,Gens,alpha;
+
+	phi:=X!.map;
+	act:=X!.action;
+	P:=Range(phi);
+	A:=Kernel(phi);
+	nat:=NaturalHomomorphismByNormalSubgroup(P,Image(phi));
+	G:=Range(nat);
+	#################################################################
+	#1
+	alpha:=function(g,a)
+	local x;
+		
+		x:=PreImagesRepresentative(nat,g);
+		return act(x,a);
+	end;
+	##
+	#################################################################
+	Gens:=GeneratorsOfGroup(A);
+	return Objectify(HapCrossedModule,rec(
+				map:=GroupHomomorphismByImages(A,G,Gens,List(Gens,x->One(G))),
+				action:=alpha
+			));
+end);
+##
+################### end of HomotopyCrossedModule ############################
+
+#############################################################################
+#0
+#F	NumberSmallCrossedModules
+##	Input: An integer n
+##	Output: The number of non-isomorphic crossed modules of order n
+##
+InstallGlobalFunction(NumberSmallCrossedModules, function(n)
+
+	if n >CATONEGROUP_DATA_SIZE then
+		Print("This function only apply for order less than or equal to ",
+				CATONEGROUP_DATA_SIZE,".\n");
+		return fail;
+	fi;
+	return Sum(CATONEGROUP_DATA[n],x->Length(x));
+end);
+##
+################### NumberSmallCrossedModules ###############################
+
+#############################################################################
+#0
+#F	SmallCrossedModule
+##	Input: An integers n,k.
+##	Output: The kth crossed module of order n.
+##
+InstallGlobalFunction(SmallCrossedModule, function(n,k)
+local sum,m,i;
+
+	if n >CATONEGROUP_DATA_SIZE then
+		Print("This function only apply for order less than or equal to ",
+				CATONEGROUP_DATA_SIZE,".\n");
+		return fail;
+	fi;
+	if k>NumberSmallCrossedModules(n) then
+		Print("There are only ",NumberSmallCrossedModules(n),
+				" crossed modules of order ",n,"\n");
+		return fail;
+	fi;
+	sum:=0;
+	m:=0;
+	while sum<k do
+		i:=k-sum;
+		m:=m+1;
+		sum:=sum+Length(CATONEGROUP_DATA[n][m]);
+	od;
+	return CrossedModuleByCatOneGroup(SmallCatOneGroup(n,m,i));
+end);
+##
+################### SmallCrossedModule ######################################
+
+#############################################################################
+#0
+#F	IdCrossedModule
+##	Input: A crossed module X.
+##	Output: The position of X.
+##
+InstallGlobalFunction(IdCrossedModule, function(X)
+local T;
+
+	if Order(X) > CATONEGROUP_DATA_SIZE then
+		Print("This function only apply for crossed module of order less than or equal to",
+				CATONEGROUP_DATA_SIZE,".\n");
+		return fail;
+	fi;
+	T:=IdCatOneGroup(CatOneGroupByCrossedModule(X));
+	return [T[1],Sum(List([1..T[2]-1],m->Length(CATONEGROUP_DATA[T[1]][m])))+T[3]];
+end);
+##
+################### IdCrossedModule #########################################
+
+#############################################################################
+#0
+#F	IsomorphismCrossedModules
+##	Input: Two crossed modules XC, XD.
+##	Output: A morphism between XC and XD if XC and XD are isomorphic.
+##			return false for other else
+##
+InstallGlobalFunction(IsomorphismCrossedModules, function(XC,XD)
+local 
+	C,D,Iso,f,GC,GD,MC,MD,
+	proD,emb1C,emb2C,emb1D,emb2D,
+	Gens,Imgs,m,x,px,Map;
+	
+	C:=CatOneGroupByCrossedModule(XC);
+	D:=CatOneGroupByCrossedModule(XD);
+	Iso:=IsomorphismCatOneGroups(C,D);
+	if Iso=fail then
+		return fail;
+	fi;
+	f:=Iso!.mapping;
+	GC:=Source(f);
+	GD:=Range(f);
+	
+	MC:=Source(XC!.map);
+	MD:=Source(XD!.map);
+	
+	proD:=Projection(GD);
+	emb1C:=Embedding(GC,1);
+	emb2C:=Embedding(GC,2);
+	emb1D:=Embedding(GD,1);
+	emb2D:=Embedding(GD,2);
+
+	Gens:=GeneratorsOfGroup(MC);
+	Imgs:=[];
+	for m in Gens do
+		x:=Image(f,Image(emb2C,m));
+		px:=Image(emb1D,Image(proD,x));
+		Add(Imgs,PreImagesRepresentative(emb2D,px^(-1)*x));
+	od;
+	
+	######################################################################
+	##
+	Map:=function(n)
+		if n=1 then
+			return GroupHomomorphismByImages(MC,MD,Gens,Imgs);
+		fi;
+		if n=2 then
+			return emb1C*f*proD;
+		fi;
+		Print("Only apply for n =1,2");
+		return fail;
+	end;
+	##
+	######################################################################
+	return Objectify(HapCrossedModuleMorphism,
+					rec(source:=XC,
+						target:=XD,
+						mapping:=Map
+					));
+end);
+##
+################### IsomorphismCrossedModules ###############################
+
+
 
 
 

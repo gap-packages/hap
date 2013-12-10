@@ -13,7 +13,9 @@ function(G,N)
 ####FINITE################
 if Order(G)<infinity then 
 
-Tz:=TietzeReducedResolution;
+#Tz:=TietzeReducedResolution;
+Tz:=function(R) return R; end;
+
    if IsAbelian(G) then
    return ResolutionAbelianGroup(G,N);
    fi;

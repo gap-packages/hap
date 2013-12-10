@@ -1,430 +1,451 @@
-InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
-    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
-        function(g,h,gg,gh)
-    return GroupHomomorphismByFunction(g,h,x->One(h),false,x->One(g));
-end);
-
-########################################################################
-########################################################################
+###############################################################################
+#0
+#F	NerveOfCatOneGroup
+##	Input:	A cat-1-group or a morphism of cat-1-group or a sequence of 
+##			morphisms of cat-1-groups
+##	Output:	The image of the input under the functor
+##				Nerve: (cat-1-groups)->(simplicial groups)
+##
 InstallGlobalFunction(NerveOfCatOneGroup,
 function(X,n)
-local NerveOfCatOneGroup_Homopre,
-	  C,NerveOfCatOneGroup_Obj,
-	  NerveOfCatOneGroup_Homo,
-	  NerveOfCatOneGroup_Seq;
+local	
+	NerveOfCatOneGroup_Morpre, 
+	C,NerveOfCatOneGroup_Obj,	
+	NerveOfCatOneGroup_Mor,
+	NerveOfCatOneGroup_Seq;
 	  
-#####################################################################
-#####################################################################
-NerveOfCatOneGroup_Obj:=function(C,number)
-local 
-    ListGroups,Boundaries, Degeneracies, Nerve,
-    smap,tmap,e,
-	G,M,H,
-	AutM,phi,
-	g,m,tempprod,ConjugatorOfProd,tempBound,tempDegen,
-	ComposOfGens,Gens,TempB,ImageOfGens,TempL,
-	Elto,boundary,degeneracy,
-	i,j,k,n,
-	ElementsOfSemiDirect,BoundaryElement,CreatElement,DegenElement,
-	GroupsList,BoundariesList,DegeneraciesList;
-
-	
-if not IsHapCatOneGroup(C) then
-	Print("This function must be applied to a cat-1-group.\n");
-	return fail;
-fi;
-
-#################
-ListGroups:=[];
-Boundaries:=[];
-Degeneracies:=[];
-
-smap:=C!.sourceMap;
-tmap:=C!.targetMap;
-Add(Boundaries,[tmap,smap]);
-G:=smap!.Source;
-M:=Kernel(smap);
-e:=Identity(M);
-Add(ListGroups,Image(tmap));
-Add(ListGroups,G);
-AutM:=AutomorphismGroup(M);
-Gens:=GeneratorsOfGroup(G);
-phi:=GroupHomomorphismByImagesNC(G,AutM,Gens,List(Gens,g->ConjugatorAutomorphismNC(M,Image(tmap,g))));
-H:=SemidirectProduct(G,phi,M);
-Add(ListGroups,H);
-
-##   Create [m1,m2, ...mn] --> semidirect product of n elements
-####################################
-CreatElement:=function(ListM)  
-local i,G,
-    m,len;
-	len:=Length(ListM);
-if len=1 then
-		m:=ListM[1];
-fi;
-if len>1 then
-	m:=ListM[1];
-	for i in [2..len] do    
-		G:=ListGroups[i+1];
-		m:=Image(Embedding(G,1),m)*Image(Embedding(G,2),ListM[i]);
-    od;	
-fi;
-return m;
-end;
-########################################
-ElementsOfSemiDirect:= function(H,n)  
-local 
-    gens,componentsofgens,tempL,
-	emb1,emb2,pro,K,
-	x,y,m,len,
-	i,j;
-	gens:=GeneratorsOfGroup(H);
-	componentsofgens:=[];
-	len:=Length(gens);
-	if n=1 then
-		for i in [1..len] do
-			componentsofgens[i]:=[gens[i]];
-		od;
-	fi;
-	if n>1 then 
-		for i in [1..len] do
-			K:=H;
-			tempL:=[];
-			y:=gens[i];
-			for j in [1..n-1] do
-				pro:=Projection(K);
-				emb1:=Embedding(K,1);
-				emb2:=Embedding(K,2);
-				m:=PreImagesRepresentative(emb2,(Image(emb1,Image(pro,y)))^(-1)*y);	
-				tempL[n-j+1]:=m;
-				y:=Image(pro,y);
-				K:=emb1!.Source;	
-			od;
-			tempL[1]:=y;
-			componentsofgens[i]:=tempL;
-		od;
-	fi;
-	return [gens,componentsofgens];
-end;
-
-####################################
-BoundaryElement:=function(ListM)
-local n,i,j,tempB,Bound;
-n:=Length(ListM); 
-if n=2 then 
-	Bound:=[[Image(tmap,ListM[1])*ListM[2]],[ListM[1]*ListM[2]],[ListM[1]]];	
-fi;
-
-if n>2 then
-	Bound:=[];
-######Creat 1###############
-	tempB:=[ Image(tmap,ListM[1])*ListM[2] ];
-	for i in [2..n-1] do
-		tempB[i]:=ListM[i+1];
-	od;
-	Add(Bound,tempB);
-##### Creat 2 --> n#############
-	for i in [2..n] do
-		tempB:=[];
-		for j in [1..i-2] do
-			tempB[j]:=ListM[j];
-			od;
-		tempB[i-1]:= ListM[i-1]*ListM[i];
-		for j in [i..n-1] do
-			tempB[j]:=ListM[j+1];
-		od;
-	Add(Bound,tempB);
-	od;
-####### Creat n+1##########
-	tempB:=[];
-	for i in [1..n-1] do
-		tempB[i]:=ListM[i];
-	od;
-	Add(Bound,tempB);
-fi;
-
-return Bound;
-end;
-###############################################################################
-
-DegenElement:=function(ListM)
-local n,i,j,tempB,Degen,g;
-
-n:=Length(ListM);
-g:=ListM[1]; 
-if n=1 then 
-	Degen:=[[Image(smap,g),Image(smap,g^(-1))*g],[g,e]];	
-fi;
-
-if n>1 then
-	Degen:=[];
-#####Creat 1############
-	tempB:=[Image(smap,g),Image(smap,g^(-1))*g];
-	for i in [3..n+1] do
-		tempB[i]:=ListM[i-1];
-	od;
-	Add(Degen,tempB);
-#####Creat 2 --> n+1########
-	for i in [2..n+1] do
-		tempB:=[];
-		for j in [1..i-1] do
-			tempB[j]:=ListM[j];
-		od;
-		tempB[i]:=e;
-		for j in [i+1..n+1] do
-			tempB[j]:=ListM[j-1];
-		od;
-	Add(Degen,tempB);
-	od;
-fi;
-return Degen;
-end;
-############################################################################
-
-for i in [2..number] do
-	Elto:=ElementsOfSemiDirect(H,i);
-	Gens:=Elto[1];	
-	ComposOfGens:=Elto[2];
-	n:=Length(Gens);
-	tempBound:=[];
-	for j in [1..n]do
-		tempBound[j]:=BoundaryElement(ComposOfGens[j]);
-	od;
-	ImageOfGens:=[];
-	for j in [1..i+1] do
-		TempL:=[];
-		for k in [1..n] do
-		    Add(TempL,CreatElement(tempBound[k][j]));
-	    od;
-		Add(ImageOfGens,TempL);
-	od;
-	boundary:=[];
-	for j in [1..i+1] do
-		boundary[j]:=GroupHomomorphismByImagesNC(H,G,Gens,ImageOfGens[j]);
-	od;
-	Add(Boundaries,boundary);
-	G:=H;
-	
-######## Create semidirect product ##########
-	
-	ConjugatorOfProd:=[];	
-	for j in [1..n] do
-		tempprod:=ComposOfGens[j][1];
-		for k in [2..i] do
-			tempprod:=tempprod*ComposOfGens[j][k];
-		od;
-		Add(ConjugatorOfProd,ConjugatorAutomorphismNC(M,Image(tmap,tempprod)));
-	od;
-	phi:=GroupHomomorphismByImagesNC(G,AutM,Gens,ConjugatorOfProd);  
-	H:=SemidirectProduct(G,phi,M);
-	if i<number then 
-		Add(ListGroups,H);
-	fi;
-		
-od;
-
-####### Create degeneracy maps ############
-
-phi:=GroupHomomorphismByImagesNC(ListGroups[1],ListGroups[2],GeneratorsOfGroup(ListGroups[1]),GeneratorsOfGroup(ListGroups[1]));
-Add(Degeneracies,[phi]);
-for i in [2..number] do
-	G:=ListGroups[i];  ##G-->H
-	H:=ListGroups[i+1];
-	Elto:=ElementsOfSemiDirect(G,i-1);
-	Gens:=Elto[1];	
-	ComposOfGens:=Elto[2];
-	n:=Length(Gens);
-	tempDegen:=[];
-	for j in [1..n]do
-		tempDegen[j]:=DegenElement(ComposOfGens[j]);
-	od;
-	ImageOfGens:=[];
-	for j in [1..i] do
-		TempL:=[];
-		for k in [1..n] do
-		    Add(TempL,CreatElement(tempDegen[k][j]));
-	    od;
-		Add(ImageOfGens,TempL);
-	od;
-	degeneracy:=[];
-	for j in [1..i] do
-		degeneracy[j]:=GroupHomomorphismByImagesNC(G,H,Gens,ImageOfGens[j]);
-	od;
-	Add(Degeneracies,degeneracy);	
-od;
-
-#######################################################
-GroupsList:=function(i)
-return ListGroups[i+1];
-end;
-#######################################################
-BoundariesList:=function(i,j)
-	return Boundaries[i][j+1];
-end;
-#######################################################
-DegeneraciesList:=function(i,j)
-return Degeneracies[i+1][j+1];
-end;
-###########################################################
-Nerve:=Objectify(HapSimplicialGroup,
-       rec(
-            groupsList:=GroupsList,
-            boundariesList:=BoundariesList,
-            degeneraciesList:=DegeneraciesList,
-            properties:=[["length",number]]
-          ));
-return Nerve;
-end;
-###########################################################
-###########################################################
-
-NerveOfCatOneGroup_Homopre:=function(NG,NH,f,n)
+	######################################################################
+	#1	
+	#F	NerveOfCatOneGroup_Obj
+	##	Input: Cat-1-group C and an integer number 
+	##	Output: The nerve of C
+	##
+	NerveOfCatOneGroup_Obj:=function(C,number)
 	local 
-	groupsG,groupsH,
-	PG,PH,GensPG,Map,EmbG,ProG,EmbH,
-	GenGs,FacGenGs,LGs,LHs,
-	len,i,j,k,temp,x,p,
-	CreateOneElementH,Mapping,
-	ImgH;
-	
-	groupsG:=NG!.groupsList;
-	groupsH:=NH!.groupsList;
-	PG:=groupsG(0);
-	PH:=groupsH(0);
-	GensPG:=GeneratorsOfGroup(PG);
-	Map:=[];
-	Map[1]:=GroupHomomorphismByImages(PG,PH,GensPG,List(GensPG,x->Image(f,x)));
-	Map[2]:=f;
-	EmbG:=[];
-	ProG:=[];
-	EmbH:=[];
-	GenGs:=[];
-	LGs:=[];
-	LHs:=[];
-	for i in [2..n] do
-		LGs[i]:=groupsG(i);
-		LHs[i]:=groupsH(i);
-		EmbG[i]:=[];
-		EmbG[i][1]:=Embedding(LGs[i],1);
-		EmbG[i][2]:=Embedding(LGs[i],2);
-		EmbH[i]:=[];
-		EmbH[i][1]:=Embedding(LHs[i],1);
-		EmbH[i][2]:=Embedding(LHs[i],2);
-		ProG[i]:=Projection(LGs[i]);
-		GenGs[i]:=GeneratorsOfGroup(LGs[i]);
-	od;
-	FacGenGs:=[];
-	for i in [2..n] do
-		FacGenGs[i]:=[];
-		len:=Length(GenGs[i]);
-		for j in [1..len] do
-			x:=GenGs[i][j];
-			temp:=[];
-			for k in [0..i-2] do
-				p:=Image(EmbG[i-k][1],Image(ProG[i-k],x))^(-1)*x;
-				temp[i-k]:=PreImagesRepresentative(EmbG[i-k][2],p);
-				x:=Image(ProG[i-k],x);
+		LGs,LBs, LDs, 
+		s,t,e,
+		N,M,AutM,phi,
+		g,pg,m,ConjTmp,Tmp,TmpBs,TmpDs,
+		Gens,GensToLists,ImgGens,
+		LTmpB,LTmpD,
+		i,j,k,n,len,
+		EmbOnes,EmbTwos,Pros,
+		ListToOne,BoundariesOfToList,DegeneraciesOfToList,
+		GroupsList,BoundariesList,DegeneraciesList;
+
+		if not IsHapCatOneGroup(C) then
+			Print("This function must be applied to a cat-1-group.\n");
+			return fail;
+		fi;		
+		s:=C!.sourceMap;
+		t:=C!.targetMap;
+		N:=Image(s);
+		M:=Kernel(s);
+		AutM:=AutomorphismGroup(M);
+		e:=One(M);
+		LGs:=[];
+		LBs:=[];
+		LDs:=[];
+		EmbOnes:=[];
+		EmbTwos:=[];
+		Pros:=[];
+		Gens:=[];
+		GensToLists:=[];
+		
+		########## Compute the list of group G_i for i=1..n ##############
+		LGs[1]:=s!.Source;
+		Gens[1]:=GeneratorsOfGroup(LGs[1]);
+		GensToLists[1]:=List(Gens[1],g->[g]);
+		for n in [2..number] do
+			ConjTmp:=[];
+			len:=Length(Gens[n-1]);	
+			for i in [1..len] do
+				m:=GensToLists[n-1][i][1];
+				for j in [2..n-1] do
+					m:=m*GensToLists[n-1][i][j];
+				od;
+				Add(ConjTmp,ConjugatorAutomorphismNC(M,Image(t,m)));
 			od;
-			temp[1]:=x;
-			FacGenGs[i][j]:=temp;	
+			phi:=GroupHomomorphismByImagesNC(LGs[n-1],AutM,Gens[n-1],ConjTmp);  
+			LGs[n]:=SemidirectProduct(LGs[n-1],phi,M);
+			EmbOnes[n]:=Embedding(LGs[n],1);
+			EmbTwos[n]:=Embedding(LGs[n],2);
+			Pros[n]:=Projection(LGs[n]);	
+			Gens[n]:=GeneratorsOfGroup(LGs[n]);
+			len:=Length(Gens[n]);
+			GensToLists[n]:=List([1..len],x->[]);
+			for i in [1..len] do
+				g:=Gens[n][i];
+				Tmp:=[];
+				for j in [1..n-1] do
+					pg:=Image(Pros[n-j+1],g);
+					m:=PreImagesRepresentative(EmbTwos[n-j+1],
+						(Image(EmbOnes[n-j+1],pg))^(-1)*g);	
+					Tmp[n-j+1]:=m;
+					g:=pg;
+				od;
+				Tmp[1]:=g;
+				GensToLists[n][i]:=Tmp;
+			od;	
 		od;
-	od;	
-	
-	##################################
-	##Create one element by getting semidirect product of list [g1,g2, ...gn] 
-	####################################
-	CreateOneElementH:=function(L,k)  
-			local i,
-				m,len;
-				m:=L[1];
-				for i in [2..k] do    
-					m:=Image(EmbH[i][1],m)*Image(EmbH[i][2],L[i]);
+		#############################################################
+		#2
+		#F	BoundariesOfToList
+		##	Input: List m:=[g_1,m_2,...,m_n]
+		##	Output: List of the image of d_i(m) with i:=0..n 
+		##
+		BoundariesOfToList:=function(Lm,n)
+		local i,j,TmpB,LB;
+		
+			if n=2 then 
+				LB:=[[Image(t,Lm[1])*Lm[2]],[Lm[1]*Lm[2]],[Lm[1]]];	
+			fi;
+
+			if n>2 then
+				LB:=[];
+				
+				########## Compute d_0 #########################
+				TmpB:=[Image(t,Lm[1])*Lm[2]];
+				for i in [2..n-1] do
+					TmpB[i]:=Lm[i+1];
+				od;
+				Add(LB,TmpB);
+				
+				########## Compute d_1-->d_{n-1} ###############
+				for i in [2..n] do
+					TmpB:=[];
+					for j in [1..i-2] do
+						TmpB[j]:=Lm[j];
+					od;
+					TmpB[i-1]:= Lm[i-1]*Lm[i];
+					for j in [i..n-1] do
+						TmpB[j]:=Lm[j+1];
+					od;
+					Add(LB,TmpB);
+				od;
+				
+				######### Compute d_n ##########################
+				TmpB:=[];
+				for i in [1..n-1] do
+					TmpB[i]:=Lm[i];
+				od;
+				Add(LB,TmpB);
+			fi;
+			return LB;
+		end;
+		##
+		########## end of BoundariesOfToList ########################
+		
+		#############################################################
+		#2
+		#F	DegeneraciesOfToList		
+		##	Input: List m:=[g_1,m_2,...,m_n]
+		##	Output: List of the image of s_i(m) with i:=0..n 
+		##
+		DegeneraciesOfToList:=function(Lm,n)
+		local i,j,TmpD,LD,g;
+		
+			g:=Lm[1]; 
+			if n=1 then 
+				LD:=[[Image(s,g),Image(s,g^(-1))*g],[g,e]];	
+			fi;
+			if n>1 then
+				LD:=[];
+				
+				########## Compute s_0 #########################
+				TmpD:=[Image(s,g),Image(s,g^(-1))*g];
+				for i in [3..n+1] do
+					TmpD[i]:=Lm[i-1];
+				od;
+				Add(LD,TmpD);
+				
+				########## Compute s_1 -> s_n ##################
+				for i in [2..n+1] do
+					TmpD:=[];
+					for j in [1..i-1] do
+						TmpD[j]:=Lm[j];
+					od;
+					TmpD[i]:=e;
+					for j in [i+1..n+1] do
+						TmpD[j]:=Lm[j-1];
+					od;
+					Add(LD,TmpD);
+				od;
+			fi;
+			return LD;
+		end;
+		##
+		########## end of DegeneraciesOfToList ######################
+		
+		#############################################################
+		#2   
+		#F	ListToOne
+	    ##	Input: List [g_1,m_2,m_3,...,m_n]
+        ##	Output: The semi-product g_1 x| m_2 x| m_3 x| ... x| m_n
+		##
+		ListToOne:=function(Lm,n) 
+		local i,m;
+		
+			if n=1 then
+				m:=Lm[1];
+			fi;
+			if n>1 then
+				m:=Lm[1];
+				for i in [2..n] do    
+					m:=Image(EmbOnes[i],m)*Image(EmbTwos[i],Lm[i]);
 				od;	
+			fi;
 			return m;
-	end;
-	########################################
-	
-    for i in [2..n] do
-		len:=Length(FacGenGs[i]);
-		ImgH:=[];
-		for j in [1..len] do
-			temp:=FacGenGs[i][j];
-			for k in [1..i] do
-				temp[k]:=Image(f,temp[k]);
+		end;
+		##
+	    ########## end of ListToOne #################################
+		
+		############### Compute boundary maps #######################
+		LBs:=[[t,s]];
+		for n in [2..number] do
+			len:=Length(Gens[n]);
+			Tmp:=[];
+			TmpBs:=[];
+			for i in [1..len] do
+				Tmp[i]:=BoundariesOfToList(GensToLists[n][i],n);
+				TmpBs[i]:=List(Tmp[i],Lm->ListToOne(Lm,n-1));
 			od;
-			ImgH[j]:=CreateOneElementH(temp,i);
+			ImgGens:=[];
+			for k in [1..n+1] do
+				ImgGens[k]:=List([1..len],i->TmpBs[i][k]);
+			od;
+			LTmpB:=[];
+			for k in [1..n+1] do
+				LTmpB[k]:=GroupHomomorphismByImagesNC(LGs[n],LGs[n-1],
+						Gens[n],ImgGens[k]);
+			od;
+			LBs[n]:=LTmpB;
 		od;
-		Map[i+1]:=GroupHomomorphismByImages(LGs[i],LHs[i],GenGs[i],ImgH);
-	od;
-	######################
-	Mapping:=function(k)
-	 return Map[k+1];
+		
+		############### Compute degeneracy maps #####################
+		for n in [1..number-1] do
+			len:=Length(Gens[n]);
+			Tmp:=[];
+			TmpDs:=[];
+			for i in [1..len] do
+				Tmp[i]:=DegeneraciesOfToList(GensToLists[n][i],n);
+				TmpDs[i]:=List(Tmp[i],Lm->ListToOne(Lm,n+1));
+			od;
+			ImgGens:=[];
+			for k in [1..n+1] do
+				ImgGens[k]:=List([1..len],i->TmpDs[i][k]);
+			od;
+			LTmpD:=[];
+			for k in [1..n+1] do
+				LTmpD[k]:=GroupHomomorphismByImagesNC(LGs[n],LGs[n+1],
+						Gens[n],ImgGens[k]);
+			od;
+			LDs[n]:=LTmpD;	
+		od;
+
+		#############################################################
+		#2
+		GroupsList:=function(n)
+			if n=0 then
+				return N;
+			fi;
+			return LGs[n];
+		end;
+		##
+		#############################################################
+		
+		#############################################################
+		#2
+		BoundariesList:=function(n,k)
+			return LBs[n][k+1];
+		end;
+		##
+		#############################################################
+		
+		#############################################################
+		#2
+		DegeneraciesList:=function(n,k)
+			if n=0 and k = 0 then
+				return GroupHomomorphismByFunction(N,LGs[1],
+						function(x) return x; end);
+			fi;
+			return LDs[n][k+1];
+		end;
+		##
+		#############################################################
+		
+		return Objectify(HapSimplicialGroup,
+			   rec(
+					groupsList:=GroupsList,
+					boundariesList:=BoundariesList,
+					degeneraciesList:=DegeneraciesList,
+					properties:=[["length",number]]
+				  ));
 	end;
+	##
+	############### end of NerveOfCatOneGroup_Obj ########################
 	
-return Objectify(HapSimplicialGroupMap,
-       rec(
-            source:=NG,
-            target:=NH,
-            mapping:=Mapping,
-            properties:=[["length",n]]
-          ));
-end;	
+	######################################################################
+	#1
+	#F	NerveOfCatOneGroup_Morpre
+	##	Input: Nerve of G, nerve of H, map f:G-->H
+	##	Output: simplicial map between nerve of G and nerve of H
+	##
+	NerveOfCatOneGroup_Morpre:=function(NG,NH,f,number)
+	local 
+		GLs,GEmbOnes,GEmbTwos,GPros,HLs,HEmbOnes,HEmbTwos,HPros,
+		Gens,GensToLists,
+		i,j,n,m,g,pg,len,
+		Tmp,ImgGens,Maps,
+		HListToOne,Mapping;
+		
+		GLs:=[];
+		GEmbOnes:=[];
+		GEmbTwos:=[];
+		GPros:=[];
+		HLs:=[];
+		HEmbOnes:=[];
+		HEmbTwos:=[];
+		HPros:=[];
+		Gens:=[];
+		GensToLists:=[];
+		for n in [2..number] do
+			GLs[n]:=NG!.groupsList(n);
+			GEmbOnes[n]:=Embedding(GLs[n],1);
+			GEmbTwos[n]:=Embedding(GLs[n],2);
+			GPros[n]:=Projection(GLs[n]);
+			HLs[n]:=NH!.groupsList(n);
+			HEmbOnes[n]:=Embedding(HLs[n],1);
+			HEmbTwos[n]:=Embedding(HLs[n],2);
+			HPros[n]:=Projection(HLs[n]);	
+			Gens[n]:=GeneratorsOfGroup(GLs[n]);
+			len:=Length(Gens[n]);
+			GensToLists[n]:=List([1..len],x->[]);
+			for i in [1..len] do
+				g:=Gens[n][i];
+				Tmp:=[];
+				for j in [1..n-1] do
+					pg:=Image(GPros[n-j+1],g);
+					m:=PreImagesRepresentative(GEmbTwos[n-j+1],(Image(
+							GEmbOnes[n-j+1],pg))^(-1)*g);	
+					Tmp[n-j+1]:=m;
+					g:=pg;
+				od;
+				Tmp[1]:=g;
+				GensToLists[n][i]:=Tmp;
+			od;
+		od;
+		
+		#############################################################
+		#2   
+		#F	HListToOne
+	    ##	Input: List [h_1,m_2,m_3,...,m_n]
+        ##	Output: The semi-product h_1 x| m_2 x| m_3 x| ... x| m_n
+		##
+		HListToOne:=function(Lm,n) 
+		local i,m;
+		
+			m:=Lm[1];
+			for i in [2..n] do    
+				m:=Image(HEmbOnes[i],m)*Image(HEmbTwos[i],Lm[i]);
+			od;	
+			return m;
+		end;
+		##
+		########## end of HListToOne ################################
+		
+		Maps:=[];
+		for n in [2..number] do
+			len:=Length(Gens[n]);
+			ImgGens:=[];
+			for i in [1..len] do
+				ImgGens[i]:=HListToOne(List(GensToLists[n][i],m->Image(f,m)),n);
+			od;	
+			Maps[n]:=GroupHomomorphismByImages(GLs[n],HLs[n],Gens[n],ImgGens);
+		od;
 
-################################################################################################################
-NerveOfCatOneGroup_Homo:=function(Nf,n)
-local 
-    NG,NH,f, RewL;
+		#############################################################
+		#2
+		Mapping:=function(n)
+			if n=0 then
+				return GroupHomomorphismByFunction(NG!.groupsList(0),
+						NH!.groupsList(0),function(x) return Image(f,x); end);
+			fi;
+			if n=1 then
+				return f;
+			fi;
+			return Maps[n];
+		end;
+		##
+		#############################################################
+		
+		return Objectify(HapSimplicialGroupMorphism,
+		   rec(
+				source:=NG,
+				target:=NH,
+				mapping:=Mapping,
+				properties:=[["length",number]]
+			  ));
+	end;
+	##
+	############### end of NerveOfCatOneGroup_Morpre #####################
 	
-    NG:=NerveOfCatOneGroup_Obj(Nf!.source,n);  ##G
-	NH:=NerveOfCatOneGroup_Obj(Nf!.target,n);  ##H
-	f:=Nf!.mapping;
-	return NerveOfCatOneGroup_Homopre(NG,NH,f,n);
-end;	
-###########################################################
-###########################################################
+	######################################################################
+    #1
+    #F	NerveOfCatOneGroup_Mor
+    ##	Input: Morphism of cat-1-groups	
+    ##	Output: Simplicial map of their nerves	
+	##
+	NerveOfCatOneGroup_Mor:=function(Cf,n)
+	local NG,NH,f;
+		
+		NG:=NerveOfCatOneGroup_Obj(Cf!.source,n);  
+		NH:=NerveOfCatOneGroup_Obj(Cf!.target,n);  
+		f:=Cf!.mapping;
+		return NerveOfCatOneGroup_Morpre(NG,NH,f,n);
+	end;	
+	##
+	############### end of NerveOfCatOneGroup_Mor ########################
+	
+	######################################################################
+	#1
+	#F	NerveOfCatOneGroup_Seq
+	##	Input: Sequence of morphisms of cat1groups
+	##	Output: Sequence of simplicial maps
+	NerveOfCatOneGroup_Seq:=function(Lf,n)   
+	local len,i,NC,Res;
 
-NerveOfCatOneGroup_Seq:=function(Lf,n)   
+		len:=Length(Lf);
+		NC:=[];
+		for i in [1..len] do
+			NC[i]:=NerveOfCatOneGroup_Obj(Lf[i]!.source,n);
+		od;
+		NC[len+1]:=NerveOfCatOneGroup_Obj(Lf[len]!.target,n);
+		Res:=[];
+		for i in [1..len] do
+			Res[i]:=NerveOfCatOneGroup_Morpre(NC[i],NC[i+1],Lf[i]!.mapping,n);
+		od;
+		return Res;
+	end;
+	##
+	############### end of NerveOfCatOneGroup_Seq ########################
 
-local len,i,NC,RewL;
+	if IsHapCatOneGroup(X) then
+		return NerveOfCatOneGroup_Obj(X,n);
+	fi;
 
-len:=Length(Lf);
-NC:=[];
-for i in [1..len] do
-	NC[i]:=NerveOfCatOneGroup_Obj(Lf[i]!.source,n);
-od;
-NC[len+1]:=NerveOfCatOneGroup_Obj(Lf[len]!.target,n);
-RewL:=[];
-for i in [1..len] do
-	RewL[i]:=NerveOfCatOneGroup_Homopre(NC[i],NC[i+1],Lf[i]!.mapping,n);
-od;
-return RewL;
-end;
-####################################################################
-####################################################################
-
-if IsComponentObjectRep( X )  then
-        if "TailMap" in NamesOfComponents( X ) and "HeadMap" in NamesOfComponents( X )  then
-            C := Objectify( HapCatOneGroup, rec(
-                  sourceMap := X!.TailMap,
-                  targetMap := X!.HeadMap ) );
-            return NerveOfCatOneGroup_Obj(C,n);
-        fi;
-    fi;
-
-
-if IsHapCatOneGroup(X) then
-	return NerveOfCatOneGroup_Obj(X,n);
-fi;
-
-if IsHapCatOneGroupHomomorphism(X) then
-	return NerveOfCatOneGroup_Homo(X,n);
-fi;
-if IsList(X) then
-	return NerveOfCatOneGroup_Seq(X,n);
-fi;
-
-end);
-
+	if IsHapCatOneGroupMorphism(X) then
+		return NerveOfCatOneGroup_Mor(X,n);
+	fi;
+	if IsList(X) then
+		if IsEmpty(X) then
+			return [];
+		fi;
+		return NerveOfCatOneGroup_Seq(X,n);
+	fi;
+ end);
+##
+#################### end of NerveOfCatOneGroup ##############################
 
 
 
