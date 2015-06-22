@@ -1,0 +1,359 @@
+  
+  [1X4 [33X[0;0YResolutions of the ground ring[133X[101X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTietzeReducedResolution(R)[110X[133X
+  
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X  and returns a [22XZG[122X-resolution [22XS[122X which is obtained
+  from  [22XR[122X  by applying "Tietze like operations" in each dimension. The hope is
+  that [22XS[122X has fewer free generators than [22XR[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionArithmeticGroup("PSL(4,Z)",n)[110X[133X
+  
+  [33X[0;0YInputs a positive integer [22Xn[122X and one of the following strings:[133X
+  [33X[0;0Y"SL(2,Z)"  ,  "SL(3,Z)"  ,  "PGL(3,Z[i])"  ,  "PGL(3,Eisenstein_Integers)" ,
+  "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)"[133X
+  [33X[0;0Yor the string[133X
+  [33X[0;0Y"GL(2,O(-d))"[133X
+  [33X[0;0Yfor d=1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43[133X
+  [33X[0;0Yor the string[133X
+  [33X[0;0Y"SL(2,O(-d))"[133X
+  [33X[0;0Yfor d=2, 3, 5, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43, 67, 163[133X
+  [33X[0;0Yor the string[133X
+  [33X[0;0Y"SL(2,O(-d))_a"[133X
+  [33X[0;0Yfor d=2, 7, 11, 19.[133X
+  [33X[0;0YIt  returns [22Xn[122X terms of a free ZG-resolution for the group [22XG[122X described by the
+  string.  Here  O(-d)  denotes  the  ring  of  integers  of  Q(sqrt(-d))  and
+  subscripts _a, _b , _c , _d denote alternative non-free ZG-resolutions for a
+  given group G.[133X
+  [33X[0;0YData  for  the  first  list  of resolutions was provided provided by [12XMathieu
+  Dutour[112X.  Data  for GL(2,O(-d)) was provided by [12XSebastian Schoenennbeck[112X. Data
+  for  SL(2,O(-d))  was  provided by[12XSebastian Schoennenbeck[112X for d <= 26 and by
+  [12XAlexander Rahm[112X for d>26 and for the alternative complexes.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XFreeGResolution(P,n)[110X[133X
+  [33X[0;0Y[10XFreeGResolution(P,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a  non-free  [22XZG[122X-resolution  [22XP[122X  with  finite stabilizer groups, and a
+  positive  integer  [22Xn[122X. It returns a free [22XZG[122X-resolution of length equal to the
+  minimum  of  n  and the length of [22XP[122X. If one requires only a mod [22Xp[122X resolution
+  then the prime [22Xp[122X can be entered as an optional third argument.[133X
+  
+  [33X[0;0YThe free resolution is returned without a contracting homotopy.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionGTree(P,n)[110X[133X
+  
+  [33X[0;0YInputs a non-free [22XZG[122X-resolution [22XP[122X of dimension 1 (i.e. a G-tree) with finite
+  stabilizer groups, and a positive integer [22Xn[122X. It returns a free [22XZG[122X-resolution
+  of length equal to n.[133X
+  
+  [33X[0;0YIf  [22XP[122X has a contracting homotopy then the free resolution is returned with a
+  contracting homotopy.[133X
+  
+  [33X[0;0YThis function was written by [12X Bui Anh Tuan[112X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionSL2Z(p,n)[110X[133X
+  
+  [33X[0;0YInputs positive integers [22Xm, n[122X and returns [22Xn[122X terms of a [22XZG[122X-resolution for the
+  group [22XG=SL(2,Z[1/m])[122X .[133X
+  
+  [33X[0;0YThis function is joint work with [12XBui Anh Tuan[112X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionAbelianGroup(L,n)[110X[133X
+  [33X[0;0Y[10XResolutionAbelianGroup(G,n)[110X[133X
+  
+  [33X[0;0YInputs a list [22XL:=[m_1,m_2, ..., m_d][122X of nonnegative integers, and a positive
+  integer  [22Xn[122X.  It  returns  [22Xn[122X  terms  of a [22XZG[122X-resolution for the abelian group
+  [22XG=Z_L[1]+Z_L[2]+···+Z_L[d][122X .[133X
+  
+  [33X[0;0YIf  [22XG[122X  is  finite  then  the  first argument can also be the abelian group [22XG[122X
+  itself.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionAlmostCrystalGroup(G,n)[110X[133X
+  
+  [33X[0;0YInputs  a  positive integer [22Xn[122X and an almost crystallographic pcp group [22XG[122X. It
+  returns [22Xn[122X terms of a free [22XZG[122X-resolution. (A group is almost crystallographic
+  if  it is nilpotent-by-finite and has no non-trivial finite normal subgroup.
+  Such groups can be constructed using the ACLIB package.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionAlmostCrystalQuotient(G,n,c)[110X[133X
+  [33X[0;0Y[10XResolutionAlmostCrystalQuotient(G,n,c,false)[110X[133X
+  
+  [33X[0;0YAn  almost crystallographic group [22XG[122X is an extension of a finite group [22XP[122X by a
+  nilpotent  group [22XT[122X, and has no non-trivial finite normal subgroup. We define
+  the relative lower central series by setting [22XT_1=T[122X and [22XT_i+1=[T_i,G][122X.[133X
+  
+  [33X[0;0YThis  function  inputs  an  almost  crystallographic  group  [22XG[122X together with
+  positive  integers [22Xn[122X and [22Xc[122X. It returns [22Xn[122X terms of a free [22XZQ[122X-resolution [22XR[122X for
+  the group [22XQ=G/T_c[122X .[133X
+  
+  [33X[0;0YIn  addition  to  the  usual  components, the resolution [22XR[122X has the component
+  [22XR.quotientHomomorphism[122X which gives the quotient homomorphism [22XG ⟶ Q[122X.[133X
+  
+  [33X[0;0YIf  a  fourth  optional  variable  is set equal to "false" then the function
+  omits  to  test  whether  [22XQ[122X  is  finite and a "more canonical" resolution is
+  constructed.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionArtinGroup(D,n)[110X[133X
+  
+  [33X[0;0YInputs  a Coxeter diagram [22XD[122X and an integer [22Xn>1[122X. It returns [22Xn[122X terms of a free
+  [22XZG[122X-resolution  [22XR[122X  where  [22XG[122X  is  the  Artin  monoid  associated  to  [22XD[122X. It is
+  conjectured  that  [22XR[122X  is  also  a free resolution for the Artin group [22XG[122X. The
+  conjecture      is      known      to      hold     in     certain     cases
+  ([7X../www/SideLinks/About/aboutArtinGroups.html[107X).[133X
+  
+  [33X[0;0Y[22XG=R.group[122X  is  infinite and returned as a finitely presented group. The list
+  [22XR.elts[122X  is  a partial listing of the elements of [22XG[122X which grows as [22XR[122X is used.
+  Initially  [22XR.elts[122X  is  empty and then, any time the boundary of a resolution
+  generator  is called, [22XR.elts[122X is updated to include elements of [22XG[122X involved in
+  the boundary.[133X
+  
+  [33X[0;0YThe contracting homotopy on [22XR[122X has not yet been implemented! Furthermore, the
+  group  [22XG[122X  is  currently returned only as a finitely presented group (without
+  any method for solving the word problem).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionAsphericalPresentation(F,R,n)[110X[133X
+  
+  [33X[0;0YInputs  a free group [22XF[122X, a set [22XR[122X of words in [22XF[122X which constitute an aspherical
+  presentation  for a group [22XG[122X, and a positive integer [22Xn[122X. (Asphericity can be a
+  difficult  property  to  verify.  The function [22XIsAspherical(F,R)[122X could be of
+  help.)[133X
+  
+  [33X[0;0YThe  function returns n terms of a free [22XZG[122X-resolution [22XR[122X which has generators
+  in dimensions < 3 only. No contracting homotopy on [22XR[122X will be returned.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionBieberbachGroup( G ) [110X[133X
+  [33X[0;0Y[10XResolutionBieberbachGroup( G, v ) [110X[133X
+  
+  [33X[0;0YInputs  a  torsion free crystallographic group [22XG[122X, also known as a Bieberbach
+  group,  represented  using  AffineCrystGroupOnRight  as  in  the GAP package
+  Cryst. It also optionally inputs a choice of vector [22Xv[122X in the euclidean space
+  [22XR^n[122X  on  which  [22XG[122X  acts  freely.  The function returns [22Xn+1[122X terms of the free
+  [22XZG[122X-resolution  of [22XZ[122X arising as the cellular chain complex of the tesselation
+  of [22XR^n[122X by the Dirichlet-Voronoi fundamental domain determined by [22Xv[122X.[133X
+  
+  [33X[0;0YThis  function  is  part  of the HAPcryst package written by [12XMarc Roeder[112X and
+  thus requires the HAPcryst package to be loaded.[133X
+  
+  [33X[0;0YThe function requires the use of Polymake software.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionCoxeterGroup(D,n)[110X[133X
+  
+  [33X[0;0YInputs  a Coxeter diagram [22XD[122X and an integer [22Xn>1[122X. It returns [22Xk[122X terms of a free
+  [22XZG[122X-resolution  [22XR[122X where [22XG[122X is the Coxeter group associated to [22XD[122X. Here [22Xk[122X is the
+  maximum  of  n and the number of vertices in the Coxeter diagram. At present
+  the  implementation  is  only  for  finite Coxeter groups and the group [22XG[122X is
+  returned  as  a permutation group. The contracting homotopy on [22XR[122X has not yet
+  been implemented![133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionDirectProduct(R,S) [110X[133X
+  [33X[0;0Y[10XResolutionDirectProduct(R,S,"internal")[110X[133X
+  
+  [33X[0;0YInputs a [22XZG[122X-resolution [22XR[122X and [22XZH[122X-resolution [22XS[122X. It outputs a [22XZD[122X-resolution for
+  the direct product [22XD=G x H[122X.[133X
+  
+  [33X[0;0YIf  [22XG[122X  and  [22XH[122X  lie in a common group [22XK[122X, and if they commute and have trivial
+  intersection,  then  an optional third variable "internal" can be used. This
+  will force [22XD[122X to be the subgroup [22XGH[122X in [22XK[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionExtension(g,R,S) [110X[133X
+  [33X[0;0Y[10XResolutionExtension(g,R, S,"TestFiniteness")[110X[133X
+  [33X[0;0Y[10XResolutionExtension(g,R,S,"NoTest",GmapE)[110X[133X
+  
+  [33X[0;0YInputs a surjective group homomorphism [22Xg:E ⟶ G[122X with kernel [22XN[122X. It also inputs
+  a  [22XZN[122X-resolution  [22XR[122X  and  a [22XZG[122X-resolution [22XS[122X. It returns a [22XZE[122X-resolution. The
+  groups [22XE[122X and [22XG[122X can be infinite.[133X
+  
+  [33X[0;0YIf  an  optional  fourth  argument is set equal to "TestFiniteness" then the
+  groups  [22XN[122X and [22XG[122X will be tested to see if they are finite. If they are finite
+  then some speed saving routines will be invoked.[133X
+  
+  [33X[0;0YIf  the  homomorphism  [22Xg[122X is such that the GAP function [22XPreImagesElement(g,x)[122X
+  doesn't  work,  then a function [22XGmapE()[122X should be included as a fifth input.
+  For  any  [22Xx[122X  in [22XG[122X this function should return an element [22XGmapE(x)[122X in [22XE[122X which
+  gets mapped onto [22Xx[122X by [22Xg[122X.[133X
+  
+  [33X[0;0YThe  contracting  homotopy  on  the  [22XZE[122X-resolution  has  not  yet been fully
+  implemented for infinite groups![133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionFiniteDirectProduct(R,S) [110X[133X
+  [33X[0;0Y[10XResolutionFiniteDirectProduct(R,S, "internal")[110X[133X
+  
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X  and  [22XZH[122X-resolution  [22XS[122X  where [22XG[122X and [22XH[122X are finite
+  groups. It outputs a [22XZD[122X-resolution for the direct product [22XD=G×H[122X.[133X
+  
+  [33X[0;0YIf  [22XG[122X  and  [22XH[122X  lie in a common group [22XK[122X, and if they commute and have trivial
+  intersection,  then  an optional third variable "internal" can be used. This
+  will force [22XD[122X to be the subgroup [22XGH[122X in [22XK[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionFiniteExtension(gensE,gensG,R,n)[110X[133X
+  [33X[0;0Y[10XResolutionFiniteExtension(gensE,gensG,R,n,true) [110X[133X
+  [33X[0;0Y[10XResolutionFiniteExtension(gensE,gensG,R,n,false,S) [110X[133X
+  
+  [33X[0;0YInputs: a set [22XgensE[122X of generators for a finite group [22XE[122X; a set [22XgensG[122X equal to
+  the  image  of  [22XgensE[122X  in  a  quotient group [22XG[122X of [22XE[122X; a [22XZG[122X-resolution [22XR[122X up to
+  dimension    at   least   [22Xn[122X;   a   positive   integer   [22Xn[122X.   It   uses   the
+  [22XTwistedTensorProduct()[122X construction to return [22Xn[122X terms of a [22XZE[122X-resolution.[133X
+  
+  [33X[0;0YThe  function  has  an  optional  fourth  argument  which, when set equal to
+  "true",  invokes  tietze  reductions in the construction of a resolution for
+  the kernel of [22XE ⟶ G[122X.[133X
+  
+  [33X[0;0YIf a [22XZN[122X-resolution [22XS[122X is available, where [22XN[122X is the kernel of the quotient [22XE ⟶
+  G[122X,  then  this  can  be incorporated into the computations using an optional
+  fifth argument.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionFiniteGroup(gens,n)[110X[133X
+  [33X[0;0Y[10XResolutionFiniteGroup(gens,n,true)[110X[133X
+  [33X[0;0Y[10XResolutionFiniteGroup(gens,n,false,p) [110X[133X
+  [33X[0;0Y[10XResolutionFiniteGroup(gens,n,false,0,"extendible") [110X[133X
+  
+  [33X[0;0YInputs  a set [22Xgens[122X of generators for a finite group [22XG[122X and a positive integer
+  [22Xn[122X. It outputs [22Xn[122X terms of a [22XZG[122X-resolution.[133X
+  
+  [33X[0;0YThe  function  has an optional third argument which, when set equal to [22Xtrue[122X,
+  invokes tietze reductions in the construction of the resolution.[133X
+  
+  [33X[0;0YThe  function  has  an  optional  fourth argument which, when set equal to a
+  prime  [22Xp[122X,  records  the fact that the resolution will only be used for mod [22Xp[122X
+  calculations. This could speed up subsequent constructions.[133X
+  
+  [33X[0;0YThe  function  has  an  optional  fifth  argument  which,  when set equal to
+  "extendible",  returns  a resolution whose length can be increased using the
+  command R!.extend() .[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionFiniteSubgroup(R,K)[110X[133X
+  [33X[0;0Y[10XResolutionFiniteSubgroup(R,gensG,gensK)[110X[133X
+  
+  [33X[0;0YInputs a [22XZG[122X-resolution for a finite group [22XG[122X and a subgroup [22XK[122X of index [22X|G:K|[122X.
+  It  returns a free [22XZK[122X-resolution whose [22XZK[122X-rank is [22X|G:K|[122X times the [22XZG[122X-rank in
+  each dimension.[133X
+  
+  [33X[0;0YGenerating  sets  [22XgensG[122X, [22XgensK[122X for [22XG[122X and [22XK[122X can also be input to the function
+  (though the method does not depend on a choice of generators).[133X
+  
+  [33X[0;0YThis  [22XZK[122X-resolution  is  not  reduced. ie. it has more than one generator in
+  dimension [22X0[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionGraphOfGroups(D,n) [110X[133X
+  [33X[0;0Y[10XResolutionGraphOfGroups(D,n,L) [110X[133X
+  
+  [33X[0;0YInputs a graph of groups [22XD[122X and a positive integer [22Xn[122X. It returns [22Xn[122X terms of a
+  free [22XZG[122X-resolution for the fundamental group [22XG[122X of [22XD[122X.[133X
+  
+  [33X[0;0YAn  optional  third argument [22XL=[R_1 , ... , R_t][122X can be used to list (in any
+  order)  free resolutions for some/all of the vertex and edge groups in [22XD[122X. If
+  for some vertex or edge group no resolution is listed in [22XL[122X then the function
+  [22XResolutionFiniteGroup()[122X will be used to try to construct the resolution.[133X
+  
+  [33X[0;0YThe  [22XZG[122X-resolution  is  usually  not  reduced.  i.e.  it  has  more than one
+  generator in dimension 0.[133X
+  
+  [33X[0;0YThe  contracting homotopy on the [22XZG[122X-resolution has not yet been implemented!
+  Furthermore,  the group [22XG[122X is currently returned only as a finitely presented
+  group (without any method for solving the word problem).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionNilpotentGroup(G,n) [110X[133X
+  [33X[0;0Y[10XResolutionNilpotentGroup(G,n,"TestFiniteness")[110X[133X
+  
+  [33X[0;0YInputs  a  nilpotent group [22XG[122X and positive integer [22Xn[122X. It returns [22Xn[122X terms of a
+  free  [22XZG[122X-resolution.  The  resolution is computed using a divide-and-conquer
+  technique involving the lower central series.[133X
+  
+  [33X[0;0YThis  function  can  be  applied to infinite groups [22XG[122X. For finite groups the
+  function [22XResolutionNormalSeries()[122X probably gives better results.[133X
+  
+  [33X[0;0YIf  an  optional  third  argument  is set equal to "TestFiniteness" then the
+  groups  [22XN[122X and [22XG[122X will be tested to see if they are finite. If they are finite
+  then some speed saving routines will be invoked.[133X
+  
+  [33X[0;0YThe  contracting  homotopy  on  the  [22XZE[122X-resolution  has  not  yet been fully
+  implemented for infinite groups.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionNormalSeries(L,n) [110X[133X
+  [33X[0;0Y[10XResolutionNormalSeries(L,n,true)[110X[133X
+  [33X[0;0Y[10XResolutionNormalSeries(L,n,false,p)[110X[133X
+  
+  [33X[0;0YInputs  a  positive  integer  [22Xn[122X  and  a  list [22XL = [L_1 , ..., L_k][122X of normal
+  subgroups  [22XL_i[122X  of  a  finite  group  [22XG[122X  satisfying  [22XG = L_1[122X > [22XL2[122X >[22X...[122X >[22XL_k[122X.
+  Alternatively,  [22XL  = [gensL_1, ... gensL_k][122X can be a list of generating sets
+  for   the  [22XL_i[122X  (and  these  particular  generators  will  be  used  in  the
+  construction of resolutions). It returns a [22XZG[122X-resolution by repeatedly using
+  the function [22XResolutionFiniteExtension()[122X.[133X
+  
+  [33X[0;0YThe  function  has  an  optional third argument which, if set equal to true,
+  invokes tietze reductions in the construction of resolutions.[133X
+  
+  [33X[0;0YThe  function  has an optional fourth argument which, if set equal to p > 0,
+  produces a resolution which is only valid for mod [22Xp[122X calculations.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionPrimePowerGroup(P,n) [110X[133X
+  [33X[0;0Y[10XResolutionPrimePowerGroup(G,n,p)[110X[133X
+  
+  [33X[0;0YInputs  a  [22Xp[122X-group  [22XP[122X and integer [22Xn[122X>[22X0[122X. It uses GAP's standard linear algebra
+  functions  over  the field [22XF[122X of p elements to construct a free [22XFP[122X-resolution
+  for  mod  [22Xp[122X  calculations only. The resolution is minimal - meaning that the
+  number of generators of [22XR_n[122X equals the rank of [22XH_n(P,F)[122X.[133X
+  
+  [33X[0;0YThe  function can also be used to obtain a free non-minimal [22XFG[122X-resolution of
+  a  small  group [22XG[122X of non-prime-power order. In this case the prime [22Xp[122X must be
+  entered  as  the  third  input  variable.  (In  the non-prime-power case the
+  algorithm is naive and not very good.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionSmallFpGroup(G,n) [110X[133X
+  [33X[0;0Y[10XResolutionSmallFpGroup(G,n,p) [110X[133X
+  
+  [33X[0;0YInputs  a  small finitely presented group [22XG[122X and an integer [22Xn[122X>[22X0[122X. It returns [22Xn[122X
+  terms  of  a  [22XZG[122X-resolution which, in dimensions 1 and 2, corresponds to the
+  given presentation for [22XG[122X. The method returns no contracting homotopy for the
+  resolution.[133X
+  
+  [33X[0;0YThe  function  has  an  optional  fourth argument which, when set equal to a
+  prime  [22Xp[122X,  records  the fact that the resolution will only be used for mod [22Xp[122X
+  calculations. This could speed up subsequent constructions.[133X
+  
+  [33X[0;0YThis function was written by Irina Kholodna.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionSubgroup(R,K)[110X[133X
+  
+  [33X[0;0YInputs  a [22XZG[122X-resolution for an (infinite) group [22XG[122X and a subgroup [22XK[122X of finite
+  index  [22X|G:K|[122X.  It  returns a free [22XZK[122X-resolution whose [22XZK[122X-rank is [22X|G:K|[122X times
+  the [22XZG[122X-rank in each dimension.[133X
+  
+  [33X[0;0YIf  [22XG[122X  is  finite  then  the  function  [22XResolutionFiniteSubgroup(R,G,K)[122X will
+  probably work better. In particular, resolutions from this function probably
+  won't  work  with  the function [22XEquivariantChainMap()[122X. This [22XZK[122X-resolution is
+  not reduced. i.e. it has more than one generator in dimension 0.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XResolutionSubnormalSeries(L,n) [110X[133X
+  
+  [33X[0;0YInputs  a  positive  integer n and a list [22XL = [L_1 , ... , L_k][122X of subgroups
+  [22XL_i[122X  of  a  finite  group  [22XG=L_1[122X such that [22XL_1[122X > [22XL2 ...[122X > [22XL_k[122X is a subnormal
+  series  in  [22XG[122X  (meaning that each [22XL_i+1[122X must be normal in [22XL_i[122X). It returns a
+  [22XZG[122X-resolution by repeatedly using the function [22XResolutionFiniteExtension()[122X.[133X
+  
+  [33X[0;0YIf   [22XL[122X   is   a   series   of  normal  subgroups  in  [22XG[122X  then  the  function
+  [22XResolutionNormalSeries(L,n)[122X will possibly work more efficiently.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE)[110X[133X
+  
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X, a [22XZN[122X-resolution [22XS[122X, and other data relating to a
+  short  exact sequence [22X1 ⟶ N ⟶ E ⟶ G ⟶ 1[122X. It uses a perturbation technique of
+  CTC Wall to construct a [22XZE[122X-resolution [22XF[122X. Both [22XG[122X and [22XN[122X could be infinite. The
+  "length"  of  [22XF[122X  is  equal  to  the minimum of the "length"s of [22XR[122X and [22XS[122X. The
+  resolution  [22XR[122X  needs  no contracting homotopy if no such homotopy is requied
+  for [22XF[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XConjugatedResolution(R,x)[110X[133X
+  
+  [33X[0;0YInputs  a  ZG-resoluton  [22XR[122X and an element [22Xx[122X from some group containing [22XG[122X. It
+  returns  a [22XZG^x[122X-resolution [22XS[122X where the group [22XG^x[122X is the conjugate of [22XG[122X by [22Xx[122X.
+  (The component [22XS!.elts[122X will be a pseudolist rather than a list.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XRecalculateIncidenceNumbers(R)[110X[133X
+  
+  [33X[0;0YInputs  a  ZG-resoluton  [22XR[122X  which  arises as the cellular chain complex of a
+  regular  CW-complex.  (Thus  the  boundary of any cell is a list of distinct
+  cells.)  It  recalculates the incidence numbers for [22XR[122X. If it is applied to a
+  resolution that is not regular then a wrong answer may be returned.[133X
+  

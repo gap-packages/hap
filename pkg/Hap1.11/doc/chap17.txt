@@ -1,0 +1,122 @@
+  
+  [1X17 [33X[0;0YOrbit polytopes and fundamental domains[133X[101X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XCoxeterComplex(D)[110X[133X
+  [33X[0;0Y[10XCoxeterComplex(D,n)[110X[133X
+  
+  [33X[0;0YInputs   a  Coxeter  diagram  [22XD[122X  of  finite  type.  It  returns  a  non-free
+  ZW-resolution for the associated Coxeter group [22XW[122X. The non-free resolution is
+  obtained  from  the  permutahedron  of  type  [22XW[122X. A positive integer [22Xn[122X can be
+  entered  as  an  optional  second  variable;  just  the first [22Xn[122X terms of the
+  non-free resolution are then returned.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XContractibleGcomplex("PSL(4,Z)")[110X[133X
+  
+  [33X[0;0YInputs one of the following strings:[133X
+  [33X[0;0Y"SL(2,Z)"  ,  "SL(3,Z)"  ,  "PGL(3,Z[i])"  ,  "PGL(3,Eisenstein_Integers)" ,
+  "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)"[133X
+  [33X[0;0Yor one of the following strings[133X
+  [33X[0;0Y"SL(2,O-2)"  ,  "SL(2,O-7)"  ,  "SL(2,O-11)" , "SL(2,O-19)" , "SL(2,O-43)" ,
+  "SL(2,O-67)" , "SL(2,O-163)"[133X
+  [33X[0;0YIt returns a non-free ZG-resolution for the group [22XG[122X described by the string.
+  The  stabilizer  groups of cells are finite. (Subscripts _b , _c , _d denote
+  alternative non-free ZG-resolutions for a given group G.)[133X
+  [33X[0;0YData  for  the  first  list of non-free resolutions was provided provided by
+  [12XMathieu Dutour[112X. Data for the second list was provided by [12XAlexander Rahm[112X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XQuotientOfContractibleGcomplex(C,D)[110X[133X
+  
+  [33X[0;0YInputs  a  non-free  [22XZG[122X-resolution [22XC[122X and a finite subgroup [22XD[122X of [22XG[122X which is a
+  subgroup  of  each  cell  stabilizer  group  for  [22XC[122X.  Each element of [22XD[122X must
+  preserves  the  orientation  of  any  cell  stabilized by it. It returns the
+  corresponding  non-free  [22XZ(G/D)[122X-resolution.  (So,  for  instance,  from  the
+  [22XSL(2,O)[122X  complex  [22XC=ContractibleGcomplex("SL(2,O-2)");[122X  we  can  construct a
+  [22XPSL(2,O)[122X-complex using this function.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTruncatedGComplex(R,m,n)[110X[133X
+  
+  [33X[0;0YInputs  a  non-free  [22XZG[122X-resolution  [22XR[122X  and two positive integers [22Xm[122X and [22Xn[122X. It
+  returns  the  non-free  [22XZG[122X-resolution  consisting  of  those modules in [22XR[122X of
+  degree at least [22Xm[122X and at most [22Xn[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XFundamentalDomainStandardSpaceGroup(v,G)[110X[133X
+  
+  [33X[0;0YInputs a crystallographic group G (represented using AffineCrystGroupOnRight
+  as  in  the  GAP  package Cryst). It also inputs a choice of vector v in the
+  euclidean  space  [22XR^n[122X  on  which  [22XG[122X  acts.  It returns the Dirichlet-Voronoi
+  fundamental cell for the action of [22XG[122X on euclidean space corresponding to the
+  vector  [22Xv[122X.  The fundamental cell is a fundamental domain if [22XG[122X is Bieberbach.
+  The  fundamental cell/domain is returned as a [21XPolymake object[121X. Currently the
+  function only applies to certain crystallographic groups. See the manuals to
+  HAPcryst and HAPpolymake for full details.[133X
+  
+  [33X[0;0YThis  function is part of the HAPcryst package written by [12XMarc Roeder[112X and is
+  thus only available if HAPcryst is loaded.[133X
+  
+  [33X[0;0YThe function requires the use of Polymake software.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XOrbitPolytope(G,v,L) [110X[133X
+  
+  [33X[0;0YInputs  a  permutation  group  or  matrix group [22XG[122X of degree [22Xn[122X and a rational
+  vector [22Xv[122X of length [22Xn[122X. In both cases there is a natural action of [22XG[122X on [22Xv[122X. Let
+  [22XP(G,v)[122X  be  the  convex polytope arising as the convex hull of the Euclidean
+  points  in  the orbit of [22Xv[122X under the action of [22XG[122X. The function also inputs a
+  sublist [22XL[122X of the following list of strings:[133X
+  
+  [33X[0;0Y["dimension","vertex_degree", "visual_graph", "schlegel","visual"][133X
+  
+  [33X[0;0YDepending on the sublist, the function:[133X
+  [33X[0;0Yprints the dimension of the orbit polytope [22XP(G,v)[122X;[133X
+  [33X[0;0Yprints the degree of a vertex in the graph of [22XP(G,v)[122X;[133X
+  [33X[0;0Yvisualizes the graph of [22XP(G,v)[122X;[133X
+  [33X[0;0Yvisualizes the Schlegel diagram of [22XP(G,v)[122X;[133X
+  [33X[0;0Yvisualizes [22XP(G,v)[122X if the polytope is of dimension 2 or 3.[133X
+  [33X[0;0YThe function uses Polymake software.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPolytopalComplex(G,v) [110X[133X
+  [33X[0;0Y[10XPolytopalComplex(G,v,n) [110X[133X
+  
+  [33X[0;0YInputs  a  permutation  group  or  matrix group [22XG[122X of degree [22Xn[122X and a rational
+  vector [22Xv[122X of length [22Xn[122X. In both cases there is a natural action of [22XG[122X on [22Xv[122X. Let
+  [22XP(G,v)[122X  be  the  convex polytope arising as the convex hull of the Euclidean
+  points  in  the orbit of [22Xv[122X under the action of [22XG[122X. The cellular chain complex
+  [22XC_*=C_*(P(G,v))[122X  is  an exact sequence of (not necessarily free) [22XZG[122X-modules.
+  The function returns a component object [22XR[122X with components:[133X
+  [33X[0;0Y[22XR!.dimension(k)[122X  is  a  function which returns the number of [22XG[122X-orbits of the
+  [22Xk[122X-dimensional  faces  in  [22XP(G,v)[122X.  If  each  [22Xk[122X-face  has  trivial stabilizer
+  subgroup in [22XG[122X then [22XC_k[122X is a free [22XZG[122X-module of rank [22XR.dimension(k)[122X.[133X
+  [33X[0;0Y[22XR!.stabilizer(k,n)[122X is a function which returns the stabilizer subgroup for a
+  face in the [22Xn[122X-th orbit of [22Xk[122X-faces.[133X
+  [33X[0;0YIf  all faces of dimension <[22Xk+1[122X have trivial stabilizer group then the first
+  [22Xk[122X  terms of [22XC_*[122X constitute part of a free [22XZG[122X-resolution. The boundary map is
+  described  by  the  function [22Xboundary(k,n)[122X . (If some faces have non-trivial
+  stabilizer  group  then  [22XC_*[122X is not free and no attempt is made to determine
+  signs for the boundary map.)[133X
+  [33X[0;0Y[22XR!.elements[122X, [22XR!.group[122X, [22XR!.properties[122X are as in a [22XZG[122X-resolution.[133X
+  [33X[0;0YIf  an  optional third input variable [22Xn[122X is used, then only the first [22Xn[122X terms
+  of the resolution [22XC_*[122X will be computed.[133X
+  
+  [33X[0;0YThe function uses Polymake software.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XPolytopalGenerators(G,v) [110X[133X
+  
+  [33X[0;0YInputs  a  permutation  group  or  matrix group [22XG[122X of degree [22Xn[122X and a rational
+  vector [22Xv[122X of length [22Xn[122X. In both cases there is a natural action of [22XG[122X on [22Xv[122X, and
+  the vector [22Xv[122X must be chosen so that it has trivial stabilizer subgroup in [22XG[122X.
+  Let  [22XP(G,v)[122X  be  the  convex  polytope  arising  as  the  convex hull of the
+  Euclidean  points  in  the  orbit  of  [22Xv[122X under the action of [22XG[122X. The function
+  returns a record [22XP[122X with components:[133X
+  [33X[0;0Y[22XP.generators[122X  is  a  list of all those elements [22Xg[122X in [22XG[122X such that [22Xg⋅ v[122X has an
+  edge in common with [22Xv[122X. The list is a generating set for [22XG[122X.[133X
+  [33X[0;0Y[22XP.vector[122X is the vector [22Xv[122X.[133X
+  [33X[0;0Y[22XP.hasseDiagram[122X is the Hasse diagram of the cone at [22Xv[122X.[133X
+  [33X[0;0YThe  function uses Polymake software. The function is joint work with Seamus
+  Kelly.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XVectorStabilizer(G,v) [110X[133X
+  
+  [33X[0;0YInputs  a  permutation  group  or  matrix group [22XG[122X of degree [22Xn[122X and a rational
+  vector  of  degree  [22Xn[122X. In both cases there is a natural action of [22XG[122X on [22Xv[122X and
+  the function returns the group of elements in [22XG[122X that fix [22Xv[122X.[133X
+  

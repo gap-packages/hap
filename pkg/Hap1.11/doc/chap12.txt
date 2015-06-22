@@ -1,0 +1,108 @@
+  
+  [1X12 [33X[0;0YCohomology ring structure[133X[101X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XIntegralCupProduct(R,u,v,p,q) [110X[133X
+  [33X[0;0Y[10X IntegralCupProduct(R,u,v,p,q,P,Q,N) [110X[133X
+  
+  [33X[0;0Y(Various  functions  used  to  construct  the cup product are also available
+  ([7XCR_functions.html[107X).)[133X
+  
+  [33X[0;0YInputs  a [22XZG[122X-resolution [22XR[122X, a vector [22Xu[122X representing an element in [22XH^p(G,Z)[122X, a
+  vector [22Xv[122X representing an element in [22XH^q(G,Z)[122X and the two integers [22Xp,q[122X >[22X0[122X. It
+  returns  a  vector  [22Xw[122X  representing the cup product [22Xu⋅ v[122X in [22XH^p+q(G,Z)[122X. This
+  product is associative and [22Xu⋅ v = (-1)pqv⋅ u[122X . It provides [22XH^∗(G,Z)[122X with the
+  structure  of  an anti-commutative graded ring. This function implements the
+  cup product for characteristic 0 only.[133X
+  
+  [33X[0;0YThe resolution [22XR[122X needs a contracting homotopy.[133X
+  
+  [33X[0;0YTo  save  the  function from having to calculate the abelian groups [22XH^n(G,Z)[122X
+  additional     input     variables    can    be    used    in    the    form
+  [22XIntegralCupProduct(R,u,v,p,q,P,Q,N)[122X , where[133X
+  [33X[0;0Y[22XP[122X is the output of the command [22XCR_CocyclesAndCoboundaries(R,p,true)[122X[133X
+  [33X[0;0Y[22XQ[122X is the output of the command [22XCR_CocyclesAndCoboundaries(R,q,true)[122X[133X
+  [33X[0;0Y[22XN[122X is the output of the command [22XCR_CocyclesAndCoboundaries(R,p+q,true)[122X .[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XIntegralRingGenerators(R,n) [110X[133X
+  
+  [33X[0;0YInputs  at least [22Xn+1[122X terms of a [22XZG[122X-resolution and integer [22Xn[122X> [22X0[122X. It returns a
+  minimal  list of cohomology classes in [22XH^n(G,Z)[122X which, together with all cup
+  products of lower degree classes, generate the group [22XH^n(G,Z)[122X .[133X
+  
+  [33X[0;0Y(Let  [22Xa_i[122X  be  the [22Xi[122X-th canonical generator of the [22Xd[122X-generator abelian group
+  [22XH^n(G,Z)[122X.  The  cohomology  class [22Xn_1a_1 + ... +n_da_d[122X is represented by the
+  integer vector [22Xu=(n_1, ..., n_d)[122X. )[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XModPCohomologyGenerators(G,n) [110X[133X
+  [33X[0;0Y[10XModPCohomologyGenerators(R) [110X[133X
+  
+  [33X[0;0YInputs  either  a  [22Xp[122X-group  [22XG[122X  and  positive integer [22Xn[122X, or else [22Xn[122X terms of a
+  minimal  [22XZ_pG[122X-resolution  [22XR[122X of [22XZ_p[122X. It returns a pair whose first entry is a
+  minimal  set  of homogeneous generators for the cohomology ring [22XA=H^*(G,Z_p)[122X
+  modulo  all  elements in degree greater than [22Xn[122X. The second entry of the pair
+  is  a  function  [22Xdeg[122X  which, when applied to a minimal generator, yields its
+  degree.[133X
+  
+  [33X[0;0YWARNING:  the following rule must be applied when multiplying generators [22Xx_i[122X
+  together.  Only products of the form [22Xx_1*(x_2*(x_3*(x_4*...)))[122X with [22Xdeg(x_i)
+  le  deg(x_i+1)[122X  should  be  computed  (since  the  [22Xx_i[122X belong to a structure
+  constant algebra with only a partially defined structure constants table).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XModPCohomologyRing(G,n) [110X[133X
+  [33X[0;0Y[10XModPCohomologyRing(G,n,level) [110X[133X
+  [33X[0;0Y[10XModPCohomologyRing(R) [110X[133X
+  [33X[0;0Y[10XModPCohomologyRing(R,level)[110X[133X
+  
+  [33X[0;0YInputs  either  a  [22Xp[122X-group  [22XG[122X  and  positive integer [22Xn[122X, or else [22Xn[122X terms of a
+  minimal   [22XZ_pG[122X-resolution   [22XR[122X   of  [22XZ_p[122X.  It  returns  the  cohomology  ring
+  [22XA=H^*(G,Z_p)[122X modulo all elements in degree greater than [22Xn[122X.[133X
+  
+  [33X[0;0YThe ring is returned as a structure constant algebra [22XA[122X.[133X
+  
+  [33X[0;0YThe  ring  [22XA[122X  is graded. It has a component [22XA!.degree(x)[122X which is a function
+  returning    the    degree    of    each    (homogeneous)   element   [22Xx[122X   in
+  [22XGeneratorsOfAlgebra(A)[122X.[133X
+  
+  [33X[0;0YAn optional input variable "level" can be set to one of the strings "medium"
+  or "high". These settings determine parameters in the algorithm. The default
+  setting is "medium".[133X
+  
+  [33X[0;0YWhen  "level"  is  set  to  "high"  the  ring [22XA[122X is returned with a component
+  [22XA!.niceBasis[122X.  This  component  is a pair [22X[Coeff,Bas][122X. Here [22XBas[122X is a list of
+  integer  lists;  a  "nice"  basis  for the vector space [22XA[122X can be constructed
+  using    the    command   [22XList(Bas,x->Product(List(x,i->Basis(A)[i]))[122X.   The
+  coefficients  of  the  canonical  basis  element  [22XBasis(A)[i][122X  are stored as
+  [22XCoeff[i][122X.[133X
+  
+  [33X[0;0YIf  the  ring  [22XA[122X  is  computed  using  the setting "level"="medium" then the
+  component   [22XA!.niceBasis[122X   can   be   added   to   [22XA[122X   using   the   command
+  [22XA:=ModPCohomologyRing_part_2(A)[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XModPRingGenerators(A) [110X[133X
+  
+  [33X[0;0YInputs a mod [22Xp[122X cohomology ring [22XA[122X (created using the preceeding function). It
+  returns  a  minimal  generating  set  for  the  ring  [22XA[122X.  Each  generator is
+  homogeneous.[133X
+  [33X[0;0Y[10XMod2CohomologyRingPresentation(G) [110X[133X
+  [33X[0;0Y[10XMod2CohomologyRingPresentation(G,n) [110X[133X
+  [33X[0;0Y[10XMod2CohomologyRingPresentation(A) [110X[133X
+  [33X[0;0Y[10XMod2CohomologyRingPresentation(R)[110X[133X
+  
+  [33X[0;0YWhen  applied to a finite [22X2[122X-group [22XG[122X this function returns a presentation for
+  the  mod  2 cohomology ring [22XH^*(G,Z_2)[122X. The Lyndon-Hochschild-Serre spectral
+  sequence is used to prove that the presentation is correct.[133X
+  
+  [33X[0;0YWhen  the  function  is  applied  to  a [22X2[122X-group [22XG[122X and positive integer [22Xn[122X the
+  function  first  constructs  [22Xn[122X  terms  of  a  free  [22XZ_2G[122X-resolution  [22XR[122X, then
+  constructs  the  finite-dimensional  graded  algebra [22XA=H^(*le n)(G,Z_2)[122X, and
+  finally   uses   [22XA[122X   to  approximate  a  presentation  for  [22XH^*(G,Z_2)[122X.  For
+  "sufficiently  large"  the  approximation will be a correct presentation for
+  [22XH^*(G,Z_2)[122X.[133X
+  
+  [33X[0;0YAlternatively, the function can be applied directly to either the resolution
+  [22XR[122X or graded algebra [22XA[122X.[133X
+  
+  [33X[0;0YThis  function  was  written by [12XPaul Smith[112X. It uses the Singular commutative
+  algebra package to handle the Lyndon-Hochschild-Serre spectral sequence.[133X
+  
