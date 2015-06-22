@@ -1,0 +1,215 @@
+
+
+###############################################
+###############################################
+InstallGlobalFunction(RadicalSeriesOfResolution,
+function(R)
+local C,G, ordG, FG, FGdims, Tdims, T,L,prime, 
+      Dimension, FDimension, Boundary, BoundRec, IntToPair, one, 
+      PairToInt, cnt, Mult, invT, n, i,g, j, k, r,
+      WordToVectorList, VectorListToWord, newold, oldnew  ;
+
+G:=R!.group;
+ordG:=Order(G);
+prime:=Factors(ordG)[1];
+
+###################
+###################
+if not (IsPrime(EvaluateProperty(R,"characteristic"))
+and
+IsPrimePowerInt(ordG)) then
+Print("The resolution must have prime characteristic for a prime-power group\n");
+return fail;
+fi;
+###################
+###################
+
+one:=One(GF(prime));
+
+
+###################
+Mult:=function(g,h);
+return Position(R!.elts,R!.elts[g]*R!.elts[h]);
+end;
+###################
+
+###################
+FG:=GroupAlgebraAsFpGModule(G);
+L:=RadicalSeriesOfFpGModule(FG);;
+L:=L{[1..Length(L)-1]};
+L:=Reversed(L);
+T:=List(L,x->GeneratorsOfFpGModule(x));
+FGdims:=List(T,Length);
+Tdims:=1*FGdims;
+for i in [2..Length(FGdims)] do
+FGdims[i]:=FGdims[i]+FGdims[i-1];
+od;
+T:=Concatenation(T); ##So T is the new basis
+invT:=T^-1;
+###################
+
+###################
+Dimension:=function(n);
+if n>Length(R) then return 0; fi;
+return ordG*R!.dimension(n);
+end;
+###################
+
+###################
+FDimension:=function(k,n);
+if n>Length(R) then return 0; fi;
+return FGdims[k]*R!.dimension(n);
+end;
+###################
+
+
+##################################
+IntToPair:=List([0..Length(R)],i->[]);
+PairToInt:=List([0..Length(R)],i->List([1..R!.dimension(i)], j->[]));
+# so i --> [r,g] where r is the FG summand and g is position in summand
+
+for n in [0..Length(R)] do
+cnt:=0;
+   for j in [1..Length(Tdims)] do
+   for g in [1..Tdims[j]] do
+   for r in [1..R!.dimension(n)] do
+   cnt:=cnt+1;
+   IntToPair[n+1][cnt]:=[r,g];
+   if j>1 then IntToPair[n+1][cnt][2]:=IntToPair[n+1][cnt][2]+FGdims[j-1]; fi;
+   PairToInt[n+1][IntToPair[n+1][cnt][1]][IntToPair[n+1][cnt][2]]:=cnt;
+   od;
+   od;
+   od;
+od;
+################################
+
+#####################################################################
+WordToVectorList:=function(w,k) #w is a word in R_k.
+local v,x,a;                    #v is a list of vectors mod p.
+
+#v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(ordG,0) );
+v:=List([1..Dimension(k)],i->List([1..ordG],j->0*one) );
+
+
+for x in w do
+a:=AbsoluteValue(x[1]);
+v[a][x[2]]:=v[a][x[2]] + SignInt(x[1])*one;
+od;
+
+return v ;
+end;
+#####################################################################
+
+
+#####################################################################
+VectorListToWord:=function(v)
+local w, i, x;
+
+w:=[];
+for x in [1..Length(v)] do
+for i in [1..Length(v[x])] do
+if not IsZero(v[x][i]) then 
+Append(w, MultiplyWord(IntFFE(v[x][i]),[ [x,i]   ]));
+fi;
+od;
+od;
+
+return w;
+end;
+#####################################################################
+
+#####################################################################
+newold:=function(w)
+local z,v,r,g;
+#Inputs a vector list w in with resp. to new basis and returns it
+#with resp. to old basis.
+v:=[];
+
+for r in [1..Length(w)] do
+#Add(v,w[r]*T);
+if not IsZero(w[r]) then 
+w[r]:=w[r]*T;
+fi;
+od;
+#return v;
+return w;
+end;
+###################
+
+#####################################################################
+oldnew:=function(w)
+local z,v,r,g;
+#Inputs a vector list w in with resp. to new basis and returns it
+#with resp. to old basis.
+v:=[];
+
+for r in [1..Length(w)] do
+#Add(v,w[r]*invT);
+if not IsZero(w[r]) then 
+w[r]:=w[r]*invT;
+fi;
+od;
+#return v;
+return v;
+end;
+###################
+
+BoundRec:=List([1..Length(R)],i->[]);;
+
+###################################
+Boundary:=function(n,k)
+local w, x,b, bnd, pr;
+
+if IsBound(BoundRec[n][k]) then
+return 1*BoundRec[n][k]; 
+fi;
+ 
+pr:=IntToPair[n+1][k];
+r:=pr[1];
+g:=pr[2];
+
+w:=[[r,g]];
+w:=WordToVectorList(w,n);
+w:=newold(w);
+w:=VectorListToWord(w);
+
+bnd:=[];
+for x in w do
+b:=R!.boundary(n,AbsInt(x[1]));
+b:=List(b,a->[a[1],Mult(x[2],a[2])]);
+if SignInt(x[1])<0 then b:=NegateWord(b); fi;
+Append(bnd,b);
+od;
+
+bnd:=WordToVectorList(bnd,n-1);
+bnd:=oldnew(bnd);
+bnd:=VectorListToWord(bnd);
+
+Apply(bnd,x->[x[1],one*x[2]]);;
+bnd:=AlgebraicReduction(bnd,prime);
+BoundRec[n][k]:=bnd;
+
+return 1*bnd;
+
+end;
+###################
+
+
+return 
+Objectify(HapFilteredSparseChainComplex,
+           rec(
+           dimension:=Dimension,
+           boundary:=Boundary,
+           filteredDimension:=FDimension,
+           properties:=[
+           ["length",Length(R)],
+           ["filtration_length",Length(FGdims)],
+           ["type","FilteredChainComplex"],
+           ["characteristic",prime]]
+           ));
+
+
+end);
+###############################################
+###############################################
+

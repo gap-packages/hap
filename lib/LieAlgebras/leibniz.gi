@@ -4,13 +4,15 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(LeibnizComplex,
-function(L,x)
+function(arg)
 
-local Leibnizcomplex,LeibnizMap;
+local Leibnizcomplex,LeibnizMap, L, x, sparse;
 
 # L: Leibniz algebra or Leibniz algebra morphism
 # x: Length of the chain complex/map to be calculated
-
+L:=arg[1];
+x:=arg[2];
+if Length(arg)=3 then sparse:=arg[3]; else sparse:=false; fi;
 
 ###################################################################
 ###################################################################
@@ -96,6 +98,7 @@ return bound; fi;
 end;
 #############################################################
 
+if not sparse then
 return Objectify(HapChainComplex,rec(dimension:=Dim,
            boundary:=Boundary,
            properties:=
@@ -103,7 +106,63 @@ return Objectify(HapChainComplex,rec(dimension:=Dim,
                  ["reduced",true],
                  ["type","chainComplex"],
                  ["characteristic",Charact(A)]]));
+fi;
+
+
+###############################################################
+Boundary:=function(n,j)
+#Boundary returns the image of the j-th generator of C(n)
+
+local a,b,x,p,q,R,m,Q,pos;
+
+if n>s then
+        return fail;
+fi;
+if j>d^n then
+        return fail;
+fi;
+
+bound:=[];
+Q:=ITT(j,n);
+
+for a in [1..n-1] do
+for b in [a+1..n] do
+        p:=Length(Sctab[Q[a]][Q[b]][1]);
+        for m in [1..p] do
+                R:=StructuralCopy(Q);
+                Add(R,Sctab[Q[a]][Q[b]][1][m],a);
+                Remove(R,a+1);
+                Remove(R,b);
+                #bound[TTI(R)]:=bound[TTI(R)]+((-1)^b)*Sctab[Q[a]][Q[b]][2][m];
+                pos:=Position(bound,y->y[1]=TTI(R));
+                if IsInt(pos) then 
+                bound[pos][2]:=bound[pos][2] + ((-1)^b)*Sctab[Q[a]][Q[b]][2][m];
+                else
+		Add(bound,[TTI(R),((-1)^b)*Sctab[Q[a]][Q[b]][2][m] ]  );
+		fi;
+        od;
+od;
+od;
+
+if IsPrimeInt(Charact(A)) then
+Apply(bound, y->[y[1],y[2]*ONE]);
+return bound;
+else
+return bound; fi;
+
 end;
+#############################################################
+
+return Objectify(HapSparseChainComplex,rec(dimension:=Dim,
+           boundary:=Boundary,
+           properties:=
+                [["length",s],
+                 ["reduced",true],
+                 ["type","chainComplex"],
+                 ["characteristic",Charact(A)]]));
+
+end;
+
 #############################################################
 #############################################################
 

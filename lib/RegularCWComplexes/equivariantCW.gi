@@ -36,12 +36,14 @@ end);
 #############################################################
 InstallGlobalFunction("ResolutionToEquivariantCWComplex",
 function(R)
-local Stabilizer,T,dim;
+local Stabilizer,T,dim,i;
 
-dim:=Position(List([0..Length(R)],R!.dimension),0);
-if dim=fail then
-dim:=Length(R);
-fi;
+#dim:=Position(List([0..Length(R)],R!.dimension),0);
+#if dim=fail then
+for i in [0..Length(R)] do
+if R!.dimension(i)>0 then dim:=i; fi;
+od;
+#fi;
 
 T:=Group(Identity(R!.group));
 ##########
@@ -59,7 +61,7 @@ return Objectify(HapEquivariantCWComplex,
             group:=R!.group,
             stabilizer:=Stabilizer,
             properties:=
-            [["dimension",dim],
+            [["dimension",dim]
             ]  ));
 
 end);
@@ -92,7 +94,8 @@ return Objectify(HapResolution,
             homotopy:=fail,
             properties:=
             [["length",dim],
-             ["characteristic",0]
+             ["characteristic",0],
+             ["type","resolution"]
             ]  ));
 
 end);
@@ -168,6 +171,21 @@ end);
 
 #############################################################
 #############################################################
+InstallMethod(ChainComplexOfQuotient,
+"chain complex of the quotient of an equivariant CW-complex",
+[IsHapEquivariantCWComplex],
+
+function(Y) local R, P;
+R:=EquivariantCWComplexToResolution(Y);
+P:=TensorWithIntegers(R);
+return P;
+end);
+#############################################################
+#############################################################
+
+
+#############################################################
+#############################################################
 InstallGlobalFunction(RestrictedEquivariantCWComplex,
 function(Y,H)
 local R, X;
@@ -179,4 +197,5 @@ return ResolutionToEquivariantCWComplex(R);
 end);
 #############################################################
 #############################################################
+
 

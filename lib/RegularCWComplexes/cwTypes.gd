@@ -43,10 +43,60 @@ InstallMethod( PrintObj,
  Print("\n");
 #fi;
 end);
-
  
 ###################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapFilteredRegularCWComplex",IsObject);
+
+DeclareRepresentation(  "IsHapFilteredRegularCWComplexRep",
+                        IsComponentObjectRep,
+                        ["nrCells",
+                         "boundaries",
+                         "coboundaries",
+                         "vectorField",
+                         "filtration",
+                         ]);
+
+HapFilteredRegularCWComplexFamily:=NewFamily( "HapFilteredRegularCWComplexFamily",
+                                          IsHapFilteredRegularCWComplex,
+                                          IsHapFilteredRegularCWComplex);
+
+HapFilteredRegularCWComplex:=NewType(HapFilteredRegularCWComplexFamily,
+                                IsHapFilteredRegularCWComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapFilteredRegularCWComplexes",
+ [IsHapFilteredRegularCWComplex],
+ function(R)
+ Print("Filtered regular CW-complex of dimension ",EvaluateProperty(R,"dimension"));
+#if IsList(R!.vectorField) then
+# Print(" with discrete vector field\n");
+#else
+ Print("\n");
+#fi;
+end);
+
+InstallMethod( PrintObj,
+"for HapFilteredRegularCWComplexes",
+ [IsHapFilteredRegularCWComplex],
+ function(R)
+ Print("Filtered regular CW-complex of dimension ",EvaluateProperty(R,"dimension"));
+#if IsList(R!.vectorField) then
+# Print(" with discrete vector field\n");
+#else
+ Print("\n");
+#fi;
+end);
+
+###################################################################
+#####################################################################
+
+
+
 
 #####################################################################
 #####################################################################
@@ -132,8 +182,6 @@ end);
 #####################################################################
 
 
-
- 
 #####################################################################
 #####################################################################
 DeclareCategory("IsHapSparseChainComplex",IsObject);

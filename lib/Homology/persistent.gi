@@ -1083,7 +1083,7 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex,
+InstallGlobalFunction(PersistentHomologyOfFilteredPureCubicalComplex,
 function(F,n)
 local FF, C, D;
 
@@ -1095,15 +1095,19 @@ fi;
 ############################
 
 if IsHapFilteredPureCubicalComplex(F) then
-FF:=ZigZagContractedFilteredPureCubicalComplex(F);
+#FF:=ZigZagContractedFilteredPureCubicalComplex(F,2);
+FF:=ContractedFilteredPureCubicalComplex(F);
 FF:=FilteredPureCubicalComplexToCubicalComplex(FF);
 fi;
 
-if IsHapFilteredCubicalComplex(F) then
+if IsHapFilteredPureCubicalComplex(F) then
 FF:=F;
 fi;
 
 C:=SparseFilteredChainComplexOfFilteredCubicalComplex(FF);
+if Dimension(F)<=3 then
+C:=TensorWithIntegersModPSparse(C,2);
+fi;
 
 return
 PersistentHomologyOfFilteredSparseChainComplex(C,n);
@@ -1113,7 +1117,7 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(PersistentHomologyOfFilteredCubicalComplex_alt,
+InstallGlobalFunction(PersistentHomologyOfFilteredPureCubicalComplex_alt,
 function(FF,deg)
 local flen, HEMin, HEMax, FT, PH, D, PHfirst, Pmat, PB, F, r, s,n;
 

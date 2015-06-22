@@ -885,3 +885,60 @@ end);
 ########################################
 ########################################
 
+#########################################
+#########################################
+InstallGlobalFunction(FpGModuleSection,
+function(M,w)
+local gens, G, A, B, g, S, pp, fn1, fn, u,v,zz;
+
+gens:=GeneratorsOfFpGModule(M);
+G:=M!.group;
+pp:=Order(G);
+
+if not IsBound(M!.section) then
+
+###############
+fn1:=function(i)
+local n;
+n:=i/pp;
+if IsInt(n) then return [n,pp];
+else return [1+Int(n),i mod pp];
+fi;
+end;
+###############
+###############
+fn:=function(v)
+local j,i,x,w;
+w:=[];
+for i in [1..Length(v)] do
+for j in [1..IntFFE(v[i])] do
+Add(w,fn1(i));
+od;
+od;
+return w;
+end;
+###############
+
+A:=[];
+for zz in gens do
+for g in G do
+Append(A,M!.action(g,[zz]));
+od;
+od;
+B:=MutableCopyMat(M!.matrix);
+A:=MutableCopyMat(A);
+
+S:=SolutionsMatDestructive(A,B);
+M!.section:=[S,fn];
+fi;
+##########################################
+
+S:=M!.section[1];
+fn:=M!.section[2];
+u:=SolutionMat(M!.matrix,w);
+return fn(u*S);
+
+end);
+########################################
+########################################
+

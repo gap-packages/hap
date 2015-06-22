@@ -1259,8 +1259,12 @@ InstallOtherMethod(Bettinumbers,
 "Rank of n-th homology of a chain complex",
 [IsHapChainComplex,IsInt],
 function(M,n)
-local H;
+local H, p;
+if EvaluateProperty(M,"characteristic")<=0  then
 return Homology(TensorWithRationals(M),n);
+fi;
+p:=EvaluateProperty(M,"characteristic");
+return Homology(TensorWithIntegersModP(M,p),n);
 end);
 #################################################################
 #################################################################
@@ -1562,15 +1566,22 @@ end);
 #################################################################
 InstallGlobalFunction(ExcisedPureCubicalPair,
 function(M,S)
-local B,intS,N;
+local B,intS,N, M1, S1;
 
 if Dimension(M)=2 then return ExcisedPureCubicalPair_dim_2(M,S); fi;
 
-B:=BoundaryOfPureCubicalComplex(S);
-intS:=PureCubicalComplexDifference(S,B);
-N:=PureCubicalComplexDifference(M,intS);
+#B:=BoundaryOfPureCubicalComplex(S);
+#intS:=PureCubicalComplexDifference(S,B);
+#N:=PureCubicalComplexDifference(M,intS);
 
-return [N,B];
+B:=PureComplexDifference(M,S);
+B:=ThickenedPureComplex(B);
+B:=PureCubicalComplexDifference(S,B);
+S1:=PureComplexDifference(S,B);
+M1:=PureComplexDifference(M,B);
+
+#return [N,B];
+return [M1,S1];
 end);
 #################################################################
 #################################################################

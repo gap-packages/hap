@@ -174,6 +174,7 @@ ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
 #ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
+ReadPackage("HAP", "lib/ResolutionsModP/radical.gi");
 
 ##################### FUNCTORS ######################################
 ReadPackage("HAP", "lib/Functors/permMatrix.gi");
@@ -190,6 +191,7 @@ ReadPackage("HAP", "lib/Functors/primePartDerived.gi");
 ReadPackage("HAP", "lib/Functors/homToZ.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithRationals.gi");
 ReadPackage("HAP", "lib/Functors/homToZmodP.gi");
+ReadPackage("HAP", "lib/Functors/homtint.gi");
 
 
 ##################### HOMOLOGY ######################################
@@ -312,6 +314,7 @@ ReadPackage("HAP","lib/PolyComplexes/rips.gi");
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
+ReadPackage("HAP","lib/PolyComplexes/clique.gi");
 ReadPackage("HAP","lib/PolyComplexes/metrics.gi");
 ReadPackage("HAP","lib/PolyComplexes/graphviz.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
@@ -378,6 +381,9 @@ ReadPackage("HAP","lib/RegularCWComplexes/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/fundamental.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/cocontract.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/piZero.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/filteredCW.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/directproduct.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -396,6 +402,7 @@ fi;
 ################## KNOTS ##########################################
 ReadPackage("HAP","/lib/Knots/knotdata.gi");
 ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
+ReadPackage("HAP","/lib/Knots/csvknot.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
@@ -408,9 +415,10 @@ ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
 #ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/freeZGRes.gi");
 fi;
 
-
+ReadPackage("HAP","lib/Operations/hapOps.gi");
 
 ################## HAP PRIME ##################################
 if IsPackageMarkedForLoading("singular","06.07.23") then
@@ -427,4 +435,14 @@ fi;
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
 ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
 
+
+################## HAP COCYCLIC ##############################
+if not IsPackageMarkedForLoading("HAPcocyclic","0.2") then
+ReadPackage("HAP","lib/HapCocyclic/init.g");
+ReadPackage("HAP","lib/HapCocyclic/read.g");
+fi;
+
 SetInfoLevel(InfoWarning,1); #This is GAP's default level
+
+
+

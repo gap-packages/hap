@@ -1,0 +1,13 @@
+## get filename from cmd arg $1
+_backuppath="$1"
+ 
+# Get filename 
+filename="${_backuppath%.*}" 
+
+## Just display commands for demo purpose ##
+dest="${filename}.tex"
+cp "$_backuppath" "$dest" 
+
+./llaregub "$dest"
+
+mv "$dest" /home/graham/ComputationalHomotopy/hap/ 

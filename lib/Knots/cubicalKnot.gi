@@ -107,6 +107,7 @@ PureComp:=PurePermutahedralComplex; fi;
 
 C:=ComplementOfPureComplex(C);
 C:=ZigZagContractedPureComplex(C,"one iteration only");
+#C:=ContractedComplex(C);
 Y:=PureCompToReg(C);
 Unbind(C);
 Y:=ContractedComplex(Y);
@@ -186,7 +187,8 @@ end);
 ########################################
 InstallGlobalFunction(KnotSum,
 function(K,L)
-local A,B,M,i,j,x,y,x1,x2,y1,y2;
+local LF, RT, TL, BL, TR, BR, P, Q, x, 
+A,B,M,y,x1,x2,y1,y2, bools,  s,t, i, j;
 
 if not (EvaluateProperty(K,"knot") and EvaluateProperty(K,"knot")) then
 Print("The sum is only defined for knots.\n");
@@ -195,9 +197,32 @@ fi;
 
 A:=K!.binaryArray;
 B:=L!.binaryArray;
-M:=NullMat(Length(A[1])+Length(B[1])+1,Length(A[1][1])+Length(B[1][1])+1);
+
+LF:=PositionProperty(Reversed(TransposedMat(A[2])), row-> not IsZero(row));
+LF:=Length(A[2][1])+1-LF;
+x:=List(A[2],row-> row[LF]);
+TL:=Position(x, 1);
+BL:=Position(Reversed(x),1);
+BL:=Length(x)+1-BL;
+
+RT:=PositionProperty(TransposedMat(B[2]), row-> not IsZero(row));
+x:=List(B[2],row-> row[RT]);
+TR:=Position(x, 1);
+BR:=Position(Reversed(x),1);
+BR:=Length(x)+1-BR;
+
+RT:=RT+Length(A[1][1])+3;
+TR:=TR+Length(A[1])-1;
+BR:=BR+Length(A[1])-1;
+
+
+P:=Length(A[2])+Length(B[2])-1;
+Q:=Length(A[2][1])+Length(B[2][1])+3;
+M:=NullMat( P , Q);
 M:=List([1..5],i->StructuralCopy(M));
 
+##########
+##########INSERT BOTH KNOTS
 for i in [1..Length(A[2])] do
 for j in [1..Length(A[2][1])] do
 if A[2][i][j]=1 then M[2][i][j]:=1; fi;
@@ -206,8 +231,8 @@ if A[4][i][j]=1 then M[4][i][j]:=1; fi;
 od;
 od;
 
-x:=Length(A[1])+1;
-y:=Length(A[1][1])+1;
+x:=Length(A[2])-1; 
+y:=Length(A[2][1])+3; 
 for i in [1..Length(B[2])] do
 for j in [1..Length(B[2][1])] do
 if B[2][i][j]=1 then M[2][x+i][y+j]:=1; fi;
@@ -215,25 +240,63 @@ if B[3][i][j]=1 then M[3][x+i][y+j]:=1; fi;
 if B[4][i][j]=1 then M[4][x+i][y+j]:=1; fi;
 od;
 od;
+##########BOTH KNOTS INSERTED
+##########
 
-x:=Minimum(List(A[2], R->Position(Reversed(R),1)));
-x1:=Length(A[2][1])-x+1;
-y:=Minimum(List(B[2], R->Position(R,1)));
-y1:=y+Length(A[1][1])+1;;
-
-for i in [2..Length(M[2])-4] do
-if M[2][x1][i]=1 and M[3][x1][i]=0 then M[2][x1][i]:=0;
-else M[2][x1][i]:=1; fi;
-od;
-for i in [2..Length(M[2])-4] do
-if M[2][y1][i]=1 and M[3][y1][i]=0 then M[2][y1][i]:=0;
-else M[2][y1][i]:=1; fi;
+##########
+##########REMOVE FINAL/INITIAL COLUMNS
+for i in [TL..BL] do
+M[3][i][LF]:=0;
+M[4][i][LF]:=0;
 od;
 
-for j in [x1..y1] do
-M[2][j][2]:=1;
-M[2][j][Length(M[2])-4]:=1;
+for i in [TR..BR] do
+M[3][i][RT]:=0;
+M[4][i][RT]:=0;
 od;
+##########BOTH COLUMNS REMOVED
+##########
+
+##########
+##########EXTEND TOP LEFT ROW
+for i in [LF..RT] do
+M[2][TL][i]:=1;
+od;
+##########
+##########
+
+##########
+##########EXTEND BOTTOM ROW
+for i in [LF..RT] do
+M[2][BR][i]:=1;
+od;
+##########
+##########
+
+##########
+##########ADD CENTRAL CONNECTIONS
+M[3][TL][RT]:=1;
+M[3][BL][LF]:=1;
+M[3][TR][RT]:=1;
+M[3][BR][LF]:=1;
+##########
+##########
+
+##########
+##########ADD LEFT COLUMN
+for i in [BL..BR] do
+M[4][i][LF]:=1;
+od;
+##########
+##########
+
+##########
+##########ADD RIGHT COLUMN
+for i in [TL..TR] do
+M[4][i][RT]:=1;
+od;
+##########
+##########
 
 
 M:=Objectify(HapPureCubicalLink,
@@ -354,26 +417,149 @@ end);
 ############################################################
 InstallGlobalFunction(ReadPDBfileAsPurePermutahedralComplex,
 function(arg)
-local   K;
+local   file, scl, char, A, B, M, f, g, v, instr, atoms, i, j,
+        L, S, T, x1, x2, y1, y2, z1, z2, bool, x, ball;
 
-if Length(arg)=1 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[1]);
-fi;
-if Length(arg)=2 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[1],arg[2]);
-fi;
-if Length(arg)=3 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[3]);
-fi;
-if Length(arg)=4 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[4]);
+file:=arg[1];
+scl:=2; char:="A";
+
+if Length(arg)>1 then
+if IsRat(arg[2]) then scl:=arg[2];  else char:=arg[2]; fi;
 fi;
 
-K:=PurePermutahedralComplex(K!.binaryArray);
-K:=ContractedComplex(K);
-K:=PurePermutahedralComplex(FrameArray(K!.binaryArray));
+if Length(arg)>2 then
+if IsRat(arg[3]) then scl:=arg[3];  else char:=arg[3]; fi;
+fi;
 
-return K;
+ball:=UnitPermutahedralBall(3);
+Add(ball,[0,0,0]);
+ball:=SSortedList(ball);
+
+
+A:=[];
+instr:=InputTextFile(file);
+f:=ReadLine(instr);
+while not f=fail do
+f:=ReadLine(instr);
+if f=fail then break; fi;
+if Length(f)<4 then break; fi;
+if f{[1,2,3,4]}="ATOM" and
+(f{[14,15]}="CA" or f{[15,16]}="CA") then
+if  f{[22]}=char then
+v:=[f{[32,33,34,36,37,38]}, f{[40,41,42,44,45,46]}, f{[48,49,50,52,53,54]}];
+Apply(v,EvalString);
+v[1]:=(scl*v[1]/1000);
+v[2]:=(scl*v[2]/1000);
+v[3]:=(scl*v[3]/1000);
+
+Add(A,v);
+fi;
+fi;
+od;
+
+atoms:=Length(A);
+
+if atoms=0 then return fail; fi;
+
+
+Print("Reading chain containing ",atoms," atoms.\n");
+
+for j in [1..11+scl] do
+B:=[];
+for i in [1..Length(A)-1] do
+B[2*i-1]:=A[i];
+v:=(A[i]+A[i+1])/2;
+B[2*i]:=v;
+od;
+B[2*i+1]:=A[i+1];
+A:=StructuralCopy(B);
+B:=[];
+od;
+
+A:=CubicalToPermutahedralArray(A);
+
+A:=List(A,a->[Int(a[1]),Int(a[2]),Int(a[3])]);
+for i in [2..Length(A)] do
+if A[i]=A[i-1] then Unbind(A[i-1]); fi;
+od;
+A:=Filtered(A,a->IsBound(a));
+#A:=DuplicateFreeList(A);
+L:=List(A,a->a[1]);
+x1:=Minimum(L);
+x2:=Maximum(L);
+L:=List(A,a->a[2]);
+y1:=Minimum(L);
+y2:=Maximum(L);
+L:=List(A,a->a[3]);
+z1:=Minimum(L);
+z2:=Maximum(L);
+x1:=x1-1;
+y1:=y1-1;
+z1:=z1-1;
+
+M:=NullMat(y2-y1+1,z2-z1+1);
+M:=List([1..x2-x1],i->StructuralCopy(M));
+
+f:=A[1];
+M[f[1]-x1][f[2]-y1][f[3]-z1]:=1;
+
+for i in [2..Length(A)] do
+f:=A[i];
+M[f[1]-x1][f[2]-y1][f[3]-z1]:=1;
+
+############################
+#REPLACE THIS CODE BY A THICKENING AT THE END
+#if not f-A[i-1] in ball then
+#   g:=f-A[i-1];
+#   bool:=true;
+#   for x in ball do
+#   #if f+x-g in ball then bool:=false; break; fi;
+#   if g+x in ball then bool:=false; break; fi;
+#   od;
+#   if bool then Print("Warning: discontinuity in knot at ", f,"\n"); fi; 
+#   g:=f+x;
+#   M[g[1]-x1][g[2]-y1][g[3]-z1]:=1;
+#fi;
+############################
+od;
+
+
+f:=A[1];
+S:=[f[1]-x1,f[2]-y1,f[3]-z1];
+f:=A[Length(A)];
+T:=[f[1]-x1,f[2]-y1,f[3]-z1];
+Add(M,M[1]*0);
+Add(M,M[1]*0);
+Add(M,M[1]*0);
+for i in [S[1]+1..Length(M)] do
+if M[i][S[2]][S[3]]=1 then
+Print("Failed to construct simple closed curve.\n"); return fail; fi;
+M[i][S[2]][S[3]]:=1;
+od;
+for i in [T[1]+1..Length(M)] do
+if M[i][T[2]][T[3]]=1 then
+Print("Failed to construct simple closed curve.\n"); return fail; fi;
+M[i][T[2]][T[3]]:=1;
+od;
+for i in [1..Length(M[1])] do
+for j in [1..Length(M[1][1])] do
+M[Length(M)][i][j]:=1;
+od;od;
+
+Unbind(A);
+
+M:=FrameArray(M);
+M:=FrameArray(M);
+
+M:=PurePermutahedralComplex(M);
+M:=ThickenedPureComplex(M);
+ContractPureComplex(M);
+return M;
+
+
+
+
+
 end);
 ############################################################
 
@@ -426,7 +612,7 @@ if atoms=0 then return fail; fi;
 
 Print("Reading chain containing ",atoms," atoms.\n");
 
-for j in [1..13] do
+for j in [1..11+scl] do
 B:=[];
 for i in [1..Length(A)-1] do
 B[2*i-1]:=A[i];
@@ -439,6 +625,12 @@ B:=[];
 od;
 
 A:=List(A,a->[Int(a[1]),Int(a[2]),Int(a[3])]);
+
+for i in [2..Length(A)] do
+if A[i]=A[i-1] then Unbind(A[i-1]); fi;
+od;
+A:=Filtered(A,a->IsBound(a));
+
 
 L:=List(A,a->a[1]);
 x1:=Minimum(L);
@@ -510,7 +702,7 @@ end);
 
 ############################################################
 ############################################################
-InstallGlobalFunction(ViewPDBfile,
+InstallGlobalFunction(DisplayPDBfile,
 function(File)
 local  S,T,i,j,char,atoms, acids, cnt, tmpdir, file,
  scl, instr, f, avg,  v, A, x1,x2,y1,y2,z1,z2, L, M , B,b;
@@ -579,14 +771,15 @@ end);
 ###########################################
 InstallGlobalFunction(ReflectedCubicalKnot,
 function(K)
-local A;
+local A, R;
 
 A:=1*K!.binaryArray;
 A:=Reversed(A);
 Apply(A,a->Reversed(TransposedMat(a)));
 A:=ArcPresentation(PureCubicalComplex(A),"anything");
-
-return PureCubicalKnot(A);
+R:=PureCubicalKnot(A);
+R!.name:=Concatenation("Reflected( ",K!.name," )");
+return R;
 end);
 ################################################
 ################################################
@@ -633,4 +826,173 @@ return Reversed(P);
 end);
 ################################################
 ################################################
+
+################################################
+################################################
+InstallGlobalFunction(NumberOfPrimeKnots,
+function(n);
+
+if n<=2 then return 0; fi;
+if n>11 then
+Print("Only prime knots with at most 11 crossings are currently avaiable.\n");
+return fail;
+fi;
+
+return Length(HAP_Knots[n-2]);
+end);
+################################################
+################################################
+
+#############################################
+#############################################
+InstallGlobalFunction(WirtingerGroup,
+function(KK)
+local crossing, K, A, i, j, start, toggle, colour, directions,
+D,x, G, RELS, aa,bb,cc,dd,a,b,c,d,F,AA,tac,tbd,MX,mx,gens,m,M,
+red,subs,subs2, CRS, sft;
+
+crossing:=-1;
+
+K:=KK!.binaryArray;
+A:=K[1]*0;;
+
+#############################################
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+A[i][j]:=Maximum(K[2][i][j],K[4][i][j]);
+od;od;
+
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+if
+A[i][j]=1 and A[i-1][j]=1 and A[i+1][j]=1 and A[i][j-1]=1 and A[i][j+1]=1
+then A[i][j]:=crossing; crossing:=crossing-1;
+fi;
+od;od;
+#############################################
+
+#############################################
+toggle:=true;
+for i in [2..Length(A)-1] do
+if toggle=false then break; fi;
+for j in [2..Length(A[1])-1] do
+if
+A[i][j]<0 then start:=[i,j]; toggle:=false; break;
+fi;
+od;od;
+#############################################
+
+colour:=2;
+directions:=[ [1,0], [-1,0], [0,1], [0,-1] ];
+D:=[1,0];;
+
+#############################################
+while not D=false do
+
+x:=start+D;
+
+if A[x[1]][x[2]]>1  then  D:=false; fi;
+
+if A[x[1]][x[2]]=1 then
+A[x[1]][x[2]]:=colour; start:=x; fi;
+
+if A[x[1]][x[2]]<0  then
+start:=x; colour:=colour+1; fi;
+
+if A[x[1]][x[2]]=0  then
+D:=false;
+for d in directions do
+x:=start+d;
+if A[x[1]][x[2]]=1 then D:=d; break; fi;
+od;
+fi;
+
+od;
+#####################################################
+
+CRS:=[];
+subs:=[];
+#####################################################
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+if
+A[i][j]<0 then
+m:=Minimum(A[i][j-1],A[i][j+1]);
+M:=Maximum(A[i][j-1],A[i][j+1]);
+CRS[-A[i][j]]:=[i,j];
+A[i][j]:=m;
+Add(subs,[m,M]);
+fi;
+od;od;
+#############################################
+
+subs2:=List(subs,x->x[2]);
+
+#############################
+#############################
+red:=function(k)
+local p;
+if not k in subs2 then return k; fi;
+p:=PositionProperty(subs,x->x[2]=k);
+return red(subs[p][1]);
+end;
+#############################
+#############################
+
+#############################################
+AA:=A*1;
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+A[i][j]:=1*red(A[i][j]);
+od;od;
+#############################################
+
+sft:=SSortedList(Flat(A));
+sft:=Filtered(sft,j->not j=0);
+sft:=SSortedList(sft);
+
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+if A[i][j]>0 then A[i][j]:=Position(sft,A[i][j]); fi;
+od;od;
+
+mx:=Maximum(Flat(A));
+MX:=Maximum(Flat(AA));
+F:=FreeGroup(mx);
+gens:=GeneratorsOfGroup(F);
+
+RELS:=[];
+for x in CRS do
+a:=x+[0,1]; aa:=gens[A[a[1]][a[2]]];
+b:=x+[-1,0]; bb:=gens[A[b[1]][b[2]]];
+c:=x+[0,-1]; cc:=gens[A[c[1]][c[2]]];
+d:=x+[1,0]; dd:=gens[A[d[1]][d[2]]];
+
+tac:=( AA[a[1]][a[2]]>AA[c[1]][c[2]] and (not AA[a[1]][a[2]]=MX) ) or
+(AA[a[1]][a[2]]=2 and AA[c[1]][c[2]]=MX) ;
+tbd:=( AA[b[1]][b[2]]>AA[d[1]][d[2]]  and (not AA[b[1]][b[2]] =MX)) or
+(AA[b[1]][b[2]]=2 and AA[d[1]][d[2]]=MX);
+
+
+if (tac and tbd) then
+Add(RELS,aa^-1*bb^-1*cc*dd);
+fi;
+if ((not tac) and tbd) then
+Add(RELS,aa*bb^-1*cc^-1*dd);
+fi;
+if (tac and (not tbd)) then
+Add(RELS,aa^-1*bb*cc*dd^-1);
+fi;
+if ((not tac) and (not tbd)) then
+Add(RELS,aa*bb*cc^-1*dd^-1);
+fi;
+
+od;
+
+G:=F/RELS;
+
+return G;
+end);
+####################################################
+####################################################
 

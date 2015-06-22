@@ -35,7 +35,7 @@ fi;
 
 #####################################################################
 Action:=function(g,V) ;
-return g*V;
+return g*V;;   #This actually works!
 end;
 #####################################################################
 
@@ -68,6 +68,8 @@ G:=[];
 for w in Points do
 for x in GG do
 if Action(x,v)=w then Add(G,x); break; fi;
+##if Action(x,v) in Points then Add(G,x);  fi;
+
 od;
 od;
 
@@ -104,7 +106,7 @@ AppendTo(tmpInlog,"\n");
 od;
 
 #Exec(Concatenation("beneath_beyond ",tmpInlog,"  POINTS"));
-Exec(Concatenation(POLYMAKE_PATH,tmpInlog,"  VERTICES > ",tmp3Inlog));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog,"  beneath_beyond VERTICES > ",tmp3Inlog));   #Added "beneath_beyond"
 ################# HULL CALCULATED ###################################
 
 #####################################################################

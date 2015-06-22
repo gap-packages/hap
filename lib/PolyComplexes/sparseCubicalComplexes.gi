@@ -369,6 +369,46 @@ end);
 #####################################################################
 #####################################################################
 
+#################################################################
+#################################################################
+InstallGlobalFunction(FilteredChainComplexToFilteredSparseChainComplex,
+function(C)
+local Boundary;
+
+########################
+Boundary:=function(n,k)
+local v,i,bnd;
+v:=C!.boundary(n,k);
+bnd:=[];
+
+for i in [1..Length(v)] do
+if not IsZero(v[i]) then
+Add(bnd, [i,v[i]]);
+fi;
+od;
+
+return bnd;
+end;
+########################
+
+return
+Objectify(HapFilteredSparseChainComplex,
+           rec(
+           dimension:=C!.dimension,
+           boundary:=Boundary,
+           filteredDimension:=C!.filteredDimension,
+           properties:=[
+           ["length",EvaluateProperty(C,"length")],
+           ["type","chainComplex"],
+           ["characteristic",0],
+           ["filtration_length",EvaluateProperty(C,"filtration_length")]]
+           ));
+
+end);
+#####################################################################
+#####################################################################
+
+
 
 #################################################################
 #################################################################
@@ -516,6 +556,8 @@ Objectify(HapFilteredSparseChainComplex,
            dimension:=Dimsn,
            boundary:=Boundary,
            filteredDimension:=FilteredDimension,
+           coordinateToPosition:=BinLst,
+           positionToCoordinate:=LstBin,
            properties:=[
            ["length",EvaluateProperty(M,"dimension")],
            ["type","chainComplex"],

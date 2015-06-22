@@ -50,6 +50,40 @@ end);
 
 #####################################################################
 #####################################################################
+DeclareCategory("IsHapRegularCWMap",IsObject);
+
+DeclareRepresentation(  "IsHapRegularCWMapRep",
+                        IsComponentObjectRep,
+                        ["source",
+                         "target",
+                         "mapping"
+                         ]);
+
+HapRegularCWMapFamily:=NewFamily( "HapRegularCWMapFamily",
+                                          IsHapRegularCWMap,
+                                          IsHapRegularCWMap);
+
+HapRegularCWMap:=NewType(HapRegularCWMapFamily,
+                                IsHapRegularCWMapRep);
+
+
+InstallMethod( ViewObj,
+"for HapRegularCWMaps",
+ [IsHapRegularCWMap],
+ function(R)
+ Print("Map of regular CW-complexes\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapRegularCWMaps",
+ [IsHapRegularCWMap],
+ function(R)
+ Print("Map of regular CW-complexes\n");
+end);
+
+
+#####################################################################
+#####################################################################
 DeclareCategory("IsHapEquivariantCWComplex",IsObject);
 
 

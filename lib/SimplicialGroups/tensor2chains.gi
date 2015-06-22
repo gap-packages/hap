@@ -11,11 +11,24 @@ local
 	dim,SearchPosition,dhr,dvs,
 	Dimension,Boundary;
 	
-	rdim := R!.dimension;
+        ########################## Modified by Graham
+	rdim := function(n);
+        if n<0 or n> Length(R) then return 0; fi;
+        return R!.dimension(n);
+        end;
+        ##########################
 	rbound := R!.boundary;
-	sdim := S!.dimension;
+        ########################## Modified by Graham
+        sdim := function(n);
+        if n<0 or n> Length(S) then return 0; fi;
+        return S!.dimension(n);
+        end;
+        ##########################
+
 	sbound := S!.boundary;
-	N := Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
+	#N := Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length")); #CHANGED BY GRAHAM
+N := 1+EvaluateProperty(R,"length")+EvaluateProperty(S,"length");
+
 ##############################################
 dim := function(i,j)
 	if i<0 or j <0 then
@@ -131,7 +144,7 @@ end;
 return Objectify( HapChainComplex, rec(
 				boundary := Boundary,
 				dimension := Dimension,
-				properties :=  [ [ "length",N],
+				properties :=  [ [ "length",N-1],
                     [ "type", "chainComplex" ], 
                     [ "characteristic",0 ] ] ) );
 end;

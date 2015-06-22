@@ -4,13 +4,24 @@
 ##########################################################
 InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
-local P,Y,base,e,bool, b, vertices,edges,F, G, r,x,w, gens, rels, 
+local P,Y,base,e,bool, b, vertices,edges,F, G, FhomG, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
-      EdgeToLoop, VertexToPath, loops;
+      EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation;
 
 Y:=arg[1];
+base:=1;
+BOOL:=true;
 
-if Length(arg)>1 then base:=arg[2]; else base:=1; fi;
+if Length(arg)>1 then 
+if IsInt(arg[2]) then base:=arg[2]; fi;
+if IsString(arg[2]) then BOOL:=false;  fi;
+fi;
+
+if Length(arg)>2 then 
+if IsInt(arg[3]) then base:=arg[3];  fi;
+if IsString(arg[3]) then BOOL:=false;  fi;
+fi;
+
 
 
 if Dimension(Y)<4 then
@@ -19,13 +30,25 @@ else
 cells:=CocriticalCellsOfRegularCWComplex(Y,3);
 fi;
 Y!.criticalCells:=cells;
+
+###########################################################
+P:=SSortedList(List(Y!.orientation[1],Sum));
+if P=[0] then Y!.homotopyOrientation:=Y!.orientation{[1,2,3]};
+else
+P:=TruncatedRegularCWComplex(Y,2);;
+P!.orientation:=fail;
+OrientRegularCWComplex(P);
+Y!.homotopyOrientation:=P!.orientation;
+fi;
+Unbind(P);
+###########################################################
 0cells:=Filtered(cells,x->x[1]=0);
 Apply(0cells,x->x[2]);
 1cells:=Filtered(cells,x->x[1]=1);
 Apply(1cells,x->x[2]);
 2cells:=Filtered(cells,x->x[1]=2);
 Apply(2cells,x->x[2]);
-2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.orientation[3][x]]);
+2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.homotopyOrientation[3][x]]);
 Apply(2boundaries,x->[x[1]{[2..Length(x[1])]},x[2]]);
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
 
@@ -72,6 +95,7 @@ gens:=GeneratorsOfGroup(F);
 if Length(gens)=0 then return F; fi;
 rels:=[];
 for r in 2boundaries do
+
 w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
@@ -84,8 +108,16 @@ od;
 Add(rels,w);
 od;
 
+if BOOL then 
 P:=PresentationFpGroup(F/rels);
-if Length(arg)<3 then SimplifyPresentation(P);; fi;
+SimplifyPresentation(P);; 
+G:=FpGroupPresentation(P);
+
+else
+
+G:=F/rels;
+FhomG:=GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),GeneratorsOfGroup(G));
+fi;
 
 ##############################################
 EdgeToWord:=function(e)
@@ -96,18 +128,20 @@ r:=Flat(deform(1,e));
 w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
-w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x));
+#if (not AbsInt(x) in edges)  then
+w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x)) ; 
 fi;
 od;
 
-return w;
+return Image(FhomG,w);
 
 end;
 ##############################################
 
-G:=FpGroupPresentation(P);
-
+if not BOOL then
 G!.edgeToWord:=EdgeToWord;
+fi;
+
 loops:=StructuralCopy(1cells);
 
 ########################
@@ -123,7 +157,7 @@ e:=Y!.inverseVectorField[1][v];
 w:=Y!.boundaries[2][e];
 w:=w{[2,3]};
 pos:=Position(w,v);
-if pos=2 then v:=w[1]; Add(path,e); else v:=w[2]; Add(path,-e); fi;
+if pos=2 then v:=w[1]; Add(path,-e); else v:=w[2]; Add(path,e); fi;
 fi;
 od;
 
@@ -217,6 +251,25 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(FundamentalGroup,
+"for  pure permutahedral complexes",
+[IsHapPurePermutahedralComplex],
+function(M)
+local Y,c;
+Y:=RegularCWComplex(M);;
+if Dimension(Y)<4 then
+c:=CriticalCellsOfRegularCWComplex(Y);
+else
+c:=CocriticalCellsOfRegularCWComplex(Y,3);
+fi;
+return FundamentalGroup(Y);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(FundamentalGroup,
 "for  pure Regular CW-Maps",
 [IsHapRegularCWMap],
 function(map);
@@ -224,6 +277,8 @@ return FundamentalGroupOfRegularCWMap(map);
 end);
 ##########################################################
 ##########################################################
+
+
 
 ##########################################################
 ##########################################################
@@ -341,7 +396,7 @@ w:= List(x,i->SignInt(i)*mapfn(1,AbsInt(i))) ;
 
 Apply(w,i->GT!.edgeToWord(AbsInt(i))^SignInt(i));
 
-Add(loops, Product(w));
+Add(loops, Product(w));  
 od;
 
 return GroupHomomorphismByImagesNC(GS,GT,gensS,loops);;

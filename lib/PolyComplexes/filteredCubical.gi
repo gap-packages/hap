@@ -86,7 +86,7 @@ end);
 
 ###################################################
 ###################################################
-InstallGlobalFunction(FiltrationTerm,
+InstallGlobalFunction(FiltrationTermOfPureCubicalComplex,
 function(M,t)
 local
         B, obj,
@@ -100,7 +100,7 @@ local
 
 #############################################
 if not (IsHapFilteredPureCubicalComplex(M) or 
-IsHapFilteredCubicalComplex(M)) then
+IsHapFilteredPureCubicalComplex(M)) then
 Print("This function must be applied to a filtered cubical or pure cubical complex.\n");
 return fail;
 fi;
@@ -154,7 +154,7 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(DendrogramDisplay,
+InstallGlobalFunction(DisplayDendrogram,
 function(M)
 local D, V, G,  t, i, shft1, shft2, tmpDir, Loggeddot, Loggedpng;
 
@@ -210,7 +210,7 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(ReadImageAsFilteredCubicalComplex,
+InstallGlobalFunction(ReadImageAsFilteredPureCubicalComplex,
 function(file,N)
 local A, B, C, F, i, j, D;
 D:=Int(3*255/N);
@@ -238,7 +238,7 @@ end);
 
 #################################################################
 #################################################################
-InstallGlobalFunction(ComplementOfFilteredCubicalComplex,
+InstallGlobalFunction(ComplementOfFilteredPureCubicalComplex,
 function(M)
 local  F, B, A, T, TT,      D,   k;
 
@@ -448,11 +448,14 @@ end);
 ###############################################################
 ###############################################################
 InstallGlobalFunction(ZigZagContractedFilteredPureCubicalComplex,
-function(M)
+function(arg)
 local
-        LM, F, i, flen, A, G,
+        M,LM, F, i, flen, A, G, stop, cnt,
         dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
         Opp, x,t, CM, sz1, sz2, maxB, dimSet, ArrayIt;
+
+M:=arg[1];
+if Length(arg)>1 then stop:=arg[2]; else stop:=infinity; fi;
 
 LM:=[];
 flen:=Maximum(Flat(M!.filtration));
@@ -466,8 +469,9 @@ G:=HomotopyEquivalentMaximalPureCubicalSubcomplex;
 sz1:=infinity;
 sz2:=Size(LM[flen]);
 
-while sz2<sz1 do
-
+cnt:=0;
+while sz2<sz1 and stop>cnt do
+cnt:=cnt+1;
 sz1:=sz2;
 LM[flen]:=F(LM[flen],LM[flen-1]);
 
@@ -547,13 +551,60 @@ Print("Function must be applied to a pure cubical complex.\n");
 return fail;
 fi;
 
-if not Dimension(M)=3 then
-Print("At present this function is only implemented for 3-dimensional pure cubical complexes.\n");
+if not (Dimension(M)=3 or Dimension(M)=2) then
+Print("At present this function is only implemented for 2- and 3-dimensional pure cubical complexes.\n");
 return fail;
 fi;
 ############################
 
+############################
+############################
+if Dimension(M)=2 then
+#########################################
+CentreOfGravity:=function(M)
+local B,x,y,z,V;
 
+V:=[];
+B:=M!.binaryArray;
+
+for x in [1..Length(B)] do
+for y in [1..Length(B[1])] do
+if B[x][y]=1 then Add(V,[x,y]); fi;
+od;od;
+
+V:= (1/Length(V))*Sum(V);
+V:=[Int(V[1]),Int(V[2])];
+return V;
+end;
+#########################################
+
+#########################################
+Radius:=function(M)
+local B;
+
+B:=M!.binaryArray;
+return Maximum(ArrayDimensions(B))/2;
+end;
+#########################################
+
+rad:=Radius(M);
+cen:=CentreOfGravity(M);
+F:=M!.binaryArray*0;
+B:=M!.binaryArray;
+for x in [1..Length(B)] do
+for y in [1..Length(B[1])] do
+if B[x][y]=1 then
+F[x][y]:= 1+Int(N*EuclideanApproximatedMetric(cen, [x,y])/rad) ;  fi;
+od;od;
+
+fi;
+#######################################
+#######################################
+
+
+############################
+############################
+if Dimension(M)=3 then
 #########################################
 CentreOfGravity:=function(M)
 local B,x,y,z,V;
@@ -593,6 +644,10 @@ for z in [1..Length(B[1][1])] do
 if B[x][y][z]=1 then
 F[x][y][z]:= 1+Int(N*EuclideanApproximatedMetric(cen, [x,y,z])/rad) ;  fi;
 od;od;od;
+
+fi;
+#######################################
+#######################################
 
 return   Objectify(HapFilteredPureCubicalComplex,
                  rec(binaryArray:=M!.binaryArray,

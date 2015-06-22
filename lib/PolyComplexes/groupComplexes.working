@@ -5,12 +5,20 @@ function(G,p)
 local
 	SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, s,t,x,m,mm,tmp;
 
+######################################
+if not IsPrimeInt(p) then 
+Print("Second variable is not a prime.\n");
+return fail;
+fi;
+######################################
 
 SubsCl:=ConjugacyClassesSubgroups(LatticeByCyclicExtension(G, 
       IsElementaryAbelian, true));;
 
+#SubsCl:=Filtered(SubsCl,cl-> IsPGroup(ClassElementLattice(cl,1)));
 SubsCl:=Filtered(SubsCl,cl->
-        IsElementaryAbelianPGroup(ClassElementLattice(cl,1),p));
+        PrimePGroup(ClassElementLattice(cl,1))=p);
+
 SubsCl:=Filtered(SubsCl,cl->Order(ClassElementLattice(cl,1))>1);
 Subs:=[];
 for cl in SubsCl do

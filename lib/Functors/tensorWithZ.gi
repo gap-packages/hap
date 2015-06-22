@@ -155,7 +155,9 @@ end;
 #####################################################################
 #####################################################################
 
-if EvaluateProperty(X,"type") = "resolution" then
+if EvaluateProperty(X,"type") = "resolution" 
+   or
+   EvaluateProperty(X,"type") = "chaincomplex" then
 return TensorWithZ_Obj(X); fi;
 
 if EvaluateProperty(X,"type") = "equivariantChainMap" then

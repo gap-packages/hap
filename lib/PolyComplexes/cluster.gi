@@ -96,8 +96,14 @@ end);
 #########################################################
 #########################################################
 InstallGlobalFunction(SymmetricMatrixToFilteredGraph,
-function(S,T,M)
-local A,  i,j;
+function(arg)
+local S,T,M,A,  i,j;
+
+S:=arg[1];
+T:=arg[2];
+if Length(arg)=3 then M:=arg[3]; else
+M:=Maximum(Flat(S));
+fi;
 
 A:=StructuralCopy(S);;
 #M:=Maximum(Maximum(A));
@@ -384,7 +390,7 @@ end);
 #####################################################################
 InstallGlobalFunction(GraphDisplay,
 function(arg)
-local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log;
+local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
 
 tmpDir:=DirectoryTemporary();
 
@@ -396,7 +402,36 @@ G:=arg[1];
 
 M:=G!.incidenceMatrix;
 
+if IsBound(G!.clustersizes) then
+################ WRITE TO TMPIN.LOG #################################
+cs:=G!.clustersizes;
+s:=Sum(cs);
+s:=[1..s]*(4/s);
+s:=(1/5)+s;
+s:=1.0*s;
 
+AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+
+for i in [1..Length(M)] do
+AppendTo(tmpInlog,i, "[width=",s[cs[i]],",height=",s[cs[i]],"] \n");
+od;
+
+for i in [1..Length(M)] do
+for j in [i+1..Length(M)] do
+
+if not M[i][j]=0 then
+AppendTo(tmpInlog,i," -- ", j, " \n");
+fi;
+
+od;od;
+
+AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1,fixedsize=true,style=filled, color=white,fillcolor=white] \n ");
+
+
+
+AppendTo(tmpInlog,"}\n }\n");
+############### WRITTEN ############################################
+else
 ################ WRITE TO TMPIN.LOG #################################
 
 AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
@@ -409,8 +444,6 @@ for i in [1..Length(M)] do
 for j in [i+1..Length(M)] do
 
 if not M[i][j]=0 then
-#AppendTo(tmpInlog,i, " \n");
-#else
 AppendTo(tmpInlog,i," -- ", j, " \n");
 fi;
 
@@ -422,6 +455,8 @@ AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1
 
 AppendTo(tmpInlog,"}\n }\n");
 ############### WRITTEN ############################################
+fi;
+
 Exec(Concatenation(NEATO_PATH,"-Tgif ", tmpInlog," > ", tmpIngif));
 
 if Length(arg)=1 then
@@ -711,7 +746,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(BarCodeOfFilteredCubicalComplex,
+InstallGlobalFunction(BarCodeOfFilteredPureCubicalComplex,
 function(arg)
 local M, T, F, m, t, bettis, B, i, j;
 
@@ -957,10 +992,43 @@ InstallMethod(CliqueComplex,
 function(K,n)
 local G;
 
+if Dimension(K)=1 then
 G:=GraphOfSimplicialComplex(K);
 return SimplicialNerveOfGraph(G,n);
+fi;
+
+if Dimension(K)=2 then
+return SimplicialNerveOfTwoComplex(K,n);
+fi;
 
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(CliqueComplex,
+"Clique complex of  graph",
+[IsHapGraph, IsInt],
+function(K,n);
+
+return SimplicialNerveOfGraph(K,n);
+
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(CliqueComplex,
+"Clique complex of filtered graph",
+[IsHapFilteredGraph, IsInt],
+function(K,n);
+
+return SimplicialNerveOfFilteredGraph(K,n);
+
+end);
+#####################################################################
+#####################################################################
+
 

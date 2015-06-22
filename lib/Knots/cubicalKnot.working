@@ -291,14 +291,6 @@ w:=List(w,x->[SignInt(x[1]),Image(hom,R!.elts[x[2]])]);
 w:=List(w,x->[x[1],ExponentSumWord(x[2],xx)]);
 w:=List(w,x-> x[1]*poly(x[2]));
 w:=Sum(w);
-#if w=0 then
-#w:=[[0],1];
-if IsInt(w) then
-w:=[[w],1];
-else
-w:=CoefficientsOfLaurentPolynomial(w);
-fi;
-w:=LaurentPolynomialByCoefficients(FamilyObj(1),w[1],0);
 
 Add(M[i],StructuralCopy(w));
 od;
@@ -311,7 +303,9 @@ end);
 #############################################
 InstallGlobalFunction(AlexanderPolynomial,
 function(GG)
-local M, row, col, Cols, Rows, Combs, C,R,G, dets, A, i, j;
+local M, row, col, Cols, Rows, Combs, C,R,G, dets, gen, A, i, j;
+
+gen:=LaurentPolynomialByCoefficients(FamilyObj(1),[1],1);
 
 if IsHapPureCubicalLink(GG) then
 if PathComponentOfPureCubicalComplex(GG,0)=1 then
@@ -328,7 +322,7 @@ if Length(GeneratorsOfGroup(G))=1 and Length(RelatorsOfFpGroup(G))=0
 then return 1;
 fi;
 
-M:=AlexanderMatrix(G);
+M:=(gen^0)*AlexanderMatrix(G);
 if M=fail then return fail; fi;
 
 
@@ -350,6 +344,7 @@ fi;
 od;
 od;
 
+Apply(dets,w->w*gen^-CoefficientsOfLaurentPolynomial(w)[2]);
 A:=Gcd(dets);
 return
 A*Lcm(List(Flat(CoefficientsOfLaurentPolynomial(A)),x->DenominatorRat(x)));
@@ -359,26 +354,149 @@ end);
 ############################################################
 InstallGlobalFunction(ReadPDBfileAsPurePermutahedralComplex,
 function(arg)
-local   K;
+local   file, scl, char, A, B, M, f, g, v, instr, atoms, i, j,
+        L, S, T, x1, x2, y1, y2, z1, z2, bool, x, ball;
 
-if Length(arg)=1 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[1]);
-fi;
-if Length(arg)=2 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[1],arg[2]);
-fi;
-if Length(arg)=3 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[3]);
-fi;
-if Length(arg)=4 then
-K:=ReadPDBfileAsPureCubicalComplex(arg[4]);
+file:=arg[1];
+scl:=2; char:="A";
+
+if Length(arg)>1 then
+if IsRat(arg[2]) then scl:=arg[2];  else char:=arg[2]; fi;
 fi;
 
-K:=PurePermutahedralComplex(K!.binaryArray);
-K:=ContractedComplex(K);
-K:=PurePermutahedralComplex(FrameArray(K!.binaryArray));
+if Length(arg)>2 then
+if IsRat(arg[3]) then scl:=arg[3];  else char:=arg[3]; fi;
+fi;
 
-return K;
+ball:=UnitPermutahedralBall(3);
+Add(ball,[0,0,0]);
+ball:=SSortedList(ball);
+
+
+A:=[];
+instr:=InputTextFile(file);
+f:=ReadLine(instr);
+while not f=fail do
+f:=ReadLine(instr);
+if f=fail then break; fi;
+if Length(f)<4 then break; fi;
+if f{[1,2,3,4]}="ATOM" and
+(f{[14,15]}="CA" or f{[15,16]}="CA") then
+if  f{[22]}=char then
+v:=[f{[32,33,34,36,37,38]}, f{[40,41,42,44,45,46]}, f{[48,49,50,52,53,54]}];
+Apply(v,EvalString);
+v[1]:=(scl*v[1]/1000);
+v[2]:=(scl*v[2]/1000);
+v[3]:=(scl*v[3]/1000);
+
+Add(A,v);
+fi;
+fi;
+od;
+
+atoms:=Length(A);
+
+if atoms=0 then return fail; fi;
+
+
+Print("Reading chain containing ",atoms," atoms.\n");
+
+for j in [1..11+scl] do
+B:=[];
+for i in [1..Length(A)-1] do
+B[2*i-1]:=A[i];
+v:=(A[i]+A[i+1])/2;
+B[2*i]:=v;
+od;
+B[2*i+1]:=A[i+1];
+A:=StructuralCopy(B);
+B:=[];
+od;
+
+A:=CubicalToPermutahedralArray(A);
+
+A:=List(A,a->[Int(a[1]),Int(a[2]),Int(a[3])]);
+for i in [2..Length(A)] do
+if A[i]=A[i-1] then Unbind(A[i-1]); fi;
+od;
+A:=Filtered(A,a->IsBound(a));
+#A:=DuplicateFreeList(A);
+L:=List(A,a->a[1]);
+x1:=Minimum(L);
+x2:=Maximum(L);
+L:=List(A,a->a[2]);
+y1:=Minimum(L);
+y2:=Maximum(L);
+L:=List(A,a->a[3]);
+z1:=Minimum(L);
+z2:=Maximum(L);
+x1:=x1-1;
+y1:=y1-1;
+z1:=z1-1;
+
+M:=NullMat(y2-y1+1,z2-z1+1);
+M:=List([1..x2-x1],i->StructuralCopy(M));
+
+f:=A[1];
+M[f[1]-x1][f[2]-y1][f[3]-z1]:=1;
+
+for i in [2..Length(A)] do
+f:=A[i];
+M[f[1]-x1][f[2]-y1][f[3]-z1]:=1;
+
+############################
+#REPLACE THIS CODE BY A THICKENING AT THE END
+#if not f-A[i-1] in ball then
+#   g:=f-A[i-1];
+#   bool:=true;
+#   for x in ball do
+#   #if f+x-g in ball then bool:=false; break; fi;
+#   if g+x in ball then bool:=false; break; fi;
+#   od;
+#   if bool then Print("Warning: discontinuity in knot at ", f,"\n"); fi; 
+#   g:=f+x;
+#   M[g[1]-x1][g[2]-y1][g[3]-z1]:=1;
+#fi;
+############################
+od;
+
+
+f:=A[1];
+S:=[f[1]-x1,f[2]-y1,f[3]-z1];
+f:=A[Length(A)];
+T:=[f[1]-x1,f[2]-y1,f[3]-z1];
+Add(M,M[1]*0);
+Add(M,M[1]*0);
+Add(M,M[1]*0);
+for i in [S[1]+1..Length(M)] do
+if M[i][S[2]][S[3]]=1 then
+Print("Failed to construct simple closed curve.\n"); return fail; fi;
+M[i][S[2]][S[3]]:=1;
+od;
+for i in [T[1]+1..Length(M)] do
+if M[i][T[2]][T[3]]=1 then
+Print("Failed to construct simple closed curve.\n"); return fail; fi;
+M[i][T[2]][T[3]]:=1;
+od;
+for i in [1..Length(M[1])] do
+for j in [1..Length(M[1][1])] do
+M[Length(M)][i][j]:=1;
+od;od;
+
+Unbind(A);
+
+M:=FrameArray(M);
+M:=FrameArray(M);
+
+M:=PurePermutahedralComplex(M);
+M:=ThickenedPureComplex(M);
+ContractPureComplex(M);
+return M;
+
+
+
+
+
 end);
 ############################################################
 
@@ -431,7 +549,7 @@ if atoms=0 then return fail; fi;
 
 Print("Reading chain containing ",atoms," atoms.\n");
 
-for j in [1..13] do
+for j in [1..11+scl] do
 B:=[];
 for i in [1..Length(A)-1] do
 B[2*i-1]:=A[i];
@@ -444,6 +562,12 @@ B:=[];
 od;
 
 A:=List(A,a->[Int(a[1]),Int(a[2]),Int(a[3])]);
+
+for i in [2..Length(A)] do
+if A[i]=A[i-1] then Unbind(A[i-1]); fi;
+od;
+A:=Filtered(A,a->IsBound(a));
+
 
 L:=List(A,a->a[1]);
 x1:=Minimum(L);
@@ -635,6 +759,22 @@ Apply(P,a->[Position(L,a[1]),Position(L,a[2])]);
 
 return Reversed(P);
 
+end);
+################################################
+################################################
+
+################################################
+################################################
+InstallGlobalFunction(NumberOfPrimeKnots,
+function(n);
+
+if n<=2 then return 0; fi;
+if n>11 then
+Print("Only prime knots with at most 11 crossings are currently avaiable.\n");
+return fail;
+fi;
+
+return Length(HAP_Knots[n-2]);
 end);
 ################################################
 ################################################

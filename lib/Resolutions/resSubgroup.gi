@@ -138,22 +138,22 @@ BoundaryRec[i]:=[];
 od;
 
 #####################################################################
-Boundary:=function(n,i)
-local x, w, nn;
+Boundary:=function(n,ii)
+local x, w, i;
 
-nn:=n;
-if nn<=0 then return []; fi;
-#nn:=AbsInt(n);
-if not IsBound(BoundaryRec[nn][i]) then
+if n<=0 then return []; fi;
+
+i:=AbsInt(ii);
+if not IsBound(BoundaryRec[n][i]) then
 x:=Int2Pair(i);
-w:=StructuralCopy(BoundaryR(nn,x[1]));
+w:=StructuralCopy(BoundaryR(n,x[1]));
 Apply(w, y->[y[1],Mult(x[2],y[2])]);
 #Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]); #Changed this back but forgot why this line was ever here!!
-BoundaryRec[nn][i]:= Gword2Kword(w);
+BoundaryRec[n][i]:= Gword2Kword(w);
 fi;
 
-if n>0 then return BoundaryRec[nn][i]; fi;
-return NegateWord(BoundaryRec[nn][i]);
+if ii>0 then return BoundaryRec[n][i]; 
+else return NegateWord(BoundaryRec[n][i]); fi;
 end;
 #####################################################################
 

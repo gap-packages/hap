@@ -2,6 +2,46 @@
 
 #############################
 #############################
+InstallGlobalFunction(RandomCellOfPureComplex,
+function(M)
+local dims, A, B,x,U,v,  i;
+
+if not IsPureComplex(M) then
+Print("Function must be applied to a pure cubical or pure permutahedral complex.\n");
+return fail;
+fi;
+
+if ArraySum(M!.binaryArray)=0 then return fail; fi;
+
+dims:=EvaluateProperty(M,"arraySize");
+dims:=Reversed(dims);
+A:=M!.binaryArray;
+B:=0*A;
+
+while true do
+U:=A;
+v:=[];
+for i in [1..Length(dims)] do
+x:=Random([1..dims[i]]);
+Add(v,x);
+U:=U[x];
+od;
+if U=1 then break;  fi;
+od;
+
+U:=B;
+for i in v{[1..Length(v)-1]} do
+U:=U[i];
+od;
+U[v[Length(v)]]:=1;
+
+return PureComplex(M,B);
+end);
+#############################
+#############################
+
+#############################
+#############################
 InstallGlobalFunction(IsPureComplex,
 function(M);
 
@@ -139,7 +179,8 @@ InstallGlobalFunction(PureComplexToSimplicialComplex,
 function(arg)
 local M, DIM, AO,A,dim,dims,
       ArrayValueDim,
-      CartProd,
+      #CartProd,
+      dimSet, ArrayIt, FN,
       Vertices, VertexCoordinates,ArrayValueDim1,
       Ball, Balls,
       SimplicesLst, Simplices, NrSimplices, EnumeratedSimplex,
@@ -163,7 +204,7 @@ Vertices:=0;
 VertexCoordinates:=[];
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim-1);
-CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
+#CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
 
 
 Ball:=UnitBall(M);
@@ -184,13 +225,21 @@ for t in [2..DIM] do
 od;
 #############################
 
-for x in CartProd do
+#for x in CartProd do
+FN:=function(x)
+local y;
   if ArrayValueDim(AO,x)=1 then Vertices:=Vertices+1;
     y:=ArrayValueDim1(A,x{[2..dim]});
     y[x[1]]:=Vertices;
     VertexCoordinates[Vertices]:=x;
   fi;
-od;
+end;
+#od;
+
+dimSet:=List([1..dim],x->[2..dims[x]-1]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,FN);
+
 
 Vertices:=[1..Vertices];
 SimplicesLst:=List([1..1000],i->[]);  #VERY SLOPPY!!!
@@ -322,6 +371,9 @@ end);
 #################################################################
 #################################################################
 
+PureComplexThickened:=ThickenedPureComplex;
+MakeReadOnlyGlobal("PureComplexThickened");
+
 #################################################################
 #################################################################
 InstallGlobalFunction(ThickenedPureCubicalComplex,
@@ -378,6 +430,13 @@ return PureComplex(M,B);
 end);
 #################################################################
 #################################################################
+
+PureComplexComplement:=ComplementOfPureComplex;
+MakeReadOnlyGlobal("PureComplexComplement");
+
+PureComplexBoundary:=BoundaryOfPureComplex;
+MakeReadOnlyGlobal("PureComplexBoundary");
+
 
 #################################################################
 #################################################################
@@ -474,13 +533,14 @@ local
 
 ###################################
 if not
-(IsHapPureCubicalComplex(M)
+((IsHapPureCubicalComplex(M)
 and
 IsHapPureCubicalComplex(N))
 or
 (IsHapPurePermutahedralComplex(M)
 and
 IsHapPurePermutahedralComplex(N))
+)
 then
 Print("This function must be applied to a pair of pure cubical complexes or a pair of pure permutahedral complexes.\n");
 return fail;
@@ -543,6 +603,7 @@ local
 
 ###################################
 if not
+(
 (IsHapPureCubicalComplex(M)
 and
 IsHapPureCubicalComplex(N))
@@ -550,6 +611,7 @@ or
 (IsHapPurePermutahedralComplex(M)
 and
 IsHapPurePermutahedralComplex(N))
+)
 then
 Print("This function must be applied to a pair of pure cubical complexes or a pair of pure permutahedral complexes.\n");
 return fail;
@@ -708,23 +770,13 @@ fi;
 #####################
 if IsHapPureCubicalComplex(T) then
 A:=HomotopyEquivalentSmallerSubArray(T!.binaryArray,S!.binaryArray);
-
-return Objectify(HapPureCubicalComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
+return PureCubicalComplex(A);
 fi;
 #####################
 #####################
 if IsHapPurePermutahedralComplex(T) then
 A:=HomotopyEquivalentSmallerSubPermArray(T!.binaryArray,S!.binaryArray);
-
-return Objectify(HapPurePermutahedralComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
+return PurePermutahedralComplex(A);
 fi;
 #####################
 
@@ -799,21 +851,12 @@ fi;
 if IsHapPureCubicalComplex(T) then
 A:=HomotopyEquivalentLargerSubArray(T!.binaryArray,S!.binaryArray);
 
-return Objectify(HapPureCubicalComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
+return PureCubicalComplex(A);
 fi;
 
 if IsHapPurePermutahedralComplex(T) then
 A:=HomotopyEquivalentLargerSubPermArray(T!.binaryArray,S!.binaryArray);
-
-return Objectify(HapPurePermutahedralComplex,
-        rec(
-        binaryArray:=A,
-        properties:=StructuralCopy(T!.properties)
-        ));
+return PurePermutahedralComplex(A);
 fi;
 
 
@@ -1028,6 +1071,44 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallMethod(CochainComplex,
+"Cochain complex for pure cubical complexes",
+[IsHapPureCubicalComplex],
+function(M) local  C;
+C:=ChainComplex(M);
+return HomToIntegers(C);
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallMethod(CochainComplex,
+"Cochain complex for pure permutahedral complexes",
+[IsHapPurePermutahedralComplex],
+function(M) local  C;
+C:=ChainComplex(M);
+return HomToIntegers(C);
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallMethod(CochainComplex,
+"Cochain complex for simplicial complexes",
+[IsHapSimplicialComplex],
+function(M) local  C;
+C:=ChainComplex(M);
+return HomToIntegers(C);
+end);
+#####################################################################
+#####################################################################
+
+
+
 
 ##########################################
 ##########################################
@@ -1116,6 +1197,7 @@ return M;
 end);
 ##########################################
 ##########################################
+
 
 ######################################################################
 ######################################################################

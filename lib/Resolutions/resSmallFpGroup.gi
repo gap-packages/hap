@@ -671,5 +671,21 @@ end);
 #####################################################################
 
 
+#####################################################################
+InstallGlobalFunction(ResolutionSmallGroup,
+function(G,n)
+local GG;
+
+if IsFpGroup(G) then
+return ResolutionSmallFpGroup(G,n);
+fi;
+
+GG:=Image(IsomorphismFpGroup(G));
+GG:=SimplifiedFpGroup(GG);
+return ResolutionSmallFpGroup(GG,n);
+
+end);
+#####################################################################
+
 
 

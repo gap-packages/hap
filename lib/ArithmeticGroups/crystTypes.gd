@@ -20,3 +20,11 @@ DeclareGlobalFunction("ResolutionCubicalCrystGroup");
 DeclareGlobalFunction("AverageInnerProduct");
 DeclareGlobalFunction("OrthogonalizeBasisByAverageInnerProduct");
 DeclareGlobalFunction("CrystMatrix");
+DeclareGlobalFunction("TensorWithComplexRepresentationRing");
+DeclareGlobalFunction("TensorWithComplexRepresentationRingOnRight");
+DeclareGlobalFunction("FreeZGResolution");
+DeclareGlobalFunction("IsRigid");
+DeclareGlobalFunction("TensorWithBurnsideRing");
+DeclareGlobalFunction("IsRigidOnRight");
+
+

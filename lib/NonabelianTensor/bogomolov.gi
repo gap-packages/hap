@@ -80,8 +80,9 @@ GhomQ:=NaturalHomomorphismByNormalSubgroup(G,Centre(G));
 Q:=Range(GhomQ);
 
 if IsPGroup(Q) then
-  RQ:=ResolutionGenericGroup(Q,3);
+#RQ:=ResolutionGenericGroup(Q,3);
 #RQ:=ResolutionSubnormalSeries(CompositionSeries(Q),3);
+RQ:=ResolutionNilpotentGroup(Q,3);
   P:=Homology(TensorWithIntegers(RQ),2);
 else
   P:=GroupHomology(Q,2);
@@ -255,7 +256,7 @@ InstallGlobalFunction(AreIsoclinic,
 function(arg)
 local G,H,bool, GhomGZ, HhomHZ, GZ, gensGZ, isotest, Aut, Inn, OutReps,
       HZ, DG, DH, Homs, HOMS, gensDG, gensDG1, gensDH, JG,
-      L, f, ff, g, h, i, gg,hh, x, xx, iso, iso1, gensG;
+      CG, CH, L, f, ff, g, h, i, gg,hh, x, xx, iso, iso1, gensG;
 #This function can return true, false or fail
 
 G:=arg[1];
@@ -279,6 +280,10 @@ HhomHZ:=NaturalHomomorphismByNormalSubgroup(H,Center(H));
 HZ:=Image(HhomHZ);
 
 if not IdGroup(GZ)=IdGroup(HZ) then return false; fi;
+
+CG:=SortedList(List(ConjugacyClasses(G), Size));
+CH:=SortedList(List(ConjugacyClasses(G), Size));
+if not CG=CH then return false; fi;
 
 ######################Quick tests finished###############
 

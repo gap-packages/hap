@@ -1,0 +1,21 @@
+<Verb>ModPCohomologyGenerators(G,n):: Group, Int --> List</Verb>
+<Verb>ModPCohomologyGenerators(R):: FreeResolution --> List</Verb><P/>
+
+
+
+
+Inputs either a <M>p</M>-group <M>G</M> and positive integer <M>n</M>, or else 
+<M>n+1</M> terms of a minimal <M>\mathbb FG</M>-resolution <M>R</M> of the field
+<M>\mathbb F</M> of <M>p</M> elements. It returns a pair whose first entry is 
+a minimal list of homogeneous generators for the cohomology ring 
+<M>A=H^\ast(G,\mathbb F)</M> modulo all elements in degree greater than 
+<M>n</M>. The second entry of the pair is a function <B>deg</B> which, when 
+applied to a minimal generator, yields its degree.
+
+WARNING: the following rule must be applied when multiplying generators 
+<M>x_i</M> together. 
+Only products of the form <M>x_1*(x_2*(x_3*(x_4*...)))</M> with 
+<M>deg(x_i) \le deg(x_{i+1})</M> should be computed (since the <M>x_i</M>
+ belong to a structure constant algebra with only a partially defined structure constants table).
+
+

@@ -6,12 +6,17 @@ InstallGlobalFunction(CR_ChainMapFromCocycle,
 function(R,f,p,n)
 local 
 	DimensionR,BoundaryR, HomotopyR, EltsG, Mult,
-	map, mapgens, ChainMap, mapgensRec, m,i,g;
+	map, mapgens, ChainMap, mapgensRec, IDEN, m,i,g;
 
 DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 HomotopyR:=R!.homotopy;
 EltsG:=R!.elts;
+IDEN:=Position(EltsG,Identity(R!.group));  #Added August 2014
+if IDEN=fail then                   #
+Add(EltsG,Identity(R!.group));      #
+IDEN:=Length(EltsG);                #
+fi;                                 #
 
 mapgensRec:=[];
 for m in [0..n] do
@@ -39,8 +44,8 @@ local z,u,a,y;
 
 if mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]=0 then
 
-if x[2]>1 then 
-z:=ShallowCopy(mapgens([x[1],1],m));
+if not x[2]=IDEN then 
+z:=ShallowCopy(mapgens([x[1],IDEN],m));   #Changed August 2014
 Apply(z,b->[b[1],Mult(x[2],b[2])]);
 	if x[1]>0 then 
 	mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]:=z;

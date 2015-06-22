@@ -33,7 +33,6 @@ if Dimension(n)=0 then return GF(prime)^0; fi;
 
 ########################
 if n=0 then
-#BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
 M1:=[];
 fi;
 

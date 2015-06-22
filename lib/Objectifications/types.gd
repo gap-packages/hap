@@ -563,3 +563,31 @@ Print(R!.element, "_quotient ");
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+IsHapGChainComplex:=NewFilter("IsHapGChainComplex");;
+HapGChainComplex:=NewType(FamilyObj(rec()),
+                   IsHapGChainComplex
+                   and IsComponentObjectRep
+                   and IsHapComplex);;
+
+InstallMethod( ViewObj,
+"for HapGChainComplex",
+[IsHapGChainComplex],
+function(R)
+Print("G-chain complex in characteristic ", EvaluateProperty(R,"characteristic"),
+ " for "); ViewObj(R!.group); Print(" . \n");
+ end);
+
+InstallMethod( PrintObj,
+"for HapGChainComplex",
+[IsHapGChainComplex],
+function(R)
+Print("G-chain complex of length ",
+EvaluateProperty(R,"length"),
+" in characteristic ", EvaluateProperty(R,"characteristic"),
+" for ", R!.group," . \n");
+end);
+#####################################################################
+#####################################################################
+

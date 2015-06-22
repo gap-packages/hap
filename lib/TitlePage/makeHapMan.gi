@@ -50,6 +50,9 @@ Exec( cn(VISCRIPT, cn(HAPDOC,"chap29.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chapInd.html")) );
 
 Exec( cn("cp ",HAPDOC,"/*.xml ",HAPPDFDOC)); 
+Exec( cn("mkdir ",HAPPDFDOC,"/newman"));
+Exec( cn("cp ",HAPDOC,"newman/*.xml ",HAPPDFDOC,"/newman"));
+Exec( cn(VIS, cn(HAPPDFDOC,"NewCellComplexes.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"Resolutions.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"ModuleResolutions.xml")) );
 Exec( cn(VIS, cn(HAPPDFDOC,"InducedChainMaps.xml")) );

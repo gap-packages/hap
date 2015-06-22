@@ -63,3 +63,7 @@ od;
 return Gens;
 end);
 #####################################################################
+
+IntegralCohomologyGenerators:=IntegralRingGenerators;
+MakeReadOnlyGlobal("IntegralCohomologyGenerators");
+

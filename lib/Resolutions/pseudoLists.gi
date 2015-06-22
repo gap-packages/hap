@@ -1,11 +1,4 @@
 ##########################################################
-#DeclareCategory("IsPseudoList",IsObject);
-
-#DeclareRepresentation(  "IsPseudoListRep",
-#                        IsComponentObjectRep,
-#                        ["elts",
-#                         "pos" ]);
-
 PseudoListFamily:=NewFamily( "PseudoListFamily",
                                 IsPseudoList,
                                 IsPseudoList);
@@ -26,6 +19,59 @@ InstallMethod( PrintObj,
 Print(R!.lst);
 end);
 #############################################################
+
+#############################################################
+InstallGlobalFunction(LazyList,
+function(arg)
+local fn, name, length, opts, L, len, pos, x;
+
+fn:=arg[1];
+if Length(arg)=2 then opts:=arg[2];
+else opts:=[];
+fi;
+
+name:="lazy list";
+length:=infinity;
+for x in opts do
+if x[1]="name" then name:=x[2]; fi;
+if x[1]="length" then length:=x[2]; fi;
+od;
+
+##################
+len:=function()
+return length;
+end;
+##################
+
+##################
+pos:=function(t)
+local i, bool;
+i:=0;
+bool:=true;
+while bool and i< length do
+i:=i+1;
+bool:= not (fn(i)=t) ;
+od;
+if not bool then return i;
+else return fail; fi;
+end;
+##################
+
+
+L:=     Objectify(PseudoList,
+        rec(
+        lst:=[name],
+        pos:=fail,
+        sslst:=fail,
+        eltfun:=fn,
+        lnthfun:=len,
+        posfun:=pos));
+SetIsPseudoListWithFunction(L,true);
+
+return L;
+end);
+#############################################################
+
 
 #############################################################
 InstallGlobalFunction(ListToPseudoList,
@@ -88,18 +134,14 @@ InstallOtherMethod(Position,
 "for PseudoLists",
 [IsPseudoListWithFunction and IsPseudoList,IsObject,IsInt],
 function(PL,g,i)
-#local p,A;
-#A:=List([1..Length(PL)],j->PL!.eltfun(j));
-#return Position(A,g,i);
 local j;
-for j in [i+1..Length(PL)] do
+#for j in [i+1..Length(PL)] do
+j:=0;
+while j<PL!.lnthfun() do
+j:=j+1;
 if PL!.eltfun(j)=g then return j; fi;
 od;
 return fail;
-#local p;
-#p:=PositionProperty([i+1..Length(PL)],j->PL!.eltfun(j)=g);
-#if p=fail then return p;
-#else return i+p; fi;
 end);
 #############################################################
 
@@ -128,8 +170,8 @@ end);
 InstallOtherMethod(Length,
 "for PseudoLists",
 [IsPseudoListWithFunction],
-function(PL)
-return PL!.lnthfun();
+function(PL) 
+return  PL!.lnthfun();
 end);
 #############################################################
 

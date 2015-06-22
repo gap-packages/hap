@@ -109,10 +109,14 @@ local
 
 if Order(G)<32 then R:=ResolutionFiniteGroup(gensG,N+1,false,p); 
 else
+if N<=2 then
+R:=ResolutionNilpotentGroup(G,N+1);
+else
 L:=LowerCentralSeries(G);
 L:=BigStepLCS(G,9);
 
 R:=ResolutionNormalSeries(L,N+1,false,p);
+fi;
 fi;
 
 return Homology(Functor(R),N);

@@ -12,7 +12,6 @@ local
 	Dimension,
 	CorrectedDimension,
 	Boundary,
-	PartialHomotopy,
 	Homotopy,
 	PseudoBoundary,
 	PseudoBoundaryAsVec,
@@ -98,7 +97,7 @@ end;
 WordToVectorList:=function(w,k)	#w is a word in R_k. 
 local v,x,a;			#v is a list of vectors mod p.
 
-v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(pp,0) );
+v:=ListWithIdenticalEntries(CorrectedDimension(k),ListWithIdenticalEntries(pp,0) );
 
 
 for x in w do
@@ -375,21 +374,25 @@ end;
 #####################################################################
 
 #####################################################################
-Homotopy:=function(k,w)         #assume w is in kernel d_n
-local u,v,s;
+Homotopy:=function(k,w)         
+local u,v,s,uu,i;
 
 if Toggle then Echelonize(); Toggle:=false; fi;
 
 v:=Flat(WordToVectorList([w],k))*one;
 ConvertToVectorRep(v,prime);
+
+
 if k=0 then 
 
-u:=StructuralCopy(v);
-Apply(u,i->IntFFE(i));
-s:=Sum(u);
-u:=ListWithIdenticalEntries(Length(v),zero);
-u[1]:=one*s;
-ConvertToVectorRep(u);
+
+u:=SignInt(w[1])*Mgens[AbsInt(w[1])];
+u:=MDL!.action(eltsG[w[2]],[u]);
+u:=u[1];
+u:=FpGModuleSection(MDL,u);
+u:=WordToVectorList(u,k);
+u:=Flat(u);
+
 v:=v-u;
 v:=SolutionMatBoundaryMatrices(k+1,v);
 
@@ -412,7 +415,7 @@ return Objectify(HapResolution,
 	        rec(
 		dimension:=CorrectedDimension,
 		boundary:=Boundary,
-		homotopy:=fail,
+		homotopy:=Homotopy,
 		elts:=eltsG,
 		group:=G,
 		properties:=

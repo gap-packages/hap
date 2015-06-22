@@ -617,3 +617,115 @@ RemoveFile(file);
 end);
 ##########################################################
 
+##########################################################
+##########################################################
+InstallGlobalFunction(CoproductOfFpGroups,
+function(f,g)
+local P, rels, FhomP, FFhomP, GhomP, GGhomP, FGhomP, F, FF, G, GG, FG,
+gensF, gensFF, gensG, gensGG, gensP, x, gg;
+
+#if not Source(f)=Source(g) then return fail; fi;
+
+F:=Target(f);
+FF:=FreeGroupOfFpGroup(F);
+G:=Target(g);
+GG:=FreeGroupOfFpGroup(G);
+FG:=Source(f);
+
+gensFF:=GeneratorsOfGroup(FF);
+gensF:=GeneratorsOfGroup(F);
+gensGG:=GeneratorsOfGroup(GG);
+gensG:=GeneratorsOfGroup(G);
+P:=FreeGroup(Length(gensFF)+Length(gensGG));
+gensP:=GeneratorsOfGroup(P);
+
+FFhomP:=GroupHomomorphismByImagesNC(FF,P,gensFF, gensP{[1..Length(gensFF)]});
+FhomP:=GroupHomomorphismByImagesNC(F,P,gensF, gensP{[1..Length(gensFF)]});
+GGhomP:=GroupHomomorphismByImagesNC(GG,P,gensGG, gensP{[1+Length(gensFF)..Length(gensP)]});
+GhomP:=GroupHomomorphismByImagesNC(G,P,gensG, gensP{[1+Length(gensFF)..Length(gensP)]});
+
+gg:=GroupHomomorphismByImagesNC(FG,G,GeneratorsOfGroup(FG),
+List(GeneratorsOfGroup(Source(g)),x->Image(g,x)) );
+
+rels:=[];
+Append(rels, List(RelatorsOfFpGroup(F),x->Image(FFhomP,x)) );
+Append(rels, List(RelatorsOfFpGroup(G),x->Image(GGhomP,x)) );
+
+for x in GeneratorsOfGroup(FG) do
+Add(rels,
+Image(FhomP, Image(f,x))^-1 * Image(GhomP, Image(gg,x))
+);
+od;
+
+
+return P/rels;
+
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(Fp2PcpAbelianGroupHomomorphism,
+function(F)
+local P, S, T, pS, pT, ShompS, pShomS, pThomT, ThompT, gensS,  genspS;
+
+S:=Source(F);
+T:=Target(F);
+
+ShompS:=NqEpimorphismNilpotentQuotient(S,1);
+pS:=Range(ShompS);
+genspS:=GeneratorsOfGroup(pS);
+gensS:=List(genspS, x->PreImagesRepresentative(ShompS,x));
+pShomS:=GroupHomomorphismByImagesNC(pS,S,genspS,gensS);
+
+ThompT:=NqEpimorphismNilpotentQuotient(T,1);
+pT:=Range(ThompT);
+
+P:=GroupHomomorphismByFunction(pS,pT,
+x->Image(ThompT,Image(F, Image(pShomS,x) ) ) );
+
+return P;
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(IsIsomorphismOfAbelianFpGroups,
+function(F)
+local h;
+
+h:=Fp2PcpAbelianGroupHomomorphism(F);
+
+if not IsTrivial(Kernel(h)) then return false; fi;
+if not IsTrivial(Range(h)/Image(h)) then return false; fi;
+
+return true;
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(SignedPermutationGroup,
+function(n)
+local A, i, gens;
+
+gens:=[];;
+
+for i in [1..n-1] do
+Add(gens,  PermutationMat((i,i+1),n));
+od;
+
+for i in [1..n] do
+A:=1*IdentityMat(n);
+A[i]:=-A[i];
+Add(gens,A);
+od;
+
+return Group(gens);
+end);
+##########################################################################
+##########################################################################
+

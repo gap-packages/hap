@@ -45,8 +45,9 @@ end);
 InstallGlobalFunction(PermutahedralComplexToRegularCWComplex, 
 function(M)
 local AO,A,MO, dim,dims, DIM,
-      ArrayValueDim,
-      CartProd,
+      ArrayValueDim, FN,
+      #CartProd, 
+      dimSet, ArrayIt, 
       Vertices, MVertices, VertexCoordinates,ArrayValueDim1,
       IsMSimplex,
       Ball, Balls,
@@ -76,7 +77,7 @@ VertexCoordinates:=[];
 MVertices:=[];
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim-1);
-CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
+#CartProd:=Cartesian(List([1..dim],a->[2..dims[a]-1]));
 
 Ball:=UnitBall(M);
 
@@ -105,7 +106,9 @@ fi;
 end;
 ########################
 
-for x in CartProd do
+#for x in CartProd do
+FN:=function(x)
+local y;
   if ArrayValueDim(AO,x)=1 then Vertices:=Vertices+1;
     y:=ArrayValueDim1(A,x{[2..dim]});
     y[x[1]]:=Vertices;
@@ -116,7 +119,12 @@ for x in CartProd do
     MVertices[Vertices]:=false;
     fi;
   fi;
-od;
+end;
+#od;
+
+dimSet:=List([1..dim],x->[2..dims[x]-1]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,FN);
 
 Vertices:=[1..Vertices];
 SimplicesLst:=List([1..1000],i->[]);  #VERY SLOPPY!!!
@@ -227,4 +235,88 @@ return ChainComplex(Y);;
 end);
 #####################################################################
 #####################################################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(CubicalToPermutahedralArray,
+function(D)
+local sq2, sq3, sq6, A, B, v, w, P, LN;
+
+sq2:=Float("1.414213562":PrecisionFloat:=1000000);
+sq3:=Float("1.732050808":PrecisionFloat:=1000000);
+sq6:=sq2*sq3;
+
+if Length(D)=0 then return D; fi;
+LN:=Length(D[1]);
+
+if LN=2 then
+A:=[[Rat(1/sq2), -Rat(1/sq2),0], [Rat(1/sq6),Rat(1/sq6),-Rat(2/sq6)]];
+B:=[[1,-1,0],[0,-1,1],[0,0,1]]^-1;
+fi;
+
+if LN=3 then
+A:=[[Rat(1/sq2), -Rat(1/sq2),0,0],
+    [1/2, 1/2,-1/2, -1/2],
+    [0,0,Rat(1/sq2), -Rat(1/sq2)]];
+B:=[[1,-1,0,0],[0,-1,1,0],[0,0,1,-1],[0,0,0,1]]^-1;
+fi;
+
+
+P:=[];
+
+for v in D do
+w:=v*A;
+w:=w*B;
+Add(P, w{[1..LN]});
+od;
+
+return P;
+end);
+####################################################
+####################################################
+
+
+#####################################################
+#####################################################
+InstallGlobalFunction(PermutahedralToCubicalArray,
+function(D)
+local sq2, sq3, sq6, A, B, BAS, v, w, P, LN;
+
+sq2:=Float("1.414213562":PrecisionFloat:=1000000);
+sq3:=Float("1.732050808":PrecisionFloat:=1000000);
+sq6:=sq2*sq3;
+
+if Length(D)=0 then return D; fi;
+LN:=Length(D[1]);
+
+if LN=2 then
+A:=[[Rat(1/sq2), -Rat(1/sq2),0],
+    [Rat(1/sq6),Rat(1/sq6),-Rat(2/sq6)],
+    [0,0,1]]^-1;
+
+BAS:=[[1,-1,0],[0,-1,1]];
+fi;
+
+if LN=3 then
+A:=[[Rat(1/sq2), -Rat(1/sq2),0,0],
+    [1/2, 1/2,-1/2, -1/2],
+    [0,0,Rat(1/sq2), -Rat(1/sq2)],
+    [0,0,0,1]]^-1;
+BAS:=[[1,-1,0,0], [1,1,-1,-1], [0,0,1,-1]];
+
+fi;
+
+P:=[];
+
+for v in D do
+w:=v*BAS;
+w:=w*A;
+w:=w{[1..LN]};
+Add(P,w);
+od;
+
+return P;
+end);
+####################################################
+####################################################
 

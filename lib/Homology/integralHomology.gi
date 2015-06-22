@@ -102,16 +102,18 @@ end;
 #####################################################################
 HomologyAsFpGroup:=function(C,n)
 local  
-	F, H, HH, FhomH, FhomHH, HHhomH,
+	F, H, HH, FhomH, FhomHH, HHhomH, nn,
 	Rels, Fgens, Frels, IHC, HhomC, ChomH, ExpH,
 	Vector2Word, BasisKerd1, rel, i, j, Htmp,FhomHtmp,HtmphomH;
 
 if not "fpIntHom" in NamesOfComponents(C) then
-C!.fpIntHom:=[1..999];        #SLOPPPY! Some one might ask for 
+C!.fpIntHom:=[1..1000];        #SLOPPPY! Some one might ask for 
 			      #the 1000-dimensional homology
 fi;
 
-if IsInt(C!.fpIntHom[n]) then
+if n=0 then nn:=1000; else nn:=n; fi;
+
+if IsInt(C!.fpIntHom[nn]) then
 
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
@@ -195,13 +197,13 @@ end;
 #####################################################################
 fi;
 
-C!.fpIntHom[n]:=rec(
+C!.fpIntHom[nn]:=rec(
 	    fpgroup:=H,
 	    h2c:=HhomC,
 	    c2h:=ChomH );
 fi;
 
-return C!.fpIntHom[n];
+return C!.fpIntHom[nn];
 end;
 #####################################################################
 #####################################################################

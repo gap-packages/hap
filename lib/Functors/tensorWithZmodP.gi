@@ -295,7 +295,7 @@ end);
 #####################################################################
 InstallGlobalFunction(TensorWithIntegersModPSparse,
 function(R,prime)
-local TensorResolution, TensorChainComplex;
+local TensorResolution, TensorChainComplex, S;
 
 #########################################################
 #########################################################
@@ -410,7 +410,8 @@ end;
 
 if IsHapResolution(R) then return TensorResolution(R,prime); fi;
 if IsHapSparseChainComplex(R) then return TensorChainComplex(R,prime); fi;
-
+if IsHapFilteredSparseChainComplex(R) then S:=TensorChainComplex(R,prime); 
+S!.filteredDimension:=StructuralCopy(R!.filteredDimension); return S; fi;
 
 end);
 #####################################################################

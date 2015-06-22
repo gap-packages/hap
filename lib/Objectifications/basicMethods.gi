@@ -42,7 +42,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallMethod(BoundaryMap,
+InstallOtherMethod(BoundaryMap,
 "Boundary function of complex",
 [IsHapComplex],
 function(R) return R!.boundary;

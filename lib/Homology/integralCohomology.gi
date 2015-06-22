@@ -173,6 +173,10 @@ HD:=IHD.fpgroup;
 HDhomD:=IHD.h2c;
 DhomHD:=IHD.c2h;
 
+if Length(GeneratorsOfGroup(HD))=0 then
+return GroupHomomorphismByImagesNC(HC,HD,gensHC,List(gensHC,x->One(HD)));
+fi;   ####ADDED FEB 2014
+
 imageGensHC:=[];
 for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );

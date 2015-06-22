@@ -1,6 +1,6 @@
 #######################################################
 #######################################################
-InstallGlobalFunction(RegularCWPolytope,
+InstallGlobalFunction(HAPRegularCWPolytope,
 function(points)
 local polytope, H, ind, Boundaries, n, i, x, Y;
 

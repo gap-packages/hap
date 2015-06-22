@@ -147,7 +147,14 @@ return HomToZ_Obj(X); fi;
 if EvaluateProperty(X,"type") = "equivariantChainMap" then
 return HomToZ_Arr(X); fi;
 
-Print("ERROR: Input should be a resolution or equivariant map between resolutions. \n");
+if EvaluateProperty(X,"type") = "chainComplex" then
+return HomToInt_ChainComplex(X); fi;
+
+if EvaluateProperty(X,"type") = "chainMap" then
+return HomToInt_ChainMap(X); fi;
+
+
+Print("ERROR: Input should be a resolution or equivariant map between resolutions or a chain complex. \n");
 
 end);
 #####################################################################

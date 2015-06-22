@@ -13,6 +13,7 @@ local
 n:=N-1;
 
 if N <0 then return [ ]; fi;
+if C!.dimension(N)=0 then return []; fi; #ADDED FEB 2014
 
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;

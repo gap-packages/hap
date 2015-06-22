@@ -1,4 +1,5 @@
-InstallGlobalFunction(CrystGcomplex_alt,
+
+InstallGlobalFunction(CrystGcomplex,
 function(gens,basis)
 local i,x,k,combin,n,j,r,m,vect,c,
       B,G,T,S,Bt,Action,Sign,FinalBoundary,BoundaryList,
@@ -334,9 +335,9 @@ Gram:=GramianOfAverageScalarProductFromFiniteMatrixGroup(PointGroup(G));
 if Gram=IdentityMat(DimensionOfMatrixGroup(PointGroup(G))) then
 gens:=GeneratorsOfGroup(G);
 G:=AffineCrystGroup(gens);
-B:=CrystGFullBasis_alt(G);
+B:=CrystGFullBasis(G);
 if IsList(B) then
-C:=CrystGcomplex_alt(gens,B);
+C:=CrystGcomplex(gens,B);
 Apply(C!.elts,x->x^-1);
 R:=FreeGResolution(C,n);
 return R;

@@ -1,5 +1,31 @@
 #(C) Graham Ellis
 
+######################################
+######################################
+InstallGlobalFunction(HomotopyTruncation,
+function(W,N)
+local Y, V, A, n, x, i;
+
+if Dimension(W)=N then
+return ContractedComplex(W);
+fi;
+
+Y:=1*W!.boundaries{[1..N+2]};
+Add(Y,[]);
+Y:=RegularCWComplex(Y);
+CocriticalCellsOfRegularCWComplex(Y,N+1);
+V:=SSortedList(Flat(Y!.vectorField[N+1]));
+V:=Filtered([1..Length(Y!.boundaries[N+1])],i-> not i in V);
+
+Y!.boundaries[N+1]:=Y!.boundaries[N+1]{V};
+Y!.boundaries[N+2]:=[];
+
+return ContractedComplex(RegularCWComplex(Y!.boundaries));
+
+end);
+######################################
+######################################
+
 ##################################################################
 ##################################################################
 InstallGlobalFunction(SimplicialComplexToRegularCWComplex,
@@ -413,7 +439,7 @@ InstallGlobalFunction(CubicalComplexToRegularCWComplex,
 function(arg)
 local M,dim,C, Properties, Boundaries, Coboundaries, BinLst, 
       LstBin,   bnd,  Boundary, ArrayValueDim, Orientation, 
-      Dimension,   n, i, j, k, b, v;
+      Dimension,  dimm,  n, i, j, k, b, v;
 
 M:=arg[1];
 if Length(arg)>1 then dim:=arg[2];
@@ -426,7 +452,9 @@ C:=ChainComplex(M);
 BinLst:=C!.coordinateToPosition;
 LstBin:=C!.positionToCoordinate;
 
-Properties:=[["dimension",dim]];
+dimm:=Position(List([0..dim],i->C!.dimension(i)),0);
+if dimm=fail then dimm:=dim; else dimm:=dimm-2; fi;
+Properties:=[["dimension", dimm ]];
 
 if Length(arg)=1 then
 Dimension:=C!.dimension;
@@ -522,6 +550,8 @@ return Objectify(HapRegularCWComplex,
            inverseVectorField:=fail,
            criticalCells:=fail,
            orientation:=Orientation,
+           coordinateToPosition:=BinLst,
+           positionToCoordinate:=LstBin,
            properties:=Properties));
 
 
@@ -610,12 +640,13 @@ end);
 ##########################################################
 ##########################################################
 InstallGlobalFunction(ChainComplexOfRegularCWComplexWithVectorField,
-function(Y)
+function(arg)
 local
-        basis, bool, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn, HomotopicalDeformCell, 
-        HDCrec, DCSrec, AlgRed, HtpyRed;
+        Y,basis, bool, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn, DeformCellSgnHtpy, HomotopicalDeformCell, 
+        HDCrec, DCSrec, DCSHrec, AlgRed, HtpyRed, BoundaryRec;
 
-#HAP_Sequence2Boundaries(Y);
+
+Y:=arg[1];
 
 #############################################
 HtpyRed:=function(w)
@@ -705,7 +736,6 @@ DeformCellSgn:=function(n,kk)
 local sgnn,x,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2;            
 		        	#This will return a list of signed n-cells
                                 #into which the k-th n-cell is deformed.
-
 k:=AbsInt(kk);
 sgnk:=SignInt(kk);
 if [n,k] in Y!.criticalCells then
@@ -719,12 +749,9 @@ fi;
 if IsBound(DCSrec[n+1][k]) then
 if sgnk=1 then return DCSrec[n+1][k];
 else
-#return -Reversed(DCSrec[n+1][k]);
 return -DCSrec[n+1][k];
 fi;
 fi;
-
-
 
 f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
@@ -747,7 +774,6 @@ Add(def2,sn[x-1]*bnd[x]);
 od;
 
 if sgnn=1 then 
-#def:=-Concatenation(Reversed(def1),Reversed(def2));
 def:=-Concatenation(def1,def2);
 else
 def:=Concatenation(def2,def1);
@@ -755,12 +781,10 @@ fi;
 
 Apply(def,x->DeformCellSgn(n,x));
 
-
 def:=Flat(def);
 Apply(def,x->[x,0]);
 
 def:=AlgRed(def);
-
 
 Apply(def,x->x[1]);
 
@@ -768,12 +792,87 @@ DCSrec[n+1][k]:=def;
 
 if sgnk=1 then return def;
 else
-#return -Reversed(def);
 return -def;
 fi;
 end;
 ###############################
 ###############################
+
+DCSHrec:=List([1..dim+1],i->[]);;
+###############################
+###############################
+DeformCellSgnHtpy:=function(n,kk)
+local sgnn,x,f,k,sgnk,cnt,bnd,def,defcp,sn,tog,def1,def2;
+                                #This will return a list of signed n-cells
+                                #into which the k-th n-cell is deformed.
+k:=AbsInt(kk);
+sgnk:=SignInt(kk);
+if [n,k] in Y!.criticalCells then
+DCSHrec[n+1][k]:=[];
+return [kk];
+fi;
+
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then 
+DCSHrec[n+1][k]:=[];
+return []; fi;
+fi;
+
+if IsBound(DCSrec[n+1][k]) and IsBound(DCSHrec[n+1][k]) then
+if sgnk=1 then return DCSrec[n+1][k];
+else
+return -DCSrec[n+1][k];
+fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+
+bnd:=Y!.boundaries[n+2][f];
+sn:=Y!.orientation[n+2][f];          #CHECK THIS!!
+
+def:=[]; 
+
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Add(def,sn[x-1]*bnd[x]);
+else
+sgnn:=sn[x-1];
+break;
+fi;
+od;
+cnt:=x+1;
+
+DCSHrec[n+1][k]:=[sgnn*f];
+
+for x in [cnt..Length(bnd)] do
+Add(def,sn[x-1]*bnd[x]);
+od;
+
+def:=sgnn*def;
+
+defcp:=StructuralCopy(def);
+Apply(def,xx->-DeformCellSgnHtpy(n,xx));
+for x in defcp do
+Append(DCSHrec[n+1][k], -SignInt(x)*DCSHrec[n+1][AbsInt(x)]);
+od;
+
+def:=Flat(def);
+Apply(def,x->[x,0]);
+
+def:=AlgRed(def);
+
+Apply(def,x->x[1]);
+
+DCSrec[n+1][k]:=def;
+
+if sgnk=1 then return def;
+else
+return -def;
+fi;
+end;
+###############################
+###############################
+
 
 HDCrec:=List([1..dim+1],i->[]);;
 ###############################
@@ -803,7 +902,7 @@ fi;
 
 f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
-sn:=Y!.orientation[n+2][f];
+sn:=Y!.homotopyOrientation[n+2][f];  ##
 
 def:=[]; def1:=[];def2:=[];
 
@@ -848,7 +947,7 @@ end;
 ###############################
 ###############################
 
-
+BoundaryRec:=List([1..dim+1],i->[]);
 
 
 
@@ -858,6 +957,9 @@ one:=One(GF(2));
 ######################
 Boundary:=function(n,k)
 local b,i,j,B;
+
+if IsBound(BoundaryRec[n+1][AbsInt(k)]) then return 
+SignInt(k)*BoundaryRec[n+1][AbsInt(k)]; fi;
 
 b:=StructuralCopy(zero[n]);
 B:=Y!.boundaries[n+1][basis[n+1][k]];
@@ -870,7 +972,8 @@ for i in B do
 b[i]:=b[i]+1;
 od;
 
-return one*b;
+BoundaryRec[n+1][k]:=one*b;
+return 1*BoundaryRec[n+1][k];
 end;
 ######################
 else
@@ -878,6 +981,9 @@ characteristic:=0;
 ######################
 Boundary:=function(n,k)
 local b,i,j,B,sn;
+
+if IsBound(BoundaryRec[n+1][AbsInt(k)]) then return
+SignInt(k)*BoundaryRec[n+1][AbsInt(k)]; fi;
 
 b:=StructuralCopy(zero[n]);
 B:=Y!.boundaries[n+1][basis[n+1][k]];
@@ -895,12 +1001,16 @@ for i in B do
 b[AbsInt(i)]:=b[AbsInt(i)]+SignInt(i);
 od;
 
-return b;
+BoundaryRec[n+1][k]:=b;
+return 1*BoundaryRec[n+1][k];
 end;
 ######################
 fi;
 
 if IsBound(Y!.orientation) then DeformCell:=DeformCellSgn; fi;
+if Length(arg)=2 then DeformCell:=DeformCellSgnHtpy; fi;
+if Length(arg)=1 then DCSHrec:=fail; fi;
+
 
 return
 Objectify(HapChainComplex,
@@ -908,6 +1018,7 @@ Objectify(HapChainComplex,
            dimension:=Dimension,
            boundary:=Boundary,
            deform:=DeformCell,
+           htpy:=DCSHrec,
            homotopicalDeform:=HomotopicalDeformCell,
            basis:=basis,
            bij:=bij,
@@ -934,6 +1045,20 @@ InstallMethod( ChainComplex,
 ##########################################################
 ##########################################################
 
+##########################################################
+##########################################################
+InstallMethod( CochainComplex,
+"for regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWComplex],
+ function(Y) local C;
+ CriticalCellsOfRegularCWComplex(Y);
+ C:=ChainComplexOfRegularCWComplexWithVectorField(Y);
+ return HomToIntegers(C);
+ end);
+##########################################################
+##########################################################
+
+
 
 ##########################################################
 ##########################################################
@@ -955,7 +1080,7 @@ InstallOtherMethod( Homology,
  [IsHapRegularCWComplex,IsInt],
  function(Y,n) local C, H, m, bool;
  if not IsBound(Y!.orientation) then
- Print("Can only compute the mod 2 homology as no orientation is available.\n");
+ OrientRegularCWComplex(Y);
  fi;
  m:=Minimum(n+1,Dimension(Y));
  bool:=Y!.vectorField=fail or Y!.criticalCells=fail;
@@ -975,6 +1100,35 @@ return H;
  end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod( Cohomology,
+"Coomology of a regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWComplex,IsInt],
+ function(Y,n) local C, H, m, bool;
+ if not IsBound(Y!.orientation) then
+ OrientRegularCWComplex(Y);
+ fi;
+ m:=Minimum(n+1,Dimension(Y));
+ bool:=Y!.vectorField=fail or Y!.criticalCells=fail;
+ if bool then
+    if m=Dimension(Y) then CriticalCellsOfRegularCWComplex(Y);
+    else
+    CocriticalCellsOfRegularCWComplex(Y,m); fi;
+ fi;
+ C:=ChainComplex(Y);
+ H:=Cohomology(HomToIntegers(C),n);
+ if m<Dimension(Y) and bool then
+ Y!.vectorField:=fail;
+ Y!.criticalCells:=fail;
+ Y!.properties:=Filtered(Y!.properties,x->not x[1]="codim");
+ fi;
+return H;
+ end);
+##########################################################
+##########################################################
+
 
 ##########################################################
 ##########################################################
@@ -1252,7 +1406,7 @@ end);
 
 #######################################################
 #######################################################
-InstallGlobalFunction(RegularCWComplex,
+InstallGlobalFunction(HAPRegularCWComplex,
 function(arg)
 local bnd, Y, dim, Coboundaries, k, i, j, n, b;
 
@@ -1285,7 +1439,8 @@ Y!.coboundaries:=Coboundaries;
 Y!.vectorField:=fail;
 Y!.inverseVectorField:=fail;
 Y!.criticalCells:=fail;
-if Length(arg)=2 then Y!.orientation:=arg[2]; fi;
+if Length(arg)=2 then Y!.orientation:=arg[2]; 
+else OrientRegularCWComplex(Y); fi;
 
 ####################
 Y!.nrCells:=function(n);
@@ -1303,7 +1458,7 @@ end);
 #######################################################
 InstallGlobalFunction(ContractedRegularCWComplex,
 function(W)
-local Y, perm, d, d1, n, x, i, b, cnt, bnd,  dim , F, bool, orien;
+local Y, V,perm, d, d1, n, x, i, b, cnt, bnd,  dim , F, bool, orien;
 
 if IsBound(W!.orientation) then
 Y:=RegularCWComplex(W!.boundaries,W!.orientation);
@@ -1348,8 +1503,12 @@ od;
 fi;
 od;
 
-if bool then return RegularCWComplex(bnd, orien);
-else return RegularCWComplex(bnd);fi;
+if bool then V:=RegularCWComplex(bnd, orien);
+else V:= RegularCWComplex(bnd);fi;
+
+V!.perm:=perm;
+
+return V;
 end);
 #######################################################
 #######################################################
@@ -1754,8 +1913,10 @@ function(Y)
 local bnd, cobnd, orien, dim, d, d1, d2, x, i, j, b, bb, sn, m, S, T, s, t, 
        L, bool ;
 
-#Print("Function not yet implemented.\n\n");
-#return fail;
+if IsBound(Y!.orientation) then
+if not Y!.orientation=fail then
+return ;
+fi;fi;
 
 dim:=Dimension(Y);
 bnd:=Y!.boundaries;
@@ -1878,7 +2039,7 @@ InstallGlobalFunction(ReadImageAsWeightFunction,
 function(file,f)
 local MM,F, M, A, B, C, Y, k,k1, i,j,W, weight, coord, x1;
 
-MM:=ReadImageAsFilteredCubicalComplex(file,f);
+MM:=ReadImageAsFilteredPureCubicalComplex(file,f);
 A:=PureCubicalComplexToCubicalComplex(MM);;
 A:=0*A!.binaryArray;
 
@@ -1946,4 +2107,130 @@ return eulint;
 end);
 ######################################################
 ######################################################
+
+#####################################
+#####################################
+InstallGlobalFunction(HAP_PureCubicalPairToCWMap,
+function(M,A)
+local F, YA, YM;
+
+YA:=RegularCWComplex(A);
+YM:=RegularCWComplex(M);
+
+################
+################
+F:=function(n,k)
+local x,i, v;
+x:=YA!.positionToCoordinate[n+1][k];
+v:=1*YM!.coordinateToPosition;
+for i in Reversed(x) do
+v:=v[i];
+od;
+return v;
+end;
+################
+################
+
+return Objectify(HapRegularCWMap,
+       rec(
+       source:=YA,
+       target:=YM,
+       mapping:=F
+       ));
+end);
+######################################
+######################################
+
+######################################
+######################################
+InstallGlobalFunction(GraphOfRegularCWComplex,
+function(Y)
+local A, n, x;
+
+n:=Y!.nrCells(0);
+A:=NullMat(n,n);
+
+for x in Y!.boundaries[2] do
+A[x[2]][x[3]]:=1;
+A[x[3]][x[2]]:=1;
+od;
+
+return IncidenceMatrixToGraph(A);
+
+end);
+######################################
+######################################
+
+######################################
+######################################
+InstallGlobalFunction(HomotopyGraph,
+function(W)
+local Y, V, A, n, x, i;
+
+if Dimension(W)=1 then
+return ContractedComplex(Graph(W));
+fi;
+
+Y:=1*W!.boundaries{[1..3]};
+Add(Y,[]);
+Y:=RegularCWComplex(Y);
+CocriticalCellsOfRegularCWComplex(Y,2);
+V:=SSortedList(Flat(Y!.vectorField[2]));
+
+n:=Y!.nrCells(0);
+A:=NullMat(n,n);
+
+#for x in Y!.boundaries[2] do
+for i in [1..Y!.nrCells(1)] do
+if not i in V then
+x:=Y!.boundaries[2][i];
+A[x[2]][x[3]]:=1;
+A[x[3]][x[2]]:=1;
+fi;
+od;
+
+return ContractedComplex(IncidenceMatrixToGraph(A));
+
+end);
+######################################
+######################################
+
+
+######################################
+######################################
+InstallGlobalFunction(DeformationRetract,
+function(Y)
+local R,map, perm, invperm, P, IP, i;
+
+R:=ContractedComplex(Y);
+
+perm:=R!.perm;
+invperm:=[];
+
+for P in perm do
+IP:=[];
+for i in [1..Length(P)] do
+if IsBound(P[i]) then
+IP[P[i]]:=i;
+fi;
+od;
+Add(invperm,IP);
+od;
+
+
+##################
+map:=function(n,k);
+return invperm[n+1][k];
+end;
+##################
+
+return Objectify(HapRegularCWMap,
+       rec(
+           source:=R,
+           target:=Y,
+           mapping:=map));
+
+end);
+######################################
+######################################
 
