@@ -168,23 +168,26 @@ end);
 ##	Output:	The cat-1-group with data type from the HAP package 
 ##
 InstallGlobalFunction(XmodToHAP,function (X)
-local G,Gens,s,t;
+local G,Gens,s,t,e,se,te;
 
     if IsHapCatOneGroup(X)  then
         return X;
     fi;
     if IsComponentObjectRep(X)  then
         if "TailMap" in NamesOfComponents(X) and 
-					"HeadMap" in NamesOfComponents(X) then
-		    G:=X!.Source;
+           "HeadMap" in NamesOfComponents(X) then
+		        G:=X!.Source;
 			Gens:=GeneratorsOfGroup(G);
 			s:=X!.TailMap;
 			t:=X!.HeadMap;
+			e := X!.RangeEmbedding; # Added 21/7/2015 as 
+            		se := s*e;              # suggested by Chris
+            		te := t*e;              # Wensley
             return Objectify(HapCatOneGroup,rec(
-					sourceMap:=GroupHomomorphismByImagesNC(G,G,Gens,List(Gens,
-							g->Image(s,g))),
-					targetMap:=GroupHomomorphismByImagesNC(G,G,Gens,List(Gens,
-							g->Image(t,g)))
+			sourceMap:=GroupHomomorphismByImagesNC(G,G,Gens,
+					List(Gens, g->Image(se,g))),
+			targetMap:=GroupHomomorphismByImagesNC(G,G,Gens,
+					List(Gens, g->Image(te,g)))
 					));      
         fi;
     fi;

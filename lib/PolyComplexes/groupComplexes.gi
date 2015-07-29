@@ -3,7 +3,7 @@
 InstallGlobalFunction(QuillenComplex,
 function(G,p)
 local
-	SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, K, lessthan, k,
+	SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, K,  k,
         s,t,x,m,mm,tmp;
 
 ######################################
@@ -89,13 +89,15 @@ end);
 ######################################################
 InstallGlobalFunction(GChainComplex,
 function(K,G)
-local Ksimps,R, orbits, stabilizers, stabfn, Dim, lessthan, boundfn,
-elts, i, k, x, m,Action ,ontuples;
+local Ksimps,R, orbits, stabilizers, stabfn, Dim,  boundfn,
+elts, inv, gg, i,j, k, x, y, m,Action ,ontuples, A, B;
 
 elts:=Elements(G);
+inv:=List(elts,x->Position(elts,x^-1));
 Ksimps:=[];
+
 for k in [1..1+Dimension(K)] do
-Ksimps[k]:=List(K!.simplicesLst[k],x->StructuralCopy(x));
+Ksimps[k]:=List(K!.simplicesLst[k],x->SSortedList(x));
 od;
 
 #############################
@@ -105,17 +107,11 @@ Action:=function(a,b,c) return 1; end;
 #############################
 ontuples:=function(x,g)
 local g1;
-g1:=g^-1;
-return OnTuples(x,g1);
+g1:=g;
+return SSortedList(OnTuples(x,g1));
 end;
 #############################
 
-lessthan:=function(a,b) return Order(a)<Order(b); end;
-for k in [1..Dimension(K)+1] do
-for x in Ksimps[k] do
-Sort(x,lessthan);
-od;
-od;
 
 orbits:=[];
 for k in [1..1+Dimension(K)] do
@@ -144,30 +140,30 @@ end;
 
 ######################
 boundfn:=function(n,i)
-local V,Vhat, ii, j, m,bnd,g,ob;
+local V,Vhat, ii, j, bnd,g,ob;
 
 if n<=0 then return []; fi;
 
 V:=orbits[n+1][i][1];
-V:=SSortedList(V);
 
 bnd:=[];
 
 for j in [1..Length(V)] do
-Vhat:=StructuralCopy(V);
+Vhat:=List(V,v->v);
 RemoveSet(Vhat,V[j]);
-m:=K!.enumeratedSimplex(Vhat);
-m:=Ksimps[n][m];
+Vhat:=SSortedList(Vhat);
+ob:=fail;
 for ii in [1..Length(orbits[n])] do
-if m in orbits[n][ii] then ob:=ii; break; fi;
+if Vhat in orbits[n][ii] then ob:=ii; break; fi;
 od;
+gg:=fail;
 for g in [1..Length(elts)] do
-if ontuples(orbits[n][ob][1],elts[g])=m then break; fi;
-od;
+if ontuples(orbits[n][ob][1],elts[g])=Vhat then 
+gg:=g; break; fi; od;
 if IsOddInt(j) then
-Add(bnd,[ob,g]);
+Add(bnd,[ob,inv[gg]]);
 else
-Add(bnd,[-ob,g]);
+Add(bnd,[-ob,inv[gg]]);
 fi;
 od;
 
@@ -181,7 +177,7 @@ R:=Objectify(HapGChainComplex,
             dimension:=Dim,
             boundary:=boundfn,
             homotopy:=fail,
-            elts:=Elements(G),
+            elts:=elts,
             group:=G,
             stabilizer:=stabfn,
             action:=Action,

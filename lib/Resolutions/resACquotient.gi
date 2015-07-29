@@ -82,3 +82,16 @@ RGD!.quotientHomomorphism:=GhomGD;
 return RGD;
 end);
 #####################################################################
+
+#####################################################################
+InstallGlobalFunction(RelativeCentralQuotientSpaceGroup,
+function(G,c)
+local Q;
+if not IsSpaceGroup(G) then
+Print("This function must be applied to a space group.\n"); return fail; fi;
+Q:=Image(IsomorphismPcpGroup(G));;
+Q:=ResolutionAlmostCrystalQuotient(Q,0,c)!.group;;
+return Q;
+end);
+#####################################################################
+

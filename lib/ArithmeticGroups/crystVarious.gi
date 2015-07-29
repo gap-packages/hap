@@ -457,18 +457,17 @@ end);
 InstallGlobalFunction(IsRigid,
 function(C)
 local 
-    i,j,L,bdr,intst;
+    i,j,bdr, w,s;
 
-    i:=1;    
-    while C!.dimension(i)>0 do
-        for j in [1..C!.dimension(i)] do
+    for i in [1..5000] do #SLOPPY!! 	        
+	for j in [1..C!.dimension(i)] do
             bdr:=C!.boundary(i,j);
-            L:=List(bdr,w->Elements(ConjugateGroup(C!.stabilizer(i-1,AbsInt(w[1])),C!.elts[w[2]]^-1)));
-            intst:=Intersection(L);
-            if not Elements(C!.stabilizer(i,j))=Elements(intst) then
-Print([i,j]);
-                return false;
-            fi;
+            for w in bdr do
+            s:=ConjugateGroup(C!.stabilizer(i-1,AbsInt(w[1])),
+                                      C!.elts[w[2]]^-1); 
+            if not IsSubgroup(s,C!.stabilizer(i,j)) then Print([i,j],"\n");
+ return false; fi;
+            od;
         od;
         i:=i+1;
     od; 
