@@ -796,22 +796,25 @@ local
 	D,N,R, A, W, WP, EltsWP, WPev,
 	AhomW, WhomWP, AhomWP, 
 	ResGens, 
+        Dimension,
 	StabilizerSubgroup,
 	Action,
 	i, n, k,x;
 
 D:=arg[1];
+if Length(arg)>1 then N:=arg[2];
+else N:=1000; fi;
+
 ###########################
 if not CoxeterDiagramIsSpherical(D) then
-Print("This function is only implemented for finite Coxeter groups.\n");
-return fail;
+#Print("This function is only implemented for finite Coxeter groups.\n");
+#return fail;
+return CoxeterComplex_alt(D,N);
 fi;
 ###########################
 
 
 
-if Length(arg)>1 then N:=arg[2];
-else N:=1000; fi;
 
 R:=ResolutionArtinGroup(D,N); #I guess no one will ever try 
 				 #more than 1000 generators!
@@ -858,12 +861,22 @@ end;
 ###############################################################
 
 
+#####################################################################
+Dimension:=function(n);
+
+if n=0 then return 1; fi;
+if n>Length(R) then return 0;
+else return R!.dimension(n); fi;
+
+end;
+#####################################################################
+
 
 
 
 return Objectify(HapNonFreeResolution,
            rec(
-            dimension:=R!.dimension,
+            dimension:=Dimension,
             boundary:=R!.boundary,
             homotopy:=fail,
             elts:=EltsWP,
@@ -878,6 +891,180 @@ return Objectify(HapNonFreeResolution,
 end);
 ################################################################
 ################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(CoxeterComplex_alt,
+function(D,K)
+local
+        Dimension,
+        Boundary,
+        Contraction,    #not yet used
+        EltsG,
+        Vertices,
+        G, gensG,
+        W, Wgens, GhomW,
+        ResGens,
+        BoundaryCoeff,
+        PseudoBoundary,
+        BoundaryRecord,
+        Action, StabilizerSubgroup,
+        m, n, S, SD, LN;
+
+Vertices:=CoxeterDiagramVertices(D);
+G:=CoxeterDiagramMatCoxeterGroup(D);
+gensG:=GeneratorsOfGroup(G);
+LN:=Length(gensG[1]);
+EltsG:=[];
+
+ResGens:=[];
+ResGens[1]:=[[]];
+for n in [1..K] do
+ResGens[n+1]:=[];
+for S in Combinations(Vertices,n) do
+SD:=CoxeterSubDiagram(D,S);
+if CoxeterDiagramIsSpherical(SD) then AddSet(ResGens[n+1],S); fi;
+od;
+od;
+
+#####################################################################
+Dimension:=function(n);
+
+if n=0 then return 1; fi;
+if n>=Length(ResGens) then return 0;
+else return Length(ResGens[n+1]); fi;
+
+end;
+#####################################################################
+
+BoundaryRecord:=[];
+for n in [1..K] do
+BoundaryRecord[n]:=[];
+for m in [1..Dimension(n)] do
+BoundaryRecord[n][m]:=true;
+od;
+od;
+
+
+#####################################################################
+BoundaryCoeff:=function(S,T)    #S is a set of vertices generating a
+                                #finite Coxeter group WS. T is a
+                                #subset of S, and WT is the corresponding
+                                #subgroup of WS.
+local   SD, WS, gensWS,
+        WT, gensWT,
+        Trans,
+        WShomG, Ggens,
+        x,y;
+
+SD:=CoxeterSubDiagram(D,S);
+WS:=CoxeterDiagramFpCoxeterGroup(SD);
+WS:=WS[1]/WS[2];
+Ggens:=List(S,x->gensG[Position(Vertices,x)]);
+gensWS:=GeneratorsOfGroup(WS);
+WShomG:=GroupHomomorphismByImagesNC(WS,G,gensWS,Ggens);
+gensWT:=List(T,x->gensWS[Position(S,x)]);
+if Length(T)>0 then WT:=Group(gensWT);
+else WT:=Group(Identity(WS)); fi;
+
+Trans:=List(Elements(RightTransversal(WS,WT)),x->x^-1);
+
+for x in Trans do
+y:=Image(WShomG,x);
+if not y in EltsG then Append(EltsG,[y]); fi;
+od;
+
+return List(Trans,x->Image(WShomG,x));
+end;
+#####################################################################
+
+#####################################################################
+PseudoBoundary:=function(S)     #S is a subset of vertices with finite
+                                #Coxeter group WS.
+local T, bndry, a;
+
+bndry:=[];
+for T in Combinations(S,Length(S)-1) do
+a:=Difference(S,T)[1];
+Append(bndry,[  [T,BoundaryCoeff(S,T),Position(S,a)]  ]);
+od;
+
+return bndry;
+end;
+#####################################################################
+
+#####################################################################
+Boundary:=function(n,kk)
+local B, B1, FreeGWord, x, y, k;
+
+#n:=AbsoluteValue(m);
+if n<1 then return 0; fi;
+
+k:=AbsoluteValue(kk);
+
+if not BoundaryRecord[n][k]=true then
+if kk>0 then return BoundaryRecord[n][k];
+else return NegateWord(BoundaryRecord[n][k]);fi;
+fi;
+
+B:=PseudoBoundary(ResGens[n+1][k]);
+#B1:=List(B,x->[Position(ResGens[n],x[1]),
+#        List(x[2],y->(-1)^(Length(y)+x[3])*Position(EltsG,y))  ]);
+B1:=List(B,x->[Position(ResGens[n],x[1]),
+        List(x[2],y->Determinant(y)*(-1)^(x[3])*Position(EltsG,y))  ]);
+
+FreeGWord:=[];
+for x in B1 do
+for y in x[2] do
+Append(FreeGWord,[ [SignInt(y)*x[1],AbsoluteValue(y)] ]);
+od;
+od;
+BoundaryRecord[n][k]:=FreeGWord;
+if kk>0 then return FreeGWord;
+else return NegateWord(FreeGWord); fi;
+end;
+#####################################################################
+
+###############################################################
+StabilizerSubgroup:=function(n,k)
+local G,S;
+
+S:=ResGens[n+1][k];
+S:=List(S,i->gensG[i]  ) ;
+if Length(S)=0 then return Group(IdentityMat(LN)); fi;
+return Group(S);
+
+end;
+###############################################################
+
+###############################################################
+# This describes how the group WP acts on the orientation.
+Action:=function(n,k,g);
+if n=0 then return 1; fi;
+return Determinant( EltsG[g]);
+end;
+###############################################################
+
+
+
+return Objectify(HapNonFreeResolution,
+            rec(
+            dimension:=Dimension,
+            boundary:=Boundary,
+            homotopy:=fail,
+            elts:=EltsG,
+            group:=G,
+            stabilizer:=StabilizerSubgroup,
+            action:=Action,
+            properties:=
+            [["length",n],
+             ["characteristic",0],
+             ["type","resolution"],
+             ["reduced",true]]  ));
+
+end);
+#####################################################################
+#####################################################################
 
 ################################################################
 ################################################################

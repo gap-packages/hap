@@ -71,10 +71,9 @@ PairToInt:=List([0..Length(R)],i->List([1..R!.dimension(i)], j->[]));
 
 for n in [0..Length(R)] do
 cnt:=0;
-   for r in [1..R!.dimension(n)] do
    for j in [1..Length(Tdims)] do
    for g in [1..Tdims[j]] do
-   #for r in [1..R!.dimension(n)] do
+   for r in [1..R!.dimension(n)] do
    cnt:=cnt+1;
    IntToPair[n+1][cnt]:=[r,g];
    if j>1 then IntToPair[n+1][cnt][2]:=IntToPair[n+1][cnt][2]+FGdims[j-1]; fi;

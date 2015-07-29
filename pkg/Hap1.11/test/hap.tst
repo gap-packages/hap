@@ -18,8 +18,6 @@ gap> Tensor:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3));
 [ 2 ]
 gap> Tensor2:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3),12);
 [ 2 ]
-gap> P:=PresentationOfResolution(ResolutionAbelianGroup([0,2,4],3)).relators;
-[ f1*f3*f1*f3^-1, f2*f3*f2^-1*f3^-1, f1^2, f2*f1*f2^-1*f1, f2^4 ]
 gap> P:=Length(P);
 5
 gap> R:=ResolutionAbelianGroup([0,0,0],5);;

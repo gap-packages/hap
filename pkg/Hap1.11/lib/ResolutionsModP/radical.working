@@ -4,10 +4,10 @@
 ###############################################
 InstallGlobalFunction(RadicalSeriesOfResolution,
 function(R)
-local C,G, ordG, FG, FGdims, Tdims, T,L,prime, 
+local G, ordG, FG, FGdims, Tdims, T,L,prime, 
       Dimension, FDimension, Boundary, BoundRec, IntToPair, one, 
       PairToInt, cnt, Mult, invT, n, i,g, j, k, r,
-      WordToVectorList, VectorListToWord, newold, oldnew  ;
+      WordToVectorList, VectorListToWord ;
 
 G:=R!.group;
 ordG:=Order(G);
@@ -25,7 +25,6 @@ fi;
 ###################
 
 one:=One(GF(prime));
-
 
 ###################
 Mult:=function(g,h);
@@ -45,6 +44,7 @@ for i in [2..Length(FGdims)] do
 FGdims[i]:=FGdims[i]+FGdims[i-1];
 od;
 T:=Concatenation(T); ##So T is the new basis
+
 invT:=T^-1;
 ###################
 
@@ -66,13 +66,15 @@ end;
 ##################################
 IntToPair:=List([0..Length(R)],i->[]);
 PairToInt:=List([0..Length(R)],i->List([1..R!.dimension(i)], j->[]));
-# so i --> [r,g] where r is the FG summand and g is position in summand
+# so i --> [r,g] where r is the FG summand and g is the (new basis) position 
+# in summand
 
 for n in [0..Length(R)] do
 cnt:=0;
+   for r in [1..R!.dimension(n)] do
    for j in [1..Length(Tdims)] do
    for g in [1..Tdims[j]] do
-   for r in [1..R!.dimension(n)] do
+   #for r in [1..R!.dimension(n)] do
    cnt:=cnt+1;
    IntToPair[n+1][cnt]:=[r,g];
    if j>1 then IntToPair[n+1][cnt][2]:=IntToPair[n+1][cnt][2]+FGdims[j-1]; fi;
@@ -84,16 +86,14 @@ od;
 ################################
 
 #####################################################################
-WordToVectorList:=function(w,k) #w is a word in R_k.
-local v,x,a;                    #v is a list of vectors mod p.
+WordToVectorList:=function(w,k) #w is a FG-word in R_k.
+local v,x,r;                    #v is a list of vectors mod p.
 
-#v:=ListWithIdenticalEntries(Dimension(k),ListWithIdenticalEntries(ordG,0) );
-v:=List([1..Dimension(k)],i->List([1..ordG],j->0*one) );
-
+v:=List([1..R!.dimension(k)],i->List([1..ordG],j->0*one) );
 
 for x in w do
-a:=AbsoluteValue(x[1]);
-v[a][x[2]]:=v[a][x[2]] + SignInt(x[1])*one;
+r:=AbsInt(x[1]);
+v[r][x[2]]:=v[r][x[2]] + SignInt(x[1])*one;
 od;
 
 return v ;
@@ -102,15 +102,14 @@ end;
 
 
 #####################################################################
-VectorListToWord:=function(v)
-local w, i, x;
+VectorListToWord:=function(v,n)  #returns a sparse word over F.
+local w, r, g, vv;
 
 w:=[];
-for x in [1..Length(v)] do
-for i in [1..Length(v[x])] do
-if not IsZero(v[x][i]) then 
-Append(w, MultiplyWord(IntFFE(v[x][i]),[ [x,i]   ]));
-fi;
+
+for r in [1..Length(v)] do
+for g in [1..Length(v[r])] do
+if not IsZero(v[r][g]) then Add(w,[PairToInt[n+1][r][g],v[r][g]]); fi;
 od;
 od;
 
@@ -118,78 +117,51 @@ return w;
 end;
 #####################################################################
 
-#####################################################################
-newold:=function(w)
-local z,v,r,g;
-#Inputs a vector list w in with resp. to new basis and returns it
-#with resp. to old basis.
-v:=[];
-
-for r in [1..Length(w)] do
-#Add(v,w[r]*T);
-if not IsZero(w[r]) then 
-w[r]:=w[r]*T;
-fi;
-od;
-#return v;
-return w;
-end;
-###################
-
-#####################################################################
-oldnew:=function(w)
-local z,v,r,g;
-#Inputs a vector list w in with resp. to new basis and returns it
-#with resp. to old basis.
-v:=[];
-
-for r in [1..Length(w)] do
-#Add(v,w[r]*invT);
-if not IsZero(w[r]) then 
-w[r]:=w[r]*invT;
-fi;
-od;
-#return v;
-return v;
-end;
-###################
 
 BoundRec:=List([1..Length(R)],i->[]);;
 
 ###################################
 Boundary:=function(n,k)
-local w, x,b, bnd, pr;
+local w, x,b, bnd, pr, gg,i;
 
-if IsBound(BoundRec[n][k]) then
-return 1*BoundRec[n][k]; 
+if IsBound(BoundRec[n][AbsInt(k)]) then
+if SignInt(k)>0 then return 1*BoundRec[n][k]; 
+else
+return NegateWord(BoundRec[n][k]);
+fi;
 fi;
  
-pr:=IntToPair[n+1][k];
+pr:=IntToPair[n+1][AbsInt(k)];
 r:=pr[1];
 g:=pr[2];
 
-w:=[[r,g]];
-w:=WordToVectorList(w,n);
-w:=newold(w);
-w:=VectorListToWord(w);
-
-bnd:=[];
-for x in w do
-b:=R!.boundary(n,AbsInt(x[1]));
-b:=List(b,a->[a[1],Mult(x[2],a[2])]);
-if SignInt(x[1])<0 then b:=NegateWord(b); fi;
-Append(bnd,b);
+w:=T[g];
+gg:=[];
+for i in [1..Length(w)] do
+for j in [1..IntFFE(w[i])] do
+Add(gg,i);
+od;
 od;
 
+w:=R!.boundary(n,r);  #This is an FG-word
+bnd:=[];
+for i in gg do
+b:=List(w, x->[x[1],Mult(i,x[2])]);
+Append(bnd,b);
+od;
 bnd:=WordToVectorList(bnd,n-1);
-bnd:=oldnew(bnd);
-bnd:=VectorListToWord(bnd);
 
-Apply(bnd,x->[x[1],one*x[2]]);;
-bnd:=AlgebraicReduction(bnd,prime);
-BoundRec[n][k]:=bnd;
+for i in [1..Length(bnd)] do
+if not IsZero(bnd[i]) then
+bnd[i]:=bnd[i]*invT;
+fi;
+od;
 
-return 1*bnd;
+bnd:=VectorListToWord(bnd,n-1);
+BoundRec[n][AbsInt(k)]:=bnd;
+
+if SignInt(k)=1 then return 1*bnd;
+else return NegateWord(bnd); fi;
 
 end;
 ###################

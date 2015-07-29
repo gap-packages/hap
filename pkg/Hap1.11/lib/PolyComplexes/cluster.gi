@@ -1032,3 +1032,85 @@ end);
 #####################################################################
 
 
+########################################################
+########################################################
+NerveOfCover:=function(C,N)
+local S, V, cnt, i, x, tog;
+
+V:=[1..Length(C)];
+
+S:=List(V,i->[i]);
+
+cnt:=1; tog:=true;
+while cnt<=N and tog=true do
+cnt:=cnt+1;tog:=false;
+for x in Combinations(V,cnt) do
+if Length(Intersection(List(x,xi->C[xi])))>0 then Add(S,x); tog:=true; fi;
+od;
+od;
+
+S:=List(S,x->SSortedList(x));
+S:=SSortedList(S);
+return SimplicialComplex(S);
+
+end;
+########################################################
+########################################################
+
+
+########################################################
+########################################################
+Mapper:=function(S,f,N,t,tol)
+local M,m,s,I,x,y,i,j,c,G,A,Clusters,Mapper,vert,K,W;
+##IntervalPreCover  function of N, f, S ,tol
+#N number of divisions of image
+# f  function
+# S  distance matrix
+#tol clustering parameter
+# toverlap parameter
+M:=Maximum(Flat(S));;
+m:=Minimum(Filtered(Flat(S),x->not x=0));;
+s:=(M-m)/(N);
+I:=[];
+for i in [1..N] do
+I[i]:=[];
+x:=(i-1)*s-t*s/100;
+y:=i*s+t*s/100;
+for j in [1..Length(S)] do
+if f(j)<=y and f(j)>=x then Add(I[i],j); fi;
+od;
+od;
+##PreCover Done
+
+
+##Mapper Complex should output the nerve of a collection of sets
+G:=[]; #tol:=5;
+for i in [1..N] do
+A:=List(I[i],j->S[j]*1);
+A:=List(A,a->a{I[i]}*1);
+G[i]:=SymmetricMatrixToGraph(A,Maximum(Flat(A))/tol);
+od;
+
+Clusters:=[];
+for i in [1..N] do
+Clusters[i]:=[];
+vert:=EvaluateProperty(G[i],"numberofvertices");
+for c in 1+[1..PathComponentsOfGraph(G[i],0)] do
+K:=Filtered([1..vert],k->c in G[i]!.pathComponents[k]);
+K:=List(K,a->I[i][a]);
+if Length(K)>0 then Add(Clusters[i],K); fi;
+od;
+for c in G[i]!.singletons do
+Add(Clusters[i],[c]);
+od;
+od;
+
+
+W:=Concatenation(Clusters);
+Mapper:=NerveOfCover(W,20);
+Mapper!.clustersizes:=List(W,Size);
+return Mapper;
+end;
+########################################################
+########################################################
+

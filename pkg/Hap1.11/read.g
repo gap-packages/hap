@@ -272,6 +272,7 @@ fi;
 
 ################### TEST ###########################################
 ReadPackage("HAP", "test/test.gap");
+ReadPackage("HAP", "test/test.g");
 
 ################### STREAMS ########################################
 ReadPackage("HAP","lib/Streams/streams.gi");
@@ -396,6 +397,7 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/sl2zresalt.gi");
 # ReadPackage("HAP","lib/ArithmeticGroups/resDirectProd.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/barycentric.gi");
 ######################################################
 fi;
 
@@ -429,6 +431,8 @@ ReadPackage("HAP","lib/HapPrime/gradedalgebra.gi");
 ReadPackage("HAP","lib/HapPrime/polynomials.gi");
 ReadPackage("HAP","lib/HapPrime/happrime.gi");
 ReadPackage("HAP","lib/HapPrime/derivation.gi");
+#ReadPackage("HAP","lib/HapPrime/poincare.gd");
+#ReadPackage("HAP","lib/HapPrime/poincare.gi");
 fi;
 
 
