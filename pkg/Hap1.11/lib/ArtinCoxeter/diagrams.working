@@ -432,3 +432,36 @@ od;
 return true;
 end);
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(CoxeterDiagramMatCoxeterGroup,
+function(D)
+local M, cosine, G, i,j;
+
+M:=CoxeterDiagramMatrix(D);
+M:=M-IdentityMat(Length(M));
+
+#################################
+cosine := function(n)
+if n>0 then
+return (1/2)*( E(2*n) + E(2*n)^(2*n-1) );
+elif n = 0 then  return 1; 
+fi;
+end;
+#################################
+
+G := [];
+for i in [1..Length(M)] do
+G[i] := IdentityMat(Length(M));
+for j in [1..Length(M)] do
+G[i][i][j] := G[i][i][j] + 2*cosine(M[i][j]);
+od;
+od;
+
+return Group(G);
+end);
+#####################################################################
+#####################################################################
+
+

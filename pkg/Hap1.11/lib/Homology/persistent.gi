@@ -968,7 +968,7 @@ end;
 if not IsHapNonFreeResolution(R) then return fail; fi;
 
 
-return          Objectify( HapResolution,
+return          Objectify( HapNonFreeResolution,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,

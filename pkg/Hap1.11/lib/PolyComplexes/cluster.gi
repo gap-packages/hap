@@ -992,7 +992,7 @@ InstallMethod(CliqueComplex,
 function(K,n)
 local G;
 
-if Dimension(K)=1 then
+if Dimension(K)<=1 then
 G:=GraphOfSimplicialComplex(K);
 return SimplicialNerveOfGraph(G,n);
 fi;

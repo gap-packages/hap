@@ -606,3 +606,86 @@ InstallOtherMethod( LowerGCentralSeries,
 
 #############################################################################
 
+##################################################
+##################################################
+InstallGlobalFunction(ImageOfGOuterGroupHomomorphism,
+function(phi)
+local A, B, G, h,f, L;
+
+A:=phi!.Source;
+B:=phi!.Target;
+G:=A!.ActingGroup;
+h:=phi!.Mapping;
+f:=Image(h);
+L:=GOuterGroup();
+SetActingGroup(L,G);
+SetActedGroup(L,f);
+SetOuterAction(L,A!.OuterAction);
+
+return L;
+
+end);
+##################################################
+##################################################
+
+##################################################
+##################################################
+
+##################################################
+##################################################
+InstallGlobalFunction(KernelOfGOuterGroupHomomorphism,
+function(phi)
+local h,k,K,A,G;
+
+A:=phi!.Source;
+G:=A!.ActingGroup;
+h:=phi!.Mapping;
+k:=Kernel(h);
+
+K:=GOuterGroup();
+SetActingGroup(K,G);
+SetActedGroup(K,k);
+SetOuterAction(K,A!.OuterAction);
+
+
+return K;
+end);
+##################################################
+##################################################
+
+##################################################
+##################################################
+InstallOtherMethod(Size,
+        "for GOuterGroups",
+        [IsGOuterGroup],
+    function(N)
+    return Size( ActedGroup(N));
+end);
+##################################################
+##################################################
+
+##################################################
+##################################################
+InstallOtherMethod(Source,
+        "for GOuterGroups",
+        [IsGOuterGroupHomomorphism],
+    function(N)
+    return N!.Source;
+end);
+##################################################
+##################################################
+
+##################################################
+##################################################
+InstallOtherMethod(Target,
+        "for GOuterGroups",
+        [IsGOuterGroupHomomorphism],
+    function(N)
+    return N!.Target;
+end);
+##################################################
+##################################################
+
+
+
+

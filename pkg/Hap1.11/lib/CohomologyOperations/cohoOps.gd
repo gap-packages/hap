@@ -1,0 +1,2 @@
+DeclareGlobalFunction("CohomologyHomomorphism");
+DeclareGlobalFunction("ConnectingCohomologyHomomorphism");

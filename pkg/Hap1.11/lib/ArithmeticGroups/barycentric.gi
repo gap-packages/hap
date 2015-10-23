@@ -2,26 +2,17 @@
 #######################################################################
 #0
 #F  ControlledSubdivision
-##  Input: A pair of positive integers (m,n) 
-##         
-##  Output: The first n+1 terms of a free ZG-resolution  
-##          where G is SL2Z(1/m)
 ##
 
 InstallGlobalFunction(BaryCentricSubdivision,
 function(C)
-local W, StabRec, i, j, N, x, bdry, s1, s2, p, k, w, t,
-      DimRec, BoundaryRec, id, dims, NotRigid, NewCell,
-      AddCell, Cell, Elts, Boundary, Dimension, CLeftCosetElt,
-      pos, IsSameOrbit, Stab, Mult, ConnectToCenter,
-      Stabilizer, Action, IsRigidCell, ReplaceCell, SubdividingCell;
-    
-    
+local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,
+    Elts,Rep,mult,ListUnion, Chains, IsSameOrbit, AddReturn,
+    Orbit, Dimension, StabRec, Action, Stabilizer, Boundary,
+    NChains, BoundaryRec, FinalBoundary;
 
+    
     Elts:=C!.elts;
-    StabRec:=[];
-    DimRec:=[];
-
     ##################################################################
     # If g in Elts return the position of g in the list,
     # otherwise, add g to Elts and return the position.
@@ -37,307 +28,232 @@ local W, StabRec, i, j, N, x, bdry, s1, s2, p, k, w, t,
         fi;
     end;
     ##################################################################
-    id:=pos(One(C!.group));
-    ##################################################################
-    # return the stabilizer of g*e,
-    # 
-    Stab:=function(e,g)
-    return ConjugateGroup(StabRec[e[1]+1][e[2]],Elts[g]^-1);
-    end;
-    ##################################################################
     # returns  a  "canonical"  representative  of  the  right  coset 
     # Elts[g]*Stab[i+1][j]
-    CLeftCosetElt:=function(i,j,g)
+    Rep:=function(i,j,g)
 
     return pos(CanonicalRightCountableCosetElement
-                            (StabRec[AbsInt(i)+1][j],Elts[g]^-1)^-1);
+                            (C!.stabilizer(i,j),Elts[g]^-1)^-1);
     end;
     ##################################################################
-    ##
-    ##  Input:  A list L, degree k, position g of an element    
-    ##  Output: Product of g and L.
-    ##
-    Mult:=function(L,k,g)
-    local x,w,t,h,y,vv;
-        vv:=[];
-        for x in [1..Length(L)] do
-            w:=Elts[g]*Elts[L[x][2]];
-            t:=CLeftCosetElt(k,AbsInt(L[x][1]),pos(w));
-            Add(vv,[L[x][1],t]);
-        od;
-        return vv;
+    AddReturn:=function(a,g)
+    local b;
+        b:=StructuralCopy(a);    
+        Add(b,g);
+    return b;
     end;
-    ###################################################################
-    # Store essential data: stabilizers, boundaries, dimensions
+    ##################################################################
+    mult:=function(L,g)
 
-    i:=0;
-    while C!.dimension(i)>0 do
-        i:=i+1;
-    od;
-    N:=i-1; # Length of the chain complex
-    NewCell:=[];
-    for i in [1..N] do
-        NewCell[i]:=[];
-    od;
-    for i in [0..N] do
-        StabRec[i+1]:=[];
-        DimRec[i+1]:=C!.dimension(i);
-        for j in [1..C!.dimension(i)] do
-            StabRec[i+1][j]:=C!.stabilizer(i,j);
+    return List(L,a->[a[1],pos(Elts[g]*Elts[a[2]])]);
+
+    end;
+    ##################################################################
+    ListUnion:=function(x,y)
+    local a;
+        for a in y do
+            if not a in x then
+                Add(x,a);
+            fi;
         od;
-    od;
-    
-    BoundaryRec:=[];
-    for i in [1..N] do
-        BoundaryRec[i]:=[];
-        for j in [1..DimRec[i+1]] do
-            bdry:=C!.boundary(i,j);
-            BoundaryRec[i][j]:=[];
-            for x in bdry do
-                s1:=C!.action(i-1,AbsInt(x[1]),x[2]);
-                p:=pos(CanonicalRightCountableCosetElement
-                            (C!.stabilizer(i-1,AbsInt(x[1])),Elts[x[2]]^-1)^-1);
-                s2:=C!.action(i-1,AbsInt(x[1]),p);
+    end;
+    ##################################################################
+    IsSameOrbit:=function(a,b)
+    local s,w,v,x,y,k,g,i;
+        for i in [1..Length(a)] do
+            if not a[i][1]=b[i][1] then
+                return false; 
+            fi;
+        od;
+        x:=List([1..Length(a)],i->[a[i][1],Cells[a[i][1]+1][a[i][2]]]);
+        y:=List([1..Length(b)],i->[b[i][1],Cells[b[i][1]+1][b[i][2]]]);
+        for i in [1..Length(x)] do
+            if not x[i][2][1]=y[i][2][1] then
+                return false; 
+            fi;
+        od;
+        w:=List(C!.stabilizer(x[1][1],x[1][2][1]),i->Elts[y[1][2][2]]*i*Elts[x[1][2][2]]^-1);
+        for s in [2..Length(x)] do
+            v:=List(C!.stabilizer(x[s][1],x[s][2][1]),i->Elts[y[s][2][2]]*i*Elts[x[s][2][2]]^-1);
+            w:=Intersection(w,v);
+            if IsEmpty(w) then return false;fi;
+        od;
+        if not IsEmpty(w) then 
        
-                Add(BoundaryRec[i][j],[s1*s2*x[1],p]);
-            od;
-#            BoundaryRec[i][j]:=ShallowCopy(C!.boundary(i,j));
-        od;
-    od;
-    ##################################################################
- 
-    # Data type for a k-cell with stabilizer stab and boundary bdry
-    Cell:=function(k,stab,bdry)
-    return rec(
-        dimension:=k,
-        stabilizer:=stab,
-        boundary:=bdry
-    );
+    return w[1];fi;
     end;
     ##################################################################
-    # Add a k-cell with stabilizer stab and boundary bdry
-    # to the cell complex
-    AddCell:=function(k,stab,bdry)
-    local i,g;
-        if k=0 then 
-            DimRec[k+1]:=DimRec[k+1]+1;
-            Add(StabRec[k+1],stab);
-            return [DimRec[k+1],CLeftCosetElt(0,DimRec[k+1],id)];
-        fi;
+    Dims:=[];
+    for i in [0..Length(C)] do
+        if C!.dimension(i)=0 then N:=i-1; break; fi;
+        Dims[i+1]:=C!.dimension(i);
+    od;
+    Cells:=[];
+    coBoundaries:=[];
+    id:=pos(One(C!.group));
+    for i in [1..N+1] do 
+        Cells[i]:=[];
+        coBoundaries[i]:=[];
+    od;
+    for j in [1..Dims[N+1]] do
+        Add(Cells[N+1],[j,id]);
+    od;
 
-        for i in [(dims[k+1]+1)..DimRec[k+1]] do
-            g:=IsSameOrbit([k,StabRec[k+1][i],
-                               BoundaryRec[k][i]],[k,stab,bdry]);
-            if not g=false then
-#Print("the cell ",[i, CLeftCosetElt(k,i,g)],"\n");
-                return [i, CLeftCosetElt(k,i,g)];
-            fi;
-        od;
-        DimRec[k+1]:=DimRec[k+1]+1;
-        Add(StabRec[k+1],stab);
-        Add(BoundaryRec[k],bdry);
-        return [DimRec[k+1],CLeftCosetElt(k,DimRec[k+1],id)];    
-    end;    
-    ##################################################################
-    # check if two k-cells are in the same orbit
-    IsSameOrbit:=function(e,f)
-    local p, bdry1, bdry2, i, a, b, x;
-        if not e[1]=f[1] then
-            return false;
-        fi;
-        bdry1:=ShallowCopy(e[3]);
-        bdry2:=ShallowCopy(f[3]);
-        bdry2:=List(bdry2,w->[w[1],CLeftCosetElt(e[1]-1,AbsInt(w[1]),w[2])]);
-#Print("bdry1 ",bdry1,"\n");
-#Print("bdry2 ",bdry2,"\n");
-        p:=PositionsProperty(bdry2,w->AbsInt(w[1])=AbsInt(bdry1[1][1]));
-#Print("p ",p,"\n");
-        for i in p do
-            for a in Elements(StabRec[e[1]][AbsInt(bdry1[1][1])]) do
-                b:=Elts[bdry2[i][2]]*a*Elts[bdry1[1][2]]^-1;
-                x:=List(bdry1,w->[w[1],CLeftCosetElt(e[1]-1,
-                   AbsInt(w[1]),pos(b*Elts[w[2]]))]);
-                if Set(x)=Set(bdry2) then 
-#Print("b ",pos(b),"\n");
-                    return pos(b);
+# Construct the list of cells and the corresponding coboundary of those cells
+    i:=N;
+    while i>0 do
+        for k in [1..Length(Cells[i+1])] do
+            x:=Cells[i+1][k];
+            w:=StructuralCopy(C!.boundary(i,AbsInt(x[1])));
+            w:=mult(w,x[2]);
+            w:=List(w,a->[AbsInt(a[1]),Rep(i-1,AbsInt(a[1]),a[2])]);
+            ListUnion(Cells[i],w);
+            for y in w do
+                t:=Position(Cells[i],y);
+                if not IsBound(coBoundaries[i][t]) then
+                    coBoundaries[i][t]:=[];
                 fi;
-            od;    
-        od;
-        return false;
-    end;
-    ##################################################################
-    # Connect the cell e to the barycenter of the cell f
-    # e and f are in the form [k,i,g]: dimension k, obtain by sending 
-    # ith-representative under the action of the element g in G 
-    ConnectToCenter:=function(e,f)
-    local bdry, x, stab, bdrye, w, stablst;
-      
-        if e[1]=0 then 
-            stab:=Intersection(Stab([e[1],e[2]],e[3]),Stab([f[1],f[2]],f[3]));
-            bdry:=[[-f[2],f[3]],[e[2],e[3]]];
-#Print(e,"  ",AddCell(e[1]+1,stab,bdry),"\n");
-            return AddCell(1,stab,bdry);
-        fi;
-        stablst:=[];
-        Add(stablst,Stab([e[1],e[2]],e[3]));
-#        stab:=Intersection(Stab([e[1],e[2]],e[3]),Stab([f[1],f[2]],f[3]));
-        bdry:=[];
-        Add(bdry,[e[2],e[3]]);
-        bdrye:=Mult(BoundaryRec[e[1]][e[2]],e[1]-1,e[3]);
-        for x in bdrye do
-            w:=ConnectToCenter([e[1]-1,AbsInt(x[1]),x[2]],f);
-            Add(bdry,[-SignInt(x[1])*w[1],w[2]]);
-            Add(stablst,Stab([e[1],w[1]],w[2]));
-        od;
-        stab:=Intersection(stablst);
-#Print(e,"  ",AddCell(e[1]+1,stab,bdry),"\n");
-        return AddCell(e[1]+1,stab,bdry);
-    end;  
-    ##################################################################
-    # Check if the cell is whether rigid or not
- 
-    IsRigidCell:=function(k,m)
-    local bdry, intst, L;
-        bdry:=BoundaryRec[k][m];
-        L:=List(bdry,w->Elements(ConjugateGroup(StabRec[k][AbsInt(w[1])],Elts[w[2]]^-1)));
-        intst:=Intersection(L);
-        if not Elements(StabRec[k+1][m])=Elements(intst) then
-            return false;
-        else return true;
-        fi;
+                Add(coBoundaries[i][t],k);
+            od;
 
-    end;
-    ##################################################################
-    # Subdividing a cell 
-    SubdividingCell:=function(k,i)
-    local bdry, w, x, d, y;
-        y:=AddCell(0,StabRec[k+1][i],[]);
-        bdry:=BoundaryRec[k][i];
-        w:=[];
-#Print([k,i],"  ",bdry,"\n");
-        for x in bdry do
-            d:=ConnectToCenter([k-1,AbsInt(x[1]),x[2]],[0,y[1],y[2]]);
-            if x[1]<0 then 
-                Add(w,[-d[1],d[2]]);
-            else
-                Add(w,d);
+        od;
+        i:=i-1;
+    od;        
+
+# Record k-chains as a list 
+    
+    Chains:=[];
+
+# Record the 1-chains 
+    Chains[1]:=[];
+    for i in [1..1] do
+
+        for j in [1..Length(Cells[i])] do
+            Add(Chains[1],[[i-1,j]]);
+        od;
+    od;
+# Construct the list of N-chains
+    for k in [1..(N)] do
+        Chains[k+1]:=[];
+
+            for i in [1..Length(Chains[k])] do
+                ck:=StructuralCopy(Chains[k][i]);
+                c:=ck[k];
+                w:=List(coBoundaries[c[1]+1][c[2]],x->AddReturn(ck,[c[1]+1,x]));
+                Append(Chains[k+1],w);
+            od;    
+        
+    od;
+    NChains:=StructuralCopy(Chains[N+1]);
+
+# Recognizing orbits and compute the boundary of cells.
+
+    Orbit:=[];
+    Orbit[N+1]:=[];
+    Add(Orbit[N+1],NChains[1]);
+    for i in [2..Length(NChains)] do
+        for j in [1..Length(Orbit[N+1])] do
+            c:=0;
+            if not IsSameOrbit(NChains[i],Orbit[N+1][j])=false then
+                c:=1;
+                break;
             fi;
         od;
-        return w;
-    end;
-    ##################################################################
-    # Replacing a cell by its subdivision
-    ReplaceCell:=function(k,m)
-    local i, j, p, w, x, bdry, y, ww;
-        w:=ShallowCopy(SubdividingCell(k,m));
-        if k<N then
-        for i in [1..DimRec[k+2]] do
-            bdry:=ShallowCopy(BoundaryRec[k+1][i]);
-            p:=PositionsProperty(bdry,w->AbsInt(w[1])=m);
-            for j in p do
-                x:=bdry[j];
-                ww:=ShallowCopy(w);
-                if x[1]<0 then ww:=NegateWord(ww);fi;
-                ww:=Mult(ww,k,x[2]);
-                Append(bdry,ww);
-            od;
-            y:=bdry{p};
-            bdry:=Set(bdry);
-            SubtractSet(bdry,y);
-            BoundaryRec[k+1][i]:=bdry;
-        od;
-        fi;
-        BoundaryRec[k][m]:="del";
-        StabRec[k+1][m]:="del";
-    end;
-    ##################################################################
-    # Main part: subdividing the fundamental domain
-    NotRigid:=[];
-    dims:=ShallowCopy(DimRec);
-    i:=1;
-#    Print("The cells which are not rigid: \n");
-    while i<=N do
-        j:=1;
-        while j<=dims[i+1] do
-#            if not IsRigidCell(i,j) then
-#                Print([i,j]);
-                Add(NotRigid,[i,j]);
-#            fi;
-            j:=j+1;
-        od;
-        i:=i+1;
-    od;
-    for x in NotRigid do
-#        Print("\n The cell ",x," is in process of subdividing \n");
-        ReplaceCell(x[1],x[2]);
+        if c=0 then Add(Orbit[N+1],NChains[i]);fi;
     od;
 
-    
-    #Delete cells which are already replaced by its subdivision
-#    Print("Deleting cells which are already replaced by its subdivision... \n");
-    t:=1;
-    for w in [1..Length(NotRigid)] do
-        k:=NotRigid[w][1];
-        j:=NotRigid[w][2];
-        if k<N then
-        for i in [1..DimRec[k+2]] do
-            bdry:=BoundaryRec[k+1][i];
+    BoundaryRec:=[];
+    k:=N+1;
+    while k>1 do
+        BoundaryRec[k-1]:=[];
+        for i in [1..Length(Orbit[k])] do
+            x:=StructuralCopy(Orbit[k][i]);
 
-            if not IsString(bdry) then
-                for x in bdry do
-                    if AbsInt(x[1])>j then 
-                        x[1]:=x[1]-SignInt(x[1]);
+            b:=[];
+            for j in [1..Length(x)] do
+                w:=StructuralCopy(x);
+                Remove(w,j);
+
+                if not IsBound(Orbit[k-1]) then
+                    Orbit[k-1]:=[];
+                fi;
+                c:=0;
+                for s in [1..Length(Orbit[k-1])] do
+                    g:=IsSameOrbit(Orbit[k-1][s],w);
+                 
+                    if not g=false then
+                        c:=1; 
+                        Add(b,[(-1)^j*s,pos(g)]);
                     fi;
-                od;
-             fi;
-             BoundaryRec[k+1][i]:=bdry;
-
-         od;
-         fi;
-         dims[k+1]:=dims[k+1]-1;
-         DimRec[k+1]:=DimRec[k+1]-1;
-         Remove(BoundaryRec[k],j);
-         Remove(StabRec[k+1],j);
-         if IsBound(NotRigid[w+1]) and NotRigid[w+1][1]=NotRigid[w][1] then
-             NotRigid[w+1][2]:=NotRigid[w+1][2]-t;
-             t:=t+1;
-         else
-             t:=1;
-         fi;  
-
+                od; 
+                if c=0 then
+                    Add(Orbit[k-1],w);
+                    Add(b,[(-1)^j*Length(Orbit[k-1]),id]);
+                fi;        
+            od;
+            BoundaryRec[k-1][i]:=b;
+        od;
+        k:=k-1;
     od;
-#    Print("Done!","\n");
-    ##################################################################
-    Boundary:=function(k,m)
-        return BoundaryRec[k][m];
-    end;
-
-    Stabilizer:=function(k,m)
-        return StabRec[k+1][m];
-    end;
-
+            
+# Find the k-rank
     Dimension:=function(k)
-        if k>N then return 0;fi;
-        return DimRec[k+1];
+        if k<0 or k>N then return 0;fi;
+    return Length(Orbit[k+1]);
+    end;   
+
+# Stabilizer subgroup of the representative of the ith-orbit of (k-1)-cells
+
+    StabRec:=[];
+    for k in [1..(N+1)] do
+        StabRec[k]:=[];
+        for i in [1..Dimension(k-1)] do
+            a:=Orbit[k][i];
+            x:=List([1..Length(a)],w->[a[w][1],Cells[a[w][1]+1][a[w][2]]]);
+            w:=ConjugateGroup(C!.stabilizer(a[1][1],x[1][2][1]),Elts[x[1][2][2]]^-1);
+            for s in [2..Length(x)] do
+                v:=ConjugateGroup(C!.stabilizer(a[s][1],x[s][2][1]),Elts[x[s][2][2]]^-1);
+                w:=Intersection(w,v);
+            od;
+            StabRec[k][i]:=w;
+         od;
+    od;
+
+    Stabilizer:=function(k,i)
+    return StabRec[k+1][i];
     end;
+
+# The cell structure is rigid under the action of G then Action(k,i,j) always be 1.
 
     Action:=function(k,i,j)
-        return 1;
+    return 1;
     end;
+
+# Calculate the boundary of the representative of the ith-orbit of k-cells
+    
+    Boundary:=function(n,k)
+    if k>0 then 
+        return BoundaryRec[n][k];
+    else 
+        return NegateWord(BoundaryRec[n][AbsInt(k)]);
+    fi;
+    end;
+          
     ##################################################################
 return Objectify(HapNonFreeResolution,
     rec(
     dimension:=Dimension,
+    Orbit:=Orbit,
+    Cells:=Cells,
+    Chains:=Chains,
     boundary:=Boundary,
+    coBoundaries:=coBoundaries,
+    IsSameOrbit:=IsSameOrbit,
     homotopy:=fail,
     elts:=Elts,
     group:=C!.group,
     stabilizer:=Stabilizer,
     action:=Action,
-    subdividing:=SubdividingCell,
-    replacecell:=ReplaceCell,
-    issameorbit:=IsSameOrbit,
-    isrigid:=IsRigidCell,
     properties:=
     [["length",Maximum(1000,N)],
     ["characteristic",0],
