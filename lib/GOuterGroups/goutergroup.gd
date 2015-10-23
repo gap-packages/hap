@@ -190,3 +190,5 @@ InstallMethod( PrintObj,
 DeclareOperation("GDerivedSubgroup",[IsGOuterGroup]);
 DeclareOperation("LowerGCentralSeries",[IsGOuterGroup]);
 DeclareGlobalFunction("AbelianGOuterGroupToCatOneGroup");
+DeclareGlobalFunction("ImageOfGOuterGroupHomomorphism");
+DeclareGlobalFunction("KernelOfGOuterGroupHomomorphism");

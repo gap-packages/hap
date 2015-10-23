@@ -10,6 +10,7 @@ ReadPackage("HAP","lib/RegularCWComplexes/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
 ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
+ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gd");
 
 
 
@@ -54,6 +55,7 @@ DeclareGlobalFunction("MaximalSubmodulesOfFpGModule");
 DeclareGlobalFunction("MaximalSubmoduleOfFpGModule");
 DeclareGlobalFunction("RadicalSeriesOfFpGModule");
 DeclareOperation("RadicalSeries",[IsHapFPGModule]);
+DeclareOperation("Radical", [IsHapFPGModule]);
 DeclareGlobalFunction("CompositionSeriesOfFpGModule");
 DeclareGlobalFunction("Classify");
 DeclareGlobalFunction("RefineClassification");
@@ -212,6 +214,7 @@ DeclareGlobalFunction("CoxeterDiagramFpArtinGroup");
 DeclareGlobalFunction("CoxeterDiagramFpCoxeterGroup");
 DeclareGlobalFunction("CoxeterDiagramMatCoxeterGroup");
 DeclareGlobalFunction("CoxeterSubDiagram");
+DeclareOperation("CoxeterMatrix",[IsList]);
 DeclareGlobalFunction("CoxeterDiagramComponents");
 DeclareGlobalFunction("CoxeterDiagramDegree");
 DeclareGlobalFunction("CoxeterDiagramIsSpherical");
@@ -738,6 +741,7 @@ ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
+ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
 
 
 

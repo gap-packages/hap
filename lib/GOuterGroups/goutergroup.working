@@ -109,7 +109,7 @@ InstallMethod( GOuterGroup,
 	      N, type, G,
               alpha,     ## Action of G on A
               nat,       ## Natural homomorphism from E to G
-	      alphaRec,p,q,bool;
+	      alphaRec,p,q,bool, coc;
 
         if not IsNormal(E,A) then
             Error("A must be a normal subgroup of E");
@@ -152,6 +152,18 @@ InstallMethod( GOuterGroup,
                SetActingGroup(N,G);
                SetActedGroup(N,A);
                SetOuterAction(N,alpha);
+
+###################
+if not IsAbelian(A) then
+coc:=function(x,y);
+return
+Representative(PreImages(nat,x))*
+Representative(PreImages(nat,y))*
+Representative(PreImages(nat,x*y))^-1;
+end;
+N!.nonabeliancocycle:=coc;
+fi;
+###################
         return N;
     end);
 

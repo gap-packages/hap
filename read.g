@@ -438,7 +438,11 @@ fi;
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
 ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
+ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gi");
 
+################## Cohomology Operations #####################
+ReadPackage("HAP","lib/CohomologyOperations/cohomology_homomorphism.gi");
+ReadPackage("HAP","lib/CohomologyOperations/connecting_homomorphism.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0.2") then

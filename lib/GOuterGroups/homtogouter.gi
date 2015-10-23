@@ -156,6 +156,7 @@ H:=Kernel(C!.boundary(n));
 N:=Range(C!.boundary(n-1));
 nat:=NaturalHomomorphism(H,N);
 coh:=Target(nat);
+coh!.nat:=nat;
 
 if not "resolution" in NamesOfComponents(C) then
 return coh; fi;
