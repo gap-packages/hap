@@ -7,6 +7,7 @@ ReadPackage("HAP","lib/GOuterGroups/goutergroup.gd");
 ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
 ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWComplexes/cwTypes.gd");
+ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
 ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
@@ -441,6 +442,7 @@ DeclareGlobalFunction("ContractedFilteredPureCubicalComplex");#<ContractedComple
 DeclareOperation("ChainComplex",[IsObject]);#doc
 DeclareOperation("ChainMap",[IsHapRegularCWMap]);#doc
 DeclareOperation("CochainComplex",[IsObject]);
+DeclareOperation("CoboundaryMatrix",[IsHapCochainComplex,IsInt]);
 DeclareOperation("ChainComplex",[IsObject, IsBool]);
 DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
 DeclareOperation("SparseChainComplexOfPair",[IsObject,IsObject]);
