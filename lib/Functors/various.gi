@@ -673,13 +673,13 @@ local P, S, T, pS, pT, ShompS, pShomS, pThomT, ThompT, gensS,  genspS;
 S:=Source(F);
 T:=Target(F);
 
-ShompS:=NqEpimorphismNilpotentQuotient(S,1);
+ShompS:=HAP_NqEpimorphismNilpotentQuotient(S,1);
 pS:=Range(ShompS);
 genspS:=GeneratorsOfGroup(pS);
 gensS:=List(genspS, x->PreImagesRepresentative(ShompS,x));
 pShomS:=GroupHomomorphismByImagesNC(pS,S,genspS,gensS);
 
-ThompT:=NqEpimorphismNilpotentQuotient(T,1);
+ThompT:=HAP_NqEpimorphismNilpotentQuotient(T,1);
 pT:=Range(ThompT);
 
 P:=GroupHomomorphismByFunction(pS,pT,
