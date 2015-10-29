@@ -445,7 +445,7 @@ ReadPackage("HAP","lib/CohomologyOperations/cohomology_homomorphism.gi");
 ReadPackage("HAP","lib/CohomologyOperations/connecting_homomorphism.gi");
 
 ################## HAP COCYCLIC ##############################
-if not IsPackageMarkedForLoading("HAPcocyclic","0.2") then
+if not IsPackageMarkedForLoading("HAPcocyclic","0") then
 ReadPackage("HAP","lib/HapCocyclic/init.g");
 ReadPackage("HAP","lib/HapCocyclic/read.g");
 fi;
