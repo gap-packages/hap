@@ -849,17 +849,18 @@ end; ## end of function ExportAsContractibleGcomplex
 
 
 
-InstallGlobalFunction(DavisComplex, function(CoxeterMatrix)
+InstallGlobalFunction(DavisComplex, function(CoxMat)
 local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
-    GEN := Size(CoxeterMatrix);
-    DC:= DavisComplexCombinatorial(MaximalSphericalCoxeterSubgroupsFromAbove(CoxeterMatrix));
+    if not IsMatrix(CoxMat) then CoxMat:=CoxeterMatrix(CoxMat); fi;
+    GEN := Size(CoxMat);
+    DC:= DavisComplexCombinatorial(MaximalSphericalCoxeterSubgroupsFromAbove(CoxMat));
 
 #### EXTRACT SPHERICAL SIMPLICES ####
-    DC := extractSpherical( DC, GEN, CoxeterMatrix );
+    DC := extractSpherical( DC, GEN, CoxMat );
 #### REMOVE ANY EMPTY LIST OF CHAINS ####
     DC := Difference( DC, [[]] );
 #### GENERATE STABILIZERS ####
-    STAB := generateStabs( DC, CoxeterMatrix );
+    STAB := generateStabs( DC, CoxMat );
 
 #### GENERATE BOUNDARY ####
     BOUNDARY := generateBoundary( DC );
