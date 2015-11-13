@@ -1,7 +1,7 @@
 
 #################################################################
 #################################################################
-FilteredCubicalComplexToFilteredRegularCWComplex:=
+InstallGlobalFunction(FilteredCubicalComplexToFilteredRegularCWComplex,
 function(arg)
 local M, C, BinLst, LstBin, dim, dimm, flen,
       Boundaries, Coboundaries, filtration, Orientation, Properties,
@@ -96,13 +96,14 @@ return Objectify(HapFilteredRegularCWComplex,
            orientation:=Orientation,
            properties:=Properties));
 
-end;
+end);
 #################################################################
 #################################################################
 
 #################################################################
 #################################################################
-StructuralCopyOfFilteredRegularCWComplex:=function(Y)
+InstallGlobalFunction(StructuralCopyOfFilteredRegularCWComplex,
+function(Y)
 local nrcells, Boundaries, filtdim, filtdimrec, F, n, i;
 
 Boundaries:=1*Y!.boundaries;
@@ -136,14 +137,14 @@ return Objectify(HapFilteredRegularCWComplex,
            orientation:=StructuralCopy(Y!.orientation),
            properties:=StructuralCopy(Y!.properties)));
 
-end;
+end);
 #################################################################
 #################################################################
 
 
 ##########################################################
 ##########################################################
-SparseChainComplexOfFilteredRegularCWComplex:=
+InstallGlobalFunction(SparseChainComplexOfFilteredRegularCWComplex,
 function(Y)
 local
         C;
@@ -165,7 +166,7 @@ Objectify(HapFilteredSparseChainComplex,
            ));
 
 
-end;
+end);
 ##########################################################
 ##########################################################
 
@@ -211,7 +212,7 @@ end);
 
 #############################################
 #############################################
-HAPContractFilteredRegularCWComplex:=
+InstallGlobalFunction(HAPContractFilteredRegularCWComplex,
 function(arg)
 local
       Y, Start, Contract, nn, dim, bool, BOOL, FREE, degrees,F, CNT;
@@ -309,13 +310,14 @@ od;
 
 od;
 
-end;
+end);
 ############################################
 ############################################
 
 ############################################
 ############################################
-ContractedFilteredRegularCWComplex:=function(YY)
+InstallGlobalFunction(ContractedFilteredRegularCWComplex,
+function(YY)
 local Y, W, bnd,  perm,F, cnt, d, i,j, newboundaries, adjust, f, properties,
 filtdim, orien, nrcells;
 
@@ -413,7 +415,7 @@ return Objectify(HapFilteredRegularCWComplex,
            properties:=properties));
 
 
-end;
+end);
 ############################################
 ############################################
 

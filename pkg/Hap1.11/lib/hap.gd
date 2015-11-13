@@ -679,6 +679,14 @@ DeclareGlobalFunction("TruncatedRegularCWComplex");
 DeclareGlobalFunction("HomotopyTruncation");
 DeclareGlobalFunction("VerticesOfRegularCWCell");
 DeclareGlobalFunction("BoundaryOfRegularCWCell");
+DeclareGlobalFunction("FilteredCubicalComplexToFilteredRegularCWComplex");
+DeclareGlobalFunction("StructuralCopyOfFilteredRegularCWComplex");
+DeclareGlobalFunction("SparseChainComplexOfFilteredRegularCWComplex");
+DeclareGlobalFunction("HAPContractFilteredRegularCWComplex");
+DeclareGlobalFunction("ContractedFilteredRegularCWComplex");
+DeclareGlobalFunction("DirectProductOfRegularCWComplexes");
+DeclareGlobalFunction("DiagonalApproximation");
+DeclareGlobalFunction("CWMap2ChainMap");
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");#doc
@@ -745,7 +753,6 @@ ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
 ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
-
 
 
 

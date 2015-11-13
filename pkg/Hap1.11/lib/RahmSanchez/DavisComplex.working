@@ -530,7 +530,7 @@ local GEN, M, m, k, i, j;
         GEN := numberOfGenerators;
    else
 	return fail;
-	break;
+	#break;
    fi;
    if Size(CoxeterMatrixEntries) = GEN*(GEN-1)/2 then
 

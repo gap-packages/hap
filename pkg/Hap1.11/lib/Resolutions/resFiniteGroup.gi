@@ -221,7 +221,10 @@ od;
 
 LengthOfDiff:=function(p);
 if DiffLengths[p[1]][p[2]]=0 then 
-DiffLengths[p[1]][p[2]]:=Length(Differential(i,p)); fi;
+  DiffLengths[p[1]][p[2]]:=Length(Differential(i,p)); fi;###################
+##################################################Modified 5 Nov 2015#######
+#DiffLengths[p[1]][p[2]]:=Reversed([Length(Differential(i,p)),        ######
+#Length(SSortedList(List(Differential(i,p),a->AbsInt(a[1]))))]); fi;  ######
 return DiffLengths[p[1]][p[2]];
 end;
 

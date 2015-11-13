@@ -38,7 +38,7 @@ local
 	Charact,
 	AlgebraicRed,
 	ExtendRes, Extendible,
-	i, ii,
+	i, ii, iso,
 #################################
 AbsInt,				#
 SignInt;			#
@@ -66,6 +66,19 @@ fi;
 
 G:=Group(Gens);
 N:=Order(G);
+
+
+######################################################
+if IsMatrixGroup(G) then
+
+iso:=IsomorphismPermGroup(G);
+R:=ResolutionFiniteGroup(Image(iso),N);
+R!.elts:=List(R!.elts,x->PreImagesRepresentative(iso,x));
+R!.group:=G;
+return R;
+
+fi;
+######################################################
 
 Elts:=Elements(G);
 
