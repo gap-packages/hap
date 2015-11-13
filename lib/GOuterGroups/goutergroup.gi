@@ -614,13 +614,13 @@ local A, B, G, h,f, L;
 
 A:=phi!.Source;
 B:=phi!.Target;
-G:=A!.ActingGroup;
+G:=B!.ActingGroup;
 h:=phi!.Mapping;
 f:=Image(h);
 L:=GOuterGroup();
 SetActingGroup(L,G);
 SetActedGroup(L,f);
-SetOuterAction(L,A!.OuterAction);
+SetOuterAction(L,B!.OuterAction);
 
 return L;
 

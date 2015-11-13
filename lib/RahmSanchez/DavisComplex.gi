@@ -1,3 +1,13 @@
+InstallGlobalFunction(DavisComplex, function(CoxMat)
+local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells,
+irreducible, equalCoxeterMatrices, generateA, generateB, generateD,
+H_4, F_4, E_6, E_7, E_8, irreducibleComponents, irr, spherical, extractSpherical, canonicalGenerators, generateStabs, gens, generateBoundary, generateCoeff, 
+generateConj, getDimension, getNumberOfSimplices, chains, 
+DavisComplexCombinatorial, aux, ExportAsContractibleGcomplex ;
+
+
+
+
 ##########################################################
 # DavisComplexes, a HAP sub-package in GAP
 # by Ruben J. Sanchez-Garcia and Alexander D. Rahm,
@@ -849,8 +859,8 @@ end; ## end of function ExportAsContractibleGcomplex
 
 
 
-InstallGlobalFunction(DavisComplex, function(CoxMat)
-local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
+#InstallGlobalFunction(DavisComplex, function(CoxMat)
+#local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
     if not IsMatrix(CoxMat) then CoxMat:=CoxeterMatrix(CoxMat); fi;
     GEN := Size(CoxMat);
     DC:= DavisComplexCombinatorial(MaximalSphericalCoxeterSubgroupsFromAbove(CoxMat));

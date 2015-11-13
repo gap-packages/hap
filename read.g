@@ -437,12 +437,14 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
-ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
+#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
 ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gi");
 
 ################## Cohomology Operations #####################
 ReadPackage("HAP","lib/CohomologyOperations/cohomology_homomorphism.gi");
 ReadPackage("HAP","lib/CohomologyOperations/connecting_homomorphism.gi");
+ReadPackage("HAP","lib/CohomologyOperations/steenrod.gi");
+ReadPackage("HAP","lib/CohomologyOperations/toplevelsquares.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0") then
@@ -451,6 +453,9 @@ ReadPackage("HAP","lib/HapCocyclic/read.g");
 fi;
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level
+
+##AFTER THOUGHT######################################################
+ReadPackage("HAP","lib/hap_afterthought.gd");
 
 
 

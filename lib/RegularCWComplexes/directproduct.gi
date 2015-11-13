@@ -3,7 +3,8 @@
 
 ##################################################
 ##################################################
-DirectProductOfRegularCWComplexes:= function(X,Y)
+InstallGlobalFunction(DirectProductOfRegularCWComplexes, 
+function(X,Y)
 local bndX, bndY, bnd, orientX, orientY, orient,
       quad2pair, pair2quad,
       XYmapX, XYmapY, XYmappingX, XYmappingY,
@@ -142,13 +143,14 @@ M!.secondProjection:=XYmapY;
 M!.quad2pair:=quad2pair;
 
 return M;
-end;
+end);
 ##################################################
 ##################################################
 
 ##################################################
 ##################################################
-DiagonalApproximation:=function(X)
+InstallGlobalFunction(DiagonalApproximation,
+function(X)
 local W, M, R, RM, D, DD, DDinv, bound, orient, fp,
       mapW, mapX, maprec, x, y, i, j, n, quad2pair, b, MmapW, MmapX; 
 
@@ -237,13 +239,14 @@ return rec(projection:=MmapX, inclusion:=MmapW);
 
 
 
-end;
+end);
 ##################################################
 ##################################################
 
 ##################################################
 ##################################################
-CWMap2ChainMap:=function(F)
+InstallGlobalFunction(CWMap2ChainMap,
+function(F)
 local C,D, X,Y, map, critX, critY, L, n, i;
 
 if not IsHapRegularCWMap(F) then 
@@ -320,7 +323,7 @@ return Objectify(HapChainMap,
            ["characteristic", 0]
            ]));
 
-end;
+end);
 ##################################################
 ##################################################
 
