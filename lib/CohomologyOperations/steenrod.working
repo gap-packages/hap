@@ -5,7 +5,7 @@ function(R,S,A,Hn,n)
 local G,a,b,x,bhomc,B,C,psi,delta,GhomG,SmapR,BasA,Basn,
       gensHnA, HnAgrp, gensHnAgrp, hn, natn, Kn, Cn,fun,fun2,
       genshn,imgenshn,hn2HnA,xx,HnA2hn,imgensHnA,RmapSdual,SmapRdual,matRS,
-      matSR, w,i,j, HnAgrp2hn, hn2HnAgrp;
+      matSR, w,i,j,jj, HnAgrp2hn, hn2HnAgrp,p;
 
 #R is a minimal resolution of GF(2) for the 2-group G.
 #S is any resolution of GF(2) (or even Z) for the 2-group G.
@@ -15,6 +15,14 @@ local G,a,b,x,bhomc,B,C,psi,delta,GhomG,SmapR,BasA,Basn,
 #We'll return a pair of isomorphisms [hn2HnA, HnA2hn] where hn is the
 #cohomology *group* H^n(S,K) and HnA is a sub magma of A. 
 
+p:=EvaluateProperty(R,"characteristic");
+
+#########################
+if not IsPrimeInt(p) then 
+Print("The first input resolution must be a minimal resolution of prime characteristic.\n");
+return fail;
+fi;
+#########################
 
 G:=R!.group;
 if not G=S!.group then return fail; fi;
@@ -24,26 +32,30 @@ SmapR:=EquivariantChainMap(S,R,GhomG);
 matSR:=NullMat(S!.dimension(n),R!.dimension(n));
 for i in [1..S!.dimension(n)] do
 w:=SmapR!.mapping([[i,1]],n);
-w:=List(w,x->AbsInt(x[1]));
+w:=List(w,x->x[1]);
 for j in w do
-matSR[i][j]:=matSR[i][j]+1 mod 2;
+jj:=AbsInt(j);
+matSR[i][jj]:=matSR[i][jj]+SignInt(j) mod p;
 od;
 od;
 
-matSR:=TransposedMat(matSR) mod 2;
+matSR:=TransposedMat(matSR) mod p;
 
 ###################################
 SmapRdual:=function(w,n)
-local v,x,j;
+local v,x,j,a;
 v:=[];
 
 for x in w do
 for j in [1..S!.dimension(n)] do
-if not matSR[AbsInt(x[1])][j]=0 then Add(v,[j,1]); fi;
+#if not matSR[AbsInt(x[1])][j]=0 then Add(v,[j,1]); fi;
+a:=matSR[AbsInt(x[1])][j];
+if not a=0 then 
+v:=AddFreeWords(v,MultiplyWord(a,[[j,1]]),p); fi;
 od;
 od;
 
-return AlgebraicReduction(v,2);
+return AlgebraicReduction(v,p);
 end;
 ###################################
 
@@ -65,7 +77,7 @@ fun:=function(w)
 local v,y;
 v:=One(Cn);
 for y in w do
-v:=v*Image(Embedding(Cn,AbsInt(y[1])),xx);
+v:=v*Image(Embedding(Cn,AbsInt(y[1])),xx)^SignInt(y[1]);
 od;
 return v;
 end;
@@ -82,13 +94,14 @@ c:=Coefficients(BasA,w);
 c:=c{Basn};
 v:=One(hn);
 for i in [1..Length(c)] do
-if not IsZero(c[i]) then v:=v*imgensHnA[i]; fi;
+#if not IsZero(c[i]) then v:=v*imgensHnA[i]; fi;
+v:=v*imgensHnA[i]^IntFFE(c[i]);
 od;
 return v;
 end;
 ##################
 
-HnAgrp:=AbelianGroup(List(gensHnA,i->2));
+HnAgrp:=AbelianGroup(List(gensHnA,i->p));
 gensHnAgrp:=Pcgs(HnAgrp);
 HnAgrp2hn:=GroupHomomorphismByImages(HnAgrp,hn,gensHnAgrp,
 List([1..Length(gensHnA)],i-> HnA2hn(gensHnA[i])) );
@@ -117,12 +130,13 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(Mod2SteenrodAlgebra,
+InstallGlobalFunction(ModPSteenrodAlgebra,
 function(arg)
-local G,N,R,A,S,
-      x,a,b,B,C,psi,bhomc,delta,i, Sq0,Sq1,AhomH,HhomA,K,maxdeg;
+local G,N,R,A,S,p,
+      x,a,b,B,C,psi,bhomc,delta,i, Sq0,Bok,AhomH,HhomA,K,maxdeg;
 
 G:=arg[1];
+p:=PrimePGroup(G);
 N:=arg[2];
 if Length(arg)>2 then R:=arg[3]; else
 R:=ResolutionPrimePowerGroup(G,N+1);fi;
@@ -130,11 +144,14 @@ R!.properties[PositionProperty(R!.properties,x->x[1]="length")][2]:=N;
 A:=ModPCohomologyRing(R);
 if Length(arg)>3 then S:=arg[4]; 
 else
-#S:=ResolutionFiniteGroup(G,N+1);
 S:=ResolutionGenericGroup(G,N+1); fi;
 
 x:=(1,2,3,4);;
-a:=Group(x^2);;
+x:=[1..p^2];
+x:=x{[2..p^2]};
+x[p^2]:=1;
+x:=PermList(x);
+a:=Group(x^p);;
 b:=Group(x);;
 bhomc:=NaturalHomomorphismByNormalSubgroup(b,a);
 B:=TrivialGModuleAsGOuterGroup(G,b);
@@ -162,7 +179,7 @@ HhomA[i]:=HAP_coho_isoms(R,S,A,K,i+1)[1];
 od;
 
 ########################
-Sq1:=function(w)
+Bok:=function(w)
 local n, v,del,iso;
 n:=A!.degree(w);
 iso:=AhomH[n];
@@ -181,8 +198,9 @@ Sq0:=function(w);
 return w;
 end;
 ########################
-A!.Sq1:=Sq1;
-A!.squares:=[Sq0,Sq1];
+A!.squares:=[Sq0];
+if p=2 then A!.squares[2]:=Bok; fi;
+A!.bockstein:=Bok;
 A!.maxdeg:=Maximum(List(CanonicalBasis(A),x->A!.degree(x)));
 return A;
 end);

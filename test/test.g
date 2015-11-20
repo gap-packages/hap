@@ -201,6 +201,33 @@ else Print("error in 3.5.3\n"); fi;
 if Test(Concatenation(dir,"3.5.4.tst")) then Print(true," 3.5.4\n");
 else Print("error in 3.5.4\n"); fi;
 
+if Test(Concatenation(dir,"3.5.5.tst")) then Print(true," 3.5.5\n");
+else Print("error in 3.5.5\n"); fi;
+
+if Test(Concatenation(dir,"3.6.1.tst")) then Print(true," 3.6.1\n");
+else Print("error in 3.6.1\n"); fi;
+
+if Test(Concatenation(dir,"3.6.2.tst")) then Print(true," 3.6.2\n");
+else Print("error in 3.6.2\n"); fi;
+
+if Test(Concatenation(dir,"3.7.1.tst")) then Print(true," 3.7.1\n");
+else Print("error in 3.7.1\n"); fi;
+
+if Test(Concatenation(dir,"3.7.4.tst")) then Print(true," 3.7.4\n");
+else Print("error in 3.7.4\n"); fi;
+
+if Test(Concatenation(dir,"3.7.5.tst")) then Print(true," 3.7.5\n");
+else Print("error in 3.7.5\n"); fi;
+
+if Test(Concatenation(dir,"3.8.1.tst")) then Print(true," 3.8.1\n");
+else Print("error in 3.8.1\n"); fi;
+
+if Test(Concatenation(dir,"3.9.1.tst")) then Print(true," 3.9.1\n");
+else Print("error in 3.9.1\n"); fi;
+
+if Test(Concatenation(dir,"3.9.3.tst")) then Print(true," 3.9.3\n");
+else Print("error in 3.9.3\n"); fi;
+
 end;
 #################################################
 #################################################

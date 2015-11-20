@@ -388,6 +388,65 @@ Print("Standard ",R!.Arity,"-cocycle \n");
 #######################################################################
 #######################################################################
 
+#######################################################################
+#######################################################################
+InstallMethod(CohomologyClass,
+"Constructing a second cohomology class from a standard 2-cocycle G x G --> A",
+[IsGOuterGroup,IsStandardNCocycle],
+function(H,f)
+local cls,A,R, C, P, G, F, FhomG, K, u,v,k, L, r, x, e, i, j, gensF, nat;
+
+#H is the seconfd cohomology
+#f is a standard cocycle
+
+C:=H!.cocomplex;
+R:=C!.resolution;
+P:=PresentationOfResolution(R);
+F:=P.freeGroup;
+gensF:=GeneratorsOfGroup(F);
+G:=R!.group;
+FhomG:=GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),R!.elts{P.gens});
+A:=f!.CoefficientModule;
+A:=A!.ActedGroup;
+nat:=H!.nat;
+K:=Source(nat);
+K:=K!.ActedGroup;
+K:=K!.ParentAttr;
+cls:=One(K);
+
+#We want a cocycle k:R_2 ---> A corresponding to f:G x G --> A
+
+k:=[];
+for r in  P.relators do
+
+L:=[];
+e:=ExtRepOfObj(r);
+for i in [1..Length(e)/2] do
+for j in [1..AbsInt(e[2*i])] do
+Add(L,gensF[e[2*i-1]]^SignInt(e[2*i]));
+od;
+od;
+
+Apply(L,x->Image(FhomG,x));
+
+x:=One(A);
+for i in [1..Length(L)-1] do
+u:=Product(L{[1..i]});
+v:=L[i+1];
+x:=x*f!.Mapping(u,v);
+od;
+Add(k,x);
+od;
+for i in [1..Length(k)] do
+cls:=cls*Image(Embedding(K,i),k[i]);
+od;
+
+cls:=Image(nat!.Mapping,cls);
+return cls;
+end);
+#######################################################################
+#######################################################################
+
 
 
 

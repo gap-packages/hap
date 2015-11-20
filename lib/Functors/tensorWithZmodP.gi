@@ -9,6 +9,7 @@ local
 		Tensor_Obj,
 		Tensor_Arr,
 		TensorChainComplex,
+                TensorCochainComplex,
 	        TensorChainMap;
 
 #####################################################################
@@ -269,6 +270,45 @@ end;
 ####################################################################
 
 
+####################################################################
+####################################################################
+TensorCochainComplex:=function(C,prime)
+local D, pos, oldboundary, newboundary, newproperties, one;
+
+if not EvaluateProperty(C,"characteristic") in [0,prime] then
+Print("Only characteristic 0 or p cochain complexes can be tensored with a prime p field.\n");
+return fail;
+fi;
+
+D:=rec();
+D!.dimension:=StructuralCopy(C!.dimension);
+D!.properties:=List(C!.properties,a->StructuralCopy(a));
+pos:=PositionProperty(C!.properties,a->"characteristic" in a);
+D!.properties[pos][2]:=prime;
+
+##############
+if not IsPrimeInt(prime) then
+D!.boundary:=StructuralCopy(C!.boundary);
+return
+Objectify(HapCochainComplex, D);
+fi;
+##############
+
+one:=One(GF(prime));
+oldboundary:=StructuralCopy(C!.boundary);
+#############################
+newboundary:=function(n,i);
+return oldboundary(n,i)*one;
+end;
+#############################
+D!.boundary:=newboundary;
+
+return
+Objectify(HapCochainComplex, D);
+
+end;
+####################################################################
+####################################################################
 
 if IsHapResolution(X)  then 
 return Tensor_Obj(X,prime); fi;
@@ -279,9 +319,11 @@ return Tensor_Arr(X,prime); fi;
 if IsHapChainComplex(X) then
 return TensorChainComplex(X,prime); fi;
 
+if IsHapCochainComplex(X) then
+return TensorCochainComplex(X,prime); fi;
+
 if IsHapChainMap(X) then
 return TensorChainMap(X,prime); fi;
-
 
 return fail;
 end);
