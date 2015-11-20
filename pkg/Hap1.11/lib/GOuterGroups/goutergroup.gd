@@ -192,3 +192,4 @@ DeclareOperation("LowerGCentralSeries",[IsGOuterGroup]);
 DeclareGlobalFunction("AbelianGOuterGroupToCatOneGroup");
 DeclareGlobalFunction("ImageOfGOuterGroupHomomorphism");
 DeclareGlobalFunction("KernelOfGOuterGroupHomomorphism");
+DeclareOperation("CohomologyClass",[IsGOuterGroup,IsStandardNCocycle]);

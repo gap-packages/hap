@@ -130,10 +130,10 @@ end);
 
 ###############################################################
 ###############################################################
-InstallGlobalFunction(Mod2SteenrodAlgebra,
+InstallGlobalFunction(ModPSteenrodAlgebra,
 function(arg)
 local G,N,R,A,S,p,
-      x,a,b,B,C,psi,bhomc,delta,i, Sq0,Sq1,AhomH,HhomA,K,maxdeg;
+      x,a,b,B,C,psi,bhomc,delta,i, Sq0,Bok,AhomH,HhomA,K,maxdeg;
 
 G:=arg[1];
 p:=PrimePGroup(G);
@@ -179,9 +179,10 @@ HhomA[i]:=HAP_coho_isoms(R,S,A,K,i+1)[1];
 od;
 
 ########################
-Sq1:=function(w)
+Bok:=function(w)
 local n, v,del,iso;
 n:=A!.degree(w);
+if n=0 then return Zero(A); fi;
 iso:=AhomH[n];
 v:=iso(w);
 del:=delta[n];
@@ -198,8 +199,9 @@ Sq0:=function(w);
 return w;
 end;
 ########################
-A!.Sq1:=Sq1;
-A!.squares:=[Sq0,Sq1];
+A!.squares:=[Sq0];
+if p=2 then A!.squares[2]:=Bok; fi;
+A!.bockstein:=Bok;
 A!.maxdeg:=Maximum(List(CanonicalBasis(A),x->A!.degree(x)));
 return A;
 end);
@@ -289,3 +291,51 @@ end);
 ##################################################################
 ##################################################################
 
+###############################################################
+###############################################################
+InstallMethod(Bockstein,
+"Bockstein for Mod p cohomology rings",
+[IsAlgebra,IsObject],
+function(A,w)
+local W, M, v, x, MAX;
+
+#### Is the Bockstein defined at all?##############
+if not IsBound(A!.bockstein) then
+Print("The Bockstein operation is not defined for this algebra.\n");
+return fail;
+fi;
+####################################################
+
+M:=HAP_MultiplicativeGenerators(A);
+W:=M[2](w);
+
+####################################################
+if Length(W)=0 then MAX:=0; else
+MAX:=Maximum(List(Flat(W),A!.degree)); fi;
+if A!.maxdeg<MAX+1 then
+#Print("Bockstein image has too high a degree.\n");
+return fail;
+fi;
+####################################################
+
+
+#### additivity: apply to the homogeneous parts ####
+if Length(W)>1 then
+    v:=Zero(A);
+    for x in W do
+        v:=v+Bockstein(A,Product(x));
+    od;
+    return v;
+fi;
+####################################################
+
+#### So now W is homogeneous #######################
+#### We remove outer brackets of W and multiply  ###
+W:=W[1];
+W:=Product(W);
+return A!.bockstein(W); 
+####################################################
+
+end);
+####################################################;
+####################################################

@@ -25,7 +25,7 @@
             <td
  style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
  style="font-weight: bold;">About HAP: Mod p cohomology rings &amp;
-Steenrod squares<br>
+the Steenrod algebra<br>
             </span></big></td>
             <td style="text-align: right; vertical-align: top;"><a
  href="aboutTwistedCoefficients.html"><small
@@ -47,7 +47,9 @@ in
 the
 ring
 structure
-of the mod p cohomology H<sup>*</sup>(G,Z<sub>p</sub>)
+of
+the
+mod p cohomology H<sup>*</sup>(G,Z<sub>p</sub>)
 of
 p-groups
 G. <br>
@@ -64,12 +66,16 @@ can
 be
 found
 
+
+
           <a href="http://www.math.uga.edu/%7Elvalero/cohointro.html">here</a>.
 His
 methods
 rely
 on
-matrix algebra over the field of p elements and are not
+matrix
+algebra
+over the field of p elements and are not
 directly suitable for large groups.</li>
         <li>David Green has developed non-abelian Gr&ouml;bner basis
 methods for calculating the mod p homology of larger groups. He has
@@ -100,7 +106,9 @@ of
 degree
 greater
 than
-10. The ring is returned as
+10.
+The
+ring is returned as
 a structure constant algebra A over the field of two elements.<br>
       </td>
     </tr>
@@ -129,7 +137,9 @@ three
 elements
 in
 degree
-1, two in degree 2,
+1,
+two
+in degree 2,
 one in degree 3, one in degree 5, one in degree 8 and possibly some
 generators of degree greater than
 10. </td>
@@ -179,13 +189,15 @@ of
 order
 32
 and
-most of the groups of order 64 are
+most
+of
+the groups of order 64 are
 listed <a href="aboutPoincareSeries.html">here</a>.</td>
     </tr>
     <tr align="center">
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
- style="font-weight: bold;"><big>Steenrod Squares</big></big><br>
+ style="font-weight: bold;"><big>Steenrod Algebra</big></big><br>
       <br>
       <div style="text-align: left;">Given a finite p-group G, the
 short exact sequence <br>
@@ -193,41 +205,56 @@ short exact sequence <br>
       <div style="text-align: center;">Z &gt;---&gt; Z ---&gt;Z<sub>p</sub><br>
       </div>
       <br>
-of ZG-modules induces cohomology connecting homomorphisms&nbsp; Sq<sup>1</sup>:H<sup>n</sup>(G,Z<sub>p</sub>)
+of ZG-modules induces cohomology connecting homomorphisms&nbsp; b:H<sup>n</sup>(G,Z<sub>p</sub>)
 --&gt;
-H<sup>n+1</sup>(G,Z<sub>p</sub>) for each n.&nbsp; &nbsp; The
-collection of all these Sq<sup>1</sup> homomorphisms is a group
-homomorphism Sq<sup>1</sup>:H<sup>*</sup>(G,Z<sub>p</sub>) --&gt; H<sup>*</sup>(G,Z<sub>p</sub>)
-known
-as
-the
-
-
-
-      <span style="font-style: italic;">first Steenrod power</span>
-or, for p=2, Steenrod square.<br>
-      </div>
+H<sup>n+1</sup>(G,Z<sub>p</sub>) for each n. The collection of all
+these connecting homomorphisms is known as the Bockstein homomorphism
+b:H<sup>*</sup>(G,Z_p) --&gt; H<sup>*</sup>(G,Z_p).<span
+ style="font-style: italic;"></span> The following commands compute the
+Bockstein homomorphism on the
+generators of the ring H<sup>*</sup>(G,Z<sub>p</sub>),&nbsp;
+where
+p=3 and G=SmallGroup(81,4) is the fourth group of order 81 in GAP's
+library of small groups. </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SmallGroup(81,4);;<br>
+gap&gt; A:=ModPSteenrodAlgebra(G,8);;<br>
+gap&gt; List(ModPRingGenerators(A),x-&gt;Bockstein(A,x));<br>
+[ 0*v.1, 0*v.1, v.5, 0*v.1, (Z(3))*v.7+v.8+(Z(3))*v.9 ]<br>
       </td>
     </tr>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+Bockstein together with the steenrod squares Sq<sup>k</sup>:H<sup>n</sup>(G,Z<sub>p</sub>)
+--&gt;
+H<sup>n+k</sup>(G,Z<sub>p</sub>) for p=2, or steenrod powers P<sup>k</sup>:H<sup>n</sup>(G,Z<sub>p</sub>)
+--&gt;
+H<sup>n+2k(p-1)</sup>(G,Z<sub>p</sub>) for p&gt;2, generate the
+Steenrod
+algebra. The Steenrod squares and powers are not yet fully implemented.<br>
+      <br>
+However, the
 following commands compute the Steenrod square Sq<sup>1 </sup>on the
-generators of the ring H<sup>*</sup>(G,Z<sub>2</sub>),&nbsp;
-where
-p=2 and G=SmallGroup(32,8) is the eighth group of order 32 in GAP's
+generators of the ring H<sup>*</sup>(G,Z<sub>2</sub>)&nbsp;
+where G=SmallGroup(32,8) is the eighth group of order 32 in GAP's
 library of small groups.&nbsp; It is known that all mod-2 cohomology
 ring generators for this G lie in degrees at most 8, so only the first
 nine degrees of the ring
 H<sup>*</sup>(G,Z<sub>2</sub>)
 are
-computed.<br>
+computed. (This is a bit of a cheat because Sq<sup>1</sup> is equal to
+the Bockstein homomorphism for p=2.)<br>
       <br>
-At present only Sq<sup>1</sup> is fully implemented. Higher squares Sq<sup>n</sup>
+The higher squares Sq<sup>n</sup>
 are
 only partially implemented and return <span style="font-style: italic;">fail</span>
-in cases where it is not
-implemented. <br>
+in cases where they are not
+yet implemented. <br>
       </td>
     </tr>
     <tr>
