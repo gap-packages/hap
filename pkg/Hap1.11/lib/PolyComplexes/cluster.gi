@@ -1060,7 +1060,8 @@ end;
 
 ########################################################
 ########################################################
-Mapper:=function(S,f,N,t,tol)
+InstallGlobalFunction(Mapper_alt,
+function(S,f,N,t,tol)
 local M,m,s,I,x,y,i,j,c,G,A,Clusters,Mapper,vert,K,W;
 ##IntervalPreCover  function of N, f, S ,tol
 #N number of divisions of image
@@ -1110,7 +1111,68 @@ W:=Concatenation(Clusters);
 Mapper:=NerveOfCover(W,20);
 Mapper!.clustersizes:=List(W,Size);
 return Mapper;
-end;
+end);
 ########################################################
 ########################################################
+
+###########################################
+###########################################
+#Mapper:=function(S,dx,f,dz,P,r,cluster)
+#Mapper_alt:=function(S,f,N,t,tol)
+InstallGlobalFunction(Mapper,
+function(arg)
+local  L, i, s , N, t, tol, f, S, dx, dz, cluster, r, P;
+
+###########################
+if Length(arg)=5 then
+S:=arg[1]; f:=arg[2]; N:=arg[3]; t:=arg[4]; tol:=arg[5];
+return Mapper_alt(S,f,N,t,tol);
+fi;
+###########################
+
+S:=arg[1]; dx:=arg[2]; f:=arg[3]; dz:=arg[4]; 
+P:=arg[5]; r:=arg[6]; cluster:=arg[7];
+L:=List(P,x->[]);
+for s in S do
+for i in [1..Length(P)] do
+if dz(f(s),P[i]) <=r then Add(L[i],s); fi;
+od;
+od;
+
+L:=List(L,x->cluster(x));
+L:=Concatenation(L);
+L:=Filtered(L,x->Length(x)>0);
+
+N:=NerveOfCover(L,10);
+N!.clustersizes:=List(L,Size);
+return N;
+end);
+###########################################
+###########################################
+
+#############################################
+#############################################
+InstallGlobalFunction(VectorsToOneSkeleton,
+function(S,epsilon,dx)
+local Boundaries, i, j;
+
+Boundaries:=[];;
+
+Boundaries[1]:=List(S,x->[1,0]);
+
+Boundaries[2]:=[];
+for i in [1..Length(S)] do
+for j in [i+1..Length(S)] do
+if dx(S[i],S[j])<=epsilon then Add(Boundaries[2],[2,i,j]); fi;
+od;
+od;
+
+if Length(Boundaries[2])>0 then
+Boundaries[3]:=[];
+fi;
+return RegularCWComplex(Boundaries);
+
+end);
+#############################################
+#############################################
 

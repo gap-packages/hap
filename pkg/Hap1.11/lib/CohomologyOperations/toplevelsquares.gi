@@ -6,7 +6,7 @@ InstallMethod(HAP_MultiplicativeGenerators,
 [IsAlgebra],
 function(A)
 local gensA, BasA, BasAexp, grgensA, x, i, W, n, P, w, v,
-      AsGens, mx; 
+      AsGens, mx, AsPolys; 
 
 #A:=ModPCohomologyRing(G,n) for some p-group G
 
@@ -43,14 +43,29 @@ BasA:=Basis(A,BasA);
 
 ###################################
 AsGens:=function(v)
-local w;
+local w,u;
 w:=Coefficients(BasA,v);
-w:=Filtered([1..Length(BasA)],i->not IsZero(w[i]));
-return BasAexp{w};
+u:=Filtered([1..Length(BasA)],i->not IsZero(w[i]));
+u:=List(u,i->w[i]*BasA[i]);
+return u;
 end;
 ###################################
 
-return [BasAexp,AsGens];
+###################################
+AsPolys:=function(v)
+local w,u,z,i;
+w:=Coefficients(BasA,v);
+u:=Filtered([1..Length(BasA)],i->not IsZero(w[i]));
+z:=List(u,i->1*BasAexp[i]);
+for i in [1..Length(u)] do
+z[i][1]:=w[u[i]]*z[i][1];
+od;
+return z;
+end;
+###################################
+
+
+return [BasAexp,AsGens,AsPolys];
 end);
 ##################################################################
 ##################################################################

@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.11.12",
-  Date    := "11/11/2015",
+  Version := "1.11.13",
+  Date    := "03/11/2015",
   ArchiveURL 
           := "http://hamilton.nuigalway.ie/Hap/hap1.11",
   ArchiveFormats 
@@ -64,21 +64,21 @@ SetPackageInfo( rec(
     GAP := ">= 4.5.6",
     NeededOtherPackages := [
                              [ "polycyclic", ">=1.1" ],
-                            #[ "aclib",      ">=1.1" ],
-                            #[ "gapdoc",      ">=0.0" ]
+                             [ "crystcat",   ">=1.1" ],
+                            #[ "gapdoc",     ">=0.0" ]
                            ],
     SuggestedOtherPackages := [
                               #[ "polycyclic", ">=1.1" ],
                                [ "aclib",      ">=1.1" ],
                                [ "gapdoc",      ">=0.0" ],
 			       [ "nq",         ">=1.1" ],
-                               ["nql",         ">=0.0" ],
-                               ["homology",    ">=0.0"   ], 
+                               [ "nql",         ">=0.0" ],
+                               [ "homology",    ">=0.0"   ], 
 			       [ "edim",      ">=1.2.2" ],
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
                                [ "HAPcryst", ">0.0" ],
-                               [ "xmod", ">0.0" ]
+                               [ "xmod", ">0.0" ],
 			      ],
 
     ExternalConditions := [["Some optional functions require Polymake software",

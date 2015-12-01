@@ -7,11 +7,11 @@ local G,a,b,x,bhomc,B,C,psi,delta,GhomG,SmapR,BasA,Basn,
       genshn,imgenshn,hn2HnA,xx,HnA2hn,imgensHnA,RmapSdual,SmapRdual,matRS,
       matSR, w,i,j,jj, HnAgrp2hn, hn2HnAgrp,p;
 
-#R is a minimal resolution of GF(2) for the 2-group G.
-#S is any resolution of GF(2) (or even Z) for the 2-group G.
+#R is a minimal resolution of GF(p) for the p-group G.
+#S is any resolution of even Z for the p-group G.
 #A is the algebra constructed from ModPCohomologyRing(R).
 #Hn is H^n(Hom(S,K)) where K is any GOuter group representation of
-#the trivial G-module GF(2)
+#the trivial G-module GF(p)
 #We'll return a pair of isomorphisms [hn2HnA, HnA2hn] where hn is the
 #cohomology *group* H^n(S,K) and HnA is a sub magma of A. 
 
@@ -48,8 +48,7 @@ v:=[];
 
 for x in w do
 for j in [1..S!.dimension(n)] do
-#if not matSR[AbsInt(x[1])][j]=0 then Add(v,[j,1]); fi;
-a:=matSR[AbsInt(x[1])][j];
+a:=SignInt(x[1])*matSR[AbsInt(x[1])][j];
 if not a=0 then 
 v:=AddFreeWords(v,MultiplyWord(a,[[j,1]]),p); fi;
 od;
@@ -122,6 +121,9 @@ return z;
 end;
 ###################
 
+for x in GeneratorsOfGroup(hn) do
+if not x = HnA2hn(hn2HnA(x)) then Print("Ooops!\n"); fi;
+od;
 
 return [hn2HnA, HnA2hn];
 end);
@@ -132,7 +134,7 @@ end);
 ###############################################################
 InstallGlobalFunction(ModPSteenrodAlgebra,
 function(arg)
-local G,N,R,A,S,p,
+local G,N,R,A,S,p,mx,
       x,a,b,B,C,psi,bhomc,delta,i, Sq0,Bok,AhomH,HhomA,K,maxdeg;
 
 G:=arg[1];
@@ -142,9 +144,13 @@ if Length(arg)>2 then R:=arg[3]; else
 R:=ResolutionPrimePowerGroup(G,N+1);fi;
 R!.properties[PositionProperty(R!.properties,x->x[1]="length")][2]:=N;
 A:=ModPCohomologyRing(R);
+mx:=ModPRingGenerators(A);;
+mx:=List(mx,A!.degree);;
+mx:=Maximum(mx)+1;
+mx:=Minimum(mx,N);
 if Length(arg)>3 then S:=arg[4]; 
 else
-S:=ResolutionGenericGroup(G,N+1); fi;
+S:=ResolutionGenericGroup(G,mx+2); fi;
 
 x:=(1,2,3,4);;
 x:=[1..p^2];
@@ -162,18 +168,18 @@ psi!.Target:=C;
 psi!.Mapping:=bhomc;
 
 delta:=[];
-for i in [1..N-1] do
+for i in [1..Minimum(mx,N-1)] do
 delta[i]:=ConnectingCohomologyHomomorphism(psi,i,S);;
 od;
 
 AhomH:=[];
-for i in [1..N-1] do
+for i in [1..Minimum(mx,N-1)] do
 K:=Source(delta[i]);
 AhomH[i]:=HAP_coho_isoms(R,S,A,K,i)[2];
 od;
 
 HhomA:=[];
-for i in [1..N-1] do
+for i in [1..Minimum(mx,N-1)] do
 K:=Target(delta[i]);
 HhomA[i]:=HAP_coho_isoms(R,S,A,K,i+1)[1];
 od;
@@ -214,7 +220,7 @@ InstallMethod(Sq,
 "steenrod squares for Mod 2 cohomology rings",
 [IsAlgebra,IsInt,IsObject],
 function(A,n,w)
-local W, M, v, x, i, MAX, sqq, a,b;
+local W, WW, M, v, x, i, MAX, sqq, a,b,V;
 
 ####################################################
 ## This function makes use of the Cartan relations. At present it
@@ -223,7 +229,6 @@ local W, M, v, x, i, MAX, sqq, a,b;
 
 #### Are Steenrod squares defined at all?###########
 if not IsBound(A!.squares) then
-#Print("Steenrod squares are not defined for this algebra.\n");
 return fail;
 fi;
 ####################################################
@@ -233,11 +238,13 @@ if n=0 then return w; fi;
 ####################################################
 
 M:=HAP_MultiplicativeGenerators(A);
-W:=M[2](w);
+W:=M[3](w);
 
 #### Sq^n=0 if n> degrees of all homogeneous parts##
 if Length(W)=0 then MAX:=0; else
-MAX:=Maximum(List(Flat(W),A!.degree)); fi;
+WW:=List(W,  x->List(x,b->A!.degree(b)) );
+WW:=List(WW, x->Sum(x) );
+MAX:=Maximum(WW); fi;
 if n>MAX then return Zero(A); fi;
 ####################################################
 
@@ -252,7 +259,7 @@ fi;
 if Length(W)>1 then
     v:=Zero(A);
     for x in W do
-        v:=v+Sq(A,n,Product(x));
+        v:=v+Sq(A,n,Product(x));  
     od;
     return v;
 fi;
@@ -260,23 +267,22 @@ fi;
 
 #### So now W is homogeneous #######################
 #### We remove outer brackets of W  ################
-W:=W[1];
+V:=W[1];
 
 ##### if Degree(W)=n then Sq^n(W)=W^2 ##############
-if n=Sum(List(W,A!.degree)) then W:=Product(W);
-return W^2; fi;
+if n=Sum(List(V,A!.degree)) then V:=Product(V);
+return V^2; fi;
 ####################################################
 
-### Length(W)>1 : so W is a product of generators ##
-if Length(W)>1 then
+### Length(V)>1 : so V is a product of generators ##
+if Length(V)>1 then
 v:=Zero(A);
 for i in [0..n] do
-a:=Sq(A,i,W[1]);
+a:=Sq(A,i,V[1]);
 if a=fail then return fail; fi;
-b:=Sq(A,n-i,Product(W{[2..Length(W)]}));
+b:=Sq(A,n-i,Product(V{[2..Length(V)]}));
 if b=fail then return fail; fi;
 v:=v+ a*b;
-#v:=Sq(A,i,W[1])*Sq(A,n-i,Product(W{[2..Length(W)]}));
 od;
 return v;
 fi;
@@ -297,7 +303,7 @@ InstallMethod(Bockstein,
 "Bockstein for Mod p cohomology rings",
 [IsAlgebra,IsObject],
 function(A,w)
-local W, M, v, x, MAX;
+local W, WW, V, M, i, v, x, MAX, a, b,c, gens, gensbas;;
 
 #### Is the Bockstein defined at all?##############
 if not IsBound(A!.bockstein) then
@@ -306,14 +312,23 @@ return fail;
 fi;
 ####################################################
 
+###### If w=0 then return 0 ########################
+if IsZero(w) then return w; fi;
+####################################################
+
 M:=HAP_MultiplicativeGenerators(A);
-W:=M[2](w);
+W:=M[3](w);
+gens:=ModPRingGenerators(A);
+gensbas:=Basis(Submodule(A,gens),gens);
+if not IsBound(A!.bocksteinrec) then
+A!.bocksteinrec:=[]; fi;
 
 ####################################################
 if Length(W)=0 then MAX:=0; else
-MAX:=Maximum(List(Flat(W),A!.degree)); fi;
+WW:=List(W,  x->List(x,b->A!.degree(b)) );
+WW:=List(WW, x->Sum(x) );
+MAX:=Maximum(WW); fi;
 if A!.maxdeg<MAX+1 then
-#Print("Bockstein image has too high a degree.\n");
 return fail;
 fi;
 ####################################################
@@ -329,13 +344,74 @@ if Length(W)>1 then
 fi;
 ####################################################
 
-#### So now W is homogeneous #######################
-#### We remove outer brackets of W and multiply  ###
-W:=W[1];
-W:=Product(W);
-return A!.bockstein(W); 
+###### Now Length(W)=1 #############################
+V:=W[1];
+if Length(V)=1 then 
+c:=Coefficients(gensbas,V[1]);
+c:=Sum(c);
+i:=Position(gens,c^-1*V[1]);
+if not IsBound(A!.bocksteinrec[i]) then
+A!.bocksteinrec[i]:=A!.bockstein(c^-1*V[1]); fi;
+return c*A!.bocksteinrec[i]; fi;
+
+a:=V[1];
+b:=Product(V{[2..Length(V)]});
+return A!.bockstein(a)*b + (-1)^(A!.degree(a))*a*Bockstein(A,b);
+
 ####################################################
 
 end);
 ####################################################;
 ####################################################
+
+########################################################
+########################################################
+InstallGlobalFunction(BocksteinHomology,
+function(A,n)
+local Bas, gensn, gensnm1, B, Z ;
+
+Bas:=Basis(A);;
+gensn:=Filtered(Bas,x->A!.degree(x)=n);
+gensnm1:=Filtered(Bas,x->A!.degree(x)=n-1);
+B:=Submodule(A,List(gensnm1, x->Bockstein(A,x)));;
+B:=Dimension(B);
+Z:=Submodule(A,List(gensn, x->Bockstein(A,x)));;
+Z:=Dimension(Submodule(A,gensn)) - Dimension(Z);
+
+return Z-B;
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallGlobalFunction(PrintAlgebraWordAsPolynomial,
+function(A,w)
+local  M, B, e, c,d,x,p,i,j;
+
+M:=HAP_MultiplicativeGenerators(A);
+e:=M[2](w);
+
+B:=List(M[1],x->Product(x));
+B:=Basis(A,B);
+
+c:=Coefficients(B,w);
+d:=Filtered([1..Length(c)], i-> not IsZero(c[i]));
+for i in d do
+     if i<Length(c) then
+        if not IsOne(c[i]) then Print(c[i],"*"); fi;
+     else
+        if not IsOne(c[i]) then Print(c[i]); fi;
+     fi;
+     for j in [1..Length(M[1][i])] do
+        if j < Length(M[1][i]) then Print(M[1][i][j],"*");
+        else Print(M[1][i][j]);
+        fi;
+     od;
+     if not i=d[Length(d)] then Print(" + "); fi;
+od;
+
+end);
+########################################################
+########################################################
+

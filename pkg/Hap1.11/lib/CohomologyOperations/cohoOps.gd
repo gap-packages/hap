@@ -5,3 +5,5 @@ DeclareGlobalFunction("HAP_coho_isoms");
 DeclareGlobalFunction("ModPSteenrodAlgebra");
 DeclareAttribute("HAP_MultiplicativeGenerators",IsAlgebra);
 DeclareOperation("Bockstein",[IsAlgebra,IsObject]);
+DeclareGlobalFunction("BocksteinHomology");
+DeclareGlobalFunction("PrintAlgebraWordAsPolynomial");

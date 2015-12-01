@@ -7,11 +7,11 @@ local G,a,b,x,bhomc,B,C,psi,delta,GhomG,SmapR,BasA,Basn,
       genshn,imgenshn,hn2HnA,xx,HnA2hn,imgensHnA,RmapSdual,SmapRdual,matRS,
       matSR, w,i,j,jj, HnAgrp2hn, hn2HnAgrp,p;
 
-#R is a minimal resolution of GF(2) for the 2-group G.
-#S is any resolution of GF(2) (or even Z) for the 2-group G.
+#R is a minimal resolution of GF(p) for the p-group G.
+#S is any resolution of even Z for the p-group G.
 #A is the algebra constructed from ModPCohomologyRing(R).
 #Hn is H^n(Hom(S,K)) where K is any GOuter group representation of
-#the trivial G-module GF(2)
+#the trivial G-module GF(p)
 #We'll return a pair of isomorphisms [hn2HnA, HnA2hn] where hn is the
 #cohomology *group* H^n(S,K) and HnA is a sub magma of A. 
 
@@ -48,8 +48,7 @@ v:=[];
 
 for x in w do
 for j in [1..S!.dimension(n)] do
-#if not matSR[AbsInt(x[1])][j]=0 then Add(v,[j,1]); fi;
-a:=matSR[AbsInt(x[1])][j];
+a:=SignInt(x[1])*matSR[AbsInt(x[1])][j];
 if not a=0 then 
 v:=AddFreeWords(v,MultiplyWord(a,[[j,1]]),p); fi;
 od;
@@ -122,6 +121,9 @@ return z;
 end;
 ###################
 
+for x in GeneratorsOfGroup(hn) do
+if not x = HnA2hn(hn2HnA(x)) then Print("Ooops!\n"); fi;
+od;
 
 return [hn2HnA, HnA2hn];
 end);
@@ -182,6 +184,7 @@ od;
 Bok:=function(w)
 local n, v,del,iso;
 n:=A!.degree(w);
+if n=0 then return Zero(A); fi;
 iso:=AhomH[n];
 v:=iso(w);
 del:=delta[n];
@@ -213,7 +216,7 @@ InstallMethod(Sq,
 "steenrod squares for Mod 2 cohomology rings",
 [IsAlgebra,IsInt,IsObject],
 function(A,n,w)
-local W, M, v, x, i, MAX, sqq, a,b;
+local W, WW, M, v, x, i, MAX, sqq, a,b;
 
 ####################################################
 ## This function makes use of the Cartan relations. At present it
@@ -222,7 +225,6 @@ local W, M, v, x, i, MAX, sqq, a,b;
 
 #### Are Steenrod squares defined at all?###########
 if not IsBound(A!.squares) then
-#Print("Steenrod squares are not defined for this algebra.\n");
 return fail;
 fi;
 ####################################################
@@ -236,7 +238,8 @@ W:=M[2](w);
 
 #### Sq^n=0 if n> degrees of all homogeneous parts##
 if Length(W)=0 then MAX:=0; else
-MAX:=Maximum(List(Flat(W),A!.degree)); fi;
+WW:=List(W,x->Sum(List(x,a->A!.degree(a))));
+MAX:=Maximum(WW); fi;
 if n>MAX then return Zero(A); fi;
 ####################################################
 
@@ -251,7 +254,7 @@ fi;
 if Length(W)>1 then
     v:=Zero(A);
     for x in W do
-        v:=v+Sq(A,n,Product(x));
+        v:=v+Sq(A,n,Product(x));  #SUM????????
     od;
     return v;
 fi;
@@ -290,3 +293,45 @@ end);
 ##################################################################
 ##################################################################
 
+###############################################################
+###############################################################
+InstallMethod(Bockstein,
+"Bockstein for Mod p cohomology rings",
+[IsAlgebra,IsObject],
+function(A,w)
+local W, WW, M, v, x, MAX;
+
+#### Is the Bockstein defined at all?##############
+if not IsBound(A!.bockstein) then
+Print("The Bockstein operation is not defined for this algebra.\n");
+return fail;
+fi;
+####################################################
+
+if IsZero(w) then return w; fi;
+
+M:=HAP_MultiplicativeGenerators(A);
+W:=M[2](w);
+
+####################################################
+if Length(W)=0 then MAX:=0; else
+WW:=List(W,a->A!.degree(a));
+MAX:=Maximum(WW); fi;
+
+if A!.maxdeg<MAX+1 then
+return fail;
+fi;
+####################################################
+
+
+#### additivity: apply to the homogeneous parts ####
+    v:=Zero(A);
+    for x in W do
+        v:=v+A!.bockstein(x);
+    od;
+    return v;
+####################################################
+
+end);
+####################################################;
+####################################################
