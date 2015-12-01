@@ -558,6 +558,9 @@ DeclareOperation("PureComplexRandomCell",[IsHapPureCubicalComplex]);
 DeclareGlobalFunction("RandomSimplicialGraph");
 DeclareGlobalFunction("RandomSimplicialTwoComplex");
 DeclareGlobalFunction("FirstHomologySimplicialTwoComplex");
+DeclareGlobalFunction("Mapper");
+DeclareGlobalFunction("Mapper_alt");
+DeclareGlobalFunction("VectorsToOneSkeleton");
 
 
 ########################## ARRAYS ################################

@@ -554,13 +554,13 @@ local GEN, M, m, k, i, j;
 		    	k := k+1;
                 else
 			return fail;
-			break;
+			#break;
 		fi;
             od;
         od;    
    else
 	return fail;
-	break;
+	#break;
    fi;
 #### COMPLETE COXETER MATRIX (symmetric) ####
    for i in [1..GEN] do
@@ -605,7 +605,7 @@ InstallGlobalFunction(MaximalSphericalCoxeterSubgroupsFromAbove, function(M)
             for m in max_spherical do
                 if IsSubset(m, subset{l}) then #use subset{l} to keep consistent numbering
                     found := true;
-                    break;
+                    #break;
                 fi;
             od;
             if not(found) then

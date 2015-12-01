@@ -107,7 +107,6 @@ MakeReadOnlyGlobal("IsHapFPGModuleHomomorphism");
 MakeReadOnlyGlobal("IsHapGChainComplex");
 MakeReadOnlyGlobal("IsHapMap");
 MakeReadOnlyGlobal("IsHapNonFreeResolution");
-MakeReadOnlyGlobal("Mapper");
 MakeReadOnlyGlobal("NerveOfCover");
 MakeReadOnlyGlobal("PseudoList");
 MakeReadOnlyGlobal("PseudoListFamily");
