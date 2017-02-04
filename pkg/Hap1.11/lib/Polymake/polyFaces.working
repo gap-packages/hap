@@ -1,5 +1,5 @@
 #(C) Graham Ellis 2005-2006
-
+#RT:=0;
 #####################################################################
 InstallGlobalFunction(PolytopalComplex,
 function(arg)
@@ -34,6 +34,7 @@ fi;
 
 StartVector:=arg[2];
 PG:=PolytopalGenerators(G,StartVector);
+
 if Length(arg)>2 then lngth:=arg[3]; else lngth:=Length(PG.hasseDiagram); fi;
 Points:=[];
 EltsG:=Elements(G);
@@ -72,6 +73,7 @@ end;
 #####################################################################
 FaceToVertices:=function(F)
 local W,v,w,V;
+#RT:=RT-Runtime();
 V:=[];
 W:=BaseOrthogonalSpaceMat(List(F,x->VertexToVector(x)));
 
@@ -83,7 +85,7 @@ for p in Points do
 
 if IsZero((p - StartVector)*TransposedMat(W)) then Add(V,p); fi;
 od;
-
+#RT:=RT+Runtime();
 return V;
 end;
 #####################################################################
@@ -119,7 +121,10 @@ return Reps;
 end;
 #####################################################################
 
+
 Hasse:=List(Hasse,x->OrbitReps(x));
+
+
 
 
 StabilizerRecord:=List([1..lngth],i->[1..Dimension(i)]);
@@ -140,17 +145,23 @@ return StabilizerRecord[k][n]; fi;
 
 if k=Length(PG.hasseDiagram) then return G; fi;
 
-StabGroup:=[One(G)];
+StabGroup:=Group(One(G));
 S:=Hasse[k][n];
 
 T:=StructuralCopy(S);
 for x in G do
+if not x in StabGroup then
 xT:=List(T,a->Action(x,a));
-if Length(Intersection(xT,T))=Length(T) then Add(StabGroup,x); fi;
+if Length(Intersection(xT,T))=Length(T) then 
+StabGroup:=  GeneratorsOfGroup(StabGroup); ;
+StabGroup:=Concatenation(StabGroup,[x]);
+StabGroup:=Group(StabGroup);
+fi;
+fi;
 od;
 
 
-StabGroup:=ReduceGenerators(StabGroup,Group(StabGroup));
+StabGroup:=ReduceGenerators(GeneratorsOfGroup(StabGroup),StabGroup);
 if Length(StabGroup)=0 then StabGroup:=[Identity(G)]; fi;
 
 StabilizerRecord[k][n]:=Group(StabGroup);
@@ -184,8 +195,11 @@ end;
 #####################################################################
 
 
+
 StabSum:=List([1..lngth],k->
 Sum(List([1..Dimension(k-1)],j->Order(StabilizerSubgroup(k-1,j)))-1));
+
+
 
 #####################################################################
 BoundaryComponent:=function(k,m,n)  	#Let Fm be the m-th face in 

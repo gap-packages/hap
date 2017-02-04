@@ -1,5 +1,5 @@
 #(C) Graham Ellis 2005-2006
-#RT:=0;
+
 #####################################################################
 InstallGlobalFunction(PolytopalComplex,
 function(arg)
@@ -14,6 +14,9 @@ local
 	Points,
 	Dimension,
 	Boundary,
+        InsertSigns,
+        StandardWord,
+        StandardWordSgn,
 	lngth,
 	StabilizerSubgroup,
 	StabilizerRecord,
@@ -85,7 +88,6 @@ for p in Points do
 
 if IsZero((p - StartVector)*TransposedMat(W)) then Add(V,p); fi;
 od;
-#RT:=RT+Runtime();
 return V;
 end;
 #####################################################################
@@ -236,6 +238,31 @@ return SSortedList(Component);
 end;
 #####################################################################
 
+#####################################################################
+StandardWord:=function(k,bnd)
+local w;
+w:=
+List(bnd,x->[x[1],
+Position(EltsG,  CanonicalRightCosetElement(StabilizerSubgroup(k,AbsInt(x[1])), EltsG[x[2]]^-1 )^-1)
+]);
+return AlgebraicReduction(w);
+end;
+#####################################################################
+
+#####################################################################
+StandardWordSgn:=function(k,bnd)
+local w,x,y,r,h;
+w:=[];
+for x in bnd do 
+r:=CanonicalRightCosetElement(StabilizerSubgroup(k,AbsInt(x[1])), EltsG[x[2]]^-1 )^-1;
+y:=[x[1]*StabAction(k,AbsInt(x[1]),x[2]), Position(EltsG,r)];
+Add(w,y);
+od;
+return AlgebraicReduction(w);
+end;
+#####################################################################
+
+
 PseudoBoundary:=List([1..lngth],i->[1..Dimension(i)]);
 
 #####################################################################
@@ -257,98 +284,35 @@ tmp:=List(tmp, x->[n,x]);
 Append(bnd,tmp);
 od;
 
-
-#PseudoBoundary[k][m]:=bnd;  ##WARNING: REMOVE THIS
-#return Boundary(k,mm);
-
-
-	######Inserting the signs#########
-if k=1 then
-bnd[1][1]:=-bnd[1][1];
-fi;
-
-if k>1  then
-#################################
-bndbnd:=[];
-bnd:=SortedList(bnd);
-signedbnd:=[bnd[1]]; 
-x:=bnd[1]; 
-b:=Boundary(k-1,x[1]);
-b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
-
-b:=List(b,y->[StabAction(k-2,y[1],y[2])*y[1], CanonicalRightCosetElement(StabilizerSubgroup(k-2,AbsInt(y[1])), EltsG[y[2]]^-1)^-1]);
-
-if StabAction(k-1,x[1],x[2])<0 then
-b:=NegateWord(b);
-fi;
-
-Append(bndbnd,b);
-RemoveSet(bnd,bnd[1]);
-
-while Length(bnd)>0 do
-x:=Random(bnd);
-b:=Boundary(k-1,x[1]);
-b:=List(b,y->[y[1], Position(EltsG,EltsG[x[2]]*EltsG[y[2]])]);
-
-b:=List(b,y->[StabAction(k-2,y[1],y[2])*y[1], CanonicalRightCosetElement(StabilizerSubgroup(k-2,AbsInt(y[1])), EltsG[y[2]]^-1)^-1]);
-
-if StabAction(k-1,x[1],x[2])<0 then
-b:=NegateWord(b);
-fi;
-
-
-if Length(Intersection(b,bndbnd))>0 then
-Append(signedbnd, [[-x[1],x[2]]]);
-Append(bndbnd,NegateWord(b));
-RemoveSet(bnd,x);
-else
-
-if Length(Intersection(NegateWord(b),bndbnd))>0 then
-Append(signedbnd, [[x[1],x[2]]]);
-Append(bndbnd,b);
-RemoveSet(bnd,x);
-fi;
-
-fi;
-od;
-
-bnd:=signedbnd;
-########################################
-fi;
-	######Signs inserted##############
-
+bnd:= StandardWord(k-1,bnd); 
 
 PseudoBoundary[k][m]:=bnd;
 
 if mm>0 then return PseudoBoundary[k][m];
 else return NegateWord(PseudoBoundary[k][m]);fi;
 
-
 end;
+###############################################################
 
 ###############################################################
 # This describes how the group G acts on the orientation.
 StabAction:=function(n,k,h)
 local bas, Gbas, mat,id,r,u,H; 
 
-#n:=AbsInt(nn);
-
 if n=0 then return 1; fi;
 
 H:=StabilizerSubgroup(n,k);
 
-id:=CanonicalRightCosetElement(H,Identity(H));
+id:=CanonicalRightCosetElement(H,Identity(G));
 r:=CanonicalRightCosetElement(H,EltsG[h]^-1);
 r:=id^-1*r;
 u:=r*EltsG[h];
-
-
 
 bas:=StabilizerBasis(n,k);
 Gbas:=List(bas,V->Action(u,V));
 mat:=List(Gbas, b->SolutionMat(bas,b));
 
-return SignInt(Determinant(mat));
+return Determinant(mat);
 end;
 ###############################################################
 
@@ -357,10 +321,72 @@ for i in [1..Dimension(n)] do
 Boundary(n,i);
 od;od;
 
+##We now need to insert signs into the boundary.
+###############################################################
+InsertSigns:=function()
+local i, bnd, copybnd, b, sb, pos, signedbnd,bndbnd, n, w, D;
+
+for i in [1..Dimension(1)] do
+bnd:=SortedList(PseudoBoundary[1][i]);;
+bnd[2][1]:=-bnd[2][1];
+PseudoBoundary[1][i]:=bnd;
+od;
+
+for n in [2..lngth] do
+for i in [1..Dimension(n)] do
+
+#####################################
+#####################################
+bnd:=SSortedList(PseudoBoundary[n][i]);;  #regular CW space
+copybnd:=1*bnd;
+signedbnd:=[];
+D:=[];
+bndbnd:=[];
+for x in bnd do
+w:=Boundary(n-1,x[1]);
+w:=List(w, y->[y[1],Position(EltsG,EltsG[x[2]]*EltsG[y[2]]) ]);
+w:=StandardWordSgn(n-2,w);
+Add(bndbnd,w);
+od;
+#####################################
+#####################################
+
+signedbnd:=[1*bnd[1]];
+D:=1*bndbnd[1];
+RemoveSet(bnd,bnd[1]);
+
+############
+while Length(bnd)>0 do
 
 
+for b in bnd do
+pos:=Position(copybnd,b);
+if Length(Intersection(D,bndbnd[pos]))>0 then break; fi;
+if Length(Intersection(D,NegateWord(bndbnd[pos])))>0 then pos:=-pos; break; fi;
+od;
 
-#EltsG:=List(EltsG,x->x^-1);
+
+if pos<0 then Add(signedbnd,1*b); 
+D:=AddFreeWords(D,bndbnd[-pos]);
+else Add(signedbnd,1*[-b[1],b[2]]); 
+D:=AddFreeWords(D,NegateWord(bndbnd[pos]));
+fi;
+RemoveSet(bnd,b);
+
+od;
+############
+
+PseudoBoundary[n][i]:=signedbnd;
+Print(Collected(D),"\n\n");
+
+
+od;
+od;
+end;
+
+InsertSigns();
+###############################################################
+##Signs inserted.
 
 #####################################################################
 return Objectify(HapNonFreeResolution,
@@ -370,6 +396,7 @@ return Objectify(HapNonFreeResolution,
             homotopy:=fail,
             elts:=EltsG,
             group:=G,
+            standardWord:=StandardWord,
 	    stabilizer:=StabilizerSubgroup,
             basis:=StabilizerBasis,
 	    action:=StabAction,

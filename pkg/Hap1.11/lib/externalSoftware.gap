@@ -31,6 +31,23 @@ fi;
 #############################################################
 
 #############################################################
+if not IsBound(DOT_PATH)
+   then
+    DOT_PATH:=Filename( DirectoriesSystemPrograms( ), "dot" );
+
+if DOT_PATH=fail
+   or not IsExecutableFile(DOT_PATH)
+   then
+    Info(InfoWarning,1,"HAP warning: Set DOT_PATH manually if needed.");
+else
+DOT_PATH:=Concatenation(DOT_PATH," ");
+    MakeReadOnlyGlobal("DOT_PATH");
+fi;
+fi;
+#############################################################
+
+
+#############################################################
 if not IsBound(DISPLAY_PATH)
    then
     DISPLAY_PATH:=Filename( DirectoriesSystemPrograms( ), "display" );

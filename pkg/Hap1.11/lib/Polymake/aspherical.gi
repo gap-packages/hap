@@ -3,8 +3,9 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(IsAspherical,
-function(F,Frels)
+function(arg)
 local
+        F,Frels,G,
 	Vertices,
 	CollEdges,
 	Edges,
@@ -19,14 +20,19 @@ local
 	InEqSizes,
 	Polymake,
         tmpdir, tmpin, tmpodir, tmpout,
-	R,Redges,V, i,x,row,n,m,M;
+        L,r,
+	R,Redges,V,ii,bol, sm, i,x,row,n,m,M;
 
 tmpdir := DirectoryTemporary();;
 tmpin:=Filename( tmpdir , "tmpIn.log" );
 tmpodir := DirectoryTemporary();;
 tmpout:=Filename( tmpdir , "tmpOut.log" );
 
-
+if Length(arg)=2 then F:=arg[1]; Frels:=arg[2]; fi;
+if Length(arg)=1 then
+G:=arg[1];
+F:=FreeGroupOfFpGroup(G); Frels:=RelatorsOfFpGroup(G); fi;
+Frels:=List(Frels,r->CyclicallyReducedWord(r));
 Vertices:=[];
 CollEdges:=[];
 Edges:=[];
@@ -104,9 +110,19 @@ od;
 #Vector:=SolutionMat(TransposedMat(EqualitiesMat),EqualitiesVec);
 
 #INEQUALITIES
-InEqualities:=NullspaceModQ(BoundaryMat,2);
-V:=List([1..Length(InEqualities[1])],i->0);
-RemoveSet(InEqualities,V);
+InEqualities:=NullspaceModQ(BoundaryMat,2);  #THIS IS CLUMSY!!
+InEqualities:=Filtered(InEqualities,r->not IsZero(r));  
+
+        ###MODIFIED AUG 2016
+#SortBy(InEqualities,Sum);
+#L:=InEqualities;
+#for ii in [1..Minimum(1000,Length(InEqualities))] do
+##ANF WHY 1000??
+#sm:=Sum(InEqualities[ii]);
+#L:=Filtered(L,r->r*InEqualities[ii]<sm or r=InEqualities[ii]);
+#od;
+#InEqualities:=L;
+        ###MODIFICATION STOPS HERE
 
 
 InEqSizes:=List(InEqualities,x->Sum(x));
@@ -187,3 +203,76 @@ end);
 #####################################################################
 #####################################################################
 
+
+#####################################################################
+#####################################################################
+InstallMethod(StarGraph,
+"For FpGroups",
+[IsFpGroup],
+function(G)
+local
+        F,Frels,Vertices,
+        CollEdges,
+        Edges,
+        RelatorToVertices,
+        RelatorToEdges,
+        A,R,i,j,x;
+
+
+F:=FreeGroupOfFpGroup(G);;
+Frels:=RelatorsOfFpGroup(G);;
+Frels:=List(Frels,r->CyclicallyReducedWord(r));
+Vertices:=[];
+CollEdges:=[];
+Edges:=[];
+
+#####################################################################
+RelatorToVertices:=function(R);
+return SSortedList(LetterRepAssocWord(R));
+end;
+#####################################################################
+
+for R in Frels do
+UniteSet(Vertices, RelatorToVertices(R));
+UniteSet(Vertices, -1*RelatorToVertices(R));
+od;
+
+#####################################################################
+RelatorToEdges:=function(R)
+local Rvertices, Redges, u,v,i;
+
+Rvertices:=LetterRepAssocWord(R);
+Redges:=[];
+
+for i in [1..(Length(Rvertices)-1)] do
+u:=Rvertices[i];
+v:=-Rvertices[i+1];
+Append(Redges,[  SortedList([u,v])  ]);
+od;
+
+u:=Rvertices[Length(Rvertices)];
+v:=-Rvertices[1];
+Append(Redges,[  SortedList([u,v])  ]);
+
+return Redges;
+end;
+####################################################################
+
+for R in Frels do
+Append(CollEdges, RelatorToEdges(R));
+od;
+
+CollEdges:=Collected(CollEdges);
+Edges:=List(CollEdges,x->x[1]);
+
+A:=NullMat(Length(Vertices),Length(Vertices));
+for x in CollEdges do
+i:=Position(Vertices,x[1][1]);
+j:=Position(Vertices,x[1][2]);
+A[i][j]:=Minimum(2,A[i][j]+x[2]);A[j][i]:=Minimum(2,A[j][i]+x[2]);
+od;
+return IncidenceMatrixToGraph(A);
+
+end);
+#####################################################################
+#####################################################################

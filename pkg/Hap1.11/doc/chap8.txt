@@ -1,72 +1,108 @@
   
-  [1X8 [33X[0;0YChain complexes[133X[101X
+  [1X8 [33X[0;0YFunctors[133X[101X
   
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XChainComplex(T)[110X[133X
+  [33X[0;0Y[10XExtendScalars(R,G,EltsG)[110X[133X
   
-  [33X[0;0YInputs  a  pure cubical complex, or cubical complex, or simplicial complex [22XT[122X
-  and returns the (often very large) cellular chain complex of [22XT[122X.[133X
+  [33X[0;0YInputs  a  [22XZH[122X-resolution [22XR[122X, a group [22XG[122X containing [22XH[122X as a subgroup, and a list
+  [22XEltsG[122X  of  elements of [22XG[122X. It returns the free [22XZG[122X-resolution [22X(R ⊗_ZH ZG)[122X. The
+  returned  resolution  [22XS[122X  has  S!.elts:=EltsG.  This  is  a resolution of the
+  [22XZG[122X-module [22X(Z ⊗_ZH ZG)[122X. (Here [22X⊗_ZH[122X means tensor over [22XZH[122X.)[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XChainComplexOfPair(T,S)[110X[133X
+  [33X[0;0Y[10XHomToIntegers(X) [110X[133X
   
-  [33X[0;0YInputs  a  pure  cubical  complex  or  cubical  complex  [22XT[122X  and contractible
-  subcomplex [22XS[122X. It returns the quotient [22XC(T)/C(S)[122X of cellular chain complexes.[133X
+  [33X[0;0YInputs  either  a  [22XZG[122X-resolution [22XX=R[122X, or an equivariant chain map [22XX = (F:R ⟶
+  S)[122X.  It  returns  the  cochain  complex  or cochain map obtained by applying
+  [22XHomZG( _ , Z)[122X where [22XZ[122X is the trivial module of integers (characteristic 0).[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X ChevalleyEilenbergComplex(X,n) [110X[133X
+  [33X[0;0Y[10XHomToIntegersModP(R) [110X[133X
   
-  [33X[0;0YInputs either a Lie algebra [22XX=A[122X (over the ring of integers [22XZ[122X or over a field
-  [22XK[122X)  or  a homomorphism of Lie algebras [22XX=(f:A ⟶ B)[122X, together with a positive
-  integer  [22Xn[122X.  It  returns either the first [22Xn[122X terms of the Chevalley-Eilenberg
-  chain  complex  [22XC(A)[122X,  or  the  induced map of Chevalley-Eilenberg complexes
-  [22XC(f):C(A) ⟶ C(B)[122X.[133X
-  
-  [33X[0;0Y(The  homology  of the Chevalley-Eilenberg complex [22XC(A)[122X is by definition the
-  homology of the Lie algebra [22XA[122X with trivial coefficients in [22XZ[122X or [22XK[122X).[133X
-  
-  [33X[0;0YThis function was written by [12XPablo Fernandez Ascariz[112X[133X
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X  and  returns  the  cochain  complex obtained by
+  applying  [22XHomZG( _ , Z_p)[122X where [22XZ_p[122X is the trivial module of integers mod [22Xp[122X.
+  (At present this functor does not handle equivariant chain maps.)[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X LeibnizComplex(X,n) [110X[133X
+  [33X[0;0Y[10XHomToIntegralModule(R,f) [110X[133X
   
-  [33X[0;0YInputs  either  a Lie or Leibniz algebra [22XX=A[122X (over the ring of integers [22XZ[122X or
-  over  a  field  [22XK[122X) or a homomorphism of Lie or Leibniz algebras [22XX=(f:A ⟶ B)[122X,
-  together  with  a positive integer [22Xn[122X. It returns either the first [22Xn[122X terms of
-  the  Leibniz  chain  complex  [22XC(A)[122X,  or the induced map of Leibniz complexes
-  [22XC(f):C(A) ⟶ C(B)[122X.[133X
-  
-  [33X[0;0Y(The  Leibniz  complex  [22XC(A)[122X  was  defined by J.-L.Loday. Its homology is by
-  definition the Leibniz homology of the algebra [22XA[122X).[133X
-  
-  [33X[0;0YThis function was written by [12XPablo Fernandez Ascariz[112X[133X
+  [33X[0;0YInputs a [22XZG[122X-resolution [22XR[122X and a group homomorphism [22Xf:G ⟶ GL_n(Z)[122X to the group
+  of  [22Xn×n[122X  invertible  integer matrices. Here [22XZ[122X must have characteristic 0. It
+  returns  the  cochain  complex obtained by applying [22XHomZG( _ , A)[122X where [22XA[122X is
+  the  [22XZG[122X-module  [22XZ^n[122X  with [22XG[122X action via [22Xf[122X. (At present this function does not
+  handle equivariant chain maps.)[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XSuspendedChainComplex(C)[110X[133X
+  [33X[0;0Y[10XTensorWithIntegralModule(R,f) [110X[133X
   
-  [33X[0;0YInputs a chain complex [22XC[122X and returns the chain complex [22XS[122X defined by applying
-  the degree shift [22XS_n = C_n-1[122X to chain groups and boundary homomorphisms.[133X
+  [33X[0;0YInputs a [22XZG[122X-resolution [22XR[122X and a group homomorphism [22Xf:G ⟶ GL_n(Z)[122X to the group
+  of  [22Xn×n[122X  invertible  integer matrices. Here [22XZ[122X must have characteristic 0. It
+  returns  the  chain complex obtained by tensoring over [22XZG[122X with the [22XZG[122X-module
+  [22XA=Z^n[122X  with  [22XG[122X  action  via  [22Xf[122X.  (At  present  this function does not handle
+  equivariant chain maps.)[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XReducedSuspendedChainComplex(C)[110X[133X
+  [33X[0;0Y[10XHomToGModule(R,A) [110X[133X
   
-  [33X[0;0YInputs a chain complex [22XC[122X and returns the chain complex [22XS[122X defined by applying
-  the  degree shift [22XS_n = C_n-1[122X to chain groups and boundary homomorphisms for
-  all [22Xn > 0[122X. The chain complex [22XS[122X has trivial homology in degree [22X0[122X and [22XS_0= Z[122X.[133X
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X  and  an abelian G-outer group A. It returns the
+  G-cocomplex  obtained  by  applying [22XHomZG( _ , A)[122X. (At present this function
+  does not handle equivariant chain maps.)[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoreducedChainComplex(C)[110X[133X
-  [33X[0;0Y[10XCoreducedChainComplex(C,2)[110X[133X
+  [33X[0;0Y[10XInduceScalars(R,hom) [110X[133X
   
-  [33X[0;0YInputs  a chain complex [22XC[122X and returns a quasi-isomorphic chain complex [22XD[122X. In
-  many  cases  the  complex  [22XD[122X should be smaller than [22XC[122X. If an optional second
-  input  argument  is  set  equal  to 2 then an alternative method is used for
-  reducing the size of the chain complex.[133X
+  [33X[0;0YInputs  a  [22XZQ[122X-resolution  [22XR[122X and a surjective group homomorphism [22Xhom:G→ Q[122X. It
+  returns the unduced non-free [22XZG[122X-resolution.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XTensorProductOfChainComplexes(C,D)[110X[133X
+  [33X[0;0Y[10XLowerCentralSeriesLieAlgebra(G) [110X[133X
+  [33X[0;0Y[10XLowerCentralSeriesLieAlgebra(f) [110X[133X
   
-  [33X[0;0YInputs  two  chain  complexes [22XC[122X and [22XD[122X of the same characteristic and returns
-  their tensor product as a chain complex.[133X
+  [33X[0;0YInputs a pcp group [22XG[122X. If each quotient [22XG_c/G_c+1[122X of the lower central series
+  is  free  abelian  or  p-elementary  abelian  (for fixed prime p) then a Lie
+  algebra  [22XL(G)[122X  is  returned. The abelian group underlying [22XL(G)[122X is the direct
+  sum  of  the quotients [22XG_c/G_c+1[122X . The Lie bracket on [22XL(G)[122X is induced by the
+  commutator in [22XG[122X. (Here [22XG_1=G[122X, [22XG_c+1=[G_c,G][122X .)[133X
   
-  [33X[0;0YThis function was written by [12X Le Van Luyen[112X.[133X
+  [33X[0;0YThe function can also be applied to a group homomorphism [22Xf: G ⟶ G'[122X . In this
+  case the induced homomorphism of Lie algebras [22XL(f):L(G) ⟶ L(G')[122X is returned.[133X
+  
+  [33X[0;0YIf  the  quotients  of  the  lower  central  series  are  not  all  free  or
+  p-elementary abelian then the function returns fail.[133X
+  
+  [33X[0;0YThis function was written by Pablo Fernandez Ascariz[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XLefschetzNumber(F)[110X[133X
+  [33X[0;0Y[10XTensorWithIntegers(X) [110X[133X
   
-  [33X[0;0YInputs  a  chain  map  [22XF: C→ C[122X with common source and target. It returns the
-  Lefschetz  number  of the map (that is, the alternating sum of the traces of
-  the homology maps in each degree).[133X
+  [33X[0;0YInputs  either  a  [22XZG[122X-resolution [22XX=R[122X, or an equivariant chain map [22XX = (F:R ⟶
+  S)[122X. It returns the chain complex or chain map obtained by tensoring with the
+  trivial module of integers (characteristic 0).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XFilteredTensorWithIntegers(R) [110X[133X
+  
+  [33X[0;0YInputs   a   [22XZG[122X-resolution   [22XR[122X   for   which   "filteredDimension"  lies  in
+  NamesOfComponents(R).   (Such   a   resolution   can   be   produced   using
+  TwisterTensorProduct(),  ResolutionNormalSubgroups()  or FreeGResolution().)
+  It returns the filtered chain complex obtained by tensoring with the trivial
+  module of integers (characteristic 0).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTensorWithTwistedIntegers(X,rho) [110X[133X
+  
+  [33X[0;0YInputs  either  a  [22XZG[122X-resolution [22XX=R[122X, or an equivariant chain map [22XX = (F:R ⟶
+  S)[122X.  It  also  inputs a function [22Xrho: G→ Z[122X where the action of [22Xg ∈ G[122X on [22XZ[122X is
+  such  that  [22Xg.1 = rho(g)[122X. It returns the chain complex or chain map obtained
+  by tensoring with the (twisted) module of integers (characteristic 0).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTensorWithIntegersModP(X,p) [110X[133X
+  
+  [33X[0;0YInputs  either a [22XZG[122X-resolution [22XX=R[122X, or a characteristics 0 chain complex, or
+  an   equivariant  chain  map  [22XX  =  (F:R  ⟶  S)[122X,  or  a  chain  map  between
+  characteristic  0  chain  complexes, together with a prime [22Xp[122X. It returns the
+  chain  complex or chain map obtained by tensoring with the trivial module of
+  integers modulo [22Xp[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTensorWithTwistedIntegersModP(X,p,rho)[110X[133X
+  
+  [33X[0;0YInputs  either  a  [22XZG[122X-resolution [22XX=R[122X, or an equivariant chain map [22XX = (F:R ⟶
+  S)[122X, and a prime [22Xp[122X. It also inputs a function [22Xrho: G→ Z[122X where the action of [22Xg
+  ∈  G[122X  on  [22XZ[122X is such that [22Xg.1 = rho(g)[122X. It returns the chain complex or chain
+  map obtained by tensoring with the trivial module of integers modulo [22Xp[122X.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XTensorWithRationals(R)[110X[133X
+  
+  [33X[0;0YInputs a [22XZG[122X-resolution [22XR[122X and returns the chain complex obtained by tensoring
+  with the trivial module of rational numbers.[133X
   

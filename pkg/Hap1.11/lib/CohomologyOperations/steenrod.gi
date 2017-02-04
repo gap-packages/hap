@@ -8,7 +8,7 @@ local G,a,b,x,bhomc,B,C,psi,delta,GhomG,SmapR,BasA,Basn,
       matSR, w,i,j,jj, HnAgrp2hn, hn2HnAgrp,p;
 
 #R is a minimal resolution of GF(p) for the p-group G.
-#S is any resolution of even Z for the p-group G.
+#S is any resolution over Z for the p-group G.
 #A is the algebra constructed from ModPCohomologyRing(R).
 #Hn is H^n(Hom(S,K)) where K is any GOuter group representation of
 #the trivial G-module GF(p)
@@ -121,9 +121,9 @@ return z;
 end;
 ###################
 
-for x in GeneratorsOfGroup(hn) do
-if not x = HnA2hn(hn2HnA(x)) then Print("Ooops!\n"); fi;
-od;
+#for x in GeneratorsOfGroup(hn) do
+#if not x = HnA2hn(hn2HnA(x)) then Print("Ooops!\n"); fi;
+#od;
 
 return [hn2HnA, HnA2hn];
 end);
@@ -209,6 +209,8 @@ A!.squares:=[Sq0];
 if p=2 then A!.squares[2]:=Bok; fi;
 A!.bockstein:=Bok;
 A!.maxdeg:=Maximum(List(CanonicalBasis(A),x->A!.degree(x)));
+A!.AhomH:=AhomH;
+A!.HhomA:=HhomA;
 return A;
 end);
 ###############################################################
@@ -386,8 +388,11 @@ end);
 ########################################################
 ########################################################
 InstallGlobalFunction(PrintAlgebraWordAsPolynomial,
-function(A,w)
-local  M, B, e, c,d,x,p,i,j;
+function(arg)
+local  A,w,M, B, e, c,d,x,p,i,j,str;
+
+A:=arg[1];
+w:=arg[2];
 
 M:=HAP_MultiplicativeGenerators(A);
 e:=M[2](w);
@@ -395,22 +400,26 @@ e:=M[2](w);
 B:=List(M[1],x->Product(x));
 B:=Basis(A,B);
 
+str:=[];
 c:=Coefficients(B,w);
 d:=Filtered([1..Length(c)], i-> not IsZero(c[i]));
 for i in d do
      if i<Length(c) then
-        if not IsOne(c[i]) then Print(c[i],"*"); fi;
+        if not IsOne(c[i]) then Print(c[i],"*"); Append(str,"*"); fi;
      else
-        if not IsOne(c[i]) then Print(c[i]); fi;
+        if not IsOne(c[i]) then Print(c[i]); Append(str, String(c[i])); fi;
      fi;
      for j in [1..Length(M[1][i])] do
-        if j < Length(M[1][i]) then Print(M[1][i][j],"*");
-        else Print(M[1][i][j]);
+        if j < Length(M[1][i]) then Print(M[1][i][j],"*"); 
+        Append(str,String(M[1][i][j])); Append(str,"*");
+        else Print(M[1][i][j]); Append(str,String(M[1][i][j]));
         fi;
      od;
-     if not i=d[Length(d)] then Print(" + "); fi;
+     if not i=d[Length(d)] then Print(" + "); Add(str,'+'); fi;
 od;
-
+if Length(arg)=3 then 
+return str;
+fi;
 end);
 ########################################################
 ########################################################

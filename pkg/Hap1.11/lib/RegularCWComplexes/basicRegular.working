@@ -1,5 +1,31 @@
 #(C) Graham Ellis
 
+######################################
+######################################
+InstallGlobalFunction(HomotopyTruncation,
+function(W,N)
+local Y, V, A, n, x, i;
+
+if Dimension(W)=N then
+return ContractedComplex(W);
+fi;
+
+Y:=1*W!.boundaries{[1..N+2]};
+Add(Y,[]);
+Y:=RegularCWComplex(Y);
+CocriticalCellsOfRegularCWComplex(Y,N+1);
+V:=SSortedList(Flat(Y!.vectorField[N+1]));
+V:=Filtered([1..Length(Y!.boundaries[N+1])],i-> not i in V);
+
+Y!.boundaries[N+1]:=Y!.boundaries[N+1]{V};
+Y!.boundaries[N+2]:=[];
+
+return ContractedComplex(RegularCWComplex(Y!.boundaries));
+
+end);
+######################################
+######################################
+
 ##################################################################
 ##################################################################
 InstallGlobalFunction(SimplicialComplexToRegularCWComplex,
@@ -825,7 +851,7 @@ od;
 def:=sgnn*def;
 
 defcp:=StructuralCopy(def);
-Apply(def,xx->DeformCellSgnHtpy(n,xx));
+Apply(def,xx->-DeformCellSgnHtpy(n,xx));
 for x in defcp do
 Append(DCSHrec[n+1][k], -SignInt(x)*DCSHrec[n+1][AbsInt(x)]);
 od;
@@ -1054,7 +1080,7 @@ InstallOtherMethod( Homology,
  [IsHapRegularCWComplex,IsInt],
  function(Y,n) local C, H, m, bool;
  if not IsBound(Y!.orientation) then
- Print("Can only compute the mod 2 homology as no orientation is available.\n");
+ OrientRegularCWComplex(Y);
  fi;
  m:=Minimum(n+1,Dimension(Y));
  bool:=Y!.vectorField=fail or Y!.criticalCells=fail;
@@ -1074,6 +1100,35 @@ return H;
  end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod( Cohomology,
+"Coomology of a regular CW spaces, using discrete vector fields",
+ [IsHapRegularCWComplex,IsInt],
+ function(Y,n) local C, H, m, bool;
+ if not IsBound(Y!.orientation) then
+ OrientRegularCWComplex(Y);
+ fi;
+ m:=Minimum(n+1,Dimension(Y));
+ bool:=Y!.vectorField=fail or Y!.criticalCells=fail;
+ if bool then
+    if m=Dimension(Y) then CriticalCellsOfRegularCWComplex(Y);
+    else
+    CocriticalCellsOfRegularCWComplex(Y,m); fi;
+ fi;
+ C:=ChainComplex(Y);
+ H:=Cohomology(HomToIntegers(C),n);
+ if m<Dimension(Y) and bool then
+ Y!.vectorField:=fail;
+ Y!.criticalCells:=fail;
+ Y!.properties:=Filtered(Y!.properties,x->not x[1]="codim");
+ fi;
+return H;
+ end);
+##########################################################
+##########################################################
+
 
 ##########################################################
 ##########################################################

@@ -1,54 +1,26 @@
   
-  [1X36 [33X[0;0YSome functions for accessing basic data[133X[101X
+  [1X36 [33X[0;0YParallel Computation - Extra Functions[133X[101X
   
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XBoundaryMap(C)[110X[133X
+  [33X[0;0Y[10XChildFunction("function(arg);",s)[110X[133X
   
-  [33X[0;0YInputs  a  resolution,  chain  complex  or cochain complex [22XC[122X and returns the
-  function [22XC!.boundary[122X.[133X
+  [33X[0;0YThis  runs  the GAP function "function(arg);" on a child process accessed by
+  the stream s. The output from "func;" can be accessed via the stream.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XBoundaryMatrix(C,n)[110X[133X
+  [33X[0;0Y[10XChildRead(s)[110X[133X
   
-  [33X[0;0YInputs  a  chain  or  cochain complex [22XC[122X and integer [22Xn[122X>[22X0[122X. It returns the [22Xn[122X-th
-  boundary map of [22XC[122X as a matrix.[133X
+  [33X[0;0YThis   returns,  as  a  string,  the  output  of  the  last  application  of
+  [22XChildFunction("function(arg);",s)[122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XDimension(C) [110X[133X
-  [33X[0;0Y[10XDimension(M) [110X[133X
+  [33X[0;0Y[10XChildReadEval(s)[110X[133X
   
-  [33X[0;0YInputs  a  resolution,  chain  complex  or cochain complex [22XC[122X and returns the
-  function [22XC!.dimension[122X .[133X
-  
-  [33X[0;0YAlternatively,  inputs an [22XFpG[122X-module [22XM[122X and returns its dimension as a vector
-  space over the field of [22Xp[122X elements.[133X
+  [33X[0;0YThis  returns, as an evaluated string, the output of the last application of
+  [22XChildFunction("function(arg);",s)[122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XEvaluateProperty(X,"name") [110X[133X
+  [33X[0;0Y[10XParallelList(I,fn,L)[110X[133X
   
-  [33X[0;0YInputs  a  component  object  [22XX[122X (such as a [22XZG[122X-resolution or chain map) and a
-  string  "name"  (such as "characteristic" or "type"). It searches [22XX.property[122X
-  for the pair ["name",value] and returns value. If [22XX.property[122X does not exist,
-  or if ["name",value] does not exist, it returns fail.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XGroupOfResolution(R)[110X[133X
-  
-  [33X[0;0YInputs a [22XZG[122X-resolution [22XR[122X and returns the group [22XG[122X.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XLength(R)[110X[133X
-  
-  [33X[0;0YInputs  a resolution [22XR[122X and returns its length (i.e. the number of terms of [22XR[122X
-  that HAP has computed).[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XMap(f)[110X[133X
-  
-  [33X[0;0YInputs  a  chain  map, or cochain map or equivariant chain map [22Xf[122X and returns
-  the mapping function (as opposed to the target or the source of [22Xf[122X) .[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XSource(f)[110X[133X
-  
-  [33X[0;0YInputs  a chain map, or cochain map, or equivariant chain map, or [22XFpG[122X-module
-  homomorphism [22Xf[122X and returns it source.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XTarget(f)[110X[133X
-  
-  [33X[0;0YInputs  a chain map, or cochain map, or equivariant chain map, or [22XFpG[122X-module
-  homomorphism [22Xf[122X and returns its target.[133X
+  [33X[0;0YInputs  a  list  [22XI[122X, a function [22Xfn[122X such that [22Xfn(x)[122X is defined for all [22Xx[122X in [22XI[122X,
+  and   a  list  of  children  [22XL[122X.  It  uses  the  children  in  [22XL[122X  to  compute
+  [22XList(I,x->fn(x))[122X.  (Obviously  the  function [22Xfn[122X must be defined on all child
+  processes in [22XL[122X.)[133X
   

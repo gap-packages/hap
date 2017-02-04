@@ -1,112 +1,162 @@
   
-  [1X25 [33X[0;0YCoxeter diagrams and graphs of groups[133X[101X
+  [1X25 [33X[0;0YSimplicial groups[133X[101X
   
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramComponents(D) [110X[133X
+  [33X[0;0Y[10XNerveOfCatOneGroup(G,n)[110X[133X
   
-  [33X[0;0YInputs a Coxeter diagram [22XD[122X and returns a list [22X[D_1, ..., D_d][122X of the maximal
-  connected subgraphs [22XD_i[122X.[133X
+  [33X[0;0YInputs   a   cat-1-group  [22XG[122X  and  a  positive  integer  [22Xn[122X.  It  returns  the
+  low-dimensional part of the nerve of [22XG[122X as a simplicial group of length [22Xn[122X.[133X
+  [33X[0;0YThis  function applies both to cat-1-groups for which IsHapCatOneGroup(G) is
+  true, and to cat-1-groups produced using the Xmod package.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramDegree(D,v) [110X[133X
+  [33X[0;0Y[10XEilenbergMacLaneSimplicialGroup(G,n,dim)[110X[133X
   
-  [33X[0;0YInputs  a  Coxeter  diagram [22XD[122X and vertex [22Xv[122X. It returns the degree of [22Xv[122X (i.e.
-  the number of edges incident with [22Xv[122X).[133X
+  [33X[0;0YInputs  a  group  [22XG[122X,  a  positive integer [22Xn[122X, and a positive integer [22Xdim[122X. The
+  function  returns  the  first  [22X1+dim[122X  terms of a simplicial group with [22Xn-1[122Xst
+  homotopy group equal to [22XG[122X and all other homotopy groups equal to zero.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramDisplay(D) [110X[133X
-  [33X[0;0Y[10XCoxeterDiagramDisplay(D,"web browser") [110X[133X
+  [33X[0;0Y[10XEilenbergMacLaneSimplicialGroupMap(f,n,dim)[110X[133X
   
-  [33X[0;0YInputs  a  Coxeter  diagram  [22XD[122X  and  displays it as a .gif file. It uses the
-  Mozilla web browser as a default to view the diagram. An alternative browser
-  can be set using a second argument.[133X
-  
-  [33X[0;0YThis function requires Graphviz software.[133X
+  [33X[0;0YInputs  a  group  homomorphism  [22Xf:G→ Q[122X, a positive integer [22Xn[122X, and a positive
+  integer  [22Xdim[122X.  The  function  returns  the first [22X1+dim[122X terms of a simplicial
+  group homomorphism [22Xf:K(G,n) → K(Q,n)[122X of Eilenberg-MacLane simplicial groups.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramFpArtinGroup(D) [110X[133X
+  [33X[0;0Y[10XMooreComplex(G)[110X[133X
   
-  [33X[0;0YInputs  a Coxeter diagram [22XD[122X and returns the corresponding finitely presented
-  Artin group.[133X
+  [33X[0;0YInputs a simplicial group [22XG[122X and returns its Moore complex as a [22XG[122X-complex.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramFpCoxeterGroup(D) [110X[133X
+  [33X[0;0Y[10XChainComplexOfSimplicialGroup(G)[110X[133X
   
-  [33X[0;0YInputs  a Coxeter diagram [22XD[122X and returns the corresponding finitely presented
-  Coxeter group.[133X
+  [33X[0;0YInputs  a  simplicial  group [22XG[122X and returns the cellular chain complex [22XC[122X of a
+  CW-space  [22XX[122X  represented  by the homotopy type of the simplicial group. Thus
+  the homology groups of [22XC[122X are the integral homology groups of [22XX[122X.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramIsSpherical(D) [110X[133X
+  [33X[0;0Y[10XSimplicialGroupMap(f)[110X[133X
   
-  [33X[0;0YInputs  a  Coxeter  diagram  [22XD[122X  and returns "true" if the associated Coxeter
-  groups is finite, and returns "false" otherwise.[133X
+  [33X[0;0YInputs  a  homomorphism [22Xf:G→ Q[122X of simplicial groups. The function returns an
+  induced  map [22Xf:C(G) → C(Q)[122X of chain complexes whose homology is the integral
+  homology of the simplicial group G and Q respectively.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramMatrix(D) [110X[133X
+  [33X[0;0Y[10XHomotopyGroup(G,n)[110X[133X
   
-  [33X[0;0YInputs  a  Coxeter  diagram [22XD[122X and returns a matrix representation of it. The
-  matrix is given as a function [22XDiagramMatrix(D)(i,j)[122X where [22Xi,j[122X can range over
-  the vertices.[133X
+  [33X[0;0YInputs  a simplicial group [22XG[122X and a positive integer [22Xn[122X. The integer [22Xn[122X must be
+  less than the length of [22XG[122X. It returns, as a group, the (n)-th homology group
+  of  its  Moore  complex.  Thus  HomotopyGroup(G,0)  returns the "fundamental
+  group" of [22XG[122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterSubDiagram(D,V) [110X[133X
+  [33X[0;0Y[10XRepresentation of elements in the bar resolution[110X[133X
   
-  [33X[0;0YInputs  a  Coxeter  diagram [22XD[122X and a subset [22XV[122X of its vertices. It returns the
-  full sub-diagram of [22XD[122X with vertex set [22XV[122X.[133X
+  [33X[0;0YFor  a  group  G we denote by [22XB_n(G)[122X the free [22XZG[122X-module with basis the lists
+  [22X[g_1 | g_2 | ... | g_n][122X where the [22Xg_i[122X range over [22XG[122X.[133X
+  [33X[0;0YWe represent a word[133X
+  [33X[0;0Y[22Xw  = h_1.[g_11 | g_12 | ... | g_1n] - h_2.[g_21 | g_22 | ... | g_2n] + ... +
+  h_k.[g_k1 | g_k2 | ... | g_kn][122X[133X
+  [33X[0;0Yin [22XB_n(G)[122X as a list of lists:[133X
+  [33X[0;0Y[22X[  [+1,h_1,g_11  , g_12 , ... , g_1n] , [-1, h_2,g_21 , g_22 , ... | g_2n] +
+  ... + [+1, h_k,g_k1 , g_k2 , ... , g_kn][122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XCoxeterDiagramVertices(D) [110X[133X
+  [33X[0;0Y[10XBarResolutionBoundary(w)[110X[133X
   
-  [33X[0;0YInputs a Coxeter diagram [22XD[122X and returns its set of vertices.[133X
+  [33X[0;0YThis  function  inputs  a  word  [22Xw[122X  in  the bar resolution module [22XB_n(G)[122X and
+  returns  its image under the boundary homomorphism [22Xd_n: B_n(G) → B_n-1(G)[122X in
+  the bar resolution.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XEvenSubgroup(G) [110X[133X
+  [33X[0;0Y[10XBarResolutionHomotopy(w)[110X[133X
   
-  [33X[0;0YInputs  a group [22XG[122X and returns a subgroup [22XG^+[122X. The subgroup is that generated
-  by  all products [22Xxy[122X where [22Xx[122X and [22Xy[122X range over the generating set for [22XG[122X stored
-  by  GAP.  The  subgroup  is  probably  only meaningful when [22XG[122X is an Artin or
-  Coxeter group.[133X
+  [33X[0;0YThis  function  inputs  a  word  [22Xw[122X  in  the bar resolution module [22XB_n(G)[122X and
+  returns  its  image under the contracting homotopy [22Xh_n: B_n(G) → B_n+1(G)[122X in
+  the bar resolution.[133X
+  [33X[0;0YThis function is currently being implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X GraphOfGroupsDisplay(D) [110X[133X
-  [33X[0;0Y[10XGraphOfGroupsDisplay(D,"web browser") [110X[133X
+  [33X[0;0Y[10XRepresentation of elements in the bar complex[110X[133X
   
-  [33X[0;0YInputs  a  graph  of  groups  [22XD[122X  and displays it as a .gif file. It uses the
-  Mozilla web browser as a default to view the diagram. An alternative browser
-  can be set using a second argument.[133X
-  
-  [33X[0;0YThis function requires Graphviz software.[133X
+  [33X[0;0YFor  a  group  G  we denote by [22XBC_n(G)[122X the free abelian group with basis the
+  lists [22X[g_1 | g_2 | ... | g_n][122X where the [22Xg_i[122X range over [22XG[122X.[133X
+  [33X[0;0YWe represent a word[133X
+  [33X[0;0Y[22Xw  = [g_11 | g_12 | ... | g_1n] - [g_21 | g_22 | ... | g_2n] + ... + [g_k1 |
+  g_k2 | ... | g_kn][122X[133X
+  [33X[0;0Yin [22XBC_n(G)[122X as a list of lists:[133X
+  [33X[0;0Y[22X[  [+1,g_11  ,  g_12  , ... , g_1n] , [-1, g_21 , g_22 , ... | g_2n] + ... +
+  [+1, g_k1 , g_k2 , ... , g_kn][122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X GraphOfResolutions(D,n) [110X[133X
+  [33X[0;0Y[10XBarComplexBoundary(w)[110X[133X
   
-  [33X[0;0YInputs  a  graph of groups [22XD[122X and a positive integer [22Xn[122X. It returns a graph of
-  resolutions,  each  resolution  being  of  length  [22Xn[122X.  It  uses the function
-  ResolutionGenericGroup() to produce the resolutions.[133X
+  [33X[0;0YThis  function  inputs  a word [22Xw[122X in the n-th term of the bar complex [22XBC_n(G)[122X
+  and  returns  its  image  under  the  boundary  homomorphism  [22Xd_n: BC_n(G) →
+  BC_n-1(G)[122X in the bar complex.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X GraphOfGroups(D) [110X[133X
+  [33X[0;0Y[10XBarResolutionEquivalence(R)[110X[133X
   
-  [33X[0;0YInputs  a  graph  of  resolutions  [22XD[122X  and returns the corresponding graph of
-  groups.[133X
+  [33X[0;0YThis  function  inputs a free [22XZG[122X-resolution [22XR[122X. It returns a component object
+  HE with components[133X
+  [33X[0;0YHE!.phi(n,w)  is a function which inputs a non-negative integer [22Xn[122X and a word
+  [22Xw[122X  in  [22XB_n(G)[122X. It returns the image of [22Xw[122X in [22XR_n[122X under a chain equivalence [22Xϕ:
+  B_n(G) → R_n[122X.[133X
+  [33X[0;0YHE!.psi(n,w)  is a function which inputs a non-negative integer [22Xn[122X and a word
+  [22Xw[122X  in  [22XR_n[122X. It returns the image of [22Xw[122X in [22XB_n(G)[122X under a chain equivalence [22Xψ:
+  R_n → B_n(G)[122X.[133X
+  [33X[0;0YHE!.equiv(n,w)  is  a  function  which inputs a non-negative integer [22Xn[122X and a
+  word  [22Xw[122X  in  [22XB_n(G)[122X.  It  returns  the  image  of  [22Xw[122X  in  [22XB_n+1(G)[122X  under  a
+  [22XZG[122X-equivariant homomorphism[133X
+  [33X[0;0Y[22Xequiv(n,-) : B_n(G) → B_n+1(G)[122X[133X
+  [33X[0;0Ysatisfying[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Yw - \psi ( \phi (w)) = d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .[133X [124X[133X
+  
+  
+  [33X[0;0Ywhere  [22Xd(n,-):  B_n(G)  →  B_n-1(G)[122X  is the boundary homomorphism in the bar
+  resolution.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10X GraphOfResolutionsDisplay(D) [110X[133X
+  [33X[0;0Y[10XBarComplexEquivalence(R)[110X[133X
   
-  [33X[0;0YInputs  a graph of resolutions [22XD[122X and displays it as a .gif file. It uses the
-  Mozilla web browser as a default to view the diagram.[133X
+  [33X[0;0YThis  function  inputs a free [22XZG[122X-resolution [22XR[122X. It first constructs the chain
+  complex [22XT=TensorWithIntegerts(R)[122X. The function returns a component object HE
+  with components[133X
+  [33X[0;0YHE!.phi(n,w)  is a function which inputs a non-negative integer [22Xn[122X and a word
+  [22Xw[122X  in [22XBC_n(G)[122X. It returns the image of [22Xw[122X in [22XT_n[122X under a chain equivalence [22Xϕ:
+  BC_n(G) → T_n[122X.[133X
+  [33X[0;0YHE!.psi(n,w)  is  a  function  which  inputs a non-negative integer [22Xn[122X and an
+  element  [22Xw[122X  in  [22XT_n[122X.  It  returns  the  image  of [22Xw[122X in [22XBC_n(G)[122X under a chain
+  equivalence [22Xψ: T_n → BC_n(G)[122X.[133X
+  [33X[0;0YHE!.equiv(n,w)  is  a  function  which inputs a non-negative integer [22Xn[122X and a
+  word  [22Xw[122X  in  [22XBC_n(G)[122X.  It  returns  the  image  of  [22Xw[122X  in  [22XBC_n+1(G)[122X under a
+  homomorphism[133X
+  [33X[0;0Y[22Xequiv(n,-) : BC_n(G) → BC_n+1(G)[122X[133X
+  [33X[0;0Ysatisfying[133X
   
-  [33X[0;0YThis function requires Graphviz software.[133X
+  
+        [33X[1;6Y[24X[33X[0;0Yw - \psi ( \phi (w)) = d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .[133X [124X[133X
+  
+  
+  [33X[0;0Ywhere  [22Xd(n,-):  BC_n(G)  → BC_n-1(G)[122X is the boundary homomorphism in the bar
+  complex.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XGraphOfGroupsTest(D) [110X[133X
+  [33X[0;0Y[10XRepresentation of elements in the bar cocomplex[110X[133X
   
-  [33X[0;0YInputs  an  object  [22XD[122X  and  itries  to test whether it is a Graph of Groups.
-  However,  it  DOES NOT test the injectivity of any homomorphisms. It returns
-  true if [22XD[122X passes the test, and false otherwise.[133X
-  
-  [33X[0;0YNote  that there is no function [22XIsHapGraphOfGroups()[122X because no special data
-  type has been created for these graphs.[133X
+  [33X[0;0YFor  a  group  G  we denote by [22XBC^n(G)[122X the free abelian group with basis the
+  lists [22X[g_1 | g_2 | ... | g_n][122X where the [22Xg_i[122X range over [22XG[122X.[133X
+  [33X[0;0YWe represent a word[133X
+  [33X[0;0Y[22Xw  = [g_11 | g_12 | ... | g_1n] - [g_21 | g_22 | ... | g_2n] + ... + [g_k1 |
+  g_k2 | ... | g_kn][122X[133X
+  [33X[0;0Yin [22XBC^n(G)[122X as a list of lists:[133X
+  [33X[0;0Y[22X[  [+1,g_11  ,  g_12  , ... , g_1n] , [-1, g_21 , g_22 , ... | g_2n] + ... +
+  [+1, g_k1 , g_k2 , ... , g_kn][122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XTreeOfGroupsToContractibleGcomplex(D,G) [110X[133X
+  [33X[0;0Y[10XBarCocomplexCoboundary(w)[110X[133X
   
-  [33X[0;0YInputs  a graph of groups [22XD[122X which is a tree, and also inputs the fundamental
-  group [22XG[122X of the tree in a form which contains each of the groups in the graph
-  as subgroups. It returns a corresponding contractible G-complex.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XTreeOfResolutionsToContractibleGcomplex(D,G) [110X[133X
-  
-  [33X[0;0YInputs  a  graph  of  resolutions  [22XD[122X  which  is  a tree, and also inputs the
-  fundamental  group [22XG[122X of the tree in a form which contains each of the groups
-  in   the  graph  as  subgroups.  It  returns  a  corresponding  contractible
-  G-complex.  The  resolutions  are  stored as a component of the contractible
-  [22XG[122X-complex.[133X
-  
-  [33X[0;0Y#[133X
+  [33X[0;0YThis  function inputs a word [22Xw[122X in the n-th term of the bar cocomplex [22XBC^n(G)[122X
+  and  returns  its  image  under  the  coboundary homomorphism [22Xd^n: BC^n(G) →
+  BC^n+1(G)[122X in the bar cocomplex.[133X
+  [33X[0;0YThis function was implemented by [12XVan Luyen Le[112X.[133X
   

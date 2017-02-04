@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP) - Chapter 21:  Meataxe modules</title>
+<title>GAP (HAP) - Chapter 21:  FpG-modules</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -14,33 +14,165 @@
 </head>
 <body class="chap21"  onload="jscontent()">
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap20.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap22.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X85B05BBA78ED7BE2" name="X85B05BBA78ED7BE2"></a></p>
-<div class="ChapSects"><a href="chap21.html#X85B05BBA78ED7BE2">21 <span class="Heading"> Meataxe modules</span></a>
+<p><a id="X7A7916087F55765C" name="X7A7916087F55765C"></a></p>
+<div class="ChapSects"><a href="chap21.html#X7A7916087F55765C">21 <span class="Heading"> <span class="SimpleMath">FpG</span>-modules</span></a>
 </div>
 
-<h3>21 <span class="Heading"> Meataxe modules</span></h3>
+<h3>21 <span class="Heading"> <span class="SimpleMath">FpG</span>-modules</span></h3>
 
 <div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
 <tr>
-<td class="tdleft"><code class="code">DesuspensionMtxModule(M)</code></p>
+<td class="tdleft"><code class="code">CompositionSeriesOfFpGModules(M) </code></p>
 
-<p>Inputs a meataxe module <span class="SimpleMath">M</span> over the field of <span class="SimpleMath">p</span> elements and returns an FpG-module DM. The two modules are related mathematically by the existence of a short exact sequence <span class="SimpleMath">DM ⟶ FM ⟶ M</span> with <span class="SimpleMath">FM</span> a free module. Thus the homological properties of <span class="SimpleMath">DM</span> are equal to those of <span class="SimpleMath">M</span> with a dimension shift.</p>
-
-<p>(If <span class="SimpleMath">G:=Group(M.generators)</span> is a <span class="SimpleMath">p</span>-group then <span class="SimpleMath">FM</span> is a projective cover of <span class="SimpleMath">M</span> in the sense that the homomorphism <span class="SimpleMath">FM ⟶ M</span> does not factor as <span class="SimpleMath">FM ⟶ P ⟶ M</span> for any projective module <span class="SimpleMath">P</span>.)</td>
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and returns a list of <span class="SimpleMath">FpG</span>-modules that constitute a composition series for <span class="SimpleMath">M</span>.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">FpG_to_MtxModule(M)</code></p>
+<td class="tdleft"><code class="code">DirectSumOfFpGModules(M,N) </code> <code class="code">DirectSumOfFpGModules([ M[1], M[2], ..., M[k] ])) </code></p>
 
-<p>Inputs an FpG-module <span class="SimpleMath">M</span> and returns an isomorphic meataxe module.</td>
+<p>Inputs two <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> with common group and characteristic. It returns the direct sum of <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> as an <span class="SimpleMath">FpG</span>-Module.</p>
+
+<p>Alternatively, the function can input a list of <span class="SimpleMath">FpG</span>-modules with common group <span class="SimpleMath">G</span>. It returns the direct sum of the list.</td>
 </tr>
 <tr>
-<td class="tdleft"><code class="code">GeneratorsOfMtxModule(M)</code></p>
+<td class="tdleft"><code class="code">FpGModule(A,P) </code> <code class="code">FpGModule(A,G,p) </code></p>
 
-<p>Inputs a meataxe module <span class="SimpleMath">M</span> acting on, say, the vector space <span class="SimpleMath">V</span>. The function returns a minimal list of row vectors in <span class="SimpleMath">V</span> which generate <span class="SimpleMath">V</span> as a <span class="SimpleMath">G</span>-module (where G=Group(M.generators) ).</td>
+<p>Inputs a <span class="SimpleMath">p</span>-group <span class="SimpleMath">P</span> and a matrix <span class="SimpleMath">A</span> whose rows have length a multiple of the order of <span class="SimpleMath">G</span>. It returns the "canonical" <span class="SimpleMath">FpG</span>-module generated by the rows of <span class="SimpleMath">A</span>.</p>
+
+<p>A small non-prime-power group <span class="SimpleMath">G</span> can also be input, provided the characteristic <span class="SimpleMath">p</span> is entered as a third input variable.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">FpGModuleDualBasis(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span>. It returns a record <span class="SimpleMath">R</span> with two components:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">R.freeModule</span> is the free module <span class="SimpleMath">FG</span> of rank one.</p>
+
+</li>
+<li><p><span class="SimpleMath">R.basis</span> is a list representing an <span class="SimpleMath">F</span>-basis for the module <span class="SimpleMath">Hom_FG(M,FG)</span>. Each term in the list is a matrix <span class="SimpleMath">A</span> whose rows are vectors in <span class="SimpleMath">FG</span> such that <span class="SimpleMath">M!.generators[i] ⟶ A[i]</span> extends to a module homomorphism <span class="SimpleMath">M ⟶ FG</span>.</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">FpGModuleHomomorphism(M,N,A) </code> <code class="code">FpGModuleHomomorphismNC(M,N,A) </code></p>
+
+<p>Inputs <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> over a common <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span>. Also inputs a list <span class="SimpleMath">A</span> of vectors in the vector space spanned by <span class="SimpleMath">N!.matrix</span>. It tests that the function</p>
+
+<p><span class="SimpleMath">M!.generators[i] ⟶ A[i]</span></p>
+
+<p>extends to a homomorphism of <span class="SimpleMath">FpG</span>-modules and, if the test is passed, returns the corresponding <span class="SimpleMath">FpG</span>-module homomorphism. If the test is failed it returns fail.</p>
+
+<p>The "NC" version of the function assumes that the input defines a homomorphism and simply returns the <span class="SimpleMath">FpG</span>-module homomorphism.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code"> DesuspensionFpGModule(M,n)</code> <code class="code">DesuspensionFpGModule(R,n) </code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and and FpG-module <span class="SimpleMath">M</span>. It returns an FpG-module <span class="SimpleMath">D^nM</span> which is mathematically related to <span class="SimpleMath">M</span> via an exact sequence <span class="SimpleMath">0 ⟶ D^nM ⟶ R_n ⟶ ... ⟶ R_0 ⟶ M ⟶ 0</span> where <span class="SimpleMath">R_∗</span> is a free resolution. (If <span class="SimpleMath">G=Group(M)</span> is of prime-power order then the resolution is minimal.)</p>
+
+<p>Alternatively, the function can input a positive integer <span class="SimpleMath">n</span> and at least <span class="SimpleMath">n</span> terms of a free resolution <span class="SimpleMath">R</span> of <span class="SimpleMath">M</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RadicalOfFpGModule(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> with <span class="SimpleMath">G</span> a <span class="SimpleMath">p</span>-group, and returns the Radical of <span class="SimpleMath">M</span> as an <span class="SimpleMath">FpG</span>-module. (Ig <span class="SimpleMath">G</span> is not a <span class="SimpleMath">p</span>-group then a submodule of the radical is returned.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RadicalSeriesOfFpGModule(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and returns a list of <span class="SimpleMath">FpG</span>-modules that constitute the radical series for <span class="SimpleMath">M</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GeneratorsOfFpGModule(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and returns a matrix whose rows correspond to a minimal generating set for <span class="SimpleMath">M</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ImageOfFpGModuleHomomorphism(f) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module homomorphism <span class="SimpleMath">f:M ⟶ N</span> and returns its image <span class="SimpleMath">f(M)</span> as an <span class="SimpleMath">FpG</span>-module.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GroupAlgebraAsFpGModule(G) </code></p>
+
+<p>Inputs a <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span> and returns its mod <span class="SimpleMath">p</span> group algebra as an <span class="SimpleMath">FpG</span>-module.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IntersectionOfFpGModules(M,N) </code></p>
+
+<p>Inputs two <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M, N</span> arising as submodules in a common free module <span class="SimpleMath">(FG)^n</span> where <span class="SimpleMath">G</span> is a finite group and <span class="SimpleMath">F</span> the field of <span class="SimpleMath">p</span>-elements. It returns the <span class="SimpleMath">FpG</span>-module arising as the intersection of <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">IsFpGModuleHomomorphismData(M,N,A) </code></p>
+
+<p>Inputs <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> over a common <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span>. Also inputs a list <span class="SimpleMath">A</span> of vectors in the vector space spanned by <span class="SimpleMath">N!.matrix</span>. It returns true if the function</p>
+
+<p><span class="SimpleMath">M!.generators[i] ⟶ A[i]</span></p>
+
+<p>extends to a homomorphism of <span class="SimpleMath">FpG</span>-modules. Otherwise it returns false.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MaximalSubmoduleOfFpGModule(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and returns one maximal <span class="SimpleMath">FpG</span>-submodule of <span class="SimpleMath">M</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MaximalSubmodulesOfFpGModule(M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and returns the list of maximal <span class="SimpleMath">FpG</span>-submodules of <span class="SimpleMath">M</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">MultipleOfFpGModule(w,M) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and a list <span class="SimpleMath">w:=[g_1 , ..., g_t]</span> of elements in the group <span class="SimpleMath">G=M!.group</span>. The list <span class="SimpleMath">w</span> can be thought of as representing the element <span class="SimpleMath">w=g_1 + ... + g_t</span> in the group algebra <span class="SimpleMath">FG</span>, and the function returns a semi-echelon matrix <span class="SimpleMath">B</span> which is a basis for the vector subspace <span class="SimpleMath">wM</span> .</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ProjectedFpGModule(M,k) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> of ambient dimension <span class="SimpleMath">n|G|</span>, and an integer <span class="SimpleMath">k</span> between <span class="SimpleMath">1</span> and <span class="SimpleMath">n</span>. The module <span class="SimpleMath">M</span> is a submodule of the free module <span class="SimpleMath">(FG)^n</span> . Let <span class="SimpleMath">M_k</span> denote the intersection of <span class="SimpleMath">M</span> with the last <span class="SimpleMath">k</span> summands of <span class="SimpleMath">(FG)^n</span> . The function returns the image of the projection of <span class="SimpleMath">M_k</span> onto the <span class="SimpleMath">k</span>-th summand of <span class="SimpleMath">(FG)^n</span> . This image is returned an <span class="SimpleMath">FpG</span>-module with ambient dimension <span class="SimpleMath">|G|</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RandomHomomorphismOfFpGModules(M,N) </code></p>
+
+<p>Inputs two <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> over a common group <span class="SimpleMath">G</span>. It returns a random matrix <span class="SimpleMath">A</span> whose rows are vectors in <span class="SimpleMath">N</span> such that the function</p>
+
+<p><span class="SimpleMath">M!.generators[i] ⟶ A[i]</span></p>
+
+<p>extends to a homomorphism <span class="SimpleMath">M ⟶ N</span> of <span class="SimpleMath">FpG</span>-modules. (There is a problem with this function at present.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Rank(f) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module homomorphism <span class="SimpleMath">f:M ⟶ N</span> and returns the dimension of the image of <span class="SimpleMath">f</span> as a vector space over the field <span class="SimpleMath">F</span> of <span class="SimpleMath">p</span> elements.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SumOfFpGModules(M,N) </code></p>
+
+<p>Inputs two <span class="SimpleMath">FpG</span>-modules <span class="SimpleMath">M, N</span> arising as submodules in a common free module <span class="SimpleMath">(FG)^n</span> where <span class="SimpleMath">G</span> is a finite group and <span class="SimpleMath">F</span> the field of <span class="SimpleMath">p</span>-elements. It returns the <span class="SimpleMath">FpG</span>-Module arising as the sum of <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SumOp(f,g) </code></p>
+
+<p>Inputs two <span class="SimpleMath">FpG</span>-module homomorphisms <span class="SimpleMath">f,g:M ⟶ N</span> with common sorce and common target. It returns the sum <span class="SimpleMath">f+g:M ⟶ N</span> . (This operation is also available using "+".</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">VectorsToFpGModuleWords(M,L) </code></p>
+
+<p>Inputs an <span class="SimpleMath">FpG</span>-module <span class="SimpleMath">M</span> and a list <span class="SimpleMath">L=[v_1,... ,v_k]</span> of vectors in <span class="SimpleMath">M</span>. It returns a list <span class="SimpleMath">L'= [x_1,...,x_k]</span> . Each <span class="SimpleMath">x_j=[[W_1,G_1],...,[W_t,G_t]]</span> is a list of integer pairs corresponding to an expression of <span class="SimpleMath">v_j</span> as a word</p>
+
+<p><span class="SimpleMath">v_j = g_1*w_1 + g_2*w_1 + ... + g_t*w_t</span></p>
+
+<p>where</p>
+
+<p><span class="SimpleMath">g_i=Elements(M!.group)[G_i]</span></p>
+
+<p><span class="SimpleMath">w_i=GeneratorsOfFpGModule(M)[W_i]</span> .</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -49,7 +181,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap20.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap22.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

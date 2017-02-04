@@ -16,10 +16,11 @@ local
 	BoundaryC,
 	LengthC,
 	M,
-        One,
+        myOne,
 	Charact;
 
-One:=Elements(GaloisField(prime))[2];
+#One:=Elements(GaloisField(prime))[2];
+myOne:=One(GF(prime));
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
 
@@ -70,7 +71,7 @@ if M[n]=n then
 
 fi;
 
-return M[n][k]*One;
+return M[n][k]*myOne;
 end;
 #####################################################################
 

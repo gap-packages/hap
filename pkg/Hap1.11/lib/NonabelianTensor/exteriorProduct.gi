@@ -69,14 +69,20 @@ G2homF:=GroupHomomorphismByFunction(H,F,x->Image(BG2homF,Image(HhomBH,x)));
 AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AH,F,g->Image(G2homF,Image(AHhomH,g)));
 
+if IsSolvable(AG) then #
+NiceGensAG:=Pcgs(AG); #Need to check the maths here!
+         else          #
+
 NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 NiceGensAG[1]:=[Identity(AG)];
 NiceGensAG:=Flat(NiceGensAG);
 Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
+fi;
 
-NiceGensAG:=Elements(AG);   ##THIS IS OVERKILL!! BUT IT FIXES A SLIP
-
+if IsSolvable(AH) then #
+NiceGensAH:=Pcgs(AH); #Need to check the maths here!
+         else          #
 
 NiceGensAH:=
 List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
@@ -85,10 +91,8 @@ NiceGensAH:=Flat(NiceGensAH);
 NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
+fi;
 
-NiceGensAH:=Elements(AH);     ##THIS IS OVERKILL!! 
-                              ## BUT IT FIXES A SLIP AND 
-                              ##SLOWS THINGS UP TO AN UNACCEPTABLE POINT.
 
 relsT:=[];
 for x in relsG do
@@ -99,20 +103,26 @@ Append(relsT,[Image(BG2homF,x)]);
 od;
 
 
-#for z in GeneratorsOfGroup(AG) do
 for z in NiceGensAG do
-for x in NiceGensAG do
-for y in NiceGensAH do
+for x in gensAG do
+for y in gensAH do
 v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG1homF,z) ;
 w:=Comm(Image(AG2homF,y^z),Image(AG1homF,x^z) );
 Append(relsT,[v*w]);
-if z in AH then
+od;
+od;
+od;
+
+for z in NiceGensAH do
+for x in gensAG do
+for y in gensAH do
+w:=Comm(Image(AG2homF,y^z),Image(AG1homF,x^z) );
 v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG2homF,z);
 Append(relsT,[v*w]);
-fi;
 od;
 od;
 od;
+
 
 for y in AH do
 v:=Comm(Image(AG1homF,y),Image(AG2homF,y));

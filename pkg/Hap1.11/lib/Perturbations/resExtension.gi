@@ -222,6 +222,9 @@ od;
 od;
 fi;
 
+#Print("\n",[NisFinite, GisFinite, EisFinite],"\n");
+
+
 T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE);
 
         ########################################################

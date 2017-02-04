@@ -29,7 +29,7 @@ od;
 else
 
 for x in G do
-    w:=x*v;
+    w:=v*x;
     Append(Points, [w]);
     od;
 fi;

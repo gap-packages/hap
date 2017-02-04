@@ -1,5 +1,5 @@
 HAPchildren:=[];
-
+HAP_XYXYXYXY:=0;
 
 ####################################################
 ####################################################
@@ -60,6 +60,9 @@ end);
 ####################################################
 ####################################################
 
+ChildCreate:=ChildProcess;
+MakeReadOnlyGlobal("ChildCreate");
+
 ####################################################
 ####################################################
 InstallGlobalFunction(ChildClose,
@@ -104,16 +107,38 @@ end);
 ####################################################
 ####################################################
 
+ChildKill:=ChildClose;
+MakeReadOnlyGlobal("ChildKill");
+
+####################################################
+####################################################
+InstallGlobalFunction(ChildRestart,
+function(s)
+local r;
+ChildKill(s);
+r:=ChildCreate();
+s.name:=r.name; s.stream:=r.stream;
+end);
+####################################################
+####################################################
+
 
 ####################################################
 ####################################################
 InstallGlobalFunction(ChildCommand,
-function(command,s)
-local i;
+function(arg)
+local command, s, i;
+
+command:=arg[1];
+s:=arg[2];
+if Length(arg)=2 then
+NextAvailableChild([s]);
+fi;
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 Append(command,";");
 
+WriteLine(s.stream,"true;");
 if HAPchildFunctionToggle then
 while not ReadAllLine(s.stream)=fail do  #Flush stream
 od;
@@ -123,11 +148,7 @@ WriteLine(s.stream,command);;
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
 
-#if HAPchildFunctionToggle then
-#while not ReadAllLine(s.stream)=fail do  #Flush stream
-#od;
-#fi;
-
+return true;
 end);
 ####################################################
 ####################################################
@@ -205,20 +226,20 @@ if s!.remote then
         i:=Concatenation(["sftp -b ",flebatch," ",s!.computer]);
         Exec(i);
 	i:=Concatenation(["Exec(\"mv ",fleRemote," ",fle," \")"]);
-        ChildCommand(i,s);
+        ChildCommand(i,s,true);
         fi;
 
 i:=Concatenation("Read(\"",fle,"\");");
-ChildCommand(i,s);
+ChildCommand(i,s,true);
 if not s!.remote then
 i:=Concatenation("Exec(\"rm -r ",fle{[1..Length(fle)-4]},"\");");
 else 
 i:=Concatenation("Exec(\"rm ",fle,"\");");
 fi;
-ChildCommand(i,s);
+ChildCommand(i,s,true);
 if s!.remote then 
 i:=Concatenation("Exec(\"rm ",flebatch,"\");");
-ChildCommand(i,s);
+ChildCommand(i,s,true);
 fi;
 
 
@@ -261,7 +282,7 @@ WriteLine(s.stream,i);
 
 i:=Concatenation("AppendTo(\"",fle,"\"," ,  X,");");
 
-ChildCommand(i,s);
+ChildCommand(i,s,true);
 NextAvailableChild([s]);
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
@@ -272,7 +293,7 @@ Exec(i);
 i:=Concatenation(["rm ",batchfile]);
 Exec(i);
 i:=Concatenation(["Exec(\"mv ",fleLocal," ",fle," \");"]);
-ChildCommand(i,s);
+ChildCommand(i,s,true);
 fi;
 
 AppendTo(fle,";");

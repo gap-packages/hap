@@ -5,22 +5,28 @@ InstallGlobalFunction(PrimePartDerivedFunctor,
 function(G,R,F,n)
 local
 	C,P, DCRS, DCRS1, DCRSpruned,L,Y,GroupL,
-	X, K, gensK, S, f,fx, P1,
+	X, K, gensK, S, f,fx, P1, 
 	HP, HK, HPK, HKhomHPK, HPKhomHP, HKhomHP,
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	HPrels, x, y, i,prime, core, conjs, conjelt,CentP,
-	HPpres,G1,epi,HPP,rho;
+	HPpres,G1,epi,HPP,rho, bool;
+
 
 C:=F(R);
-P:=StructuralCopy(R!.group);
-P1:=Normalizer(G,P);
-prime:=Factors(Order(P))[1];
+#P:=StructuralCopy(R!.group);
+P:=Group(SmallGeneratingSet(R!.group));
+HP:=GroupHomomorphismByFunction(P,P,x->x);
+HP:=EquivariantChainMap(R,R,HP);
+HP:=F(HP);
+HP:=Homology(HP,n);
+HP:=Source(HP);
+HPrels:=[Identity(HP)];
+if Length(AbelianInvariants(HP))=0 then return []; fi;
 
-core:=[];
-for x in P do
-if Order(x)=prime then AddSet(core,x); fi;
-od;
+P1:=Normalizer(G,P);
+
+prime:=Factors(Order(P))[1];
 
 if not IsPrimeInt(Order(P)) then
 DCRS1:=List(DoubleCosetRepsAndSizes(G,P1,P1),x->x[1]);
@@ -33,25 +39,17 @@ Append(DCRS1,Filtered(ReduceGenerators(GeneratorsOfGroup(P1),P1),
 x->not x in P));
 fi;
 
+core:=[];
+for x in P do
+if Order(x)=prime then AddSet(core,x); fi;
+od;
+
 DCRS:=[];
 for x in DCRS1 do  #I've forgotten what all this means!!
 for y in core do
 if x*y*x^-1 in core then Add(DCRS,x); break; fi;
 od;od;
 DCRSpruned:=[];
-
-HP:=GroupHomomorphismByFunction(P,P,x->x);
-HP:=EquivariantChainMap(R,R,HP);
-HP:=F(HP);
-
-
-HP:=Homology(HP,n);
-
-HP:=Source(HP);
-
-HPrels:=[Identity(HP)];
-
-if Length(AbelianInvariants(HP))=0 then return []; fi;
 
 conjs:=[];
 conjelt:=[];
@@ -65,21 +63,25 @@ for Y in conjs do
 L:=Filtered(conjelt,x->x[2]=Y);
 L:=List(L,x->x[1]);
 GroupL:=Group(L);
-Append(DCRSpruned,[ReduceGenerators(L,GroupL)]); 
+Add(DCRSpruned,ReduceGenerators(L,GroupL)); 
 od;
 DCRSpruned:=Filtered(DCRSpruned,x->Length(x)>0);
+
 
 for L in DCRSpruned do
 K:=Intersection(P,P^L[1]);
 gensK:=ReduceGenerators(GeneratorsOfGroup(K),K);
+if not Length(gensK)=0 then
 
-G1:=Group(Concatenation(gensK,[Identity(P)]));
+G1:=Group(gensK);
+
 if Order(G1)<64 and n<4 then 	##NEED TO FIND AN "OPTIMAL" CHOICE HERE
 S:=ResolutionFiniteGroup(gensK,n+1);
+S!.group:=Group(SmallGeneratingSet(S!.group));
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
+S!.group:=Group(SmallGeneratingSet(S!.group));
 fi;
-#S:=TietzeReducedResolution(S);
 
 
 if not (Homology(F(S),n)=[]) then
@@ -122,6 +124,7 @@ Append(HPrels, [Image(HKhomHP,x)*Image(HKhomHP2,x)^-1]);
 od;
 
 od;
+fi;
 fi;
 od;
 

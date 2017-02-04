@@ -851,6 +851,12 @@ local crossing, K, A, i, j, start, toggle, colour, directions,
 D,x, G, RELS, aa,bb,cc,dd,a,b,c,d,F,AA,tac,tbd,MX,mx,gens,m,M,
 red,subs,subs2, CRS, sft;
 
+##########################
+if IsList(KK) then
+return WirtingerGroup_gc(KK);
+fi;
+##########################
+
 crossing:=-1;
 
 K:=KK!.binaryArray;
@@ -995,4 +1001,144 @@ return G;
 end);
 ####################################################
 ####################################################
+
+#############################################
+#############################################
+InstallGlobalFunction(GaussCodeOfPureCubicalKnot,
+function(KK)
+local crossing, start, colour, directions, code, startfn,
+      cnt, orientations, K, A, D, d, i, j, x;
+
+#Returns the Gauss code of a pure cubical complex representing an
+#arc presentation of a knot or link.
+
+crossing:=-1;
+K:=KK!.binaryArray;
+A:=K[1]*0;;
+
+#############################################
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+   A[i][j]:=Maximum(K[2][i][j],K[4][i][j]);
+od;od;
+
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+if A[i][j]=1 and A[i-1][j]=1 and A[i+1][j]=1 and A[i][j-1]=1 and A[i][j+1]=1
+   then
+   A[i][j]:=crossing; crossing:=crossing-1;
+fi;
+od;od;
+
+crossing:=Minimum(Flat(A));  #So crossing <=0
+orientations:=List([1..AbsInt(crossing)],i->[]);
+#############################################
+
+#############################################
+startfn:=function();
+for i in [2..Length(A)-1] do
+for j in [2..Length(A[1])-1] do
+   if A[i][j]=1 and A[i][j-1]<0 then D:=[0,1]; return [i,j-1]; fi;
+   if A[i][j]=1 and A[i][j+1]<0 then D:=[0,-1]; return [i,j+1]; fi;
+   if A[i][j]=1 and A[i-1][j]<0 then D:=[1,0]; return [i-1,j]; fi;
+   if A[i][j]=1 and A[i+1][j]<0 then D:=[-1,0]; return [i+1,j]; fi;
+od;od;
+end;
+#############################################
+
+colour:=2;
+directions:=[ [1,0], [-1,0], [0,1], [0,-1] ];
+code:=[];
+cnt:=0;
+
+#############################################
+while 1 in Flat(A) do
+   cnt:=cnt+1;
+   code[cnt]:=[];
+   start:=startfn();
+   ##########################################
+   while not D=false do
+      x:=start+D;
+      if A[x[1]][x[2]]>1 then D:=false; fi;
+      if A[x[1]][x[2]]=1 then A[x[1]][x[2]]:=colour; start:=x; fi;
+      if A[x[1]][x[2]]<0  then start:=x; colour:=colour+1;
+         Add( orientations[AbsInt(A[x[1]][x[2]])], Filtered(D,b->not b=0));
+         if K[2][x[1]-D[1]][x[2]-D[2]]=1 then Add(code[cnt], -A[x[1]][x[2]]);
+         else
+         Add(code[cnt], A[x[1]][x[2]]); fi;
+      fi;
+
+      if A[x[1]][x[2]]=0  then
+         D:=false;
+         for d in directions do
+            x:=start+d;
+            if A[x[1]][x[2]]=1 then D:=d; A[x[1]][x[2]]:=colour; start:=x;
+               break;
+            fi;
+         od;
+      fi;
+
+   od;
+   ##########################################
+od;
+#############################################
+
+orientations:=List(orientations,x->Product(x));
+return [code,orientations];
+
+end);
+#############################################
+#############################################
+
+#############################################
+#############################################
+InstallGlobalFunction(WirtingerGroup_gc,
+function(arg)
+local GC, F, gens, rels, arcs, orientations, crossings, R, C, c, a, cr,i, x,y,z;
+
+GC:=arg[1][1];
+orientations:=arg[1][2];
+crossings:=Flat(GC);
+crossings:=List(crossings,AbsInt);
+crossings:=SSortedList(crossings);
+
+arcs:=[];
+
+for C in GC do
+cr:=Filtered([1..Length(C)],x->C[x]<0);
+for i in [1..Length(cr)-1] do
+a:=List( C{[cr[i]..cr[i+1]]} , AbsInt);
+Add(arcs,a);
+od;
+x:=C{[cr[Length(cr)]..Length(C)]};
+y:=C{[1..cr[1]]};
+a:=List(Concatenation(x,y), AbsInt);
+Add(arcs,a);
+od;
+
+F:=FreeGroup(Length(arcs));
+gens:=GeneratorsOfGroup(F);
+rels:=[];
+for c in crossings do
+R:=Filtered(arcs, x-> c in x);
+for a in R do
+if a[1]=c then x:=a; fi;
+if a[Length(a)]=c then y:=a; fi;
+if not (a[1]=c or a[Length(a)]=c) then z:=a; fi;
+od;
+x:=Position(arcs,x);
+y:=Position(arcs,y);
+z:=Position(arcs,z);
+if orientations[c]=1 then
+Add(rels,gens[x]^-1*gens[z]*gens[y]*gens[z]^-1);
+else
+Add(rels,gens[x]^-1*gens[z]^-1*gens[y]*gens[z]);
+fi;
+od;
+
+return F/rels;
+end);
+#############################################
+#############################################
+
 

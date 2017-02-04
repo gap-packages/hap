@@ -15,7 +15,7 @@ local
 	AF, FhomAF,
 	AGhomG, G1homF, G2homF, AG1homF, AG2homF,
 	SF, gensSF, gensSFG, FhomSF, AFhomSF, AG1homSF, AG2homSF, SFhomAG,
-	ExteriorProduct, delta,
+	TensorProduct, delta,
 	Trans,
 	CrossedPairing,
 	i,v,w,x,y,z;
@@ -33,6 +33,8 @@ local
 # The homomorphisms GhomBG, AGhomG, FhomSF, FhomAF, AFhomSF are all 
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
+
+if not IsFinite(AG) then return NonabelianTensorProduct_Inf(AG,AH); fi;
 
 #############################################################
 if Order(AH)=1 then 
@@ -77,22 +79,22 @@ G2homF:=GroupHomomorphismByFunction(H,F,x->Image(BG2homF,Image(HhomBH,x)));
 AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AH,F,g->Image(G2homF,Image(AHhomH,g)));
 
-#if IsSolvable(AG) then #
-# NiceGensAG:=Pcgs(AG); #Need to check the maths here!
-#         else	       #
+if IsSolvable(AG) then #
+NiceGensAG:=Pcgs(AG); #Need to check the maths here!
+         else	       #
 	 
 NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 NiceGensAG[1]:=[Identity(AG)];
 NiceGensAG:=Flat(NiceGensAG);
 Trans:=RightTransversal(AG,Group(NiceGensAG));
 Append(NiceGensAG,Elements(Trans));
-#fi;                    #
+fi;                    #
 
- NiceGensAG:=Elements(AG);   #OVERKILL!!!
+# NiceGensAG:=Elements(AG);   #OVERKILL!!!
 
-#if IsSolvable(AG) then #
-# NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
-#          else         # the eight lines ending in #.
+if IsSolvable(AH) then #
+ NiceGensAH:=Pcgs(AH); # Need to check the maths here. If wrong, just delete
+          else         # the eight lines ending in #.
 	  
 NiceGensAH:=
 List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
@@ -101,9 +103,9 @@ NiceGensAH:=Flat(NiceGensAH);
 NiceGensAH:=Filtered(NiceGensAH,x-> (x in AH));
 Trans:=RightTransversal(AH,Group(NiceGensAH));
 Append(NiceGensAH,Elements(Trans));
-#fi;                    #
+fi;                    #
 
- NiceGensAH:=Elements(AH);   #OVERKILL!!!
+# NiceGensAH:=Elements(AH);   #OVERKILL!!!
 
 relsT:=[];
 for x in relsG do
@@ -113,26 +115,27 @@ for x in relsH do
 Append(relsT,[Image(BG2homF,x)]);
 od;
 
-
-#for z in GeneratorsOfGroup(AG) do
 for z in NiceGensAG do
-for x in NiceGensAG do
-for y in NiceGensAH do
+for x in gensAG do
+for y in gensAH do
 v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG1homF,z) ;
 w:=Comm(Image(AG2homF,y^z),Image(AG1homF,x^z) );
 Append(relsT,[v*w]);
-if z in AH then
-v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG2homF,z);
-Append(relsT,[v*w]);
-fi;
 od;
 od;
 od;
 
-#for y in AH do
-#v:=Comm(Image(AG1homF,y),Image(AG2homF,y));
-#Append(relsT,[v]);
-#od;
+for z in NiceGensAH do
+for x in gensAG do
+for y in gensAH do
+w:=Comm(Image(AG2homF,y^z),Image(AG1homF,x^z) );
+v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG2homF,z);
+Append(relsT,[v*w]);
+od;
+od;
+od;
+
+relsT:=SSortedList(relsT);
 
 #####################################################################IF
 if not IsSolvable(AG) then
@@ -170,7 +173,7 @@ fi;
 AG1homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG1homF,x)));
 AG2homSF:=GroupHomomorphismByFunction(AH,SF,x->Image(FhomSF,Image(AG2homF,x)));
 
-ExteriorProduct:=Intersection(
+TensorProduct:=Intersection(
 NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x)))),
 NormalClosure(SF,Group(List(GeneratorsOfGroup(AH),x->Image(AG2homSF,x))))
 );
@@ -187,7 +190,7 @@ od;
 
 SFhomAG:=GroupHomomorphismByImagesNC(SF,AG,gensSF,gensSFG);
 
-delta:=GroupHomomorphismByFunction(ExteriorProduct,AG,x->Image(SFhomAG,x));
+delta:=GroupHomomorphismByFunction(TensorProduct,AG,x->Image(SFhomAG,x));
 
 #####################################################################
 CrossedPairing:=function(x,y)

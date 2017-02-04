@@ -34,6 +34,7 @@ if x[1]<0 then
 fi;
         od;
         #return v;
+
         return Filtered(v,a->IsBound(a));
 fi;
 
@@ -108,14 +109,15 @@ InstallGlobalFunction(AddFreeWords,
 function(arg)
 local x,u,v,w,r, w2;
 
+
 if Length(arg[2])<Length(arg[1]) then
 v:=arg[1];w:=arg[2];
 else
 w:=arg[1];v:=arg[2];fi;
 
 
-if Length(w)=0 then return v; fi;
-if Length(v)=0 then return w; fi;
+if Length(w)=0 then  return v; fi;
+if Length(v)=0 then  return w; fi;
 
 w2:=ShallowCopy(w);
 

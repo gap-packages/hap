@@ -1,60 +1,40 @@
   
-  [1X19 [33X[0;0YWords in free [22XZG[122X[101X[1X-modules[133X[101X
+  [1X19 [33X[0;0YCocycles[133X[101X
   
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XAddFreeWords(v,w) [110X[133X
+  [33X[0;0Y[10XCcGroup(A,f) [110X[133X
   
-  [33X[0;0YInputs  two  words [22Xv,w[122X in a free [22XZG[122X-module and returns their sum [22Xv+w[122X. If the
-  characteristic  of  [22XZ[122X is greater than [22X0[122X then the next function might be more
-  efficient.[133X
+  [33X[0;0YInputs a [22XG[122X-module [22XA[122X (i.e. an abelian [22XG[122X-outer group) and a standard 2-cocycle
+  f  [22XG  x  G ---> A[122X. It returns the extension group determined by the cocycle.
+  The group is returned as a CcGroup.[133X
+  
+  [33X[0;0YThis  is  a  HAPcocyclic  function  and  thus only works when HAPcocyclic is
+  loaded.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XAddFreeWordsModP(v,w,p) [110X[133X
+  [33X[0;0Y[10XCocycleCondition(R,n) [110X[133X
   
-  [33X[0;0YInputs  two  words [22Xv,w[122X in a free [22XZG[122X-module and the characteristic [22Xp[122X of [22XZ[122X. It
-  returns  the  sum  [22Xv+w[122X.  If  [22Xp=0[122X the previous function might be fractionally
-  quicker.[133X
+  [33X[0;0YInputs  a  resolution  [22XR[122X  and an integer [22Xn[122X>[22X0[122X. It returns an integer matrix [22XM[122X
+  with  the  following  property.  Suppose [22Xd=R.dimension(n)[122X. An integer vector
+  [22Xf=[f_1,  ...  , f_d][122X then represents a [22XZG[122X-homomorphism [22XR_n ⟶ Z_q[122X which sends
+  the  [22Xi[122Xth  generator  of  [22XR_n[122X to the integer [22Xf_i[122X in the trivial [22XZG[122X-module [22XZ_q[122X
+  (where possibly [22Xq=0[122X ). The homomorphism [22Xf[122X is a cocycle if and only if [22XM^tf=0[122X
+  mod [22Xq[122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XAlgebraicReduction(w) [110X[133X
-  [33X[0;0Y[10XAlgebraicReduction(w,p) [110X[133X
+  [33X[0;0Y[10XStandardCocycle(R,f,n) [110X[133X
+  [33X[0;0Y[10XStandardCocycle(R,f,n,q) [110X[133X
   
-  [33X[0;0YInputs  a  word  [22Xw[122X  in a free [22XZG[122X-module and returns a reduced version of the
-  word in which all pairs of mutually inverse letters have been cancelled. The
-  reduction  is  performed in a free abelian group unless the characteristic [22Xp[122X
-  of [22XZ[122X is entered.[133X
+  [33X[0;0YInputs  a  [22XZG[122X-resolution [22XR[122X (with contracting homotopy), a positive integer [22Xn[122X
+  and  an  integer  vector  [22Xf[122X representing an [22Xn[122X-cocycle [22XR_n ⟶ Z_q[122X where [22XG[122X acts
+  trivially  on  [22XZ_q[122X.  It  is assumed [22Xq=0[122X unless a value for [22Xq[122X is entered. The
+  command  returns  a  function [22XF(g_1, ..., g_n)[122X which is the standard cocycle
+  [22XG_n ⟶ Z_q[122X corresponding to [22Xf[122X. At present the command is implemented only for
+  [22Xn=2[122X or [22X3[122X.[133X
   [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XMultiply Word(n,w) [110X[133X
+  [33X[0;0Y[10XSyzygy(R,g) [110X[133X
   
-  [33X[0;0YInputs a word [22Xw[122X and integer [22Xn[122X. It returns the scalar multiple [22Xn⋅ w[122X.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XNegate([i,j]) [110X[133X
-  
-  [33X[0;0YInputs a pair [22X[i,j][122X of integers and returns [22X[-i,j][122X.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XNegateWord(w) [110X[133X
-  
-  [33X[0;0YInputs a word [22Xw[122X in a free [22XZG[122X-module and returns the negated word [22X-w[122X.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XPrintZGword(w,elts) [110X[133X
-  
-  [33X[0;0YInputs  a word [22Xw[122X in a free [22XZG[122X-module and a (possibly partial but sufficient)
-  listing  elts  of  the  elements of [22XG[122X. The function prints the word [22Xw[122X to the
-  screen in the form[133X
-  
-  [33X[0;0Y[22Xr_1E_1 + ... + r_nE_n[122X[133X
-  
-  [33X[0;0Ywhere  [22Xr_i[122X  are elements in the group ring [22XZG[122X, and [22XE_i[122X denotes the [22Xi[122X-th free
-  generator of the module.[133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XTietzeReduction(S,w) [110X[133X
-  
-  [33X[0;0YInputs a set [22XS[122X of words in a free [22XZG[122X-module, and a word [22Xw[122X in the module. The
-  function returns a word [22Xw'[122X such that {[22XS,w'[122X} generates the same abelian group
-  as  {[22XS,w[122X}. The word [22Xw'[122X is possibly shorter (and certainly no longer) than [22Xw[122X.
-  This function needs to be improved![133X
-  [33X[0;0Y::::::::::::::::::::::::[133X
-  [33X[0;0Y[10XResolutionBoundaryOfWord(R,n,w)[110X[133X
-  
-  [33X[0;0YInputs a resolution [22XR[122X, a positive integer [22Xn[122X and a list [22Xw[122X representing a word
-  in  the  free  module [22XR_n[122X. It returns the image of [22Xw[122X under the [22Xn[122X-th boundary
-  homomorphism.[133X
+  [33X[0;0YInputs  a  [22XZG[122X-resolution [22XR[122X (with contracting homotopy) and a list [22Xg = [g[1],
+  ...,  g[n]][122X  of elements in [22XG[122X. It returns a word [22Xw[122X in [22XR_n[122X. The word [22Xw[122X is the
+  image  of  the [22Xn[122X-simplex in the standard bar resolution corresponding to the
+  [22Xn[122X-tuple  [22Xg[122X.  This  function  can  be  used  to  construct  explicit standard
+  [22Xn[122X-cocycles. (Currently implemented only for n<4.)[133X
   
