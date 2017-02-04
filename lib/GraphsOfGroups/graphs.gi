@@ -96,17 +96,17 @@ od;
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n node [shape=circle, style=filled, color=blue] \n edge [style=\"setlinewidth(5)\"] \n");
+AppendTo(tmpInlog," graph G { \n size=\"10,10\" \n node [shape=circle, style=filled,  color=gray] \n edge [style=\"setlinewidth(2)\"] \n");
 
 
 for x in Vertices do
-AppendTo(tmpInlog,PositionName(Vertices,x), "[label=\" ", Name(x), "\",fontsize=10]\n");
+AppendTo(tmpInlog,PositionName(Vertices,x), "[label=\" ", Name(x), "\",fontsize=8]\n");
 od;
 
 for x in Edges do
 AppendTo(tmpInlog,
 PositionName(Vertices,Range(x[1]))," -- ",
-PositionName(Vertices,Range(x[2])), "[label=\" ",Name(Source(x[1])),"\",fontsize=10,color=brown] \n");
+PositionName(Vertices,Range(x[2])), "[label=\" ",Name(Source(x[1])),"\",fontsize=8,color=black] \n");
 od;
 
 AppendTo(tmpInlog,"} \n");

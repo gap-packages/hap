@@ -491,6 +491,8 @@ T:= rec(
 	    group:=E,
 	    firstProjection:=EhomG,
 	    secondProjection:=EhomH,
+            Int2Vector:=Int2Vector,
+            Vector2Int:=Vector2Int,
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],

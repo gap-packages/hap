@@ -445,10 +445,10 @@ if Toggle2 then InitHomotopyRec(); Toggle2:=false; fi;
 if not IsInt(HomotopyRec[k+1][Ab][w[2]]) then
 if SignInt(w[1]) > 0 then
 
-return HomotopyRec[k+1][Ab][w[2]]; 
+return 1*HomotopyRec[k+1][Ab][w[2]]; 
 else
 
-return NegateWord(HomotopyRec[k+1][Ab][w[2]]);
+return 1*NegateWord(HomotopyRec[k+1][Ab][w[2]]);
 fi;
 fi;
 
@@ -484,7 +484,7 @@ else
 HomotopyRec[k+1][-w[1]][w[2]]:=NegateWord(v);
 fi;
 
-return v;
+return 1*v;
 end;
 #####################################################################
 

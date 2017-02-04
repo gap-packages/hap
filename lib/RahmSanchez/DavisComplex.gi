@@ -3,7 +3,7 @@ local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells,
 irreducible, equalCoxeterMatrices, generateA, generateB, generateD,
 H_4, F_4, E_6, E_7, E_8, irreducibleComponents, irr, spherical, extractSpherical, canonicalGenerators, generateStabs, gens, generateBoundary, generateCoeff, 
 generateConj, getDimension, getNumberOfSimplices, chains, 
-DavisComplexCombinatorial, aux, ExportAsContractibleGcomplex ;
+DavisComplexCombinatorial, aux, ExportAsContractibleGcomplex, IsSphericalCoxeterGroup, CreateCoxeterMatrix, MaximalSpherical ;
 
 
 
@@ -180,7 +180,7 @@ end;
 #### SPHERICAL FUNCTION ####
 ## Check whether the Coxeter group represented
 ## Coxeter matrix M is spherical (finite)
-InstallGlobalFunction(IsSphericalCoxeterGroup, function(M)
+IsSphericalCoxeterGroup:=function(M)
     local N, i, j, sum, CoxeterMatrix, components, irre, 
             comp, fourOrfive, caseA, caseB, caseD;
     
@@ -270,7 +270,7 @@ InstallGlobalFunction(IsSphericalCoxeterGroup, function(M)
         return false;
     fi;
        
-end);
+end;
 
 
 
@@ -532,7 +532,7 @@ end;
 #
 ##########################################################
 
-InstallGlobalFunction(CreateCoxeterMatrix, function( numberOfGenerators, CoxeterMatrixEntries)
+CreateCoxeterMatrix:= function( numberOfGenerators, CoxeterMatrixEntries)
 # CreateCoxeterMatrix := function( numberOfGenerators, CoxeterMatrixEntries)
 local GEN, M, m, k, i, j;
 
@@ -569,7 +569,7 @@ local GEN, M, m, k, i, j;
         od;
    od;
    return M;
-end);   
+end;   
 
 
 
@@ -584,7 +584,7 @@ end);
 # May 2015
 ##########################################################################
         
-InstallGlobalFunction(MaximalSphericalCoxeterSubgroupsFromAbove, function(M)
+MaximalSpherical:= function(M)
     local S, subset, max_spherical, temp_spherical, l, m, found;
 
     # Coxeter generators
@@ -598,7 +598,7 @@ InstallGlobalFunction(MaximalSphericalCoxeterSubgroupsFromAbove, function(M)
     # if not, evaluate each subset recursively
     max_spherical := [];
     for subset in Combinations(S,Length(S)-1) do
-        temp_spherical :=  MaximalSphericalCoxeterSubgroupsFromAbove(M{subset}{subset});
+        temp_spherical :=  MaximalSpherical(M{subset}{subset});
         # for each returned spherical subset, check is not yet a subset in max_spherical
         for l in temp_spherical do
             found := false; 
@@ -615,7 +615,7 @@ InstallGlobalFunction(MaximalSphericalCoxeterSubgroupsFromAbove, function(M)
     od;
 
     return max_spherical;
-end);
+end;
 
 ##########################################################################
 # Program to compute the combinatorial structure of the Davis complex
@@ -863,7 +863,7 @@ end; ## end of function ExportAsContractibleGcomplex
 #local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
     if not IsMatrix(CoxMat) then CoxMat:=CoxeterMatrix(CoxMat); fi;
     GEN := Size(CoxMat);
-    DC:= DavisComplexCombinatorial(MaximalSphericalCoxeterSubgroupsFromAbove(CoxMat));
+    DC:= DavisComplexCombinatorial(MaximalSpherical(CoxMat));
 
 #### EXTRACT SPHERICAL SIMPLICES ####
     DC := extractSpherical( DC, GEN, CoxMat );

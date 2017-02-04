@@ -40,6 +40,7 @@ SignInt:=SignInt_HAP;           #
 #################################
 		
 SMALL:=4096;;
+#SMALL:=2^22;
 if Order(S!.group) >SMALL  then SizeE:=Order(S!.group); fi;
 if Order(R!.group) >SMALL
  then SizeE:=Order(R!.group); fi;
@@ -203,11 +204,14 @@ if not IsBound(HtpyRecord[p+1][q+1][AB][x[2]]) then
 
 tensor:=Int2Pair(AB,p,q);
 
+
 g:=NEhomN(Mult(InvE(GmapE(EhomG(x[2]))),x[2] ));
 t:=GmapE(EhomG(x[2]));
 r:=ShallowCopy(HomotopyS(q,[tensor[2],g]));
+
 Apply(r,y->[y[1],NhomE(y[2])]);
 Apply(r,y->[Pair2Int([tensor[1],y[1]],p,q+1),Mult(t,y[2])]);
+
 HtpyRecord[p+1][q+1][AB][x[2]]:=r;
 fi;
 

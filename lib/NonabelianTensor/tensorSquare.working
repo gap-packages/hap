@@ -15,7 +15,7 @@ local
 	AFhomSSF,SSF,gensSF2,SSFhomSF,
 	TensorSquare, delta,
 	Trans,
-	CrossedPairing, 
+	CrossedPairing, Action,
 	UpperBound,
 	Todd,i,v,w,x,y,z;
 
@@ -186,7 +186,16 @@ return Comm(Image(AG1homSF,x), Image(AG2homSF,y));
 end;
 #####################################################################
 
-return rec(homomorphism:=delta, pairing:=CrossedPairing);
+#####################################################################
+Action:=function(x,t)
+
+return Image(AG1homSF,x) * t * Image(AG1homSF,x)^-1;
+
+end;
+#####################################################################
+
+
+return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action);
 end);
 #####################################################################
 
@@ -233,3 +242,33 @@ od;
 
 return Group(Concatenation(TC,[Identity(G)]));
 end);
+######################################################################
+
+######################################################################
+InstallGlobalFunction(NonabelianTensorSquareAsCrossedModule,
+function(G)
+local delta, pairing, act, C;
+
+C:=NonabelianTensorSquare(G);
+delta:=C.homomorphism;
+act:=C.action;
+
+return Objectify(HapCrossedModule,rec(
+                                       map:=delta,
+                                       action:=act
+                                        ));
+
+end);
+#######################################################################
+
+######################################################################
+InstallGlobalFunction(NonabelianTensorSquareAsCatOneGroup,
+function(G)
+local C;
+
+C:=NonabelianTensorSquareAsCrossedModule(G);
+return CatOneGroupByCrossedModule(C);
+
+
+end);
+#######################################################################

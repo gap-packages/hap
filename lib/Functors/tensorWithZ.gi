@@ -6,6 +6,7 @@
 InstallGlobalFunction(TensorWithIntegers,
 function(X)
 local 	TensorWithZ_Obj,
+        TensorNFWithZ_Obj,
 	TensorWithZ_Arr;
 
 	
@@ -24,6 +25,8 @@ local
 if "tensorWithIntRec" in NamesOfComponents(R) then
 return R!.tensorWithIntRec; fi;
 
+if IsBound(R!.action) then
+return TensorNFWithZ_Obj(R); fi;
 
 LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC];				
@@ -66,8 +69,55 @@ end;
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+TensorNFWithZ_Obj:=function(R)
+local
+        BoundaryC,
+        LengthC,
+        M;
+
+if "tensorWithIntRec" in NamesOfComponents(R) then
+return R!.tensorWithIntRec; fi;
 
 
+LengthC:=EvaluateProperty(R,"length");
+M:=[1..LengthC];
+
+
+#####################################################################
+BoundaryC:=function(n,k)
+local returnvec, bound, x, i;
+
+if n <0 then return false; fi;
+if n=0 then return [0]; fi;
+returnvec:=0*[1..R!.dimension(n-1)];
+
+bound:=R!.boundary(n,k);
+for x in [1..Size(bound)]
+do
+i:=AbsInt(bound[x][1]);
+returnvec[i]:=returnvec[i]+SignInt(bound[x][1])*R!.action(n-1,i,bound[x][2]);
+od;
+
+return returnvec;
+end;
+#####################################################################
+
+R!.tensorWithIntRec:= Objectify(HapChainComplex,
+                rec(
+                dimension:=R!.dimension,
+                boundary:=BoundaryC,
+                properties:=
+                [["length",LengthC],
+                ["connected",true],
+                ["type", "chainComplex"],
+                ["characteristic",
+                EvaluateProperty(R,"characteristic")] ]));
+return R!.tensorWithIntRec;
+end;
+#####################################################################
+#####################################################################
 
 
 #####################################################################

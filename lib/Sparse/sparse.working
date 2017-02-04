@@ -2,6 +2,32 @@
 
 ####################################################
 ####################################################
+InstallGlobalFunction(SparseMattoMat,
+function(M)
+local A,i, x;
+#Inputs a soarse matrix M and returns a  matrix
+
+A:=NullMat(M!.rows,M!.cols);
+
+for i in [1..M!.rows] do
+for x in M!.mat[i] do
+A[i][x[1]]:=A[i][x[1]]+x[2];
+od;
+od;
+
+if M!.characteristic>0 then
+A:=A*One(GF(M!.characteristic));
+fi;
+
+return A;
+
+end);
+####################################################
+####################################################
+
+
+####################################################
+####################################################
 InstallGlobalFunction(SparseMat,
 function(M)
 local S, Rows, Cols, char, i, j;

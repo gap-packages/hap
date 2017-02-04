@@ -2108,6 +2108,68 @@ end);
 ######################################################
 ######################################################
 
+
+############################################
+############################################
+InstallGlobalFunction(HAP_SimplicialPairToCWMap,
+function(T,S)
+local TT,SS, VT, V, SimpT, SimpS, i, fn, F;
+
+VT:=T!.vertices;
+###################
+fn:=function(i);
+#return i;
+return Position(VT,i);
+end;
+###################
+
+SimpT:=[];
+for i in [1..Length(T!.simplicesLst)] do
+SimpT[i]:=List(T!.simplicesLst[i],x->List(x,fn));
+od;
+
+VT:=S!.vertices;
+###################
+fn:=function(i);
+#return i;
+return Position(VT,i);
+end;
+###################
+
+SimpS:=[];
+for i in [1..Length(S!.simplicesLst)] do
+SimpS[i]:=List(S!.simplicesLst[i],x->List(x,fn));
+od;
+
+TT:=SimplicialComplex(Concatenation(SimpT));
+SS:=SimplicialComplex(Concatenation(SimpS));
+
+TT:=RegularCWComplex(TT);
+
+SS:=RegularCWComplex(SS);
+
+################
+################
+F:=function(n,k);
+return Position(T!.simplicesLst[n+1],S!.simplicesLst[n+1][k]);
+end;
+################
+################
+
+
+return Objectify(HapRegularCWMap,
+       rec(
+           source:=SS,
+           target:=TT,
+           mapping:=F,
+           SimpT:=SimpT,
+           SimpS:=SimpS));
+
+end);
+############################################
+############################################
+
+
 #####################################
 #####################################
 InstallGlobalFunction(HAP_PureCubicalPairToCWMap,

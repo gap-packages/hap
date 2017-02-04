@@ -149,6 +149,8 @@ ReadPackage("HAP", "lib/FpGmodules/homs.gi");
 ##################### NONABELIAN TENSOR #############################
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquare.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensorPairInf.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensorPair.alt");
 ReadPackage("HAP", "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
@@ -171,6 +173,7 @@ ReadPackage("HAP", "lib/Resolutions/resSL2Z.gi");
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroup.gi");
+ReadPackage("HAP", "lib/ResolutionsModP/resPrimeGroupSparse.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/ranksPrimeGroup.gi");
 ReadPackage("HAP", "lib/ResolutionsModP/poincare.gi");
 #ReadPackage("HAP", "lib/ResolutionsModP/primepart.gi");
@@ -250,6 +253,7 @@ ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
 ReadPackage("HAP", "lib/Polymake/orbitPoly.gi");
 #ReadPackage("HAP", "lib/Polymake/fix.gi");
+ReadPackage("HAP", "lib/Polymake/TZ.gi");
 
 ################### POLYCYLIC ######################################
 ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
@@ -333,10 +337,12 @@ ReadPackage("HAP","lib/CatGroups/CatConstructions.gi");
 ReadPackage("HAP","lib/CatGroups/CatBasic.gi");
 ReadPackage("HAP","lib/CatGroups/identities.gi");
 ReadPackage("HAP","lib/CatGroups/algIdentities.gi");
+ReadPackage("HAP","lib/CatGroups/CrossedInvariant.gi");
 
 ################## G-OUTER GROUPS ##################################
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
+ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
@@ -437,14 +443,17 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
-#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
+ReadPackage("HAP","lib/TorsionSubcomplexes/torsioninit.gi");
 ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gi");
 
 ################## Cohomology Operations #####################
 ReadPackage("HAP","lib/CohomologyOperations/cohomology_homomorphism.gi");
 ReadPackage("HAP","lib/CohomologyOperations/connecting_homomorphism.gi");
 ReadPackage("HAP","lib/CohomologyOperations/steenrod.gi");
+ReadPackage("HAP","lib/CohomologyOperations/mycupi.gi");
 ReadPackage("HAP","lib/CohomologyOperations/toplevelsquares.gi");
+ReadPackage("HAP","lib/CohomologyOperations/detection.gi");
+ReadPackage("HAP","lib/CohomologyOperations/cohodata.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0") then

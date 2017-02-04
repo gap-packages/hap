@@ -799,6 +799,7 @@ local
         Dimension,
 	StabilizerSubgroup,
 	Action,
+        StandardWord, 
 	i, n, k,x;
 
 D:=arg[1];
@@ -871,6 +872,16 @@ else return R!.dimension(n); fi;
 end;
 #####################################################################
 
+#####################################################################
+StandardWord:=function(k,bnd)
+local w;
+w:=
+List(bnd,x->[x[1],
+Position(EltsWP,  CanonicalRightCosetElement(StabilizerSubgroup(k,AbsInt(x[1])), EltsWP[x[2]]^-1 )^-1)
+]);
+return AlgebraicReduction(w);
+end;
+#####################################################################
 
 
 
@@ -883,6 +894,7 @@ return Objectify(HapNonFreeResolution,
             group:=WP,
             stabilizer:=StabilizerSubgroup,
 	    action:=Action,
+            standardWord:=StandardWord,
             properties:=
              [["type","resolution"],
               ["length",N],

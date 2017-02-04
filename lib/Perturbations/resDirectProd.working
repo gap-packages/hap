@@ -28,7 +28,7 @@ local
 	F,FhomE,
 	gensE, gensE1, gensE2, 
 	AppendToElts, RappendToElts, SappendToElts,
-	Boole,
+	Boole, Bl,
 	i,j,k,g,h,fn;
 
 R:=arg[1];
@@ -49,7 +49,13 @@ G:=R!.group;
 H:=S!.group; 
 
 ####################### DIRECT PRODUCT OF GROUPS ###########
-if Length(arg)=2 then
+Bl:=true;
+for i in [3..Length(arg)] do
+if arg[i]="internal" then Bl:=false; fi; #Print("HELLO");fi;
+od;
+
+#if Length(arg)=2 then
+if Bl then
 
 E:=DirectProduct(G,H);
 if Size(G)=infinity or Size(H)=infinity then SetSize(E,infinity);fi;
@@ -123,8 +129,21 @@ EltsE:=[Identity(E)];
 #####################################################################
 
 PseudoBoundary:=[];
-DimensionR:=R!.dimension; 
-DimensionS:=S!.dimension; 
+#########################
+DimensionR:=function(n);
+if n<0 or n>Length(R) then return 0;
+else return R!.dimension(n);
+fi;
+end;; 
+#########################
+#########################
+DimensionS:=function(n);
+if n<0 or n>Length(S) then return 0;
+else return S!.dimension(n);
+fi;
+end;;
+#########################
+
 BoundaryS:= S!.boundary;
 	   
 BoundaryR:=R!.boundary;  
@@ -133,6 +152,11 @@ HomotopyS:=S!.homotopy;
 
 #################DETERMINE VARIOUS PROPERTIES########################
 Lngth:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
+#Lngth:=Length(R)+Length(S);
+
+for i in [3..Length(arg)] do
+if IsInt(arg[i]) then Lngth:=arg[i]; fi;
+od;
 
 if EvaluateProperty(R,"characteristic")=0
 and EvaluateProperty(S,"characteristic")=0

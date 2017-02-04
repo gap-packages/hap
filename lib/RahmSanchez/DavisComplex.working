@@ -1,3 +1,13 @@
+InstallGlobalFunction(DavisComplex, function(CoxMat)
+local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells,
+irreducible, equalCoxeterMatrices, generateA, generateB, generateD,
+H_4, F_4, E_6, E_7, E_8, irreducibleComponents, irr, spherical, extractSpherical, canonicalGenerators, generateStabs, gens, generateBoundary, generateCoeff, 
+generateConj, getDimension, getNumberOfSimplices, chains, 
+DavisComplexCombinatorial, aux, ExportAsContractibleGcomplex ;
+
+
+
+
 ##########################################################
 # DavisComplexes, a HAP sub-package in GAP
 # by Ruben J. Sanchez-Garcia and Alexander D. Rahm,
@@ -544,13 +554,13 @@ local GEN, M, m, k, i, j;
 		    	k := k+1;
                 else
 			return fail;
-			break;
+			#break;
 		fi;
             od;
         od;    
    else
 	return fail;
-	break;
+	#break;
    fi;
 #### COMPLETE COXETER MATRIX (symmetric) ####
    for i in [1..GEN] do
@@ -595,7 +605,7 @@ InstallGlobalFunction(MaximalSphericalCoxeterSubgroupsFromAbove, function(M)
             for m in max_spherical do
                 if IsSubset(m, subset{l}) then #use subset{l} to keep consistent numbering
                     found := true;
-                    break;
+                    #break;
                 fi;
             od;
             if not(found) then
@@ -849,8 +859,8 @@ end; ## end of function ExportAsContractibleGcomplex
 
 
 
-InstallGlobalFunction(DavisComplex, function(CoxMat)
-local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
+#InstallGlobalFunction(DavisComplex, function(CoxMat)
+#local DC, GEN, STAB, BOUNDARY, COEFF, CONJ, DIMENSION, numberOfCells;
     if not IsMatrix(CoxMat) then CoxMat:=CoxeterMatrix(CoxMat); fi;
     GEN := Size(CoxMat);
     DC:= DavisComplexCombinatorial(MaximalSphericalCoxeterSubgroupsFromAbove(CoxMat));

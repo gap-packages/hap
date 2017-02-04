@@ -445,10 +445,10 @@ if Toggle2 then InitHomotopyRec(); Toggle2:=false; fi;
 if not IsInt(HomotopyRec[k+1][Ab][w[2]]) then
 if SignInt(w[1]) > 0 then
 
-return HomotopyRec[k+1][Ab][w[2]]; 
+return 1*HomotopyRec[k+1][Ab][w[2]]; 
 else
 
-return NegateWord(HomotopyRec[k+1][Ab][w[2]]);
+return 1*NegateWord(HomotopyRec[k+1][Ab][w[2]]);
 fi;
 fi;
 
@@ -484,7 +484,7 @@ else
 HomotopyRec[k+1][-w[1]][w[2]]:=NegateWord(v);
 fi;
 
-return v;
+return 1*v;
 end;
 #####################################################################
 
@@ -519,37 +519,46 @@ end);
 InstallGlobalFunction(RankHomologyPGroup,
 function(arg)
 local
-	G, R, N, Ranks, i;
+	G, R, N, Ranks, expand, pol, i;
 
+if IsGroup(arg[1]) and Length(arg)=3 then
+G:=arg[1];
+pol:=arg[2];
+N:=arg[3];
+Ranks:=[];
+Ranks[1]:=Length(AbelianInvariants(G));
+expand:=ExpansionOfRationalFunction(pol,N);
+for i in [2..N] do
+Ranks[i]:= expand[i+1]- Ranks[i-1];
+od;
+return Ranks[N] ;
+fi;
+
+
+##############################################
 if IsHapResolution(arg[1]) then
 if EvaluateProperty(arg[1],"isMinimal")=true then 
 R:=arg[1]; G:=R!.group; N:=arg[2];
-else
-Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; 
 fi;
-else
+fi;
+##############################################
+
+##############################################
 if IsGroup(arg[1]) and Length(arg)=2 then
 G:=arg[1]; N:=arg[2];
 R:=ResolutionPrimePowerGroup(G,N);
-else
-
-if  IsGroup(arg[1]) and Length(arg)=3 then
-return
-ExpansionOfRationalFunction(PoincareSeries(arg[1]),arg[2])[1+arg[2]];
 fi;
+##############################################
 
-
-
-Print("The function applies only to a finite p-group or minimal mod-p resolution.\n"); return fail; fi;
+if not IsBound(R) then
+ return fail; 
 fi;
 
 Ranks:=[];
 Ranks[1]:=Length(AbelianInvariants(G));
-
 for i in [2..N] do
 Ranks[i]:=R!.dimension(i) - Ranks[i-1];
 od;
-
 return Ranks[N];
 
 end);
@@ -583,8 +592,6 @@ Ranks[i]:= expand[i+1]- Ranks[i-1];
 od;
 
 return Ranks;
-
-
 
 end);
 #####################################################################

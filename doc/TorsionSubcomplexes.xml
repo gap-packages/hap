@@ -1,16 +1,28 @@
-<Chapter><Heading>Torsion subcomplexes</Heading>
+<Chapter><Heading>Torsion Subcomplexes</Heading>
 
 <Table Align="|l|" >
+
 <Row>
 <Item>
-The torsion subcomplexes subpackage has been conceived and implemented by <B>Alexander D. Rahm</B>.
+The Torsion Subcomplex subpackage has been conceived and implemented by <B>Bui Anh Tuan</B> and <B> Alexander D. Rahm</B></Item>
+</Row>
+
+<Row>
+<Item>
+<Index>RigidFacetsSubdivision</Index>
+<C>RigidFacetsSubdivision( X )</C>
+<P/>
+It inputs an <M>n</M>-dimensional <M>G</M>-equivariant CW-complex <M>X</M> on which
+all the cell stabilizer subgroups in <M>G</M> are finite.
+It returns an <M>n</M>-dimensional <M>G</M>-equivariant CW-complex <M>Y</M> which is topologically the same
+as <M>X</M>, but equipped with a <M>G</M>-CW-structure which is rigid.
 </Item>
 </Row>
 
 <Row>
 <Item>
-<Index>IsPnormal</Index>
-<C>IsPnormal( G, p)</C>
+<Index>IsPNormal</Index>
+<C> IsPNormal( G, p)</C>
 <P/>
 Inputs a finite group <M>G</M> and a prime <M>p</M>. 
 Checks if the group G is p-normal for the prime p. 
@@ -21,9 +33,9 @@ Zassenhaus defines a finite group to be p-normal if the center of one of its Syl
 <Row>
 <Item>
 <Index>TorsionSubcomplex</Index>
-<C>TorsionSubcomplex(  groupName, p)</C>
+<C>TorsionSubcomplex(  C, p)</C>
 <P/>
-Inputs a cell complex with action of a group. In HAP, presently the following cell complexes with stabilisers fixing their cells pointwise are available, specified by the following "groupName" strings: <Br/><Br/> 
+Inputs either a cell complex with action of a group as a variable or a group name. In HAP, presently the following cell complexes with stabilisers fixing their cells pointwise are available, specified by the following "groupName" strings: <Br/><Br/>
 "SL(2,O-2)" , "SL(2,O-7)" , "SL(2,O-11)" ,
  "SL(2,O-19)" , "SL(2,O-43)" , "SL(2,O-67)" ,
  "SL(2,O-163)",  <Br/><Br/>
@@ -66,15 +78,75 @@ Executes the function TorsionSubcomplex(  groupName, p) and visualizes its outpu
 <Row>
 <Item>
 <Index>ReduceTorsionSubcomplex</Index>
-<C>ReduceTorsionSubcomplex( groupName, p)</C>
+<C>ReduceTorsionSubcomplex( C, p)</C>
 <P/>
-This function start with the same operations as the function TorsionSubcomplex(  groupName, p), and if the cell stabilisers are fixing their cells pointwise, it continues as follows.
+This function start with the same operations as the function TorsionSubcomplex(  C, p), and if the cell stabilisers are fixing their cells pointwise, it continues as follows.
  <Br/><Br/> 
  It prints on the screen which cells to merge and which edges to cut off in order to reduce the p-torsion subcomplex without changing the equivariant Farrell cohomology.
 Finally, it prints the representative cells, their stabilizers and the Abelianization of the latter. 
 </Item>
 </Row>
 
+<Row>
+<Item>
+<Index>EquivariantEulerCharacteristic</Index>
+<C>EquivariantEulerCharacteristic( X )</C>
+
+<P/>
+It inputs an <M>n</M>-dimensional <M>\Gamma</M>-equivariant CW-complex <M>X</M> all the cell stabilizer subgroups in <M>\Gamma</M> are finite. It returns the equivariant euler characteristic obtained by using mass formula <M>\sum_{\sigma}(-1)^{dim\sigma}\frac{1}{card(\Gamma_{\sigma})}</M>
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>CountingCellsOfACellComplex</Index>
+<C>CountingCellsOfACellComplex( X )</C>
+<P/>
+It inputs an <M>n</M>-dimensional <M>\Gamma</M>-equivariant CW-complex <M>X</M> on which
+all the cell stabilizer subgroups in <M>\Gamma</M> are finite. It returns the number of cells in <M>X</M>
+</Item>
+</Row>
+
+
+<Row>
+<Item>
+<Index>CountingControlledSubdividedCells</Index>
+<C>CountingControlledSubdividedCells( X )</C>
+<P/>
+It inputs an <M>n</M>-dimensional <M>\Gamma</M>-equivariant CW-complex <M>X</M> on which
+all the cell stabilizer subgroups in <M>\Gamma</M> are finite. It returns the number of cells in <M>X</M> appear during the subdivision process using the RigidFacetsSubdivision.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>CountingBaryCentricSubdividedCells</Index>
+<C>CountingBaryCentricSubdividedCells( X )</C>
+<P/>
+It inputs an <M>n</M>-dimensional <M>\Gamma</M>-equivariant CW-complex <M>X</M> on which
+all the cell stabilizer subgroups in <M>\Gamma</M> are finite. It returns the number of cells in <M>X</M> appear during the subdivision process using the barycentric subdivision.
+</Item>
+</Row>
+
+<Row>
+<Item>
+<Index>EquivariantSpectralSequencePage</Index>
+<C>EquivariantSpectralSequencePage( C, m, n)</C>
+<P/>
+It inputs a triple (C,m,n) where C is either a groupName explained as in TorsionSubcomplex, m is the dimension of the reduced torsion subcomplex, and n is the highest vertical degree in the spectral sequence page. At the moment, the function works only when m=1,i.e, after reduction the torsion subcomplex has degree 1. It returns a component object R consists of the first page of spectral sequence, and i-th cohomology groups for i less than n.
+</Item>
+</Row>
+
+<Row>
+    <Item>
+        <Index>ExportHapCellcomplexToDisk</Index>
+        <C>ExportHapCellcomplexToDisk( C, groupName)</C>
+        <P/>
+        It inputs a cell complex <M>C</M> which is stored as a variable in the memory, together with a user's desire name. In case, the input is a torsion cell complex then the user's desire name should be in the form "group_ptorsion" in order to use the function EquivariantSpectralSequencePage. The function will export C to the hard disk.
+
+    </Item>
+</Row>
 
 </Table>
 </Chapter>

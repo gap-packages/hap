@@ -77,7 +77,7 @@ Mult:=function(i,j);
 return Position(EltsQ,EltsQ[i]*EltsQ[j]);
 end;
 #####################################################################
-if Order(S!.group)<1000 then
+if N*Order(S!.group)<200  then
 Multmat:=[];
 for i in [1..Order(S!.group)] do
 Multmat[i]:=[];

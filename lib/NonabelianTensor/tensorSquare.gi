@@ -102,9 +102,9 @@ for x in relsG do
 Append(relsT,[Image(BG1homF,x), Image(BG2homF,x)]);
 od;
 
-for z in GeneratorsOfGroup(AG) do
-for x in NiceGensAG do
-for y in NiceGensAG do
+for z in NiceGensAG do
+for x in gensAG do
+for y in gensAG do
 v:=Comm(Image(AG1homF,x),Image(AG2homF,y))^Image(AG1homF,z) ;
 w:=Comm(Image(AG2homF,y^z),Image(AG1homF,x^z) );
 Append(relsT,[v*w]);

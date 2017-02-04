@@ -263,3 +263,28 @@ AbelianInvariants(D/Group(CoBoundPlus));
 end);
 ############################################################
 ############################################################
+
+############################################################
+############################################################
+InstallOtherMethod(HomotopyGroup,
+"Homotopy group of simplicial group",
+[IsHapSimplicialGroup,IsInt],
+function(G,n)
+local M, d1,d2;
+M:=MooreComplex(G);
+
+if n=1 then
+d2:=M!.boundary(n);
+d2:=d2!.Mapping;
+return Range(d2)/Image(d2);
+fi;
+
+d1:=M!.boundary(n-1);
+d1:=d1!.Mapping;
+d2:=M!.boundary(n);
+d2:=d2!.Mapping;
+return Kernel(d1)/Image(d2);
+end);
+############################################################
+############################################################
+

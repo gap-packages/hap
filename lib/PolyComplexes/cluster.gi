@@ -390,7 +390,7 @@ end);
 #####################################################################
 InstallGlobalFunction(GraphDisplay,
 function(arg)
-local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
+local G,X,Elts,M,i,j,mm,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
 
 tmpDir:=DirectoryTemporary();
 
@@ -443,9 +443,13 @@ od;
 for i in [1..Length(M)] do
 for j in [i+1..Length(M)] do
 
-if not M[i][j]=0 then
+#if not M[i][j]=0 then
+#AppendTo(tmpInlog,i," -- ", j, " \n");
+#fi;
+
+for mm in [1..M[i][j]] do
 AppendTo(tmpInlog,i," -- ", j, " \n");
-fi;
+od;
 
 od;od;
 
@@ -457,7 +461,11 @@ AppendTo(tmpInlog,"}\n }\n");
 ############### WRITTEN ############################################
 fi;
 
-Exec(Concatenation(NEATO_PATH,"-Tgif ", tmpInlog," > ", tmpIngif));
+if IsBound(G!.dot) then
+Exec(Concatenation(DOT_PATH," -Tgif -Gstart=rand -Gepsilon=.000001 ", tmpInlog," > ", tmpIngif));
+else
+Exec(Concatenation(NEATO_PATH," -Tgif -Gstart=rand ", tmpInlog," > ", tmpIngif));
+fi;
 
 if Length(arg)=1 then
 Exec(Concatenation(DISPLAY_PATH, tmpIngif));

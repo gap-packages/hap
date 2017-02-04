@@ -151,6 +151,18 @@ if n=0 then
 return Kernel(C!.boundary(0));
 fi;
 
+#####################
+#####################  6 December 2016
+if IsBound(C!.cohmod) then
+if IsBound(C!.cohmod[n]) then
+return C!.cohmod[n];
+fi;
+else C!.cohmod:=[];
+fi;
+#####################
+#####################
+
+
 DP:=ActedGroup(Source(C!.boundary(n)));
 H:=Kernel(C!.boundary(n));
 N:=Range(C!.boundary(n-1));   
@@ -160,7 +172,7 @@ coh!.nat:=nat;
 coh!.cocomplex:=C;
 
 if not "resolution" in NamesOfComponents(C) then
-return coh; fi;
+C!.cohmod[n]:=coh; return coh; fi;
 
 ##
 ##  The rest of this method is devoted to producing a cocycle 
@@ -239,7 +251,7 @@ R:=C!.resolution;
 	###############################################
 
 coh!.representativeCocycle:=RepresentativeCocycle;
-return coh;
+C!.cohmod[n]:=coh; return coh;
 end);
 ##################################################################
 

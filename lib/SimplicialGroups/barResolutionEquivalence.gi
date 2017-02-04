@@ -290,7 +290,9 @@ local
 	return rec(
 				phi:=Phi,
 				psi:=Psi,
-				equiv:=Equiv
+				equiv:=Equiv,
+                                barBoundary:=BarBoundary,
+                                barHomotopy:=BarHomotopy
 			);
 end);
 ##				

@@ -40,7 +40,7 @@ fi;
 if Length(M2)=0 then RankM2:=0; else
 M2:=MutableCopyMat(M2);
 ConvertToMatrixRep(M2);
-RankM2:=RankMatDestructive(M2);
+RankM2:=RankMatDestructive(1*M2);
 BasisImaged1:=BaseMat(M2);
 dim:=Length(BasisImaged1);
 #BasisKerd2:=NullspaceMat(M2);
@@ -55,7 +55,7 @@ od;
 if Length(M1)=0 then RankM1:=0; else
 M1:=MutableCopyMat(M1);
 ConvertToMatrixRep(M1);
-RankM1:=RankMatDestructive(M1);fi;
+RankM1:=RankMatDestructive(1*M1);fi;
 LengthM1:=Length(M1);
 #BasisImaged1:=BaseMat(M1);
 #dim:=Length(BasisImaged1);
@@ -65,6 +65,7 @@ M1:=0;
 Rels:=[];
 for i in [1..dim] do
         Rels[i]:=SolutionMat(BasisKerd2,BasisImaged1[i]);
+#if Rels[i]=fail then Print(" \n\n ",Rels[i],"   "   ,BasisImaged1[i],"\n\n");fi;
 od;
 
 Rank:= LengthM1-RankM1 -RankM2;;

@@ -100,7 +100,8 @@ for i in [1..10] do
 MM:=ContractedComplex(M);
 MM:=RegularCWComplex(MM);;
 #if Homology(MM,0)=[0] and Homology(MM,1)=[0] then return M; fi;
-if Homology(MM,0)=[0] and Length(Homology(MM,1))=Length(FILE) then return M; fi;
+#if Homology(MM,0)=[0] and Length(Homology(MM,1))=Length(FILE) then return M; fi;
+if Length(Homology(MM,0))=Length(FILE) and Length(Homology(MM,1))=Length(FILE) then return M; fi;
 Print("thickening ...\n");
 M:=ThickenedPureCubicalComplex(M);
 M:=PureCubicalComplex(FrameArray(M!.binaryArray));

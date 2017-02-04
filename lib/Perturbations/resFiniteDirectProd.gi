@@ -1,12 +1,12 @@
 #(C) Graham Ellis, 2005-2006
-
-
+#RT:=0;
 #####################################################################
 InstallGlobalFunction(ResolutionFiniteDirectProduct,
 function(arg)
 local
 	R,S,
-	G,H,E,K,GhomE,HhomE,EhomG,EhomH,EltsE,
+	G,H,E,K,GhomE,HhomE,EhomG,EhomH,EltsE,eltse,elts2intrec,
+        ghome, hhome, ehomg, ehomh, 
  	DimensionR,BoundaryR,HomotopyR,
         DimensionS,BoundaryS,HomotopyS,
 	Lngth,Dimension,Boundary,Homotopy,
@@ -15,8 +15,8 @@ local
 	Int2Pair, Pair2Int,
 	Charact,
 	AddWrds,
-	Int2Vector,
-	Vector2Int,
+	Int2Vector, Int2Vectorrec,
+	Vector2Int, Vector2IntRec,
 	Elts2Int,
 	HomotopyGradedGen,
 	HomotopyRec,
@@ -26,8 +26,8 @@ local
 	HorizontalBoundaryWord,
 	F,FhomE,
 	gensE, gensE1, gensE2, 
-	Boole,
-	i,j,k,g,h,fn;
+	Boole,HGrec, DimPQrec,
+	i,j,k,p,q,r,s,b,g,h,fn;
 
 R:=arg[1];
 S:=arg[2];
@@ -35,8 +35,12 @@ S:=arg[2];
 G:=R!.group; 
 H:=S!.group; 
 
+
 ####################### DIRECT PRODUCT OF GROUPS ###########
 if Length(arg)=2 then
+
+if (not IsFinite(G)) or (not IsFinite(H)) then
+return ResolutionDirectProduct(R,S); fi;
 
 E:=DirectProduct(G,H);
 if Size(G)=infinity or Size(H)=infinity then SetSize(E,infinity);fi;
@@ -100,10 +104,7 @@ EltsE:=[Identity(E)];
 for g in R!.elts do					
 for h in S!.elts do					
 AddSet(EltsE,Image(GhomE,g)*Image(HhomE,h));		
-#AddSet(EltsE,(Image(GhomE,g)*Image(HhomE,h))^-1);
 AddSet(EltsE,Image(HhomE,h)*Image(GhomE,g));		
-#AddSet(EltsE,(Image(HhomE,h)*Image(GhomE,g))^-1);
-
 od;							
 od;						
 i:=Position(EltsE,Identity(E));			
@@ -175,18 +176,25 @@ for i in [1..Lngth] do
 PseudoBoundary[i]:=[1..Dimension(i)];
 od;
 
+DimPQrec:=[];
+for i in [1..Lngth+1] do
+DimPQrec[i]:=[];
+od;
+
 #####################################################################
 DimPQ:=function(p,q)
 local D,j;
 
 if (p<0) or (q<0) then return 0; fi;
-
+if not IsBound(DimPQrec[p+1][q+1]) then 
 D:=0;
 for j in [0..q] do
 D:=D+DimensionR(p+q-j)*DimensionS(j);
 od;
+DimPQrec[p+1][q+1]:=D;
+fi;
 
-return D;
+return DimPQrec[p+1][q+1];
 end;
 #####################################################################
 
@@ -208,29 +216,49 @@ end;
 #####################################################################
 Pair2Int:=function(x,p,q)
 local y;                        #Pair2Int is the inverse of Int2Pair.
-
 y:=[AbsoluteValue(x[1]),AbsoluteValue(x[2])];
-return SignInt(x[1])*SignInt(x[2])*((y[1]-1)*DimensionS(q)+y[2]+DimPQ(p+1,q-1));end;
+return SignInt(x[1])*SignInt(x[2])*((y[1]-1)*DimensionS(q)+y[2]+DimPQ(p+1,q-1));
+end;
 #####################################################################
+
+Int2Vectorrec:=[];
+for i in [1..Lngth+1] do
+Int2Vectorrec[i]:=[];
+od;
 
 #####################################################################
 Int2Vector:=function(k,j)
 local tmp,p,q;
 
+if not IsBound(Int2Vectorrec[k+1][j]) then
 p:=k;q:=0;
 while j>=DimPQ(p,q)+1 do
 p:=p-1;q:=q+1;
 od;				#p,q are now computed from k,j
 
 tmp:=Int2Pair(j,p,q);
-
-return [p,q,tmp[1],tmp[2]];
+Int2Vectorrec[k+1][j]:=[p,q,tmp[1],tmp[2]];
+fi;
+return Int2Vectorrec[k+1][j];
 end;
 #####################################################################
 
+Vector2IntRec:=[];
+for p in [1..Lngth+1] do
+Vector2IntRec[p]:=[];
+for q in [1..Lngth+1] do
+Vector2IntRec[p][q]:=[];
+for r in [1..R!.dimension(p-1)] do
+Vector2IntRec[p][q][r]:=[];
+od;od;od;
 #####################################################################
-Vector2Int:=function(p,q,r,s);
-return Pair2Int([r,s],p,q);
+Vector2Int:=function(p,q,r,s)
+local rr, ss;
+rr:=AbsInt(r); ss:=AbsInt(s);
+if not IsBound(Vector2IntRec[p+1][q+1][rr][ss]) then
+Vector2IntRec[p+1][q+1][rr][ss]:= Pair2Int([rr,ss],p,q);
+fi;
+return SignInt(r)*SignInt(s)*Vector2IntRec[p+1][q+1][rr][ss];
 end;
 #####################################################################
 
@@ -246,6 +274,20 @@ else
 fi;
 end;
 #####################################################################
+eltse:=Elements(E);
+elts2intrec:=List([1..Length(eltse)],i->Elts2Int(eltse[i]));
+#####################################################################
+Elts2Int:=function(x);
+return elts2intrec[PositionSorted(eltse,x)];
+end;
+#####################################################################
+
+###############################################
+ghome:=List([1..Order(G)],i->Elts2Int(Image(GhomE,R!.elts[i])));
+hhome:=List([1..Order(H)],i->Elts2Int(Image(HhomE,S!.elts[i])));
+ehomg:=List([1..Order(E)],i->Position(R!.elts,Image(EhomG,EltsE[i])));
+ehomh:=List([1..Order(E)],i->Position(S!.elts,Image(EhomH,EltsE[i])));
+###############################################
 
 #####################################################################
 Boundary:=function(k,jj)
@@ -259,11 +301,13 @@ tmp:=Int2Vector(k,j);
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=ShallowCopy(BoundaryR(p,r));
-Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R!.elts[x[2]])   )  ]);
+#Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R!.elts[x[2]])   )  ]);
+Apply(horizontal,x->[x[1],1*ghome[x[2]]]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
 vertical:=ShallowCopy(BoundaryS(q,s));
-Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S!.elts[x[2]])  )    ]);
+#Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S!.elts[x[2]])  )    ]);
+Apply(vertical,x->[x[1],1*hhome[x[2]] ]);
 Apply(vertical,x->[Vector2Int(p,q-1,r,x[1]),x[2]]);
 if IsOddInt(p) then
 vertical:=NegateWord(vertical);
@@ -293,7 +337,8 @@ p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=StructuralCopy(BoundaryR(p,r));
 
-Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R!.elts[x[2]]) )]);
+#Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R!.elts[x[2]]) )]);
+Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*EltsE[ghome[x[2]]])   ]);
 
 
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
@@ -316,42 +361,62 @@ return bnd;
 end;
 #####################################################################
 
+HGrec:=[];
+for p in [1..Lngth+1] do
+HGrec[p]:=[];
+for q in [1..Lngth-p+1] do
+HGrec[p][q]:=[];
+for r in [1..R!.dimension(p)+2] do  #why +2?
+HGrec[p][q][r]:=[];
+for s in [1..S!.dimension(q)+2] do  #why +2?
+HGrec[p][q][r][s]:=[];
+for b in [1,2] do
+HGrec[p][q][r][s][b]:=[];
+od;od;od;od;od;
+
 #####################################################################
 HomotopyGradedGen:=function(g,p,q,r,s,bool)    #Assume EltsE[g] exists!
-local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;	#bool=true for vertical homotopy
+local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2,b;	#bool=true for vertical homotopy
+
+if bool=true then b:=1; else b:=2; fi;
+if IsBound(HGrec[p+1][q+1][r+1][s+1][b][g]) then 
+return 1*HGrec[p+1][q+1][r+1][s+1][b][g]; fi;
+
+
 
 #This function seems to work! But I should really check the maths again!!
 
-Eg:=EltsE[g];
-Eg1:=Image(EhomG,Eg);
-Eg2:=Image(EhomH,Eg);
-g2:=Position(S!.elts,Eg2);
-g1:=Position(R!.elts,Eg1);
-#Eg1:=Image(GhomE,Image(EhomG,Eg));
-#Eg2:=Image(HhomE,Image(EhomH,Eg));
-Eg1:=Image(GhomE,Eg1);
-Eg2:=Image(HhomE,Eg2);
-
+g2:=1*ehomh[g];
+g1:=1*ehomg[g];
+Eg1:=EltsE[ghome[g1]];
+Eg2:=EltsE[hhome[g2]];
 
 hty:=HomotopyS(q,[s,g2]);
-Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S!.elts[x[2]])]); 
-Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
+if Length(hty)>0 then
+#Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S!.elts[x[2]])]); 
+Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), hhome[x[2]]]);
+Apply(hty,x->[ x[1], Elts2Int(Eg1*EltsE[x[2]])]);
 if IsOddInt(p) then
 hty:=NegateWord(hty); fi;
+fi;
 
 if (p=0 and q>0) or bool then return hty; fi;
 
-if p>0 then
-hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty)),false);
+if p>0 then 
+if Length(hty)>0 then
+hty1:=HomotopyOfWord(p+q,1*HorizontalBoundaryWord(p+q+1,hty),false);
 Append(hty, NegateWord(hty1));
 fi;
+fi;
 
-if q>0 then return hty; fi;
+if q>0 then  return hty; fi;
 
 
 hty1:=HomotopyR(p,[r,g1]);
-Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R!.elts[x[2]])]);
-Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
+if Length(hty1)>0 then
+#Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R!.elts[x[2]])]);
+Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), ghome[x[2]]]);
+#Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 
 Append(hty,hty1);
 
@@ -364,8 +429,11 @@ hty1:=HomotopyOfWord(p+q,StructuralCopy(HorizontalBoundaryWord(p+q+1,hty1)),fals
 
 Append(hty,hty1); 	#I think this perturbation term is always zero and
 			#thus not necessary.
+fi;
+HGrec[p+1][q+1][r+1][s+1][b][g]:=hty;
 
-return hty;
+return 1*HGrec[p+1][q+1][r+1][s+1][b][g];
+
 end;
 #####################################################################
 
@@ -392,6 +460,7 @@ hty:=[];
 for x in w do
 Append(hty,Homotopy(n,x,bool));
 od;
+
 return hty;
 
 end;
@@ -407,6 +476,7 @@ od;od;
 #####################################################################
 FinalHomotopy:=function(n,x)
 local a;
+
 
 a:=AbsInt(x[1]);
 if not IsBound(HomotopyRec[n+1][a][x[2]]) then
@@ -450,6 +520,8 @@ return Objectify(HapResolution,
 	    group:=E,
 	    firstProjection:=EhomG,
 	    secondProjection:=EhomH,
+            Int2Vector:=Int2Vector,
+            Vector2Int:=Vector2Int,
 	    properties:=
 	    [["type","resolution"],
 	    ["length",Lngth],

@@ -286,3 +286,51 @@ ListWithIdenticalEntries(answer,arg[3]); fi;
 
 
 end);
+#####################################################################
+#####################################################################
+
+#######################################################
+#######################################################
+InstallGlobalFunction(RelativeGroupHomology,
+function(G,N,kk)
+local i, GhomQ, Q, RQ, RN, T, C, D, K,
+      newdimension, newboundary, newproperties;
+
+GhomQ:=NaturalHomomorphismByNormalSubgroup(G,N);
+Q:=Range(GhomQ);
+RQ:=ResolutionFiniteGroup(Q,kk+1);
+RN:=ResolutionFiniteGroup(N,kk+1);
+T:=ResolutionExtension(GhomQ,RN,RQ);
+
+C:=TensorWithIntegers(T);
+D:=TensorWithIntegers(RQ);
+
+######
+newdimension:=function(n);
+return C!.dimension(n)-D!.dimension(n);
+end;
+######
+
+######
+newboundary:=function(n,k);
+return C!.boundary(n,k+D!.dimension(n));
+end;
+######
+
+######
+newproperties:=[["length",kk+1],
+                ["connected",true],
+                ["type","chainComplex"],
+                ["characteristic",0]];
+######
+
+K:=rec(dimension:=newdimension,
+       boundary:=newboundary,
+       properties:=newproperties);
+K:=Objectify(HapChainComplex,K);
+
+return Homology(K,kk);
+end);
+#######################################################
+#######################################################
+

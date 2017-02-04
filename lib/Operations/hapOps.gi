@@ -308,6 +308,19 @@ end);
 
 ##########################################################
 ##########################################################
+InstallOtherMethod(RegularCWMap,
+"inclusion of simplicial complexes to regular CW map ",
+[IsHapSimplicialComplex, IsHapSimplicialComplex],
+function(M,A)
+
+return HAP_SimplicialPairToCWMap(M,A);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
 InstallMethod(PureComplexSubcomplex,
 "subcomplex of  pure cubical complex ",
 [IsHapPureCubicalComplex, IsList],

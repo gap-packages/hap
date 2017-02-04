@@ -10,8 +10,9 @@ ReadPackage("HAP","lib/RegularCWComplexes/cwTypes.gd");
 ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
-ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
+ReadPackage("HAP","lib/TorsionSubcomplexes/torsionsubcomplex.gd");
 ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gd");
+ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gd");
 
 
 
@@ -71,6 +72,8 @@ DeclareGlobalFunction("NonabelianSymmetricSquare");
 DeclareGlobalFunction("NonabelianSymmetricSquare_inf");
 DeclareGlobalFunction("SymmetricCentre");
 DeclareGlobalFunction("NonabelianTensorProduct");
+DeclareGlobalFunction("NonabelianTensorProduct_Inf");
+DeclareGlobalFunction("NonabelianTensorProduct_alt");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
 DeclareGlobalFunction("NonabelianSymmetricKernel");
 DeclareGlobalFunction("NonabelianExteriorProduct");
@@ -123,6 +126,7 @@ DeclareGlobalFunction("RecalculateIncidenceNumbers");
 
 ## RESOLUTIONS MOD P ################################################
 DeclareGlobalFunction("ResolutionPrimePowerGroup");
+DeclareGlobalFunction("ResolutionPrimePowerGroupSparse");
 DeclareGlobalFunction("RankPrimeHomology");
 DeclareGlobalFunction("RankHomologyPGroup");
 DeclareGlobalFunction("NumberGeneratorsOfGroupHomology");
@@ -253,6 +257,7 @@ DeclareGlobalFunction("HomologyVectorSpace");
 DeclareGlobalFunction("IntegralHomology");#<Homology
 DeclareGlobalFunction("ModularHomology");#<Homology
 DeclareGlobalFunction("GroupHomology");
+DeclareGlobalFunction("RelativeGroupHomology");
 DeclareGlobalFunction("RipsHomology");
 DeclareGlobalFunction("IntegralCohomology");#<Cohomology
 #DeclareOperation("Cohomology",[IsObject,IsObject]);
@@ -301,6 +306,7 @@ DeclareGlobalFunction("ModPCohomologyGenerators");
 
 ## CURVATURE & POLYTOPES ############################################
 DeclareGlobalFunction("IsAspherical");
+DeclareAttribute("StarGraph",IsFpGroup);
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");#doc
@@ -309,6 +315,9 @@ DeclareGlobalFunction("RegularCWOrbitPolytope");#doc
 DeclareGlobalFunction("HAPRegularCWPolytope");#<RegularCWPolytope
 DeclareOperation("RegularCWPolytope",[IsList]);#doc
 DeclareGlobalFunction("PolymakeFaceLattice");
+DeclareGlobalFunction("HAP_TzPair");
+DeclareGlobalFunction("HAP_AddGenerator");
+DeclareGlobalFunction("SmoothedFpGroup");
 
 
 ## POLYCYLIC ########################################################
@@ -360,6 +369,7 @@ DeclareGlobalFunction("FpG_to_MtxModule");
 ## STREAMS ##########################################################
 DeclareGlobalFunction("ChildProcess");
 DeclareGlobalFunction("ChildClose");
+DeclareGlobalFunction("ChildRestart");
 DeclareGlobalFunction("ChildFunction");
 DeclareGlobalFunction("ChildCommand");
 DeclareGlobalFunction("ChildRead");
@@ -453,6 +463,7 @@ DeclareGlobalFunction("SparseFilteredChainComplexOfFilteredCubicalComplex");
 DeclareGlobalFunction("ChainComplexOfCubicalPair");
 DeclareGlobalFunction("SparseChainComplexOfCubicalPair");
 DeclareGlobalFunction("HAP_PureCubicalPairToCWMap");
+DeclareGlobalFunction("HAP_SimplicialPairToCWMap");
 DeclareOperation("ExcisedPair",[IsHapPureCubicalComplex,IsHapPureCubicalComplex]);#doc
 DeclareGlobalFunction("ExcisedPureCubicalPair");#<ExcisedPair
 DeclareGlobalFunction("ExcisedPureCubicalPair_dim_2");#<ExcisedPair
@@ -622,6 +633,9 @@ DeclareGlobalFunction("QuasiIsomorph");
 DeclareGlobalFunction("QuotientQuasiIsomorph");
 DeclareGlobalFunction("SubQuasiIsomorph");
 DeclareGlobalFunction("SylowSubgroupOfCatOneGroup");
+DeclareGlobalFunction("CrossedInvariant");
+AutomorphismGroupAsCrossedModule:=CrossedModuleByAutomorphismGroup;
+MakeReadOnlyGlobal("AutomorphismGroupAsCrossedModule");
 
 ## COMMUTATIVE DIAGRAMS #############################################
 DeclareGlobalFunction("HomomorphismChainToCommutativeDiagram");
@@ -693,8 +707,10 @@ DeclareGlobalFunction("CWMap2ChainMap");
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");#doc
+DeclareGlobalFunction("GaussCodeOfPureCubicalKnot");
 DeclareOperation("DisplayArcPresentation",[IsHapPureCubicalComplex]);#doc
 DeclareGlobalFunction("WirtingerGroup");
+DeclareGlobalFunction("WirtingerGroup_gc");
 DeclareGlobalFunction("NumberOfPrimeKnots");
 DeclareGlobalFunction("ReflectedCubicalKnot");
 DeclareGlobalFunction("ArcPresentation");
@@ -725,6 +741,7 @@ DeclareOperation("EuclideanApproximatedMetric",[IsVector,IsVector]);
 DeclareGlobalFunction("IsMetricMatrix");
 
 ## SPARSE ###########################################################
+DeclareGlobalFunction("SparseMattoMat");
 DeclareGlobalFunction("SparseMat");
 DeclareGlobalFunction("SparseRowMult");
 DeclareGlobalFunction("SparseRowInterchange");

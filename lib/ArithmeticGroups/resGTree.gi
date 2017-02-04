@@ -60,6 +60,7 @@ local
     ##
     Gmult:=function(i,j)
     local posit,g;
+
     if not IsBound(Gmultrec[i]) then
         Gmultrec[i]:=[];
     fi;
