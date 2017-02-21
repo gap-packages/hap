@@ -1153,6 +1153,7 @@ L:=Filtered(L,x->Length(x)>0);
 
 N:=NerveOfCover(L,10);
 N!.clustersizes:=List(L,Size);
+N!.clusters:=L;
 return N;
 end);
 ###########################################

@@ -20,10 +20,18 @@ InstallMethod(KendallMetric,
 "for permutations g,h",
 [IsPerm,IsPerm],
 function(g,h)
-local N,S, i,j;
+local N,M,S, i,j;
 
+if IsOne(g) then N:=0;
+else
 N:=Maximum(ListPerm(g));
-N:=Maximum(N,Maximum(ListPerm(h)));
+fi;
+if IsOne(h) then M:=0;
+else
+M:=Maximum(ListPerm(h));
+fi;
+
+N:=Maximum(N,M);
 
 S:=0;
 

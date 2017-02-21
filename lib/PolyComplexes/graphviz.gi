@@ -29,13 +29,14 @@ tmpInlog:=Filename(tmpDir,"tmpIn.log");
 tmpIngif:=Filename(tmpDir,"tmpIn.gif");
 tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
 
-mx:=Maximum(Maximum(M));;
-for i in [1..Length(M)] do
-for j in [1..Length(M)] do
-if not i=j then
-M[i][j]:=1+Int(M[i][j]*100/mx);
-fi;
-od;od;
+#mx:=Maximum(Maximum(M));;
+#for i in [1..Length(M)] do
+#for j in [1..Length(M)] do
+#if not i=j then
+#M[i][j]:=1+Int(M[i][j]*100/mx);
+#M[i][j]:=1+Int(M[i][j]);
+#fi;
+#od;od;
 
 
 ################ WRITE TO TMPIN.LOG #################################
