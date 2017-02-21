@@ -390,7 +390,7 @@ end);
 #####################################################################
 InstallGlobalFunction(GraphDisplay,
 function(arg)
-local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
+local G,X,Elts,M,i,j,mm,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
 
 tmpDir:=DirectoryTemporary();
 
@@ -443,9 +443,13 @@ od;
 for i in [1..Length(M)] do
 for j in [i+1..Length(M)] do
 
-if not M[i][j]=0 then
+#if not M[i][j]=0 then
+#AppendTo(tmpInlog,i," -- ", j, " \n");
+#fi;
+
+for mm in [1..M[i][j]] do
 AppendTo(tmpInlog,i," -- ", j, " \n");
-fi;
+od;
 
 od;od;
 
@@ -457,7 +461,11 @@ AppendTo(tmpInlog,"}\n }\n");
 ############### WRITTEN ############################################
 fi;
 
-Exec(Concatenation(NEATO_PATH,"-Tgif ", tmpInlog," > ", tmpIngif));
+if IsBound(G!.dot) then
+Exec(Concatenation(DOT_PATH," -Tgif -Gstart=rand -Gepsilon=.000001 ", tmpInlog," > ", tmpIngif));
+else
+Exec(Concatenation(NEATO_PATH," -Tgif -Gstart=rand ", tmpInlog," > ", tmpIngif));
+fi;
 
 if Length(arg)=1 then
 Exec(Concatenation(DISPLAY_PATH, tmpIngif));
@@ -992,7 +1000,7 @@ InstallMethod(CliqueComplex,
 function(K,n)
 local G;
 
-if Dimension(K)=1 then
+if Dimension(K)<=1 then
 G:=GraphOfSimplicialComplex(K);
 return SimplicialNerveOfGraph(G,n);
 fi;
@@ -1031,4 +1039,149 @@ end);
 #####################################################################
 #####################################################################
 
+
+########################################################
+########################################################
+NerveOfCover:=function(C,N)
+local S, V, cnt, i, x, tog;
+
+V:=[1..Length(C)];
+
+S:=List(V,i->[i]);
+
+cnt:=1; tog:=true;
+while cnt<=N and tog=true do
+cnt:=cnt+1;tog:=false;
+for x in Combinations(V,cnt) do
+if Length(Intersection(List(x,xi->C[xi])))>0 then Add(S,x); tog:=true; fi;
+od;
+od;
+
+S:=List(S,x->SSortedList(x));
+S:=SSortedList(S);
+return SimplicialComplex(S);
+
+end;
+########################################################
+########################################################
+
+
+########################################################
+########################################################
+InstallGlobalFunction(Mapper_alt,
+function(S,f,N,t,tol)
+local M,m,s,I,x,y,i,j,c,G,A,Clusters,Mapper,vert,K,W;
+##IntervalPreCover  function of N, f, S ,tol
+#N number of divisions of image
+# f  function
+# S  distance matrix
+#tol clustering parameter
+# toverlap parameter
+M:=Maximum(Flat(S));;
+m:=Minimum(Filtered(Flat(S),x->not x=0));;
+s:=(M-m)/(N);
+I:=[];
+for i in [1..N] do
+I[i]:=[];
+x:=(i-1)*s-t*s/100;
+y:=i*s+t*s/100;
+for j in [1..Length(S)] do
+if f(j)<=y and f(j)>=x then Add(I[i],j); fi;
+od;
+od;
+##PreCover Done
+
+
+##Mapper Complex should output the nerve of a collection of sets
+G:=[]; #tol:=5;
+for i in [1..N] do
+A:=List(I[i],j->S[j]*1);
+A:=List(A,a->a{I[i]}*1);
+G[i]:=SymmetricMatrixToGraph(A,Maximum(Flat(A))/tol);
+od;
+
+Clusters:=[];
+for i in [1..N] do
+Clusters[i]:=[];
+vert:=EvaluateProperty(G[i],"numberofvertices");
+for c in 1+[1..PathComponentsOfGraph(G[i],0)] do
+K:=Filtered([1..vert],k->c in G[i]!.pathComponents[k]);
+K:=List(K,a->I[i][a]);
+if Length(K)>0 then Add(Clusters[i],K); fi;
+od;
+for c in G[i]!.singletons do
+Add(Clusters[i],[c]);
+od;
+od;
+
+
+W:=Concatenation(Clusters);
+Mapper:=NerveOfCover(W,20);
+Mapper!.clustersizes:=List(W,Size);
+return Mapper;
+end);
+########################################################
+########################################################
+
+###########################################
+###########################################
+#Mapper:=function(S,dx,f,dz,P,r,cluster)
+#Mapper_alt:=function(S,f,N,t,tol)
+InstallGlobalFunction(Mapper,
+function(arg)
+local  L, i, s , N, t, tol, f, S, dx, dz, cluster, r, P;
+
+###########################
+if Length(arg)=5 then
+S:=arg[1]; f:=arg[2]; N:=arg[3]; t:=arg[4]; tol:=arg[5];
+return Mapper_alt(S,f,N,t,tol);
+fi;
+###########################
+
+S:=arg[1]; dx:=arg[2]; f:=arg[3]; dz:=arg[4]; 
+P:=arg[5]; r:=arg[6]; cluster:=arg[7];
+L:=List(P,x->[]);
+for s in S do
+for i in [1..Length(P)] do
+if dz(f(s),P[i]) <=r then Add(L[i],s); fi;
+od;
+od;
+
+L:=List(L,x->cluster(x));
+L:=Concatenation(L);
+L:=Filtered(L,x->Length(x)>0);
+
+N:=NerveOfCover(L,10);
+N!.clustersizes:=List(L,Size);
+N!.clusters:=L;
+return N;
+end);
+###########################################
+###########################################
+
+#############################################
+#############################################
+InstallGlobalFunction(VectorsToOneSkeleton,
+function(S,epsilon,dx)
+local Boundaries, i, j;
+
+Boundaries:=[];;
+
+Boundaries[1]:=List(S,x->[1,0]);
+
+Boundaries[2]:=[];
+for i in [1..Length(S)] do
+for j in [i+1..Length(S)] do
+if dx(S[i],S[j])<=epsilon then Add(Boundaries[2],[2,i,j]); fi;
+od;
+od;
+
+if Length(Boundaries[2])>0 then
+Boundaries[3]:=[];
+fi;
+return RegularCWComplex(Boundaries);
+
+end);
+#############################################
+#############################################
 

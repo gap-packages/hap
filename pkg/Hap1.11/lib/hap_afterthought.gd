@@ -1,7 +1,9 @@
 #MakeReadOnlyGlobal("CATONEGROUP_DATA");
 #MakeReadOnlyGlobal("COMPILED");
 MakeReadOnlyGlobal("FilteredSimplicialComplexToFilteredCWComplex");
+if IsPackageMarkedForLoading("singular","06.07.23") then
 MakeReadOnlyGlobal("GradedAlgebraPresentationType");
+fi;
 #MakeReadOnlyGlobal("HAPAAA");
 #MakeReadOnlyGlobal("HAPBARCODE");
 #MakeReadOnlyGlobal("HAPDerivationType");

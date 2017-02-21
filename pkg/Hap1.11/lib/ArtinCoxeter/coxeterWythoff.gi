@@ -105,6 +105,8 @@ od;
 od;
 od;
 
+#Print(NonEssentialSets,"\n");
+
 ##############################################################
 CoxeterDiagramIsEssential:=function(T);
 if Length(T)=Length(Vertices) then return true; fi;
