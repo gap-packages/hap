@@ -156,6 +156,8 @@ ReadPackage("HAP", "lib/NonabelianTensor/SBG.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquare.gi");
 #ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/bogomolov.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/equivalenceclasses.gi");
+
 
 ##################### RESOLUTIONS ###################################
 ReadPackage("HAP", "lib/Resolutions/resAspherical.gi");
@@ -191,6 +193,7 @@ ReadPackage("HAP", "lib/Functors/various.gi");
 ReadPackage("HAP", "lib/Functors/equiChainMap.gi");
 ReadPackage("HAP", "lib/Functors/modularEquiChainMap.gi");
 ReadPackage("HAP", "lib/Functors/primePartDerived.gi");
+ReadPackage("HAP", "lib/Functors/primePartDerivedvsgc.gi");
 ReadPackage("HAP", "lib/Functors/homToZ.gi");
 ReadPackage("HAP", "lib/Functors/tensorWithRationals.gi");
 ReadPackage("HAP", "lib/Functors/homToZmodP.gi");
@@ -199,6 +202,7 @@ ReadPackage("HAP", "lib/Functors/homtint.gi");
 
 ##################### HOMOLOGY ######################################
 ReadPackage("HAP", "lib/Homology/integralHomology.gi");
+#ReadPackage("HAP", "lib/Homology/integralHomology.may2017working");
 ReadPackage("HAP", "lib/Homology/lefschetz.gi");
 ReadPackage("HAP", "lib/Homology/modularHomology.gi");
 ReadPackage("HAP", "lib/Homology/modularHomologyVectSpace.gi");
@@ -454,12 +458,20 @@ ReadPackage("HAP","lib/CohomologyOperations/mycupi.gi");
 ReadPackage("HAP","lib/CohomologyOperations/toplevelsquares.gi");
 ReadPackage("HAP","lib/CohomologyOperations/detection.gi");
 ReadPackage("HAP","lib/CohomologyOperations/cohodata.gi");
+ReadPackage("HAP","lib/CohomologyOperations/stiefel.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0") then
 ReadPackage("HAP","lib/HapCocyclic/init.g");
 ReadPackage("HAP","lib/HapCocyclic/read.g");
 fi;
+
+################## QUANDLES ##################################
+ReadPackage("HAP","lib/Quandles/quandles.gi");
+ReadPackage("HAP","lib/Quandles/planarDiagramData.gi");
+ReadPackage("HAP","lib/Quandles/quandleKnots.gi");
+ReadPackage("HAP","lib/Quandles/quandleOrbits.gi");
+
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level
 

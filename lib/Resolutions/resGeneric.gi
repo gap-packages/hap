@@ -3,12 +3,17 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionGenericGroup,
-function(G,N)
+function(arg)
 
-    local L, M, GG, A, R, fn, epi, F, FhomG, AhomG, Tz;
+    local G,N, bool, prime, L, M, GG, A, R, fn, epi, F, FhomG, AhomG, Tz;
 
 #This function will try to return an efficient resolution, 
 #and any resolution returned will have a contracting homotopy.
+
+G:=arg[1];
+N:=arg[2];
+if Length(arg)>2 then bool:=arg[3]; fi;
+if Length(arg)>3 then prime :=arg[4]; fi;
 
 ####FINITE################
 if Order(G)<infinity then 
@@ -20,12 +25,13 @@ Tz:=function(R) return R; end;
    return ResolutionAbelianGroup(G,N);
    fi;
 
-   if Order(G)<33 then
+   if Order(G)<64 then
    return Tz(ResolutionFiniteGroup(G,N));
    fi;
 
    if IsPGroup(G) then
-   return ResolutionNormalSeries(LowerCentralSeries(G),N);
+   #return ResolutionNormalSeries(LowerCentralSeries(G),N);
+   return ResolutionNormalSeries(BigStepLCS(G,8),N);  #OPTIMIZE!!!
    fi;
 
 L:=LowerCentralSeries(G);

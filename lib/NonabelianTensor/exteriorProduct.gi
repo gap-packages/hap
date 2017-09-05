@@ -217,6 +217,7 @@ local 		G,N,gensG, Epi, Pairing,toggle,x,z;
 G:=arg[1];
 if Length(arg)>1 then N:=arg[2]; else 
 
+if Order(Centre(G))=1 then return Centre(G); fi;
 if IsNilpotent(G) and LoadPackage("nq")=true then
 return UpperEpicentralSeries(G,1); fi;
 

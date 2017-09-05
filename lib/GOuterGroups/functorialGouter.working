@@ -189,8 +189,8 @@ gens:=List(gens,x->x!.Mapping);;
 gens:=CommonEndomorphisms(H,gens);;
 AUT:=Group(gens);;
 
-hom:=GroupHomomorphismByImages(aut,AUT,gens1, gens);
-if hom=fail then Print("fail\n"); fi;
+hom:=GroupHomomorphismByImages(aut,AUT,gens1, List(gens,x->x^-1));
+
 CH!.ActingGroup:=aut;
 
 #############################

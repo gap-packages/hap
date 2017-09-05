@@ -44,6 +44,9 @@ BinGp:=Image(RegularActionHomomorphism(BinGp));
 ResolutionFG:=function(G,n)
 local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
 
+##Added April 2017
+if prime>0 and Order(G)>1 then return ResolutionPrimePowerGroup(G,n); fi;
+##
 ##Added Jan 2012
 if IsBound(P!.resolutions) and HasName(G) then
 x:=Position(P!.resolutions[2], Name(G));
@@ -184,8 +187,8 @@ StabGrps:= List([0..Length(P)],n->
 
 StabResls:=[];
 i:=N;
-if prime=0 then
-##################################
+#if true then
+#################################
 for L in StabGrps do
 Add(StabResls,List(L,	
 g->ExtendScalars(ResolutionFG(g,i),G,EltsG))
@@ -193,16 +196,16 @@ g->ExtendScalars(ResolutionFG(g,i),G,EltsG))
 i:=Maximum(0,AbsInt(i-1));
 od;
 #################################
-else
+#else
 ##################################
-for L in StabGrps do
-Add(StabResls,List(L,
-#g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG)));
-g->ExtendScalars(ResolutionGenericGroup(g,i,false,prime),G,EltsG)));
-i:=Maximum(0,AbsInt(i-1));
-od;
-#################################
-fi;
+#for L in StabGrps do
+#Add(StabResls,List(L,
+##g->ExtendScalars(ResolutionFiniteGroup(g,i,false,prime),G,EltsG)));
+#g->ExtendScalars(ResolutionGenericGroup(g,i,false,prime),G,EltsG)));
+#i:=Maximum(0,AbsInt(i-1));
+#od;
+##################################
+#fi;
 
 DimRecs:=List([0..N],i->[]);
 

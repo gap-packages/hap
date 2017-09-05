@@ -17,7 +17,7 @@ local
         InsertSigns,
         StandardWord,
         StandardWordSgn,
-	lngth,
+	lngth,ln,
 	StabilizerSubgroup,
 	StabilizerRecord,
         StabilizerBasisRecord,
@@ -47,6 +47,7 @@ VSGS:=VectorStabilizer(G,StartVector);
 Dimension:=function(k);
 if k<0 then return 0; fi;
 if k=0 then return 1; fi;
+if k>lngth then return 0; fi;
 return Length(Hasse[k]);
 end;
 #####################################################################
@@ -269,6 +270,7 @@ PseudoBoundary:=List([1..lngth],i->[1..Dimension(i)]);
 Boundary:=function(k,mm)
 local b,bb,x,n, bnd,signedbnd,bndbnd,tmp,m;
 
+if k<1 then return []; fi;  #Added April 2017
 m:=AbsoluteValue(mm);
 
 if not IsInt(PseudoBoundary[k][m]) then 
@@ -377,7 +379,7 @@ od;
 ############
 
 PseudoBoundary[n][i]:=signedbnd;
-Print(Collected(D),"\n\n");
+#Print(Collected(D),"\n\n");
 
 
 od;
@@ -387,7 +389,7 @@ end;
 InsertSigns();
 ###############################################################
 ##Signs inserted.
-
+if Length(arg)>2 then ln:=lngth; else ln:=1000; fi;
 #####################################################################
 return Objectify(HapNonFreeResolution,
 	   rec(
@@ -401,9 +403,10 @@ return Objectify(HapNonFreeResolution,
             basis:=StabilizerBasis,
 	    action:=StabAction,
 	    hasse:=Hasse,
+            originalGroup:=arg[1],
             properties:=
              [["type","resolution"],
-              ["length",lngth],
+              ["length",ln],
               ["characteristic", 0] ]));
 
 end);

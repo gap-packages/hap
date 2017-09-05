@@ -309,11 +309,12 @@ InstallOtherMethod(RankMatDestructive,
 function(M) local T;
 if M!.cols>=M!.rows then 
 SparseSemiEchelon(M);
-return Length(Flat(M!.heads));
+#return Length(Flat(M!.heads));
+return Length(Filtered(Flat(M!.heads),u->not IsZero(u)));
 else
 T:=TransposeOfSparseMat(M);
 SparseSemiEchelon(T);
-return Length(Flat(T!.heads));
+return Length(Filtered(Flat(T!.heads),u->not IsZero(u)));
 fi;
 end);
 #####################################################################
@@ -329,7 +330,8 @@ local mat, rk, tog, heads;
 mat:=StructuralCopy(M!.mat);
 if IsBound(M!.heads) then tog:=true; heads:=StructuralCopy(M!.heads); else tog:=false; fi;
 SparseSemiEchelon(M);
-rk:= Length(Flat(M!.heads));
+#rk:= Length(Flat(M!.heads));
+rk:= Length(Filtered(Flat(M!.heads),u->not IsZero(u)));
 if tog then M!.heads:=heads; else Unbind(M!.heads); fi;
 M!.mat:=mat;
 return rk;

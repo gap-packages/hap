@@ -10,3 +10,7 @@ DeclareOperation("Bockstein",[IsAlgebra,IsObject]);
 DeclareGlobalFunction("BocksteinHomology");
 DeclareGlobalFunction("PrintAlgebraWordAsPolynomial");
 DeclareGlobalFunction("InducedSteenrodHomomorphisms");
+DeclareGlobalFunction("PolytopalRepresentationComplex");
+DeclareGlobalFunction("HAP_StiefelWhitney");
+DeclareGlobalFunction("FundamentalMultiplesOfStiefelWhitneyClasses");
+DeclareGlobalFunction("CohomologyHomomorphismOfRepresentation");

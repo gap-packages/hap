@@ -47,6 +47,17 @@ Exec( cn(VISCRIPT, cn(HAPDOC,"chap26.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap27.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap28.html")) );
 Exec( cn(VISCRIPT, cn(HAPDOC,"chap29.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap30.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap31.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap32.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap33.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap34.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap35.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap36.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap37.html")) );
+Exec( cn(VISCRIPT, cn(HAPDOC,"chap38.html")) );
+
+
 Exec( cn(VISCRIPT, cn(HAPDOC,"chapInd.html")) );
 
 Exec( cn("cp ",HAPDOC,"/*.xml ",HAPPDFDOC)); 

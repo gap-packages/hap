@@ -498,8 +498,8 @@ function(G)
 local R, C, cup, one,two, diag, tensor , rel, sn,i,j,k,x,t,ii;
 
 R:=ResolutionAsphericalPresentation(G,3);
-C:=TensorWithIntegers(R);
-C:=HomToIntegers(C);
+#C:=TensorWithIntegers(R);
+C:=HomToIntegers(R);
 
 one:=HAP_CocyclesAndCoboundaries(C,1,true);
 two:=HAP_CocyclesAndCoboundaries(C,2,true);
@@ -514,9 +514,10 @@ for i in [1..Length(rel)]  do
 ii:=i+1;
 if rel[i]<0 then ii:=i; fi;
 for j in [ii..Length(rel)]  do
-if AbsInt(rel[i]) <= AbsInt(rel[j]) then sn:=1; fi;
-if AbsInt(rel[i]) > AbsInt(rel[j]) then sn:=-1; fi;
-sn:=sn*SignInt(rel[i])*SignInt(rel[j]);
+#if AbsInt(rel[i]) <= AbsInt(rel[j]) then sn:=1; fi;
+#if AbsInt(rel[i]) > AbsInt(rel[j]) then sn:=-1; fi;
+#sn:=sn*SignInt(rel[i])*SignInt(rel[j]);
+sn:=SignInt(rel[i])*SignInt(rel[j]);  #Changed May 2017
 Add(tensor,[sn*AbsInt(rel[i]), AbsInt(rel[j])] );
 od;
 od;

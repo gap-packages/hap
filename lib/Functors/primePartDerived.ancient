@@ -4,46 +4,49 @@
 InstallGlobalFunction(PrimePartDerivedFunctor,
 function(G,R,F,n)
 local
-	C,P, DCRS, L, AscChn,
+	C,P,P1, D,DCRS, L, AscChn,
 	K, gensK, S, f,fx,
 	HP, HK, HPK, HKhomHPK, HPKhomHP, HKhomHP,
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	HPrels, x, y, i,prime,  
-	HPpres,G1;
+	HPpres,G1,newDCRS;
 
 C:=F(R);
 
 P:=R!.group;
-prime:=Factors(Order(P))[1];
-AscChn:=AscendingChain(G,P);
-DCRS:=[];
+prime:=PrimePGroup(P);
+P1:=Normalizer(G,P);
+AscChn:=AscendingChain(G,P1);
+D:= List(DoubleCosetRepsAndSizes(P1,P,P), x->x[1]);
+D:=List(SmallGeneratingSet(P1),x->x);
+DCRS:=D;
+
 for i in [2..Length(AscChn)] do
-Append(DCRS,
-#GeneratorsOfGroup(AscChn[i]));
-List(Elements(RightTransversal(AscChn[i],AscChn[i-1])),x->x^-1));
-#Append(DCRS,
-#List(DoubleCosetRepsAndSizes(AscChn[i],AscChn[i-1],AscChn[i-1]), 
-#x->x[1]));
+D:=List(DoubleCosetRepsAndSizes(AscChn[i],AscChn[i-1],AscChn[i-1]),
+x->x[1]);
+Append(DCRS,D);
+newDCRS:=[];
+for x in DCRS do
+for y in D do
+Add(newDCRS,y*x);
+od;od;
+DCRS:=SSortedList(newDCRS);
 od;
 
-#DCRS:=List(DoubleCosetRepsAndSizes(G,P,P),x->x[1]);
-Print(Length(DCRS),"\n");
 
 HP:=GroupHomomorphismByFunction(P,P,x->x);
 HP:=EquivariantChainMap(R,R,HP);
 HP:=F(HP);
-
-
 HP:=Homology(HP,n);
-
 HP:=Source(HP);
-HPrels:=[Identity(HP)];
-
 if Length(AbelianInvariants(HP))=0 then return []; fi;
+
+HPrels:=[Identity(HP)];
 
 for L in DCRS do
 K:=Intersection(P,P^L);
+
 if Order(K)>1 then
 
 
@@ -55,8 +58,8 @@ S:=ResolutionFiniteGroup(gensK,n+1);
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
 fi;
-#S:=ResolutionFiniteSubgroup(R,K);
-if not (Homology(F(S),n)=[]) then
+
+if Length(Homology(F(S),n))>0 then
 
 f:=GroupHomomorphismByFunction(K,P,x->x);
 HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);

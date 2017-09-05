@@ -619,7 +619,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(CoproductOfFpGroups,
+InstallGlobalFunction(PushoutOfFpGroups,
 function(f,g)
 local P, rels, FhomP, FFhomP, GhomP, GGhomP, FGhomP, F, FF, G, GG, FG,
 gensF, gensFF, gensG, gensGG, gensP, x, gg;

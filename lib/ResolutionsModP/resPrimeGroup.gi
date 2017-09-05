@@ -38,7 +38,7 @@ local
 	HomotopyRec,
 	InitHomotopyRec,
 	Toggle2,
-	A,g,h,i,x,tmp, htpy,
+	pos,A,g,h,i,x,tmp, htpy,
 #################################
 AbsInt,                         #
 SignInt;                        #
@@ -52,6 +52,13 @@ G:=arg[1];
 n:=arg[2];
 tmp:=SSortedList(Factors(Order(G)));
 
+##A HACK April 2017
+if n=0 then x:=ResolutionFiniteGroup(G,0);
+i:=Position(x!.properties,["characteristic", 0 ]);
+x!.properties[i][2]:=tmp[1];
+return x;
+fi;
+##
 
 if Length(tmp)>1 and Length(arg)<3 then 
 Print("The third input variable must be a prime when this function is applied to non prime-power groups. \n");
@@ -67,6 +74,12 @@ zero:=0*one;
 
 gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
+if Order(eltsG[1])>1 then
+eltsG:=List(eltsG,x->x);
+pos:=Position(eltsG,One(G));
+eltsG[pos]:=eltsG[1];
+eltsG[1]:=One(G);
+fi;
 MT:=MultiplicationTable(eltsG);
 
 pcgens:=Pcgs(SylowSubgroup(G,prime));

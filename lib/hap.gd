@@ -65,6 +65,7 @@ DeclareGlobalFunction("FpGModuleSection");
 
 
 ## NONABELIAN TENSOR ################################################
+DeclareOperation("HAP_EquivalenceClasses",[IsList,IsFunction]);
 DeclareGlobalFunction("NonabelianTensorSquare");
 DeclareGlobalFunction("NonabelianTensorSquareAsCatOneGroup");
 DeclareGlobalFunction("NonabelianTensorSquareAsCrossedModule");
@@ -153,6 +154,7 @@ DeclareGlobalFunction("TensorWithIntegersModPSparse");
 DeclareGlobalFunction("TensorWithTwistedIntegers");
 DeclareGlobalFunction("TensorWithTwistedIntegersModP");
 DeclareGlobalFunction("PrimePartDerivedFunctor");
+DeclareGlobalFunction("PrimePartDerivedFunctorViaSubgroupChain");
 DeclareGlobalFunction("ReduceGenerators");
 DeclareGlobalFunction("ReduceGenerators_alt");
 DeclareGlobalFunction("HomToIntegers"); #partial doc
@@ -179,8 +181,8 @@ DeclareProperty("IsHAPRationalSpecialLinearGroup",IsMatrixGroup);
 DeclareGlobalFunction("SL2Z");
 DeclareGlobalFunction("KernelWG");
 DeclareGlobalFunction("ScatterPlot");#doc
-DeclareGlobalFunction("CoproductOfFpGroups");#<coproduct
-DeclareOperation("Coproduct",[IsGroupHomomorphism,IsGroupHomomorphism]);
+DeclareGlobalFunction("PushoutOfFpGroups");#<coproduct
+DeclareOperation("Pushout",[IsGroupHomomorphism,IsGroupHomomorphism]);
 DeclareGlobalFunction("Fp2PcpAbelianGroupHomomorphism");
 DeclareGlobalFunction("IsIsomorphismOfAbelianFpGroups");
 DeclareGlobalFunction("SignedPermutationGroup");
@@ -232,6 +234,7 @@ DeclareGlobalFunction("CoxeterWythoffComplex");
 ## HOMOLOGY #########################################################
 DeclareOperation("Homology",[IsHapChain,IsInt]);
 DeclareOperation("Homology",[IsHapGComplex,IsInt]);
+DeclareOperation("PathComponents",[IsMagma]);
 #DeclareOperation("Homology",[IsObject,IsInt]);
 DeclareOperation("PersistentHomology",[IsList,IsInt, IsInt]);
 DeclareGlobalFunction("BarCode");#doc
@@ -704,6 +707,7 @@ DeclareGlobalFunction("ContractedFilteredRegularCWComplex");
 DeclareGlobalFunction("DirectProductOfRegularCWComplexes");
 DeclareGlobalFunction("DiagonalApproximation");
 DeclareGlobalFunction("CWMap2ChainMap");
+DeclareGlobalFunction("NonRegularCWBoundary");
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");#doc
@@ -773,6 +777,7 @@ ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
 ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
+ReadPackage("HAP","lib/Quandles/quandles.gd");
 
 
 

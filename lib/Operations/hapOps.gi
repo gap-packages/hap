@@ -258,12 +258,12 @@ end);
 
 ##########################################################
 ##########################################################
-InstallMethod(Coproduct,
+InstallMethod(Pushout,
 "amalgamated sum of fp groups ",
 [IsGroupHomomorphism, IsGroupHomomorphism],
 function(f,g)
 
-return CoproductOfFpGroups(f,g);
+return PushoutOfFpGroups(f,g);
 end);
 ##########################################################
 ##########################################################

@@ -166,7 +166,8 @@ end;
 HomologyAsFpGroup:=function(C,n)
 local
         F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
-        Vector2Word, BasisKerd1, rel, i, j, prime, FieldToInt, one;
+        Vector2Word, BasisKerd1, rel, i, j, prime, FieldToInt, one,
+        sem, z1,sol1,lngm , Hgens;
 
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
@@ -217,6 +218,7 @@ od;
 
 H:=F/Frels;
 FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+Hgens:=GeneratorsOfGroup(H);
 
 #####################################################################
 HhomC:=function(w);
@@ -226,14 +228,51 @@ end;
 
 
 #####################################################################
-ChomH:=function(v)
-local w;
+#ChomH:=function(v)
+#local w;
 
-w:=SolutionMat(BasisKerd1,v);
-w:=Vector2Word(w);
-return Image(FhomH,w);
+#w:=SolutionMat(BasisKerd1,v);
+#w:=Vector2Word(w);
+#return Image(FhomH,w);
+#end;
+#####################################################################
+
+
+    z1 := Zero(BasisKerd1[1][1]);
+    sol1:=ListWithIdenticalEntries(Length(BasisKerd1),z1);
+    lngm:=Length(BasisKerd1[1]);
+    sem := SemiEchelonMatTransformation(StructuralCopy(BasisKerd1));
+
+#####################################################################
+ChomH:=function(v)
+local w,i,xx, vno, z,x, row, ncols,sol,vec,solmat;
+
+### w:=SolutionMat(BasisKerd1,v) mod expH;
+ncols := Length(BasisKerd1[1]);
+vec:=v;
+    z := StructuralCopy(z1);
+    sol := StructuralCopy(sol1);
+    ConvertToVectorRepNC(sol);
+    for i in [1..ncols] do
+        vno := sem.heads[i];
+        if vno <> 0 then
+            x := vec[i];
+            if x <> z then
+                AddRowVector(vec, sem.vectors[vno], -x);
+                AddRowVector(sol, sem.coeffs[vno], x);
+            fi;
+        fi;
+    od;
+
+xx:=One(H);
+for i in [1..Length(sol)] do
+xx:=xx*Hgens[i]^FieldToInt(sol[i]);
+od;
+
+return xx;
 end;
 #####################################################################
+
 
 return rec(
             fpgroup:=H,

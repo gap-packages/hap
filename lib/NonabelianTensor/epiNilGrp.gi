@@ -31,8 +31,13 @@ od;
 od;
 rels:=newrels;
 od;
+
 U:=F/rels;
+if Length(GeneratorsOfGroup(F))>1 then
 epi:=HAP_NqEpimorphismNilpotentQuotient(U);
+else
+epi:=HAP_NqEpimorphismNilpotentQuotient(U,1);
+fi;
 UU:=Image(epi);
 
 upperZ:=Reversed(UpperCentralSeries(UU));

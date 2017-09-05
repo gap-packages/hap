@@ -128,7 +128,7 @@ fi;
 fi;
 od;
 
-if IsPcpGroup(HP)  then 
+if IsPcpGroup(HP) or IsPcGroup(HP)  then 
 HPP:=HP/Group(SSortedList(HPrels));
 else
 epi:=EpimorphismNilpotentQuotient(HP,1);

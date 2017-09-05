@@ -15,7 +15,7 @@ local
 
 C:=F(R);
 #P:=StructuralCopy(R!.group);
-P:=R!.group;
+P:=Group(SmallGeneratingSet(R!.group));
 HP:=GroupHomomorphismByFunction(P,P,x->x);
 HP:=EquivariantChainMap(R,R,HP);
 HP:=F(HP);
@@ -77,8 +77,10 @@ G1:=Group(gensK);
 
 if Order(G1)<64 and n<4 then 	##NEED TO FIND AN "OPTIMAL" CHOICE HERE
 S:=ResolutionFiniteGroup(gensK,n+1);
+S!.group:=Group(SmallGeneratingSet(S!.group));
 else
 S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
+S!.group:=Group(SmallGeneratingSet(S!.group));
 fi;
 
 

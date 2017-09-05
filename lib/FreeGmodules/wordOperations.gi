@@ -23,6 +23,7 @@ w:=arg[1];
 if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 
 if p= 0  then
+
         v:=Filtered(w,x->x[1]>0);
         for x in w do
 if x[1]<0 then

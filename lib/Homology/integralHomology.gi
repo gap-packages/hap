@@ -1,12 +1,12 @@
 #(C) Graham Ellis, 2005-2006
-
+#RT:=0;
 #####################################################################
 InstallGlobalFunction(IntegralHomology,
 function(X,n)
 local
 	Homology_Obj,
 	Homology_Arr,
-	HomologyAsFpGroup;
+	HomologyAsFpGroup, xx;
 
 if not EvaluateProperty(X,"characteristic")=0 then 
 Print("ERROR: There is an inconsitency with characteristic of Z. \n");
@@ -41,7 +41,6 @@ M1[i]:=Boundary(n,i);
 od;
 ConvertToMatrixRep(M1);
 BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;
-#BasisKerd1:=NullspaceIntMat(M1);
 M1:=0;
 
 fi;
@@ -54,21 +53,13 @@ M2[i]:=Boundary(n+1,i);
 od;
 
 ConvertToMatrixRep(M2);
-#BasisImaged2:=LLLReducedBasis(M2).basis;
 BasisImaged2:=BaseIntMat(M2);
 dim:=Length(BasisImaged2);
 M2:=0;
 
-#Rels:=[];
-#for i in [1..dim] do
-#	Rels[i]:=SolutionMat(BasisKerd1,BasisImaged2[i]);
-#od;
 
-#BasisKerd1:=MutableCopyMat(BasisKerd1);
-#ConvertToMatrixRep(BasisKerd1);
 BasisImaged2:=MutableCopyMat(List([1..dim],i->BasisImaged2[i]));
 #!!!!!!!!!!!!!!!CHANGE IT
-#ConvertToMatrixRep(BasisImaged2);
 
 if Length(BasisImaged2)>0 then
 Rels:=SolutionsMatDestructive(BasisKerd1, BasisImaged2);
@@ -102,12 +93,14 @@ end;
 #####################################################################
 HomologyAsFpGroup:=function(C,n)
 local  
-	F, H, HH, FhomH, FhomHH, HHhomH, nn,
-	Rels, Fgens, Frels, IHC, HhomC, ChomH, ExpH,
-	Vector2Word, BasisKerd1, rel, i, j, Htmp,FhomHtmp,HtmphomH;
+	F, H, HH, HHhomH, nn, expH,
+	Rels, Fgens, FhomFH, FHhomH, FhomH, 
+        FH, Frels, Hgens, FHgens, IHC, HhomC, ChomH, 
+	Vector2Word, BasisKerd1, rel, i, j, Htmp,HtmphomH,
+        sem, z1,sol1,lngm , epim;
 
 if not "fpIntHom" in NamesOfComponents(C) then
-C!.fpIntHom:=[1..1000];        #SLOPPPY! Some one might ask for 
+C!.fpIntHom:=[1..1000];       #SLOPPPY! Some one might ask for 
 			      #the 1000-dimensional homology
 fi;
 
@@ -118,6 +111,10 @@ if IsInt(C!.fpIntHom[nn]) then
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
 Rels:=IHC.rels;
+if Length(IHC.torsionCoefficients)>0 then  #changed August 2017
+expH:=Lcm(IHC.torsionCoefficients);
+else expH:=0;
+fi;
 
 F:=FreeGroup(Length(BasisKerd1));
 Fgens:=GeneratorsOfGroup(F);
@@ -140,38 +137,33 @@ for rel in Rels do
 Append(Frels,[Vector2Word(rel)]);
 od;
 
-if true then #not LoadPackage("nq") then  #This does not work too well!
 #################################	  #Should make "abelian groups"
 for i in [1..Length(Fgens)] do		  #type in GAP
 for j in [i..Length(Fgens)] do
 Append(Frels,[Fgens[i]*Fgens[j]*Fgens[i]^-1*Fgens[j]^-1]);
 od;
 od;
+FH:=F/Frels;
+FHgens:=GeneratorsOfGroup(FH);
+FHhomH:=NqEpimorphismNilpotentQuotient(FH,1);
+FHhomH:=EpimorphismNilpotentQuotient(FH);
 
-H:=F/Frels;
-SetIsAbelian(H,true);
-ExpH:=AbelianInvariants(H);
-  if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
-ExpH:=0;
-FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+H:=Range(FHhomH);
+Hgens:=GeneratorsOfGroup(H);
 ################################
-else
-################################
-HH:=F/Frels;
-ExpH:=0;
-ExpH:=AbelianInvariants(HH);
-  if Length(ExpH)>0 then ExpH:=Maximum(ExpH); else ExpH:=1; fi;
-FhomHH:=GroupHomomorphismByImagesNC(F,HH,Fgens,GeneratorsOfGroup(HH));
-HHhomH:=HAP_NqEpimorphismNilpotentQuotient(HH,1);;
-H:=Range(HHhomH);
-FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,
-List(Fgens,x->Image(HHhomH,Image(FhomHH,x)) ));
-################################
-fi;
 
+epim:=EpimorphismFromFreeGroup(FH);
 #####################################################################
-HhomC:=function(w);
-return BasisKerd1[w];
+HhomC:=function(w)
+local ww,v,i,s;
+ww:=PreImagesRepresentative(FHhomH,Hgens[w]);
+ww:=PreImagesRepresentative(epim,ww);
+v:=BasisKerd1[1]*0;
+for i in [1..Length(BasisKerd1)] do
+s:=ExponentSumWord(ww,PreImagesRepresentative(epim,FHgens[i]));
+v:=v+s*BasisKerd1[i];
+od;
+return v ;
 end;
 #####################################################################
 
@@ -182,17 +174,42 @@ return Identity(H);
 end;
 #####################################################################
 else
+    
+    z1 := Zero(BasisKerd1[1][1]);
+    sol1:=ListWithIdenticalEntries(Length(BasisKerd1),z1);
+    lngm:=Length(BasisKerd1[1]);
+    sem := SemiEchelonMatTransformationDestructive(1*BasisKerd1);
+
 #####################################################################
 ChomH:=function(v)
-local w;
+local w,i,xx, vno, z,x, row, ncols,sol,vec,solmat;
 
-if ExpH>0 then
-w:=SolutionMat(BasisKerd1,v) mod ExpH; #Am I sure about this?
-else
-w:=SolutionMat(BasisKerd1,v);
-fi;
-w:=Vector2Word(w) ; 
-return Image(FhomH,w);
+### w:=SolutionMat(BasisKerd1,v) mod expH; 
+ncols := Length(BasisKerd1[1]);
+vec:=v;
+    z := StructuralCopy(z1);
+    sol := StructuralCopy(sol1);
+    ConvertToVectorRepNC(sol);
+    for i in [1..ncols] do
+        vno := sem.heads[i];
+        if vno <> 0 then
+            x := vec[i];
+            if x <> z then
+                AddRowVector(vec, sem.vectors[vno], -x);
+                AddRowVector(sol, sem.coeffs[vno], x);
+            fi;
+        fi;
+    od;
+sol:=sol  mod expH;
+
+xx:=Identity(H);
+for i in [1..Length(FHgens)] do
+
+xx:=xx*Image(FHhomH,FHgens[i])^sol[i];
+od;
+
+
+return xx;
 end;
 #####################################################################
 fi;
@@ -235,25 +252,24 @@ IHD:=HomologyAsFpGroup(D,n);
 HD:=IHD.fpgroup;
 HDhomD:=IHD.h2c;
 DhomHD:=IHD.c2h;
-
 imageGensHC:=[];
 for x in [1..Length(gensHC)] do
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
 od;
-
-
 HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
+
 return HChomHD;
 end;
 #####################################################################
 #####################################################################
 
 if EvaluateProperty(X,"type")="chainComplex" then
-#return Homology_Obj(X,n).torsionCoefficients; fi; #unecessarily slow!!
-return IntegralHomologyOfChainComplex(X,n); fi;
+xx:=IntegralHomologyOfChainComplex(X,n);
+return xx; fi;
 
 if EvaluateProperty(X,"type")="chainMap" then
-return Homology_Arr(X,n); fi;
+xx:=Homology_Arr(X,n);
+return xx; fi;
 
 Print("ERROR: Input should be a chain complex or chain map.\n");
 end );

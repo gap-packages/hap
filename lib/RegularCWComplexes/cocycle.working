@@ -2,7 +2,10 @@
 
 #####################################################################
 #####################################################################
-CoboundaryMatrix:=function(C,n)
+InstallMethod(CoboundaryMatrix,
+"coboundary matrix of a cochain complex",
+[IsHapCochainComplex,IsInt],
+function(C,n)
 local A,k;
 
 A:=[];
@@ -11,13 +14,16 @@ Add(A, C!.boundary(n,k));
 od;
 
 return 1*TransposedMat(A);
-end;
+end);
 #####################################################################
 #####################################################################
 
 #####################################################################
 #####################################################################
-IdentityMap:=function(X)
+InstallMethod(IdentityMap,
+"Identity map on regular CW complex",
+[IsHapRegularCWComplex],
+function(X)
 local map;
 
 map:=function(n,k);
@@ -30,14 +36,15 @@ return Objectify(HapRegularCWMap,
            target:=X,
            mapping:=map));
 
-end;
+end);
 #####################################################################
 #####################################################################
 
 
 #####################################################################
 #####################################################################
-ChainMapOfRegularCWMap:=function(f)
+InstallGlobalFunction(ChainMapOfRegularCWMap,
+function(f)
 local S, T, map, sparsemap;
 
 S:=ChainComplexOfRegularCWComplex(Source(f));
@@ -82,13 +89,14 @@ return Objectify(HapChainMap,
            properties:=[["characteristic", 0],["type","chainMap"]]));
 
 
-end;
+end);
 #####################################################################
 #####################################################################
 
 #####################################################################
 #####################################################################
-ChainComplexEquivalenceOfRegularCWComplex:=function(X)
+InstallGlobalFunction(ChainComplexEquivalenceOfRegularCWComplex,
+function(X)
 local S,T,F,G, mapS, mapT,Deform,Crits,n, Htpy, bij;;
 
 S:=ChainComplexOfRegularCWComplex(X);
@@ -163,7 +171,7 @@ G:=Objectify(HapChainMap,
 
 
 return [F,G];
-end;
+end);
 #####################################################################
 #####################################################################
 
@@ -171,7 +179,7 @@ end;
 
 #####################################################################
 #####################################################################
-HAP_CocyclesAndCoboundaries:=
+InstallGlobalFunction(HAP_CocyclesAndCoboundaries,
 function(arg)
 local  
 	C, n, toggle, Dimension,  
@@ -314,14 +322,14 @@ return 	rec(
 	 	cocycleToClass:=CycleToClass,        
 	 	classToCocycle:=ClassToCycle );
 
-end;
+end);
 #####################################################################
 #####################################################################
 
 
 #####################################################################
 #####################################################################
-HAP_IntegralCohomology:=
+InstallGlobalFunction(HAP_IntegralCohomology, 
 function(C,n)
 local A, i, Smith, TorsionCoefficients;
 
@@ -340,14 +348,14 @@ od;
 
 return Filtered(TorsionCoefficients, i-> not (i=1));
 
-end;
+end);
 #####################################################################
 #####################################################################
 
 
 #####################################################################
 #####################################################################
-HAP_IntegralClassToCocycle:=
+InstallGlobalFunction(HAP_IntegralClassToCocycle,  
 function(arg)
 local
 	C, u, n, A,
@@ -363,14 +371,14 @@ A:=HAP_CocyclesAndCoboundaries(C,n,true);
 fi;
 
 return A.classToCocycle(u);
-end;
+end);
 #####################################################################
 #####################################################################
 
 
 #####################################################################
 #####################################################################
-HAP_IntegralCocycleToClass:=
+InstallGlobalFunction(HAP_IntegralCocycleToClass, 
 function(arg)
 local
         C, v, n, A,
@@ -386,14 +394,15 @@ A:=HAP_CocyclesAndCoboundaries(C,n,true);
 fi;
 
 return A.cocycleToClass(v);
-end;
+end);
 #####################################################################
 #####################################################################
 
 
 #####################################################################
 #####################################################################
-CupProductOfRegularCWComplex:=function(arg)
+InstallGlobalFunction(CupProductOfRegularCWComplex,
+function(arg)
 local X,Xd,XX,A, CX, HCX, CXd, CXX, CXcab, XdmapXX, XdmapX, CXdmapCXX, 
       DIAG, tc,i,n, w, HCXXmapHCXd, tensor, quad2pair, HCXcab, HCXd, 
       HCXdsmallcab, CXdsmall, HXdsmall, CXdsmallmapCXd, HCXdmapHCXdsmall,
@@ -476,7 +485,7 @@ end;
 ##############################
 
 return tensor;
-end;
+end);
 #####################################################################
 #####################################################################
 

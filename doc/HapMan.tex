@@ -5971,7 +5971,105 @@ the homotopy type of a circle. In this case retry with a larger integer m. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Finite metric spaces and their filtered complexes }}\logpage{[ 32, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Knots and Quandles }}\logpage{[ 32, 0, 0 ]}
+\hyperdef{L}{X83856E7178651841}{}
+{
+ \begin{center}
+\begin{tabular}{|l|} Knots \\
+ \index{PresentationKnotQuandle} \texttt{PresentationKnotQuandle(gaussCode) } 
+
+ Inputs a Gauss Code of a knot (with the orientations; see $GaussCodeOfPureCubicalKnot$ in HAP package) and outputs the generators and relators of the knot quandle
+associated (in the form of a record). \\
+ \index{PD2GC} \texttt{PD2GC(PD) } 
+
+ Inputs a Planar Diagram of a knot; outputs the Gauss Code associated (with the
+orientations). \\
+ \index{PlanarDiagramKnot} \texttt{PlanarDiagramKnot(n,k) } 
+
+ Returns a Planar Diagram for the $k$-th knot with $n$ crossings ($n$UNKNOWNEntity(le)$12$) if it exists; fail otherwise. \\
+ \index{GaussCodeKnot} \texttt{GaussCodeKnot(n,k) } 
+
+ Returns a Gauss Code (with orientations) for the $k$-th knot with $n$ crossings ($n$UNKNOWNEntity(le)$12$) if it exists; fail otherwise. \\
+ \index{PresentationKnotQuandleKnot} \texttt{PresentationKnotQuandleKnot(n,k) } 
+
+ Returns generators and relators (in the form of a record) for the $k$-th knot with $n$ crossings ($n$UNKNOWNEntity(le)$12$) if it exists; fail otherwise. \\
+ \index{NumberOfHomomorphisms} \texttt{NumberOfHomomorphisms(genRelQ,finiteQ) } 
+
+ Inputs generators and relators $genRelQ$ of a knot quandle (in the form of a record, see above) and a finite quandle $finiteQ$; outputs the number of homomorphisms from the former to the latter. \\
+ \index{PartitionedNumberOfHomomorphisms} \texttt{PartitionedNumberOfHomomorphisms(genRelQ,finiteQ) } 
+
+ Inputs generators and relators $genRelQ$ of a knot quandle (in the form of a record, see above) and a finite connected
+quandle $finiteQ$; outputs a partition of the number of homomorphisms from the former to the
+latter. \\
+ Quandles \\
+ \index{ConjugationQuandle} \texttt{ConjugationQuandle(G,n) } 
+
+ Inputs a finite group $G$ and an integer $n$; outputs the associated $n$-fold conjugation quandle. \\
+ \index{QuandleAxiomIsSatisfied} \texttt{FirstQuandleAxiomIsSatisfied(M) } \\
+ \texttt{SecondQuandleAxiomIsSatisfied(M) } \\
+ \texttt{ThirdQuandleAxiomIsSatisfied(M) } 
+
+ Inputs a finite magma $M$; returns true if $M$ satisfy the first/second/third axiom of a quandle, false otherwise. \\
+ \index{IsQuandle} \texttt{ IsQuandle(M) } 
+
+ Inputs a finite magma $M$; returns true if $M$ is a quandle, false otherwise. \\
+ \index{Quandles} \texttt{Quandles(n) } 
+
+ Returns a list of all quandles of size $n$, $n$UNKNOWNEntity(le)$6$. If $n$UNKNOWNEntity(ge)$7$, it returns fail. \\
+ \index{Quandle} \texttt{ Quandle(n,k) } 
+
+ Returns the $k$-th quandle of size $n$ ($n$UNKNOWNEntity(le)$6$) if such a quandle exists, fail otherwise. \\
+ \index{IdQuandle} \texttt{IdQuandle(Q) } 
+
+ Inputs a quandle $Q$; and outputs a list of integers [$n$,$k$] such that $Q$ is isomorphic to \texttt{Quandle(n,k)}. If $n$UNKNOWNEntity(ge)$7$, then it returns [$n$,fail] (where $n$ is the size of $Q$). \\
+ \index{IsLatin} \texttt{IsLatin(Q) } 
+
+ Inputs a finite quandle $Q$; returns true if $Q$ is latin, false otherwise. \\
+ \index{IsConnectedQuandle} \texttt{IsConnectedQuandle(Q) } 
+
+ Inputs a finite quandle $Q$; returns true if $Q$ is connected, false otherwise. \\
+ \index{ConnectedQuandles} \texttt{ConnectedQuandles(n) } 
+
+ Returns a list of all connected quandles of size $n$. \\
+ \index{ConnectedQuandle} \texttt{ConnectedQuandle(n,k) } 
+
+ Returns the $k$-th quandle of size $n$ if such a quandle exists, fail otherwise. \\
+ \index{IdConnectedQuandle} \texttt{IdConnectedQuandle(Q) } 
+
+ Inputs a connected quandle $Q$; and outputs a list of integers [$n$,$k$] such that $Q$ is isomorphic to \texttt{ConnectedQuandle(n,k)}. \\
+ \index{IsQuandleEnvelope} \texttt{IsQuandleEnvelope(Q,G,e,stigma) } 
+
+ Inputs a set $Q$, a permutation group $G$, an element $e$ UNKNOWNEntity(isin) $Q$ and an element $stigma $ UNKNOWNEntity(isin) $G$; returns true if this structure describes a quandle envelope, false
+otherwise. \\
+ \index{QuandleQuandleEnveloppe} \texttt{ QuandleQuandleEnveloppe(Q,G,e,stigma) } 
+
+ Inputs a set $Q$, a permutation group $G$, an element $e$ UNKNOWNEntity(isin) $Q$ and an element $stigma$ UNKNOWNEntity(isin) $G$. If this structure describes a quandle envelope, the function returns the
+quandle from this quandle envelope; and fail otherwise. Nb: this quandle is a
+connected quandle. \\
+ \index{KnotInvariantCedric} \texttt{ KnotInvariantCedric(genRelQ,n,m) } 
+
+ Inputs generators and relators of a knot quandle (in the form of a record, see
+above) and two integers $n$ and $m$; outputs a list [$n$1,$n$2,...,$n$k] where $n$j is a partition of the number of homomorphisms from the considered knot
+quandle to the $j$-th connected quandle of size $n$UNKNOWNEntity(le)$i$UNKNOWNEntity(le)$m$. \\
+ \index{RightMultiplicationGroupAsPerm} \texttt{RightMultiplicationGroupAsPerm(Q) } 
+
+ Inputs a connected quandle $Q$; output its right multiplication group whose elements are permutations. \\
+ \index{RightMultiplicationGroup} \texttt{RightMultiplicationGroup(Q) } 
+
+ Inputs a connected quandle $Q$; output its right multiplication group whose elements are mappings from $Q$ to $Q$. \\
+ \index{AutomorphismGroupQuandleAsPerm} \texttt{AutomorphismGroupQuandleAsPerm(Q) } 
+
+ Inputs a connected quandle $Q$; outputs its automorphism group whose elements are permutations. \\
+ \index{AutomorphismGroupQuandle} \texttt{AutomorphismGroupQuandle(Q)} 
+
+ Inputs a connected quandle $Q$; outputs its automorphism group whose elements are mappings from $Q$ to $Q$. \\
+\end{tabular}\\[2mm]
+\end{center}
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{ Finite metric spaces and their filtered complexes }}\logpage{[ 33, 0, 0 ]}
 \hyperdef{L}{X7988ECB7803BA915}{}
 {
  \begin{center}
@@ -6019,7 +6117,7 @@ filtration being a distinct graph. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Commutative diagrams and abstract categories}}\logpage{[ 33, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Commutative diagrams and abstract categories}}\logpage{[ 34, 0, 0 ]}
 \hyperdef{L}{X83AAC8367CC7686F}{}
 {
  \\
@@ -6208,7 +6306,7 @@ In an additive category the sum and difference of suitable arrows is given by $f
  }
 
  
-\chapter{\textcolor{Chapter }{ Arrays and Pseudo lists}}\logpage{[ 34, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Arrays and Pseudo lists}}\logpage{[ 35, 0, 0 ]}
 \hyperdef{L}{X7B71D3EA7B30ADAB}{}
 {
  \\
@@ -6354,7 +6452,7 @@ each "row" of the array. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 35, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Core Functions}}\logpage{[ 36, 0, 0 ]}
 \hyperdef{L}{X85F9DF1985B88C37}{}
 {
  \\
@@ -6471,7 +6569,7 @@ Currently this is only implemented for R equal to a resolution. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 36, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Parallel Computation - Extra Functions}}\logpage{[ 37, 0, 0 ]}
 \hyperdef{L}{X85B21D56816A1B39}{}
 {
   \\
@@ -6512,7 +6610,7 @@ stream s. The output from "func;" can be accessed via the stream. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 37, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Some functions for accessing basic data}}\logpage{[ 38, 0, 0 ]}
 \hyperdef{L}{X7AE3B902812A10B0}{}
 {
  \\
@@ -6597,7 +6695,7 @@ stream s. The output from "func;" can be accessed via the stream. \\
  }
 
  
-\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 38, 0, 0 ]}
+\chapter{\textcolor{Chapter }{ Miscellaneous}}\logpage{[ 39, 0, 0 ]}
 \hyperdef{L}{X7C5563A37D566DA5}{}
 {
  \\

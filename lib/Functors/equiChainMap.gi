@@ -112,6 +112,7 @@ else
 AlgRed:=function(v); return AlgebraicReduction(v,Charact); end;
 fi;
 
+
 IDEL:=Position(EltsG,Identity(R!.group));   ##8/02/2012
 if IDEL=fail then Add(EltsG,Identity(R!.group)); IDEL:=Length(EltsG);fi;
 #####################################################################
@@ -191,6 +192,8 @@ v:= Concatenation(v);
 
 
 return AlgRed(v);
+
+return a;
 end;
 #####################################################################
 

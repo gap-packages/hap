@@ -2296,3 +2296,46 @@ end);
 ######################################
 ######################################
 
+###############################
+###############################
+InstallGlobalFunction(NonRegularCWBoundary,
+function(Y,n,k)
+local DeformCell , bnd;
+
+###############################
+###############################
+DeformCell:=function(n,k)
+local x,f,bnd,def;            #This will return a list of n-cells
+                              #into which the k-th n-cell is deformed.
+
+if [n,k] in Y!.criticalCells then
+return [k];
+fi;
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+bnd:=Y!.boundaries[n+2][f];
+def:=[];
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Append(def,DeformCell(n,bnd[x]));
+fi;
+od;
+
+return def;
+end;
+###############################
+###############################
+
+bnd:=Y!.boundaries[n+1][k];
+bnd:=bnd{[2..Length(bnd)]};
+Apply(bnd,i->DeformCell(n-1,i));
+bnd:=Concatenation(bnd);
+bnd:=SortedList(bnd);
+return bnd;
+
+end);
+###############################
+###############################

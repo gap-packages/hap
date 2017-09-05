@@ -1,3 +1,10 @@
+#############################################
+#############################################
+CommutingProbability:=function(G);
+return Length(ConjugacyClasses(G))/Order(G);
+end;
+#############################################
+#############################################
 
 #########################################################
 #########################################################
@@ -11,6 +18,14 @@ G:=arg[1];
 if Length(arg)=1 then toggle:="standard"; else
 toggle:= arg[2]; fi;
 
+################### Very easy cases  ###############
+###################                  ###############
+if IsAbelian(G) then G!.BogomolovMultiplier:=[]; return []; fi;
+if CommutingProbability(G)>1/4 then G!.BogomolovMultiplier:=[]; return []; fi;
+################### Very easy cases  ###############
+################### finished         ###############
+
+
 if not toggle in ["standard", "homology", "tensor"] then
 Print("The available algorithms are \"standard\", \"homology\" and \"tensor\".\n");
 return fail; fi;
@@ -23,13 +38,6 @@ if not IsFinite(G) then
 Print("At present this function is only implemented for finite groups.\n");
 return fail;
 fi; 
-
-################### A very easy case ###############
-###################                  ###############
-if IsAbelian(G) then G!.BogomolovMultiplier:=[]; return []; fi;
-################### Very easy case   ###############
-################### finished         ###############
-
 
 ################### Non p-groups ##################
 ###################              ##################
@@ -256,22 +264,27 @@ InstallGlobalFunction(AreIsoclinic,
 function(arg)
 local G,H,bool, GhomGZ, HhomHZ, GZ, gensGZ, isotest, Aut, Inn, OutReps,
       HZ, DG, DH, Homs, HOMS, gensDG, gensDG1, gensDH, JG,
-      CG, CH, L, f, ff, g, h, i, gg,hh, x, xx, iso, iso1, gensG;
-#This function can return true, false or fail
+      CG, CH, L, f, ff, g, h, i, gg,hh, x, xx, iso, iso1, gensG, TotalDegree;
+#This function can return true or false.
+#The function does NOT test isomorphism. So sometimes an 
+#isomorphism test first will speed things up. 
+#We assume that input groups have derived subgroup and central quotient
+#of size <1024 and not equal to 512.
 
 G:=arg[1];
 H:=arg[2];
 if Length(arg)>2 then bool:=arg[3]; else bool:=true; fi;
 
-######################Quick tests########################
+######################Quick positive tests########################
 if G=H then return true; fi;
+if IsAbelian(G) and IsAbelian(H) then return true; fi;
+######################Quick positive tests done###################
 
+######################Quick negative tests########################
 DG:=DerivedSubgroup(G);
 DH:=DerivedSubgroup(H);
-
 if not IdGroup(DG)=IdGroup(DH) then return false; fi;
-
-if Order(DG)=1 then return true; fi;
+######################Quick negative tests done###################
 
 GhomGZ:=NaturalHomomorphismByNormalSubgroup(G,Center(G));
 GZ:=Image(GhomGZ);
@@ -279,15 +292,35 @@ GZ:=Image(GhomGZ);
 HhomHZ:=NaturalHomomorphismByNormalSubgroup(H,Center(H));
 HZ:=Image(HhomHZ);
 
+
+######################More quick negative tests##########
 if not IdGroup(GZ)=IdGroup(HZ) then return false; fi;
 
-CG:=SortedList(List(ConjugacyClasses(G), Size));
-CH:=SortedList(List(ConjugacyClasses(G), Size));
+if bool then
+
+CG:=Collected(List(ConjugacyClasses(G), Size));
+CG:=List(CG,x->[x[1],x[2]/Order(G)]);
+CH:=Collected(List(ConjugacyClasses(G), Size));
+CH:=List(CH,x->[x[1],x[2]/Order(H)]);
 if not CG=CH then return false; fi;
 
-######################Quick tests finished###############
+if not CommutingProbability(G)=CommutingProbability(H) then return false; fi;
 
-gensDG1:=StrongGeneratorsOfDerivedSubgroup(G);
+TotalDegree:= G -> Sum(CharacterDegrees(G), Product)/Order(G);
+
+if not TotalDegree(G)=TotalDegree(H) then return false; fi;
+
+fi;
+######################More quick negative tests done#####
+
+if not bool then return false; fi;  #So in this case some isoclinic pairs
+                                    #may be deemed non-isoclinic
+                                    #This line actually speed up 
+                                    #IsoclinismClasses()
+
+
+######################Another quick positive test########
+gensDG1:=StrongGeneratorsOfDerivedSubgroup(G); #this is time consuming!
 gensDG:=List(gensDG1[1],x->x[1]);
 JG:=gensDG1[3];
 gensG:=GeneratorsOfGroup(G);
@@ -310,15 +343,15 @@ PreImagesRepresentative(HhomHZ,Image(ff,x[2][2]))]
 Apply(gensDH,x->x[1]^-1*x[2]^-1*x[1]*x[2]);
 
 #####Case when Bogomolov Multiplier is trivial#####
-if T=true then 
+if T=true then
 if SSortedList(gensDH)=[One(DH)] then return  true; else return false; fi;
 fi;
-#####Special case done#############################  
+#####Special case done#############################
 
 iso1:=GroupHomomorphismByImagesNC(T,DH,gensDG,gensDH);
 
 for x in JG do
-if not Image(iso1,x)=One(DH) then return false; fi; 
+if not Image(iso1,x)=One(DH) then return false; fi;
 od;
 
 return true;
@@ -329,8 +362,11 @@ end;
 iso:=IsomorphismGroups(GZ,HZ);
 
 if isotest(iso) then return true; fi;
+######################Another quick positive test done#####
 
-if not bool then return false; fi;
+
+if not bool then return false; fi;  #So in this case some isoclinic pairs
+                                    #may be deemed non-isoclinic
 
 
 if not IsBound(H!.OutReps) then
@@ -355,27 +391,15 @@ end);
 ###########################################################
 ###########################################################
 
-
-
 ###########################################################
 ###########################################################
 InstallGlobalFunction(PartialIsoclinismClasses,
 function(L)
-local C, P, G, H;
+local test;
 
-C:=[];
+test:=function(G,H); return AreIsoclinic(G,H,false); end;
 
-while Length(L)>0 do
-G:=L[1];
-P:=[];
-for H in L do
-if AreIsoclinic(G,H,false) then Add(P,H); fi;
-od;
-L:=Filtered(L,x-> not x in P);
-Add(C,P);
-od;
-
-return C;
+return HAP_EquivalenceClasses(L,test);
 
 end);
 ###########################################################
@@ -385,9 +409,32 @@ end);
 ###########################################################
 InstallGlobalFunction(IsoclinismClasses,
 function(L)
-local C, D, DD, P, G, H, classes, c;
+local inv, C, D, DD, G,H,P,TotalDegree,LL,A,M;
+#We assume that each group has derived subgroup and central quotient
+#of order <1024 and not equal to 512.
 
-DD:=PartialIsoclinismClasses(L);;
+TotalDegree:= G -> Sum(CharacterDegrees(G), Product)/Order(G);
+
+########
+inv:=function(G)
+local CG;
+CG:=Collected(List(ConjugacyClasses(G), Size));
+CG:=List(CG,x->[x[1],x[2]/Order(G)]);
+return [IdGroup(DerivedSubgroup(G)),
+        IdGroup(G/Center(G)),
+        CG,
+        NilpotencyClassOfGroup(G),
+        CommutingProbability(G),
+        TotalDegree(G)];
+end;
+########
+
+LL:=Classify(L,inv);
+A:=[];
+        
+for M in LL do
+#####################################
+DD:=PartialIsoclinismClasses(M);;
 D:=List(DD,d->d[1]);
 
 C:=[];
@@ -399,24 +446,20 @@ for H in D do
 if AreIsoclinic(G,H,true) then Add(P,H); fi;
 od;
 D:=Filtered(D,x-> not x in P);
+P:=Filtered(DD,x->Length(Filtered(x,i->i in P)) >0);
+P:=Concatenation(P);
 Add(C,P);
 od;
 
-C:=List(C,c->c[1]);
-
-classes:=[];
-
-for c in C do
-P:=Filtered(DD,d->c in d);
-P:=Concatenation(P);
-Add(classes,P);
+Append(A,C);
+#####################################
 od;
 
-return classes;
-
+return A;
 end);
 ###########################################################
 ###########################################################
+
 
 #########################################################
 #########################################################
@@ -435,7 +478,11 @@ fi;
 ################################################
 GhomQ:=NaturalHomomorphismByNormalSubgroup(G,Center(G));
 Q:=Image(GhomQ);
+if IsPolycyclicGroup(Q) and not IsNilpotentGroup(Q) then
+T:=NonabelianTensorSquare_inf(Q);   ##Changed 19 August 2017
+else
 T:=NonabelianTensorSquare(Q);
+fi;
 delta:=T.homomorphism;
 pairing:=T.pairing;
 TS:=Source(delta);

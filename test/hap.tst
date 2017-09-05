@@ -18,8 +18,6 @@ gap> Tensor:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3));
 [ 2 ]
 gap> Tensor2:=ThirdHomotopyGroupOfSuspensionB(SymmetricGroup(3),12);
 [ 2 ]
-gap> P:=Length(P);
-5
 gap> R:=ResolutionAbelianGroup([0,0,0],5);;
 gap> H6:=Homology(TensorWithIntegers(R),3);
 [ 0 ]
