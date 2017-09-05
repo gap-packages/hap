@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 33:  Finite metric spaces and their filtered complexes </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap33"  onload="jscontent()">
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap32.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap34.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p><a id="X7988ECB7803BA915" name="X7988ECB7803BA915"></a></p>
+<div class="ChapSects"><a href="chap33.html#X7988ECB7803BA915">33 <span class="Heading"> Finite metric spaces and their filtered complexes </span></a>
+</div>
+
+<h3>33 <span class="Heading"> Finite metric spaces and their filtered complexes </span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">CayleyMetric(g,h,N) </code> <code class="code">CayleyMetric(g,h) </code></p>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the minimum number of transpositions needed to express <span class="SimpleMath">g*h^-1</span> as a product of transpositions.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">HammingMetric(g,h,N) </code> <code class="code">HammingMetric(g,h) </code></p>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the number of integers moved by the permutation <span class="SimpleMath">g*h^-1</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">KendallMetric(g,h,N) </code> <code class="code">KendallMetric(g,h) </code></p>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the minimum number of adjacent transpositions needed to express <span class="SimpleMath">g*h^-1</span> as a product of adjacent transpositions. An adjacent transposition has the for <span class="SimpleMath">(i,i+1)</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EuclideanSquaredMetric(v,w) </code></p>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w</span> of equal length and returns the sum of the squares of the components of <span class="SimpleMath">v-w</span>. In other words, it returns the square of the Euclidean distance between <span class="SimpleMath">v</span> and <span class="SimpleMath">w</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">EuclideanApproximatedMetric(v,w) </code></p>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w</span> of equal length and returns a rational approximation to the square root of the sum of the squares of the components of <span class="SimpleMath">v-w</span>. In other words, it returns an approximation to the Euclidean distance between <span class="SimpleMath">v</span> and <span class="SimpleMath">w</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ManhattanMetric(v,w) </code></p>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w</span> of equal length and returns the sum of the absolute values of the components of <span class="SimpleMath">v-w</span>. This is often referred to as the taxi-cab distance between <span class="SimpleMath">v</span> and <span class="SimpleMath">w</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">VectorsToSymmetricMatrix(L) </code> <code class="code">VectorsToSymmetricMatrix(L,D) </code></p>
+
+<p>Inputs a list <span class="SimpleMath">L</span> of vectors and optionally a metric <span class="SimpleMath">D</span>. The default is <span class="SimpleMath">D=ManhattanMetric</span>. It returns the symmetric matrix whose i-j-entry is <span class="SimpleMath">S[i][j]=D(L[i],L[j])</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SymmetricMatDisplay(S) </code> <code class="code">SymmetricMatDisplay(L,V) </code></p>
+
+<p>Inputs an <span class="SimpleMath">n × n</span> symmetric matrix <span class="SimpleMath">S</span> of non-negative integers and an integer <span class="SimpleMath">t</span> in <span class="SimpleMath">[0 .. 100]</span>. Optionally it inputs a list <span class="SimpleMath">V=[V_1, ... , V_k]</span> of disjoint subsets of <span class="SimpleMath">[1 .. n]</span>. It displays the graph with vertex set <span class="SimpleMath">[1 .. n]</span> and with an edge between <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> if <span class="SimpleMath">S[i][j] &lt; t</span>. If the optional list <span class="SimpleMath">V</span> is input then the vertices in <span class="SimpleMath">V_i</span> will be given a common colour distinct from other vertices.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">SymmetricMatrixToFilteredGraph(S,t,m) </code></p>
+
+<p>Inputs an integer symmetric matrix <span class="SimpleMath">S</span>, a positive integer <span class="SimpleMath">t</span> and a positive integer <span class="SimpleMath">m</span>. The function returns a filtered graph of filtration length <span class="SimpleMath">t</span>. The <span class="SimpleMath">k</span>-th term of the filtration is a graph with one vertex for each row of <span class="SimpleMath">S</span>. There is an edge in this graph between the <span class="SimpleMath">i</span>-th and <span class="SimpleMath">j</span>-th vertices if the entry <span class="SimpleMath">S[i][j]</span> is less than or equal to <span class="SimpleMath">k*m/t</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PermGroupToFilteredGraph(S,D) </code></p>
+
+<p>Inputs a permutation group <span class="SimpleMath">G</span> and a metric <span class="SimpleMath">D</span> defined on permutations. The function returns a filtered graph. The <span class="SimpleMath">k</span>-th term of the filtration is a graph with one vertex for each element of the group <span class="SimpleMath">G</span>. There is an edge in this graph between vertices <span class="SimpleMath">g</span> and <span class="SimpleMath">h</span> if <span class="SimpleMath">D(g,h)</span> is less than some integer threshold <span class="SimpleMath">t_k</span>. The thresholds <span class="SimpleMath">t_1 &lt; t_2 &lt; ... &lt; t_N</span> are chosen to form as long a sequence as possible subject to each term of the filtration being a distinct graph.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap32.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap34.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 11:  Homology and cohomology groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap11"  onload="jscontent()">
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p><a id="X782177107A5D6D19" name="X782177107A5D6D19"></a></p>
+<div class="ChapSects"><a href="chap11.html#X782177107A5D6D19">11 <span class="Heading"> Homology and cohomology groups</span></a>
+</div>
+
+<h3>11 <span class="Heading"> Homology and cohomology groups</span></h3>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft"><code class="code">Cohomology(X,n) </code></p>
+
+<p>Inputs either a cochain complex <span class="SimpleMath">X=C</span> (or G-cocomplex C) or a cochain map <span class="SimpleMath">X=(C ⟶ D)</span> in characteristic <span class="SimpleMath">p</span> together with a non-negative intereg <span class="SimpleMath">n</span>.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> and <span class="SimpleMath">p=0</span> then the torsion coefficients of <span class="SimpleMath">H^n(C)</span> are retuned. If <span class="SimpleMath">X=C</span> and <span class="SimpleMath">p</span> is prime then the dimension of <span class="SimpleMath">H^n(C)</span> are retuned.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H^n(C)⟶ H^n(D)</span> is returned as a homomorphism of finitely presented groups.</p>
+
+</li>
+</ul>
+<p>A <span class="SimpleMath">G</span>-cocomplex <span class="SimpleMath">C</span> can also be input. The cohomology groups of such a complex may not be abelian. <strong class="button">Warning:</strong> in this case Cohomology(C,n) returns the abelian invariants of the <span class="SimpleMath">n</span>-th cohomology group of <span class="SimpleMath">C</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">CohomologyModule(C,n) </code></p>
+
+<p>Inputs a <span class="SimpleMath">G</span>-cocomplex <span class="SimpleMath">C</span> together with a non-negative integer <span class="SimpleMath">n</span>. It returns the cohomology <span class="SimpleMath">H^n(C)</span> as a <span class="SimpleMath">G</span>-outer group. If <span class="SimpleMath">C</span> was constructed from a resolution <span class="SimpleMath">R</span> by homing to an abelian <span class="SimpleMath">G</span>-outer group <span class="SimpleMath">A</span> then, for each x in H:=CohomologyModule(C,n), there is a function f:=H!.representativeCocycle(x) which is a standard n-cocycle corresponding to the cohomology class x. (At present this works only for n=1,2,3.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">CohomologyPrimePart(C,n,p)</code></p>
+
+<p>Inputs a cochain complex <span class="SimpleMath">C</span> in characteristic 0, a positive integer <span class="SimpleMath">n</span>, and a prime <span class="SimpleMath">p</span>. It returns a list of those torsion coefficients of <span class="SimpleMath">H^n(C)</span> that are positive powers of <span class="SimpleMath">p</span>. The function uses the EDIM package by Frank Luebeck.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GroupCohomology(X,n) </code> <code class="code">GroupCohomology(X,n,p)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and either</p>
+
+
+<ul>
+<li><p>a finite group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a nilpotent Pcp-group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a space group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a list <span class="SimpleMath">X=D</span> representing a graph of groups</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Artin",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing an infinite Artin group <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Coxeter",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing a finite Coxeter group <span class="SimpleMath">G</span>.</p>
+
+</li>
+</ul>
+<p>It returns the torsion coefficients of the integral cohomology <span class="SimpleMath">H^n(G,Z)</span>.</p>
+
+<p>There is an optional third argument which, when set equal to a prime <span class="SimpleMath">p</span>, causes the function to return the the mod <span class="SimpleMath">p</span> cohomology <span class="SimpleMath">H^n(G,Z_p)</span> as a list of length equal to its rank.</p>
+
+<p>This function is a composite of more basic functions, and makes choices for a number of parameters. For a particular group you would almost certainly be better using the more basic functions and making the choices yourself!</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">GroupHomology(X,n)</code> <code class="code">GroupHomology(X,n,p)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and either</p>
+
+
+<ul>
+<li><p>a finite group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a nilpotent Pcp-group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a space group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a list <span class="SimpleMath">X=D</span> representing a graph of groups</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Artin",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing an infinite Artin group <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Coxeter",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing a finite Coxeter group <span class="SimpleMath">G</span>.</p>
+
+</li>
+</ul>
+<p>It returns the torsion coefficients of the integral homology <span class="SimpleMath">H_n(G,Z)</span>.</p>
+
+<p>There is an optional third argument which, when set equal to a prime <span class="SimpleMath">p</span>, causes the function to return the mod <span class="SimpleMath">p</span> homology <span class="SimpleMath">H_n(G,Z_p)</span> as a list of lenth equal to its rank.</p>
+
+<p>This function is a composite of more basic functions, and makes choices for a number of parameters. For a particular group you would almost certainly be better using the more basic functions and making the choices yourself!</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfQuotientGroupSeries(S,n)</code> <code class="code">PersistentHomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of normal subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of quotient homomorphisms <span class="SimpleMath">G → G/S_k → G/S_k-1 → ... → G/S_2</span>. The bar code is returned as a matrix containing the dimensions of the images of the induced homology maps.</p>
+
+<p>If one sets <span class="SimpleMath">p=0</span> then the integral persitent homology bar code is returned. This is a matrix whose entries are pairs of the lists: the list of abelian invariants of the images of the induced homology maps and the cokernels of the induced homology maps. (The matrix probably does not uniquely determine the induced homology maps.)</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup, so this must be changed for infinite groups.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentCohomologyOfQuotientGroupSeries(S,n)</code> <code class="code">PersistentCohomologyOfQuotientGroupSeries(S,n,p,Resolution_Algorithm)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of normal subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> cohomology in degree <span class="SimpleMath">n</span> of the sequence of quotient homomorphisms <span class="SimpleMath">G → G/S_k → G/S_k-1 → ... → G/S_2</span>. The bar code is returned as a matrix containing the dimensions of the images of the induced homology maps.</p>
+
+<p>If one sets <span class="SimpleMath">p=0</span> then the integral persitent cohomology bar code is returned. This is a matrix whose entries are pairs of the lists: the list of abelian invariants of the images of the induced cohomology maps and the cokernels of the induced cohomology maps. (The matrix probably does not uniquely determine the induced homology maps.)</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup, so this must be changed for infinite groups.)</p>
+
+<p>(The implementation is possibly a little less efficient than that of the corresponding persistent homology function.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">UniversalBarCode("UpperCentralSeries",n,d)</code> <code class="code">UniversalBarCode("UpperCentralSeries",n,d,k)</code></p>
+
+<p>Inputs integers <span class="SimpleMath">n,d</span> that identify a prime power group G=SmallGroup(n,d), together with one of the strings "UpperCentralSeries", LowerCentralSeries", "DerivedSeries", "UpperPCentralSeries", "LowerPCentralSeries". The function returns a matrix of rational functions; the coefficients of <span class="SimpleMath">x^k</span> in their expansions yield the persistence matrix for the degree <span class="SimpleMath">k</span> homology with trivial mod p coefficients associated to the quotients of <span class="SimpleMath">G</span> by the terms of the given series.</p>
+
+<p>If the additional integer argument <span class="SimpleMath">k</span> is supplied then the function returns the degree k homology persistence matrix.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfSubGroupSeries(S,n)</code> <code class="code">PersistentHomologyOfSubGroupSeries(S,n,p,Resolution_Algorithm)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of inclusion homomorphisms <span class="SimpleMath">S_k → S_k-1 → ... → S_1=G</span>. The bar code is returned as a binary matrix.</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) must be entered as a fourth argument.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfFilteredChainComplex(C,n,p) </code></p>
+
+<p>Inputs a filtered chain complex <span class="SimpleMath">C</span> (of characteristic <span class="SimpleMath">0</span> or <span class="SimpleMath">p</span>) together with a positive integer <span class="SimpleMath">n</span> and prime <span class="SimpleMath">p</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the filtered chain complex <span class="SimpleMath">C</span>. (This function needs a more efficient implementation. Its fine as it stands for investigation in group homology, but not sufficiently efficient for the homology of large complexes arising in applied topology.)</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfCommutativeDiagramOfPGroups(D,n) </code></p>
+
+<p>Inputs a commutative diagram <span class="SimpleMath">D</span> of finite <span class="SimpleMath">p</span>-groups and a positive integer <span class="SimpleMath">n</span>. It returns a list containing, for each homomorphism in the nerve of <span class="SimpleMath">D</span>, a triple <span class="SimpleMath">[k,l,m]</span> where <span class="SimpleMath">k</span> is the dimension of the source of the induced mod <span class="SimpleMath">p</span> homology map in degree <span class="SimpleMath">n</span>, <span class="SimpleMath">l</span> is the dimension of the image, and <span class="SimpleMath">m</span> is the dimension of the cokernel.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfFilteredPureCubicalComplex(M,n)</code></p>
+
+<p>Inputs a filtered pure cubical complex <span class="SimpleMath">M</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns the degree <span class="SimpleMath">n</span> persistent homology of <span class="SimpleMath">M</span> with rational coefficients.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PersistentHomologyOfPureCubicalComplex(L,n,p)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span>, a prime <span class="SimpleMath">p</span> and an increasing chain <span class="SimpleMath">L=[L_1, L_2, ..., L_k]</span> of subcomplexes in a pure cubical complex <span class="SimpleMath">L_k</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of inclusion maps. The bar code is returned as a matrix. (This function is extremely inefficient and it is better to use PersistentHomologyOFilteredfPureCubicalComplex.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">ZZPersistentHomologyOfPureCubicalComplex(L,n,p)</code></p>
+
+<p>Inputs a positive integer <span class="SimpleMath">n</span>, a prime <span class="SimpleMath">p</span> and any sequence <span class="SimpleMath">L=[L_1, L_2, ..., L_k]</span> of subcomplexes of some pure cubical complex. It returns the bar code of the zig-zag persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of maps <span class="SimpleMath">L_1 → L_1 ∪ L_2 ← L_2 → L_2 ∪ L_3 ← L_4 → ... ← L_k</span>. The bar code is returned as a matrix.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RipsHomology(G,n)</code> <code class="code">RipsHomology(G,n,p)</code></p>
+
+<p>Inputs a graph <span class="SimpleMath">G</span>, a non-negative integer <span class="SimpleMath">n</span> (and optionally a prime number <span class="SimpleMath">p</span>). It returns the integral homology (or mod p homology) in degree <span class="SimpleMath">n</span> of the Rips complex of <span class="SimpleMath">G</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">BarCode(P)</code></p>
+
+<p>Inputs an integer persistence matrix P and returns the same information in the form of a binary matrix (corresponding to the usual bar code).</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">BarCodeDisplay(P)</code> <code class="code">BarCodeDisplay(P,"mozilla")</code> <code class="code">BarCodeCompactDisplay(P)</code> <code class="code">BarCodeCompactDisplay(P,"mozilla")</code></p>
+
+<p>Inputs an integer persistence matrix P, and an optional string specifying a viewer/browser. It displays a picture of the bar code (using GraphViz software). The compact display is better for large bar codes.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">Homology(X,n)</code></p>
+
+<p>Inputs either a chain complex <span class="SimpleMath">X=C</span> or a chain map <span class="SimpleMath">X=(C ⟶ D)</span>.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> then the torsion coefficients of <span class="SimpleMath">H_n(C)</span> are retuned.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H_n(C) ⟶ H_n(D)</span> is returned as a homomorphism of finitely presented groups.</p>
+
+</li>
+</ul>
+<p>A <span class="SimpleMath">G</span>-complex <span class="SimpleMath">C</span> can also be input. The homology groups of such a complex may not be abelian. <strong class="button">Warning:</strong> in this case Homology(C,n) returns the abelian invariants of the <span class="SimpleMath">n</span>-th homology group of <span class="SimpleMath">C</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">HomologyPb(C,n)</code></p>
+
+<p>This is a back-up function which might work in some instances where <span class="SimpleMath">Homology(C,n)</span> fails. It is most useful for chain complexes whose boundary homomorphisms are sparse.</p>
+
+<p>It inputs a chain complex <span class="SimpleMath">C</span> in characteristic <span class="SimpleMath">0</span> and returns the torsion coefficients of <span class="SimpleMath">H_n(C)</span> . There is a small probability that an incorrect answer could be returned. The computation relies on probabilistic Smith Normal Form algorithms implemented in the Simplicial Homology GAP package. This package therefore needs to be loaded. The computation is stored as a component of <span class="SimpleMath">C</span> so, when called a second time for a given <span class="SimpleMath">C</span> and <span class="SimpleMath">n</span>, the calculation is recalled without rerunning the algorithm.</p>
+
+<p>The choice of probabalistic algorithm can be changed using the command</p>
+
+<p>SetHomologyAlgorithm(HomologyAlgorithm[i]);</p>
+
+<p>where i = 1,2,3 or 4. The upper limit for the probability of an incorrect answer can be set to any rational number <span class="SimpleMath">0</span>&lt;<span class="SimpleMath">e</span>&lt;= <span class="SimpleMath">1</span> using the following command.</p>
+
+<p>SetUncertaintyTolerence(e);</p>
+
+<p>See the Simplicial Homology package manual for further details.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">HomologyVectorSpace(X,n)</code></p>
+
+<p>Inputs either a chain complex <span class="SimpleMath">X=C</span> or a chain map <span class="SimpleMath">X=(C ⟶ D)</span> in prime characteristic.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> then <span class="SimpleMath">H_n(C)</span> is retuned as a vector space.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H_n(C) ⟶ H_n(D)</span> is returned as a homomorphism of vector spaces.</p>
+
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">HomologyPrimePart(C,n,p)</code></p>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> in characteristic 0, a positive integer <span class="SimpleMath">n</span>, and a prime <span class="SimpleMath">p</span>. It returns a list of those torsion coefficients of <span class="SimpleMath">H_n(C)</span> that are positive powers of <span class="SimpleMath">p</span>. The function uses the EDIM GAP package by Frank Luebeck.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">LeibnizAlgebraHomology(A,n)</code></p>
+
+<p>Inputs a Lie or Leibniz algebra <span class="SimpleMath">X=A</span> (over the ring of integers <span class="SimpleMath">Z</span> or over a field <span class="SimpleMath">K</span>), together with a positive integer <span class="SimpleMath">n</span>. It returns the <span class="SimpleMath">n</span>-dimensional Leibniz homology of <span class="SimpleMath">A</span>.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">LieAlgebraHomology(A,n)</code></p>
+
+<p>Inputs a Lie algebra <span class="SimpleMath">A</span> (over the integers or a field) and a positive integer <span class="SimpleMath">n</span>. It returns the homology <span class="SimpleMath">H_n(A,k)</span> where <span class="SimpleMath">k</span> denotes the ground ring.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">PrimePartDerivedFunctor(G,R,F,n)</code></p>
+
+<p>Inputs a finite group <span class="SimpleMath">G</span>, a positive integer <span class="SimpleMath">n</span>, at least <span class="SimpleMath">n+1</span> terms of a <span class="SimpleMath">ZP</span>-resolution for a Sylow subgroup <span class="SimpleMath">P</span>&lt;<span class="SimpleMath">G</span> and a "mathematically suitable" covariant additive functor <span class="SimpleMath">F</span> such as TensorWithIntegers . It returns the abelian invariants of the <span class="SimpleMath">p</span>-component of the homology <span class="SimpleMath">H_n(F(R))</span> .</p>
+
+<p>Warning: All calculations are assumed to be in characteristic 0. The function should not be used if the coefficient module is over the field of <span class="SimpleMath">p</span> elements.</p>
+
+<p>"Mathematically suitable" means that the Cartan-Eilenberg double coset formula must hold.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RankHomologyPGroup(G,n)</code> <code class="code">RankHomologyPGroup(R,n)</code> <code class="code">RankHomologyPGroup(G,n,"empirical")</code></p>
+
+<p>Inputs a (smallish) <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span>, or <span class="SimpleMath">n</span> terms of a minimal <span class="SimpleMath">Z_pG</span>-resolution <span class="SimpleMath">R</span> of <span class="SimpleMath">Z_p</span> , together with a positive integer <span class="SimpleMath">n</span>. It returns the minimal number of generators of the integral homology group <span class="SimpleMath">H_n(G,Z)</span>.</p>
+
+<p>If an option third string argument "empirical" is included then an empirical algorithm will be used. This is one which always seems to yield the right answer but which we can't prove yields the correct answer.</td>
+</tr>
+<tr>
+<td class="tdleft"><code class="code">RankPrimeHomology(G,n)</code></p>
+
+<p>Inputs a (smallish) <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span> together with a positive integer <span class="SimpleMath">n</span>. It returns a function <span class="SimpleMath">dim(k)</span> which gives the rank of the vector space <span class="SimpleMath">H_k(G,Z_p)</span> for all <span class="SimpleMath">0</span> &lt;= <span class="SimpleMath">k</span> &lt;= <span class="SimpleMath">n</span>.</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,73 @@
+  
+  [1X36 [33X[0;0YParallel Computation - Core Functions[133X[101X
+  
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChildProcess()[110X[133X
+  [33X[0;0Y[10XChildProcess("computer.ac.wales")[110X[133X
+  [33X[0;0Y[10XChildProcess(["-m", "100000M", "-T"])[110X[133X
+  [33X[0;0Y[10XChildProcess("computer.ac.wales", ["-m", "100000M", "-T"])[110X[133X
+  
+  [33X[0;0YThis  starts  a  GAP  session as a child process and returns a stream to the
+  child  process. If no argument is given then the child process is created on
+  the  local  machine;  otherwise  the argument should be: 1) the address of a
+  remote  computer  for  which  ssh has been configured to require no password
+  from the user; (2) or a list of GAP command line options; (3) or the address
+  of a computer followed by a list of command line options.[133X
+  
+  [33X[0;0Y(To  configure ssh so that the user can login without a password prompt from
+  "thishost" to "remotehost" either consult "man ssh" or[133X
+  [33X[0;0Y- open a shell on thishost[133X
+  [33X[0;0Y- cd .ssh[133X
+  [33X[0;0Y- ls[133X
+  [33X[0;0Y-> if id_dsa, id_rsa etc exists, skip the next two steps![133X
+  [33X[0;0Y- ssh-keygen -t rsa[133X
+  [33X[0;0Y- ssh-keygen -t dsa[133X
+  [33X[0;0Y- scp *.pub user@remotehost:~/[133X
+  [33X[0;0Y- ssh remotehost -l user[133X
+  [33X[0;0Y- cat id_rsa.pub >> .ssh/authorized_keys[133X
+  [33X[0;0Y- cat id_dsa.pub >> .ssh/authorized_keys[133X
+  [33X[0;0Y- rm id_rsa.pub id_dsa.pub[133X
+  [33X[0;0Y- exit[133X
+  [33X[0;0YYou  should now be able to connect from "thishost" to "remotehost" without a
+  password prompt.)[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChildClose(s)[110X[133X
+  
+  [33X[0;0YThis closes the stream s to a child GAP process.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChildCommand("cmd;",s)[110X[133X
+  
+  [33X[0;0YThis  runs  a GAP command "cmd;" on the child process accessed by the stream
+  s. Here "cmd;" is a string representing the command.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XNextAvailableChild(L)[110X[133X
+  
+  [33X[0;0YInputs  a  list [22XL[122X of child processes and returns a child in [22XL[122X which is ready
+  for computation (as soon as such a child is available).[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XIsAvailableChild(s)[110X[133X
+  
+  [33X[0;0YInputs  a  child  process [22Xs[122X and returns true if s is currently available for
+  computations, and false otherwise.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChildPut(A,"B",s)[110X[133X
+  
+  [33X[0;0YThis copies a GAP object A on the parent process to an object B on the child
+  process s. (The copying relies on the function PrintObj(A); )[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XChildGet("A",s)[110X[133X
+  
+  [33X[0;0YThis  functions  copies a GAP object A on the child process s and returns it
+  on the parent process. (The copying relies on the function PrintObj(A); )[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHAPPrintTo("file",R)[110X[133X
+  
+  [33X[0;0YInputs  a  name  "file" of a new text file and a HAP object R. It writes the
+  object  R  to  "file".  Currently  this is only implemented for R equal to a
+  resolution.[133X
+  [33X[0;0Y::::::::::::::::::::::::[133X
+  [33X[0;0Y[10XHAPRead("file",R)[110X[133X
+  
+  [33X[0;0YInputs  a  name  "file"  containing  a  HAP object R and returns the object.
+  Currently this is only implemented for R equal to a resolution.[133X
+  

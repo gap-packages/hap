@@ -1,0 +1,1687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP) - Chapter 1: Cellular complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p><a id="X81F2008E8232E877" name="X81F2008E8232E877"></a></p>
+<div class="ChapSects"><a href="chap1.html#X81F2008E8232E877">1 <span class="Heading">Cellular complexes</span></a>
+</div>
+
+<h3>1 <span class="Heading">Cellular complexes</span></h3>
+
+<p>Data <span class="SimpleMath">⟶</span> Cellular Complexes</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RegularCWPolytope(L):: List --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWPolytope(G,v):: PermGroup, List --&gt; RegCWComplex
+</pre>
+
+<p>Inputs a list <span class="SimpleMath">L</span> of vectors in <span class="SimpleMath">R^n</span> and outputs their convex hull as a regular CW-complex.</p>
+
+<p>Inputs a permutation group G of degree <span class="SimpleMath">d</span> and vector <span class="SimpleMath">v∈ R^d</span>, and outputs the convex hull of the orbit <span class="SimpleMath">{v^g : g∈ G}</span> as a regular CW-complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CubicalComplex(A):: List --&gt; CubicalComplex
+</pre>
+
+<p>Inputs a binary array <span class="SimpleMath">A</span> and returns the cubical complex represented by <span class="SimpleMath">A</span>. The array <span class="SimpleMath">A</span> must of course be such that it represents a cubical complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureCubicalComplex(A):: List --&gt; PureCubicalComplex
+</pre>
+
+<p>Inputs a binary array <span class="SimpleMath">A</span> and returns the pure cubical complex represented by <span class="SimpleMath">A</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureCubicalKnot(n,k):: Int, Int --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureCubicalKnot(L):: List --&gt; PureCubicalComplex
+</pre>
+
+<p>Inputs integers <span class="SimpleMath">n, k</span> and returns the <span class="SimpleMath">k</span>-th prime knot on <span class="SimpleMath">n</span> crossings as a pure cubical complex (if this prime knot exists).</p>
+
+<p>Inputs a list <span class="SimpleMath">L</span> describing an arc presentation for a knot or link and returns the knot or link as a pure cubical complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PurePermutahedralKnot(n,k):: Int, Int --&gt; PurePermutahedralComplex
+</pre>
+
+
+<pre class="normal">
+PurePermutahedralKnot(L):: List --&gt; PurePermutahedralComplex
+</pre>
+
+<p>Inputs integers <span class="SimpleMath">n, k</span> and returns the <span class="SimpleMath">k</span>-th prime knot on <span class="SimpleMath">n</span> crossings as a pure permutahedral complex (if this prime knot exists).</p>
+
+<p>Inputs a list <span class="SimpleMath">L</span> describing an arc presentation for a knot or link and returns the knot or link as a pure permutahedral complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PurePermutahedralComplex(A):: List --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a binary array <span class="SimpleMath">A</span> and returns the pure permutahedral complex represented by <span class="SimpleMath">A</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CayleyGraphOfGroup(G,L):: Group, List --&gt; Graph
+</pre>
+
+<p>Inputs a finite group <span class="SimpleMath">G</span> and a list <span class="SimpleMath">L</span> of elements in <span class="SimpleMath">G</span>.It returns the Cayley graph of the group generated by <span class="SimpleMath">L</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EquivariantEuclideanSpace(G,v):: MatrixGroup, List --&gt; EquivariantRegCWComplex
+</pre>
+
+<p>Inputs a crystallographic group <span class="SimpleMath">G</span> with left action on <span class="SimpleMath">R^n</span> together with a row vector <span class="SimpleMath">v ∈ R^n</span>. It returns an equivariant regular CW-space corresponding to the Dirichlet-Voronoi tessellation of <span class="SimpleMath">R^n</span> produced from the orbit of <span class="SimpleMath">v</span> under the action.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EquivariantOrbitPolytope(G,v):: PermGroup, List --&gt; EquivariantRegCWComplex
+</pre>
+
+<p>Inputs a permutation group <span class="SimpleMath">G</span> of degree <span class="SimpleMath">n</span> together with a row vector <span class="SimpleMath">v ∈ R^n</span>. It returns, as an equivariant regular CW-space, the convex hull of the orbit of <span class="SimpleMath">v</span> under the canonical left action of <span class="SimpleMath">G</span> on <span class="SimpleMath">R^n</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EquivariantTwoComplex(G):: Group --&gt; EquivariantRegCWComplex
+</pre>
+
+<p>Inputs a suitable group <span class="SimpleMath">G</span> and returns, as an equivariant regular CW-space, the <span class="SimpleMath">2</span>-complex associated to some presentation of <span class="SimpleMath">G</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+QuillenComplex(G,p):: Group, Int --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs a finite group <span class="SimpleMath">G</span> and prime <span class="SimpleMath">p</span>, and returns the simplicial complex arising as the order complex of the poset of elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RestrictedEquivariantCWComplex(Y,H):: RegCWComplex, Group --&gt; EquivariantRegCWComplex
+</pre>
+
+<p>Inputs a <span class="SimpleMath">G</span>-equivariant regular CW-space Y and a subgroup <span class="SimpleMath">H le G</span> for which GAP can find a transversal. It returns the equivariant regular CW-complex obtained by retricting the action to <span class="SimpleMath">H</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RandomSimplicialGraph(n,p):: Int, Int --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs an integer <span class="SimpleMath">n ge 1</span> and positive prime <span class="SimpleMath">p</span>, and returns an Erd\"os-R\'enyi random graph as a <span class="SimpleMath">1</span>-dimensional simplicial complex. The graph has <span class="SimpleMath">n</span> vertices. Each pair of vertices is, with probability <span class="SimpleMath">p</span>, directly connected by an edge.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RandomSimplicialTwoComplex(n,p):: Int, Int --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs an integer <span class="SimpleMath">n ge 1</span> and positive prime <span class="SimpleMath">p</span>, and returns a Linial-Meshulam random simplicial <span class="SimpleMath">2</span>-complex. The <span class="SimpleMath">1</span>-skeleton of this simplicial complex is the complete graph on <span class="SimpleMath">n</span> vertices. Each triple of vertices lies, with probability <span class="SimpleMath">p</span>, in a common <span class="SimpleMath">2</span>-simplex of the complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadCSVfileAsPureCubicalKnot(str):: String --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ReadCSVfileAsPureCubicalKnot(str,r):: String, Int --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ReadCSVfileAsPureCubicalKnot(L):: List --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ReadCSVfileAsPureCubicalKnot(L,R):: List,List --&gt; PureCubicalComplex
+</pre>
+
+<p>Reads a CSV file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">3</span>-dimensional pure cubical complex <span class="SimpleMath">K</span>. Each line of the file should contain the coordinates of a point in <span class="SimpleMath">R^3</span> and the complex <span class="SimpleMath">K</span> should represent a knot determined by the sequence of points, though the latter is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">K</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">r ge 2</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+<p>The function can also read in a list <span class="SimpleMath">L</span> of strings identifying CSV files for several knots. In this case a list <span class="SimpleMath">R</span> of integer resolutions can also be entered. The lists <span class="SimpleMath">L</span> and <span class="SimpleMath">R</span> must be of equal length.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadImageAsPureCubicalComplex(str,t):: String, Int --&gt; PureCubicalComplex
+</pre>
+
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with an integer <span class="SimpleMath">t</span> between <span class="SimpleMath">0</span> and <span class="SimpleMath">765</span>. It returns a <span class="SimpleMath">2</span>-dimensional pure cubical complex corresponding to a black/white version of the image determined by the threshold <span class="SimpleMath">t</span>. The <span class="SimpleMath">2</span>-cells of the pure cubical complex correspond to pixels with RGB value <span class="SimpleMath">R+G+B le t</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadImageAsFilteredPureCubicalComplex(str,n):: String, Int --&gt; FilteredPureCubicalComplex
+</pre>
+
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with a positive integer <span class="SimpleMath">n</span>. It returns a <span class="SimpleMath">2</span>-dimensional filtered pure cubical complex of filtration length <span class="SimpleMath">n</span>. The <span class="SimpleMath">k</span>th term in the filtration is a pure cubical complex corresponding to a black/white version of the image determined by the threshold <span class="SimpleMath">t_k=k × 765/n</span>. The <span class="SimpleMath">2</span>-cells of the <span class="SimpleMath">k</span>th term correspond to pixels with RGB value <span class="SimpleMath">R+G+B le t_k</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadImageAsWeightFunction(str,t):: String, Int --&gt; RegCWComplex, Function
+</pre>
+
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with an integer <span class="SimpleMath">t</span>. It constructs a <span class="SimpleMath">2</span>-dimensional regular CW-complex <span class="SimpleMath">Y</span> from the image, together with a weight function <span class="SimpleMath">w: Y→ Z</span> corresponding to a filtration on <span class="SimpleMath">Y</span> of filtration length <span class="SimpleMath">t</span>. The pair <span class="SimpleMath">[Y,w]</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadPDBfileAsPureCubicalComplex(str):: String --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ReadPDBfileAsPureCubicalComplex(str,r):: String, Int --&gt; PureCubicalComplex
+</pre>
+
+<p>Reads a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">3</span>-dimensional pure cubical complex <span class="SimpleMath">K</span>. The complex <span class="SimpleMath">K</span> should represent a (protein backbone) knot but this is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">K</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">r ge 2</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ReadPDBfileAsPurepermutahedralComplex(str):: String --&gt; PurePermComplex
+</pre>
+
+
+<pre class="normal">
+ReadPDBfileAsPurePermutahedralComplex(str,r):: String, Int --&gt; PurePermComplex
+</pre>
+
+<p>Reads a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">3</span>-dimensional pure permutahedral complex <span class="SimpleMath">K</span>. The complex <span class="SimpleMath">K</span> should represent a (protein backbone) knot but this is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">K</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">r ge 2</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RegularCWPolytope(L):: List --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWPolytope(G,v):: PermGroup, List --&gt; RegCWComplex
+</pre>
+
+<p>Inputs a list <span class="SimpleMath">L</span> of vectors in <span class="SimpleMath">R^n</span> and outputs their convex hull as a regular CW-complex.</p>
+
+<p>Inputs a permutation group G of degree <span class="SimpleMath">d</span> and vector <span class="SimpleMath">v∈ R^d</span>, and outputs the convex hull of the orbit <span class="SimpleMath">{v^g : g∈ G}</span> as a regular CW-complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+SimplicialComplex(L):: List --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs a list <span class="SimpleMath">L</span> whose entries are lists of vertices representing the maximal simplices of a simplicial complex, and returns the simplicial complex. Here a "vertex" is a GAP object such as an integer or a subgroup. The list <span class="SimpleMath">L</span> can also contain non-maximal simplices.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+SymmetricMatrixToFilteredGraph(A,m,s):: Mat, Int, Rat --&gt; FilteredGraph
+</pre>
+
+
+<pre class="normal">
+SymmetricMatrixToFilteredGraph(A,m):: Mat, Int --&gt; FilteredGraph
+</pre>
+
+<p>Inputs an <span class="SimpleMath">n × n</span> symmetric matrix <span class="SimpleMath">A</span>, a positive integer <span class="SimpleMath">m</span> and a positive rational <span class="SimpleMath">s</span>. The function returns a filtered graph of filtration length <span class="SimpleMath">m</span>. The <span class="SimpleMath">t</span>-th term of the filtration is a graph with <span class="SimpleMath">n</span> vertices and an edge between the <span class="SimpleMath">i</span>-th and <span class="SimpleMath">j</span>-th vertices if the <span class="SimpleMath">(i,j)</span> entry of <span class="SimpleMath">A</span> is less than or equal to <span class="SimpleMath">t × s/m</span>.</p>
+
+<p>If the optional input <span class="SimpleMath">s</span> is omitted then it is set equal to the largest entry in the matrix <span class="SimpleMath">A</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+SymmetricMatrixToGraph(A,t):: Mat, Rat --&gt; Graph
+</pre>
+
+<p>Inputs an <span class="SimpleMath">n× n</span> symmetric matrix <span class="SimpleMath">A</span> over the rationals and a rational number <span class="SimpleMath">t ge 0</span>, and returns the graph on the vertices <span class="SimpleMath">1,2, ..., n</span> with an edge between distinct vertices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> precisely when the <span class="SimpleMath">(i,j)</span> entry of <span class="SimpleMath">A</span> is <span class="SimpleMath">le t</span>.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Metric Spaces</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CayleyMetric(g,h):: Permutation, Permutation --&gt; Int
+</pre>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the minimum number of transpositions needed to express <span class="SimpleMath">g*h^-1</span> as a product of transpositions.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EuclideanMetric(g,h):: List, List --&gt; Rat
+</pre>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w ∈ R^n</span> and returns a rational number approximating the Euclidean distance between them.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EuclideanSquaredMetric(g,h):: List, List --&gt; Rat
+</pre>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w ∈ R^n</span> and returns the square of the Euclidean distance between them.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+HammingMetric(g,h):: Permutation, Permutation --&gt; Int
+</pre>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the minimum number of integers moved by the permutation <span class="SimpleMath">g*h^-1</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+KendallMetric(g,h):: Permutation, Permutation --&gt; Int
+</pre>
+
+<p>Inputs two permutations <span class="SimpleMath">g,h</span> and optionally the degree <span class="SimpleMath">N</span> of a symmetric group containing them. It returns the minimum number of adjacent transpositions needed to express <span class="SimpleMath">g*h^-1</span> as a product of adjacent transpositions. An {\em adjacent} transposition is of the form <span class="SimpleMath">(i,i+1)</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ManhattanMetric(g,h):: List, List --&gt; Rat
+</pre>
+
+<p>Inputs two vectors <span class="SimpleMath">v,w ∈ R^n</span> and returns the Manhattan distance between them.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+VectorsToSymmetricMatrix(V):: List --&gt; Matrix
+</pre>
+
+
+<pre class="normal">
+VectorsToSymmetricMatrix(V,d):: List, Function --&gt; Matrix
+</pre>
+
+<p>Inputs a list <span class="SimpleMath">V ={ v_1, ..., v_k} ∈ R^n</span> and returns the <span class="SimpleMath">k × k</span> symmetric matrix of Euclidean distances <span class="SimpleMath">d(v_i, v_j)</span>. When these distances are irrational they are approximated by a rational number.</p>
+
+<p>As an optional second argument any rational valued function <span class="SimpleMath">d(x,y)</span> can be entered.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Cellular Complexes <span class="SimpleMath">⟶</span> Cellular Complexes</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+BoundaryMap(K):: RegCWComplex --&gt; RegCWMap
+</pre>
+
+<p>Inputs a pure regular CW-complex <span class="SimpleMath">K</span> and returns the regular CW-inclusion map <span class="SimpleMath">ι : ∂ K ↪ K</span> from the boundary <span class="SimpleMath">∂ K</span> into the complex <span class="SimpleMath">K</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CliqueComplex(G,n):: Graph, Int --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+CliqueComplex(F,n):: FilteredGraph, Int --&gt; FilteredSimplicialComplex
+</pre>
+
+
+<pre class="normal">
+CliqueComplex(K,n):: SimplicialComplex, Int --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs a graph <span class="SimpleMath">G</span> and integer <span class="SimpleMath">n ge 1</span>. It returns the <span class="SimpleMath">n</span>-skeleton of a simplicial complex <span class="SimpleMath">K</span> with one <span class="SimpleMath">k</span>-simplex for each complete subgraph of <span class="SimpleMath">G</span> on <span class="SimpleMath">k+1</span> vertices.</p>
+
+<p>Inputs a fitered graph <span class="SimpleMath">F</span> and integer <span class="SimpleMath">n ge 1</span>. It returns the <span class="SimpleMath">n</span>-skeleton of a filtered simplicial complex <span class="SimpleMath">K</span> whose <span class="SimpleMath">t</span>-term has one <span class="SimpleMath">k</span>-simplex for each complete subgraph of the <span class="SimpleMath">t</span>-th term of <span class="SimpleMath">G</span> on <span class="SimpleMath">k+1</span> vertices.</p>
+
+<p>Inputs a simplicial complex of dimension <span class="SimpleMath">d=1</span> or <span class="SimpleMath">d=2</span>. If <span class="SimpleMath">d=1</span> then the clique complex of a graph returned. If <span class="SimpleMath">d=2</span> then the clique complex of a $2$-complex is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ConcentricFiltration(K,n):: PureCubicalComplex, Int --&gt; FilteredPureCubicalComplex
+</pre>
+
+<p>Inputs a pure cubical complex <span class="SimpleMath">K</span> and integer <span class="SimpleMath">n ge 1</span>, and returns a filtered pure cubical complex of filtration length <span class="SimpleMath">n</span>. The <span class="SimpleMath">t</span>-th term of the filtration is the intersection of <span class="SimpleMath">K</span> with the ball of radius <span class="SimpleMath">r_t</span> centred on the centre of gravity of <span class="SimpleMath">K</span>, where <span class="SimpleMath">0=r_1 le r_2 le r_3 le ⋯ le r_n</span> are equally spaced rational numbers. The complex <span class="SimpleMath">K</span> is contained in the ball of radius <span class="SimpleMath">r_n</span>. (At present, this is implemented only for <span class="SimpleMath">2</span>- and <span class="SimpleMath">3</span>-dimensional complexes.)</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DirectProduct(M,N):: RegCWComplex, RegCWComplex --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+DirectProduct(M,N):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+<p>Inputs two or more regular CW-complexes or two or more pure cubical complexes and returns their direct product.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+FiltrationTerm(K,t):: FilteredPureCubicalComplex, Int --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+FiltrationTerm(K,t):: FilteredRegCWComplex, Int --&gt; RegCWComplex
+</pre>
+
+<p>Inputs a filtered regular CW-complex or a filtered pure cubical complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">t ge 1</span>. The <span class="SimpleMath">t</span>-th term of the filtration is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Graph(K):: RegCWComplex --&gt; Graph
+</pre>
+
+
+<pre class="normal">
+Graph(K):: SimplicialComplex --&gt; Graph
+</pre>
+
+<p>Inputs a regular CW-complex or a simplicial complex <span class="SimpleMath">K</span> and returns its $1$-skeleton as a graph.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+HomotopyGraph(Y):: RegCWComplex --&gt; Graph
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and returns a subgraph <span class="SimpleMath">M ⊂ Y^1</span> of the <span class="SimpleMath">1</span>-skeleton for which the induced homology homomorphisms <span class="SimpleMath">H_1(M, Z) → H_1(Y, Z)</span> and <span class="SimpleMath">H_1(Y^1, Z) → H_1(Y, Z)</span> have identical images. The construction tries to include as few edges in <span class="SimpleMath">M</span> as possible, though a minimum is not guaranteed.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Nerve(M):: PureCubicalComplex --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+Nerve(M):: PurePermComplex --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+Nerve(M,n):: PureCubicalComplex, Int --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+Nerve(M,n):: PurePermComplex, Int --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs a pure cubical complex or pure permutahedral complex <span class="SimpleMath">M</span> and returns the simplicial complex <span class="SimpleMath">K</span> obtained by taking the nerve of an open cover of <span class="SimpleMath">|M|</span>, the open sets in the cover being sufficiently small neighbourhoods of the top-dimensional cells of <span class="SimpleMath">|M|</span>. The spaces <span class="SimpleMath">|M|</span> and <span class="SimpleMath">|K|</span> are homotopy equivalent by the Nerve Theorem. If an integer <span class="SimpleMath">n ge 0</span> is supplied as the second argument then only the n-skeleton of <span class="SimpleMath">K</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RegularCWComplex(K):: SimplicialComplex --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWComplex(K):: PureCubicalComplex --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWComplex(K):: CubicalComplex --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWComplex(K):: PurePermComplex --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWComplex(L):: List --&gt; RegCWComplex
+</pre>
+
+
+<pre class="normal">
+RegularCWComplex(L,M):: List,List --&gt; RegCWComplex
+</pre>
+
+<p>Inputs a simplicial, pure cubical, cubical or pure permutahedral complex <span class="SimpleMath">K</span> and returns the corresponding regular CW-complex. Inputs a list <span class="SimpleMath">L=Y!.boundaries</span> of boundary incidences of a regular CW-complex <span class="SimpleMath">Y</span> and returns <span class="SimpleMath">Y</span>. Inputs a list <span class="SimpleMath">L=Y!.boundaries</span> of boundary incidences of a regular CW-complex <span class="SimpleMath">Y</span> together with a list <span class="SimpleMath">M=Y!.orientation</span> of incidence numbers and returns a regular CW-complex <span class="SimpleMath">Y</span>. The availability of precomputed incidence numbers saves recalculating them.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+RegularCWMap(M,A):: PureCubicalComplex, PureCubicalComplex --&gt; RegCWMap
+</pre>
+
+<p>Inputs a pure cubical complex <span class="SimpleMath">M</span> and a subcomplex <span class="SimpleMath">A</span> and returns the inclusion map <span class="SimpleMath">A → M</span> as a map of regular CW complexes.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ThickeningFiltration(K,n):: PureCubicalComplex, Int --&gt; FilteredPureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ThickeningFiltration(K,n,s):: PureCubicalComplex, Int, Int --&gt; FilteredPureCubicalComplex
+</pre>
+
+<p>Inputs a pure cubical complex <span class="SimpleMath">K</span> and integer <span class="SimpleMath">n ge 1</span>, and returns a filtered pure cubical complex of filtration length <span class="SimpleMath">n</span>. The <span class="SimpleMath">t</span>-th term of the filtration is the <span class="SimpleMath">t</span>-fold thickening of <span class="SimpleMath">K</span>. If an integer <span class="SimpleMath">s ge 1</span> is entered as the optional third argument then the <span class="SimpleMath">t</span>-th term of the filtration is the <span class="SimpleMath">ts</span>-fold thickening of <span class="SimpleMath">K</span>.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Cellular Complexes <span class="SimpleMath">⟶</span> Cellular Complexes (Preserving Data Types)</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ContractedComplex(K):: RegularCWComplex --&gt; RegularCWComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: FilteredRegularCWComplex --&gt; FilteredRegularCWComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: CubicalComplex --&gt; CubicalComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K,S):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: FilteredPureCubicalComplex --&gt; FilteredPureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K,S):: PurePermComplex, PurePermComplex --&gt; PurePermComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(K):: SimplicialComplex --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+ContractedComplex(G):: Graph --&gt; Graph
+</pre>
+
+<p>Inputs a complex (regular CW, Filtered regular CW, pure cubical etc.) and returns a homotopy equivalent subcomplex.</p>
+
+<p>Inputs a pure cubical complex or pure permutahedral complex <span class="SimpleMath">K</span> and a subcomplex <span class="SimpleMath">S</span>. It returns a homotopy equivalent subcomplex of <span class="SimpleMath">K</span> that contains <span class="SimpleMath">S</span>.</p>
+
+<p>Inputs a graph <span class="SimpleMath">G</span> and returns a subgraph <span class="SimpleMath">S</span> such that the clique complexes of <span class="SimpleMath">G</span> and <span class="SimpleMath">S</span> are homotopy equivalent.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ContractibleSubcomplex(K):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ContractibleSubcomplex(K):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+
+<pre class="normal">
+ContractibleSubcomplex(K):: SimplicialComplex --&gt; SimplicialComplex
+</pre>
+
+<p>Inputs a non-empty pure cubical, pure permutahedral or simplicial complex <span class="SimpleMath">K</span> and returns a contractible subcomplex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+KnotReflection(K):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+<p>Inputs a pure cubical knot and returns the reflected knot.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+KnotSum(K,L):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+<p>Inputs two pure cubical knots and returns their sum.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+OrientRegularCWComplex(Y):: RegCWComplex --&gt; Void
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and computes and stores incidence numbers for <span class="SimpleMath">Y</span>. If <span class="SimpleMath">Y</span> already has incidence numbers then the function does nothing.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PathComponent(K,n):: SimplicialComplex, Int --&gt; SimplicialComplex
+</pre>
+
+
+<pre class="normal">
+PathComponent(K,n):: PureCubicalComplex, Int --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PathComponent(K,n):: PurePermComplex, Int --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a simplicial, pure cubical or pure permutahedral complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">1 le n le β_0(K)</span>. The <span class="SimpleMath">n</span>-th path component of <span class="SimpleMath">K</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexBoundary(M):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexBoundary(M):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a <span class="SimpleMath">d</span>-dimensional pure cubical or pure permutahedral complex <span class="SimpleMath">M</span> and returns a <span class="SimpleMath">d</span>-dimensional complex consisting of the closure of those <span class="SimpleMath">d</span>-cells whose boundaries contains some cell with coboundary of size less than the maximal possible size.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexComplement(M):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexComplement(M):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a pure cubical complex or a pure permutahedral complex and returns its complement.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexDifference(M,N):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexDifference(M,N):: PurePermComplex, PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns the difference <span class="SimpleMath">M - N</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexInterstection(M,N):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexIntersection(M,N):: PurePermComplex, PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns their intersection.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexThickened(M):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexThickened(M):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a pure cubical complex or a pure permutahedral complex and returns the a thickened complex.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PureComplexUnion(M,N):: PureCubicalComplex, PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+PureComplexUnion(M,N):: PurePermComplex, PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns their union.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+SimplifiedComplex(K):: RegularCWComplex --&gt; RegularCWComplex
+</pre>
+
+
+<pre class="normal">
+SimplifiedComplex(K):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+
+<pre class="normal">
+SimplifiedComplex(R):: FreeResolution --&gt; FreeResolution
+</pre>
+
+
+<pre class="normal">
+SimplifiedComplex(C):: ChainComplex --&gt; ChainComplex
+</pre>
+
+<p>Inputs a regular CW-complex or a pure permutahedral complex <span class="SimpleMath">K</span> and returns a homeomorphic complex with possibly fewer cells and certainly no more cells.</p>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> of <span class="SimpleMath">Z</span> and returns a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">S</span> with potentially fewer free generators.</p>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> of free abelian groups and returns a chain homotopic chain complex <span class="SimpleMath">D</span> with potentially fewer free generators.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ZigZagContractedComplex(K):: PureCubicalComplex --&gt; PureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ZigZagContractedComplex(K):: FilteredPureCubicalComplex --&gt; FilteredPureCubicalComplex
+</pre>
+
+
+<pre class="normal">
+ZigZagContractedComplex(K):: PurePermComplex --&gt; PurePermComplex
+</pre>
+
+<p>Inputs a pure cubical, filtered pure cubical or pure permutahedral complex and returns a homotopy equivalent complex. In the filtered case, the <span class="SimpleMath">t</span>-th term of the output is homotopy equivalent to the <span class="SimpleMath">t</span>-th term of the input for all <span class="SimpleMath">t</span>.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Cellular Complexes <span class="SimpleMath">⟶</span> Homotopy Invariants</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+AlexanderPolynomial(K):: PureCubicalComplex --&gt; Polynomial
+</pre>
+
+
+<pre class="normal">
+AlexanderPolynomial(K):: PurePermComplex --&gt; Polynomial
+</pre>
+
+
+<pre class="normal">
+AlexanderPolynomial(G):: FpGroup --&gt; Polynomial
+</pre>
+
+<p>Inputs a <span class="SimpleMath">3</span>-dimensional pure cubical or pure permutahdral complex <span class="SimpleMath">K</span> representing a knot and returns the Alexander polynomial of the fundamental group <span class="SimpleMath">G = π_1( R^3∖ K)</span>.</p>
+
+<p>Inputs a finitely presented group <span class="SimpleMath">G</span> with infinite cyclic abelianization and returns its Alexander polynomial.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+BettiNumber(K,n):: SimplicialComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: PureCubicalComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: CubicalComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: PurePermComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: RegCWComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: ChainComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n):: SparseChainComplex, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n,p):: SimplicialComplex, Int, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n,p):: PureCubicalComplex, Int, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n,p):: CubicalComplex, Int, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n,p):: PurePermComplex, Int, Int --&gt; Int
+</pre>
+
+
+<pre class="normal">
+BettiNumber(K,n,p):: RegCWComplex, Int, Int --&gt; Int
+</pre>
+
+<p>Inputs a simplicial, cubical, pure cubical, pure permutahedral, regular CW, chain or sparse chain complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span> and returns the <span class="SimpleMath">n</span>th Betti number of <span class="SimpleMath">K</span>.</p>
+
+<p>Inputs a simplicial, cubical, pure cubical, pure permutahedral or regular CW-complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span> and a prime <span class="SimpleMath">p ge 0</span> or <span class="SimpleMath">p=0</span>. In this case the <span class="SimpleMath">n</span>th Betti number of <span class="SimpleMath">K</span> over a field of characteristic <span class="SimpleMath">p</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EulerCharacteristic(C):: ChainComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+EulerCharacteristic(K):: CubicalComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+EulerCharacteristic(K):: PureCubicalComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+EulerCharacteristic(K):: PurePermComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+EulerCharacteristic(K):: RegCWComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+EulerCharacteristic(K):: SimplicialComplex --&gt; Int
+</pre>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> and returns its Euler characteristic.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW-, or simplicial complex <span class="SimpleMath">K</span> and returns its Euler characteristic.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+EulerIntegral(Y,w):: RegCWComplex, Int --&gt; Int
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and a weight function <span class="SimpleMath">w: Y→ Z</span>, and returns the Euler integral <span class="SimpleMath">∫_Y w dχ</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+FundamentalGroup(K):: RegCWComplex --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(K,n):: RegCWComplex, Int --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(K):: SimplicialComplex --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(K):: PureCubicalComplex --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(K):: PurePermComplex --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(F):: RegCWMap --&gt; GroupHomomorphism
+</pre>
+
+
+<pre class="normal">
+FundamentalGroup(F,n):: RegCWMap, Int --&gt; GroupHomomorphism
+</pre>
+
+<p>Inputs a regular CW, simplicial, pure cubical or pure permutahedral complex <span class="SimpleMath">K</span> and returns the fundamental group.</p>
+
+<p>Inputs a regular CW complex <span class="SimpleMath">K</span> and the number <span class="SimpleMath">n</span> of some zero cell. It returns the fundamental group of <span class="SimpleMath">K</span> based at the <span class="SimpleMath">n</span>-th zero cell.</p>
+
+<p>Inputs a regular CW map <span class="SimpleMath">F</span> and returns the induced homomorphism of fundamental groups. If the number of some zero cell in the domain of <span class="SimpleMath">F</span> is entered as an optional second variable then the fundamental group is based at this zero cell.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+FundamentalGroupOfQuotient(Y):: EquivariantRegCWComplex --&gt; Group
+</pre>
+
+<p>Inputs a <span class="SimpleMath">G</span>-equivariant regular CW complex <span class="SimpleMath">Y</span> and returns the group <span class="SimpleMath">G</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+IsAspherical(F,R):: FreeGroup, List --&gt; Boolean
+</pre>
+
+<p>Inputs a free group <span class="SimpleMath">F</span> and a list <span class="SimpleMath">R</span> of words in <span class="SimpleMath">F</span>. The function attempts to test if the quotient group <span class="SimpleMath">G=F/⟨ R ⟩^F</span> is aspherical. If it succeeds it returns <span class="SimpleMath">true</span>. Otherwise the test is inconclusive and <span class="SimpleMath">fail</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+KnotGroup(K):: PureCubicalComplex --&gt; FpGroup
+</pre>
+
+
+<pre class="normal">
+KnotGroup(K):: PureCubicalComplex --&gt; FpGroup
+</pre>
+
+<p>Inputs a pure cubical or pure permutahedral complex <span class="SimpleMath">K</span> and returns the fundamental group of its complement. If the complement is path-connected then this fundamental group is unique up to isomorphism. Otherwise it will depend on the path-component in which the randomly chosen base-point lies.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PiZero(Y):: RegCWComplex --&gt; List
+</pre>
+
+
+<pre class="normal">
+PiZero(Y):: Graph --&gt; List
+</pre>
+
+
+<pre class="normal">
+PiZero(Y):: SimplicialComplex --&gt; List
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span>, or graph <span class="SimpleMath">Y</span>, or simplicial complex <span class="SimpleMath">Y</span> and returns a pair <span class="SimpleMath">[cells,r]</span> where: <span class="SimpleMath">cells</span> is a list of vertices of $Y$ representing the distinct path-components; <span class="SimpleMath">r(v)</span> is a function which, for each vertex <span class="SimpleMath">v</span> of <span class="SimpleMath">Y</span> returns the representative vertex <span class="SimpleMath">r(v) ∈ cells</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+PersistentBettiNumbers(K,n):: FilteredSimplicialComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n):: FilteredPureCubicalComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n):: FilteredRegCWComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n):: FilteredChainComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n):: FilteredSparseChainComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n,p):: FilteredSimplicialComplex, Int, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n,p):: FilteredPureCubicalComplex, Int, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n,p):: FilteredRegCWComplex, Int, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n,p):: FilteredChainComplex, Int, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+PersistentBettiNumbers(K,n,p):: FilteredSparseChainComplex, Int, Int --&gt; List
+</pre>
+
+<p>Inputs a filtered simplicial, filtered pure cubical, filtered regular CW, filtered chain or filtered sparse chain complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span> and returns the <span class="SimpleMath">n</span>th PersistentBetti numbers of <span class="SimpleMath">K</span> as a list of lists of integers.</p>
+
+<p>Inputs a filtered simplicial, filtered pure cubical, filtered regular CW, filtered chain or filtered sparse chain complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span> and a prime <span class="SimpleMath">p ge 0</span> or <span class="SimpleMath">p=0</span>. In this case the <span class="SimpleMath">n</span>th PersistentBetti numbers of <span class="SimpleMath">K</span> over a field of characteristic <span class="SimpleMath">p</span> are returned.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Data <span class="SimpleMath">⟶</span> Homotopy Invariants</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DendrogramMat(A,t,s):: Mat, Rat, Int --&gt; List
+</pre>
+
+<p>Inputs an <span class="SimpleMath">n× n</span> symmetric matrix <span class="SimpleMath">A</span> over the rationals, a rational <span class="SimpleMath">t ge 0</span> and an integer <span class="SimpleMath">s ge 1</span>. A list <span class="SimpleMath">[v_1, ..., v_t+1]</span> is returned with each <span class="SimpleMath">v_k</span> a list of positive integers. Let <span class="SimpleMath">t_k = (k-1)s</span>. Let <span class="SimpleMath">G(A,t_k)</span> denote the graph with vertices <span class="SimpleMath">1, ..., n</span> and with distinct vertices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> connected by an edge when the <span class="SimpleMath">(i,j)</span> entry of <span class="SimpleMath">A</span> is <span class="SimpleMath">le t_k</span>. The <span class="SimpleMath">i</span>-th path component of <span class="SimpleMath">G(A,t_k)</span> is included in the <span class="SimpleMath">v_k[i]</span>-th path component of <span class="SimpleMath">G(A,t_k+1)</span>. This defines the integer vector <span class="SimpleMath">v_k</span>. The vector <span class="SimpleMath">v_k</span> has length equal to the number of path components of <span class="SimpleMath">G(A,t_k)</span>.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Cellular Complexes <span class="SimpleMath">⟶</span> Non Homotopy Invariants</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ChainComplex(K):: CubicalComplex --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+ChainComplex(K):: PureCubicalComplex --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+ChainComplex(K):: PurePermComplex --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+ChainComplex(Y):: RegCWComplex --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+ChainComplex(K):: SimplicialComplex --&gt; ChainComplex
+</pre>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or simplicial complex <span class="SimpleMath">K</span> and returns its chain complex of free abelian groups. In degree <span class="SimpleMath">n</span> this chain complex has one free generator for each <span class="SimpleMath">n</span>-dimensional cell of <span class="SimpleMath">K</span>.</p>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and returns a chain complex <span class="SimpleMath">C</span> which is chain homotopy equivalent to the cellular chain complex of <span class="SimpleMath">Y</span>. In degree <span class="SimpleMath">n</span> the free abelian chain group <span class="SimpleMath">C_n</span> has one free generator for each critical <span class="SimpleMath">n</span>-dimensional cell of <span class="SimpleMath">Y</span> with respect to some discrete vector field on <span class="SimpleMath">Y</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ChainComplexEquivalence(X):: RegCWComplex --&gt; List
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">X</span> and returns a pair <span class="SimpleMath">[f_∗, g_∗]</span> of chain maps <span class="SimpleMath">f_∗: C_∗(X) → D_∗(X)</span>, <span class="SimpleMath">g_∗: D_∗(X) → C_∗(X)</span>. Here <span class="SimpleMath">C_∗(X)</span> is the standard cellular chain complex of <span class="SimpleMath">X</span> with one free generator for each cell in <span class="SimpleMath">X</span>. The chain complex <span class="SimpleMath">D_∗(X)</span> is a typically smaller chain complex arising from a discrete vector field on <span class="SimpleMath">X</span>. The chain maps <span class="SimpleMath">f_∗, g_∗</span> are chain homotopy equivalences.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ChainComplexOfQuotient(Y):: EquivariantRegCWComplex --&gt; ChainComplex
+</pre>
+
+<p>Inputs a <span class="SimpleMath">G</span>-equivariant regular CW-complex <span class="SimpleMath">Y</span> and returns the cellular chain complex of the quotient space <span class="SimpleMath">Y/G</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ChainMap(X,A,Y,B):: PureCubicalComplex, PureCubicalComplex, PureCubicalComplex, PureCubicalComplex --&gt; ChainMap
+</pre>
+
+
+<pre class="normal">
+ChainMap(f):: RegCWMap --&gt; ChainMap
+</pre>
+
+
+<pre class="normal">
+ChainMap(f):: SimplicialMap --&gt; ChainComplex
+</pre>
+
+<p>Inputs a pure cubical complex <span class="SimpleMath">Y</span> and pure cubical sucomplexes <span class="SimpleMath">X⊂ Y</span>, <span class="SimpleMath">B⊂ Y</span>,<span class="SimpleMath">A⊂ B</span>. It returns the induced chain map <span class="SimpleMath">f_∗: C_∗(X/A) → C_∗(Y/B)</span> of cellular chain complexes of pairs. (Typlically one takes <span class="SimpleMath">A</span> and <span class="SimpleMath">B</span> to be empty or contractible subspaces, in which case <span class="SimpleMath">C_∗(X/A) ≃ C_∗(X)</span>, <span class="SimpleMath">C_∗(Y/B) ≃ C_∗(Y)</span>.)</p>
+
+<p>Inputs a map <span class="SimpleMath">f: X → Y</span> between two regular CW-complexes <span class="SimpleMath">X,Y</span> and returns an induced chain map <span class="SimpleMath">f_∗: C_∗(X) → C_∗(Y)</span> where <span class="SimpleMath">C_∗(X)</span>, <span class="SimpleMath">C_∗(Y)</span> are chain homotopic to (but usually smaller than) the cellular chain complexes of <span class="SimpleMath">X</span>, <span class="SimpleMath">Y</span>.</p>
+
+<p>Inputs a map <span class="SimpleMath">f: X → Y</span> between two simplicial complexes <span class="SimpleMath">X,Y</span> and returns the induced chain map <span class="SimpleMath">f_∗: C_∗(X) → C_∗(Y)</span> of cellular chain complexes.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CochainComplex(K):: CubicalComplex --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+CochainComplex(K):: PureCubicalComplex --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+CochainComplex(K):: PurePermComplex --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+CochainComplex(Y):: RegCWComplex --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+CochainComplex(K):: SimplicialComplex --&gt; CohainComplex
+</pre>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or simplicial complex <span class="SimpleMath">K</span> and returns its cochain complex of free abelian groups. In degree <span class="SimpleMath">n</span> this cochain complex has one free generator for each <span class="SimpleMath">n</span>-dimensional cell of <span class="SimpleMath">K</span>.</p>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and returns a cochain complex <span class="SimpleMath">C</span> which is chain homotopy equivalent to the cellular cochain complex of <span class="SimpleMath">Y</span>. In degree <span class="SimpleMath">n</span> the free abelian cochain group <span class="SimpleMath">C_n</span> has one free generator for each critical <span class="SimpleMath">n</span>-dimensional cell of <span class="SimpleMath">Y</span> with respect to some discrete vector field on <span class="SimpleMath">Y</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CriticalCells(K):: RegCWComplex --&gt; List
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">K</span> and returns its critical cells with respect to some discrete vector field on <span class="SimpleMath">K</span>. If no discrete vector field on <span class="SimpleMath">K</span> is available then one will be computed and stored.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DiagonalApproximation(X):: RegCWComplex --&gt; RegCWMap, RegCWMap
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">X</span> and outputs a pair <span class="SimpleMath">[p,ι]</span> of maps of CW-complexes. The map <span class="SimpleMath">p: X^∆ → X</span> will often be a homotopy equivalence. This is always the case if <span class="SimpleMath">X</span> is the CW-space of any pure cubical complex. In general, one can test to see if the induced chain map <span class="SimpleMath">p_∗ : C_∗(X^∆) → C_∗(X)</span> is an isomorphism on integral homology. The second map <span class="SimpleMath">ι : X^∆ ↪ X× X</span> is an inclusion into the direct product. If <span class="SimpleMath">p_∗</span> induces an isomorphism on homology then the chain map <span class="SimpleMath">ι_∗: C_∗(X^∆) → C_∗(X× X)</span> can be used to compute the cup product.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Size(Y):: RegCWComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+Size(Y):: SimplicialComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+Size(K):: PureCubicalComplex --&gt; Int
+</pre>
+
+
+<pre class="normal">
+Size(K):: PurePermComplex --&gt; Int
+</pre>
+
+<p>Inputs a regular CW complex or a simplicial complex <span class="SimpleMath">Y</span> and returns the number of cells in the complex.</p>
+
+<p>Inputs a <span class="SimpleMath">d</span>-dimensional pure cubical or pure permutahedral complex <span class="SimpleMath">K</span> and returns the number of <span class="SimpleMath">d</span>-dimensional cells in the complex.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>(Co)chain Complexes <span class="SimpleMath">⟶</span> (Co)chain Complexes</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+FilteredTensorWithIntegers(R):: FreeResolution, Int --&gt; FilteredChainComplex
+</pre>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> for which <span class="SimpleMath">"filteredDimension"</span> lies in <strong class="button">NamesOfComponents(R)</strong>. (Such a resolution can be produced using <strong class="button">TwisterTensorProduct()</strong>, <strong class="button">ResolutionNormalSubgroups()</strong> or <strong class="button">FreeGResolution()</strong>.) It returns the filtered chain complex obtained by tensoring with the trivial module $\mathbb Z$.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+FilteredTensorWithIntegersModP(R,p):: FreeResolution, Int --&gt; FilteredChainComplex
+</pre>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> for which <span class="SimpleMath">"filteredDimension"</span> lies in <strong class="button">NamesOfComponents(R)</strong>, together with a prime <span class="SimpleMath">p</span>. (Such a resolution can be produced using <strong class="button">TwisterTensorProduct()</strong>, <strong class="button">ResolutionNormalSubgroups()</strong> or <strong class="button">FreeGResolution()</strong>.) It returns the filtered chain complex obtained by tensoring with the trivial module $\mathbb F$, the field of <span class="SimpleMath">p</span> elements.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+HomToIntegers(C):: ChainComplex --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+HomToIntegers(R):: FreeResolution --&gt; CochainComplex
+</pre>
+
+
+<pre class="normal">
+HomToIntegers(F):: EquiChainMap --&gt; CochainMap
+</pre>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> of free abelian groups and returns the cochain complex <span class="SimpleMath">Hom_ Z(C, Z)</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> in characteristic <span class="SimpleMath">0</span> and returns the cochain complex <span class="SimpleMath">Hom_ ZG(R, Z)</span>.</p>
+
+<p>Inputs an equivariant chain map <span class="SimpleMath">F: R→ S</span> of resolutions and returns the induced cochain map <span class="SimpleMath">Hom_ ZG(S, Z) ⟶ Hom_ ZG(R, Z)</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+TensorWithIntegersModP(C,p):: ChainComplex, Int --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+TensorWithIntegersModP(R,p):: FreeResolution, Int --&gt; ChainComplex
+</pre>
+
+
+<pre class="normal">
+TensorWithIntegersModP(F,p):: EquiChainMap, Int --&gt; ChainMap
+</pre>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> of characteristic <span class="SimpleMath">0</span> and a prime integer <span class="SimpleMath">p</span>. It returns the chain complex <span class="SimpleMath">C ⊗_ Z Z_p</span> of characteristic <span class="SimpleMath">p</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> of characteristic <span class="SimpleMath">0</span> and a prime integer <span class="SimpleMath">p</span>. It returns the chain complex <span class="SimpleMath">R ⊗_ ZG Z_p</span> of characteristic <span class="SimpleMath">p</span>.</p>
+
+<p>Inputs an equivariant chain map <span class="SimpleMath">F: R → S</span> in characteristic <span class="SimpleMath">0</span> a prime integer <span class="SimpleMath">p</span>. It returns the induced chain map <span class="SimpleMath">F⊗_ ZG Z_p : R ⊗_ ZG Z_p ⟶ S ⊗_ ZG Z_p</span>.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>(Co)chain Complexes <span class="SimpleMath">⟶</span> Homotopy Invariants</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Cohomology(C,n):: CochainComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Cohomology(F,n):: CochainMap, Int --&gt; GroupHomomorphism
+</pre>
+
+
+<pre class="normal">
+Cohomology(K,n):: CubicalComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Cohomology(K,n):: PureCubicalComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Cohomology(K,n):: PurePermComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Cohomology(K,n):: RegCWComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Cohomology(K,n):: SimplicialComplex, Int --&gt; List
+</pre>
+
+<p>Inputs a cochain complex <span class="SimpleMath">C</span> and integer <span class="SimpleMath">n ge 0</span> and returns the <span class="SimpleMath">n</span>-th cohomology group of <span class="SimpleMath">C</span> as a list of its abelian invariants.</p>
+
+<p>Inputs a chain map <span class="SimpleMath">F</span> and integer <span class="SimpleMath">n ge 0</span>. It returns the induced cohomology homomorphism <span class="SimpleMath">H_n(F)</span> as a homomorphism of finitely presented groups.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW or simplicial complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span>. It returns the <span class="SimpleMath">n</span>-th integral cohomology group of <span class="SimpleMath">K</span> as a list of its abelian invariants.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CupProduct(Y):: RegCWComplex --&gt; Function
+</pre>
+
+
+<pre class="normal">
+CupProduct(R,p,q,P,Q):: FreeRes, Int, Int, List, List  --&gt; List
+</pre>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">Y</span> and returns a function <span class="SimpleMath">f(p,q,P,Q)</span>. This function <span class="SimpleMath">f</span> inputs two integers <span class="SimpleMath">p,q ge 0</span> and two integer lists <span class="SimpleMath">P=[p_1, ..., p_m]</span>, <span class="SimpleMath">Q=[q_1, ..., q_n]</span> representing elements <span class="SimpleMath">P∈ H^p(Y, Z)</span> and <span class="SimpleMath">Q∈ H^q(Y, Z)</span>. The function <span class="SimpleMath">f</span> returns a list <span class="SimpleMath">P ∪ Q</span> representing the cup product <span class="SimpleMath">P ∪ Q ∈ H^p+q(Y, Z)</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">ZG</span> resolution <span class="SimpleMath">R</span> of <span class="SimpleMath">Z</span> for some group <span class="SimpleMath">G</span>, together with integers <span class="SimpleMath">p,q ge 0</span> and integer lists <span class="SimpleMath">P, Q</span> representing cohomology classes <span class="SimpleMath">P∈ H^p(G, Z)</span>, <span class="SimpleMath">Q∈ H^q(G, Z)</span>. An integer list representing the cup product <span class="SimpleMath">P∪ Q ∈ H^p+q(G, Z)</span> is returned.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Homology(C,n):: ChainComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Homology(F,n):: ChainMap, Int --&gt; GroupHomomorphism
+</pre>
+
+
+<pre class="normal">
+Homology(K,n):: CubicalComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Homology(K,n):: PureCubicalComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Homology(K,n):: PurePermComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Homology(K,n):: RegCWComplex, Int --&gt; List
+</pre>
+
+
+<pre class="normal">
+Homology(K,n):: SimplicialComplex, Int --&gt; List
+</pre>
+
+<p>Inputs a chain complex <span class="SimpleMath">C</span> and integer <span class="SimpleMath">n ge 0</span> and returns the <span class="SimpleMath">n</span>-th homology group of <span class="SimpleMath">C</span> as a list of its abelian invariants.</p>
+
+<p>Inputs a chain map <span class="SimpleMath">F</span> and integer <span class="SimpleMath">n ge 0</span>. It returns the induced homology homomorphism <span class="SimpleMath">H_n(F)</span> as a homomorphism of finitely presented groups.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW or simplicial complex <span class="SimpleMath">K</span> together with an integer <span class="SimpleMath">n ge 0</span>. It returns the <span class="SimpleMath">n</span>-th integral homology group of <span class="SimpleMath">K</span> as a list of its abelian invariants.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Visualization</p>
+
+<div class="pcenter"><table cellspacing="10"  class="GAPDocTable">
+<tr>
+<td class="tdleft">
+<pre class="normal">
+BarCodeDisplay(L) :: List --&gt; void
+</pre>
+
+<p>Displays a barcode <strong class="button">L=PersitentBettiNumbers(X,n)</strong>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+BarCodeCompactDisplay(L) :: List --&gt; void
+</pre>
+
+<p>Displays a barcode <strong class="button">L=PersitentBettiNumbers(X,n)</strong> in compact form.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+CayleyGraphOfGroup(G,L):: Group, List --&gt; Void
+</pre>
+
+<p>Inputs a finite group <span class="SimpleMath">G</span> and a list <span class="SimpleMath">L</span> of elements in <span class="SimpleMath">G</span>.It displays the Cayley graph of the group generated by <span class="SimpleMath">L</span> where edge colours correspond to generators.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+Display(G) :: Graph --&gt; void
+</pre>
+
+
+<pre class="normal">
+Display(M) :: PureCubicalComplex --&gt; void
+</pre>
+
+
+<pre class="normal">
+Display(M) :: PurePermutahedralComplex --&gt; void
+</pre>
+
+<p>Displays a graph <span class="SimpleMath">G</span>; a $2$- or $3$-dimensional pure cubical complex <span class="SimpleMath">M</span>; a $3$-dimensional pure permutahedral complex <span class="SimpleMath">M</span>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DisplayArcPresentation(K) :: PureCubicalComplex --&gt; void
+</pre>
+
+<p>Displays a <span class="SimpleMath">3</span>-dimensional pure cubical knot <strong class="button">K=PureCubicalKnot(L)</strong> in the form of an arc presentation.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DisplayCSVKnotFile(str) :: String --&gt; void
+</pre>
+
+<p>Inputs a string <span class="SimpleMath">str</span> that identifies a csv file containing the points on a piecewise linear knot in <span class="SimpleMath">R^3</span>. It displays the knot.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DisplayDendrogram(L):: List --&gt; Void
+</pre>
+
+<p>Displays the dendrogram <strong class="button">L:=DendrogramMat(A,t,s)</strong>.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DisplayDendrogramMat(A,t,s):: Mat, Rat, Int --&gt; Void
+</pre>
+
+<p>Inputs an <span class="SimpleMath">n× n</span> symmetric matrix <span class="SimpleMath">A</span> over the rationals, a rational <span class="SimpleMath">t ge 0</span> and an integer <span class="SimpleMath">s ge 1</span>. The dendrogram defined by <strong class="button">DendrogramMat(A,t,s)</strong> is displayed.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+DisplayPDBfile(str):: String --&gt; Void
+</pre>
+
+<p>Displays the protein backone described in a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb".</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+OrbitPolytope(G,v,L) :: PermGroup, List, List --&gt; void
+</pre>
+
+<p>Inputs a permutation group or finite matrix group <span class="SimpleMath">G</span> of degree <span class="SimpleMath">d</span> and a rational vector <span class="SimpleMath">v∈ R^d</span>. In both cases there is a natural action of <span class="SimpleMath">G</span> on <span class="SimpleMath">R^d</span>. Let <span class="SimpleMath">P(G,v)</span> be the convex hull of the orbit of <span class="SimpleMath">v</span> under the action of <span class="SimpleMath">G</span>. The function also inputs a sublist <span class="SimpleMath">L</span> of the following list of strings: ["dimension","vertex\_degree", "visual\_graph", "schlegel", "visual"]</p>
+
+<p>Depending on <span class="SimpleMath">L</span>, the function displays the following information:\\ the dimension of the orbit polytope <span class="SimpleMath">P(G,v)</span>;\\ the degree of a vertex in the graph of <span class="SimpleMath">P(G,v)</span>;\\ a visualization of the graph of <span class="SimpleMath">P(G,v)</span>;\\ a visualization of the Schlegel diagram of <span class="SimpleMath">P(G,v)</span>;\\ a visualization of the polytope <span class="SimpleMath">P(G,v)</span> if <span class="SimpleMath">d=2,3</span>.</p>
+
+<p>The function requires Polymake software.</p>
+
+</td>
+</tr>
+<tr>
+<td class="tdleft">
+<pre class="normal">
+ScatterPlot(L):: List --&gt; Void
+</pre>
+
+<p>Inputs a list <span class="SimpleMath">L=[[x_1,y_1],..., [x_n,y_n]]</span> of pairs of rational numbers and displays a scatter plot of the points in the <span class="SimpleMath">x</span>-<span class="SimpleMath">y</span>-plane.</p>
+
+</td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
