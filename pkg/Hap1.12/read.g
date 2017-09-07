@@ -471,6 +471,7 @@ ReadPackage("HAP","lib/Quandles/quandles.gi");
 ReadPackage("HAP","lib/Quandles/planarDiagramData.gi");
 ReadPackage("HAP","lib/Quandles/quandleKnots.gi");
 ReadPackage("HAP","lib/Quandles/quandleOrbits.gi");
+ReadPackage("HAP","lib/Quandles/isoreps.gi");
 
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level
