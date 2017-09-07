@@ -419,19 +419,30 @@ function(n)
 local Stab,ListMultTabConnQuan,Q,i,G,der,Norm,listKSI,st,bool,ksi;
 
 if IsBound(Cedric_XYXYConnQuan[n]) then return Cedric_XYXYConnQuan[n]; fi;
+if n>30 then
+Print("Transitive groups of degree >30 are not available in the standard GAP distribution.\n");
+return fail;
+fi;
 
 Stab:=Stabilizer(SymmetricGroup(n),1);
 ListMultTabConnQuan:=[];
 Q:=[1..n];
 
 for G in AllTransitiveGroups(DegreeAction,n,DerivedSubgroup,IsTransitive,function(g) return g/DerivedSubgroup(g);end,IsCyclic) do 
-Norm:=Normalizer(Stab,G);
+
+#Norm:=Normalizer(Stab,G);
+
 listKSI:=[];
 for st in Center(Stabilizer(G,1)) do
-if NormalClosure(G,Group([st]))=G then
+if Order(NormalClosure(G,Group([st])))=Order(G) then
 bool:=true;
 for ksi in listKSI do
-if IsConjugate(Norm,st,ksi) then bool:=false; break; fi;
+
+#
+#if IsConjugate(Norm,st,ksi) then bool:=false; break; fi;
+## This approach is too slow!!
+
+
 od;
 if bool then
 AddSet(ListMultTabConnQuan,MultiplicationTable(QuandleQuandleEnvelope(Q,G,1,st))); Add(listKSI,st); fi;
@@ -441,6 +452,10 @@ od;
 od;
 
 Apply(ListMultTabConnQuan,MagmaByMultiplicationTable);
+
+ListMultTabConnQuan:=   #This approach is much faster
+QuandleIsomorphismRepresentatives(ListMultTabConnQuan); 
+
 Cedric_XYXYConnQuan[n]:=ListMultTabConnQuan; MakeImmutable("Cedric_XYXYConnQuan[n]");
 return ShallowCopy(ListMultTabConnQuan);
 end);
@@ -784,9 +799,6 @@ od;od;
 D:= GroupByMultiplicationTable(T);
 D:=SmallGeneratingSet(D);
 return Group(D);
-
-
-
 
 end);
 ##########################################################

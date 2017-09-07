@@ -47,9 +47,11 @@ AutomorphismGroupQuandle:=NewOperation("AutomorphismGroupQuandle",[IsMagma]);
 DeclareGlobalFunction("TupleOrbitReps_perm");
 DeclareGlobalFunction("TupleOrbitReps");
 DeclareGlobalFunction("NumberOfHomomorphisms_connected");
+DeclareGlobalFunction("HomomorphismsImages");
 #DeclareGlobalFunction("FundamentalGroupFromQuandle");
 DeclareGlobalFunction("AdjointGroupOfQuandle");
 DeclareGlobalFunction("DerivedGroupOfQuandle");
+DeclareGlobalFunction("QuandleIsomorphismRepresentatives");
 
 
 ########################################## KNOTS ##########################################

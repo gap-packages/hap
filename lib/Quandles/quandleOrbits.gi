@@ -101,3 +101,49 @@ return T;
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(HomomorphismsImages,
+function(genRelK,Q)
+local multTab,tester,A,T,TT,nbGen,rels,RELS,r,n;
+
+
+multTab:=MultiplicationTable(Q);
+nbGen:=Length(genRelK.generators);
+rels:=genRelK.relators;
+RELS:=[];
+for n in [1..nbGen] do
+RELS[n]:=[];
+od;
+for r in rels do
+Add(RELS[Maximum(Flat(r))], r);
+od;
+
+###########################
+tester:=function(mapping)
+local R,re,x,y,z;
+R:=RELS[Length(mapping)];
+for re in R do
+x:=re[1][1];
+y:=re[1][2];
+z:=re[2];
+if not mapping[z]=multTab[mapping[x]][mapping[y]] then return false; fi;
+od;
+return true;
+end;
+###########################
+
+A:=AutomorphismGroupQuandle(Q);
+T:=TupleOrbitReps(A,Q,nbGen,tester);
+T:=List(T[1],x->Orbit(T[2],x,OnTuples));
+T:=Concatenation(T);
+TT:=List(T,x->SSortedList(Elements(Magma(List(x,i->Elements(Q)[i])))));
+TT:=SortedList(TT);
+return TT; 
+
+end);
+#####################################################################
+#####################################################################
+
+
