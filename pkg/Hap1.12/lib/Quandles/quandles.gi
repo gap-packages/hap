@@ -18,6 +18,30 @@ InstallMethod( PrintObj,
 
 #####################################################################
 #####################################################################
+InstallGlobalFunction(CosetsQuandle,
+function(G,H,f)
+local Trans, T, i, j;
+
+Trans:=RightTransversal(G,H);
+T:=List([1..Length(Trans)],i->[]);
+
+for i in [1..Length(T)] do
+for j in [1..Length(T)] do
+T[i][j]:=PositionCanonical(Trans,f^-1*(Trans[i]*Trans[j]^-1)*f*Trans[j]);   
+od;od;
+
+
+
+T:=MagmaByMultiplicationTable(T);
+if IsQuandle(T) then return T;
+else
+Print("The data does not yield a quandle.\n");
+return fail; fi;
+end);
+
+
+#####################################################################
+#####################################################################
 InstallGlobalFunction(Cedric_ConjugateQuandleElement,
 function(w,n);
 
@@ -364,7 +388,7 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(IsLatin,"for a magma",[IsMagma],
+InstallMethod(IsLatinQuandle,"for a magma",[IsMagma],
 function(Q)
 local x,y,a,bool;
 
@@ -497,43 +521,33 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(IdConnectedQuandle,
-function(Q) local size,Qp,G,Stab,bool,Norm,st,ksi,MTCQ,multTab,P,permMatList,iPermMatList,listMultTabQ,pT,i;
+function(Q) local size, invariant, C, D, invQ, i;
 
 size:=Size(Q);
 if not IsConnected(Q) then return [size,fail]; fi;
 if Q in ConnectedQuandles(size) then return [size,Position(ConnectedQuandles(size),Q)]; fi;
 if size=1 then return [1,1]; fi;
 
-P:=PermutationsList([1..size]);
-permMatList:=List([1..Length(P)],i->PermutationMat(PermList(P[i]),size));
-iPermMatList:=List([1..Length(P)],i->Inverse(permMatList[i]));
+#################
+invariant:=function(Q)
+local R;
+R:=RightMultiplicationGroupOfQuandleAsPerm(Q);
+if HasIdGroup(R) then
+return IdGroup(R);
+else return AbelianInvariants(R); fi;
+end;
+#################
 
-multTab:=MultiplicationTable(Q);
-listMultTabQ:=[multTab];
-for i in [1..Length(permMatList)] do
-pT:=Cedric_Permute(P[i],permMatList[i],iPermMatList[i],multTab);
-Add(listMultTabQ,pT);
+invQ:=invariant(Q);
+
+C:=ConnectedQuandles(size);
+D:=Filtered([1..Length(C)],i->invariant(C[i])=invQ);
+
+for i in D do
+if Length(QuandleIsomorphismRepresentatives([Q,C[i]]))=1 then
+return [size,i]; fi;;
 od;
 
-
-Qp:=[1..size]; Stab:=Stabilizer(SymmetricGroup(size),1); bool:=false;
-MTCQ:=ShallowCopy(ConnectedQuandles(size)); Apply(MTCQ,MultiplicationTable);
-for G in AllTransitiveGroups(DegreeAction,n,DerivedSubgroup,IsTransitive,function(g) return g/DerivedSubgroup(g);end,IsCyclic) do
-Norm:=Normalizer(Stab,G);
-
-for st in Center(Stabilizer(G,1)) do
-if IsQuandleEnvelope(Qp,G,1,st) and (MultiplicationTable(QuandleQuandleEnvelope(Qp,G,1,st)) in listMultTabQ) then bool:=true; break; fi;
-od;
-
-if bool then
-for ksi in Center(Stabilizer(G,1)) do
-if IsConjugate(Norm,st,ksi) and IsQuandleEnvelope(Qp,G,1,ksi) then
-multTab:=MultiplicationTable(QuandleQuandleEnvelope(Qp,G,1,ksi));
-if multTab in MTCQ then return [size,Position(MTCQ,multTab)]; fi;
-fi; od; fi;
-od;
-
-return [size,fail];
 end);
 
 #####################################################################
@@ -599,9 +613,11 @@ end);
 #####################################################################
 InstallGlobalFunction(Cedric_FromAutGeReToAutQe,
 function(Ralpha,RightMultGrpOfQ,Q)
-local L,Lg,g;
+local L,g,A,elts;
 
-L:=List([1..Size(Q)],function(x) Lg:=Filtered(RightMultGrpOfQ,g->1^g=x); g:=Lg[1]; return 1^(g^Ralpha); end);
+elts:=Elements(RightMultGrpOfQ);
+A:=List(elts,g->1^g);
+L:=List([1..Size(Q)],function(x) g:=elts[Position(A,x)]; return 1^(g^Ralpha); end);
 return Inverse(PermList(L));
 end);
 
@@ -654,7 +670,9 @@ return (q^(Cedric_FromAutGeReToAutQe(phi,G,Q)))^alpha;
 end;
 ########
 
-AutQ:=List(ImageTau,function(a) L:=List([1..Size(Q)],i->action(a,i)); return PermList(L); end);
+AutQ:=List(GeneratorsOfGroup(ImageTau),function(a) L:=List([1..Size(Q)],i->action(a,i)); return PermList(L); end);
+
+#AutQ:=List(ImageTau,function(a) L:=List([1..Size(Q)],i->action(a,i)); return PermList(L); end);
 
 return Group(SmallGeneratingSet(Group(AutQ)));
 end);

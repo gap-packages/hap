@@ -1,8 +1,31 @@
 #####################################################################
 #####################################################################
+InstallMethod( ViewObj,
+ "for HapQuandlePresentation",
+ [IsHapQuandlePresentation],
+ function(R)
+ Print("Quandle presentation of ", Length(R!.generators), " generators and ",Length(R!.relators), " relators.\n");  
+end);
+
+#####################################################################
+#####################################################################
+InstallMethod( PrintObj,
+ "for HapQuandlePresentation",
+ [IsHapQuandlePresentation],
+ function(R)
+ Print("Quandle presentation of ", Length(R!.generators), " generators and ",Length(R!.relators), " relators.\n");
+end);
+
+
+#####################################################################
+#####################################################################
 InstallGlobalFunction(PresentationKnotQuandle,
 function(gaussCode)
 local generators,relators,genAndRel,i,j,beg,arcs,arc1,arc2,n,a,b,c,sign;
+
+#A relation w=v in a presentation will be stored as a list [v,w].
+#If v is an integer then it represents generators[v];
+#if v=[x,y] is a list then it represents the word x*y.
 
 # List the generators
 generators:=[1..Length(gaussCode[2])];
@@ -47,8 +70,8 @@ else Add(relators,[[c,b],a]); fi;
 
 od;
 
-genAndRel:=rec(generators:=generators,relators:=relators);
-return genAndRel;
+return Objectify(HapQuandlePresentation, rec(generators:=generators,relators:=relators));
+
 end);
 
 #####################################################################
@@ -122,7 +145,9 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(NumberOfHomomorphisms,"for a KnotQuandle and a Quandle",[IsRecord,IsMagma],
+InstallMethod(NumberOfHomomorphisms,
+"for a finite quandle presentation  and a finite quandle",
+[IsHapQuandlePresentation,IsMagma],
 function(genRelQ,finiteQ)
 local multTab,orderFiniteQ,nbGen,nbHom,phi,i,j,bool,q,T;
 
@@ -132,14 +157,14 @@ if IsConnected(finiteQ) and (not Size(finiteQ)=1) then T:=NumberOfHomomorphisms_
 
 multTab:=MultiplicationTable(finiteQ);
 orderFiniteQ:=Size(finiteQ);
-nbGen:=Length(genRelQ.generators);
+nbGen:=Length(genRelQ!.generators);
 nbHom:=0;
 
 phi:=ListWithIdenticalEntries(nbGen,1);
 
 while not phi=ListWithIdenticalEntries(nbGen,orderFiniteQ) do
 
-if Cedric_IsHomomorphism(phi,genRelQ.relators,multTab) then nbHom:=nbHom+1; fi;
+if Cedric_IsHomomorphism(phi,genRelQ!.relators,multTab) then nbHom:=nbHom+1; fi;
 
 if phi[nbGen]<orderFiniteQ then phi[nbGen]:=phi[nbGen]+1;
 else
@@ -151,7 +176,7 @@ fi;
 
 od;
 
-if Cedric_IsHomomorphism(ListWithIdenticalEntries(nbGen,orderFiniteQ),genRelQ.relators,multTab) then nbHom:=nbHom+1; fi;
+if Cedric_IsHomomorphism(ListWithIdenticalEntries(nbGen,orderFiniteQ),genRelQ!.relators,multTab) then nbHom:=nbHom+1; fi;
 
 return nbHom;
 end);

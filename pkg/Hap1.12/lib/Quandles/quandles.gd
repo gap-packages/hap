@@ -12,8 +12,15 @@ DeclareRepresentation(  "IsHapConjQuandEltRep", IsComponentObjectRep, IsMultipli
 HapConjQuandEltFamily:=NewFamily( "HapConjQuandEltFamily", IsHapConjQuandElt, IsHapConjQuandElt);
 HapConjQuandElt:=NewType(HapConjQuandEltFamily, IsHapConjQuandEltRep);
 
+DeclareCategory("IsHapQuandlePresentation",IsRecord);
+DeclareRepresentation(  "IsHapQuandlePresentationRep", IsComponentObjectRep, IsRecord);
+HapQuandlePresentationFamily:=NewFamily( "HapQuandlePresentationFamily",IsHapQuandlePresentation,IsHapQuandlePresentation);
+HapQuandlePresentation:=NewType(HapQuandlePresentationFamily,IsHapQuandlePresentationRep);
+
+
 ########
 
+DeclareGlobalFunction("CosetsQuandle");
 DeclareGlobalFunction("Cedric_ConjugateQuandleElement");
 DeclareGlobalFunction("ConjugationQuandle");
 DeclareGlobalFunction("FirstQuandleAxiomIsSatisfied");
@@ -28,26 +35,26 @@ DeclareGlobalFunction("Cedric_Quandle3");
 DeclareGlobalFunction("Cedric_Quandle4");
 DeclareGlobalFunction("Cedric_Quandle5");
 DeclareGlobalFunction("Cedric_Quandle6");
-Quandles:=NewOperation("Quandles",[IsInt]);
-Quandle:=NewOperation("Quandle",[IsInt,IsInt]);
+DeclareOperation("Quandles",[IsInt]);
+DeclareOperation("Quandle",[IsInt,IsInt]);
 DeclareGlobalFunction("IdQuandle");
-IsLatin:=NewOperation("IsLatin",[IsMagma]);
-IsConnected:=NewOperation("IsConnected",[IsMagma]);
-ConnectedQuandles:=NewOperation("ConnectedQuandles",[IsInt]);
-ConnectedQuandle:=NewOperation("ConnectedQuandle",[IsInt,IsInt]);
+DeclareAttribute("IsLatinQuandle",IsMagma);
+DeclareAttribute("IsConnected",IsMagma);
+DeclareOperation("ConnectedQuandles",[IsInt]);
+DeclareOperation("ConnectedQuandle",[IsInt,IsInt]);
 DeclareGlobalFunction("IdConnectedQuandle");
 DeclareGlobalFunction("IsQuandleEnvelope");
 DeclareGlobalFunction("QuandleQuandleEnvelope");
-RightMultiplicationGroupOfQuandleAsPerm:=NewOperation("RightMultiplicationGroupOfQuandleAsPerm",[IsMagma]);
-RightMultiplicationGroupOfQuandle:=NewOperation("RightMultiplicationGroupOfQuandle",[IsMagma]);
+DeclareAttribute("RightMultiplicationGroupOfQuandleAsPerm",IsMagma);
+DeclareAttribute("RightMultiplicationGroupOfQuandle",IsMagma);
 DeclareGlobalFunction("Cedric_FromAutGeReToAutQe");
-AutomorphismGroupQuandleAsPerm:=NewOperation("AutomorphismGroupQuandleAsPerm",[IsMagma]);
-AutomorphismGroupQuandle:=NewOperation("AutomorphismGroupQuandle",[IsMagma]);
+DeclareAttribute("AutomorphismGroupQuandleAsPerm",IsMagma);
+DeclareAttribute("AutomorphismGroupQuandle",IsMagma);
 
 DeclareGlobalFunction("TupleOrbitReps_perm");
 DeclareGlobalFunction("TupleOrbitReps");
 DeclareGlobalFunction("NumberOfHomomorphisms_connected");
-DeclareGlobalFunction("HomomorphismsImages");
+DeclareOperation("HomomorphismsImages",[IsHapQuandlePresentation,IsMagma]);
 #DeclareGlobalFunction("FundamentalGroupFromQuandle");
 DeclareGlobalFunction("AdjointGroupOfQuandle");
 DeclareGlobalFunction("DerivedGroupOfQuandle");
@@ -57,11 +64,12 @@ DeclareGlobalFunction("QuandleIsomorphismRepresentatives");
 ########################################## KNOTS ##########################################
 
 DeclareGlobalFunction("PresentationKnotQuandle");
+DeclareGlobalFunction("SimplifiedQuandlePresentation");
 DeclareGlobalFunction("PD2GC");
 DeclareGlobalFunction("PlanarDiagramKnot");
 DeclareGlobalFunction("GaussCodeKnot");
 DeclareGlobalFunction("PresentationKnotQuandleKnot");
 DeclareGlobalFunction("Cedric_IsHomomorphism");
-NumberOfHomomorphisms:=NewOperation("NumberOfHomomorphisms",[IsRecord,IsMagma]);
-PartitionedNumberOfHomomorphisms:=NewOperation("PartitionedNumberOfHomomorphisms",[IsRecord,IsMagma]);
+DeclareOperation("NumberOfHomomorphisms",[IsRecord,IsMagma]);
+DeclareOperation("PartitionedNumberOfHomomorphisms",[IsRecord,IsMagma]);
 DeclareGlobalFunction("KnotInvariantCedric");
