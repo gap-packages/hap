@@ -18,6 +18,30 @@ InstallMethod( PrintObj,
 
 #####################################################################
 #####################################################################
+InstallGlobalFunction(CosetsQuandle,
+function(G,H,f)
+local Trans, T, i, j;
+
+Trans:=RightTransversal(G,H);
+T:=List([1..Length(Trans)],i->[]);
+
+for i in [1..Length(T)] do
+for j in [1..Length(T)] do
+T[i][j]:=PositionCanonical(Trans,f^-1*(Trans[i]*Trans[j]^-1)*f*Trans[j]);   
+od;od;
+
+
+
+T:=MagmaByMultiplicationTable(T);
+if IsQuandle(T) then return T;
+else
+Print("The data does not yield a quandle.\n");
+return fail; fi;
+end);
+
+
+#####################################################################
+#####################################################################
 InstallGlobalFunction(Cedric_ConjugateQuandleElement,
 function(w,n);
 
@@ -368,6 +392,8 @@ InstallMethod(IsLatin,"for a magma",[IsMagma],
 function(Q)
 local x,y,a,bool;
 
+if not IsQuandle(Q) then TryNextMethod(); fi;
+
 for x in Q do
 for y in Q do
 bool:=false;
@@ -381,11 +407,12 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(IsConnectedQuandle,"for a magma",[IsMagma],
+InstallMethod(IsConnected,"for a magma",[IsMagma],
 function(Q)
 local i,j,q,L1,L2,X;
 
-if not IsQuandle(Q) then return false; fi;
+if not IsQuandle(Q) then TryNextMethod(); fi;
+
 for i in Q do
 L1:=[i];
 X:=[i];
@@ -416,19 +443,30 @@ function(n)
 local Stab,ListMultTabConnQuan,Q,i,G,der,Norm,listKSI,st,bool,ksi;
 
 if IsBound(Cedric_XYXYConnQuan[n]) then return Cedric_XYXYConnQuan[n]; fi;
+if n>30 then
+Print("Transitive groups of degree >30 are not available in the standard GAP distribution.\n");
+return fail;
+fi;
 
 Stab:=Stabilizer(SymmetricGroup(n),1);
 ListMultTabConnQuan:=[];
 Q:=[1..n];
 
 for G in AllTransitiveGroups(DegreeAction,n,DerivedSubgroup,IsTransitive,function(g) return g/DerivedSubgroup(g);end,IsCyclic) do 
-Norm:=Normalizer(Stab,G);
+
+#Norm:=Normalizer(Stab,G);
+
 listKSI:=[];
 for st in Center(Stabilizer(G,1)) do
-if NormalClosure(G,Group([st]))=G then
+if Order(NormalClosure(G,Group([st])))=Order(G) then
 bool:=true;
 for ksi in listKSI do
-if IsConjugate(Norm,st,ksi) then bool:=false; break; fi;
+
+#
+#if IsConjugate(Norm,st,ksi) then bool:=false; break; fi;
+## This approach is too slow!!
+
+
 od;
 if bool then
 AddSet(ListMultTabConnQuan,MultiplicationTable(QuandleQuandleEnvelope(Q,G,1,st))); Add(listKSI,st); fi;
@@ -438,6 +476,10 @@ od;
 od;
 
 Apply(ListMultTabConnQuan,MagmaByMultiplicationTable);
+
+ListMultTabConnQuan:=   #This approach is much faster
+QuandleIsomorphismRepresentatives(ListMultTabConnQuan); 
+
 Cedric_XYXYConnQuan[n]:=ListMultTabConnQuan; MakeImmutable("Cedric_XYXYConnQuan[n]");
 return ShallowCopy(ListMultTabConnQuan);
 end);
@@ -482,7 +524,7 @@ InstallGlobalFunction(IdConnectedQuandle,
 function(Q) local size,Qp,G,Stab,bool,Norm,st,ksi,MTCQ,multTab,P,permMatList,iPermMatList,listMultTabQ,pT,i;
 
 size:=Size(Q);
-if not IsConnectedQuandle(Q) then return [size,fail]; fi;
+if not IsConnected(Q) then return [size,fail]; fi;
 if Q in ConnectedQuandles(size) then return [size,Position(ConnectedQuandles(size),Q)]; fi;
 if size=1 then return [1,1]; fi;
 
@@ -552,15 +594,17 @@ end);
 #####################################################################
 InstallMethod(RightMultiplicationGroupOfQuandleAsPerm,"for a magma", [IsMagma],
 function(M)
-local listRx,x,multTab;
+local listRx,x,multTab,R;
 
+if not IsQuandle(M) then TryNextMethod(); fi;
 multTab:=TransposedMat(MultiplicationTable(M));
 listRx:=[];
 for x in multTab do
 AddSet(listRx,PermList(x));
 od;
 
-return Group(listRx);
+R:=Group(listRx);
+return Group(SmallGeneratingSet(R));
 end);
 
 #####################################################################
@@ -569,18 +613,21 @@ InstallMethod(RightMultiplicationGroupOfQuandle,"for a magma",[IsMagma],
 function(M)
 local RM;
 
+if not IsQuandle(M) then TryNextMethod(); fi;
 RM:=RightMultiplicationGroupOfQuandleAsPerm(M);
-RM:=List(RM,a-> MagmaHomomorphismByFunctionNC(M,M,function(q) return MagmaElement(M,Position(Elements(M),q)^a); end)); 
-return RM;
+RM:=List(GeneratorsOfGroup(RM),a-> MagmaHomomorphismByFunctionNC(M,M,function(q) return MagmaElement(M,Position(Elements(M),q)^a); end)); 
+return Group(RM);
 end);
 
 #####################################################################
 #####################################################################
 InstallGlobalFunction(Cedric_FromAutGeReToAutQe,
 function(Ralpha,RightMultGrpOfQ,Q)
-local L,Lg,g;
+local L,g,A,elts;
 
-L:=List([1..Size(Q)],function(x) Lg:=Filtered(RightMultGrpOfQ,g->1^g=x); g:=Lg[1]; return 1^(g^Ralpha); end);
+elts:=Elements(RightMultGrpOfQ);
+A:=List(elts,g->1^g);
+L:=List([1..Size(Q)],function(x) g:=elts[Position(A,x)]; return 1^(g^Ralpha); end);
 return Inverse(PermList(L));
 end);
 
@@ -589,6 +636,8 @@ end);
 InstallMethod(AutomorphismGroupQuandleAsPerm,"for a magma",[IsMagma],
 function(Q)
 local G,Re,Ge,AutG,elAutGeRe,AutGeRe,semiDP,AutGeReHomSDP,GHomSDP,L,p,sour,ImL,x,pos,tau,ImageTau,P1,P2,action,AutQ;
+
+if not (IsConnected(Q) and IsQuandle(Q)) then TryNextMethod(); fi;
 
 G:=RightMultiplicationGroupOfQuandleAsPerm(Q);;
 Re:=PermList(TransposedMat(MultiplicationTable(Q))[1]);;
@@ -633,7 +682,7 @@ end;
 
 AutQ:=List(ImageTau,function(a) L:=List([1..Size(Q)],i->action(a,i)); return PermList(L); end);
 
-return Group(AutQ);
+return Group(SmallGeneratingSet(Group(AutQ)));
 end);
 
 #####################################################################
@@ -642,8 +691,144 @@ InstallMethod(AutomorphismGroupQuandle,"for a magma",[IsMagma],
 function(Q)
 local Au;
 
+if not (IsConnected(Q) and IsQuandle(Q)) then TryNextMethod(); fi;
 Au:=AutomorphismGroupQuandleAsPerm(Q);
+Au:=GeneratorsOfGroup(Au); 
 Au:=List(Au,a-> MagmaHomomorphismByFunctionNC(Q,Q,function(q) return MagmaElement(Q,Position(Elements(Q),q)^a); end)); 
 
-return Au;
+return Group(Au);
 end);
+#####################################################################
+#####################################################################
+InstallGlobalFunction(AdjointGroupOfQuandle,
+function(Q)
+local rel,F,G,Gen;
+
+F:=FreeGroup(Size(Q));
+Gen:=GeneratorsOfGroup(F);
+
+rel:=List([1..Size(Q)],function(k)
+local L,i,j;
+L:=[];
+for i in [1..Size(Q)] do
+for j in [1..Size(Q)] do
+if MultiplicationTable(Q)[i][j]=k then Add(L,Gen[j]^-1*Gen[i]*Gen[j]*Gen[k]^-1); fi;
+od; od;
+return L;
+end);;
+
+return F/Flat(rel);
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallMethod(PathComponents,
+"Path components of a quandle",
+[IsMagma],
+function(Q) 
+local act, R;
+
+if not IsQuandle(Q) then
+Print("Magma is not a quandle.\n");
+return fail; fi;
+
+R:=RightMultiplicationGroupOfQuandle(Q);
+act:=function(q,r) return Image(r,q); end;
+return Orbits(R,Q,act);
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(FundamentalGroup,
+"fundamental group of a connected quandle",
+[IsMagma],
+
+function(Q)
+local A, Inn, AhomInn, S,gensA,gensAI, elts, Z,gensZ,H,R,RR,T,AhomZ,
+      D,ZhomA,i,j,a,q;
+
+if not IsConnected(Q) then
+Print("The quandle is not connected.\n");
+return fail;
+fi;
+
+q:=Elements(Q)[1];
+Inn:=RightMultiplicationGroupOfQuandle(Q);
+Z:=FreeGroup(1);
+gensZ:=GeneratorsOfGroup(Z);
+A:=AdjointGroupOfQuandle(Q);
+gensA:=GeneratorsOfGroup(A); #gensA[i] corresponds to Elements(Q)[i]
+gensAI:=List(Elements(Q),q->MagmaHomomorphismByFunctionNC(Q,Q,x->x*q));
+AhomInn:=GroupHomomorphismByImagesNC(A,Inn,gensA,gensAI);
+
+AhomZ:=GroupHomomorphismByImagesNC(A,Z,gensA,
+       List([1..Length(gensA)],i->gensZ[1]));
+
+ZhomA:=GroupHomomorphismByImagesNC(Z,A,gensZ,[gensA[1]]);
+
+H:=Subgroup(A,[gensA[1]]);   #H=ZZ and A=R x| H with R finite.
+S:=RightTransversal(A,H);
+R:=List(S, x->Image(ZhomA,Image(AhomZ,x))^-1*x);
+RR:=Filtered([1..Length(R)],r->Image(Image(AhomInn,R[r]),q)=q);
+
+R:=R{RR};
+T:=[];
+for i in [1..Length(R)] do
+T[i]:=[];
+for j in [1..Length(R)] do
+a:=PositionCanonical(S,R[i]*R[j]);
+T[i][j]:=Position(RR,a);
+od;od;
+
+D:= GroupByMultiplicationTable(T);
+D:=SmallGeneratingSet(D);
+return Group(D);
+end);
+
+##########################################################
+##########################################################
+InstallGlobalFunction(DerivedGroupOfQuandle,
+function(Q)
+local A, S,gensA, elts, Z,gensZ,H,R,RR,T,AhomZ,              
+      D,ZhomA,i,j,a;
+
+if not IsConnected(Q) then
+Print("The quandle is not connected.\n");
+return fail;
+fi;
+
+Z:=FreeGroup(1);
+gensZ:=GeneratorsOfGroup(Z);
+A:=AdjointGroupOfQuandle(Q);
+gensA:=GeneratorsOfGroup(A); #gensA[i] corresponds to Elements(Q)[i]
+
+AhomZ:=GroupHomomorphismByImagesNC(A,Z,gensA,
+       List([1..Length(gensA)],i->gensZ[1]));
+
+ZhomA:=GroupHomomorphismByImagesNC(Z,A,gensZ,[gensA[1]]);
+
+H:=Subgroup(A,[gensA[1]]);   #H=ZZ and A=R x| H with R finite.
+S:=RightTransversal(A,H);
+R:=List(S, x->Image(ZhomA,Image(AhomZ,x))^-1*x);
+
+T:=[];
+for i in [1..Length(R)] do
+T[i]:=[];
+for j in [1..Length(R)] do
+T[i][j]:=PositionCanonical(S,R[i]*R[j]);
+od;od;
+
+D:= GroupByMultiplicationTable(T);
+D:=SmallGeneratingSet(D);
+return Group(D);
+
+end);
+##########################################################
+##########################################################
+
+
+
