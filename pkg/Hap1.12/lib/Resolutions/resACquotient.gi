@@ -7,18 +7,16 @@ local
 	G,K,KK,bool,
 	GhomP,P,T,Derived,i, RGD,
 	pcpGD, GD, GDhomPCGD,PCGD,GhomGD, GDhomG, GDhomP, TD, gensP, RP,RTD,
-        iso, isoTD;
+        iso, isoTD, gensGD;
 
 G:=arg[1];
 K:=arg[2];
 KK:=arg[3];
 if Length(arg)>3 then bool:=false; else bool:=true; fi; 
 
-
 if not (IsAlmostCrystallographic(G) and IsPcpGroup(G)) then
 Print("This function can only be applied to Almost Crystallographic pcp groups.  \n"); return fail;
 fi;
-
 
 GhomP:=NaturalHomomorphismOnHolonomyGroup(G);
 P:=Image(GhomP);
@@ -29,7 +27,7 @@ for i in [2..KK] do
 Derived:=CommutatorSubgroup(G,Derived);
 od;
 
-pcpGD:=Pcp(G,Derived);
+#pcpGD:=Pcp(G,Derived);
 GhomGD:=NaturalHomomorphism(G,Derived);
 GD:=Image(GhomGD);
 
@@ -52,12 +50,16 @@ if IsNilpotent(GD) and bool then
 
 else
 
-GDhomG:=GroupHomomorphismByImagesNC(GD,G,    
-GeneratorsOfGroup(GD),GeneratorsOfPcp(pcpGD));
 
-gensP:=List(GeneratorsOfPcp(pcpGD),x->Image(GhomP,x));
-GDhomP:=GroupHomomorphismByImagesNC(GD,P,          
-GeneratorsOfGroup(GD),gensP);
+#gensP:=List(GeneratorsOfPcp(pcpGD),x->Image(GhomP,x));
+#GDhomP:=GroupHomomorphismByImagesNC(GD,P,          
+#GeneratorsOfGroup(GD),gensP); #This causes a bug. Introduced the 
+                               #following 3-line fix Nov 2017.
+
+gensGD:=List(GeneratorsOfGroup(G),x->Image(GhomGD,x));
+gensP:=List(GeneratorsOfGroup(G),x->Image(GhomP,x));
+GDhomP:=GroupHomomorphismByImagesNC(GD,P,gensGD,gensP);
+
 
 TD:=Kernel(GDhomP);
 
@@ -66,11 +68,6 @@ if 0 in AbelianInvariants(TD) then
 RTD:=ResolutionNilpotentGroup(TD,K);
 else
 RTD:=ResolutionFiniteGroup(TD,K);
-#TD:=Group(TorsionGeneratorsAbelianGroup(TD));
-#iso:=IsomorphismPcGroup(TD);
-#isoTD:=Image(iso);
-#RTD:=ResolutionFiniteGroup(isoTD,K);
-#RTD!.elts:=List(RTD!.elts,x->PreImagesRepresentative(iso,x));
 fi;
 
 

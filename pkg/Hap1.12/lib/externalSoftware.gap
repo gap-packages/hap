@@ -79,3 +79,20 @@ fi;
 fi;
 #############################################################
 
+#############################################################
+if not IsBound(ASY_PATH)
+   then
+    ASY_PATH:=Filename( DirectoriesSystemPrograms( ), "asy" );
+
+if ASY_PATH=fail
+   or not IsExecutableFile(ASY_PATH)
+   then
+    Info(InfoWarning,1,"HAP warning: Set ASY_PATH manually if needed.");
+else
+ASY_PATH:=Concatenation(ASY_PATH," ");
+    MakeReadOnlyGlobal("ASY_PATH");
+fi;
+fi;
+#############################################################
+
+

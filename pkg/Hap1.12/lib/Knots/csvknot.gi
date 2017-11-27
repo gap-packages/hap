@@ -189,7 +189,7 @@ od;
 
 od;
 
-Exec( Concatenation( "asy -V ", file) );
+Exec( Concatenation( ASY_PATH, "-V ", file) );
 
 RemoveFile(file);
 file:=Filename(tmpdir,"");
