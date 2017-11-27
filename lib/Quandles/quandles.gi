@@ -18,6 +18,23 @@ InstallMethod( PrintObj,
 
 #####################################################################
 #####################################################################
+InstallGlobalFunction(NumberConnectedQuandles,
+function(n)
+local L;
+
+if n>47 or n<1 then 
+Print("The number of connected quandles of this order is not available.\n");
+return fail; fi;
+
+L:=[ 1, 0, 1, 1, 3, 2, 5, 3, 8, 1, 9, 10, 11, 0, 7, 9, 15, 12, 17, 10, 9, 0, 
+  21, 42, 34, 0, 65, 13, 27, 24, 29, 17, 11, 0, 15, 73, 35, 0, 13, 33, 39, 
+  26, 41, 9, 45, 0, 45 ];;
+
+return L[n];
+end);
+
+#####################################################################
+#####################################################################
 InstallGlobalFunction(CosetsQuandle,
 function(G,H,f)
 local Trans, T, i, j;
@@ -33,7 +50,10 @@ od;od;
 
 
 T:=MagmaByMultiplicationTable(T);
-if IsQuandle(T) then return T;
+if IsQuandle(T) then 
+  if Size(T)<=1000 then return AsMagma(Elements(T));
+  else return T;
+  fi;
 else
 Print("The data does not yield a quandle.\n");
 return fail; fi;
@@ -60,7 +80,11 @@ function(G,n)
 local elts;
 elts:=List(Elements(G),g->Cedric_ConjugateQuandleElement(g,n));
 
+if Size(elts)<=1000 then
 return AsMagma(elts);
+else
+return MagmaByGenerators(elts);
+fi;
 
 end);
 
@@ -318,6 +342,7 @@ end);
 #####################################################################
 
 Cedric_XYXYQuandles:=[];
+HAPRIGXXX:=[];
 
 #####################################################################
 #####################################################################
@@ -407,6 +432,21 @@ end);
 
 #####################################################################
 #####################################################################
+InstallMethod(IsHomogeneous,"for a magma",[IsMagma],
+function(Q)
+local A;
+
+if not IsQuandle(Q) then TryNextMethod(); fi;
+if IsConnected(Q) then return true; fi;
+A:=AutomorphismGroupQuandle(Q);
+if Size(Random(Q)^A)=Size(Q) then return true;
+else return false; fi;
+
+end);
+
+
+#####################################################################
+#####################################################################
 InstallMethod(IsConnected,"for a magma",[IsMagma],
 function(Q)
 local i,j,q,L1,L2,X;
@@ -438,14 +478,35 @@ for n in [14,22,26,34,38,46] do Cedric_XYXYConnQuan[n]:=[]; MakeImmutable("Cedri
 
 #####################################################################
 #####################################################################
-InstallMethod(ConnectedQuandles,"for an integer",[IsInt],
-function(n)
-local Stab,ListMultTabConnQuan,Q,i,G,der,Norm,listKSI,st,bool,ksi;
+InstallGlobalFunction(ConnectedQuandles,
+function(arg)
+local n,Stab,ListMultTabConnQuan,Q,i,G,der,Norm,listKSI,st,bool,ksi;
 
+n:=arg[1];
 if IsBound(Cedric_XYXYConnQuan[n]) then return Cedric_XYXYConnQuan[n]; fi;
-if n>30 then
-Print("Transitive groups of degree >30 are not available in the standard GAP distribution.\n");
+if n>30 and Length(arg)=1 then
+Print("Transitive groups of degree >30 are not available in the standard GAP distribution. Use the command  ConnectedQuandles(n, \"rig\"); if n<48.\n");
 return fail;
+fi;
+
+
+if Length(arg)>1 then
+if n<48 then
+ReadPackage("HAP", "lib/Quandles/rig.gi");
+if n>30 then
+Print("This function uses data from the Rig package for racks, quandles and Nichols algebras due to L. Vendramin.\n");
+fi;
+if n>30 then
+Cedric_XYXYConnQuan[n]:=List(HAPRIGXXX[n],T->AsMagma(Elements(MagmaByMultiplicationTable(TransposedMat(T)))));; 
+else
+Cedric_XYXYConnQuan[n]:=List(HAPRIGXXX[n],T->AsMagma(Elements(MagmaByMultiplicationTable(T))));;
+fi;
+MakeImmutable("Cedric_XYXYConnQuan[n]");
+return Cedric_XYXYConnQuan[n];
+else
+Print("The connected quandles of order >47 are not available.\n");
+return fail;
+fi;
 fi;
 
 Stab:=Stabilizer(SymmetricGroup(n),1);
@@ -486,11 +547,20 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(ConnectedQuandle,"for two integers",[IsInt,IsInt],
-function(n,k)
-local CQ;
+InstallGlobalFunction(ConnectedQuandle,
+function(arg)
+local CQ, n, k;
 
+n:=arg[1];
+k:=arg[2];
+if Length(arg)=2 then
 CQ:=ConnectedQuandles(n);
+else
+CQ:=ConnectedQuandles(n,"rig");
+fi;
+if CQ=fail then
+#Print("The connected quandles of order ",n," are not available. The command ConnectedQuandle(n,k,\"rig\") works for n<48.\n"); 
+return fail; fi;
 if k<=Length(CQ) then return CQ[k]; fi;
 return fail;
 end);
@@ -594,7 +664,9 @@ AddSet(listRx,PermList(x));
 od;
 
 R:=Group(listRx);
+if Size(R)>1 then
 return Group(SmallGeneratingSet(R));
+else return R; fi;
 end);
 
 #####################################################################
@@ -608,6 +680,24 @@ RM:=RightMultiplicationGroupOfQuandleAsPerm(M);
 RM:=List(GeneratorsOfGroup(RM),a-> MagmaHomomorphismByFunctionNC(M,M,function(q) return MagmaElement(M,Position(Elements(M),q)^a); end)); 
 return Group(RM);
 end);
+
+#####################################################################
+#####################################################################
+InstallMethod(InnerAutomorphismGroupQuandle,"for a magma",[IsMagma],
+function(M)
+return RightMultiplicationGroupOfQuandle(M);
+end);
+
+#####################################################################
+#####################################################################
+InstallMethod(InnerAutomorphismGroupQuandleAsPerm,"for a magma",[IsMagma],
+function(M)
+return RightMultiplicationGroupOfQuandleAsPerm(M);
+end);
+
+
+
+
 
 #####################################################################
 #####################################################################
@@ -627,7 +717,10 @@ InstallMethod(AutomorphismGroupQuandleAsPerm,"for a magma",[IsMagma],
 function(Q)
 local G,Re,Ge,AutG,elAutGeRe,AutGeRe,semiDP,AutGeReHomSDP,GHomSDP,L,p,sour,ImL,x,pos,tau,ImageTau,P1,P2,action,AutQ;
 
-if not (IsConnected(Q) and IsQuandle(Q)) then TryNextMethod(); fi;
+if not  IsQuandle(Q) then TryNextMethod(); fi;
+
+if not IsConnected(Q) then
+return AutomorphismGroupQuandleAsPerm_nonconnected(Q); fi;
 
 G:=RightMultiplicationGroupOfQuandleAsPerm(Q);;
 Re:=PermList(TransposedMat(MultiplicationTable(Q))[1]);;
@@ -674,7 +767,10 @@ AutQ:=List(GeneratorsOfGroup(ImageTau),function(a) L:=List([1..Size(Q)],i->actio
 
 #AutQ:=List(ImageTau,function(a) L:=List([1..Size(Q)],i->action(a,i)); return PermList(L); end);
 
+if Size(Group(AutQ))>1 then
 return Group(SmallGeneratingSet(Group(AutQ)));
+else
+return Group(AutQ); fi;
 end);
 
 #####################################################################
@@ -683,13 +779,48 @@ InstallMethod(AutomorphismGroupQuandle,"for a magma",[IsMagma],
 function(Q)
 local Au;
 
-if not (IsConnected(Q) and IsQuandle(Q)) then TryNextMethod(); fi;
+if not IsQuandle(Q) then TryNextMethod(); fi;
+#if IsConnected(Q) then TryNextMethod(); fi;
+
 Au:=AutomorphismGroupQuandleAsPerm(Q);
 Au:=GeneratorsOfGroup(Au); 
 Au:=List(Au,a-> MagmaHomomorphismByFunctionNC(Q,Q,function(q) return MagmaElement(Q,Position(Elements(Q),q)^a); end)); 
 
 return Group(Au);
 end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(AutomorphismGroupQuandleAsPerm_nonconnected,
+function(Q)
+local S, T, Au, s, bool, x, y;
+
+S:=SymmetricGroup(Size(Q));
+T:=MultiplicationTable(S);
+Au:=[];
+for s in S do
+bool:=true;
+for x in [1..Size(Q)] do
+for y in [1..Size(Q)] do
+if not T[x][y]^s= T[x^s][y^s]
+then bool:=false; break; fi;
+od;
+if not bool then break; fi;
+od;
+if bool then Add(Au,s); fi;
+od;
+
+if Size(Group(Au))>1 then
+Au:=Group(SmallGeneratingSet(Group(Au)));
+else
+Au:=Group(Au);
+fi;
+return Au;
+
+end);
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(AdjointGroupOfQuandle,
@@ -732,6 +863,25 @@ return Orbits(R,Q,act);
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallMethod(ConnectedComponentsQuandle,
+"components of a quandle as quandles",
+[IsMagma],
+function(Q)
+local act, C;
+
+if not IsQuandle(Q) then
+Print("Magma is not a quandle.\n");
+return fail; fi;
+
+C:=PathComponents(Q);
+return List(C,AsMagma);
+end);
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################

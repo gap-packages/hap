@@ -2,7 +2,7 @@
 #####################################################################
 InstallGlobalFunction(SimplifiedQuandlePresentation,
 function(P)
-local smplfy, bool, Q,subst,rename;
+local smplfy, bool, Q,subst,subst1,rename,rename1,TRANS,i,j;
 
 ############################
 rename:=function(s,n)
@@ -19,6 +19,21 @@ return w;
 end;
 ############################
 ############################
+rename1:=function(s,n)
+local w,x,i;
+w:=1*s;
+
+if IsInt(w) then
+if w>n then w:=w-1; fi;
+else
+w:=rename(w,n);
+fi;
+
+return w;
+end;
+############################
+
+############################
 subst:=function(s,r)
 local i,w;
 # r=[i,w] with i an integer and w a list or integer.
@@ -31,10 +46,20 @@ if s[2]=r[1] then s[2]:=r[2]; fi;
 else s[2]:=subst(s[2],r);
 fi;
 
-#s:=rename(s,r[1]);
 return s;
 end;
 ############################
+############################
+subst1:=function(s,r)
+local i,w;
+if IsInt(s) then
+if s=r[1] then s:=1*r[2]; fi;
+else s:=subst(s,r);
+fi;
+return s;
+end;
+############################
+
 
 ############################
 smplfy:=function(P)
@@ -48,11 +73,13 @@ if IsInt(r[1]) and not r[1] in Flat(r[2]) then  bool:=true; break; fi;
 od;
 if bool then
 
+#Add(P!.transformations,r);
 rels:=Filtered(P!.relators,s->not s=r);
 
 Apply(rels,s->subst(s,r));
 Apply(rels,s->rename(s,r[1]));
-
+Apply(P!.TRANS,s->subst1(s,r));
+Apply(P!.TRANS,s->rename1(s,r[1]));
 
 P!.relators:=rels;
 P!.generators:=[1..Length(P!.generators)-1];
@@ -63,10 +90,12 @@ end;
 
 bool:=true;
 Q:=Objectify(HapQuandlePresentation,rec( relators:=1*P!.relators,
-generators:=1*P!.generators));
+generators:=1*P!.generators,#transformations:=[],
+TRANS:=[1..Length(P!.generators)]));
 while bool do
 Q:=smplfy(Q);
 od;
+
 return Q;
 end);
 #####################################################################
@@ -167,22 +196,6 @@ end;
 ###########################
 
 ###########################
-tester:=function(mapping)   #no longer used!
-local R,re,x,y,z;
-R:=RELS[Length(mapping)];
-for re in R do
-Print(re[1],"   ",re[2]," ");
-Print(wrd(mapping,re[1]),"   ",wrd(mapping,re[2])," ");
-x:=re[1][1];
-y:=re[1][2];
-z:=re[2];
-if not mapping[z]=multTab[mapping[x]][mapping[y]] then return false; fi;
-od;
-return true;
-end;
-###########################
-
-###########################
 tester:=function(mapping)
 local R,re;
 R:=RELS[Length(mapping)];
@@ -198,7 +211,7 @@ end;
 A:=RightMultiplicationGroupOfQuandle(Q);
 T:=TupleOrbitReps(A,Q,nbGen,tester);
 if Length(arg)=3 then
-return List(T[1],x->Magma(List(x,j->Elements(Q)[j])));
+return List(T[1],x->List(x,j->Elements(Q)[j]));
 fi;
 T:=List(T[1],x->Size(Orbit(T[2],x,OnTuples)));
 return T;
@@ -223,8 +236,18 @@ InstallOtherMethod(NumberOfHomomorphisms,
 "for an fp group and a finite group",
 [IsGroup,IsGroup],
 function(KK,Q)
-local GG,F, K, gens, tester,A,T,elts,r,i,w,ww;
 
+return NumberOfHomomorphisms_groups(KK,Q);
+end);
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(NumberOfHomomorphisms_groups,
+function(arg)
+local KK,Q,GG,F, K, gens, tester,A,B,T,elts,r,i,w,ww;
+
+KK:=arg[1];
+Q:=arg[2];
 #Q is a finite group and K is an fp group
 elts:=Elements(Q);
 K:=Image(IsomorphismFpGroup(KK));
@@ -256,12 +279,117 @@ end;
 ###########################
 
 
-A:=AutomorphismGroup(Q);
+B:=AutomorphismGroup(Q);
+if Length(arg)=3 then
+A:=InnerAutomorphismsAutomorphismGroup(B);
 T:=TupleOrbitReps(A,Q,Length(gens),tester);
+return List(T[1],x->List(x,j->Elements(Q)[j]));
+fi;
+T:=TupleOrbitReps(B,Q,Length(gens),tester);
 T:=List(T[1],x->Size(Orbit(T[2],x,OnTuples)));
 return Sum(T);
 
 end);
 #####################################################################
+
+#####################################################################
+RefinedColouring_group:=function(K,Q,F)
+local L,LL,n,W,P;
+n:=DegreeAction(Q);
+L:=LowIndexSubgroupsFpGroup(K,n);
+L:=Filtered(L,H->IsSubgroup(Q,Image(FactorCosetAction(K,H))));
+Apply(L,W->[Image(IsomorphismFpGroup(W)),Index(K,W) ]);
+LL:=[];
+for W in L do
+P:=PresentationFpGroup(W[1]);
+P!.TzOptions.printLevel:=0;
+TzEliminate(P,Length(GeneratorsOfGroup(W[1]))-2);
+P:=FpGroupPresentation(P);
+#Print(Length(GeneratorsOfGroup(P)),"  ");
+Add(LL,[P,W[2]]);
+od;
+Apply(LL,w->[F(w[1]), w[2]] );
+return SortedList(LL);
+end;
+#####################################################################
+
+#######################################################
+#######################################################
+RefinedColouring_gc:=function(gc,Q,F)
+local W,P,sP,InnQ,gensW,C,TRANS,trans,elm2perm,HOMS,ims,c,HomInv;
+
+W:=WirtingerGroup(gc);
+P:=PresentationKnotQuandle(gc);
+sP:=SimplifiedQuandlePresentation(P);
+InnQ:=RightMultiplicationGroupOfQuandleAsPerm(Q);
+gensW:=GeneratorsOfGroup(W);
+C:=NumberOfHomomorphisms_connected(sP,Q,true);
+
+
+TRANS:=sP!.TRANS;
+#########################
+trans:=function(x,c);
+if IsInt(x) then return c[x];
+else
+return trans(x[1],c)*trans(x[2],c);
+fi;
+end;
+#########################
+#########################
+elm2perm:=function(x);
+return PermList(List(Elements(Q),e->Position(Elements(Q),e*x)));
+end;
+#########################
+
+HOMS:=[];
+for c in C do
+ims:=List(TRANS,x->trans(x,c));
+ims:=List(ims,elm2perm);
+Add(HOMS,GroupHomomorphismByImages(W,InnQ, gensW,ims));
+od;
+
+######################################
+HomInv:=function(c)
+local G,s1;
+
+G:=Image(c);
+s1:=Stabilizer(G,1);
+s1:=GeneratorsOfGroup(s1);
+#s1:=SmallGeneratingSet(s1);
+s1:=List(s1,x->PreImagesRepresentative(c,x));
+s1:=Concatenation(s1,GeneratorsOfGroup(Kernel(c)));
+s1:=Group(s1);
+return F(s1);
+end;
+######################################
+
+Apply(HOMS,HomInv);
+Sort(HOMS);
+
+return HOMS;
+end;
+#######################################################
+#######################################################
+
+#####################################################################
+#####################################################################
+InstallMethod(RefinedColouring,
+"for an fp group, a finite group and a functor",
+[IsFpGroup,IsGroup, IsFunction],
+function(GK,G,F)
+return RefinedColouring_group(GK,G,F);
+end);
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(RefinedColouring,
+"for a Gauss code, a finite quandle and a functor",
+[IsList,IsMagma, IsFunction],
+function(GK,Q,F)
+if not IsQuandle(Q) then 
+Print("The second argument must be a finite quandle.\n");
+return fail; fi;
+return RefinedColouring_gc(GK,Q,F);
+end);
 
 

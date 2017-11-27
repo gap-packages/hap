@@ -1302,7 +1302,7 @@ AppendTo(file, "draw(g,black);\n");
 od;
 od;
 
-Exec( Concatenation( "asy -V ", file) );
+Exec( Concatenation( ASY_PATH, "-V ", file) );
 
 #RemoveFile(file);
 #file:=Filename(tmpdir,"");

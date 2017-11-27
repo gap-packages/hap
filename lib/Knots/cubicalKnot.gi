@@ -756,7 +756,7 @@ AppendTo(file,"dot(g,red);");
 AppendTo( file , "draw(" , A[1] , "..",M,".." , A[Length(A)] , ", blue);" );
 
 
-Exec( Concatenation( "asy -V ", file) );
+Exec( Concatenation( ASY_PATH, "-V ", file) );
 
 RemoveFile(file);
 file:=Filename(tmpdir,"");
