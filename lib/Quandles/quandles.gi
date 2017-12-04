@@ -171,7 +171,9 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(IsQuandle,
+InstallMethod(IsQuandle,
+"test to see if a magma is a quandle",
+[IsMagma],
 function(M)
 
 return FirstQuandleAxiomIsSatisfied(M) and SecondQuandleAxiomIsSatisfied(M) and ThirdQuandleAxiomIsSatisfied(M);
@@ -432,7 +434,7 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(IsHomogeneous,"for a magma",[IsMagma],
+InstallMethod(IsHomogeneousQuandle,"for a quandle magma",[IsMagma],
 function(Q)
 local A;
 
