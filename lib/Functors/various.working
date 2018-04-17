@@ -608,7 +608,7 @@ od;
 
 
 
-Exec( Concatenation( "asy -V ", file) );
+Exec( Concatenation( ASY_PATH,"-V ", file) );
 
 RemoveFile(file);
 file:=Filename(tmpdir,"");
@@ -619,7 +619,7 @@ end);
 
 ##########################################################
 ##########################################################
-InstallGlobalFunction(CoproductOfFpGroups,
+InstallGlobalFunction(PushoutOfFpGroups,
 function(f,g)
 local P, rels, FhomP, FFhomP, GhomP, GGhomP, FGhomP, F, FF, G, GG, FG,
 gensF, gensFF, gensG, gensGG, gensP, x, gg;
@@ -663,3 +663,69 @@ return P/rels;
 end);
 ##########################################################################
 ##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(Fp2PcpAbelianGroupHomomorphism,
+function(F)
+local P, S, T, pS, pT, ShompS, pShomS, pThomT, ThompT, gensS,  genspS;
+
+S:=Source(F);
+T:=Target(F);
+
+ShompS:=HAP_NqEpimorphismNilpotentQuotient(S,1);
+pS:=Range(ShompS);
+genspS:=GeneratorsOfGroup(pS);
+gensS:=List(genspS, x->PreImagesRepresentative(ShompS,x));
+pShomS:=GroupHomomorphismByImagesNC(pS,S,genspS,gensS);
+
+ThompT:=HAP_NqEpimorphismNilpotentQuotient(T,1);
+pT:=Range(ThompT);
+
+P:=GroupHomomorphismByFunction(pS,pT,
+x->Image(ThompT,Image(F, Image(pShomS,x) ) ) );
+
+return P;
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(IsIsomorphismOfAbelianFpGroups,
+function(F)
+local h;
+
+h:=Fp2PcpAbelianGroupHomomorphism(F);
+
+if not IsTrivial(Kernel(h)) then return false; fi;
+if not IsTrivial(Range(h)/Image(h)) then return false; fi;
+
+return true;
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(SignedPermutationGroup,
+function(n)
+local A, i, gens;
+
+gens:=[];;
+
+for i in [1..n-1] do
+Add(gens,  PermutationMat((i,i+1),n));
+od;
+
+for i in [1..n] do
+A:=1*IdentityMat(n);
+A[i]:=-A[i];
+Add(gens,A);
+od;
+
+return Group(gens);
+end);
+##########################################################################
+##########################################################################
+

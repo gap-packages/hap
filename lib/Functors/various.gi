@@ -586,7 +586,7 @@ yminnew:=0;
 xmaxnew:=200;
 ymaxnew:=200;
 
-PrintTo(file,"import math; size(200,200);");
+PrintTo(file,"import math; size(400,400);");
 
 AppendTo(file,"draw((", xminnew, ",", yminnew,")--(",xmaxnew,",",yminnew,"),blue+linewidth(0.5));");
 

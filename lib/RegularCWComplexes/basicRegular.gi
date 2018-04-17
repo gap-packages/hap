@@ -142,9 +142,12 @@ end);
 #############################################
 #############################################
 InstallGlobalFunction(HAPContractRegularCWComplex,
-function(Y)
+function(arg)
 local
-      Contract, nn, dim, bool, BOOL, FREE;
+      Y,d,Contract, nn, dim, bool, BOOL, FREE;
+Y:=arg[1];
+if Length(arg)>1 then d:=arg[2];  #Added 12/03/2018
+else d:=0; fi;
 
 #############################################
 ##### The work-horse function.###############
@@ -252,9 +255,9 @@ bool:=true;
 BOOL:=true;
 nn:=dim-1;
 
-while BOOL or nn>0 do
+while BOOL or nn>d do
 BOOL:=false;
-  for nn in Reversed([0..dim-1]) do
+  for nn in Reversed([d..dim-1]) do
     while bool do
       bool:=Contract(nn);
       if bool=true then BOOL:=true; fi;
@@ -1457,8 +1460,12 @@ end);
 #######################################################
 #######################################################
 InstallGlobalFunction(ContractedRegularCWComplex,
-function(W)
-local Y, V,perm, d, d1, n, x, i, b, cnt, bnd,  dim , F, bool, orien;
+function(arg)
+local W,dd,Y, V,perm, d, d1, n, x, i, b, cnt, bnd,  dim , F, bool, orien;
+W:=arg[1];
+
+if Length(arg)>1 then dd:=arg[2];  ##Added 12/03/2018
+else dd:=0; fi;
 
 if IsBound(W!.orientation) then
 Y:=RegularCWComplex(W!.boundaries,W!.orientation);
@@ -1470,7 +1477,7 @@ if IsBound(Y!.orientation) then bool:=true;
 orien:=StructuralCopy(Y!.orientation);
 else bool:=false; fi;
 
-HAPContractRegularCWComplex(Y);
+HAPContractRegularCWComplex(Y,dd);
 
 bnd:=StructuralCopy(Y!.bnd);
 

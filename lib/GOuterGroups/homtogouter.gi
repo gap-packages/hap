@@ -61,20 +61,33 @@ end);
 InstallMethod(HomToGModule,
 [IsHapResolution,IsGOuterGroup],
 function(R,A)
-local gogs,homos,Boundary, properties, L;
+local gogs,homos,Boundary, properties, L,T;
 
 L:=EvaluateProperty(R,"length");
 homos:=[1..L];  #homs[1] has source in degree 0.
 gogs:=[1..L+1]; #gogs[1] is the chain module C_0
 
+T:=TrivialGModuleAsGOuterGroup(R!.group,Group(Identity(A!.ActedGroup)));
 
 ########################################
 Boundary:=function(n)
 if IsInt(homos[n+1]) then
-if IsInt(gogs[n+1]) then gogs[n+1]:=
-DirectProductGog(List([1..R!.dimension(n)],i->A)); fi;
-if IsInt(gogs[n+2]) then gogs[n+2]:=
-DirectProductGog(List([1..R!.dimension(n+1)],i->A)); fi;
+if IsInt(gogs[n+1]) then 
+	if R!.dimension(n)>0 then
+	gogs[n+1]:=
+	DirectProductGog(List([1..R!.dimension(n)],i->A)); 
+        else
+        gogs[n+1]:=T;
+        fi;
+fi;
+if IsInt(gogs[n+2]) then 
+	if R!.dimension(n+1)>0 then
+        gogs[n+2]:=
+        DirectProductGog(List([1..R!.dimension(n+1)],i->A)); 
+        else
+        gogs[n+2]:=T;
+        fi;
+fi;
 homos[n+1]:=HomToGModule(R,n,A,gogs[n+1],gogs[n+2]);
 fi;
 return homos[n+1];

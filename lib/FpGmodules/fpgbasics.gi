@@ -713,7 +713,7 @@ InstallGlobalFunction(GroupAlgebraAsFpGModule,
 function(G)
 local S,M,p,V,A;
 
-if not IsPGroup(G) then
+if not IsPGroup(G) or not IsFinite(G) then
 Print("G must be a finite p-group\n");
 return fail; fi;
 

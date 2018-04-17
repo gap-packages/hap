@@ -3,11 +3,11 @@
 tmppath:=HAP_ROOT{[1..Length(HAP_ROOT)-4]};
 
 ########## COMPILED GAP FUNCTIONS ###################################
-LoadDynamicModule(
-Concatenation(tmppath,"lib/CompiledGAP/Compiled/absint.so"));
+#LoadDynamicModule(
+#Concatenation(tmppath,"lib/CompiledGAP/Compiled/absint.so"));
 
-LoadDynamicModule(
-Concatenation(tmppath,"lib/CompiledGAP/Compiled/signint.so"));
+#LoadDynamicModule(
+#Concatenation(tmppath,"lib/CompiledGAP/Compiled/signint.so"));
 
 ########## FREE G MODULES ###########################################
 
