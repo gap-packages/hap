@@ -347,6 +347,7 @@ ReadPackage("HAP","lib/CatGroups/CrossedInvariant.gi");
 ReadPackage("HAP","lib/GOuterGroups/goutergroup.gi");
 ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gi");
+ReadPackage("HAP","lib/GOuterGroups/hadamard.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################

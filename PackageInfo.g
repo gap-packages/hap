@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.12.5",
-  Date    := "21/11/2017",
+  Version := "1.12.6",
+  Date    := "16/04/2018",
   ArchiveURL 
           := "http://hamilton.nuigalway.ie/Hap/hap1.12",
   ArchiveFormats 
@@ -66,11 +66,12 @@ SetPackageInfo( rec(
                              [ "polycyclic", ">=1.1" ],
                              [ "crystcat",   ">=1.1" ],
                              [ "fga",        ">=1.1" ],
+                             [ "aclib",      ">=1.1" ],
                             #[ "gapdoc",     ">=0.0" ]
                            ],
     SuggestedOtherPackages := [
                               #[ "polycyclic", ">=1.1" ],
-                               [ "aclib",      ">=1.1" ],
+                              #[ "aclib",      ">=1.1" ],
                                [ "gapdoc",      ">=0.0" ],
 			       [ "nq",         ">=1.1" ],
                                [ "nql",         ">=0.0" ],

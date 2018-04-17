@@ -407,7 +407,7 @@ InstallOtherMethod( \-,
 
 ######################################################################
 ##
-##  Install method for DirectProduct of two GOuter groups, with commin
+##  Install method for DirectProduct of two GOuter groups, with common
 ##  acting group and diagonal action 
 ##
 InstallOtherMethod( DirectProductGog,

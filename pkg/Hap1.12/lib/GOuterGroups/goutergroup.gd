@@ -193,3 +193,8 @@ DeclareGlobalFunction("AbelianGOuterGroupToCatOneGroup");
 DeclareGlobalFunction("ImageOfGOuterGroupHomomorphism");
 DeclareGlobalFunction("KernelOfGOuterGroupHomomorphism");
 DeclareOperation("CohomologyClass",[IsGOuterGroup,IsStandardNCocycle]);
+DeclareGlobalFunction("CocyclicMatrices");
+DeclareGlobalFunction("IsHadamardMatrix");
+DeclareGlobalFunction("HadamardGraph");
+DeclareGlobalFunction("CocyclicHadamardMatrices");
+

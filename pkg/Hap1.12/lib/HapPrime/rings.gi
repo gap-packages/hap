@@ -772,10 +772,10 @@ InstallGlobalFunction(HAPPRIME_LHSSpectralSequence,
     PQDegreeOfMonomial, DegreeOfPolynomial, DerivationImagesOfMonomial,
     DerivationImagesOfPolynomial, PolynomialModIdeal,tmplst,xx;
 
-    if not IsPGroup(G) then
+    if not IsPGroup(G) or not IsFinite(G) then
       Error("<G> must be a p-group");
     fi;
-    if not IsPGroup(N) then
+    if not IsFinite(N) or not IsPGroup(N) then
       Error("<N> must be a p-group");
     fi;
     if not IsSubgroup(G, N) then

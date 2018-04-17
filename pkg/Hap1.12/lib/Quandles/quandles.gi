@@ -800,7 +800,7 @@ function(Q)
 local S, T, Au, s, bool, x, y;
 
 S:=SymmetricGroup(Size(Q));
-T:=MultiplicationTable(S);
+T:=MultiplicationTable(Q);   #Changed S to Q!!!!
 Au:=[];
 for s in S do
 bool:=true;
