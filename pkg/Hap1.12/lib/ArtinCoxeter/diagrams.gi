@@ -3,7 +3,10 @@
 #####################################################################
 InstallGlobalFunction(CoxeterDiagramDisplay,
 function(arg)
-local D,V,M,i,j,tmpDir,tmpInlog,tmpIn2log,basicgif;
+local AppendTo, PrintTo, D,V,M,i,j,tmpDir,tmpInlog,tmpIn2log,basicgif;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 tmpInlog:=Filename(tmpDir,"tmpIn.log");

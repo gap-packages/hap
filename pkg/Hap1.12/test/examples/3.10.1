@@ -1,0 +1,12 @@
+G:=DihedralGroup(32);;
+A:=ModPSteenrodAlgebra(G,13);;
+Print(List([1..12],n->BocksteinHomology(A,n)),"\n"); 
+gens:=ModPRingGenerators(A);
+Print(List(gens,A!.degree),"\n");
+a:=Bockstein(A,gens[2]);;
+PrintAlgebraWordAsPolynomial(A,a); Print("\n");
+b:=Bockstein(A,gens[3]);;
+PrintAlgebraWordAsPolynomial(A,b); Print("\n");
+c:=Bockstein(A,gens[4]);;
+PrintAlgebraWordAsPolynomial(A,c); Print("\n");
+Print(Mod2CohomologyRingPresentation(G),"\n");

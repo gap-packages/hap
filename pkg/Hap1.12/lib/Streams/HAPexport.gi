@@ -6,7 +6,10 @@ InstallMethod(HAPPrintTo,
 	[IsString,IsHapResolution],
 
 function(file,R)
-local n,k,g;
+local n,k,g,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 #Create a gap function
 PrintTo(file,"HAPTEMPORARYFUNCTION:=function() local TYPE,RANKS, HIGHEST_DEGREE,BOUNDARIES,CONTRACTING_HOMOTOPY,ELEMENTS,SPECIAL_PROPERTIES;\n\n");

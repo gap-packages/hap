@@ -5,7 +5,11 @@
 InstallGlobalFunction(NoncrossingPartitionsLatticeDisplay,
 function(D)
 local W,S,T,WLevel,Level,PreviousLevels,
+      AppendTo, PrintTo,
       CoxeterElement,n,EltsW,NCP,tmpDir,Loggeddot,Loggedpng,x,w,y,wx,k;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 Loggeddot:=Filename(tmpDir,"Logged.dot");

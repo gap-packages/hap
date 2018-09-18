@@ -1,0 +1,15 @@
+#This example takes quite some time!
+n:=50;; Betti2:=[];; Betti3:=[];;
+for p in [10..133]*(1/200) do
+ Print("p= ",p,"\n");
+ Y:=RandomSimplicialTwoComplex(n,p);;
+ K:=CliqueComplex(Y,4);;
+ W:=RegularCWComplex(K);;
+ W:=ContractedComplex(W);;
+ b2:=BettiNumber(W,2);;
+ Add(Betti2,[p,b2]);;
+ b3:=BettiNumber(W,3);;
+ Add(Betti3,[p,b3]);;
+od;
+ScatterPlot(Betti2);
+ScatterPlot(Betti3);

@@ -4,7 +4,7 @@
 ##########################################################
 InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
-local P,Y,base,e,bool, b, vertices,edges,F, G, r,x,w, gens, rels, 
+local P,Y,base,e,bool, b, vertices,edges,F, G, FhomG, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
       EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation;
 
@@ -95,6 +95,7 @@ gens:=GeneratorsOfGroup(F);
 if Length(gens)=0 then return F; fi;
 rels:=[];
 for r in 2boundaries do
+
 w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
@@ -107,8 +108,16 @@ od;
 Add(rels,w);
 od;
 
+if BOOL then 
 P:=PresentationFpGroup(F/rels);
-if BOOL then SimplifyPresentation(P);; fi;
+SimplifyPresentation(P);; 
+G:=FpGroupPresentation(P);
+
+else
+
+G:=F/rels;
+FhomG:=GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),GeneratorsOfGroup(G));
+fi;
 
 ##############################################
 EdgeToWord:=function(e)
@@ -119,18 +128,20 @@ r:=Flat(deform(1,e));
 w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
-w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x));
+#if (not AbsInt(x) in edges)  then
+w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x)) ; 
 fi;
 od;
 
-return w;
+return Image(FhomG,w);
 
 end;
 ##############################################
 
-G:=FpGroupPresentation(P);
-
+if not BOOL then
 G!.edgeToWord:=EdgeToWord;
+fi;
+
 loops:=StructuralCopy(1cells);
 
 ########################
@@ -146,7 +157,7 @@ e:=Y!.inverseVectorField[1][v];
 w:=Y!.boundaries[2][e];
 w:=w{[2,3]};
 pos:=Position(w,v);
-if pos=2 then v:=w[1]; Add(path,e); else v:=w[2]; Add(path,-e); fi;
+if pos=2 then v:=w[1]; Add(path,-e); else v:=w[2]; Add(path,e); fi;
 fi;
 od;
 
@@ -385,7 +396,7 @@ w:= List(x,i->SignInt(i)*mapfn(1,AbsInt(i))) ;
 
 Apply(w,i->GT!.edgeToWord(AbsInt(i))^SignInt(i));
 
-Add(loops, Product(w));
+Add(loops, Product(w));  
 od;
 
 return GroupHomomorphismByImagesNC(GS,GT,gensS,loops);;

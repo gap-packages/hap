@@ -5,7 +5,10 @@
 InstallGlobalFunction(BinaryArrayToTextFile,
 function(file,AA)
 local
-	i,j,k,l,m,A;
+	i,j,k,l,m,A, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 if IsHapPureCubicalComplex(AA) then
 A:=AA!.binaryArray;

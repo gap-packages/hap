@@ -141,6 +141,10 @@ DeclareGlobalFunction("RadicalSeriesOfResolution");
 
 
 ## FUNCTORS #########################################################
+DeclareGlobalFunction("HAP_PrintTo");
+DeclareGlobalFunction("HAP_AppendTo");
+DeclareGlobalFunction("HapExample");
+DeclareGlobalFunction("HapFile");
 #DeclareGlobalFunction("EvaluateProperty");
 DeclareGlobalFunction("EvenSubgroup");
 DeclareGlobalFunction("EquivariantChainMap");

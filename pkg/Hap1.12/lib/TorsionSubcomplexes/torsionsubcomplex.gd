@@ -11,11 +11,17 @@ DeclareGlobalFunction("EquivariantEulerCharacteristic");
 DeclareGlobalFunction("CountingCellsOfACellComplex");
 DeclareGlobalFunction("CountingControlledSubdividedCells");
 DeclareGlobalFunction("CountingBaryCentricSubdividedCells");
-DeclareGlobalFunction("CountingCellsOfBaryCentricSubdivision");
 DeclareGlobalFunction("GroupHomomorphismToMatrix");
 
 DeclareGlobalFunction("EquivariantSpectralSequencePage");
 DeclareGlobalFunction("ExportHapCellcomplexToDisk");
+DeclareGlobalFunction("CountingCellsOfBaryCentricSubdivision");
+DeclareGlobalFunction("QuotientByTorsionSubcomplex");
+DeclareGlobalFunction("ExtractTorsionSubcomplex");
+DeclareGlobalFunction("IntegralCellularHomology");
+DeclareGlobalFunction("GammaSubgroupInSL3Z");
+
+
 #####################################################################
 DeclareCategory("IsHapTorsionSubcomplex",IsObject);
 
@@ -24,7 +30,7 @@ DeclareRepresentation(	"IsHapTorsionSubcomplexRep",
 			["torsion",
 			 "groupname",
 			  "reducedTorsionCells",
-			  "orginalCelldata"]);
+			  "celldata"]);
 
 HapTorsionSubcomplexFamily:=NewFamily(	"HapTorsionSubcomplexFamily",
 				IsHapTorsionSubcomplex,
@@ -52,6 +58,7 @@ local N, reducedTorsionCells,J,n,j,G,B,b, ReduceModP, p, celldata;
 Print("Reduced ",R!.torsion,"-torsion subcomplex of the given cell complex for the group ",R!.groupname);
 
 reducedTorsionCells:=R!.torsionCells;
+#originalData:=R!.originalData;
 celldata:=R!.celldata;
 p:=R!.torsion;
 #########
@@ -61,7 +68,7 @@ local K, h, H, Q, P;
 	Q := G;
 	K := ConjugacyClassesSubgroups(G);
 	for h in K do
-          if Size(h)=1 then 
+          if Size(h)=1 then
 	       H := Representative(h);
 	           if Size(H) > 1 then
 	     	       if Gcd(Size(H),p) = 1 then
@@ -76,7 +83,7 @@ local K, h, H, Q, P;
 	    fi;
 	od;
        P:=Q;
-       if IsPNormal(Q,p) then P:=Normalizer(Q,Center(SylowSubgroup(Q,p)));fi; 
+       if IsPNormal(Q,p) then P:=Normalizer(Q,Center(SylowSubgroup(Q,p)));fi;
   return P;
 end;
 #########
@@ -85,13 +92,13 @@ for N in [1..Size(reducedTorsionCells)] do
 	n := J[1];
 	j := J[2];
 	G := celldata[n+1][j]!.TheMatrixStab;;
-		
+
 	Print("\n",n,"-cell number ",j,": ",IdSmallGroup(G)," is controlled by ",IdSmallGroup(ReduceModP(G,p))," and has boundary ");
  	B := celldata[n+1][j]!.BoundaryImage!.ListIFace;
 	for b in B do
 		G := celldata[n][b]!.TheMatrixStab;;
 		Print(n-1,"-cell number ",b,": ",IdSmallGroup(G)," is controlled by ",
-			IdSmallGroup(ReduceModP(G,p)),"\n");	
+			IdSmallGroup(ReduceModP(G,p)),"\n");
 	od;
   od;
 Print("\n");
@@ -134,7 +141,7 @@ DeclareGlobalFunction("KernelOfMap");
 DeclareGlobalFunction("ImageOfMap");
 #####################################################################
 InstallGlobalFunction(KernelOfMap,
-function(M) 
+function(M)
 
 if IsTrivial(Source(M)) then return Source(M);
 else
@@ -143,7 +150,7 @@ fi;
 end);
 #####################################################################
 InstallGlobalFunction(ImageOfMap,
-function(M) 
+function(M)
 
 if IsTrivial(Source(M)) then return One(Target(M));
 else
@@ -151,7 +158,3 @@ return Image(M);
 fi;
 end);
 #####################################################################
-
-
-
-

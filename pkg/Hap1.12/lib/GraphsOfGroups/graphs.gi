@@ -68,7 +68,10 @@ function(arg)
 local
 
 	PositionName, tmpDir, tmpInlog, tmpIn2log, basicgif,
-	D, Boole, Vertices, Edges,x;
+	D, Boole, Vertices, Edges,x,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 tmpInlog:=Filename(tmpDir,"tmpIn.log");

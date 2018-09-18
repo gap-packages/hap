@@ -19,7 +19,11 @@ local
 		Color,
 		COLOURS,
   		tmpDir,tmpInlog,tmpIn2log,tmpIngif,
+                AppendTo, PrintTo,
 		b, r, x,i,X;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 tmpInlog:=Filename(tmpDir,"tmpInlog");

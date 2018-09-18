@@ -926,8 +926,11 @@ end);
 InstallGlobalFunction(WritePureCubicalComplexAsImage,
 function(T,file,ext)
 local
-        A,i,j,rows,cols,colour,filetxt;
+        AppendTo, PrintTo, A,i,j,rows,cols,colour,filetxt;
 # This writes a 2-dimensional cubical complex to an image file.
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 if not Dimension(T)=2 then
 Print("There is no method for viewing a pure cubical complex of dimension ",
@@ -1543,7 +1546,10 @@ end);
 InstallGlobalFunction(PureCubicalComplexToTextFile,
 function(file,M)
 local
-	dim,dims,CART,x,i;
+	dim,dims,CART,x,i, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 dim:=Dimension(M);
 dims:=EvaluateProperty(M,"arraySize");

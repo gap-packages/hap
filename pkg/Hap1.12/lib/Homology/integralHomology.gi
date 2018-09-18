@@ -143,16 +143,20 @@ for j in [i..Length(Fgens)] do
 Append(Frels,[Fgens[i]*Fgens[j]*Fgens[i]^-1*Fgens[j]^-1]);
 od;
 od;
+
 FH:=F/Frels;
 FHgens:=GeneratorsOfGroup(FH);
+
 FHhomH:=NqEpimorphismNilpotentQuotient(FH,1);
-FHhomH:=EpimorphismNilpotentQuotient(FH);
+#FHhomH:=EpimorphismNilpotentQuotient(FH); #Commented out 20 June 2018
+
 
 H:=Range(FHhomH);
 Hgens:=GeneratorsOfGroup(H);
 ################################
 
 epim:=EpimorphismFromFreeGroup(FH);
+
 #####################################################################
 HhomC:=function(w)
 local ww,v,i,s;
@@ -184,7 +188,7 @@ else
 ChomH:=function(v)
 local w,i,xx, vno, z,x, row, ncols,sol,vec,solmat;
 
-### w:=SolutionMat(BasisKerd1,v) mod expH; 
+### thenw:=SolutionMat(BasisKerd1,v) mod expH; 
 ncols := Length(BasisKerd1[1]);
 vec:=v;
     z := StructuralCopy(z1);
@@ -200,7 +204,8 @@ vec:=v;
             fi;
         fi;
     od;
-sol:=sol  mod expH;
+if expH>0 then sol:=sol  mod expH; fi;
+
 
 xx:=Identity(H);
 for i in [1..Length(FHgens)] do

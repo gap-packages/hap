@@ -21,7 +21,11 @@ local
 	Polymake,
         tmpdir, tmpin, tmpodir, tmpout,
         L,r,
+        AppendTo, PrintTo,
 	R,Redges,V,ii,bol, sm, i,x,row,n,m,M;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpdir := DirectoryTemporary();;
 tmpin:=Filename( tmpdir , "tmpIn.log" );
