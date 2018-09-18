@@ -1,0 +1,13 @@
+file1:=HapFile("data175_1.csv");
+file2:=HapFile("data175_2.csv");
+K:=ReadCSVfileAsPureCubicalKnot([file1,file2]);
+K:=ThickenedPureComplex(K);
+K1:=PathComponent(K,1);;
+K2:=PathComponent(K,2);;
+K2:=ContractedComplex(K2);;
+C:=PureComplexComplement(K1);;
+C:=ContractedComplex(C,K2);;
+F:=RegularCWMap(C,K2);;
+f:=FundamentalGroup(F);;
+ab:=NqEpimorphismNilpotentQuotient(Target(f),1);;
+Print(Size(Image(ab)/Image(ab,Image(f))),"\n");

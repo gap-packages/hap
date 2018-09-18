@@ -390,7 +390,10 @@ end);
 #####################################################################
 InstallGlobalFunction(GraphDisplay,
 function(arg)
-local G,X,Elts,M,i,j,mm,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
+local AppendTo,
+G,X,Elts,M,i,j,mm,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, cs,  s;
+
+AppendTo:=HAP_AppendTo;
 
 tmpDir:=DirectoryTemporary();
 

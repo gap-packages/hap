@@ -1,0 +1,9 @@
+children:=List([1..8],i->ChildProcess());;
+fn:=function(i);
+  return BogomolovMultiplier(SmallGroup(11^5,i));
+end;;
+for s in children do
+ ChildPut(fn,"fn",s);
+od;
+L:=ParallelList([1..NrSmallGroups(11^5)],"fn",children);;
+Print(Filtered([1..NrSmallGroups(11^5)],x->Length(L[x])>0),"\n");

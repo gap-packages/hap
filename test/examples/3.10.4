@@ -1,0 +1,13 @@
+G:=SmallGroup(16,6);;
+K:=MaximalSubgroups(G)[2];;
+f:=GroupHomomorphismByFunction(K,G,x->x);;
+L:=InducedSteenrodHomomorphisms(f,8);;
+HG:=L[1];;
+HK:=L[2];;
+iota:=L[3];;
+gens:=ModPRingGenerators(HG);
+Print(List(gens,HG!.degree),"\n");
+w:=Sq(HK,2,Image(iota[5],gens[5]));;
+P:=List(PreImagesElm(iota[7],w), x->x);;
+PrintAlgebraWordAsPolynomial(HG,P[1]); Print("\n");
+PrintAlgebraWordAsPolynomial(HG,P[2]); Print("\n");

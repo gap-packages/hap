@@ -109,7 +109,7 @@ local
 
 if Order(G)<32 then R:=ResolutionFiniteGroup(gensG,N+1,false,p); 
 else
-if N<=2 then
+if N<=1 then
 R:=ResolutionNilpotentGroup(G,N+1);
 else
 L:=LowerCentralSeries(G);
@@ -175,7 +175,7 @@ Length(H)=0
 then Append(TorsionCoeffs,H); 
 else
 Append(TorsionCoeffs,
-PrimePartDerivedFunctor(G,R,Functor,N));
+PrimePartDerivedFunctorViaSubgroupChain(G,R,Functor,N));
 fi;
 od;
 

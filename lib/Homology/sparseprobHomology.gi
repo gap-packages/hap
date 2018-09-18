@@ -7,8 +7,10 @@ local
         M1, M2,
         Dimension, Boundary,
         dr, drtmp,
-	i,j,ans,dim1,dim2,v,x;
+	i,j,ans,dim1,dim2,v,x,AppendTo,PrintTo;
 
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 if n <=0 then return Bettinumbers(C,n); fi;
 
 if not "snf" in NamesOfComponents(C) then

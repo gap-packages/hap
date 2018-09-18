@@ -2,7 +2,10 @@
 #####################################################################
 InstallGlobalFunction(SymmetricMatDisplay,
 function(arg)
-local M,t,X,V,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, mx;
+local AppendTo, PrintTo, M,t,X,V,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log, mx;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 M:=StructuralCopy(arg[1]);
 t:=arg[2];

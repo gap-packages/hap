@@ -16,7 +16,11 @@ local
 	Index, IndexFn, tmplst,
 	Count,
 	tmp, x, w, i, y, p,
+        AppendTo, PrintTo,
 	tmpInlog, tmp2Inlog,tmp3Inlog, tmp4Inlog, tmpDir;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 tmpInlog:=Filename(tmpDir,"tmpIn.log");

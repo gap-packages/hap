@@ -10,6 +10,7 @@ local
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	x, y, i, Cent, hh, HPpres, ord;
 
+
 ####################################
 ####################################
 P:=R!.group;
@@ -27,10 +28,12 @@ P1:=Normalizer(G,P);
 
 fi;
 
+
 HP:=GroupHomomorphismByFunction(P,P,x->x);
 HP:=EquivariantChainMap(R,R,HP);
 HP:=F(HP);
-HP:=Homology(HP,n);
+HP:=Homology(HP,n);   #This takes too much time!!
+
 HP:=Source(HP);
 if Length(AbelianInvariants(HP))=0 then return []; fi;
 HPrels:=[Identity(HP)];
@@ -55,9 +58,13 @@ if not Order(sylQQ)>1 then return; fi;
 #########################################
 #########################################
 if Order(P)/Order(sylQQ)>1 then  #NEED TO OPTIMIZETHIS CHOICE!!
+
 S:=ResolutionGenericGroup(sylQQ,n+1);
+
 else
+
 S:=ResolutionFiniteSubgroup(R,sylQQ^gg);
+
 S!.group:=sylQQ;
 gg1:=gg^-1;
 S!.elts:=List(S!.elts,x->x^(gg1));

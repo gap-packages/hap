@@ -76,7 +76,7 @@ DeclareAttribute("IndeterminateDegrees", IsGradedAlgebraPresentation);
 DeclareOperation("TensorProductOp", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
 
 DeclareOperation("DegreeOfRepresentative", [IsGradedAlgebraPresentation, IsPolynomial]);
-DeclareOperation("IsIsomorphicGradedAlgebra", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
+DeclareOperation("AreIsomorphicGradedAlgebras", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
 DeclareOperation("IsAssociatedGradedRing", [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation]);
 DeclareAttribute("MaximumDegreeForPresentation", IsGradedAlgebraPresentation);
 DeclareOperation("SubspaceDimensionDegree", [IsGradedAlgebraPresentation, IsPosInt]);

@@ -5,7 +5,11 @@ HAP_XYXYXYXY:=0;
 ####################################################
 InstallGlobalFunction(ChildProcess,
 function(arg)
-local d,f,s,Name,Remote,Computer,ST;
+local d,f,s,Name,Remote,Computer,ST,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
 d:= DirectoryCurrent();
 
 if Length(arg)=0 then 
@@ -86,7 +90,11 @@ HAPchildFunctionToggle:=true;
 ####################################################
 InstallGlobalFunction(ChildFunction,
 function(func,s)
-local i;
+local i,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 WriteLine(s.stream,"\"STOP\";");;
@@ -127,7 +135,11 @@ end);
 ####################################################
 InstallGlobalFunction(ChildCommand,
 function(arg)
-local command, s, i;
+local command, s, i,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
 
 command:=arg[1];
 s:=arg[2];
@@ -197,7 +209,10 @@ end);
 #####################################################
 InstallGlobalFunction(ChildPut,
 function(X,Name,s)
-local i,fle,flebatch,fleRemote;
+local i,fle,flebatch,fleRemote,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
@@ -252,7 +267,10 @@ HAP_XYXYXYXY:=0;
 #####################################################
 InstallGlobalFunction(ChildGet,
 function(X,s)
-local i,ST, fle, fleLocal, batchfile;
+local i,ST, fle, fleLocal, batchfile, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 NextAvailableChild([s]); #Don't start if s is busy.
 

@@ -75,8 +75,11 @@ resVertices:=[];
 for x in Vertices do
 pos:=Position(List(L,r->r!.group),x);
 if pos=fail then
-#R:=ResolutionFiniteGroup(x,N);
+if Order(x)<121 then           #This suggests I should improve
+R:=ResolutionFiniteGroup(x,N); #ResolutionGenericGroup() !!!
+else
 R:=ResolutionGenericGroup(x,N);
+fi;
 else
 R:=L[pos];
 fi;

@@ -51,12 +51,11 @@ H:=S!.group;
 ####################### DIRECT PRODUCT OF GROUPS ###########
 Bl:=true;
 for i in [3..Length(arg)] do
-if arg[i]="internal" then Bl:=false; fi; #Print("HELLO");fi;
+if arg[i]="internal" then Bl:=false; fi; #Print("HELLO"); fi; 
 od;
 
 #if Length(arg)=2 then
 if Bl then
-
 E:=DirectProduct(G,H);
 if Size(G)=infinity or Size(H)=infinity then SetSize(E,infinity);fi;
 GhomE:=Embedding(E,1);
@@ -100,6 +99,7 @@ fi;
 
 ############OTHER CASE##############
 if not IsPcpGroup(G) then
+
 gensE:=Concatenation(GeneratorsOfGroup(G),GeneratorsOfGroup(H));
 E:=Group(gensE);
 
@@ -295,11 +295,11 @@ tmp:=Int2Vector(k,j);
 p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=ShallowCopy(BoundaryR(p,r));
-Apply(horizontal,x->[x[1],Elts2Int(   Image(GhomE,R!.elts[x[2]])   )  ]);
+Apply(horizontal,x->[x[1],Elts2Int(   ImagesRepresentative(GhomE,R!.elts[x[2]])   )  ]);
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
 
 vertical:=ShallowCopy(BoundaryS(q,s));
-Apply(vertical,x->[x[1],Elts2Int(   Image(HhomE,S!.elts[x[2]])  )    ]);
+Apply(vertical,x->[x[1],Elts2Int(   ImagesRepresentative(HhomE,S!.elts[x[2]])  )    ]);
 Apply(vertical,x->[Vector2Int(p,q-1,r,x[1]),x[2]]);
 if IsOddInt(p) then
 vertical:=NegateWord(vertical);
@@ -329,7 +329,7 @@ p:=tmp[1]; q:=tmp[2]; r:=tmp[3]; s:=tmp[4];
 
 horizontal:=StructuralCopy(BoundaryR(p,r));
 
-Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*Image(GhomE,R!.elts[x[2]]) )]);
+Apply(horizontal,x->[x[1],Elts2Int( EltsE[y[2]]*ImagesRepresentative(GhomE,R!.elts[x[2]]) )]);
 
 
 Apply(horizontal,x->[Vector2Int(p-1,q,x[1],s),x[2]]);
@@ -359,20 +359,20 @@ local aa,hty, hty1, Eg, Eg1, Eg2, g1, g2;	#bool=true for vertical homotopy
 #This function seems to work! But I should really check the maths again!!
 
 Eg:=EltsE[g];
-Eg1:=Image(EhomG,Eg);
+Eg1:=ImagesRepresentative(EhomG,Eg);
 	if not Eg1 in R!.elts then RappendToElts(Eg1); fi; 
 				    
-Eg2:=Image(EhomH,Eg);
+Eg2:=ImagesRepresentative(EhomH,Eg);
 	if not Eg2 in S!.elts then SappendToElts(Eg2); fi;
 				    
 g2:=Position(S!.elts,Eg2); 
 g1:=Position(R!.elts,Eg1); 
-Eg1:=Image(GhomE,Eg1);
-Eg2:=Image(HhomE,Eg2);
+Eg1:=ImagesRepresentative(GhomE,Eg1);
+Eg2:=ImagesRepresentative(HhomE,Eg2);
 
 
 hty:=HomotopyS(q,[s,g2]);
-Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), Image(HhomE,S!.elts[x[2]])]); 
+Apply(hty,x->[ Vector2Int(p,q+1,r,x[1]), ImagesRepresentative(HhomE,S!.elts[x[2]])]); 
 Apply(hty,x->[ x[1], Elts2Int(Eg1*x[2])]);
 if IsOddInt(p) then
 hty:=NegateWord(hty); fi;
@@ -388,7 +388,7 @@ if q>0 then return hty; fi;
 
 
 hty1:=HomotopyR(p,[r,g1]);
-Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), Image(GhomE,R!.elts[x[2]])]);
+Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), ImagesRepresentative(GhomE,R!.elts[x[2]])]);
 Apply(hty1,x->[ x[1], Elts2Int(x[2])]); #Here
 
 Append(hty,hty1);

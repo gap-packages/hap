@@ -1,0 +1,7 @@
+#This example uses GraphViz software.
+#This example uses Polymake software.
+D:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[7,3]],[4,[5,3]],[5,[6,3]]];;
+CoxeterDiagramDisplay(D);
+C:=CoxeterWythoffComplex(D,[1,2,3,4,5,6,7],4);
+R:=FreeGResolution(C,4);;
+Print(Homology(TensorWithIntegers(R),3),"\n");

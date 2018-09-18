@@ -663,7 +663,10 @@ end);
 ###########################################################
 InstallGlobalFunction(BarCodeDisplay,
 function(arg)
-local P,B,i,j,Disp,tmpDir,barcodedot,barcodegif;
+local P,B,i,j,Disp,tmpDir,barcodedot,barcodegif, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 ###############
 P:=arg[1];
@@ -725,7 +728,10 @@ end);
 ###########################################################
 InstallGlobalFunction(BarCodeCompactDisplay,
 function(arg)
-local P,B,i,j,Disp,tmpDir,barcodedot,barcodegif, lb;
+local P,B,i,j,Disp,tmpDir,barcodedot,barcodegif, lb, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 ###############
 P:=arg[1];

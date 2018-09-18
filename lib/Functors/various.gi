@@ -1,6 +1,36 @@
 #(C) Graham ellis, 2005-2006
 
 #####################################################################
+InstallGlobalFunction(HAP_PrintTo,
+function(arg)
+local file, out,i;
+
+file:=arg[1];
+out:=OutputTextFile(file,false);
+for i in [2..Length(arg)] do
+WriteAll(out,String(arg[i]));
+od;
+CloseStream(out);
+
+end);
+#####################################################################
+
+#####################################################################
+InstallGlobalFunction(HAP_AppendTo,
+function(arg)
+local file, out,i;
+
+file:=arg[1];
+out:=OutputTextFile(file,true);
+for i in [2..Length(arg)] do
+WriteAll(out,String(arg[i]));
+od;
+CloseStream(out);
+end);
+#####################################################################
+
+
+#####################################################################
 InstallGlobalFunction(EvaluateProperty,
 function(X,name)
 local
@@ -559,9 +589,14 @@ end);
 
 ############################################
 InstallGlobalFunction(ScatterPlot,
-function(LL)
-local L, tmpdir, file, colour, i, x, xmax, xmin, ymax, ymin, xscale, yscale,
-xminnew, yminnew, xmaxnew, ymaxnew;
+function(arg)
+local LL, L, tmpdir, file, colour, i, x, xmax, xmin, ymax, ymin, xscale, yscale,
+xminnew, yminnew, xmaxnew, ymaxnew, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
+LL:=arg[1];
 
 tmpdir := DirectoryTemporary();;
 file:=Filename( tmpdir , "tmp.asy" );
@@ -571,6 +606,13 @@ xmax:=Maximum(List(LL,x->x[1]));
 xmin:=Minimum(List(LL,x->x[1]));
 ymax:=Maximum(List(LL,x->x[2]));
 ymin:=Minimum(List(LL,x->x[2]));
+
+if Length(arg)=2 then
+xmax:=Maximum(xmax,ymax);
+ymax:=xmax;
+xmin:=Minimum(xmin,ymin);
+ymin:=xmin;
+fi;
 
 xscale:=200/(xmax-xmin);
 yscale:=200/(ymax-ymin);
@@ -696,7 +738,11 @@ InstallGlobalFunction(IsIsomorphismOfAbelianFpGroups,
 function(F)
 local h;
 
+## I've adjusted this so that it will also work for Pc and Pcp groups.
+if IsFpGroup(Source(F)) and IsFpGroup(Target(F)) then
 h:=Fp2PcpAbelianGroupHomomorphism(F);
+else h:=F;
+fi;
 
 if not IsTrivial(Kernel(h)) then return false; fi;
 if not IsTrivial(Range(h)/Image(h)) then return false; fi;

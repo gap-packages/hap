@@ -118,7 +118,10 @@ end);
 InstallGlobalFunction(DisplayCSVknotFile,  
 function(arg)
 local  FILE, File, i,j,  tmpdir, file, cnt,
- scl,  f, x,  v, AA, A,  M , B, BLUE;
+ scl,  f, x,  v, AA, A,  M , B, BLUE, AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 if IsString(arg[1]) then
 FILE:=[arg[1]];

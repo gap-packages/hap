@@ -1213,7 +1213,11 @@ end);
 ############################################################
 InstallGlobalFunction(View3dPureComplex,
 function(M)
-local a1,a2,a3,A,  B, BB, squares, T, i, j, k, s, t,  VtoS, tmpdir, file;
+local a1,a2,a3,A,  B, BB, squares, T, i, j, k, s, t,  VtoS, tmpdir, file,
+    AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 B:=M!.binaryArray;
 A:=[];

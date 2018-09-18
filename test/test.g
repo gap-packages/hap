@@ -1,3 +1,47 @@
+#################################################
+#################################################
+InstallGlobalFunction(HapFile,
+function(str)
+local exfile, input, linefile, x;
+
+exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
+exfile:=Filename(exfile,"");;
+exfile:=Concatenation(exfile,"test/examples/");;
+exfile:=Concatenation(exfile,str);
+
+return exfile;
+end);
+#################################################
+#################################################
+
+#################################################
+#################################################
+InstallGlobalFunction(HapExample,
+function(str)
+local exfile, input, linefile, x;
+
+exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
+exfile:=Filename(exfile,"");;
+exfile:=Concatenation(exfile,"test/examples/");;
+exfile:=Concatenation(exfile,str);
+
+input:=InputTextFile(exfile);
+x:=ReadLine(input);
+while not x=fail do
+Print("gap> ");
+Print(x);
+x:=ReadLine(input);
+od;
+Print("\n\n");
+Read(exfile);
+end);
+#################################################
+#################################################
+
+
+
+
+
 
 #################################################
 #################################################

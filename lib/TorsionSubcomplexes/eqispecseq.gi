@@ -4,23 +4,23 @@
 ## HAP subpackage for GAP (Groups Algorithms Programming) ##
 ##         under the GNU GPL license (v. 3),  2012        ##
 ##      by Alexander D. Rahm & Bui Anh Tuan               ##
-############################################################   	
+############################################################
 
 
 
-InstallGlobalFunction("EquivariantSpectralSequencePage", function( C, m,n)
+InstallGlobalFunction("EquivariantSpectralSequencePage", function( C, n)
 #########################################################################
-                                             
+
 #########################################################################
-local reducedTorsionCells,celldata,j,N,l,P,Q,RP,RQ,g,Pt,
+local reducedTorsionCells,celldata,j,N,l,w,P,Q,RP,RQ,g,Pt,k,pos,E1PageRec,p,q,
 stabgrp,cell,i, E1page, T, EnPage, Differential, CohomologyOfGroup, stabres,stabcohom, inclusionMaps, groupname,name,sb,se,
-maps,map,eqmap,tmp,BI,SGN,LstEl,s,r,t,sign,E2page,CH1,Mat1
+maps,map,eqmap,tmp,BI,SGN,LstEl,s,r,t,multiple,E2page,CH1,Mat1, MatRank
 ;
 
 if IsString(C) then
 groupname:=Filtered(C,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
 
-   Read(Concatenation( 	DirectoriesPackageLibrary("HAP")[1]![1], 
+   Read(Concatenation( 	DirectoriesPackageLibrary("HAP")[1]![1],
 			"Perturbations/Gcomplexes/",groupname));
    celldata := StructuralCopy(HAP_GCOMPLEX_LIST);
    name:=StructuralCopy(groupname);
@@ -28,7 +28,7 @@ groupname:=Filtered(C,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
    sb:=Position(name,'_');
    se:=Length(name);
    l:=Int(name{[sb+1..se]});
-   
+
    reducedTorsionCells:=[];
    for i in [1..Size(celldata)] do
       reducedTorsionCells[i]:=[];
@@ -37,19 +37,19 @@ groupname:=Filtered(C,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
       od;
    od;
    N:=Size(reducedTorsionCells);
-   if N>2 then return fail;fi; 
+#   if N>2 then return fail;fi;
 
 else
 
 
 #if not IsHapTorsionSubcomplex(C) then
-    return fail;
+#    return fail;
 #else
     N:=Size(C!.reducedTorsionCells);
 
-    ## We only consider the case when length of the subcomplex is 
+    ## We only consider the case when length of the subcomplex is
     ## less than 2 in order to get rid of the differential d2
-    if N>2 then return fail;fi; 
+#    if N>2 then return fail;fi;
 
     reducedTorsionCells:=C!.torsionCells;
     celldata:=C!.celldata;
@@ -68,38 +68,52 @@ for j in [1..N] do
         Add(stabgrp[j],celldata[cell[1]+1][cell[2]]!.TheMatrixStab);
     od;
 od;
-
+###################### Rank of a matrix ###################
+MatRank:=function(g)
+if not (IsBound(g[1]) and IsBound(g[1][1])) then return 0;
+else return RankMat(g);fi;
+end;
 ###################### E_1 Page of Cohomology##############
 E1page:=function(p,q)
 local w,i;
     if p=0 then return Differential(1,0,q)[1];
-    elif p=1 then return Differential(1,0,q)[2];
-    else return fail;
+    else return Differential(1,p-1,q)[2];
     fi;
 end;
 ######################End of E_1 Page######################
 E2page:=function(p,q)
-local t,M;
-M:=Differential(1,0,q)[3];
-if IsEmpty(M) then 
-   if p=0 then 
-       return 0;
-   else return E1page(1,q);
-   fi;
+local t,M,lnth,N;
+lnth:=Length(reducedTorsionCells);
+
+if (p<0) or (p>lnth-1) then return 0;fi;
+
+if p=0 then
+    M:=Differential(1,0,q)[3];
+    if IsEmpty(M) then return 0;
+    else return Size(M[1])-RankMat(M);
+    fi;
+fi;
+if p=lnth-1 then
+    M:=Differential(1,p-1,q)[3];
+    if IsEmpty(M) then return E1page(p,q);
+    else return E1page(p,q)-RankMat(M);
+    fi;
 fi;
 
-if p=0 then return Size(M[1])-RankMat(M);
-elif p=1 then 
-return E1page(1,q)-RankMat(M);
-else return fail;
-fi;
+M:=Differential(1,p-1,q)[3];
+N:=Differential(1,p,q)[3];
 
-end;##############End of E_1 Page######################
+return E1page(p,q)-MatRank(M)-MatRank(N);
+
+end;
+##############End of E_2 Page######################
 ###################### Cohomology of Group ################
 CohomologyOfGroup:=function(k)
-local p,w;
+local p,w,lnth;
+Print("\n Users please self-aware that this attribute only works correctly in those cases whose d2 differentials are trivial \n");
     w:=0;
-    for p in [0..Minimum(k,1)] do
+    lnth:=Length(reducedTorsionCells);
+    for p in [0..Minimum(k,lnth-1)] do
         w:=w+E2page(p,k-p);
     od;
     return w;
@@ -109,137 +123,182 @@ end;
 
             inclusionMaps:=[];
             maps:=[];
-            sign:=[];
-            N:=2;
-            for i in [1..Size(reducedTorsionCells[N])] do
-                cell:= reducedTorsionCells[N][i];
-                maps[i]:=[];
-                inclusionMaps[i]:=[];
-                sign[i]:=[];
+            multiple:=[];
+#            N:=2;
+      for k in [1..N-1] do
+            maps[k]:=[];
+            inclusionMaps[k]:=[];
+            multiple[k]:=[];
+            for i in [1..Size(reducedTorsionCells[k+1])] do
+                cell:= reducedTorsionCells[k+1][i];
+                maps[k][i]:=[];
+                inclusionMaps[k][i]:=[];
+                multiple[k][i]:=[];
 
-                tmp:=celldata[N][cell[2]].BoundaryImage;
+                tmp:=celldata[k+1][cell[2]].BoundaryImage;
                 BI:=tmp.ListIFace;
                 SGN:=tmp.ListSign;
                 LstEl:=tmp.ListElt;
-                P:=StructuralCopy(stabgrp[N][i]);
-                if IsPNormal(P,l) then 
+                P:=StructuralCopy(stabgrp[k+1][i]);
+                if IsPNormal(P,l) then
                     P:=Normalizer(P,Center(SylowSubgroup(P,l)));
                 fi;
                 RP:=ResolutionFiniteGroup(P,n);
-                for r in [1..Size(reducedTorsionCells[N-1])] do
-                    s:=reducedTorsionCells[N-1][r][2];
-                    sign[i][r]:=0;
-                    if s in BI then
-                        
+                for r in [1..Size(reducedTorsionCells[k])] do
+                    s:=reducedTorsionCells[k][r][2];
 
-                        Q:=StructuralCopy(stabgrp[N-1][r]);
-                        if IsPNormal(Q,l) then 
+                    pos:=Positions(BI,s);
+                    multiple[k][i][r]:=Sum(SGN{pos}) mod l;
+#                    Print([k,i,r,s],BI,pos,multiple[k][i][r],"\n");
+                    if not multiple[k][i][r]=0 then
+
+
+                        Q:=StructuralCopy(stabgrp[k][r]);
+                        if IsPNormal(Q,l) then
                             Q:=Normalizer(Q,Center(SylowSubgroup(Q,l)));
                         fi;
                         RQ:=ResolutionFiniteGroup(Q,n);
                         t:=Position(BI,s);
                         Pt:=ConjugateGroup(P,LstEl[t]);
-                        for g in  stabgrp[N-1][r] do                                   
+                        for g in  stabgrp[k][r] do
                             if IsSubgroup(Q,ConjugateGroup(Pt,g)) then
                                 break;
                             fi;
                         od;
                         map:=GroupHomomorphismByFunction(P,
                              Q,x->(LstEl[t]*g)^-1*x*(LstEl[t]*g));
-                        inclusionMaps[i][r]:=LstEl[t];
+                        inclusionMaps[k][i][r]:=LstEl[t];
                         eqmap:=EquivariantChainMap(RP,RQ,map);
 
                         T:=HomToIntegersModP(eqmap,l);
-                        maps[i][r]:=T;
-                        sign[i][r]:=SGN[t];
+                        maps[k][i][r]:=T;
+
                     else
-                        
-                        maps[i][r]:=0;
+
+                        maps[k][i][r]:=0;
                     fi;
                 od;
             od;
+      od;
 
             stabres:=[];
-            for j in [1..Size(maps[1])] do
+      for k in [1..N-1] do
+
+            stabres[k]:=[];
+      od;
+      for k in [1..N-1] do
+            for j in [1..Size(maps[k][1])] do
+              if not IsBound(stabres[k][j]) then
                 i:=1;
-                while i<=Size(maps) do
-                    if maps[i][j]=0 then 
+                while i<=Size(maps[k]) do
+                    if maps[k][i][j]=0 then
                         i:=i+1;
                     else break;
                     fi;
                 od;
-                if i>Size(maps) then
-                    P:=StructuralCopy(stabgrp[N-1][j]);
-                    if IsPNormal(P,l) then 
-                        P:=Normalizer(P,Center(SylowSubgroup(P,l)));
-                    fi; 
-                    RP:=ResolutionFiniteGroup(P,n); 
-                    stabres[j]:=HomToIntegersModP(RP,l);                 
-                fi;                    
+                if i>Size(maps[k]) then
+                    P:=StructuralCopy(stabgrp[k][j]);
+                    if IsPNormal(P,l) then
+                    fi;
+                    RP:=ResolutionFiniteGroup(P,n);
+                    stabres[k][j]:=HomToIntegersModP(RP,l);
+                fi;
+              fi;
             od;
+
+
+
+            for i in [1..Size(maps[k])] do
+              if not IsBound(stabres[k][i]) then
+                j:=1;
+                while j<=Size(maps[k][i]) do
+                    if maps[k][i][j]=0 then
+                        j:=j+1;
+                    else break;
+                    fi;
+                od;
+                if j>Size(maps[k][i]) then
+                    P:=StructuralCopy(stabgrp[k][i]);
+                    if IsPNormal(P,l) then
+                    fi;
+                    RP:=ResolutionFiniteGroup(P,n);
+
+                    stabres[k+1][i]:=HomToIntegersModP(RP,l);
+                fi;
+              fi;
+            od;
+
+       od;
+
 
 ###################### d1 differential#### ################
 Differential:=function(k,p,q)
 local w,i,j,A,B,CH,temp,x,M,Mat,BMat,t;
     if k=1 then
-        if not p=0 then return [];fi;
+        N:=Length(reducedTorsionCells);
+        if (p < 0) or (p > N-2) then return [];fi;
+
             CH:=[];
             Mat:=[];
 
-            for i in [1..Size(reducedTorsionCells[N])] do
+            for i in [1..Size(reducedTorsionCells[p+2])] do
                 CH[i]:=[];
                 Mat[i]:=[];
-                for j in [1..Size(reducedTorsionCells[N-1])] do
-                    if maps[i][j]=0 then CH[i][j]:=0;
+                for j in [1..Size(reducedTorsionCells[p+1])] do
+                    if maps[p+1][i][j]=0 then CH[i][j]:=0;
                     else
-                        CH[i][j]:=Cohomology(maps[i][j],q);
+                        CH[i][j]:=Cohomology(maps[p+1][i][j],q);
                     fi;
-                od;                
+                od;
             od;
             A:=[];
-            
+
             for j in [1..Size(CH[1])] do
                 i:=1;
                 while i<=Size(CH) do
 
-                    if CH[i][j]=0 then 
+                    if CH[i][j]=0 then
 
                         i:=i+1;
-                    else 
+                    else
 
                         A[j]:=Size(AbelianInvariants(Source(CH[i][j]))); break;
                     fi;
                 od;
                 if i>Size(CH) then
-                    A[j]:=Cohomology(stabres[j],q);
+                    A[j]:=Cohomology(stabres[p+1][j],q);
                 fi;
             od;
 
             B:=[];
-            
+
             for i in [1..Size(CH)] do
                 j:=1;
+
                 while j<=Size(CH[1]) do
                     if CH[i][j]=0 then j:=j+1;
                     else B[i]:=Size(AbelianInvariants(Target(CH[i][j]))); break;
                     fi;
                 od;
+                if j>Size(CH[1]) then
+                    B[i]:=Cohomology(stabres[p+2][i],q);
+                fi;
             od;
 
-            for i in [1..Size(reducedTorsionCells[N])] do
+            for i in [1..Size(reducedTorsionCells[p+2])] do
                 Mat[i]:=[];
-                for j in [1..Size(reducedTorsionCells[N-1])] do
-                    if maps[i][j]=0 then 
+                for j in [1..Size(reducedTorsionCells[p+1])] do
+                    if maps[p+1][i][j]=0 then
                         if A[j]*B[i]=0 then Mat[i][j]:=[];
                         else Mat[i][j]:=0*RandomMat(B[i],A[j]);fi;
                     else
 
-                        Mat[i][j]:=sign[i][j]*GroupHomomorphismToMatrix(CH[i][j],l);
+                        Mat[i][j]:=multiple[p+1][i][j]*GroupHomomorphismToMatrix(CH[i][j],l);
 
                     fi;
 
-                od;                
-            od; 
+                od;
+            od;
 
             BMat:=[];
             for i in [1..Size(Mat)] do
@@ -250,16 +309,16 @@ local w,i,j,A,B,CH,temp,x,M,Mat,BMat,t;
                 od;
                 for r in [1..t] do
                     M[r]:=[];
-                    for j in [1..Size(Mat[1])] do 
-                        if not IsEmpty(Mat[i][j]) then  
+                    for j in [1..Size(Mat[1])] do
+                        if not IsEmpty(Mat[i][j]) then
                             Append(M[r],Mat[i][j][r]);
                         fi;
                     od;
                 od;
                 Append(BMat,M);
             od;
-
-            return [Sum(A),Sum(B),BMat]; 
+#Print(1/0);
+            return [Sum(A),Sum(B),BMat];
     else
     return fail;
     fi;
@@ -284,7 +343,7 @@ end;
                     torsion:=l,
                     cohomology:=CohomologyOfGroup,
                     maps:=maps,
-                    sign:=sign,
+                    multiple:=multiple,
                     inclusionMaps:= inclusionMaps
                     ));
 
@@ -310,13 +369,13 @@ local i,x,vectors,fgensA,fgensB,A,B,M,FreeGenerators, ElementToWord;
                 a:=a*L[i]^x[i];
             od;
             if g=a then return x;fi;
-        
-        od; 
+
+        od;
     return false;
     end;
     A:=Source(phi);
     B:=Target(phi);
-    
+
     FreeGenerators:=function(G)
     local gens,i,fgens;
         gens:=GeneratorsOfGroup(G);
@@ -340,4 +399,11 @@ local i,x,vectors,fgensA,fgensB,A,B,M,FreeGenerators, ElementToWord;
         Add(M,ElementToWord(B,fgensB,Image(phi,fgensA[i])));
     od;
     return TransposedMat(M);
+end);
+
+######################################################
+DeclareGlobalFunction("MatrixSize");
+InstallGlobalFunction(MatrixSize,
+function(M)
+return [Length(M),Length(M[1])];
 end);

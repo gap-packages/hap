@@ -156,8 +156,10 @@ end);
 #################################################################
 InstallGlobalFunction(DisplayDendrogram,
 function(M)
-local D, V, G,  t, i, shft1, shft2, tmpDir, Loggeddot, Loggedpng;
+local AppendTo, PrintTo, D, V, G,  t, i, shft1, shft2, tmpDir, Loggeddot, Loggedpng;
 
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 Loggeddot:=Filename(tmpDir,"Logged.dot");

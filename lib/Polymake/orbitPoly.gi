@@ -4,7 +4,10 @@ InstallGlobalFunction(OrbitPolytope,
 function(G,v,Props)
 local
 	Points,p,x,i,w,Dim,tmp,input, tmpdir, tmpIn, tmp2dir, tmp2In,
-	a,b,c,d,U,V,W;
+	a,b,c,d,U,V,W,AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 Dim:=Length(v);
 Points:=[];

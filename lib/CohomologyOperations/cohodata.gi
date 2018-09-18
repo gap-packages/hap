@@ -45,7 +45,11 @@ fi;
 #########################################################
 CohomologicalData:=function(arg)
 local G,N,file, alpha, alpha1, A, gens, gensletters, gensletters1, gensdegrees,
-d, p, tmp, tmpdir, x, relabel, relabeltwo, pres, rels, r, s,i, k, w; 
+d, p, tmp, tmpdir, x, relabel, relabeltwo, pres, rels, r, s,i, k, w,
+AppendTo, PrintTo; 
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 G:=arg[1];
 if not SSortedList(Factors(Order(G)))=[2] then 

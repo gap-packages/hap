@@ -97,7 +97,7 @@ local
 	Rels, Fgens, FhomFH, FHhomH, FhomH, 
         FH, Frels, Hgens, FHgens, IHC, HhomC, ChomH, 
 	Vector2Word, BasisKerd1, rel, i, j, Htmp,HtmphomH,
-        sem, z1,sol1,lngm ;
+        sem, z1,sol1,lngm , epim;
 
 if not "fpIntHom" in NamesOfComponents(C) then
 C!.fpIntHom:=[1..1000];       #SLOPPPY! Some one might ask for 
@@ -111,7 +111,10 @@ if IsInt(C!.fpIntHom[nn]) then
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
 Rels:=IHC.rels;
+if Length(IHC.torsionCoefficients)>0 then  #changed August 2017
 expH:=Lcm(IHC.torsionCoefficients);
+else expH:=0;
+fi;
 
 F:=FreeGroup(Length(BasisKerd1));
 Fgens:=GeneratorsOfGroup(F);
@@ -143,12 +146,24 @@ od;
 FH:=F/Frels;
 FHgens:=GeneratorsOfGroup(FH);
 FHhomH:=NqEpimorphismNilpotentQuotient(FH,1);
+FHhomH:=EpimorphismNilpotentQuotient(FH);
+
 H:=Range(FHhomH);
+Hgens:=GeneratorsOfGroup(H);
 ################################
 
+epim:=EpimorphismFromFreeGroup(FH);
 #####################################################################
-HhomC:=function(w);
-return BasisKerd1[w];
+HhomC:=function(w)
+local ww,v,i,s;
+ww:=PreImagesRepresentative(FHhomH,Hgens[w]);
+ww:=PreImagesRepresentative(epim,ww);
+v:=BasisKerd1[1]*0;
+for i in [1..Length(BasisKerd1)] do
+s:=ExponentSumWord(ww,PreImagesRepresentative(epim,FHgens[i]));
+v:=v+s*BasisKerd1[i];
+od;
+return v ;
 end;
 #####################################################################
 
@@ -161,8 +176,7 @@ end;
 else
     
     z1 := Zero(BasisKerd1[1][1]);
-    #sol1:=ListWithIdenticalEntries(Length(BasisKerd1),z1);
-    sol1:=List([1..Length(BasisKerd1)],i->z1);
+    sol1:=ListWithIdenticalEntries(Length(BasisKerd1),z1);
     lngm:=Length(BasisKerd1[1]);
     sem := SemiEchelonMatTransformationDestructive(1*BasisKerd1);
 
@@ -189,9 +203,11 @@ vec:=v;
 sol:=sol  mod expH;
 
 xx:=Identity(H);
-for i in [1..Length(sol)] do
-xx:=xx*Image(FHhomH,FHgens[i]^sol[i]);
+for i in [1..Length(FHgens)] do
+
+xx:=xx*Image(FHhomH,FHgens[i])^sol[i];
 od;
+
 
 return xx;
 end;

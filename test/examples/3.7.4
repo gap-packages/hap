@@ -1,0 +1,10 @@
+G:=SylowSubgroup(MathieuGroup(12),2);;
+R:=ResolutionPrimePowerGroup(G,10);;
+A:=ModPCohomologyRing(R);
+S:=[];;
+for n in [0..10] do
+ B:=Filtered(Basis(A),x->A!.degree(x)=n);
+ B:=Subalgebra(A,B);
+ Add(S,B);
+od;
+Print(List(S,Dimension),"\n");

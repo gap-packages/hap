@@ -705,7 +705,11 @@ end);
 InstallGlobalFunction(DisplayPDBfile,
 function(File)
 local  S,T,i,j,char,atoms, acids, cnt, tmpdir, file,
- scl, instr, f, avg,  v, A, x1,x2,y1,y2,z1,z2, L, M , B,b;
+ scl, instr, f, avg,  v, A, x1,x2,y1,y2,z1,z2, L, M , B,b,
+  AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 scl:=2; char:="A";
 

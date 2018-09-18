@@ -466,9 +466,9 @@ InstallMethod(TensorProductOp,
 
 
 #####################################################################
-##  <#GAPDoc Label="IsIsomorphicGradedAlgebra_DTmanGradedAlgebra_Func">
+##  <#GAPDoc Label="AreIsomorphicGradedAlgebras_DTmanGradedAlgebra_Func">
 ##  <ManSection>
-##  <Oper Name="IsIsomorphicGradedAlgebra" Arg="A, B"/>
+##  <Oper Name="AreIsomorphicGradedAlgebras" Arg="A, B"/>
 ##
 ##  <Description>
 ##  Returns <K>true</K> if the graded algebras <A>A</A> and <A>B</A> are
@@ -479,7 +479,7 @@ InstallMethod(TensorProductOp,
 ##  </ManSection>
 ##  <#/GAPDoc>
 #####################################################################
-InstallMethod(IsIsomorphicGradedAlgebra,
+InstallMethod(AreIsomorphicGradedAlgebras,
   [IsGradedAlgebraPresentation, IsGradedAlgebraPresentation],
   function(A, B)
     local a, b, Aindets, Bindets, B2, ord, Arels, Aleading, B2rels,

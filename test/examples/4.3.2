@@ -1,0 +1,10 @@
+G:=SmallGroup(32,20);;
+R:=ResolutionFiniteGroup(G,4);;
+aut:=AutomorphismGroup(G);;
+gens:=MinimalGeneratingSet(aut);;
+A:=CyclicGroup(32);;
+A:=TrivialGModuleAsGOuterGroup(G,A);;
+C:=HomToGModule(R,A);;
+H:=CohomologyModule(C,aut,3);;
+act:=function(h,a); return H!.OuterAction(a^-1,h); end;;
+Print(Orbits(aut,H!.ActedGroup,act),"\n");

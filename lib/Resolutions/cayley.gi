@@ -25,7 +25,11 @@ end);
 #####################################################################
 InstallGlobalFunction(CayleyGraphOfGroupDisplay,
 function(arg)
-local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log;
+local G,X,Elts,M,i,j,COLOURS,tmpDir,tmpInlog,tmpIngif,tmpIn2log,
+AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
 
 tmpDir:=DirectoryTemporary();
 

@@ -1,6 +1,6 @@
 InstallGlobalFunction(PolymakeFaceLattice,
 function(arg)
-local  polygon, callPolymake, F,D, L, i,j,s,t, toggle;
+local  polygon, callPolymake, F,D, L, i,j,s,t, toggle, DD,x,y;
 
 polygon:=arg[1];
 if Length(arg)=2 then toggle:=false;
@@ -39,10 +39,19 @@ F:=F{[2..Length(F)]};
 F:=ConvertPolymakeListOfSetsToGAP(F);
 F:=F+1;
 
-D:=callPolymake(polygon,["HASSE_DIAGRAM->DIMS"]);
+D:=callPolymake(polygon,["F_VECTOR"]);
 D:=SplitString(D.string,"\n")[2];
 D:=SplitString(D," ");
 Apply(D,EvalString);
+D:=Reversed(D);
+DD:=[1];;
+x:=1;;
+for y in D do
+x:=x+y;
+Add(DD,x);
+od;
+D:=DD;
+
 Add(D,Length(F)-1);
 
 L:=List([1..Length(D)-1],i->[]);
