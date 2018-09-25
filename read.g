@@ -8,12 +8,12 @@ HAPconstant:=2;
 SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 
 #From version 4.5 of GAP we'll use the new function IsPackageMarkedForLoading
-if not CompareVersionNumbers(VERSION,"4.5") then
-        IsPackageMarkedForLoading:=function(ver,num) local b;
-        b:=LoadPackage(ver,num,false);
-        if b=true then return b; else return false; fi;
-        end;
-fi;
+#if not CompareVersionNumbers(VERSION,"4.5") then
+#        IsPackageMarkedForLoading:=function(ver,num) local b;
+#        b:=LoadPackage(ver,num,false);
+#        if b=true then return b; else return false; fi;
+#        end;
+#fi;
 
 ReadPackage("HAP","boolean");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
