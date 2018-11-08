@@ -15,10 +15,10 @@ GACDIR=/usr/local/lib/gap4r4/bin/i686-pc-linux-gnu-gcc;
 #####################################################################
 
 
-LIB=$PKGDIR/Hap1.15/lib;
+LIB=$PKGDIR/Hap1.16/lib;
 
-rm $PKGDIR/Hap1.15/boolean;
-echo "COMPILED:=true;" > $PKGDIR/Hap1.15/boolean;
+rm $PKGDIR/Hap1.16/boolean;
+echo "COMPILED:=true;" > $PKGDIR/Hap1.16/boolean;
 
 $GACDIR/gac -d $LIB/CompiledGAP/*.c;
 mkdir  $LIB/CompiledGAP/Compiled;
