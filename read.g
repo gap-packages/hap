@@ -396,6 +396,7 @@ ReadPackage("HAP","lib/RegularCWComplexes/piZero.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/filteredCW.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/directproduct.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/universalCover.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
