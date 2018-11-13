@@ -100,7 +100,6 @@ return Objectify(HapEquivariantCWComplex,
             elts:=Elts,
             group:=G,
             stabilizer:=Group(One(G)),
-            baseSpace:=X,
             properties:=
             [["dimension",dim], 
             ]  ));
@@ -114,7 +113,7 @@ end);
 ##########################################################
 InstallGlobalFunction(EquivariantCWComplexToRegularCWComplex,
 function(U,H)
-local boundaries, bnd, gbnd, ind, trans,pair2int, dimU, n, k,g,W;
+local boundaries, bnd, gbnd, ind, trans,pair2int, dimU, n, k,g;
 
 if not IsHapEquivariantCWComplex(U) then
     Print("This function applies only to G-CW-complexes.\n");
@@ -161,45 +160,9 @@ od;
 od;
 boundaries[dimU+2]:=[];
 
-W:=HAPRegularCWComplex(boundaries);
-W!.index:=ind;
-return W;
+return  HAPRegularCWComplex(boundaries);
 
 end);
 ##########################################################
 ##########################################################
-
-
-
-##########################################################
-##########################################################
-InstallGlobalFunction(EquivariantCWComplexToRegularCWMap,
-function(U,H)
-local YH,Y, map, ind;
-
-YH:=EquivariantCWComplexToRegularCWComplex(U,H);
-Y:=U!.baseSpace;
-ind:=YH!.index;
-
-#######################
-map:=function(n,k)
-local m, a;
-m:=k mod ind;
-a:=Int(k/ind);
-if m=0 then return a;
-else return a+1; fi;
-end;
-#######################
-
-return Objectify(HapRegularCWMap,
-       rec(
-           source:=YH,
-           target:=Y,
-           mapping:=map));
-
-
-end);
-##########################################################
-##########################################################
-
 

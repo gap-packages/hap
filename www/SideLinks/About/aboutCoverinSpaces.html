@@ -8,7 +8,7 @@
 <body
  style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
  link="#000066" vlink="#000066" alink="#000066">
-<br>
+pi<br>
 <table
  style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
  border="0" cellpadding="20" cellspacing="10">
@@ -45,8 +45,8 @@
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
-Y denote a regular CW-Complex, Let U denote the universal covering
-space of Y, and let p:U--&gt;Y denote the canonical map. The space U
+Y denote a regular CW-Complex, and let U denote the universal covering
+space of Y. The space U
 can be constructed and stored as a G-equivariant CW-complex.<br>
       <br>
 For instance, the following commands construct a 4-dimensional
@@ -83,7 +83,7 @@ Equivariant CW-complex of dimension 4<br>
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
 next commands set G equal to the fundamental group of Y, and then
 construct a subgroup H&lt;G of index 9. The group G is free abelian on
-two generators, and the quotient G/H is isomorphic to Z<sub>3</sub>+Z<sub>3</sub>.<br>
+two generators, and the quotient G/H is shown to be isomorphic to Z<sub>3</sub>+Z<sub>3</sub>.<br>
       </td>
     </tr>
     <tr>
@@ -119,7 +119,11 @@ gap&gt; Size(W);<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">General
 theory
-implies that the covering space W should also be homotopy
+implies
+that
+the
+covering
+space W should also be homotopy
 equivalent to a torus. As a check for this, the following commands
 establish that W has the same integral homology as a torus, as well as
 the same fundamental group.<br>
@@ -144,6 +148,131 @@ gap&gt; F:=FundamentalGroup(W);<br>
 &lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
 gap&gt; RelatorsOfFpGroup(F);<br>
 [ f2*f1*f2^-1*f1^-1 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">It
+may be that we are interested in the covering map p:W---&gt;Y and not
+just the 9-fold covering W. The map p can be constructed as folows.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+p:=EquivariantCWComplexToRegularCWMap(U,H);<br>
+Map of regular CW-complexes<br>
+      <br>
+gap&gt; Source(p);<br>
+Regular CW-complex of dimension 4<br>
+gap&gt; Size(Source(p));<br>
+20736<br>
+      <br>
+gap&gt; Target(p);<br>
+Regular CW-complex of dimension 4<br>
+gap&gt; Size(Target(p));<br>
+2304<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+covering map p induces homomorphisms H<sub>n</sub>(p):H<sub>n</sub>(W,Z)---&gt;H<sub>n</sub>(Y,Z)
+on
+integral
+homology. These homomorphisms, together with their
+cokernels, can be computed as follows.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P:=ChainMap(p);<br>
+Chain Map between complexes of length 4 . <br>
+      <br>
+gap&gt; h0:=Homology(P,0);;<br>
+gap&gt; AbelianInvariants(Target(h0)/Image(h0));<br>
+[&nbsp; ]<br>
+      <br>
+gap&gt; h1:=Homology(P,1);;<br>
+gap&gt; AbelianInvariants(Target(h1)/Image(h1));<br>
+[ 3, 3 ]<br>
+      <br>
+gap&gt; h2:=Homology(P,2);;<br>
+gap&gt; AbelianInvariants(Target(h2)/Image(h2));<br>
+[ 9 ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;">Second homotopy groups of spaces with
+finite fundamental groups</big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">If
+p:U--&gt;Y is the map from the universal cover U of Y, then the
+fundamental group of U is trivial and the Hurewicz homomorphism &#960;<sub>2</sub>(U)--&gt;H<sub>2</sub>(U)
+from
+the
+second
+homotopy group of U to the second integral homology of
+U is an isomorphism. Furthermore, the map p induces an
+isomorphism&nbsp;
+&#960;<sub>2</sub>(U)--&gt;&#960;<sub>2</sub>(Y). Thus H<sub>2</sub>(U) is
+isomorphic to the second homotopy group &#960;<sub>2</sub>(Y).<br>
+      <br>
+If the fundamental group of Y happens to be finite, then we can
+calculate H<sub>2</sub>(U) = &#960;<sub>2</sub>(Y) as follows. We
+illustrate the computation for Y equal to the projective plane.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+K:=[
+[1,2,3],
+[1,3,4],
+[1,2,6], [1,5,6], [1,4,5], [2,3,5], [2,4,5],
+[2,4,6], [3,4,6], [3,5,6]];;<br>
+      <br>
+gap&gt; K:=MaximalSimplicesToSimplicialComplex(K);<br>
+Simplicial complex of dimension 2.<br>
+      <br>
+gap&gt; Y:=RegularCWComplex(K);&nbsp; # Y is a regular CW-complex
+corresponding to the projective plane.<br>
+Regular CW-complex of dimension 2<br>
+      <br>
+gap&gt; U:=UniversalCover(Y);<br>
+Equivariant CW-complex of dimension 2<br>
+      <br>
+gap&gt; G:=U!.group;; #G is the fundamental group of Y, which by the
+next command is finite of order 2.<br>
+gap&gt; Order(G);<br>
+2<br>
+      <br>
+gap&gt; U:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); #U
+is the universal cover of Y<br>
+Regular CW-complex of dimension 2<br>
+      <br>
+gap&gt; Homology(U,0);<br>
+[ 0 ]<br>
+gap&gt; Homology(U,1);<br>
+[&nbsp; ]<br>
+gap&gt; Homology(U,2);<br>
+[ 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+above computation shows that the space Y has infinite cyclic second
+homotopy group<br>
+      <br>
+      <div style="text-align: center;">&#960;<sub>2</sub>(Y) = Z .<br>
+      </div>
       </td>
     </tr>
     <tr>
