@@ -714,6 +714,7 @@ DeclareGlobalFunction("CWMap2ChainMap");
 DeclareGlobalFunction("NonRegularCWBoundary");
 DeclareGlobalFunction("UniversalCover");
 DeclareGlobalFunction("EquivariantCWComplexToRegularCWComplex");
+DeclareGlobalFunction("EquivariantCWComplexToRegularCWMap");
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");#doc
