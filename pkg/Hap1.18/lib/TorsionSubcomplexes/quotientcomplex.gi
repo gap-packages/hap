@@ -456,7 +456,6 @@ end);
 ###########################################################################
 DeclareGlobalFunction("PrintTorsionSubcomplex");
 InstallGlobalFunction("PrintTorsionSubcomplex",
-[IsHapTorsionSubcomplex],
 function(R)
 local N, reducedTorsionCells,J,n,j,G,B,b, ReduceModP, p, celldata, Stab,freq,
       t, StabList, StabListStr;
@@ -538,7 +537,6 @@ end);
 #################################
 DeclareGlobalFunction("ConvertTorsionComplexToGcomplex");
 InstallGlobalFunction("ConvertTorsionComplexToGcomplex",
-[IsHapTorsionSubcomplex],
 function(C)
 local data, Elts,n,lnth,dims,Dimension, StabilizerGroups,
       RotSubGroups,boundaryList,k, tmp, BI, SGN, LstEl,

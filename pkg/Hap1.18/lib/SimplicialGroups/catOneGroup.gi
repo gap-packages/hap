@@ -508,7 +508,8 @@ local
 		for n in [1..nLK] do
 			LfK:=[];
 			K:=LK[n];
-			CompK:=Complementclasses(G,K);
+			#CompK:=Complementclasses(G,K); #CHANGED 25/11/2018
+                        CompK:=ComplementClassesRepresentatives(G,K);
 			for N in CompK do
 				GensN:=SmallGeneratingSet(N);
 				Gens:=Concatenation(GensLK[n],GensN);
