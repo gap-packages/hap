@@ -6,7 +6,8 @@ InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
 local P,Y,base,e,bool, b, vertices,edges,F, G, FhomG, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
-      EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation;
+      EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation,R,S,i,ii,jj, 
+      indx, A, B;
 
 Y:=arg[1];
 base:=1;
@@ -48,8 +49,30 @@ Apply(0cells,x->x[2]);
 Apply(1cells,x->x[2]);
 2cells:=Filtered(cells,x->x[1]=2);
 Apply(2cells,x->x[2]);
-2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.homotopyOrientation[3][x]]);
+2boundaries:=1*List(2cells,x->[Y!.boundaries[3][x],Y!.homotopyOrientation[3][x]]);
 Apply(2boundaries,x->[x[1]{[2..Length(x[1])]},x[2]]);
+
+##NEED TO ORDER EACH BOUNDARY  #CHANGED 27/11/2018
+for i in [1..Length(2boundaries)] do
+R:=1*2boundaries[i];
+S:=[1];
+indx:=[2..Length(R[1])];
+for ii in [1..Length(R[1])-1] do
+A:=Y!.boundaries[2][R[1][S[ii]]];
+A:=A{[2,3]};
+for jj in indx do
+B:=Y!.boundaries[2][R[1][jj]];
+B:=B{[2,3]};
+if Length(Intersection(A,B))>0 then
+Add(S,jj);
+RemoveSet(indx,jj);
+break;
+fi;
+od;
+od;
+2boundaries[i]:=[2boundaries[i][1]{S},2boundaries[i][2]{S}];
+od;
+##BOUNDARIES ORDERED
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
 
 

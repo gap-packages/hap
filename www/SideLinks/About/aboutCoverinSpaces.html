@@ -124,7 +124,8 @@ that
 the
 covering
 space
-W should also be homotopy
+W
+should also be homotopy
 equivalent to a torus. As a check for this, the following commands
 establish that W has the same integral homology as a torus, as well as
 the same fundamental group.<br>
@@ -182,7 +183,8 @@ covering map p induces homomorphisms H<sub>n</sub>(p):H<sub>n</sub>(W,Z)---&gt;H
 on
 integral
 homology.
-These homomorphisms, together with their
+These
+homomorphisms, together with their
 cokernels, can be computed as follows.<br>
       </td>
     </tr>
@@ -221,7 +223,8 @@ from
 the
 second
 homotopy
-group of U to the second integral homology of
+group
+of U to the second integral homology of
 U is an isomorphism. Furthermore, the map p induces an
 isomorphism&nbsp;
 &#960;<sub>2</sub>(U)--&gt;&#960;<sub>2</sub>(Y). Thus H<sub>2</sub>(U) is
@@ -229,7 +232,7 @@ isomorphic to the second homotopy group &#960;<sub>2</sub>(Y).<br>
       <br>
 If the fundamental group of Y happens to be finite, then we can
 calculate H<sub>2</sub>(U) = &#960;<sub>2</sub>(Y) as follows. We
-illustrate the computation for Y equal to the projective plane.<br>
+illustrate the computation for Y equal to the real projective plane.<br>
       </td>
     </tr>
     <tr>
@@ -239,7 +242,8 @@ K:=[
 [1,2,3],
 [1,3,4],
 [1,2,6],
-[1,5,6], [1,4,5], [2,3,5], [2,4,5],
+[1,5,6],
+[1,4,5], [2,3,5], [2,4,5],
 [2,4,6], [3,4,6], [3,5,6]];;<br>
       <br>
 gap&gt; K:=MaximalSimplicesToSimplicialComplex(K);<br>
@@ -276,6 +280,126 @@ above computation shows that the space Y has infinite cyclic second
 homotopy group<br>
       <br>
       <div style="text-align: center;">&#960;<sub>2</sub>(Y) = Z .<br>
+      </div>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-weight: bold;">Third homotopy groups of simply connected
+spaces</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">For
+any simply connected space U there is an exact sequence<br>
+      <br>
+      <div style="text-align: center;">---&gt; &#960;<sub>4</sub>(U) ---&gt;
+H<sub>4</sub>(U) ---&gt; H<sub>4</sub>( K(&#960;<sub>2</sub>(U), 2) )
+---&gt; &#960;<sub>3</sub>(U) ---&gt;&nbsp; H<sub>4</sub>(U) ---&gt; 0<br>
+      <div style="text-align: left;"><br>
+due to J.H.C.Whitehead.&nbsp; Here K(&#960;<sub>2</sub>(U), 2) is an
+Eilenberg-MacLane space with second homotopy group equal to &#960;<sub>2</sub>(U).<br>
+      <br>
+      <span style="font-weight: bold;">FIRST EXAMPLE</span>:<br>
+      <br>
+Continuing with the above example with Y the real projective plane and
+U its universal cover, we see that H<sub>4</sub>(U) = H<sub>4</sub>(U)
+= 0 since U is a 2-dimensional CW-space. The exact sequence
+implies&nbsp; &#960;<sub>3</sub>(U) = H<sub>4</sub>(K(&#960;<sub>2</sub>(U), 2)
+). Furthermore, &#960;<sub>3</sub>(U) = &#960;<sub>3</sub>(Y) since U is the
+universal cover. The following commands establish that<br>
+      <br>
+      <div style="text-align: center;">&#960;<sub>3</sub>(Y) = Z .<br>
+      </div>
+      <br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+A:=AbelianPcpGroup([0]);<br>
+Pcp-group with orders [ 0 ]<br>
+&nbsp;<br>
+gap&gt; K:=EilenbergMacLaneSimplicialGroup(A,2,5);;<br>
+gap&gt; C:=ChainComplexOfSimplicialGroup(K);<br>
+Chain complex of length 5 in characteristic 0 . <br>
+      <br>
+gap&gt; Homology(C,4);<br>
+[ 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-weight: bold;">SECOND EXAMPLE:</span><br>
+      <br>
+The following commands construct a 4-dimensional simplicial complex Y
+with 9 vertices and 36 4-dimensional simplices, and establish that<br>
+      <br>
+&#960;<sub>1</sub>(Y)=0 , &#960;<sub>2</sub>(Y)=Z , H<sub>3</sub>(Y)=0, H<sub>4</sub>(Y)=Z,
+H<sub>4</sub>(K(&#960;<sub>2</sub>(U), 2) =Z .<br>
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">Y:=[
+[ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], [ 1, 2, 6, 4,
+7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], [ 2, 3, 5, 6, 7 ], [ 2, 3,
+6, 4, 9 ], [ 3, 1, 4, 5, 7 ], <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ 3, 1, 5, 6, 9 ], [ 3, 1,
+6, 4, 5 ], [ 3, 1, 6, 4, 8 ], [ 4, 5, 7, 8, 3 ], [ 4, 5, 7, 8, 9 ], [
+4, 5, 8, 9, 2 ], [ 4, 5, 9, 7, 1 ], [ 5, 6, 7, 8, 2 ], [ 5, 6, 8, 9, 1
+], <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ 5, 6, 8, 9, 7 ], [ 5, 6,
+9, 7, 3 ], [ 6, 4, 7, 8, 1 ], [ 6, 4, 8, 9, 3 ], [ 6, 4, 9, 7, 2 ], [
+6, 4, 9, 7, 8 ], [ 7, 8, 1, 2, 3 ], [ 7, 8, 1, 2, 6 ], [ 7, 8, 2, 3, 5
+], <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ 7, 8, 3, 1, 4 ], [ 8, 9,
+1, 2, 5 ], [ 8, 9, 2, 3, 1 ], [ 8, 9, 2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [
+9, 7, 1, 2, 4 ], [ 9, 7, 2, 3, 6 ], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5
+] ];;<br>
+      <br>
+Y:=MaximalSimplicesToSimplicialComplex(Y);<br>
+Simplicial complex of dimension 4.<br>
+      <br>
+Y:=RegularCWComplex(K);<br>
+Regular CW-complex of dimension 4<br>
+      <br>
+gap&gt; Order(FundamentalGroup(Y));<br>
+1<br>
+gap&gt; Homology(Y,2);<br>
+[ 0 ]<br>
+gap&gt; Homology(Y,3);<br>
+[&nbsp; ]<br>
+gap&gt; Homology(Y,4);<br>
+[ 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Whitehead's
+sequence yields the exact sequence<br>
+      <br>
+      <div style="text-align: center;">Z ----&gt; Z ----&gt; &#960;<sub>3</sub>(Y)
+---&gt; 0 .<br>
+      <div style="text-align: left;">The first map <br>
+      <br>
+      <div style="text-align: center;">H<sub>4</sub>(Y)=Z ---&gt; H<sub>4</sub>(K(&#960;<sub>2</sub>(Y),
+2)=Z<br>
+      <br>
+      <div style="text-align: left;">In order to determine &#960;<sub>3</sub>(Y)
+it remains compute this first map.<br>
+      <br>
+[The simplicial complex is due to W. Kiihnel and T. F. Banchoff and is
+of the homotopy type of the complex projective plane. So, assuming this
+extra knowledge, we have &#960;<sub>3</sub>(Y)=0.]</div>
+      </div>
+      </div>
       </div>
       </td>
     </tr>
