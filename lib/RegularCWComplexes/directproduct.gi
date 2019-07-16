@@ -16,11 +16,14 @@ bndY:=Y!.boundaries;
 bnd:=List([0..Dimension(X)+Dimension(Y)],i->[]);
 
 bool:=IsBound(Y!.orientation) and IsBound(X!.orientation);
+
+bool:=false;     ##NEED TO FIX THE BUG WHEN bool=true 
+                 ##as this will save time and memory (20/04/2019)
 if bool then
 orientX:=X!.orientation;
 orientY:=Y!.orientation;
-orient:=List([0..Dimension(X)+Dimension(Y)],i->[]);
 fi;
+orient:=List([0..Dimension(X)+Dimension(Y)],i->[]);
 
 ###############################
 ###############################

@@ -181,6 +181,46 @@ end);
 ###################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapEquivariantChainComplex",IsObject);
+
+
+DeclareRepresentation(  "IsHapEquivariantChainComplexRep",
+                        IsComponentObjectRep,
+                        ["dimension",
+                         "boundary",
+                         "group",
+                         "elts",
+                         "properties"
+                         ]);
+
+HapEquivariantChainComplexFamily:=NewFamily( "HapEquivariantChainComplexFamily",
+                                          IsHapEquivariantChainComplex,
+                                          IsHapEquivariantChainComplex);
+
+HapEquivariantChainComplex:=NewType(HapEquivariantChainComplexFamily,
+                                IsHapEquivariantChainComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapEquivariantChainComplexes",
+ [IsHapEquivariantChainComplex],
+ function(R)
+ Print("Equivariant chain complex of dimension ",EvaluateProperty(R,"dimension"));
+ Print("\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapEquivariantChainComplexes",
+ [IsHapEquivariantChainComplex],
+ function(R)
+ Print("Equivariant chain complex of dimension ",EvaluateProperty(R,"dimension"));
+ Print("\n");
+end);
+###################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################

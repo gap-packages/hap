@@ -190,7 +190,6 @@ for i in FREE do
 if MCoboundaries[i][1]=1 then Add(Free,i);fi;
 od;
 
-#Print([Length(FREE),Length(Free)],"  ");
 
 if Length(Free)=0 then Unbind(FREE); return false;fi;
 #######################
@@ -881,7 +880,7 @@ HDCrec:=List([1..dim+1],i->[]);;
 ###############################
 ###############################
 HomotopicalDeformCell:=function(n,kk)
-local sgnn,x,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2;
+local sgnn,x,y,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2,B,S,i,ii,jj,indx,A,C;
                                 #This will return an ordered list of signed 
 				#n-cells into which the k-th n-cell is 
 				#deformed.
@@ -907,13 +906,54 @@ f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
 sn:=Y!.homotopyOrientation[n+2][f];  ##
 
+if n=1 then
+########################################
+# Let's order the elements of bnd.
+B:=1*bnd{[2..Length(bnd)]};
+S:=[1]; 
+indx:=[2..Length(B)];
+for ii in [1..Length(B)-1] do
+   A:=Y!.boundaries[2][B[S[ii]]];
+   A:=A{[2,3]};
+   for jj in indx do
+      C:=Y!.boundaries[2][B[jj]];
+      C:=C{[2,3]};
+      if Length(Intersection(A,C))>0 then
+         Add(S,jj);
+         RemoveSet(indx,jj);
+         break;
+      fi;
+   od;
+od;
+bnd:=Concatenation([Length(B)],B{S});
+sn:=sn{S};;
+
+if Length(bnd)>3 then
+###### This is a really thoughtless way to get the signs right!!!
+###### And it is also wasteful of time.
+A:=[Y!.boundaries[2][bnd[2]]{[2,3]}];
+for i in [3..Length(bnd)]  do
+x:=Y!.boundaries[2][bnd[i]]{[2,3]}; y:=A[Length(A)];;
+if x[1] in y then sn[i-1]:=Y!.homotopyOrientation[2][bnd[i]][1]; Add(A,x{[1,2]});  
+else  sn[i-1]:=-Y!.homotopyOrientation[2][bnd[i]][1]; Add(A,x{[2,1]}); fi; 
+
+od;
+if A[1][1] in A[2] then sn[1]:=-Y!.homotopyOrientation[2][bnd[1]][1]; 
+else sn[1]:=Y!.homotopyOrientation[2][bnd[1]][1]; fi;
+######
+######
+########################################
+fi;
+fi;
+
 def:=[]; def1:=[];def2:=[];
+
 
 for x in [2..Length(bnd)] do
 if not bnd[x]=k then
-Add(def1,sn[x-1]*bnd[x]);
+     Add(def1,sn[x-1]*bnd[x]);
 else
-sgnn:=sn[x-1];
+     sgnn:=sn[x-1];
 break;
 fi;
 od;
@@ -1021,6 +1061,7 @@ Objectify(HapChainComplex,
            dimension:=Dimension,
            boundary:=Boundary,
            deform:=DeformCell,
+           deformCellSgn:=DeformCellSgn,
            htpy:=DCSHrec,
            homotopicalDeform:=HomotopicalDeformCell,
            basis:=basis,
@@ -1597,16 +1638,18 @@ local W , a, b, OnceSimplifiedRegularCWComplex;
 #######################################################
 #######################################################
 OnceSimplifiedRegularCWComplex:=function(W)
-local Y, perm, cnt, JoinCells, d, d1, n, x, i, b,  cobnd, bnd,  dim , F, bool, orien,  pos;
+local Y, perm, cnt, JoinCells, d, d1, n, x, i, b,  cobnd, bnd,  dim , F, bool, orien,  pos ;
 
 if IsBound(W!.orientation) then
-Y:=RegularCWComplex(StructuralCopy(W!.boundaries),StructuralCopy(W!.orientation));
+Y:=RegularCWComplex(1*W!.boundaries,1*W!.orientation);
 else
-Y:=RegularCWComplex(StructuralCopy(W!.boundaries));
+Y:=RegularCWComplex(1*W!.boundaries);
+
 fi;
 
 if IsBound(Y!.orientation) then bool:=true;
-orien:=StructuralCopy(Y!.orientation);
+orien:=1*Y!.orientation;
+
 else bool:=false; fi;
 
 bnd:=Y!.boundaries;
@@ -1618,41 +1661,34 @@ cobnd:=Y!.coboundaries;
 JoinCells:=function(d1,n)
                                  #The n-th cell in dimension d=d1-1 is removed
                                  #assuming it has a coboundary of size 2.
-local V1,V2,V3,cob, d, a, b, d2,d3, m, s, t, pos, poss ;
+local V1,V2,V3,cob, d, a, b, d2,d3, m, s, t, pos, poss,u;
 
 ##
 ##CHECK IF REMOVAL SHOULD TAKE PLACE
-
+if not (cobnd[d1][n][1] =2 and bnd[d1][n][1]>0) then return false; fi;
+d2:=d1+1;
+d3:=d2+1;
+cob:=1*cobnd[d1][n];
+if not SortedList(cobnd[d2][cob[2]])= SortedList(cobnd[d2][cob[3]]) then return false; fi;
 V1:=BoundaryOfRegularCWCell(Y,d1-1,n);
 V2:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][2]);
 V3:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][3]);
-#if not Size(V1)=Size(Intersection(V1,V2,V3)) then Print([d1-1,n],V1,V2,V3,"\n\n");
-# fi;
-if 
-not (
-cobnd[d1][n][1] =2 
-and bnd[d1][n][1]>0  
-and 1+Size(V1)=Size(Intersection(V2,V3)) )
+if not 
+ 1+Size(V1)=Size(Intersection(V2,V3))  
 then return false; fi;
 ##
 ##CHECK DONE
-
-d2:=d1+1;
-d3:=d2+1;
-cob:=StructuralCopy(cobnd[d1][n]);
-if not SortedList(cobnd[d2][cob[2]])= SortedList(cobnd[d2][cob[3]]) then return false; fi;
 
 ##
 ##REDUCE COBOUNDARIES OF BOUNDARIES OF nTH CELL
 if d1>1 then
 d:=d1-1;
 for m in bnd[d1][n]{[2..Length(bnd[d1][n])]} do
-t:=cobnd[d][m]{[2..Length(cobnd[d][m])]};
+t:=1*cobnd[d][m]{[2..Length(cobnd[d][m])]};
 poss:=Position(t,n);
 Remove(t,poss);
 cobnd[d][m]:=Concatenation([Length(t)],t);
 od;
-
 fi;
 ##
 ##COBOUNDARIES OF BOUNDARIES REDUCED
@@ -1677,7 +1713,9 @@ Remove(t,pos);
 
 if bool then b:=orien[d2][cob[3]][pos]; Remove(orien[d2][cob[3]],pos); fi;
 
-bnd[d2][cob[2]]:=Concatenation([Length(s)+Length(t)],s,t);
+u:=SortedList(Concatenation(s,t));
+
+bnd[d2][cob[2]]:=Concatenation([Length(u)],u);
 
 if bool then orien[d2][cob[2]]:=Concatenation(orien[d2][cob[2]],-a*b*orien[d2][cob[3]]); fi;
 ##
@@ -1717,28 +1755,31 @@ fi;
 od;
 
 
-
 bnd[d2][cob[3]]:=[0];
+
 cobnd[d2][cob[3]]:=[0];
+return true;
 end;
 
 
 ###################################################
 ###################################################
 
+
+
 ###################################################
 ######SIMPLIFICATION STARTS########################
 
 for d in [0..Dimension(Y)-1] do
 d1:=d+1;
+
 for n in [1..Length(bnd[d1])] do
 if cobnd[d1][n][1] =2 and bnd[d1][n][1]>0 then 
-JoinCells(d1,n);  
+JoinCells(d1,n);   
 fi;
 od;
 
 od;
-
 
 ######SIMPLIFICATION DONE##########################
 ###################################################
@@ -1758,21 +1799,23 @@ od;
 od;
 
 for d in [1..Length(bnd)] do
-F:=Filtered([1..Length(bnd[d])],i->not bnd[d][i][1]=0);
-bnd[d]:=bnd[d]{F};
+F:=1*Filtered([1..Length(bnd[d])],i->not bnd[d][i][1]=0);
+bnd[d]:=1*((bnd[d]){F});
 if bool and IsBound(orien[d]) then orien[d]:=orien[d]{F}; fi;
 
 if d>1 then
 d1:=d-1;
 for x in bnd[d] do
 for i in [2..Length(x)] do
-x[i]:=StructuralCopy(perm[d1][x[i]]);
+x[i]:=1*perm[d1][x[i]];
+
 od;
 od;
 fi;
 od;
 
-if bool then return RegularCWComplex(bnd, orien);
+#if bool then return RegularCWComplex(bnd, orien);
+if false then return RegularCWComplex(bnd, orien);
 else
 return RegularCWComplex(bnd);
 fi;
@@ -1782,7 +1825,7 @@ end;
 
 
 W:=OnceSimplifiedRegularCWComplex(Y);
-#return W;
+
 
 a:=Size(Y);
 b:=Size(W);

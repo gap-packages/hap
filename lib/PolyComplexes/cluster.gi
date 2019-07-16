@@ -1046,7 +1046,7 @@ end);
 ########################################################
 ########################################################
 NerveOfCover:=function(C,N)
-local S, V, cnt, i, x, tog;
+local S, V, cnt, i, x, tog,en;
 
 V:=[1..Length(C)];
 
@@ -1055,7 +1055,9 @@ S:=List(V,i->[i]);
 cnt:=1; tog:=true;
 while cnt<=N and tog=true do
 cnt:=cnt+1;tog:=false;
-for x in Combinations(V,cnt) do
+#for x in Combinations(V,cnt) do #CHANGED 06/02/2019
+en:=IteratorOfCombinations(V,cnt);
+for x in en do
 if Length(Intersection(List(x,xi->C[xi])))>0 then Add(S,x); tog:=true; fi;
 od;
 od;
@@ -1132,7 +1134,7 @@ end);
 #Mapper_alt:=function(S,f,N,t,tol)
 InstallGlobalFunction(Mapper,
 function(arg)
-local  L, i, s , N, t, tol, f, S, dx, dz, cluster, r, P;
+local  L, i, s , B, N, t, tol, f, S, dx, dz, cluster, r, P;
 
 ###########################
 if Length(arg)=5 then
@@ -1143,6 +1145,7 @@ fi;
 
 S:=arg[1]; dx:=arg[2]; f:=arg[3]; dz:=arg[4]; 
 P:=arg[5]; r:=arg[6]; cluster:=arg[7];
+if Length(arg)=8 then B:=arg[8]; else B:=5; fi; #CHANGED 06/02/2019
 L:=List(P,x->[]);
 for s in S do
 for i in [1..Length(P)] do
@@ -1154,7 +1157,7 @@ L:=List(L,x->cluster(x));
 L:=Concatenation(L);
 L:=Filtered(L,x->Length(x)>0);
 
-N:=NerveOfCover(L,10);
+N:=NerveOfCover(L,B);
 N!.clustersizes:=List(L,Size);
 N!.clusters:=L;
 return N;

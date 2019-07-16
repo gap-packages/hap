@@ -3,6 +3,7 @@
 ##  cocyclic.gi                HAPcocyclic                    Robert F. Morse
 ##
 ##
+##  $Id: cocyclic.gi,v 1.1 2008-06-11 17:26:09 unialg Exp $
 
 #############################################################################
 ##
@@ -352,3 +353,13 @@ InstallMethod( ViewObj, true, [ IsCcGroup ], SUM_FLAGS,
             Print("<Cc-group>");
         fi;
     end );
+
+
+#############################################################################
+##
+##  History
+##
+##  $Log: cocyclic.gi,v $
+##  Revision 1.1  2008-06-11 17:26:09  unialg
+##  File Creation. RFM
+##

@@ -17,7 +17,7 @@ local
 	BoundaryCoeff,
 	PseudoBoundary,
 	BoundaryRecord,
-	m, n, S, SD;
+	m, n, i, S, SD,R;
 
 Vertices:=CoxeterDiagramVertices(D);
 Glist:=CoxeterDiagramFpArtinGroup(D);
@@ -81,9 +81,9 @@ Trans:=List(Elements(RightTransversal(WS,WT)),x->x^-1);
 
 for x in Trans do
 y:=Image(WShomG,x);
-if not y in EltsG then Append(EltsG,[y]); 
+if not y in EltsG then Add(EltsG,y); 
 y:=Image(GhomG1,y); 
-Append(EltsG1,[y]);
+Add(EltsG1,y);
 fi;
 od;
 
@@ -137,7 +137,7 @@ end;
 #####################################################################
 
 
-return Objectify(HapResolution,
+R:=         Objectify(HapResolution,
 	    rec(
 	    dimension:=Dimension,
 	    boundary:=Boundary,
@@ -150,6 +150,13 @@ return Objectify(HapResolution,
 	     ["characteristic",0],
 	     ["type","resolution"],
 	     ["reduced",true]]  ));
+for n in [1..Length(R)] do
+for i in [1..R!.dimension(n)] do
+R!.boundary(n,i);
+od;od;
+
+return R;
+
 end);
 #####################################################################
 

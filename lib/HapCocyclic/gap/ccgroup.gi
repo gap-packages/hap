@@ -3,6 +3,7 @@
 ##  cocyclic.gi                HAPcocyclic                    Robert F. Morse
 ##
 ##
+##  $Id: ccgroup.gi,v 1.4 2008-07-11 22:42:22 unialg Exp $
 
 #############################################################################
 ##
@@ -267,3 +268,29 @@ InstallMethod
        fi;
    end 
 );
+
+
+#############################################################################
+##
+##  History
+##
+##  $Log: ccgroup.gi,v $
+##  Revision 1.4  2008-07-11 22:42:22  unialg
+##
+##  Some final clean up before first release. RFM
+##
+##  Revision 1.3  2008-07-11 22:04:17  unialg
+##
+##  Added IdGroup but avoiding Multiplication tables. RFM
+##
+##  Revision 1.2  2008-07-11 21:38:55  unialg
+##
+##  Development commit for beta release. RFM
+##
+##  Revision 1.1  2008-07-11 21:02:00  unialg
+##
+##  First beta release. RFM
+##
+##  Revision 1.1  2008-06-11 17:26:09  unialg
+##  File Creation. RFM
+##

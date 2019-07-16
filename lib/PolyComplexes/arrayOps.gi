@@ -156,6 +156,43 @@ return fail;
 end;
 fi;
 ######
+if Dim=7 then return
+function(Dims,Func)
+local i,j,k,l,m,n,p,b;
+for i in Dims[1] do
+for j in Dims[2] do
+for k in Dims[3] do
+for l in Dims[4] do
+for m in Dims[5] do
+for n in Dims[6] do
+for p in Dims[7] do
+b:=Func([i,j,k,l,m,n,p]);
+if b then return [i,j,k,l,m,n,p]; fi;
+od;od;od;od;od;od;od;
+return fail;
+end;
+fi;
+######
+if Dim=8 then return
+function(Dims,Func)
+local i,j,k,l,m,n,p,q,b;
+for i in Dims[1] do
+for j in Dims[2] do
+for k in Dims[3] do
+for l in Dims[4] do
+for m in Dims[5] do
+for n in Dims[6] do
+for p in Dims[7] do
+for q in Dims[8] do
+b:=Func([i,j,k,l,m,n,p,q]);
+if b then return [i,j,k,l,m,n,p,q]; fi;
+od;od;od;od;od;od;od;od;
+return fail;
+end;
+fi;
+######
+
+
 
 
 end);
@@ -235,6 +272,38 @@ od;od;od;od;od;od;
 end;
 fi;
 ######
+if Dim=7 then return
+function(Dims,Func)
+local i,j,k,l,m,n,p;
+for i in Dims[1] do
+for j in Dims[2] do
+for k in Dims[3] do
+for l in Dims[4] do
+for m in Dims[5] do
+for n in Dims[6] do
+for p in Dims[7] do
+Func([i,j,k,l,m,n,p]);
+od;od;od;od;od;od;od;
+end;
+fi;
+######
+if Dim=8 then return
+function(Dims,Func)
+local i,j,k,l,m,n,p,q;
+for i in Dims[1] do
+for j in Dims[2] do
+for k in Dims[3] do
+for l in Dims[4] do
+for m in Dims[5] do
+for n in Dims[6] do
+for p in Dims[7] do
+for q in Dims[8] do
+Func([i,j,k,l,m,n,p,q]);
+od;od;od;od;od;od;od;od;
+end;
+fi;
+
+
 
 end);
 #####################################################################

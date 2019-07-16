@@ -6,7 +6,8 @@ InstallGlobalFunction(FundamentalGroupOfRegularCWComplex,
 function(arg)
 local P,Y,base,e,bool, b, vertices,edges,F, G, FhomG, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
-      EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation;
+      EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation,R,S,SS,i,ii,jj,      bnd,sn, y, j,
+      indx, A, B, fn;
 
 Y:=arg[1];
 base:=1;
@@ -24,10 +25,14 @@ fi;
 
 
 
-if Dimension(Y)<4 then
-cells:=CriticalCellsOfRegularCWComplex(Y);
+if Dimension(Y)<4 then    
+   cells:=CriticalCellsOfRegularCWComplex(Y);
 else
-cells:=CocriticalCellsOfRegularCWComplex(Y,3);
+   if IsBound(Y!.allcocriticalcells) then 
+      cells:=CocriticalCellsOfRegularCWComplex(Y,Y!.allcocriticalcells);
+   else
+      cells:=CocriticalCellsOfRegularCWComplex(Y,3);
+   fi;
 fi;
 Y!.criticalCells:=cells;
 
@@ -48,14 +53,61 @@ Apply(0cells,x->x[2]);
 Apply(1cells,x->x[2]);
 2cells:=Filtered(cells,x->x[1]=2);
 Apply(2cells,x->x[2]);
-2boundaries:=List(2cells,x->[Y!.boundaries[3][x],Y!.homotopyOrientation[3][x]]);
+2boundaries:=1*List(2cells,x->[Y!.boundaries[3][x],Y!.homotopyOrientation[3][x]]);
 Apply(2boundaries,x->[x[1]{[2..Length(x[1])]},x[2]]);
+
+
+##NEED TO ORDER EACH BOUNDARY  #CHANGED 27/11/2018
+for i in [1..Length(2boundaries)] do
+R:=1*2boundaries[i];
+S:=[1]; #SS:=[1];
+indx:=[2..Length(R[1])];
+for ii in [1..Length(R[1])-1] do
+A:=Y!.boundaries[2][R[1][S[ii]]];
+A:=A{[2,3]};
+for jj in indx do
+B:=Y!.boundaries[2][R[1][jj]];
+B:=B{[2,3]};
+if Length(Intersection(A,B))>0 then
+Add(S,jj);
+RemoveSet(indx,jj);
+break;
+fi;
+od;
+od;
+
+2boundaries[i]:=[2boundaries[i][1]{S},2boundaries[i][2]{S}];
+od;
+##BOUNDARIES ORDERED
+
+for j in [1..Length(2boundaries)] do
+sn:=[];
+bnd:=2boundaries[j][1];
+###### This is a really thoutless way to get the signs right!!!
+###### And it is also wasteful of time.
+A:=[Y!.boundaries[2][bnd[1]]{[2,3]}];
+for i in [2..Length(bnd)]  do
+x:=Y!.boundaries[2][bnd[i]]{[2,3]}; y:=A[Length(A)];;
+if x[1] in y then sn[i]:=Y!.homotopyOrientation[2][bnd[i]][1]; Add(A,x{[1,2]}); 
+else sn[i]:=-Y!.homotopyOrientation[2][bnd[i]][1]; Add(A,x{[2,1]}); fi;
+od;
+if A[1][1] in A[2] then A[1]:=A[1]{[2,1]}; sn[1]:=-Y!.homotopyOrientation[2][bnd[1]][1];
+else sn[1]:=Y!.homotopyOrientation[2][bnd[1]][1]; fi;
+2boundaries[j][2]:=sn;
+######
+######
+########################################
+od;
+
+
+
+
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
 
 
 deform:=ChainComplex(Y)!.homotopicalDeform;
-Apply(2boundaries,x->Flat(List(x,a->deform(1,a))));
 
+Apply(2boundaries,x->Flat(List(x,a->deform(1,a))));
 
 vertices:=[deform(0,base)];
 edges:=[];
@@ -100,9 +152,7 @@ w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
 w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x));
-#Print(gens[Position(1cells,AbsInt(x))]^(SignInt(x)),"  ");
 fi;
-#Print("\n");
 od;
 
 Add(rels,w);

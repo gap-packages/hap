@@ -1,311 +1,516 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type"
- content="text/html; charset=ISO-8859-1">
-  <title>AboutHap</title>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(214, 255, 255);;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
 </head>
-<body
- style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
- link="#000066" vlink="#000066" alink="#000066">
-<br>
-<table
- style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
- border="0" cellpadding="20" cellspacing="10">
-  <tbody>
-    <tr align="center">
-      <th style="vertical-align: top;">
-      <table style="width: 100%; text-align: left;" cellpadding="2"
- cellspacing="2">
-        <tbody>
-          <tr>
-            <td style="vertical-align: top;"><a
- href="aboutPeripheral.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
-            </td>
-            <td
- style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
- style="font-weight: bold;">About HAP: Covering Spaces<br>
-            </span></big></td>
-            <td style="text-align: right; vertical-align: top;"><a
- href="aboutQuandles.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <big><span style="font-weight: bold;"></span></big><br>
-      </th>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: center;"><big
- style="font-weight: bold;">Covering Spaces<br>
-      </big>Joint work with Kelvin Killeen<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
-Y denote a regular CW-Complex, and let U denote the universal covering
-space of Y. The space U
-can be constructed and stored as a G-equivariant CW-complex.<br>
-      <br>
-For instance, the following commands construct a 4-dimensional
-CW-complex Y which is homotopy equivalent to a 2-dimensional torus. The
-CW-complex Y involves 2304 cells.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
-A:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
-gap&gt; S:=PureCubicalComplex(A);;<br>
-gap&gt; T:=DirectProduct(S,S);;<br>
-gap&gt; Y:=RegularCWComplex(T);;<br>
-gap&gt; Size(Y);<br>
-2304<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-next commands then construct the universal covering space U of Y.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-U:=UniversalCover(Y);<br>
-Equivariant CW-complex of dimension 4<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-next commands set G equal to the fundamental group of Y, and then
-construct a subgroup H&lt;G of index 9. The group G is free abelian on
-two generators, and the quotient G/H is shown to be isomorphic to Z<sub>3</sub>+Z<sub>3</sub>.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-G:=U!.group;;<br>
-gap&gt;
-L:=LowIndexSubgroupsFpGroup(G,9);;<br>
-gap&gt; H:=L[58];;<br>
-gap&gt; AbelianInvariants(G/H);<br>
-[ 3, 3 ]<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-next command constructs the 9-fold covering space W of Y for which the
-covering map p:W--&gt;Y sends the fundamental group of W injectively
-onto the subgroup H&lt;G. The space W has 20736 cells.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-W:=EquivariantCWComplexToRegularCWComplex(U,H);<br>
-Regular CW-complex of dimension 4<br>
-      <br>
-gap&gt; Size(W);<br>
-20736<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">General
-theory
-implies
-that
-the
-covering
-space
-W should also be homotopy
-equivalent to a torus. As a check for this, the following commands
-establish that W has the same integral homology as a torus, as well as
-the same fundamental group.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-Homology(W,0);<br>
+<body>
+
+<a href="aboutPeripheral.html" class="previous">&laquo; Previous</a>
+<a href="aboutContents.html" class="previous"> Top</a>
+<a href="aboutQuandles.html" class="next">Next &raquo;</a> 
+<h2>About HAP: Covering Spaces</h2>
+
+<h3>Joint work with Kelvin Killeen</h3>
+
+<p>
+Let \(Y\) denote a finite regular CW-complex. 
+Let \(\widetilde Y\)  denote its universal covering space. 
+The covering space  inherits a regular CW-structure which 
+can be computed  and stored using the data type of a 
+\(\pi_1Y\)-equivariant CW-complex. The 
+cellular chain complex \(C_\ast\widetilde Y\)  of \(\widetilde Y\) can  
+be computed and stored as an equivariant chain complex.
+Given an admissible discrete vector field  on 
+\( Y\), we can endow \(Y\) with a smaller  
+non-regular CW-structre whose cells correspond to the critical 
+cells in the vector field.
+ This smaller CW-structure leads to a more efficient chain complex
+ \(C_\ast \widetilde Y\) involving one free generator for each critical cell in the vector field. 
+</p>
+
+<h3>Cellular chains on the universal cover</h3>
+<p>
+The following commands construct a \(6\)-dimensional 
+regular CW-complex  
+\(Y\simeq S^1 \times
+S^1\times S^1\) 
+homotopy equivalent to a product of three circles.
+</p>
+
+<div><code>
+gap> A:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
+gap> S:=PureCubicalComplex(A);;<br>
+gap> T:=DirectProduct(S,S,S);;<br>
+gap> Y:=RegularCWComplex(T);;<br>
+gap> Size(Y);<br>
+110592
+</code></div>
+
+<p>
+The CW-somplex \(Y\) has \(110592\) cells. 
+The next commands construct a free 
+\(\pi_1Y\)-equivariant chain complex
+\(C_\ast\widetilde Y\)  homotopy equivalent to the chain complex of the 
+universal cover of \(Y\). The chain complex \(C_\ast\widetilde Y\)
+has just \(8\) free generators.
+</p>
+
+<div><code>
+gap> Y:=ContractedComplex(Y);<br>
+gap> CU:=ChainComplexOfUniversalCover(Y,"vector field");;<br>
+gap> List([0..Dimension(Y)],n->CU!.dimension(n));<br>
+[ 1, 3, 3, 1 ]
+</code></div>
+
+<p>The next commands construct a subgroup \(H < \pi_1Y\)
+of index \(50\) and the chain complex
+\(C_\ast\widetilde Y\otimes_{\mathbb ZH}\mathbb Z\)  which is 
+homotopy equivalent to the cellular chain complex 
+\(C_\ast\widetilde Y_H\) of the \(50\)-fold cover 
+\(\widetilde Y_H\) of 
+\(Y\) corresponding to \(H\).
+</p>
+
+<div><code>
+gap> L:=LowIndexSubgroupsFpGroup(CU!.group,50);;<br>
+gap> H:=L[Length(L)-1];;<br>
+gap> Index(CU!.group,H);<br>
+50<br>
+gap> D:=TensorWithIntegersOverSubgroup(CU,H);<br>
+Chain complex of length 3 in characteristic 0 .<br> 
+</code></div>
+
+<p> General theory implies that the \(50\)-fold covering space 
+\(\widetilde Y_H\)  should again be homotopy equivalent to a 
+product of three circles. As a check for this, the following commands 
+establish that \(\widetilde Y_H\) has the same integral homology 
+as \(S^1\times S^1\times S^1\).
+ 
+<div><code>
+gap> Homology(D,0);<br>
 [ 0 ]<br>
-gap&gt; Homology(W,1);<br>
+gap> Homology(D,1);<br>
+[ 0, 0, 0 ]<br>
+gap> Homology(D,2);<br>
+[ 0, 0, 0 ]<br>
+gap> Homology(D,3);<br>
+[ 0 ]
+</code></div>
+
+<h3>Spun knots and the Satoh tube map</h3>
+
+<p> By 'spinning' a  link \(K \subset \mathbb R^3\) about a plane  
+\( P\subset \mathbb R^3\) with \(P\cap K=\emptyset\), we obtain a  collection
+\(Sp(K)\subset \mathbb R^4\) of knotted tori. The following commands produce the two tori obtained by spinning the Hopf link \(K\), and then verify that these 
+two tori have the correct homology and fundamental group. (Since the space \(Sp(K)\) is not path-connected its fundamental group is that of a single torus.).
+The final commands show that the space \(Y=\mathbb R^4\setminus Sp(K) = Sp(\mathbb R^3\setminus K)\) is connected with fundamental group \(\pi_1Y = \mathbb Z\times \mathbb Z\).
+
+<div><code>
+gap> Hopf:=PureCubicalLink("Hopf");<br>
+Pure cubical link.<br>
+
+gap> SpHopf:=SpunAboutInitialHyperplane(Hopf);<br>
+Regular CW-complex of dimension 2<br>
+<br>
+gap> Homology(SpHopf,0);<br>
 [ 0, 0 ]<br>
-gap&gt; Homology(W,2);<br>
+gap> Homology(SpHopf,1);<br>
+[ 0, 0, 0, 0 ]<br>
+gap> Homology(SpHopf,2);<br>
+[ 0, 0 ]<br>
+gap> Homology(SpHopf,3);<br>
+[  ]<br>
+gap> G:=FundamentalGroup(SpHopf);;<br>
+gap> RelatorsOfFpGroup(G);<br>
+[ f1^-1*f2*f1*f2^-1 ]<br>
+
+<br>
+gap> Y:=SpunAboutInitialHyperplane(PureComplexComplement(Hopf));<br>
+Regular CW-complex of dimension 3<br>
+
+gap> Homology(Y,0);<br>
 [ 0 ]<br>
-gap&gt; Homology(W,3);<br>
-[&nbsp; ]<br>
-gap&gt; Homology(W,4);<br>
-[&nbsp; ]<br>
-      <br>
-gap&gt; F:=FundamentalGroup(W);<br>
-#I&nbsp; there are 2 generators and 1 relator of total length 4<br>
+gap> Homology(Y,1);<br>
+[ 0, 0 ]<br>
+gap> Homology(Y,2);<br>
+[ 0, 0, 0, 0 ]<br>
+gap> Homology(Y,3);<br>
+[ 0, 0 ]<br>
+gap> Homology(Y,4);<br>
+[  ]<br>
+gap> GY:=FundamentalGroup(Y);;<br>
+gap> GeneratorsOfGroup(GY);<br>
+[ f2, f3 ]<br>
+gap> RelatorsOfFpGroup(GY);<br>
+[ f3^-1*f2^-1*f3*f2 ]<br>
+
+</code></div>
+
+<p>An alternative embedding of two tori  \(L\subset \mathbb R^4 \) can be 
+obtained by applying the 'tube map' of Shin Satoh to a 'welded Hopf link' [
+ Satoh, Shin. Virtual knot presentation of ribbon torus-knots. <i>J. Knot Theory Ramifications</i> 9 (2000), no. 4, 531--542]. The following commands 
+construct the complement \(W=\mathbb R^4\setminus L\) of this alternative 
+embedding
+and show that \(W \) has the same fundamental group and integral homology as \(Y\) above.
+</p>
+
+<div><code>
+gap> L:=HopfSatohSurface();<br>
+Pure cubical complex of dimension 4.<br>
+
+gap> W:=ContractedComplex(RegularCWComplex(PureComplexComplement(L)));<br>
+Regular CW-complex of dimension 3<br>
+
+gap> Homology(W,0);<br>
+[ 0 ]<br>
+gap> Homology(W,1);<br>
+[ 0, 0 ]<br>
+gap> Homology(W,2);<br>
+[ 0, 0, 0, 0 ]<br>
+gap> Homology(W,3);<br>
+[ 0, 0 ]<br>
+gap> Homology(W,4);<br>
+[  ]<br>
+
+
+
+gap> GW:=FundamentalGroup(W);;<br>
+gap> GeneratorsOfGroup(GW);<br>
+[ f1, f2 ]<br>
+gap> RelatorsOfFpGroup(GW);<br>
+[ f1^-1*f2^-1*f1*f2 ]<br>
+</div></code>
+
+<p>
+Despite having the same fundamental group and integral homology groups, 
+the above two spaces \(Y\) and \(W\) were shown by Louis Kauffman and Jo\(\tilde a\)o Faria Martins to be  <b>not</b> 
+ homotopy equivalent [Kauffman, Louis H. and Faria Martins, Jo\(\tilde a\)o. 
+Invariants of welded virtual knots via crossed module invariants of knotted surfaces. 
+<I>Compos. Math.</I> 144 (2008), no. 4, 1046--1080]. Their technique involves 
+the fundamental crossed module derived from the first three dimensions of the universal cover of a space, and counts the representations of this fundamental crossed module into a given finite crossed module.  
+This homotopy inequivalence is recovered by the following commands which also
+involve the first three dimensions of the universal cover of a space.
+</p>
+<div><code>
+gap> CY:=ChainComplexOfUniversalCover(Y);<br>
+Equivariant chain complex of dimension 3<br>
+gap> LY:=LowIndexSubgroups(CY!.group,5);;<br>
+gap> invY:=List(LY,g->Homology(TensorWithIntegersOverSubgroup(CY,g),2));;<br>
+<br>
+gap> CW:=ChainComplexOfUniversalCover(W);<br>
+Equivariant chain complex of dimension 3<br>
+gap> LW:=LowIndexSubgroups(CW!.group,5);;<br>
+gap> invW:=List(LW,g->Homology(TensorWithIntegersOverSubgroup(CW,g),2));;<br>
+gap> SSortedList(invY)=SSortedList(invW);<br>
+false
+</code></div>
+
+<p> We mention that by tying a knot in a length of string, positioning the knotted string so  that  its end points lie on the x-axis and no other points lie in the xy-plane, and then rotating about the xy-plane, we obtain a knotted sphere in \(\mathbb R^4\). The following code illustrates this construction by computing invariants of the complement of the spun trefoil knot.
+</p>
+<div><code>
+gap> K:=PureCubicalKnot(3,1);;<br> 
+gap> S:=SpunKnotComplement(K);;<br>
+gap> Homology(S,0);<br>
+[ 0 ]<br>
+gap> Homology(S,1);<br>
+[ 0 ]<br>
+gap> Homology(S,2);<br>
+[  ]<br>
+gap> Homology(S,3);<br>
+[ 0 ]<br>
+gap> F:=FundamentalGroup(S);;<br>
+#I  there are 2 generators and 1 relator of total length 6<br>
+gap> GeneratorsOfGroup(F);<br>
+[ f2, f3 ]<br>
+gap> RelatorsOfFpGroup(F);<br>
+[ f2*f3*f2^-1*f3^-1*f2^-1*f3 ]<br>
+</code></div>
+
+<h3>Cohomology with local coefficients</h3>
+
+<p>
+The \(\pi_1Y\)-equivariant cellular chain complex 
+\(C_\ast\widetilde Y\) of the universal cover \(\widetilde Y\) of a regular 
+CW-complex \(Y\) can be used to compute the homology 
+\(H_n(Y,A)\) and cohomology \(H^n(Y,A)\) 
+of \(Y\) with local coefficients in a 
+\(\mathbb Z\pi_1Y\)-module \(A\). 
+To illustrate this we consister the space \(Y\) arising as the 
+complement of the trefoil knot, with fundamental group 
+\(\pi_1Y = \langle x,y : xyx=yxy \rangle\). 
+We take \(A= \mathbb Z\) to be the integers with non-trivial 
+\(\pi_1Y\)-action given by \(x.1=-1, y.1=-1\). 
+We then compute
+$$\begin{array}{lcl}
+H_0(Y,A) &= &\mathbb Z_2\, ,\\
+H_1(Y,A) &= &\mathbb Z_3\, ,\\
+H_2(Y,A) &= &\mathbb Z\, .\end{array}$$
+</p>
+
+<div><code>
+gap> K:=PureCubicalKnot(3,1);;<br>
+gap> Y:=PureComplexComplement(K);;<br>
+gap> Y:=ContractedComplex(Y);;<br>
+gap> Y:=RegularCWComplex(Y);;<br>
+gap> Y:=SimplifiedComplex(Y);;<br>
+gap> C:=ChainComplexOfUniversalCover(Y);;<br>
+gap> G:=C!.group;;<br>
+gap> GeneratorsOfGroup(G);<br>
+[ f1, f2 ]<br>
+gap> RelatorsOfFpGroup(G);<br>
+[ f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ]<br>
+gap> hom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;<br>
+gap> A:=function(x); return Determinant(Image(hom,x)); end;;<br>
+gap> D:=TensorWithTwistedIntegers(C,A); #Here the function A represents the integers with twisted action of G.<br>
+Chain complex of length 3 in characteristic 0 .<br>
+gap> Homology(D,0);<br>
+[ 2 ]<br>
+gap> Homology(D,1);<br>
+[ 3 ]<br>
+gap> Homology(D,2);<br>
+[ 0 ]<br>
+</code></div>
+
+
+<h3>Finite covers as regular CW-complexes</h3> 
+<p>
+We next construct a 4-dimensional CW-complex \(Y\simeq S^1\times S^1\) 
+homotopy equivalent to a \(2\)-dimensional torus, involving 
+\(2304\) cells.  We choose a subgroup \(H < \pi_1Y\)
+of index \(50\) and  construct the covering space \(\widetilde Y_H\) 
+corresponding to \(H\) as a finite regular CW-complex. The fundamental group
+\(\pi_1 (\widetilde Y_H)\) is shown to be free abelian on two generators.
+This is in keeping with the fact that \(\widetilde Y_H\) is homotopy equivalent to
+\(Y\).  
+</p>
+
+<div><code>
+gap> G:=U!.group;;<br>                      
+gap> L:=LowIndexSubgroupsFpGroup(G,50);;<br>
+gap> H:=L[Length(L)-3];;Index(G,H);<br>
+50<br>
+gap> W:=EquivariantCWComplexToRegularCWComplex(U,H);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(W);<br>
+115200<br>
+<br>
+gap> F:=FundamentalGroup(W);<br>
 &lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
-gap&gt; RelatorsOfFpGroup(F);<br>
-[ f2*f1*f2^-1*f1^-1 ]<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">It
-may be that we are interested in the covering map p:W---&gt;Y and not
-just the 9-fold covering W. The map p can be constructed as folows.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-p:=EquivariantCWComplexToRegularCWMap(U,H);<br>
-Map of regular CW-complexes<br>
-      <br>
-gap&gt; Source(p);<br>
-Regular CW-complex of dimension 4<br>
-gap&gt; Size(Source(p));<br>
-20736<br>
-      <br>
-gap&gt; Target(p);<br>
-Regular CW-complex of dimension 4<br>
-gap&gt; Size(Target(p));<br>
-2304<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-covering map p induces homomorphisms H<sub>n</sub>(p):H<sub>n</sub>(W,Z)---&gt;H<sub>n</sub>(Y,Z)
-on
-integral
-homology.
-These homomorphisms, together with their
-cokernels, can be computed as follows.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-P:=ChainMap(p);<br>
-Chain Map between complexes of length 4 . <br>
-      <br>
-gap&gt; h0:=Homology(P,0);;<br>
-gap&gt; AbelianInvariants(Target(h0)/Image(h0));<br>
-[&nbsp; ]<br>
-      <br>
-gap&gt; h1:=Homology(P,1);;<br>
-gap&gt; AbelianInvariants(Target(h1)/Image(h1));<br>
+gap> RelatorsOfFpGroup(F);<br>
+[ f2^-1*f1*f2*f1^-1 ]
+</code></div>
+
+<h3>Covering maps</h3>
+<p>
+It may be that we are interested in the covering map 
+\(p:\widetilde Y_H \rightarrow   Y\) and not just the  covering 
+\(\widetilde Y_H\) itself. As an illustration we construct the map \(p\) for 
+\(Y\) homotopy equivalent to a torus, for \(H<\pi_1Y\) a subgroup with
+
+$$\pi_1Y / H \cong \mathbb Z_3 \oplus \mathbb Z_3\,,$$
+and for \(p\) the corresponding covering map.
+</p>
+
+<div><code>
+gap> A:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
+gap> S:=PureCubicalComplex(A);;<br>
+gap> T:=DirectProduct(S,S);;<br>
+gap> Y:=RegularCWComplex(T);;<br>
+gap> U:=UniversalCover(Y);<br>
+Equivariant CW-complex of dimension 4<br>
+gap> G:=U!.group;;<br>
+gap> L:=LowIndexSubgroupsFpGroup(G,9);;<br>
+gap> H:=L[58];;<br>
+gap> AbelianInvariants(G/H);<br>
 [ 3, 3 ]<br>
-      <br>
-gap&gt; h2:=Homology(P,2);;<br>
-gap&gt; AbelianInvariants(Target(h2)/Image(h2));<br>
+gap> p:=EquivariantCWComplexToRegularCWMap(U,H);<br>
+Map of regular CW-complexes<br>
+
+gap> Source(p);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(Source(p));<br>
+20736<br>
+
+gap> Target(p);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(Target(p));<br>
+2304<br>
+</code></div>
+
+<p>
+The covering map \(p\) induces homomorphisms 
+\(H_n(p):H_n(W,\mathbb Z) \rightarrow H_n(Y,\mathbb Z)\) 
+on integral homology. These homomorphisms, together with their cokernels, 
+can be computed as follows.
+</p>
+
+<div><code>
+gap> P:=ChainMap(p);<br>
+Chain Map between complexes of length 4 .<br>
+
+gap> h0:=Homology(P,0);;<br>
+gap> AbelianInvariants(Target(h0)/Image(h0));<br>
+[  ]<br>
+
+gap> h1:=Homology(P,1);;<br>
+gap> AbelianInvariants(Target(h1)/Image(h1));<br>
+[ 3, 3 ]<br>
+
+gap> h2:=Homology(P,2);;<br>
+gap> AbelianInvariants(Target(h2)/Image(h2));<br>
 [ 9 ]<br>
-      </td>
-    </tr>
-    <tr align="center">
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
- style="font-weight: bold;">Second homotopy groups of spaces with
-finite fundamental groups</big><br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">If
-p:U--&gt;Y is the map from the universal cover U of Y, then the
-fundamental group of U is trivial and the Hurewicz homomorphism &#960;<sub>2</sub>(U)--&gt;H<sub>2</sub>(U)
-from
-the
-second
-homotopy
-group of U to the second integral homology of
-U is an isomorphism. Furthermore, the map p induces an
-isomorphism&nbsp;
-&#960;<sub>2</sub>(U)--&gt;&#960;<sub>2</sub>(Y). Thus H<sub>2</sub>(U) is
-isomorphic to the second homotopy group &#960;<sub>2</sub>(Y).<br>
-      <br>
-If the fundamental group of Y happens to be finite, then we can
-calculate H<sub>2</sub>(U) = &#960;<sub>2</sub>(Y) as follows. We
-illustrate the computation for Y equal to the projective plane.<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
-K:=[
-[1,2,3],
-[1,3,4],
-[1,2,6],
-[1,5,6], [1,4,5], [2,3,5], [2,4,5],
-[2,4,6], [3,4,6], [3,5,6]];;<br>
-      <br>
-gap&gt; K:=MaximalSimplicesToSimplicialComplex(K);<br>
+</code></div>
+
+<h3>Second homotopy groups of spaces</h3>
+<p>
+If \(p:\widetilde Y \rightarrow Y\) is the map from the universal cover 
+\(\widetilde Y\) of \(Y\), then the fundamental group of 
+\(\widetilde Y\) is trivial and the Hurewicz homomorphism 
+\(\pi_2\widetilde Y\rightarrow H_2(\widetilde Y,\mathbb Z)\) from the second 
+homotopy group of \(\widetilde Y\) to the second integral homology of 
+\(\widetilde Y\) is an isomorphism. Furthermore, the map \(p\) 
+induces an isomorphism  \(\pi_2\widetilde Y \rightarrow 
+\pi_2Y\). Thus \(H_2(U,\mathbb Z)\)
+ is isomorphic to 
+the second homotopy group \(\pi_2Y\).
+</p>
+<p>
+If the fundamental group of \(Y\) happens to be finite, then 
+in principle we 
+can calculate \(H_2(\widetilde Y,\mathbb Z) \cong \pi_2Y\). 
+We illustrate this computation for \(Y\) equal to the 
+real projective plane.
+</p>
+
+<div><code>
+gap> K:=[ [1,2,3], [1,3,4], [1,2,6], [1,5,6], [1,4,5], [2,3,5], [2,4,5], [2,4,6], [3,4,6], [3,5,6]];;<br>
+
+gap> K:=MaximalSimplicesToSimplicialComplex(K);<br>
 Simplicial complex of dimension 2.<br>
-      <br>
-gap&gt; Y:=RegularCWComplex(K);&nbsp; # Y is a regular CW-complex
-corresponding to the projective plane.<br>
-Regular CW-complex of dimension 2<br>
-      <br>
-gap&gt; U:=UniversalCover(Y);<br>
+
+gap> Y:=RegularCWComplex(K);  # Y is a regular CW-complex corresponding to the projective plane.<br>
+Regular CW-complex of dimension 2</br>
+
+gap> U:=UniversalCover(Y);<br>
 Equivariant CW-complex of dimension 2<br>
-      <br>
-gap&gt; G:=U!.group;; #G is the fundamental group of Y, which by the
-next command is finite of order 2.<br>
-gap&gt; Order(G);<br>
+
+gap> G:=U!.group;; #G is the fundamental group of Y, which by the next command is finite of order 2.</br>
+gap> Order(G);<br>
 2<br>
-      <br>
-gap&gt; U:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); #U
-is the universal cover of Y<br>
-Regular CW-complex of dimension 2<br>
-      <br>
-gap&gt; Homology(U,0);<br>
+
+gap> U:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); #U is the universal cover of Y</br>
+Regular CW-complex of dimension 2</br>
+
+gap> Homology(U,0);<br>
 [ 0 ]<br>
-gap&gt; Homology(U,1);<br>
-[&nbsp; ]<br>
-gap&gt; Homology(U,2);<br>
+gap> Homology(U,1);<br>
+[  ]<br>
+gap> Homology(U,2);<br>
 [ 0 ]<br>
-      </td>
-    </tr>
-    <tr>
-      <td
- style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-above computation shows that the space Y has infinite cyclic second
-homotopy group<br>
-      <br>
-      <div style="text-align: center;">&#960;<sub>2</sub>(Y) = Z .<br>
-      </div>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">
-      <table
- style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
- border="0" cellpadding="2" cellspacing="2">
-        <tbody>
-          <tr>
-            <td style="vertical-align: top;"><a
- style="color: rgb(0, 0, 102);" href="aboutPeripheral.html">Previous
-Page</a><br>
-            </td>
-            <td style="text-align: center; vertical-align: top;"><a
- href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
-            </td>
-            <td style="text-align: right; vertical-align: top;"><a
- href="aboutQuandles.html"><span style="color: rgb(0, 0, 102);">Next
-page</span><br>
-            </a> </td>
-          </tr>
-        </tbody>
-      </table>
-      <a href="aboutTopology.html"><br>
-      </a> </td>
-    </tr>
-  </tbody>
-</table>
-<br>
-<br>
+</code></div>
+
+<p>
+The above computation shows that the space \(Y\) has 
+infinite cyclic second homotopy group \(\pi_2Y \cong \mathbb Z\).
+</p>
+
+<h3>Third homotopy groups of simply connected spaces</h3>
+
+<p>
+For any simply connected space \(U\) there is an exact sequence
+$$
+\rightarrow \pi_4\widetilde Y \rightarrow H_4(\widetilde Y,\mathbb Z) \rightarrow 
+ H_4( K(\pi_2\widetilde Y,2), \mathbb Z ) \rightarrow \pi_3\widetilde Y 
+ \rightarrow   H_4(\widetilde Y,\mathbb Z) \rightarrow 0
+$$
+due to J.H.C.Whitehead.  Here 
+\(K(\pi_2U,2)\) is an Eilenberg-MacLane space with 
+second homotopy group equal to \(\pi_2U\).
+</p>
+<center><b>First Example</b></center>
+<p>
+Continuing with the above example where \(Y\) is the real 
+projective plane and \(\widetilde Y\) its universal cover, we see that 
+\(H_4(\widetilde Y,\mathbb Z) = H_4(\widetilde Y,\mathbb Z) = 0\)
+ since \(\widetilde Y\) is a 2-dimensional CW-space. The exact sequence implies 
+ \(\pi_3\widetilde Y \cong H_4(K(\pi_2\widetilde Y,2), \mathbb Z )\). Furthermore, \(\pi_3\widetilde Y = \pi_3 Y\).   
+ The following commands establish that
+$$
+\pi_3Y \cong \mathbb Z\, .
+$$</p>
+<div><code>
+gap> A:=AbelianPcpGroup([0]);<br>
+Pcp-group with orders [ 0 ]<br>
+ 
+gap> K:=EilenbergMacLaneSimplicialGroup(A,2,5);;<br>
+gap> C:=ChainComplexOfSimplicialGroup(K);<br>
+Chain complex of length 5 in characteristic 0 .<br>
+
+gap> Homology(C,4);<br>
+[ 0 ]<br>
+</code></div>
+
+<center><b>Second Example</b></center>
+<p>
+The following commands construct a 4-dimensional simplicial complex 
+\(Y\) with 9 vertices and 36 4-dimensional simplices, 
+and establish that
+$$
+\pi_1Y=0 , \pi_2Y=\mathbb Z , H_3(Y,\mathbb Z)=0, H_4(Y,\mathbb Z)=\mathbb Z, 
+H_4(K(\pi_2Y,2), \mathbb Z) =\mathbb Z .
+$$
+</p>
+
+<div><code>
+gap> Y:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], [ 1, 2, 6, 4, 7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], [ 2, 3, 5, 6, 7 ], [ 2, 3, 6, 4, 9 ], [ 3, 1, 4, 5, 7 ],<br>
+        [ 3, 1, 5, 6, 9 ], [ 3, 1, 6, 4, 5 ], [ 3, 1, 6, 4, 8 ], [ 4, 5, 7, 8, 3 ], [ 4, 5, 7, 8, 9 ], [ 4, 5, 8, 9, 2 ], [ 4, 5, 9, 7, 1 ], [ 5, 6, 7, 8, 2 ], [ 5, 6, 8, 9, 1 ],<br>
+        [ 5, 6, 8, 9, 7 ], [ 5, 6, 9, 7, 3 ], [ 6, 4, 7, 8, 1 ], [ 6, 4, 8, 9, 3 ], [ 6, 4, 9, 7, 2 ], [ 6, 4, 9, 7, 8 ], [ 7, 8, 1, 2, 3 ], [ 7, 8, 1, 2, 6 ], [ 7, 8, 2, 3, 5 ],<br>
+        [ 7, 8, 3, 1, 4 ], [ 8, 9, 1, 2, 5 ], [ 8, 9, 2, 3, 1 ], [ 8, 9, 2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [ 9, 7, 1, 2, 4 ], [ 9, 7, 2, 3, 6 ], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5 ] ];;<br>
+
+gap> Y:=MaximalSimplicesToSimplicialComplex(Y);<br>
+Simplicial complex of dimension 4.<br>
+
+gap> Y:=RegularCWComplex(Y);<br>
+Regular CW-complex of dimension 4<br>
+
+gap> Order(FundamentalGroup(Y));<br>
+1<br>
+gap> Homology(Y,2);<br>
+[ 0 ]<br>
+gap> Homology(Y,3);<br>
+[  ]<br>
+gap> Homology(Y,4);<br>
+[ 0 ]<br>
+</code></div>
+
+<p>
+Whitehead's sequence reduces to an exact sequence
+
+
+$$\mathbb Z \rightarrow \mathbb Z \rightarrow \pi_3Y \rightarrow 0$$ 
+
+
+in which the first map is
+\(
+H_4(Y,\mathbb Z)=\mathbb Z \rightarrow H_4(K(\pi_2Y,2), \mathbb Z )=\mathbb Z
+\). 
+In order to determine \(\pi_3Y\) it remains compute this first map. This computation is currently not available in HAP.
+</p>
+<p>
+[The simplicial complex in this second example is due to W. Kiihnel and 
+T. F. Banchoff and is of the homotopy type of the complex projective plane. 
+So, assuming this extra knowledge, we have \(\pi_3Y=0\).]
+</p>
 </body>
 </html>

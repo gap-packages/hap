@@ -23,6 +23,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
+##  $Id: happrime.gd 296 2008-08-21 11:52:33Z pas $
 ##
 #############################################################################
 

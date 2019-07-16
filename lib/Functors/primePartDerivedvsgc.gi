@@ -46,8 +46,9 @@ HPrels:=[Identity(HP)];
 AddRels:=function(Q,L)  #Here P < Q < G where P=Syl_p(G)
 local i, hh, Lhh, gg, g, gg1, h, sylQQ, QQ, xx;
 
-QQ:=Intersection(Q,Q^L);
+QQ:=Intersection(Q,Q^L); 
 sylQQ:=SylowSubgroup(QQ,prime);
+
 gg:=false;
 for g in Q do
 if IsSubgroup(P,sylQQ^g) then gg:=g;  break; fi;

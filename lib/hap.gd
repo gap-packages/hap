@@ -713,8 +713,14 @@ DeclareGlobalFunction("DiagonalApproximation");
 DeclareGlobalFunction("CWMap2ChainMap");
 DeclareGlobalFunction("NonRegularCWBoundary");
 DeclareGlobalFunction("UniversalCover");
+DeclareGlobalFunction("ChainComplexOfUniversalCover");
+DeclareGlobalFunction("TensorWithIntegersOverSubgroup");
 DeclareGlobalFunction("EquivariantCWComplexToRegularCWComplex");
 DeclareGlobalFunction("EquivariantCWComplexToRegularCWMap");
+DeclareGlobalFunction("Spin");
+DeclareGlobalFunction("SpunKnotComplement");
+DeclareGlobalFunction("SpunAboutInitialHyperplane");
+
 
 ## KNOTS ############################################################
 DeclareGlobalFunction("PureCubicalKnot");#doc
@@ -738,6 +744,8 @@ DeclareGlobalFunction("ReadCSVfileAsPureCubicalKnot");
 DeclareGlobalFunction("DisplayCSVknotFile");
 DeclareGlobalFunction("DisplayPDBfile");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
+DeclareGlobalFunction("PureCubicalLink");
+DeclareGlobalFunction("HopfSatohSurface");
 
 ## METRICS #########################################################
 DeclareOperation("CayleyMetric",[IsPerm,IsPerm,IsInt]);

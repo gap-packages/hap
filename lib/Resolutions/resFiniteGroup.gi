@@ -72,7 +72,8 @@ N:=Order(G);
 if IsMatrixGroup(G) then
 
 iso:=IsomorphismPermGroup(G);
-R:=ResolutionFiniteGroup(Image(iso),N);
+#R:=ResolutionFiniteGroup(Image(iso),N); #CHANGED 26/11/2018
+R:=ResolutionFiniteGroup(Image(iso),K);
 R!.elts:=List(R!.elts,x->PreImagesRepresentative(iso,x));
 R!.group:=G;
 return R;
@@ -212,6 +213,7 @@ temp:=[];
 
 for j in [1..Length(MC)] do
 for g in [1..N] do
+#for g in ExtendedElts do    #TRIED 11 May 2019, BUT WAS SLOWER!!
 if MC[j][g]=0 then Add(temp,[j,g]);
 fi;
 od;

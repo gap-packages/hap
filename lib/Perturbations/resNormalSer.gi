@@ -50,7 +50,11 @@ GensQ[L]:=GensSeries[1];
 
 
 Res:=[];
+#if IsPrimeInt(Charact) then 
+#Res[2]:=ResolutionPrimePowerGroup(Group(GensQ[2]),n);
+#else 
 Res[2]:=ResolutionFiniteGroup(GensQ[2],n,tietze,Charact);
+#fi;
 if nohomotopy then Res[2]!.homotopy:=fail; fi;
 
 for i in [3..L] do

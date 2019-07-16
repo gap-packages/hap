@@ -165,9 +165,9 @@ end;
 #####################################################################
 HomologyAsFpGroup:=function(C,n)
 local
-        F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
+        F, H, FHhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
         Vector2Word, BasisKerd1, rel, i, j, prime, FieldToInt, one,
-        sem, z1,sol1,lngm , Hgens;
+        sem, z1,sol1,lngm , Hgens, FH, epim, FHgens;
 
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
@@ -216,26 +216,40 @@ Append(Frels,[Fgens[i]*Fgens[j]*Fgens[i]^-1*Fgens[j]^-1]);
 od;
 od;
 
-H:=F/Frels;
-FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+#H:=F/Frels;
+#FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+#Hgens:=GeneratorsOfGroup(H);
+
+FH:=F/Frels;
+FHgens:=GeneratorsOfGroup(FH);
+
+FHhomH:=NqEpimorphismNilpotentQuotient(FH,1);
+
+H:=Range(FHhomH);
 Hgens:=GeneratorsOfGroup(H);
 
+epim:=EpimorphismFromFreeGroup(FH);
+
+
 #####################################################################
-HhomC:=function(w);
-return BasisKerd1[w];
+#HhomC:=function(w);
+#return BasisKerd1[w];
+#end;
+#####################################################################
+#####################################################################
+HhomC:=function(w)
+local ww,v,i,s;
+ww:=PreImagesRepresentative(FHhomH,Hgens[w]);
+ww:=PreImagesRepresentative(epim,ww);
+v:=BasisKerd1[1]*0*one;
+for i in [1..Length(BasisKerd1)] do
+s:=ExponentSumWord(ww,PreImagesRepresentative(epim,FHgens[i]));
+v:=v+s*BasisKerd1[i]*one;
+od;
+return v ;
 end;
 #####################################################################
 
-
-#####################################################################
-#ChomH:=function(v)
-#local w;
-
-#w:=SolutionMat(BasisKerd1,v);
-#w:=Vector2Word(w);
-#return Image(FhomH,w);
-#end;
-#####################################################################
 
 
     z1 := Zero(BasisKerd1[1][1]);
@@ -264,10 +278,18 @@ vec:=v;
         fi;
     od;
 
-xx:=One(H);
-for i in [1..Length(sol)] do
-xx:=xx*Hgens[i]^FieldToInt(sol[i]);
+#xx:=One(H);
+#for i in [1..Length(sol)] do
+#xx:=xx*Hgens[i]^FieldToInt(sol[i]);
+#od;
+
+xx:=Identity(H);
+for i in [1..Length(FHgens)] do
+
+xx:=xx*Image(FHhomH,FHgens[i])^FieldToInt(sol[i]);
+
 od;
+
 
 return xx;
 end;

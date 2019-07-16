@@ -160,7 +160,8 @@ od;
 
 ################ READ HASSE DIAGRAM #################################
 Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"HASSE_DIAGRAM -> FACES\" >",tmp2Inlog));
-Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"HASSE_DIAGRAM -> DIMS\" >",tmp4Inlog));
+#Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"HASSE_DIAGRAM -> DIMS\" >",tmp4Inlog));
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog," \"F_VECTOR\" >",tmp4Inlog));
 RemoveFile(tmpInlog);
 Filename(tmpDir,tmp);
 RemoveFile(tmp);
@@ -209,7 +210,12 @@ Index:=[];
 input:=InputTextFile(tmp4Inlog);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
-Index:= IndexFn(tmp);
+#Index:=IndexFn(tmp);
+tmp:= IndexFn(tmp);           #Modified July 2019
+Index:=[1];                   #because Polymake has
+for i in [1..Length(tmp)] do  #discontinued the DIMS
+Add(Index,Index[i]+tmp[i]);   #property.
+od;                           #
 RemoveFile(tmp4Inlog);
 
 

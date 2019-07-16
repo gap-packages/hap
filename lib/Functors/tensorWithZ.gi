@@ -205,6 +205,9 @@ end;
 #####################################################################
 #####################################################################
 
+if IsHapEquivariantChainComplex(X) then
+return TensorWithZ_Obj(X); fi;
+
 if EvaluateProperty(X,"type") = "resolution" 
    or
    EvaluateProperty(X,"type") = "chaincomplex" then

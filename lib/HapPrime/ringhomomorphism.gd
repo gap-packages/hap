@@ -23,6 +23,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
+##  $Id: ringhomomorphism.gd 354 2008-12-09 17:38:12Z pas $
 ##
 #############################################################################
 

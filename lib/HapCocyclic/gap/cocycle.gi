@@ -3,6 +3,7 @@
 #W  cocycle.gi                     HAP                        Robert F. Morse
 ##                                                               Graham Ellis
 ##
+##  $Id: cocycle.gi,v 1.3 2008-07-11 21:52:16 unialg Exp $
 
 #############################################################################
 ##
@@ -100,3 +101,21 @@ InstallMethod
 
         return S;
     end);
+
+
+#############################################################################
+##
+##  $Log: cocycle.gi,v $
+##  Revision 1.3  2008-07-11 21:52:16  unialg
+##
+##  Development commit for first release. RFM
+##
+##  Revision 1.2  2008-07-11 21:02:25  unialg
+##
+##  First beta release. RFM
+##
+##  Revision 1.1  2008-06-18 06:06:34  unialg
+##  File Creation. RFM
+##
+##
+##

@@ -109,13 +109,13 @@ end;
 #####################################################################
 Boundary:=function(n,i)
 local x, w;
-
 x:=Int2Pair(i);
 w:=StructuralCopy(BoundaryR(n,x[1]));
 Apply(w, y->[y[1],Mult(x[2],y[2])]);
 return Gword2Kword(w);
 end;
 #####################################################################
+
 
 return Objectify(HapResolution,
 	  rec(

@@ -166,6 +166,8 @@ return Objectify(HapChainMap,
 end;
 #####################################################################
 #####################################################################
+if IsHapEquivariantChainComplex(X) then
+return TensorWithZ_Obj(X,rho); fi;  #Added 12/02/2019
 
 if EvaluateProperty(X,"type") = "resolution" then
 return TensorWithZ_Obj(X,rho); fi;

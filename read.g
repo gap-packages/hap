@@ -397,6 +397,8 @@ ReadPackage("HAP","lib/RegularCWComplexes/filteredCW.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/directproduct.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/universalCover.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/spin.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/spunknotcomp.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -417,6 +419,7 @@ fi;
 ReadPackage("HAP","/lib/Knots/knotdata.gi");
 ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
 ReadPackage("HAP","/lib/Knots/csvknot.gi");
+ReadPackage("HAP","/lib/Knots/surface.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");

@@ -1,6 +1,5 @@
 #(C) Graham Ellis, 2005-2006
 
-
 #####################################################################
 InstallGlobalFunction(ResolutionFiniteExtension,
 function(arg)
@@ -29,7 +28,6 @@ EltsE:=Elements(E);
 
 #####################################################################
 Mult:=function(i,j);
-
 return Position(EltsE,EltsE[i]*EltsE[j]);
 end;
 #####################################################################

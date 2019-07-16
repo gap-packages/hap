@@ -1,4 +1,23 @@
 ########################################
+InstallGlobalFunction(PureCubicalLink,
+function(X)
+local L;
+
+if IsString(X) then
+
+if X{[1..4]}="Hopf" or X{[1..4]}="hopf" then
+L:=PureCubicalKnot([[2,4],[1,3],[2,4],[1,3]]);
+L!.name:="Hopf link";
+return L;
+fi;
+
+fi;
+return PureCubicalKnot(X);
+end);
+########################################
+
+
+########################################
 InstallGlobalFunction(PurePermutahedralKnot,
 function(arg)
 local K;
