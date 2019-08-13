@@ -121,6 +121,10 @@ fi;
 
 
 EltsE:=[Identity(E)];
+#for g in R!.elts do                       #Added these lines
+#for h in S!.elts do                       #26 July 2019.
+#Add(EltsE,Image(GhomE,g)*Image(HhomE,h)); #
+#od;od;                                    #
 
 #####################################################################
 	AppendToElts:=function(x);

@@ -15,7 +15,6 @@ local
 	PcpG,
 	gens1,hom1,OriginalAppend;
 
-#if IsFinite(G) then return ResolutionAbelianGroup(G,n); fi;
 ###The last command is a real cheat!!
 
 PcpG:=Pcp(G,"snf");
@@ -25,12 +24,11 @@ gens:=List([1..Length(PcpG)],i->PcpG[i]);
 if Length(gens)=1 then
 
 if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
-#if Order(Group(gens))<1000 then return ResolutionFiniteGroup(gens,n);
 else
 
 
 
-tmp:=ResolutionAbelianGroup([0],n);
+tmp:=ResolutionAbelianGroup_alt([0],n);
 FreeElts:=tmp!.elts;
 	tmp!.appendToElts:=function(x)
 	local a,i,j;
@@ -77,7 +75,7 @@ if IsPcpGroup(arg[1]) and IsAbelian(arg[1]) and IsInt(arg[2]) then
 return ResolutionAbGroup(arg[1],arg[2]);  fi;
 
 if (not IsPcpGroup(arg[1])) and IsAbelian(arg[1]) and IsInt(arg[2]) then
-return ResolutionAbelianGroup(arg[1],arg[2]);  fi;
+return ResolutionAbelianGroup_alt(arg[1],arg[2]);  fi;
 
 
 Print("The first argument must be an abelian Pcp group. The second argument must be a positive integer. \n");

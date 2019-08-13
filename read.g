@@ -127,6 +127,7 @@ ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/multNilGrp.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/tensorSquareInf.gi");
 ReadPackage("HAP", "lib/NonabelianTensor/symmetricSquareInf.gi");
+ReadPackage("HAP", "lib/NonabelianTensor/tensor.gi");
 fi;
 
 ################# ACLIB DONE #########################################
@@ -234,6 +235,7 @@ ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
 ReadPackage("HAP", "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
+ReadPackage("HAP", "lib/Perturbations/resDirectProdLazy.gi"); 
 
 
 

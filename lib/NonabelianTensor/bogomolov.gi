@@ -63,7 +63,7 @@ if toggle="homology" then return Bogomology(G,2); fi;
 
 if toggle="homology" then return BogomolovMultiplier_viaTensorSquare(G); fi;
 
-RA:=ResolutionAbelianGroup([0,0],3);
+RA:=ResolutionAbelianGroup_alt([0,0],3);
 A:=RA!.group;
 gensA:=GeneratorsOfGroup(A);
 

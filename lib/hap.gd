@@ -66,18 +66,19 @@ DeclareGlobalFunction("FpGModuleSection");
 
 ## NONABELIAN TENSOR ################################################
 DeclareOperation("HAP_EquivalenceClasses",[IsList,IsFunction]);
+DeclareGlobalFunction("HAP_Tensor");
 DeclareGlobalFunction("NonabelianTensorSquare");
 DeclareGlobalFunction("NonabelianTensorSquareAsCatOneGroup");
 DeclareGlobalFunction("NonabelianTensorSquareAsCrossedModule");
 DeclareGlobalFunction("NonabelianSymmetricSquare");
 DeclareGlobalFunction("NonabelianSymmetricSquare_inf");
 DeclareGlobalFunction("SymmetricCentre");
-DeclareGlobalFunction("NonabelianTensorProduct");
+DeclareOperation("NonabelianTensorProduct",[IsGroup,IsGroup]);
 DeclareGlobalFunction("NonabelianTensorProduct_Inf");
 DeclareGlobalFunction("NonabelianTensorProduct_alt");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
 DeclareGlobalFunction("NonabelianSymmetricKernel");
-DeclareGlobalFunction("NonabelianExteriorProduct");
+DeclareOperation("NonabelianExteriorProduct",[IsGroup,IsGroup]);
 DeclareGlobalFunction("RelativeSchurMultiplier");
 DeclareGlobalFunction("EpiCentre");
 DeclareGlobalFunction("UpperEpicentralSeries");
@@ -102,7 +103,7 @@ DeclareGlobalFunction("ResolutionArithmeticGroup");
 DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareOperation("Resolution",[IsGroup,IsInt]);
 DeclareGlobalFunction("ResolutionFiniteGroup");
-DeclareGlobalFunction("ResolutionSmallFpGroup");
+DeclareGlobalVariable("ResolutionSmallFpGroup");
 DeclareGlobalFunction("ResolutionSmallGroup");
 DeclareGlobalFunction("PresentationOfResolution");
 DeclareGlobalFunction("PresentationOfResolution_alt");
@@ -190,6 +191,8 @@ DeclareOperation("Pushout",[IsGroupHomomorphism,IsGroupHomomorphism]);
 DeclareGlobalFunction("Fp2PcpAbelianGroupHomomorphism");
 DeclareGlobalFunction("IsIsomorphismOfAbelianFpGroups");
 DeclareGlobalFunction("SignedPermutationGroup");
+DeclareProperty("IsPeriodic",IsGroup);
+DeclareAttribute("CohomologicalPeriod",IsGroup);
 
 
 
@@ -216,6 +219,10 @@ DeclareGlobalFunction("BoundariesOfFilteredChainComplex");
 #DeclareGlobalFunction("ResolutionGTree");
 DeclareGlobalFunction("ResolutionSL2Z");
 DeclareGlobalFunction("ResolutionSL2Z_alt");
+DeclareGlobalFunction("ResolutionDirectProductLazy");
+DeclareGlobalFunction("ResolutionInfiniteCyclicGroup");
+DeclareGlobalFunction("ResolutionAbelianGroup_alt");
+
 
 
 ## ARTIN COXETER ####################################################

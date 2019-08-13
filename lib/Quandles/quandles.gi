@@ -477,6 +477,7 @@ end);
 
 Cedric_XYXYConnQuan:=[[MagmaByMultiplicationTable([[1]])]];
 for n in [14,22,26,34,38,46] do Cedric_XYXYConnQuan[n]:=[]; MakeImmutable("Cedric_XYXYConnQuan[n]"); od;
+Unbind(n);
 
 #####################################################################
 #####################################################################

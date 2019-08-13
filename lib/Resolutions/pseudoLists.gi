@@ -120,6 +120,7 @@ InstallOtherMethod(Position,
 [IsPseudoList,IsObject,IsInt],
 function(PL,g,i)
 local p;
+#if i=0 and IsBound(PL!.posfun) then return PL!.posfun(g); fi;
 p:=Position(PL!.sslst,g,i);
 if IsInt(p) then
 return PL!.pos[p];
@@ -135,8 +136,8 @@ InstallOtherMethod(Position,
 [IsPseudoListWithFunction and IsPseudoList,IsObject,IsInt],
 function(PL,g,i)
 local j;
-#for j in [i+1..Length(PL)] do
-j:=0;
+if i=0 and IsBound(PL!.posfun) then return PL!.posfun(g); fi;
+j:=i;   #CHANGED 30July 2019
 while j<PL!.lnthfun() do
 j:=j+1;
 if PL!.eltfun(j)=g then return j; fi;
@@ -148,7 +149,7 @@ end);
 #############################################################
 InstallOtherMethod(Position,
 "for PseudoLists",
-[IsPseudoListWithFunction and IsPseudoList,IsObject],
+[IsPseudoListWithFunction and IsPseudoList,IsObject], 1000,
 function(PL,g)
 local p;
 return PL!.posfun(g);

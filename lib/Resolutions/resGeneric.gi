@@ -22,7 +22,7 @@ if Order(G)<infinity then
 Tz:=function(R) return R; end;
 
    if IsAbelian(G) then
-   return ResolutionAbelianGroup(G,N);
+   return ResolutionAbelianGroup_alt(G,N);
    fi;
 
    if Order(G)<64 then

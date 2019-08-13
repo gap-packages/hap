@@ -775,3 +775,46 @@ end);
 ##########################################################################
 ##########################################################################
 
+##########################################################################
+##########################################################################
+InstallMethod(IsPeriodic,
+"Tests to see if a finite group has periodic cohomology",
+[IsGroup and IsFinite],
+function(G)
+local p,S;
+for p in SSortedList(Factors(Order(G))) do
+S:=SylowSubgroup(G,p);
+if not (IsCyclic(S) or IsQuaternionGroup(S))  then return false; fi;
+od;
+return true;
+end);
+##########################################################################
+##########################################################################
+
+##########################################################################
+##########################################################################
+InstallMethod(CohomologicalPeriod,
+"Returns the period of a finite group with periodic cohomology",
+[IsGroup and IsFinite],
+function(G)
+local p,S,L,N,C;
+if not IsPeriodic(G) then
+Print("The group does not have periodic cohomology.\n");
+return fail; fi;
+
+L:=[];
+for p in SSortedList(Factors(Order(G))) do
+S:=SylowSubgroup(G,p);
+if p=2 then
+if IsCyclic(S) then Add(L,2); else Add(L,4); fi;
+else
+N:=Normalizer(G,S);
+C:=Centralizer(G,S);
+Add(L,2*Order(N)/Order(C));
+fi;
+od;
+return Lcm(L);
+end);
+##########################################################################
+##########################################################################
+

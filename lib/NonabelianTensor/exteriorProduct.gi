@@ -1,7 +1,9 @@
 #(C) Graham Ellis, October 2005
 
 #####################################################################
-InstallGlobalFunction(NonabelianExteriorProduct,
+InstallMethod(NonabelianExteriorProduct,
+"Exterior produce of a group AG and normal subgroup AH",
+[IsGroup,IsGroup],
 function(AG,AH)
 local
 	gensAG, NiceGensAG, 
@@ -33,6 +35,17 @@ local
 # The homomorphisms GhomBG, AGhomG, FhomSF, FhomAF, AFhomSF are all 
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
+
+if not IsSubgroup(AG,AH) then
+Print("The second argument should be a normal subgroup of the first.\n");
+return fail;
+fi;
+
+if not IsNormal(AG,AH) then
+Print("The second argument should be a normal subgroup of the first.\n");
+return fail;
+fi;
+
 
 gensAG:=GeneratorsOfGroup(AG);
 AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);	

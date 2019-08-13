@@ -21,13 +21,9 @@ K:=arg[2];
 if Length(arg)>2 then Test:=arg[3]; else Test:="NoTest"; fi;
 if IsAbelian(EE) then 
 	if IsPcpGroup(EE) then 
-		#if IsFinite(EE) then
-		#return ResolutionFiniteGroup(EE,K);
-		#else
 		return ResolutionAbelianPcpGroup(EE,K);
-		#fi;
 	else
-		return ResolutionAbelianGroup(EE,K);
+		return ResolutionAbelianGroup_alt(EE,K);
 	fi;
 fi;
 

@@ -1,7 +1,7 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
-InstallGlobalFunction(ResolutionAbelianGroup,
+InstallGlobalFunction(ResolutionAbelianGroup_alt,
 function(arg)
 local  
 	ResolutionFreeAbelianGroup,

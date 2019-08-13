@@ -1,7 +1,7 @@
 #(C) Irina Kholodna, 2001 (converted to HAP format by Graham Ellis)
 
 #####################################################################
-InstallGlobalFunction(ResolutionSmallFpGroup,
+InstallGlobalFunction(ResolutionSmallGroup,
 function(arg)
 local
 	G,n,
@@ -35,8 +35,14 @@ G:=arg[1];
 n:=arg[2];
 if Length(arg)>2 then Charact:=arg[3]; else Charact:=0; fi;
 OrderG:=Order(G);
+
+if IsFpGroup(G) then
 FpToPerm:=IsomorphismPermGroup(G);
-pG:=Image(FpToPerm);
+else
+G:=Group(MinimalGeneratingSet(G));
+FpToPerm:=IsomorphismPermGroup(G);
+fi;
+pG:=Image(FpToPerm,G);
 
 EltsG:=List(Elements(pG),x->PreImagesRepresentative(FpToPerm,x));
 
@@ -173,8 +179,6 @@ local #FpToPerm, #pG,
       position, l,
       d, i;
 
-#FpToPerm:=IsomorphismPermGroup(G);
-#pG:=Image(FpToPerm);
 
 l:=NullList(Size(pG));
 for d in zg do
@@ -424,7 +428,7 @@ MinimalModuleGenerators:=function(G, S)
 #   of T has this property.
 
 
-local T,
+local T, 
       temp, G_temp,
       sublist_G_temp, except, index,
       i, j;
@@ -518,6 +522,14 @@ return m;
 
 end;
 
+#***************************************************************
+Dimension:=function(n);
+if n=0 then return 1; fi;
+if n=1 then return Length(GeneratorsOfGroup(G)); fi;
+if n= 2 then return Length(RelatorsOfFpGroup(G)); fi;
+if n>2 then return Length(IrinasRes[n]); fi;
+end;
+#*
 
  
 #***************************************************************
@@ -534,15 +546,42 @@ Resolution:=function(G,n)
 
 local res, matrix,
       nf, V,
-      mgen, i;
+      mgen, i, j;
 
+Table(G);
 res:=[];
+res[1]:=[];
+for i in [1..Dimension(1)] do
+V:=[];
+        for j in [1..Dimension(1)*OrderG] do
+        if j=(1+(i-1)*OrderG) then V[j]:=-1;else
+
+        if j=Position(EltsG,GeneratorsOfGroup(G)[i])+(i-1)*Order(G) then
+        V[j]:=1;
+        else V[j]:=0;
+        fi; fi;
+        od;
+V:=List([1..Order(G)],x->V[x+(i-1)*Order(G)]);
+Append(res[1],[V]);
+od;
+
+if not IsFpGroup(G) then
+      matrix:=[];
+      for mgen in res[1] do
+        Add(matrix, mgen);
+      od;
+      matrix:=GenerateAsZGModule(G,matrix);
+      nf:=NormalFormIntMat(matrix,6);
+      V:=nf.rowtrans{[nf.rank+1..Length(matrix)]};
+      V:=LLLReducedBasis(V).basis;
+      res[2]:=MinimalModuleGenerators(G,V);
+fi;
 
 for i in [3..n] do
 
-if  i=3 
+if IsFpGroup(G) and i=3 
 then  res[i]:=IdentityModuleGenerators(G);
-else  Table(G);
+else  
       matrix:=[];
       for mgen in res[i-1] do
         Add(matrix, mgen);
@@ -569,16 +608,16 @@ end;
 
 
 IrinasRes:=Resolution(G,n);
-FoxM:=FoxMatrix(G);
 
 #####################################################################
 Dimension:=function(n);
 if n=0 then return 1; fi;
+if n>2 or (not IsFpGroup(G)) then return Length(IrinasRes[n]); fi;
 if n=1 then return Length(GeneratorsOfGroup(G)); fi;
-if n= 2 then return Length(RelatorsOfFpGroup(G)); fi;
-if n>2 then return Length(IrinasRes[n]); fi; 
+if n=2 then return Length(RelatorsOfFpGroup(G)); fi;
 end;
 #####################################################################
+
 
 #####################################################################
 ExtendIrinasRes:=function()	#This function will add the first
@@ -587,6 +626,7 @@ local i, j, V;			#two dimensions to Irinas Resolution.
 IrinasRes[1]:=[];
 IrinasRes[2]:=[];
 
+if IsFpGroup(G) then
 for i in [1..Dimension(2)] do
 V:=[];
 	for j in [1..Dimension(2)*OrderG] do
@@ -594,6 +634,7 @@ V:=[];
 	od;
 Append(IrinasRes[2], [TransposedMat(FoxM)*V]);
 od;
+fi;
 
 for i in [1..Dimension(1)] do
 V:=[];
@@ -612,7 +653,8 @@ od;
 end;
 #####################################################################
 
-ExtendIrinasRes();
+if IsFpGroup(G) then  FoxM:=FoxMatrix(G); ExtendIrinasRes(); fi;
+
 
 #####################################################################
 Int2Pair:=function(i,m)    	#m=Order(G), i=Position in a vector
@@ -671,21 +713,7 @@ end);
 #####################################################################
 
 
-#####################################################################
-InstallGlobalFunction(ResolutionSmallGroup,
-function(G,n)
-local GG;
-
-if IsFpGroup(G) then
-return ResolutionSmallFpGroup(G,n);
-fi;
-
-GG:=Image(IsomorphismFpGroup(G));
-GG:=SimplifiedFpGroup(GG);
-return ResolutionSmallFpGroup(GG,n);
-
-end);
-#####################################################################
+InstallValue(ResolutionSmallFpGroup,ResolutionSmallGroup);
 
 
 
