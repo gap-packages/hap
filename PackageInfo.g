@@ -11,7 +11,7 @@ SetPackageInfo( rec(
   Version := "1.21",
   Date    := "13/08/2019",
   ArchiveURL 
-          := "http://hamilton.nuigalway.ie/Hap/hap1.21",
+          := Concatenation( "http://hamilton.nuigalway.ie/Hap/hap", ~.Version ),
   ArchiveFormats 
           := ".tar.gz",
 
