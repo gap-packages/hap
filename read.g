@@ -281,8 +281,8 @@ ReadPackage("HAP", "lib/GraphsOfGroups/graphOfResolutions.gi");
 fi;
 
 ################### TEST ###########################################
-ReadPackage("HAP", "test/test.gap");
-ReadPackage("HAP", "test/test.g");
+ReadPackage("HAP", "tst/test.gap");
+ReadPackage("HAP", "tst/test.g");
 
 ################### STREAMS ########################################
 ReadPackage("HAP","lib/Streams/streams.gi");

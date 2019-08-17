@@ -99,7 +99,7 @@ BannerString     := Concatenation( "Loading HAP ",
 
 Autoload := true,
 
-TestFile := "test/hap.tst",
+TestFile := "tst/testall.g",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities" ]

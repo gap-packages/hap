@@ -6,7 +6,7 @@ local exfile, input, linefile, x;
 
 exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
 exfile:=Filename(exfile,"");;
-exfile:=Concatenation(exfile,"test/examples/");;
+exfile:=Concatenation(exfile,"tst/examples/");;
 exfile:=Concatenation(exfile,str);
 
 return exfile;
@@ -22,7 +22,7 @@ local exfile, input, linefile, x;
 
 exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
 exfile:=Filename(exfile,"");;
-exfile:=Concatenation(exfile,"test/examples/");;
+exfile:=Concatenation(exfile,"tst/examples/");;
 exfile:=Concatenation(exfile,str);
 
 input:=InputTextFile(exfile);
@@ -50,7 +50,7 @@ local dir;
 
 dir:=DirectoriesPackageLibrary( "HAP","")[1];;
 dir:=Filename(dir,"");;
-dir:=Concatenation(dir,"test/files/");;
+dir:=Concatenation(dir,"tst/files/");;
 
 
 if Test(Concatenation(dir,"1.1.1.tst")) then Print(true," 1.1.1\n");
