@@ -1,5 +1,6 @@
 LoadPackage( "hap" );
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
+TestDirectory( [ DirectoriesPackageLibrary( "hap", "tst/testall" ),
+                 DirectoriesPackageLibrary( "hap", "tst/files" ) ],
   rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
