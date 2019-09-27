@@ -23,7 +23,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
-##  $Id: derivation.gd 315 2008-09-09 11:53:29Z pas $
 ##
 #############################################################################
 

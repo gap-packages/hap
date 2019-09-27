@@ -2,9 +2,7 @@
 ##
 #W  ccgroup.tst                   HAPCocyclic                 Robert F. Morse
 ##
-##  $Id: ccgroup.tst,v 1.1 2008-07-11 22:41:31 unialg Exp $
 ##
-gap> START_TEST("$Id: ccgroup.tst,v 1.1 2008-07-11 22:41:31 unialg Exp $");
 
 gap> ## Test creating Cc-Groups with Standard 2-Cocycle
 gap> ##
@@ -30,13 +28,3 @@ gap> ccgrps := List(lst, x->CcGroup(OG, x));;
 gap> List(ccgrps,IdGroup);
 [ [ 256, 3700 ], [ 256, 3 ], [ 256, 3783 ], [ 256, 1300 ], [ 256, 1553 ] ]
 gap> STOP_TEST( "ccgroup.tst", 38100000 );
-
-#############################################################################
-##
-##  History
-##
-##  $Log: ccgroup.tst,v $
-##  Revision 1.1  2008-07-11 22:41:31  unialg
-##
-##  Two basic checks on Ccgroup. RFM
-##

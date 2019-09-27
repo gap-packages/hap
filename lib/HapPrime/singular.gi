@@ -23,7 +23,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
-##  $Id: singular.gi 334 2008-10-22 16:13:30Z pas $
 ##
 #############################################################################
 

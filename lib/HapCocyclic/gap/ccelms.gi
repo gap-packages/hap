@@ -2,7 +2,6 @@
 ##
 ##   ccelms.gi                   HAPCocyclic                  Robert F. Morse
 ##
-##   $Id: ccelms.gi,v 1.2 2008-07-11 21:33:20 unialg Exp $
 ##
 
 #############################################################################
@@ -172,20 +171,3 @@ InstallMethod
        return false;
    end 
 );
-
-
-#############################################################################
-##
-##  History
-##
-##  $Log: ccelms.gi,v $
-##  Revision 1.2  2008-07-11 21:33:20  unialg
-##
-##  Development commit for beta version. RFM
-##
-##  Revision 1.1  2008-07-11 21:01:19  unialg
-##
-##  First release. RFM
-##
-##
-##
