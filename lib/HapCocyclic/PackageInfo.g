@@ -2,7 +2,6 @@
 ##  
 ##  PackageInfo.g for HAPcocyclic                             Robert F. Morse
 ##  
-##  $Id: PackageInfo.g,v 1.2 2008-07-11 21:19:44 unialg Exp $
 
 SetPackageInfo
 (  rec
@@ -68,13 +67,3 @@ SetPackageInfo
       Keywords := ["group extensions"]
    )
 );
-
-#############################################################################
-##
-#H
-##  $Log: PackageInfo.g,v $
-##  Revision 1.2  2008-07-11 21:19:44  unialg
-##
-##  Beta Release. RFM
-##
-##

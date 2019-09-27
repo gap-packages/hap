@@ -2,7 +2,6 @@
 ##
 #W  ccelms.gd                   HAPCocyclic                   Robert F. Morse
 ##
-##  $Id: ccelms.gd,v 1.3 2008-07-11 21:26:06 unialg Exp $
 ##
 
 #############################################################################
@@ -42,22 +41,3 @@ DeclareAttribute( "InCcGroup",                IsCcElement );
 ##  Constructor
 ##
 DeclareGlobalFunction( "CcElement" );
-
-
-#############################################################################
-##
-##  History
-##
-##  $Log: ccelms.gd,v $
-##  Revision 1.3  2008-07-11 21:26:06  unialg
-##
-##  Development commit for beta release. RFM
-##
-##  Revision 1.2  2008-07-11 21:00:34  unialg
-##
-##  First release version. RFM
-##
-##  Revision 1.1  2008-06-20 10:17:31  unialg
-##  File Creation. RFM
-##
-
