@@ -372,6 +372,38 @@ gap> AbelianInvariants(Target(h2)/Image(h2));<br>
 [ 9 ]<br>
 </code></div>
 
+<h3>Distinguishing between the granny knot and reef knot</h3>
+<p>
+The granny knot is the sum of the trefoil knot and its mirror image. The reef
+knot is the sum of two identical copies of the trefoil knot. 
+The following commands show that the degree \(1\) homology homomorphisms 
+$$H_1(p^{-1}(B),\mathbb Z)
+\rightarrow H_1(\widetilde X_H,\mathbb Z)$$ distinguish between the
+homeomorphism types of the complements \(X\subset \mathbb R^3\) of the granny knot and the reef knot, where \(B\subset X\) is the knot boundary, and where
+\(p\colon \widetilde X_H \rightarrow X\) is the  covering map corresponding to the finite index subgroup \(H < \pi_1X\). 
+ More precisely, \(p^{-1}(B)\) is in general a union of path components
+$$p^{-1}(B) = B_1 \cup B_2 \cup \cdots \cup B_t\ .$$ The function
+FirstHomologyCoveringCokernels(f,c) inputs an integer \(c\) and the inclusion
+\(f\colon B\hookrightarrow X\) of a knot boundary \(B\) into the knot complement \(X\). The function returns the ordered list of the  lists of abelian invariants of cokernels 
+$${\rm coker}(\ H_1(p^{-1}(B_i),\mathbb Z)
+\rightarrow H_1(\widetilde X_H,\mathbb Z)\ )$$
+arising from subgroups \(H < \pi_1X\) of index \(c\). To distinguish between the granny and reef knots we use index \(c=6\).
+</p>
+
+<div><code>
+gap> K:=PureCubicalKnot(3,1);;<br>
+gap> L:=ReflectedCubicalKnot(K);;<br>
+gap> granny:=KnotSum(K,L);;<br>
+gap> reef:=KnotSum(K,K);;<br>
+gap> fg:=KnotComplementWithBoundary(ArcPresentation(granny));;<br>
+gap> fr:=KnotComplementWithBoundary(ArcPresentation(reef));;<br>
+gap> a:=FirstHomologyCoveringCokernels(fg,6);;<br>
+gap> b:=FirstHomologyCoveringCokernels(fr,6);;<br>
+gap> a=b;<br>
+false<br>
+</code></div>
+
+
 <h3>Second homotopy groups of spaces</h3>
 <p>
 If \(p:\widetilde Y \rightarrow Y\) is the map from the universal cover 

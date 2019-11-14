@@ -57,7 +57,8 @@ w:=0*[1..T!.dimension(n)];
 for i in Filtered([1..Length(v)],a-> not IsZero(v[a])) do
 x:=f!.mapping(n,i);
 if not x=fail then
-w[AbsInt(x)]:=w[AbsInt(x)]+SignInt(x)*v[i];
+#w[AbsInt(x)]:=w[AbsInt(x)]+SignInt(x)*v[i];
+w[x]:=w[x]+1*v[i];
 fi;
 od;
 return w;

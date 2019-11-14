@@ -1,5 +1,130 @@
 #(C) Graham Ellis, 2005-2006
 
+#################################################################
+#################################################################
+InstallGlobalFunction(ResolutionFiniteCyclicGroup,
+function(MM,N)
+local G, GG, M, iso, R, Dimension, Boundary, Homotopy, fn, posfn, pcp, Elts,g;
+
+if IsInt(MM) then M:=MM;
+G:=AbelianPcpGroup([M]);
+else
+if not IsCyclic(MM) then 
+Print("The group must be finite cyclic.\n");
+return fail; fi;
+M:=Order(MM);
+G:=AbelianPcpGroup([M]);
+iso:=GroupHomomorphismByImagesNC(G,MM,MinimalGeneratingSet(G),MinimalGeneratingSet(MM));
+fi;
+pcp:=Pcp(G);
+g:=MinimalGeneratingSet(G);
+g:=g[1];
+
+##########################
+##########################
+Dimension:=function(n);
+if n>=0  then return 1;
+else return 0;
+fi;
+end;
+##########################
+##########################
+
+##########################
+##########################
+Boundary:=function(n,k)
+if n<=0 or AbsInt(k)>1 then return []; fi;
+
+if IsOddInt(n) then 
+if k>0 then return [[1,2], [-1,1]]; 
+else return [[-1,2], [1,1]]; fi;
+fi;
+
+if IsEvenInt(n) then 
+if k>0 then return 
+List([1..M],i->[1,i]); 
+else return List([1..M],i->[-1,i]); fi;
+fi;
+end;
+##########################
+##########################
+
+##########################
+##########################
+fn:=function(k);
+return g^(k-1);
+end;
+Elts:=LazyList(fn,[["length",M]]);
+
+posfn:=function(x)
+local e;
+e:=ExponentsByPcp(pcp,x)[1];
+if e>0 then return e+1; else return 1; fi;
+end;
+Elts!.posfun:=posfn;
+##########################
+##########################
+
+if IsGroup(MM) then 
+##########################
+##########################
+fn:=function(k);
+return Image(iso,g^(k-1));
+end;
+Elts:=LazyList(fn,[["length",M]]);
+
+posfn:=function(x)
+local e,y;
+y:=PreImagesRepresentative(iso,x);
+e:=ExponentsByPcp(pcp,y)[1];
+if e>0 then return e+1; else return 1; fi;
+end;
+Elts!.posfun:=posfn;
+##########################
+##########################
+fi;
+
+##########################
+##########################
+Homotopy:=function(n,x)
+local k;
+k:=x[2];
+if IsEvenInt(n) then
+if x[1]>0 then return List([1..k-1],i->[1,i]);
+else return List([1..k-1],i->[-1,i]);fi;
+else
+if not k=M then return [];
+else
+if x[1]>0 then
+return [[1,1]];
+else return [[-1,1]]; fi;
+fi;
+fi;
+
+end;
+##########################
+##########################
+
+if IsInt(MM) then GG:=G;
+else GG:=Image(iso); fi;
+
+return Objectify(HapResolution,
+                rec(
+                dimension:=Dimension,
+                boundary:=Boundary,
+                homotopy:=Homotopy,
+                elts:=Elts,
+                group:=GG,
+                properties:=
+                   [["length",N],
+                    ["reduced",true],
+                    ["type","resolution"],
+                    ["characteristic",0]  ]));
+
+end);
+#################################################################
+#################################################################
+
 
 #################################################################
 #################################################################
@@ -147,7 +272,9 @@ r:=n-((d+1)*d/2);
 if r=0 then return Image(GhomE,R!.elts[1])*Image(HhomE,S!.elts[d]); fi;
 return Image(GhomE,R!.elts[d+2-r])*Image(HhomE,S!.elts[r]);
 end;
-EltsE:=LazyList(fn);
+EltsE:=LazyList(fn,[["length",Order(G)*Order(H)]]);
+#EltsE:=LazyList(fn);
+
 
 posfn:=function(x)
 local g,h, posg,posh,d;
@@ -544,11 +671,11 @@ if HomotopyR=fail or HomotopyS=fail then
 FinalHomotopy:=fail;
 fi;
 
-for i in [1..Lngth] do
-for j in [1..Dimension(i)] do
-g:=Boundary(i,j);
-od;
-od;
+#for i in [1..Lngth] do           #I'm guessing there is no need for this
+#for j in [1..Dimension(i)] do    #given that we are "lazy computing".
+#g:=Boundary(i,j);
+#od;
+#od;
 
 
 Boole:=false;

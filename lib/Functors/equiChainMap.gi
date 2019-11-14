@@ -36,9 +36,6 @@ for m in [0..N] do
 mapgensRec[m+1]:=[];
 for i in [1..DimensionR(m)] do
 mapgensRec[m+1][i]:=[];
-#for g in [1..Length(R!.elts)] do
-#mapgensRec[m+1][i][g]:=0;
-#od;
 od;
 od;
 
@@ -121,11 +118,8 @@ local z,u,a,y;
 
 if not IsBound(mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]) then
 
-#if x[2]>1 then
 if not x[2]=IDEL then
-#y:=ShallowCopy(mapgens([x[1],1],m));
 y:=ShallowCopy(mapgens([x[1],IDEL],m));
-#y:=StructuralCopy(mapgens([x[1],IDEL],m));
 Apply(y,b->[b[1],Mult(GhomQ(x[2]),b[2])]);
 
 	if x[1]>0 then mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]:=y;
@@ -193,7 +187,7 @@ v:= Concatenation(v);
 
 return AlgRed(v);
 
-return a;
+#return a; 
 end;
 #####################################################################
 

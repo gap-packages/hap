@@ -261,21 +261,19 @@ Y:=Target(F);
 L:=CriticalCellsOfRegularCWComplex(X);
 critX:=[];
 for n in [0..Dimension(X)] do
-critX[n+1]:=Filtered(L,x->x[1]=n); #I hope the order is preserved!!
+critX[n+1]:=1*Filtered(L,x->x[1]=n); #I hope the order is preserved!!
 Apply(critX[n+1],x->x[2]);
 od;
 L:=CriticalCellsOfRegularCWComplex(Y);
 critY:=[];
 for n in [0..Dimension(Y)] do
-critY[n+1]:=Filtered(L,x->x[1]=n); #I hope the order is preserved!!
+critY[n+1]:=1*Filtered(L,x->x[1]=n); #I hope the order is preserved!!
 Apply(critY[n+1],x->x[2]);
 od;
 C:=ChainComplexOfRegularCWComplexWithVectorField(X,"anything");
-#for n in [0..Length(C)] do
-#for i in [1..X!.nrCells(n)] do
-#C!.deform(n,i);
-#od;od;
-D:=ChainComplex(Y);
+#D:=ChainComplex(Y);
+D:=ChainComplexOfRegularCWComplexWithVectorField(Y);
+#CHANGED 29/10/2019
 
 
 ####################
@@ -284,7 +282,6 @@ map:=function(v,n)
 local w,i,j,jj,k,kk, x, cells,B,Or;
 
 w:=List([1..D!.dimension(n)],i->0);
-#for i in [1..Length(v)] do
 for i in Filtered( [1..Length(v)], i->not IsZero(v[i])  )  do
 
 cells:=[critX[n+1][i]];
@@ -292,7 +289,6 @@ if n>0 then
 B:=X!.boundaries[n+1][critX[n+1][i]];
 Or:=X!.orientation[n+1][critX[n+1][i]];;
 B:=List([1..Length(Or)],s->Or[s]*B[s+1]);
-#for j in X!.boundaries[n+1][critX[n+1][i]] do
 for j in B do
 C!.deform(n-1,j);
 Append(cells,-SignInt(j)*C!.htpy[n][AbsInt(j)]);

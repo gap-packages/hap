@@ -221,6 +221,7 @@ DeclareGlobalFunction("ResolutionSL2Z");
 DeclareGlobalFunction("ResolutionSL2Z_alt");
 DeclareGlobalFunction("ResolutionDirectProductLazy");
 DeclareGlobalFunction("ResolutionInfiniteCyclicGroup");
+DeclareGlobalFunction("ResolutionFiniteCyclicGroup");
 DeclareGlobalFunction("ResolutionAbelianGroup_alt");
 
 
@@ -727,6 +728,8 @@ DeclareGlobalFunction("EquivariantCWComplexToRegularCWMap");
 DeclareGlobalFunction("Spin");
 DeclareGlobalFunction("SpunKnotComplement");
 DeclareGlobalFunction("SpunAboutInitialHyperplane");
+DeclareGlobalFunction("LiftedRegularCWMap");
+DeclareGlobalFunction("FirstHomologyCoveringCokernels");
 
 
 ## KNOTS ############################################################
@@ -800,6 +803,7 @@ ReadPackage("HAP","lib/HapPrime/happrime.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
 ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
 ReadPackage("HAP","lib/Quandles/quandles.gd");
+ReadPackage("HAP","lib/Kelvin/kelvin.gd");
 
 
 

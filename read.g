@@ -401,6 +401,7 @@ ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/universalCover.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/spin.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/spunknotcomp.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/grannyknot.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -479,6 +480,11 @@ ReadPackage("HAP","lib/Quandles/planarDiagramData.gi");
 ReadPackage("HAP","lib/Quandles/quandleKnots.gi");
 ReadPackage("HAP","lib/Quandles/quandleOrbits.gi");
 ReadPackage("HAP","lib/Quandles/isoreps.gi");
+
+################## KELVIN ##################################
+#ReadPackage("HAP","lib/Kelvin/knotcomp.gi");
+ReadPackage("HAP","lib/Kelvin/knotCompBound.gi");
+
 
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

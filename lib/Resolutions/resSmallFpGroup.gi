@@ -675,6 +675,8 @@ end;
 Boundary:=function(n,kk)
 local B, i, j, p, w, k, StandardForm;
 
+if n<1 then return []; fi;
+
 k:=AbsoluteValue(kk);
 B:=IrinasRes[n][k];
 StandardForm:=[];

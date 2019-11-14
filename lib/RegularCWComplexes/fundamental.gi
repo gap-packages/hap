@@ -7,7 +7,7 @@ function(arg)
 local P,Y,base,e,bool, b, vertices,edges,F, G, FhomG, r,x,w, gens, rels, 
       cells, 0cells,1cells, 2cells, 2boundaries, deform, EdgeToWord,
       EdgeToLoop, VertexToPath, loops, BOOL, homotopyOrientation,R,S,SS,i,ii,jj,      bnd,sn, y, j,
-      indx, A, B, fn;
+      indx, A, B, fn,LL;
 
 Y:=arg[1];
 base:=1;
@@ -26,7 +26,8 @@ fi;
 
 
 if Dimension(Y)<4 then    
-   cells:=CriticalCellsOfRegularCWComplex(Y);
+     cells:=CriticalCellsOfRegularCWComplex(Y);
+#    cells:=CocriticalCellsOfRegularCWComplex(Y,4);
 else
    if IsBound(Y!.allcocriticalcells) then 
       cells:=CocriticalCellsOfRegularCWComplex(Y,Y!.allcocriticalcells);
@@ -37,9 +38,9 @@ fi;
 Y!.criticalCells:=cells;
 
 ###########################################################
-P:=SSortedList(List(Y!.orientation[1],Sum));
+P:=SSortedList(List(Y!.orientation[2],Sum)); # changed 1 to 2 (Nov 2019)
 if P=[0] then Y!.homotopyOrientation:=Y!.orientation{[1,2,3]};
-else
+else 
 P:=TruncatedRegularCWComplex(Y,2);;
 P!.orientation:=fail;
 OrientRegularCWComplex(P);
@@ -105,6 +106,7 @@ od;
 Apply(2boundaries,x->List([1..Length(x[1])],i->x[1][i]*x[2][i]));
 
 
+
 deform:=ChainComplex(Y)!.homotopicalDeform;
 
 Apply(2boundaries,x->Flat(List(x,a->deform(1,a))));
@@ -142,6 +144,7 @@ fi;
 ###################################
 ###################################
 
+
 F:=FreeGroup(Length(1cells));
 gens:=GeneratorsOfGroup(F);
 if Length(gens)=0 then return F; fi;
@@ -173,12 +176,13 @@ fi;
 EdgeToWord:=function(e)
 local r, x, w;
 
-r:=Flat(deform(1,e));
+#r:=Flat(deform(1,e));   ###changed
+r:=deform(1,e);
+
 
 w:=Identity(F);
 for x in r do
 if (not AbsInt(x) in edges) and deform(0,Y!.boundaries[2][AbsInt(x)][2]) in vertices then
-#if (not AbsInt(x) in edges)  then
 w:=w*gens[Position(1cells,AbsInt(x))]^(SignInt(x)) ; 
 fi;
 od;
@@ -197,6 +201,7 @@ loops:=StructuralCopy(1cells);
 ########################
 VertexToPath:=function(v)
 local path, e, pos;
+
 
 path:=[];
 
@@ -382,7 +387,7 @@ od;
 
 #########################
 map:=function(n,i);
-return invperm[n+1][i];
+return 1*invperm[n+1][i];
 end;
 #########################
 
@@ -444,7 +449,9 @@ loops:=[];
 for x in GS!.loops do
 w:= List(x,i->SignInt(i)*mapfn(1,AbsInt(i))) ;
 
-Apply(w,i->GT!.edgeToWord(AbsInt(i))^SignInt(i));
+#Apply(w,i->GT!.edgeToWord(AbsInt(i))^SignInt(i));
+#change:
+Apply(w,GT!.edgeToWord);
 
 Add(loops, Product(w));  
 od;

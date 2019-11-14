@@ -1,0 +1,693 @@
+#(C) Kelvin Killeen  2019
+
+########################################################################
+####### Regular CW-complex of knot complements #########################
+########################################################################
+####### Input: a list of integer pairs corresponding ###################
+####### to the lengths of horizontal segments of a knot/link. ##########
+########################################################################
+####### Output: a regular CW-complex representing the complement of ####
+####### the input knot/link. ###########################################
+######################################################################## 
+InstallGlobalFunction(KnotComplement,
+function(arg...)
+    local
+        rand, D, len, signless, PuncturedDisk,
+        P, grid, PuncturedTube;
+
+    if Length(arg)>1
+        then
+        rand:=true;
+        Print("Random 2-cell selection is enabled.\n");
+    else
+        rand:=false;
+    fi;
+
+    D:=arg[1];
+    len:=Length(D);
+    signless:=List(D,x->[AbsInt(x[1]),AbsInt(x[2])]);
+
+    PuncturedDisk:=function(D)
+        local
+            grid, i, IsIntersection,
+            CornerConfiguration, bound,
+            bigGrid, GridFill, j, tick,
+            hslice, vslice, k, 0c, Orient,
+            path, FaceTrace, cgrid;
+
+        grid:=List([1..len],x->List([1..len],y->0));
+        for i in [1..len]
+            do
+            grid[len-i+1][D[i][1]]:=1;
+            grid[len-i+1][D[i][2]]:=1;
+        od;
+
+        IsIntersection:=function(i,j)
+
+            if grid[i][j]=0
+                then
+                if 1 in grid[i]{[1..j]}
+                    then
+                    if 1 in grid[i]{[j..len]}
+                        then
+                        if 1 in List([1..i],x->grid[x][j])
+                            then
+                            if 1 in List([i..len],x->grid[x][j])
+                                then
+                                return true;
+                            fi;
+                        fi;
+                    fi;
+                fi;
+            fi;
+
+        return false;
+        end;
+
+        CornerConfiguration:=function(i,j);
+
+            if grid[i][j]=1
+                then
+                if Size(Positions(grid[i]{[j..len]},1))=2
+                    then
+                    if Size(Positions(List([i..len],x->grid[x][j]),1))=2
+                        then # Corner type 1, i.e : __
+                        return 1; #                |
+                    elif Size(Positions(List([1..i],x->grid[x][j]),1))=2
+                        then # Corner type 3, i.e :
+                        return 3; #                |__
+                    fi;
+                elif Size(Positions(grid[i]{[1..j]},1))=2
+                    then
+                    if Size(Positions(List([i..len],x->grid[x][j]),1))=2
+                        then # Corner type 2, i.e : __
+                        return 2; #                   |
+                    elif Size(Positions(List([1..i],x->grid[x][j]),1))=2
+                        then # Corner type 4, i.e :
+                        return 4; #                 __|
+                    fi;
+                fi;
+            fi;
+
+            return 0;
+        end;
+
+        bound:=[[],[],[],[],[]];
+        bigGrid:=List([1..2*len],x->List([1..2*len],y->0));
+
+        GridFill:=function(c,i,j);
+# places an * at each point where a 0-cell is to be added to bigGrid
+            if c=1 or c=4
+                then
+                bigGrid[(2*i)-1][(2*j)-1]:='*';
+                bigGrid[2*i][2*j]:='*';
+            elif c=2 or c=3
+                then
+                bigGrid[(2*i)-1][2*j]:='*';
+                bigGrid[2*i][(2*j)-1]:='*';
+            fi;
+        end;
+
+        for i in [1..len]
+            do # loop through bigGrid and add temporary *s
+            for j in [1..len]
+                do
+                if IsIntersection(i,j)
+                    then # four 0-cells at an intersection
+                    bigGrid[(2*i)-1][(2*j)-1]:='*';
+                    bigGrid[(2*i)-1][2*j]:='*';
+                    bigGrid[2*i][(2*j)-1]:='*';
+                    bigGrid[2*i][2*j]:='*';
+                elif grid[i][j]=1
+                    then # two 0-cells at the endpoints of each horizontal bar
+                    GridFill(CornerConfiguration(i,j),i,j);
+                fi;
+            od;
+        od;
+
+        tick:=2;
+        for i in [1..2*len]
+            do # number the 0-cells row-by-row
+            for j in [1..2*len]
+                do
+                if bigGrid[i][j]='*'
+                    then
+                    bigGrid[i][j]:=tick;
+                    tick:=tick+1;
+                fi;
+            od;
+        od;
+
+        for i in [1..2*len]
+            do # connect all 0-cells that lie in the same
+            hslice:=[]; # horizontal/vertical 'slice'
+            vslice:=[];
+            for j in [1..2*len]
+                do
+                if not bigGrid[i][j]=0
+                    then
+                    Add(hslice,bigGrid[i][j]);
+                fi;
+                if not bigGrid[j][i]=0
+                    then
+                    Add(vslice,bigGrid[j][i]);
+                fi;
+            od;
+            for k in [1..Length(hslice)]
+                do
+                if Length(hslice)>k
+                    then
+                    Add(bound[2],[2,hslice[k],hslice[k+1]]);
+                fi;
+            od;
+            for k in [1..Length(vslice)]
+                do
+                if Length(vslice)>k
+                    then
+                    Add(bound[2],[2,vslice[k],vslice[k+1]]);
+                fi;
+            od;
+        od;
+
+        for i in [1..len]
+            do # add the looping 1-cells to the 1-skeleton
+            for j in [1..len]
+                do
+                if CornerConfiguration(i,j) in [1,4]
+                    then
+                    Add(bound[2],[2,bigGrid[(2*i)-1][(2*j)-1],bigGrid[2*i][2*j]]);
+                    Add(bound[2],[2,bigGrid[(2*i)-1][(2*j)-1],bigGrid[2*i][2*j]]);
+                elif CornerConfiguration(i,j) in [2,3]
+                    then
+                    Add(bound[2],[2,bigGrid[(2*i)-1][2*j],bigGrid[2*i][(2*j)-1]]);
+                    Add(bound[2],[2,bigGrid[(2*i)-1][2*j],bigGrid[2*i][(2*j)-1]]);
+                fi;
+            od;
+        od;
+
+        0c:=Maximum(List(bigGrid,x->Maximum(x)));
+        for i in [1..0c+1]
+            do
+            Add(bound[1],[1,0]);
+        od;
+
+        Add(bound[2],[2,1,2]); # connect the central component to the circumference
+        Add(bound[2],[2,Length(bound[1])-1,Length(bound[1])]); # of the disk
+        Add(bound[2],[2,1,Length(bound[1])]);
+        Add(bound[2],[2,1,Length(bound[1])]);
+
+        bigGrid:=FrameArray(bigGrid);
+        bigGrid[1][2]:=1; # Adds the first and last 0-cells to bigGrid to be used below
+        bigGrid[Length(bigGrid)][Length(bigGrid[1])-1]:=0c+1;
+
+        Orient:=function(bound)
+# traces the 1-skeleton in a clockwise walk to yield the 2-cells
+            local 
+                unchosen, neighbours, i, j,
+                Clockwise;
+
+            unchosen:=List(ShallowCopy(bound[2]),x->[x[2],x[3]]);
+            neighbours:=List(ShallowCopy(bound[1]),x->[]);
+
+            for i in [1..Length(bound[1])]
+                do
+                for j in [1..Length(unchosen)]
+                    do
+                    if i in unchosen[j]
+                        then
+                        Add(neighbours[i],j);
+                    fi;
+                od;
+            od;
+
+            Clockwise:=function(neighbours)
+                local # orders the neighbours of each 0-cell in a clockwise manner
+                    oriented, first0, last0,
+                    i, j, x, k, l, posi, posx;
+
+                oriented:=List(neighbours,x->List([1..12],y->"pass"));
+                first0:=SortedList(neighbours[1]);
+                last0:=SortedList(neighbours[Length(neighbours)]);
+
+                oriented[1][7]:=first0[1];
+                oriented[1][6]:=first0[3];
+                oriented[1][8]:=first0[2];
+# these two orderings are always fixed; they correspond to the circumferential edges
+                oriented[Length(oriented)][1]:=last0[1]; 
+                oriented[Length(oriented)][2]:=last0[3];
+                oriented[Length(oriented)][12]:=last0[2];
+
+                for i in [2..Length(neighbours)-1] # excludes the 1st and last 0-cells
+                    do
+                    for j in [1..Length(neighbours[i])]
+                        do # x is a neighbouring 0-cell to i
+                        x:=bound[2][neighbours[i][j]];
+                        x:=Filtered(x{[2,3]},y->y<>i)[1];
+                        for k in [1..Length(bigGrid)]
+                            do
+                            for l in [1..Length(bigGrid[1])]
+                                do
+                                if i=bigGrid[k][l]
+                                    then
+                                    posi:=[k,l];
+                                fi;
+                                if x=bigGrid[k][l]
+                                    then
+                                    posx:=[k,l];
+                                fi;
+                            od;
+                        od;
+                        # below are the checks for orientation,
+                        # there are 12 in total (two for each diagonal):
+                        # _\\|//_
+                        #  //|\\
+                        # ! ugly code warning !
+                        if posi[1]>posx[1]
+                            then
+                            if posi[2]=posx[2]
+                                then
+                                oriented[i][1]:=neighbours[i][j];
+                            elif posi[2]<posx[2]
+                                then
+                                if oriented[i][2]="pass"
+                                    then # ***always assigns the uppermost loop first***
+                                    oriented[i][2]:=neighbours[i][j];
+                                else
+                                    oriented[i][3]:=neighbours[i][j];
+                                fi;
+                            elif posi[2]>posx[2]
+                                then
+                                if oriented[i][12]="pass"
+                                    then
+                                    oriented[i][12]:=neighbours[i][j];
+                                else
+                                    oriented[i][11]:=neighbours[i][j];
+                                fi;
+                            fi;
+                        elif posi[1]=posx[1]
+                            then
+                            if posi[2]<posx[2]
+                                then
+                                oriented[i][4]:=neighbours[i][j];
+                            elif posi[2]>posx[2]
+                                then
+                                oriented[i][10]:=neighbours[i][j];
+                            fi;
+                        elif posi[1]<posx[1]
+                            then
+                            if posi[2]=posx[2]
+                                then
+                                oriented[i][7]:=neighbours[i][j];
+                            elif posi[2]<posx[2]
+                                then
+                                if oriented[i][5]="pass"
+                                    then
+                                    oriented[i][5]:=neighbours[i][j];
+                                else
+                                    oriented[i][6]:=neighbours[i][j];
+                                fi;
+                            elif posi[2]>posx[2]
+                                then
+                                if oriented[i][9]="pass"
+                                    then
+                                    oriented[i][9]:=neighbours[i][j];
+                                else
+                                    oriented[i][8]:=neighbours[i][j];
+                                fi;
+                            fi;
+                        fi;
+                    od;
+                od;
+                
+                return oriented;
+            end;
+
+            return Clockwise(neighbours);
+        end;
+
+        path:=Orient(bound); # this is an ordered list of the neighbours of each 1-cell
+
+        FaceTrace:=function(path)
+            local
+                unselectedEdges, sourceORtarget,
+                x, ClockwiseTurn, 2cell,
+                sORt, ori, e1, e0, i;
+
+            unselectedEdges:=List([1..Length(bound[2])-2]);
+            unselectedEdges:=Concatenation(unselectedEdges,unselectedEdges);
+            Add(unselectedEdges,Length(bound[2])-1); # list of two of each edge except
+            Add(unselectedEdges,Length(bound[2])); # for the circumferential edges
+
+            ClockwiseTurn:=function(p,e)
+# inputs the orientation list of a node and the number of an edge in that list,
+# outputs the next edge after a clockwise turn
+                local
+                    f;
+                
+                f:=(Position(p,e) mod 12)+1;
+                while p[f]="pass"
+                    do
+                    f:=(f mod 12)+1;
+                od;
+                
+                return p[f];
+            end;
+
+            sourceORtarget:=List([1..Length(bound[2])],y->[3,2]);
+            x:=1;
+            while unselectedEdges<>[]
+                do # main loop, locates all 2-cells
+                if rand
+                    then
+                    x:=Random([1..Length(bound[2])]); # select a random edge
+                fi;
+                while (not x in unselectedEdges) and (not e1 in unselectedEdges)
+                    do # reselect edge if it already has two 2-cells in its coboundary
+                    if rand
+                        then
+                        x:=Random([1..Length(bound[2])]);
+                    else
+                        x:=x+1;
+                    fi;
+                od;
+                2cell:=[x]; # the 2-cell begins with just x in its boundary
+                if rand
+                    then
+                    sORt:=Random([2,3]);
+                else
+                    sORt:=sourceORtarget[x][Length(sourceORtarget[x])];
+                    Unbind(sourceORtarget[x][Length(sourceORtarget[x])]);
+                fi;
+                ori:=path[bound[2][x][sORt]]; # the orientation of the target of x
+                e0:=bound[2][x][sORt];
+                e1:=ClockwiseTurn(ori,x); # next edge to travel along
+                while e1<>x
+                    do
+                    Add(2cell,e1);
+                    e0:=Filtered(bound[2][e1]{[2,3]},y->y<>e0)[1]; # target vertex of e1
+                    ori:=path[e0];
+                    e1:=ClockwiseTurn(ori,e1);
+                od;
+                Add(2cell,Length(2cell),1);
+                if (not Set(2cell) in List(bound[3],x->Set(x)))
+                    then
+                    for i in Filtered(2cell{[2..Length(2cell)]},y->y in unselectedEdges)
+                        do
+                        Unbind(unselectedEdges[Position(unselectedEdges,i)]);
+                    od;
+                    Add(bound[3],2cell);
+                fi;
+            od;
+
+            bound[3]:=Filtered(bound[3],y->y[1]<>2);
+            return bound;
+        end;
+
+        cgrid:=grid*0; # this is needed at the very end when
+        for i in [1..Length(grid)] # patching the tubes together
+            do
+            for j in [1..Length(grid)]
+                do
+                cgrid[i][j]:=CornerConfiguration(i,j);
+            od;
+        od;
+
+        return [FaceTrace(path),cgrid];
+    end;
+
+    P:=PuncturedDisk(D);
+    grid:=P[2];
+    P:=P[1];
+
+    PuncturedTube:=function(bound)
+        local
+            l0, l1, l2, DuplicateDisk,
+            JoinDisks, Patch, prepatch,
+            postpatch, Cap;
+
+        l0:=Length(bound[1]);
+        l1:=Length(bound[2]);
+        l2:=Length(bound[3]);
+
+        DuplicateDisk:=function(bound)
+            local # creates a disjoint copy of the punctured
+                i, edges2, faces2; # disk and concatenates the two
+
+            for i in [1..l0]
+                do
+                Add(bound[1],[1,0]);
+            od;
+
+            edges2:=List(ShallowCopy(bound[2]),x->[2,x[2]+l0,x[3]+l0]);
+            bound[2]:=Concatenation(bound[2],edges2);
+
+            faces2:=List(ShallowCopy(bound[3]),
+            x->Concatenation([x[1]],x{[2..Length(x)]}+l1));
+            bound[3]:=Concatenation(bound[3],faces2);
+
+            return bound;
+        end;
+
+        bound:=DuplicateDisk(bound);
+
+        JoinDisks:=function(bound)
+# patch together the two disks via 1-cells, 2-cells & 3-cells
+# mathematically speaking, form the space P x I where I is the unit interval
+            local
+                i, x, y, 3cell;
+
+            for i in [1..l0]
+                do # connect the 2 disks by 1-cells
+                Add(bound[2],[2,i,l0+i]);
+            od;
+
+            for i in [1..l1]
+                do # for each base 1-cell, form a 2-cell
+                x:=bound[2][i][2];
+                y:=bound[2][i][3];
+                Add(bound[3],[4,i,l1+i,(l1*2)+x,(l1*2)+y]);
+            od;
+
+            for i in [1..l2]
+                do # form a 3-cell from each 2-cell in the base disk
+                x:=List(bound[3][i]{[2..Length(bound[3][i])]},y->y+(2*l2));
+                3cell:=Concatenation([i,l2+i],x);
+                Add(3cell,Length(3cell),1);
+                Add(bound[4],3cell);
+            od;
+
+            return bound;
+        end;
+
+        bound:=JoinDisks(bound);
+
+        prepatch:=Length(bound[3]);
+        postpatch:=0;
+
+        Patch:=function(bound)
+            local # close the tubes to complete the construction
+                loops, horizontals, verticals, i,
+                lst, htube, h1, h2, vtube, x,
+                cycle, loopless;
+
+            loops:=Filtered(
+                [1..l1-4],
+                x->Length(Positions(bound[2],bound[2][x]))>1 and bound[2][x][2]<>1
+            );
+
+            horizontals:=Filtered(
+                [1..l1-4],
+                x->bound[2][x][2]=bound[2][x][3]-1
+            );
+
+            verticals:=Filtered(
+                [1..l1-4],
+                x->not (x in loops or x in horizontals)
+            );
+            verticals:=verticals+l1;
+
+            for i in [1..Length(loops)/4]
+                do
+                lst:=[0,0];
+                if 1 in grid[i]
+                    then # check for corner configuration, this is important in deciding
+                    lst[1]:=2; # which loop to use in the 2-cell (top/bottom)
+                fi;
+                if 2 in grid[i]
+                    then
+                    lst[2]:=4;
+                fi;
+                if 3 in grid[i]
+                    then
+                    lst[1]:=1;
+                fi;
+                if 4 in grid[i]
+                    then
+                    lst[2]:=3;
+                fi;
+
+                htube:=loops{lst+4*(i-1)};
+                h1:=Filtered(
+                    horizontals,
+                    x->bound[2][x][2] in [bound[2][htube[1]][2]..bound[2][htube[2]][2]]
+                );
+                h2:=Filtered(
+                    horizontals,
+                    x->bound[2][x][2] in [bound[2][htube[1]][3]..bound[2][htube[2]][3]]
+                );
+                htube:=Concatenation(htube,h1,h2);
+                Add(htube,Length(htube),1);
+                Add(bound[3],htube);
+            od;
+
+            postpatch:=Length(bound[3]);
+
+            loops:=loops+l1;
+
+            vtube:=[];
+            Add(vtube,verticals[1]);
+            x:=bound[2][verticals[1]][3];
+            cycle:=0;
+            loopless:=[];
+            for i in [2..Length(verticals)]
+                do
+                if bound[2][verticals[i]][2]=x
+                    then
+                    Add(vtube,verticals[i]);
+                    x:=bound[2][verticals[i]][3];
+                else
+                    cycle:=cycle+1;
+                    if cycle=2
+                        then
+                        cycle:=0;
+                        Add(loopless,vtube);
+                        vtube:=[];
+                    fi;
+                    x:=bound[2][verticals[i]][3];
+                    Add(vtube,verticals[i]);
+                fi;
+            od;
+            Add(loopless,vtube);
+
+            for i in loopless
+                do
+                Add(i,Filtered(loops,y->bound[2][i[1]][2] in bound[2][y]{[2,3]})[1]);
+                Add(i,Filtered(
+                    loops,
+                    y->bound[2][i[Length(i)-1]][3] in bound[2][y]{[2,3]})[2]
+                );
+                Add(i,Length(i),1);
+                Add(bound[3],i);
+            od;
+
+            return bound;
+        end;
+
+        bound:=Patch(bound);
+
+        Cap:=function(bound)
+            local
+                bottom, btm, top, tp,
+                i, x, j, k;
+
+            Add(bound[3],[2,l1-1,l1]); # the upper and lower
+            Add(bound[3],[2,(2*l1)-1,2*l1]); # domes
+
+            bottom:=[1..l2];
+            btm:=[];
+            for i in bound[3]{[prepatch+1..postpatch]}
+                do
+                x:=(Length(i)-3)/2;
+                for j in [4..3+x]
+                    do
+                    for k in bottom
+                        do
+                        if 
+                        i[j] in bound[3][k]{[2..Length(bound[3][k])]} and
+                        i[j+x] in bound[3][k]{[2..Length(bound[3][k])]}
+                            then
+                            Add(btm,k);
+                        fi;
+                    od;
+                od;
+            od;
+
+            bottom:=Difference(bottom,btm);
+            bottom:=Concatenation(
+                bottom, # all base 2-cells without the overlap
+                [prepatch+1..postpatch], # the patch 2-cells enclosing the tubes
+                [Length(bound[3])-1] # the dome
+            );
+            Add(bottom,Length(bottom),1);
+
+            top:=[l2+1..2*l2];
+            tp:=[];
+            for i in bound[3]{[postpatch+1..Length(bound[3])-2]}
+                do
+                x:=(Length(i)-3)/2;
+                for j in [2..1+x]
+                    do
+                    for k in top
+                        do
+                        if
+                        i[j] in bound[3][k]{[2..Length(bound[3][k])]} and
+                        i[j+x] in bound[3][k]{[2..Length(bound[3][k])]}
+                            then
+                            Add(tp,k);
+                        fi;
+                    od;
+                od;
+            od;
+
+            top:=Difference(top,tp);
+            top:=Concatenation(
+                top,
+                [postpatch+1..Length(bound[3])-2],
+                [Length(bound[3])]
+            );
+            Add(top,Length(top),1);
+
+            Add(bound[4],bottom);
+            Add(bound[4],top);
+
+            return bound;
+        end;
+
+        return Cap(bound);
+    end;
+
+    P:=PuncturedTube(P);
+
+    return RegularCWComplex(P);
+end);
+########################################################################
+
+########################################################################
+InstallGlobalFunction(KnotComplementWithAxis,
+function(a)
+local K,B,L,F,bnd,b;
+K:=KnotComplement(a);
+L:=[ [[1,0], [1,0]], [[2,1,2],[2,1,2]], [[2,1,2]], []  ];
+B:=RegularCWComplex(L);
+
+b:=BoundaryOfRegularCWCell(K,2,K!.nrCells(2));
+bnd:=[];
+Add(bnd,[b[1][2],b[2][2]]);
+Add(bnd,[b[3][2],b[4][2]]);
+Add(bnd,[K!.nrCells(2)]);
+
+
+F:=function(n,k);
+return bnd[n+1][k];
+end;
+
+return Objectify(HapRegularCWMap,
+       rec(
+           source:=B,
+           target:=K,
+           mapping:=F
+           ));
+
+end);
+########################################################################
+

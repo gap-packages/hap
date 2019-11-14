@@ -904,7 +904,7 @@ fi;
 
 f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
-sn:=Y!.homotopyOrientation[n+2][f];  ##
+sn:=1*Y!.homotopyOrientation[n+2][f];  ##
 
 if n=1 then
 ########################################
@@ -928,6 +928,7 @@ od;
 bnd:=Concatenation([Length(B)],B{S});
 sn:=sn{S};;
 
+
 if Length(bnd)>3 then
 ###### This is a really thoughtless way to get the signs right!!!
 ###### And it is also wasteful of time.
@@ -945,6 +946,7 @@ else sn[1]:=Y!.homotopyOrientation[2][bnd[1]][1]; fi;
 ########################################
 fi;
 fi;
+
 
 def:=[]; def1:=[];def2:=[];
 
@@ -973,12 +975,8 @@ Apply(def,x->HomotopicalDeformCell(n,x));
 
 
 def:=Flat(def);
-Apply(def,x->[x,0]);
 
 def:=HtpyRed(def);
-
-
-Apply(def,x->x[1]);
 
 HDCrec[n+1][k]:=def;
 
