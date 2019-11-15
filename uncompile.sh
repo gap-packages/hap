@@ -2,10 +2,10 @@
 
 PKGDIR=/home/graham/pkg;
 
-rm $PKGDIR/Hap1.21/boolean;
+rm $PKGDIR/Hap1.22/boolean;
 
-rm -rf $PKGDIR/Hap1.21/lib/*/Compiled
-echo "COMPILED:=false;" > $PKGDIR/Hap1.21/boolean;
+rm -rf $PKGDIR/Hap1.22/lib/*/Compiled
+echo "COMPILED:=false;" > $PKGDIR/Hap1.22/boolean;
 
 
 
