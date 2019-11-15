@@ -1,0 +1,3 @@
+LoadPackage("HAP");
+MakeHAPManual();
+QUIT;
