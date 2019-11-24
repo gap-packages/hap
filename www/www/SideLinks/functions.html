@@ -1,0 +1,2387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>functions</title>
+</head>
+<body
+ style="color: rgb(0, 0, 102); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<div style="text-align: center;">
+<div style="text-align: left;"><a href="../index.html">HAP home</a><br>
+</div>
+<h2 style="text-align: center;"><span style="font-weight: bold;">ALPHABETICAL
+LIST OF HAP FUNCTIONS</span></h2>
+<span style="font-weight: bold;"></span></div>
+<table style="width: 100%; text-align: left;" border="0"
+ cellpadding="10" cellspacing="10">
+  <tbody>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 255); vertical-align: top; font-family: helvetica,arial,sans-serif; color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">AddFreeWords(v,w)</span><big><br>
+      </big></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two words v,w in a
+free ZG-module and returns their sum v+w. If the characteristic of Z is
+greater than 0 then the next function should be more efficient.<big><br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">AddFreeWordsModP(v,w,p)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two words v,w in a
+free ZG-module and the characteristic p of Z. It returns the sum v+w.
+If p=0 the previous function might be fractionally quicker.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">AlgebraicReduction(w)<br>
+      <br>
+      </span><span style="color: rgb(0, 0, 0);">AlgebraicReduction(w,p)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a word w in a free
+ZG-module and returns a reduced version of the word in which all pairs
+of mutually inverse letters have been cancelled. The reduction is
+performed in a free abelian group unless the characteristic p of Z is
+entered.<big><br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">BaerInvariant(G,c)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a <span style="font-style: italic;">nilpotent</span> group G and
+integer c&gt;0. It returns the Baer invariant M<sup>(c)</sup>(G)
+defined as follows.<br>
+      <br>
+For an <span style="font-style: italic;">arbitrary</span> group G let L<sup>*</sup><sub>c+1</sub>(G)
+be the (c+1)-st
+term
+of the upper central series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. This is an invariant of G and
+we define M<sup>(c)</sup>(G) to be the kernel of the canonical
+homomorphism M<sup>(c)</sup>(G)&#8594;G. For c=1 the Baer invariant M<sup>(1)</sup>(G)
+is isomorphic to the second integral homology H<sub>2</sub>(G,Z).<br>
+      <br>
+This function requires the NQ package.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BigStepLCS(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and a positive integer n. It returns a subseries G=L<sub>1</sub>&gt;L<sub>2</sub>&gt;...L<sub>k</sub>=1
+of the lower central series of G such that L<sub>i</sub>/L<sub>i+1</sub>
+has order greater than n.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BoundaryMap(C)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution, chain complex or cochain complex C and returns the
+function C!.boundary.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">BoundaryMatrix(C,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain or cochain complex C and integer n&gt;0. It returns the n-th
+boundary map of C as a matrix.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CayleyGraphDisplay(G,X)<br>
+      <br>
+CayleyGraphDisplay(G,X,"mozilla")<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G together with a subset X of G. It displays
+the corresponding Cayley graph&nbsp; as a .gif file. It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+The argument G can also be a finite set of elements in a (possibly
+infinite) group containing X. The edges of the graph are coloured
+according to which element of X they are labelled by. The list X
+corresponds to the list of colours [blue, red, green, yellow, brown,
+black] in that order.<br>
+      <br>
+This function requires Graphviz software.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ChevalleyEilenberg</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Complex(X,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a Lie algebra X=A (over the ring of integers Z or over a field
+K)
+or a homomorphism of Lie algebras X=(f:A&#8594;B), together with
+a positive integer n. It
+returns either the first n terms of the Chevalley-Eilenberg chain
+complex C(A), or the induced map of Chevalley-Eilenberg complexes
+C(f):C(A)&#8594;C(B).<br>
+      <br>
+(The homology of the Chevalley-Eilenberg complex C(A) is by
+definition the homology of the Lie algebra A with trivial coefficients
+in Z or K).<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Coclass(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G of prime-power order p<sup>n</sup> and nilpotency class c
+say. It returns the integer r=n-c .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">CocycleCondition(R,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution R and an integer n&gt;0. It returns an integer matrix M
+with the following property. Suppose d=R.dimension(n). An integer
+vector f=[f<sub>1</sub>, ..., f<sub>d</sub>] then represents a
+ZG-homomorphism R<sub>n</sub> &#8594; Z<sub>q</sub> which sends the ith
+generator of R<sub>n</sub> to the integer f<sub>i</sub> in the trivial
+ZG-module Z<sub>q</sub> (where possibly q=0). The homomorphism f is a
+cocycle if and only if
+M<sup>t</sup>f=0 mod q. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Cohomology(X)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a cochain complex X=C or a cochain map X=(C&#8594;D) over the integers
+Z. <br>
+      <ul>
+        <li>If X=C then the torsion coefficients of H<sup>n</sup>(C)
+are
+retuned.</li>
+        <li>If X=(C&#8594;D) then the induced homomorphism H<sup>n</sup>(C) &#8594;
+H<sup>n</sup>(D) is returned as a homomorphism of finitely presented
+groups. <br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Compose</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">(f,g)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-module homomorphisms f:M&#8594;N and g:L&#8594;M with Source(f)=Target(g) .
+It returns the composite homomorphism fg:L&#8594;N .<br>
+      <br>
+This also applies to group homomorphisms f,g.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
+Components(D)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and returns a list [D<sub>1</sub>, ..., D<sub>d</sub>]
+of the maximal connected subgraphs D<sub>i</sub>.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"><span
+ style="font-family: helvetica,arial,sans-serif;">CoxeterDiagram<br>
+Degree(D,v)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and vertex v. It returns the degree of v (i.e. the
+number of edges incident with v).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagramDisplay(D)</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagramDisplay(D,"mozilla")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and displays it as a .gif file.&nbsp; It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+This function requires Graphviz software.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">CoxeterDiagram<br>
+Fp</span><span style="color: rgb(0, 0, 0);">ArtinGroup(D)</span></span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">Inputs a Coxeter diagram D and returns the
+corresponding
+finitely presented Artin group.</span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
+FpCoxeterGroup(D)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">I<span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">nputs a Coxeter diagram D and returns the
+corresponding finitely presented Coxeter group.</span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
+IsSpherical(D)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and returns "true" if the associated Coxeter groups
+is finite, and returns "false" otherwise.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
+Matrix(D)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">I<span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">nputs a Coxeter diagram D and returns a
+matrix representation of it. The matrix is given as a function <span
+ style="font-family: helvetica,arial,sans-serif;">DiagramMatrix(D)(i,j)</span>
+where i,j can range over the vertices.<br>
+      </span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"><span
+ style="font-family: helvetica,arial,sans-serif;">CoxeterSubDiagram(D,V)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and a subset V of its vertices. It returns the full
+sub-diagram of D with vertex set V.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">CoxeterDiagram<br>
+Vertices(D)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">I<span
+ style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">nputs a Coxeter diagram D and returns its
+set of vertices.<br>
+      </span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Dimension(C)<br>
+      <br>
+Dimension(M)<br>
+      </span> </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution, chain complex or cochain complex C and returns the
+function C!.dimension .<br>
+      <br>
+Alternatively, inputs an FpG-module M and returns its dimension as a
+vector space over the field of p elements.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">DirectSumOfFpGModules(M,N)</span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      <br>
+DirectSumOfFpG<br>
+Modules([ M[1], M[2], ..., M[k] ]))</span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      <br>
+      </span> </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M and N with common group G. It returns the direct sum
+of M and N as an FpGModule. <br>
+      <br>
+Alternatively, the function can input a list of FpG-modules with common
+group G. It returns the direct sum of the list. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">EpiCentre(G,N)<br>
+      <br>
+EpiCentre(G)<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G and normal subgroup N and returns a subgroup Z<sup>*</sup>(G,N)
+of the centre of N. The group Z<sup>*</sup>(G,N) is trivial if and only
+if there is a crossed module d:E &#8594; G with N=Image(d) and with Ker(d)
+equal to the subgroup of E consisting of those elements on which G acts
+trivially. <br>
+      <br>
+If no value for N is entered then it is assumed that N=G. In this case
+the group Z<sup>*</sup>(G,G) is trivial if and only if G is isomorphic
+to a quotient G=E/Z(E) of some group E by the centre of E.&nbsp;
+(See also the command<span
+ style="font-family: helvetica,arial,sans-serif;">
+UpperEpicentralSeries(G,c)</span>.
+)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">EquivariantChain</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">Map(R,S,f)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R, a ZG'-resolution S, and a group homomorphism f : G &#8594;
+G'. It outputs a component object M with the following components.<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.source</span>
+is the resolution R.</li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.target
+          </span>is the resolution S.</li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">M!.mapping(w,n)</span>
+is a function which gives the image in S<sub>n</sub>, under a chain map
+induced by f, of a word w in R<sub>n</sub>. (Here&nbsp; R<sub>n</sub>
+and S<sub>n </sub>are the n-th modules in the resolutions R and S.)</li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">F!.properties</span>
+is a list of pairs such as ["type", "equivariantChainMap"].</li>
+      </ul>
+      <br>
+The
+resolution S must have a contracting homotopy. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">EvaluateProperty(X,"name")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a component object X (such as a ZG-resolution or chain map) and a
+string "name"
+(such as "characteristic" or "type"). It searches X.property for
+the&nbsp; pair ["name",value] and returns value. If X.property does not
+exist, or if ["name",value] does not exist, it returns fail.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">EvenSubgroup(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and returns a subgroup G<sup>+</sup>. The subgroup is that
+generated by all products xy where x and y range over the generating
+set for G stored by GAP. The subgroup is probably only meaningful when
+G is an Artin or Coxeter group.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ExpansionOfRational</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Function(f,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and a rational function f(x)=p(x)/q(x) where the
+degree of the polynomial p(x) is less than that of q(x). It returns a
+list [a<sub>0</sub> , a<sub>1</sub> , a<sub>2</sub> , a<sub>3</sub> ,
+... ,a<sub>n</sub>] of the first n+1 coefficients of the infinite
+expansion<br>
+      <div style="text-align: center;">f(x) = a<sub>0</sub> + a<sub>1</sub>x
++
+a<sub>2</sub>x<sup>2</sup> + a<sub>3</sub>x<sup>3</sup> + ...&nbsp; .<br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule(A,G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a p-group G and a matrix A whose rows have length a multiple of the
+order of G. It returns an FpG-module generated by the rows of A.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGModuleDualBasis(M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M. It returns a record R with two components:<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R.freeModule</span>
+is the free module FG of rank one.</li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R.basis</span>
+is a list representing an F-basis for the module Hom<sub>FG</sub>(M,FG).
+Each term in the list is a matrix A whose rows are vectors in FG such
+that&nbsp; M!.generators[i] &#8594; A[i]&nbsp; extends to a module
+homomorphism M&#8594;FG.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Homomorphism(M,N,A)</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HomomorphismNC(M,N,A)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+FpG-modules M and N over a common p-group G. Also inputs a list A
+of vectors in the vector space spanned by N!.matrix. It tests that
+the function<br>
+      <br>
+      <div style="text-align: center;">&nbsp;M!.generators[i] &#8594; A[i]<br>
+      </div>
+      <br>
+extends to a homomorphism of FpG-modules and, if the test is passed,
+returns the corresponding FpG-module homomorphism. If the test is
+failed it returns fail.<br>
+      <br>
+The "NC" version of the function assumes that the input defines a
+homomorphism and simply returns the FpG-module homomorphism.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGOmega(R,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and at least n terms of an FG-resolution R, where
+G is a finite p-group and F is the field of p elements. It returns the
+kernel of the nth boundary homomorphism as an FpG-module.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGRadicalModule(M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and returns the Radical of M as an FpG-module.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GeneratorsOfFpGModule(M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and returns a matrix whose rows correspond to a minimal
+generating set for M.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsDisplay(D)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsDisplay(D,"mozilla")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a graph of groups D and displays it as a .gif file.&nbsp; It uses the
+Mozilla web browser as a default to view the diagram.&nbsp; An
+alternative browser can be set using a second argument. <br>
+      <br>
+This function requires Graphviz software.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GraphOfGroupsTest(D)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an object D and tests whether it is a Graph of Groups. However, it DOES
+NOT test the injectivity of any homomorphisms. It returns true if D
+passes the test, and false otherwise.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupCohomology(X,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupCohomology(X,n,p)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and either a finite group X=G or a Coxeter diagram
+X=D representing an infinite Artin group G.&nbsp; It
+returns the torsion coefficients of the integral cohomology H<sup>n</sup>(G,Z).
+      <br>
+      <br>
+There is an optional third
+argument which, when set equal to a prime p, causes the<span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
+function to return the the mod p cohomology </span></span>H<sup>n</sup>(G,Z<sub>p</sub>)
+as a list of length equal to its rank. <br>
+      <span style="color: rgb(51, 0, 51);"><span
+ style="color: rgb(0, 0, 102);"> <br>
+This function is a composite of more basic functions, and makes choices
+for a number of parameters. For a particular group you would almost
+certainly be better using the more basic functions and making the
+choices yourself!</span></span> </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupHomology(X,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">GroupHomology(X,n,p)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"></span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and either a finite group X=G or a Coxeter diagram
+X=D representing an infinite Artin group G.&nbsp; It
+returns the torsion coefficients of the integral homology H<sub>n</sub>(G,Z).
+      <br>
+      <br>
+There is an optional third
+argument which, when set equal to a prime p, causes the<span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
+function to return the mod p homology </span></span>H<sub>n</sub>(G,Z<sub>p</sub>)
+as a list of lenth equal to its rank.. <br>
+      <span style="color: rgb(51, 0, 51);"><span
+ style="color: rgb(0, 0, 102);"> <br>
+This function is a composite of more basic functions, and makes choices
+for a number of parameters. For a particular group you would almost
+certainly be better using the more basic functions and making the
+choices yourself!<br>
+      </span></span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">GroupOfResolution(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns the group G.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HAPcopyright()</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+function provides details of HAP'S GNU public copyright licence.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">Homology(X,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a chain complex X=C or a chain map X=(C&#8594;D). <br>
+      <ul>
+        <li>If X=C then the torsion coefficients of H<sub>n</sub>(C)
+are
+retuned.</li>
+        <li>If X=(C&#8594;D) then the induced homomorphism H<sub>n</sub>(C) &#8594;
+H<sub>n</sub>(D) is returned as a homomorphism of finitely presented
+groups. <br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">HomologyPb(C,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+is a back-up function which might work in some instances where
+Homology(C,n) fails. It is most useful for chain complexes whose
+boundary homomorphisms are sparse.<br>
+      <br>
+It inputs
+a chain complex C in characteristic 0 and returns the torsion
+coefficients of H<sub>n</sub>(C) . There is a small
+probability that an
+incorrect answer could be returned. The computation relies on
+probabilistic Smith Normal Form algorithms implemented in the
+Simplicial Homology GAP
+package. This package therefore needs to be loaded. <br>
+      <br>
+The choice of probabalistic algorithm can be changed using the command<br>
+      <br>
+      <span style="font-family: helvetica,arial,sans-serif;">SetHomologyAlgorithm(HomologyAlgorithm[i]);</span><br
+ style="font-family: helvetica,arial,sans-serif;">
+      <br>
+where i = 1,2,3 or 4. The upper limit for the probability of an
+incorrect answer can be set to any rational number 0&lt;e&lt;=1 using
+the following command.<br>
+      <br>
+      <span style="font-family: helvetica,arial,sans-serif;">SetUncertaintyTolerence(e);<br>
+      <br>
+      <span style="font-family: serif;">See the Simplicial Homology
+package manual for further details.</span><br>
+      </span> </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">HomToIntegers(X)<br>
+      <br>
+      </span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a ZG-resolution X =R, or an equivariant chain map X = (F:R&#8594;S).
+It returns
+the cochain complex or cochain map obtained by applying Hom<sub>ZG</sub>(
+_ , Z) where Z is the trivial
+module of integers (characteristic 0).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">HomToIntegersModP(R)<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns
+the cochain complex obtained by applying Hom<sub>ZG</sub>(
+_ , Z<sub>p</sub>) where Z<sub>p</sub> is the trivial
+module of integers mod p. (At present this function does handle
+equivariant chain maps.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">HomToIntegralModule(R,f)</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and a group homomorphism f:G &#8594; GL<sub>n</sub>(Z)&nbsp;
+to the group of n&times;n invertible integer matrices. Here Z must have
+characteristic
+0. It returns the cochain complex obtained by applying Hom<sub>ZG</sub>(
+_ , A) where A is the ZG-module Z<sup>n</sup> with G action via f. (At
+present this function does not handle
+equivariant chain maps.) </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ImageOfFpGModule</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Homomorphism(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module homomorphism f:M&#8594;N and returns its image f(M) as an
+FpG-module.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">IntegralRingGenerators(R,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+at least n+1 terms of a ZG-resolution and integer n&gt;0. It returns a
+minimal list of cohomology classes in H<sup>n</sup>(G,Z) which,
+together with all cup products of lower degree classes, generate the
+group H<sup>n</sup>(G,Z)
+.<br>
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;"><span style="color: rgb(0, 0, 102);">(</span></span></span>Let
+a<sub>i</sub> be the i-th canonical generator of the d-generator
+abelian group H<sup>n</sup>(G,Z). The cohomology class n<sub>1</sub>a<sub>1</sub>
++ ... +n<sub>d</sub>a<sub>d </sub>is represented by the integer vector
+u=(n<sub>1</sub>, ..., n<sub>d</sub>). )<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"><span
+ style="font-family: helvetica,arial,sans-serif;">IntegralCup<br>
+Product(R,u,v,p,q)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IntegralCup<br>
+Product(R,u,v,p,q,P,Q,N)<br>
+      <br>
+      <br>
+      <br>
+      <br style="color: rgb(0, 0, 102);">
+      </span><span style="font-family: helvetica,arial,sans-serif;"><small><span
+ style="color: rgb(0, 0, 102); font-family: serif;">Various functions
+used to construct the cup product <br>
+are <a href="CR_functions.html">also available</a>.</span></small><br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R, a vector u representing an element in H<sup>p</sup>(G,Z),
+a vector v representing an element in H<sup>q</sup>(G,Z) and the two
+integers p,q &gt; 0. It returns a vector w representing the cup product
+u&middot;v in H<sup>p+q</sup>(G,Z). This product is associative and
+u&middot;v = (-1)<sup>pq</sup>v&middot;u .&nbsp; It provides H<sup>*</sup>(G,Z)
+with the structure of an anti-commutative graded ring. The cup product
+is currently implemented for characteristic 0 only.<br>
+      <br>
+The resolution R needs a
+contracting homotopy.<br>
+      <br>
+To save the function from having to calculate the abelian groupsH<sup>n</sup>(G,Z)
+additional input variables can be used in the form <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IntegralCupProduct(R,u,v,p,q,P,Q,N)
+      <span style="color: rgb(0, 0, 102); font-family: serif;">, where <br>
+      </span></span>
+      <ul>
+        <li><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102); font-family: serif;">P is the output of
+the command <span style="font-family: helvetica,arial,sans-serif;">CR_CocyclesAndCoboundaries(R,p,true)</span></span></span></li>
+        <li><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102); font-family: serif;">Q </span></span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102); font-family: serif;">is the output of
+the command <span style="font-family: helvetica,arial,sans-serif;">CR_CocyclesAndCoboundaries(R,q,true)</span></span></span></li>
+        <li><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102); font-family: serif;">N </span></span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102); font-family: serif;">is the output of
+the command <span style="font-family: helvetica,arial,sans-serif;">CR_CocyclesAndCoboundaries(R,p+q,true)<span
+ style="font-family: serif;"> .</span></span></span></span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IntersectionOfFpG</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Modules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M, N arising as submodules in a common free module (FG)<sup>n</sup>
+where G is a p-group and F the field of p-elements. It returns the
+FpG-Module arising as the intersection of M and N.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">IsAspherical(F,R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a free group F and a set R of words in F. It performs a test on the
+2-dimensional
+CW-space
+K associated to this presentation for the group G=F/&lt;R&gt;<sup>F</sup>.&nbsp;
+      <br>
+      <br>
+The function returns "true" if K <span style="font-style: italic;"></span>has
+trivial
+second homotopy group. In this case it prints:<span
+ style="font-style: italic;"> Presentation is aspherical</span>. <br>
+      <br>
+Otherwise it returns "fail" and prints: <span
+ style="font-style: italic;">Presentation is NOT piece-wise Euclidean
+non-positively curved</span>. (In this case K may or may not have
+trivial second homotopy group. But it is NOT possible to impose a
+metric on K which restricts to a Euclidean metric on each 2-cell.)<br>
+      <br>
+The function uses Polymake software. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsFpGModule<br>
+Homomorphism</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Data(M,N,A)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+FpG-modules M and N over a common p-group G. Also inputs a list A
+of vectors in the vector space spanned by N!.matrix. It returns true if
+the function<br>
+      <br>
+      <div style="text-align: center;">&nbsp;M!.generators[i] &#8594; A[i]<br>
+      </div>
+      <br>
+extends to a homomorphism of FpG-modules. Otherwise it returns false.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsLieAlgebraHomomorphism(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an object f and returns true if f is a homomorphism f:A&#8594;B of Lie
+algebras (preserving the Lie bracket).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">IsSuperperfect(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and returns "true" if&nbsp; both the first and second
+integral homology of G is trivial. Otherwise, it returns "false". <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LeibnizComplex(X,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a Lie or Leibniz algebra X=A (over the ring of integers Z or
+over a field
+K)
+or a homomorphism of Lie or Leibniz algebras X=(f:A&#8594;B), together with
+a positive integer n. It
+returns either the first n terms of the Leibniz chain
+complex C(A), or the induced map of Leibniz complexes
+C(f):C(A)&#8594;C(B).<br>
+      <br>
+(The Leibniz complex C(A) was defined by J.-L.Loday. Its homology is by
+definition the Leibniz homology of the algebra A).<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LeibnizAlgebraHomology(A,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Lie or Leibniz algebra X=A (over the ring of integers Z or over a
+field
+K), together with
+a positive integer n. It
+returns the n-dimensional Leibniz homology of A<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Length(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a resolution R and returns its length (i.e. the number of terms of R
+that Hap has computed). <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">LieAlgebraHomology(A,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Lie algebra A (over the integers or a field) and a positive integer
+n. It returns the homology H<sub>n</sub>(A,k)&nbsp; where&nbsp; k
+denotes the ground ring.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LowerCentralSeries</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LieAlgebra(G)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LowerCentralSeries</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">LieAlgebra(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a pcp group G. If each quotient G<sub>c</sub>/G<sub>c+1 </sub>of the
+lower central series is free abelian or p-elementary abelian (for fixed
+prime p) then a Lie algebra&nbsp; L(G) is returned. The abelian group
+underlying L(G) is the direct sum of the quotients<sub> </sub>G<sub>c</sub>/G<sub>c+1</sub>
+. The Lie bracket on L(G) is induced by the commutator in G. (Here G<sub>1</sub>=G,
+G<sub>c+1</sub>=[G<sub>c</sub>,G] .) <br>
+      <br>
+The function can also be applied to a group homomorphism f:G&#8594;G' . In
+this case the induced homomorphism of Lie algebras L(f):L(G) &#8594; L(G') is
+returned.<br>
+      <br>
+If the quotients of the lower central series are not all free or
+p-elementary abelian then the function returns fail.<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Pablo Fernandez Ascariz</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Map(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map or equivariant chain map f and returns the
+mapping function (as opposed to the target or the source of f) .</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ModPCohomologyRing(G,n)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ModPCohomologyRing(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a p-group G and positive integer n, or else n terms of a minimal
+Z<sub>p</sub>G-resolution R of Z<sub>p</sub>. It returns the cohomology
+ring A=H<sup>*</sup>(G,Z<sub>p</sub>) modulo all elements in degree
+greater than n. <br>
+      <br>
+The ring is returned as a structure constant algebra A. <br>
+      <br>
+The ring A is graded. It has a component <span
+ style="font-family: helvetica,arial,sans-serif;">A!.degree(x)</span>
+which is a function returning the degree of each (homogeneous) element
+x in GeneratorsOfAlgebra(A).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ModPRingGenerators(A)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a mod p cohomology ring A (created using the preceeding function). It
+returns a generating set for the ring A. Each generator is
+homogeneous.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">MultipleOfFpGModule(w,M)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and a list w:=[g<sub>1</sub> , ..., g<sub>t</sub>] of
+elements in the group G=M!.group. The list w can be thought of as
+representing the element w=g<sub>1</sub> + ...+ g<sub>t </sub>in the
+group algebra FG, and the function returns a semi-echelon matrix B
+which is a basis for the vector subspace wM .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">MultiplyWord(n,w)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a word w and integer n. It returns the scalar multiple n&middot;w .</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">Negate([i,j])</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a pair [i,j] of integers and returns [-i,j].<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">NegateWord(w)</span><big><br>
+      </big></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a word w in a free
+ZG-module and returns the negated word -w.<big><br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">NonabelianExterior<br>
+Product(G,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G and normal subgroup N. It returns a record E with the
+following components.<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">E.homomorphism</span>
+is a group homomorphism &micro; :
+G^N &#8594; G from the nonabelian exterior product G^N to G. The
+kernel of &micro; is the relative Schur multiplier. <br>
+        </li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">E.pairing(x,y)
+          </span>is a function which inputs an element x in G
+and an element y in N and returns&nbsp; x ^ y in the exterior product
+G^N
+.</li>
+      </ul>
+      <br>
+This function should work for
+reasonably small nilpotent groups or extremely small non-nilpotent
+groups.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">NonabelianTensor<br>
+Product(G,N)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G and normal subgroup N. It returns a record E with the
+following components.<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">E.homomorphism</span>
+is a group homomorphism &micro; :
+G(&times;)N &#8594; G from the nonabelian exterior product G(&times;)N to G. <br>
+        </li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">E.pairing(x,y)
+          </span>is a function which inputs an element x in G
+and an element y in N and returns&nbsp; x (&times;) y in the tensor
+product
+G(&times;)N
+.</li>
+      </ul>
+      <br>
+This function should work for
+reasonably small nilpotent groups or extremely small non-nilpotent
+groups.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">NonabelianTensorSquare(G)<br>
+      <br>
+NonabelianTensorSquare(G,m)<br>
+      </span> </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite or nilpotent infinite group G and returns a record T with the
+following components.<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">T.homomorphism</span>
+is a group homomorphism &micro; :
+G(&times;)G &#8594; G from the nonabelian tensor square of G to G. The
+kernel of &micro; is
+isomorphic to the third homotopy group of the suspension SK(G,1)
+of&nbsp; an Eilenberg-Mac Lane space. <br>
+        </li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">T.pairing(x,y)
+          </span>is a function which inputs two elements x, y
+in G
+and returns the tensor x (&times;) y in the tensor square G (&times;) G
+. <br>
+        </li>
+      </ul>
+An optional second varible m can be set equal to a multiple of the
+order of the tensor square G(&times;)G . This might help when G is
+solvable but not nilpotent (especially if the estimated upper bound m
+is reasonable accurate) as the bound is used in the solvable quotient
+algorithm.<br>
+      <br>
+The optional second variable m can also be set equal to 0. In this case
+the Todd-Coxeter procedure will be used to enumerate the tensor square
+even when G is solvable.<br>
+      <br>
+This function should work for
+reasonably small solvable groups or extremely small non-solvable
+groups.<br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 102);"></span></span> </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">OrbitPolytope(G,v,L)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group or matrix group G of degree n and a rational vector
+v of length n. In both cases there is a natural action of G on v. Let
+P(G,v) be the convex polytope arising as the convex hull of
+the Euclidean points in the orbit of v under the action of G. The
+function also inputs a sublist L of the following list of strings:<br>
+      <br>
+      <div style="text-align: center;">["dimension","vertex_degree",
+"visual_graph", "schlegel","visual"]<br>
+      <div style="text-align: left;"><br>
+Depending on the sublist, the function:
+      <ul>
+        <li>prints the dimension of the orbit polytope P(G,v);</li>
+        <li>prints the degree of a vertex in the graph of P(G,v);</li>
+        <li>visualizes the graph of P(G,v);</li>
+        <li>visualizes the Schlegel diagram of P(G,v);</li>
+        <li>visualizes P(G,v) if the polytope is of dimension 2 or 3.</li>
+      </ul>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">PermToMatrixGroup(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group G and its degree n. Returns a bijective
+homomorphism f:G &#8594; M where M is a group of permutation matrices.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">PoincareSeries(G,n)<br>
+      <br>
+PoincareSeries(R,n)<br>
+      <br>
+PoincareSeries(L,n)<br>
+      <br>
+PoincareSeries(G)<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite p-group G and a positive integer n. It returns a quotient of
+polynomials f(x)=P(x)/Q(x) whose coefficient of x<sup>k</sup> equals
+the rank of the vector space H<sub>k</sub>(G,Z<sub>p</sub>) for all k
+in the range k=1 to k=n.&nbsp; (The second input variable can be
+omitted, in which case the function tries to choose a "reasonable"
+value for n.)<br>
+      <br>
+In place of the group G the function can also input (at least n terms
+of) a minimal mod
+p resolution R for G.<br>
+      <br>
+Alternatively, the first input variable can be a list L of integers. In
+this case the coefficient of x<sup>k</sup> in f(x) is equal to the
+(k+1)st term in the list.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">PoincareSeriesPrimePart(G,p,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G, a prime p, and a positive integer n. It returns a
+quotient of
+polynomials f(x)=P(x)/Q(x) whose coefficient of x<sup>k</sup> equals
+the rank of the vector space H<sub>k</sub>(G,Z<sub>p</sub>) for all k
+in the range k=1 to k=n. <br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The efficiency of this
+function needs to be improved.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">PolytopalComplex(G,v)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">PolytopalComplex(G,v,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group or matrix group G of degree n and a rational vector
+v of length n. In both cases there is a natural action of G on v. Let
+P(G,v) be the convex polytope arising as the convex hull of
+the Euclidean points in the orbit of v under the action of G. The
+cellular chain complex C<sub>*</sub>=C<sub>*</sub>(P(G,v)) is an exact
+sequence of (not necessarily free) ZG-modules. The
+function returns a component object R with components:<br>
+      <ul style="font-family: helvetica,arial,sans-serif;">
+        <li>R!.dimension(k)<span style="font-family: serif;"> is a
+function which returns the number of G-orbits of the k-dimensional
+faces in&nbsp; P(G,v).&nbsp; If each k-face has trivial stabilizer
+subgroup in G then C<sub>k</sub> is a free ZG-module of rank
+R.dimension(k).</span></li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">R!.stabilizer(k,n)<span
+ style="font-family: serif;"> is a function which returns the
+stabilizer subgroup for a face in the n-th orbit of k-faces.</span></span></li>
+        <li><span style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;">If all faces of dimension &lt;k+1 have
+trivial stabilizer group then the first k terms of C<sub>*</sub>
+constitute part of a free&nbsp; ZG-resolution. The boundary map is
+described by the function <span
+ style="font-family: helvetica,arial,sans-serif;">boundary(k,n)</span>
+. (If some faces have non-trivial stabilizer group then C<sub>*</sub>
+is not free and no attempt is made to determine signs for the boundary
+map.)<br>
+          </span></span></li>
+        <li><span style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-family: serif;"><span
+ style="font-family: helvetica,arial,sans-serif;">R!.elements,
+R!.group,
+R!.properties <span style="font-family: serif;">are as in a
+ZG-resolution.</span></span></span></span></li>
+      </ul>
+If an optional third input variable n is used, then only the first n
+terms of the resolution C<sub>*</sub> will be computed.<br>
+      <br>
+The function uses Polymake software. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">PolytopalGenerators(G,v)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group or matrix group G of degree n and a rational vector
+v of length n. In both cases there is a natural action of G on v, and
+the vector v must be chosen so that it has trivial stabilizer subgroup
+in G. Let P(G,v) be the convex polytope arising as the convex hull of
+the Euclidean points in the orbit of v under the action of G. The
+function returns a record P with components:<br>
+      <ul>
+        <li>P.generators is a list of all those elements g in G such
+that
+g&middot;v has an edge in common with v. The list is a generating set
+for G.<br>
+        </li>
+        <li>P.vector is the vector v.</li>
+        <li>P.hasseDiagram is the Hasse diagram of the cone at v.</li>
+      </ul>
+The function uses Polymake software. <br>
+      <span style="font-weight: bold;">The function is joint work with
+Seamus Kelly.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Prank(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a p-group G and returns the rank of the largest elementary abelian
+subgroup. (The implementation of this function is extremely naive!!)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">PresentationOfResolution(R)</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+at least two terms
+of a reduced ZG-resolution R and returns a record P with components<br>
+      <ul>
+        <li><span style="font-family: helvetica,arial,sans-serif;">P.freeGroup</span>
+is a free group F<br>
+        </li>
+        <li><span style="font-family: helvetica,arial,sans-serif;">P.relators</span>
+is a list S of words in F</li>
+      </ul>
+where G is isomorphic to F modulo the normal
+closure of S. This presentation for G corresponds to
+the 2-skeleton of the classifying CW-space from which R was
+constructed. The resolution R
+requires no contracting homotopy.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">PrimePartDerived</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">Functor(G,R,F,n)</span><big><br>
+      </big></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G, a positive integer n, at least n+1 terms of a
+ZP-resolution for a Sylow subgroup P&lt;G and a "mathematically
+suitable" covariant additive functor F such as <span
+ style="font-family: helvetica,arial,sans-serif;">TensorWithIntegers <span
+ style="font-family: serif;"></span></span>. It returns the abelian
+invariants of the
+p-component of the&nbsp; homology H<sub>n</sub>(F(R)) . <br>
+      <br>
+Warning: All calculations are assumed to be in characteristic 0. The
+function should not be used if the coefficient module is over the field
+of p elements.<br>
+      <br>
+"Mathematically suitable" means that the Cartan-Eilenberg double coset
+formula must hold.<br>
+      <big> </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">PrintZGword(w,elts)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a word w in a free ZG-module and a (possibly partial but sufficient)
+listing elts of the
+elements of G. The function prints the word w to the screen in the form<br>
+      <div style="text-align: center;">r<sub>1</sub>E<sub>1</sub> + ...
++ r<sub>n</sub>E<sub>n</sub><br>
+      </div>
+where r<sub>i</sub> are elements in the group ring ZG, and E<sub>i</sub>
+denotes the i-th free generator of the module. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ProjectedFpGModule(M,k)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M of ambient dimension n|G|, and an integer k between 1
+and n. The module M is a submodule of the free module (FG)<sup>n</sup>
+. Let M<sub>k</sub> denote the intersection of M with the k-th summand
+of (FG)<sup>n</sup> . The function returns M<sub>k</sub> as an
+FpG-module with ambient diemnsio n|G|.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RandomHomomorphismOf</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">FpGModules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M and N over a common group G. It returns a random
+matrix A whose rows are vectors in N such that
+the function<br>
+      <br>
+      <div style="text-align: center;">&nbsp;M!.generators[i] &#8594; A[i]<br>
+      </div>
+      <br>
+extends to a homomorphism M&#8594;N of FpG-modules.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Rank(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module homomorphism f:M&#8594;N and returns the dimension of the image
+of f as a vector space over the field F of p elements.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RankHomologyPGroup(G,n)</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RankHomologyPGroup(R,n)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">RankHomology<br>
+PGroup(G,n,"empirical")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a (smallish) p-group G, or n terms of a minimal Z<sub>p</sub>G-resolution
+R of Z<sub>p</sub> , together with a positive integer n. It returns the
+minimal number of generators of the integral homology group H<sub>n</sub>(G,Z).<br>
+      <br>
+If an option third string argument "empirical" is included then an
+empirical algorithm will be used. This is one which always seems to
+yield the right
+answer but&nbsp; which we can't prove yields the correct answer. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">RankPrimeHomology(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a (smallish) p-group G together with a positive integer n. It returns a
+function dim(k) which gives the rank of the vector space<br>
+H<sub>k</sub>(G,Z<sub>p</sub>) for all 0 &lt;= k &lt;= n<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">&nbsp;RelativeSchurMultiplierG,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite group G and normal subgroup N. It returns the homology group H<sub>2</sub>(G,N,Z)
+that fits into the exact sequence <br>
+&middot;&middot;&middot; &#8594; H<sub>3</sub>(G,Z) &#8594; H<sub>3</sub>(G/N,Z) &#8594; H<sub>2</sub>(G,N,Z)
+&#8594; H<sub>3</sub>(G,Z) &#8594; H<sub>3</sub>(G/N,Z) &#8594; &middot;&middot;&middot;.<br>
+      <br>
+This function should work for reasonably small
+nilpotent groups G or extremely small non-nilpotent groups.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAbelianGroup(L,n)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"></span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAbelianGroup(G,n)</span>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a list L:=[m<sub>1</sub>,m<sub>2</sub>, ..., m<sub>d</sub>] of
+nonnegative integers, and a positive integer n. It returns n terms of a
+ZG-resolution for the abelian group G=Z<sub>L[1]</sub>+Z<sub>L[2]</sub>+&middot;&middot;&middot;+Z<sub>L[d]</sub>
+.<br>
+      <br>
+If G is finite then the first argument can also be the abelian group G
+itself.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystalGroup(G,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer n and an almost
+crystallographic pcp group G.
+It
+returns n terms of a free ZG-resolution. (A group is <span
+ style="font-style: italic;">almost crystallographic</span> if it
+nilpotent-by-finite and has no non-trivial finite normal subgroup. Such
+groups can be constructed using the ACLIB package.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystal<br>
+Quotient(G,n,c)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAlmostCrystal<br>
+Quotient(G,n,c,false)<br>
+      </span><br>
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">An
+almost crystallographic group G is an extension of a finite group P by
+a nilpotent group T, and has no non-trivial finite normal subgroup. We
+define the <span style="font-style: italic;">relative lower central
+series</span> by setting T<sub>1</sub>=T and T<sub>i+1</sub>=[T<sub>i</sub>,G].
+      <br>
+      <br>
+This function inputs an almost crystallographic group G together with
+positive integers n and c. It returns n terms of a free ZQ-resolution
+R for the group Q=G/T<sub>c</sub> .<br>
+      <br>
+In addition to the usual components, the resolution R has the component
+      <span style="font-family: helvetica,arial,sans-serif;">R.quotientHomomorphism</span>
+which gives the quotient homomorphism G&#8594;Q.<br>
+      <br>
+If a fourth optional variable is set equal to "false" then the the
+function omits to test whether Q is finite and a "more canonical"
+resolution is constructed.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionArtinGroup(D,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a Coxeter diagram D and an integer&nbsp; n&gt;1.&nbsp; It returns n
+terms of a free ZG-resolution R where G is the Artin monoid associated
+to D.&nbsp; It is conjectured that R is also a free resolution for the
+Artin group G. The conjecture is known to hold in <a
+ href="About/aboutArtinGroups.html">certain cases</a>.<br>
+      <br>
+G=R.group is infinite and returned as a finitely presented group. The
+list
+R.elts is a partial listing of the elements of G which grows as R is
+used. Initially R.elts is empty and
+then, any time the boundary of a
+resolution generator is called, R.elts is updated to include elements
+of G involved in the boundary. <br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
+R has not yet been implemented! </span><span
+ style="color: rgb(255, 0, 0);">Furthermore, the group G is
+currently returned only as a finitely presented group (without any
+method for solving the word problem).</span> </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionAspherical<br>
+Presentation(F,R,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a free group F, a set R of words in F which constitute an <span
+ style="font-weight: bold;">aspherical</span> presentation for a group
+G, and a positive integer n.&nbsp; (Asphericity can be a difficult
+property to verify. The
+function IsAspherical(F,R) could be of help.)<br>
+      <br>
+The function returns n terms of a free ZG-resolution R which has
+generators in dimensions &lt;3 only. No contracting homotopy on R will
+be returned.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionDirectProduct(R,S)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionDirect<br>
+Product(R,S,"internal")<br>
+      </span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and ZH-resolution S. It outputs a ZD-resolution for
+the direct product D=G&times;H. <br>
+      <br>
+If G and H lie in a common group K, and if they commute and have
+trivial intersection, then an optional third variable "internal" can be
+used. This will force D to be the subgroup GH in K.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionExtension(g,R,S)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionExtension<br>
+(g,R,S,"TestFiniteness")<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionExtension<br>
+(g,R,S,"NoTest",GmapE)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a surjective group homomorphism g:E&#8594;G with kernel N. It also inputs a
+ZN-resolution R and a ZG-resolution S. It returns
+a ZE-resolution. The groups E and G can be infinite.<br>
+      <br>
+If an optional fourth argument is set equal to "TestFiniteness" then
+the
+groups N and G will be tested to see if they are finite. If they are
+finite then some speed saving routines will be invoked.<br>
+      <br>
+If the homomorphism g is such that the GAP function <span
+ style="font-family: helvetica,arial,sans-serif;">PreImagesElement(g,x)</span>
+doesn't work, then a function <span
+ style="font-family: helvetica,arial,sans-serif;">GmapE()</span> should
+be included as a fifth input. For any x in G this function should
+return an element GmapE(x) in E&nbsp; which gets mapped onto x by g. <span
+ style="font-weight: bold;"></span><br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
+the
+ZE-resolution has not yet been fully implemented for infinite groups!</span><span
+ style="font-family: helvetica,arial,sans-serif;"></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteDirectProduct(R,S)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteDirect<br>
+Product(R,S,"internal")<br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and ZH-resolution S where G and H are finite groups.
+It outputs a ZD-resolution for
+the direct product D=G&times;H. <br>
+      <br>
+If G and H lie in a common group K, and if they commute and have
+trivial intersection, then an optional third variable "internal" can be
+used. This will force D to be the subgroup GH in K.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">ResolutionFiniteExtension</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">(gensE,gensG,R,n)</span><br>
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteExtension<br>
+(gensE,gensG,R,n,true)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFiniteExtension<br>
+(gensE,gensG,R,n,false,S)</span><span style="color: rgb(255, 0, 0);"></span><span
+ style="font-family: helvetica,arial,sans-serif;"> <br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 102);">Inputs: a set gensE of generators for a
+finite group E; a set gensG equal to the image of gensE in a quotient
+group G
+of E; a ZG-resolution R up to dimension at least n; a
+positive&nbsp; integer n. It uses the TwistedTensorProduct()
+construction to return n terms of a ZE-resolution. </span><br>
+      <br>
+The
+function has an optional fourth
+argument which, when set equal to true, <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
+ style="font-family: helvetica,arial,sans-serif;"></span><span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
+invokes tietze reductions in the
+construction of a resolution for the kernel of E--&gt;G.<br>
+      <br>
+If a ZN-resolution S is available, where N is the kernel of the
+quotient E&#8594;G, then this can be incorporated into the computations using
+an optional fifth argument. </span></span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"></span><span
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 0, 102);"></span></span><span
+ style="color: rgb(0, 0, 102);"><small><span
+ style="color: rgb(255, 0, 0);"></span></small><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">ResolutionFinite</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">Group(gens,n)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFinite<br>
+Group(gens,n,true)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFinite<br>
+Group(gens,n,false,p)</span><span
+ style="font-family: helvetica,arial,sans-serif;"></span><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(0, 0, 102); background-color: rgb(255, 255, 255);">Inputs
+a set gens of
+generators for a finite group G and a positive integer n. It outputs n
+terms of a ZG-resolution. <br>
+      <br>
+The function has an optional third
+argument which, when set equal to&nbsp; true, invokes<span
+ style="font-family: helvetica,arial,sans-serif;"></span><span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);">
+tietze reductions in the
+construction of the resolution. <br>
+      <br>
+      </span></span>The function has an optional fourth
+argument which, when set equal to a prime p, records the fact that the
+resolution will only be used for mod p calculations. This could speed
+up subsequent constructions.<span style="color: rgb(255, 0, 0);"></span><span
+ style="color: rgb(51, 0, 51);"><span style="color: rgb(0, 0, 102);"> </span></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif;"><span
+ style="color: rgb(0, 0, 0);">ResolutionFinite</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">Subgroup(R,K)<br>
+      <br>
+      </span><span style="color: rgb(0, 0, 0);">ResolutionFinite</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">Subgroup(R,gensG,gensK)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution for a finite group G and a subgroup K of index |G:K|.
+It returns a free ZK-resolution whose
+ZK-rank is |G:K| times the ZG-rank in each dimension. <br>
+      <br>
+Generating sets gensG, gensK for G and K can also be input to the
+function (though the method does not depend on a choice of generators).<br>
+      <span style="color: rgb(255, 0, 0);"><br>
+      <span style="color: rgb(0, 0, 102);">This ZK-resolution is not
+reduced. ie.e it has more
+than one
+generator in dimension 0.&nbsp;</span></span><big><span
+ style="color: rgb(0, 0, 102);"> </span></big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionFpGModule(M,n)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and a positive integer n. It returns n terms of a
+minimal free FG-resolution of the module M (where G is a finite p-group
+and F the field of p elements).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionGraphOfGroups(D,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionGraphOfGroups(D,n,L)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br>
+      <br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a graph of groups D and a positive integer n. It returns n terms of a
+free ZG-resolution for the fundamental group G of D.<br>
+      <br>
+An optional third argument L=[R<sub>1</sub> , ..., R<sub>t</sub>] can
+be used to list (in any order) free resolutions for some/all of the
+vertex and edge groups in D. If for some vertex or edge group no
+resolution is listed in L then the function <span
+ style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteGroup()</span>
+will be used to try to construct the resolution. &nbsp; <br>
+      <br>
+The ZG-resolution is usually not reduced. i.e. it has more than one
+generator in dimension 0.<br>
+      <br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
+the
+ZG-resolution has not yet been implemented!</span> <span
+ style="color: rgb(255, 0, 0);">Furthermore, the group G is currently
+returned only as a finitely presented group (without any method for
+solving the word problem).</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionNilpotentGroup(G,n)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionNilpotentGroup<br>
+(G,n,"TestFiniteness")</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a nilpotent group G and positive integer n. It returns n terms of a
+free ZG-resolution. The resolution is computed using a
+divide-and-conquer technique involving the lower central series. <br>
+      <br>
+This function can be applied to infinite groups G. For finite groups
+the function ResolutionNormalSeries() probably gives better results.<br>
+      <br>
+If an optional third argument is set equal to "TestFiniteness" then the
+groups N and G will be tested to see if they are finite. If they are
+finite then some speed saving routines will be invoked.<span
+ style="font-weight: bold;"></span><br>
+      <br>
+      <span style="color: rgb(255, 0, 0);">The contracting homotopy on
+the
+ZE-resolution has not yet been fully implemented for infinite groups.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionNormalSeries(L,n)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries<br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">(L,n,</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">true)<br>
+      <br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries<br>
+      </span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">(L,n,</span><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">false,p)</span><br>
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;"><br>
+      </span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer
+n and a list L = [L<sub>1</sub> , ..., L<sub>k</sub>] of normal
+subgroups L<sub>i </sub>of
+a finite group G satisfying G = L<sub>1</sub>&gt;L<sub>2</sub> ... &gt;L<sub>k</sub>.
+Alternatively, L = [gensL<sub>1</sub>, ... gensL<sub>k</sub>] can be a
+list of generating sets for the L<sub>i</sub> (and these&nbsp;
+particular generators will be used in the construction of resolutions).
+It returns a Z(G)-resolution by repeatedly using the
+function
+ResolutionFiniteExtension(). <br>
+      <br>
+The function has an optional third
+argument which, if set equal to true, invokes tietze reductions in the
+construction of resolutions. <br>
+      <br>
+The function has an optional fourth argument which, if set equal to
+p&gt;0, produces a resolution which is only valid for mod p
+calculations.<span style="color: rgb(255, 0, 0);"><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionPrimePowerGroup(G,n)<br>
+      <br>
+ResolutionPrimePower<br>
+Group(G,n,"save space")<br>
+      </span> </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a p-group G and integer n&gt;0. It uses GAP's standard linear algebra
+functions over the field Z<sub>p</sub>
+to construct a ZG-resolution for mod p calculations only. The
+resolution is minimal - meaning that the number of generators
+of R<sub>n</sub> equals the rank of H<sub>n</sub>(G,Z<sub>p</sub>). <br>
+      <br>
+If an optional third variable is set equal to the string "save space"
+then the resolution will take a little longer to compute but less space
+will be needed.<span style="color: rgb(255, 0, 0);"></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGroup(G,n)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSmall</span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">FpGroup(G,n,p)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"></span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);"><br>
+      <br>
+      </span> </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a small finitely presented group G and an integer n&gt;0. It returns n
+terms of a ZG-resolution which, in dimensions 1 and 2, corresponds to
+the given presentation for G. The method returns no contracting
+homotopy for the resolution.<br>
+      <br>
+The function has an optional fourth
+argument which, when set equal to a prime p, records the fact that the
+resolution will only be used for mod p calculations. This could speed
+up subsequent constructions.<br>
+      <br>
+      <span style="font-weight: bold;">This function was written by
+Irina Kholodna.</span></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Resolution<br>
+Subgroup(R,K)</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution for an (infinite) group G and a subgroup K of finite
+index |G:K|.
+It returns a free ZK-resolution whose
+ZK-rank is |G:K| times the ZG-rank in each dimension.<br>
+      <br>
+If G is finite then the function <span
+ style="color: rgb(0, 0, 102); font-family: helvetica,arial,sans-serif;">ResolutionFinite</span><span
+ style="color: rgb(0, 0, 102); font-family: helvetica,arial,sans-serif;">Subgroup(R,G,K)
+      <span style="font-family: serif;">will probably work better. In
+particular, resolutions from this function probably won't work with the
+function <span style="font-family: helvetica,arial,sans-serif;">EquivariantChainMap()</span>.</span></span><br>
+      <span style="color: rgb(255, 0, 0);"><br>
+      <span style="color: rgb(0, 0, 102);">This ZK-resolution is not
+reduced. i.e. it has more
+than one
+generator in dimension 0.&nbsp;</span></span><big><span
+ style="color: rgb(0, 0, 102);"> </span></big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ResolutionSubnormalSeries(L,n)</span></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a positive integer
+n and a list L = [L<sub>1</sub> , ..., L<sub>k</sub>] of&nbsp;
+subgroups L<sub>i </sub>of
+a finite group G=L<sub>1</sub> such that L<sub>1</sub>&gt;L<sub>2</sub>
+... &gt;L<sub>k </sub>is a subnormal series in G (meaning that each L<sub>i+1</sub>
+must be normal in L<sub>i</sub>). It returns a Z(G)-resolution
+by repeatedly using the
+function <span style="font-family: helvetica,arial,sans-serif;">ResolutionFiniteExtension()</span>.
+      <br>
+      <br>
+If L is a series of normal subgroups in G then the function <span
+ style="font-family: helvetica,arial,sans-serif;">ResolutionNormalSeries(L,n)</span>
+will possibly work more efficiently.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">SolutionsMatDestructive(M,B)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an m&times;n matrix M and a k&times;n matrix B over a field. It returns
+a k&times;m matrix S satisfying SM=B.<br>
+      <br>
+The function will leave matrix M unchanged but will probably change
+matrix B.<br>
+      <br>
+(This is&nbsp; a trivial rewrite of the standard GAP function <span
+ style="font-family: helvetica,arial,sans-serif;">SolutionMatDestructive(&lt;mat&gt;,&lt;vec&gt;)</span>
+.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Source(f)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map, or equivariant chain map, or FpG-module
+homomorphism f and returns it
+source.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">StandardCocycle(R,f,n)</span><br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <br
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">
+      <span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">StandardCocycle(R,f,n,q)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R (with contracting homotopy), a positive integer n and
+an integer vector f representing an n-cocycle R<sub>n</sub> &#8594; Z<sub>q </sub>where
+G acts trivially on Z<sub>q</sub>. It is assumed q=0 unless a value for
+q is entered. The command returns a function F(g<sub>1</sub>, ...,
+g<sub>n</sub>) which is the standard cocycle&nbsp; G<sup>n</sup> &#8594; Z<sub>q</sub>
+corresponding to f. At present the command is implemented only for n=2
+or 3.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">SumOfFpGModules(M,N)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+two FpG-modules M, N arising as submodules in a common free module (FG)<sup>n</sup>
+where G is a p-group and F the field of p-elements. It returns the
+FpG-Module arising as the sum of M and N.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">SumOp(f,g)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 102);">Inputs two FpG-module homomorphisms
+f,g:M&#8594;N with common sorce and common target. It returns the sum f+g:M&#8594;N
+. (This operation is also available using "+".</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">Syzygy(R,g)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R (with contracting homotopy) and a list g = [g[1],
+..., g[n]] of elements in G. It returns a word w in R<sub>n</sub>. The
+word
+w is the image of the n-simplex in the standard bar
+resolution corresponding
+to the n-tuple g. This function can be used to construct explicit
+standard n-cocycles. (Currently implemented only for n&lt;4.)<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Target(f)</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a chain map, or cochain map, or equivariant chain map, or FpG-module
+homomorphism f and returns its
+target.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorCentre(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a group G and returns the largest central subgroup N such that the
+induced homomorphism of nonabelian tensor squares G (&times;) G &#8594; G/N
+(&times;) G/N is an isomorphism. Equivalently, N is the largest central
+subgroup such that pi<sub>3</sub>(SK(G,1)) &#8594; pi<sub>3</sub>(SK(G/N,1))
+is injective.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorWithIntegers(X)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a ZG-resolution X =R, or an equivariant chain map X = (F:R&#8594;S).
+It returns
+the chain complex or chain map obtained by tensoring with the trivial
+module of integers (characteristic 0).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorWith<br>
+IntegersModP(X,p)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+either a ZG-resolution X =R, or an equivariant chain map X = (F:R&#8594;S),
+and a prime p.
+It returns
+the chain complex or chain map obtained by tensoring with the trivial
+module of integers modulo p.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TensorWithRationals(R)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R and returns
+the chain complex obtained by tensoring with the trivial
+module of rational numbers. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">TestHap()</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+runs a representative sample of HAP functions and checks to see that
+they produce the correct output.&nbsp; <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ThirdHomotopyGroup<br>
+OfSuspensionB(G)<br>
+      <br>
+      </span><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">ThirdHomotopyGroup<br>
+OfSuspensionB(G,m)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a finite or nilpotent infinite group G and returns the abelian
+invariants of the third
+homotopy group JG of the suspension SK(G,1) of the Eilenberg-Mac Lane
+space&nbsp; K(G,1).<br>
+      <br>
+For non-nilpotent groups the implementation of the function <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 102);">ThirdHomotopyGroupOfSuspensionB(G)<span
+ style="font-family: serif;"> is far from optimal and will soon be
+improved.</span></span> As a temporary solution to this problem, an
+optional second variable m can be set equal to 0, and then the function
+efficiently returns the abelian invariants of groups A and B such that
+there is an exact sequence 0 &#8594; B &#8594; JG &#8594; A &#8594;0<span
+ style="font-style: italic;"></span>.<br>
+      <br>
+Alternatively, the optional second varible m can be set equal to a
+positive multiple of the
+order of the tensor square G(&times;)G . In this case the function
+returns the abelian invariants of JG. This might help when G is
+solvable
+but not nilpotent (especially if the estimated upper bound m is
+reasonable accurate).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">TietzeReduction(S,w)</span><big><br>
+      </big></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a set S of words
+in a free ZG-module, and a word w in the module. The
+function returns a word w' such that {S,w'} generates the same
+abelian group as {S,w}. The word w' is possibly shorter (and
+certainly no longer) than w. This function needs to be improved!<big><br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">TorsionGeneratorsAbelianGroup(G)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an abelian group G and returns a generating set [x<sub>1</sub>, ...,x<sub>n</sub>]
+where no pair of generators have coprime orders.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: helvetica,arial,sans-serif; background-color: rgb(255, 255, 255); color: rgb(255, 204, 0);"><span
+ style="color: rgb(0, 0, 0);">TwistedTensorProduct(R,S,</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">EhomG,GmapE,NhomE,</span><br
+ style="color: rgb(0, 0, 0);">
+      <span style="color: rgb(0, 0, 0);">NEhomN,EltsE,Mult,InvE)</span><big><br>
+      </big></td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a ZG-resolution R,
+a ZN-resolution S, and other data
+relating to a short exact sequence 1&#8594;N&#8594;E&#8594;G&#8594;1. It
+uses a perturbation technique of CTC Wall to construct a ZE-resolution
+F. Both G and N could be infinite. The "length" of F is equal to the
+minimum of the "length"s of R and S. The resolution R needs no
+contracting homotopy if no such homotopy is requied for F. <span
+ style="color: rgb(255, 0, 0);"></span><big><br>
+      </big></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">UpperEpicentralSeries(G,c)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a <span style="font-style: italic;">nilpotent </span>group G and an
+integer c. It returns the c-th term of the
+upper epicentral series 1 &lt; Z<sub>1</sub><sup>*</sup>(G) &lt; Z<sub>2</sub><sup>*</sup>(G)
+&lt; ... . <br>
+      <br>
+The upper epicentral series is defined for an <span
+ style="font-style: italic;">arbitrary</span> group G. The
+group Z<sub>c</sub><sup>*</sup>(G) is the image in G of the c-th
+term Z<sub>c</sub>(U)
+of the upper central series of the group U=F/[[[R,F],F]...] (with c
+copies of F in the denominator)
+where F/R is any free presentation of G. <br>
+      <br>
+This functions requires the NQ package.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="color: rgb(0, 0, 0); font-family: helvetica,arial,sans-serif;">VectorStabilizer(G,v)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+a permutation group or matrix group G of degree n and a rational vector
+of degree n. In both cases there is a natural action of G on v and the
+function returns the group of elements in G that fix v. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">VectorsToFpGModule</span><br
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">
+      <span
+ style="font-family: helvetica,arial,sans-serif; color: rgb(0, 0, 0);">Words(M,L)</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Inputs
+an FpG-module M and a list L=[v<sub>1</sub>,...,v<sub>k</sub>] of
+vectors in M. It returns a list L'= [x<sub>1</sub>,...,x<sub>k</sub>] .
+Each x<sub>j</sub>=[[<span style="text-decoration: underline;">w</span><sub>1</sub>,<span
+ style="text-decoration: underline;">g</span><sub>1</sub>],...,[<span
+ style="text-decoration: underline;">w</span><sub>t</sub>,<span
+ style="text-decoration: underline;">g</span><sub>t</sub>]] is a list
+of integer pairs corresponding to an expression of v<sub>j</sub> as a
+word<br>
+&nbsp;<br>
+      <div style="text-align: center;">&nbsp;v<sub>j&nbsp; </sub>= g<sub>1*</sub>w<sub>1
+      </sub>+ g<sub>2*</sub>w<sub>1 </sub>+ ... + g<sub>t*</sub>w<sub>t<br>
+      </sub>
+      <div style="text-align: left;"><br>
+where <br>
+      <ul>
+        <li>&nbsp;g<sub>i</sub>=Elements(M!.group)[ <span
+ style="text-decoration: underline;">g</span><sub>i</sub>]</li>
+        <li>&nbsp;w<sub>i</sub>=GeneratorsOfFpGModule(M)[<span
+ style="text-decoration: underline;">w</span><sub>i</sub>] .</li>
+      </ul>
+      </div>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0072)http://hamilton.nuigalway.ie/Hap/www/SideLinks/About/aboutPolytopes.html -->
+  <title>AboutHap</title>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <meta content="MSHTML 6.00.2900.3132" name="GENERATOR">
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ link="#000066" vlink="#000066" alink="#000066">
+<br>
+<table
+ style="margin-left: auto; color: rgb(0, 0, 102); margin-right: auto; text-align: left;"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutCocycles.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="vertical-align: top; color: rgb(0, 0, 102); text-align: center;"><big><span
+ style="font-weight: bold;">About HAP: Groups acting on polytopes<br>
+            </span></big></td>
+            <td style="vertical-align: top; text-align: right;"><a
+ href="bieberbach.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Suppose
+that
+G is a permutation group of degree n or a finite group of
+n&times;n orthogonal real matrices. In both cases we can try to use the
+action of G on euclidean n-space <span
+ style="font-weight: bold; font-family: serif;">R</span><sup>n </sup>to
+obtain
+information about the cohomology of G. We do this by choosing a
+vector v in <span style="font-weight: bold;">R</span><sup>n</sup>
+which is fixed by no non-trivial element in G. (It is an exercise to
+see that such a vector always
+exists.) We then form the convex hull of the vectors in the orbit of v
+under the action of G. This hull is a convex polytope which we denote
+by P(G,v). <span style="font-style: italic;"></span>Its combinatorial
+structure can be accessed using the <a
+ href="http://www.math.tu-berlin.de/polymake/">Polymake</a>
+computational geometry software package.<br>
+      <br>
+Consider for example the symmetric group S<sub>4</sub> acting on R<sup>4</sup>
+by permuting basis vectors. For any&nbsp; vector v in <span
+ style="font-weight: bold;">R</span><sup>4&nbsp; </sup>with distinct
+coordinates the polytope P(S<sub>4</sub>,v) is the Permutahedron. It
+can be vizualized using the following commands (which call Polymake
+functions).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+OrbitPolytope(SymmetricGroup(4),[1,2,3,4],["visual"]);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 332px; height: 248px;" alt="" src="orbs4.png"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">The
+linearity
+of the action implies that G permutes the k-faces of P(G,v)
+in each dimension k. The action of G on the vertices (0-faces) can be
+recorded by labelling edges with elements of G. The set of edge labels
+corresponds to a generating set for the group G. For G=S<sub>4</sub>
+the labelling is as follows.
+      <div style="text-align: center;"><img
+ style="width: 418px; height: 285px;" alt="" src="s4.jpg"><br>
+      <div style="text-align: left;">(Pictures for other 3-dimensional
+euclidean isometry groups are given <a href="web.pdf">here</a>.)<br>
+      <br>
+The following commands show that the edge labels for P(S<sub>4</sub>,v)
+are the permutations x=(1,2), y=(2,3), z=(3,4). <br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SymmetricGroup(4);;v:=[1,2,3,4];;<br>
+gap&gt; P:=PolytopalGenerators(G,v);;<br>
+gap&gt; P.generators;<br>
+[ (3,4), (2,3), (1,2) ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands show that there are precisely three orbits of
+1-faces (edges) and also three orbits of 2-faces in the polytope P(S<sub>4</sub>,v).<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SymmetricGroup(4);;v:=[1,2,3,4];;<br>
+gap&gt; P:=PolytopalComplex(G,v);;<br>
+gap&gt; P!.dimension(1);<br>
+3<br>
+gap&gt; P!.dimension(2);<br>
+3<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following additional commands for P(S<sub>4</sub>,v) show that the
+stabilizer subgroups for the 2-cells in each of the three orbits are
+the three groups C<sub>2</sub>&times;C<sub>2</sub>=&lt;x,z&gt;, S<sub>3</sub>=&lt;x,y&gt;
+and
+S<sub>3</sub>=&lt;y,z&gt;.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P!.stabilizer(2,1);<br>
+Group([ (1,2), (1,2)(3,4) ])<br>
+gap&gt; P!.stabilizer(2,2);<br>
+Group([ (1,3,2), (1,3) ])<br>
+gap&gt; P!.stabilizer(2,3);<br>
+Group([ (2,4,3), (2,4) ])<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+cellular chain complex C<sub>*</sub>(P(G,v)) is a complex of ZG-modules
+which, thanks to the contractibility of the polytope, has trivial
+homology in all but its top and bottom dimensions; its homology groups
+are infinite cyclic in both the top and bottom dimensions. Thus
+infinitely many copies of C<sub>*</sub>(P(G,v)) can be spliced together
+to form an infinite periodic ZG-resolution P<sub>*</sub> of Z. <br>
+      <br>
+In general P<sub>*</sub> is not a free ZG-resolution. But sometimes it
+is free, and the homology of G is then periodic with period equal to
+the dimension of (P(G,v)). The resolution P<sub>*</sub> is free if all
+faces of the polytope (except the single top dimensional face) have
+trivial stabilizer group.<br>
+      <br>
+For example, the usual 2-dimensional complex representation of the
+group Q of quaternions can be regarded as a 4-dimensional real
+representation. The group Q has order eight, and the 1-skeleton of the
+4-dimensional polytope P(Q,v) can be pictured using the following
+commands.</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+A:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;<br>
+gap&gt; B:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;<br>
+gap&gt; Q:=Group([A,B]);;<br>
+gap&gt; OrbitPolytope(Q,[1,0,0,0],["visual_graph"]);<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 302px; height: 262px;" alt="" src="quat.png"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following additional commands show that the polytope P(Q,v) yields a
+free ZQ-resolution of period 4.&nbsp; </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P:=PolytopalComplex(Q,[1,0,0,0]);;<br>
+gap&gt; for k in [1..3] do<br>
+&gt; for n in [1..P!.dimension(k)] do<br>
+&gt; Print(Order(P!.stabilizer(k,n)),"\n");<br>
+&gt; od;od;<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following additional commands show that the quaternion group has third
+integral homology H<sub>3</sub>(Q,Z)=Z<sub>8</sub><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+TP:=TensorWithIntegers(P);;<br>
+gap&gt; Homology(TP,3);<br>
+[ 8 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">The
+following
+additional command yields the satisfying group presentation <br>
+      <br>
+      <div style="text-align: center;">Q = &lt; i, j, k : ij=k, jk=i,
+ki=j, ikj=1&gt; <br>
+      <br>
+      <div style="text-align: left;">for the quaternion group Q.<br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+PresentationOfResolution(P);<br>
+rec( freeGroup := &lt;free group on the generators [ f1, f2, f3 ]&gt;, <br>
+relators := [ f2*f3^-1*f1^-1, f3*f2*f1^-1, f1*f2*f3, f1*f3^-1*f2 ] )<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">This
+method
+of obtaining a presentation for the group G from the
+combinatorial structure of the polytope P(G,v) will work&nbsp; whenever
+the vertices and edges of the polytope have trivial stabilizer in
+G.&nbsp; <br>
+      <br>
+For example, the&nbsp; following commands produce a nice presentation
+for the permutation group G of order 6561 arising as the Sylow
+3-subgroup of the alternating group A<sub>18</sub> .<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+G:=SylowSubgroup(AlternatingGroup(18),3);;<br>
+gap&gt;
+P:=PolytopalComplex(G,[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],2);<br>
+gap&gt; PresentationOfResolution(P);<br>
+rec( freeGroup := &lt;free group on the generators<br>
+&nbsp;&nbsp;&nbsp; [ f1, f2, f3, f4, f5, f6, f7, f8 ]&gt;,<br>
+&nbsp; relators := [ f1^3, f2*f1*f2^-1*f1^-1, f3*f1*f3^-1*f1^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f4*f3*f4^-1*f1^-1, f1*f4^-1*f2^-1*f4,
+f5*f1*f5^-1*f1^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f6*f1*f6^-1*f1^-1, f7*f1*f7^-1*f1^-1,
+f8*f1*f8^-1*f1^-1, f2^3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f3*f2*f3^-1*f2^-1, f2*f4^-1*f3^-1*f4,
+f5*f2*f5^-1*f2^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f6*f2*f6^-1*f2^-1, f7*f2*f7^-1*f2^-1,
+f8*f2*f8^-1*f2^-1, f3^3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f5*f3*f5^-1*f3^-1, f6*f3*f6^-1*f3^-1,
+f7*f3*f7^-1*f3^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f8*f3*f8^-1*f3^-1, f4^3,
+f5*f4*f5^-1*f4^-1, f6*f4*f6^-1*f4^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f7*f4*f7^-1*f4^-1, f8*f4*f8^-1*f4^-1,
+f5^3, f6*f5*f6^-1*f5^-1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f7*f5*f7^-1*f5^-1, f8*f7*f8^-1*f5^-1,
+f5*f8^-1*f6^-1*f8, f6^3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f7*f6*f7^-1*f6^-1, f6*f8^-1*f7^-1*f8,
+f7^3, f8^3 ] )<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Suppose
+that
+the vertices of the polytope P(G,v) have trivial stabilizer group,
+but that an edge with generator label x has non-trivial stabilizer
+group. Then the relation x<sup>2</sup>=1 would have to be added to a
+presentation for G obtained by the above method. <br>
+      <br>
+The function <span style="font-family: helvetica,arial,sans-serif;">PresentationOfResolution(P)
+
+      <span style="font-family: serif;">does not work if the resolution
+P is not free in dimension 1. However, the following commands show for
+example that the alternating group A<sub>8</sub> admits a presentation
+with six generators and 21 relators. The relators are of lengths
+2,3,4,5,6,8 and their total length is 89.</span></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+P:=PolytopalComplex(AlternatingGroup(8),[1,2,3,4,5,6,7,7],2);;<br>
+gap&gt; NumberOfGens:=P!.dimension(1);<br>
+6<br>
+      <br>
+gap&gt;
+OrdersOfGens:=List([1..NumberOfGens],x-&gt;Order(P!.stabilizer(1,x)));<br>
+[ 1, 2, 2, 2, 2, 2 ]<br>
+      <br>
+gap&gt; NumberOfRels:=5+P!.dimension(2);<br>
+21<br>
+      <br>
+gap&gt; SizesOfRels:=Concatenation([2,2,2,2,2],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+List([1..NumberOfRels-5],x-&gt;Length(P!.boundary(2,x))));<br>
+[ 2, 2, 2, 2, 2, 3, 8, 5, 5, 5, 5, 6, 4, 4, 4, 6, 4, 4, 6, 4, 6 ]<br>
+      <br>
+gap&gt; Sum(SizesOfRels);<br>
+89<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">When
+the
+k-faces e in P(G,v) have non-trivial stabilizer groups G<sub>e</sub>
+then the non-free ZG-resolution C<sub>*</sub>(P(G,v)) can be combined
+with free ZG<sub>e</sub>-resolutions to produce a smallish (i.e.
+polynomial growth) free ZG-resolution. The details are explained in [G.
+Ellis, J. Harris &amp; E. Sk&ouml;ldberg, "Polytopal resolutions for
+finite groups", J. Reine Angewandte Math., to appear] but have not yet
+been implemented in HAP. A slightly weaker result states that there is
+a spectral sequence <br>
+      <br>
+      <div style="text-align: center;">E<sup>1</sup><sub>pq&nbsp; </sub>=&nbsp;
+H<sub>q</sub>(G<sub>e[1]</sub>,Z) +&nbsp; ...&nbsp; +&nbsp; H<sub>q</sub>(G<sub>e[t]</sub>,Z)
+&nbsp;
+&nbsp; &nbsp;&nbsp; &nbsp; =&gt; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; H<sub>p+q</sub>(G,Z)<br>
+      </div>
+      <br>
+in which the E<sup>1</sup> term involves the q-th homology of the
+stabilizer groups G<sub>e[i] </sub>where the e[i] are p-cells
+representing the orbits of p-cells under the action of G.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; width: 100%; margin-right: auto; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutCocycles.html">Previous
+Page</a><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="vertical-align: top; text-align: right;"><a
+ href="bieberbach.html"><span style="color: rgb(0, 0, 102);">Next page</span><br>
+            </a></td>
+          </tr>
+        </tbody>
+      </table>
+      <a
+ href="http://hamilton.nuigalway.ie/Hap/www/SideLinks/About/aboutTopology.html"><br>
+      </a></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>
