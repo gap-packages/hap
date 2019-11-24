@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.22",
+  Version := "1.23",
   Date    := "14/11/2019",
 
   SourceRepository := rec(
@@ -16,7 +16,7 @@ SetPackageInfo( rec(
       URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
   ),
   IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-  PackageWWWHome  := "http://hamilton.nuigalway.ie/Hap/www",
+  PackageWWWHome  := "http://hamilton.nuigalway.ie/Hap",
   README_URL      := Concatenation( ~.PackageWWWHome, "/README.HAP" ),
   PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
   ArchiveURL      := Concatenation( ~.SourceRepository.URL,
@@ -70,13 +70,14 @@ SetPackageInfo( rec(
                              [ "crystcat",   ">=1.1" ],
                              [ "fga",        ">=1.1" ],
                              [ "aclib",      ">=1.1" ],
+                             [ "nq",         ">=1.1" ],
                             #[ "gapdoc",     ">=0.0" ]
                            ],
     SuggestedOtherPackages := [
                               #[ "polycyclic", ">=1.1" ],
                               #[ "aclib",      ">=1.1" ],
                                [ "gapdoc",      ">=0.0" ],
-			       [ "nq",         ">=1.1" ],
+			      #[ "nq",         ">=1.1" ],
                                [ "nql",         ">=0.0" ],
                                [ "homology",    ">=0.0"   ], 
 			       [ "edim",      ">=1.2.2" ],
