@@ -1,0 +1,11 @@
+e:=Image(IsomorphismPcpGroup(SpaceGroup(2,11)));;
+R:=ResolutionAlmostCrystalGroup(e,3);;
+Print(Homology(TensorWithIntegers(R),2),"\n");
+IsAlmostCrystallographic(e);;
+T:=Kernel(NaturalHomomorphismOnHolonomyGroup(e));;
+CS:=[];; Q:=[];;
+CS[1]:=T;; Q[1]:=e/CS[1];;
+CS[2]:=CommutatorSubgroup(CS[1],e);; Q[2]:=e/CS[2];;
+CS[3]:=CommutatorSubgroup(CS[2],e);; Q[3]:=e/CS[3];;
+Print(GroupHomology(Q[2],2),"\n");
+Print(GroupHomology(Q[3],2),"\n");

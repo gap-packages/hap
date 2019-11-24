@@ -1,0 +1,13 @@
+#This example uses Polymake.
+A:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;
+B:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;
+Q:=Group([A,B]);;
+Y:=EquivariantOrbitPolytope(Q,[1,0,0,0]);
+Print(Y,"\n");
+for k in [0..2] do
+ for n in [1..Y!.dimension(k)] do
+ Print(Order(Y!.stabilizer(k,n)),"  ");
+od;od;
+F:=FundamentalGroupOfQuotient(Y);
+Print(F,"\n");
+Print(RelatorsOfFpGroup(F),"\n");

@@ -1,0 +1,9 @@
+#The example uses GraphViz software.
+file:=HapFile("data245.txt");;
+Read(file);;
+A:=NullMat(350,350);;
+for x in S do A[x[1]][x[2]]:=1; od;
+Y:=PureCubicalComplex(A);;
+F:=ThickeningFiltration(Y,100,4);
+P:=PersistentBettiNumbers(F,1);;
+BarCodeCompactDisplay(P);

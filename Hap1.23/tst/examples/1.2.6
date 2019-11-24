@@ -1,0 +1,15 @@
+M:=PurePermutahedralKnot(3,1);;
+XM:=RegularCWComplex(M);
+M1:=PureCubicalKnot(3,1);;
+XM1:=RegularCWComplex(M1);
+K:=Nerve(M);;
+XK:=RegularCWComplex(K);
+K1:=Nerve(M1);;
+XK1:=RegularCWComplex(K1);
+Chi:=function(Y);
+ return List([0..Dimension(Y)],i->(-1)^i*Y!.nrCells(i));
+ end;;
+Print(Chi(XM),"\n");
+Print(Chi(XM1));
+Print(Chi(XK),"\n");
+Print(Chi(XK1));

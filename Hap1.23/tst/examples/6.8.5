@@ -1,0 +1,8 @@
+_X:=ContractibleGcomplex("SL(2,O-2)");;
+Z2:=Group( -Identity(_X!.group) );;
+Y:=QuotientOfContractibleGcomplex(_X,Z2);;
+R:=FreeGResolution(Y,21);;
+K:=TensorWithIntegersModP(R,2);;
+L:=List([0..20],n->Homology(K,n));;
+p:=PoincareSeries(L,20);
+Print(p,"\n");

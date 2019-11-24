@@ -1,0 +1,9 @@
+#This example may require extra memory.
+file:=HapFile("data1XD3.pdb");
+K:=ReadPDBfileAsPureCubicalComplex(file,5);;
+K:=ContractedComplex(K);;
+for i in [0..5] do
+ Y:=RegularCWComplex(ContractedComplex(K));;
+ Print(CriticalCells(Y),"\n");
+ K:=PureComplexThickened(K);;
+od; 
