@@ -215,9 +215,9 @@ end);
 InstallGlobalFunction(ReadImageAsFilteredPureCubicalComplex,
 function(file,N)
 local A, B, C, F, i, j, D;
-D:=Int(3*255/N);
-
+#D:=Int(3*255/N);
 A:=ReadImageAsPureCubicalComplex(file,"matrix");
+D:=Int((7/10)*Maximum(Flat(A))/N);
 for i in [1..Length(A)] do
 for j in [1..Length(A[1])] do
 A[i][j]:=1+Int(A[i][j]/D);

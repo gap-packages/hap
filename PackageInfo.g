@@ -104,7 +104,7 @@ BannerString     := Concatenation( "Loading HAP ",
 TestFile := "tst/testall.g",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
-"module of identities" ]
+"module of identities", "CW complex", "simplicial complex", "cubical complex", "permutahedral complex", "knots", "nonabelian tensor", "nonabelian exterior", "covering space" ]
 
 ));
 

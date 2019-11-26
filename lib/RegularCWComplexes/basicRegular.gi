@@ -2087,7 +2087,7 @@ InstallGlobalFunction(ReadImageAsWeightFunction,
 function(file,f)
 local MM,F, M, A, B, C, Y, k,k1, i,j,W, weight, coord, x1;
 
-MM:=ReadImageAsFilteredPureCubicalComplex(file,f);
+MM:=ReadImageAsFilteredPureCubicalComplex(file,3);
 A:=PureCubicalComplexToCubicalComplex(MM);;
 A:=0*A!.binaryArray;
 
