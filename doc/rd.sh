@@ -61,7 +61,7 @@ The next time HAP is loaded a compiled version will be loaded.
 STOP
 );
 
-echo "$file" >../README.HAP;
+echo "$file" >./README.HAP;
 
 file=$(more<<STOP
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
