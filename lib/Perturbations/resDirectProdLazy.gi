@@ -272,7 +272,8 @@ r:=n-((d+1)*d/2);
 if r=0 then return Image(GhomE,R!.elts[1])*Image(HhomE,S!.elts[d]); fi;
 return Image(GhomE,R!.elts[d+2-r])*Image(HhomE,S!.elts[r]);
 end;
-EltsE:=LazyList(fn,[["length",Order(G)*Order(H)]]);
+#EltsE:=LazyList(fn,[["length",Order(G)*Order(H)]]);
+EltsE:=LazyList(fn,[["length",infinity]]);
 #EltsE:=LazyList(fn);
 
 
