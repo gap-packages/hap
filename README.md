@@ -1,14 +1,15 @@
+[![Build Status](https://travis-ci.org/gap-packages/hap.svg?branch=master)](https://travis-ci.org/gap-packages/hap)
+[![Code Coverage](https://codecov.io/github/gap-packages/hap/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/hap)
+
+# The HAP package for group cohomology and related functors
+
 (C) Graham Ellis 
 
-
-	The HAP package for group cohomology and related functors
-        ---------------------------------------------------------
-
-"HAP" is a package for some basic calculations in the cohomology of finite 
+HAP is a package for some basic calculations in the cohomology of finite 
 and infinite groups. A full description of the library can be found from the 
 html file Hap1.24/www/index.html .
 
-"HAP" is written almost entirely in the GAP language. A few of HAP's (optional) 
+HAP is written almost entirely in the GAP language. A few of HAP's (optional) 
 functions rely on Polymake software (available from 
 www.math.tu-berlin.de/polymake/) which should be installed so that it starts 
 using the command "polymake" at the Linux prompt. A few (oprional) functions
@@ -17,11 +18,10 @@ rely on Graphviz software (available from http://www.graphviz.org/).
 Please send your bug reports to graham.ellis(at)nuigalway.ie .
 
 
-                     Installing HAP 
-                     --------------
+## Installing HAP 
 
 On a Linux machine with GAP (and optionally Polymake) installed, the HAP 
-library can be loaded as follows:\n\n
+library can be loaded as follows:
  
 * First download the file hap1.24.tar.gz to the subdirectory "pkg/" of GAP. (If 
 you don't have access to this, then create a directory "pkg" in your home 
@@ -36,16 +36,17 @@ your home directory.)
 
 * In GAP type " LoadPackage("HAP"); " .
 
-* Help on HAP can be found on the HAP home page (a version of which is included in directory "pkg/Hap1.24/www" of this distribution).
+* Help on HAP can be found on the HAP home page (a version of which is
+included in directory "pkg/Hap1.24/www" of this distribution).
 
 * Performance can be significantly improved by using a compiled version of the 
 HAP library. A compiled version can be created by the following steps.
 
-(1) Change to the directory "pkg/Hap1.24/" .
-(2) Edit the file "compile" so that: PKGDIR is equal to the path to the 
+1. Change to the directory "pkg/Hap1.24/" .
+2. Edit the file "compile" so that: PKGDIR is equal to the path to the 
 directory "pkg" where your GAP packages are stored; GACDIR is equal to the 
 path to the directory where the GAP compiler "gac" is stored.
-(3) Type "./compile" . 
+3. Type "./compile" . 
 
 The next time HAP is loaded a compiled version will be loaded.
 
