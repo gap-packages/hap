@@ -1,0 +1,22 @@
+gap> file:=HapFile("data134.txt");;
+gap> Read(file);
+gap> dx:=EuclideanApproximatedMetric;;
+gap> dz:=EuclideanApproximatedMetric;;
+gap> L:=List(S,x->Maximum(List(S,y->dx(x,y))));;
+gap> n:=Position(L,Minimum(L));;
+gap> f:=function(x); return [dx(S[n],x)]; end;;
+gap> P:=30*[0..100];; P:=List(P, i->[i]);;
+gap> r:=29;;
+gap> epsilon:=75;;
+gap>  cluster:=function(S)
+>   local Y, P, C;
+>   if Length(S)=0 then return S; fi;
+>   Y:=VectorsToOneSkeleton(S,epsilon,dx);
+>   P:=PiZero(Y);
+>   C:=Classify([1..Length(S)],P[2]);
+>   return List(C,x->S{x});
+>  end;;
+gap> M:=Mapper(S,dx,f,dz,P,r,cluster);
+Simplicial complex of dimension 1.
+
+gap> Display(GraphOfSimplicialComplex(M));

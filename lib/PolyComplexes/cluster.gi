@@ -436,8 +436,9 @@ AppendTo(tmpInlog,"}\n }\n");
 ############### WRITTEN ############################################
 else
 ################ WRITE TO TMPIN.LOG #################################
+s:=Length(M)*0.05;
 
-AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+AppendTo(tmpInlog,Concatenation(" graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(",String(s),")\"] \n"));
 
 for i in [1..Length(M)] do
 AppendTo(tmpInlog,i, " \n");

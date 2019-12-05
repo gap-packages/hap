@@ -1,8 +1,12 @@
 root:=HAP_ROOT{[1..Length(HAP_ROOT)-4]};
 rootwww:=Concatenation(root,"www/SideLinks/About/");
 rootdoc:=Concatenation(root,"doc/");
+roottut:=Concatenation(rootdoc,"tutorial/");
 
-L:=["aboutAbelianCategories.html",    "aboutLinks.html",
+L:=[
+"chap1.html", "chap2.html", "chap3.html", "chap4.html", "chap5.html",
+"chap6.html", "chap7.html", "chap8.html", "chap9.html", "chap10.html",
+"aboutAbelianCategories.html",    "aboutLinks.html",
 "aboutArithmetic.html",           "aboutMetrics.html",
 "aboutArtinGroups.html",          "aboutModPRings.html",
 "aboutAspherical.html",           "aboutNonabelian.html",
@@ -30,12 +34,14 @@ L:=["aboutAbelianCategories.html",    "aboutLinks.html",
 "aboutKnots.html",                "aboutTensorSquare.html",
 "aboutKnotsQuandles.html",        "aboutTopology.html",
 "aboutLieCovers.html",            "aboutTorAndExt.html",
-"aboutLie.html",                  "aboutTwistedCoefficients.html"];;
+"aboutLie.html",                  "aboutTwistedCoefficients.html",
+];;
 
 ##########################################
 IllustratedInFile:=function(fle,fn)
 local file, input, bool;
 
+if StartsWith(fle,"about") then
 file:=Concatenation(rootwww,fle);
 input:=InputTextFile(file);
 file:=ReadAll(input);
@@ -44,6 +50,19 @@ file:=ReplacedString(file,fn,"@");
 bool:= '@' in file;
 if not bool then return bool; fi;
 return Concatenation("../www/SideLinks/About/",fle);
+fi;
+
+if StartsWith(fle,"chap") then
+file:=Concatenation(roottut,fle);
+input:=InputTextFile(file);
+file:=ReadAll(input);
+CloseStream(input);
+file:=ReplacedString(file,fn,"@");
+bool:= '@' in file;
+if not bool then return bool; fi;
+return Concatenation("tutorial/",fle);
+fi;
+
 
 end;
 ##########################################

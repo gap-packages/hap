@@ -201,7 +201,10 @@ fi;
 od;
 od;
 
-Exec(Concatenation("display ",file));  
+#Exec(Concatenation("display ",file));  
+i:=InputTextFile(file);
+s:=ReadAll(i);
+Print(s);
 if Length(arg)=2 then RemoveFile(file); fi;
 end;
 #########################################################
