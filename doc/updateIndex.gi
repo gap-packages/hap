@@ -242,5 +242,5 @@ for fle in M do
 AddExamplesToFile(fle);
 od;
 AddExamplesToUndocumentedFile("Undocumented.xml");
-MakeGAPDocDoc("/home/graham/pkg/Hap1.23/doc/","newHapMan.xml",[],"HAP","MathJax");
+MakeGAPDocDoc("/home/graham/pkg/Hap1.24/doc/","newHapMan.xml",[],"HAP","MathJax");
 QUIT;
