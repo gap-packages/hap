@@ -6,9 +6,11 @@ root:=Filename(root,".");
 root:=Concatenation(root{[1..Length(root)-5]},"doc/");
 
 MakeGAPDocDoc(root,"newHapMan.xml",[],"HAP","MathJax");
+i:=InputTextFile(root);;
+version:=ReadAll(i);;
+version:=NormalizedWhitespace(version);;
 
-
-hapvariables:= PackageVariablesInfo("HAP","1.24");;
+hapvariables:= PackageVariablesInfo("HAP",version);;
 h:=List(hapvariables,x->x[2]);;
 hapvariables:=[];;
 for i in [1..Length(h)] do
