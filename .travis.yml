@@ -7,24 +7,37 @@ env:
     - GAP_PKGS_TO_BUILD="io profiling nq" # note: io and profiling always must be built
 
 addons:
-  apt_packages:
+  apt:
+    sources:
+    - sourceline: 'deb ftp://jim.mathematik.uni-kl.de/repo/ubuntu16 xenial main'
+      key_url: 'ftp://jim.mathematik.uni-kl.de/repo/extra/gpg'
+    packages:
     - libgmp-dev
     - libreadline-dev
     - zlib1g-dev
+    - polymake
+    - singular
 
 matrix:
   include:
     - env: GAPBRANCH=master
+    - env: GAPBRANCH=stable-4.11
     - env: GAPBRANCH=stable-4.10
     - env: GAPBRANCH=stable-4.9
     - env: GAPBRANCH=master ABI=32
       addons:
-        apt_packages:
+        apt:
+          sources:
+          - sourceline: 'deb ftp://jim.mathematik.uni-kl.de/repo/ubuntu16 xenial main'
+            key_url: 'ftp://jim.mathematik.uni-kl.de/repo/extra/gpg'
+          packages:
           - libgmp-dev:i386
           - libreadline-dev:i386
           - zlib1g-dev:i386
           - gcc-multilib
           - g++-multilib
+          - polymake
+          - singular
 
 branches:
   only:
