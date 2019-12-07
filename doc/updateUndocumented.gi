@@ -2,11 +2,12 @@
 #    gap -l '/home/graham/;' -A -r update.gi
 
 root:=DirectoriesPackageLibrary("HAP");
+rootversion:=Filename(root,"../version");
 root:=Filename(root,".");
 root:=Concatenation(root{[1..Length(root)-5]},"doc/");
 
 MakeGAPDocDoc(root,"newHapMan.xml",[],"HAP","MathJax");
-i:=InputTextFile(root);;
+i:=InputTextFile(rootversion);;
 version:=ReadAll(i);;
 version:=NormalizedWhitespace(version);;
 
