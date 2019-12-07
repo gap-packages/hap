@@ -1,7 +1,7 @@
 LoadPackage( "hap" );
 
 TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-  rec(exitGAP     := false,
+  rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
 TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
