@@ -113,5 +113,3 @@ MakeReadOnlyGlobal("NerveOfCover");
 MakeReadOnlyGlobal("PseudoList");
 MakeReadOnlyGlobal("PseudoListFamily");
 MakeReadOnlyGlobal("ReadBioData");
-MakeReadOnlyGlobal("TestHap");
-MakeReadOnlyGlobal("TestHapBook");

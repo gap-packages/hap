@@ -45,7 +45,23 @@ end);
 
 #################################################
 #################################################
-TestHapBook:=function()
+InstallGlobalFunction(TestHapBook,
+function()
+local dir;
+
+dir:=DirectoriesPackageLibrary( "HAP","")[1];;
+dir:=Filename(dir,"");;
+dir:=Concatenation(dir,"tst/testallextra.g");;
+Read(dir);
+
+end);
+#################################################
+#################################################
+
+#################################################
+#################################################
+InstallGlobalFunction(TestHap,
+function()
 local dir;
 
 dir:=DirectoriesPackageLibrary( "HAP","")[1];;
@@ -53,7 +69,8 @@ dir:=Filename(dir,"");;
 dir:=Concatenation(dir,"tst/testall.g");;
 Read(dir);
 
-end;
+end);
 #################################################
 #################################################
+
 

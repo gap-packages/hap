@@ -12,14 +12,23 @@ file=$(more<<STOP
 
 (C) Graham Ellis
 
-HAP is a package for some basic calculations in the cohomology of finite
-and infinite groups. A full description of the library can be found from the
-html file Hap1.24/www/index.html .
+HAP is a package for some calculations in elementary algebraic topology and
+the cohomology of groups. The initial focus of the library was on computations 
+related to the cohomology of finite and infinite groups, with particular 
+emphasis on integral coefficients. The focus has since broadened to include 
+Steenrod algebras of finite groups, Bredon homology, and general 
+computations in algebraic topology relating to finite CW-complexes, 
+covering spaces, knots, knotted surfaces, and topics such as persitent 
+homology arising in topological data analysis. A full description of the 
+library can be found from in html file Hap$version/www/index.html .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from
 www.math.tu-berlin.de/polymake/) which should be installed so that it starts
-using the command "polymake" at the Linux prompt. A few (oprional) functions
+using the command "polymake" at the Linux prompt. A few (optional) 
+functions rely on Singular software (available from 
+https://www.singular.uni-kl.de/) which should be installed so that it starts 
+using the command "singular" at the Linux prompt. A few (oprional) functions
 rely on Graphviz software (available from http://www.graphviz.org/).
 
 Please send your bug reports to graham.ellis(at)nuigalway.ie .
@@ -34,8 +43,8 @@ library can be loaded as follows:
 you don't have access to this, then create a directory "pkg" in your home
 directory and download the file there.)
 
-* Change to directory "pkg/" and type "gunzip hap1.24.tar.gz" followed by
-"tar -xvf hap1.24.tar" .
+* Change to directory "pkg/" and type "gunzip hap$version.tar.gz" followed by
+"tar -xvf hap$version.tar" .
 
 * Start GAP. (If you have created "pkg" in your home directory then start GAP
 with the command "gap -l 'path/homedir;' "   where path/homedir is the path to
@@ -44,7 +53,7 @@ your home directory.)
 * In GAP type " LoadPackage("HAP"); " .
 
 * Help on HAP can be found on the HAP home page (a version of which is
-included in directory "pkg/Hap1.24/www" of this distribution).
+included in directory "pkg/Hap$version/www" of this distribution).
 
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
@@ -58,7 +67,7 @@ path to the directory where the GAP compiler "gac" is stored.
 The next time HAP is loaded a compiled version will be loaded.
 
 * Should you want to return to an uncompiled version, change to the directory
-"pkg/Hap1.24/" and type "./uncompile".
+"pkg/Hap$version/" and type "./uncompile".
 STOP
 );
 
