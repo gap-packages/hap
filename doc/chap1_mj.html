@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 1: Basic functionality for cellular complexes, fundamental groups and homology</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
+<p><a id="X85BEB9F48106583E" name="X85BEB9F48106583E"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X85BEB9F48106583E">1 <span class="Heading">Basic functionality for cellular complexes, fundamental groups and homology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7F06418383E098EB">1.1 <span class="Heading"> Data <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes
+</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X85C818B87D9AC922">1.1-1 RegularCWPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7910F39B7AB79096">1.1-2 CubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78A3981C878C7FB5">1.1-3 PureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X869065F77C4761EC">1.1-4 PureCubicalKnot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B432A6184CBAC75">1.1-5 PurePermutahedralKnot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X824625A27FF6DE6F">1.1-6 PurePermutahedralComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80CAD0357AF44E48">1.1-7 CayleyGraphOfGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8187F6507BA14D5C">1.1-8 EquivariantEuclideanSpace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FE0522B8134DF7C">1.1-9 EquivariantOrbitPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X81E8E97278B1AE92">1.1-10 EquivariantTwoComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F8D4C4C7ED15A31">1.1-11 QuillenComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X854B96757AF38A41">1.1-12 RestrictedEquivariantCWComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A3B6B647C8CF90B">1.1-13 RandomSimplicialGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8394037487D3C17E">1.1-14 RandomSimplicialTwoComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83DB403087D02CC8">1.1-15 ReadCSVfileAsPureCubicalKnot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7BE9892784AA4990">1.1-16 ReadImageAsPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84D89B96873308B7">1.1-17 ReadImageAsFilteredPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80E8B89F7E95D101">1.1-18 ReadImageAsWeightFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D8681B079E019C0">1.1-19 ReadPDBfileAsPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E278788808A9EE4">1.1-20 ReadPDBfileAsPurepermutahedralComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X85C818B87D9AC922">1.1-21 RegularCWPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X818F2E887FE5F7BE">1.1-22 SimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79CA51F27C07435C">1.1-23 SymmetricMatrixToFilteredGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8227636B7E878448">1.1-24 SymmetricMatrixToGraph</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7C0C080487641830">1.2 <span class="Heading"> Metric Spaces</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F8113757F7DD2F4">1.2-1 CayleyMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A4560307BA911F5">1.2-2 EuclideanMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X789AE7CE8445A67C">1.2-3 EuclideanSquaredMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79DA33CB7D46CAB4">1.2-4 HammingMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7BD62D75829F8701">1.2-5 KendallMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8763D1167EF519A1">1.2-6 ManhattanMetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C86B58A7CEA5513">1.2-7 VectorsToSymmetricMatrix</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X80A49CAC84313990">1.3 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7AF313D387F6BA22">1.3-1 BoundaryMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X848ED6C378A1C5C0">1.3-2 CliqueComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X85FAD5E086DBD429">1.3-3 ConcentricFiltration</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X861BA02C7902A4F4">1.3-4 DirectProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7DB4D3B57E0DA723">1.3-5 FiltrationTerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B335342839E5146">1.3-6 Graph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7966519E78BC6C18">1.3-7 HomotopyGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84560FF678621AE1">1.3-8 Nerve</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C2BEF7C871E54D7">1.3-9 RegularCWComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79967AC2859A9631">1.3-10 RegularCWMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X82843E747FE622AF">1.3-11 ThickeningFiltration</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7FD50DF6782F00A0">1.4 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes (Preserving Data Types)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X840576107A2907B8">1.4-1 ContractedComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A46614B84FF25BE">1.4-2 ContractibleSubcomplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86164F4481ACC485">1.4-3 KnotReflection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D86D13C822D59A9">1.4-4 KnotSum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X855537287E9C4E72">1.4-5 OrientRegularCWComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A266B5A7BE88E89">1.4-6 PathComponent</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FF34B9E86E901DC">1.4-7 PureComplexBoundary</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D0C9B27845F0739">1.4-8 PureComplexComplement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FB5BE6C78D5C7C8">1.4-9 PureComplexDifference</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8091C9BA819C2332">1.4-10 PureComplexInterstection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84A7E7A47F7BA09D">1.4-11 PureComplexThickened</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78014E027F28C2C8">1.4-12 PureComplexUnion</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E7AC0E77E25C45B">1.4-13 SimplifiedComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X844174D37E70B9B4">1.4-14 ZigZagContractedComplex</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7E25932F7DD535E8">1.5 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Homotopy Invariants</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7DC474EE7A909563">1.5-1 AlexanderPolynomial</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83EF7B888014C363">1.5-2 BettiNumber</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8307F8DB85F145AE">1.5-3 EulerCharacteristic</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78813B9A851B922A">1.5-4 EulerIntegral</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EAE7E4181546C17">1.5-5 FundamentalGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X808733FF7EF6278E">1.5-6 FundamentalGroupOfQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78F2C5ED80D1C8DD">1.5-7 IsAspherical</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X797F8D4A848DD9BC">1.5-8 KnotGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X825539B57FBDDE86">1.5-9 PiZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EE96E8B7C1643BD">1.5-10 PersistentBettiNumbers</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7C17A7897DDAE22C">1.6 <span class="Heading"> Data <span class="SimpleMath">\(\longrightarrow\)</span> Homotopy Invariants</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F5B6CAD7CB2E985">1.6-1 DendrogramMat</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X859286BF7F6047B7">1.7 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Non Homotopy Invariants</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A1C427578108B7E">1.7-1 ChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D4AF2E8785DA457">1.7-2 ChainComplexEquivalence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D77D18679E941D3">1.7-3 ChainComplexOfQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7BCD94877DF261C4">1.7-4 ChainMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B8741FB7A3263EC">1.7-5 CochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8489A39F870FF08B">1.7-6 CriticalCells</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A4AD52D82627ABC">1.7-7 DiagonalApproximation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X858ADA3B7A684421">1.7-8 Size</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7B6F366F7A2D8FEE">1.8 <span class="Heading"> (Co)chain Complexes <span class="SimpleMath">\(\longrightarrow \)</span> (Co)chain Complexes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X829DD3868410FE2E">1.8-1 FilteredTensorWithIntegers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7BC291C47FEAC5B8">1.8-2 FilteredTensorWithIntegersModP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X788F3B5E7810E309">1.8-3 HomToIntegers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8122D25786C83565">1.8-4 TensorWithIntegersModP</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7BB8DC9783A4AF81">1.9 <span class="Heading"> (Co)chain Complexes <span class="SimpleMath">\(\longrightarrow \)</span> Homotopy Invariants</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84CFC57B7E9CCCF7">1.9-1 Cohomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X877825E57D79839C">1.9-2 CupProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X85A9D5CB8605329C">1.9-3 Homology</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X867BE1388467C939">1.10 <span class="Heading"> Visualization</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X806A81EF79CE0DEF">1.10-1 BarCodeDisplay</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83D60A6682EBB6F1">1.10-2 BarCodeCompactDisplay</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80CAD0357AF44E48">1.10-3 CayleyGraphOfGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83A5C59278E13248">1.10-4 Display</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B98A3C4831D5B0D">1.10-5 DisplayArcPresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X861690C27BADC326">1.10-6 DisplayCSVKnotFile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F4AA01E7C0A5C16">1.10-7 DisplayDendrogram</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E5A38F081B401BE">1.10-8 DisplayDendrogramMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X822F54F385D7EF8A">1.10-9 DisplayPDBfile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80EC50C27EFF2E12">1.10-10 OrbitPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7DF49EAD7C0B0E84">1.10-11 ScatterPlot</a></span>
+</div></div>
+</div>
+
+<h3>1 <span class="Heading">Basic functionality for cellular complexes, fundamental groups and homology</span></h3>
+
+<p>This page covers the functions used in chapters 1 and 2 of the book <span class="URL"><a href="https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980">An Invitation to Computational Homotopy</a></span>.</p>
+
+<p><a id="X7F06418383E098EB" name="X7F06418383E098EB"></a></p>
+
+<h4>1.1 <span class="Heading"> Data <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes
+</span></h4>
+
+<p><a id="X85C818B87D9AC922" name="X85C818B87D9AC922"></a></p>
+
+<h5>1.1-1 RegularCWPolytope</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWPolytope</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWPolytope</code>( <var class="Arg">G</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">\(L\)</span> of vectors in <span class="SimpleMath">\(\mathbb R^n\)</span> and outputs their convex hull as a regular CW-complex.</p>
+
+<p>Inputs a permutation group G of degree <span class="SimpleMath">\(d\)</span> and vector <span class="SimpleMath">\(v\in \mathbb R^d\)</span>, and outputs the convex hull of the orbit <span class="SimpleMath">\(\{v^g : g\in G\}\)</span> as a regular CW-complex.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7910F39B7AB79096" name="X7910F39B7AB79096"></a></p>
+
+<h5>1.1-2 CubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CubicalComplex</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a binary array <span class="SimpleMath">\(A\)</span> and returns the cubical complex represented by <span class="SimpleMath">\(A\)</span>. The array <span class="SimpleMath">\(A\)</span> must of course be such that it represents a cubical complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap4.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">11</a></span> </p>
+
+<p><a id="X78A3981C878C7FB5" name="X78A3981C878C7FB5"></a></p>
+
+<h5>1.1-3 PureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureCubicalComplex</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a binary array <span class="SimpleMath">\(A\)</span> and returns the pure cubical complex represented by <span class="SimpleMath">\(A\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap4.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">11</a></span> </p>
+
+<p><a id="X869065F77C4761EC" name="X869065F77C4761EC"></a></p>
+
+<h5>1.1-4 PureCubicalKnot</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureCubicalKnot</code>( <var class="Arg">n</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureCubicalKnot</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs integers <span class="SimpleMath">\(n, k\)</span> and returns the <span class="SimpleMath">\(k\)</span>-th prime knot on <span class="SimpleMath">\(n\)</span> crossings as a pure cubical complex (if this prime knot exists).</p>
+
+<p>Inputs a list <span class="SimpleMath">\(L\)</span> describing an arc presentation for a knot or link and returns the knot or link as a pure cubical complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap5.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles2.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnotsQuandles.html">10</a></span> </p>
+
+<p><a id="X7B432A6184CBAC75" name="X7B432A6184CBAC75"></a></p>
+
+<h5>1.1-5 PurePermutahedralKnot</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PurePermutahedralKnot</code>( <var class="Arg">n</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PurePermutahedralKnot</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs integers <span class="SimpleMath">\(n, k\)</span> and returns the <span class="SimpleMath">\(k\)</span>-th prime knot on <span class="SimpleMath">\(n\)</span> crossings as a pure permutahedral complex (if this prime knot exists).</p>
+
+<p>Inputs a list <span class="SimpleMath">\(L\)</span> describing an arc presentation for a knot or link and returns the knot or link as a pure permutahedral complex.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X824625A27FF6DE6F" name="X824625A27FF6DE6F"></a></p>
+
+<h5>1.1-6 PurePermutahedralComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PurePermutahedralComplex</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a binary array <span class="SimpleMath">\(A\)</span> and returns the pure permutahedral complex represented by <span class="SimpleMath">\(A\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeripheral.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">3</a></span> </p>
+
+<p><a id="X80CAD0357AF44E48" name="X80CAD0357AF44E48"></a></p>
+
+<h5>1.1-7 CayleyGraphOfGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyGraphOfGroup</code>( <var class="Arg">G</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">\(G\)</span> and a list <span class="SimpleMath">\(L\)</span> of elements in <span class="SimpleMath">\(G\)</span>.It returns the Cayley graph of the group generated by <span class="SimpleMath">\(L\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8187F6507BA14D5C" name="X8187F6507BA14D5C"></a></p>
+
+<h5>1.1-8 EquivariantEuclideanSpace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivariantEuclideanSpace</code>( <var class="Arg">G</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a crystallographic group <span class="SimpleMath">\(G\)</span> with left action on <span class="SimpleMath">\(\mathbb R^n\)</span> together with a row vector <span class="SimpleMath">\(v \in \mathbb R^n\)</span>. It returns an equivariant regular CW-space corresponding to the Dirichlet-Voronoi tessellation of <span class="SimpleMath">\(\mathbb R^n\)</span> produced from the orbit of <span class="SimpleMath">\(v\)</span> under the action.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7FE0522B8134DF7C" name="X7FE0522B8134DF7C"></a></p>
+
+<h5>1.1-9 EquivariantOrbitPolytope</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivariantOrbitPolytope</code>( <var class="Arg">G</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a permutation group <span class="SimpleMath">\(G\)</span> of degree <span class="SimpleMath">\(n\)</span> together with a row vector <span class="SimpleMath">\(v \in \mathbb R^n\)</span>. It returns, as an equivariant regular CW-space, the convex hull of the orbit of <span class="SimpleMath">\(v\)</span> under the canonical left action of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(\mathbb R^n\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X81E8E97278B1AE92" name="X81E8E97278B1AE92"></a></p>
+
+<h5>1.1-10 EquivariantTwoComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivariantTwoComplex</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a suitable group <span class="SimpleMath">\(G\)</span> and returns, as an equivariant regular CW-space, the <span class="SimpleMath">\(2\)</span>-complex associated to some presentation of <span class="SimpleMath">\(G\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7F8D4C4C7ED15A31" name="X7F8D4C4C7ED15A31"></a></p>
+
+<h5>1.1-11 QuillenComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuillenComplex</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">\(G\)</span> and prime <span class="SimpleMath">\(p\)</span>, and returns the simplicial complex arising as the order complex of the poset of elementary abelian <span class="SimpleMath">\(p\)</span>-subgroups of <span class="SimpleMath">\(G\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">3</a></span> </p>
+
+<p><a id="X854B96757AF38A41" name="X854B96757AF38A41"></a></p>
+
+<h5>1.1-12 RestrictedEquivariantCWComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedEquivariantCWComplex</code>( <var class="Arg">Y</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">\(G\)</span>-equivariant regular CW-space Y and a subgroup <span class="SimpleMath">\(H \le G\)</span> for which GAP can find a transversal. It returns the equivariant regular CW-complex obtained by retricting the action to <span class="SimpleMath">\(H\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7A3B6B647C8CF90B" name="X7A3B6B647C8CF90B"></a></p>
+
+<h5>1.1-13 RandomSimplicialGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomSimplicialGraph</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an integer <span class="SimpleMath">\( n \ge 1 \)</span> and positive prime <span class="SimpleMath">\(p\)</span>, and returns an Erd\"os-R\'enyi random graph as a <span class="SimpleMath">\(1\)</span>-dimensional simplicial complex. The graph has <span class="SimpleMath">\(n\)</span> vertices. Each pair of vertices is, with probability <span class="SimpleMath">\(p\)</span>, directly connected by an edge.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">1</a></span> </p>
+
+<p><a id="X8394037487D3C17E" name="X8394037487D3C17E"></a></p>
+
+<h5>1.1-14 RandomSimplicialTwoComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomSimplicialTwoComplex</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an integer <span class="SimpleMath">\( n \ge 1 \)</span> and positive prime <span class="SimpleMath">\(p\)</span>, and returns a Linial-Meshulam random simplicial <span class="SimpleMath">\(2\)</span>-complex. The <span class="SimpleMath">\(1\)</span>-skeleton of this simplicial complex is the complete graph on <span class="SimpleMath">\(n\)</span> vertices. Each triple of vertices lies, with probability <span class="SimpleMath">\(p\)</span>, in a common <span class="SimpleMath">\(2\)</span>-simplex of the complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">1</a></span> </p>
+
+<p><a id="X83DB403087D02CC8" name="X83DB403087D02CC8"></a></p>
+
+<h5>1.1-15 ReadCSVfileAsPureCubicalKnot</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSVfileAsPureCubicalKnot</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSVfileAsPureCubicalKnot</code>( <var class="Arg">str</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSVfileAsPureCubicalKnot</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSVfileAsPureCubicalKnot</code>( <var class="Arg">L</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads a CSV file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">\(3\)</span>-dimensional pure cubical complex <span class="SimpleMath">\(K\)</span>. Each line of the file should contain the coordinates of a point in <span class="SimpleMath">\(\mathbb R^3\)</span> and the complex <span class="SimpleMath">\(K\)</span> should represent a knot determined by the sequence of points, though the latter is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">\(K\)</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">\(r \ge 2\)</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+<p>The function can also read in a list <span class="SimpleMath">\(L\)</span> of strings identifying CSV files for several knots. In this case a list <span class="SimpleMath">\(R\)</span> of integer resolutions can also be entered. The lists <span class="SimpleMath">\(L\)</span> and <span class="SimpleMath">\(R\)</span> must be of equal length.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7BE9892784AA4990" name="X7BE9892784AA4990"></a></p>
+
+<h5>1.1-16 ReadImageAsPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadImageAsPureCubicalComplex</code>( <var class="Arg">str</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with an integer <span class="SimpleMath">\(t\)</span> between <span class="SimpleMath">\(0\)</span> and <span class="SimpleMath">\(765\)</span>. It returns a <span class="SimpleMath">\(2\)</span>-dimensional pure cubical complex corresponding to a black/white version of the image determined by the threshold <span class="SimpleMath">\(t\)</span>. The <span class="SimpleMath">\(2\)</span>-cells of the pure cubical complex correspond to pixels with RGB value <span class="SimpleMath">\(R+G+B \le t\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">3</a></span> </p>
+
+<p><a id="X84D89B96873308B7" name="X84D89B96873308B7"></a></p>
+
+<h5>1.1-17 ReadImageAsFilteredPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadImageAsFilteredPureCubicalComplex</code>( <var class="Arg">str</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with a positive integer <span class="SimpleMath">\(n\)</span>. It returns a <span class="SimpleMath">\(2\)</span>-dimensional filtered pure cubical complex of filtration length <span class="SimpleMath">\(n\)</span>. The <span class="SimpleMath">\(k\)</span>th term in the filtration is a pure cubical complex corresponding to a black/white version of the image determined by the threshold <span class="SimpleMath">\(t_k=k \times 765/n \)</span>. The <span class="SimpleMath">\(2\)</span>-cells of the <span class="SimpleMath">\(k\)</span>th term correspond to pixels with RGB value <span class="SimpleMath">\(R+G+B \le t_k\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X80E8B89F7E95D101" name="X80E8B89F7E95D101"></a></p>
+
+<h5>1.1-18 ReadImageAsWeightFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadImageAsWeightFunction</code>( <var class="Arg">str</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads an image file identified by a string str such as "file.bmp", "file.eps", "file.jpg", "path/file.png" etc., together with an integer <span class="SimpleMath">\(t\)</span>. It constructs a <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex <span class="SimpleMath">\(Y\)</span> from the image, together with a weight function <span class="SimpleMath">\(w\colon Y\rightarrow \mathbb Z\)</span> corresponding to a filtration on <span class="SimpleMath">\(Y\)</span> of filtration length <span class="SimpleMath">\(t\)</span>. The pair <span class="SimpleMath">\([Y,w]\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D8681B079E019C0" name="X7D8681B079E019C0"></a></p>
+
+<h5>1.1-19 ReadPDBfileAsPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadPDBfileAsPureCubicalComplex</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadPDBfileAsPureCubicalComplex</code>( <var class="Arg">str</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">\(3\)</span>-dimensional pure cubical complex <span class="SimpleMath">\(K\)</span>. The complex <span class="SimpleMath">\(K\)</span> should represent a (protein backbone) knot but this is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">\(K\)</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">\(r \ge 2\)</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">2</a></span> </p>
+
+<p><a id="X7E278788808A9EE4" name="X7E278788808A9EE4"></a></p>
+
+<h5>1.1-20 ReadPDBfileAsPurepermutahedralComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadPDBfileAsPurepermutahedralComplex</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadPDBfileAsPurePermutahedralComplex</code>( <var class="Arg">str</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Reads a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb" and returns a <span class="SimpleMath">\(3\)</span>-dimensional pure permutahedral complex <span class="SimpleMath">\(K\)</span>. The complex <span class="SimpleMath">\(K\)</span> should represent a (protein backbone) knot but this is not guaranteed. A useful check in this direction is to test that <span class="SimpleMath">\(K\)</span> has the homotopy type of a circle.</p>
+
+<p>If the test fails then try the function again with an integer <span class="SimpleMath">\(r \ge 2\)</span> entered as the optional second argument. The integer determines the resolution with which the knot is constructed.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X85C818B87D9AC922" name="X85C818B87D9AC922"></a></p>
+
+<h5>1.1-21 RegularCWPolytope</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWPolytope</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWPolytope</code>( <var class="Arg">G</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">\(L\)</span> of vectors in <span class="SimpleMath">\(\mathbb R^n\)</span> and outputs their convex hull as a regular CW-complex.</p>
+
+<p>Inputs a permutation group G of degree <span class="SimpleMath">\(d\)</span> and vector <span class="SimpleMath">\(v\in \mathbb R^d\)</span>, and outputs the convex hull of the orbit <span class="SimpleMath">\(\{v^g : g\in G\}\)</span> as a regular CW-complex.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X818F2E887FE5F7BE" name="X818F2E887FE5F7BE"></a></p>
+
+<h5>1.1-22 SimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplicialComplex</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">\(L\)</span> whose entries are lists of vertices representing the maximal simplices of a simplicial complex, and returns the simplicial complex. Here a "vertex" is a GAP object such as an integer or a subgroup. The list <span class="SimpleMath">\(L\)</span> can also contain non-maximal simplices.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap4.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">10</a></span> </p>
+
+<p><a id="X79CA51F27C07435C" name="X79CA51F27C07435C"></a></p>
+
+<h5>1.1-23 SymmetricMatrixToFilteredGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricMatrixToFilteredGraph</code>( <var class="Arg">A</var>, <var class="Arg">m</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricMatrixToFilteredGraph</code>( <var class="Arg">A</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an <span class="SimpleMath">\(n \times n\)</span> symmetric matrix <span class="SimpleMath">\(A\)</span>, a positive integer <span class="SimpleMath">\(m\)</span> and a positive rational <span class="SimpleMath">\(s\)</span>. The function returns a filtered graph of filtration length <span class="SimpleMath">\(m\)</span>. The <span class="SimpleMath">\(t\)</span>-th term of the filtration is a graph with <span class="SimpleMath">\(n\)</span> vertices and an edge between the <span class="SimpleMath">\(i\)</span>-th and <span class="SimpleMath">\(j\)</span>-th vertices if the <span class="SimpleMath">\((i,j)\)</span> entry of <span class="SimpleMath">\(A\)</span> is less than or equal to <span class="SimpleMath">\(t \times s/m\)</span>.</p>
+
+<p>If the optional input <span class="SimpleMath">\(s\)</span> is omitted then it is set equal to the largest entry in the matrix <span class="SimpleMath">\(A\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">2</a></span> </p>
+
+<p><a id="X8227636B7E878448" name="X8227636B7E878448"></a></p>
+
+<h5>1.1-24 SymmetricMatrixToGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricMatrixToGraph</code>( <var class="Arg">A</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an <span class="SimpleMath">\(n\times n\)</span> symmetric matrix <span class="SimpleMath">\(A\)</span> over the rationals and a rational number <span class="SimpleMath">\(t \ge 0\)</span>, and returns the graph on the vertices <span class="SimpleMath">\(1,2, \ldots, n\)</span> with an edge between distinct vertices <span class="SimpleMath">\(i\)</span> and <span class="SimpleMath">\(j\)</span> precisely when the <span class="SimpleMath">\((i,j)\)</span> entry of <span class="SimpleMath">\(A\)</span> is <span class="SimpleMath">\(\le t\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X7C0C080487641830" name="X7C0C080487641830"></a></p>
+
+<h4>1.2 <span class="Heading"> Metric Spaces</span></h4>
+
+<p><a id="X7F8113757F7DD2F4" name="X7F8113757F7DD2F4"></a></p>
+
+<h5>1.2-1 CayleyMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyMetric</code>( <var class="Arg">g</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two permutations <span class="SimpleMath">\(g,h\)</span> and optionally the degree <span class="SimpleMath">\(N\)</span> of a symmetric group containing them. It returns the minimum number of transpositions needed to express <span class="SimpleMath">\(g*h^{-1}\)</span> as a product of transpositions.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X7A4560307BA911F5" name="X7A4560307BA911F5"></a></p>
+
+<h5>1.2-2 EuclideanMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EuclideanMetric</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs two vectors <span class="SimpleMath">\(v,w \in \mathbb R^n\)</span> and returns a rational number approximating the Euclidean distance between them.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X789AE7CE8445A67C" name="X789AE7CE8445A67C"></a></p>
+
+<h5>1.2-3 EuclideanSquaredMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EuclideanSquaredMetric</code>( <var class="Arg">g</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two vectors <span class="SimpleMath">\(v,w \in \mathbb R^n\)</span> and returns the square of the Euclidean distance between them.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X79DA33CB7D46CAB4" name="X79DA33CB7D46CAB4"></a></p>
+
+<h5>1.2-4 HammingMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HammingMetric</code>( <var class="Arg">g</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two permutations <span class="SimpleMath">\(g,h\)</span> and optionally the degree <span class="SimpleMath">\(N\)</span> of a symmetric group containing them. It returns the minimum number of integers moved by the permutation <span class="SimpleMath">\(g*h^{-1}\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7BD62D75829F8701" name="X7BD62D75829F8701"></a></p>
+
+<h5>1.2-5 KendallMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KendallMetric</code>( <var class="Arg">g</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two permutations <span class="SimpleMath">\(g,h\)</span> and optionally the degree <span class="SimpleMath">\(N\)</span> of a symmetric group containing them. It returns the minimum number of adjacent transpositions needed to express <span class="SimpleMath">\(g*h^{-1}\)</span> as a product of adjacent transpositions. An {\em adjacent} transposition is of the form <span class="SimpleMath">\((i,i+1)\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8763D1167EF519A1" name="X8763D1167EF519A1"></a></p>
+
+<h5>1.2-6 ManhattanMetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ManhattanMetric</code>( <var class="Arg">g</var>, <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two vectors <span class="SimpleMath">\(v,w \in \mathbb R^n\)</span> and returns the Manhattan distance between them.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X7C86B58A7CEA5513" name="X7C86B58A7CEA5513"></a></p>
+
+<h5>1.2-7 VectorsToSymmetricMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorsToSymmetricMatrix</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorsToSymmetricMatrix</code>( <var class="Arg">V</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">\(V =\{ v_1, \ldots, v_k\} \in \mathbb R^n\)</span> and returns the <span class="SimpleMath">\(k \times k\)</span> symmetric matrix of Euclidean distances <span class="SimpleMath">\(d(v_i, v_j)\)</span>. When these distances are irrational they are approximated by a rational number.</p>
+
+<p>As an optional second argument any rational valued function <span class="SimpleMath">\(d(x,y)\)</span> can be entered.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X80A49CAC84313990" name="X80A49CAC84313990"></a></p>
+
+<h4>1.3 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes</span></h4>
+
+<p><a id="X7AF313D387F6BA22" name="X7AF313D387F6BA22"></a></p>
+
+<h5>1.3-1 BoundaryMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BoundaryMap</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure regular CW-complex <span class="SimpleMath">\(K\)</span> and returns the regular CW-inclusion map <span class="SimpleMath">\(\iota \colon \partial K \hookrightarrow K\)</span> from the boundary <span class="SimpleMath">\(\partial K\)</span> into the complex <span class="SimpleMath">\(K\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">2</a></span> </p>
+
+<p><a id="X848ED6C378A1C5C0" name="X848ED6C378A1C5C0"></a></p>
+
+<h5>1.3-2 CliqueComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CliqueComplex</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CliqueComplex</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CliqueComplex</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">\(G\)</span> and integer <span class="SimpleMath">\(n \ge 1\)</span>. It returns the <span class="SimpleMath">\(n\)</span>-skeleton of a simplicial complex <span class="SimpleMath">\(K\)</span> with one <span class="SimpleMath">\(k\)</span>-simplex for each complete subgraph of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(k+1\)</span> vertices.</p>
+
+<p>Inputs a fitered graph <span class="SimpleMath">\(F\)</span> and integer <span class="SimpleMath">\(n \ge 1\)</span>. It returns the <span class="SimpleMath">\(n\)</span>-skeleton of a filtered simplicial complex <span class="SimpleMath">\(K\)</span> whose <span class="SimpleMath">\(t\)</span>-term has one <span class="SimpleMath">\(k\)</span>-simplex for each complete subgraph of the <span class="SimpleMath">\(t\)</span>-th term of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(k+1\)</span> vertices.</p>
+
+<p>Inputs a simplicial complex of dimension <span class="SimpleMath">\(d=1\)</span> or <span class="SimpleMath">\(d=2\)</span>. If <span class="SimpleMath">\(d=1\)</span> then the clique complex of a graph returned. If <span class="SimpleMath">\(d=2\)</span> then the clique complex of a $2$-complex is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X85FAD5E086DBD429" name="X85FAD5E086DBD429"></a></p>
+
+<h5>1.3-3 ConcentricFiltration</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConcentricFiltration</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex <span class="SimpleMath">\(K\)</span> and integer <span class="SimpleMath">\(n \ge 1\)</span>, and returns a filtered pure cubical complex of filtration length <span class="SimpleMath">\(n\)</span>. The <span class="SimpleMath">\(t\)</span>-th term of the filtration is the intersection of <span class="SimpleMath">\(K\)</span> with the ball of radius <span class="SimpleMath">\(r_t\)</span> centred on the centre of gravity of <span class="SimpleMath">\(K\)</span>, where <span class="SimpleMath">\(0=r_1 \le r_2 \le r_3 \le \cdots \le r_n\)</span> are equally spaced rational numbers. The complex <span class="SimpleMath">\(K\)</span> is contained in the ball of radius <span class="SimpleMath">\(r_n\)</span>. (At present, this is implemented only for <span class="SimpleMath">\(2\)</span>- and <span class="SimpleMath">\(3\)</span>-dimensional complexes.)</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X861BA02C7902A4F4" name="X861BA02C7902A4F4"></a></p>
+
+<h5>1.3-4 DirectProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two or more regular CW-complexes or two or more pure cubical complexes and returns their direct product.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">6</a></span> </p>
+
+<p><a id="X7DB4D3B57E0DA723" name="X7DB4D3B57E0DA723"></a></p>
+
+<h5>1.3-5 FiltrationTerm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiltrationTerm</code>( <var class="Arg">K</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiltrationTerm</code>( <var class="Arg">K</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a filtered regular CW-complex or a filtered pure cubical complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(t \ge 1\)</span>. The <span class="SimpleMath">\(t\)</span>-th term of the filtration is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X7B335342839E5146" name="X7B335342839E5146"></a></p>
+
+<h5>1.3-6 Graph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Graph</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Graph</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex or a simplicial complex <span class="SimpleMath">\(K\)</span> and returns its $1$-skeleton as a graph.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap4.html">2</a></span> , <span class="URL"><a href="tutorial/chap6.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">11</a></span> </p>
+
+<p><a id="X7966519E78BC6C18" name="X7966519E78BC6C18"></a></p>
+
+<h5>1.3-7 HomotopyGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomotopyGraph</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns a subgraph <span class="SimpleMath">\(M \subset Y^1\)</span> of the <span class="SimpleMath">\(1\)</span>-skeleton for which the induced homology homomorphisms <span class="SimpleMath">\(H_1(M,\mathbb Z) \rightarrow H_1(Y,\mathbb Z)\)</span> and <span class="SimpleMath">\(H_1(Y^1,\mathbb Z) \rightarrow H_1(Y,\mathbb Z)\)</span> have identical images. The construction tries to include as few edges in <span class="SimpleMath">\(M\)</span> as possible, though a minimum is not guaranteed.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X84560FF678621AE1" name="X84560FF678621AE1"></a></p>
+
+<h5>1.3-8 Nerve</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Nerve</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Nerve</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Nerve</code>( <var class="Arg">M</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Nerve</code>( <var class="Arg">M</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex or pure permutahedral complex <span class="SimpleMath">\(M\)</span> and returns the simplicial complex <span class="SimpleMath">\(K\)</span> obtained by taking the nerve of an open cover of <span class="SimpleMath">\(|M|\)</span>, the open sets in the cover being sufficiently small neighbourhoods of the top-dimensional cells of <span class="SimpleMath">\(|M|\)</span>. The spaces <span class="SimpleMath">\(|M|\)</span> and <span class="SimpleMath">\(|K|\)</span> are homotopy equivalent by the Nerve Theorem. If an integer <span class="SimpleMath">\(n \ge 0\)</span> is supplied as the second argument then only the n-skeleton of <span class="SimpleMath">\(K\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap9.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">7</a></span> </p>
+
+<p><a id="X7C2BEF7C871E54D7" name="X7C2BEF7C871E54D7"></a></p>
+
+<h5>1.3-9 RegularCWComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWComplex</code>( <var class="Arg">L</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial, pure cubical, cubical or pure permutahedral complex <span class="SimpleMath">\(K\)</span> and returns the corresponding regular CW-complex. Inputs a list <span class="SimpleMath">\(L=Y!.boundaries\)</span> of boundary incidences of a regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns <span class="SimpleMath">\(Y\)</span>. Inputs a list <span class="SimpleMath">\(L=Y!.boundaries\)</span> of boundary incidences of a regular CW-complex <span class="SimpleMath">\(Y\)</span> together with a list <span class="SimpleMath">\(M=Y!.orientation\)</span> of incidence numbers and returns a regular CW-complex <span class="SimpleMath">\(Y\)</span>. The availability of precomputed incidence numbers saves recalculating them.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap4.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeripheral.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">10</a></span> </p>
+
+<p><a id="X79967AC2859A9631" name="X79967AC2859A9631"></a></p>
+
+<h5>1.3-10 RegularCWMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularCWMap</code>( <var class="Arg">M</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex <span class="SimpleMath">\(M\)</span> and a subcomplex <span class="SimpleMath">\(A\)</span> and returns the inclusion map <span class="SimpleMath">\(A \rightarrow M\)</span> as a map of regular CW complexes.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">2</a></span> </p>
+
+<p><a id="X82843E747FE622AF" name="X82843E747FE622AF"></a></p>
+
+<h5>1.3-11 ThickeningFiltration</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThickeningFiltration</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThickeningFiltration</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex <span class="SimpleMath">\(K\)</span> and integer <span class="SimpleMath">\(n \ge 1\)</span>, and returns a filtered pure cubical complex of filtration length <span class="SimpleMath">\(n\)</span>. The <span class="SimpleMath">\(t\)</span>-th term of the filtration is the <span class="SimpleMath">\(t\)</span>-fold thickening of <span class="SimpleMath">\(K\)</span>. If an integer <span class="SimpleMath">\(s \ge 1\)</span> is entered as the optional third argument then the <span class="SimpleMath">\(t\)</span>-th term of the filtration is the <span class="SimpleMath">\(ts\)</span>-fold thickening of <span class="SimpleMath">\(K\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X7FD50DF6782F00A0" name="X7FD50DF6782F00A0"></a></p>
+
+<h4>1.4 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Cellular Complexes (Preserving Data Types)</span></h4>
+
+<p><a id="X840576107A2907B8" name="X840576107A2907B8"></a></p>
+
+<h5>1.4-1 ContractedComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractedComplex</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a complex (regular CW, Filtered regular CW, pure cubical etc.) and returns a homotopy equivalent subcomplex.</p>
+
+<p>Inputs a pure cubical complex or pure permutahedral complex <span class="SimpleMath">\(K\)</span> and a subcomplex <span class="SimpleMath">\(S\)</span>. It returns a homotopy equivalent subcomplex of <span class="SimpleMath">\(K\)</span> that contains <span class="SimpleMath">\(S\)</span>.</p>
+
+<p>Inputs a graph <span class="SimpleMath">\(G\)</span> and returns a subgraph <span class="SimpleMath">\(S\)</span> such that the clique complexes of <span class="SimpleMath">\(G\)</span> and <span class="SimpleMath">\(S\)</span> are homotopy equivalent.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">6</a></span> </p>
+
+<p><a id="X7A46614B84FF25BE" name="X7A46614B84FF25BE"></a></p>
+
+<h5>1.4-2 ContractibleSubcomplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractibleSubcomplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractibleSubcomplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractibleSubcomplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a non-empty pure cubical, pure permutahedral or simplicial complex <span class="SimpleMath">\(K\)</span> and returns a contractible subcomplex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">1</a></span> </p>
+
+<p><a id="X86164F4481ACC485" name="X86164F4481ACC485"></a></p>
+
+<h5>1.4-3 KnotReflection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnotReflection</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical knot and returns the reflected knot.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D86D13C822D59A9" name="X7D86D13C822D59A9"></a></p>
+
+<h5>1.4-4 KnotSum</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnotSum</code>( <var class="Arg">K</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two pure cubical knots and returns their sum.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap5.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">5</a></span> </p>
+
+<p><a id="X855537287E9C4E72" name="X855537287E9C4E72"></a></p>
+
+<h5>1.4-5 OrientRegularCWComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrientRegularCWComplex</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and computes and stores incidence numbers for <span class="SimpleMath">\(Y\)</span>. If <span class="SimpleMath">\(Y\)</span> already has incidence numbers then the function does nothing.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7A266B5A7BE88E89" name="X7A266B5A7BE88E89"></a></p>
+
+<h5>1.4-6 PathComponent</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathComponent</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathComponent</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathComponent</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial, pure cubical or pure permutahedral complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(1 \le n \le \beta_0(K)\)</span>. The <span class="SimpleMath">\(n\)</span>-th path component of <span class="SimpleMath">\(K\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutQuandles.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">2</a></span> </p>
+
+<p><a id="X7FF34B9E86E901DC" name="X7FF34B9E86E901DC"></a></p>
+
+<h5>1.4-7 PureComplexBoundary</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexBoundary</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexBoundary</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">\(d\)</span>-dimensional pure cubical or pure permutahedral complex <span class="SimpleMath">\(M\)</span> and returns a <span class="SimpleMath">\(d\)</span>-dimensional complex consisting of the closure of those <span class="SimpleMath">\(d\)</span>-cells whose boundaries contains some cell with coboundary of size less than the maximal possible size.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D0C9B27845F0739" name="X7D0C9B27845F0739"></a></p>
+
+<h5>1.4-8 PureComplexComplement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexComplement</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexComplement</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex or a pure permutahedral complex and returns its complement.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> </p>
+
+<p><a id="X7FB5BE6C78D5C7C8" name="X7FB5BE6C78D5C7C8"></a></p>
+
+<h5>1.4-9 PureComplexDifference</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexDifference</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexDifference</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns the difference <span class="SimpleMath">\( M - N\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8091C9BA819C2332" name="X8091C9BA819C2332"></a></p>
+
+<h5>1.4-10 PureComplexInterstection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexInterstection</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexIntersection</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns their intersection.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X84A7E7A47F7BA09D" name="X84A7E7A47F7BA09D"></a></p>
+
+<h5>1.4-11 PureComplexThickened</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexThickened</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexThickened</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex or a pure permutahedral complex and returns the a thickened complex.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X78014E027F28C2C8" name="X78014E027F28C2C8"></a></p>
+
+<h5>1.4-12 PureComplexUnion</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexUnion</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexUnion</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two pure cubical complexes or two pure permutahedral complexes and returns their union.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7E7AC0E77E25C45B" name="X7E7AC0E77E25C45B"></a></p>
+
+<h5>1.4-13 SimplifiedComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedComplex</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex or a pure permutahedral complex <span class="SimpleMath">\(K\)</span> and returns a homeomorphic complex with possibly fewer cells and certainly no more cells.</p>
+
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span> of <span class="SimpleMath">\(\mathbb Z\)</span> and returns a <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(S\)</span> with potentially fewer free generators.</p>
+
+<p>Inputs a chain complex <span class="SimpleMath">\(C\)</span> of free abelian groups and returns a chain homotopic chain complex <span class="SimpleMath">\(D\)</span> with potentially fewer free generators.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap3.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">3</a></span> </p>
+
+<p><a id="X844174D37E70B9B4" name="X844174D37E70B9B4"></a></p>
+
+<h5>1.4-14 ZigZagContractedComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZigZagContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZigZagContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZigZagContractedComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical, filtered pure cubical or pure permutahedral complex and returns a homotopy equivalent complex. In the filtered case, the <span class="SimpleMath">\(t\)</span>-th term of the output is homotopy equivalent to the <span class="SimpleMath">\(t\)</span>-th term of the input for all <span class="SimpleMath">\(t\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> </p>
+
+<p><a id="X7E25932F7DD535E8" name="X7E25932F7DD535E8"></a></p>
+
+<h4>1.5 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Homotopy Invariants</span></h4>
+
+<p><a id="X7DC474EE7A909563" name="X7DC474EE7A909563"></a></p>
+
+<h5>1.5-1 AlexanderPolynomial</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlexanderPolynomial</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlexanderPolynomial</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlexanderPolynomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">\(3\)</span>-dimensional pure cubical or pure permutahdral complex <span class="SimpleMath">\(K\)</span> representing a knot and returns the Alexander polynomial of the fundamental group <span class="SimpleMath">\(G = \pi_1(\mathbb R^3\setminus K)\)</span>.</p>
+
+<p>Inputs a finitely presented group <span class="SimpleMath">\(G\)</span> with infinite cyclic abelianization and returns its Alexander polynomial.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">2</a></span> </p>
+
+<p><a id="X83EF7B888014C363" name="X83EF7B888014C363"></a></p>
+
+<h5>1.5-2 BettiNumber</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiNumber</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial, cubical, pure cubical, pure permutahedral, regular CW, chain or sparse chain complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span> and returns the <span class="SimpleMath">\(n\)</span>th Betti number of <span class="SimpleMath">\(K\)</span>.</p>
+
+<p>Inputs a simplicial, cubical, pure cubical, pure permutahedral or regular CW-complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span> and a prime <span class="SimpleMath">\(p \ge 0\)</span> or <span class="SimpleMath">\(p=0\)</span>. In this case the <span class="SimpleMath">\(n\)</span>th Betti number of <span class="SimpleMath">\(K\)</span> over a field of characteristic <span class="SimpleMath">\(p\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X8307F8DB85F145AE" name="X8307F8DB85F145AE"></a></p>
+
+<h5>1.5-3 EulerCharacteristic</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">\(C\)</span> and returns its Euler characteristic.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW-, or simplicial complex <span class="SimpleMath">\(K\)</span> and returns its Euler characteristic.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X78813B9A851B922A" name="X78813B9A851B922A"></a></p>
+
+<h5>1.5-4 EulerIntegral</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerIntegral</code>( <var class="Arg">Y</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and a weight function <span class="SimpleMath">\(w\colon Y\rightarrow \mathbb Z\)</span>, and returns the Euler integral <span class="SimpleMath">\( \int_Y w\, d\chi \)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7EAE7E4181546C17" name="X7EAE7E4181546C17"></a></p>
+
+<h5>1.5-5 FundamentalGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroup</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW, simplicial, pure cubical or pure permutahedral complex <span class="SimpleMath">\(K\)</span> and returns the fundamental group.</p>
+
+<p>Inputs a regular CW complex <span class="SimpleMath">\(K\)</span> and the number <span class="SimpleMath">\(n\)</span> of some zero cell. It returns the fundamental group of <span class="SimpleMath">\(K\)</span> based at the <span class="SimpleMath">\(n\)</span>-th zero cell.</p>
+
+<p>Inputs a regular CW map <span class="SimpleMath">\(F\)</span> and returns the induced homomorphism of fundamental groups. If the number of some zero cell in the domain of <span class="SimpleMath">\(F\)</span> is entered as an optional second variable then the fundamental group is based at this zero cell.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeripheral.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">10</a></span> </p>
+
+<p><a id="X808733FF7EF6278E" name="X808733FF7EF6278E"></a></p>
+
+<h5>1.5-6 FundamentalGroupOfQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FundamentalGroupOfQuotient</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">\(G\)</span>-equivariant regular CW complex <span class="SimpleMath">\(Y\)</span> and returns the group <span class="SimpleMath">\(G\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X78F2C5ED80D1C8DD" name="X78F2C5ED80D1C8DD"></a></p>
+
+<h5>1.5-7 IsAspherical</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAspherical</code>( <var class="Arg">F</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a free group <span class="SimpleMath">\(F\)</span> and a list <span class="SimpleMath">\(R\)</span> of words in <span class="SimpleMath">\(F\)</span>. The function attempts to test if the quotient group <span class="SimpleMath">\(G=F/\langle R \rangle^F\)</span> is aspherical. If it succeeds it returns <span class="SimpleMath">\(true\)</span>. Otherwise the test is inconclusive and <span class="SimpleMath">\(fail\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap5.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutAspherical.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">3</a></span> </p>
+
+<p><a id="X797F8D4A848DD9BC" name="X797F8D4A848DD9BC"></a></p>
+
+<h5>1.5-8 KnotGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnotGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnotGroup</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical or pure permutahedral complex <span class="SimpleMath">\(K\)</span> and returns the fundamental group of its complement. If the complement is path-connected then this fundamental group is unique up to isomorphism. Otherwise it will depend on the path-component in which the randomly chosen base-point lies.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">1</a></span> </p>
+
+<p><a id="X825539B57FBDDE86" name="X825539B57FBDDE86"></a></p>
+
+<h5>1.5-9 PiZero</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PiZero</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PiZero</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PiZero</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span>, or graph <span class="SimpleMath">\(Y\)</span>, or simplicial complex <span class="SimpleMath">\(Y\)</span> and returns a pair <span class="SimpleMath">\([cells,r]\)</span> where: <span class="SimpleMath">\(cells\)</span> is a list of vertices of $Y$ representing the distinct path-components; <span class="SimpleMath">\(r(v)\)</span> is a function which, for each vertex <span class="SimpleMath">\(v\)</span> of <span class="SimpleMath">\(Y\)</span> returns the representative vertex <span class="SimpleMath">\(r(v) \in cells\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X7EE96E8B7C1643BD" name="X7EE96E8B7C1643BD"></a></p>
+
+<h5>1.5-10 PersistentBettiNumbers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentBettiNumbers</code>( <var class="Arg">K</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a filtered simplicial, filtered pure cubical, filtered regular CW, filtered chain or filtered sparse chain complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span> and returns the <span class="SimpleMath">\(n\)</span>th PersistentBetti numbers of <span class="SimpleMath">\(K\)</span> as a list of lists of integers.</p>
+
+<p>Inputs a filtered simplicial, filtered pure cubical, filtered regular CW, filtered chain or filtered sparse chain complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span> and a prime <span class="SimpleMath">\(p \ge 0\)</span> or <span class="SimpleMath">\(p=0\)</span>. In this case the <span class="SimpleMath">\(n\)</span>th PersistentBetti numbers of <span class="SimpleMath">\(K\)</span> over a field of characteristic <span class="SimpleMath">\(p\)</span> are returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> </p>
+
+<p><a id="X7C17A7897DDAE22C" name="X7C17A7897DDAE22C"></a></p>
+
+<h4>1.6 <span class="Heading"> Data <span class="SimpleMath">\(\longrightarrow\)</span> Homotopy Invariants</span></h4>
+
+<p><a id="X7F5B6CAD7CB2E985" name="X7F5B6CAD7CB2E985"></a></p>
+
+<h5>1.6-1 DendrogramMat</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DendrogramMat</code>( <var class="Arg">A</var>, <var class="Arg">t</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an <span class="SimpleMath">\(n\times n\)</span> symmetric matrix <span class="SimpleMath">\(A\)</span> over the rationals, a rational <span class="SimpleMath">\(t \ge 0\)</span> and an integer <span class="SimpleMath">\(s \ge 1\)</span>. A list <span class="SimpleMath">\([v_1, \ldots, v_{t+1}]\)</span> is returned with each <span class="SimpleMath">\(v_k\)</span> a list of positive integers. Let <span class="SimpleMath">\(t_k = (k-1)s\)</span>. Let <span class="SimpleMath">\(G(A,t_k)\)</span> denote the graph with vertices <span class="SimpleMath">\(1, \ldots, n\)</span> and with distinct vertices <span class="SimpleMath">\(i\)</span> and <span class="SimpleMath">\(j\)</span> connected by an edge when the <span class="SimpleMath">\((i,j)\)</span> entry of <span class="SimpleMath">\(A\)</span> is <span class="SimpleMath">\(\le t_k\)</span>. The <span class="SimpleMath">\(i\)</span>-th path component of <span class="SimpleMath">\(G(A,t_k)\)</span> is included in the <span class="SimpleMath">\(v_k[i]\)</span>-th path component of <span class="SimpleMath">\(G(A,t_{k+1})\)</span>. This defines the integer vector <span class="SimpleMath">\(v_k\)</span>. The vector <span class="SimpleMath">\(v_k\)</span> has length equal to the number of path components of <span class="SimpleMath">\(G(A,t_k)\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X859286BF7F6047B7" name="X859286BF7F6047B7"></a></p>
+
+<h4>1.7 <span class="Heading"> Cellular Complexes <span class="SimpleMath">\(\longrightarrow\)</span> Non Homotopy Invariants</span></h4>
+
+<p><a id="X7A1C427578108B7E" name="X7A1C427578108B7E"></a></p>
+
+<h5>1.7-1 ChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or simplicial complex <span class="SimpleMath">\(K\)</span> and returns its chain complex of free abelian groups. In degree <span class="SimpleMath">\(n\)</span> this chain complex has one free generator for each <span class="SimpleMath">\(n\)</span>-dimensional cell of <span class="SimpleMath">\(K\)</span>.</p>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns a chain complex <span class="SimpleMath">\(C\)</span> which is chain homotopy equivalent to the cellular chain complex of <span class="SimpleMath">\(Y\)</span>. In degree <span class="SimpleMath">\(n\)</span> the free abelian chain group <span class="SimpleMath">\(C_n\)</span> has one free generator for each critical <span class="SimpleMath">\(n\)</span>-dimensional cell of <span class="SimpleMath">\(Y\)</span> with respect to some discrete vector field on <span class="SimpleMath">\(Y\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap9.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">11</a></span> </p>
+
+<p><a id="X7D4AF2E8785DA457" name="X7D4AF2E8785DA457"></a></p>
+
+<h5>1.7-2 ChainComplexEquivalence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexEquivalence</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(X\)</span> and returns a pair <span class="SimpleMath">\([f_\ast, g_\ast]\)</span> of chain maps <span class="SimpleMath">\(f_\ast\colon C_\ast(X) \rightarrow D_\ast(X)\)</span>, <span class="SimpleMath">\(g_\ast\colon D_\ast(X) \rightarrow C_\ast(X)\)</span>. Here <span class="SimpleMath">\(C_\ast(X)\)</span> is the standard cellular chain complex of <span class="SimpleMath">\(X\)</span> with one free generator for each cell in <span class="SimpleMath">\(X\)</span>. The chain complex <span class="SimpleMath">\(D_\ast(X)\)</span> is a typically smaller chain complex arising from a discrete vector field on <span class="SimpleMath">\(X\)</span>. The chain maps <span class="SimpleMath">\(f_\ast, g_\ast\)</span> are chain homotopy equivalences.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D77D18679E941D3" name="X7D77D18679E941D3"></a></p>
+
+<h5>1.7-3 ChainComplexOfQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexOfQuotient</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">\(G\)</span>-equivariant regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns the cellular chain complex of the quotient space <span class="SimpleMath">\(Y/G\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7BCD94877DF261C4" name="X7BCD94877DF261C4"></a></p>
+
+<h5>1.7-4 ChainMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMap</code>( <var class="Arg">X</var>, <var class="Arg">A</var>, <var class="Arg">Y</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMap</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMap</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex <span class="SimpleMath">\(Y\)</span> and pure cubical sucomplexes <span class="SimpleMath">\(X\subset Y\)</span>, <span class="SimpleMath">\(B\subset Y\)</span>,<span class="SimpleMath">\(A\subset B\)</span>. It returns the induced chain map <span class="SimpleMath">\(f_\ast\colon C_\ast(X/A) \rightarrow C_\ast(Y/B)\)</span> of cellular chain complexes of pairs. (Typlically one takes <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(B\)</span> to be empty or contractible subspaces, in which case <span class="SimpleMath">\(C_\ast(X/A) \simeq C_\ast(X)\)</span>, <span class="SimpleMath">\(C_\ast(Y/B) \simeq C_\ast(Y)\)</span>.)</p>
+
+<p>Inputs a map <span class="SimpleMath">\(f\colon X \rightarrow Y\)</span> between two regular CW-complexes <span class="SimpleMath">\(X,Y\)</span> and returns an induced chain map <span class="SimpleMath">\(f_\ast\colon C_\ast(X) \rightarrow C_\ast(Y)\)</span> where <span class="SimpleMath">\(C_\ast(X)\)</span>, <span class="SimpleMath">\(C_\ast(Y)\)</span> are chain homotopic to (but usually smaller than) the cellular chain complexes of <span class="SimpleMath">\(X\)</span>, <span class="SimpleMath">\(Y\)</span>.</p>
+
+<p>Inputs a map <span class="SimpleMath">\(f\colon X \rightarrow Y\)</span> between two simplicial complexes <span class="SimpleMath">\(X,Y\)</span> and returns the induced chain map <span class="SimpleMath">\(f_\ast\colon C_\ast(X) \rightarrow C_\ast(Y)\)</span> of cellular chain complexes.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">6</a></span> </p>
+
+<p><a id="X7B8741FB7A3263EC" name="X7B8741FB7A3263EC"></a></p>
+
+<h5>1.7-5 CochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or simplicial complex <span class="SimpleMath">\(K\)</span> and returns its cochain complex of free abelian groups. In degree <span class="SimpleMath">\(n\)</span> this cochain complex has one free generator for each <span class="SimpleMath">\(n\)</span>-dimensional cell of <span class="SimpleMath">\(K\)</span>.</p>
+
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns a cochain complex <span class="SimpleMath">\(C\)</span> which is chain homotopy equivalent to the cellular cochain complex of <span class="SimpleMath">\(Y\)</span>. In degree <span class="SimpleMath">\(n\)</span> the free abelian cochain group <span class="SimpleMath">\(C_n\)</span> has one free generator for each critical <span class="SimpleMath">\(n\)</span>-dimensional cell of <span class="SimpleMath">\(Y\)</span> with respect to some discrete vector field on <span class="SimpleMath">\(Y\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8489A39F870FF08B" name="X8489A39F870FF08B"></a></p>
+
+<h5>1.7-6 CriticalCells</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CriticalCells</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(K\)</span> and returns its critical cells with respect to some discrete vector field on <span class="SimpleMath">\(K\)</span>. If no discrete vector field on <span class="SimpleMath">\(K\)</span> is available then one will be computed and stored.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeripheral.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">6</a></span> </p>
+
+<p><a id="X7A4AD52D82627ABC" name="X7A4AD52D82627ABC"></a></p>
+
+<h5>1.7-7 DiagonalApproximation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalApproximation</code>( <var class="Arg">X</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(X\)</span> and outputs a pair <span class="SimpleMath">\([p,\iota]\)</span> of maps of CW-complexes. The map <span class="SimpleMath">\(p\colon X^\Delta \rightarrow X\)</span> will often be a homotopy equivalence. This is always the case if <span class="SimpleMath">\(X\)</span> is the CW-space of any pure cubical complex. In general, one can test to see if the induced chain map <span class="SimpleMath">\(p_\ast \colon C_\ast(X^\Delta) \rightarrow C_\ast(X)\)</span> is an isomorphism on integral homology. The second map <span class="SimpleMath">\(\iota \colon X^\Delta \hookrightarrow X\times X\)</span> is an inclusion into the direct product. If <span class="SimpleMath">\(p_\ast\)</span> induces an isomorphism on homology then the chain map <span class="SimpleMath">\(\iota_\ast\colon C_\ast(X^\Delta) \rightarrow C_\ast(X\times X)\)</span> can be used to compute the cup product.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> </p>
+
+<p><a id="X858ADA3B7A684421" name="X858ADA3B7A684421"></a></p>
+
+<h5>1.7-8 Size</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW complex or a simplicial complex <span class="SimpleMath">\(Y\)</span> and returns the number of cells in the complex.</p>
+
+<p>Inputs a <span class="SimpleMath">\(d\)</span>-dimensional pure cubical or pure permutahedral complex <span class="SimpleMath">\(K\)</span> and returns the number of <span class="SimpleMath">\(d\)</span>-dimensional cells in the complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap9.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoefficientSequence.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeripheral.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles2.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnots.html">16</a></span> </p>
+
+<p><a id="X7B6F366F7A2D8FEE" name="X7B6F366F7A2D8FEE"></a></p>
+
+<h4>1.8 <span class="Heading"> (Co)chain Complexes <span class="SimpleMath">\(\longrightarrow \)</span> (Co)chain Complexes</span></h4>
+
+<p><a id="X829DD3868410FE2E" name="X829DD3868410FE2E"></a></p>
+
+<h5>1.8-1 FilteredTensorWithIntegers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FilteredTensorWithIntegers</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span> for which <span class="SimpleMath">\("filteredDimension"\)</span> lies in <strong class="button">NamesOfComponents(R)</strong>. (Such a resolution can be produced using <strong class="button">TwisterTensorProduct()</strong>, <strong class="button">ResolutionNormalSubgroups()</strong> or <strong class="button">FreeGResolution()</strong>.) It returns the filtered chain complex obtained by tensoring with the trivial module $\mathbb Z$.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X7BC291C47FEAC5B8" name="X7BC291C47FEAC5B8"></a></p>
+
+<h5>1.8-2 FilteredTensorWithIntegersModP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FilteredTensorWithIntegersModP</code>( <var class="Arg">R</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span> for which <span class="SimpleMath">\("filteredDimension"\)</span> lies in <strong class="button">NamesOfComponents(R)</strong>, together with a prime <span class="SimpleMath">\(p\)</span>. (Such a resolution can be produced using <strong class="button">TwisterTensorProduct()</strong>, <strong class="button">ResolutionNormalSubgroups()</strong> or <strong class="button">FreeGResolution()</strong>.) It returns the filtered chain complex obtained by tensoring with the trivial module $\mathbb F$, the field of <span class="SimpleMath">\(p\)</span> elements.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X788F3B5E7810E309" name="X788F3B5E7810E309"></a></p>
+
+<h5>1.8-3 HomToIntegers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomToIntegers</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomToIntegers</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomToIntegers</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">\(C\)</span> of free abelian groups and returns the cochain complex <span class="SimpleMath">\(Hom_{\mathbb Z}(C,\mathbb Z)\)</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span> in characteristic <span class="SimpleMath">\(0\)</span> and returns the cochain complex <span class="SimpleMath">\(Hom_{\mathbb ZG}(R,\mathbb Z)\)</span>.</p>
+
+<p>Inputs an equivariant chain map <span class="SimpleMath">\(F\colon R\rightarrow S\)</span> of resolutions and returns the induced cochain map <span class="SimpleMath">\(Hom_{\mathbb ZG}(S,\mathbb Z) \longrightarrow Hom_{\mathbb ZG}(R,\mathbb Z)\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">5</a></span> </p>
+
+<p><a id="X8122D25786C83565" name="X8122D25786C83565"></a></p>
+
+<h5>1.8-4 TensorWithIntegersModP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorWithIntegersModP</code>( <var class="Arg">C</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorWithIntegersModP</code>( <var class="Arg">R</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorWithIntegersModP</code>( <var class="Arg">F</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">\(C\)</span> of characteristic <span class="SimpleMath">\(0\)</span> and a prime integer <span class="SimpleMath">\(p\)</span>. It returns the chain complex <span class="SimpleMath">\(C \otimes_{\mathbb Z} {\mathbb Z}_p\)</span> of characteristic <span class="SimpleMath">\(p\)</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span> of characteristic <span class="SimpleMath">\(0\)</span> and a prime integer <span class="SimpleMath">\(p\)</span>. It returns the chain complex <span class="SimpleMath">\(R \otimes_{\mathbb ZG} {\mathbb Z}_p\)</span> of characteristic <span class="SimpleMath">\(p\)</span>.</p>
+
+<p>Inputs an equivariant chain map <span class="SimpleMath">\(F\colon R \rightarrow S\)</span> in characteristic <span class="SimpleMath">\(0\)</span> a prime integer <span class="SimpleMath">\(p\)</span>. It returns the induced chain map <span class="SimpleMath">\(F\otimes_{\mathbb ZG}\mathbb Z_p \colon R \otimes_{\mathbb ZG} {\mathbb Z}_p \longrightarrow S \otimes_{\mathbb ZG} {\mathbb Z}_p\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">8</a></span> </p>
+
+<p><a id="X7BB8DC9783A4AF81" name="X7BB8DC9783A4AF81"></a></p>
+
+<h4>1.9 <span class="Heading"> (Co)chain Complexes <span class="SimpleMath">\(\longrightarrow \)</span> Homotopy Invariants</span></h4>
+
+<p><a id="X84CFC57B7E9CCCF7" name="X84CFC57B7E9CCCF7"></a></p>
+
+<h5>1.9-1 Cohomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a cochain complex <span class="SimpleMath">\(C\)</span> and integer <span class="SimpleMath">\(n \ge 0\)</span> and returns the <span class="SimpleMath">\(n\)</span>-th cohomology group of <span class="SimpleMath">\(C\)</span> as a list of its abelian invariants.</p>
+
+<p>Inputs a chain map <span class="SimpleMath">\(F\)</span> and integer <span class="SimpleMath">\(n \ge 0\)</span>. It returns the induced cohomology homomorphism <span class="SimpleMath">\(H_n(F)\)</span> as a homomorphism of finitely presented groups.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW or simplicial complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span>. It returns the <span class="SimpleMath">\(n\)</span>-th integral cohomology group of <span class="SimpleMath">\(K\)</span> as a list of its abelian invariants.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap6.html">3</a></span> , <span class="URL"><a href="tutorial/chap7.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutModPRings.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutNoncrossing.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoefficientSequence.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCrossedMods.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGouter.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSurvey.html">17</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">18</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">19</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">20</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">21</a></span> </p>
+
+<p><a id="X877825E57D79839C" name="X877825E57D79839C"></a></p>
+
+<h5>1.9-2 CupProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CupProduct</code>( <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CupProduct</code>( <var class="Arg">R</var>, <var class="Arg">p</var>, <var class="Arg">q</var>, <var class="Arg">P</var>, <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a regular CW-complex <span class="SimpleMath">\(Y\)</span> and returns a function <span class="SimpleMath">\(f(p,q,P,Q)\)</span>. This function <span class="SimpleMath">\(f\)</span> inputs two integers <span class="SimpleMath">\(p,q \ge 0\)</span> and two integer lists <span class="SimpleMath">\(P=[p_1, \ldots, p_m]\)</span>, <span class="SimpleMath">\(Q=[q_1, \ldots, q_n]\)</span> representing elements <span class="SimpleMath">\(P\in H^p(Y,\mathbb Z)\)</span> and <span class="SimpleMath">\(Q\in H^q(Y,\mathbb Z)\)</span>. The function <span class="SimpleMath">\(f\)</span> returns a list <span class="SimpleMath">\(P \cup Q\)</span> representing the cup product <span class="SimpleMath">\(P \cup Q \in H^{p+q}(Y,\mathbb Z)\)</span>.</p>
+
+<p>Inputs a free <span class="SimpleMath">\(\mathbb ZG\)</span> resolution <span class="SimpleMath">\(R\)</span> of <span class="SimpleMath">\(\mathbb Z\)</span> for some group <span class="SimpleMath">\(G\)</span>, together with integers <span class="SimpleMath">\(p,q \ge 0\)</span> and integer lists <span class="SimpleMath">\(P, Q\)</span> representing cohomology classes <span class="SimpleMath">\(P\in H^p(G,\mathbb Z)\)</span>, <span class="SimpleMath">\(Q\in H^q(G,\mathbb Z)\)</span>. An integer list representing the cup product <span class="SimpleMath">\(P\cup Q \in H^{p+q}(G,\mathbb Z)\)</span> is returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">2</a></span> </p>
+
+<p><a id="X85A9D5CB8605329C" name="X85A9D5CB8605329C"></a></p>
+
+<h5>1.9-3 Homology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">K</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">\(C\)</span> and integer <span class="SimpleMath">\(n \ge 0\)</span> and returns the <span class="SimpleMath">\(n\)</span>-th homology group of <span class="SimpleMath">\(C\)</span> as a list of its abelian invariants.</p>
+
+<p>Inputs a chain map <span class="SimpleMath">\(F\)</span> and integer <span class="SimpleMath">\(n \ge 0\)</span>. It returns the induced homology homomorphism <span class="SimpleMath">\(H_n(F)\)</span> as a homomorphism of finitely presented groups.</p>
+
+<p>Inputs a cubical, or pure cubical, or pure permutahedral or regular CW or simplicial complex <span class="SimpleMath">\(K\)</span> together with an integer <span class="SimpleMath">\(n \ge 0\)</span>. It returns the <span class="SimpleMath">\(n\)</span>-th integral homology group of <span class="SimpleMath">\(K\)</span> as a list of its abelian invariants.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap6.html">4</a></span> , <span class="URL"><a href="tutorial/chap8.html">5</a></span> , <span class="URL"><a href="tutorial/chap9.html">6</a></span> , <span class="URL"><a href="tutorial/chap10.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutAspherical.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCocycles.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">17</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">18</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">19</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">20</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">21</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">22</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutquasi.html">23</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">24</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">25</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">26</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDavisComplex.html">27</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">28</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">29</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">30</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">31</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">32</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">33</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">34</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">35</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">36</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">37</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLie.html">38</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">39</a></span> </p>
+
+<p><a id="X867BE1388467C939" name="X867BE1388467C939"></a></p>
+
+<h4>1.10 <span class="Heading"> Visualization</span></h4>
+
+<p><a id="X806A81EF79CE0DEF" name="X806A81EF79CE0DEF"></a></p>
+
+<h5>1.10-1 BarCodeDisplay</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeDisplay</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays a barcode <strong class="button">L=PersitentBettiNumbers(X,n)</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X83D60A6682EBB6F1" name="X83D60A6682EBB6F1"></a></p>
+
+<h5>1.10-2 BarCodeCompactDisplay</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeCompactDisplay</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays a barcode <strong class="button">L=PersitentBettiNumbers(X,n)</strong> in compact form.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">2</a></span> </p>
+
+<p><a id="X80CAD0357AF44E48" name="X80CAD0357AF44E48"></a></p>
+
+<h5>1.10-3 CayleyGraphOfGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyGraphOfGroup</code>( <var class="Arg">G</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">\(G\)</span> and a list <span class="SimpleMath">\(L\)</span> of elements in <span class="SimpleMath">\(G\)</span>.It displays the Cayley graph of the group generated by <span class="SimpleMath">\(L\)</span> where edge colours correspond to generators.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X83A5C59278E13248" name="X83A5C59278E13248"></a></p>
+
+<h5>1.10-4 Display</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays a graph <span class="SimpleMath">\(G\)</span>; a $2$- or $3$-dimensional pure cubical complex <span class="SimpleMath">\(M\)</span>; a $3$-dimensional pure permutahedral complex <span class="SimpleMath">\(M\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap4.html">2</a></span> , <span class="URL"><a href="tutorial/chap6.html">3</a></span> , <span class="URL"><a href="tutorial/chap8.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutNoncrossing.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeriodic.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles2.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutQuandles.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSuperperfect.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutKnotsQuandles.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">17</a></span> </p>
+
+<p><a id="X7B98A3C4831D5B0D" name="X7B98A3C4831D5B0D"></a></p>
+
+<h5>1.10-5 DisplayArcPresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayArcPresentation</code>( <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays a <span class="SimpleMath">\(3\)</span>-dimensional pure cubical knot <strong class="button">K=PureCubicalKnot(L)</strong> in the form of an arc presentation.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X861690C27BADC326" name="X861690C27BADC326"></a></p>
+
+<h5>1.10-6 DisplayCSVKnotFile</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayCSVKnotFile</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs a string <span class="SimpleMath">\(str\)</span> that identifies a csv file containing the points on a piecewise linear knot in <span class="SimpleMath">\(\mathbb R^3\)</span>. It displays the knot.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7F4AA01E7C0A5C16" name="X7F4AA01E7C0A5C16"></a></p>
+
+<h5>1.10-7 DisplayDendrogram</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayDendrogram</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays the dendrogram <strong class="button">L:=DendrogramMat(A,t,s)</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7E5A38F081B401BE" name="X7E5A38F081B401BE"></a></p>
+
+<h5>1.10-8 DisplayDendrogramMat</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayDendrogramMat</code>( <var class="Arg">A</var>, <var class="Arg">t</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an <span class="SimpleMath">\(n\times n\)</span> symmetric matrix <span class="SimpleMath">\(A\)</span> over the rationals, a rational <span class="SimpleMath">\(t \ge 0\)</span> and an integer <span class="SimpleMath">\(s \ge 1\)</span>. The dendrogram defined by <strong class="button">DendrogramMat(A,t,s)</strong> is displayed.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X822F54F385D7EF8A" name="X822F54F385D7EF8A"></a></p>
+
+<h5>1.10-9 DisplayPDBfile</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayPDBfile</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Displays the protein backone described in a PDB (Protein Database) file identified by a string str such as "file.pdb" or "path/file.pdb".</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80EC50C27EFF2E12" name="X80EC50C27EFF2E12"></a></p>
+
+<h5>1.10-10 OrbitPolytope</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitPolytope</code>( <var class="Arg">G</var>, <var class="Arg">v</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a permutation group or finite matrix group <span class="SimpleMath">\(G\)</span> of degree <span class="SimpleMath">\(d\)</span> and a rational vector <span class="SimpleMath">\(v\in \mathbb R^d\)</span>. In both cases there is a natural action of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(\mathbb R^d\)</span>. Let <span class="SimpleMath">\(P(G,v)\)</span> be the convex hull of the orbit of <span class="SimpleMath">\(v\)</span> under the action of <span class="SimpleMath">\(G\)</span>. The function also inputs a sublist <span class="SimpleMath">\(L\)</span> of the following list of strings: ["dimension","vertex\_degree", "visual\_graph", "schlegel", "visual"]</p>
+
+<p>Depending on <span class="SimpleMath">\(L\)</span>, the function displays the following information:\\ the dimension of the orbit polytope <span class="SimpleMath">\(P(G,v)\)</span>;\\ the degree of a vertex in the graph of <span class="SimpleMath">\(P(G,v)\)</span>;\\ a visualization of the graph of <span class="SimpleMath">\(P(G,v)\)</span>;\\ a visualization of the Schlegel diagram of <span class="SimpleMath">\(P(G,v)\)</span>;\\ a visualization of the polytope <span class="SimpleMath">\(P(G,v)\)</span> if <span class="SimpleMath">\(d=2,3\)</span>.</p>
+
+<p>The function requires Polymake software.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">1</a></span> </p>
+
+<p><a id="X7DF49EAD7C0B0E84" name="X7DF49EAD7C0B0E84"></a></p>
+
+<h5>1.10-11 ScatterPlot</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ScatterPlot</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">\(L=[[x_1,y_1],\ldots, [x_n,y_n]]\)</span> of pairs of rational numbers and displays a scatter plot of the points in the <span class="SimpleMath">\(x\)</span>-<span class="SimpleMath">\(y\)</span>-plane.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

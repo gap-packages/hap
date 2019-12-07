@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 5: Resolutions of the ground ring</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5_mj.html">[MathJax on]</a></p>
+<p><a id="X8735FC5E7BB5CE3A" name="X8735FC5E7BB5CE3A"></a></p>
+<div class="ChapSects"><a href="chap5.html#X8735FC5E7BB5CE3A">5 <span class="Heading">Resolutions of the ground ring</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7CFDEEC07F15CF82">5.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D8875C87BC9C379">5.1-1 TietzeReducedResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X808535C3851CA4D4">5.1-2 ResolutionArithmeticGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79EA11238403019D">5.1-3 FreeGResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8108E1047C31A058">5.1-4 ResolutionGTree</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E4556B078B209CE">5.1-5 ResolutionSL2Z</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79CB82D77A1FAE9D">5.1-6 ResolutionAbelianGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79107B5F857DC27B">5.1-7 ResolutionAlmostCrystalGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X839D1B3B78B672BB">5.1-8 ResolutionAlmostCrystalQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82A0D2B986724BB1">5.1-9 ResolutionArtinGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87DABAF98575DC13">5.1-10 ResolutionAsphericalPresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CA87AA478007468">5.1-11 ResolutionBieberbachGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A20180E7D45038F">5.1-12 ResolutionCoxeterGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7FCE801781AD83E1">5.1-13 ResolutionDirectProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79C83C4881B6A656">5.1-14 ResolutionExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87C346747F3B7C8C">5.1-15 ResolutionFiniteDirectProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79EDB1D584C2776F">5.1-16 ResolutionFiniteExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X789B3E7C7CBB3751">5.1-17 ResolutionFiniteGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AF48FA77F677E75">5.1-18 ResolutionFiniteSubgroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78E504557FD75664">5.1-19 ResolutionGraphOfGroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CBE6BDA7DB5AD7D">5.1-20 ResolutionNilpotentGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8574D76D7C891A04">5.1-21 ResolutionNormalSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X86934BE9858F7199">5.1-22 ResolutionPrimePowerGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8521359A87D46462">5.1-23 ResolutionSmallFpGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79A0221B7E96B642">5.1-24 ResolutionSubgroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80CE971A7C2C538B">5.1-25 ResolutionSubnormalSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A8E03D57895D04A">5.1-26 TwistedTensorProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X864044D679AE4E25">5.1-27 ConjugatedResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82646B64875E5560">5.1-28 RecalculateIncidenceNumbers</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Resolutions of the ground ring</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>5.1 <span class="Heading">  </span></h4>
+
+<p><a id="X7D8875C87BC9C379" name="X7D8875C87BC9C379"></a></p>
+
+<h5>5.1-1 TietzeReducedResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TietzeReducedResolution</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> and returns a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">S</span> which is obtained from <span class="SimpleMath">R</span> by applying "Tietze like operations" in each dimension. The hope is that <span class="SimpleMath">S</span> has fewer free generators than <span class="SimpleMath">R</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X808535C3851CA4D4" name="X808535C3851CA4D4"></a></p>
+
+<h5>5.1-2 ResolutionArithmeticGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionArithmeticGroup</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a string <span class="SimpleMath">P</span> equal to one of the following: <br /> <br /> "SL(2,Z)" , "SL(3,Z)" , "PGL(3,Z[i])" , "PGL(3,Eisenstein_Integers)" , "PSL(4,Z)" , "PSL(4,Z)_b" , "PSL(4,Z)_c" , "PSL(4,Z)_d" , "Sp(4,Z)" <br /> <br /> or the string <br /> <br /> "GL(2,O(-d))" <br /> <br /> for d=1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43 <br /> <br /> or the string <br /> <br /> "SL(2,O(-d))" <br /> <br /> for d=2, 3, 5, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 43, 67, 163 <br /> <br /> or the string <br /> <br /> "SL(2,O(-d))_a" <br /> <br /> for d=2, 7, 11, 19. <br /> <br /> It returns <span class="SimpleMath">n</span> terms of a free ZG-resolution for the group <span class="SimpleMath">G</span> described by the string. Here O(-d) denotes the ring of integers of Q(sqrt(-d)) and subscripts _a, _b , _c , _d denote alternative non-free ZG-resolutions for a given group G.<br /> <br /> Data for the first list of resolutions was provided provided by <strong class="button">Mathieu Dutour</strong>. Data for GL(2,O(-d)) was provided by <strong class="button">Sebastian Schoenennbeck</strong>. Data for SL(2,O(-d)) was provided by<strong class="button">Sebastian Schoennenbeck</strong> for d &lt;= 26 and by <strong class="button">Alexander Rahm</strong> for d&gt;26 and for the alternative complexes.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X79EA11238403019D" name="X79EA11238403019D"></a></p>
+
+<h5>5.1-3 FreeGResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGResolution</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGResolution</code>( <var class="Arg">P</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a non-free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">P</span> with finite stabilizer groups, and a positive integer <span class="SimpleMath">n</span>. It returns a free <span class="SimpleMath">ZG</span>-resolution of length equal to the minimum of n and the length of <span class="SimpleMath">P</span>. If one requires only a mod <span class="SimpleMath">p</span> resolution then the prime <span class="SimpleMath">p</span> can be entered as an optional third argument.</p>
+
+<p>The free resolution is returned without a contracting homotopy.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap6.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDavisComplex.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">5</a></span> </p>
+
+<p><a id="X8108E1047C31A058" name="X8108E1047C31A058"></a></p>
+
+<h5>5.1-4 ResolutionGTree</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionGTree</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a non-free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">P</span> of dimension 1 (i.e. a G-tree) with finite stabilizer groups, and a positive integer <span class="SimpleMath">n</span>. It returns a free <span class="SimpleMath">ZG</span>-resolution of length equal to n.</p>
+
+<p>If <span class="SimpleMath">P</span> has a contracting homotopy then the free resolution is returned with a contracting homotopy.</p>
+
+<p>This function was written by <strong class="button"> Bui Anh Tuan</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7E4556B078B209CE" name="X7E4556B078B209CE"></a></p>
+
+<h5>5.1-5 ResolutionSL2Z</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionSL2Z</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs positive integers <span class="SimpleMath">m, n</span> and returns <span class="SimpleMath">n</span> terms of a <span class="SimpleMath">ZG</span>-resolution for the group <span class="SimpleMath">G=SL(2,Z[1/m])</span> .</p>
+
+<p>This function is joint work with <strong class="button">Bui Anh Tuan</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">2</a></span> </p>
+
+<p><a id="X79CB82D77A1FAE9D" name="X79CB82D77A1FAE9D"></a></p>
+
+<h5>5.1-6 ResolutionAbelianGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAbelianGroup</code>( <var class="Arg">L</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAbelianGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">L:=[m_1,m_2, ..., m_d]</span> of nonnegative integers, and a positive integer <span class="SimpleMath">n</span>. It returns <span class="SimpleMath">n</span> terms of a <span class="SimpleMath">ZG</span>-resolution for the abelian group <span class="SimpleMath">G=Z_L[1]+Z_L[2]+···+Z_L[d]</span> .</p>
+
+<p>If <span class="SimpleMath">G</span> is finite then the first argument can also be the abelian group <span class="SimpleMath">G</span> itself.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">2</a></span> </p>
+
+<p><a id="X79107B5F857DC27B" name="X79107B5F857DC27B"></a></p>
+
+<h5>5.1-7 ResolutionAlmostCrystalGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAlmostCrystalGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and an almost crystallographic pcp group <span class="SimpleMath">G</span>. It returns <span class="SimpleMath">n</span> terms of a free <span class="SimpleMath">ZG</span>-resolution. (A group is almost crystallographic if it is nilpotent-by-finite and has no non-trivial finite normal subgroup. Such groups can be constructed using the ACLIB package.)</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">1</a></span> </p>
+
+<p><a id="X839D1B3B78B672BB" name="X839D1B3B78B672BB"></a></p>
+
+<h5>5.1-8 ResolutionAlmostCrystalQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAlmostCrystalQuotient</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAlmostCrystalQuotient</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">c</var>, <var class="Arg">false</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>An almost crystallographic group <span class="SimpleMath">G</span> is an extension of a finite group <span class="SimpleMath">P</span> by a nilpotent group <span class="SimpleMath">T</span>, and has no non-trivial finite normal subgroup. We define the relative lower central series by setting <span class="SimpleMath">T_1=T</span> and <span class="SimpleMath">T_i+1=[T_i,G]</span>.</p>
+
+<p>This function inputs an almost crystallographic group <span class="SimpleMath">G</span> together with positive integers <span class="SimpleMath">n</span> and <span class="SimpleMath">c</span>. It returns <span class="SimpleMath">n</span> terms of a free <span class="SimpleMath">ZQ</span>-resolution <span class="SimpleMath">R</span> for the group <span class="SimpleMath">Q=G/T_c</span> .</p>
+
+<p>In addition to the usual components, the resolution <span class="SimpleMath">R</span> has the component <span class="SimpleMath">R.quotientHomomorphism</span> which gives the quotient homomorphism <span class="SimpleMath">G ⟶ Q</span>.</p>
+
+<p>If a fourth optional variable is set equal to "false" then the function omits to test whether <span class="SimpleMath">Q</span> is finite and a "more canonical" resolution is constructed.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">1</a></span> </p>
+
+<p><a id="X82A0D2B986724BB1" name="X82A0D2B986724BB1"></a></p>
+
+<h5>5.1-9 ResolutionArtinGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionArtinGroup</code>( <var class="Arg">D</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a Coxeter diagram <span class="SimpleMath">D</span> and an integer <span class="SimpleMath">n&gt;1</span>. It returns <span class="SimpleMath">n</span> terms of a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> where <span class="SimpleMath">G</span> is the Artin monoid associated to <span class="SimpleMath">D</span>. It is conjectured that <span class="SimpleMath">R</span> is also a free resolution for the Artin group <span class="SimpleMath">G</span>. The conjecture is known to hold in <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">certain cases</a></span>.</p>
+
+<p><span class="SimpleMath">G=R.group</span> is infinite and returned as a finitely presented group. The list <span class="SimpleMath">R.elts</span> is a partial listing of the elements of <span class="SimpleMath">G</span> which grows as <span class="SimpleMath">R</span> is used. Initially <span class="SimpleMath">R.elts</span> is empty and then, any time the boundary of a resolution generator is called, <span class="SimpleMath">R.elts</span> is updated to include elements of <span class="SimpleMath">G</span> involved in the boundary.</p>
+
+<p>The contracting homotopy on <span class="SimpleMath">R</span> has not yet been implemented! Furthermore, the group <span class="SimpleMath">G</span> is currently returned only as a finitely presented group (without any method for solving the word problem).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap6.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">4</a></span> </p>
+
+<p><a id="X87DABAF98575DC13" name="X87DABAF98575DC13"></a></p>
+
+<h5>5.1-10 ResolutionAsphericalPresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionAsphericalPresentation</code>( <var class="Arg">F</var>, <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a free group <span class="SimpleMath">F</span>, a set <span class="SimpleMath">R</span> of words in <span class="SimpleMath">F</span> which constitute an aspherical presentation for a group <span class="SimpleMath">G</span>, and a positive integer <span class="SimpleMath">n</span>. (Asphericity can be a difficult property to verify. The function <span class="SimpleMath">IsAspherical(F,R)</span> could be of help.)</p>
+
+<p>The function returns n terms of a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> which has generators in dimensions &lt; 3 only. No contracting homotopy on <span class="SimpleMath">R</span> will be returned.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutAspherical.html">1</a></span> </p>
+
+<p><a id="X7CA87AA478007468" name="X7CA87AA478007468"></a></p>
+
+<h5>5.1-11 ResolutionBieberbachGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionBieberbachGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionBieberbachGroup</code>( <var class="Arg">G</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a torsion free crystallographic group <span class="SimpleMath">G</span>, also known as a Bieberbach group, represented using AffineCrystGroupOnRight as in the GAP package Cryst. It also optionally inputs a choice of vector <span class="SimpleMath">v</span> in the euclidean space <span class="SimpleMath">R^n</span> on which <span class="SimpleMath">G</span> acts freely. The function returns <span class="SimpleMath">n+1</span> terms of the free <span class="SimpleMath">ZG</span>-resolution of <span class="SimpleMath">Z</span> arising as the cellular chain complex of the tesselation of <span class="SimpleMath">R^n</span> by the Dirichlet-Voronoi fundamental domain determined by <span class="SimpleMath">v</span>.</p>
+
+<p>This function is part of the HAPcryst package written by <strong class="button">Marc Roeder</strong> and thus requires the HAPcryst package to be loaded.</p>
+
+<p>The function requires the use of Polymake software.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7A20180E7D45038F" name="X7A20180E7D45038F"></a></p>
+
+<h5>5.1-12 ResolutionCoxeterGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionCoxeterGroup</code>( <var class="Arg">D</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a Coxeter diagram <span class="SimpleMath">D</span> and an integer <span class="SimpleMath">n&gt;1</span>. It returns <span class="SimpleMath">k</span> terms of a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> where <span class="SimpleMath">G</span> is the Coxeter group associated to <span class="SimpleMath">D</span>. Here <span class="SimpleMath">k</span> is the maximum of n and the number of vertices in the Coxeter diagram. At present the implementation is only for finite Coxeter groups and the group <span class="SimpleMath">G</span> is returned as a permutation group. The contracting homotopy on <span class="SimpleMath">R</span> has not yet been implemented!</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">2</a></span> </p>
+
+<p><a id="X7FCE801781AD83E1" name="X7FCE801781AD83E1"></a></p>
+
+<h5>5.1-13 ResolutionDirectProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionDirectProduct</code>( <var class="Arg">R</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionDirectProduct</code>( <var class="Arg">R</var>, <var class="Arg">S</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> and <span class="SimpleMath">ZH</span>-resolution <span class="SimpleMath">S</span>. It outputs a <span class="SimpleMath">ZD</span>-resolution for the direct product <span class="SimpleMath">D=G x H</span>.</p>
+
+<p>If <span class="SimpleMath">G</span> and <span class="SimpleMath">H</span> lie in a common group <span class="SimpleMath">K</span>, and if they commute and have trivial intersection, then an optional third variable <span class="SimpleMath">str</span>="internal" can be used. This will force <span class="SimpleMath">D</span> to be the subgroup <span class="SimpleMath">GH</span> in <span class="SimpleMath">K</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">1</a></span> </p>
+
+<p><a id="X79C83C4881B6A656" name="X79C83C4881B6A656"></a></p>
+
+<h5>5.1-14 ResolutionExtension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionExtension</code>( <var class="Arg">g</var>, <var class="Arg">R</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionExtension</code>( <var class="Arg">g</var>, <var class="Arg">R</var>, <var class="Arg">S</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionExtension</code>( <var class="Arg">g</var>, <var class="Arg">R</var>, <var class="Arg">S</var>, <var class="Arg">str</var>, <var class="Arg">GmapE</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a surjective group homomorphism <span class="SimpleMath">g:E ⟶ G</span> with kernel <span class="SimpleMath">N</span>. It also inputs a <span class="SimpleMath">ZN</span>-resolution <span class="SimpleMath">R</span> and a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">S</span>. It returns a <span class="SimpleMath">ZE</span>-resolution. The groups <span class="SimpleMath">E</span> and <span class="SimpleMath">G</span> can be infinite.</p>
+
+<p>If an optional fourth argument <span class="SimpleMath">str</span>is set equal to "TestFiniteness" then the groups <span class="SimpleMath">N</span> and <span class="SimpleMath">G</span> will be tested to see if they are finite. If they are finite then some speed saving routines will be invoked. One can also set <span class="SimpleMath">str</span>="NoTest".</p>
+
+<p>If the homomorphism <span class="SimpleMath">g</span> is such that the GAP function <span class="SimpleMath">PreImagesElement(g,x)</span> doesn't work, then a function <span class="SimpleMath">GmapE()</span> should be included as a fifth input. For any <span class="SimpleMath">x</span> in <span class="SimpleMath">G</span> this function should return an element <span class="SimpleMath">GmapE(x)</span> in <span class="SimpleMath">E</span> which gets mapped onto <span class="SimpleMath">x</span> by <span class="SimpleMath">g</span>.</p>
+
+<p>The contracting homotopy on the <span class="SimpleMath">ZE</span>-resolution has not yet been fully implemented for infinite groups!</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">2</a></span> </p>
+
+<p><a id="X87C346747F3B7C8C" name="X87C346747F3B7C8C"></a></p>
+
+<h5>5.1-15 ResolutionFiniteDirectProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteDirectProduct</code>( <var class="Arg">R</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteDirectProduct</code>( <var class="Arg">R</var>, <var class="Arg">S</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> and <span class="SimpleMath">ZH</span>-resolution <span class="SimpleMath">S</span> where <span class="SimpleMath">G</span> and <span class="SimpleMath">H</span> are finite groups. It outputs a <span class="SimpleMath">ZD</span>-resolution for the direct product <span class="SimpleMath">D=G×H</span>.</p>
+
+<p>If <span class="SimpleMath">G</span> and <span class="SimpleMath">H</span> lie in a common group <span class="SimpleMath">K</span>, and if they commute and have trivial intersection, then an optional third variable <span class="SimpleMath">str</span>="internal" can be used. This will force <span class="SimpleMath">D</span> to be the subgroup <span class="SimpleMath">GH</span> in <span class="SimpleMath">K</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X79EDB1D584C2776F" name="X79EDB1D584C2776F"></a></p>
+
+<h5>5.1-16 ResolutionFiniteExtension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteExtension</code>( <var class="Arg">gensE</var>, <var class="Arg">gensG</var>, <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteExtension</code>( <var class="Arg">gensE</var>, <var class="Arg">gensG</var>, <var class="Arg">R</var>, <var class="Arg">n</var>, <var class="Arg">true</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteExtension</code>( <var class="Arg">gensE</var>, <var class="Arg">gensG</var>, <var class="Arg">R</var>, <var class="Arg">n</var>, <var class="Arg">false</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs: a set <span class="SimpleMath">gensE</span> of generators for a finite group <span class="SimpleMath">E</span>; a set <span class="SimpleMath">gensG</span> equal to the image of <span class="SimpleMath">gensE</span> in a quotient group <span class="SimpleMath">G</span> of <span class="SimpleMath">E</span>; a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span> up to dimension at least <span class="SimpleMath">n</span>; a positive integer <span class="SimpleMath">n</span>. It uses the <span class="SimpleMath">TwistedTensorProduct()</span> construction to return <span class="SimpleMath">n</span> terms of a <span class="SimpleMath">ZE</span>-resolution.</p>
+
+<p>The function has an optional fourth argument which, when set equal to "true", invokes tietze reductions in the construction of a resolution for the kernel of <span class="SimpleMath">E ⟶ G</span>.</p>
+
+<p>If a <span class="SimpleMath">ZN</span>-resolution <span class="SimpleMath">S</span> is available, where <span class="SimpleMath">N</span> is the kernel of the quotient <span class="SimpleMath">E ⟶ G</span>, then this can be incorporated into the computations using an optional fifth argument.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">2</a></span> </p>
+
+<p><a id="X789B3E7C7CBB3751" name="X789B3E7C7CBB3751"></a></p>
+
+<h5>5.1-17 ResolutionFiniteGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteGroup</code>( <var class="Arg">gens</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteGroup</code>( <var class="Arg">gens</var>, <var class="Arg">n</var>, <var class="Arg">true</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteGroup</code>( <var class="Arg">gens</var>, <var class="Arg">n</var>, <var class="Arg">false</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteGroup</code>( <var class="Arg">gens</var>, <var class="Arg">n</var>, <var class="Arg">false</var>, <var class="Arg">0</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a set <span class="SimpleMath">gens</span> of generators for a finite group <span class="SimpleMath">G</span> and a positive integer <span class="SimpleMath">n</span>. It outputs <span class="SimpleMath">n</span> terms of a <span class="SimpleMath">ZG</span>-resolution.</p>
+
+<p>The function has an optional third argument which, when set equal to <span class="SimpleMath">true</span>, invokes tietze reductions in the construction of the resolution.</p>
+
+<p>The function has an optional fourth argument which, when set equal to a prime <span class="SimpleMath">p</span>, records the fact that the resolution will only be used for mod <span class="SimpleMath">p</span> calculations. This could speed up subsequent constructions.</p>
+
+<p>The function has an optional fifth argument <span class="SimpleMath">str</span> which, when set equal to "extendible", returns a resolution whose length can be increased using the command R!.extend() .</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCocycles.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPeriodic.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCrossedMods.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGouter.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">15</a></span> </p>
+
+<p><a id="X7AF48FA77F677E75" name="X7AF48FA77F677E75"></a></p>
+
+<h5>5.1-18 ResolutionFiniteSubgroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteSubgroup</code>( <var class="Arg">R</var>, <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionFiniteSubgroup</code>( <var class="Arg">R</var>, <var class="Arg">gensG</var>, <var class="Arg">gensK</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution for a finite group <span class="SimpleMath">G</span> and a subgroup <span class="SimpleMath">K</span> of index <span class="SimpleMath">|G:K|</span>. It returns a free <span class="SimpleMath">ZK</span>-resolution whose <span class="SimpleMath">ZK</span>-rank is <span class="SimpleMath">|G:K|</span> times the <span class="SimpleMath">ZG</span>-rank in each dimension.</p>
+
+<p>Generating sets <span class="SimpleMath">gensG</span>, <span class="SimpleMath">gensK</span> for <span class="SimpleMath">G</span> and <span class="SimpleMath">K</span> can also be input to the function (though the method does not depend on a choice of generators).</p>
+
+<p>This <span class="SimpleMath">ZK</span>-resolution is not reduced. ie. it has more than one generator in dimension <span class="SimpleMath">0</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">2</a></span> </p>
+
+<p><a id="X78E504557FD75664" name="X78E504557FD75664"></a></p>
+
+<h5>5.1-19 ResolutionGraphOfGroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionGraphOfGroups</code>( <var class="Arg">D</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionGraphOfGroups</code>( <var class="Arg">D</var>, <var class="Arg">n</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph of groups <span class="SimpleMath">D</span> and a positive integer <span class="SimpleMath">n</span>. It returns <span class="SimpleMath">n</span> terms of a free <span class="SimpleMath">ZG</span>-resolution for the fundamental group <span class="SimpleMath">G</span> of <span class="SimpleMath">D</span>.</p>
+
+<p>An optional third argument <span class="SimpleMath">L=[R_1 , ... , R_t]</span> can be used to list (in any order) free resolutions for some/all of the vertex and edge groups in <span class="SimpleMath">D</span>. If for some vertex or edge group no resolution is listed in <span class="SimpleMath">L</span> then the function <span class="SimpleMath">ResolutionFiniteGroup()</span> will be used to try to construct the resolution.</p>
+
+<p>The <span class="SimpleMath">ZG</span>-resolution is usually not reduced. i.e. it has more than one generator in dimension 0.</p>
+
+<p>The contracting homotopy on the <span class="SimpleMath">ZG</span>-resolution has not yet been implemented! Furthermore, the group <span class="SimpleMath">G</span> is currently returned only as a finitely presented group (without any method for solving the word problem).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap6.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">2</a></span> </p>
+
+<p><a id="X7CBE6BDA7DB5AD7D" name="X7CBE6BDA7DB5AD7D"></a></p>
+
+<h5>5.1-20 ResolutionNilpotentGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionNilpotentGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionNilpotentGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a nilpotent group <span class="SimpleMath">G</span> and positive integer <span class="SimpleMath">n</span>. It returns <span class="SimpleMath">n</span> terms of a free <span class="SimpleMath">ZG</span>-resolution. The resolution is computed using a divide-and-conquer technique involving the lower central series.</p>
+
+<p>This function can be applied to infinite groups <span class="SimpleMath">G</span>. For finite groups the function <span class="SimpleMath">ResolutionNormalSeries()</span> probably gives better results.</p>
+
+<p>If an optional third argument <span class="SimpleMath">str</span> is set equal to "TestFiniteness" then the groups <span class="SimpleMath">N</span> and <span class="SimpleMath">G</span> will be tested to see if they are finite. If they are finite then some speed saving routines will be invoked.</p>
+
+<p>The contracting homotopy on the <span class="SimpleMath">ZE</span>-resolution has not yet been fully implemented for infinite groups.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">3</a></span> </p>
+
+<p><a id="X8574D76D7C891A04" name="X8574D76D7C891A04"></a></p>
+
+<h5>5.1-21 ResolutionNormalSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionNormalSeries</code>( <var class="Arg">L</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionNormalSeries</code>( <var class="Arg">L</var>, <var class="Arg">n</var>, <var class="Arg">true</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionNormalSeries</code>( <var class="Arg">L</var>, <var class="Arg">n</var>, <var class="Arg">false</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a list <span class="SimpleMath">L = [L_1 , ..., L_k]</span> of normal subgroups <span class="SimpleMath">L_i</span> of a finite group <span class="SimpleMath">G</span> satisfying <span class="SimpleMath">G = L_1</span> &gt; <span class="SimpleMath">L2</span> &gt;<span class="SimpleMath">...</span> &gt;<span class="SimpleMath">L_k</span>. Alternatively, <span class="SimpleMath">L = [gensL_1, ... gensL_k]</span> can be a list of generating sets for the <span class="SimpleMath">L_i</span> (and these particular generators will be used in the construction of resolutions). It returns a <span class="SimpleMath">ZG</span>-resolution by repeatedly using the function <span class="SimpleMath">ResolutionFiniteExtension()</span>.</p>
+
+<p>The function has an optional third argument which, if set equal to true, invokes tietze reductions in the construction of resolutions.</p>
+
+<p>The function has an optional fourth argument which, if set equal to p &gt; 0, produces a resolution which is only valid for mod <span class="SimpleMath">p</span> calculations.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutModPRings.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">5</a></span> </p>
+
+<p><a id="X86934BE9858F7199" name="X86934BE9858F7199"></a></p>
+
+<h5>5.1-22 ResolutionPrimePowerGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionPrimePowerGroup</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionPrimePowerGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">p</span>-group <span class="SimpleMath">P</span> and integer <span class="SimpleMath">n</span>&gt;<span class="SimpleMath">0</span>. It uses GAP's standard linear algebra functions over the field <span class="SimpleMath">F</span> of p elements to construct a free <span class="SimpleMath">FP</span>-resolution for mod <span class="SimpleMath">p</span> calculations only. The resolution is minimal - meaning that the number of generators of <span class="SimpleMath">R_n</span> equals the rank of <span class="SimpleMath">H_n(P,F)</span>.</p>
+
+<p>The function can also be used to obtain a free non-minimal <span class="SimpleMath">FG</span>-resolution of a small group <span class="SimpleMath">G</span> of non-prime-power order. In this case the prime <span class="SimpleMath">p</span> must be entered as the third input variable. (In the non-prime-power case the algorithm is naive and not very good.)</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutModPRings.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">3</a></span> </p>
+
+<p><a id="X8521359A87D46462" name="X8521359A87D46462"></a></p>
+
+<h5>5.1-23 ResolutionSmallFpGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionSmallFpGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionSmallFpGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a small finitely presented group <span class="SimpleMath">G</span> and an integer <span class="SimpleMath">n</span>&gt;<span class="SimpleMath">0</span>. It returns <span class="SimpleMath">n</span> terms of a <span class="SimpleMath">ZG</span>-resolution which, in dimensions 1 and 2, corresponds to the given presentation for <span class="SimpleMath">G</span>. The method returns no contracting homotopy for the resolution.</p>
+
+<p>The function has an optional fourth argument which, when set equal to a prime <span class="SimpleMath">p</span>, records the fact that the resolution will only be used for mod <span class="SimpleMath">p</span> calculations. This could speed up subsequent constructions.</p>
+
+<p>This function was written by Irina Kholodna.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPeriodic.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">2</a></span> </p>
+
+<p><a id="X79A0221B7E96B642" name="X79A0221B7E96B642"></a></p>
+
+<h5>5.1-24 ResolutionSubgroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionSubgroup</code>( <var class="Arg">R</var>, <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution for an (infinite) group <span class="SimpleMath">G</span> and a subgroup <span class="SimpleMath">K</span> of finite index <span class="SimpleMath">|G:K|</span>. It returns a free <span class="SimpleMath">ZK</span>-resolution whose <span class="SimpleMath">ZK</span>-rank is <span class="SimpleMath">|G:K|</span> times the <span class="SimpleMath">ZG</span>-rank in each dimension.</p>
+
+<p>If <span class="SimpleMath">G</span> is finite then the function <span class="SimpleMath">ResolutionFiniteSubgroup(R,G,K)</span> will probably work better. In particular, resolutions from this function probably won't work with the function <span class="SimpleMath">EquivariantChainMap()</span>. This <span class="SimpleMath">ZK</span>-resolution is not reduced. i.e. it has more than one generator in dimension 0.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">3</a></span> </p>
+
+<p><a id="X80CE971A7C2C538B" name="X80CE971A7C2C538B"></a></p>
+
+<h5>5.1-25 ResolutionSubnormalSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionSubnormalSeries</code>( <var class="Arg">L</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer n and a list <span class="SimpleMath">L = [L_1 , ... , L_k]</span> of subgroups <span class="SimpleMath">L_i</span> of a finite group <span class="SimpleMath">G=L_1</span> such that <span class="SimpleMath">L_1</span> &gt; <span class="SimpleMath">L2 ...</span> &gt; <span class="SimpleMath">L_k</span> is a subnormal series in <span class="SimpleMath">G</span> (meaning that each <span class="SimpleMath">L_i+1</span> must be normal in <span class="SimpleMath">L_i</span>). It returns a <span class="SimpleMath">ZG</span>-resolution by repeatedly using the function <span class="SimpleMath">ResolutionFiniteExtension()</span>.</p>
+
+<p>If <span class="SimpleMath">L</span> is a series of normal subgroups in <span class="SimpleMath">G</span> then the function <span class="SimpleMath">ResolutionNormalSeries(L,n)</span> will possibly work more efficiently.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">1</a></span> </p>
+
+<p><a id="X7A8E03D57895D04A" name="X7A8E03D57895D04A"></a></p>
+
+<h5>5.1-26 TwistedTensorProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedTensorProduct</code>( <var class="Arg">R</var>, <var class="Arg">S</var>, <var class="Arg">EhomG</var>, <var class="Arg">GmapE</var>, <var class="Arg">NhomE</var>, <var class="Arg">NEhomN</var>, <var class="Arg">EltsE</var>, <var class="Arg">Mult</var>, <var class="Arg">InvE</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R</span>, a <span class="SimpleMath">ZN</span>-resolution <span class="SimpleMath">S</span>, and other data relating to a short exact sequence <span class="SimpleMath">1 ⟶ N ⟶ E ⟶ G ⟶ 1</span>. It uses a perturbation technique of CTC Wall to construct a <span class="SimpleMath">ZE</span>-resolution <span class="SimpleMath">F</span>. Both <span class="SimpleMath">G</span> and <span class="SimpleMath">N</span> could be infinite. The "length" of <span class="SimpleMath">F</span> is equal to the minimum of the "length"s of <span class="SimpleMath">R</span> and <span class="SimpleMath">S</span>. The resolution <span class="SimpleMath">R</span> needs no contracting homotopy if no such homotopy is requied for <span class="SimpleMath">F</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">1</a></span> </p>
+
+<p><a id="X864044D679AE4E25" name="X864044D679AE4E25"></a></p>
+
+<h5>5.1-27 ConjugatedResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConjugatedResolution</code>( <var class="Arg">R</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a ZG-resoluton <span class="SimpleMath">R</span> and an element <span class="SimpleMath">x</span> from some group containing <span class="SimpleMath">G</span>. It returns a <span class="SimpleMath">ZG^x</span>-resolution <span class="SimpleMath">S</span> where the group <span class="SimpleMath">G^x</span> is the conjugate of <span class="SimpleMath">G</span> by <span class="SimpleMath">x</span>. (The component <span class="SimpleMath">S!.elts</span> will be a pseudolist rather than a list.)</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X82646B64875E5560" name="X82646B64875E5560"></a></p>
+
+<h5>5.1-28 RecalculateIncidenceNumbers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RecalculateIncidenceNumbers</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a ZG-resoluton <span class="SimpleMath">R</span> which arises as the cellular chain complex of a regular CW-complex. (Thus the boundary of any cell is a list of distinct cells.) It recalculates the incidence numbers for <span class="SimpleMath">R</span>. If it is applied to a resolution that is not regular then a wrong answer may be returned.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

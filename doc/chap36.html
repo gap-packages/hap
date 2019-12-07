@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 36:  Parallel Computation - Core Functions</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap36"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap35.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap37.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap36_mj.html">[MathJax on]</a></p>
+<p><a id="X85F9DF1985B88C37" name="X85F9DF1985B88C37"></a></p>
+<div class="ChapSects"><a href="chap36.html#X85F9DF1985B88C37">36 <span class="Heading"> Parallel Computation - Core Functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap36.html#X7CFDEEC07F15CF82">36.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X83CCD55F86D927B7">36.1-1 ChildProcess</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X80D8F17A803964C7">36.1-2 ChildClose</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X8341AA7B87037076">36.1-3 ChildCommand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X7D2312CF84C453D0">36.1-4 NextAvailableChild</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X7E4327F67D13572E">36.1-5 IsAvailableChild</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X7CAEA866804C8020">36.1-6 ChildPut</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X7994121C87DC5ACE">36.1-7 ChildGet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X810978457C788DE7">36.1-8 HAPPrintTo</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap36.html#X790D15437EC2A0B0">36.1-9 HAPRead</a></span>
+</div></div>
+</div>
+
+<h3>36 <span class="Heading"> Parallel Computation - Core Functions</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>36.1 <span class="Heading">  </span></h4>
+
+<p><a id="X83CCD55F86D927B7" name="X83CCD55F86D927B7"></a></p>
+
+<h5>36.1-1 ChildProcess</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildProcess</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildProcess</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This starts a GAP session as a child process and returns a stream to the child process. If no argument is given then the child process is created on the local machine; otherwise the argument should be:<br /> 1) <span class="SimpleMath">arg</span>="computer.ac.wales" the address of a remote computer for which ssh has been configured to require no password from the user;<br /> (2) <span class="SimpleMath">arg</span>=["-m", "100000M", "-T"] a list of GAP command line options;<br /> (3) <span class="SimpleMath">arg</span>="computer.ac.wales", ["-m", "100000M", "-T"] the address of a computer followed by a list of command line options.</p>
+
+<p>(To configure ssh so that the user can login without a password prompt from "thishost" to "remotehost" either consult "man ssh" or <br /> <br /> - open a shell on thishost<br /> - cd .ssh<br /> - ls<br /> -&gt; if id_dsa, id_rsa etc exists, skip the next two steps!<br /> - ssh-keygen -t rsa<br /> - ssh-keygen -t dsa<br /> - scp *.pub userremotehost:~/<br /> - ssh remotehost -l user<br /> - cat id_rsa.pub &gt;&gt; .ssh/authorized_keys<br /> - cat id_dsa.pub &gt;&gt; .ssh/authorized_keys<br /> - rm id_rsa.pub id_dsa.pub<br /> - exit<br /> <br /> You should now be able to connect from "thishost" to "remotehost" without a password prompt.)</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap10.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">3</a></span> </p>
+
+<p><a id="X80D8F17A803964C7" name="X80D8F17A803964C7"></a></p>
+
+<h5>36.1-2 ChildClose</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildClose</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This closes the stream s to a child GAP process.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">1</a></span> </p>
+
+<p><a id="X8341AA7B87037076" name="X8341AA7B87037076"></a></p>
+
+<h5>36.1-3 ChildCommand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildCommand</code>( <var class="Arg">str</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This runs a GAP command <span class="SimpleMath">str</span>="cmd;" on the child process accessed by the stream s. Here "cmd;" is a string representing the command.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">2</a></span> </p>
+
+<p><a id="X7D2312CF84C453D0" name="X7D2312CF84C453D0"></a></p>
+
+<h5>36.1-4 NextAvailableChild</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NextAvailableChild</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list <span class="SimpleMath">L</span> of child processes and returns a child in <span class="SimpleMath">L</span> which is ready for computation (as soon as such a child is available).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">2</a></span> </p>
+
+<p><a id="X7E4327F67D13572E" name="X7E4327F67D13572E"></a></p>
+
+<h5>36.1-5 IsAvailableChild</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAvailableChild</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a child process <span class="SimpleMath">s</span> and returns true if s is currently available for computations, and false otherwise.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">1</a></span> </p>
+
+<p><a id="X7CAEA866804C8020" name="X7CAEA866804C8020"></a></p>
+
+<h5>36.1-6 ChildPut</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildPut</code>( <var class="Arg">A</var>, <var class="Arg">str</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This copies a GAP object A on the parent process to an object B=<span class="SimpleMath">str</span> on the child process s. (The copying relies on the function PrintObj(A); )</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap10.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">3</a></span> </p>
+
+<p><a id="X7994121C87DC5ACE" name="X7994121C87DC5ACE"></a></p>
+
+<h5>36.1-7 ChildGet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChildGet</code>( <var class="Arg">str</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This functions copies a GAP object A="str" on the child process s and returns it on the parent process. (The copying relies on the function PrintObj(A); )</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">2</a></span> </p>
+
+<p><a id="X810978457C788DE7" name="X810978457C788DE7"></a></p>
+
+<h5>36.1-8 HAPPrintTo</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HAPPrintTo</code>( <var class="Arg">str</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a string <span class="SimpleMath">str</span>="file" giving the address of a new text file and a HAP object R. It writes the object R to "file". Currently this is only implemented for R equal to a resolution.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">1</a></span> </p>
+
+<p><a id="X790D15437EC2A0B0" name="X790D15437EC2A0B0"></a></p>
+
+<h5>36.1-9 HAPRead</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HAPRead</code>( <var class="Arg">str</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an address <span class="SimpleMath">str</span>="file" of a file containing a HAP object R and returns the object. Currently this is only implemented for R equal to a resolution.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">1</a></span> </p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap35.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap37.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

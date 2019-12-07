@@ -1,0 +1,119 @@
+  
+  [1X36 [33X[0;0YParallel Computation - Core Functions[133X[101X
+  
+  
+  [1X36.1 [33X[0;0Y [133X[101X
+  
+  [1X36.1-1 ChildProcess[101X
+  
+  [33X[1;0Y[29X[2XChildProcess[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XChildProcess[102X( [3Xarg[103X ) [32X function[133X
+  
+  [33X[0;0YThis  starts  a  GAP  session as a child process and returns a stream to the
+  child  process. If no argument is given then the child process is created on
+  the local machine; otherwise the argument should be:[133X
+  [33X[0;0Y1)  [22Xarg[122X="computer.ac.wales"  the  address of a remote computer for which ssh
+  has been configured to require no password from the user;[133X
+  [33X[0;0Y(2) [22Xarg[122X=["-m", "100000M", "-T"] a list of GAP command line options;[133X
+  [33X[0;0Y(3)  [22Xarg[122X="computer.ac.wales",  ["-m",  "100000M",  "-T"]  the  address  of a
+  computer followed by a list of command line options.[133X
+  
+  [33X[0;0Y(To  configure ssh so that the user can login without a password prompt from
+  "thishost" to "remotehost" either consult "man ssh" or[133X
+  [33X[0;0Y- open a shell on thishost[133X
+  [33X[0;0Y- cd .ssh[133X
+  [33X[0;0Y- ls[133X
+  [33X[0;0Y-> if id_dsa, id_rsa etc exists, skip the next two steps![133X
+  [33X[0;0Y- ssh-keygen -t rsa[133X
+  [33X[0;0Y- ssh-keygen -t dsa[133X
+  [33X[0;0Y- scp *.pub userremotehost:~/[133X
+  [33X[0;0Y- ssh remotehost -l user[133X
+  [33X[0;0Y- cat id_rsa.pub >> .ssh/authorized_keys[133X
+  [33X[0;0Y- cat id_dsa.pub >> .ssh/authorized_keys[133X
+  [33X[0;0Y- rm id_rsa.pub id_dsa.pub[133X
+  [33X[0;0Y- exit[133X
+  [33X[0;0YYou  should now be able to connect from "thishost" to "remotehost" without a
+  password prompt.)[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap10.html[107X) ,             2
+  ([7X../www/SideLinks/About/aboutBogomolov.html[107X) ,                             3
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-2 ChildClose[101X
+  
+  [33X[1;0Y[29X[2XChildClose[102X( [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YThis closes the stream s to a child GAP process.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutBogomolov.html[107X) [133X
+  
+  [1X36.1-3 ChildCommand[101X
+  
+  [33X[1;0Y[29X[2XChildCommand[102X( [3Xstr[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YThis  runs  a  GAP  command  [22Xstr[122X="cmd;" on the child process accessed by the
+  stream s. Here "cmd;" is a string representing the command.[133X
+  
+  [33X[0;0Y[12XExamples:[112X       1      ([7X../www/SideLinks/About/aboutBogomolov.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-4 NextAvailableChild[101X
+  
+  [33X[1;0Y[29X[2XNextAvailableChild[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  list [22XL[122X of child processes and returns a child in [22XL[122X which is ready
+  for computation (as soon as such a child is available).[133X
+  
+  [33X[0;0Y[12XExamples:[112X       1      ([7X../www/SideLinks/About/aboutBogomolov.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-5 IsAvailableChild[101X
+  
+  [33X[1;0Y[29X[2XIsAvailableChild[102X( [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  child  process [22Xs[122X and returns true if s is currently available for
+  computations, and false otherwise.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-6 ChildPut[101X
+  
+  [33X[1;0Y[29X[2XChildPut[102X( [3XA[103X, [3Xstr[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YThis  copies  a GAP object A on the parent process to an object B=[22Xstr[122X on the
+  child process s. (The copying relies on the function PrintObj(A); )[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap10.html[107X) ,             2
+  ([7X../www/SideLinks/About/aboutBogomolov.html[107X) ,                             3
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-7 ChildGet[101X
+  
+  [33X[1;0Y[29X[2XChildGet[102X( [3Xstr[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YThis  functions  copies  a  GAP  object  A="str"  on the child process s and
+  returns  it  on  the  parent  process.  (The  copying relies on the function
+  PrintObj(A); )[133X
+  
+  [33X[0;0Y[12XExamples:[112X       1      ([7X../www/SideLinks/About/aboutBogomolov.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-8 HAPPrintTo[101X
+  
+  [33X[1;0Y[29X[2XHAPPrintTo[102X( [3Xstr[103X, [3XR[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  string [22Xstr[122X="file" giving the address of a new text file and a HAP
+  object  R.  It  writes  the  object  R  to  "file".  Currently  this is only
+  implemented for R equal to a resolution.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
+  [1X36.1-9 HAPRead[101X
+  
+  [33X[1;0Y[29X[2XHAPRead[102X( [3Xstr[103X, [3XR[103X ) [32X function[133X
+  
+  [33X[0;0YInputs an address [22Xstr[122X="file" of a file containing a HAP object R and returns
+  the object. Currently this is only implemented for R equal to a resolution.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutParallel.html[107X) [133X
+  
