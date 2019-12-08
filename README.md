@@ -13,7 +13,7 @@ Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial
 groups, and general computations in algebraic topology relating to finite 
 CW-complexes, covering spaces, knots, knotted surfaces, and topics such as
  persitent homology arising in topological data analysis. A full description 
-of the library can be found at http://hamilton.nuigalway.ie/Hap1.24/www/ .
+of the library can be found at http://hamilton.nuigalway.ie/Hap/www/ .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from
