@@ -16,11 +16,11 @@ HAP is a package for some calculations in elementary algebraic topology and
 the cohomology of groups. The initial focus of the library was on computations 
 related to the cohomology of finite and infinite groups, with particular 
 emphasis on integral coefficients. The focus has since broadened to include 
-Steenrod algebras of finite groups, Bredon homology, and general 
-computations in algebraic topology relating to finite CW-complexes, 
-covering spaces, knots, knotted surfaces, and topics such as persitent 
-homology arising in topological data analysis. A full description of the 
-library can be found from in html file Hap$version/www/index.html .
+Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial 
+groups, and general computations in algebraic topology relating to finite 
+CW-complexes, covering spaces, knots, knotted surfaces, and topics such as
+ persitent homology arising in topological data analysis. A full description 
+of the library can be found from in html file Hap$version/www/index.html .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from
@@ -93,8 +93,10 @@ GAP computer algebra system, and is still under development.
  The current version <a href="../../hap$version.tar.gz">$version</a> was released on
 $date.</p>
 
+
 <p>
-The initial focus of the library was on computations related to the cohomology of finite and infinite groups, with particular emphasis on integral coefficients. The focus has since broadened to include Steenrod algebras of finite groups, Bredon homology, and general computations in algebraic topology relating to finite CW-complexes, covering spaces, knots, knotted surfaces, and topics such as persitent homology arising in topological data analysis.
+The initial focus of the library was on computations related to the cohomology of finite and infinite groups, with particular emphasis on integral coefficients. The focus has since broadened to include Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial groups, and general computations in algebraic topology relating to finite CW-complexes, covering spaces, knots, knotted surfaces, and topics such as persitent homology arising in topological data analysis. 
+
 
  This tutorial <a href="../SideLinks/About/aboutContents.html" target="_top">table of contents</a> gives an indication of  topics covered. This <a href="https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980" target="_top">book</a> provides a detailed overview.</p>
 
