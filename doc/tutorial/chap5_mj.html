@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 5: Group theoretic computations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5.html">[MathJax off]</a></p>
+<p><a id="X7C07F4BD8466991A" name="X7C07F4BD8466991A"></a></p>
+<div class="ChapSects"><a href="chap5_mj.html#X7C07F4BD8466991A">5 <span class="Heading">Group theoretic computations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X86D7FBBD7E5287C9">5.1 <span class="Heading">Third homotopy group of a supsension of an Eilenberg-MacLane space </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X803FDFFE78A08446">5.2 <span class="Heading">Representations of knot quandles</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X8664E986873195E6">5.3 <span class="Heading">Aspherical <span class="SimpleMath">\(2\)</span>-complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7F719758856A443D">5.4 <span class="Heading">Bogomolov multiplier</span></a>
+</span>
+</div>
+</div>
+
+<h3>5 <span class="Heading">Group theoretic computations</span></h3>
+
+<p><a id="X86D7FBBD7E5287C9" name="X86D7FBBD7E5287C9"></a></p>
+
+<h4>5.1 <span class="Heading">Third homotopy group of a supsension of an Eilenberg-MacLane space </span></h4>
+
+<p>The following example uses the nonabelian tensor square of groups to compute the third homotopy group</p>
+
+<p><span class="SimpleMath">\(\pi_3(S(K(G,1))) = \mathbb Z^{30}\)</span></p>
+
+<p>of the suspension of the Eigenberg-MacLane space <span class="SimpleMath">\(K(G,1)\)</span> for <span class="SimpleMath">\(G\)</span> the free nilpotent group of class <span class="SimpleMath">\(2\)</span> on four generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(4);;G:=NilpotentQuotient(F,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThirdHomotopyGroupOfSuspensionB(G);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X803FDFFE78A08446" name="X803FDFFE78A08446"></a></p>
+
+<h4>5.2 <span class="Heading">Representations of knot quandles</span></h4>
+
+<p>The following example constructs the finitely presented quandles associated to the granny knot and square knot, and then computes the number of quandle homomorphisms from these two finitely prresented quandles to the <span class="SimpleMath">\(17\)</span>-th quandle in <strong class="button">HAP</strong>'s library of connected quandles of order <span class="SimpleMath">\(24\)</span>. The number of homomorphisms differs between the two cases. The computation therefore establishes that the complement in <span class="SimpleMath">\(\mathbb R^3\)</span> of the granny knot is not homeomorphic to the complement of the square knot.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=ConnectedQuandle(24,17,"import");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PureCubicalKnot(3,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ReflectedCubicalKnot(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">square:=KnotSum(K,L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">granny:=KnotSum(K,K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gcsquare:=GaussCodeOfPureCubicalKnot(square);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gcgranny:=GaussCodeOfPureCubicalKnot(granny);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qsquare:=PresentationKnotQuandle(gcsquare);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qgranny:=PresentationKnotQuandle(gcgranny);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberOfHomomorphisms(Qsquare,Q);</span>
+408
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberOfHomomorphisms(Qgranny,Q);</span>
+24
+
+</pre></div>
+
+<p><a id="X8664E986873195E6" name="X8664E986873195E6"></a></p>
+
+<h4>5.3 <span class="Heading">Aspherical <span class="SimpleMath">\(2\)</span>-complexes</span></h4>
+
+<p>The following example uses Polymake's linear programming routines to establish that the <span class="SimpleMath">\(2\)</span>-complex associated to the group presentation <span class="SimpleMath">\(&lt;x,y,z : xyx=yxy,\, yzy=zyz,\, xzx=zxz&gt;\)</span> is aspherical (that is, has contractible universal cover). The presentation is Tietze equivalent to the presentation used in the computer code, and the associated <span class="SimpleMath">\(2\)</span>-complexes are thus homotopy equivalent.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=F.1;;y:=F.2;;z:=F.3;;a:=F.4;;b:=F.5;;c:=F.6;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   b*y*(z*b)^-1, c*z*(x*c)^-1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print(IsAspherical(F,rels),"\n");</span>
+Presentation is aspherical.
+
+true
+
+</pre></div>
+
+<p><a id="X7F719758856A443D" name="X7F719758856A443D"></a></p>
+
+<h4>5.4 <span class="Heading">Bogomolov multiplier</span></h4>
+
+<p>The Bogomolov multiplier of a group is an isoclinism invariant. Using this property, the following example shows that there are precisely three groups of order <span class="SimpleMath">\(243\)</span> with non-trivial Bogomolov multiplier. The groups in question are numbered 28, 29 and 30 in <strong class="button">GAP</strong>'s library of small groups of order <span class="SimpleMath">\(243\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=AllSmallGroups(3^5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=IsoclinismClasses(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for c in C do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if Length(BogomolovMultiplier(c[1]))&gt;0 then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(List(c,g-&gt;IdGroup(g)),"\n\n\n"); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+[ [ 243, 28 ], [ 243, 29 ], [ 243, 30 ] ]
+
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
