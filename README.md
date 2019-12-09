@@ -9,11 +9,11 @@ HAP is a package for some calculations in elementary algebraic topology and
 the cohomology of groups. The initial focus of the library was on computations 
 related to the cohomology of finite and infinite groups, with particular 
 emphasis on integral coefficients. The focus has since broadened to include 
-Steenrod algebras of finite groups, Bredon homology, and general 
-computations in algebraic topology relating to finite CW-complexes, 
-covering spaces, knots, knotted surfaces, and topics such as persitent 
-homology arising in topological data analysis. A full description of the 
-library can be found from in html file Hap1.24/www/index.html .
+Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial 
+groups, and general computations in algebraic topology relating to finite 
+CW-complexes, covering spaces, knots, knotted surfaces, and topics such as
+ persitent homology arising in topological data analysis. A full description 
+of the library can be found at http://hamilton.nuigalway.ie/Hap/www/ .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from

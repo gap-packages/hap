@@ -1,0 +1,597 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>AboutHap</title>
+	<meta name="generator" content="LibreOffice 5.2.7.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-03-12T13:11:51.485570759"/>
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-12T10:41:13.965055175">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-12T10:33:25.182051006">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-12T09:56:51.305684435">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-12T09:50:53.641028644">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-11T21:39:23.703534292">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-11T14:05:34.474486472">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-11T12:51:54.802763548">
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2019-03-11T11:34:19.416255949">
+	<style type="text/css">
+		p { color: #000099 }
+		td p { color: #000099 }
+		a:link { color: #000066 }
+		a:visited { color: #000066 }
+	</style>
+</head>
+<body lang="en-IE" text="#000099" link="#000066" vlink="#000066" bgcolor="#ccffff" dir="ltr">
+<p style="margin-bottom: 0cm"><br/>
+
+</p>
+<table width="100%" cellpadding="20" cellspacing="0">
+	<col width="256*">
+	<tr>
+		<td width="100%" style="border: none; padding: 0cm">
+			<center>
+				<table cellpadding="2" cellspacing="2">
+					<tr>
+						<td style="border: none; padding: 0cm">
+							<p><a href="aboutPeripheral.html"><font color="#000066"><font size="2" style="font-size: 10pt">Previous</font></font></a></p>
+						</td>
+						<td style="border: none; padding: 0cm">
+							<p align="center"><font color="#000066"><font size="4" style="font-size: 14pt"><b>About
+							HAP: Covering Spaces</b></font></font></p>
+						</td>
+						<td style="border: none; padding: 0cm">
+							<p align="right"><a href="aboutQuandles.html"><font color="#000066"><font size="2" style="font-size: 10pt">next</font></font></a></p>
+						</td>
+					</tr>
+				</table>
+			</center>
+			<p><br/>
+<br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p align="center"><font size="4" style="font-size: 14pt"><b>Covering
+			Spaces<br/>
+</b></font>Joint work with Kelvin Killeen</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>Let Y denote a regular CW-Complex, and let U denote denote its
+			universal covering space. The space U can be constructed and
+			stored as a G-equivariant CW-complex.<br/>
+<br/>
+As an
+			illustration, we construct a 4-dimensional CW-complex Y which
+			happens to be homotopy equivalent to a 2-dimensional torus. The
+			CW-complex Y involves 2304 cells.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; A:=[[1,1,1],[1,0,1],[1,1,1]];;<br/>
+gap&gt;
+			S:=PureCubicalComplex(A);;<br/>
+gap&gt;
+			T:=DirectProduct(S,S);;<br/>
+gap&gt; Y:=RegularCWComplex(T);;<br/>
+gap&gt;
+			Size(Y);<br/>
+2304</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>The next commands construct the universal covering space U of
+			Y.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; U:=UniversalCover(Y);<br/>
+Equivariant CW-complex of
+			dimension 4</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>The next commands set G equal to the fundamental group of Y,
+			and then construct a subgroup H&lt;G of index 9. The group G is
+			free abelian on two generators, and the quotient G/H is shown to
+			be isomorphic to Z<sub>3</sub>+Z<sub>3</sub>.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; G:=U!.group;;<br/>
+gap&gt;
+			L:=LowIndexSubgroupsFpGroup(G,9);;<br/>
+gap&gt; H:=L[58];;<br/>
+gap&gt;
+			AbelianInvariants(G/H);<br/>
+[ 3, 3 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>The next command constructs the 9-fold covering space W of Y
+			for which the covering map p:W--&gt;Y sends the fundamental group
+			of W injectively onto the subgroup H&lt;G. The space W has 20736
+			cells.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; W:=EquivariantCWComplexToRegularCWComplex(U,H);<br/>
+Regular
+			CW-complex of dimension 4<br/>
+<br/>
+gap&gt; Size(W);<br/>
+20736</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>General theory implies that the covering space W should also be
+			homotopy equivalent to a torus. As a check for this, the following
+			commands establish that W has the same integral homology as a
+			torus, as well as the same fundamental group.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; Homology(W,0);<br/>
+[ 0 ]<br/>
+gap&gt; Homology(W,1);<br/>
+[
+			0, 0 ]<br/>
+gap&gt; Homology(W,2);<br/>
+[ 0 ]<br/>
+gap&gt;
+			Homology(W,3);<br/>
+[&nbsp; ]<br/>
+gap&gt; Homology(W,4);<br/>
+[&nbsp;
+			]<br/>
+<br/>
+gap&gt; F:=FundamentalGroup(W);<br/>
+#I&nbsp; there
+			are 2 generators and 1 relator of total length 4<br/>
+&lt;fp group
+			of size infinity on the generators [ f1, f2 ]&gt;<br/>
+gap&gt;
+			RelatorsOfFpGroup(F);<br/>
+[ f2*f1*f2^-1*f1^-1 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>It may be that we are interested in the covering map p:W---&gt;Y
+			and not just the 9-fold covering W. The map p can be constructed
+			as folows.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; p:=EquivariantCWComplexToRegularCWMap(U,H);<br/>
+Map of
+			regular CW-complexes<br/>
+<br/>
+gap&gt; Source(p);<br/>
+Regular
+			CW-complex of dimension 4<br/>
+gap&gt;
+			Size(Source(p));<br/>
+20736<br/>
+<br/>
+gap&gt; Target(p);<br/>
+Regular
+			CW-complex of dimension 4<br/>
+gap&gt; Size(Target(p));<br/>
+2304</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>The covering map p induces homomorphisms
+			H<sub>n</sub>(p):H<sub>n</sub>(W,Z)---&gt;H<sub>n</sub>(Y,Z) on
+			integral homology. These homomorphisms, together with their
+			cokernels, can be computed as follows.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; P:=ChainMap(p);<br/>
+Chain Map between complexes of
+			length 4 . <br/>
+<br/>
+gap&gt; h0:=Homology(P,0);;<br/>
+gap&gt;
+			AbelianInvariants(Target(h0)/Image(h0));<br/>
+[&nbsp; ]<br/>
+<br/>
+gap&gt;
+			h1:=Homology(P,1);;<br/>
+gap&gt;
+			AbelianInvariants(Target(h1)/Image(h1));<br/>
+[ 3, 3 ]<br/>
+<br/>
+gap&gt;
+			h2:=Homology(P,2);;<br/>
+gap&gt;
+			AbelianInvariants(Target(h2)/Image(h2));<br/>
+[ 9 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p align="center"><font size="4" style="font-size: 14pt"><b>Homology
+			of covering spaces / homology with local coefficients</b></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p align="left" style="font-weight: normal"><font size="3" style="font-size: 12pt">The
+			above 9-fold cover W of the torus Y has 20736 cells. The cellular
+			chain complex C(W) thus has 20736 free abelian generators. A
+			discrete vector field was used (behind the scenes) to reduce this
+			number of generators before computing homology. </font>
+			</p>
+			<p style="margin-bottom: 0cm"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">The
+			homology of W can be computed more efficiently by first
+			simplifying the cell structure on Y to obtain a homeomorphic
+			regular CW-space Y1 with fewer cells, and then taking the
+			universal cover U1 of Y1. The </span></font><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">π</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">-</span></font></font><font size="3" style="font-size: 12pt"><span style="font-weight: normal">equivariant
+			cellular chain complex C(U1) can be constructed, and then tensored
+			with the integers over the subgroup H. The homology of this
+			tensored chain complex corresponds to the homology of W. The
+			following commands implement this approach.</span></font> 
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; Y1:=SimplifiedComplex(Y);;<br/>
+gap&gt; Size(Y1);
+			Size(Y); <br/>
+428 <br/>
+2304 <br/>
+gap&gt;
+			CU1:=ChainComplexOfUniversalCover(Y1,false);; “false” prevents
+			the use of vector fields <br/>
+gap&gt;
+			L:=LowIndexSubgroupsFpGroup(CU1!.group,9);;<br/>
+gap&gt;
+			L:=LowIndexSubgroupsFpGroup(CU1!.group,9);;<br/>
+gap&gt;
+			L:=Filtered(L,g-&gt;Index(CU1!.group,g)=9);; <br/>
+gap&gt;
+			L:=Filtered(L,g-&gt;AbelianInvariants(CU1!.group/g)=[3,3]); [
+			Group(&lt;fp, no generators known&gt;) ] <br/>
+gap&gt;
+			D:=TensorWithIntegersOverSubgroup(CU1,L[1]); <br/>
+Chain complex
+			of length 4 in characteristic 0 .<br/>
+<br/>
+gap&gt;
+			Homology(D,0); <br/>
+[ 0 ] <br/>
+gap&gt; Homology(D,1); <br/>
+[ 0,
+			0 ] <br/>
+gap&gt; Homology(D,2); <br/>
+[ 0 ] 
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p><font size="3" style="font-size: 12pt"><span style="font-weight: normal">In
+			general the </span></font><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">π</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Y-</span></font></font><font size="3" style="font-size: 12pt"><span style="font-weight: normal">equivariant
+			cellular chain complex C(U) of the universal cover U of a regular</span></font>
+			<font size="3" style="font-size: 12pt"><span style="font-weight: normal">CW-complex
+			Y can be used to compute the homology H</span></font><sub>n</sub>(Y,A)
+			and cohomology H<sup>n</sup>(Y,A) of Y with local coefficients in
+			a Z<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">π</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Y-module
+			A. To illustrate this we consister the space Y arising as the
+			complement of the trefoil knot, with fundamental group π</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Y
+			= &lt;x,y : xyx=yxy&gt; . We take A=Z to be the integers with
+			non-trivial π</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Y
+			action given by x.1=-1, y.1=-1. We then compute </span></font></font>
+			</p>
+			<p align="center"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">H</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">0</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">(Y,A)
+			= Z</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">2
+			</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">,
+			</span></font></font>
+			</p>
+			<p align="center"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">H</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">1</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">(Y,A)
+			= </span></font></font><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Z</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">3
+			</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">
+			,</span></font></font></p>
+			<p align="center"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">H</span></font></font><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">2</span></font></font></sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">(Y,A)
+			= Z .</span></font></font><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">
+			</span></font></font>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; K:=PureCubicalKnot(3,1);;<br/>
+gap&gt;
+			Y:=PureComplexComplement(K);;<br/>
+gap&gt;
+			Y:=ContractedComplex(Y);;<br/>
+gap&gt;
+			Y:=RegularCWComplex(Y);;<br/>
+gap&gt;
+			Y:=SimplifiedComplex(Y);;<br/>
+gap&gt;
+			C:=ChainComplexOfUniversalCover(Y,false);;<br/>
+gap&gt;
+			G:=C!.group;;<br/>
+gap&gt; GeneratorsOfGroup(G);<br/>
+[ f1, f2
+			]<br/>
+gap&gt; RelatorsOfFpGroup(G); <br/>
+[
+			f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ]<br/>
+gap&gt;
+			hom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;<br/>
+gap&gt;
+			A:=function(x); return Determinant(Image(hom,x)); end;;<br/>
+gap&gt;
+			D:=TensorWithTwistedIntegers(C,A); #Here the function A represents
+			the integers with twisted action of G.<br/>
+Chain complex of
+			length 3 in characteristic 0 .<br/>
+gap&gt; Homology(D,0); <br/>
+[
+			2 ]<br/>
+gap&gt; Homology(D,1);<br/>
+[ 3 ]<br/>
+gap&gt;
+			Homology(D,2);<br/>
+[ 0 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p align="center"><font size="4" style="font-size: 14pt"><b>Second
+			homotopy groups of spaces with finite fundamental groups</b></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>If p:U--&gt;Y is the map from the universal cover U of Y, then
+			the fundamental group of U is trivial and the Hurewicz
+			homomorphism π<sub>2</sub>(U)--&gt;H<sub>2</sub>(U) from the
+			second homotopy group of U to the second integral homology of U is
+			an isomorphism. Furthermore, the map p induces an isomorphism&nbsp;
+			π<sub>2</sub>(U)--&gt;π<sub>2</sub>(Y). Thus H<sub>2</sub>(U) is
+			isomorphic to the second homotopy group π<sub>2</sub>(Y).<br/>
+<br/>
+If
+			the fundamental group of Y happens to be finite, then we can
+			calculate H<sub>2</sub>(U) = π<sub>2</sub>(Y) as follows. We
+			illustrate the computation for Y equal to the real projective
+			plane.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; K:=[ [1,2,3], [1,3,4], [1,2,6], [1,5,6], [1,4,5],
+			[2,3,5], [2,4,5], [2,4,6], [3,4,6], [3,5,6]];;<br/>
+<br/>
+gap&gt;
+			K:=MaximalSimplicesToSimplicialComplex(K);<br/>
+Simplicial complex
+			of dimension 2.<br/>
+<br/>
+gap&gt; Y:=RegularCWComplex(K);&nbsp; #
+			Y is a regular CW-complex corresponding to the projective
+			plane.<br/>
+Regular CW-complex of dimension 2<br/>
+<br/>
+gap&gt;
+			U:=UniversalCover(Y);<br/>
+Equivariant CW-complex of dimension
+			2<br/>
+<br/>
+gap&gt; G:=U!.group;; #G is the fundamental group of
+			Y, which by the next command is finite of order 2.<br/>
+gap&gt;
+			Order(G);<br/>
+2<br/>
+<br/>
+gap&gt;
+			U:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); #U is
+			the universal cover of Y<br/>
+Regular CW-complex of dimension
+			2<br/>
+<br/>
+gap&gt; Homology(U,0);<br/>
+[ 0 ]<br/>
+gap&gt;
+			Homology(U,1);<br/>
+[&nbsp; ]<br/>
+gap&gt; Homology(U,2);<br/>
+[ 0
+			]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>The above computation shows that the space Y has infinite
+			cyclic second homotopy group</p>
+			<p align="center" style="margin-bottom: 0cm">π<sub>2</sub>(Y) = Z
+			.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p align="center"><b>Third homotopy groups of simply connected
+			spaces</b></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>For any simply connected space U there is an exact sequence</p>
+			<p align="center" style="margin-bottom: 0cm">---&gt; π<sub>4</sub>(U)
+			---&gt; H<sub>4</sub>(U) ---&gt; H<sub>4</sub>( K(π<sub>2</sub>(U),
+			2) ) ---&gt; π<sub>3</sub>(U) ---&gt;&nbsp; H<sub>4</sub>(U) ---&gt;
+			0</p>
+			<p align="left"><br/>
+due to J.H.C.Whitehead.&nbsp; Here K(π<sub>2</sub>(U),
+			2) is an Eilenberg-MacLane space with second homotopy group equal
+			to π<sub>2</sub>(U).<br/>
+<br/>
+<b>FIRST EXAMPLE</b>:<br/>
+<br/>
+Continuing
+			with the above example with Y the real projective plane and U its
+			universal cover, we see that H<sub>4</sub>(U) = H<sub>4</sub>(U) =
+			0 since U is a 2-dimensional CW-space. The exact sequence implies&nbsp;
+			π<sub>3</sub>(U) = H<sub>4</sub>(K(π<sub>2</sub>(U), 2) ).
+			Furthermore, π<sub>3</sub>(U) = π<sub>3</sub>(Y) since U is the
+			universal cover. The following commands establish that</p>
+			<p align="center" style="margin-bottom: 0cm">π<sub>3</sub>(Y) = Z
+			.</p>
+			<p align="left" style="margin-bottom: 0cm"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>gap&gt; A:=AbelianPcpGroup([0]);<br/>
+Pcp-group with orders [ 0
+			]<br/>
+&nbsp;<br/>
+gap&gt;
+			K:=EilenbergMacLaneSimplicialGroup(A,2,5);;<br/>
+gap&gt;
+			C:=ChainComplexOfSimplicialGroup(K);<br/>
+Chain complex of length
+			5 in characteristic 0 . <br/>
+<br/>
+gap&gt; Homology(C,4);<br/>
+[
+			0 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p><b>SECOND EXAMPLE:</b><br/>
+<br/>
+The following commands
+			construct a 4-dimensional simplicial complex Y with 9 vertices and
+			36 4-dimensional simplices, and establish that<br/>
+<br/>
+π<sub>1</sub>(Y)=0
+			, π<sub>2</sub>(Y)=Z , H<sub>3</sub>(Y)=0, H<sub>4</sub>(Y)=Z,
+			H<sub>4</sub>(K(π<sub>2</sub>(U), 2) =Z .</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffcc" style="background: #ffffcc" style="border: none; padding: 0cm">
+			<p>Y:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], [
+			1, 2, 6, 4, 7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], [ 2, 3, 5,
+			6, 7 ], [ 2, 3, 6, 4, 9 ], [ 3, 1, 4, 5, 7 ], <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			[ 3, 1, 5, 6, 9 ], [ 3, 1, 6, 4, 5 ], [ 3, 1, 6, 4, 8 ], [ 4, 5,
+			7, 8, 3 ], [ 4, 5, 7, 8, 9 ], [ 4, 5, 8, 9, 2 ], [ 4, 5, 9, 7, 1
+			], [ 5, 6, 7, 8, 2 ], [ 5, 6, 8, 9, 1 ], <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			[ 5, 6, 8, 9, 7 ], [ 5, 6, 9, 7, 3 ], [ 6, 4, 7, 8, 1 ], [ 6, 4,
+			8, 9, 3 ], [ 6, 4, 9, 7, 2 ], [ 6, 4, 9, 7, 8 ], [ 7, 8, 1, 2, 3
+			], [ 7, 8, 1, 2, 6 ], [ 7, 8, 2, 3, 5 ], <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			[ 7, 8, 3, 1, 4 ], [ 8, 9, 1, 2, 5 ], [ 8, 9, 2, 3, 1 ], [ 8, 9,
+			2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [ 9, 7, 1, 2, 4 ], [ 9, 7, 2, 3, 6
+			], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5 ]
+			];;<br/>
+<br/>
+Y:=MaximalSimplicesToSimplicialComplex(Y);<br/>
+Simplicial
+			complex of dimension 4.<br/>
+<br/>
+Y:=RegularCWComplex(K);<br/>
+Regular
+			CW-complex of dimension 4<br/>
+<br/>
+gap&gt;
+			Order(FundamentalGroup(Y));<br/>
+1<br/>
+gap&gt; Homology(Y,2);<br/>
+[
+			0 ]<br/>
+gap&gt; Homology(Y,3);<br/>
+[&nbsp; ]<br/>
+gap&gt;
+			Homology(Y,4);<br/>
+[ 0 ]</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" bgcolor="#ffffff" style="background: #ffffff" style="border: none; padding: 0cm">
+			<p>Whitehead's sequence yields the exact sequence</p>
+			<p align="center" style="margin-bottom: 0cm">Z ----&gt; Z ----&gt;
+			π<sub>3</sub>(Y) ---&gt; 0 .</p>
+			<p align="left">The first map 
+			</p>
+			<p align="center">H<sub>4</sub>(Y)=Z ---&gt; H<sub>4</sub>(K(π<sub>2</sub>(Y),
+			2)=Z</p>
+			<p align="left" style="margin-bottom: 0cm">In order to determine
+			π<sub>3</sub>(Y) it remains compute this first map.<br/>
+<br/>
+[The
+			simplicial complex is due to W. Kiihnel and T. F. Banchoff and is
+			of the homotopy type of the complex projective plane. So, assuming
+			this extra knowledge, we have π<sub>3</sub>(Y)=0.]</p>
+			<table cellpadding="2" cellspacing="2">
+				<tr>
+					<td style="border: none; padding: 0cm">
+						<p><a href="aboutPeripheral.html"><font color="#000066">Previous
+						Page</font></a></p>
+					</td>
+					<td style="border: none; padding: 0cm">
+						<p align="center"><a href="aboutContents.html"><font color="#000066">Contents</font></a></p>
+					</td>
+					<td style="border: none; padding: 0cm">
+						<p align="right"><a href="aboutQuandles.html"><font color="#000066">Next
+						page</font></a></p>
+					</td>
+				</tr>
+			</table>
+			<p><br/>
+<br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" style="border: none; padding: 0cm">
+			<p><br/>
+<br/>
+
+			</p>
+		</td>
+	</tr>
+</table>
+<p><br/>
+<br/>
+
+</p>
+</body>
+</html>
