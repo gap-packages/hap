@@ -39,7 +39,7 @@ Please send your bug reports to graham.ellis(at)nuigalway.ie .
 On a Linux machine with GAP (and optionally Polymake) installed, the HAP
 library can be loaded as follows:
 
-* First download the file hap1.24.tar.gz to the subdirectory "pkg/" of GAP. (If
+* First download the file hap1.25.tar.gz to the subdirectory "pkg/" of GAP. (If
 you don't have access to this, then create a directory "pkg" in your home
 directory and download the file there.)
 
@@ -58,7 +58,7 @@ included in directory "pkg/Hap$version/www" of this distribution).
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
 
-1. Change to the directory "pkg/Hap1.24/" .
+1. Change to the directory "pkg/Hap1.25/" .
 2. Edit the file "compile" so that: PKGDIR is equal to the path to the
 directory "pkg" where your GAP packages are stored; GACDIR is equal to the
 path to the directory where the GAP compiler "gac" is stored.
