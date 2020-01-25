@@ -10,7 +10,7 @@
 ## The category of groups. As the implementation improves the properties
 ## of this category will increase! 
 ##
-Category_Of_Groups:="Category_Of_Groups";
+Category_Of_Groups:=rec();
 HAP_type:= NewType(NewFamily("Category_Of_Groups"),
                        IsString  and 
                        HasInitialObject
