@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 7: Cohomology operations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap7"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
+<p><a id="X81FDD09B8454C905" name="X81FDD09B8454C905"></a></p>
+<div class="ChapSects"><a href="chap7.html#X81FDD09B8454C905">7 <span class="Heading">Cohomology operations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X80638C137E300A52">7.1 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">2</span>-group</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7D5ACA56870A40E9">7.2 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">p</span>-group</span></a>
+</span>
+</div>
+</div>
+
+<h3>7 <span class="Heading">Cohomology operations</span></h3>
+
+<p><a id="X80638C137E300A52" name="X80638C137E300A52"></a></p>
+
+<h4>7.1 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">2</span>-group</span></h4>
+
+<p>The following example determines a presentation for the cohomology ring <span class="SimpleMath">H^∗(Syl_2(M_12), Z_2)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong>, are used to determine how much of a resolution to compute for the presentation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mod2CohomologyRingPresentation(G);</span>
+Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
+[ x_2*x_3, x_1*x_2, x_2*x_4, x_3^3+x_3*x_5, 
+  x_1^2*x_4+x_1*x_3*x_4+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_4^2+x_4*x_5, 
+  x_1^2*x_3^2+x_1*x_3*x_5+x_3^2*x_5+x_3*x_6, 
+  x_1^3*x_3+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_3*x_6+x_4*x_5, 
+  x_1*x_3^2*x_4+x_1*x_3*x_6+x_1*x_4*x_5+x_3*x_4^2+x_3*x_4*x_5+x_3*x_5^\
+2+x_4*x_6, x_1^2*x_3*x_5+x_1*x_3^2*x_5+x_3^2*x_6+x_3*x_5^2, 
+  x_3^2*x_4^2+x_3^2*x_5^2+x_1*x_5*x_6+x_3*x_4*x_6+x_4*x_5^2, 
+  x_1*x_3*x_4^2+x_1*x_3*x_4*x_5+x_1*x_3*x_5^2+x_3^2*x_5^2+x_1*x_4*x_6+\
+x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
+2, x_1*x_3^2*x_6+x_3^2*x_4*x_5+x_1*x_5*x_6+x_4*x_5^2, 
+  x_1^2*x_3*x_6+x_1*x_5*x_6+x_2^2*x_7+x_2*x_5*x_6+x_3*x_5*x_6+x_6^2 
+ ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
+
+</pre></div>
+
+<p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">H^∗(G, Z_2 )</span> of a <span class="SimpleMath">2</span>-group <span class="SimpleMath">G</span> provided that the integer <span class="SimpleMath">n</span> is at least the maximal degree of a relator in a minimal set of relators for the ring. Groebner basis routines from <strong class="button">Singular</strong> are called involved in the example.</p>
+
+<p>The following example produces complete information on the Steenrod algebra of group number <span class="SimpleMath">8</span> in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">32</span>.</p>
+
+
+<div class="example"><pre>
+Group number: 8
+Group description: C2 . ((C4 x C2) : C2) = (C2 x C2) . (C4 x C2)
+
+Cohomology generators
+Degree 1: a, b
+Degree 2: c, d
+Degree 3: e
+Degree 5: f, g
+Degree 6: h
+Degree 8: p
+
+Cohomology relations
+1: f^2
+2: c*h+e*f
+3: c*f
+4: b*h+c*g
+5: b*e+c*d
+6: a*h
+7: a*g
+8: a*f+b*f
+9: a*e+c^2
+10: a*c
+11: a*b
+12: a^2
+13: d*e*h+e^2*g+f*h
+14: d^2*h+d*e*f+d*e*g+f*g
+15: c^2*d+b*f
+16: b*c*g+e*f
+17: b*c*d+c*e
+18: b^2*g+d*f
+19: b^2*c+c^2
+20: b^3+a*d
+21: c*d^2*e+c*d*g+d^2*f+e*h
+22: c*d^3+d*e^2+d*h+e*f+e*g
+23: b^2*d^2+c*d^2+b*f+e^2
+24: b^3*d
+25: d^3*e^2+d^2*e*f+c^2*p+h^2
+26: d^4*e+b*c*p+e^2*g+g*h
+27: d^5+b*d^2*g+b^2*p+f*g+g^2
+
+Poincare series
+(x^5+x^2+1)/(x^8-2*x^7+2*x^6-2*x^5+2*x^4-2*x^3+2*x^2-2*x+1)
+
+Steenrod squares
+Sq^1(c)=0
+Sq^1(d)=b*b*b+d*b
+Sq^1(e)=c*b*b
+Sq^2(e)=e*d+f
+Sq^1(f)=c*d*b*b+d*d*b*b
+Sq^2(f)=g*b*b
+Sq^4(f)=p*a
+Sq^1(g)=d*d*d+g*b
+Sq^2(g)=0
+Sq^4(g)=c*d*d*d*b+g*d*b*b+g*d*d+p*a+p*b
+Sq^1(h)=c*d*d*b+e*d*d
+Sq^2(h)=d*d*d*b*b+c*d*d*d+g*c*b
+Sq^4(h)=d*d*d*d*b*b+g*e*d+p*c
+Sq^1(p)=c*d*d*d*b
+Sq^2(p)=d*d*d*d*b*b+c*d*d*d*d
+Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
+
+</pre></div>
+
+<p><a id="X7D5ACA56870A40E9" name="X7D5ACA56870A40E9"></a></p>
+
+<h4>7.2 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">p</span>-group</span></h4>
+
+<p>The following example constructs the first eight degrees of the mod-<span class="SimpleMath">3</span> cohomology ring <span class="SimpleMath">H^∗(G, Z_3)</span> for the group <span class="SimpleMath">G</span> number 4 in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">81</span>. It determines a minimal set of ring generators lying in degree <span class="SimpleMath">le 8</span> and it evaluates the Bockstein operator on these generators. Steenrod powers for <span class="SimpleMath">pge 3</span> are not implemented as no efficient method of implementation is known.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SmallGroup(81,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ModPSteenrodAlgebra(G,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ModPRingGenerators(A),x-&gt;Bockstein(A,x));</span>
+[ 0*v.1, 0*v.1, v.5, 0*v.1, (Z(3))*v.7+v.8+(Z(3))*v.9 ]
+
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

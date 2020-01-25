@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 4: Topological data analysis</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap4"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap4.html">[MathJax off]</a></p>
+<p><a id="X7B7E077887694A9F" name="X7B7E077887694A9F"></a></p>
+<div class="ChapSects"><a href="chap4_mj.html#X7B7E077887694A9F">4 <span class="Heading">Topological data analysis</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X80A70B20873378E0">4.1 <span class="Heading">Persistent homology  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D512DA37F789B4C">4.1-1 <span class="Heading">Background to the data</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X849556107A23FF7B">4.2 <span class="Heading">Mapper clustering</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D512DA37F789B4C">4.2-1 <span class="Heading">Background to the data</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X825C5B837A08F579">4.3 <span class="Heading">Digital image analysis</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D512DA37F789B4C">4.3-1 <span class="Heading">Background to the data</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>4 <span class="Heading">Topological data analysis</span></h3>
+
+<p><a id="X80A70B20873378E0" name="X80A70B20873378E0"></a></p>
+
+<h4>4.1 <span class="Heading">Persistent homology  </span></h4>
+
+<p>Pairwise distances between <span class="SimpleMath">\(74\)</span> points from some metric space have been recorded and stored in a <span class="SimpleMath">\(74\times 74\)</span> matrix <span class="SimpleMath">\(D\)</span>. The following commands load the matrix, construct a filtration of length <span class="SimpleMath">\(100\)</span> on the first two dimensions of the assotiated clique complex (also known as the <em>Rips Complex</em>), and display the resulting degree <span class="SimpleMath">\(0\)</span> persistent homology as a barcode. A single bar with label <span class="SimpleMath">\(n\)</span> denotes <span class="SimpleMath">\(n\)</span> bars with common starting point and common end point.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data253a.txt");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricMatrixToFilteredGraph(D,100);</span>
+Filtered graph on 74 vertices.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=FilteredRegularCWComplex(CliqueComplex(G,2));</span>
+Filtered regular CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbers(K,0);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/bar0.png" align="center" height="60" alt="degree 0 barcode"/></p>
+
+<p>The next commands display the resulting degree <span class="SimpleMath">\(1\)</span> persistent homology as a barcode.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbers(K,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/bar1.png" align="center" height="120" alt="degree 1 bar code"/></p>
+
+<p>The following command displays the <span class="SimpleMath">\(1\)</span> skeleton of the simplicial complex arizing as the <span class="SimpleMath">\(65\)</span>-th term in the filtration on the clique complex.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=FiltrationTerm(K,65);</span>
+Regular CW-complex of dimension 1
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(HomotopyGraph(Y));</span>
+
+</pre></div>
+
+<p><img src="images/twocircles.png" align="center" height="300" alt="1-skeleton"/></p>
+
+<p>These computations suuggest that the dataset contains two persistent path components (or clusters), and that each path component is in some sense periodic. The final command displays one possible representation of the data as points on two circles.</p>
+
+<p><a id="X7D512DA37F789B4C" name="X7D512DA37F789B4C"></a></p>
+
+<h5>4.1-1 <span class="Heading">Background to the data</span></h5>
+
+<p>Each point in the dataset was an image consisting of <span class="SimpleMath">\(732\times 761\)</span> pixels. This point was regarded as a vector in <span class="SimpleMath">\(\mathbb R^{732\times 761}\)</span> and the matrix <span class="SimpleMath">\(D\)</span> was constructed using the Euclidean metric. The images were the following:</p>
+
+<p><img src="images/letters.png" align="center" height="220" alt="letters"/></p>
+
+<p><a id="X849556107A23FF7B" name="X849556107A23FF7B"></a></p>
+
+<h4>4.2 <span class="Heading">Mapper clustering</span></h4>
+
+<p>The following example reads in a set <span class="SimpleMath">\(S\)</span> of vectors of rational numbers. It uses the Euclidean distance <span class="SimpleMath">\(d(u,v)\)</span> between vectors. It fixes some vector $u_0\in S$ and uses the associated function <span class="SimpleMath">\(f\colon D\rightarrow [0,b] \subset \mathbb R, v\mapsto d(u_0,v)\)</span>. In addition, it uses an open cover of the interval <span class="SimpleMath">\([0,b]\)</span> consisting of <span class="SimpleMath">\(100\)</span> uniformly distributed overlapping open subintervals of radius <span class="SimpleMath">\(r=29\)</span>. It also uses a simple clustering algorithm implemented in the function <code class="code">cluster</code>.</p>
+
+<p>These ingredients are input into the Mapper clustering procedure to produce a simplicial complex <span class="SimpleMath">\(M\)</span> which is intended to be a representation of the data. The complex <span class="SimpleMath">\(M\)</span> is <span class="SimpleMath">\(1\)</span>-dimensional and the final command uses GraphViz software to visualize the graph. The nodes of this simplicial complex are "buckets" containing data points. A data point may reside in several buckets. The number of points in the bucket determines the size of the node. Two nodes are connected by an edge when their end-point nodes contain common data points.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data134.txt");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dx:=EuclideanApproximatedMetric;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dz:=EuclideanApproximatedMetric;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=List(S,x-&gt;Maximum(List(S,y-&gt;dx(x,y))));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=Position(L,Minimum(L));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=function(x); return [dx(S[n],x)]; end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=30*[0..100];; P:=List(P, i-&gt;[i]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=29;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon:=75;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> cluster:=function(S)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  local Y, P, C;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  if Length(S)=0 then return S; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Y:=VectorsToOneSkeleton(S,epsilon,dx);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  P:=PiZero(Y);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  C:=Classify([1..Length(S)],P[2]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  return List(C,x-&gt;S{x});</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=Mapper(S,dx,f,dz,P,r,cluster);</span>
+Simplicial complex of dimension 1.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(GraphOfSimplicialComplex(M));</span>
+
+</pre></div>
+
+<p><img src="images/mapper.png" align="center" height="300" alt="Mapper graph"/></p>
+
+<p><a id="X7D512DA37F789B4C" name="X7D512DA37F789B4C"></a></p>
+
+<h5>4.2-1 <span class="Heading">Background to the data</span></h5>
+
+<p>The datacloud <span class="SimpleMath">\(S\)</span> consists of the <span class="SimpleMath">\(400\)</span> points in the plane shown in the following picture.</p>
+
+<p><img src="images/mappercloud.png" align="center" height="400" alt="data cloud"/></p>
+
+<p><a id="X825C5B837A08F579" name="X825C5B837A08F579"></a></p>
+
+<h4>4.3 <span class="Heading">Digital image analysis</span></h4>
+
+<p>The following example reads in a digital image as a filtered pure cubical complexex. The filtration is obtained by thresholding at a sequence of uniformly spaced values on the greyscale range. The persistent homology of this filtered complex is calculated in degrees <span class="SimpleMath">\(0\)</span> and <span class="SimpleMath">\(1\)</span> and displayed as two barcodes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("image1.3.2.png");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ReadImageAsFilteredPureCubicalComplex(file,20);</span>
+Filtered pure cubical complex of dimension 2.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbers(F,0);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/imbar0.gif" align="center" height="400" alt="barcode"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbers(F,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/imbar1.gif" align="center" height="400" alt="barcode"/></p>
+
+<p>The <span class="SimpleMath">\(20\)</span> persistent bars in the degree <span class="SimpleMath">\(0\)</span> barcode suggest that the image has <span class="SimpleMath">\(20\)</span> objects. The degree <span class="SimpleMath">\(1\)</span> barcode suggests that <span class="SimpleMath">\(14\)</span> (or possibly <span class="SimpleMath">\(17\)</span>) of these objects have holes in them.</p>
+
+<p><a id="X7D512DA37F789B4C" name="X7D512DA37F789B4C"></a></p>
+
+<h5>4.3-1 <span class="Heading">Background to the data</span></h5>
+
+<p>The following image was used in the example.</p>
+
+<p><img src="../../tst/examples/image1.3.2.png" align="center" height="500" alt="barcode"/></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
