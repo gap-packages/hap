@@ -74,12 +74,6 @@ ElementaryDivisorsPPartRk:=function(G); return fail; end;
 fi;
 ################# EDIM COMMANDS DONE ###############################
 
-################# GAPDOC COMMANDS #######################################
-if not IsPackageMarkedForLoading("gapdoc","0.0") then 
-MakeGAPDocDoc:=function(G); return fail; end;
-fi;
-################# GAPDOC COMMANDS DONE ###############################
-
 ################# CONGRUENE COMMANDS #######################################
 if not IsPackageMarkedForLoading("congruence","0.0") then
 CongruenceSubgroupGamma0:=function(m); return fail; end;
