@@ -1,5 +1,5 @@
 gap> START_TEST("HAP library");
-gap> SetAssertionLevel( 1 );;
+gap> SetAssertionLevel(0);;
 gap> gens:= [ [ [-1,0,0,0], [0,-1,0,0], [0,0,1,1/2], [0,0,0,1] ], [ [0,-1,0,0], [1,-1,0,0], [0,0,1,1/3], [0,0,0,1] ], [ [1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,1] ] ];;
 gap> G:=AffineCrystGroupOnLeft(gens);;
 gap> G:=StandardAffineCrystGroup(G);;
