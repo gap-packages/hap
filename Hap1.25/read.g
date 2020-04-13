@@ -75,9 +75,9 @@ fi;
 ################# EDIM COMMANDS DONE ###############################
 
 ################# GAPDOC COMMANDS #######################################
-if not IsPackageMarkedForLoading("gapdoc","0.0") then 
-MakeGAPDocDoc:=function(G); return fail; end;
-fi;
+#if not IsPackageMarkedForLoading("gapdoc","0.0") then 
+#MakeGAPDocDoc:=function(G); return fail; end;
+#fi;
 ################# GAPDOC COMMANDS DONE ###############################
 
 ################# CONGRUENE COMMANDS #######################################

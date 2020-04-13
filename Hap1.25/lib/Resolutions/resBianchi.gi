@@ -18,7 +18,7 @@ name:=Concatenation("SLO",d,")");
 fi;
 if name="SL(2,O-2)" then 
 K:=ContractibleGcomplex("SL2O-2_a");
-Kgroup:=K!.group; Kgroup!.bianchiInteger:=2;
+Kgroup:=K!.group; Kgroup!.bianchiInteger:=-2;
 else
 K:=ContractibleGcomplex(name);
 Kgroup:=K!.group;
@@ -27,7 +27,11 @@ D:=Group( -Identity(K!.group) );;
 PK:=QuotientOfContractibleGcomplex(K,D);;
 R:=FreeGResolution(PK,n);
 Rgroup:=R!.group;
-Rgroup!.bianchiInteger:=Kgroup!.bianchiInteger;
+if IsInt(d) then
+Rgroup!.bianchiInteger:=d;
+else
+Rgroup!.bianchiInteger:=fail;
+fi;
 R!.group:=Rgroup;
 
 if not '(' in name then
