@@ -4,7 +4,7 @@
 #####################################################################
 InstallGlobalFunction(HomToIntegralModule,
 function(R,f)
-local HomObj, HomArr, Image;
+local HomObj, HomArr,Image;
 
 ####################################
 Image:=function(f,x);

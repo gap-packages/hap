@@ -35,7 +35,7 @@ G:=P!.group;
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
-BinGp:=ContractibleGcomplex("SL(2,O-2)_a");
+BinGp:=ContractibleGcomplex("SL(2,O-2)");
 BinGp:=BinGp!.stabilizer(0,4);;
 BinGp:=Image(RegularActionHomomorphism(BinGp));
 #BinGp:=Group(ReduceGenerators(GeneratorsOfGroup(BinGp),BinGp));

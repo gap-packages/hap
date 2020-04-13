@@ -1,5 +1,6 @@
 gap> START_TEST("HAP library");
-gap> SetAssertionLevel(1);;
+gap> SetAssertionLevel(0);;
+gap> SetCrystGroupDefaultAction( RightAction );
 gap> G:=SpaceGroup(4,122);;
 gap> R:=ResolutionCubicalCrystGroup(G,5);;
 gap> C:=HomToIntegers(R);;

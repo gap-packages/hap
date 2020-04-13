@@ -1,5 +1,6 @@
 gap> START_TEST("HAP library");
-gap> SetAssertionLevel(1);;
+gap> SetAssertionLevel(0);;
+gap> SetCrystGroupDefaultAction( RightAction );
 gap> e:=SpaceGroupBBNWZ(2,10);;
 gap> G:=RelativeCentralQuotientSpaceGroup(e,4);;
 gap> n:=30;;PoincareSeries(G,n);

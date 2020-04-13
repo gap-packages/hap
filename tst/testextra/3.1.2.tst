@@ -1,6 +1,7 @@
 #E
 gap> START_TEST("HAP library");
-gap> SetAssertionLevel(1);;
+gap> SetAssertionLevel(0);;
+gap> SetCrystGroupDefaultAction( RightAction );
 gap> G:=SpaceGroup(4,1886);;
 gap> R:=ResolutionBieberbachGroup(G);;
 gap> C:=TensorWithIntegers(R);;
