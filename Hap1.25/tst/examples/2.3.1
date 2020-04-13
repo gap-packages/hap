@@ -1,0 +1,12 @@
+2simplices:=
+ [[1,2,5], [2,5,8], [2,3,8], [3,8,9], [1,3,9], [1,4,9],
+ [4,5,8], [4,6,8], [6,8,9], [6,7,9], [4,7,9], [4,5,7],
+ [1,4,6], [1,2,6], [2,6,7], [2,3,7], [3,5,7], [1,3,5]];;
+K:=SimplicialComplex(2simplices);;
+K:=RegularCWComplex(K);;
+Y:=DirectProduct(K,K);;
+C:=ChainComplexOfRegularCWComplex(Y);;
+D:=ChainComplex(Y);;
+Print(List([0..4],C!.dimension),"\n");;
+Print(List([0..4],D!.dimension),"\n");;
+Print(Homology(D,2),"\n");;

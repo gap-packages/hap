@@ -1,0 +1,9 @@
+#This example uses GraphViz software.
+H:=SymmetricGroup(5);;SetName(H,"S5");;
+A:=SymmetricGroup(3);;SetName(A,"S3");;
+alpha:=GroupHomomorphismByImages(A,H,[(1,2),(1,2,3)], [(3,4),(3,4,5)]);;
+beta:=GroupHomomorphismByFunction(A,H,x->x);;
+L:=[H,[alpha,beta]];;
+GraphOfGroupsDisplay(L);;
+R:=ResolutionGraphOfGroups(L,8);;
+Print(Homology(TensorWithIntegers(R),7),"\n");

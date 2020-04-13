@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ link="#000066" vlink="#000066" alink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutExtensions.html"><small style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Resolutions for Arithmetic Groups<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutBredon.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">Suppose
+that
+a group G acts on a contractible cellular space X by permuting
+cells. Suppose additionally that&nbsp; we have a method for
+constructing a free ZH<sup>e</sup>-resolution R<sup>e </sup>of each
+cell stabilizer group H<sup>e </sup>. Using a method explained in [G.
+Ellis, J. Harris &amp;
+E. Sk&ouml;ldberg, "Polytopal resolutions for finite groups", J. Reine
+Angewandte Math.] we can combine the resolutions R<sup>e</sup> with the
+cellular chain complex C<sub>*</sub>(X) to form a free ZG-resolution. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">For
+a number of arithmetic groups, such as G=SL<sub>3</sub>(Z) and&nbsp;
+G=PSL<sub>4</sub>(Z), the data for an appropriate exact G-equivariant
+chain complex C<sub>*</sub>(X) has been computed by Mathieu Dutour and
+Alexander Rahm and stored as part of HAP. These chain complexes
+can be accessed by the following HAP commands. </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+C:=ContractibleGcomplex("SL(3,Z)");<br>
+Non-free resolution in characteristic 0 for &lt;matrix group with<br>
+65 generators&gt; .<br>
+No contracting homotopy available.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 255); vertical-align: top;">The
+list of the available complexes can be found as follows. (It is
+actually two lists, data for the first being due to Mathieu Dutour and
+data for the second being due to Alexander Rahm.) <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;&nbsp;
+C:=ContractibleGcomplex("help");<br>
+G-complexes are implemented for the following groups only:<br>
+      <br>
+&nbsp; SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) ,<br>
+&nbsp; PSL(4,Z) , PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d ,<br>
+&nbsp; Sp(4,Z)<br>
+      <br>
+(where subscripts _b etc denote alternative complexes for a given
+group) and<br>
+      <br>
+&nbsp;SL(2,O-d) , d=2, 7, 11, 19, 43, 67, 163<br>
+      <br>
+where O-d denotes the ring of integers of the number field Q(sqrt(-d)).<br>
+      <br>
+fail<br>
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+first 5 terms of a free ZG-resolution for say G=SL<sub>3</sub>(Z),
+together with the 4th integral homology, can be contructed using the
+following commands. (We remark that all degrees of the integral
+homology of SL<sub>3</sub>(Z)
+were calculated in a classic paper by Christophe Soule
+[The cohomology of SL<sub>3</sub>(Z), Topology 17 (1978) 1&#8211;22].<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ContractibleGcomplex("SL(3,Z)");;<br>
+gap&gt; R:=FreeGResolution(C,5);<br>
+Resolution of length 5 in characteristic 0 for &lt;matrix group with<br>
+65 generators&gt; .<br>
+No contracting homotopy available.<br>
+      <br>
+gap&gt; Homology(TensorWithIntegers(R),4);<br>
+[ 2 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+cohomology of an arbitrary finite index subgroups of G=SL<sub>3</sub>(Z)
+can
+be
+investigated by first converting the resolution for the matrix group G
+into a resolution for an isomorphic finitely presented group. This
+convertion can be done using the command
+ResolutionToResolutionOfFpGroup. One can then use GAP's implementation
+of the algorithm for enumerating subgroups up to a given index.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">ResolutionToResolutionOfFpGroup(R);<br>
+gap&gt; G:=R!.group;<br>
+&lt;fp group on the generators [ f1, f2, f3, f4 ]&gt;<br>
+      <br>
+gap&gt;index:=15;;<br>
+gap&gt; L:=LowIndexSubgroupsFpGroup(G,index);;<br>
+gap&gt; Length(L);<br>
+8<br>
+gap&gt; H:=L[8];;<br>
+gap&gt; Index(G,H);<br>
+8<br>
+      <br>
+gap&gt; #So H is a subgroup of index 8 in G=SL(3,Z). A presentation for
+H can be found as follows.<br>
+      <br>
+gap&gt; RelatorsOfFpGroup(Image(IsomorphismFpGroup(H)));<br>
+[ F1^3, F1*F2*F1*F2*F1*F2,&nbsp;
+F1*F2^-2*F1^-1*F2*F1*F2^-2*F1^-1*F2,&nbsp;
+F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">A
+resolution for H and its 4th integral homology can be found as follows.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+S:=ResolutionSubgroup(R,H);<br>
+Resolution of length 5 in characteristic 0 for Group(&lt;fp, no
+generators known&gt;) .<br>
+No contracting homotopy available.<br>
+      <br>
+gap&gt; S:=ResolutionSubgroup(R,H);<br>
+Resolution of length 5 in characteristic 0 for Group(&lt;fp, no
+generators known&gt;) .<br>
+No contracting homotopy available.<br>
+      <br>
+gap&gt; Homology(TensorWithIntegers(S),4);<br>
+[ 2, 2 ]</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+homology of a congruence subgroup H in SL(2,Z) can be computed as
+follows. In the example the congruence subgroup H is the subgroup
+H=Gamma<sub>0</sub>(197) of integer matrices of the form<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ [
+p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , q ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [
+197r , s ]
+]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <br>
+      <br>
+with ps-197rq = 1, and is constructed using the prototype "Congruence"
+package being developed by&nbsp; Ann Dooms, Eric Jespers, Alexander
+Konovalov and Helena Verrill.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ContractibleGcomplex("SL(2,Z)");;<br>
+gap&gt; R:=FreeGResolution(C,5);;<br>
+gap&gt; H:=CongruenceSubgroupGamma0(197);;<br>
+gap&gt; S:=ResolutionFiniteSubgroup(R,H);;<br>
+gap&gt; D:=TensorWithIntegers(S);;<br>
+gap&gt; Homology(D,4);<br>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+2, 2,<br>
+&nbsp; 2, 2, 2, 2, 2, 2, 2, 2 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+homology of SL(2,Z[1/p]) can be computed using the following resolution
+(which is joint work with <span style="font-weight: bold;">Bui Anh Tuan</span>).
+This
+resolution can be used to recover, for any specific prime p, the
+periodic cohomology of SL(2,Z[1/p]) determined by Alejandro Adem and
+Nadim Naffah ["On the cohomology of SL<sub>2</sub>(Z[1/p])",
+arXiv:math9503230v1].<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+R:=ResolutionSL2Z(7,6);<br>
+Resolution of length 6 in characteristic 0 for SL(2,Z[1/7]) .<br>
+No contracting homotopy available.<br>
+      <br>
+gap&gt; Homology(TensorWithIntegers(R),5);<br>
+[ 4, 12 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">In
+order to compute a free resolution R for PSL(2,O-2) we first construct
+a contractible complex C with (non-free) action of SL(2,O-2). We then
+factor out the action of the group D of order two generated by the
+negative of the identity matrix to obtain a contractibe complex PC with
+(non-free) action of PSL(2,O-2). We use PC to compute the resolution R.
+The relevant commands follow.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+C:=ContractibleGcomplex("SL(2,O-2)");;<br>
+gap&gt; D:=Group( -Identity(C!.group) );;<br>
+gap&gt; PC:=QuotientOfContractibleGcomplex(C,D);;<br>
+gap&gt; R:=FreeGResolution(PC,21);;<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+Poincare series for the mod 2 cohomology H<sup>*</sup>(PSL(2,O-2),Z<sub>2</sub>)
+was
+calculated by Ethan Berkove in ["The mod-2 cohomology of the
+Bianchi groups", Transactions American Math Soc, vol 355, number 10
+(2000), 4585-4602]. The following commands recompute this using our
+resolution for PSL(2,O-2) . <br>
+      <br>
+(Strictly speaking, the commands compute a rational function p(x) whose
+expansion has coefficient of x<sup>n</sup> guaranteed to be
+equal to the dimension of H<sup>n</sup>(PSL(2,O-2),Z<sub>2</sub>) for
+at least all n&lt;21.)&nbsp; </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+K:=TensorWithIntegersModP(R,2);;<br>
+gap&gt; L:=List([0..20],n-&gt;Homology(K,n));;<br>
+      <br>
+gap&gt; p:=PoincareSeries(L,20);<br>
+(x_1^6+x_1^5-x_1^4+x_1^2+x_1+1)/(x_1^4-x_1^3-x_1+1)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutExtensions.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutBredon.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

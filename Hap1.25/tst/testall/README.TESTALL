@@ -1,0 +1,30 @@
+The files in directory Hapv.n/tst/testall call many of HAP's functions, 
+and are based on the examples in the book "An Invitation to Computational 
+Homotopy". 
+
+Those test files starting with #E or with #ED call external software such
+as Polymake, or Singular, or the convert function from ImageMagic. In 
+particular, files containing the string "ReadImageAs" use a perl script 
+and ImageMagic to read some image file.
+
+Some of the files take just a few seconds to run. But some take up to 20 
+minutes or more.
+
+Some of the files require GAP to be started with with extra memory allocated. This can be done using the command line option  "gap -o 0".
+
+The complete collection of files can be run using the GAP command
+
+gap> Read("pkg/Hapv.n/tst/testallextra.g");
+
+Alternatively, one can use the equivalent command
+
+gap> TestHapBook();
+
+A quicker and less comprehensive test for HAP can be called using the command
+
+gap> TestHap();
+ 
+or
+
+gap> Read("pkg/Hapv.n/tst/testall.g");
+

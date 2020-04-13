@@ -1,0 +1,15 @@
+M:=RandomMat(4000,4000);;
+N:=RandomMat(4000,4000);;
+s:=ChildCreate();;
+Exec("date +%M:%S");
+Mtop:=M{[1..2000]};;
+Mbottom:=M{[2001..4000]};;
+ChildPut(Mtop,"Mtop",s);
+ChildPut(N,"N",s);
+ChildCommand("Atop:=Mtop*N;;",s);;
+Abottom:=Mbottom*N;;
+A:=ChildGet("Atop",s);;
+Append(A,Abottom);;
+ChildKill(s);
+Exec("date +%M:%S");
+Exec("date +%M:%S");B:=M*N;;Exec("date +%M:%S");
