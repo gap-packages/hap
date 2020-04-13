@@ -6,8 +6,8 @@ function(M,d)
 local fun, x, A, B, C, D;
 
 ######Schoennenbeck transormation###
-if  (d mod 4 =2) or (d mod 4 =1) then x:=Sqrt(-d); fi;
-if  (d mod 4 =3)   then x:=(-1 + Sqrt(-d))/(2); fi;
+if  (-d mod 4 =2) or (-d mod 4 =1) then x:=Sqrt(d); fi;
+if  (-d mod 4 =3)   then x:=(-1 + Sqrt(d))/(2); fi;
 ####################################
 
 ###########################################
@@ -37,15 +37,15 @@ function(M,d)
 local x, fun, A, B, I, CM, rt, i, j;
 
 ######Check d#######################
-if (d mod 4 =1) or (d mod 4 =2) then x:=Sqrt(-d); fi;
-if (d mod 4 =3)  then x:=(1 + Sqrt(-d))/2; fi;
+if (-d mod 4 =1) or (-d mod 4 =2) then x:=Sqrt(d); fi;
+if (-d mod 4 =3)  then x:=(1 + Sqrt(d))/2; fi;
 ####################################
 
 I:=IdentityMat(2);
 CM:=CompanionMat(MinimalPolynomial(Rationals,x));
-rt:=Sqrt(d)^-1;
+rt:=Sqrt(-d)^-1;
 
-if (d mod 4 =1) or (d mod 4 =2) then 
+if (-d mod 4 =1) or (-d mod 4 =2) then 
 ####################################
 fun:=function(z)
 local a,b;
@@ -56,7 +56,7 @@ return a*I+b*CM;
 end;
 ####################################
 fi;
-if (d mod 4 =3) then 
+if (-d mod 4 =3) then 
 ####################################
 fun:=function(z)
 local a,b;
@@ -98,8 +98,11 @@ m:=arg[3];
 ispsl:=Name(G){[1,2,3]} = "PSL";
 d:=G!.bianchiInteger;
 
-if d mod 4 =1 then R:=Field((1+Sqrt(-d))/2); fi;
-if d mod 4 =2 or d mod 4 = 3 then R:=Field(Sqrt(-d)); fi;
+if d<0 then
+if -d mod 4 =1 then R:=Field((1+Sqrt(d))/2); fi;
+if -d mod 4 =2 or -d mod 4 = 3 then R:=Field(Sqrt(d)); fi;
+fi;
+if d>0 then R:=Field(Sqrt(d)); fi;
 
 x:=Indeterminate(R,1);;
 y:=Indeterminate(R,2);;
