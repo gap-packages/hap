@@ -83,7 +83,7 @@ SetPackageInfo( rec(
 			       [ "edim",      ">=1.2.2" ],
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
-                               [ "HAPcryst", ">=0.1.12" ],
+                               [ "HAPcryst", ">=0.0.0" ],
                                [ "xmod", ">0.0" ],
 			      ],
 
