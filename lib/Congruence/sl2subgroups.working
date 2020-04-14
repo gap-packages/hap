@@ -84,12 +84,12 @@ local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 U:=S*T;
-U1:=S*U; 
+U1:=S*U;
 U2:=S*U^2;
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
 
-tree:=[];
+tree:=[ ,[1,1],[1,2]];
 leaves:=NewDictionary(S,true,SL(2,Integers));
 nodes:=NewDictionary(S,true,SL(2,Integers));
 
@@ -129,13 +129,9 @@ end;
 
 v:=1;;
 nodes:=[];
-if not S in G then v:=v+1; AddDictionary(leaves,S,v); tree[v]:=[1,0]; 
-Add(nodes,S);fi;
-if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); tree[v]:=[1,1];
-Add(nodes,U1);fi;
-if not U2 in G then v:=v+1; AddDictionary(leaves,U2,v); tree[v]:=[1,2];
-Add(nodes,U2);fi;
-Add(nodes,S^0);
+if not S in G then v:=v+1; AddDictionary(leaves,S,v); Add(nodes,S);fi;
+if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); Add(nodes,U1);fi;
+if not U2 in G then v:=v+1; AddDictionary(leaves,U2,v); Add(nodes,U2);fi;
 nodes:=SSortedList(nodes);
 
 generators:=[];
@@ -185,10 +181,23 @@ U2:=S*U^2;
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
 
+#if U^2 in G or U^3 in G then return fail; fi;
+#For the moment we only handle groups that act freely on the vertices of
+#the cubic tree.
 
 tree:=[ ];
+#Despite what is written in the comments, tree is a set of RIGHT cosets reps.
+#tree is a list with i-th entry equal to an integer pair [j,s] denoting
+#that there is a directed edge in the tree from vertex i to vertex j and
+#where the edge is G[i]=U^s*S*G[j] ---> G[j]. Here G[j] is the i-th
+#element of the group G. We let G[1] be the identity
+#matrix. Vertex 1 is the root of the tree and so tree[1] is unbound.
+#Initially just vertices 2,3 and 4 point to a vertex (namely to vertex 1).
 
 leaves:=NewDictionary(S,true,SL(2,Integers));
+#leaves is a list of matrices corresponding to just those tree vertices that
+#currently have degree = 1 or 2. Looking up a matrix in the dictionary
+#yields an integer n where n is the tree vertex corresponding to the matrix.
 
 ###########################################
 csts:=[];
