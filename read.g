@@ -205,6 +205,7 @@ ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
 ##################### CONGRUENCE ######################################
 ReadPackageHap( "lib/Congruence/cong.gi");
 ReadPackageHap( "lib/Congruence/hecke.gi");
+#ReadPackageHap( "lib/Congruence/sl2subgroups.improving");
 ReadPackageHap( "lib/Congruence/sl2subgroups.gi");
 ReadPackageHap( "lib/Congruence/sl2word.gi");
 ReadPackageHap( "lib/Congruence/cuspidal.gi");

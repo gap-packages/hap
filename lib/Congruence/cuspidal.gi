@@ -45,7 +45,7 @@ f:=GroupHomomorphismByFunction(S!.group,T!.group,x->x);;
 eqmap2:=EquivariantChainMap(S,T,f);
 
 
-A:=HomogeneousPolynomials(k);
+A:=HomogeneousPolynomials(R!.group,k);
 cmap1:=HomToIntegralModule(eqmap,A);
 cmap2:=HomToIntegralModule(eqmap2,A);
 cmap:=Compose(cmap1,cmap2);
