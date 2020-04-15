@@ -404,7 +404,7 @@ T:=[[1,1],[0,1]];
 one:=One(sln);
 U:=S*T*one;
 
-G!.ugrp:=Group((S*T)^2);
+G!.ugrp:=Group((S*T)^0);
 G!.name:="CongruenceSubgroupGamma0";
 return G;
 
