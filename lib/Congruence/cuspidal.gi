@@ -22,7 +22,8 @@ SB:=ResolutionFiniteSubgroup(RB,H);;
 f:=GroupHomomorphismByFunction(SB!.group,S!.group,x->x);;
 eqmap:=EquivariantChainMap(SB,S,f);;
 
-t:=Length(H!.tree);
+#t:=Length(H!.tree);  #Not true!!!!!
+t:=SB!.dimension(0);
    fn:=function(x);
    if AbsInt(x[1])<=t then
       return [SignInt(x[1])*(AbsInt(x[1])+t),x[2]];

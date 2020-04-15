@@ -131,8 +131,7 @@ v:=1;;
 nodes:=[];
 if not S in G then v:=v+1; AddDictionary(leaves,S,v); tree[v]:=[1,0]; 
 Add(nodes,S);fi;
-if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); tree[v]:=[1,1];
-Add(nodes,U1);fi;
+if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); tree[v]:=[1,1]; Add(nodes,U1); fi;
 if not U2 in G then v:=v+1; AddDictionary(leaves,U2,v); tree[v]:=[1,2];
 Add(nodes,U2);fi;
 Add(nodes,S^0);
@@ -381,7 +380,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
 function(n)
-local G,sl, sln, S, T, U, Ugrp, membership, 
+local G,sl, sln, S, T, U,  membership, 
       one,g,x,y,a;
 
 sl:=SL(2,Integers);
@@ -404,9 +403,8 @@ S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 one:=One(sln);
 U:=S*T*one;
-Ugrp:=Elements(Group(U^0));
 
-G!.ugrp:=Group((S*T)^0);
+G!.ugrp:=Group((S*T)^2);
 G!.name:="CongruenceSubgroupGamma0";
 return G;
 
