@@ -9,7 +9,10 @@ n:=arg[2];
 if Length(arg)>2 then m:=arg[3]; else m:=0; fi;
 
 if IsBound(G!.bianchiInteger) then
-return HomogeneousPolynomials_Bianchi(G,n,m); fi;
+if IsInt(G!.bianchiInteger) then
+return HomogeneousPolynomials_Bianchi(G,n,m); 
+fi;
+fi;
 n:=n+m;
 
 x:=Indeterminate(Rationals,1);;

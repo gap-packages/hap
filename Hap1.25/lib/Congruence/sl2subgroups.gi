@@ -79,40 +79,19 @@ end);
 InstallGlobalFunction(HAP_SL2SubgroupTree_slow,
 function(G)
 local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,
-      leaves,generators,Perturb, InLeavesAndGensModG, csts;
-
-#This function is mainly of theoretical value and not nearly as 
-#fast as the fast version. Furthermore, at present it works only
-#for the principal congruence subgroups.
+      leaves,nodes,generators,Perturb, InLowDegreeNodesModG, csts;
 
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 U:=S*T;
-U1:=S*U;
+U1:=S*U; 
 U2:=S*U^2;
-
 Ugrp:=G!.ugrp;
-
 Ugrp:=Elements(Ugrp);
 
-#if U^2 in G or U^3 in G then return fail; fi;
-#For the moment we only handle groups that act freely on the vertices of
-#the cubic tree.
-
-tree:=[ , [1,0],[1,1],[1,2]];
-#Despite what is written in all the LEFTIST comments, 
-#tree is a set of RIGHT cosets reps.
-#tree is a list with i-th entry equal to an integer pair [j,s] denoting
-#that there is a directed edge in the tree from vertex i to vertex j and 
-#where the edge is G[i]=U^s*S*G[j] ---> G[j]. Here G[j] is the i-th 
-#element of the group G. We let G[1] be the identity 
-#matrix. Vertex 1 is the root of the tree and so tree[1] is unbound.
-#Initially just vertices 2,3 and 4 point to a vertex (namely to vertex 1).
-
+tree:=[];
 leaves:=NewDictionary(S,true,SL(2,Integers));
-#leaves is a list of matrices corresponding to just those tree vertices that 
-#currently have degree = 1 or 2. Looking up a matrix in the dictionary 
-#yields an integer n where n is the tree vertex corresponding to the matrix. 
+nodes:=NewDictionary(S,true,SL(2,Integers));
 
 ###########################################
 InGmodU:=function(g)
@@ -125,18 +104,13 @@ end;
 ###########################################
 
 ###########################################
-InLeavesAndGensModG:=function(g)
+InLowDegreeNodesModG:=function(g)
 local x,gg,B1,B2;
 gg:=g^-1;
 
-for x in leaves!.entries do
-if InGmodU(x[1]*gg) then return x[1]; fi;
+for x in nodes do
+if InGmodU(x*gg) then return x; fi;
 od;
-for x in gens do
-if InGmodU(x[1]*gg) then RemoveSet(gens,x); return x[1]; fi;
-if InGmodU(x[3]*gg) then RemoveSet(gens,x); return x[3]; fi;
-od;
-
 
 return false;
 end;
@@ -153,10 +127,15 @@ return fail;
 end;
 ###########################################
 
-
-AddDictionary(leaves,S,2);
-AddDictionary(leaves,U1,3);
-AddDictionary(leaves,U2,4);
+v:=1;;
+nodes:=[];
+if not S in G then v:=v+1; AddDictionary(leaves,S,v); tree[v]:=[1,0]; 
+Add(nodes,S);fi;
+if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); tree[v]:=[1,1]; Add(nodes,U1); fi;
+if not U2 in G then v:=v+1; AddDictionary(leaves,U2,v); tree[v]:=[1,2];
+Add(nodes,U2);fi;
+Add(nodes,S^0);
+nodes:=SSortedList(nodes);
 
 generators:=[];
 gens:=[];
@@ -167,12 +146,12 @@ vv:=leaves!.entries[1];
 v:=vv[1];
     for s in [1,2] do
         if s=1 then g:=v*U1; else g:=v*U2; fi;
-        q:=InLeavesAndGensModG(g);
+        q:=InLowDegreeNodesModG(g);
         if q=false then AddDictionary(leaves,g,1+Size(tree)); 
+         AddSet(nodes,g);
             p:=LookupDictionary(leaves,v);
             Add(tree,[p, s]);
             else Add(generators,[v,g,q]);
-                 AddSet(gens,[v,g,q]);
         fi;
     od;
 RemoveDictionary(leaves,v);
@@ -195,7 +174,7 @@ end);
 InstallGlobalFunction(HAP_SL2SubgroupTree_fast,
 function(G)
 local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,Lift,
-      leaves,generators,Perturb, InLeavesAndGensModG, csts;
+      leaves,generators,Perturb, InLowDegreeNodesModG, csts;
 
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
@@ -205,27 +184,14 @@ U2:=S*U^2;
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
 
-#if U^2 in G or U^3 in G then return fail; fi;
-#For the moment we only handle groups that act freely on the vertices of
-#the cubic tree.
 
 tree:=[ ];
-#Despite what is written in the comments, tree is a set of RIGHT cosets reps.
-#tree is a list with i-th entry equal to an integer pair [j,s] denoting
-#that there is a directed edge in the tree from vertex i to vertex j and
-#where the edge is G[i]=U^s*S*G[j] ---> G[j]. Here G[j] is the i-th
-#element of the group G. We let G[1] be the identity
-#matrix. Vertex 1 is the root of the tree and so tree[1] is unbound.
-#Initially just vertices 2,3 and 4 point to a vertex (namely to vertex 1).
 
 leaves:=NewDictionary(S,true,SL(2,Integers));
-#leaves is a list of matrices corresponding to just those tree vertices that
-#currently have degree = 1 or 2. Looking up a matrix in the dictionary
-#yields an integer n where n is the tree vertex corresponding to the matrix.
 
 ###########################################
 csts:=[];
-InLeavesAndGensModG:=function(g);
+InLowDegreeNodesModG:=function(g);
 if not IsBound(csts[G!.cosetPos(g)]) then return false; fi;
 return G!.cosetRep(g);
 end;
@@ -266,7 +232,7 @@ v:=vv[1];
     for s in [1,2] do
         if s=1 then g:=v*U1; 
         else  g:=v*U2; fi;
-        q:=InLeavesAndGensModG(g);
+        q:=InLowDegreeNodesModG(g);
         if q=false then
              AddDictionary(leaves,g,1+Size(tree));
              #p:=LookupDictionary(leaves,v);
@@ -350,7 +316,6 @@ one:=One(sln);
 U:=S*T*one;
 Ugrp:=Group(U);
 Uelts:=Elements(Ugrp);
-#R:=RightTransversal(sln,Ugrp);
 RR:=Enumerator(sln);;
 R:=[];;
 for g in RR do
@@ -415,8 +380,8 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
 function(n)
-local G,sl, sln, S, T, U, Ugrp, R,RR, UT,membership, CosetRep, CosetPos,
-      Uelts, one,g,x,y,a;
+local G,sl, sln, S, T, U,  membership, 
+      one,g,x,y,a;
 
 sl:=SL(2,Integers);
 
@@ -438,50 +403,7 @@ S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 one:=One(sln);
 U:=S*T*one;
-#UT:=Filtered(Elements(sln),IsUpperTriangularMat);
-UT:=[];
-for a in [1..n] do
-if Gcd(a,n)=1 then Add(UT,[[a,0],[0,a^-1]]*one); fi;
-od;
-Add(UT,[[1,1],[0,1]]*one);
-UT:=Group(UT);
-Uelts:=Elements(UT);
-Ugrp:=Elements(Group(U^0));
 
-RR:=RightTransversal(sln,UT);
-#RR:=Enumerator(sln);;
-R:=[];;
-for g in RR do
-x:=Minimum(List(Uelts,u->u*g));
-Add(R,SSortedList(Ugrp*x));
-od;
-R:=SSortedList(R);
-
-###################################################
-CosetPos:=function(g)
-local gg,y,a;
-gg:=g*one;
-gg:=Minimum(List(Uelts,u->u*gg));
-
-a:=Position(R,SSortedList(Ugrp*gg));
-if not a=fail then return a; fi;
-
-return fail;
-end;
-###################################################
-###################################################
-CosetRep:=function(g)
-local gg;
-gg:=g*one;
-gg:=Minimum(List(Uelts,u->u*gg));
-gg:=Uelts*gg;
-return gg[1];
-
-end;
-###################################################
-
-G!.cosetPos:=CosetPos;
-G!.cosetRep:=CosetRep;
 G!.ugrp:=Group((S*T)^0);
 G!.name:="CongruenceSubgroupGamma0";
 return G;
