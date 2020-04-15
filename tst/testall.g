@@ -5,8 +5,13 @@ TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra" ),
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
 TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
+  rec(exitGAP     := false,
+      testOptions := rec(compareFunction := "uptowhitespace") ) );
+
+TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall2" ),
   rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
+
 
 
 FORCE_QUIT_GAP(1); # if we ever get here, there was an error
