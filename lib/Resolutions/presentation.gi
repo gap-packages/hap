@@ -68,7 +68,7 @@ end;
 
 start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
 
-if Length(Intersection(start))=0 then
+if Length(Intersection(start))=0 then 
 ###############################################
 Boundary:=function(n,k)
 local w;
@@ -81,7 +81,7 @@ end;
 start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
 fi;
 
-start:=SortedList(Intersection(start))[1];
+start:=SortedList(Intersection(start))[1]; 
 
 
 #####################################################################
