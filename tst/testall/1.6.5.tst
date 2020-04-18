@@ -1,6 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> D:=[];; n:=60;;
+gap> D:=[];; n:=30;;
 gap> for p in [1..20]*(1/500) do
 > Y:=RandomSimplicialTwoComplex(n,p);;
 > G:=FundamentalGroup(Y);

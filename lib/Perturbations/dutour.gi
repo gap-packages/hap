@@ -178,6 +178,7 @@ end;
 ####################
 
 if name="SL2Z" then G:=SL(2,Integers); fi;
+SetName(G,"matrix group");
 
 return Objectify(HapNonFreeResolution,
             rec(

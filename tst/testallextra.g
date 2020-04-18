@@ -8,6 +8,10 @@ TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
   rec(exitGAP     := false,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
+TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall2" ),
+  rec(exitGAP     := false,
+      testOptions := rec(compareFunction := "uptowhitespace") ) );
+
 TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextraextra" ),
   rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );

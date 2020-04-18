@@ -1,5 +1,5 @@
 gap> START_TEST("HAP library");
-gap> n:=20;; Betti2:=[];; Betti3:=[];;
+gap> n:=15;; Betti2:=[];; Betti3:=[];;
 gap> for p in [0..10]*(1/200) do
 > Y:=RandomSimplicialTwoComplex(n,p);;
 > K:=CliqueComplex(Y,4);;

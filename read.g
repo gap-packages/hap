@@ -208,6 +208,7 @@ ReadPackageHap( "lib/Congruence/hecke.gi");
 ReadPackageHap( "lib/Congruence/sl2subgroups.gi");
 ReadPackageHap( "lib/Congruence/sl2word.gi");
 ReadPackageHap( "lib/Congruence/cuspidal.gi");
+ReadPackageHap( "lib/Congruence/quadraticIntegers.gi");
 
 
 
