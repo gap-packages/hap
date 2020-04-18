@@ -1,11 +1,9 @@
 DeclareFilter("IsQuadraticNF");
-DeclareAttribute("QuadraticNF",IsQuadraticNF);
+DeclareProperty("QuadraticNF",IsQuadraticNF);
 DeclareFilter("IsRingOfQuadraticIntegers");
-DeclareAttribute("RingOfQuadraticIntegers",IsRingOfQuadraticIntegers);
-DeclareFilter("HasAssociatedNF");
-DeclareAttribute("AssociatedNumberField",HasAssociatedNF);
-DeclareFilter("HasAssociatedRing");
-DeclareAttribute("AssociatedRing",HasAssociatedRing);
+DeclareProperty("RingOfQuadraticIntegers",IsRingOfQuadraticIntegers);
+DeclareAttribute("AssociatedNumberField",IsNumberField);
+DeclareAttribute("AssociatedRing",IsRing);
 DeclareGlobalFunction("QuadraticNumberField");
 DeclareOperation("RingOfIntegers",[IsNumberField]);
 DeclareOperation("PrincipalIdeal",[IsRing and IsRingOfQuadraticIntegers, IsObject]);

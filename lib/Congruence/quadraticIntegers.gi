@@ -5,7 +5,7 @@ function(d)
 local F;
 F:=Field(Sqrt(d));
 F!.bianchiInteger:=d;
-Setter(IsQuadraticNumberField)(F,true);
+Setter(IsQuadraticNF)(F,true);
 SetName(F,Concatenation("Rationals( Sqrt(", String(d), ") )"  ));
 return F;
 end);
@@ -27,7 +27,7 @@ if d mod 4 =2 or d mod 4 = 3 then D:=Sqrt(d); fi;
 R:=Ring(D);
 R!.bianchiInteger:=d;
 Setter(IsRingOfQuadraticIntegers)(R,true);
-Setter(AssociatedField)(R,F);
+Setter(AssociatedNumberField)(R,F);
 SetName(R,Concatenation("ring of integers of ",Name(F)));
 
 return R;
@@ -41,7 +41,7 @@ InstallOtherMethod(Norm,
 "Norm of an element in a ring of quadratic integers",
 [IsRingOfQuadraticIntegers,IsObject],
 function(R,x)
-return Norm(AssociatedField(R),x);
+return Norm(AssociatedNumberField(R),x);
 end);
 ##########################################################
 ##########################################################
@@ -52,7 +52,7 @@ InstallOtherMethod(Trace,
 "Trace of an element in a ring of quadratic integers",
 [IsRingOfQuadraticIntegers,IsObject],
 function(R,x)
-return Trace(AssociatedField(R),x);
+return Trace(AssociatedNumberField(R),x);
 end);
 ##########################################################
 ##########################################################

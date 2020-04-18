@@ -17,7 +17,7 @@ fi;
 
 
 TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-  rec(exitGAP     := false,
+  rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
 
