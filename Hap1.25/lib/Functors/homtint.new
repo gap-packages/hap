@@ -1,0 +1,127 @@
+
+########################################################
+########################################################
+InstallGlobalFunction(HomToInt_ChainComplex,
+function(C)
+local D, DimensionD, BoundaryD, BoundaryDrec, len, n, k,i, A;
+
+################################
+################################
+if not IsHapChainComplex(C) then
+Print("Error: input must be a chain complex.\n");
+return fail;
+fi;
+
+if not EvaluateProperty(C,"characteristic")=0 then
+Print("Error: chain complex must have characteristic 0.\n"); 
+return fail;
+fi;
+################################
+################################
+
+len:=Length(C);
+BoundaryDrec:=[];
+
+################################
+################################
+DimensionD:=function(n);
+if n<0 or n>len then return 0; fi;
+
+return C!.dimension(n);
+end;
+################################
+################################
+
+for n in [1..len] do
+for k in [1..C!.dimension(n)] do
+C!.boundary(n,k);
+od;
+od;
+
+#######################
+BoundaryD:=function(n,k);
+if n<0 or n>=len then return [0]; fi;
+
+if not IsBound(BoundaryDrec[n+1]) then
+A:=BoundaryMatrix(C,n+1);
+if Length(A)=0 then A:=[[0]]; fi;   
+BoundaryDrec[n+1]:=A;
+fi;
+
+return BoundaryDrec[n+1][k];
+end;
+#######################
+
+D:=Objectify(HapCochainComplex,
+                rec(
+                dimension:=DimensionD,
+                boundary:=BoundaryD,
+                properties:=
+                [["length",len],
+                ["type", "cochainComplex"],
+                ["characteristic",0 ] ]));
+
+return D;
+
+end);
+###############################################################
+###############################################################
+
+##########################################
+##########################################
+InstallGlobalFunction(HomToInt_ChainMap,
+function(arg)
+local F,S, T, HS, HT, HF, HThomHS, homrec, A, n;
+
+F:=arg[1];
+S:=Source(F);
+HS:=HomToIntegers(S);
+T:=Target(F);
+HT:=HomToIntegers(T);
+
+#homrec:=[];
+#for n in [0..Maximum(Length(S),Length(T))] do
+#A:=IdentityMat(S!.dimension(n));
+#Apply(A,v->F!.mapping(v,n));
+#A:=TransposedMat(A);
+#Add(homrec,A);
+#od;
+
+#################
+#HThomHS:=function(v,n);
+#return v*homrec[n+1];
+#end;
+#################
+
+#################
+HThomHS:=function(v,n)
+local rowA, ans, k,w;
+
+rowA:=0*[1..S!.dimension(n)];
+
+ans:=0*List([1..S!.dimension(n)]);
+
+for k in [1..Length(ans)] do
+w:=0*v;
+rowA[k]:=1;
+ans[k]:=v*F!.mapping(rowA,n);
+od;
+return ans;
+end;
+#################
+
+
+return Objectify(HapCochainMap,
+        rec(
+           source:=HT,
+           target:=HS,
+           mapping:=HThomHS,
+           properties:=[ ["type","cochainMap"],
+           ["characteristic", Maximum(
+           EvaluateProperty(F!.source,"characteristic"),
+           EvaluateProperty(F!.target,"characteristic"))]
+           ]));
+
+end);
+##########################################
+##########################################

@@ -1,0 +1,27 @@
+gap> Y:=PureComplexComplement(K);
+Pure permutahedral complex of dimension 3.
+gap> Size(Y);
+418922
+
+gap> YY:=ZigZagContractedComplex(Y);
+Pure permutahedral complex of dimension 3.
+gap> Size(YY);
+3438
+
+gap> W:=RegularCWComplex(YY);
+Regular CW-complex of dimension 3
+
+gap> f:=BoundaryMap(W);
+Map of regular CW-complexes
+
+gap> CriticalCells(Source(f));
+[ [ 2, 1 ], [ 2, 261 ], [ 1, 1043 ], [ 1, 1626 ], [ 0, 2892 ], [ 0, 24715 ] ]
+
+gap> F:=FundamentalGroup(f,2892);
+[ f1, f2 ] -> [ f2*f1^-3*f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-1*f2^-1*f1^2*f2^-1 ]
+
+gap> G:=Target(F);
+&lt;fp group on the generators [ f1, f2 ]>
+gap> RelatorsOfFpGroup(G);
+[ f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-2*f2^-1*f1*(f1*f2^-1)^2 ]
+

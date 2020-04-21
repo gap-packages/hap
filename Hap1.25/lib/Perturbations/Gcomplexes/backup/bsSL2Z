@@ -1,0 +1,47 @@
+HAP_GCOMPLEX_SETUP:=[true];
+
+HAP_GCOMPLEX_LIST:=
+
+
+[
+[rec(TheMatrixStab:=Group([  [[1,1],[-1,0]] ]), 
+     TheRotSubgroup:=Group([  [[1,1],[-1,0]] ]), 
+     BoundaryImage:=rec(ListIFace:=[], 
+                        ListSign:=[],
+                        ListElt:=[])),
+
+rec(TheMatrixStab:=Group([  -IdentityMat(2), [[1,0],[0,1]] ]),
+    TheRotSubgroup:=Group([ -IdentityMat(2), [[1,0],[0,1]] ]),
+    BoundaryImage:=rec(ListIFace:=[],
+                        ListSign:=[],
+                        ListElt:=[]))
+],
+[rec(TheMatrixStab:=Group([ [[0,1],[-1,0]] ]), 
+     TheRotSubgroup:=Group([-IdentityMat(2)]),
+     BoundaryImage:=rec(ListIFace:=[1,1],
+                        ListSign:=[1,-1],
+                        #ListElt:=[IdentityMat(2), [[0,1],[-1,0]] ])),
+                        ListElt:=[IdentityMat(2), [[1,-1],[0,1]] ])),
+
+rec(TheMatrixStab:=Group([ -IdentityMat(2) ]),
+     TheRotSubgroup:=Group([-IdentityMat(2)]),
+     BoundaryImage:=rec(ListIFace:=[2,1],
+                        ListSign:=[1,-1],
+                        ListElt:=[IdentityMat(2), IdentityMat(2) ])),
+
+rec(TheMatrixStab:=Group([ -IdentityMat(2) ]),
+     TheRotSubgroup:=Group([-IdentityMat(2) ]),
+     BoundaryImage:=rec(ListIFace:=[2,2],
+                        ListSign:=[1,-1],
+                        ListElt:=[IdentityMat(2), [[1,-1],[0,1]] ]))
+],
+[
+rec(TheMatrixStab:=Group([ -[[1,0],[0,1]] ]),
+     TheRotSubgroup:=Group([-[[1,0],[0,1]] ]),
+     BoundaryImage:=rec(ListIFace:=[2,3,2,1],
+                        ListSign:=[1,-1,-1,1],
+                        ListElt:=[IdentityMat(2), IdentityMat(2), 
+                                  [[1,-1],[0,1]], [[1,0],[0,1]] ]))
+]];
+
+HAP_GCOMPLEX_LIST[1][2].TheMatrixStab!.gname:="sl2inf";
