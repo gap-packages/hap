@@ -1,0 +1,44 @@
+gap> Q:=QuadraticNumberField(-7);
+Q(Sqrt(-7))
+
+gap> OQ:=RingOfIntegers(Q);
+O(Q(Sqrt(-7)))
+
+gap> I:=PrincipalIdeal(OQ,5+2*Sqrt(-7));
+principal ideal of norm 53 in O(Q(Sqrt(-7)))
+
+gap> R:=HAPRingModIdeal(I);
+ring mod ideal of norm 53
+
+gap> IsIntegralRing(R);
+true
+
+gap> w:=(1+Sqrt(-7))/2;;
+gap> T:=[[1,1],[0,1]]*One(R);;
+gap> C:=[[1,w],[0,1]]*One(R);;
+gap> S:=[[0,-1],[1,0]]*One(R);;
+gap> G:=Group(S,T,C);; G:=Range(IsomorphismPermGroup(G));;
+gap> StructureDescription(G);
+"SL(2,53)"
+
+gap> IsPeriodic(G);
+true
+gap> CohomologicalPeriod(G);
+52
+
+gap> GroupHomology(G,1);
+[  ]
+gap> GroupHomology(G,2);
+[  ]
+gap> GroupHomology(G,3);
+[ 8, 27, 13 ]
+gap> GroupHomology(G,4);
+[  ]
+gap> GroupHomology(G,5);
+[  ]
+gap> GroupHomology(G,6);
+[  ]
+gap> GroupHomology(G,7);
+[ 8, 27, 13 ]
+gap> GroupHomology(G,8);
+[  ]
