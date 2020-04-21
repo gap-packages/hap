@@ -14,6 +14,7 @@ ReadPackage("HAP","lib/TorsionSubcomplexes/torsionsubcomplex.gd");
 ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gd");
 ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gd");
 ReadPackage("HAP","lib/Congruence/quadraticIntegers.gd");
+ReadPackage("HAP","lib/Congruence/residues.gd");
 
 
 

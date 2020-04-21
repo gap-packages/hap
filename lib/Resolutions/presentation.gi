@@ -194,7 +194,7 @@ while Length(Tips)>0 do
 for t in Tips do 
 for x in gensFF do
 w:=Image(epi,t*x);
-if not w in elts then Add(elts,w); Add(NewTips,t*x);
+if not w in elts then Add(elts,w); Add(NewTips,t*x); 
 ######
 pos:=Position(L,Image(epi,t*x));
 if IsInt(pos) then 
