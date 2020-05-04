@@ -8,15 +8,15 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.25",
-  Date    := "25/01/2020",
+  Version := "1.26",
+  Date    := "04/05/2020",
 
   SourceRepository := rec(
       Type := "git",
       URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
   ),
   IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-  PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+  PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
   README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
   PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
   ArchiveURL      := Concatenation( ~.SourceRepository.URL,
@@ -83,7 +83,7 @@ SetPackageInfo( rec(
 			       [ "edim",      ">=1.2.2" ],
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
-                               [ "HAPcryst", ">0.0" ],
+                               [ "HAPcryst", ">=0.0.0" ],
                                [ "xmod", ">0.0" ],
 			      ],
 
