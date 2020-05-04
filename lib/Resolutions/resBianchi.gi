@@ -49,8 +49,11 @@ end);
 ################################################
 ################################################
 InstallGlobalFunction(ResolutionSL2QuadraticIntegers,
-function(d,n)
-local K, PK, R, S, D, name, ints,x;
+function(arg)
+local d,n,K, PK, R, S, D, name, ints,x, gens, Q,OQ,I,G,i,k;
+
+d:=arg[1];
+n:=arg[2];
 
 ints:=[ -1, -2, -3, -5, -6, -7, -10, -11, -13, -14, -15, -17, -19, -21, -22, -23, -26, -43, -67, -163, "-26+I", "-22+I", "-21+I2", "-21+I3", "-21+I4", "-17+I", "-15+I", "-14+I", "-13+I", "-10+I", "-6+I", "-5+I"  ];
 if not d in ints then
@@ -80,6 +83,20 @@ fi;
 #name:=Concatenation("P",name);
 SetName(R!.group,name);
 
+if Length(arg)=3 then
+  if arg[3]=true then
+  for k in [1..n] do
+    for i in [1..R!.dimension(k)] do
+    R!.boundary(k,i);
+    od; 
+  od;
+  Q:=QuadraticNumberField(d);;OQ:=RingOfIntegers(Q);;I:=QuadraticIdeal(OQ,1);;
+  Apply(R!.elts,x->HAP_4x4MatTo2x2Mat(x,d));
+  G:=HAP_CongruenceSubgroupGamma0(I);;
+  G!.tree:=true;
+  R!.group:=G;
+  fi;
+fi;
 return R;
 end);
 ################################################
@@ -233,5 +250,6 @@ return R;
 end);
 ################################################
 ################################################
+
 
 

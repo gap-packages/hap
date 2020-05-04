@@ -1,7 +1,7 @@
 
 ###################################################################
 ###################################################################
-InstallGlobalFunction(HAP_GenericSL2Subgroup,
+InstallGlobalFunction(HAP_GenericSL2ZSubgroup,
 function()
 local type, G;
 
@@ -10,7 +10,7 @@ local type, G;
                      IsAttributeStoringRep and
                      IsFinitelyGeneratedGroup and
                      IsMatrixGroup and
-                     IsHapSL2Subgroup);
+                     IsHapSL2ZSubgroup);
 
 G:=rec(
     membership:= fail,
@@ -26,6 +26,7 @@ ObjectifyWithAttributes(G, type,
 DimensionOfMatrixGroup, 2,
 IsIntegerMatrixGroup, true,
 IsFinite, false,
+IsHapSL2ZSubgroup, true,
 IsHapSL2Subgroup, true);
 
 return G;
@@ -48,7 +49,7 @@ end);
 ###################################################################
 ###################################################################
 InstallMethod(GeneratorsOfGroup,
-"Generating set for Hap_SL2Subgroups",
+"Generating set for Hap_SL2ZSubgroups",
 [IsHapSL2Subgroup and IsGroup],
 1000000,  #There must be a better way to ensure this method is used!
 function(G)
@@ -62,12 +63,17 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_SL2SubgroupTree,
 function(G);
+    
 if G!.tree=fail then
+ if IsRing(G!.level) then
+      HAP_SL2OSubgroupTree_slow(G);
+ else  
    if G!.cosetRep=fail then 
-      HAP_SL2SubgroupTree_slow(G);
+      HAP_SL2ZSubgroupTree_slow(G);
    else
-      HAP_SL2SubgroupTree_fast(G);
+      HAP_SL2ZSubgroupTree_fast(G);
    fi;
+ fi;
 fi;
 end);
 ###################################################################
@@ -76,7 +82,7 @@ end);
 
 ###################################################################
 ###################################################################
-InstallGlobalFunction(HAP_SL2SubgroupTree_slow,
+InstallGlobalFunction(HAP_SL2ZSubgroupTree_slow,
 function(G)
 local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,
       leaves,nodes,generators,Perturb, InLowDegreeNodesModG, csts;
@@ -91,8 +97,8 @@ Ugrp:=Elements(Ugrp);
 
 tree:=[];
 leaves:=NewDictionary(S,true,SL(2,Integers));
-nodes:=NewDictionary(S,true,SL(2,Integers));
 
+if Size(Ugrp)>1 then
 ###########################################
 InGmodU:=function(g)
 local x;
@@ -102,6 +108,9 @@ od;
 return false;
 end;
 ###########################################
+else
+     InGmodU:=G!.membership;
+fi;
 
 ###########################################
 InLowDegreeNodesModG:=function(g)
@@ -116,7 +125,7 @@ return false;
 end;
 ###########################################
 
-
+if Size(Ugrp)>0 then
 ###########################################
 Perturb:=function(g)
 local u;
@@ -126,6 +135,9 @@ od;
 return fail;
 end;
 ###########################################
+else
+     Perturb:=function(g); return g; end;
+fi;
 
 v:=1;;
 nodes:=[];
@@ -171,7 +183,7 @@ end);
 
 ###################################################################
 ###################################################################
-InstallGlobalFunction(HAP_SL2SubgroupTree_fast,
+InstallGlobalFunction(HAP_SL2ZSubgroupTree_fast,
 function(G)
 local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,Lift,
       leaves,generators,Perturb, InLowDegreeNodesModG, csts;
@@ -197,7 +209,7 @@ return G!.cosetRep(g);
 end;
 ###########################################
 
-
+if Size(Ugrp)>1 then
 ###########################################
 Perturb:=function(g)
 local u;
@@ -207,6 +219,9 @@ od;
 return [fail,g];
 end;
 ###########################################
+else 
+    Perturb:=function(g); return g; end;
+fi;
 
 
 AddDictionary(leaves,S,2);
@@ -291,9 +306,12 @@ function(n)
 local G,sl, sln, S, T, U, Ugrp, R,RR, membership, CosetRep, CosetPos, 
       Uelts, one,g;
 
-sl:=SL(2,Integers);
+if IsRing(n) then return
+   HAP_PrincipalCongruenceSubgroupIdeal(n);
+fi;
 
-G:=HAP_GenericSL2Subgroup();
+sl:=SL(2,Integers);
+G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
 membership:=function(g);
@@ -309,9 +327,18 @@ end;
 G!.membership:=membership;
 G!.level:=n;
 G!.name:="PrincipalCongruenceSubgroup";
+G!.index:=n^3*Product(List(SSortedList(Factors(n)), p->1-1/p^2));
 sln:=SL(2,Integers mod n);
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
+
+##############################################
+if n<=2 then
+G!.ugrp:=Group((S*T)^0);
+G!.name:="CongruenceSubgroupGamma0";
+return G;
+fi;
+##############################################
 one:=One(sln);
 U:=S*T*one;
 Ugrp:=Group(U);
@@ -380,12 +407,14 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
 function(n)
-local G,sl, sln, S, T, U,  membership, 
-      one,g,x,y,a;
+local G,sl,S,T,membership,g,x,y,a;
+
+if IsRing(n) then
+    return HAP_CongruenceSubgroupGamma0Ideal(n);
+fi;
 
 sl:=SL(2,Integers);
-
-G:=HAP_GenericSL2Subgroup();
+G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
 membership:=function(g);
@@ -398,14 +427,12 @@ end;
 G!.membership:=membership;
 G!.level:=n;
 
-sln:=SL(2,Integers mod n);
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
-one:=One(sln);
-U:=S*T*one;
 
 G!.ugrp:=Group((S*T)^0);
 G!.name:="CongruenceSubgroupGamma0";
+G!.index:=n*Product(List(SSortedList(Factors(n)), p->1+1/p));
 return G;
 
 end);
@@ -416,8 +443,10 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_TransversalCongruenceSubgroups,
 function(G,H)
-local gensG, gensH, N, GN, HN, R, x, sln, one, epi;
+local gensG, gensH, N, GN, iso, HN, R, R2, x, sln, one, epi, epi2, poscan;
 
+#AT PRESENT THIS APPROACH IS SLOW AND SO RANKED VERY LOW AS A METHOD
+Print("HAP should not be using this method.\n");
 gensH:=GeneratorsOfGroup(H);
 for x in gensH do
 if not x in G then
@@ -425,18 +454,31 @@ Print("The second argument is not a subgroup of the first.\n");
 return fail;fi;
 od;
 gensG:=GeneratorsOfGroup(G);
-#GG:=Group(gensG);;
 N:=H!.level;
 
 sln:=SL(2,Integers mod N);
 one:=One(sln);
 GN:=Group(gensG*one);
-epi:=GroupHomomorphismByImagesNC(G,GN,gensG,gensG*one);
-HN:=Group(gensH*one);
-R:=RightTransversal(GN,HN);
-R:=List(R,x->PreImagesRepresentative(epi,x));
+iso:=IsomorphismPermGroup(GN);
+epi:=GroupHomomorphismByImagesNC(G,Image(iso),gensG,List(gensG*one,x->Image(iso,x)));
+epi2:=GroupHomomorphismByFunction(G,GN,x->Image(iso,x*one));
+HN:=Group(List(gensH*one,x->Image(iso,x)));
 
-return R;
+R:=RightTransversal(Image(iso),HN);
+R2:=List(R,x->PreImagesRepresentative(epi,x));
+
+##########################################
+poscan:=function(x);
+return PositionCanonical(R,ImagesRepresentative(epi2,x));
+end;
+##########################################
+return Objectify( NewType( FamilyObj( G ),
+                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsDuplicateFreeList and IsAttributeStoringRep ),
+          rec( group := G,
+               subgroup := H,
+               cosets:=R2,
+               poscan:=poscan ));
 end);
 ###################################################################
 ###################################################################
@@ -445,12 +487,65 @@ end);
 ############################################################
 InstallOtherMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
-[IsHapSL2Subgroup,IsHapSL2Subgroup],
+[IsMatrixGroup,IsHapSL2ZSubgroup],
+0,  #There must be a better way to ensure this method is not used!
 function(H,HH)
-
 return HAP_TransversalCongruenceSubgroups(H,HH);
 
 end);
 ############################################################
 ############################################################
+
+############################################################
+############################################################
+InstallOtherMethod(RightTransversal,
+"right transversal for finite index subgroups of SL2QuadraticIntegers(d))",
+[IsHapSL2OSubgroup,IsHapSL2OSubgroup],
+1000000, #Must be a better way than this to ensure this method
+function(H,HH)
+local N;
+
+if IsPrime(HH!.level) and IsRing(HH!.level) then 
+    N:=HH!.level;
+    if AssociatedRing(N)!.bianchiInteger<0 then
+        return HAP_TransversalGamma0SubgroupsIdeal(H,HH); 
+    fi;
+fi;
+
+return HAP_TransversalCongruenceSubgroupsIdeal(H,HH);
+
+end);
+############################################################
+############################################################
+
+
+############################################################
+############################################################
+InstallMethod(IndexInSL2Z,
+"Index of HAP_congruence subgroup in SL(2,Integers)",
+[IsHapSL2ZSubgroup],
+function(H)
+
+return H!.index;
+
+end);
+############################################################
+############################################################
+
+############################################################
+############################################################
+InstallMethod(IndexInSL2O,
+"Index of HAP_congruence subgroup in SL(2,Integers)",
+[IsHapSL2OSubgroup],
+function(H)
+
+HAP_SL2OSubgroupTree_slow(H);
+H!.index:=Length(H!.tree);
+
+return H!.index;
+
+end);
+############################################################
+############################################################
+
 

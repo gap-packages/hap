@@ -4,13 +4,14 @@ DeclareFilter("RingOfQuadraticIntegers");
 DeclareProperty("IsRingOfQuadraticIntegers",RingOfQuadraticIntegers);
 DeclareAttribute("AssociatedNumberField",IsNumberField);
 DeclareAttribute("AssociatedRing",IsRing);
-DeclareAttribute("NormOfPrincipalIdealGenerator",IsInt);
+DeclareAttribute("NormOfIdeal",IsInt);
 DeclareGlobalFunction("QuadraticNumberField");
 DeclareOperation("RingOfIntegers",[IsNumberField]);
-DeclareOperation("PrincipalIdeal",[IsRing and IsRingOfQuadraticIntegers, IsCyclotomic]);
-DeclareFilter("PrincipalIdealOfRing");
-DeclareProperty("IsPrincipalIdeal",PrincipalIdealOfRing);
-
+DeclareOperation("QuadraticIdeal",[IsRing and IsRingOfQuadraticIntegers, IsCyclotomic]);
+DeclareFilter("IdealOfQuadraticIntegers");
+DeclareProperty("IsIdealOfQuadraticIntegers",IdealOfQuadraticIntegers);
+DeclareGlobalFunction("PartsOfQuadraticInteger");
+DeclareGlobalFunction("SL2QuadraticIntegers");
 
 
 

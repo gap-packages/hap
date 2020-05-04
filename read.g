@@ -172,6 +172,7 @@ ReadPackageHap( "lib/Resolutions/coreducedRes.gi");
 ReadPackageHap( "lib/Resolutions/pseudoLists.gi");
 ReadPackageHap( "lib/Resolutions/resSL2Z.gi");
 ReadPackageHap( "lib/Resolutions/resBianchi.gi");
+ReadPackageHap( "lib/Resolutions/gens.gi");
 
 ##################### RESOLUTIONS MOD P #############################
 ReadPackageHap( "lib/ResolutionsModP/resPrimeGroup.gi");
@@ -209,6 +210,8 @@ ReadPackageHap( "lib/Congruence/sl2subgroups.gi");
 ReadPackageHap( "lib/Congruence/sl2word.gi");
 ReadPackageHap( "lib/Congruence/cuspidal.gi");
 ReadPackageHap( "lib/Congruence/quadraticIntegers.gi");
+ReadPackageHap( "lib/Congruence/sl2o.gi");
+ReadPackageHap( "lib/Congruence/volume.gi");
 
 
 

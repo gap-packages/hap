@@ -1,7 +1,7 @@
 gap> START_TEST("HAP library");
 gap> Q:=QuadraticNumberField(-5);;
 gap> OQ:=RingOfIntegers(Q);;
-gap> I:=PrincipalIdeal(OQ,7);;
+gap> I:=QuadraticIdeal(OQ,7);;
 gap> R:=OQ mod I;;
 gap> RightTransversal(I);;
 gap> IsIntegralRing(R);

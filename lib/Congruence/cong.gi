@@ -4,14 +4,22 @@
 InstallMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
 [IsMatrixGroup,IsMatrixGroup],
+function(H,HH);
+if not IsHapSL2ZSubgroup(HH) then TryNextMethod(); fi;
+
+return HAP_RightTransversalSL2ZSubgroups(H,HH);
+end);
+############################################################
+############################################################
+
+############################################################
+############################################################
+InstallGlobalFunction(HAP_RightTransversalSL2ZSubgroups,
 function(H,HH)
 local F, rels, S, T, G, FhomG, Q, gensQ, epi, ElementToWord,
-gensH, gensHH, QH, QHH, R, R1, R2, s, t, poscan;
+gensH, gensHH, QH, QHH, R, R1, R2, s, t, poscan, iso;
 
 G:=SL(2,Integers);
-if not IsSubgroup(G,H) and IsSubgroup(H,HH) then
-TryNextMethod(); fi;
-
 F:=FreeGroup(2);s:=F.1;t:=F.2;
 rels:=[s^4,(s*t)^3*s^-2];
 S:=[[0,-1],[1,0]];
@@ -28,7 +36,6 @@ local A, d,i, b,L, bool;
 
 #bool is true if S^n was the last added element
 bool:=false;
-
 
 L:=[One(F)];
 A:=1*g; 
@@ -109,10 +116,18 @@ end;
 
 gensH:=List(GeneratorsOfGroup(H),x->ElementToWord(x));
 gensH:=List(gensH,x->Image(epi,x));
+QH:=Subgroup(Q,gensH);
+
+####################
+if HH=false then
+iso:=IsomorphismFpGroup(QH);
+return GroupHomomorphismByFunction(H, Image(iso), x->
+       Image(iso,Image(epi,ElementToWord(x)) ) );
+fi;
+####################
+
 gensHH:=List(GeneratorsOfGroup(HH),x->ElementToWord(x));
 gensHH:=List(gensHH,x->Image(epi,x));
-#gensH:=Concatenation(gensH,gensHH);
-QH:=Subgroup(Q,gensH);
 QHH:=Subgroup(QH,gensHH);
 R1:=RightTransversal(QH,QHH);;
 R2:=List(R1,x->PreImagesRepresentative(epi,x));
@@ -122,6 +137,7 @@ Apply(R2,x->Image(FhomG,x));
 #####################################################
 poscan:=function(g)
 local w;
+
 w:=ElementToWord(g);
 w:=Image(epi,w);
 return PositionCanonical(R1,w);
@@ -130,7 +146,7 @@ end;
 #####################################################
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2Subgroup and IsList and
+                    IsHapRightTransversalSL2ZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := H,
                subgroup := HH,
@@ -144,10 +160,36 @@ end);;
 ###########################################################
 ###########################################################
 InstallOtherMethod(PositionCanonical,
-"for HapRightTransversals of subrougs in SL(2,Z)",
-[IsHapRightTransversalSL2Subgroup,IsObject],
+"for HapRightTransversals of subrougs in SL(2,Z) or SL(2,O)",
+[IsHapRightTransversalSL2ZSubgroup,IsObject],
 function(R,x)
 return R!.poscan(x);
 end);
 ###########################################################
 ###########################################################
+
+
+
+################################################
+################################################
+InstallOtherMethod(IndexNC,
+"index for HapSLOSubgroups",
+[IsMatrixGroup,IsHapSL2ZSubgroup],
+function(G,H);
+return Length(RightTransversal(G,H));
+end);
+################################################
+################################################
+
+################################################
+################################################
+InstallOtherMethod(IndexNC,
+"index for HapSLOSubgroups",
+[IsMatrixGroup,IsHapSL2OSubgroup],
+function(G,H);
+return Length(RightTransversal(G,H));
+end);
+################################################
+################################################
+
+

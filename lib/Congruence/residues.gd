@@ -18,8 +18,8 @@ DeclareGlobalFunction( "HAPRingModIdeal" );
 InstallGlobalFunction( HAPRingModIdeal, function( I )
     local F, R;
  
-    if not IsPrincipalIdeal( I ) then
-      Error( "<I> must be a principal ideal" );
+    if not IsIdealOfQuadraticIntegers( I ) then
+      Error( "<I> must be an  ideal" );
     fi;
  
     # Construct the family of element objects of our ring.
@@ -30,10 +30,10 @@ InstallGlobalFunction( HAPRingModIdeal, function( I )
     F!.modulus:= I;
  
     # Make the domain.
-    R:= RingWithOneByGenerators( [ HAPRingModIdealObj( F, GeneratorsOfRing(AssociatedRing(I))[1] ) ] );
+R:= RingWithOneByGenerators(  List(GeneratorsOfRing(AssociatedRing(I)) , x -> HAPRingModIdealObj( F, x) )  );
     SetIsWholeFamily( R, true );
     SetName( R,  Concatenation("ring mod ideal of norm ", String(Norm(I)))  );
- 
+    R!.associatedIdeal:=I; 
     # Return the ring.
     return R;
  end );
@@ -49,31 +49,34 @@ InstallMethod( \=,
     "for two elements in Z/nZ (ModulusRep)",
     IsIdenticalObj,
     [IsHAPRingModIdealObj and IsHAPIdealRep, IsHAPRingModIdealObj and IsHAPIdealRep],
-    function( x, y ) return x![1] = y![1]; end );
+    function( x, y ) return x![1]  = y![1] ; 
+end );
  
 InstallMethod( \<,
     "for two elements in Z/nZ (ModulusRep)",
     IsIdenticalObj,
     [IsHAPRingModIdealObj and IsHAPIdealRep, IsHAPRingModIdealObj and IsHAPIdealRep],
-    function( x, y ) return x![1] < y![1]; end );
+    function( x, y ) return x![1]  < y![1] ;
+ end );
 
 InstallMethod( \+,
     "for two elements in Z/nZ (ModulusRep)",
     IsIdenticalObj,
     [IsHAPRingModIdealObj and IsHAPIdealRep, IsHAPRingModIdealObj and IsHAPIdealRep],
     function( x, y )
-    return HAPRingModIdealObj( FamilyObj( x ), x![1] + y![1] );
+    return HAPRingModIdealObj( FamilyObj( x ), x![1] + y![1]  ) ;
     end );
  
 InstallMethod( ZeroOp,
     "for element in Z/nZ (ModulusRep)",
     [ IsHAPRingModIdealObj ],
-    x -> HAPRingModIdealObj( FamilyObj( x ), 0 ) );
+    x -> HAPRingModIdealObj( FamilyObj( x ), 0)  );
  
 InstallMethod( AdditiveInverseOp,
     "for element in Z/nZ (ModulusRep)",
     [ IsHAPRingModIdealObj and IsHAPIdealRep ],
-    x -> HAPRingModIdealObj( FamilyObj( x ), AdditiveInverse( x![1] ) ) );
+    x -> HAPRingModIdealObj( FamilyObj( x ), 
+AdditiveInverse( x![1] ) ) );
 
 
 
@@ -81,7 +84,8 @@ InstallMethod( \+,
     "for element in Z/nZ (ModulusRep) and integer",
     [ IsHAPRingModIdealObj and IsHAPIdealRep, IsCyclotomic ],
     function( x, y )
-    return HAPRingModIdealObj( FamilyObj( x ), x![1] + y );
+    return HAPRingModIdealObj( FamilyObj( x ), 
+    (x![1] + y)  );
     end );
 
 InstallMethod( \^,
@@ -89,7 +93,8 @@ InstallMethod( \^,
     [ IsHAPRingModIdealObj and IsHAPIdealRep, IsInt ],
     function( x, n )
     if n>=0 then
-    return HAPRingModIdealObj( FamilyObj( x ), (x![1])^n );
+    return HAPRingModIdealObj( FamilyObj( x ), 
+    ( (x![1])^n )  );
     else
     return HAPRingModIdealObj( FamilyObj( x ), (InverseOp(FamilyObj(x)!.modulus,x![1]))^AbsInt(n) );
     fi; 
@@ -100,7 +105,8 @@ InstallMethod( \+,
     "for integer and element in Z/nZ (ModulusRep)",
     [ IsCyclotomic, IsHAPRingModIdealObj and IsHAPIdealRep ],
     function( x, y )
-    return HAPRingModIdealObj( FamilyObj( y ), x + y![1] );
+    return HAPRingModIdealObj( FamilyObj( y ), 
+(x + y![1])  );
     end );
 
 InstallMethod( \*,
@@ -162,7 +168,7 @@ InstallMethod( PrintObj,
  
 InstallMethod( \mod,
     "for `quadratic Integers', and an ideal",
-    [ IsRingOfQuadraticIntegers, IsPrincipalIdeal ],
+    [ IsRingOfQuadraticIntegers, IsIdealOfQuadraticIntegers ],
     function( Integers, I ) return HAPRingModIdeal( I ); end );
 
 InstallMethod( InverseOp,
@@ -246,7 +252,8 @@ InstallMethod( Random,
 InstallMethod( Size,
     "for full ring Z/nZ",
     [ CategoryCollections( IsHAPRingModIdealObj ) and IsWholeFamily ],
-    R -> ElementsFamily( FamilyObj(R) )!.modulus );
+    #R -> ElementsFamily( FamilyObj(R) )!.modulus );
+    R -> Size( RightTransversal ( R!.associatedIdeal )) );
  
 InstallMethod( Units,
     "for full ring Z/nZ",

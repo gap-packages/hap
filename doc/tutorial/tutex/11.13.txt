@@ -4,20 +4,17 @@ Q(Sqrt(-7))
 gap> OQ:=RingOfIntegers(Q);
 O(Q(Sqrt(-7)))
 
-gap> I:=PrincipalIdeal(OQ,5+2*Sqrt(-7));
-principal ideal of norm 53 in O(Q(Sqrt(-7)))
+gap> I:=QuadraticIdeal(OQ,5+2*Sqrt(-7));
+ideal of norm 53 in O(Q(Sqrt(-7)))
 
-gap> R:=HAPRingModIdeal(I);
+gap> R:=OQ mod I;
 ring mod ideal of norm 53
 
 gap> IsIntegralRing(R);
 true
 
-gap> w:=(1+Sqrt(-7))/2;;
-gap> T:=[[1,1],[0,1]]*One(R);;
-gap> C:=[[1,w],[0,1]]*One(R);;
-gap> S:=[[0,-1],[1,0]]*One(R);;
-gap> G:=Group(S,T,C);; G:=Range(IsomorphismPermGroup(G));;
+gap> gens:=GeneratorsOfGroup( SL2QuadraticIntegers(-7) );;
+gap> G:=Group(gens*One(R));;G:=Image(IsomorphismPermGroup(G));;
 gap> StructureDescription(G);
 "SL(2,53)"
 

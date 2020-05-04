@@ -63,30 +63,64 @@ InstallOtherMethod(IN,
 "for ring of quadratic integers",
 [IsCyclotomic,IsRingOfQuadraticIntegers and IsRing],
 function(x,R)
-local a,b; 
-b:=Trace(R,x);
-if not IsInt(b) then return false; fi;
-a:=Norm(R,x);
-if not IsInt(a) then return false; 
-else return true; fi;;
+local p; 
+
+p:=PartsOfQuadraticInteger(R,x);
+
+if IsInt(p[1]) and IsInt(p[2]) then return true;
+else return false;
+fi;
+
+  
 end);
 ##########################################################
 ##########################################################
 
 ##########################################################
 ##########################################################
-InstallMethod(PrincipalIdeal,
-"principal ideal in a ring of quadratic integers",
-[IsRing and IsRingOfQuadraticIntegers,IsCyclotomic],
-function(R,x)
-local I;
+InstallMethod(QuadraticIdeal,
+"ideal in a ring of quadratic integers",
+[IsRing and IsRingOfQuadraticIntegers, IsCyclotomic],
+function(R,x);
+return QuadraticIdeal(R,[x]);
+end);
+##########################################################
+##########################################################
 
-I:=TwoSidedIdeal(R,[x]);
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(QuadraticIdeal,
+"ideal in a ring of quadratic integers",
+[IsRing and IsRingOfQuadraticIntegers, IsList],
+function(R,X)
+local I, D, N, g, p, q, G, A;
+
+if IsCyclotomic(X) then
+I:=TwoSidedIdeal(R,[X]);
+else
+I:=TwoSidedIdeal(R,X);
+fi;
 Setter(AssociatedRing)(I,R);
-Setter(IsPrincipalIdeal)(I,true);
+Setter(IsIdealOfQuadraticIntegers)(I,true);
 Setter(IsRingOfQuadraticIntegers)(I,false);
-Setter(NormOfPrincipalIdealGenerator)(I,Norm(R,x));
-SetName(I,Concatenation("principal ideal of norm ", String(Norm(I))," in ",Name(R)) );
+
+D:=GeneratorsOfRing(AssociatedRing(I));
+D:=D[1];
+
+G:=GeneratorsOfTwoSidedIdeal(I);
+A:=[];
+for g in G do
+p:=PartsOfQuadraticInteger(R,g);
+q:=PartsOfQuadraticInteger(R,g*D);
+Add(A,p); Add(A,q);
+od;
+N:=HermiteNormalFormIntegerMat(A); #rows are new basis of I
+Setter(NormOfIdeal)(I,N[1][1]*N[2][2]);
+#if R!.bianchiInteger mod 4 = 1 then D:=2*(D-(1/2)); fi;
+I!.hermiteBasis:=[N,D];
+SetName(I,Concatenation("ideal of norm ", String(Norm(I))," in ",Name(R)) );
 return I;
 end);
 ##########################################################
@@ -95,13 +129,20 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(IN,
-"for principal ideal in a ring of quadratic integers",
-[IsCyclotomic,IsPrincipalIdeal and IsRing ],
+"for ideal in a ring of quadratic integers",
+[IsCyclotomic,IsIdealOfQuadraticIntegers and IsRing ],
 function(x,I)
 local g;
 
-g:=GeneratorsOfTwoSidedIdeal(I)[1]; 
-return x*g^-1 in AssociatedRing(I);
+if x mod I = 0 then return true; else return false; fi;
+
+##################This code is never used#########
+#g:=GeneratorsOfTwoSidedIdeal(I)[1]; 
+#if not 
+#IsInt(  Norm(AssociatedRing(I),x) / Norm(I) )
+#then return false; fi;
+#return x*g^-1 in AssociatedRing(I);
+##################################################
 end);
 ##########################################################
 ##########################################################
@@ -110,33 +151,32 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(MOD,
-"for a cyclotomic  and a principal ideal in a ring of quadratic integers",
-[IsCyclotomic,IsPrincipalIdeal and IsRing],
-function(x,I)   #THERE IS A BETTER METHOD!!!
-local n,i,g,norm ;
+"for a cyclotomic  and an ideal in a ring of quadratic integers",
+[IsCyclotomic,IsIdealOfQuadraticIntegers and IsRing],
+function(x,I)   
+local g, N, D, p, int;
 
+############This code is never used################
+#for g in RightTransversal(I) do
+#if g-x in I then return g; fi;
+#od;
+###################################################
 
-if x in I then return 0; fi;
+##############################
+int:=function(y);
+if y>0 or IsInt(y) then return Int(y); 
+else return Int(y)-1; fi;
+end;
+##############################
 
-if IsBound(I!.RightTransversal) then
-for g in I!.RightTransversal do
-if g-x in I then return g; fi;
-od;
-fi;
+N:=I!.hermiteBasis[1];
+D:=I!.hermiteBasis[2];
 
+p:=PartsOfQuadraticInteger(AssociatedRing(I),x);
+p:=p-int(p[1]/N[1][1])*N[1];
+p:=p-int(p[2]/N[2][2])*N[2];
 
-norm:=NormOfPrincipalIdealGenerator(I);
-g:=GeneratorsOfRing(AssociatedRing(I));
-g:=g[1];
-n:=0;
-while true do
-n:=n+1;
-for i in [0..Maximum(n,norm)] do
-if (x - i - (n-i)*g) in I then 
-return i + (n-i)*g;
-fi;
-od;
-od;
+return p[1]+p[2]*D;
 
 end);
 ##########################################################
@@ -146,7 +186,7 @@ end);
 ##########################################################
 InstallOtherMethod(InverseOp,
 "Inverse of an element mod an ideal",
-[IsPrincipalIdeal,IsCyclotomic],
+[IsIdealOfQuadraticIntegers,IsCyclotomic],  #NEED TO IMPROVE THIS!!!
 function(I,x)
 local T,y;
 
@@ -163,36 +203,70 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(Norm,
-"Norm of a principal ideal in a ring of quadratic integers",
-[IsPrincipalIdeal],
+"Norm of an  ideal in a ring of quadratic integers",
+[IsIdealOfQuadraticIntegers],
 function(I)
 local m;
-m:=GeneratorsOfTwoSidedIdeal(I);
-m:=m[1];
-return Norm(AssociatedRing(I),m);
+return I!.NormOfIdeal;
 end);
 ##########################################################
 ##########################################################
 
 
+DeclareOperation("RightTransversal_alt",[IsIdealOfQuadraticIntegers]);
 ##########################################################
 ##########################################################
 InstallOtherMethod(RightTransversal,
 "Coset representatives of an ideal in a ring of quadratic integers",
-[IsPrincipalIdeal],
+[IsIdealOfQuadraticIntegers],
 function(I)
-local cosetreps,leaves,newleaves,isinset,norm,x,y,i,j,D;
+local cosetreps,R,d,D,N,i,j;
+
+if IsBound(I!.RightTransversal) then return I!.RightTransversal; fi;
+R:=AssociatedRing(I);
+d:=R!.bianchiInteger;
+D:=I!.hermiteBasis[2];;
+N:=I!.hermiteBasis[1];
+
+cosetreps:=[];
+for i in [0..N[1][1]-1] do
+for j in [0..N[2][2]-1] do
+Add(cosetreps,i+j*D);
+od;od;
+
+I!.RightTransversal:=cosetreps;
+return cosetreps;
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(RightTransversal_alt,
+"For test purposes only: Coset representatives of an ideal in a ring of quadratic integers",
+[IsIdealOfQuadraticIntegers],
+function(I)
+local cosetreps,leaves,newleaves,isinsetModI,norm,R,A,H,P,g,a,b,x,y,i,j,D;
 
 if IsBound(I!.RightTransversal) then return I!.RightTransversal; fi;
 
+norm:=Norm(I);
+if IsPrimeInt(norm) then
+#   I!.RightTransversal:=[0..norm-1];
+#   return I!.RightTransversal;
+fi;
+
 D:=GeneratorsOfRing(AssociatedRing(I));
 D:=D[1];
-norm:=NormOfPrincipalIdealGenerator(I);
+g:=GeneratorsOfTwoSidedIdeal(I);
+g:=g[1];
+R:=AssociatedRing(I);
+
 cosetreps:=[0];
 leaves:=[0];
 
 #################################
-isinset:=function(S,x)
+isinsetModI:=function(S,x)
 local s;
 for s in S do
 if (s-x) in I then return true; fi;
@@ -206,12 +280,12 @@ while Size(leaves)>0 do
 newleaves:=[];
 for x in leaves do
 y:=x+1; 
-if not isinset(cosetreps,y) then
+if not isinsetModI(cosetreps,y) then
 Add(cosetreps,y);  
 Add(newleaves,y);
 fi;
-y:=x+D; 
-if not isinset(cosetreps,y) then
+y:=x+D;
+if not isinsetModI(cosetreps,y) then
 Add(cosetreps,y); 
 Add(newleaves,y);
 fi;
@@ -247,6 +321,83 @@ return Discriminant(AssociatedNumberField(R));
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(Units,
+"Units of a ring of quadratic integers",
+[IsRingOfQuadraticIntegers],
+1000000,#Hmm!
+function(R) local d;
+d:=R!.bianchiInteger;
+if d>=0 then 
+  Print("Not implemented for d>0.\n");
+  return fail; 
+fi;
+
+if d=-1 then return [ [1,1] , [Sqrt(-1),-Sqrt(-1)] ]; fi;
+if d=-3 then return [ [1,1] , [(1+Sqrt(-3))/2,(1-Sqrt(-3))/2] ]; fi;
+return [[1,1]];
+
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallGlobalFunction(PartsOfQuadraticInteger,
+function(R,x)
+local q,a,b,d,r;
+
+d:=R!.bianchiInteger;
+r:=Sqrt(d);
+a:=Trace(R,x)/2;
+b:=(x-a)/r;
+
+if not d mod 4 = 1 then
+  return [a,b];
+else
+  return [a-b,2*b];
+fi;
+    
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallGlobalFunction(SL2QuadraticIntegers,
+function(arg)
+local X,R,S,d,gens,G;
+
+X:=arg[1];
+
+if IsInt(X) then
+   R:=ResolutionSL2QuadraticIntegers(X,2);
+   gens:=Generators(R,true);
+   G:=Group(gens);
+   SetName(G,Concatenation("SL(2,O(Q(",String(X),"))"));
+   return G;
+fi;
+if IsRing(X) then
+  if not IsBound(X!.associatedIdeal) then return fail; 
+  else S:=X!.associatedIdeal;  S:=S!.AssociatedRing;
+  fi;
+  if not IsBound(S!.bianchiInteger) then return fail; 
+  else d:=S!.bianchiInteger; fi;
+
+   R:=ResolutionSL2QuadraticIntegers(d,2);
+   gens:=Generators(R,true);
+   G:=Group(gens*One(S));
+   SetName(G,Concatenation("SL(2,", Name(X),")"));
+   return G;
+  
+fi;
+end);
+##########################################################
+##########################################################
+
 
 
 

@@ -593,24 +593,24 @@ end);
 
 #####################################################################
 #####################################################################
-IsHapRightTransversalSL2Subgroup:=NewFilter("IsHapRightTransversalSL2Subgroup");;
+IsHapRightTransversalSL2ZSubgroup:=NewFilter("IsHapRightTransversalSL2ZSubgroup");;
 
-HapRightTransversalSL2Subgroup:=NewType(FamilyObj(rec()),
-                   IsHapRightTransversalSL2Subgroup
+HapRightTransversalSL2ZSubgroup:=NewType(FamilyObj(rec()),
+                   IsHapRightTransversalSL2ZSubgroup
                    and IsList
                    );;
 
 InstallMethod( ViewObj,
-"for HapRightTransversalSL2Subgroup",
-[IsHapRightTransversalSL2Subgroup],
+"for HapRightTransversalSL2ZSubgroup",
+[IsHapRightTransversalSL2ZSubgroup],
 function(R)
 Print("Transversal of "); 
   ViewObj(R!.subgroup); Print(" in "); ViewObj(R!.group);Print(" . \n");
  end);
 
 InstallMethod( PrintObj,
-"for HapTransversalSL2Subgroup",
-[IsHapRightTransversalSL2Subgroup],
+"for HapTransversalSL2ZSubgroup",
+[IsHapRightTransversalSL2ZSubgroup],
 function(R)
 Print("Transversal of ");
   ViewObj(R!.subgroup); Print(" in "); ViewObj(R!.group);Print(" . \n");
@@ -619,30 +619,61 @@ Print("Transversal of ");
 #####################################################################
 #####################################################################
 
+
 #####################################################################
 #####################################################################
 IsHapSL2Subgroup:=NewFilter("IsHapSL2Subgroup");;
+IsHapSL2ZSubgroup:=NewFilter("IsHapSL2ZSubgroup");;
 
-HapSL2Subgroup:=NewType(FamilyObj(rec()),
+HapSL2ZSubgroup:=NewType(FamilyObj(rec()),
                    IsHapSL2Subgroup
+                   and IsHapSL2ZSubgroup
                    and IsGroup
                    );;
 
 InstallMethod( ViewObj,
-"for HapSL2Subgroup",
-[IsHapSL2Subgroup and IsGroup],
+"for HapSL2ZSubgroup",
+[IsHapSL2ZSubgroup and IsGroup],
 function(G)
 Print(G!.name,"(",G!.level,") ");
  end);
 
 InstallMethod( PrintObj,
-"for HapSL2Subgroup",
-[IsHapSL2Subgroup and IsGroup],
+"for HapSL2ZSubgroup",
+[IsHapSL2ZSubgroup and IsGroup],
 function(G)
 Print(G!.name,"(",G!.level,") ");
  end);
 
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+IsHapSL2OSubgroup:=NewFilter("IsHapSL2OSubgroup");;
+
+HapSL2ZSubgroup:=NewType(FamilyObj(rec()),
+                   IsHapSL2Subgroup
+                   and IsHapSL2OSubgroup
+                   and IsGroup
+                   );;
+
+InstallMethod( ViewObj,
+"for HapSL2OSubgroup",
+[IsHapSL2OSubgroup and IsGroup],
+function(G)
+Print(G!.name,"(",G!.level,") ");
+ end);
+
+InstallMethod( PrintObj,
+"for HapSL2OSubgroup",
+[IsHapSL2OSubgroup and IsGroup],
+function(G)
+Print(G!.name,"(",G!.level,") ");
+ end);
+
+#####################################################################
+#####################################################################
+
 
 

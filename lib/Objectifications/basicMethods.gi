@@ -75,8 +75,8 @@ end);
 
 #############################################################
 InstallOtherMethod( Size,
-"for HapRightTransversalSL2Subgroup",
-[IsHapRightTransversalSL2Subgroup],
+"for HapRightTransversalSL2ZSubgroup",
+[IsHapRightTransversalSL2ZSubgroup],
 function(R)
 return Length(R!.cosets);
  end);
@@ -84,8 +84,8 @@ return Length(R!.cosets);
 
 #############################################################
 InstallOtherMethod( Length,
-"for HapRightTransversalSL2Subgroup",
-[IsHapRightTransversalSL2Subgroup],
+"for HapRightTransversalSL2ZSubgroup",
+[IsHapRightTransversalSL2ZSubgroup],
 function(R)
 return Length(R!.cosets);
  end);
@@ -94,7 +94,7 @@ return Length(R!.cosets);
 #############################################################
 InstallOtherMethod(ELM_LIST,
 "for HapRightTransversals",
-[IsHapRightTransversalSL2Subgroup,IsInt],
+[IsHapRightTransversalSL2ZSubgroup,IsInt],
 function(R,i)
 return R!.cosets[i];
 end);

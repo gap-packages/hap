@@ -7,7 +7,7 @@ local fun, x, A, B, C, D;
 
 ######Schoennenbeck transormation###
 if  (d mod 4 =2) or (d mod 4 =3) then x:=Sqrt(d); fi;
-if  (d mod 4 =1)   then x:=(1 + Sqrt(d))/(2); fi;
+if  (d mod 4 =1)   then x:=(1 + Sqrt(d))/2; fi;
 ####################################
 
 ###########################################
@@ -15,7 +15,7 @@ fun:=function(a,b,c,d)
 local A, p, q;
 #return p +q*x
 A:=1*[a,b,c,d];
-p:=d;
+p:=a;
 q:=SignInt(b)*Gcd(b,c,a-d);
 return p + q*x;
 end;
@@ -43,6 +43,7 @@ if (d mod 4 =1)  then x:=(1 + Sqrt(d))/2; fi;
 
 I:=IdentityMat(2);
 CM:=CompanionMat(MinimalPolynomial(Rationals,x));
+CM:=TransposedMat(CM);
 rt:=Sqrt(-d)^-1;
 
 if (d mod 4 =3) or (d mod 4 =2) then 
