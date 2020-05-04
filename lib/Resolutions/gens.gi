@@ -1,6 +1,6 @@
 #####################################################
 #####################################################
-InstallOtherMethod(Generators,
+InstallMethod(Generators,
 "Group generators derived froma free resolution",
 [IsHapResolution],
 function(R)
