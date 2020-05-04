@@ -133,6 +133,7 @@ DeclareGlobalFunction("ResolutionGL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionPGL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionGL3QuadraticIntegers");
 DeclareGlobalFunction("ResolutionPGL3QuadraticIntegers");
+DeclareAttribute("Generators",IsHapResolution);
 
 
 ## RESOLUTIONS MOD P ################################################
