@@ -80,7 +80,7 @@ in <M>S</M>, <M>T</M> and their inverses. The following illustrates such an algo
 
 It is convenient to introduce the matrix <M>U=ST = \left(\begin{array}{rr}0&amp;-1\\ 1 &amp;1 \end{array}\right)</M>. The matrices <M>S</M> and <M>U</M>
 also generate <M>SL_2(\mathbb Z)</M>. In fact we have a free presentation
- <M>SL_2(\mathbb Z)= \langle S,T\, |\, S^4=U^6=1 \rangle </M>. 
+ <M>SL_2(\mathbb Z)= \langle S,U\, |\, S^4=U^6=1 \rangle </M>. 
 
 <P/><P/>
 The <E>cubic tree</E> <M>\cal T</M> is a tree (<E>i.e.</E> a <M>1</M>-dimensional  contractible regular  
@@ -110,40 +110,56 @@ the cubic tree <M>\cal T</M> we just need to record the following finite amount 
 
 </Section>
 
-<Section><Heading>One-dimensional fundamental domains and generators for congruence subgroups</Heading>
+<Section><Heading>One-dimensional fundamental domains and  
+generators for congruence subgroups</Heading>
 
-Recall that a <E>cell structure</E> on a space <M>X</M> is a partition of 
-<M>X</M> into subsets <M>e_i</M> such that each <M>e_i</M> is homeomorphic to 
-an open Euclidean ball of some dimension. We say that <M>e_i</M> is an 
-<M>n</M>-<E>cell</E> if it is homeomorphic to the open <M>n</M>-dimensional ball. We say that the cell structure is <E>reduced</E> if it has precisely one <M>0</M>-cell.  A CW-complex is a cell complex  satisfying  extra conditions.
+The modular group <M>{\cal M}=PSL_2(\mathbb Z)</M> is isomorphic, as an abstract group, 
+to the free product <M>\mathbb Z_2\ast \mathbb Z_3</M>. By the Kurosh subgroup 
+theorem, any finite index subgroup <M>M \subset {\cal M}</M> is isomorphic to the free product 
+of finitely many copies of <M>\mathbb Z_2</M>s, <M>\mathbb Z_3</M>s and <M>\mathbb Z</M>s. A
+subset <M>\underline x \subset M</M> is  an <E>independent</E> 
+ set of subgroup generators if <M>M</M> is the free product of the cyclic subgroups <M>&lt;x &gt;</M> as <M>x</M> runs over <M>\underline x</M>. Let us say 
+that a set of elements in <M>SL_2(\mathbb Z)</M> is <E>projectively 
+independent</E> if it maps injectively onto an independent set of subgroup generators <M>\underline x\subset {\cal M}</M>.  
+The generating set <M>\{S,U\}</M> for <M>SL_2(\mathbb Z)</M> given in the preceding section is projectively independent. 
 
-<P/> 
-Suppose that we wish to compute a set of generators for a congruence subgroup 
-<M>\Gamma</M>. The required generators correspond to the
- <M>1</M>-cells of   a 
- reduced classifying CW-complex (or free resolution) <M>B(\Gamma)</M>. Such a classifying complex  can be constructed, using perturbation techniques,
- from  <M> \cal T</M> and reduced classifying CW-complexes 
-<M>B(stab(e^0))</M>, <M>B(Stab(e^1))</M> for the stabilizer groups of a
-vertex and edge of <M>\cal T</M>. In this construction, the  <M>1</M>-cells of <M>B(\Gamma)</M>
-are in one-one correspondence with generators for the first homology of the quotient graph  
-<M> \Gamma \setminus \cal T</M> together with the <M>1</M>-cells of <M>B(stab(e^0))</M>. If
-<M>\Gamma</M> acts freely on the vertices of <M> \cal T</M> then the  <M>1</M>-cells of <M>B(\Gamma)</M>
-are in one-one correspondence with just the          
-generators for the first homology of                                                 <M> \Gamma \setminus \cal T</M>. To determine the quotient
-<M> \Gamma \setminus \cal T</M> we need to determine a cellular subspace 
-<M>D_\Gamma \subset \cal T</M>   whose images under the action of <M>\Gamma</M>  cover <M>\cal T</M> and are  pairwise either disjoint or identical. The subspace <M>D_\Gamma</M> will not be a CW-complex as it won't be closed, but it can be chosen to be connected, and hence contractible. We call <M>D_\Gamma</M> a <E>fundamental region</E> for <M>\Gamma</M>. We denote by <M>\mathring D_\Gamma</M> the largest CW-subcomplex of <M>D_\Gamma</M>. The vertices of <M>\mathring D_\Gamma</M> are the same as the vertices of <M>D_\Gamma</M>. Thus <M>\mathring D_\Gamma</M> is a subtree of the cubic tree whose vertices correspond to coset representatives of <M>\Gamma</M> in
+<P/> We are interested in constructing a set of generators for a given congruence subgroup <M>\Gamma</M>. If a small generating set for <M>\Gamma</M> is required then we should
+ aim
+to  construct one which is close to being  projectively independent. 
 
-<M>SL_2(\mathbb Z)</M>. For each vertex <M>v</M> in  the tree
-<M>\mathring D_\Gamma</M> define <M>\eta(v)=3 -{\rm degree}(v)</M>. Then the number of homology generators for <M> \Gamma \setminus \cal T</M>  will
- be <M>(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)</M>. The role of tree diagrams in the study of congruence subgroups of <M>SL_2(\mathbb Z)</M>
- is explained in detail in <Cite Key="kulkarni"/>.
-  
-<P/>Suppose that we wish to calculate a set of generators for the principal
-congruence subgroup <M>\Gamma_1(N)</M> of level <M>N</M>. Note that <M>\Gamma_1(N)</M>  intersects trivially with   
-<M>\cal U</M>,  and hence 
- <M>\Gamma_1(N)</M> acts freely on the vertices of the cubical tree <M>\cal T</M>.
-The following commands determine generators for <M>\Gamma_1(6)</M> and display
-<M>\mathring D_{\Gamma_1(6)}</M>.
+<P/>
+ It is useful to    
+invoke the following general result which follows from a perturbation result about free <M>\mathbb ZG</M>-resolutons in <Cite Key="ellisharrisskoldberg" Where="Theorem 2"/> and an old observation of John Milnor that a free <M>\mathbb ZG</M>-resolution can be realized as the cellular chain complex of a CW-complex if it can be so realized in low dimensions.
+
+<P/><B>Theorem.</B> Let <M>X</M> be a contractible CW-complex on which a group
+<M>G</M> acts by permuting cells. The cellular chain complex <M>C_\ast X</M> 
+is a <M>\mathbb ZG</M>-resolution of <M>\mathbb Z</M> which typically is not free. 
+Let <M>[e^n]</M> denote the orbit of the n-cell <M>e^n</M> under the action. Let <M>G^{e^n} \le G</M> denote the stabilizer subgroup of <M>e^n</M>, in which group elements are not required to stabilize <M>e^n</M> point-wise. Let <M>Y_{e^n}</M>
+denote a contractible CW-complex on which <M>G^{e^n}</M> acts cellularly and freely. Then there exists a contractible CW-complex <M>W</M>
+on which <M>G</M> acts cellularly and freely, and in which the orbits of <M>n</M>-cells are labelled by <M>[e^p]\otimes [f^q]</M> where <M>p+q=n</M> and 
+<M>[e^p]</M> ranges over the <M>G</M>-orbits of <M>p</M>-cells  in <M>X</M>, <M>[f^q]</M> ranges over the <M>G^{e^p}</M>-orbits of <M>q</M>-cells in <M>Y_{e^p}</M>.
+<P/>
+
+<P/>Let <M>W</M> be as in the theorem. Then the quotient CW-complex <M>B_G=W/G</M> is a classifying space for <M>G</M>. Let <M>T</M> denote a maximal tree in the <M>1</M>-skeleton <M>B^1_G</M>. Basic geometric group theory tells us that  the <M>1</M>-cells in <M>B^1_G\setminus T</M> correspond to
+a generating set for <M>G</M>.
+
+<P/>
+Suppose  we wish to compute a set of generators for a principal congruence subgroup 
+<M>\Gamma=\Gamma_1(N)</M>. In the above theorem take <M>X={\cal T}</M> to be the cubic tree, and note that <M>\Gamma</M> acts freely on <M>\cal T</M> and thus that <M>W={\cal T}</M>. 
+To determine the  <M>1</M>-cells of <M>B_{\Gamma}\setminus T</M>
+ we need to determine a cellular subspace 
+<M>D_\Gamma \subset \cal T</M>   whose images under the action of <M>\Gamma</M>  cover <M>\cal T</M> and are  pairwise either disjoint or identical. The subspace <M>D_\Gamma</M> will not be a CW-complex as it won't be closed, but it can be chosen to be connected, 
+and hence contractible. We call <M>D_\Gamma</M> a <E>fundamental region</E> for <M>\Gamma</M>. We denote by <M>\mathring D_\Gamma</M> the 
+largest CW-subcomplex of <M>D_\Gamma</M>. The vertices of <M>\mathring D_\Gamma</M> are the same as the vertices of <M>D_\Gamma</M>.
+Thus <M>\mathring D_\Gamma</M> is a subtree of the cubic tree with <M>|\Gamma|/6</M> vertices. 
+ For each vertex <M>v</M> in  the tree
+<M>\mathring D_\Gamma</M> define <M>\eta(v)=3 -{\rm degree}(v)</M>. Then the number of  generators for <M> \Gamma </M>  will
+ be <M>(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)</M>. 
+
+ <P/> 
+The following commands determine projectively independent 
+generators for <M>\Gamma_1(6)</M> and display
+<M>\mathring D_{\Gamma_1(6)}</M>. The subgroup <M>\Gamma_1(6)</M> is free on <M>13</M> generators. 
 
 <Example>
 <#Include SYSTEM "tutex/11.2.txt">
@@ -152,10 +168,16 @@ The following commands determine generators for <M>\Gamma_1(6)</M> and display
 <Alt Only="HTML">&lt;img src="images/pctree6.gif" align="center" width="350" alt="Fundamental region in the   cubic tree"/>
 </Alt>
 
-<P/>The congruence subgroup <M>\Gamma_0(N)</M> does not act freely on the vertices of <M>\cal T</M>. However, we can replace <M>\cal T</M> by a double cover
-<M>{\cal T}'</M> which admits a free action of <M>\Gamma_0(N)</M> on its vertices.
+<P/>An alternative but very related approach to computing generators  of congruence subgroups of <M>SL_2(\mathbb Z)</M>
+ is described in <Cite Key="kulkarni"/>.
+<P/>The congruence subgroup <M>\Gamma_0(N)</M> does not act freely on the vertices of <M>\cal T</M>, and so one needs to incorporate
+ a generator for the cyclic stabilizer group according to the above theorem. Alternatively, we can replace the cubic tree by a six-fold cover 
+<M>{\cal T}'</M> on whose vertex set  <M>\Gamma_0(N)</M> acts freely. 
+This alternative approach will produce a  redundant set of generators.
 The following commands  display
-<M>\mathring D_{\Gamma_1(39)}</M> for a fundamental region in <M>{\cal T}'</M>.
+<M>\mathring D_{\Gamma_0(39)}</M> for a fundamental region in <M>{\cal T}'</M>. They also use the corresponding generating set for <M>\Gamma_0(39)</M>, 
+involving <M>18</M> generators, to compute the abelianization <M>\Gamma_0(39)^{ab}= \mathbb Z_2 \oplus \mathbb Z_3^2 \oplus \mathbb Z^9</M>. The abelianization
+  shows that any generating set has at least <M>11</M> generators.
 
 <Example>
 <#Include SYSTEM "tutex/11.3.txt">
@@ -164,8 +186,7 @@ The following commands  display
 <Alt Only="HTML">&lt;img src="images/g0tree39.gif" align="center" width="350" alt="Fundamental region in the   cubic tree"/>
 </Alt>
 
-<P/> To compute <M>D_\Gamma</M> one only needs to be able to test whether a given matrix lies in <M>\Gamma</M> or not. However, for speed, the above calculations of <M>D_\Gamma</M> take advantage in GAP's facility for iterating over elements of <M>SL_2(\mathbb Z/N \mathbb Z)</M>. An algorithm that does not use this facility is also implemented but seems to be a bit slower in general.
-<P/> 
+<P/> Note that to compute <M>D_\Gamma</M> one only needs to be able to test whether a given matrix lies in <M>\Gamma</M> or not. 
 Given an inclusion <M>\Gamma'\subset \Gamma</M> of congruence subgroups, it is straightforward to use the trees <M>\mathring D_{\Gamma'}</M> and <M>\mathring D_{\Gamma}</M> to compute a system of coset representative for <M>\Gamma'\setminus \Gamma</M>.
 </Section>
 
@@ -654,7 +675,8 @@ The final command displays a tree in a Cayley graph for <M>SL_2({\cal O}\mathbb 
 
 <Section><Heading>First homology</Heading>
 The isomorphism <M>H_1(G,\mathbb Z) \cong G_{ab}</M> allows for the computation of first integral homology using computational methods for finitely presented groups. Such methods underly the following computation of
-<Display>H_1( SL_2({\cal O}\mathbb Q(\sqrt{-1})),\mathbb Z) \cong \mathbb Z_? \oplus \mathbb Z_?</Display>
+<Display>H_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z_2 \oplus  \cdots \oplus
+\mathbb Z_{4078793513671}</Display>
 where <M>I</M> is the prime ideal in the Gaussian integers generated by  <M>41+56\sqrt{-1}</M>.
 
 <Example>

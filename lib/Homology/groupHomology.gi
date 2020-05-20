@@ -177,6 +177,7 @@ then Append(TorsionCoeffs,H);
 else
 Append(TorsionCoeffs,
 PrimePartDerivedFunctorViaSubgroupChain(G,R,Functor,N));
+#PrimePartDerivedFunctor(G,R,Functor,N));
 fi;
 od;
 

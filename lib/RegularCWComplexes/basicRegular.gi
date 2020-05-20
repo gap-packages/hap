@@ -756,6 +756,7 @@ fi;
 fi;
 
 f:=Y!.inverseVectorField[n+1][k];
+
 bnd:=Y!.boundaries[n+2][f];
 sn:=Y!.orientation[n+2][f];
 

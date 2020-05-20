@@ -343,13 +343,38 @@ end);
 
 #####################################################
 #####################################################
+InstallOtherMethod(AbelianInvariants,
+"for HAPSL2OSubgroups",
+[IsHapSL2OSubgroup],
+1000000, #Hmm!
+function(H)
+local P,G, CosetTable,r;
+
+HAP_SL2OSubgroupTree_slow(H);
+P:=H!.presentation;
+G:=P.freeGroup/P.relators;
+
+CosetTable:=[];
+for r in H!.PermRep do
+Add(CosetTable,r);
+Add(CosetTable, ListPerm(PermList(r)^-1)  );
+od;
+
+return AbelianInvariantsSubgroupFpGroupRrs(G,CosetTable);
+
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
 InstallMethod(AsFpGroup,
 "for HAPSL2OSubgroups",
 [IsHapSL2OSubgroup],
 1000000, #Hmm!
 function(H)
-local I,d,R,P,G,gensG, gensH, HG, tree, loops, vertex2word,x,iso,iso1,iso2,
-CosetTable, r;
+local I,d,R,P,G,gensG, gensH, HG, tree, loops,
+vertex2word,x,iso,iso1,iso2, CosetTable,r;
 
 HAP_SL2OSubgroupTree_slow(H);
 P:=H!.presentation;
@@ -377,15 +402,10 @@ for x in loops do
 Add(gensH, vertex2word(x[2])*gensG[x[3]]*(vertex2word(x[1]))^-1);
 od;
 
-CosetTable:=[];
-for r in H!.PermRep do
-Add(CosetTable,r);
-Add(CosetTable, ListPerm(PermList(r)^-1)  );
-od;
-
-HG:=PresentationSubgroupRrs(G,CosetTable);
-HG!.TzOptions.printLevel:=0;
-TzEliminate(HG,Length(HG!.generators)-200);
+#HG:=PresentationSubgroupRrs(G,CosetTable);
+HG:=PresentationSubgroup(G,Group(gensH));
+#HG!.TzOptions.printLevel:=0;
+#TzEliminate(HG,Length(HG!.generators)-500);
 HG:= FpGroupPresentation(HG);
 return HG;
 end);

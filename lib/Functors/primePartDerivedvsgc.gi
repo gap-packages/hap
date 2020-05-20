@@ -136,16 +136,19 @@ Cent:=Centralizer(AscChn[i],AscChn[i-1]);
 
 Sort(DCRS,ord);
 DCRS:=Filtered(DCRS,a->not a in Cent);
-dcrs:=[];
-for x in DCRS do
-bool:=true;
-for y in dcrs do
-if y^-1*x in Cent or y^-1*x in P or x in Group(y) then bool:=false; break; fi;
-od;
-if bool then Add(dcrs,x); fi;
-od;
 
-   for L in dcrs do
+############################################
+#dcrs:=[];
+#for x in DCRS do
+#bool:=true;
+#for y in dcrs do
+#if y^-1*x in Cent or y^-1*x in P or x in Group(y) then bool:=false; break; fi;
+#od;
+#if bool then Add(dcrs,x); fi;
+#od;
+#for L in dcrs do  #This causes problems.  Need to think more!!!
+############################################
+   for L in DCRS do
    cnt:=cnt+1;
    AddRels(AscChn[i-1],L);
    od;

@@ -84,26 +84,33 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_SL2ZSubgroupTree_slow,
 function(G)
-local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,
-      leaves,nodes,generators,Perturb, InLowDegreeNodesModG, csts;
+local tree,InGmodU,Ugrp,S,T,U,v,p,g,s,n,q,vv,gens,
+      nodes, leaves, ambientGenerators, InLowDegreeNodesModG, 
+      one, genTriples, vertex2word, triple2word, csts;
 
+####################
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 U:=S*T;
-U1:=S*U; 
-U2:=S*U^2;
+one:=IdentityMat(2);
+####################
+
+ambientGenerators:=[S,S*U];
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
-
-tree:=[];
+tree:=[1 ];
+genTriples:=[];
+cnt:=1;
 leaves:=NewDictionary(S,true,SL(2,Integers));
+nodes:=[one];
+AddDictionary(leaves,one,1);
 
 if Size(Ugrp)>1 then
 ###########################################
 InGmodU:=function(g)
-local x;
-for x in Ugrp do
-if G!.membership(x*g) then return true; fi;;
+local u;
+for u in Ugrp do
+if G!.membership(u*g) then return true; fi;;
 od;
 return false;
 end;
@@ -125,57 +132,63 @@ return false;
 end;
 ###########################################
 
-if Size(Ugrp)>0 then
-###########################################
-Perturb:=function(g)
-local u;
-for u in Ugrp do
-if G!.membership(u*g) then return u*g; fi;
-od;
-return fail;
-end;
-###########################################
-else
-     Perturb:=function(g); return g; end;
-fi;
 
-v:=1;;
-nodes:=[];
-if not S in G then v:=v+1; AddDictionary(leaves,S,v); tree[v]:=[1,0]; 
-Add(nodes,S);fi;
-if not U1 in G then v:=v+1; AddDictionary(leaves,U1,v); tree[v]:=[1,1]; Add(nodes,U1); fi;
-if not U2 in G then v:=v+1; AddDictionary(leaves,U2,v); tree[v]:=[1,2];
-Add(nodes,U2);fi;
-Add(nodes,S^0);
-nodes:=SSortedList(nodes);
 
-generators:=[];
-gens:=[];
 
 ############Tree Construction########################
 while Size(leaves)>0 do
 vv:=leaves!.entries[1];   
 v:=vv[1];
-    for s in [1,2] do
-        if s=1 then g:=v*U1; else g:=v*U2; fi;
+    for s in [1..Length(ambientGenerators)] do
+        g:=v*ambientGenerators[s]; 
         q:=InLowDegreeNodesModG(g);
-        if q=false then AddDictionary(leaves,g,1+Size(tree)); 
-         AddSet(nodes,g);
+        if q=false then 
+         Add(nodes,g);
+         AddDictionary(leaves,g,Length(nodes));
             p:=LookupDictionary(leaves,v);
             Add(tree,[p, s]);
-            else Add(generators,[v,g,q]);
+            else Add(genTriples,[v,g,q]);
         fi;
     od;
 RemoveDictionary(leaves,v);
 od;
 #####################################################
 
-G!.tree:=tree; 
-generators:=List(generators,x->Perturb(x[3]*x[2]^-1));
-generators:=List(generators,x->Minimum(x,x^-1));
-generators:=SSortedList(generators);
-generators:=Filtered(generators,x->not x=IdentityMat(2));
-G!.GeneratorsOfMagmaWithInverses:=generators;
+#####################################################
+vertex2word:=function(v)
+local word;
+word:=one;
+while not v=1 do
+word:=ambientGenerators[tree[v][2]]*word;
+v:=tree[v][1];
+od;
+return word;
+end;
+#####################################################
+
+#####################################################
+triple2word:=function(x)
+local u,uu,g,q,c,ans;
+#Print(Position(nodes,x[3]),"  ",x[2],"\n");
+ans:=[];
+for u in Reversed(Ugrp) do
+c:=x[2]*u*vertex2word(  Position(nodes,x[3])  )^-1;
+if c in G then Add(ans,c); fi;
+od;
+
+return ans;
+return fail;  #This should never happen
+end;
+#####################################################
+
+G!.tree:=tree;
+Unbind(tree[1]);
+genTriples:=List(genTriples,x->triple2word(x));
+genTriples:=Concatenation(genTriples);
+genTriples:=List(genTriples,x->Minimum(x,x^-1));
+genTriples:=SSortedList(genTriples);
+G!.GeneratorsOfMagmaWithInverses:=genTriples;
+
 end);
 ###################################################################
 ###################################################################
@@ -185,78 +198,53 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_SL2ZSubgroupTree_fast,
 function(G)
-local tree,InGmodU,Ugrp,S,T,U,U1,U2,v,p,g,s,n,q,vv,gens,Lift,
-      leaves,generators,Perturb, InLowDegreeNodesModG, csts;
+local ambientGenerators, tree,InGmodU,Ugrp,S,T,U,v,p,g,s,n,q,vv,
+      leaves,genTriples,generators, InLowDegreeNodesModG, csts, cnt,
+      vertex2word, one, triple2word,i,j,u,c,a,b;
 
+####################
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];
 U:=S*T;
-U1:=S*U;
-U2:=S*U^2;
+one:=IdentityMat(2);
+####################
+
+ambientGenerators:=[S*U,S*U^2];
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
 
-
 tree:=[ ];
-
+genTriples:=[];
+cnt:=1;
 leaves:=NewDictionary(S,true,SL(2,Integers));
-
-###########################################
 csts:=[];
-InLowDegreeNodesModG:=function(g);
-if not IsBound(csts[G!.cosetPos(g)]) then return false; fi;
-return G!.cosetRep(g);
+csts[G!.cosetPos(one)]:=1;
+AddDictionary(leaves,one,G!.cosetPos(one));
+
+###########################################
+InLowDegreeNodesModG:=function(g)
+local pos;
+pos:=G!.cosetPos(g);
+if not IsBound(csts[pos]) then return false; else;
+return pos; fi;
 end;
 ###########################################
 
-if Size(Ugrp)>1 then
-###########################################
-Perturb:=function(g)
-local u;
-for u in Ugrp do
-if G!.membership(u*g) then return u*g; fi;
-od;
-return [fail,g];
-end;
-###########################################
-else 
-    Perturb:=function(g); return g; end;
-fi;
 
-
-AddDictionary(leaves,S,2);
-AddDictionary(leaves,U1,3);
-AddDictionary(leaves,U2,4);
-
-generators:=[];
-gens:=[];
-
-#####################################################
-tree[G!.cosetPos(S)]:=[G!.cosetPos(S^0),0];
-tree[G!.cosetPos(U1)]:=[G!.cosetPos(S^0),1];
-tree[G!.cosetPos(U2)]:=[G!.cosetPos(S^0),2];
-
-csts[G!.cosetPos(S^0)]:=1;
-csts[G!.cosetPos(S)]:=1;
-csts[G!.cosetPos(U1)]:=1;
-csts[G!.cosetPos(U2)]:=1;
-#####################################################
+#########The work horse##############################
 while Size(leaves)>0 do
-vv:=leaves!.entries[1];
+vv:=1*leaves!.entries[1];
 v:=vv[1];
-    for s in [1,2] do
-        if s=1 then g:=v*U1; 
-        else  g:=v*U2; fi;
+p:=G!.cosetPos(v);
+    for s in [1..Length(ambientGenerators)] do
+        g:=ambientGenerators[s]*v;
         q:=InLowDegreeNodesModG(g);
         if q=false then
-             AddDictionary(leaves,g,1+Size(tree));
-             #p:=LookupDictionary(leaves,v);
-             csts[G!.cosetPos(g)]:=1;
-             p:=G!.cosetPos(v);
-            #Add(tree,[p, s]);
-            tree[G!.cosetPos(g)]:=[p,s];
-            else Add(generators,[v,g]);
-                 AddSet(gens,[v,g]);
+             q:=G!.cosetPos(g);
+             AddDictionary(leaves,g,q);
+             csts[q]:=1;
+             tree[q]:=[p,s];
+            else Add(genTriples,[p,s,v,g]);  #Usp=Uq mod G
         fi;
     od;
 RemoveDictionary(leaves,v);
@@ -264,36 +252,36 @@ od;
 #####################################################
 
 #####################################################
-#####################################################
-Lift:=function(g)
-local r,root,x,ROOT;
-if not IsBound(tree[G!.cosetPos(g)]) then return S^0; fi;
-r:=S^0;
-root:=G!.cosetPos(r);
-x:=tree[G!.cosetPos(g)];
-
-while not x[1]=root do
-if x[2]=1 then r:=U1*r;fi;
-if x[2]=2 then r:=U2*r; fi;
-#if x[2]=0 then r:=S*r; fi;
-x:=tree[x[1]];
+vertex2word:=function(v)
+local word;
+word:=one;
+while IsBound(tree[v]) do
+word:=word*ambientGenerators[tree[v][2]];
+v:=tree[v][1];
 od;
-if x[2]=1 then r:=U1*r; fi;
-if x[2]=2 then r:=U2*r; fi;
-if x[2]=0 then r:=S*r;fi;
-return r;
+return word;
 end;
 #####################################################
+
+#####################################################
+triple2word:=function(x)
+local u,uu,g,q,c;
+for u in Ugrp do
+#Print(vertex2word(G!.cosetPos(x[3])) = x[3], " ");
+c:=x[4]^-1*u*vertex2word(G!.cosetPos(x[4]));
+if c in G then return c; fi;
+od;
+return fail;  #This should never happen
+end;
 #####################################################
 
-G!.tree:=tree;
-generators:=List(generators,x-> [x[1],x[2],Lift(x[2])]);
 
-generators:=List(generators,x->Perturb(x[2]*x[3]^-1));
-generators:=List(generators,x->Minimum(x,x^-1));
-generators:=SSortedList(generators);
-generators:=Filtered(generators,x->not x=IdentityMat(2));
-G!.GeneratorsOfMagmaWithInverses:=generators;
+genTriples:=List(genTriples,x->triple2word(x));
+genTriples:=List(genTriples,x->Minimum(x,x^-1));
+genTriples:=SSortedList(genTriples);
+G!.tree:=tree;
+G!.GeneratorsOfMagmaWithInverses:=genTriples;
+
 end);
 ###################################################################
 ###################################################################
@@ -335,13 +323,13 @@ T:=[[1,1],[0,1]];
 ##############################################
 if n<=2 then
 G!.ugrp:=Group((S*T)^0);
-G!.name:="CongruenceSubgroupGamma0";
+G!.name:="PrincipalCongruenceSubgroup";
 return G;
 fi;
 ##############################################
 one:=One(sln);
 U:=S*T*one;
-Ugrp:=Group(U);
+Ugrp:=Group(U); #########################################
 Uelts:=Elements(Ugrp);
 RR:=Enumerator(sln);;
 R:=[];;
@@ -371,7 +359,7 @@ end;
 
 G!.cosetPos:=CosetPos;
 G!.cosetRep:=CosetRep;
-G!.ugrp:=Group(S*T);
+G!.ugrp:=Group((S*T));
 return G;
 
 end);

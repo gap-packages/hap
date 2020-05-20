@@ -120,9 +120,15 @@ QH:=Subgroup(Q,gensH);
 
 ####################
 if HH=false then
+
+QH!.epimorphism:=epi;
+QH!.ElementToWord:=ElementToWord;
+return QH;
+
 iso:=IsomorphismFpGroup(QH);
-return GroupHomomorphismByFunction(H, Image(iso), x->
-       Image(iso,Image(epi,ElementToWord(x)) ) );
+QH!.isoFpGroup:=GroupHomomorphismByFunction(H, Image(iso), x->
+                Image(iso,Image(epi,ElementToWord(x)) ) );
+
 fi;
 ####################
 
