@@ -1,0 +1,131 @@
+  
+  [1X3 [33X[0;0YBasic functionality for homological group theory[133X[101X
+  
+  [33X[0;0YThis  page  covers the functions used in chapter 4 of the book An Invitation
+  to                           Computational                          Homotopy
+  (
+  https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980
+  ).[133X
+  
+  
+  [1X3.1 [33X[0;0YCocycles[133X[101X
+  
+  [1X3.1-1 CcGroup[101X
+  
+  [33X[1;0Y[29X[2XCcGroup[102X( [3XN[103X, [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a [22XG[122X-outer group [22XN[122X with nonabelian cocycle describing some extension [22XN
+  ↣  E  ↠  G[122X  together  with  standard 2-cocycle [22Xf: G × G → A[122X where [22XA=Z(N)[122X. It
+  returns  the  extension  group  determined  by  the  cocycle [22Xf[122X. The group is
+  returned as a cocyclic group.[133X
+  
+  [33X[0;0YThis function is part of the HAPcocyclic package of functions implemented by
+  Robert F. Morse.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  
+  [1X3.1-2 CocycleCondition[101X
+  
+  [33X[1;0Y[29X[2XCocycleCondition[102X( [3XR[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution  [22XR[122X  of [22XZ[122X and an integer [22Xn ge 1[122X. It returns an
+  integer  matrix  [22XM[122X with the following property. Let [22Xd[122X be the [22XZG[122X-rank of [22XR_n[122X.
+  An integer vector [22Xf=[f_1, ... , f_d][122X then represents a [22XZG[122X-homomorphism [22XR_n →
+  Z_q[122X  which  sends the [22Xi[122Xth generator of [22XR_n[122X to the integer [22Xf_i[122X in the trivial
+  [22XZG[122X-module  [22XZ_q=  Z/q Z[122X (where possibly [22Xq=0[122X). The homomorphism [22Xf[122X is a cocycle
+  if and only if [22XM^tf=0[122X mod [22Xq[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutCocycles.html[107X) [133X
+  
+  [1X3.1-3 StandardCocycle[101X
+  
+  [33X[1;0Y[29X[2XStandardCocycle[102X( [3XR[103X, [3Xf[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XStandardCocycle[102X( [3XR[103X, [3Xf[103X, [3Xn[103X, [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution  [22XR[122X  (with  contracting  homotopy), a positive
+  integer [22Xn[122X and an integer vector [22Xf[122X representing an [22Xn[122X-cocycle [22XR_n → Z_q= Z/q Z[122X
+  where  [22XG[122X  acts  trivially  on [22XZ_q[122X. It is assumed [22Xq=0[122X unless a value for [22Xq[122X is
+  entered.  The  command  returns  a  function  [22XF(g_1,  ..., g_n)[122X which is the
+  standard  cocycle  [22XG^n  →  Z_q[122X corresponding to [22Xf[122X. At present the command is
+  implemented only for [22Xn=2[122X or [22X3[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutCocycles.html[107X) [133X
+  
+  
+  [1X3.2 [33X[0;0YG-Outer Groups[133X[101X
+  
+  [1X3.2-1 ActedGroup[101X
+  
+  [33X[1;0Y[29X[2XActedGroup[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-outer  group [22XM[122X corresponding to a homomorphism [22Xα: G→ Out(N)[122X and
+  returns the group [22XN[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X      1      ([7X../www/SideLinks/About/aboutCrossedMods.html[107X) ,     2
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  
+  [1X3.2-2 ActingGroup[101X
+  
+  [33X[1;0Y[29X[2XActingGroup[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-outer  group [22XM[122X corresponding to a homomorphism [22Xα: G→ Out(N)[122X and
+  returns the group [22XG[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  
+  [1X3.2-3 Centre[101X
+  
+  [33X[1;0Y[29X[2XCentre[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a [22XG[122X-outer group [22XM[122X and returns its group-theoretic centre as a [22XG[122X-outer
+  group.[133X
+  
+  [33X[0;0Y[12XExamples:[112X       1       ([7X../www/SideLinks/About/aboutParallel.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutSchurMultiplier.html[107X) ,                       3
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) ,                                4
+  ([7X../www/SideLinks/About/aboutLieCovers.html[107X) [133X
+  
+  [1X3.2-4 GOuterGroup[101X
+  
+  [33X[1;0Y[29X[2XGOuterGroup[102X( [3XE[103X, [3XN[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGOuterGroup[102X(  ) [32X function[133X
+  
+  [33X[0;0YInputs  a  group  [22XE[122X  and  normal subgroup [22XN[122X. It returns [22XN[122X as a [22XG[122X-outer group
+  where  [22XG=E/N[122X.  A nonabelian cocycle [22Xf: G× G→ N[122X is attached as a component of
+  the [22XG[122X-Outer group.[133X
+  
+  [33X[0;0YThe  function  can  be used without an argument. In this case an empty outer
+  group  [22XC[122X  is returned. The components must be set using [12XSetActingGroup(C,G)[112X,
+  [12XSetActedGroup(C,N)[112X and [12XSetOuterAction(C,alpha)[112X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X   1   ([7X../www/SideLinks/About/aboutCoefficientSequence.html[107X) ,   2
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  
+  
+  [1X3.3 [33X[0;0Y[22XG[122X[101X[1X-cocomplexes[133X[101X
+  
+  [1X3.3-1 CohomologyModule[101X
+  
+  [33X[1;0Y[29X[2XCohomologyModule[102X( [3XC[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-cocomplex  [22XC[122X together with a non-negative integer [22Xn[122X. It returns
+  the  cohomology  [22XH^n(C)[122X  as  a  [22XG[122X-outer  group.  If [22XC[122X was constructed from a
+  [22XZG[122X-resolution  [22XR[122X by homing to an abelian [22XG[122X-outer group [22XA[122X then, for each [22Xx[122X in
+  [22XH:=CohomologyModule(C,n)[122X, there is a function [22Xf:=H!.representativeCocycle(x)[122X
+  which  is  a standard [22Xn[122X-cocycle corresponding to the cohomology class [22Xx[122X. (At
+  present this is implemented only for [22Xn=1,2,3[122X.)[133X
+  
+  [33X[0;0Y[12XExamples:[112X      1      ([7X../www/SideLinks/About/aboutCrossedMods.html[107X) ,     2
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  
+  [1X3.3-2 HomToGModule[101X
+  
+  [33X[1;0Y[29X[2XHomToGModule[102X( [3XR[103X, [3XA[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XZG[122X-resolution  [22XR[122X  and  an abelian [22XG[122X-outer group [22XA[122X. It returns the
+  [22XG[122X-cocomplex  obtained  by  applying [22XHomZG( _ , A)[122X. (At present this function
+  does not handle equivariant chain maps.)[133X
+  
+  [33X[0;0Y[12XExamples:[112X      1      ([7X../www/SideLinks/About/aboutCrossedMods.html[107X) ,     2
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) [133X
+  

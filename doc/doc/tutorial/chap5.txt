@@ -1,0 +1,91 @@
+  
+  [1X5 [33X[0;0YGroup theoretic computations[133X[101X
+  
+  
+  [1X5.1 [33X[0;0YThird homotopy group of a supsension of an Eilenberg-MacLane space[133X[101X
+  
+  [33X[0;0YThe following example uses the nonabelian tensor square of groups to compute
+  the third homotopy group[133X
+  
+  [33X[0;0Y[22Xπ_3(S(K(G,1))) = Z^30[122X[133X
+  
+  [33X[0;0Yof  the  suspension  of  the  Eigenberg-MacLane  space [22XK(G,1)[122X for [22XG[122X the free
+  nilpotent group of class [22X2[122X on four generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(4);;G:=NilpotentQuotient(F,2);;[127X[104X
+    [4X[25Xgap>[125X [27XThirdHomotopyGroupOfSuspensionB(G);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.2 [33X[0;0YRepresentations of knot quandles[133X[101X
+  
+  [33X[0;0YThe  following example constructs the finitely presented quandles associated
+  to  the granny knot and square knot, and then computes the number of quandle
+  homomorphisms  from  these  two  finitely  prresented  quandles to the [22X17[122X-th
+  quandle  in  [12XHAP[112X's  library of connected quandles of order [22X24[122X. The number of
+  homomorphisms  differs  between  the  two  cases.  The computation therefore
+  establishes   that  the  complement  in  [22XR^3[122X  of  the  granny  knot  is  not
+  homeomorphic to the complement of the square knot.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=ConnectedQuandle(24,17,"import");;[127X[104X
+    [4X[25Xgap>[125X [27XK:=PureCubicalKnot(3,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=ReflectedCubicalKnot(K);;[127X[104X
+    [4X[25Xgap>[125X [27Xsquare:=KnotSum(K,L);;[127X[104X
+    [4X[25Xgap>[125X [27Xgranny:=KnotSum(K,K);;[127X[104X
+    [4X[25Xgap>[125X [27Xgcsquare:=GaussCodeOfPureCubicalKnot(square);;[127X[104X
+    [4X[25Xgap>[125X [27Xgcgranny:=GaussCodeOfPureCubicalKnot(granny);;[127X[104X
+    [4X[25Xgap>[125X [27XQsquare:=PresentationKnotQuandle(gcsquare);;[127X[104X
+    [4X[25Xgap>[125X [27XQgranny:=PresentationKnotQuandle(gcgranny);;[127X[104X
+    [4X[25Xgap>[125X [27XNumberOfHomomorphisms(Qsquare,Q);[127X[104X
+    [4X[28X408[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfHomomorphisms(Qgranny,Q);[127X[104X
+    [4X[28X24[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.3 [33X[0;0YAspherical [22X2[122X[101X[1X-complexes[133X[101X
+  
+  [33X[0;0YThe  following  example  uses  Polymake's  linear  programming  routines  to
+  establish  that  the [22X2[122X-complex associated to the group presentation [22X<x,y,z :
+  xyx=yxy,   yzy=zyz,  xzx=zxz>[122X  is  aspherical  (that  is,  has  contractible
+  universal  cover). The presentation is Tietze equivalent to the presentation
+  used  in the computer code, and the associated [22X2[122X-complexes are thus homotopy
+  equivalent.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(6);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:=F.1;;y:=F.2;;z:=F.3;;a:=F.4;;b:=F.5;;c:=F.6;;[127X[104X
+    [4X[25Xgap>[125X [27Xrels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,[127X[104X
+    [4X[25X>[125X [27X   b*y*(z*b)^-1, c*z*(x*c)^-1];;[127X[104X
+    [4X[25Xgap>[125X [27XPrint(IsAspherical(F,rels),"\n");[127X[104X
+    [4X[28XPresentation is aspherical.[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.4 [33X[0;0YBogomolov multiplier[133X[101X
+  
+  [33X[0;0YThe  Bogomolov  multiplier of a group is an isoclinism invariant. Using this
+  property,  the following example shows that there are precisely three groups
+  of  order  [22X243[122X with non-trivial Bogomolov multiplier. The groups in question
+  are numbered 28, 29 and 30 in [12XGAP[112X's library of small groups of order [22X243[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=AllSmallGroups(3^5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=IsoclinismClasses(L);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor c in C do[127X[104X
+    [4X[25X>[125X [27Xif Length(BogomolovMultiplier(c[1]))>0 then[127X[104X
+    [4X[25X>[125X [27XPrint(List(c,g->IdGroup(g)),"\n\n\n"); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[ [ 243, 28 ], [ 243, 29 ], [ 243, 30 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
