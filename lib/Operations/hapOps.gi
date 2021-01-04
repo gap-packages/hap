@@ -817,6 +817,61 @@ end);
 ##########################################################
 ##########################################################
 
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted sparse chain complex",
+[IsHapSparseChainComplex],
+function(C);
+return
+SimplifiedSparseChainComplex(C);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  chain complex",
+[IsHapChainComplex],
+function(C)
+local D;
+D:=ChainComplexToSparseChainComplex(C);
+D:=ContractedComplex(D);
+return
+SparseChainComplexToChainComplex(D);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  free ZG-resolution",
+[IsHapResolution],
+function(R)
+return
+TietzeReducedResolution(R);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  chain complex",
+[IsHapCochainComplex],
+function(C)
+local D;
+D:=HomToIntegers(C);
+D:=ContractedComplex(D);
+D:=HomToIntegers(D);
+return D;
+end);
+##########################################################
+##########################################################
+
+
 
 
 

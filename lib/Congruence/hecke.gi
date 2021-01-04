@@ -1,7 +1,7 @@
 
 ###########################################################
 ###########################################################
-InstallGlobalFunction(HeckeOperator,
+InstallGlobalFunction(HeckeOperatorWeight2,
 function(H,p,N)
 local g, gg, Hg, HH, gHH, R, RH, TH, RgHH, TgHH,
 HHhomgHH, gHHhomH, map1, THH, eqmap2, map2, eqmap3, map3,

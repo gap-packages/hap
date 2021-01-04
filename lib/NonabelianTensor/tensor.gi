@@ -27,10 +27,6 @@ actN:=NG!.action;
 M:=Source(MhomG);
 N:=Source(NhomG);
 G:=Target(MhomG);
-#gensM:=MinimalGeneratingSet(M);
-#gensN:=MinimalGeneratingSet(N);
-#MhomMfp:=IsomorphismFpGroupByGenerators(M,gensM);
-#NhomNfp:=IsomorphismFpGroupByGenerators(N,gensN);
 
 MhomMfp:=IsomorphismFpGroup(M);#
 NhomNfp:=IsomorphismFpGroup(N);#

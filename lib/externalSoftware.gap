@@ -1,7 +1,13 @@
 #############################################################
 if not IsBound(POLYMAKE_PATH)
    then
-    POLYMAKE_PATH:=Filename( DirectoriesSystemPrograms( ), "polymake" );
+ReadPackage("HAP","boolean");
+HAP_ROOT:=DirectoriesPackageLibrary("HAP");
+HAP_ROOT:=Filename(HAP_ROOT,".");
+HAP_ROOT:=HAP_ROOT{[1..Length(HAP_ROOT)-1]};
+
+#    POLYMAKE_PATH:=Filename( DirectoriesSystemPrograms( ), "polymake" );
+POLYMAKE_PATH:=Concatenation(HAP_ROOT,"Polymake/polymakeLegacy");
 
 if POLYMAKE_PATH=fail
    or not IsExecutableFile(POLYMAKE_PATH)

@@ -24,3 +24,11 @@ fi;
 
 end );
 #####################################################################
+
+#####################################################################
+InstallMethod(Homology,"homology calculations",
+[IsHapSparseChainComplex and IsHapChain, IsInt],0,
+function(C,n)
+return Homology( SparseChainComplexToChainComplex(C) ,n);
+end);
+#####################################################################

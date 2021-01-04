@@ -67,6 +67,75 @@ end);
 ###############################################################
 ###############################################################
 
+########################################################
+########################################################
+InstallGlobalFunction(HomToInt_CochainComplex,
+function(C)
+local D, DimensionD, BoundaryD, BoundaryDrec, len, n, k,i, A;
+
+################################
+################################
+if not IsHapCochainComplex(C) then
+Print("Error: input must be a cochain complex.\n");
+return fail;
+fi;
+
+if not EvaluateProperty(C,"characteristic")=0 then
+Print("Error: cochain complex must have characteristic 0.\n");
+return fail;
+fi;
+################################
+################################
+
+len:=Length(C);
+BoundaryDrec:=[];
+
+################################
+################################
+DimensionD:=function(n);
+if n<0 or n>len then return 0; fi;
+
+return C!.dimension(n);
+end;
+################################
+################################
+
+#for n in [1..len] do
+#for k in [1..C!.dimension(n)] do
+#C!.boundary(n,k);
+#od;
+#od;
+
+#######################
+BoundaryD:=function(n,k);
+if n<0 or n>len then return [0]; fi;
+
+if not IsBound(BoundaryDrec[n]) then
+A:=BoundaryMatrix(C,n-1);
+if Length(A)=0 then A:=List([1..C!.dimension(n)],x->[0]); fi;
+BoundaryDrec[n]:=A;
+fi;
+
+return BoundaryDrec[n][k];
+end;
+#######################
+
+D:=Objectify(HapChainComplex,
+                rec(
+                dimension:=DimensionD,
+                boundary:=BoundaryD,
+                properties:=
+                [["length",len],
+                ["type", "chainComplex"],
+                ["characteristic",0 ] ]));
+
+return D;
+
+end);
+###############################################################
+###############################################################
+
+
 ##########################################
 ##########################################
 InstallGlobalFunction(HomToInt_ChainMap,

@@ -238,6 +238,64 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_TransversalCongruenceSubgroupsIdeal,
 function(G,H)
+local R, RR, lenR, x, poscan, gensH, I, t, one, P,Psorted,zero;
+
+I:=H!.level;
+one:=One(I!.AssociatedRing mod I);
+
+if not (H!.name="CongruenceSubgroupGamma0" and IsPrime(I)) then
+   HAP_SL2SubgroupTree(H);
+   R:=H!.elements;
+   lenR:=Length(R);
+   ##########################################
+   poscan:=function(x)
+   local i, xinv;
+   xinv:=x^-1;
+   for i in [1..lenR] do
+   if R[i]*xinv in H then return i; fi;
+   od;
+   end;
+   ##########################################
+else
+   RR:=[]; P:=[];
+   for t in RightTransversal(I) do
+      Add(RR,[[1,0],[t,1]]);
+   od;
+   Add(RR,[[0,1],[-1,0]]);
+   lenR:=Length(RR);
+   P:=List(RR, x -> x[2]*one);
+   P:=List(P, x->[x[1]![1],x[2]![1]]);
+   Psorted:=SSortedList(P);
+   R:=List(Psorted, p->RR[Position(P,p)]);
+   zero:=Position(R,RR[lenR]); 
+   ##########################################
+   poscan:=function(x)
+   local p;
+   p:=x[2]*one; 
+   if IsZero(p[2]) then return zero; fi;
+   p:=p*(p[2]^-1); return Position(Psorted,[p[1]![1],p[2]![1]]);
+   end;
+   ##########################################
+fi;
+
+return Objectify( NewType( FamilyObj( G ),
+                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsDuplicateFreeList and IsAttributeStoringRep ),
+          rec( group := G,
+               subgroup := H,
+               cosets:=R,
+               poscan:=poscan ));
+
+end);
+###################################################################
+###################################################################
+
+
+
+###################################################################
+###################################################################
+InstallGlobalFunction(HAP_TransversalCongruenceSubgroupsIdeal_alt,
+function(G,H)
 local gensG, gensH, N, L, GN, HN, R, R2, x, S,  one, iso, epi,epi2, poscan;
 
 gensH:=GeneratorsOfGroup(H);
@@ -247,14 +305,12 @@ Print("The second argument is not a subgroup of the first.\n");
 return fail;fi;
 od;
 gensG:=GeneratorsOfGroup(G);
-#GG:=Group(gensG);;
 N:=H!.level;
 S:= AssociatedRing(N) mod N;
 
 one:=One(S);
 GN:=Group(gensG*one);
 iso:=IsomorphismPermGroup(GN);
-#epi:=GroupHomomorphismByImagesNC(G,GN,gensG,gensG*one);
 epi:=GroupHomomorphismByImagesNC(G,Image(iso),gensG,List(gensG*one,y->Image(iso,y)));
 epi2:=GroupHomomorphismByFunction(G,Image(iso),y->Image(iso,y*one)  );
 
@@ -290,6 +346,8 @@ return Objectify( NewType( FamilyObj( G ),
 end);
 ###################################################################
 ###################################################################
+
+
 
 ###################################################################
 ###################################################################

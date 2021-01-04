@@ -156,6 +156,7 @@ w:=StructuralCopy(BoundaryR(n,x[1]));
 Apply(w, y->[y[1],Mult(x[2],y[2])]);
 #Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]); #Changed this back but forgot why this line was ever here!!
 BoundaryRec[n][i]:= Gword2Kword(w);
+###BoundaryRec[n][i]:=AlgebraicReduction(BoundaryRec[n][i]);
 fi;
 
 if ii>0 then return BoundaryRec[n][i]; 

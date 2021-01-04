@@ -153,8 +153,11 @@ return HomToInt_ChainComplex(X); fi;
 if EvaluateProperty(X,"type") = "chainMap" then
 return HomToInt_ChainMap(X); fi;
 
+if EvaluateProperty(X,"type") = "cochainComplex" then
+return HomToInt_CochainComplex(X); fi;
 
-Print("ERROR: Input should be a resolution or equivariant map between resolutions or a chain complex. \n");
+
+Print("ERROR: Input should be a resolution or equivariant map between resolutions or  chain complex or cochain complex. \n");
 
 end);
 #####################################################################

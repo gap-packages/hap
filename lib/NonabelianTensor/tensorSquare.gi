@@ -195,7 +195,7 @@ end;
 #####################################################################
 
 
-return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action);
+return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action,nu:=SF);
 end);
 #####################################################################
 

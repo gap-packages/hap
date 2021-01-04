@@ -305,14 +305,14 @@ end);
 InstallGlobalFunction(TensorWithIntegersSparse,
 function(R)
 local
+        BoundaryRec,
         BoundaryC,
-        LengthC,
-        M;
+        LengthC;
 
 
 
 LengthC:=EvaluateProperty(R,"length");
-M:=[1..LengthC];
+BoundaryRec:=List([1..LengthC],n->[] );
 
 
 #####################################################################
@@ -322,14 +322,18 @@ local  bound, x, i;
 if n <0 then return false; fi;
 if n=0 then return []; fi;
 
+#if not IsBound(BoundaryRec[n][k]) then 
+if true then 
 bound:=StructuralCopy(R!.boundary(n,k));
 Apply(bound,x->[x[1],1]);
 bound:=AlgebraicReduction(bound);
 Apply(bound,x->[AbsInt(x[1]),SignInt(x[1])]);
 bound:=Collected(bound);
 Apply(bound,x->[x[1][1],x[1][2]*x[2]]);
+BoundaryRec[n][k]:=bound;
+fi;
 
-return bound;
+return BoundaryRec[n][k];
 end;
 #####################################################################
 
@@ -349,4 +353,77 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(SparseChainComplexToChainComplex,
+function(C)
+local Boundary,zero, char;
+
+char:=EvaluateProperty(C,"characteristic");
+if char<=0 then zero:=0; else zero:=Zero(GF(char)); fi;
+
+########################################
+Boundary:=function(n,k)
+local B, x;
+B:=[1..C!.dimension(n-1)]*zero;
+for x in C!.boundary(n,k) do
+B[x[1]]:=B[x[1]]+x[2];
+od;
+return B;
+end;
+########################################
+return  Objectify(HapChainComplex,
+                rec(
+                dimension:=C!.dimension,
+                boundary:=Boundary,
+                properties:=
+                [["length",Length(C)],
+                ["connected",EvaluateProperty(C,"connected")],
+                ["type", "chainComplex"],
+                ["characteristic", char] ]));
+
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ChainComplexToSparseChainComplex,
+function(C)
+local Boundary,zero, char,bound;
+
+char:=EvaluateProperty(C,"characteristic");
+if char<=0 then zero:=0; else zero:=Zero(GF(char)); fi;
+
+bound:=List([1..Length(C)],i->[]);
+ 
+########################################
+Boundary:=function(n,k)
+local B,v,i;
+
+if not IsBound(bound[n][k]) then 
+B:=[];
+v:=C!.boundary(n,k); 
+for i in [1..Length(v)] do
+if not v[i]=0 then Add(B,[i,v[i]]); fi;
+od;
+bound[n][k]:=B;
+fi;
+
+return bound[n][k];
+end;
+########################################
+return  Objectify(HapSparseChainComplex,
+                rec(
+                dimension:=C!.dimension,
+                boundary:=Boundary,
+                properties:=
+                [["length",Length(C)],
+                ["connected",EvaluateProperty(C,"connected")],
+                ["type", "chainComplex"],
+                ["characteristic", char] ]));
+
+end);
+#####################################################################
+#####################################################################
 

@@ -176,6 +176,7 @@ DeclareGlobalFunction("ReduceGenerators");
 DeclareGlobalFunction("ReduceGenerators_alt");
 DeclareGlobalFunction("HomToIntegers"); #partial doc
 DeclareGlobalFunction("HomToInt_ChainComplex");#<HomToIntegers
+DeclareGlobalFunction("HomToInt_CochainComplex");#<HomToIntegers
 DeclareGlobalFunction("HomToInt_ChainMap");#<HomToIntegers
 DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
@@ -206,11 +207,14 @@ DeclareGlobalFunction("SignedPermutationGroup");
 DeclareProperty("IsPeriodic",IsGroup);
 DeclareAttribute("CohomologicalPeriod",IsGroup);
 DeclareGlobalFunction("TransferChainMap");
-DeclareGlobalFunction("HeckeOperator");
+DeclareGlobalFunction("HeckeOperatorWeight2");
 DeclareGlobalFunction("HomogeneousPolynomials");
 DeclareGlobalFunction("HAP_4x4MatTo2x2Mat");
 DeclareGlobalFunction("HAP_nxnMatTo2nx2nMat");
 DeclareGlobalFunction("HomogeneousPolynomials_Bianchi");
+DeclareGlobalFunction("SparseChainComplexToChainComplex");
+DeclareGlobalFunction("SimplifiedSparseChainComplex");
+DeclareGlobalFunction("ChainComplexToSparseChainComplex");
 
 
 
@@ -829,6 +833,7 @@ DeclareGlobalFunction("HAP_GenericSL2OSubgroup");
 DeclareGlobalFunction("HAP_CongruenceSubgroupGamma0Ideal");
 DeclareGlobalFunction("HAP_PrincipalCongruenceSubgroupIdeal");
 DeclareGlobalFunction("HAP_TransversalCongruenceSubgroupsIdeal");
+DeclareGlobalFunction("HAP_TransversalCongruenceSubgroupsIdeal_alt");
 DeclareGlobalFunction("HAP_TransversalGamma0SubgroupsIdeal");
 
 DeclareGlobalFunction("QuadraticCharacter");

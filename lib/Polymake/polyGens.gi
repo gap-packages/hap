@@ -109,8 +109,8 @@ AppendTo(tmpInlog,1);
 AppendTo(tmpInlog,"\n");
 od;
 
-#Exec(Concatenation("beneath_beyond ",tmpInlog,"  POINTS"));
-Exec(Concatenation(POLYMAKE_PATH,tmpInlog,"  beneath_beyond VERTICES > ",tmp3Inlog));   #Added "beneath_beyond"
+#Exec(Concatenation(POLYMAKE_PATH,tmpInlog,"  beneath_beyond VERTICES > ",tmp3Inlog));   #Added "beneath_beyond"
+Exec(Concatenation(POLYMAKE_PATH,tmpInlog," VERTICES > ",tmp3Inlog));
 ################# HULL CALCULATED ###################################
 
 #####################################################################

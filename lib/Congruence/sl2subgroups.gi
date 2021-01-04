@@ -477,12 +477,17 @@ InstallOtherMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
 [IsMatrixGroup,IsHapSL2ZSubgroup],
 0,  #There must be a better way to ensure this method is not used!
+#[IsHapSL2ZSubgroup,IsMatrixGroup],
+#10000,
 function(H,HH)
+#Print("HAP_TransversalCongruenceSubgroups\n");
 return HAP_TransversalCongruenceSubgroups(H,HH);
 
 end);
 ############################################################
 ############################################################
+
+
 
 ############################################################
 ############################################################
@@ -493,14 +498,11 @@ InstallOtherMethod(RightTransversal,
 function(H,HH)
 local N;
 
-if IsPrime(HH!.level) and IsRing(HH!.level) then 
-    N:=HH!.level;
-    if AssociatedRing(N)!.bianchiInteger<0 then
-        return HAP_TransversalGamma0SubgroupsIdeal(H,HH); 
-    fi;
-fi;
-
+if H!.tree=true then
 return HAP_TransversalCongruenceSubgroupsIdeal(H,HH);
+else
+return HAP_TransversalCongruenceSubgroupsIdeal_alt(H,HH);
+fi;
 
 end);
 ############################################################

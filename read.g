@@ -11,6 +11,12 @@ HAP_ROOT:=DirectoriesPackageLibrary("HAP");
 HAP_ROOT:=Filename(HAP_ROOT,".");
 HAP_ROOT:=HAP_ROOT{[1..Length(HAP_ROOT)-1]};
 MakeReadOnlyGlobal("HAP_ROOT");
+#POLYMAKE_PATH:=Concatenation(HAP_ROOT,"Polymake/polymakeLegacy ");
+#POLYMAKE_PATH:=Filename( DirectoriesSystemPrograms( ), "polymake" );
+#MakeReadOnlyGlobal("POLYMAKE_PATH");
+#MakeReadWriteGlobal("POLYMAKE_COMMAND");
+#POLYMAKE_COMMAND:=POLYMAKE_PATH;
+#MakeReadOnlyGlobal(POLYMAKE_COMMAND);
 
 
 #################################
@@ -202,6 +208,7 @@ ReadPackageHap( "lib/Functors/homtint.gi");
 ReadPackageHap( "lib/Functors/transfer.gi");
 ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
+ReadPackageHap( "lib/Functors/simplify.gi");
 
 ##################### CONGRUENCE ######################################
 ReadPackageHap( "lib/Congruence/cong.gi");
@@ -494,8 +501,8 @@ ReadPackageHap("lib/Quandles/quandleOrbits.gi");
 ReadPackageHap("lib/Quandles/isoreps.gi");
 
 ################## KELVIN ##################################
-#ReadPackageHap("lib/Kelvin/knotcomp.gi");
-ReadPackageHap("lib/Kelvin/knotCompBound.gi");
+#ReadPackageHap("lib/Kelvin/knotCompBound.gi");
+ReadPackageHap("lib/Kelvin/init.g");
 
 
 
