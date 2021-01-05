@@ -1,0 +1,253 @@
+  
+  [1X2 [33X[0;0YCubical complexes & permutahedral complexes[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YCubical complexes[133X[101X
+  
+  [33X[0;0YA  [13Xfinite  simplicial  complex[113X  can  be defined to be a CW-subcomplex of the
+  canonical  regular  CW-structure  on  a  simplex  [22X∆^n[122X  of  some dimension [22Xn[122X.
+  Analogously,  a  [13Xfinite  cubical  complex[113X  is a CW-subcomplex of the regular
+  CW-structure  on  a cube [22X[0,1]^n[122X of some dimension [22Xn[122X. Equivalently, but more
+  conveniently,  we  can  replace the unit interval [22X[0,1][122X by an interval [22X[0,k][122X
+  with  CW-structure  involving [22X2k+1[122X cells, namely one [22X0[122X-cell for each integer
+  [22X0le  jle  k[122X and one [22X1[122X-cell for each open interval [22X(j,j+1)[122X for [22X0le jle k-1[122X. A
+  [13Xfinite  cuical complex[113X [22XM[122X is a CW-subcompex [22XM⊂ [0,k_1]× [0,k_2]× ⋯ [0,k_n][122X of
+  a  direct  product  of intervals, the direct product having the usual direct
+  product  CW-structure. The equivalence of these two definitions follows from
+  the  Gray code embedding of a mesh into a hypercube. We say that the cubical
+  complex  has [13Xambient dimension[113X [22Xn[122X. A cubical complex [22XM[122X of ambient dimension [22Xn[122X
+  is  said to be [13Xpure[113X if each cell lies in the boundary of an [22Xn[122X-cell. In other
+  words,  [22XM[122X  is  pure  if it is a union of unit [22Xn[122X-cubes in [22XR^n[122X, each unit cube
+  having vertices with integer coordinates.[133X
+  
+  [33X[0;0Y[12XHAP[112X  has  a  datatype for finite cubical complexes, and a slightly different
+  datatype for pure cubical complexes.[133X
+  
+  [33X[0;0YThe  following example constructs the granny knot (the sum of a trefoil knot
+  with  its  reflection)  as  a  [22X3[122X-dimensional  pure cubical complex, and then
+  displays it.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=PureCubicalKnot(3,1);[127X[104X
+    [4X[28Xprime knot 1 with 3 crossings[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL:=ReflectedCubicalKnot(K);[127X[104X
+    [4X[28XReflected( prime knot 1 with 3 crossings )[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM:=KnotSum(K,L);[127X[104X
+    [4X[28Xprime knot 1 with 3 crossings + Reflected( prime knot 1 with 3 crossings )[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext  we  construct  the  complement [22XY=D^3∖ mathringM[122X of the interior of the
+  pure  cubical  complex  [22XM[122X.  Here  [22XD^3[122X  is  a  rectangular  region  with  [22XM ⊂
+  mathringD^3[122X. This pure cubical complex [22XY[122X is a union of [22X5891[122X unit [22X3[122X-cubes. We
+  contract  [22XY[122X  to get a homotopy equivalent pure cubical complex [22XYY[122X consisting
+  of  the  union  of  just  [22X775[122X  unit [22X3[122X-cubes. Then we convert [22XYY[122X to a regular
+  CW-complex  [22XW[122X  involving  [22X11939[122X  cells.  We  contract [22XW[122X to obtain a homotopy
+  equivalent  regular  CW-complex  [22XWW[122X involving [22X5993[122X cells. Finally we compute
+  the  fundamental  group  of  the  complement of the granny knot, and use the
+  presentation  of  this group to establish that the Alexander polynomial [22XP(x)[122X
+  of the granny is[133X
+  
+  [33X[0;0Y[22XP(x) = x^4-2x^3+3x^2-2x+1 .[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=PureComplexComplement(M);[127X[104X
+    [4X[28XPure cubical complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(Y);[127X[104X
+    [4X[28X5891[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XYY:=ZigZagContractedComplex(Y);[127X[104X
+    [4X[28XPure cubical complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(YY);[127X[104X
+    [4X[28X775[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XW:=RegularCWComplex(YY);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(W);[127X[104X
+    [4X[28X11939[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XWW:=ContractedComplex(W);[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(WW);[127X[104X
+    [4X[28X5993[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(WW);[127X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAlexanderPolynomial(G);[127X[104X
+    [4X[28Xx_1^4-2*x_1^3+3*x_1^2-2*x_1+1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YPermutahedral complexes[133X[101X
+  
+  [33X[0;0YA  finite  pure  cubical  complex  is  a  union  of finitely many cubes in a
+  tessellation  of  [22XR^n[122X  by  unit  cubes.  One  can  also  tessellate  [22XR^n[122X  by
+  permutahedra,  and  we  define  a  finite  [22Xn[122X-dimensional  pure [13Xpermutahedral
+  complex[113X to be a union of finitely many permutahdra from such a tessellation.
+  There are two features of pure permutahedral complexes that are particularly
+  useful in some situations:[133X
+  
+  [30X    [33X[0;6YPure permutahedral complexes are topological manifolds with boundary.[133X
+  
+  [30X    [33X[0;6YThe method used for finding a smaller pure cubical complex [22XM'[122X homotopy
+        equivalent to a given pure cubical complex [22XM[122X retains the homeomorphism
+        type, and not just the homotopy type, of the space [22XM[122X.[133X
+  
+  [33X[0;0YTo  illustrate  these  features the following example begins by reading in a
+  protein  backbone  from the online Protein Database ([7Xhttps://www.rcsb.org/[107X),
+  and  storing  it  as  a pure cubical complex [22XK[122X. The ends of the protein have
+  been  joined,  and  the homology [22XH_i(K, Z)= Z[122X, [22Xi=0,1[122X is seen to be that of a
+  circle.  We  can  thus  regard  the protein as a knot [22XK⊂ R^3[122X. The protein is
+  visualized as a pure permutahedral complex.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data1V2X.pdb");;[127X[104X
+    [4X[25Xgap>[125X [27XK:=ReadPDBfileAsPurePermutahedralComplex("file");[127X[104X
+    [4X[28XPure permutahedral complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,1);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDisplay(K);[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAn  alternative  method for seeing that the pure permutahedral complex [22XK[122X has
+  the  homotopy  type  of  a  circle  is  to  note  that it is covered by open
+  permutahedra   (small   open  neighbourhoods  of  the  closed  [22X3[122X-dimensional
+  permutahedral  titles) and to form the nerve [22XN=Nerve(mathcal U)[122X of this open
+  covering  [22Xmathcal  U[122X.  The  nerve  [22XN[122X  has  the  same homotopy type as [22XK[122X. The
+  following  commands  establish  that [22XN[122X is a [22X1[122X-dimensional simplicial complex
+  and display [22XN[122X as a circular graph.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XN:=Nerve(K);[127X[104X
+    [4X[28XSimplicial complex of dimension 1.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(GraphOfSimplicialComplex(N));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  boundary  of  the  pure  permutahedral  complex  [22XK[122X  is  a [22X2[122X-dimensional
+  CW-complex  [22XB[122X homeomorphic to a torus. We next use the advantageous features
+  of pure permutahedral complexes to compute the homomorphism[133X
+  
+  [33X[0;0Y[22Xϕ:   π_1(B)   →   π_1(   R^3∖   mathringK),   a   ↦  yx^-3y^2x^-2yxy^-1,  b↦
+  yx^-1y^-1x^2y^-1[122X[133X
+  
+  [33X[0;0Ywhere[133X
+  [33X[0;0Y[22Xπ_1(B)=< a,b : aba^-1b^-1=1>[122X,[133X
+  [33X[0;0Y[22Xπ_1( R^3∖ mathringK) ≅ < x,y : y^2x^-2yxy^-1=1, yx^-2y^-1x(xy^-1)^2=1>[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=PureComplexComplement(K);[127X[104X
+    [4X[28XPure permutahedral complex of dimension 3.[128X[104X
+    [4X[25Xgap>[125X [27XSize(Y);[127X[104X
+    [4X[28X418922[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XYY:=ZigZagContractedComplex(Y);[127X[104X
+    [4X[28XPure permutahedral complex of dimension 3.[128X[104X
+    [4X[25Xgap>[125X [27XSize(YY);[127X[104X
+    [4X[28X3438[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XW:=RegularCWComplex(YY);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf:=BoundaryMap(W);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(Source(f));[127X[104X
+    [4X[28X[ [ 2, 1 ], [ 2, 261 ], [ 1, 1043 ], [ 1, 1626 ], [ 0, 2892 ], [ 0, 24715 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroup(f,2892);[127X[104X
+    [4X[28X[ f1, f2 ] -> [ f2*f1^-3*f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-1*f2^-1*f1^2*f2^-1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=Target(F);[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-2*f2^-1*f1*(f1*f2^-1)^2 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YConstructing pure cubical and permutahedral complexes[133X[101X
+  
+  [33X[0;0YAn  [22Xn[122X-dimensional  pure cubical or permutahedral complex can be created from
+  an  [22Xn[122X-dimensional  array  of  0s  and  1s. The following example creates and
+  displays two [22X3[122X-dimensional complexes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[[0,0,0],[0,0,0],[0,0,0]],[127X[104X
+    [4X[25X>[125X [27X       [[1,1,1],[1,0,1],[1,1,1]],[127X[104X
+    [4X[25X>[125X [27X       [[0,0,0],[0,0,0],[0,0,0]]];;[127X[104X
+    [4X[25Xgap>[125X [27XM:=PureCubicalComplex(A);[127X[104X
+    [4X[28XPure cubical complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP:=PurePermutahedralComplex(A);[127X[104X
+    [4X[28XPure permutahedral complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(P);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.4 [33X[0;0YComputations in dynamical systems[133X[101X
+  
+  [33X[0;0YPure  cubical  complexes  can  be  useful  for rigourous interval arithmetic
+  calculations  in  numerical  analysis. They can also be useful for trying to
+  estimate  approximations  of certain numerical quantities. To illustrate the
+  latter we consider the [13XHenon map[113X[133X
+  
+  [33X[0;0Y[22Xf:  R^2  →  R^2,  (  beginarraycc x y endarray) ↦ ( beginarraycc y+1-ax^2 bx
+  endarray) .[122X[133X
+  
+  [33X[0;0YStarting  with [22X(x_0,y_0)=(0,0)[122X and iterating [22X(x_n+1,y_n+1) = f(x_n,y_n)[122X with
+  the  parameter values [22Xa=1.4[122X, [22Xb=0.3[122X one obtains a sequence of points which is
+  known to be dense in the so called [13Xstrange attractor[113X [22Xcal A[122X of the Henon map.
+  The  first  [22X10[122X  million points in this sequence are plotted in the following
+  example,  with  arithmetic  performed to 100 decimal places of accuracy. The
+  sequence is stored as a [22X2[122X-dimensional pure cubical complex where each [22X2[122X-cell
+  is square of side equal to [22Xϵ =1/500[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=HenonOrbit([0,0],14/10,3/10,10^7,500,100);[127X[104X
+    [4X[28XPure cubical complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(M);[127X[104X
+    [4X[28X10287[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRepeating the computation but with squares of side [22Xϵ =1/1000[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=HenonOrbit([0,0],14/10,3/10,10^7,1000,100);[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(M);[127X[104X
+    [4X[28X24949[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ywe obtain the heuristic estimate[133X
+  
+  [33X[0;0Y[22Xδ ≃ frac log 24949- log 10287} log2} = 1.277[122X[133X
+  
+  [33X[0;0Yfor the box-counting dimension of the attractor [22Xcal A[122X.[133X
+  

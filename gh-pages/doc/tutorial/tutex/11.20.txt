@@ -1,0 +1,16 @@
+gap> Q:=QuadraticNumberField(-2);;
+gap> OQ:=RingOfIntegers(Q);;
+gap> I:=QuadraticIdeal(OQ,4+9*Sqrt(-2));;
+gap> G:=HAP_CongruenceSubgroupGamma0(I);;
+gap> R:=ResolutionSL2QuadraticIntegers(-2,4,true);;
+gap> S:=ResolutionFiniteSubgroup(R,G);;
+gap> C:=TensorWithIntegers(S);;
+gap> D:=ContractedComplex(C);;
+gap> C!.dimension(2); C!.dimension(3);
+1620
+1620
+gap> D!.dimension(2); D!.dimension(3);
+49
+50
+gap> Homology(D,2);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0 ]

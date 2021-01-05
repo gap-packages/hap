@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 9:  Chain complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap9"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap9_mj.html">[MathJax on]</a></p>
+<p><a id="X7A06103979B92808" name="X7A06103979B92808"></a></p>
+<div class="ChapSects"><a href="chap9.html#X7A06103979B92808">9 <span class="Heading"> Chain complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7CFDEEC07F15CF82">9.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7A1C427578108B7E">9.1-1 ChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X838AF689838BA681">9.1-2 ChainComplexOfPair</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7D84631C7B16C703">9.1-3 ChevalleyEilenbergComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7D5DD19D7BA9D816">9.1-4 LeibnizComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86EC96CC7EB5957E">9.1-5 SuspendedChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X83340F8C868BDE60">9.1-6 ReducedSuspendedChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82F1E19E7B11095A">9.1-7 CoreducedChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7ADC193D813C82F7">9.1-8 TensorProductOfChainComplexes</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7992AE7B7C8201F9">9.1-9 LefschetzNumber</a></span>
+</div></div>
+</div>
+
+<h3>9 <span class="Heading"> Chain complexes</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>9.1 <span class="Heading">  </span></h4>
+
+<p><a id="X7A1C427578108B7E" name="X7A1C427578108B7E"></a></p>
+
+<h5>9.1-1 ChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and returns the (often very large) cellular chain complex of <span class="SimpleMath">T</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap9.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">11</a></span> </p>
+
+<p><a id="X838AF689838BA681" name="X838AF689838BA681"></a></p>
+
+<h5>9.1-2 ChainComplexOfPair</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexOfPair</code>( <var class="Arg">T</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex or cubical complex <span class="SimpleMath">T</span> and contractible subcomplex <span class="SimpleMath">S</span>. It returns the quotient <span class="SimpleMath">C(T)/C(S)</span> of cellular chain complexes.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">1</a></span> </p>
+
+<p><a id="X7D84631C7B16C703" name="X7D84631C7B16C703"></a></p>
+
+<h5>9.1-3 ChevalleyEilenbergComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChevalleyEilenbergComplex</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a Lie algebra <span class="SimpleMath">X=A</span> (over the ring of integers <span class="SimpleMath">Z</span> or over a field <span class="SimpleMath">K</span>) or a homomorphism of Lie algebras <span class="SimpleMath">X=(f:A ⟶ B)</span>, together with a positive integer <span class="SimpleMath">n</span>. It returns either the first <span class="SimpleMath">n</span> terms of the Chevalley-Eilenberg chain complex <span class="SimpleMath">C(A)</span>, or the induced map of Chevalley-Eilenberg complexes <span class="SimpleMath">C(f):C(A) ⟶ C(B)</span>.</p>
+
+<p>(The homology of the Chevalley-Eilenberg complex <span class="SimpleMath">C(A)</span> is by definition the homology of the Lie algebra <span class="SimpleMath">A</span> with trivial coefficients in <span class="SimpleMath">Z</span> or <span class="SimpleMath">K</span>).</p>
+
+<p>This function was written by <strong class="button">Pablo Fernandez Ascariz</strong></p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D5DD19D7BA9D816" name="X7D5DD19D7BA9D816"></a></p>
+
+<h5>9.1-4 LeibnizComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeibnizComplex</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a Lie or Leibniz algebra <span class="SimpleMath">X=A</span> (over the ring of integers <span class="SimpleMath">Z</span> or over a field <span class="SimpleMath">K</span>) or a homomorphism of Lie or Leibniz algebras <span class="SimpleMath">X=(f:A ⟶ B)</span>, together with a positive integer <span class="SimpleMath">n</span>. It returns either the first <span class="SimpleMath">n</span> terms of the Leibniz chain complex <span class="SimpleMath">C(A)</span>, or the induced map of Leibniz complexes <span class="SimpleMath">C(f):C(A) ⟶ C(B)</span>.</p>
+
+<p>(The Leibniz complex <span class="SimpleMath">C(A)</span> was defined by J.-L.Loday. Its homology is by definition the Leibniz homology of the algebra <span class="SimpleMath">A</span>).</p>
+
+<p>This function was written by <strong class="button">Pablo Fernandez Ascariz</strong></p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X86EC96CC7EB5957E" name="X86EC96CC7EB5957E"></a></p>
+
+<h5>9.1-5 SuspendedChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SuspendedChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">C</span> and returns the chain complex <span class="SimpleMath">S</span> defined by applying the degree shift <span class="SimpleMath">S_n = C_n-1</span> to chain groups and boundary homomorphisms.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X83340F8C868BDE60" name="X83340F8C868BDE60"></a></p>
+
+<h5>9.1-6 ReducedSuspendedChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedSuspendedChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">C</span> and returns the chain complex <span class="SimpleMath">S</span> defined by applying the degree shift <span class="SimpleMath">S_n = C_n-1</span> to chain groups and boundary homomorphisms for all <span class="SimpleMath">n &gt; 0</span>. The chain complex <span class="SimpleMath">S</span> has trivial homology in degree <span class="SimpleMath">0</span> and <span class="SimpleMath">S_0= Z</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X82F1E19E7B11095A" name="X82F1E19E7B11095A"></a></p>
+
+<h5>9.1-7 CoreducedChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoreducedChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoreducedChainComplex</code>( <var class="Arg">C</var>, <var class="Arg">2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">C</span> and returns a quasi-isomorphic chain complex <span class="SimpleMath">D</span>. In many cases the complex <span class="SimpleMath">D</span> should be smaller than <span class="SimpleMath">C</span>. If an optional second input argument is set equal to 2 then an alternative method is used for reducing the size of the chain complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">1</a></span> </p>
+
+<p><a id="X7ADC193D813C82F7" name="X7ADC193D813C82F7"></a></p>
+
+<h5>9.1-8 TensorProductOfChainComplexes</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProductOfChainComplexes</code>( <var class="Arg">C</var>, <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two chain complexes <span class="SimpleMath">C</span> and <span class="SimpleMath">D</span> of the same characteristic and returns their tensor product as a chain complex.</p>
+
+<p>This function was written by <strong class="button"> Le Van Luyen</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">1</a></span> </p>
+
+<p><a id="X7992AE7B7C8201F9" name="X7992AE7B7C8201F9"></a></p>
+
+<h5>9.1-9 LefschetzNumber</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LefschetzNumber</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain map <span class="SimpleMath">F: C→ C</span> with common source and target. It returns the Lefschetz number of the map (that is, the alternating sum of the traces of the homology maps in each degree).</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 16:  Lie commutators and nonabelian Lie tensors</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap16"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap16_mj.html">[MathJax on]</a></p>
+<p><a id="X7A3DC9327EE1BE6C" name="X7A3DC9327EE1BE6C"></a></p>
+<div class="ChapSects"><a href="chap16.html#X7A3DC9327EE1BE6C">16 <span class="Heading"> Lie commutators and nonabelian Lie tensors</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X7CFDEEC07F15CF82">16.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X80BBA6247ED4DCCF">16.1-1 LieCoveringHomomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7BEEE3D380CF22F1">16.1-2 LeibnizQuasiCoveringHomomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7B384F9486A7C92B">16.1-3 LieEpiCentre</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X849324D680C0EE5E">16.1-4 LieExteriorSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X809B166C835516EB">16.1-5 LieTensorSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X802F2E417D872042">16.1-6 LieTensorCentre</a></span>
+</div></div>
+</div>
+
+<h3>16 <span class="Heading"> Lie commutators and nonabelian Lie tensors</span></h3>
+
+<p>Functions on this page are joint work with <strong class="button">Hamid Mohammadzadeh</strong>, and implemented by him.</p>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>16.1 <span class="Heading">  </span></h4>
+
+<p><a id="X80BBA6247ED4DCCF" name="X80BBA6247ED4DCCF"></a></p>
+
+<h5>16.1-1 LieCoveringHomomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCoveringHomomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field, and returns a surjective Lie homomorphism <span class="SimpleMath">phi : C→ L</span> where:</p>
+
+
+<ul>
+<li><p>the kernel of <span class="SimpleMath">phi</span> lies in both the centre of <span class="SimpleMath">C</span> and the derived subalgebra of <span class="SimpleMath">C</span>,</p>
+
+</li>
+<li><p>the kernel of <span class="SimpleMath">phi</span> is a vector space of rank equal to the rank of the second Chevalley-Eilenberg homology of <span class="SimpleMath">L</span>.</p>
+
+</li>
+</ul>
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">1</a></span> </p>
+
+<p><a id="X7BEEE3D380CF22F1" name="X7BEEE3D380CF22F1"></a></p>
+
+<h5>16.1-2 LeibnizQuasiCoveringHomomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeibnizQuasiCoveringHomomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field, and returns a surjective homomorphism <span class="SimpleMath">phi : C→ L</span> of Leibniz algebras where:</p>
+
+
+<ul>
+<li><p>the kernel of <span class="SimpleMath">phi</span> lies in both the centre of <span class="SimpleMath">C</span> and the derived subalgebra of <span class="SimpleMath">C</span>,</p>
+
+</li>
+<li><p>the kernel of <span class="SimpleMath">phi</span> is a vector space of rank equal to the rank of the kernel <span class="SimpleMath">J</span> of the homomorphism <span class="SimpleMath">L ⊗ L → L</span> from the tensor square to <span class="SimpleMath">L</span>. (We note that, in general, <span class="SimpleMath">J</span> is NOT equal to the second Leibniz homology of <span class="SimpleMath">L</span>.)</p>
+
+</li>
+</ul>
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7B384F9486A7C92B" name="X7B384F9486A7C92B"></a></p>
+
+<h5>16.1-3 LieEpiCentre</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieEpiCentre</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field, and returns an ideal <span class="SimpleMath">Z^∗(L)</span> of the centre of <span class="SimpleMath">L</span>. The ideal <span class="SimpleMath">Z^∗(L)</span> is trivial if and only if <span class="SimpleMath">L</span> is isomorphic to a quotient <span class="SimpleMath">L=E/Z(E)</span> of some Lie algebra <span class="SimpleMath">E</span> by the centre of <span class="SimpleMath">E</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">1</a></span> </p>
+
+<p><a id="X849324D680C0EE5E" name="X849324D680C0EE5E"></a></p>
+
+<h5>16.1-4 LieExteriorSquare</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieExteriorSquare</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field. It returns a record <span class="SimpleMath">E</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">E.homomorphism</span> is a Lie homomorphism <span class="SimpleMath">µ : (L ∧ L) ⟶ L</span> from the nonabelian exterior square <span class="SimpleMath">(L ∧ L)</span> to <span class="SimpleMath">L</span>. The kernel of <span class="SimpleMath">µ</span> is the Lie multiplier.</p>
+
+</li>
+<li><p><span class="SimpleMath">E.pairing(x,y)</span> is a function which inputs elements <span class="SimpleMath">x, y</span> in <span class="SimpleMath">L</span> and returns <span class="SimpleMath">(x ∧ y)</span> in the exterior square <span class="SimpleMath">(L ∧ L)</span> .</p>
+
+</li>
+</ul>
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X809B166C835516EB" name="X809B166C835516EB"></a></p>
+
+<h5>16.1-5 LieTensorSquare</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieTensorSquare</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field and returns a record <span class="SimpleMath">T</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">T.homomorphism</span> is a Lie homomorphism <span class="SimpleMath">µ : (L ⊗ L) ⟶ L</span> from the nonabelian tensor square of <span class="SimpleMath">L</span> to <span class="SimpleMath">L</span>.</p>
+
+</li>
+<li><p><span class="SimpleMath">T.pairing(x,y)</span> is a function which inputs two elements <span class="SimpleMath">x, y</span> in <span class="SimpleMath">L</span> and returns the tensor <span class="SimpleMath">(x ⊗ y)</span> in the tensor square <span class="SimpleMath">(L ⊗ L)</span> .</p>
+
+</li>
+</ul>
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X802F2E417D872042" name="X802F2E417D872042"></a></p>
+
+<h5>16.1-6 LieTensorCentre</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieTensorCentre</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite dimensional Lie algebra <span class="SimpleMath">L</span> over a field and returns the largest ideal <span class="SimpleMath">N</span> such that the induced homomorphism of nonabelian tensor squares <span class="SimpleMath">(L ⊗ L) ⟶ (L/N ⊗ L/N)</span> is an isomorphism.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

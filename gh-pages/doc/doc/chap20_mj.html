@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 20:  Words in free \(ZG\)-modules </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap20"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap21_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap20.html">[MathJax off]</a></p>
+<p><a id="X8276B4377D092A80" name="X8276B4377D092A80"></a></p>
+<div class="ChapSects"><a href="chap20_mj.html#X8276B4377D092A80">20 <span class="Heading"> Words in free <span class="SimpleMath">\(ZG\)</span>-modules </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap20_mj.html#X7CFDEEC07F15CF82">20.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X82D71B3F85D5BE77">20.1-1 AddFreeWords</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7CCBD61A7EEBD996">20.1-2 AddFreeWordsModP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7E3F96C27E64EEF9">20.1-3 AlgebraicReduction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X844F2C187CC85C47">20.1-4 MultiplyWord</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7CA8A7CB81820EBB">20.1-5 Negate</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X818F12EC81BA4788">20.1-6 NegateWord</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7FFAEBBD7B35F84C">20.1-7 PrintZGword</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7D769FB3873B9527">20.1-8 TietzeReduction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X7D043C4282B27B69">20.1-9 ResolutionBoundaryOfWord</a></span>
+</div></div>
+</div>
+
+<h3>20 <span class="Heading"> Words in free <span class="SimpleMath">\(ZG\)</span>-modules </span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>20.1 <span class="Heading">  </span></h4>
+
+<p><a id="X82D71B3F85D5BE77" name="X82D71B3F85D5BE77"></a></p>
+
+<h5>20.1-1 AddFreeWords</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddFreeWords</code>( <var class="Arg">v</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two words <span class="SimpleMath">\(v,w\)</span> in a free <span class="SimpleMath">\(ZG\)</span>-module and returns their sum <span class="SimpleMath">\(v+w\)</span>. If the characteristic of <span class="SimpleMath">\(Z\)</span> is greater than <span class="SimpleMath">\(0\)</span> then the next function might be more efficient.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7CCBD61A7EEBD996" name="X7CCBD61A7EEBD996"></a></p>
+
+<h5>20.1-2 AddFreeWordsModP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddFreeWordsModP</code>( <var class="Arg">v</var>, <var class="Arg">w</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs two words <span class="SimpleMath">\(v,w\)</span> in a free <span class="SimpleMath">\(ZG\)</span>-module and the characteristic <span class="SimpleMath">\(p\)</span> of <span class="SimpleMath">\(Z\)</span>. It returns the sum <span class="SimpleMath">\(v+w\)</span>. If <span class="SimpleMath">\(p=0\)</span> the previous function might be fractionally quicker.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7E3F96C27E64EEF9" name="X7E3F96C27E64EEF9"></a></p>
+
+<h5>20.1-3 AlgebraicReduction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlgebraicReduction</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlgebraicReduction</code>( <var class="Arg">w</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a word <span class="SimpleMath">\(w\)</span> in a free <span class="SimpleMath">\(ZG\)</span>-module and returns a reduced version of the word in which all pairs of mutually inverse letters have been cancelled. The reduction is performed in a free abelian group unless the characteristic <span class="SimpleMath">\(p\)</span> of <span class="SimpleMath">\(Z\)</span> is entered.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X844F2C187CC85C47" name="X844F2C187CC85C47"></a></p>
+
+<h5>20.1-4 MultiplyWord</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplyWord</code>( <var class="Arg">n</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a word <span class="SimpleMath">\(w\)</span> and integer <span class="SimpleMath">\(n\)</span>. It returns the scalar multiple <span class="SimpleMath">\(n\cdot w\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7CA8A7CB81820EBB" name="X7CA8A7CB81820EBB"></a></p>
+
+<h5>20.1-5 Negate</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Negate</code>( [<var class="Arg">i</var>, <var class="Arg">j</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pair <span class="SimpleMath">\([i,j]\)</span> of integers and returns <span class="SimpleMath">\([-i,j]\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X818F12EC81BA4788" name="X818F12EC81BA4788"></a></p>
+
+<h5>20.1-6 NegateWord</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NegateWord</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a word <span class="SimpleMath">\(w\)</span> in a free <span class="SimpleMath">\(ZG\)</span>-module and returns the negated word <span class="SimpleMath">\(-w\)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7FFAEBBD7B35F84C" name="X7FFAEBBD7B35F84C"></a></p>
+
+<h5>20.1-7 PrintZGword</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintZGword</code>( <var class="Arg">w</var>, <var class="Arg">elts</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a word <span class="SimpleMath">\(w\)</span> in a free <span class="SimpleMath">\(ZG\)</span>-module and a (possibly partial but sufficient) listing elts of the elements of <span class="SimpleMath">\(G\)</span>. The function prints the word <span class="SimpleMath">\(w\)</span> to the screen in the form</p>
+
+<p><span class="SimpleMath">\(r_1E_1 + \ldots + r_nE_n\)</span></p>
+
+<p>where <span class="SimpleMath">\(r_i\)</span> are elements in the group ring <span class="SimpleMath">\(ZG\)</span>, and <span class="SimpleMath">\(E_i\)</span> denotes the <span class="SimpleMath">\(i\)</span>-th free generator of the module.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPeriodic.html">1</a></span> </p>
+
+<p><a id="X7D769FB3873B9527" name="X7D769FB3873B9527"></a></p>
+
+<h5>20.1-8 TietzeReduction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TietzeReduction</code>( <var class="Arg">S</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a set <span class="SimpleMath">\(S\)</span> of words in a free <span class="SimpleMath">\(ZG\)</span>-module, and a word <span class="SimpleMath">\(w\)</span> in the module. The function returns a word <span class="SimpleMath">\(w'\)</span> such that {<span class="SimpleMath">\(S,w'\)</span>} generates the same abelian group as {<span class="SimpleMath">\(S,w\)</span>}. The word <span class="SimpleMath">\(w'\)</span> is possibly shorter (and certainly no longer) than <span class="SimpleMath">\(w\)</span>. This function needs to be improved!</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D043C4282B27B69" name="X7D043C4282B27B69"></a></p>
+
+<h5>20.1-9 ResolutionBoundaryOfWord</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResolutionBoundaryOfWord</code>( <var class="Arg">R</var>, <var class="Arg">n</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a resolution <span class="SimpleMath">\(R\)</span>, a positive integer <span class="SimpleMath">\(n\)</span> and a list <span class="SimpleMath">\(w\)</span> representing a word in the free module <span class="SimpleMath">\(R_n\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> under the <span class="SimpleMath">\(n\)</span>-th boundary homomorphism.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap21_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

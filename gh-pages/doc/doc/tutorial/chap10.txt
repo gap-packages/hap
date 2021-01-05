@@ -1,0 +1,1254 @@
+  
+  [1X10 [33X[0;0YCongruence Subgroups, Cuspidal Cohomology and Hecke Operators[133X[101X
+  
+  [33X[0;0YIn  this  chapter  we  explain  how HAP can be used to make computions about
+  modular  forms  associated  to  congruence subgroups [22XΓ[122X of [22XSL_2( Z)[122X. Also, in
+  Subsection  10.8  onwards,  we  demonstrate  cohomology computations for the
+  [13XPicard  group[113X [22XSL_2( Z[i])[122X, some [13XBianchi groups[113X [22XPSL_2(cal O_-d)[122X where [22Xcal O_d[122X
+  is the ring of integers of [22XQ(sqrt-d)[122X for square free positive integer [22Xd[122X, and
+  some  other  groups  of  the  form  [22XSL_m(cal  O)[122X, [22XGL_m(cal O)[122X, [22XPSL_m(cal O)[122X,
+  [22XPGL_m(cal O)[122X, for [22Xm=2,3,4[122X and certain [22Xcal O= Z, cal O_-d[122X.[133X
+  
+  
+  [1X10.1 [33X[0;0YEichler-Shimura isomorphism[133X[101X
+  
+  [33X[0;0YWe begin by recalling the Eichler-Shimura isomorphism [Eic57][Shi59][133X
+  
+  
+  [24X[33X[0;6YS_k(\Gamma)  \oplus  \overline{S_k(\Gamma)}  \oplus  E_k(\Gamma)  \cong_{\sf
+  Hecke} H^1(\Gamma,P_{\mathbb C}(k-2))[133X
+  
+  [124X
+  
+  [33X[0;0Ywhich  relates  the  cohomology  of  groups  to  the theory of modular forms
+  associated  to a finite index subgroup [22XΓ[122X of [22XSL_2( Z)[122X. In subsequent sections
+  we  explain  how to compute with the right-hand side of the isomorphism. But
+  first, for completeness, let us define the terms on the left-hand side.[133X
+  
+  [33X[0;0YLet  [22XN[122X  be  a  positive  integer.  A  subgroup [22XΓ[122X of [22XSL_2( Z)[122X is said to be a
+  [13Xcongruence  subgroup[113X  of  level [22XN[122X if it contains the kernel of the canonical
+  homomorphism  [22Xπ_N: SL_2( Z) → SL_2( Z/N Z)[122X. So any congruence subgroup is of
+  finite index in [22XSL_2( Z)[122X, but the converse is not true.[133X
+  
+  [33X[0;0YOne congruence subgroup of particular interest is the group [22XΓ_1(N)=ker(π_N)[122X,
+  known  as  the  [13Xprincipal congruence subgroup[113X of level [22XN[122X. Another congruence
+  subgroup  of  particular interest is the group [22XΓ_0(N)[122X of those matrices that
+  project to upper triangular matrices in [22XSL_2( Z/N Z)[122X.[133X
+  
+  [33X[0;0YA  [13Xmodular  form[113X of weight [22Xk[122X for a congruence subgroup [22XΓ[122X is a complex valued
+  function  on  the  upper-half  plane,  [22Xf:  frakh}={z∈  C  :  Re(z)>0}  →  C[122X,
+  satisfying:[133X
+  
+  [30X    [33X[0;6Y[22Xdisplaystyle f(fracaz+bcz+d) = (cz+d)^k f(z)[122X for [22X(beginarraylla&b c &d
+        endarray) ∈ Γ[122X,[133X
+  
+  [30X    [33X[0;6Y[22Xf[122X  is `holomorphic' on the [13Xextended upper-half plane[113X [22Xfrakh^∗ = frakh ∪
+        Q  ∪  {∞}[122X  obtained from the upper-half plane by `adjoining a point at
+        each cusp'.[133X
+  
+  [33X[0;0YThe  collection  of  all  weight  [22Xk[122X  modular forms for [22XΓ[122X form a vector space
+  [22XM_k(Γ)[122X over [22XC[122X.[133X
+  
+  [33X[0;0YA  modular form [22Xf[122X is said to be a [13Xcusp form[113X if [22Xf(∞)=0[122X. The collection of all
+  weight  [22Xk[122X  cusp  forms  for  [22XΓ[122X  form  a  vector  subspace [22XS_k(Γ)[122X. There is a
+  decomposition[133X
+  
+  
+  [24X[33X[0;6YM_k(\Gamma) \cong S_k(\Gamma) \oplus E_k(\Gamma)[133X
+  
+  [124X
+  
+  [33X[0;0Yinvolving  a  summand  [22XE_k(Γ)[122X known as the [13XEisenstein space[113X. See [Ste07] for
+  further introductory details on modular forms.[133X
+  
+  [33X[0;0YThe  Eichler-Shimura  isomorphism  is  more  than  an  isomorphism of vector
+  spaces.  It  is an isomorphism of Hecke modules: both sides admit notions of
+  [13XHecke  operators[113X,  and the isomorphism preserves these operators. The bar on
+  the  left-hand  side  of  the  isomorphism  denotes  complex conjugation, or
+  [13Xanti-holomorphic[113X forms. See [Wie78] for a full account of the isomorphism.[133X
+  
+  [33X[0;0YOn  the  right-hand side of the isomorphism, the [22XZΓ[122X-module [22XP_ C(k-2)⊂ C[x,y][122X
+  denotes  the  space  of  homogeneous degree [22Xk-2[122X polynomials with action of [22XΓ[122X
+  given by[133X
+  
+  
+  [24X[33X[0;6Y\left(\begin{array}{ll}a&b\\   c   &d   \end{array}\right)\cdot   p(x,y)   =
+  p(dx-by,-cx+ay)\ .[133X
+  
+  [124X
+  
+  [33X[0;0YIn  particular [22XP_ C(0)= C[122X is the trivial module. Below we shall compute with
+  the integral analogue [22XP_ Z(k-2) ⊂ Z[x,y][122X.[133X
+  
+  [33X[0;0YIn  the  following sections we explain how to use the right-hand side of the
+  Eichler-Shimura  isomorphism  to  compute eigenvalues of the Hecke operators
+  restricted to the subspace [22XS_k(Γ)[122X of cusp forms.[133X
+  
+  
+  [1X10.2 [33X[0;0YGenerators for [22XSL_2( Z)[122X[101X[1X and the cubic tree[133X[101X
+  
+  [33X[0;0YThe  matrices [22XS=(beginarrayrr0&-1 1 &0 endarray)[122X and [22XT=(beginarrayrr1&1 0 &1
+  endarray)[122X  generate  [22XSL_2( Z)[122X and it is not difficult to devise an algorithm
+  for  expressing  an arbitrary integer matrix [22XA[122X of determinant [22X1[122X as a word in
+  [22XS[122X, [22XT[122X and their inverses. The following illustrates such an algorithm.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[4,9],[7,16]];;[127X[104X
+    [4X[25Xgap>[125X [27Xword:=AsWordInSL2Z(A);[127X[104X
+    [4X[28X[ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, -1 ], [ 0, 1 ] ], [128X[104X
+    [4X[28X  [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ], [ [ 0, 1 ], [ -1, 0 ] ], [128X[104X
+    [4X[28X  [ [ 1, -1 ], [ 0, 1 ] ], [ [ 1, -1 ], [ 0, 1 ] ], [ [ 1, -1 ], [ 0, 1 ] ], [128X[104X
+    [4X[28X  [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XProduct(word);[127X[104X
+    [4X[28X[ [ 4, 9 ], [ 7, 16 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  is  convenient  to  introduce  the  matrix [22XU=ST = (beginarrayrr0&-1 1 &1
+  endarray)[122X.  The  matrices  [22XS[122X and [22XU[122X also generate [22XSL_2( Z)[122X. In fact we have a
+  free presentation [22XSL_2( Z)= ⟨ S,U | S^4=U^6=1 ⟩[122X.[133X
+  
+  [33X[0;0YThe  [13Xcubic  tree[113X  [22Xcal T[122X is a tree ([13Xi.e.[113X a [22X1[122X-dimensional contractible regular
+  CW-complex)  with  countably  infinitely many edges in which each vertex has
+  degree  [22X3[122X.  We can realize the cubic tree [22Xcal T[122X by taking the left cosets of
+  [22Xcal  U=⟨ U⟩[122X in [22XSL_2( Z)[122X as vertices, and joining cosets [22Xxcal U[122X and [22Xycal U[122X by
+  an  edge  if,  and  only  if, [22Xx^-1y ∈ cal U Scal U[122X. Thus the vertex [22Xcal U[122X is
+  joined  to  [22XScal  U[122X, [22XUScal U[122X and [22XU^2Scal U[122X. The vertices of this tree are in
+  one-to-one correspondence with all reduced words in [22XS[122X, [22XU[122X and [22XU^2[122X that, apart
+  from the identity, end in [22XS[122X.[133X
+  
+  [33X[0;0YFrom  our  realization  of the cubic tree [22Xcal T[122X we see that [22XSL_2( Z)[122X acts on
+  [22Xcal  T[122X  in  such  a  way that each vertex is stabilized by a cyclic subgroup
+  conjugate  to  [22Xcal  U=⟨  U⟩[122X and each edge is stabilized by a cyclic subgroup
+  conjugate to [22Xcal S =⟨ S ⟩[122X.[133X
+  
+  [33X[0;0YIn  order  to  store this action of [22XSL_2( Z)[122X on the cubic tree [22Xcal T[122X we just
+  need to record the following finite amount of information.[133X
+  
+  
+  [1X10.3  [33X[0;0YOne-dimensional  fundamental  domains  and  generators  for congruence[101X
+  [1Xsubgroups[133X[101X
+  
+  [33X[0;0YThe  modular  group  [22Xcal M=PSL_2( Z)[122X is isomorphic, as an abstract group, to
+  the  free product [22XZ_2∗ Z_3[122X. By the Kurosh subgroup theorem, any finite index
+  subgroup [22XM ⊂ cal M[122X is isomorphic to the free product of finitely many copies
+  of  [22XZ_2[122Xs,  [22XZ_3[122Xs  and  [22XZ[122Xs.  A subset [22Xunderline x ⊂ M[122X is an [13Xindependent[113X set of
+  subgroup generators if [22XM[122X is the free product of the cyclic subgroups [22X<x >[122X as
+  [22Xx[122X  runs  over  [22Xunderline x[122X. Let us say that a set of elements in [22XSL_2( Z)[122X is
+  [13Xprojectively  independent[113X  if it maps injectively onto an independent set of
+  subgroup  generators  [22Xunderline x⊂ cal M[122X. The generating set [22X{S,U}[122X for [22XSL_2(
+  Z)[122X given in the preceding section is projectively independent.[133X
+  
+  [33X[0;0YWe are interested in constructing a set of generators for a given congruence
+  subgroup  [22XΓ[122X.  If a small generating set for [22XΓ[122X is required then we should aim
+  to construct one which is close to being projectively independent.[133X
+  
+  [33X[0;0YIt  is  useful  to  invoke the following general result which follows from a
+  perturbation  result  about  free [22XZG[122X-resolutons in [EHS06, Theorem 2] and an
+  old  observation of John Milnor that a free [22XZG[122X-resolution can be realized as
+  the  cellular  chain complex of a CW-complex if it can be so realized in low
+  dimensions.[133X
+  
+  [33X[0;0Y[12XTheorem.[112X  Let  [22XX[122X  be  a  contractible  CW-complex on which a group [22XG[122X acts by
+  permuting  cells.  The  cellular chain complex [22XC_∗ X[122X is a [22XZG[122X-resolution of [22XZ[122X
+  which  typically  is  not free. Let [22X[e^n][122X denote the orbit of the n-cell [22Xe^n[122X
+  under  the  action. Let [22XG^e^n le G[122X denote the stabilizer subgroup of [22Xe^n[122X, in
+  which group elements are not required to stabilize [22Xe^n[122X point-wise. Let [22XY_e^n[122X
+  denote  a contractible CW-complex on which [22XG^e^n[122X acts cellularly and freely.
+  Then there exists a contractible CW-complex [22XW[122X on which [22XG[122X acts cellularly and
+  freely,  and  in  which  the  orbits of [22Xn[122X-cells are labelled by [22X[e^p]⊗ [f^q][122X
+  where [22Xp+q=n[122X and [22X[e^p][122X ranges over the [22XG[122X-orbits of [22Xp[122X-cells in [22XX[122X, [22X[f^q][122X ranges
+  over the [22XG^e^p[122X-orbits of [22Xq[122X-cells in [22XY_e^p[122X.[133X
+  
+  [33X[0;0YLet  [22XW[122X  be  as  in  the  theorem.  Then the quotient CW-complex [22XB_G=W/G[122X is a
+  classifying  space  for  [22XG[122X.  Let  [22XT[122X  denote a maximal tree in the [22X1[122X-skeleton
+  [22XB^1_G[122X.  Basic  geometric  group theory tells us that the [22X1[122X-cells in [22XB^1_G∖ T[122X
+  correspond to a generating set for [22XG[122X.[133X
+  
+  [33X[0;0YSuppose  we  wish  to compute a set of generators for a principal congruence
+  subgroup  [22XΓ=Γ_1(N)[122X.  In the above theorem take [22XX=cal T[122X to be the cubic tree,
+  and note that [22XΓ[122X acts freely on [22Xcal T[122X and thus that [22XW=cal T[122X. To determine the
+  [22X1[122X-cells of [22XB_Γ∖ T[122X we need to determine a cellular subspace [22XD_Γ ⊂ cal T[122X whose
+  images under the action of [22XΓ[122X cover [22Xcal T[122X and are pairwise either disjoint or
+  identical.  The subspace [22XD_Γ[122X will not be a CW-complex as it won't be closed,
+  but  it can be chosen to be connected, and hence contractible. We call [22XD_Γ[122X a
+  [13Xfundamental   region[113X   for   [22XΓ[122X.  We  denote  by  [22Xmathring  D_Γ[122X  the  largest
+  CW-subcomplex  of  [22XD_Γ[122X.  The  vertices  of  [22Xmathring D_Γ[122X are the same as the
+  vertices of [22XD_Γ[122X. Thus [22Xmathring D_Γ[122X is a subtree of the cubic tree with [22X|Γ|/6[122X
+  vertices.  For  each  vertex  [22Xv[122X  in  the  tree  [22Xmathring D_Γ[122X define [22Xη(v)=3 -
+  degree(v)[122X.  Then  the  number of generators for [22XΓ[122X will be [22X(1/2)∑_v∈ mathring
+  D_Γ η(v)[122X.[133X
+  
+  [33X[0;0YThe  following  commands  determine  projectively independent generators for
+  [22XΓ_1(6)[122X  and  display  [22Xmathring  D_Γ_1(6)[122X.  The subgroup [22XΓ_1(6)[122X is free on [22X13[122X
+  generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_PrincipalCongruenceSubgroup(6);;[127X[104X
+    [4X[25Xgap>[125X [27Xgens:=GeneratorsOfGroup(G);[127X[104X
+    [4X[28X[ [ [ -83, -18 ], [ 60, 13 ] ], [ [ -77, -18 ], [ 30, 7 ] ], [128X[104X
+    [4X[28X  [ [ -65, -12 ], [ 168, 31 ] ], [ [ -53, -12 ], [ 84, 19 ] ], [128X[104X
+    [4X[28X  [ [ -47, -18 ], [ 222, 85 ] ], [ [ -41, -12 ], [ 24, 7 ] ], [128X[104X
+    [4X[28X  [ [ -35, -6 ], [ 6, 1 ] ], [ [ -11, -18 ], [ 30, 49 ] ], [128X[104X
+    [4X[28X  [ [ -11, -6 ], [ 24, 13 ] ], [ [ -5, -18 ], [ 12, 43 ] ], [128X[104X
+    [4X[28X  [ [ -5, -12 ], [ 18, 43 ] ], [ [ -5, -6 ], [ 6, 7 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0 ], [ -6, 1 ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAn  alternative  but  very  related  approach  to  computing  generators  of
+  congruence subgroups of [22XSL_2( Z)[122X is described in [Kul91].[133X
+  
+  [33X[0;0YThe congruence subgroup [22XΓ_0(N)[122X does not act freely on the vertices of [22Xcal T[122X,
+  and  so one needs to incorporate a generator for the cyclic stabilizer group
+  according to the above theorem. Alternatively, we can replace the cubic tree
+  by  a  six-fold  cover  [22Xcal  T'[122X on whose vertex set [22XΓ_0(N)[122X acts freely. This
+  alternative  approach  will  produce  a  redundant  set  of  generators. The
+  following  commands  display  [22Xmathring D_Γ_0(39)[122X for a fundamental region in
+  [22Xcal  T'[122X.  They  also  use  the  corresponding  generating  set  for [22XΓ_0(39)[122X,
+  involving  [22X18[122X  generators,  to  compute the abelianization [22XΓ_0(39)^ab= Z_2 ⊕
+  Z_3^2  ⊕  Z^9[122X. The abelianization shows that any generating set has at least
+  [22X11[122X generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27XHAP_SL2TreeDisplay(G);[127X[104X
+    [4X[25Xgap>[125X [27XLength(GeneratorsOfGroup(G));[127X[104X
+    [4X[28X18[128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  to compute [22XD_Γ[122X one only needs to be able to test whether a given
+  matrix  lies  in [22XΓ[122X or not. Given an inclusion [22XΓ'⊂ Γ[122X of congruence subgroups,
+  it  is  straightforward  to  use the trees [22Xmathring D_Γ'[122X and [22Xmathring D_Γ[122X to
+  compute a system of coset representative for [22XΓ'∖ Γ[122X.[133X
+  
+  
+  [1X10.4 [33X[0;0YCohomology of congruence subgroups[133X[101X
+  
+  [33X[0;0YTo  compute  the  cohomology  [22XH^n(Γ,A)[122X  of  a  congruence  subgroup  [22XΓ[122X  with
+  coefficients  in  a  [22XZΓ[122X-module  [22XA[122X  we  need to construct [22Xn+1[122X terms of a free
+  [22XZG[122X-resolution  of  [22XZ[122X.  We can do this by first using perturbation techniques
+  (as  described in [BE14]) to combine the cubic tree with resolutions for the
+  cyclic  groups of order [22X4[122X and [22X6[122X in order to produce a free [22XZG[122X-resolution [22XR_∗[122X
+  for  [22XG=SL_2( Z)[122X. This resolution is also a free [22XZΓ[122X-resolution with each term
+  of rank[133X
+  
+  
+  [24X[33X[0;6Y{\rm  rank}_{\mathbb Z\Gamma} R_k = |G:\Gamma|\times {\rm rank}_{\mathbb ZG}
+  R_k\ .[133X
+  
+  [124X
+  
+  [33X[0;0YFor  congruence  subgroups  of lowish index in [22XG[122X this resolution suffices to
+  make computations.[133X
+  
+  [33X[0;0YThe following commands compute[133X
+  
+  
+  [24X[33X[0;6YH^1(\Gamma_0(39),\mathbb Z) = \mathbb Z^9\ .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2Z_alt(2);[127X[104X
+    [4X[28XResolution of length 2 in characteristic 0 for SL(2,Integers) .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,gamma);[127X[104X
+    [4X[28XResolution of length 2 in characteristic 0 for [128X[104X
+    [4X[28XCongruenceSubgroupGamma0( 39)  .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(S),1);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis computation establishes that the space [22XM_2(Γ_0(39))[122X of weight [22X2[122X modular
+  forms is of dimension [22X9[122X.[133X
+  
+  [33X[0;0YThe  following  commands  show  that [22Xrank_ ZΓ_0(39) R_1 = 112[122X but that it is
+  possible  to  apply  `Tietze  like'  simplifications to [22XR_∗[122X to obtain a free
+  [22XZΓ_0(39)[122X-resolution  [22XT_∗[122X  with [22Xrank_ ZΓ_0(39) T_1 = 11[122X. It is more efficient
+  to  work with [22XT_∗[122X when making cohomology computations with coefficients in a
+  module [22XA[122X of large rank.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS!.dimension(1);[127X[104X
+    [4X[28X112[128X[104X
+    [4X[25Xgap>[125X [27XT:=TietzeReducedResolution(S);[127X[104X
+    [4X[28XResolution of length 2 in characteristic 0 for CongruenceSubgroupGamma0([128X[104X
+    [4X[28X39)  . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT!.dimension(1);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following commands compute[133X
+  
+  
+  [24X[33X[0;6YH^1(\Gamma_0(39),P_{\mathbb  Z}(8))  = \mathbb Z_3 \oplus \mathbb Z_6 \oplus
+  \mathbb Z_{168} \oplus \mathbb Z^{84}\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^1(\Gamma_0(39),P_{\mathbb Z}(9)) = \mathbb Z_2 \oplus \mathbb Z_2 .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP:=HomogeneousPolynomials(gamma,8);;[127X[104X
+    [4X[25Xgap>[125X [27Xc:=Cohomology(HomToIntegralModule(T,P),1);[127X[104X
+    [4X[28X[ 3, 6, 168, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XLength(c);[127X[104X
+    [4X[28X87[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP:=HomogeneousPolynomials(gamma,9);;[127X[104X
+    [4X[25Xgap>[125X [27Xc:=Cohomology(HomToIntegralModule(T,P),1);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  computation  establishes  that  the  space  [22XM_10(Γ_0(39))[122X of weight [22X10[122X
+  modular  forms  is  of  dimension  [22X84[122X,  and [22XM_11(Γ_0(39))[122X is of dimension [22X0[122X.
+  (There  are  never  any modular forms of odd weight, and so [22XM_k(Γ)=0[122X for all
+  odd [22Xk[122X and any congruence subgroup [22XΓ[122X.)[133X
+  
+  
+  [1X10.5 [33X[0;0YCuspidal cohomology[133X[101X
+  
+  [33X[0;0YTo define and compute cuspidal cohomology we consider the action of [22XSL_2( Z)[122X
+  on the upper-half plane [22Xfrak h[122X given by[133X
+  
+  
+  [24X[33X[0;6Y\left(\begin{array}{ll}a&b\\ c &d \end{array}\right) z = \frac{az +b}{cz+d}\
+  .[133X
+  
+  [124X
+  
+  [33X[0;0YA standard 'fundamental domain' for this action is the region[133X
+  
+  
+  [24X[33X[0;6Y\begin{array}{ll}  D=&\{z\in  {\frak  h}\  :\  |z|  >  1,  |{\rm  Re}(z)|  <
+  \frac{1}{2}\}   \\   &  \cup\  \{z\in  {\frak  h}  \  :\  |z|  \ge  1,  {\rm
+  Re}(z)=-\frac{1}{2}\}\\  &  \cup\  \{z \in {\frak h}\ :\ |z|=1, -\frac{1}{2}
+  \le {\rm Re}(z) \le 0\} \end{array}[133X
+  
+  [124X
+  
+  [33X[0;0Yillustrated below.[133X
+  
+  [33X[0;0YThe   action   factors   through   an   action  of  [22XPSL_2(  Z)  =SL_2(  Z)/⟨
+  (beginarrayrr-1&0  0  &-1  endarray)⟩[122X.  The  images of [22XD[122X under the action of
+  [22XPSL_2(  Z)[122X  cover  the  upper-half  plane, and any two images have at most a
+  single  point in common. The possible common points are the bottom left-hand
+  corner  point which is stabilized by [22X⟨ U⟩[122X, and the bottom middle point which
+  is stabilized by [22X⟨ S⟩[122X.[133X
+  
+  [33X[0;0YA  congruence  subgroup [22XΓ[122X has a `fundamental domain' [22XD_Γ[122X equal to a union of
+  finitely  many  copies  of  [22XD[122X,  one  copy for each coset in [22XΓ∖ SL_2( Z)[122X. The
+  quotient  space  [22XX=Γ∖  frak  h[122X  is  not  compact, and can be compactified in
+  several ways. We are interested in the Borel-Serre compactification. This is
+  a space [22XX^BS[122X for which there is an inclusion [22XX↪ X^BS[122X and this inclusion is a
+  homotopy  equivalence.  One  defines the [13Xboundary[113X [22X∂ X^BS = X^BS - X[122X and uses
+  the  inclusion  [22X∂  X^BS  ↪ X^BS ≃ X[122X to define the cuspidal cohomology group,
+  over the ground ring [22XC[122X, as[133X
+  
+  
+  [24X[33X[0;6YH_{cusp}^n(\Gamma,P_{\mathbb  C}(k-2))  =  \ker (\ H^n(X,P_{\mathbb C}(k-2))
+  \rightarrow H^n(\partial X^{BS},P_{\mathbb C}(k-2)) \ ).[133X
+  
+  [124X
+  
+  [33X[0;0YStrictly  speaking, this is the definition of [13Xinterior cohomology[113X [22XH_!^n(Γ,P_
+  C(k-2))[122X  which  in  general  contains the cuspidal cohomology as a subgroup.
+  However,  for  congruence subgroups of [22XSL_2( Z)[122X there is equality [22XH_!^n(Γ,P_
+  C(k-2)) = H_cusp^n(Γ,P_ C(k-2))[122X.[133X
+  
+  [33X[0;0YWorking over [22XC[122X has the advantage of avoiding the technical issue that [22XΓ[122X does
+  not  necessarily  act  freely  on  [22Xfrak h[122X since there are points with finite
+  cyclic  stabilizer groups in [22XSL_2( Z)[122X. But it has the disadvantage of losing
+  information  about  torsion  in  cohomology.  So  HAP confronts the issue by
+  working  with  a  contractible CW-complex [22Xtilde X^BS[122X on which [22XΓ[122X acts freely,
+  and  [22XΓ[122X-equivariant  inclusion  [22X∂  tilde X^BS ↪ tilde X^BS[122X. The definition of
+  cuspidal  cohomology  that we use, which coincides with the above definition
+  when working over [22XC[122X, is[133X
+  
+  
+  [24X[33X[0;6YH_{cusp}^n(\Gamma,A)     =     \ker    (\    H^n({\rm    Hom}_{\,    \mathbb
+  Z\Gamma}(C_\ast(\tilde  X^{BS}),  A)\,  )  \rightarrow  H^n(\  {\rm Hom}_{\,
+  \mathbb Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).[133X
+  
+  [124X
+  
+  [33X[0;0YThe  following  data is recorded and, using perturbation theory, is combined
+  with free resolutions for [22XC_4[122X and [22XC_6[122X to constuct [22Xtilde X^BS[122X.[133X
+  
+  [33X[0;0YThe following commands calculate[133X
+  
+  
+  [24X[33X[0;6YH^1_{cusp}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27Xk:=2;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);[127X[104X
+    [4X[28X[ g1, g2, g3, g4, g5, g6, g7, g8, g9 ] -> [ g1^-1*g3, g1^-1*g3, g1^-1*g3, [128X[104X
+    [4X[28X  g1^-1*g3, g1^-1*g2, g1^-1*g3, g1^-1*g4, g1^-1*g4, g1^-1*g4 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Kernel(c));[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFrom the Eichler-Shimura isomorphism and the already calculated dimension of
+  [22XM_2(Γ_0(39))≅  C^9[122X,  we  deduce from this cuspidal cohomology that the space
+  [22XS_2(Γ_0(39))[122X  of  cuspidal  weight  [22X2[122X  forms  is  of  dimension  [22X3[122X,  and the
+  Eisenstein space [22XE_2(Γ_0(39))≅ C^3[122X is of dimension [22X3[122X.[133X
+  
+  [33X[0;0YThe following commands show that the space [22XS_4(Γ_0(39))[122X of cuspidal weight [22X4[122X
+  forms is of dimension [22X12[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27Xk:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Kernel(c));[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.6 [33X[0;0YHecke operators[133X[101X
+  
+  [33X[0;0YA  congruence  subgroup  [22XΓ le SL_m( Z)[122X and element [22Xg∈ SL_m( Q)[122X determine the
+  subgroup [22XΓ' = Γ ∩ gΓ g^-1[122X and homomorphisms[133X
+  
+  
+  [24X[33X[0;6Y\Gamma\  \hookleftarrow\  \Gamma'\  \  \stackrel{\gamma \mapsto g^{-1}\gamma
+  g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ .[133X
+  
+  [124X
+  
+  [33X[0;0YThese homomorphisms give rise to homomorphisms of cohomology groups[133X
+  
+  
+  [24X[33X[0;6YH^n(\Gamma,\mathbb  Z)\  \ \stackrel{tr}{\leftarrow} \ \ H^n(\Gamma',\mathbb
+  Z)  \ \ \stackrel{\alpha}{\leftarrow} \ \ H^n(g^{-1}\Gamma' g,\mathbb Z) \ \
+  \stackrel{\beta}{\leftarrow} H^n(\Gamma, \mathbb Z)[133X
+  
+  [124X
+  
+  [33X[0;0Ywith  [22Xα[122X, [22Xβ[122X functorial maps, and [22Xtr[122X the transfer map. We define the composite
+  [22XT_g=tr  ∘ α ∘ β: H^n(Γ, Z) → H^n(Γ, Z)[122X to be the [13X Hecke operator [113X determined
+  by [22Xg[122X. Further details on this description of Hecke operators can be found in
+  [Ste07, Appendix by P. Gunnells].[133X
+  
+  [33X[0;0YFor    each    integer    [22Xsge    1[122X    we    set    [22XT_s    =T_s[122X    with   for
+  [22Xg=(beginarraycc1&00&frac1sendarray)[122X.[133X
+  
+  [33X[0;0YThe  following  commands  compute  [22XT_2[122X  and  [22XT_5[122X  for [22Xn=1[122X and [22XΓ=Γ_0(39)[122X. The
+  commands  also  compute  the  eigenvalues  of these two Hecke operators. The
+  final  command  confirms  that  [22XT_2[122X  and  [22XT_5[122X  commute.  (It  is a fact that
+  [22XT_pT_q=T_qT_p[122X for all integers [22Xp,q[122X.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=2;;N:=1;;h:=HeckeOperator(gamma,p,N);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Source(h));[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XT2:=HomomorphismAsMatrix(h);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(T2);[127X[104X
+    [4X[28X[ [  -2,  -2,   2,   2,   1,   2,   0,   0,   0 ],[128X[104X
+    [4X[28X  [  -2,   0,   1,   2,  -2,   2,   2,   2,  -2 ],[128X[104X
+    [4X[28X  [  -2,  -1,   2,   2,  -1,   2,   1,   1,  -1 ],[128X[104X
+    [4X[28X  [  -2,  -1,   2,   2,   1,   1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [  -1,   0,   0,   2,  -3,   2,   3,   3,  -3 ],[128X[104X
+    [4X[28X  [   0,   1,   1,   1,  -1,   0,   1,   1,  -1 ],[128X[104X
+    [4X[28X  [  -1,   1,   1,  -1,   0,   1,   2,  -1,   1 ],[128X[104X
+    [4X[28X  [  -1,  -1,   0,   2,  -3,   2,   1,   4,  -1 ],[128X[104X
+    [4X[28X  [   0,   1,   0,  -1,  -2,   1,   1,   1,   2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XEigenvalues(Rationals,T2);[127X[104X
+    [4X[28X[ 3, 1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xp:=5;;N:=1;;h:=HeckeOperator(gamma,p,N);;[127X[104X
+    [4X[25Xgap>[125X [27XT5:=HomomorphismAsMatrix(h);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(T5);[127X[104X
+    [4X[28X[ [  -1,  -1,   3,   4,   0,   0,   1,   1,  -1 ],[128X[104X
+    [4X[28X  [  -5,  -1,   5,   4,   0,   0,   3,   3,  -3 ],[128X[104X
+    [4X[28X  [  -2,   0,   4,   4,   1,   0,  -1,  -1,   1 ],[128X[104X
+    [4X[28X  [  -2,   0,   3,   2,  -3,   2,   4,   4,  -4 ],[128X[104X
+    [4X[28X  [  -4,  -2,   4,   4,   3,   0,   1,   1,  -1 ],[128X[104X
+    [4X[28X  [  -6,  -4,   5,   6,   1,   2,   2,   2,  -2 ],[128X[104X
+    [4X[28X  [   1,   5,   0,  -4,  -3,   2,   5,  -1,   1 ],[128X[104X
+    [4X[28X  [  -2,  -2,   2,   4,   0,   0,  -2,   4,   2 ],[128X[104X
+    [4X[28X  [   1,   3,   0,  -4,  -4,   2,   2,   2,   4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XEigenvalues(Rationals,T5);[127X[104X
+    [4X[28X[ 6, 2 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xgap>T2*T5=T5*T2;[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.7 [33X[0;0YReconstructing modular forms from cohomology computations[133X[101X
+  
+  [33X[0;0YGiven  a  modular  form [22Xf: frak h → C[122X associated to a congruence subgroup [22XΓ[122X,
+  and  given  a  compact edge [22Xe[122X in the tessellation of [22Xfrak h[122X ([13Xi.e.[113X an edge in
+  the  cubic  tree  [22Xcal T[122X) arising from the above fundamental domain for [22XSL_2(
+  Z)[122X, we can evaluate[133X
+  
+  
+  [24X[33X[0;6Y\int_e f(z)\,dz \ .[133X
+  
+  [124X
+  
+  [33X[0;0YIn  this  way we obtain a cochain [22Xf_1: C_1(cal T) → C[122X in [22XHom_ ZΓ(C_1(cal T),
+  C)[122X  representing  a  cohomology class [22Xc(f) ∈ H^1( Hom_ ZΓ(C_∗(cal T), C) ) =
+  H^1(Γ,   C)[122X.  The  correspondence  [22Xf↦  c(f)[122X  underlies  the  Eichler-Shimura
+  isomorphism.  Hecke  operators  can  be  used  to recover modular forms from
+  cohomology classes.[133X
+  
+  [33X[0;0YHecke  operators  restrict  to  operators  on  cuspidal  cohomology.  On the
+  left-hand  side  of the Eichler-Shimura isomorphism Hecke operators restrict
+  to operators [22XT_s: S_2(Γ) → S_2(Γ)[122X for [22Xsge 1[122X.[133X
+  
+  [33X[0;0YLet us now introduce the function [22Xq=q(z)=e^2π i z[122X which is holomorphic on [22XC[122X.
+  For any modular form [22Xf(z)[122X there are numbers [22Xa_n[122X such that[133X
+  
+  
+  [24X[33X[0;6Yf(z) = \sum_{s=0}^\infty a_sq^s[133X
+  
+  [124X
+  
+  [33X[0;0Yfor all [22Xz∈ frak h[122X. The form [22Xf[122X is a cusp form if [22Xa_0=0[122X.[133X
+  
+  [33X[0;0YA  non-zero  cusp  form [22Xf∈ S_2(Γ)[122X is an [13Xeigenform[113X if it is simultaneously an
+  eigenvector  for the Hecke operators [22XT_s[122X for all [22Xs =1,2,3,⋯[122X. An eigenform is
+  said  to be [13Xnormalized[113X if its coefficient [22Xa_1=1[122X. It turns out that if [22Xf[122X is a
+  normalized  eigenform then the coefficient [22Xa_s[122X is an eigenvalue for [22XT_s[122X (see
+  for  instance  [Ste07]  for  details).  It  can  be  shown  [AL70]  that  [22Xf∈
+  S_2(Γ_0(N))[122X admits a basis of eigenforms.[133X
+  
+  [33X[0;0YThis all implies that, in principle, we can construct an approximation to an
+  explicit  basis  for the space [22XS_2(Γ)[122X of cusp forms by computing eigenvalues
+  for Hecke operators.[133X
+  
+  [33X[0;0YSuppose  that we would like a basis for [22XS_2(Γ_0(11))[122X. The following commands
+  first  show  that  [22XH^1_cusp(Γ_0(11),  Z)=  Z⊕  Z[122X  from  which we deduce that
+  [22XS_2(Γ_0(11))  =  C[122X is [22X1[122X-dimensional. Then eigenvalues of Hecke operators are
+  calculated to establish that the modular form[133X
+  
+  
+  [24X[33X[0;6Yf = q -2q^2 -q^3 +q^4 +q^5 +2q^6 -2q^7 +2q^8 -3q^9 -2q^{10} + \cdots[133X
+  
+  [124X
+  
+  [33X[0;0Yconstitutes a basis for [22XS_2(Γ_0(11))[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(11);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT1:=HomomorphismAsMatrix(HeckeOperator(gamma,1,1));; Display(T1);[127X[104X
+    [4X[28X[ [  1,  0,  0 ],[128X[104X
+    [4X[28X  [  0,  1,  0 ],[128X[104X
+    [4X[28X  [  0,  0,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT2:=HomomorphismAsMatrix(HeckeOperator(gamma,2,1));; Display(T2);[127X[104X
+    [4X[28X[ [   3,  -4,   4 ],[128X[104X
+    [4X[28X  [   0,  -2,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT3:=HomomorphismAsMatrix(HeckeOperator(gamma,3,1));; Display(T3);[127X[104X
+    [4X[28X[ [   4,  -4,   4 ],[128X[104X
+    [4X[28X  [   0,  -1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT4:=HomomorphismAsMatrix(HeckeOperator(gamma,4,1));; Display(T4);[127X[104X
+    [4X[28X[ [   6,  -4,   4 ],[128X[104X
+    [4X[28X  [   0,   1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);[127X[104X
+    [4X[28X[ [   6,  -4,   4 ],[128X[104X
+    [4X[28X  [   0,   1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT6:=HomomorphismAsMatrix(HeckeOperator(gamma,6,1));; Display(T6);[127X[104X
+    [4X[28X[ [  12,  -8,   8 ],[128X[104X
+    [4X[28X  [   0,   2,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);[127X[104X
+    [4X[28X[ [   8,  -8,   8 ],[128X[104X
+    [4X[28X  [   0,  -2,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT8:=HomomorphismAsMatrix(HeckeOperator(gamma,8,1));; Display(T8);[127X[104X
+    [4X[28X[ [  12,  -8,   8 ],[128X[104X
+    [4X[28X  [   0,   2,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT9:=HomomorphismAsMatrix(HeckeOperator(gamma,9,1));; Display(T9);[127X[104X
+    [4X[28X[ [   12,  -12,   12 ],[128X[104X
+    [4X[28X  [    0,   -3,    0 ],[128X[104X
+    [4X[28X  [    0,    0,   -3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XT10:=HomomorphismAsMatrix(HeckeOperator(gamma,10,1));; Display(T10);[127X[104X
+    [4X[28X[ [   18,  -16,   16 ],[128X[104X
+    [4X[28X  [    0,   -2,    0 ],[128X[104X
+    [4X[28X  [    0,    0,   -2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  a normalized eigenform [22Xf=1 + ∑_s=2^∞ a_sq^s[122X the coefficients [22Xa_s[122X with [22Xs[122X
+  a  composite  integer  can be expressed in terms of the coefficients [22Xa_p[122X for
+  prime [22Xp[122X. If [22Xr,s[122X are coprime then [22XT_rs =T_rT_s[122X. If [22Xp[122X is a prime that is not a
+  divisor  of  the  level  [22XN[122X of [22XΓ[122X then [22Xa_p^m =a_p^m-1}a_p - p a_p^m-2}.[122X If the
+  prime  [22Xp[122X  divides  [22XN[122X  then  [22Xa_p^m = (a_p)^m[122X. It thus suffices to compute the
+  coefficients [22Xa_p[122X for prime integers [22Xp[122X only.[133X
+  
+  
+  [1X10.8 [33X[0;0YThe Picard group[133X[101X
+  
+  [33X[0;0YLet  us  now  consider  the  [13XPicard  group[113X  [22XG=SL_2( Z[ i])[122X and its action on
+  [13Xupper-half space[113X[133X
+  
+  
+  [24X[33X[0;6Y{\frak h}^3 =\{(z,t) \in \mathbb C\times \mathbb R\ |\ t > 0\} \ .[133X
+  
+  [124X
+  
+  [33X[0;0YTo  describe  the action we introduce the symbol [22Xj[122X satisfying [22Xj^2=-1[122X, [22Xij=-ji[122X
+  and write [22Xz+tj[122X instead of [22X(z,t)[122X. The action is given by[133X
+  
+  
+  [24X[33X[0;6Y\left(\begin{array}{ll}a&b\\  c  &d  \end{array}\right)\cdot  (z+tj)  \  = \
+  \left(a(z+tj)+b\right)\left(c(z+tj)+d\right)^{-1}\ .[133X
+  
+  [124X
+  
+  [33X[0;0YAlternatively, and more explicitly, the action is given by[133X
+  
+  
+  [24X[33X[0;6Y\left(\begin{array}{ll}a&b\\  c  &d  \end{array}\right)\cdot  (z+tj)  \  = \
+  \frac{(az+b)\overline{(cz+d)  }  + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \
+  +\ \frac{y}{|cz+d|^2+|c|^2y^2}\, j \ .[133X
+  
+  [124X
+  
+  [33X[0;0YA  standard  'fundamental  domain' [22XD[122X for this action is the following region
+  (with some of the boundary points removed).[133X
+  
+  
+  [24X[33X[0;6Y\{z+tj\in  {\frak  h}^3\  |\  0 \le |{\rm Re}(z)| \le \frac{1}{2}, 0\le {\rm
+  Im}(z) \le \frac{1}{2}, z\overline z +t^2 \ge 1\}[133X
+  
+  [124X
+  
+  [33X[0;0YThe  four  bottom  vertices of [22XD[122X are [22Xa = -frac12 +frac12i +fracsqrt2}2j[122X, [22Xb =
+  -frac12  +fracsqrt3}2j[122X,  [22Xc  =  frac12  +fracsqrt3}2j[122X,  [22Xd  =  frac12 +frac12i
+  +fracsqrt2}2j[122X.[133X
+  
+  [33X[0;0YThe upper-half space [22Xfrak h^3[122X can be retracted onto a [22X2[122X-dimensional subspace
+  [22Xcal  T  ⊂  frak h^3[122X. The space [22Xcal T[122X is a contractible [22X2[122X-dimensional regular
+  CW-complex,  and  the  action  of the Picard group [22XG[122X restricts to a cellular
+  action  of  [22XG[122X  on  [22Xcal  T[122X.  Under this action there is one orbit of [22X2[122X-cells,
+  represented  by  the  curvilinear  square with vertices [22Xa[122X, [22Xb[122X, [22Xc[122X and [22Xd[122X in the
+  picture. This [22X2[122X-cell has stabilizer group isomorphic to the quaternion group
+  [22XQ_4[122X  of order [22X8[122X. There are two orbits of [22X1[122X-cells, both with stabilizer group
+  isomorphic  to a semi-direct product [22XC_3:C_4[122X. There is one orbit of [22X0[122X-cells,
+  with stabilizer group isomorphic to [22XSL(2,3)[122X.[133X
+  
+  [33X[0;0YUsing perturbation techniques, the [22X2[122X-complex [22Xcal T[122X can be combined with free
+  resolutions  for the cell stabilizer groups to contruct a regular CW-complex
+  [22XX[122X  on  which  the Picard group [22XG[122X acts freely. The following commands compute
+  the  first  few terms of the free [22XZG[122X-resolution [22XR_∗ =C_∗ X[122X. Then [22XR_∗[122X is used
+  to compute[133X
+  
+  
+  [24X[33X[0;6YH^1(G,\mathbb Z) =0\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^2(G,\mathbb Z) =\mathbb Z_2\oplus \mathbb Z_2\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^3(G,\mathbb Z) =\mathbb Z_6\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^4(G,\mathbb Z) =\mathbb Z_4\oplus \mathbb Z_{24}\ ,[133X
+  
+  [124X
+  
+  [33X[0;0Yand  compute  a  free presentation for [22XG[122X involving four generators and seven
+  relators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,O-1)");;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,5);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),2);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),3);[127X[104X
+    [4X[28X[ 6 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),4);[127X[104X
+    [4X[28X[ 4, 24 ][128X[104X
+    [4X[25Xgap>[125X [27XP:=PresentationOfResolution(R);[127X[104X
+    [4X[28Xrec( freeGroup := <free group on the generators [ f1, f2, f3, f4 ]>, [128X[104X
+    [4X[28X  gens := [ 184, 185, 186, 187 ], [128X[104X
+    [4X[28X  relators := [ f1^2*f2^-1*f1^-1*f2^-1, f1*f2*f1*f2^-2, [128X[104X
+    [4X[28X      f3*f2^2*f1*(f2*f1^-1)^2*f3^-1*f1^2*f2^-2, [128X[104X
+    [4X[28X      f1*(f2*f1^-1)^2*f3^-1*f1^2*f2^-1*f3^-1, [128X[104X
+    [4X[28X      f4*f2*f1*(f2*f1^-1)^2*f4^-1*f1*f2^-1, f1*f4^-1*f1^-2*f4^-1, [128X[104X
+    [4X[28X      f3*f2*f1*(f2*f1^-1)^2*f4^-1*f1*f2^-1*f3^-1*f4*f2 ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  can  also compute the cohomology of [22XG=SL_2( Z[i])[122X with coefficients in a
+  module  such  as  the  module [22XP_ Z[i](k)[122X of degree [22Xk[122X homogeneous polynomials
+  with coefficients in [22XZ[i][122X and with the action described above. For instance,
+  the following commands compute[133X
+  
+  
+  [24X[33X[0;6YH^1(G,P_{\mathbb  Z[i]}(24))  =  (\mathbb  Z_2)^4  \oplus \mathbb Z_4 \oplus
+  \mathbb Z_8 \oplus \mathbb Z_{40} \oplus \mathbb Z_{80}\, ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^2(G,P_{\mathbb    Z[i]}(24))   =   (\mathbb   Z_2)^{24}   \oplus   \mathbb
+  Z_{520030}\oplus \mathbb Z_{1040060} \oplus \mathbb Z^2\, ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^3(G,P_{\mathbb  Z[i]}(24)) = (\mathbb Z_2)^{22} \oplus \mathbb Z_{4}\oplus
+  (\mathbb Z_{12})^2 \, .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=R!.group;;[127X[104X
+    [4X[25Xgap>[125X [27XM:=HomogeneousPolynomials(G,24);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,M);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 4, 8, 40, 80 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  520030, 1040060, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,3);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 12, 12 [128X[104X
+    [4X[28X ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.9 [33X[0;0YBianchi groups[133X[101X
+  
+  [33X[0;0YThe [13XBianchi groups[113X are the groups [22XG=PSL_2(cal O_-d)[122X where [22Xd[122X is a square free
+  positive  integer  and  [22Xcal  O_-d[122X  is  the ring of integers of the imaginary
+  quadratic field [22XQ(sqrt-d)[122X. More explicitly,[133X
+  
+  
+  [24X[33X[0;6Y{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1
+  {\rm ~mod~} 4\, ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6Y{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d
+  \equiv 2,3 {\rm ~mod~} 4\, .[133X
+  
+  [124X
+  
+  [33X[0;0YThese  groups act on upper-half space [22Xfrak h^3[122X in the same way as the Picard
+  group.  Upper-half  space  can  be tessellated by a 'fundamental domain' for
+  this  action. Moreover, as with the Picard group, this tessellation contains
+  a  [22X2[122X-dimensional  cellular  subspace  [22Xcal  T⊂  frak  h^3[122X  where  [22Xcal  T[122X is a
+  contractible  CW-complex  on which [22XG[122X acts cellularly. It should be mentioned
+  that  the  fundamental  domain  and the contractible [22X2[122X-complex [22Xcal T[122X are not
+  uniquely  determined  by [22XG[122X. Various algorithms exist for computing [22Xcal T[122X and
+  its cell stabilizers. One algorithm due to Swan [Swa71] has been implemented
+  by  Alexander Rahm [Rah10] and the output for various values of [22Xd[122X are stored
+  in  HAP.  Another approach is to use Voronoi's theory of perfect forms. This
+  approach  has  been  implemented  by  Sebastian  Schoennenbeck [BCNS15] and,
+  again,  its  output for various values of [22Xd[122X are stored in HAP. The following
+  commands  combine  data from Schoennenbeck's algorithm with free resolutions
+  for cell stabiliers to compute[133X
+  
+  
+  [24X[33X[0;6YH^1(PSL_2({\cal  O}_{-6}),P_{{\cal  O}_{-6}}(24))  =  (\mathbb Z_2)^4 \oplus
+  \mathbb  Z_{12} \oplus \mathbb Z_{24} \oplus \mathbb Z_{9240} \oplus \mathbb
+  Z_{55440} \oplus \mathbb Z^4\,,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^2(PSL_2({\cal  O}_{-6}),P_{{\cal O}_{-6}}(24)) = \begin{array}{l} (\mathbb
+  Z_2)^{26}  \oplus  \mathbb  (Z_{6})^8  \oplus  \mathbb  (Z_{12})^{9}  \oplus
+  \mathbb  Z_{24}  \oplus  (\mathbb  Z_{120})^2  \oplus  (\mathbb Z_{840})^3\\
+  \oplus   \mathbb  Z_{2520}  \oplus  (\mathbb  Z_{27720})^2  \oplus  (\mathbb
+  Z_{24227280})^2    \oplus   (\mathbb   Z_{411863760})^2\\   \oplus   \mathbb
+  Z_{2454438243748928651877425142836664498129840}\\       \oplus       \mathbb
+  Z_{14726629462493571911264550857019986988779040}\\       \oplus      \mathbb
+  Z^4\end{array}\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^3(PSL_2({\cal  O}_{-6}),P_{{\cal O}_{-6}}(24)) = (\mathbb Z_2)^{23} \oplus
+  \mathbb Z_{4} \oplus (\mathbb Z_{12})^2\ .[133X
+  
+  [124X
+  
+  [33X[0;0YNote  that the action of [22XSL_2(cal O_-d)[122X on [22XP_{cal O_-d}(k)[122X induces an action
+  of [22XPSL_2(cal O_-d)[122X provided [22Xk[122X is even.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionPSL2QuadraticIntegers(-6,4);[127X[104X
+    [4X[28XResolution of length 4 in characteristic 0 for PSL(2,O-6) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=R!.group;;[127X[104X
+    [4X[25Xgap>[125X [27XM:=HomogeneousPolynomials(G,24);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,M);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 12, 24, 9240, 55440, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 6, 6, 6, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24, 120, 120, [128X[104X
+    [4X[28X  840, 840, 840, 2520, 27720, 27720, 24227280, 24227280, 411863760, 411863760, [128X[104X
+    [4X[28X  2454438243748928651877425142836664498129840, [128X[104X
+    [4X[28X  14726629462493571911264550857019986988779040, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,3);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 12, [128X[104X
+    [4X[28X  12 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe can also consider the coefficient module[133X
+  
+  
+  [24X[33X[0;6YP_{{\cal  O}_{-d}}(k,\ell)  =  P_{{\cal  O}_{-d}}(k) \otimes_{{\cal O}_{-d}}
+  \overline{P_{{\cal O}_{-d}}(\ell)}[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere  the  bar  denotes  a  twist  in  the  action  obtained  from  complex
+  conjugation.  For  an  action  of the projective linear group we must insist
+  that [22Xk+ℓ[122X is even. The following commands compute[133X
+  
+  
+  [24X[33X[0;6YH^2(PSL_2({\cal  O}_{-11}),P_{{\cal O}_{-11}}(5,5)) = (\mathbb Z_2)^8 \oplus
+  \mathbb Z_{60} \oplus (\mathbb Z_{660})^3 \oplus \mathbb Z^6\,,[133X
+  
+  [124X
+  
+  [33X[0;0Ya  computation  which  was  first  made,  along  with  many other cohomology
+  computationsfor Bianchi groups, by Mehmet Haluk Sengun [Sen11].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionPSL2QuadraticIntegers(-11,3);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=HomogeneousPolynomials(R!.group,5,5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,M);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 60, 660, 660, 660, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  function [10XResolutionPSL2QuadraticIntegers(-d,n)[110X relies on a limited data
+  base  produced  by the algorithms implemented by Schoennenbeck and Rahm. The
+  function  also covers some cases covered by entering a sring "-d+I" as first
+  variable.  These  cases  correspond  to  projective special groups of module
+  automorphisms  of  lattices  of  rank  2  over the integers of the imaginary
+  quadratic  number  field  [22XQ(sqrt-d)[122X  with non-trivial Steinitz-class. In the
+  case  of  a  larger class group there are cases labelled "-d+I2",...,"-d+Ik"
+  and the Ij together with O-d form a system of representatives of elements of
+  the  class  group  modulo  squares  and  Galois  action.  For  instance, the
+  following commands compute[133X
+  
+  
+  [24X[33X[0;6YH_2(PSL({\cal O}_{-21+I2}),\mathbb Z) = \mathbb Z_2\oplus \mathbb Z^6\, .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionPSL2QuadraticIntegers("-21+I2",3);[127X[104X
+    [4X[28XResolution of length 3 in characteristic 0 for PSL(2,O-21+I2)) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),2);[127X[104X
+    [4X[28X[ 2, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.10 [33X[0;0YSome other infinite matrix groups[133X[101X
+  
+  [33X[0;0YAnalogous to the functions for Bianchi groups, HAP has functions[133X
+  
+  [30X    [33X[0;6Y[10XResolutionSL2QuadraticIntegers(-d,n)[110X[133X
+  
+  [30X    [33X[0;6Y[10XResolutionSL2ZInvertedInteger(m,n)[110X[133X
+  
+  [30X    [33X[0;6Y[10XResolutionGL2QuadraticIntegers(-d,n)[110X[133X
+  
+  [30X    [33X[0;6Y[10XResolutionPGL2QuadraticIntegers(-d,n)[110X[133X
+  
+  [30X    [33X[0;6Y[10XResolutionGL3QuadraticIntegers(-d,n)[110X[133X
+  
+  [30X    [33X[0;6Y[10XResolutionPGL3QuadraticIntegers(-d,n)[110X[133X
+  
+  [33X[0;0Yfor  computing  free resolutions for certain values of [22XSL_2(cal O_-d)[122X, [22XSL_2(
+  Z[frac1m])[122X, [22XGL_2(cal O_-d)[122X and [22XPGL_2(cal O_-d)[122X. Additionally, the function[133X
+  
+  [30X    [33X[0;6Y[10XResolutionArithmeticGroup("string",n)[110X[133X
+  
+  [33X[0;0Ycan  be  used  to  compute  resolutions  for  groups whose data (provided by
+  Sebastian Schoennenbeck, Alexander Rahm and Mathieu Dutour) is stored in the
+  directory [10Xgap/pkg/Hap/lib/Perturbations/Gcomplexes[110X .[133X
+  
+  [33X[0;0YFor instance, the following commands compute[133X
+  
+  
+  [24X[33X[0;6YH^1(SL_2({\cal  O}_{-6}),P_{{\cal  O}_{-6}}(24))  =  (\mathbb  Z_2)^4 \oplus
+  \mathbb  Z_{12} \oplus \mathbb Z_{24} \oplus \mathbb Z_{9240} \oplus \mathbb
+  Z_{55440} \oplus \mathbb Z^4\,,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^2(SL_2({\cal  O}_{-6}),P_{{\cal  O}_{-6}}(24)) = \begin{array}{l} (\mathbb
+  Z_2)^{26}  \oplus  \mathbb  (Z_{6})^7  \oplus  \mathbb  (Z_{12})^{10} \oplus
+  \mathbb  Z_{24}  \oplus  (\mathbb  Z_{120})^2  \oplus  (\mathbb Z_{840})^3\\
+  \oplus   \mathbb  Z_{2520}  \oplus  (\mathbb  Z_{27720})^2  \oplus  (\mathbb
+  Z_{24227280})^2    \oplus   (\mathbb   Z_{411863760})^2\\   \oplus   \mathbb
+  Z_{2454438243748928651877425142836664498129840}\\       \oplus       \mathbb
+  Z_{14726629462493571911264550857019986988779040}\\       \oplus      \mathbb
+  Z^4\end{array}\ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH^3(SL_2({\cal  O}_{-6}),P_{{\cal  O}_{-6}}(24)) = (\mathbb Z_2)^{58} \oplus
+  (\mathbb Z_{4})^4 \oplus (\mathbb Z_{12})\ .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-6,4);[127X[104X
+    [4X[28XResolution of length 4 in characteristic 0 for PSL(2,O-6) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=R!.group;;[127X[104X
+    [4X[25Xgap>[125X [27XM:=HomogeneousPolynomials(G,24);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,M);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 12, 24, 9240, 55440, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 6, 6, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24, 120, [128X[104X
+    [4X[28X  120, 840, 840, 840, 2520, 27720, 27720, 24227280, 24227280, 411863760, [128X[104X
+    [4X[28X  411863760, 2454438243748928651877425142836664498129840, [128X[104X
+    [4X[28X  14726629462493571911264550857019986988779040, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,3);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 12, 12 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  commands  construct  free resolutions up to degree 5 for the
+  groups  [22XSL_2(  Z[frac12])[122X,  [22XGL_2(cal  O_-2)[122X,  [22XGL_2(cal O_2)[122X, [22XPGL_2(cal O_2)[122X,
+  [22XGL_3(cal  O_-2)[122X,  [22XPGL_3(cal  O_-2)[122X.  The  final  command  constructs  a free
+  resolution up to degree 3 for [22XPSL_4( Z)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR1:=ResolutionSL2ZInvertedInteger(2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for SL(2,Z[1/2]) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR2:=ResolutionGL2QuadraticIntegers(-2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for GL(2,O-2) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR3:=ResolutionGL2QuadraticIntegers(2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for GL(2,O2) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR4:=ResolutionPGL2QuadraticIntegers(2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for PGL(2,O2) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR5:=ResolutionGL3QuadraticIntegers(-2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for GL(3,O-2) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR6:=ResolutionPGL3QuadraticIntegers(-2,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for PGL(3,O-2) . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR7:=ResolutionArithmeticGroup("PSL(4,Z)",3);[127X[104X
+    [4X[28XResolution of length 3 in characteristic 0 for <matrix group with 655 generators> . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.11 [33X[0;0YIdeals and finite quotient groups[133X[101X
+  
+  [33X[0;0YThe  following commands first construct the number field [22XQ(sqrt-7)[122X, its ring
+  of  integers  [22Xcal  O_-7=cal  O(  Q(sqrt-7))[122X, and the principal ideal [22XI=⟨ 5 +
+  2sqrt-7⟩  ◃ cal O( Q(sqrt-7))[122X of norm [22Xcal N(I)=53[122X. The ring [22XI[122X is prime since
+  its  norm  is  a  prime  number.  The primality of [22XI[122X is also demonstrated by
+  observing  that  the  quotient  ring  [22XR=cal O_-7/I[122X is an integral domain and
+  hence  isomorphic  to the unique finite field of order [22X53[122X, [22XR≅ Z/53 Z[122X . (In a
+  ring of quadratic integers [13Xprime ideal[113X is the same as [13Xmaximal ideal[113X).[133X
+  
+  [33X[0;0YThe  finite group [22XG=SL_2(cal O_-7/I)[122X is then constructed and confirmed to be
+  isomorphic  to  [22XSL_2(  Z/53  Z)[122X.  The  group  [22XG[122X is shown to admit a periodic
+  [22XZG[122X-resolution of [22XZ[122X of period dividing [22X52[122X.[133X
+  
+  [33X[0;0YFinally the integral homology[133X
+  
+  
+  [24X[33X[0;6YH_n(G,\mathbb  Z) = \left\{\begin{array}{ll} 0 & n\ne 3,7, {\rm~for~} 0\le n
+  \le 8,\\ \mathbb Z_{2808} & n=3,7, \end{array}\right.[133X
+  
+  [124X
+  
+  [33X[0;0Yis computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-7);[127X[104X
+    [4X[28XQ(Sqrt(-7))[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);[127X[104X
+    [4X[28XO(Q(Sqrt(-7)))[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,5+2*Sqrt(-7));[127X[104X
+    [4X[28Xideal of norm 53 in O(Q(Sqrt(-7)))[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR:=OQ mod I;[127X[104X
+    [4X[28Xring mod ideal of norm 53[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsIntegralRing(R);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgens:=GeneratorsOfGroup( SL2QuadraticIntegers(-7) );;[127X[104X
+    [4X[25Xgap>[125X [27XG:=Group(gens*One(R));;G:=Image(IsomorphismPermGroup(G));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
+    [4X[28X"SL(2,53)"[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodic(G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(G);[127X[104X
+    [4X[28X52[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,3);[127X[104X
+    [4X[28X[ 8, 27, 13 ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,4);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,5);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,6);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,7);[127X[104X
+    [4X[28X[ 8, 27, 13 ][128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,8);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  commands  show that the rational prime [22X7[122X is not prime in [22Xcal
+  O_-5=cal  O(  Q(sqrt-5))[122X.  Moreover,  [22X7[122X totally splits in [22Xcal O_-5[122X since the
+  final  command  shows  that  only  the rational primes [22X2[122X and [22X5[122X ramify in [22Xcal
+  O_-5[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-5);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFactors(Discriminant(OQ));[127X[104X
+    [4X[28X[ -2, 2, 5 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  [22Xd  <  0[122X  the  rings  [22Xcal  O_d=cal O( Q(sqrtd))[122X are unique factorization
+  domains for precisely[133X
+  
+  
+  [24X[33X[0;6Yd = -1, -2, -3, -7, -11, -19, -43, -67, -163.[133X
+  
+  [124X
+  
+  [33X[0;0YThis  result  was  conjectured  by  Gauss,  and  essentially  proved by Kurt
+  Heegner, and then later proved by Harold Stark.[133X
+  
+  [33X[0;0YThe following commands construct the classic example of a prime ideal [22XI[122X that
+  is not principal. They then illustrate reduction modulo [22XI[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-5);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,[2,1+Sqrt(-5)]);[127X[104X
+    [4X[28Xideal of norm 2 in O(Q(Sqrt(-5)))[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X6 mod I;[127X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.12 [33X[0;0YCongruence subgroups for ideals[133X[101X
+  
+  [33X[0;0YGiven  a  ring  of  integers  [22Xcal O[122X and ideal [22XI ◃ cal O[122X there is a canonical
+  homomorphism  [22Xπ_I:  SL_2(cal O) → SL_2(cal O/I)[122X. A subgroup [22XΓ le SL_2(cal O)[122X
+  is  said to be a [13Xcongruence subgroup[113X if it contains [22Xker π_I[122X. Thus congruence
+  subgroups are of finite index. Generalizing the definition in [14X10.1[114X above, we
+  define  the [13Xprincipal congruence subgroup[113X [22XΓ_1(I)=ker π_I[122X, and the congruence
+  subgroup  [22XΓ_0(I)[122X consisting of preimages of the upper triangular matrices in
+  [22XSL_2(cal O/I)[122X.[133X
+  
+  [33X[0;0YThe  following  commands construct [22XΓ=Γ_0(I)[122X for the ideal [22XI◃ cal O Q(sqrt-5)[122X
+  generated  by  [22X12[122X  and  [22X36sqrt-5[122X.  The  group  [22XΓ[122X has index [22X385[122X in [22XSL_2(cal O
+  Q(sqrt-5))[122X. The final command displays a tree in a Cayley graph for [22XSL_2(cal
+  O Q(sqrt-5))[122X whose nodes represent a transversal for [22XΓ[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-5);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,[36*Sqrt(-5), 12]);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);[127X[104X
+    [4X[28XCongruenceSubgroupGamma0(ideal of norm 144 in O(Q(Sqrt(-5)))) [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIndexInSL2O(G);[127X[104X
+    [4X[28X385[128X[104X
+    [4X[28X [128X[104X
+    [4X[25Xgap>[125X [27XHAP_SL2TreeDisplay(G);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  first construct the congruence subgroup [22XΓ_0(I)[122X of index
+  [22X144[122X in [22XSL_2(cal O Q(sqrt-2))[122X for the ideal [22XI[122X in [22Xcal O Q(sqrt-2)[122X generated by
+  [22X4+5sqrt-2[122X. The commands then compute[133X
+  
+  
+  [24X[33X[0;6YH_1(\Gamma_0(I),\mathbb  Z)  = \mathbb Z_3 \oplus \mathbb Z_6 \oplus \mathbb
+  Z_{30} \oplus \mathbb Z^8\, ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH_2(\Gamma_0(I), \mathbb Z) = (\mathbb Z_2)^9 \oplus \mathbb Z^7\, ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6YH_3(\Gamma_0(I), \mathbb Z) = (\mathbb Z_2)^9 \, .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-2);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,4+5*Sqrt(-2));;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);[127X[104X
+    [4X[28XCongruenceSubgroupGamma0(ideal of norm 66 in O(Q(Sqrt(-2)))) [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIndexInSL2O(G);[127X[104X
+    [4X[28X144[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-2,4,true);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(S),1);[127X[104X
+    [4X[28X[ 3, 6, 30, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(S),2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(S),3);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.13 [33X[0;0YFirst homology[133X[101X
+  
+  [33X[0;0YThe  isomorphism  [22XH_1(G,  Z)  ≅  G_ab[122X  allows  for  the computation of first
+  integral homology using computational methods for finitely presented groups.
+  Such methods underly the following computation of[133X
+  
+  
+  [24X[33X[0;6YH_1(  \Gamma_0(I),\mathbb  Z) \cong \mathbb Z_2 \oplus \cdots \oplus \mathbb
+  Z_{4078793513671}[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere   [22XI[122X  is  the  prime  ideal  in  the  Gaussian  integers  generated  by
+  [22X41+56sqrt-1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-1);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,41+56*Sqrt(-1));[127X[104X
+    [4X[28Xideal of norm 4817 in O(GaussianRationals)[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
+    [4X[28X[ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, [128X[104X
+    [4X[28X  4078793513671 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  write  [22XG^ab_tors[122X  to  denote  the  maximal  finite  summand of the first
+  homology  group  of  [22XG[122X  and  refer to this as the [13Xtorsion subgroup[113X. Nicholas
+  Bergeron and Akshay Venkatesh [Ber16] have conjectured relationships between
+  the  torsion  in  congruence  subgroups  [22XΓ[122X  and the volume of their quotient
+  manifold [22Xfrak h^3/Γ[122X. For instance, for the Gaussian integers they conjecture[133X
+  
+  
+  [24X[33X[0;6Y\frac{\log     |\Gamma_0(I)_{tors}^{ab}|}{{\rm     Norm}(I)}     \rightarrow
+  \frac{\lambda}{18\pi},\   \lambda   =L(2,\chi_{\mathbb  Q(\sqrt{-1})})  =  1
+  -\frac{1}{9} + \frac{1}{25} - \frac{1}{49} + \cdots[133X
+  
+  [124X
+  
+  [33X[0;0Yas  the  norm  of  the  prime ideal [22XI[122X tends to [22X∞[122X. The following approximates
+  [22Xλ/18π = 0.0161957[122X and [22Xfraclog |Γ_0(I)_tors^ab|{ Norm(I) = 0.00913432[122X for the
+  above example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-1);;[127X[104X
+    [4X[25Xgap>[125X [27XLfunction(Q,2)/(18*3.142);[127X[104X
+    [4X[28X0.0161957[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X1.0*Log(Product(AbelianInvariants(F)),10)/Norm(I);[127X[104X
+    [4X[28X0.00913432[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe link with volume is given by the Humbert volume formula[133X
+  
+  
+  [24X[33X[0;6Y{\rm  Vol}  (  {\frak  h}^3 / PSL_2( {\cal O}_{d} ) ) = \frac{|D|^{3/2}}{24}
+  \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2)[133X
+  
+  [124X
+  
+  [33X[0;0Yvalid  for  square-free  [22Xd<0[122X,  where  [22XD[122X is the discriminant of [22XQ(sqrtd)[122X. The
+  volume of a finite index subgroup [22XΓ[122Xis obtained by multiplying the right-hand
+  side by the index [22X|PSL_2(cal O_d): Γ|[122X.[133X
+  
