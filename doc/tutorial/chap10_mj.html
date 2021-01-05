@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 10: Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap10"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap10.html">[MathJax off]</a></p>
+<p><a id="X86D5DB887ACB1661" name="X86D5DB887ACB1661"></a></p>
+<div class="ChapSects"><a href="chap10_mj.html#X86D5DB887ACB1661">10 <span class="Heading">Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X79A1974B7B4987DE">10.1 <span class="Heading">Eichler-Shimura isomorphism</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X7BFA2C91868255D9">10.2 <span class="Heading">Generators for <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> and the cubic tree</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X7D1A56967A073A8B">10.3 <span class="Heading">One-dimensional fundamental domains and  
+generators for congruence subgroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X818BFA9A826C0DB3">10.4 <span class="Heading">Cohomology of congruence subgroups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X84D30F1580CD42D1">10.5 <span class="Heading">Cuspidal cohomology</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X8577E83782C87EBD">10.6 <span class="Heading">Hecke operators</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X84CC51EE8525E0D9">10.7 <span class="Heading">Reconstructing modular forms from cohomology computations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X8180E53C834301EF">10.8 <span class="Heading">The Picard group</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X858B1B5D8506FE81">10.9 <span class="Heading">Bianchi groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X86A6858884B9C05B">10.10 <span class="Heading">Some other infinite matrix groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X7EF5D97281EB66DA">10.11 <span class="Heading">Ideals and finite quotient groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X7D1F72287F14C5E1">10.12 <span class="Heading">Congruence subgroups for ideals</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X85E912617AFE03F4">10.13 <span class="Heading">First homology</span></a>
+</span>
+</div>
+</div>
+
+<h3>10 <span class="Heading">Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</span></h3>
+
+<p>In this chapter we explain how HAP can be used to make computions about modular forms associated to congruence subgroups <span class="SimpleMath">\(\Gamma\)</span> of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>. Also, in Subsection 10.8 onwards, we demonstrate cohomology computations for the <em>Picard group</em> <span class="SimpleMath">\(SL_2(\mathbb Z[i])\)</span>, some <em>Bianchi groups</em> <span class="SimpleMath">\(PSL_2({\cal O}_{-d}) \)</span> where <span class="SimpleMath">\({\cal O}_{d}\)</span> is the ring of integers of <span class="SimpleMath">\(\mathbb Q(\sqrt{-d})\)</span> for square free positive integer <span class="SimpleMath">\(d\)</span>, and some other groups of the form <span class="SimpleMath">\(SL_m({\cal O})\)</span>, <span class="SimpleMath">\(GL_m({\cal O})\)</span>, <span class="SimpleMath">\(PSL_m({\cal O})\)</span>, <span class="SimpleMath">\(PGL_m({\cal O})\)</span>, for <span class="SimpleMath">\(m=2,3,4\)</span> and certain <span class="SimpleMath">\({\cal O}=\mathbb Z, {\cal O}_{-d}\)</span>.</p>
+
+<p><a id="X79A1974B7B4987DE" name="X79A1974B7B4987DE"></a></p>
+
+<h4>10.1 <span class="Heading">Eichler-Shimura isomorphism</span></h4>
+
+<p>We begin by recalling the Eichler-Shimura isomorphism <a href="chapBib_mj.html#biBeichler">[Eic57]</a><a href="chapBib_mj.html#biBshimura">[Shi59]</a></p>
+
+<p class="center">\[ S_k(\Gamma) \oplus \overline{S_k(\Gamma)} \oplus E_k(\Gamma) \cong_{\sf Hecke} H^1(\Gamma,P_{\mathbb C}(k-2))\]</p>
+
+<p>which relates the cohomology of groups to the theory of modular forms associated to a finite index subgroup <span class="SimpleMath">\(\Gamma\)</span> of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>. In subsequent sections we explain how to compute with the right-hand side of the isomorphism. But first, for completeness, let us define the terms on the left-hand side.</p>
+
+<p>Let <span class="SimpleMath">\(N\)</span> be a positive integer. A subgroup <span class="SimpleMath">\(\Gamma\)</span> of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> is said to be a <em>congruence subgroup</em> of level <span class="SimpleMath">\(N \)</span> if it contains the kernel of the canonical homomorphism <span class="SimpleMath">\(\pi_N\colon SL_2(\mathbb Z) \rightarrow SL_2(\mathbb Z/N\mathbb Z)\)</span>. So any congruence subgroup is of finite index in <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>, but the converse is not true.</p>
+
+<p>One congruence subgroup of particular interest is the group <span class="SimpleMath">\(\Gamma_1(N)=\ker(\pi_N)\)</span>, known as the <em>principal congruence subgroup</em> of level <span class="SimpleMath">\(N\)</span>. Another congruence subgroup of particular interest is the group <span class="SimpleMath">\(\Gamma_0(N)\)</span> of those matrices that project to upper triangular matrices in <span class="SimpleMath">\(SL_2(\mathbb Z/N\mathbb Z)\)</span>.</p>
+
+<p>A <em>modular form</em> of weight <span class="SimpleMath">\(k\)</span> for a congruence subgroup <span class="SimpleMath">\(\Gamma\)</span> is a complex valued function on the upper-half plane, <span class="SimpleMath">\(f\colon {\frak{h}}=\{z\in \mathbb C : Re(z)&gt;0\} \rightarrow \mathbb C\)</span>, satisfying:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(\displaystyle f(\frac{az+b}{cz+d}) = (cz+d)^k f(z)\)</span> for <span class="SimpleMath">\(\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right) \in \Gamma\)</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">\(f\)</span> is `holomorphic' on the <em>extended upper-half plane</em> <span class="SimpleMath">\(\frak{h}^\ast = \frak{h} \cup \mathbb Q \cup \{\infty\}\)</span> obtained from the upper-half plane by `adjoining a point at each cusp'.</p>
+
+</li>
+</ul>
+<p>The collection of all weight <span class="SimpleMath">\(k\)</span> modular forms for <span class="SimpleMath">\(\Gamma\)</span> form a vector space <span class="SimpleMath">\(M_k(\Gamma)\)</span> over <span class="SimpleMath">\(\mathbb C\)</span>.</p>
+
+<p>A modular form <span class="SimpleMath">\(f\)</span> is said to be a <em>cusp form</em> if <span class="SimpleMath">\(f(\infty)=0\)</span>. The collection of all weight <span class="SimpleMath">\(k\)</span> cusp forms for <span class="SimpleMath">\(\Gamma\)</span> form a vector subspace <span class="SimpleMath">\(S_k(\Gamma)\)</span>. There is a decomposition</p>
+
+<p class="center">\[M_k(\Gamma) \cong S_k(\Gamma) \oplus E_k(\Gamma)\]</p>
+
+<p>involving a summand <span class="SimpleMath">\(E_k(\Gamma)\)</span> known as the <em>Eisenstein space</em>. See <a href="chapBib_mj.html#biBstein">[Ste07]</a> for further introductory details on modular forms.</p>
+
+<p>The Eichler-Shimura isomorphism is more than an isomorphism of vector spaces. It is an isomorphism of Hecke modules: both sides admit notions of <em>Hecke operators</em>, and the isomorphism preserves these operators. The bar on the left-hand side of the isomorphism denotes complex conjugation, or <em>anti-holomorphic</em> forms. See <a href="chapBib_mj.html#biBwieser">[Wie78]</a> for a full account of the isomorphism.</p>
+
+<p>On the right-hand side of the isomorphism, the <span class="SimpleMath">\(\mathbb Z\Gamma\)</span>-module <span class="SimpleMath">\(P_{\mathbb C}(k-2)\subset \mathbb C[x,y]\)</span> denotes the space of homogeneous degree <span class="SimpleMath">\(k-2\)</span> polynomials with action of <span class="SimpleMath">\(\Gamma\)</span> given by</p>
+
+<p class="center">\[\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot p(x,y) = p(dx-by,-cx+ay)\ .\]</p>
+
+<p>In particular <span class="SimpleMath">\(P_{\mathbb C}(0)=\mathbb C\)</span> is the trivial module. Below we shall compute with the integral analogue <span class="SimpleMath">\(P_{\mathbb Z}(k-2) \subset \mathbb Z[x,y]\)</span>.</p>
+
+<p>In the following sections we explain how to use the right-hand side of the Eichler-Shimura isomorphism to compute eigenvalues of the Hecke operators restricted to the subspace <span class="SimpleMath">\(S_k(\Gamma)\)</span> of cusp forms.</p>
+
+<p><a id="X7BFA2C91868255D9" name="X7BFA2C91868255D9"></a></p>
+
+<h4>10.2 <span class="Heading">Generators for <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> and the cubic tree</span></h4>
+
+<p>The matrices <span class="SimpleMath">\(S=\left(\begin{array}{rr}0&amp;-1\\ 1 &amp;0 \end{array}\right)\)</span> and <span class="SimpleMath">\(T=\left(\begin{array}{rr}1&amp;1\\ 0 &amp;1 \end{array}\right)\)</span> generate <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> and it is not difficult to devise an algorithm for expressing an arbitrary integer matrix <span class="SimpleMath">\(A\)</span> of determinant <span class="SimpleMath">\(1\)</span> as a word in <span class="SimpleMath">\(S\)</span>, <span class="SimpleMath">\(T\)</span> and their inverses. The following illustrates such an algorithm.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[[4,9],[7,16]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">word:=AsWordInSL2Z(A);</span>
+[ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, -1 ], [ 0, 1 ] ], 
+  [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ], [ [ 0, 1 ], [ -1, 0 ] ], 
+  [ [ 1, -1 ], [ 0, 1 ] ], [ [ 1, -1 ], [ 0, 1 ] ], [ [ 1, -1 ], [ 0, 1 ] ], 
+  [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Product(word);</span>
+[ [ 4, 9 ], [ 7, 16 ] ]
+
+</pre></div>
+
+<p>It is convenient to introduce the matrix <span class="SimpleMath">\(U=ST = \left(\begin{array}{rr}0&amp;-1\\ 1 &amp;1 \end{array}\right)\)</span>. The matrices <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(U\)</span> also generate <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>. In fact we have a free presentation <span class="SimpleMath">\(SL_2(\mathbb Z)= \langle S,U\, |\, S^4=U^6=1 \rangle \)</span>.</p>
+
+<p>The <em>cubic tree</em> <span class="SimpleMath">\(\cal T\)</span> is a tree (<em>i.e.</em> a <span class="SimpleMath">\(1\)</span>-dimensional contractible regular CW-complex) with countably infinitely many edges in which each vertex has degree <span class="SimpleMath">\(3\)</span>. We can realize the cubic tree <span class="SimpleMath">\(\cal T\)</span> by taking the left cosets of <span class="SimpleMath">\({\cal U}=\langle U\rangle\)</span> in <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> as vertices, and joining cosets <span class="SimpleMath">\(x\,{\cal U} \)</span> and <span class="SimpleMath">\(y\,{\cal U}\)</span> by an edge if, and only if, <span class="SimpleMath">\(x^{-1}y \in {\cal U}\, S\,{\cal U}\)</span>. Thus the vertex <span class="SimpleMath">\(\cal U \)</span> is joined to <span class="SimpleMath">\(S\,{\cal U} \)</span>, <span class="SimpleMath">\(US\,{\cal U}\)</span> and <span class="SimpleMath">\(U^2S\,{\cal U}\)</span>. The vertices of this tree are in one-to-one correspondence with all reduced words in <span class="SimpleMath">\(S\)</span>, <span class="SimpleMath">\(U\)</span> and <span class="SimpleMath">\(U^2\)</span> that, apart from the identity, end in <span class="SimpleMath">\(S\)</span>.</p>
+
+<p>From our realization of the cubic tree <span class="SimpleMath">\(\cal T\)</span> we see that <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> acts on <span class="SimpleMath">\(\cal T\)</span> in such a way that each vertex is stabilized by a cyclic subgroup conjugate to <span class="SimpleMath">\({\cal U}=\langle U\rangle\)</span> and each edge is stabilized by a cyclic subgroup conjugate to <span class="SimpleMath">\({\cal S} =\langle S \rangle\)</span>.</p>
+
+<p>In order to store this action of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> on the cubic tree <span class="SimpleMath">\(\cal T\)</span> we just need to record the following finite amount of information.</p>
+
+<p><img src="images/fdsl2.png" align="center" width="350" alt="Information for the cubic tree"/></p>
+
+<p><a id="X7D1A56967A073A8B" name="X7D1A56967A073A8B"></a></p>
+
+<h4>10.3 <span class="Heading">One-dimensional fundamental domains and  
+generators for congruence subgroups</span></h4>
+
+<p>The modular group <span class="SimpleMath">\({\cal M}=PSL_2(\mathbb Z)\)</span> is isomorphic, as an abstract group, to the free product <span class="SimpleMath">\(\mathbb Z_2\ast \mathbb Z_3\)</span>. By the Kurosh subgroup theorem, any finite index subgroup <span class="SimpleMath">\(M \subset {\cal M}\)</span> is isomorphic to the free product of finitely many copies of <span class="SimpleMath">\(\mathbb Z_2\)</span>s, <span class="SimpleMath">\(\mathbb Z_3\)</span>s and <span class="SimpleMath">\(\mathbb Z\)</span>s. A subset <span class="SimpleMath">\(\underline x \subset M\)</span> is an <em>independent</em> set of subgroup generators if <span class="SimpleMath">\(M\)</span> is the free product of the cyclic subgroups <span class="SimpleMath">\(&lt;x &gt;\)</span> as <span class="SimpleMath">\(x\)</span> runs over <span class="SimpleMath">\(\underline x\)</span>. Let us say that a set of elements in <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> is <em>projectively independent</em> if it maps injectively onto an independent set of subgroup generators <span class="SimpleMath">\(\underline x\subset {\cal M}\)</span>. The generating set <span class="SimpleMath">\(\{S,U\}\)</span> for <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> given in the preceding section is projectively independent.</p>
+
+<p>We are interested in constructing a set of generators for a given congruence subgroup <span class="SimpleMath">\(\Gamma\)</span>. If a small generating set for <span class="SimpleMath">\(\Gamma\)</span> is required then we should aim to construct one which is close to being projectively independent.</p>
+
+<p>It is useful to invoke the following general result which follows from a perturbation result about free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolutons in <a href="chapBib_mj.html#biBellisharrisskoldberg">[EHS06, Theorem 2]</a> and an old observation of John Milnor that a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution can be realized as the cellular chain complex of a CW-complex if it can be so realized in low dimensions.</p>
+
+<p><strong class="button">Theorem.</strong> Let <span class="SimpleMath">\(X\)</span> be a contractible CW-complex on which a group <span class="SimpleMath">\(G\)</span> acts by permuting cells. The cellular chain complex <span class="SimpleMath">\(C_\ast X\)</span> is a <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution of <span class="SimpleMath">\(\mathbb Z\)</span> which typically is not free. Let <span class="SimpleMath">\([e^n]\)</span> denote the orbit of the n-cell <span class="SimpleMath">\(e^n\)</span> under the action. Let <span class="SimpleMath">\(G^{e^n} \le G\)</span> denote the stabilizer subgroup of <span class="SimpleMath">\(e^n\)</span>, in which group elements are not required to stabilize <span class="SimpleMath">\(e^n\)</span> point-wise. Let <span class="SimpleMath">\(Y_{e^n}\)</span> denote a contractible CW-complex on which <span class="SimpleMath">\(G^{e^n}\)</span> acts cellularly and freely. Then there exists a contractible CW-complex <span class="SimpleMath">\(W\)</span> on which <span class="SimpleMath">\(G\)</span> acts cellularly and freely, and in which the orbits of <span class="SimpleMath">\(n\)</span>-cells are labelled by <span class="SimpleMath">\([e^p]\otimes [f^q]\)</span> where <span class="SimpleMath">\(p+q=n\)</span> and <span class="SimpleMath">\([e^p]\)</span> ranges over the <span class="SimpleMath">\(G\)</span>-orbits of <span class="SimpleMath">\(p\)</span>-cells in <span class="SimpleMath">\(X\)</span>, <span class="SimpleMath">\([f^q]\)</span> ranges over the <span class="SimpleMath">\(G^{e^p}\)</span>-orbits of <span class="SimpleMath">\(q\)</span>-cells in <span class="SimpleMath">\(Y_{e^p}\)</span>.</p>
+
+<p>Let <span class="SimpleMath">\(W\)</span> be as in the theorem. Then the quotient CW-complex <span class="SimpleMath">\(B_G=W/G\)</span> is a classifying space for <span class="SimpleMath">\(G\)</span>. Let <span class="SimpleMath">\(T\)</span> denote a maximal tree in the <span class="SimpleMath">\(1\)</span>-skeleton <span class="SimpleMath">\(B^1_G\)</span>. Basic geometric group theory tells us that the <span class="SimpleMath">\(1\)</span>-cells in <span class="SimpleMath">\(B^1_G\setminus T\)</span> correspond to a generating set for <span class="SimpleMath">\(G\)</span>.</p>
+
+<p>Suppose we wish to compute a set of generators for a principal congruence subgroup <span class="SimpleMath">\(\Gamma=\Gamma_1(N)\)</span>. In the above theorem take <span class="SimpleMath">\(X={\cal T}\)</span> to be the cubic tree, and note that <span class="SimpleMath">\(\Gamma\)</span> acts freely on <span class="SimpleMath">\(\cal T\)</span> and thus that <span class="SimpleMath">\(W={\cal T}\)</span>. To determine the <span class="SimpleMath">\(1\)</span>-cells of <span class="SimpleMath">\(B_{\Gamma}\setminus T\)</span> we need to determine a cellular subspace <span class="SimpleMath">\(D_\Gamma \subset \cal T\)</span> whose images under the action of <span class="SimpleMath">\(\Gamma\)</span> cover <span class="SimpleMath">\(\cal T\)</span> and are pairwise either disjoint or identical. The subspace <span class="SimpleMath">\(D_\Gamma\)</span> will not be a CW-complex as it won't be closed, but it can be chosen to be connected, and hence contractible. We call <span class="SimpleMath">\(D_\Gamma\)</span> a <em>fundamental region</em> for <span class="SimpleMath">\(\Gamma\)</span>. We denote by <span class="SimpleMath">\(\mathring D_\Gamma\)</span> the largest CW-subcomplex of <span class="SimpleMath">\(D_\Gamma\)</span>. The vertices of <span class="SimpleMath">\(\mathring D_\Gamma\)</span> are the same as the vertices of <span class="SimpleMath">\(D_\Gamma\)</span>. Thus <span class="SimpleMath">\(\mathring D_\Gamma\)</span> is a subtree of the cubic tree with <span class="SimpleMath">\(|\Gamma|/6\)</span> vertices. For each vertex <span class="SimpleMath">\(v\)</span> in the tree <span class="SimpleMath">\(\mathring D_\Gamma\)</span> define <span class="SimpleMath">\(\eta(v)=3 -{\rm degree}(v)\)</span>. Then the number of generators for <span class="SimpleMath">\( \Gamma \)</span> will be <span class="SimpleMath">\((1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)\)</span>.</p>
+
+<p>The following commands determine projectively independent generators for <span class="SimpleMath">\(\Gamma_1(6)\)</span> and display <span class="SimpleMath">\(\mathring D_{\Gamma_1(6)}\)</span>. The subgroup <span class="SimpleMath">\(\Gamma_1(6)\)</span> is free on <span class="SimpleMath">\(13\)</span> generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_PrincipalCongruenceSubgroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=GeneratorsOfGroup(G);</span>
+[ [ [ -83, -18 ], [ 60, 13 ] ], [ [ -77, -18 ], [ 30, 7 ] ], 
+  [ [ -65, -12 ], [ 168, 31 ] ], [ [ -53, -12 ], [ 84, 19 ] ], 
+  [ [ -47, -18 ], [ 222, 85 ] ], [ [ -41, -12 ], [ 24, 7 ] ], 
+  [ [ -35, -6 ], [ 6, 1 ] ], [ [ -11, -18 ], [ 30, 49 ] ], 
+  [ [ -11, -6 ], [ 24, 13 ] ], [ [ -5, -18 ], [ 12, 43 ] ], 
+  [ [ -5, -12 ], [ 18, 43 ] ], [ [ -5, -6 ], [ 6, 7 ] ], 
+  [ [ 1, 0 ], [ -6, 1 ] ] ]
+
+</pre></div>
+
+<p><img src="images/pctree6.gif" align="center" width="350" alt="Fundamental region in the cubic tree"/></p>
+
+<p>An alternative but very related approach to computing generators of congruence subgroups of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> is described in <a href="chapBib_mj.html#biBkulkarni">[Kul91]</a>.</p>
+
+<p>The congruence subgroup <span class="SimpleMath">\(\Gamma_0(N)\)</span> does not act freely on the vertices of <span class="SimpleMath">\(\cal T\)</span>, and so one needs to incorporate a generator for the cyclic stabilizer group according to the above theorem. Alternatively, we can replace the cubic tree by a six-fold cover <span class="SimpleMath">\({\cal T}'\)</span> on whose vertex set <span class="SimpleMath">\(\Gamma_0(N)\)</span> acts freely. This alternative approach will produce a redundant set of generators. The following commands display <span class="SimpleMath">\(\mathring D_{\Gamma_0(39)}\)</span> for a fundamental region in <span class="SimpleMath">\({\cal T}'\)</span>. They also use the corresponding generating set for <span class="SimpleMath">\(\Gamma_0(39)\)</span>, involving <span class="SimpleMath">\(18\)</span> generators, to compute the abelianization <span class="SimpleMath">\(\Gamma_0(39)^{ab}= \mathbb Z_2 \oplus \mathbb Z_3^2 \oplus \mathbb Z^9\)</span>. The abelianization shows that any generating set has at least <span class="SimpleMath">\(11\)</span> generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HAP_SL2TreeDisplay(G);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(GeneratorsOfGroup(G));</span>
+18
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(G);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3 ]
+
+</pre></div>
+
+<p><img src="images/g0tree39.gif" align="center" width="350" alt="Fundamental region in the cubic tree"/></p>
+
+<p>Note that to compute <span class="SimpleMath">\(D_\Gamma\)</span> one only needs to be able to test whether a given matrix lies in <span class="SimpleMath">\(\Gamma\)</span> or not. Given an inclusion <span class="SimpleMath">\(\Gamma'\subset \Gamma\)</span> of congruence subgroups, it is straightforward to use the trees <span class="SimpleMath">\(\mathring D_{\Gamma'}\)</span> and <span class="SimpleMath">\(\mathring D_{\Gamma}\)</span> to compute a system of coset representative for <span class="SimpleMath">\(\Gamma'\setminus \Gamma\)</span>.</p>
+
+<p><a id="X818BFA9A826C0DB3" name="X818BFA9A826C0DB3"></a></p>
+
+<h4>10.4 <span class="Heading">Cohomology of congruence subgroups</span></h4>
+
+<p>To compute the cohomology <span class="SimpleMath">\(H^n(\Gamma,A)\)</span> of a congruence subgroup <span class="SimpleMath">\(\Gamma\)</span> with coefficients in a <span class="SimpleMath">\(\mathbb Z\Gamma\)</span>-module <span class="SimpleMath">\(A\)</span> we need to construct <span class="SimpleMath">\(n+1\)</span> terms of a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution of <span class="SimpleMath">\(\mathbb Z\)</span>. We can do this by first using perturbation techniques (as described in <a href="chapBib_mj.html#biBbuiellis">[BE14]</a>) to combine the cubic tree with resolutions for the cyclic groups of order <span class="SimpleMath">\(4\)</span> and <span class="SimpleMath">\(6\)</span> in order to produce a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R_\ast\)</span> for <span class="SimpleMath">\(G=SL_2(\mathbb Z)\)</span>. This resolution is also a free <span class="SimpleMath">\(\mathbb Z\Gamma\)</span>-resolution with each term of rank</p>
+
+<p class="center">\[{\rm rank}_{\mathbb Z\Gamma} R_k = |G:\Gamma|\times {\rm rank}_{\mathbb ZG} R_k\ .\]</p>
+
+<p>For congruence subgroups of lowish index in <span class="SimpleMath">\(G\)</span> this resolution suffices to make computations.</p>
+
+<p>The following commands compute</p>
+
+<p class="center">\[H^1(\Gamma_0(39),\mathbb Z) = \mathbb Z^9\ .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2Z_alt(2);</span>
+Resolution of length 2 in characteristic 0 for SL(2,Integers) .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,gamma);</span>
+Resolution of length 2 in characteristic 0 for 
+CongruenceSubgroupGamma0( 39)  .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegers(S),1);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p>This computation establishes that the space <span class="SimpleMath">\(M_2(\Gamma_0(39))\)</span> of weight <span class="SimpleMath">\(2\)</span> modular forms is of dimension <span class="SimpleMath">\(9\)</span>.</p>
+
+<p>The following commands show that <span class="SimpleMath">\({\rm rank}_{\mathbb Z\Gamma_0(39)} R_1 = 112\)</span> but that it is possible to apply `Tietze like' simplifications to <span class="SimpleMath">\(R_\ast\)</span> to obtain a free <span class="SimpleMath">\(\mathbb Z\Gamma_0(39)\)</span>-resolution <span class="SimpleMath">\(T_\ast\)</span> with <span class="SimpleMath">\({\rm rank}_{\mathbb Z\Gamma_0(39)} T_1 = 11\)</span>. It is more efficient to work with <span class="SimpleMath">\(T_\ast\)</span> when making cohomology computations with coefficients in a module <span class="SimpleMath">\(A\)</span> of large rank.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S!.dimension(1);</span>
+112
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=TietzeReducedResolution(S);</span>
+Resolution of length 2 in characteristic 0 for CongruenceSubgroupGamma0(
+39)  . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T!.dimension(1);</span>
+11
+
+</pre></div>
+
+<p>The following commands compute</p>
+
+<p class="center">\[H^1(\Gamma_0(39),P_{\mathbb Z}(8)) = \mathbb Z_3 \oplus \mathbb Z_6
+\oplus \mathbb Z_{168} \oplus \mathbb Z^{84}\ ,\]</p>
+
+<p class="center">\[H^1(\Gamma_0(39),P_{\mathbb Z}(9)) = \mathbb Z_2 \oplus \mathbb Z_2 .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=HomogeneousPolynomials(gamma,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=Cohomology(HomToIntegralModule(T,P),1);</span>
+[ 3, 6, 168, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(c);</span>
+87
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=HomogeneousPolynomials(gamma,9);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=Cohomology(HomToIntegralModule(T,P),1);</span>
+[ 2, 2 ]
+
+</pre></div>
+
+<p>This computation establishes that the space <span class="SimpleMath">\(M_{10}(\Gamma_0(39))\)</span> of weight <span class="SimpleMath">\(10\)</span> modular forms is of dimension <span class="SimpleMath">\(84\)</span>, and <span class="SimpleMath">\(M_{11}(\Gamma_0(39))\)</span> is of dimension <span class="SimpleMath">\(0\)</span>. (There are never any modular forms of odd weight, and so <span class="SimpleMath">\(M_k(\Gamma)=0\)</span> for all odd <span class="SimpleMath">\(k\)</span> and any congruence subgroup <span class="SimpleMath">\(\Gamma\)</span>.)</p>
+
+<p><a id="X84D30F1580CD42D1" name="X84D30F1580CD42D1"></a></p>
+
+<h4>10.5 <span class="Heading">Cuspidal cohomology</span></h4>
+
+<p>To define and compute cuspidal cohomology we consider the action of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> on the upper-half plane <span class="SimpleMath">\({\frak h}\)</span> given by</p>
+
+<p class="center">\[\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right) z =
+\frac{az +b}{cz+d}\ .\]</p>
+
+<p>A standard 'fundamental domain' for this action is the region</p>
+
+<p class="center">\[\begin{array}{ll}
+ D=&amp;\{z\in {\frak h}\ :\ |z| &gt; 1, |{\rm Re}(z)| &lt; \frac{1}{2}\} \\ 
+&amp;
+\cup\ \{z\in {\frak h} \ :\ |z| \ge 1, {\rm Re}(z)=-\frac{1}{2}\}\\ 
+&amp; \cup\ \{z \in {\frak h}\ :\ |z|=1, -\frac{1}{2} \le {\rm Re}(z) \le 0\}
+\end{array}
+\]</p>
+
+<p>illustrated below.</p>
+
+<p><img src="images/filename-1.png" align="center" width="450" alt="Fundamental domain in the upper-half plane"/></p>
+
+<p>The action factors through an action of <span class="SimpleMath">\(PSL_2(\mathbb Z) =SL_2(\mathbb Z)/\langle \left(\begin{array}{rr}-1&amp;0\\ 0 &amp;-1 \end{array}\right)\rangle\)</span>. The images of <span class="SimpleMath">\(D\)</span> under the action of <span class="SimpleMath">\(PSL_2(\mathbb Z)\)</span> cover the upper-half plane, and any two images have at most a single point in common. The possible common points are the bottom left-hand corner point which is stabilized by <span class="SimpleMath">\(\langle U\rangle\)</span>, and the bottom middle point which is stabilized by <span class="SimpleMath">\(\langle S\rangle\)</span>.</p>
+
+<p>A congruence subgroup <span class="SimpleMath">\(\Gamma\)</span> has a `fundamental domain' <span class="SimpleMath">\(D_\Gamma\)</span> equal to a union of finitely many copies of <span class="SimpleMath">\(D\)</span>, one copy for each coset in <span class="SimpleMath">\(\Gamma\setminus SL_2(\mathbb Z)\)</span>. The quotient space <span class="SimpleMath">\(X=\Gamma\setminus {\frak h}\)</span> is not compact, and can be compactified in several ways. We are interested in the Borel-Serre compactification. This is a space <span class="SimpleMath">\(X^{BS}\)</span> for which there is an inclusion <span class="SimpleMath">\(X\hookrightarrow X^{BS}\)</span> and this inclusion is a homotopy equivalence. One defines the <em>boundary</em> <span class="SimpleMath">\(\partial X^{BS} = X^{BS} - X\)</span> and uses the inclusion <span class="SimpleMath">\(\partial X^{BS} \hookrightarrow X^{BS} \simeq X\)</span> to define the cuspidal cohomology group, over the ground ring <span class="SimpleMath">\(\mathbb C\)</span>, as</p>
+
+<p class="center">\[ H_{cusp}^n(\Gamma,P_{\mathbb C}(k-2)) = \ker (\ H^n(X,P_{\mathbb C}(k-2)) \rightarrow
+H^n(\partial X^{BS},P_{\mathbb C}(k-2)) \ ).\]</p>
+
+<p>Strictly speaking, this is the definition of <em>interior cohomology</em> <span class="SimpleMath">\(H_!^n(\Gamma,P_{\mathbb C}(k-2))\)</span> which in general contains the cuspidal cohomology as a subgroup. However, for congruence subgroups of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> there is equality <span class="SimpleMath">\(H_!^n(\Gamma,P_{\mathbb C}(k-2)) = H_{cusp}^n(\Gamma,P_{\mathbb C}(k-2))\)</span>.</p>
+
+<p>Working over <span class="SimpleMath">\(\mathbb C\)</span> has the advantage of avoiding the technical issue that <span class="SimpleMath">\(\Gamma \)</span> does not necessarily act freely on <span class="SimpleMath">\({\frak h}\)</span> since there are points with finite cyclic stabilizer groups in <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>. But it has the disadvantage of losing information about torsion in cohomology. So HAP confronts the issue by working with a contractible CW-complex <span class="SimpleMath">\(\tilde X^{BS}\)</span> on which <span class="SimpleMath">\(\Gamma\)</span> acts freely, and <span class="SimpleMath">\(\Gamma\)</span>-equivariant inclusion <span class="SimpleMath">\(\partial \tilde X^{BS} \hookrightarrow \tilde X^{BS}\)</span>. The definition of cuspidal cohomology that we use, which coincides with the above definition when working over <span class="SimpleMath">\(\mathbb C\)</span>, is</p>
+
+<p class="center">\[ H_{cusp}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde X^{BS}), A)\,   ) \rightarrow
+H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).\]</p>
+
+<p>The following data is recorded and, using perturbation theory, is combined with free resolutions for <span class="SimpleMath">\(C_4\)</span> and <span class="SimpleMath">\(C_6\)</span> to constuct <span class="SimpleMath">\(\tilde X^{BS}\)</span>.</p>
+
+<p><img src="images/filename-2.png" align="center" width="450" alt="Borel-Serre compactified fundamental domain in the upper-half plane"/></p>
+
+<p>The following commands calculate</p>
+
+<p class="center">\[H^1_{cusp}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=2;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);</span>
+[ g1, g2, g3, g4, g5, g6, g7, g8, g9 ] -&gt; [ g1^-1*g3, g1^-1*g3, g1^-1*g3, 
+  g1^-1*g3, g1^-1*g2, g1^-1*g3, g1^-1*g4, g1^-1*g4, g1^-1*g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
+[ 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p>From the Eichler-Shimura isomorphism and the already calculated dimension of <span class="SimpleMath">\(M_2(\Gamma_0(39))\cong \mathbb C^9\)</span>, we deduce from this cuspidal cohomology that the space <span class="SimpleMath">\(S_2(\Gamma_0(39))\)</span> of cuspidal weight <span class="SimpleMath">\(2\)</span> forms is of dimension <span class="SimpleMath">\(3\)</span>, and the Eisenstein space <span class="SimpleMath">\(E_2(\Gamma_0(39))\cong \mathbb C^3\)</span> is of dimension <span class="SimpleMath">\(3\)</span>.</p>
+
+<p>The following commands show that the space <span class="SimpleMath">\(S_4(\Gamma_0(39))\)</span> of cuspidal weight <span class="SimpleMath">\(4\)</span> forms is of dimension <span class="SimpleMath">\(12\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X8577E83782C87EBD" name="X8577E83782C87EBD"></a></p>
+
+<h4>10.6 <span class="Heading">Hecke operators</span></h4>
+
+<p>A congruence subgroup <span class="SimpleMath">\(\Gamma \le SL_m(\mathbb Z)\)</span> and element <span class="SimpleMath">\(g\in SL_m(\mathbb Q)\)</span> determine the subgroup <span class="SimpleMath">\(\Gamma' = \Gamma \cap g\Gamma g^{-1} \)</span> and homomorphisms</p>
+
+<p class="center">\[ \Gamma\ \hookleftarrow\ \Gamma'\ \ \stackrel{\gamma \mapsto g^{-1}\gamma g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . \]</p>
+
+<p>These homomorphisms give rise to homomorphisms of cohomology groups</p>
+
+<p class="center">\[H^n(\Gamma,\mathbb Z)\ \ \stackrel{tr}{\leftarrow} \ \ H^n(\Gamma',\mathbb Z) \ \ \stackrel{\alpha}{\leftarrow} \ \ H^n(g^{-1}\Gamma' g,\mathbb Z) \ \  \stackrel{\beta}{\leftarrow} H^n(\Gamma, \mathbb Z) \]</p>
+
+<p>with <span class="SimpleMath">\(\alpha\)</span>, <span class="SimpleMath">\(\beta\)</span> functorial maps, and <span class="SimpleMath">\(tr\)</span> the transfer map. We define the composite <span class="SimpleMath">\(T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow H^n(\Gamma, \mathbb Z)\)</span> to be the <em> Hecke operator </em> determined by <span class="SimpleMath">\(g\)</span>. Further details on this description of Hecke operators can be found in <a href="chapBib_mj.html#biBstein">[Ste07, Appendix by P. Gunnells]</a>.</p>
+
+<p>For each integer <span class="SimpleMath">\(s\ge 1\)</span> we set <span class="SimpleMath">\(T_s =T_s\)</span> with for <span class="SimpleMath">\(g=\left(\begin{array}{cc}1&amp;0\\0&amp;\frac{1}{s}\end{array}\right)\)</span>.</p>
+
+<p>The following commands compute <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> for <span class="SimpleMath">\(n=1\)</span> and <span class="SimpleMath">\(\Gamma=\Gamma_0(39)\)</span>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> commute. (It is a fact that <span class="SimpleMath">\(T_pT_q=T_qT_p\)</span> for all integers <span class="SimpleMath">\(p,q\)</span>.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;N:=1;;h:=HeckeOperator(gamma,p,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Source(h));</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2:=HomomorphismAsMatrix(h);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(T2);</span>
+[ [  -2,  -2,   2,   2,   1,   2,   0,   0,   0 ],
+  [  -2,   0,   1,   2,  -2,   2,   2,   2,  -2 ],
+  [  -2,  -1,   2,   2,  -1,   2,   1,   1,  -1 ],
+  [  -2,  -1,   2,   2,   1,   1,   0,   0,   0 ],
+  [  -1,   0,   0,   2,  -3,   2,   3,   3,  -3 ],
+  [   0,   1,   1,   1,  -1,   0,   1,   1,  -1 ],
+  [  -1,   1,   1,  -1,   0,   1,   2,  -1,   1 ],
+  [  -1,  -1,   0,   2,  -3,   2,   1,   4,  -1 ],
+  [   0,   1,   0,  -1,  -2,   1,   1,   1,   2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eigenvalues(Rationals,T2);</span>
+[ 3, 1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=5;;N:=1;;h:=HeckeOperator(gamma,p,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T5:=HomomorphismAsMatrix(h);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(T5);</span>
+[ [  -1,  -1,   3,   4,   0,   0,   1,   1,  -1 ],
+  [  -5,  -1,   5,   4,   0,   0,   3,   3,  -3 ],
+  [  -2,   0,   4,   4,   1,   0,  -1,  -1,   1 ],
+  [  -2,   0,   3,   2,  -3,   2,   4,   4,  -4 ],
+  [  -4,  -2,   4,   4,   3,   0,   1,   1,  -1 ],
+  [  -6,  -4,   5,   6,   1,   2,   2,   2,  -2 ],
+  [   1,   5,   0,  -4,  -3,   2,   5,  -1,   1 ],
+  [  -2,  -2,   2,   4,   0,   0,  -2,   4,   2 ],
+  [   1,   3,   0,  -4,  -4,   2,   2,   2,   4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eigenvalues(Rationals,T5);</span>
+[ 6, 2 ]
+
+gap&gt;T2*T5=T5*T2;
+true
+
+</pre></div>
+
+<p><a id="X84CC51EE8525E0D9" name="X84CC51EE8525E0D9"></a></p>
+
+<h4>10.7 <span class="Heading">Reconstructing modular forms from cohomology computations</span></h4>
+
+<p>Given a modular form <span class="SimpleMath">\(f\colon {\frak h} \rightarrow \mathbb C\)</span> associated to a congruence subgroup <span class="SimpleMath">\(\Gamma\)</span>, and given a compact edge <span class="SimpleMath">\(e\)</span> in the tessellation of <span class="SimpleMath">\({\frak h}\)</span> (<em>i.e.</em> an edge in the cubic tree <span class="SimpleMath">\(\cal T\)</span>) arising from the above fundamental domain for <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span>, we can evaluate</p>
+
+<p class="center">\[\int_e f(z)\,dz \ .\]</p>
+
+<p>In this way we obtain a cochain <span class="SimpleMath">\(f_1\colon C_1({\cal T}) \rightarrow \mathbb C\)</span> in <span class="SimpleMath">\(Hom_{\mathbb Z\Gamma}(C_1({\cal T}), \mathbb C)\)</span> representing a cohomology class <span class="SimpleMath">\(c(f) \in H^1(\, Hom_{\mathbb Z\Gamma}(C_\ast({\cal T}), \mathbb C) \,) = H^1(\Gamma,\mathbb C)\)</span>. The correspondence <span class="SimpleMath">\(f\mapsto c(f)\)</span> underlies the Eichler-Shimura isomorphism. Hecke operators can be used to recover modular forms from cohomology classes.</p>
+
+<p>Hecke operators restrict to operators on cuspidal cohomology. On the left-hand side of the Eichler-Shimura isomorphism Hecke operators restrict to operators <span class="SimpleMath">\(T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)\)</span> for <span class="SimpleMath">\(s\ge 1\)</span>.</p>
+
+<p>Let us now introduce the function <span class="SimpleMath">\(q=q(z)=e^{2\pi i z}\)</span> which is holomorphic on <span class="SimpleMath">\(\mathbb C\)</span>. For any modular form <span class="SimpleMath">\(f(z)\)</span> there are numbers <span class="SimpleMath">\(a_n\)</span> such that</p>
+
+<p class="center">\[f(z) = \sum_{s=0}^\infty a_sq^s \]</p>
+
+<p>for all <span class="SimpleMath">\(z\in {\frak h}\)</span>. The form <span class="SimpleMath">\(f\)</span> is a cusp form if <span class="SimpleMath">\(a_0=0\)</span>.</p>
+
+<p>A non-zero cusp form <span class="SimpleMath">\(f\in S_2(\Gamma)\)</span> is an <em>eigenform</em> if it is simultaneously an eigenvector for the Hecke operators <span class="SimpleMath">\(T_s\)</span> for all <span class="SimpleMath">\(s =1,2,3,\cdots\)</span>. An eigenform is said to be <em>normalized</em> if its coefficient <span class="SimpleMath">\(a_1=1\)</span>. It turns out that if <span class="SimpleMath">\(f\)</span> is a normalized eigenform then the coefficient <span class="SimpleMath">\(a_s\)</span> is an eigenvalue for <span class="SimpleMath">\(T_s\)</span> (see for instance <a href="chapBib_mj.html#biBstein">[Ste07]</a> for details). It can be shown <a href="chapBib_mj.html#biBatkinlehner">[AL70]</a> that <span class="SimpleMath">\(f\in S_2(\Gamma_0(N))\)</span> admits a basis of eigenforms.</p>
+
+<p>This all implies that, in principle, we can construct an approximation to an explicit basis for the space <span class="SimpleMath">\(S_2(\Gamma)\)</span> of cusp forms by computing eigenvalues for Hecke operators.</p>
+
+<p>Suppose that we would like a basis for <span class="SimpleMath">\(S_2(\Gamma_0(11))\)</span>. The following commands first show that <span class="SimpleMath">\(H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z\)</span> from which we deduce that <span class="SimpleMath">\(S_2(\Gamma_0(11)) =\mathbb C\)</span> is <span class="SimpleMath">\(1\)</span>-dimensional. Then eigenvalues of Hecke operators are calculated to establish that the modular form</p>
+
+<p class="center">\[f = q -2q^2 -q^3 +q^4 +q^5 +2q^6 -2q^7 +2q^8 -3q^9 -2q^{10} + \cdots \]</p>
+
+<p>constitutes a basis for <span class="SimpleMath">\(S_2(\Gamma_0(11))\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));</span>
+[ 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T1:=HomomorphismAsMatrix(HeckeOperator(gamma,1,1));; Display(T1);</span>
+[ [  1,  0,  0 ],
+  [  0,  1,  0 ],
+  [  0,  0,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2:=HomomorphismAsMatrix(HeckeOperator(gamma,2,1));; Display(T2);</span>
+[ [   3,  -4,   4 ],
+  [   0,  -2,   0 ],
+  [   0,   0,  -2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T3:=HomomorphismAsMatrix(HeckeOperator(gamma,3,1));; Display(T3);</span>
+[ [   4,  -4,   4 ],
+  [   0,  -1,   0 ],
+  [   0,   0,  -1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T4:=HomomorphismAsMatrix(HeckeOperator(gamma,4,1));; Display(T4);</span>
+[ [   6,  -4,   4 ],
+  [   0,   1,   0 ],
+  [   0,   0,   1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);</span>
+[ [   6,  -4,   4 ],
+  [   0,   1,   0 ],
+  [   0,   0,   1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T6:=HomomorphismAsMatrix(HeckeOperator(gamma,6,1));; Display(T6);</span>
+[ [  12,  -8,   8 ],
+  [   0,   2,   0 ],
+  [   0,   0,   2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);</span>
+[ [   8,  -8,   8 ],
+  [   0,  -2,   0 ],
+  [   0,   0,  -2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T8:=HomomorphismAsMatrix(HeckeOperator(gamma,8,1));; Display(T8);</span>
+[ [  12,  -8,   8 ],
+  [   0,   2,   0 ],
+  [   0,   0,   2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T9:=HomomorphismAsMatrix(HeckeOperator(gamma,9,1));; Display(T9);</span>
+[ [   12,  -12,   12 ],
+  [    0,   -3,    0 ],
+  [    0,    0,   -3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T10:=HomomorphismAsMatrix(HeckeOperator(gamma,10,1));; Display(T10);</span>
+[ [   18,  -16,   16 ],
+  [    0,   -2,    0 ],
+  [    0,    0,   -2 ] ]
+
+</pre></div>
+
+<p>For a normalized eigenform <span class="SimpleMath">\(f=1 + \sum_{s=2}^\infty a_sq^s\)</span> the coefficients <span class="SimpleMath">\(a_s\)</span> with <span class="SimpleMath">\(s\)</span> a composite integer can be expressed in terms of the coefficients <span class="SimpleMath">\(a_p\)</span> for prime <span class="SimpleMath">\(p\)</span>. If <span class="SimpleMath">\(r,s\)</span> are coprime then <span class="SimpleMath">\(T_{rs} =T_rT_s\)</span>. If <span class="SimpleMath">\(p\)</span> is a prime that is not a divisor of the level <span class="SimpleMath">\(N\)</span> of <span class="SimpleMath">\(\Gamma\)</span> then <span class="SimpleMath">\(a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.\)</span> If the prime <span class="SimpleMath">\( p\)</span> divides <span class="SimpleMath">\(N\)</span> then <span class="SimpleMath">\(a_{p^m} = (a_p)^m\)</span>. It thus suffices to compute the coefficients <span class="SimpleMath">\(a_p\)</span> for prime integers <span class="SimpleMath">\(p\)</span> only.</p>
+
+<p><a id="X8180E53C834301EF" name="X8180E53C834301EF"></a></p>
+
+<h4>10.8 <span class="Heading">The Picard group</span></h4>
+
+<p>Let us now consider the <em>Picard group</em> <span class="SimpleMath">\(G=SL_2(\mathbb Z[ i])\)</span> and its action on <em>upper-half space</em></p>
+
+<p class="center">\[{\frak h}^3 =\{(z,t) \in \mathbb C\times \mathbb R\ |\ t &gt; 0\} \ . \]</p>
+
+<p>To describe the action we introduce the symbol <span class="SimpleMath">\(j\)</span> satisfying <span class="SimpleMath">\(j^2=-1\)</span>, <span class="SimpleMath">\(ij=-ji\)</span> and write <span class="SimpleMath">\(z+tj\)</span> instead of <span class="SimpleMath">\((z,t)\)</span>. The action is given by</p>
+
+<p class="center">\[\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \ \left(a(z+tj)+b\right)\left(c(z+tj)+d\right)^{-1}\ .\]</p>
+
+<p>Alternatively, and more explicitly, the action is given by</p>
+
+<p class="center">\[\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \  
+\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\ 
+\frac{y}{|cz+d|^2+|c|^2y^2}\, j
+      \ .\]</p>
+
+<p>A standard 'fundamental domain' <span class="SimpleMath">\(D\)</span> for this action is the following region (with some of the boundary points removed).</p>
+
+<p class="center">\[
+ \{z+tj\in {\frak h}^3\ |\ 0 \le |{\rm Re}(z)| \le \frac{1}{2}, 0\le {\rm Im}(z) \le \frac{1}{2}, z\overline z +t^2 \ge 1\}
+\]</p>
+
+<p><img src="images/picarddomain.png" align="center" width="350" alt="Fundamental domain for the Picard group"/></p>
+
+<p>The four bottom vertices of <span class="SimpleMath">\(D\)</span> are <span class="SimpleMath">\(a = -\frac{1}{2} +\frac{1}{2}i +\frac{\sqrt{2}}{2}j\)</span>, <span class="SimpleMath">\(b = -\frac{1}{2} +\frac{\sqrt{3}}{2}j\)</span>, <span class="SimpleMath">\(c = \frac{1}{2} +\frac{\sqrt{3}}{2}j\)</span>, <span class="SimpleMath">\(d = \frac{1}{2} +\frac{1}{2}i +\frac{\sqrt{2}}{2}j\)</span>.</p>
+
+<p>The upper-half space <span class="SimpleMath">\({\frak h}^3\)</span> can be retracted onto a <span class="SimpleMath">\(2\)</span>-dimensional subspace <span class="SimpleMath">\({\cal T} \subset {\frak h}^3\)</span>. The space <span class="SimpleMath">\({\cal T}\)</span> is a contractible <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex, and the action of the Picard group <span class="SimpleMath">\(G\)</span> restricts to a cellular action of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\({\cal T}\)</span>. Under this action there is one orbit of <span class="SimpleMath">\(2\)</span>-cells, represented by the curvilinear square with vertices <span class="SimpleMath">\(a\)</span>, <span class="SimpleMath">\(b\)</span>, <span class="SimpleMath">\(c\)</span> and <span class="SimpleMath">\(d\)</span> in the picture. This <span class="SimpleMath">\(2\)</span>-cell has stabilizer group isomorphic to the quaternion group <span class="SimpleMath">\(Q_4\)</span> of order <span class="SimpleMath">\(8\)</span>. There are two orbits of <span class="SimpleMath">\(1\)</span>-cells, both with stabilizer group isomorphic to a semi-direct product <span class="SimpleMath">\(C_3:C_4\)</span>. There is one orbit of <span class="SimpleMath">\(0\)</span>-cells, with stabilizer group isomorphic to <span class="SimpleMath">\(SL(2,3)\)</span>.</p>
+
+<p>Using perturbation techniques, the <span class="SimpleMath">\(2\)</span>-complex <span class="SimpleMath">\({\cal T}\)</span> can be combined with free resolutions for the cell stabilizer groups to contruct a regular CW-complex <span class="SimpleMath">\(X\)</span> on which the Picard group <span class="SimpleMath">\(G\)</span> acts freely. The following commands compute the first few terms of the free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R_\ast =C_\ast X\)</span>. Then <span class="SimpleMath">\(R_\ast\)</span> is used to compute</p>
+
+<p class="center">\[H^1(G,\mathbb Z) =0\ ,\]</p>
+
+<p class="center">\[H^2(G,\mathbb Z) =\mathbb Z_2\oplus \mathbb Z_2\ ,\]</p>
+
+<p class="center">\[H^3(G,\mathbb Z) =\mathbb Z_6\ ,\]</p>
+
+<p class="center">\[H^4(G,\mathbb Z) =\mathbb Z_4\oplus \mathbb Z_{24}\ ,\]</p>
+
+<p>and compute a free presentation for <span class="SimpleMath">\(G\)</span> involving four generators and seven relators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(2,O-1)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegers(R),1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegers(R),2);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegers(R),3);</span>
+[ 6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegers(R),4);</span>
+[ 4, 24 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);</span>
+rec( freeGroup := &lt;free group on the generators [ f1, f2, f3, f4 ]&gt;, 
+  gens := [ 184, 185, 186, 187 ], 
+  relators := [ f1^2*f2^-1*f1^-1*f2^-1, f1*f2*f1*f2^-2, 
+      f3*f2^2*f1*(f2*f1^-1)^2*f3^-1*f1^2*f2^-2, 
+      f1*(f2*f1^-1)^2*f3^-1*f1^2*f2^-1*f3^-1, 
+      f4*f2*f1*(f2*f1^-1)^2*f4^-1*f1*f2^-1, f1*f4^-1*f1^-2*f4^-1, 
+      f3*f2*f1*(f2*f1^-1)^2*f4^-1*f1*f2^-1*f3^-1*f4*f2 ] )
+
+</pre></div>
+
+<p>We can also compute the cohomology of <span class="SimpleMath">\(G=SL_2(\mathbb Z[i])\)</span> with coefficients in a module such as the module <span class="SimpleMath">\(P_{\mathbb Z[i]}(k)\)</span> of degree <span class="SimpleMath">\(k\)</span> homogeneous polynomials with coefficients in <span class="SimpleMath">\(\mathbb Z[i]\)</span> and with the action described above. For instance, the following commands compute</p>
+
+<p class="center">\[H^1(G,P_{\mathbb Z[i]}(24)) = (\mathbb Z_2)^4 \oplus \mathbb Z_4
+\oplus \mathbb Z_8 \oplus \mathbb Z_{40} \oplus \mathbb Z_{80}\, ,\]</p>
+
+<p class="center">\[H^2(G,P_{\mathbb Z[i]}(24)) = (\mathbb Z_2)^{24} \oplus \mathbb Z_{520030}\oplus \mathbb Z_{1040060} \oplus  \mathbb Z^2\, ,\]</p>
+
+<p class="center">\[H^3(G,P_{\mathbb Z[i]}(24)) = (\mathbb Z_2)^{22} \oplus \mathbb Z_{4}\oplus (\mathbb Z_{12})^2 \, .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(G,24);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,1);</span>
+[ 2, 2, 2, 2, 4, 8, 40, 80 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  520030, 1040060, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,3);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 12, 12 
+ ]
+
+</pre></div>
+
+<p><a id="X858B1B5D8506FE81" name="X858B1B5D8506FE81"></a></p>
+
+<h4>10.9 <span class="Heading">Bianchi groups</span></h4>
+
+<p>The <em>Bianchi groups</em> are the groups <span class="SimpleMath">\(G=PSL_2({\cal O}_{-d})\)</span> where <span class="SimpleMath">\(d\)</span> is a square free positive integer and <span class="SimpleMath">\({\cal O}_{-d}\)</span> is the ring of integers of the imaginary quadratic field <span class="SimpleMath">\(\mathbb Q(\sqrt{-d})\)</span>. More explicitly,</p>
+
+<p class="center">\[{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1 {\rm ~mod~} 4\, ,\]</p>
+
+<p class="center">\[{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d \equiv 2,3 {\rm ~mod~} 4\, .\]</p>
+
+<p>These groups act on upper-half space <span class="SimpleMath">\({\frak h}^3\)</span> in the same way as the Picard group. Upper-half space can be tessellated by a 'fundamental domain' for this action. Moreover, as with the Picard group, this tessellation contains a <span class="SimpleMath">\(2\)</span>-dimensional cellular subspace <span class="SimpleMath">\({\cal T}\subset {\frak h}^3\)</span> where <span class="SimpleMath">\({\cal T}\)</span> is a contractible CW-complex on which <span class="SimpleMath">\(G\)</span> acts cellularly. It should be mentioned that the fundamental domain and the contractible <span class="SimpleMath">\(2\)</span>-complex <span class="SimpleMath">\({\cal T}\)</span> are not uniquely determined by <span class="SimpleMath">\(G\)</span>. Various algorithms exist for computing <span class="SimpleMath">\({\cal T}\)</span> and its cell stabilizers. One algorithm due to Swan <a href="chapBib_mj.html#biBswan">[Swa71]</a> has been implemented by Alexander Rahm <a href="chapBib_mj.html#biBrahmthesis">[Rah10]</a> and the output for various values of <span class="SimpleMath">\(d\)</span> are stored in HAP. Another approach is to use Voronoi's theory of perfect forms. This approach has been implemented by Sebastian Schoennenbeck <a href="chapBib_mj.html#biBschoennenbeck">[BCNS15]</a> and, again, its output for various values of <span class="SimpleMath">\(d\)</span> are stored in HAP. The following commands combine data from Schoennenbeck's algorithm with free resolutions for cell stabiliers to compute</p>
+
+<p class="center">\[H^1(PSL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+(\mathbb Z_2)^4
+\oplus \mathbb Z_{12}
+\oplus \mathbb Z_{24}
+\oplus \mathbb Z_{9240}
+\oplus \mathbb Z_{55440}
+\oplus \mathbb Z^4\,,
+\]</p>
+
+<p class="center">\[H^2(PSL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+\begin{array}{l}
+(\mathbb Z_2)^{26}
+\oplus \mathbb (Z_{6})^8
+\oplus \mathbb (Z_{12})^{9}
+\oplus \mathbb Z_{24}
+\oplus (\mathbb Z_{120})^2
+\oplus (\mathbb Z_{840})^3\\
+\oplus \mathbb Z_{2520}
+\oplus (\mathbb Z_{27720})^2
+\oplus (\mathbb Z_{24227280})^2
+\oplus (\mathbb Z_{411863760})^2\\
+\oplus \mathbb Z_{2454438243748928651877425142836664498129840}\\
+\oplus \mathbb Z_{14726629462493571911264550857019986988779040}\\
+\oplus \mathbb Z^4\end{array}\ ,
+\]</p>
+
+<p class="center">\[H^3(PSL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+(\mathbb Z_2)^{23}
+\oplus \mathbb Z_{4}
+\oplus (\mathbb Z_{12})^2\ .
+\]</p>
+
+<p>Note that the action of <span class="SimpleMath">\(SL_2({\cal O}_{-d})\)</span> on <span class="SimpleMath">\(P_{{\cal O}_{-d}}(k)\)</span> induces an action of <span class="SimpleMath">\(PSL_2({\cal O}_{-d})\)</span> provided <span class="SimpleMath">\(k\)</span> is even.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionPSL2QuadraticIntegers(-6,4);</span>
+Resolution of length 4 in characteristic 0 for PSL(2,O-6) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(G,24);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,1);</span>
+[ 2, 2, 2, 2, 12, 24, 9240, 55440, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 6, 6, 6, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24, 120, 120, 
+  840, 840, 840, 2520, 27720, 27720, 24227280, 24227280, 411863760, 411863760, 
+  2454438243748928651877425142836664498129840, 
+  14726629462493571911264550857019986988779040, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,3);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 12, 
+  12 ]
+
+</pre></div>
+
+<p>We can also consider the coefficient module</p>
+
+<p class="center">\[ P_{{\cal O}_{-d}}(k,\ell) = P_{{\cal O}_{-d}}(k) \otimes_{{\cal O}_{-d}} \overline{P_{{\cal O}_{-d}}(\ell)}   \]</p>
+
+<p>where the bar denotes a twist in the action obtained from complex conjugation. For an action of the projective linear group we must insist that <span class="SimpleMath">\(k+\ell\)</span> is even. The following commands compute</p>
+
+<p class="center">\[H^2(PSL_2({\cal O}_{-11}),P_{{\cal O}_{-11}}(5,5)) = 
+(\mathbb Z_2)^8 \oplus \mathbb Z_{60} \oplus (\mathbb Z_{660})^3 \oplus \mathbb Z^6\,,      \]</p>
+
+<p>a computation which was first made, along with many other cohomology computationsfor Bianchi groups, by Mehmet Haluk Sengun <a href="chapBib_mj.html#biBsengun">[Sen11]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionPSL2QuadraticIntegers(-11,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(R!.group,5,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 60, 660, 660, 660, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p>The function <code class="code">ResolutionPSL2QuadraticIntegers(-d,n)</code> relies on a limited data base produced by the algorithms implemented by Schoennenbeck and Rahm. The function also covers some cases covered by entering a sring "-d+I" as first variable. These cases correspond to projective special groups of module automorphisms of lattices of rank 2 over the integers of the imaginary quadratic number field <span class="SimpleMath">\(\mathbb Q(\sqrt{-d})\)</span> with non-trivial Steinitz-class. In the case of a larger class group there are cases labelled "-d+I2",...,"-d+Ik" and the Ij together with O-d form a system of representatives of elements of the class group modulo squares and Galois action. For instance, the following commands compute</p>
+
+<p class="center">\[H_2(PSL({\cal O}_{-21+I2}),\mathbb Z) = \mathbb Z_2\oplus  \mathbb Z^6\, .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionPSL2QuadraticIntegers("-21+I2",3);</span>
+Resolution of length 3 in characteristic 0 for PSL(2,O-21+I2)) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),2);</span>
+[ 2, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X86A6858884B9C05B" name="X86A6858884B9C05B"></a></p>
+
+<h4>10.10 <span class="Heading">Some other infinite matrix groups</span></h4>
+
+<p>Analogous to the functions for Bianchi groups, HAP has functions</p>
+
+
+<ul>
+<li><p><code class="code">ResolutionSL2QuadraticIntegers(-d,n)</code></p>
+
+</li>
+<li><p><code class="code">ResolutionSL2ZInvertedInteger(m,n)</code></p>
+
+</li>
+<li><p><code class="code">ResolutionGL2QuadraticIntegers(-d,n)</code></p>
+
+</li>
+<li><p><code class="code">ResolutionPGL2QuadraticIntegers(-d,n)</code></p>
+
+</li>
+<li><p><code class="code">ResolutionGL3QuadraticIntegers(-d,n)</code></p>
+
+</li>
+<li><p><code class="code">ResolutionPGL3QuadraticIntegers(-d,n)</code></p>
+
+</li>
+</ul>
+<p>for computing free resolutions for certain values of <span class="SimpleMath">\(SL_2({\cal O}_{-d})\)</span>, <span class="SimpleMath">\(SL_2(\mathbb Z[\frac{1}{m}])\)</span>, <span class="SimpleMath">\(GL_2({\cal O}_{-d})\)</span> and <span class="SimpleMath">\(PGL_2({\cal O}_{-d})\)</span>. Additionally, the function</p>
+
+
+<ul>
+<li><p><code class="code">ResolutionArithmeticGroup("string",n)</code></p>
+
+</li>
+</ul>
+<p>can be used to compute resolutions for groups whose data (provided by Sebastian Schoennenbeck, Alexander Rahm and Mathieu Dutour) is stored in the directory <code class="code">gap/pkg/Hap/lib/Perturbations/Gcomplexes</code> .</p>
+
+<p>For instance, the following commands compute</p>
+
+<p class="center">\[H^1(SL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+(\mathbb Z_2)^4
+\oplus \mathbb Z_{12}
+\oplus \mathbb Z_{24}
+\oplus \mathbb Z_{9240}
+\oplus \mathbb Z_{55440}
+\oplus \mathbb Z^4\,,
+\]</p>
+
+<p class="center">\[H^2(SL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+\begin{array}{l}
+(\mathbb Z_2)^{26}
+\oplus \mathbb (Z_{6})^7
+\oplus \mathbb (Z_{12})^{10}
+\oplus \mathbb Z_{24}
+\oplus (\mathbb Z_{120})^2
+\oplus (\mathbb Z_{840})^3\\
+\oplus \mathbb Z_{2520}
+\oplus (\mathbb Z_{27720})^2
+\oplus (\mathbb Z_{24227280})^2
+\oplus (\mathbb Z_{411863760})^2\\
+\oplus \mathbb Z_{2454438243748928651877425142836664498129840}\\
+\oplus \mathbb Z_{14726629462493571911264550857019986988779040}\\
+\oplus \mathbb Z^4\end{array}\ ,
+\]</p>
+
+<p class="center">\[H^3(SL_2({\cal O}_{-6}),P_{{\cal O}_{-6}}(24)) =
+(\mathbb Z_2)^{58}
+\oplus (\mathbb Z_{4})^4
+\oplus (\mathbb Z_{12})\ .
+\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2QuadraticIntegers(-6,4);</span>
+Resolution of length 4 in characteristic 0 for PSL(2,O-6) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(G,24);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,1);</span>
+[ 2, 2, 2, 2, 12, 24, 9240, 55440, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 6, 6, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24, 120, 
+  120, 840, 840, 840, 2520, 27720, 27720, 24227280, 24227280, 411863760, 
+  411863760, 2454438243748928651877425142836664498129840, 
+  14726629462493571911264550857019986988779040, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,3);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 12, 12 ]
+
+</pre></div>
+
+<p>The following commands construct free resolutions up to degree 5 for the groups <span class="SimpleMath">\(SL_2(\mathbb Z[\frac{1}{2}])\)</span>, <span class="SimpleMath">\(GL_2({\cal O}_{-2})\)</span>, <span class="SimpleMath">\(GL_2({\cal O}_{2})\)</span>, <span class="SimpleMath">\(PGL_2({\cal O}_{2})\)</span>, <span class="SimpleMath">\(GL_3({\cal O}_{-2})\)</span>, <span class="SimpleMath">\(PGL_3({\cal O}_{-2})\)</span>. The final command constructs a free resolution up to degree 3 for <span class="SimpleMath">\(PSL_4(\mathbb Z)\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R1:=ResolutionSL2ZInvertedInteger(2,5);</span>
+Resolution of length 5 in characteristic 0 for SL(2,Z[1/2]) . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2:=ResolutionGL2QuadraticIntegers(-2,5);</span>
+Resolution of length 5 in characteristic 0 for GL(2,O-2) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R3:=ResolutionGL2QuadraticIntegers(2,5);</span>
+Resolution of length 5 in characteristic 0 for GL(2,O2) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R4:=ResolutionPGL2QuadraticIntegers(2,5);</span>
+Resolution of length 5 in characteristic 0 for PGL(2,O2) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R5:=ResolutionGL3QuadraticIntegers(-2,5);</span>
+Resolution of length 5 in characteristic 0 for GL(3,O-2) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R6:=ResolutionPGL3QuadraticIntegers(-2,5);</span>
+Resolution of length 5 in characteristic 0 for PGL(3,O-2) . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R7:=ResolutionArithmeticGroup("PSL(4,Z)",3);</span>
+Resolution of length 3 in characteristic 0 for &lt;matrix group with 655 generators&gt; . 
+No contracting homotopy available. 
+
+</pre></div>
+
+<p><a id="X7EF5D97281EB66DA" name="X7EF5D97281EB66DA"></a></p>
+
+<h4>10.11 <span class="Heading">Ideals and finite quotient groups</span></h4>
+
+<p>The following commands first construct the number field <span class="SimpleMath">\(\mathbb Q(\sqrt{-7})\)</span>, its ring of integers <span class="SimpleMath">\({\cal O}_{-7}={\cal O}(\mathbb Q(\sqrt{-7}))\)</span>, and the principal ideal <span class="SimpleMath">\(I=\langle 5 + 2\sqrt{-7}\rangle \triangleleft {\cal O}(\mathbb Q(\sqrt{-7}))\)</span> of norm <span class="SimpleMath">\({\cal N}(I)=53\)</span>. The ring <span class="SimpleMath">\(I\)</span> is prime since its norm is a prime number. The primality of <span class="SimpleMath">\(I\)</span> is also demonstrated by observing that the quotient ring <span class="SimpleMath">\(R={\cal O}_{-7}/I\)</span> is an integral domain and hence isomorphic to the unique finite field of order <span class="SimpleMath">\(53 \)</span>, <span class="SimpleMath">\(R\cong \mathbb Z/53\mathbb Z\)</span> . (In a ring of quadratic integers <em>prime ideal</em> is the same as <em>maximal ideal</em>).</p>
+
+<p>The finite group <span class="SimpleMath">\(G=SL_2({\cal O}_{-7}\,/\,I)\)</span> is then constructed and confirmed to be isomorphic to <span class="SimpleMath">\(SL_2(\mathbb Z/53\mathbb Z)\)</span>. The group <span class="SimpleMath">\(G\)</span> is shown to admit a periodic <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution of <span class="SimpleMath">\(\mathbb Z\)</span> of period dividing <span class="SimpleMath">\(52\)</span>.</p>
+
+<p>Finally the integral homology</p>
+
+<p class="center">\[H_n(G,\mathbb Z) = \left\{\begin{array}{ll}
+0 &amp; n\ne 3,7, {\rm~for~} 0\le n \le 8,\\
+\mathbb Z_{2808} &amp; n=3,7,
+\end{array}\right.\]</p>
+
+<p>is computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-7);</span>
+Q(Sqrt(-7))
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);</span>
+O(Q(Sqrt(-7)))
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,5+2*Sqrt(-7));</span>
+ideal of norm 53 in O(Q(Sqrt(-7)))
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=OQ mod I;</span>
+ring mod ideal of norm 53
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIntegralRing(R);</span>
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=GeneratorsOfGroup( SL2QuadraticIntegers(-7) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Group(gens*One(R));;G:=Image(IsomorphismPermGroup(G));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"SL(2,53)"
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(G);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(G);</span>
+52
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,3);</span>
+[ 8, 27, 13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,4);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,5);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,6);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,7);</span>
+[ 8, 27, 13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,8);</span>
+[  ]
+
+</pre></div>
+
+<p>The following commands show that the rational prime <span class="SimpleMath">\(7\)</span> is not prime in <span class="SimpleMath">\({\cal O}_{-5}={\cal O}(\mathbb Q(\sqrt{-5}))\)</span>. Moreover, <span class="SimpleMath">\(7\)</span> totally splits in <span class="SimpleMath">\({\cal O}_{-5}\)</span> since the final command shows that only the rational primes <span class="SimpleMath">\(2\)</span> and <span class="SimpleMath">\(5\)</span> ramify in <span class="SimpleMath">\({\cal O}_{-5}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrime(I);</span>
+false
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(Discriminant(OQ));</span>
+[ -2, 2, 5 ]
+
+</pre></div>
+
+<p>For <span class="SimpleMath">\(d &lt; 0\)</span> the rings <span class="SimpleMath">\({\cal O}_d={\cal O}(\mathbb Q(\sqrt{d}))\)</span> are unique factorization domains for precisely</p>
+
+<p class="center">\[ d = -1, -2, -3, -7, -11, -19, -43, -67, -163.\]</p>
+
+<p>This result was conjectured by Gauss, and essentially proved by Kurt Heegner, and then later proved by Harold Stark.</p>
+
+<p>The following commands construct the classic example of a prime ideal <span class="SimpleMath">\(I\)</span> that is not principal. They then illustrate reduction modulo <span class="SimpleMath">\(I\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,[2,1+Sqrt(-5)]);</span>
+ideal of norm 2 in O(Q(Sqrt(-5)))
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">6 mod I;</span>
+0
+
+</pre></div>
+
+<p><a id="X7D1F72287F14C5E1" name="X7D1F72287F14C5E1"></a></p>
+
+<h4>10.12 <span class="Heading">Congruence subgroups for ideals</span></h4>
+
+<p>Given a ring of integers <span class="SimpleMath">\({\cal O}\)</span> and ideal <span class="SimpleMath">\(I \triangleleft {\cal O}\)</span> there is a canonical homomorphism <span class="SimpleMath">\(\pi_I\colon SL_2({\cal O}) \rightarrow SL_2({\cal O}/I)\)</span>. A subgroup <span class="SimpleMath">\(\Gamma \le SL_2({\cal O})\)</span> is said to be a <em>congruence subgroup</em> if it contains <span class="SimpleMath">\(\ker \pi_I\)</span>. Thus congruence subgroups are of finite index. Generalizing the definition in <a href="chap10_mj.html#X79A1974B7B4987DE"><span class="RefLink">10.1</span></a> above, we define the <em>principal congruence subgroup</em> <span class="SimpleMath">\(\Gamma_1(I)=\ker \pi_I\)</span>, and the congruence subgroup <span class="SimpleMath">\(\Gamma_0(I)\)</span> consisting of preimages of the upper triangular matrices in <span class="SimpleMath">\(SL_2({\cal O}/I)\)</span>.</p>
+
+<p>The following commands construct <span class="SimpleMath">\(\Gamma=\Gamma_0(I)\)</span> for the ideal <span class="SimpleMath">\(I\triangleleft {\cal O}\mathbb Q(\sqrt{-5})\)</span> generated by <span class="SimpleMath">\(12\)</span> and <span class="SimpleMath">\(36\sqrt{-5}\)</span>. The group <span class="SimpleMath">\(\Gamma\)</span> has index <span class="SimpleMath">\(385\)</span> in <span class="SimpleMath">\(SL_2({\cal O}\mathbb Q(\sqrt{-5}))\)</span>. The final command displays a tree in a Cayley graph for <span class="SimpleMath">\(SL_2({\cal O}\mathbb Q(\sqrt{-5}))\)</span> whose nodes represent a transversal for <span class="SimpleMath">\(\Gamma\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,[36*Sqrt(-5), 12]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);</span>
+CongruenceSubgroupGamma0(ideal of norm 144 in O(Q(Sqrt(-5)))) 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInSL2O(G);</span>
+385
+ 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HAP_SL2TreeDisplay(G);</span>
+
+</pre></div>
+
+<p><img src="images/treesqrt5.gif" align="center" width="350" alt="Information for the cubic tree"/></p>
+
+<p>The next commands first construct the congruence subgroup <span class="SimpleMath">\(\Gamma_0(I)\)</span> of index <span class="SimpleMath">\(144\)</span> in <span class="SimpleMath">\(SL_2({\cal O}\mathbb Q(\sqrt{-2}))\)</span> for the ideal <span class="SimpleMath">\(I\)</span> in <span class="SimpleMath">\({\cal O}\mathbb Q(\sqrt{-2})\)</span> generated by <span class="SimpleMath">\(4+5\sqrt{-2}\)</span>. The commands then compute</p>
+
+<p class="center">\[H_1(\Gamma_0(I),\mathbb Z) = \mathbb Z_3 \oplus \mathbb Z_6 \oplus \mathbb Z_{30} \oplus \mathbb Z^8\, ,\]</p>
+
+<p class="center">\[H_2(\Gamma_0(I), \mathbb Z) = (\mathbb Z_2)^9 \oplus \mathbb Z^7\, ,\]</p>
+
+<p class="center">\[H_3(\Gamma_0(I), \mathbb Z) = (\mathbb Z_2)^9 \, .\]</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,4+5*Sqrt(-2));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);</span>
+CongruenceSubgroupGamma0(ideal of norm 66 in O(Q(Sqrt(-2)))) 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInSL2O(G);</span>
+144
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2QuadraticIntegers(-2,4,true);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(S),1);</span>
+[ 3, 6, 30, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(S),2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(S),3);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X85E912617AFE03F4" name="X85E912617AFE03F4"></a></p>
+
+<h4>10.13 <span class="Heading">First homology</span></h4>
+
+<p>The isomorphism <span class="SimpleMath">\(H_1(G,\mathbb Z) \cong G_{ab}\)</span> allows for the computation of first integral homology using computational methods for finitely presented groups. Such methods underly the following computation of</p>
+
+<p class="center">\[H_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z_2 \oplus  \cdots \oplus
+\mathbb Z_{4078793513671}\]</p>
+
+<p>where <span class="SimpleMath">\(I\)</span> is the prime ideal in the Gaussian integers generated by <span class="SimpleMath">\(41+56\sqrt{-1}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,41+56*Sqrt(-1));</span>
+ideal of norm 4817 in O(GaussianRationals)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(G);</span>
+[ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, 
+  4078793513671 ]
+
+</pre></div>
+
+<p>We write <span class="SimpleMath">\(G^{ab}_{tors}\)</span> to denote the maximal finite summand of the first homology group of <span class="SimpleMath">\(G\)</span> and refer to this as the <em>torsion subgroup</em>. Nicholas Bergeron and Akshay Venkatesh <a href="chapBib_mj.html#biBbergeron">[Ber16]</a> have conjectured relationships between the torsion in congruence subgroups <span class="SimpleMath">\(\Gamma\)</span> and the volume of their quotient manifold <span class="SimpleMath">\({\frak h}^3/\Gamma\)</span>. For instance, for the Gaussian integers they conjecture</p>
+
+<p class="center">\[ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49}  + \cdots\]</p>
+
+<p>as the norm of the prime ideal <span class="SimpleMath">\(I\)</span> tends to <span class="SimpleMath">\(\infty\)</span>. The following approximates <span class="SimpleMath">\(\lambda/18\pi = 0.0161957\)</span> and <span class="SimpleMath">\(\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.00913432\)</span> for the above example.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lfunction(Q,2)/(18*3.142);</span>
+0.0161957
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(AbelianInvariants(F)),10)/Norm(I);</span>
+0.00913432
+
+</pre></div>
+
+<p>The link with volume is given by the Humbert volume formula</p>
+
+<p class="center">\[   
+{\rm Vol} ( {\frak h}^3 / PSL_2( {\cal O}_{d} ) )
+ = \frac{|D|^{3/2}}{24} \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2)                           \]</p>
+
+<p>valid for square-free <span class="SimpleMath">\(d&lt;0\)</span>, where <span class="SimpleMath">\(D\)</span> is the discriminant of <span class="SimpleMath">\(\mathbb Q(\sqrt{d})\)</span>. The volume of a finite index subgroup <span class="SimpleMath">\(\Gamma\)</span>is obtained by multiplying the right-hand side by the index <span class="SimpleMath">\(|PSL_2({\cal O}_d)\,:\, \Gamma|\)</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

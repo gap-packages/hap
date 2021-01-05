@@ -1,0 +1,80 @@
+  
+  [1X8 [33X[0;0YBredon homology[133X[101X
+  
+  
+  [1X8.1 [33X[0;0YDavis complex[133X[101X
+  
+  [33X[0;0YThe following example computes the Bredon homology[133X
+  
+  [33X[0;0Y[22Xunderline H_0(W,cal R) = Z^21[122X[133X
+  
+  [33X[0;0Yfor  the  infinite Coxeter group [22XW[122X associated to the Dynkin diagram shown in
+  the computation, with coefficients in the complex representation ring.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,6]]];;[127X[104X
+    [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=DavisComplex(D);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithComplexRepresentationRing(C);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(D,0);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.2 [33X[0;0YArithmetic groups[133X[101X
+  
+  [33X[0;0YThe following example computes the Bredon homology[133X
+  
+  [33X[0;0Y[22Xunderline H_0(SL_2(cal O_-3),cal R) = Z_2⊕ Z^9[122X[133X
+  
+  [33X[0;0Y[22Xunderline H_1(SL_2(cal O_-3),cal R) = Z[122X[133X
+  
+  [33X[0;0Yfor  [22Xcal  O_-3[122X the ring of integers of the number field [22XQ(sqrt-3)[122X, and [22Xcal R[122X
+  the complex reflection ring.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ContractibleGcomplex("SL(2,O-3)");;[127X[104X
+    [4X[25Xgap>[125X [27XIsRigid(R);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS:=BaryCentricSubdivision(R);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRigid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithComplexRepresentationRing(S);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,0);[127X[104X
+    [4X[28X[ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.3 [33X[0;0YCrystallographic groups[133X[101X
+  
+  [33X[0;0YThe following example computes the Bredon homology[133X
+  
+  [33X[0;0Y[22Xunderline H_0(G,cal R) = Z^17[122X[133X
+  
+  [33X[0;0Yfor  [22XG[122X  the second crystallographic group of dimension [22X4[122X in [12XGAP[112X's library of
+  crystallographic groups, and for [22Xcal R[122X the Burnside ring.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroup(4,2);;[127X[104X
+    [4X[25Xgap>[125X [27Xgens:=GeneratorsOfGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27XB:=CrystGFullBasis(G);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=CrystGcomplex(gens,B,1);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRigid(R);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS:=CrystGcomplex(gens,B,0);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRigid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithBurnsideRing(S);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(D,0);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
