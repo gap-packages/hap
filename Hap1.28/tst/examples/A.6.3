@@ -1,0 +1,21 @@
+########################################################
+Bogo:=function(n,i,s,t)
+local fn1, fn2, cmd, r, B;
+fn1:=function(n,i);
+     return BogomolovMultiplier(SmallGroup(n,i),"standard");
+     end;
+fn2:=function(n,i);
+     return BogomolovMultiplier(SmallGroup(n,i),"homology");
+     end;
+ChildPut( fn1, "fn", s);; ChildPut( fn2, "fn", t);;
+cmd:=Concatenation("B:=fn(",String(n),",",String(i),")");
+ChildCommand(cmd,s);; ChildCommand(cmd,t);;
+r:=NextAvailableChild([s,t]);;
+B:=ChildGet("B",r);
+if r=s then ChildRestart(t);;
+else ChildRestart(s); fi;
+return B;
+end;
+########################################################
+s:=ChildProcess();; t:=ChildProcess();;
+Print(Bogo(3^5,28,s,t),"\n");

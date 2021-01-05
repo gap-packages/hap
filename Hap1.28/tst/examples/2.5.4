@@ -1,0 +1,13 @@
+file:=HapFile("data254.txt");;
+Read(file);
+S:=VectorsToSymmetricMatrix(A, EuclideanApproximatedMetric);;
+M:=Maximum(Flat(S));;
+G:=SymmetricMatrixToFilteredGraph(S,10,M/4);;
+K:=FilteredRegularCWComplex(CliqueComplex(G,3));;
+Y:=ContractedComplex(FiltrationTerm(K,9));;
+Y:=HomotopyTruncation(Y,2);
+F:=FundamentalGroup(Y);
+Print(F,"\n");
+Print(RelatorsOfFpGroup(F),"\n");
+Print(Y!.nrCells(0),"\n");
+

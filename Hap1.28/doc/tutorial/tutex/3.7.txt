@@ -1,0 +1,12 @@
+gap> CY:=ChainComplexOfUniversalCover(Y);
+Equivariant chain complex of dimension 3
+gap> LY:=LowIndexSubgroups(CY!.group,5);;
+gap> invY:=List(LY,g->Homology(TensorWithIntegersOverSubgroup(CY,g),2));;
+
+gap> CW:=ChainComplexOfUniversalCover(W);
+Equivariant chain complex of dimension 3
+gap> LW:=LowIndexSubgroups(CW!.group,5);;
+gap> invW:=List(LW,g->Homology(TensorWithIntegersOverSubgroup(CW,g),2));;
+
+gap> SSortedList(invY)=SSortedList(invW);
+false

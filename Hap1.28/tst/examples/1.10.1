@@ -1,0 +1,14 @@
+#The example uses GraphViz software.
+x:=(1,2)(5,6)(7,8)(11,12);; y:=(2,3)(4,5)(8,9)(10,11);;
+z:=(3,4)(5,7)(6,8)(9,10);; G:=Group(x,y,z);;
+CayleyGraphOfGroupDisplay(G,[x,y,z]);
+Y:=EquivariantTwoComplex(G);;
+F:=FundamentalGroupOfQuotient(Y);;
+Print(F,"\n");
+Print(RelatorsOfFpGroup(F),"\n");;
+H:=Group(x*y,x*z,y*z);;
+W:=RestrictedEquivariantCWComplex(Y,H);;
+FH:=FundamentalGroupOfQuotient(W);;
+Print(FH,"\n");;
+Print(RelatorsOfFpGroup(FH),"\n");;
+

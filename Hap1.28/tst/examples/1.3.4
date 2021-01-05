@@ -1,0 +1,22 @@
+#The example uses GraphViz software.
+file:=HapFile("data134.txt");
+Read(file);
+dx:=EuclideanApproximatedMetric;;
+dz:=EuclideanApproximatedMetric;;
+L:=List(S,x->Maximum(List(S,y->dx(x,y))));;
+n:=Position(L,Minimum(L));
+f:=function(x); return [dx(S[n],x)]; end;;
+P:=30*[0..100];; P:=List(P, i->[i]);;
+r:=29;;
+epsilon:=75;
+ cluster:=function(S)
+  local Y, P, C;
+  if Length(S)=0 then return S; fi;
+  Y:=VectorsToOneSkeleton(S,epsilon,dx);
+  P:=PiZero(Y);
+  C:=Classify([1..Length(S)],P[2]);
+  return List(C,x->S{x});
+ end;;
+M:=Mapper(S,dx,f,dz,P,r,cluster);
+Display(GraphOfSimplicialComplex(M));
+
