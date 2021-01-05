@@ -1,0 +1,1434 @@
+  
+  [1X1  [33X[0;0YBasic  functionality  for  cellular  complexes,  fundamental  groups  and[101X
+  [1Xhomology[133X[101X
+  
+  [33X[0;0YThis  page  covers  the  functions  used  in chapters 1 and 2 of the book An
+  Invitation               to              Computational              Homotopy
+  (
+  https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980
+  ).[133X
+  
+  
+  [1X1.1 [33X[0;0YData [22X⟶[122X[101X[1X Cellular Complexes[133X[101X
+  
+  [1X1.1-1 RegularCWPolytope[101X
+  
+  [33X[1;0Y[29X[2XRegularCWPolytope[102X( [3XL[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWPolytope[102X( [3XG[103X, [3Xv[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a list [22XL[122X of vectors in [22XR^n[122X and outputs their convex hull as a regular
+  CW-complex.[133X
+  
+  [33X[0;0YInputs  a permutation group G of degree [22Xd[122X and vector [22Xv∈ R^d[122X, and outputs the
+  convex hull of the orbit [22X{v^g : g∈ G}[122X as a regular CW-complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-2 CubicalComplex[101X
+  
+  [33X[1;0Y[29X[2XCubicalComplex[102X( [3XA[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  binary  array [22XA[122X and returns the cubical complex represented by [22XA[122X.
+  The array [22XA[122X must of course be such that it represents a cubical complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7Xtutorial/chap4.html[107X) ,   4   ([7X../www/SideLinks/About/aboutLinks.html[107X) ,   5
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            6
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        7
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         8
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               9
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                      10
+  ([7X../www/SideLinks/About/aboutTDA.html[107X) ,                                  11
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.1-3 PureCubicalComplex[101X
+  
+  [33X[1;0Y[29X[2XPureCubicalComplex[102X( [3XA[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a binary array [22XA[122X and returns the pure cubical complex represented by
+  [22XA[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7Xtutorial/chap4.html[107X) ,   4   ([7X../www/SideLinks/About/aboutLinks.html[107X) ,   5
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            6
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        7
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         8
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               9
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                      10
+  ([7X../www/SideLinks/About/aboutTDA.html[107X) ,                                  11
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.1-4 PureCubicalKnot[101X
+  
+  [33X[1;0Y[29X[2XPureCubicalKnot[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureCubicalKnot[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  integers  [22Xn,  k[122X  and returns the [22Xk[122X-th prime knot on [22Xn[122X crossings as a
+  pure cubical complex (if this prime knot exists).[133X
+  
+  [33X[0;0YInputs  a  list  [22XL[122X  describing  an  arc  presentation for a knot or link and
+  returns the knot or link as a pure cubical complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,          4         ([7Xtutorial/chap5.html[107X) ,         5
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        6
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         7
+  ([7X../www/SideLinks/About/aboutQuandles2.html[107X) ,                             8
+  ([7X../www/SideLinks/About/aboutQuandles.html[107X) ,                              9
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) ,                                10
+  ([7X../www/SideLinks/About/aboutKnotsQuandles.html[107X) [133X
+  
+  [1X1.1-5 PurePermutahedralKnot[101X
+  
+  [33X[1;0Y[29X[2XPurePermutahedralKnot[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPurePermutahedralKnot[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  integers  [22Xn,  k[122X  and returns the [22Xk[122X-th prime knot on [22Xn[122X crossings as a
+  pure permutahedral complex (if this prime knot exists).[133X
+  
+  [33X[0;0YInputs  a  list  [22XL[122X  describing  an  arc  presentation for a knot or link and
+  returns the knot or link as a pure permutahedral complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-6 PurePermutahedralComplex[101X
+  
+  [33X[1;0Y[29X[2XPurePermutahedralComplex[102X( [3XA[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  binary  array  [22XA[122X  and  returns  the  pure  permutahedral  complex
+  represented by [22XA[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap2.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutPeripheral.html[107X) ,                            3
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) [133X
+  
+  [1X1.1-7 CayleyGraphOfGroup[101X
+  
+  [33X[1;0Y[29X[2XCayleyGraphOfGroup[102X( [3XG[103X, [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a finite group [22XG[122X and a list [22XL[122X of elements in [22XG[122X.It returns the Cayley
+  graph of the group generated by [22XL[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-8 EquivariantEuclideanSpace[101X
+  
+  [33X[1;0Y[29X[2XEquivariantEuclideanSpace[102X( [3XG[103X, [3Xv[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  crystallographic  group [22XG[122X with left action on [22XR^n[122X together with a
+  row vector [22Xv ∈ R^n[122X. It returns an equivariant regular CW-space corresponding
+  to  the  Dirichlet-Voronoi  tessellation of [22XR^n[122X produced from the orbit of [22Xv[122X
+  under the action.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-9 EquivariantOrbitPolytope[101X
+  
+  [33X[1;0Y[29X[2XEquivariantOrbitPolytope[102X( [3XG[103X, [3Xv[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a permutation group [22XG[122X of degree [22Xn[122X together with a row vector [22Xv ∈ R^n[122X.
+  It returns, as an equivariant regular CW-space, the convex hull of the orbit
+  of [22Xv[122X under the canonical left action of [22XG[122X on [22XR^n[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-10 EquivariantTwoComplex[101X
+  
+  [33X[1;0Y[29X[2XEquivariantTwoComplex[102X( [3XG[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  suitable group [22XG[122X and returns, as an equivariant regular CW-space,
+  the [22X2[122X-complex associated to some presentation of [22XG[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-11 QuillenComplex[101X
+  
+  [33X[1;0Y[29X[2XQuillenComplex[102X( [3XG[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  finite  group  [22XG[122X  and prime [22Xp[122X, and returns the simplicial complex
+  arising  as the order complex of the poset of elementary abelian [22Xp[122X-subgroups
+  of [22XG[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap1.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutBredon.html[107X) ,                                3
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) [133X
+  
+  [1X1.1-12 RestrictedEquivariantCWComplex[101X
+  
+  [33X[1;0Y[29X[2XRestrictedEquivariantCWComplex[102X( [3XY[103X, [3XH[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-equivariant  regular CW-space Y and a subgroup [22XH le G[122X for which
+  GAP  can  find  a transversal. It returns the equivariant regular CW-complex
+  obtained by retricting the action to [22XH[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-13 RandomSimplicialGraph[101X
+  
+  [33X[1;0Y[29X[2XRandomSimplicialGraph[102X( [3Xn[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  an  integer  [22Xn ge 1[122X and positive prime [22Xp[122X, and returns an Erdős–Rényi
+  random  graph  as  a  [22X1[122X-dimensional  simplicial  complex.  The  graph  has [22Xn[122X
+  vertices.  Each  pair of vertices is, with probability [22Xp[122X, directly connected
+  by an edge.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) [133X
+  
+  [1X1.1-14 RandomSimplicialTwoComplex[101X
+  
+  [33X[1;0Y[29X[2XRandomSimplicialTwoComplex[102X( [3Xn[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs an integer [22Xn ge 1[122X and positive prime [22Xp[122X, and returns a Linial-Meshulam
+  random  simplicial  [22X2[122X-complex.  The [22X1[122X-skeleton of this simplicial complex is
+  the  complete  graph  on  [22Xn[122X  vertices.  Each  triple  of vertices lies, with
+  probability [22Xp[122X, in a common [22X2[122X-simplex of the complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) [133X
+  
+  [1X1.1-15 ReadCSVfileAsPureCubicalKnot[101X
+  
+  [33X[1;0Y[29X[2XReadCSVfileAsPureCubicalKnot[102X( [3Xstr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XReadCSVfileAsPureCubicalKnot[102X( [3Xstr[103X, [3Xr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XReadCSVfileAsPureCubicalKnot[102X( [3XL[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XReadCSVfileAsPureCubicalKnot[102X( [3XL[103X, [3XR[103X ) [32X function[133X
+  
+  [33X[0;0YReads  a  CSV  file  identified  by  a  string  str  such  as  "file.pdb" or
+  "path/file.pdb"  and  returns  a  [22X3[122X-dimensional pure cubical complex [22XK[122X. Each
+  line  of  the  file should contain the coordinates of a point in [22XR^3[122X and the
+  complex  [22XK[122X  should  represent  a  knot determined by the sequence of points,
+  though  the latter is not guaranteed. A useful check in this direction is to
+  test that [22XK[122X has the homotopy type of a circle.[133X
+  
+  [33X[0;0YIf the test fails then try the function again with an integer [22Xr ge 2[122X entered
+  as  the optional second argument. The integer determines the resolution with
+  which the knot is constructed.[133X
+  
+  [33X[0;0YThe  function can also read in a list [22XL[122X of strings identifying CSV files for
+  several  knots.  In  this  case  a list [22XR[122X of integer resolutions can also be
+  entered. The lists [22XL[122X and [22XR[122X must be of equal length.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-16 ReadImageAsPureCubicalComplex[101X
+  
+  [33X[1;0Y[29X[2XReadImageAsPureCubicalComplex[102X( [3Xstr[103X, [3Xt[103X ) [32X function[133X
+  
+  [33X[0;0YReads  an  image  file  identified  by  a  string  str  such  as "file.bmp",
+  "file.eps",  "file.jpg",  "path/file.png"  etc.,  together with an integer [22Xt[122X
+  between  [22X0[122X  and  [22X765[122X.  It  returns  a  [22X2[122X-dimensional  pure  cubical  complex
+  corresponding  to  a  black/white  version  of  the  image determined by the
+  threshold  [22Xt[122X.  The  [22X2[122X-cells of the pure cubical complex correspond to pixels
+  with RGB value [22XR+G+B le t[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X      1      ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               3
+  ([7X../www/SideLinks/About/aboutTDA.html[107X) [133X
+  
+  [1X1.1-17 ReadImageAsFilteredPureCubicalComplex[101X
+  
+  [33X[1;0Y[29X[2XReadImageAsFilteredPureCubicalComplex[102X( [3Xstr[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YReads  an  image  file  identified  by  a  string  str  such  as "file.bmp",
+  "file.eps",  "file.jpg",  "path/file.png"  etc.,  together  with  a positive
+  integer  [22Xn[122X.  It  returns  a  [22X2[122X-dimensional  filtered pure cubical complex of
+  filtration  length  [22Xn[122X.  The  [22Xk[122Xth  term  in  the filtration is a pure cubical
+  complex  corresponding  to  a black/white version of the image determined by
+  the  threshold  [22Xt_k=k  ×  765/n[122X.  The  [22X2[122X-cells of the [22Xk[122Xth term correspond to
+  pixels with RGB value [22XR+G+B le t_k[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.1-18 ReadImageAsWeightFunction[101X
+  
+  [33X[1;0Y[29X[2XReadImageAsWeightFunction[102X( [3Xstr[103X, [3Xt[103X ) [32X function[133X
+  
+  [33X[0;0YReads  an  image  file  identified  by  a  string  str  such  as "file.bmp",
+  "file.eps", "file.jpg", "path/file.png" etc., together with an integer [22Xt[122X. It
+  constructs  a  [22X2[122X-dimensional  regular  CW-complex [22XY[122X from the image, together
+  with  a  weight  function  [22Xw:  Y→  Z[122X  corresponding  to a filtration on [22XY[122X of
+  filtration length [22Xt[122X. The pair [22X[Y,w][122X is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-19 ReadPDBfileAsPureCubicalComplex[101X
+  
+  [33X[1;0Y[29X[2XReadPDBfileAsPureCubicalComplex[102X( [3Xstr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XReadPDBfileAsPureCubicalComplex[102X( [3Xstr[103X, [3Xr[103X ) [32X function[133X
+  
+  [33X[0;0YReads  a  PDB  (Protein  Database)  file  identified by a string str such as
+  "file.pdb"  or  "path/file.pdb"  and  returns  a  [22X3[122X-dimensional pure cubical
+  complex [22XK[122X. The complex [22XK[122X should represent a (protein backbone) knot but this
+  is  not  guaranteed.  A useful check in this direction is to test that [22XK[122X has
+  the homotopy type of a circle.[133X
+  
+  [33X[0;0YIf the test fails then try the function again with an integer [22Xr ge 2[122X entered
+  as  the optional second argument. The integer determines the resolution with
+  which the knot is constructed.[133X
+  
+  [33X[0;0Y[12XExamples:[112X      1      ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.1-20 ReadPDBfileAsPurepermutahedralComplex[101X
+  
+  [33X[1;0Y[29X[2XReadPDBfileAsPurepermutahedralComplex[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XReadPDBfileAsPurePermutahedralComplex[102X( [3Xstr[103X, [3Xr[103X ) [32X function[133X
+  
+  [33X[0;0YReads  a  PDB  (Protein  Database)  file  identified by a string str such as
+  "file.pdb" or "path/file.pdb" and returns a [22X3[122X-dimensional pure permutahedral
+  complex [22XK[122X. The complex [22XK[122X should represent a (protein backbone) knot but this
+  is  not  guaranteed.  A useful check in this direction is to test that [22XK[122X has
+  the homotopy type of a circle.[133X
+  
+  [33X[0;0YIf the test fails then try the function again with an integer [22Xr ge 2[122X entered
+  as  the optional second argument. The integer determines the resolution with
+  which the knot is constructed.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-21 RegularCWPolytope[101X
+  
+  [33X[1;0Y[29X[2XRegularCWPolytope[102X( [3XL[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWPolytope[102X( [3XG[103X, [3Xv[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a list [22XL[122X of vectors in [22XR^n[122X and outputs their convex hull as a regular
+  CW-complex.[133X
+  
+  [33X[0;0YInputs  a permutation group G of degree [22Xd[122X and vector [22Xv∈ R^d[122X, and outputs the
+  convex hull of the orbit [22X{v^g : g∈ G}[122X as a regular CW-complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.1-22 SimplicialComplex[101X
+  
+  [33X[1;0Y[29X[2XSimplicialComplex[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a list [22XL[122X whose entries are lists of vertices representing the maximal
+  simplices  of a simplicial complex, and returns the simplicial complex. Here
+  a  "vertex" is a GAP object such as an integer or a subgroup. The list [22XL[122X can
+  also contain non-maximal simplices.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,          4         ([7Xtutorial/chap4.html[107X) ,         5
+  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,                               6
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            7
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        8
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         9
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                              10
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) [133X
+  
+  [1X1.1-23 SymmetricMatrixToFilteredGraph[101X
+  
+  [33X[1;0Y[29X[2XSymmetricMatrixToFilteredGraph[102X( [3XA[103X, [3Xm[103X, [3Xs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSymmetricMatrixToFilteredGraph[102X( [3XA[103X, [3Xm[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  an  [22Xn  ×  n[122X  symmetric matrix [22XA[122X, a positive integer [22Xm[122X and a positive
+  rational  [22Xs[122X.  The  function returns a filtered graph of filtration length [22Xm[122X.
+  The  [22Xt[122X-th  term  of  the  filtration  is a graph with [22Xn[122X vertices and an edge
+  between  the  [22Xi[122X-th and [22Xj[122X-th vertices if the [22X(i,j)[122X entry of [22XA[122X is less than or
+  equal to [22Xt × s/m[122X.[133X
+  
+  [33X[0;0YIf the optional input [22Xs[122X is omitted then it is set equal to the largest entry
+  in the matrix [22XA[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap4.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  [1X1.1-24 SymmetricMatrixToGraph[101X
+  
+  [33X[1;0Y[29X[2XSymmetricMatrixToGraph[102X( [3XA[103X, [3Xt[103X ) [32X function[133X
+  
+  [33X[0;0YInputs an [22Xn× n[122X symmetric matrix [22XA[122X over the rationals and a rational number [22Xt
+  ge 0[122X, and returns the graph on the vertices [22X1,2, ..., n[122X with an edge between
+  distinct vertices [22Xi[122X and [22Xj[122X precisely when the [22X(i,j)[122X entry of [22XA[122X is [22Xle t[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutMetrics.html[107X) [133X
+  
+  
+  [1X1.2 [33X[0;0YMetric Spaces[133X[101X
+  
+  [1X1.2-1 CayleyMetric[101X
+  
+  [33X[1;0Y[29X[2XCayleyMetric[102X( [3Xg[103X, [3Xh[103X ) [32X function[133X
+  
+  [33X[0;0YInputs two permutations [22Xg,h[122X and optionally the degree [22XN[122X of a symmetric group
+  containing  them.  It returns the minimum number of transpositions needed to
+  express [22Xg*h^-1[122X as a product of transpositions.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutMetrics.html[107X) [133X
+  
+  [1X1.2-2 EuclideanMetric[101X
+  
+  [33X[1;0Y[29X[2XEuclideanMetric[102X[32X global variable[133X
+  
+  [33X[0;0YInputs two vectors [22Xv,w ∈ R^n[122X and returns a rational number approximating the
+  Euclidean distance between them.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.2-3 EuclideanSquaredMetric[101X
+  
+  [33X[1;0Y[29X[2XEuclideanSquaredMetric[102X( [3Xg[103X, [3Xh[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  vectors  [22Xv,w  ∈  R^n[122X  and  returns  the square of the Euclidean
+  distance between them.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.2-4 HammingMetric[101X
+  
+  [33X[1;0Y[29X[2XHammingMetric[102X( [3Xg[103X, [3Xh[103X ) [32X function[133X
+  
+  [33X[0;0YInputs two permutations [22Xg,h[122X and optionally the degree [22XN[122X of a symmetric group
+  containing  them.  It  returns  the  minimum number of integers moved by the
+  permutation [22Xg*h^-1[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.2-5 KendallMetric[101X
+  
+  [33X[1;0Y[29X[2XKendallMetric[102X( [3Xg[103X, [3Xh[103X ) [32X function[133X
+  
+  [33X[0;0YInputs two permutations [22Xg,h[122X and optionally the degree [22XN[122X of a symmetric group
+  containing  them.  It  returns the minimum number of adjacent transpositions
+  needed  to  express  [22Xg*h^-1[122X  as  a  product  of  adjacent transpositions. An
+  [13Xadjacent[113X transposition is of the form [22X(i,i+1)[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.2-6 ManhattanMetric[101X
+  
+  [33X[1;0Y[29X[2XManhattanMetric[102X( [3Xg[103X, [3Xh[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  vectors  [22Xv,w  ∈  R^n[122X and returns the Manhattan distance between
+  them.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutMetrics.html[107X) [133X
+  
+  [1X1.2-7 VectorsToSymmetricMatrix[101X
+  
+  [33X[1;0Y[29X[2XVectorsToSymmetricMatrix[102X( [3XV[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XVectorsToSymmetricMatrix[102X( [3XV[103X, [3Xd[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  list  [22XV  ={  v_1, ..., v_k} ∈ R^n[122X and returns the [22Xk × k[122X symmetric
+  matrix  of  Euclidean  distances  [22Xd(v_i,  v_j)[122X.  When  these  distances  are
+  irrational they are approximated by a rational number.[133X
+  
+  [33X[0;0YAs  an  optional  second argument any rational valued function [22Xd(x,y)[122X can be
+  entered.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutMetrics.html[107X) [133X
+  
+  
+  [1X1.3 [33X[0;0YCellular Complexes [22X⟶[122X[101X[1X Cellular Complexes[133X[101X
+  
+  [1X1.3-1 BoundaryMap[101X
+  
+  [33X[1;0Y[29X[2XBoundaryMap[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a pure regular CW-complex [22XK[122X and returns the regular CW-inclusion map
+  [22Xι : ∂ K ↪ K[122X from the boundary [22X∂ K[122X into the complex [22XK[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap2.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutTopology.html[107X) [133X
+  
+  [1X1.3-2 CliqueComplex[101X
+  
+  [33X[1;0Y[29X[2XCliqueComplex[102X( [3XG[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCliqueComplex[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCliqueComplex[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  graph  [22XG[122X  and  integer  [22Xn  ge  1[122X.  It returns the [22Xn[122X-skeleton of a
+  simplicial  complex  [22XK[122X with one [22Xk[122X-simplex for each complete subgraph of [22XG[122X on
+  [22Xk+1[122X vertices.[133X
+  
+  [33X[0;0YInputs  a fitered graph [22XF[122X and integer [22Xn ge 1[122X. It returns the [22Xn[122X-skeleton of a
+  filtered  simplicial  complex  [22XK[122X  whose  [22Xt[122X-term  has  one [22Xk[122X-simplex for each
+  complete subgraph of the [22Xt[122X-th term of [22XG[122X on [22Xk+1[122X vertices.[133X
+  
+  [33X[0;0YInputs  a simplicial complex of dimension [22Xd=1[122X or [22Xd=2[122X. If [22Xd=1[122X then the clique
+  complex  of  a graph returned. If [22Xd=2[122X then the clique complex of a [22X2[122X-complex
+  is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.3-3 ConcentricFiltration[101X
+  
+  [33X[1;0Y[29X[2XConcentricFiltration[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure cubical complex [22XK[122X and integer [22Xn ge 1[122X, and returns a filtered
+  pure cubical complex of filtration length [22Xn[122X. The [22Xt[122X-th term of the filtration
+  is  the  intersection of [22XK[122X with the ball of radius [22Xr_t[122X centred on the centre
+  of  gravity  of  [22XK[122X, where [22X0=r_1 le r_2 le r_3 le ⋯ le r_n[122X are equally spaced
+  rational  numbers. The complex [22XK[122X is contained in the ball of radius [22Xr_n[122X. (At
+  present, this is implemented only for [22X2[122X- and [22X3[122X-dimensional complexes.)[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.3-4 DirectProduct[101X
+  
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  or  more  regular  CW-complexes  or  two  or  more pure cubical
+  complexes and returns their direct product.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        4
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         5
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               6
+  ([7X../www/SideLinks/About/aboutExtensions.html[107X) [133X
+  
+  [1X1.3-5 FiltrationTerm[101X
+  
+  [33X[1;0Y[29X[2XFiltrationTerm[102X( [3XK[103X, [3Xt[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFiltrationTerm[102X( [3XK[103X, [3Xt[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  filtered  regular CW-complex or a filtered pure cubical complex [22XK[122X
+  together  with  an  integer  [22Xt  ge  1[122X.  The  [22Xt[122X-th  term of the filtration is
+  returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.3-6 Graph[101X
+  
+  [33X[1;0Y[29X[2XGraph[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGraph[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex  or  a  simplicial  complex [22XK[122X and returns its
+  [22X1[122X-skeleton as a graph.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap4.html[107X) ,   3
+  ([7Xtutorial/chap6.html[107X) ,   4  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,  5
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            6
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                       7
+  ([7X../www/SideLinks/About/aboutSpaceGroup.html[107X) ,                            8
+  ([7X../www/SideLinks/About/aboutGraphsOfGroups.html[107X) ,                        9
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) ,                                10
+  ([7X../www/SideLinks/About/aboutTopology.html[107X) ,                             11
+  ([7X../www/SideLinks/About/aboutTwistedCoefficients.html[107X) [133X
+  
+  [1X1.3-7 HomotopyGraph[101X
+  
+  [33X[1;0Y[29X[2XHomotopyGraph[102X( [3XY[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex  [22XY[122X  and  returns  a  subgraph  [22XM ⊂ Y^1[122X of the
+  [22X1[122X-skeleton  for  which the induced homology homomorphisms [22XH_1(M, Z) → H_1(Y,
+  Z)[122X and [22XH_1(Y^1, Z) → H_1(Y, Z)[122X have identical images. The construction tries
+  to  include  as  few  edges  in  [22XM[122X  as  possible,  though  a  minimum is not
+  guaranteed.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.3-8 Nerve[101X
+  
+  [33X[1;0Y[29X[2XNerve[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNerve[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNerve[102X( [3XM[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNerve[102X( [3XM[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure  cubical complex or pure permutahedral complex [22XM[122X and returns
+  the  simplicial  complex  [22XK[122X obtained by taking the nerve of an open cover of
+  [22X|M|[122X,  the  open sets in the cover being sufficiently small neighbourhoods of
+  the  top-dimensional  cells  of  [22X|M|[122X.  The  spaces  [22X|M|[122X and [22X|K|[122X are homotopy
+  equivalent  by  the  Nerve  Theorem. If an integer [22Xn ge 0[122X is supplied as the
+  second argument then only the n-skeleton of [22XK[122X is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap9.html[107X) ,   3
+  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,                               4
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            5
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                       6
+  ([7X../www/SideLinks/About/aboutSimplicialGroups.html[107X) ,                      7
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) [133X
+  
+  [1X1.3-9 RegularCWComplex[101X
+  
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XL[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRegularCWComplex[102X( [3XL[103X, [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  simplicial, pure cubical, cubical or pure permutahedral complex [22XK[122X
+  and   returns   the   corresponding   regular   CW-complex.  Inputs  a  list
+  [22XL=Y!.boundaries[122X of boundary incidences of a regular CW-complex [22XY[122X and returns
+  [22XY[122X.  Inputs  a  list  [22XL=Y!.boundaries[122X  of  boundary  incidences  of a regular
+  CW-complex  [22XY[122X together with a list [22XM=Y!.orientation[122X of incidence numbers and
+  returns  a  regular  CW-complex [22XY[122X. The availability of precomputed incidence
+  numbers saves recalculating them.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,          4         ([7Xtutorial/chap4.html[107X) ,         5
+  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,                               6
+  ([7X../www/SideLinks/About/aboutPeripheral.html[107X) ,                            7
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        8
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         9
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                      10
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.3-10 RegularCWMap[101X
+  
+  [33X[1;0Y[29X[2XRegularCWMap[102X( [3XM[103X, [3XA[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a pure cubical complex [22XM[122X and a subcomplex [22XA[122X and returns the inclusion
+  map [22XA → M[122X as a map of regular CW complexes.[133X
+  
+  [33X[0;0Y[12XExamples:[112X     1     ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,    2
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) [133X
+  
+  [1X1.3-11 ThickeningFiltration[101X
+  
+  [33X[1;0Y[29X[2XThickeningFiltration[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XThickeningFiltration[102X( [3XK[103X, [3Xn[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure cubical complex [22XK[122X and integer [22Xn ge 1[122X, and returns a filtered
+  pure cubical complex of filtration length [22Xn[122X. The [22Xt[122X-th term of the filtration
+  is  the  [22Xt[122X-fold  thickening  of  [22XK[122X.  If  an integer [22Xs ge 1[122X is entered as the
+  optional  third argument then the [22Xt[122X-th term of the filtration is the [22Xts[122X-fold
+  thickening of [22XK[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  
+  [1X1.4 [33X[0;0YCellular Complexes [22X⟶[122X[101X[1X Cellular Complexes (Preserving Data Types)[133X[101X
+  
+  [1X1.4-1 ContractedComplex[101X
+  
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X, [3XS[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X, [3XS[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractedComplex[102X( [3XG[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  complex  (regular CW, Filtered regular CW, pure cubical etc.) and
+  returns a homotopy equivalent subcomplex.[133X
+  
+  [33X[0;0YInputs  a  pure  cubical  complex  or  pure  permutahedral  complex  [22XK[122X and a
+  subcomplex [22XS[122X. It returns a homotopy equivalent subcomplex of [22XK[122X that contains
+  [22XS[122X.[133X
+  
+  [33X[0;0YInputs  a graph [22XG[122X and returns a subgraph [22XS[122X such that the clique complexes of
+  [22XG[122X and [22XS[122X are homotopy equivalent.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        4
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         5
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               6
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.4-2 ContractibleSubcomplex[101X
+  
+  [33X[1;0Y[29X[2XContractibleSubcomplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractibleSubcomplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContractibleSubcomplex[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a non-empty pure cubical, pure permutahedral or simplicial complex [22XK[122X
+  and returns a contractible subcomplex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutCubical.html[107X) [133X
+  
+  [1X1.4-3 KnotReflection[101X
+  
+  [33X[1;0Y[29X[2XKnotReflection[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a pure cubical knot and returns the reflected knot.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-4 KnotSum[101X
+  
+  [33X[1;0Y[29X[2XKnotSum[102X( [3XK[103X, [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs two pure cubical knots and returns their sum.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7Xtutorial/chap5.html[107X) , 4 ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,
+  5 ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.4-5 OrientRegularCWComplex[101X
+  
+  [33X[1;0Y[29X[2XOrientRegularCWComplex[102X( [3XY[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a regular CW-complex [22XY[122X and computes and stores incidence numbers for
+  [22XY[122X. If [22XY[122X already has incidence numbers then the function does nothing.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-6 PathComponent[101X
+  
+  [33X[1;0Y[29X[2XPathComponent[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPathComponent[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPathComponent[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  simplicial, pure cubical or pure permutahedral complex [22XK[122X together
+  with an integer [22X1 le n le β_0(K)[122X. The [22Xn[122X-th path component of [22XK[122X is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X       1       ([7X../www/SideLinks/About/aboutQuandles.html[107X) ,      2
+  ([7X../www/SideLinks/About/aboutTDA.html[107X) [133X
+  
+  [1X1.4-7 PureComplexBoundary[101X
+  
+  [33X[1;0Y[29X[2XPureComplexBoundary[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureComplexBoundary[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22Xd[122X-dimensional  pure  cubical  or pure permutahedral complex [22XM[122X and
+  returns  a  [22Xd[122X-dimensional complex consisting of the closure of those [22Xd[122X-cells
+  whose  boundaries  contains  some cell with coboundary of size less than the
+  maximal possible size.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-8 PureComplexComplement[101X
+  
+  [33X[1;0Y[29X[2XPureComplexComplement[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureComplexComplement[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure  cubical complex or a pure permutahedral complex and returns
+  its complement.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        4
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) [133X
+  
+  [1X1.4-9 PureComplexDifference[101X
+  
+  [33X[1;0Y[29X[2XPureComplexDifference[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureComplexDifference[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  pure  cubical complexes or two pure permutahedral complexes and
+  returns the difference [22XM - N[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-10 PureComplexInterstection[101X
+  
+  [33X[1;0Y[29X[2XPureComplexInterstection[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPureComplexIntersection[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  pure  cubical complexes or two pure permutahedral complexes and
+  returns their intersection.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-11 PureComplexThickened[101X
+  
+  [33X[1;0Y[29X[2XPureComplexThickened[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureComplexThickened[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure  cubical complex or a pure permutahedral complex and returns
+  the a thickened complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-12 PureComplexUnion[101X
+  
+  [33X[1;0Y[29X[2XPureComplexUnion[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPureComplexUnion[102X( [3XM[103X, [3XN[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  two  pure  cubical complexes or two pure permutahedral complexes and
+  returns their union.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.4-13 SimplifiedComplex[101X
+  
+  [33X[1;0Y[29X[2XSimplifiedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSimplifiedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSimplifiedComplex[102X( [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSimplifiedComplex[102X( [3XC[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a regular CW-complex or a pure permutahedral complex [22XK[122X and returns a
+  homeomorphic complex with possibly fewer cells and certainly no more cells.[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution  [22XR[122X  of  [22XZ[122X  and returns a [22XZG[122X-resolution [22XS[122X with
+  potentially fewer free generators.[133X
+  
+  [33X[0;0YInputs  a  chain  complex  [22XC[122X  of  free  abelian  groups  and returns a chain
+  homotopic chain complex [22XD[122X with potentially fewer free generators.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap3.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        3
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) [133X
+  
+  [1X1.4-14 ZigZagContractedComplex[101X
+  
+  [33X[1;0Y[29X[2XZigZagContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZigZagContractedComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZigZagContractedComplex[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure cubical, filtered pure cubical or pure permutahedral complex
+  and  returns  a  homotopy equivalent complex. In the filtered case, the [22Xt[122X-th
+  term  of the output is homotopy equivalent to the [22Xt[122X-th term of the input for
+  all [22Xt[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap2.html[107X) [133X
+  
+  
+  [1X1.5 [33X[0;0YCellular Complexes [22X⟶[122X[101X[1X Homotopy Invariants[133X[101X
+  
+  [1X1.5-1 AlexanderPolynomial[101X
+  
+  [33X[1;0Y[29X[2XAlexanderPolynomial[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAlexanderPolynomial[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAlexanderPolynomial[102X( [3XG[103X ) [32X function[133X
+  
+  [33X[0;0YInputs   a  [22X3[122X-dimensional  pure  cubical  or  pure  permutahdral  complex  [22XK[122X
+  representing  a knot and returns the Alexander polynomial of the fundamental
+  group [22XG = π_1( R^3∖ K)[122X.[133X
+  
+  [33X[0;0YInputs  a finitely presented group [22XG[122X with infinite cyclic abelianization and
+  returns its Alexander polynomial.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap2.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.5-2 BettiNumber[101X
+  
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBettiNumber[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a simplicial, cubical, pure cubical, pure permutahedral, regular CW,
+  chain  or sparse chain complex [22XK[122X together with an integer [22Xn ge 0[122X and returns
+  the [22Xn[122Xth Betti number of [22XK[122X.[133X
+  
+  [33X[0;0YInputs  a  simplicial,  cubical, pure cubical, pure permutahedral or regular
+  CW-complex  [22XK[122X  together with an integer [22Xn ge 0[122X and a prime [22Xp ge 0[122X or [22Xp=0[122X. In
+  this  case  the  [22Xn[122Xth  Betti  number of [22XK[122X over a field of characteristic [22Xp[122X is
+  returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.5-3 EulerCharacteristic[101X
+  
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XC[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEulerCharacteristic[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a chain complex [22XC[122X and returns its Euler characteristic.[133X
+  
+  [33X[0;0YInputs  a cubical, or pure cubical, or pure permutahedral or regular CW-, or
+  simplicial complex [22XK[122X and returns its Euler characteristic.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.5-4 EulerIntegral[101X
+  
+  [33X[1;0Y[29X[2XEulerIntegral[102X( [3XY[103X, [3Xw[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a regular CW-complex [22XY[122X and a weight function [22Xw: Y→ Z[122X, and returns the
+  Euler integral [22X∫_Y w dχ[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.5-5 FundamentalGroup[101X
+  
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XF[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFundamentalGroup[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a regular CW, simplicial, pure cubical or pure permutahedral complex
+  [22XK[122X and returns the fundamental group.[133X
+  
+  [33X[0;0YInputs a regular CW complex [22XK[122X and the number [22Xn[122X of some zero cell. It returns
+  the fundamental group of [22XK[122X based at the [22Xn[122X-th zero cell.[133X
+  
+  [33X[0;0YInputs  a  regular  CW  map  [22XF[122X  and  returns  the  induced  homomorphism  of
+  fundamental  groups.  If  the number of some zero cell in the domain of [22XF[122X is
+  entered  as  an optional second variable then the fundamental group is based
+  at this zero cell.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,   4   ([7X../www/SideLinks/About/aboutLinks.html[107X) ,   5
+  ([7X../www/SideLinks/About/aboutPeripheral.html[107X) ,                            6
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        7
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         8
+  ([7X../www/SideLinks/About/aboutQuandles.html[107X) ,                              9
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                      10
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.5-6 FundamentalGroupOfQuotient[101X
+  
+  [33X[1;0Y[29X[2XFundamentalGroupOfQuotient[102X( [3XY[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a [22XG[122X-equivariant regular CW complex [22XY[122X and returns the group [22XG[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.5-7 IsAspherical[101X
+  
+  [33X[1;0Y[29X[2XIsAspherical[102X( [3XF[103X, [3XR[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  free group [22XF[122X and a list [22XR[122X of words in [22XF[122X. The function attempts to
+  test  if  the  quotient  group  [22XG=F/⟨ R ⟩^F[122X is aspherical. If it succeeds it
+  returns [22Xtrue[122X. Otherwise the test is inconclusive and [22Xfail[122X is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap5.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutAspherical.html[107X) ,                            3
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) [133X
+  
+  [1X1.5-8 KnotGroup[101X
+  
+  [33X[1;0Y[29X[2XKnotGroup[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XKnotGroup[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure  cubical  or  pure  permutahedral  complex [22XK[122X and returns the
+  fundamental  group  of  its  complement. If the complement is path-connected
+  then  this  fundamental group is unique up to isomorphism. Otherwise it will
+  depend on the path-component in which the randomly chosen base-point lies.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.5-9 PiZero[101X
+  
+  [33X[1;0Y[29X[2XPiZero[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPiZero[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPiZero[102X( [3XY[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex  [22XY[122X,  or  graph [22XY[122X, or simplicial complex [22XY[122X and
+  returns  a  pair  [22X[cells,r][122X  where:  [22Xcells[122X  is  a  list  of  vertices  of  [22XY[122X
+  representing  the  distinct  path-components;  [22Xr(v)[122X is a function which, for
+  each vertex [22Xv[122X of [22XY[122X returns the representative vertex [22Xr(v) ∈ cells[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  [1X1.5-10 PersistentBettiNumbers[101X
+  
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPersistentBettiNumbers[102X( [3XK[103X, [3Xn[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  filtered  simplicial, filtered pure cubical, filtered regular CW,
+  filtered chain or filtered sparse chain complex [22XK[122X together with an integer [22Xn
+  ge  0[122X and returns the [22Xn[122Xth PersistentBetti numbers of [22XK[122X as a list of lists of
+  integers.[133X
+  
+  [33X[0;0YInputs  a  filtered  simplicial, filtered pure cubical, filtered regular CW,
+  filtered chain or filtered sparse chain complex [22XK[122X together with an integer [22Xn
+  ge 0[122X and a prime [22Xp ge 0[122X or [22Xp=0[122X. In this case the [22Xn[122Xth PersistentBetti numbers
+  of [22XK[122X over a field of characteristic [22Xp[122X are returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap4.html[107X) [133X
+  
+  
+  [1X1.6 [33X[0;0YData [22X⟶[122X[101X[1X Homotopy Invariants[133X[101X
+  
+  [1X1.6-1 DendrogramMat[101X
+  
+  [33X[1;0Y[29X[2XDendrogramMat[102X( [3XA[103X, [3Xt[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  an [22Xn× n[122X symmetric matrix [22XA[122X over the rationals, a rational [22Xt ge 0[122X and
+  an integer [22Xs ge 1[122X. A list [22X[v_1, ..., v_t+1][122X is returned with each [22Xv_k[122X a list
+  of  positive  integers. Let [22Xt_k = (k-1)s[122X. Let [22XG(A,t_k)[122X denote the graph with
+  vertices  [22X1,  ..., n[122X and with distinct vertices [22Xi[122X and [22Xj[122X connected by an edge
+  when  the [22X(i,j)[122X entry of [22XA[122X is [22Xle t_k[122X. The [22Xi[122X-th path component of [22XG(A,t_k)[122X is
+  included  in  the  [22Xv_k[i][122X-th  path component of [22XG(A,t_k+1)[122X. This defines the
+  integer  vector  [22Xv_k[122X.  The vector [22Xv_k[122X has length equal to the number of path
+  components of [22XG(A,t_k)[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  
+  [1X1.7 [33X[0;0YCellular Complexes [22X⟶[122X[101X[1X Non Homotopy Invariants[133X[101X
+  
+  [1X1.7-1 ChainComplex[101X
+  
+  [33X[1;0Y[29X[2XChainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainComplex[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainComplex[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  cubical,  or  pure  cubical,  or pure permutahedral or simplicial
+  complex  [22XK[122X and returns its chain complex of free abelian groups. In degree [22Xn[122X
+  this chain complex has one free generator for each [22Xn[122X-dimensional cell of [22XK[122X.[133X
+  
+  [33X[0;0YInputs  a  regular CW-complex [22XY[122X and returns a chain complex [22XC[122X which is chain
+  homotopy equivalent to the cellular chain complex of [22XY[122X. In degree [22Xn[122X the free
+  abelian   chain   group  [22XC_n[122X  has  one  free  generator  for  each  critical
+  [22Xn[122X-dimensional cell of [22XY[122X with respect to some discrete vector field on [22XY[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7Xtutorial/chap9.html[107X) ,   4  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,  5
+  ([7X../www/SideLinks/About/aboutBredon.html[107X) ,                                6
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            7
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        8
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         9
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                              10
+  ([7X../www/SideLinks/About/aboutSimplicialGroups.html[107X) ,                     11
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) [133X
+  
+  [1X1.7-2 ChainComplexEquivalence[101X
+  
+  [33X[1;0Y[29X[2XChainComplexEquivalence[102X[32X global variable[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex [22XX[122X and returns a pair [22X[f_∗, g_∗][122X of chain maps
+  [22Xf_∗:  C_∗(X)  →  D_∗(X)[122X,  [22Xg_∗:  D_∗(X) → C_∗(X)[122X. Here [22XC_∗(X)[122X is the standard
+  cellular  chain complex of [22XX[122X with one free generator for each cell in [22XX[122X. The
+  chain  complex  [22XD_∗(X)[122X  is  a typically smaller chain complex arising from a
+  discrete  vector  field  on  [22XX[122X.  The  chain maps [22Xf_∗, g_∗[122X are chain homotopy
+  equivalences.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.7-3 ChainComplexOfQuotient[101X
+  
+  [33X[1;0Y[29X[2XChainComplexOfQuotient[102X( [3XY[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  [22XG[122X-equivariant regular CW-complex [22XY[122X and returns the cellular chain
+  complex of the quotient space [22XY/G[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.7-4 ChainMap[101X
+  
+  [33X[1;0Y[29X[2XChainMap[102X( [3XX[103X, [3XA[103X, [3XY[103X, [3XB[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainMap[102X( [3Xf[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XChainMap[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  pure cubical complex [22XY[122X and pure cubical sucomplexes [22XX⊂ Y[122X, [22XB⊂ Y[122X,[22XA⊂
+  B[122X.  It  returns  the  induced chain map [22Xf_∗: C_∗(X/A) → C_∗(Y/B)[122X of cellular
+  chain  complexes  of  pairs.  (Typlically  one  takes [22XA[122X and [22XB[122X to be empty or
+  contractible subspaces, in which case [22XC_∗(X/A) ≃ C_∗(X)[122X, [22XC_∗(Y/B) ≃ C_∗(Y)[122X.)[133X
+  
+  [33X[0;0YInputs  a  map  [22Xf: X → Y[122X between two regular CW-complexes [22XX,Y[122X and returns an
+  induced  chain  map  [22Xf_∗:  C_∗(X)  →  C_∗(Y)[122X  where [22XC_∗(X)[122X, [22XC_∗(Y)[122X are chain
+  homotopic  to  (but usually smaller than) the cellular chain complexes of [22XX[122X,
+  [22XY[122X.[133X
+  
+  [33X[0;0YInputs  a  map [22Xf: X → Y[122X between two simplicial complexes [22XX,Y[122X and returns the
+  induced chain map [22Xf_∗: C_∗(X) → C_∗(Y)[122X of cellular chain complexes.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap1.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutCohomologyRings.html[107X) ,                       3
+  ([7X../www/SideLinks/About/aboutPoincareSeries.html[107X) ,                        4
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                        5
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                         6
+  ([7X../www/SideLinks/About/aboutFunctorial.html[107X) [133X
+  
+  [1X1.7-5 CochainComplex[101X
+  
+  [33X[1;0Y[29X[2XCochainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCochainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCochainComplex[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCochainComplex[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCochainComplex[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  cubical,  or  pure  cubical,  or pure permutahedral or simplicial
+  complex  [22XK[122X and returns its cochain complex of free abelian groups. In degree
+  [22Xn[122X this cochain complex has one free generator for each [22Xn[122X-dimensional cell of
+  [22XK[122X.[133X
+  
+  [33X[0;0YInputs a regular CW-complex [22XY[122X and returns a cochain complex [22XC[122X which is chain
+  homotopy  equivalent  to  the cellular cochain complex of [22XY[122X. In degree [22Xn[122X the
+  free  abelian  cochain  group  [22XC_n[122X  has one free generator for each critical
+  [22Xn[122X-dimensional cell of [22XY[122X with respect to some discrete vector field on [22XY[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.7-6 CriticalCells[101X
+  
+  [33X[1;0Y[29X[2XCriticalCells[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a regular CW-complex [22XK[122X and returns its critical cells with respect to
+  some  discrete  vector  field  on  [22XK[122X.  If  no  discrete vector field on [22XK[122X is
+  available then one will be computed and stored.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap2.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutLinks.html[107X) ,                                 3
+  ([7X../www/SideLinks/About/aboutPeripheral.html[107X) ,                            4
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                               5
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                       6
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  [1X1.7-7 DiagonalApproximation[101X
+  
+  [33X[1;0Y[29X[2XDiagonalApproximation[102X( [3XX[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex  [22XX[122X  and  outputs  a  pair  [22X[p,ι][122X  of  maps of
+  CW-complexes.  The map [22Xp: X^∆ → X[122X will often be a homotopy equivalence. This
+  is  always  the  case  if  [22XX[122X is the CW-space of any pure cubical complex. In
+  general,  one  can  test  to  see  if the induced chain map [22Xp_∗ : C_∗(X^∆) →
+  C_∗(X)[122X is an isomorphism on integral homology. The second map [22Xι : X^∆ ↪ X× X[122X
+  is  an  inclusion  into the direct product. If [22Xp_∗[122X induces an isomorphism on
+  homology then the chain map [22Xι_∗: C_∗(X^∆) → C_∗(X× X)[122X can be used to compute
+  the cup product.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7Xtutorial/chap1.html[107X) [133X
+  
+  [1X1.7-8 Size[101X
+  
+  [33X[1;0Y[29X[2XSize[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSize[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSize[102X( [3XK[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSize[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a regular CW complex or a simplicial complex [22XY[122X and returns the number
+  of cells in the complex.[133X
+  
+  [33X[0;0YInputs  a  [22Xd[122X-dimensional  pure  cubical  or pure permutahedral complex [22XK[122X and
+  returns the number of [22Xd[122X-dimensional cells in the complex.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,          4         ([7Xtutorial/chap9.html[107X) ,         5
+  ([7X../www/SideLinks/About/aboutLinks.html[107X) ,                                 6
+  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,                               7
+  ([7X../www/SideLinks/About/aboutCoefficientSequence.html[107X) ,                   8
+  ([7X../www/SideLinks/About/aboutPeripheral.html[107X) ,                            9
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                       10
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                        11
+  ([7X../www/SideLinks/About/aboutQuandles2.html[107X) ,                            12
+  ([7X../www/SideLinks/About/aboutQuandles.html[107X) ,                             13
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                              14
+  ([7X../www/SideLinks/About/aboutSimplicialGroups.html[107X) ,                     15
+  ([7X../www/SideLinks/About/aboutTDA.html[107X) ,                                  16
+  ([7X../www/SideLinks/About/aboutKnots.html[107X) [133X
+  
+  
+  [1X1.8 [33X[0;0Y(Co)chain Complexes [22X⟶[122X[101X[1X (Co)chain Complexes[133X[101X
+  
+  [1X1.8-1 FilteredTensorWithIntegers[101X
+  
+  [33X[1;0Y[29X[2XFilteredTensorWithIntegers[102X( [3XR[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution  [22XR[122X  for  which  [22X"filteredDimension"[122X  lies  in
+  [12XNamesOfComponents(R)[112X.   (Such   a   resolution   can   be   produced   using
+  [12XTwisterTensorProduct()[112X,  [12XResolutionNormalSubgroups()[112X  or [12XFreeGResolution()[112X.)
+  It returns the filtered chain complex obtained by tensoring with the trivial
+  module [22XZ[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  [1X1.8-2 FilteredTensorWithIntegersModP[101X
+  
+  [33X[1;0Y[29X[2XFilteredTensorWithIntegersModP[102X( [3XR[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution  [22XR[122X  for  which  [22X"filteredDimension"[122X  lies  in
+  [12XNamesOfComponents(R)[112X,  together  with  a  prime [22Xp[122X. (Such a resolution can be
+  produced   using   [12XTwisterTensorProduct()[112X,   [12XResolutionNormalSubgroups()[112X  or
+  [12XFreeGResolution()[112X.)  It  returns  the  filtered  chain  complex  obtained by
+  tensoring with the trivial module [22XF[122X, the field of [22Xp[122X elements.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  [1X1.8-3 HomToIntegers[101X
+  
+  [33X[1;0Y[29X[2XHomToIntegers[102X( [3XC[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomToIntegers[102X( [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomToIntegers[102X( [3XF[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  chain  complex  [22XC[122X  of free abelian groups and returns the cochain
+  complex [22XHom_ Z(C, Z)[122X.[133X
+  
+  [33X[0;0YInputs  a  free  [22XZG[122X-resolution [22XR[122X in characteristic [22X0[122X and returns the cochain
+  complex [22XHom_ ZG(R, Z)[122X.[133X
+  
+  [33X[0;0YInputs  an  equivariant  chain  map  [22XF:  R→ S[122X of resolutions and returns the
+  induced cochain map [22XHom_ ZG(S, Z) ⟶ Hom_ ZG(R, Z)[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,   2   ([7Xtutorial/chap10.html[107X) ,   3
+  ([7X../www/SideLinks/About/aboutCohomologyRings.html[107X) ,                       4
+  ([7X../www/SideLinks/About/aboutSpaceGroup.html[107X) ,                            5
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) ,                                 6
+  ([7X../www/SideLinks/About/aboutTorAndExt.html[107X) [133X
+  
+  [1X1.8-4 TensorWithIntegersModP[101X
+  
+  [33X[1;0Y[29X[2XTensorWithIntegersModP[102X( [3XC[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTensorWithIntegersModP[102X( [3XR[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTensorWithIntegersModP[102X( [3XF[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  chain  complex  [22XC[122X  of  characteristic [22X0[122X and a prime integer [22Xp[122X. It
+  returns the chain complex [22XC ⊗_ Z Z_p[122X of characteristic [22Xp[122X.[133X
+  
+  [33X[0;0YInputs  a free [22XZG[122X-resolution [22XR[122X of characteristic [22X0[122X and a prime integer [22Xp[122X. It
+  returns the chain complex [22XR ⊗_ ZG Z_p[122X of characteristic [22Xp[122X.[133X
+  
+  [33X[0;0YInputs an equivariant chain map [22XF: R → S[122X in characteristic [22X0[122X a prime integer
+  [22Xp[122X. It returns the induced chain map [22XF⊗_ ZG Z_p : R ⊗_ ZG Z_p ⟶ S ⊗_ ZG Z_p[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap1.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutArithmetic.html[107X) ,                            3
+  ([7X../www/SideLinks/About/aboutPerformance.html[107X) ,                           4
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                            5
+  ([7X../www/SideLinks/About/aboutPoincareSeries.html[107X) ,                        6
+  ([7X../www/SideLinks/About/aboutDefinitions.html[107X) ,                           7
+  ([7X../www/SideLinks/About/aboutExtensions.html[107X) ,                            8
+  ([7X../www/SideLinks/About/aboutTorAndExt.html[107X) [133X
+  
+  
+  [1X1.9 [33X[0;0Y(Co)chain Complexes [22X⟶[122X[101X[1X Homotopy Invariants[133X[101X
+  
+  [1X1.9-1 Cohomology[101X
+  
+  [33X[1;0Y[29X[2XCohomology[102X( [3XC[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCohomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  cochain  complex  [22XC[122X  and  integer  [22Xn  ge  0[122X  and returns the [22Xn[122X-th
+  cohomology group of [22XC[122X as a list of its abelian invariants.[133X
+  
+  [33X[0;0YInputs  a  chain map [22XF[122X and integer [22Xn ge 0[122X. It returns the induced cohomology
+  homomorphism [22XH_n(F)[122X as a homomorphism of finitely presented groups.[133X
+  
+  [33X[0;0YInputs  a  cubical,  or pure cubical, or pure permutahedral or regular CW or
+  simplicial  complex  [22XK[122X  together with an integer [22Xn ge 0[122X. It returns the [22Xn[122X-th
+  integral cohomology group of [22XK[122X as a list of its abelian invariants.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap3.html[107X) ,   3
+  ([7Xtutorial/chap6.html[107X) , 4 ([7Xtutorial/chap7.html[107X) , 5 ([7Xtutorial/chap10.html[107X) ,
+  6             ([7X../www/SideLinks/About/aboutArtinGroups.html[107X) ,             7
+  ([7X../www/SideLinks/About/aboutModPRings.html[107X) ,                             8
+  ([7X../www/SideLinks/About/aboutNoncrossing.html[107X) ,                           9
+  ([7X../www/SideLinks/About/aboutCoefficientSequence.html[107X) ,                  10
+  ([7X../www/SideLinks/About/aboutCohomologyRings.html[107X) ,                      11
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                       12
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                        13
+  ([7X../www/SideLinks/About/aboutCoxeter.html[107X) ,                              14
+  ([7X../www/SideLinks/About/aboutCrossedMods.html[107X) ,                          15
+  ([7X../www/SideLinks/About/aboutExtensions.html[107X) ,                           16
+  ([7X../www/SideLinks/About/aboutSpaceGroup.html[107X) ,                           17
+  ([7X../www/SideLinks/About/aboutGouter.html[107X) ,                               18
+  ([7X../www/SideLinks/About/aboutSurvey.html[107X) ,                               19
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) ,                                20
+  ([7X../www/SideLinks/About/aboutTopology.html[107X) ,                             21
+  ([7X../www/SideLinks/About/aboutTorAndExt.html[107X) ,                            22
+  ([7X../www/SideLinks/About/aboutTwistedCoefficients.html[107X) [133X
+  
+  [1X1.9-2 CupProduct[101X
+  
+  [33X[1;0Y[29X[2XCupProduct[102X( [3XY[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCupProduct[102X( [3XR[103X, [3Xp[103X, [3Xq[103X, [3XP[103X, [3XQ[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  regular  CW-complex  [22XY[122X  and  returns  a function [22Xf(p,q,P,Q)[122X. This
+  function  [22Xf[122X  inputs two integers [22Xp,q ge 0[122X and two integer lists [22XP=[p_1, ...,
+  p_m][122X, [22XQ=[q_1, ..., q_n][122X representing elements [22XP∈ H^p(Y, Z)[122X and [22XQ∈ H^q(Y, Z)[122X.
+  The  function  [22Xf[122X  returns  a list [22XP ∪ Q[122X representing the cup product [22XP ∪ Q ∈
+  H^p+q(Y, Z)[122X.[133X
+  
+  [33X[0;0YInputs  a free [22XZG[122X resolution [22XR[122X of [22XZ[122X for some group [22XG[122X, together with integers
+  [22Xp,q  ge  0[122X  and integer lists [22XP, Q[122X representing cohomology classes [22XP∈ H^p(G,
+  Z)[122X,  [22XQ∈  H^q(G,  Z)[122X.  An  integer  list  representing the cup product [22XP∪ Q ∈
+  H^p+q(G, Z)[122X is returned.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap1.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutCohomologyRings.html[107X) [133X
+  
+  [1X1.9-3 Homology[101X
+  
+  [33X[1;0Y[29X[2XHomology[102X( [3XC[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomology[102X( [3XK[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  chain  complex [22XC[122X and integer [22Xn ge 0[122X and returns the [22Xn[122X-th homology
+  group of [22XC[122X as a list of its abelian invariants.[133X
+  
+  [33X[0;0YInputs  a  chain  map  [22XF[122X and integer [22Xn ge 0[122X. It returns the induced homology
+  homomorphism [22XH_n(F)[122X as a homomorphism of finitely presented groups.[133X
+  
+  [33X[0;0YInputs  a  cubical,  or pure cubical, or pure permutahedral or regular CW or
+  simplicial  complex  [22XK[122X  together with an integer [22Xn ge 0[122X. It returns the [22Xn[122X-th
+  integral homology group of [22XK[122X as a list of its abelian invariants.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap1.html[107X) ,    2   ([7Xtutorial/chap2.html[107X) ,   3
+  ([7Xtutorial/chap3.html[107X) ,  4 ([7Xtutorial/chap6.html[107X) , 5 ([7Xtutorial/chap8.html[107X) ,
+  6       ([7Xtutorial/chap9.html[107X) ,       7      ([7Xtutorial/chap10.html[107X) ,      8
+  ([7X../www/SideLinks/About/aboutLinks.html[107X) ,                                 9
+  ([7X../www/SideLinks/About/aboutArithmetic.html[107X) ,                           10
+  ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,                              11
+  ([7X../www/SideLinks/About/aboutArtinGroups.html[107X) ,                          12
+  ([7X../www/SideLinks/About/aboutAspherical.html[107X) ,                           13
+  ([7X../www/SideLinks/About/aboutParallel.html[107X) ,                             14
+  ([7X../www/SideLinks/About/aboutBredon.html[107X) ,                               15
+  ([7X../www/SideLinks/About/aboutPerformance.html[107X) ,                          16
+  ([7X../www/SideLinks/About/aboutCocycles.html[107X) ,                             17
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                           18
+  ([7X../www/SideLinks/About/aboutPoincareSeries.html[107X) ,                       19
+  ([7X../www/SideLinks/About/aboutCoveringSpaces.html[107X) ,                       20
+  ([7X../www/SideLinks/About/aboutCoverinSpaces.html[107X) ,                        21
+  ([7X../www/SideLinks/About/aboutPolytopes.html[107X) ,                            22
+  ([7X../www/SideLinks/About/aboutCoxeter.html[107X) ,                              23
+  ([7X../www/SideLinks/About/aboutquasi.html[107X) ,                                24
+  ([7X../www/SideLinks/About/aboutCubical.html[107X) ,                              25
+  ([7X../www/SideLinks/About/aboutRandomComplexes.html[107X) ,                      26
+  ([7X../www/SideLinks/About/aboutRosenbergerMonster.html[107X) ,                   27
+  ([7X../www/SideLinks/About/aboutDavisComplex.html[107X) ,                         28
+  ([7X../www/SideLinks/About/aboutDefinitions.html[107X) ,                          29
+  ([7X../www/SideLinks/About/aboutSimplicialGroups.html[107X) ,                     30
+  ([7X../www/SideLinks/About/aboutExtensions.html[107X) ,                           31
+  ([7X../www/SideLinks/About/aboutSpaceGroup.html[107X) ,                           32
+  ([7X../www/SideLinks/About/aboutFunctorial.html[107X) ,                           33
+  ([7X../www/SideLinks/About/aboutGraphsOfGroups.html[107X) ,                       34
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) ,                                35
+  ([7X../www/SideLinks/About/aboutTensorSquare.html[107X) ,                         36
+  ([7X../www/SideLinks/About/aboutLieCovers.html[107X) ,                            37
+  ([7X../www/SideLinks/About/aboutTorAndExt.html[107X) ,                            38
+  ([7X../www/SideLinks/About/aboutLie.html[107X) ,                                  39
+  ([7X../www/SideLinks/About/aboutTwistedCoefficients.html[107X) [133X
+  
+  
+  [1X1.10 [33X[0;0YVisualization[133X[101X
+  
+  [1X1.10-1 BarCodeDisplay[101X
+  
+  [33X[1;0Y[29X[2XBarCodeDisplay[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays a barcode [12XL=PersitentBettiNumbers(X,n)[112X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  [1X1.10-2 BarCodeCompactDisplay[101X
+  
+  [33X[1;0Y[29X[2XBarCodeCompactDisplay[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays a barcode [12XL=PersitentBettiNumbers(X,n)[112X in compact form.[133X
+  
+  [33X[0;0Y[12XExamples:[112X              1              ([7Xtutorial/chap4.html[107X) ,              2
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) [133X
+  
+  [1X1.10-3 CayleyGraphOfGroup[101X
+  
+  [33X[1;0Y[29X[2XCayleyGraphOfGroup[102X( [3XG[103X, [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs a finite group [22XG[122X and a list [22XL[122X of elements in [22XG[122X.It displays the Cayley
+  graph  of  the  group  generated  by  [22XL[122X  where  edge  colours  correspond to
+  generators.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-4 Display[101X
+  
+  [33X[1;0Y[29X[2XDisplay[102X( [3XG[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDisplay[102X( [3XM[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDisplay[102X( [3XM[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays  a  graph  [22XG[122X;  a  [22X2[122X-  or  [22X3[122X-dimensional  pure  cubical complex [22XM[122X; a
+  [22X3[122X-dimensional pure permutahedral complex [22XM[122X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X    1    ([7Xtutorial/chap2.html[107X) ,    2   ([7Xtutorial/chap4.html[107X) ,   3
+  ([7Xtutorial/chap6.html[107X) , 4 ([7Xtutorial/chap8.html[107X) , 5 ([7Xtutorial/chap10.html[107X) ,
+  6               ([7X../www/SideLinks/About/aboutMetrics.html[107X) ,               7
+  ([7X../www/SideLinks/About/aboutArtinGroups.html[107X) ,                           8
+  ([7X../www/SideLinks/About/aboutNoncrossing.html[107X) ,                           9
+  ([7X../www/SideLinks/About/aboutPeriodic.html[107X) ,                             10
+  ([7X../www/SideLinks/About/aboutPersistent.html[107X) ,                           11
+  ([7X../www/SideLinks/About/aboutPolytopes.html[107X) ,                            12
+  ([7X../www/SideLinks/About/aboutQuandles2.html[107X) ,                            13
+  ([7X../www/SideLinks/About/aboutQuandles.html[107X) ,                             14
+  ([7X../www/SideLinks/About/aboutSuperperfect.html[107X) ,                         15
+  ([7X../www/SideLinks/About/aboutGraphsOfGroups.html[107X) ,                       16
+  ([7X../www/SideLinks/About/aboutIntro.html[107X) ,                                17
+  ([7X../www/SideLinks/About/aboutKnotsQuandles.html[107X) ,                        18
+  ([7X../www/SideLinks/About/aboutTopology.html[107X) [133X
+  
+  [1X1.10-5 DisplayArcPresentation[101X
+  
+  [33X[1;0Y[29X[2XDisplayArcPresentation[102X( [3XK[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays  a [22X3[122X-dimensional pure cubical knot [12XK=PureCubicalKnot(L)[112X in the form
+  of an arc presentation.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-6 DisplayCSVKnotFile[101X
+  
+  [33X[1;0Y[29X[2XDisplayCSVKnotFile[102X[32X global variable[133X
+  
+  [33X[0;0YInputs  a  string  [22Xstr[122X that identifies a csv file containing the points on a
+  piecewise linear knot in [22XR^3[122X. It displays the knot.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-7 DisplayDendrogram[101X
+  
+  [33X[1;0Y[29X[2XDisplayDendrogram[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays the dendrogram [12XL:=DendrogramMat(A,t,s)[112X.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-8 DisplayDendrogramMat[101X
+  
+  [33X[1;0Y[29X[2XDisplayDendrogramMat[102X( [3XA[103X, [3Xt[103X, [3Xs[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  an [22Xn× n[122X symmetric matrix [22XA[122X over the rationals, a rational [22Xt ge 0[122X and
+  an  integer  [22Xs  ge  1[122X.  The  dendrogram  defined  by [12XDendrogramMat(A,t,s)[112X is
+  displayed.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-9 DisplayPDBfile[101X
+  
+  [33X[1;0Y[29X[2XDisplayPDBfile[102X( [3Xstr[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays  the  protein  backone  described  in a PDB (Protein Database) file
+  identified by a string str such as "file.pdb" or "path/file.pdb".[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  
+  [1X1.10-10 OrbitPolytope[101X
+  
+  [33X[1;0Y[29X[2XOrbitPolytope[102X( [3XG[103X, [3Xv[103X, [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a  permutation  group  or  finite  matrix  group [22XG[122X of degree [22Xd[122X and a
+  rational vector [22Xv∈ R^d[122X. In both cases there is a natural action of [22XG[122X on [22XR^d[122X.
+  Let  [22XP(G,v)[122X  be the convex hull of the orbit of [22Xv[122X under the action of [22XG[122X. The
+  function  also  inputs  a  sublist  [22XL[122X  of  the  following  list  of strings:
+  ["dimension","vertex_degree", "visual_graph", "schlegel", "visual"][133X
+  
+  [33X[0;0YDepending on [22XL[122X, the function displays the following information:[133X
+  [33X[0;0Ythe dimension of the orbit polytope [22XP(G,v)[122X;[133X
+  [33X[0;0Ythe degree of a vertex in the graph of [22XP(G,v)[122X;[133X
+  [33X[0;0Ya visualization of the graph of [22XP(G,v)[122X;[133X
+  [33X[0;0Ya visualization of the Schlegel diagram of [22XP(G,v)[122X;[133X
+  [33X[0;0Ya visualization of the polytope [22XP(G,v)[122X if [22Xd=2,3[122X.[133X
+  
+  [33X[0;0YThe function requires Polymake software.[133X
+  
+  [33X[0;0Y[12XExamples:[112X 1 ([7X../www/SideLinks/About/aboutPolytopes.html[107X) [133X
+  
+  [1X1.10-11 ScatterPlot[101X
+  
+  [33X[1;0Y[29X[2XScatterPlot[102X( [3XL[103X ) [32X function[133X
+  
+  [33X[0;0YInputs  a list [22XL=[[x_1,y_1],..., [x_n,y_n]][122X of pairs of rational numbers and
+  displays a scatter plot of the points in the [22Xx[122X-[22Xy[122X-plane.[133X
+  
+  [33X[0;0Y[12XExamples:[112X[133X
+  

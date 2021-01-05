@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 25:  Simplicial groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap25"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap24_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap26_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap25.html">[MathJax off]</a></p>
+<p><a id="X7D818E5F80F4CF63" name="X7D818E5F80F4CF63"></a></p>
+<div class="ChapSects"><a href="chap25_mj.html#X7D818E5F80F4CF63">25 <span class="Heading"> Simplicial groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap25_mj.html#X7CFDEEC07F15CF82">25.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X8624D2DF8433E4BF">25.1-1 NerveOfCatOneGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X78C5BCC37F629F5D">25.1-2 EilenbergMacLaneSimplicialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X7D7FCFA37DE30855">25.1-3 EilenbergMacLaneSimplicialGroupMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X80CF81187D3A7C0A">25.1-4 MooreComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X7EC0E55F818D234C">25.1-5 ChainComplexOfSimplicialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X84CCE7557D779553">25.1-6 SimplicialGroupMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X7F2E058F7AF17E82">25.1-7 HomotopyGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X805075A27E048EAE">25.1-8 Representation of elements in the bar resolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X823D749782FFFE8B">25.1-9 BarResolutionBoundary</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X80843E4E79F4A64B">25.1-10 BarResolutionHomotopy</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X7B3D23AB78BA441F">25.1-11 Representation of elements in the bar complex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X82DF5A738004E574">25.1-12 BarComplexBoundary</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X8713DCF68409B0F3">25.1-13 BarResolutionEquivalence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X8133375F7E120A6F">25.1-14 BarComplexEquivalence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X87D4504181AD3006">25.1-15 Representation of elements in the bar cocomplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap25_mj.html#X7C5E8E197E9331F1">25.1-16 BarCocomplexCoboundary</a></span>
+</div></div>
+</div>
+
+<h3>25 <span class="Heading"> Simplicial groups</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>25.1 <span class="Heading">  </span></h4>
+
+<p><a id="X8624D2DF8433E4BF" name="X8624D2DF8433E4BF"></a></p>
+
+<h5>25.1-1 NerveOfCatOneGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NerveOfCatOneGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a cat-1-group <span class="SimpleMath">\(G\)</span> and a positive integer <span class="SimpleMath">\(n\)</span>. It returns the low-dimensional part of the nerve of <span class="SimpleMath">\(G\)</span> as a simplicial group of length <span class="SimpleMath">\(n\)</span>. <br /> <br /> This function applies both to cat-1-groups for which IsHapCatOneGroup(G) is true, and to cat-1-groups produced using the Xmod package. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap9.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">3</a></span> </p>
+
+<p><a id="X78C5BCC37F629F5D" name="X78C5BCC37F629F5D"></a></p>
+
+<h5>25.1-2 EilenbergMacLaneSimplicialGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EilenbergMacLaneSimplicialGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a group <span class="SimpleMath">\(G\)</span>, a positive integer <span class="SimpleMath">\(n\)</span>, and a positive integer <span class="SimpleMath">\(dim \)</span>. The function returns the first <span class="SimpleMath">\(1+dim\)</span> terms of a simplicial group with <span class="SimpleMath">\(n-1\)</span>st homotopy group equal to <span class="SimpleMath">\(G\)</span> and all other homotopy groups equal to zero. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap3.html">1</a></span> , <span class="URL"><a href="tutorial/chap9.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">5</a></span> </p>
+
+<p><a id="X7D7FCFA37DE30855" name="X7D7FCFA37DE30855"></a></p>
+
+<h5>25.1-3 EilenbergMacLaneSimplicialGroupMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EilenbergMacLaneSimplicialGroupMap</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs a group homomorphism <span class="SimpleMath">\(f:G\rightarrow Q\)</span>, a positive integer <span class="SimpleMath">\(n\)</span>, and a positive integer <span class="SimpleMath">\(dim \)</span>. The function returns the first <span class="SimpleMath">\(1+dim\)</span> terms of a simplicial group homomorphism <span class="SimpleMath">\(f:K(G,n) \rightarrow K(Q,n)\)</span> of Eilenberg-MacLane simplicial groups. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80CF81187D3A7C0A" name="X80CF81187D3A7C0A"></a></p>
+
+<h5>25.1-4 MooreComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MooreComplex</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial group <span class="SimpleMath">\(G\)</span> and returns its Moore complex as a <span class="SimpleMath">\(G\)</span>-complex. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7EC0E55F818D234C" name="X7EC0E55F818D234C"></a></p>
+
+<h5>25.1-5 ChainComplexOfSimplicialGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexOfSimplicialGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial group <span class="SimpleMath">\(G\)</span> and returns the cellular chain complex <span class="SimpleMath">\(C\)</span> of a CW-space <span class="SimpleMath">\(X\)</span> represented by the homotopy type of the simplicial group. Thus the homology groups of <span class="SimpleMath">\(C\)</span> are the integral homology groups of <span class="SimpleMath">\(X\)</span>. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap3.html">1</a></span> , <span class="URL"><a href="tutorial/chap9.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">6</a></span> </p>
+
+<p><a id="X84CCE7557D779553" name="X84CCE7557D779553"></a></p>
+
+<h5>25.1-6 SimplicialGroupMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplicialGroupMap</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs a homomorphism <span class="SimpleMath">\(f:G\rightarrow Q\)</span> of simplicial groups. The function returns an induced map <span class="SimpleMath">\(f:C(G) \rightarrow C(Q)\)</span> of chain complexes whose homology is the integral homology of the simplicial group G and Q respectively. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7F2E058F7AF17E82" name="X7F2E058F7AF17E82"></a></p>
+
+<h5>25.1-7 HomotopyGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomotopyGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial group <span class="SimpleMath">\(G\)</span> and a positive integer <span class="SimpleMath">\(n\)</span>. The integer <span class="SimpleMath">\(n\)</span> must be less than the length of <span class="SimpleMath">\(G\)</span>. It returns, as a group, the (n)-th homology group of its Moore complex. Thus HomotopyGroup(G,0) returns the "fundamental group" of <span class="SimpleMath">\(G\)</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap5.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutNonabelian.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCrossedMods.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutquasi.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">7</a></span> </p>
+
+<p><a id="X805075A27E048EAE" name="X805075A27E048EAE"></a></p>
+
+<h5>25.1-8 Representation of elements in the bar resolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Representation of elements in the bar resolution</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>For a group G we denote by <span class="SimpleMath">\(B_n(G)\)</span> the free <span class="SimpleMath">\(\mathbb ZG\)</span>-module with basis the lists <span class="SimpleMath">\([g_1 | g_2 | ... | g_n]\)</span> where the <span class="SimpleMath">\(g_i\)</span> range over <span class="SimpleMath">\(G\)</span>. <br /> <br /> We represent a word <br /> <br /> <span class="SimpleMath">\(w = h_1.[g_{11} | g_{12} | ... | g_{1n}] - h_2.[g_{21} | g_{22} | ... | g_{2n}] + ... + h_k.[g_{k1} | g_{k2} | ... | g_{kn}] \)</span> <br /> <br /> in <span class="SimpleMath">\(B_n(G)\)</span> as a list of lists: <br /> <br /> <span class="SimpleMath">\( [ [+1,h_1,g_{11} , g_{12} , ... , g_{1n}] , [-1, h_2,g_{21} , g_{22} , ... | g_{2n}] + ... + [+1, h_k,g_{k1} , g_{k2} , ... , g_{kn}] \)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X823D749782FFFE8B" name="X823D749782FFFE8B"></a></p>
+
+<h5>25.1-9 BarResolutionBoundary</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarResolutionBoundary</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>This function inputs a word <span class="SimpleMath">\(w\)</span> in the bar resolution module <span class="SimpleMath">\(B_n(G)\)</span> and returns its image under the boundary homomorphism <span class="SimpleMath">\(d_n\colon B_n(G) \rightarrow B_{n-1}(G)\)</span> in the bar resolution. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80843E4E79F4A64B" name="X80843E4E79F4A64B"></a></p>
+
+<h5>25.1-10 BarResolutionHomotopy</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarResolutionHomotopy</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>This function inputs a word <span class="SimpleMath">\(w\)</span> in the bar resolution module <span class="SimpleMath">\(B_n(G)\)</span> and returns its image under the contracting homotopy <span class="SimpleMath">\(h_n\colon B_n(G) \rightarrow B_{n+1}(G)\)</span> in the bar resolution. <br /> <br /> This function is currently being implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7B3D23AB78BA441F" name="X7B3D23AB78BA441F"></a></p>
+
+<h5>25.1-11 Representation of elements in the bar complex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Representation of elements in the bar complex</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>For a group G we denote by <span class="SimpleMath">\(BC_n(G)\)</span> the free abelian group with basis the lists <span class="SimpleMath">\([g_1 | g_2 | ... | g_n]\)</span> where the <span class="SimpleMath">\(g_i\)</span> range over <span class="SimpleMath">\(G\)</span>. <br /> <br /> We represent a word <br /> <br /> <span class="SimpleMath">\(w = [g_{11} | g_{12} | ... | g_{1n}] - [g_{21} | g_{22} | ... | g_{2n}] + ... + [g_{k1} | g_{k2} | ... | g_{kn}] \)</span> <br /> <br /> in <span class="SimpleMath">\(BC_n(G)\)</span> as a list of lists: <br /> <br /> <span class="SimpleMath">\( [ [+1,g_{11} , g_{12} , ... , g_{1n}] , [-1, g_{21} , g_{22} , ... | g_{2n}] + ... + [+1, g_{k1} , g_{k2} , ... , g_{kn}] \)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X82DF5A738004E574" name="X82DF5A738004E574"></a></p>
+
+<h5>25.1-12 BarComplexBoundary</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarComplexBoundary</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>This function inputs a word <span class="SimpleMath">\(w\)</span> in the n-th term of the bar complex <span class="SimpleMath">\(BC_n(G)\)</span> and returns its image under the boundary homomorphism <span class="SimpleMath">\(d_n\colon BC_n(G) \rightarrow BC_{n-1}(G)\)</span> in the bar complex. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8713DCF68409B0F3" name="X8713DCF68409B0F3"></a></p>
+
+<h5>25.1-13 BarResolutionEquivalence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarResolutionEquivalence</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function inputs a free <span class="SimpleMath">\(ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span>. It returns a component object HE with components</p>
+
+
+<ul>
+<li><p>HE!.phi(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and a word <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(B_n(G)\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(R_n\)</span> under a chain equivalence <span class="SimpleMath">\(\phi\colon B_n(G) \rightarrow R_n\)</span>.</p>
+
+</li>
+<li><p>HE!.psi(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and a word <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(R_n\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(B_n(G)\)</span> under a chain equivalence <span class="SimpleMath">\(\psi\colon R_n \rightarrow B_n(G)\)</span>.</p>
+
+</li>
+<li><p>HE!.equiv(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and a word <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(B_n(G)\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(B_{n+1}(G)\)</span> under a <span class="SimpleMath">\(ZG\)</span>-equivariant homomorphism <br /> <br /> <span class="SimpleMath">\(equiv(n,-) \colon B_n(G) \rightarrow B_{n+1}(G)\)</span> <br /> <br /> satisfying</p>
+
+<p class="center">\[w - \psi ( \phi (w)) =   d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .
+\]</p>
+
+<p>where <span class="SimpleMath">\(d(n,-)\colon B_n(G) \rightarrow B_{n-1}(G)\)</span> is the boundary homomorphism in the bar resolution.</p>
+
+</li>
+</ul>
+<p>This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X8133375F7E120A6F" name="X8133375F7E120A6F"></a></p>
+
+<h5>25.1-14 BarComplexEquivalence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarComplexEquivalence</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function inputs a free <span class="SimpleMath">\(ZG\)</span>-resolution <span class="SimpleMath">\(R\)</span>. It first constructs the chain complex <span class="SimpleMath">\(T=TensorWithIntegerts(R)\)</span>. The function returns a component object HE with components</p>
+
+
+<ul>
+<li><p>HE!.phi(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and a word <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(BC_n(G)\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(T_n\)</span> under a chain equivalence <span class="SimpleMath">\(\phi\colon BC_n(G) \rightarrow T_n\)</span>.</p>
+
+</li>
+<li><p>HE!.psi(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and an element <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(T_n\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(BC_n(G)\)</span> under a chain equivalence <span class="SimpleMath">\(\psi\colon T_n \rightarrow BC_n(G)\)</span>.</p>
+
+</li>
+<li><p>HE!.equiv(n,w) is a function which inputs a non-negative integer <span class="SimpleMath">\(n\)</span> and a word <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(BC_n(G)\)</span>. It returns the image of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(BC_{n+1}(G)\)</span> under a homomorphism <br /> <br /> <span class="SimpleMath">\(equiv(n,-) \colon BC_n(G) \rightarrow BC_{n+1}(G)\)</span> <br /> <br /> satisfying</p>
+
+<p class="center">\[w - \psi ( \phi (w)) =   d(n+1, equiv(n,w)) + equiv(n-1,d(n,w)) .
+\]</p>
+
+<p>where <span class="SimpleMath">\(d(n,-)\colon BC_n(G) \rightarrow BC_{n-1}(G)\)</span> is the boundary homomorphism in the bar complex.</p>
+
+</li>
+</ul>
+<p>This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X87D4504181AD3006" name="X87D4504181AD3006"></a></p>
+
+<h5>25.1-15 Representation of elements in the bar cocomplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Representation of elements in the bar cocomplex</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>For a group G we denote by <span class="SimpleMath">\(BC^n(G)\)</span> the free abelian group with basis the lists <span class="SimpleMath">\([g_1 | g_2 | ... | g_n]\)</span> where the <span class="SimpleMath">\(g_i\)</span> range over <span class="SimpleMath">\(G\)</span>. <br /> <br /> We represent a word <br /> <br /> <span class="SimpleMath">\(w = [g_{11} | g_{12} | ... | g_{1n}] - [g_{21} | g_{22} | ... | g_{2n}] + ... + [g_{k1} | g_{k2} | ... | g_{kn}] \)</span> <br /> <br /> in <span class="SimpleMath">\(BC^n(G)\)</span> as a list of lists: <br /> <br /> <span class="SimpleMath">\( [ [+1,g_{11} , g_{12} , ... , g_{1n}] , [-1, g_{21} , g_{22} , ... | g_{2n}] + ... + [+1, g_{k1} , g_{k2} , ... , g_{kn}] \)</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7C5E8E197E9331F1" name="X7C5E8E197E9331F1"></a></p>
+
+<h5>25.1-16 BarCocomplexCoboundary</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCocomplexCoboundary</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>This function inputs a word <span class="SimpleMath">\(w\)</span> in the n-th term of the bar cocomplex <span class="SimpleMath">\(BC^n(G)\)</span> and returns its image under the coboundary homomorphism <span class="SimpleMath">\(d^n\colon BC^n(G) \rightarrow BC^{n+1}(G)\)</span> in the bar cocomplex. <br /> <br /> This function was implemented by <strong class="button">Van Luyen Le</strong>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap24_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap26_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chap21_mj.html">21</a>  <a href="chap22_mj.html">22</a>  <a href="chap23_mj.html">23</a>  <a href="chap24_mj.html">24</a>  <a href="chap25_mj.html">25</a>  <a href="chap26_mj.html">26</a>  <a href="chap27_mj.html">27</a>  <a href="chap28_mj.html">28</a>  <a href="chap29_mj.html">29</a>  <a href="chap30_mj.html">30</a>  <a href="chap31_mj.html">31</a>  <a href="chap32_mj.html">32</a>  <a href="chap33_mj.html">33</a>  <a href="chap34_mj.html">34</a>  <a href="chap35_mj.html">35</a>  <a href="chap36_mj.html">36</a>  <a href="chap37_mj.html">37</a>  <a href="chap38_mj.html">38</a>  <a href="chap39_mj.html">39</a>  <a href="chap40_mj.html">40</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

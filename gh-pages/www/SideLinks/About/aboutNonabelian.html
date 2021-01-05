@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(214, 255, 255);;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
+</head>
+<body>
+
+<a href="aboutTensorSquare.html" class="previous">&laquo; Previous</a>
+<a href="aboutContents.html" class="previous"> Top</a>
+<a href="aboutSchurMultiplier.html" class="next">Next &raquo;</a> 
+<h2>About HAP: The nonabelian tensor product of crossed modules</h2>
+
+
+<p>
+The right-hand side of the formula 
+$$\pi_3(SK(G,1)) \cong \ker (G\otimes G \rightarrow G, g\otimes g' \mapsto gg'g^{-1}g'^{-1})$$
+involves a special case of a crossed module
+$$M\otimes N \rightarrow G, m\otimes n \mapsto (\partial m)(\partial'n)(\partial m)^{-1}(\partial' n)^{-1}$$
+arising from two crossed modules \(\partial\colon M\rightarrow G\) and
+\(\partial'\colon N\rightarrow G\) with common target group \(G\).
+Here \(\otimes\) denotes the nonabelian tensor product introduced by Ronnie Brown and Jean-Louis Loday.
+</p>
+
+<p>
+The following two commands construct the crossed modules \(M\hookrightarrow G\)
+and \(N\hookrightarrow G\) arising from two normal subgroups \(M\), \(N\) of the sylow 2-subgroup \(G=Syl_2(M_{24})\) of the Mathieu group \(M_{24}\), and then compute the homotopy groups \(\pi_i(M\otimes N \rightarrow G)\) for
+\(i=1,2\).
+</p>
+
+<div><code>
+gap> G:=SylowSubgroup(MathieuGroup(24),2);;<br>      
+gap> L:=NormalSubgroups(G);;<br>
+gap> M:=CrossedModuleByNormalSubgroup(G,L[100]);;<br>
+gap> N:=CrossedModuleByNormalSubgroup(G,L[101]);;<br>
+gap> T:=NonabelianTensorProduct(M,N);;<br>
+gap> StructureDescription(HomotopyGroup(T,1));<br>
+"((C2 x ((C2 x C2 x C2 x C2) : C2)) : C2) : C2"<br>
+gap> StructureDescription(HomotopyGroup(T,2));<br>
+"C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2"<br>
+</code></div>
+
+<p>
+The above construction can be iterated. In particular, one can construct the triple tensor product \((G\otimes G)\otimes G \longrightarrow G\) for any group \(G\). The following commands compute
+$$\exp((G\otimes G)\otimes G) = 4 \, ,$$
+$$|(G\otimes G)\otimes G| = 1073741824 \, ,$$
+for \(G\) the 23rd group of order 32 in GAP's library of small groups.
+</p>
+
+<div><code>
+gap> G:=SmallGroup(32,23);;<br>
+gap> K:=CrossedModuleByNormalSubgroup(G,G);;<br>
+gap> T2:=NonabelianTensorProduct(K,K);;<br>
+gap> T3:=NonabelianTensorProduct(T2,K);;<br>
+gap> T:=Source(T3!.map);;<br>  
+gap> Exponent(T);<br>
+4<br>
+gap> Order(T);<br>
+1073741824<br>
+</code></div>
+
+
+<p>
+Corresponding to the nonabelian tensor product, there is  a nonabelian exterior product
+$$M\wedge N \rightarrow G, m\wedge n \mapsto (\partial m)(\partial'n)(\partial m)^{-1}(\partial' n)^{-1}$$
+arising from two crossed modules \(\partial\colon M\rightarrow G\) and
+\(\partial'\colon N\rightarrow G\) with common target group \(G\).
+The exterior product is obtained from the tensor product by adding the relation
+$$m \otimes n = 1\ \ {\rm whenever}\ \partial m=\partial'n\,.$$
+</p>
+
+<p>
+This exterior product can be  iterated. In particular, one can construct the triple exterior product \((G\wedge G)\wedge G \longrightarrow G\) for any group \(G\). The following commands compute
+$$\exp((G\wedge G)\wedge G) = 4 \, ,$$
+$$|(G\wedge G)\wedge G| = 1024 \, ,$$
+for \(G\) the 23rd group of order 32 in GAP's library of small groups.
+</p>
+
+<div><code>
+gap> G:=SmallGroup(32,23);;<br>
+gap> K:=CrossedModuleByNormalSubgroup(G,G);;<br>
+gap> E2:=NonabelianExteriorProduct(K,K);;<br>
+gap> E3:=NonabelianExteriorProduct(E2,K);;<br>
+gap> e:=Source(E3!.map);;<br>
+gap> Exponent(e);<br>
+4<br>
+gap> Order(e);<br>
+1024<br>
+</code></div>
+
+</body>
+</html>

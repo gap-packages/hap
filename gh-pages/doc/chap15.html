@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 15:  Commutator and nonabelian tensor computations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap15"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap16.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap15_mj.html">[MathJax on]</a></p>
+<p><a id="X86DE968B7B20BD48" name="X86DE968B7B20BD48"></a></p>
+<div class="ChapSects"><a href="chap15.html#X86DE968B7B20BD48">15 <span class="Heading"> Commutator and nonabelian tensor computations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7CFDEEC07F15CF82">15.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7DFB0FC4834DF183">15.1-1 BaerInvariant</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7D1614F87AAF5B97">15.1-2 BogomolovMultiplier</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X87A1E2E279597B8D">15.1-3 Bogomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7C374F188523A659">15.1-4 Coclass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X819E8AEC835F8CD1">15.1-5 EpiCentre</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7EAF8A2A79C86181">15.1-6 NonabelianExteriorProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X8155A3747A66FE81">15.1-7 NonabelianSymmetricKernel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7856BC54856452DE">15.1-8 NonabelianSymmetricSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X829476FA82D5759B">15.1-9 NonabelianTensorProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7C0DF7C97F78C666">15.1-10 NonabelianTensorSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7EF8F3FF7FB900F8">15.1-11 RelativeSchurMultiplier</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X854F2DB382723504">15.1-12 TensorCentre</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X79D037908746C65C">15.1-13 ThirdHomotopyGroupOfSuspensionB</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7967760B7E0F1E5F">15.1-14 UpperEpicentralSeries</a></span>
+</div></div>
+</div>
+
+<h3>15 <span class="Heading"> Commutator and nonabelian tensor computations</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>15.1 <span class="Heading">  </span></h4>
+
+<p><a id="X7DFB0FC4834DF183" name="X7DFB0FC4834DF183"></a></p>
+
+<h5>15.1-1 BaerInvariant</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaerInvariant</code>( <var class="Arg">G</var>, <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a nilpotent group <span class="SimpleMath">G</span> and integer <span class="SimpleMath">c</span>&gt;<span class="SimpleMath">0</span>. It returns the Baer invariant <span class="SimpleMath">M^(c)(G)</span> defined as follows. For an arbitrary group <span class="SimpleMath">G</span> let <span class="SimpleMath">L^*_c+1(G)</span> be the <span class="SimpleMath">(c+1)</span>-st term of the upper central series of the group <span class="SimpleMath">U=F/[[[R,F],F]...]</span> (with <span class="SimpleMath">c</span> copies of <span class="SimpleMath">F</span> in the denominator) where <span class="SimpleMath">F/R</span> is any free presentation of <span class="SimpleMath">G</span>. This is an invariant of <span class="SimpleMath">G</span> and we define <span class="SimpleMath">M^(c)(G)</span> to be the kernel of the canonical homomorphism <span class="SimpleMath">M^(c)(G) ⟶ G</span>. For <span class="SimpleMath">c=1</span> the Baer invariant <span class="SimpleMath">M^(1)(G)</span> is isomorphic to the second integral homology <span class="SimpleMath">H_2(G,Z)</span>.</p>
+
+<p>This function requires the NQ package.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSchurMultiplier.html">1</a></span> </p>
+
+<p><a id="X7D1614F87AAF5B97" name="X7D1614F87AAF5B97"></a></p>
+
+<h5>15.1-2 BogomolovMultiplier</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BogomolovMultiplier</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BogomolovMultiplier</code>( <var class="Arg">G</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and an optional string str="standard" or str="homology" or str="tensor". It returns the quotient <span class="SimpleMath">H_2(G,Z)/K(G)</span> of the second integral homology of <span class="SimpleMath">G</span> where <span class="SimpleMath">K(G)</span> is the subgroup of <span class="SimpleMath">H_2(G,Z)</span> generated by the images of all homomorphisms <span class="SimpleMath">H_2(A,Z) → H_2(G,Z)</span> induced from abelian subgroups of <span class="SimpleMath">G</span>.</p>
+
+<p>Three slight variants of the implementation are available. The default "standard" implementation seems to work best on average. But for some groups the "homology" implementation or the "tensor" implementation will be faster. The variants are called by including the appropriate string as the second argument.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap5.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">2</a></span> </p>
+
+<p><a id="X87A1E2E279597B8D" name="X87A1E2E279597B8D"></a></p>
+
+<h5>15.1-3 Bogomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Bogomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and positive integer <span class="SimpleMath">n</span>, and returns the quotient <span class="SimpleMath">H_n(G,Z)/K(G)</span> of the degree <span class="SimpleMath">n</span> integral homology of <span class="SimpleMath">G</span> where <span class="SimpleMath">K(G)</span> is the subgroup of <span class="SimpleMath">H_n(G,Z)</span> generated by the images of all homomorphisms <span class="SimpleMath">H_n(A,Z) → H_n(G,Z)</span> induced from abelian subgroups of <span class="SimpleMath">G</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutBogomolov.html">1</a></span> </p>
+
+<p><a id="X7C374F188523A659" name="X7C374F188523A659"></a></p>
+
+<h5>15.1-4 Coclass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Coclass</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>Inputs a group <span class="SimpleMath">G</span> of prime-power order <span class="SimpleMath">p^n</span> and nilpotency class <span class="SimpleMath">c</span> say. It returns the integer <span class="SimpleMath">r=n-c</span> .</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X819E8AEC835F8CD1" name="X819E8AEC835F8CD1"></a></p>
+
+<h5>15.1-5 EpiCentre</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EpiCentre</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EpiCentre</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and normal subgroup <span class="SimpleMath">N</span> and returns a subgroup <span class="SimpleMath">Z^∗(G,N)</span> of the centre of <span class="SimpleMath">N</span>. The group <span class="SimpleMath">Z^∗(G,N)</span> is trivial if and only if there is a crossed module <span class="SimpleMath">d:E ⟶ G</span> with <span class="SimpleMath">N=Image(d)</span> and with <span class="SimpleMath">Ker(d)</span> equal to the subgroup of <span class="SimpleMath">E</span> consisting of those elements on which <span class="SimpleMath">G</span> acts trivially.</p>
+
+<p>If no value for <span class="SimpleMath">N</span> is entered then it is assumed that <span class="SimpleMath">N=G</span>. In this case the group <span class="SimpleMath">Z^∗(G,G)</span> is trivial if and only if <span class="SimpleMath">G</span> is isomorphic to a quotient <span class="SimpleMath">G=E/Z(E)</span> of some group <span class="SimpleMath">E</span> by the centre of <span class="SimpleMath">E</span>. (See also the command <span class="SimpleMath">UpperEpicentralSeries(G,c)</span>. )</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSchurMultiplier.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">2</a></span> </p>
+
+<p><a id="X7EAF8A2A79C86181" name="X7EAF8A2A79C86181"></a></p>
+
+<h5>15.1-6 NonabelianExteriorProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianExteriorProduct</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and normal subgroup <span class="SimpleMath">N</span>. It returns a record <span class="SimpleMath">E</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">E.homomorphism</span> is a group homomorphism <span class="SimpleMath">µ : (G ∧ N) ⟶ G</span> from the nonabelian exterior product <span class="SimpleMath">(G ∧ N)</span> to <span class="SimpleMath">G</span>. The kernel of <span class="SimpleMath">µ</span> is the relative Schur multiplier.</p>
+
+</li>
+<li><p><span class="SimpleMath">E.pairing(x,y)</span> is a function which inputs an element <span class="SimpleMath">x</span> in <span class="SimpleMath">G</span> and an element <span class="SimpleMath">y</span> in <span class="SimpleMath">N</span> and returns <span class="SimpleMath">(x ∧ y)</span> in the exterior product <span class="SimpleMath">(G ∧ N)</span> .</p>
+
+</li>
+</ul>
+<p>This function should work for reasonably small nilpotent groups or extremely small non-nilpotent groups.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutNonabelian.html">1</a></span> </p>
+
+<p><a id="X8155A3747A66FE81" name="X8155A3747A66FE81"></a></p>
+
+<h5>15.1-7 NonabelianSymmetricKernel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianSymmetricKernel</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianSymmetricKernel</code>( <var class="Arg">G</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite or nilpotent infinite group <span class="SimpleMath">G</span> and returns the abelian invariants of the Fourth homotopy group <span class="SimpleMath">SG</span> of the double suspension <span class="SimpleMath">SSK(G,1)</span> of the Eilenberg-Mac Lane space <span class="SimpleMath">K(G,1)</span>.</p>
+
+<p>For non-nilpotent groups the implementation of the function <span class="SimpleMath">NonabelianSymmetricKernel(G)</span> is far from optimal and will soon be improved. As a temporary solution to this problem, an optional second variable <span class="SimpleMath">m</span> can be set equal to <span class="SimpleMath">0</span>, and then the function efficiently returns the abelian invariants of groups <span class="SimpleMath">A</span> and <span class="SimpleMath">B</span> such that there is an exact sequence <span class="SimpleMath">0 ⟶ B ⟶ SG ⟶ A ⟶ 0</span>.</p>
+
+<p>Alternatively, the optional second varible <span class="SimpleMath">m</span> can be set equal to a positive multiple of the order of the symmetric square <span class="SimpleMath">(G tilde⊗ G)</span>. In this case the function returns the abelian invariants of <span class="SimpleMath">SG</span>. This might help when <span class="SimpleMath">G</span> is solvable but not nilpotent (especially if the estimated upper bound <span class="SimpleMath">m</span> is reasonable accurate).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">1</a></span> </p>
+
+<p><a id="X7856BC54856452DE" name="X7856BC54856452DE"></a></p>
+
+<h5>15.1-8 NonabelianSymmetricSquare</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianSymmetricSquare</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianSymmetricSquare</code>( <var class="Arg">G</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite or nilpotent infinite group <span class="SimpleMath">G</span> and returns a record <span class="SimpleMath">T</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">T.homomorphism</span> is a group homomorphism <span class="SimpleMath">µ : (G tilde⊗ G) ⟶ G</span> from the nonabelian symmetric square of <span class="SimpleMath">G</span> to <span class="SimpleMath">G</span>. The kernel of <span class="SimpleMath">µ</span> is isomorphic to the fourth homotopy group of the double suspension <span class="SimpleMath">SSK(G,1)</span> of an Eilenberg-Mac Lane space.</p>
+
+</li>
+<li><p><span class="SimpleMath">T.pairing(x,y)</span> is a function which inputs two elements <span class="SimpleMath">x, y</span> in <span class="SimpleMath">G</span> and returns the tensor <span class="SimpleMath">(x ⊗ y)</span> in the symmetric square <span class="SimpleMath">(G ⊗ G)</span> .</p>
+
+</li>
+</ul>
+<p>An optional second varible <span class="SimpleMath">m</span> can be set equal to a multiple of the order of the symmetric square <span class="SimpleMath">(G tilde⊗ G)</span>. This might help when <span class="SimpleMath">G</span> is solvable but not nilpotent (especially if the estimated upper bound <span class="SimpleMath">m</span> is reasonable accurate) as the bound is used in the solvable quotient algorithm.</p>
+
+<p>The optional second variable <span class="SimpleMath">m</span> can also be set equal to <span class="SimpleMath">0</span>. In this case the Todd-Coxeter procedure will be used to enumerate the symmetric square even when <span class="SimpleMath">G</span> is solvable.</p>
+
+<p>This function should work for reasonably small solvable groups or extremely small non-solvable groups.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X829476FA82D5759B" name="X829476FA82D5759B"></a></p>
+
+<h5>15.1-9 NonabelianTensorProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianTensorProduct</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and normal subgroup <span class="SimpleMath">N</span>. It returns a record <span class="SimpleMath">E</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">E.homomorphism</span> is a group homomorphism <span class="SimpleMath">µ : (G ⊗ N ) ⟶ G</span> from the nonabelian exterior product <span class="SimpleMath">(G ⊗ N)</span> to <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p><span class="SimpleMath">E.pairing(x,y)</span> is a function which inputs an element <span class="SimpleMath">x</span> in <span class="SimpleMath">G</span> and an element <span class="SimpleMath">y</span> in <span class="SimpleMath">N</span> and returns <span class="SimpleMath">(x ⊗ y)</span> in the tensor product <span class="SimpleMath">(G ⊗ N)</span> .</p>
+
+</li>
+</ul>
+<p>This function should work for reasonably small nilpotent groups or extremely small non-nilpotent groups.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutNonabelian.html">1</a></span> </p>
+
+<p><a id="X7C0DF7C97F78C666" name="X7C0DF7C97F78C666"></a></p>
+
+<h5>15.1-10 NonabelianTensorSquare</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianTensorSquare</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonabelianTensorSquare</code>( <var class="Arg">G</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite or nilpotent infinite group <span class="SimpleMath">G</span> and returns a record <span class="SimpleMath">T</span> with the following components.</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">T.homomorphism</span> is a group homomorphism <span class="SimpleMath">µ : (G ⊗ G) ⟶ G</span> from the nonabelian tensor square of <span class="SimpleMath">G</span> to <span class="SimpleMath">G</span>. The kernel of <span class="SimpleMath">µ</span> is isomorphic to the third homotopy group of the suspension <span class="SimpleMath">SK(G,1)</span> of an Eilenberg-Mac Lane space.</p>
+
+</li>
+<li><p><span class="SimpleMath">T.pairing(x,y)</span> is a function which inputs two elements <span class="SimpleMath">x, y</span> in <span class="SimpleMath">G</span> and returns the tensor <span class="SimpleMath">(x ⊗ y)</span> in the tensor square <span class="SimpleMath">(G ⊗ G)</span> .</p>
+
+</li>
+</ul>
+<p>An optional second varible <span class="SimpleMath">m</span> can be set equal to a multiple of the order of the tensor square <span class="SimpleMath">(G ⊗ G)</span>. This might help when <span class="SimpleMath">G</span> is solvable but not nilpotent (especially if the estimated upper bound <span class="SimpleMath">m</span> is reasonable accurate) as the bound is used in the solvable quotient algorithm.</p>
+
+<p>The optional second variable <span class="SimpleMath">m</span> can also be set equal to <span class="SimpleMath">0</span>. In this case the Todd-Coxeter procedure will be used to enumerate the tensor square even when <span class="SimpleMath">G</span> is solvable.</p>
+
+<p>This function should work for reasonably small solvable groups or extremely small non-solvable groups.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">1</a></span> </p>
+
+<p><a id="X7EF8F3FF7FB900F8" name="X7EF8F3FF7FB900F8"></a></p>
+
+<h5>15.1-11 RelativeSchurMultiplier</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeSchurMultiplier</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and normal subgroup <span class="SimpleMath">N</span>. It returns the homology group <span class="SimpleMath">H_2(G,N,Z)</span> that fits into the exact sequence</p>
+
+<p><span class="SimpleMath">...⟶ H_3(G,Z) ⟶ H_3(G/N,Z) ⟶ H_2(G,N,Z) ⟶ H_3(G,Z) ⟶ H_3(G/N,Z) ⟶ ....</span></p>
+
+<p>This function should work for reasonably small nilpotent groups <span class="SimpleMath">G</span> or extremely small non-nilpotent groups.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSchurMultiplier.html">1</a></span> </p>
+
+<p><a id="X854F2DB382723504" name="X854F2DB382723504"></a></p>
+
+<h5>15.1-12 TensorCentre</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorCentre</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a group <span class="SimpleMath">G</span> and returns the largest central subgroup <span class="SimpleMath">N</span> such that the induced homomorphism of nonabelian tensor squares <span class="SimpleMath">(G ⊗ G) ⟶ (G/N ⊗ G/N)</span> is an isomorphism. Equivalently, <span class="SimpleMath">N</span> is the largest central subgroup such that <span class="SimpleMath">π_3(SK(G,1)) ⟶ π_3(SK(G/N,1))</span> is injective.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X79D037908746C65C" name="X79D037908746C65C"></a></p>
+
+<h5>15.1-13 ThirdHomotopyGroupOfSuspensionB</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThirdHomotopyGroupOfSuspensionB</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThirdHomotopyGroupOfSuspensionB</code>( <var class="Arg">G</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite or nilpotent infinite group <span class="SimpleMath">G</span> and returns the abelian invariants of the third homotopy group <span class="SimpleMath">JG</span> of the suspension <span class="SimpleMath">SK(G,1)</span> of the Eilenberg-Mac Lane space <span class="SimpleMath">K(G,1)</span>.</p>
+
+<p>For non-nilpotent groups the implementation of the function <span class="SimpleMath">ThirdHomotopyGroupOfSuspensionB(G)</span> is far from optimal and will soon be improved. As a temporary solution to this problem, an optional second variable <span class="SimpleMath">m</span> can be set equal to <span class="SimpleMath">0</span>, and then the function efficiently returns the abelian invariants of groups <span class="SimpleMath">A</span> and <span class="SimpleMath">B</span> such that there is an exact sequence <span class="SimpleMath">0 ⟶ B ⟶ JG ⟶ A ⟶ 0</span>.</p>
+
+<p>Alternatively, the optional second varible <span class="SimpleMath">m</span> can be set equal to a positive multiple of the order of the tensor square <span class="SimpleMath">(G ⊗ G)</span>. In this case the function returns the abelian invariants of <span class="SimpleMath">JG</span>. This might help when <span class="SimpleMath">G</span> is solvable but not nilpotent (especially if the estimated upper bound <span class="SimpleMath">m</span> is reasonable accurate).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap5.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">3</a></span> </p>
+
+<p><a id="X7967760B7E0F1E5F" name="X7967760B7E0F1E5F"></a></p>
+
+<h5>15.1-14 UpperEpicentralSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperEpicentralSeries</code>( <var class="Arg">G</var>, <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a nilpotent group <span class="SimpleMath">G</span> and an integer <span class="SimpleMath">c</span>. It returns the <span class="SimpleMath">c</span>-th term of the upper epicentral series <span class="SimpleMath">1</span> &lt; <span class="SimpleMath">Z_1^∗(G)</span> &lt; <span class="SimpleMath">Z_2^∗(G)</span> &lt; <span class="SimpleMath">...</span>.</p>
+
+<p>The upper epicentral series is defined for an arbitrary group <span class="SimpleMath">G</span>. The group <span class="SimpleMath">Z_c^∗ (G)</span> is the image in <span class="SimpleMath">G</span> of the <span class="SimpleMath">c</span>-th term <span class="SimpleMath">Z_c(U)</span> of the upper central series of the group <span class="SimpleMath">U=F/[[[R,F],F] ... ]</span> (with <span class="SimpleMath">c</span> copies of <span class="SimpleMath">F</span> in the denominator) where <span class="SimpleMath">F/R</span> is any free presentation of <span class="SimpleMath">G</span>.</p>
+
+<p>This functions requires the NQ package.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutSchurMultiplier.html">1</a></span> </p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap16.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

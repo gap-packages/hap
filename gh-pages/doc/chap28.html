@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 28:  Simplicial Complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap28"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap27.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap29.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap28_mj.html">[MathJax on]</a></p>
+<p><a id="X7AC76D657C578FEE" name="X7AC76D657C578FEE"></a></p>
+<div class="ChapSects"><a href="chap28.html#X7AC76D657C578FEE">28 <span class="Heading"> Simplicial Complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap28.html#X7CFDEEC07F15CF82">28.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X85A9D5CB8605329C">28.1-1 Homology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X86D0AEEC79FD104A">28.1-2 RipsHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7C3327917BE532FD">28.1-3 Bettinumbers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7A1C427578108B7E">28.1-4 ChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X87054BC582F01A36">28.1-5 CechComplexOfPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X85E64B207BBF76CE">28.1-6 PureComplexToSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X8174B2CD7839840F">28.1-7 RipsChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7C86B58A7CEA5513">28.1-8 VectorsToSymmetricMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X8307F8DB85F145AE">28.1-9 EulerCharacteristic</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X86B9F59880C58160">28.1-10 MaximalSimplicesToSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X87CABD297B8B060D">28.1-11 SkeletonOfSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X782F884F7D9233A2">28.1-12 GraphOfSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X829ABA507DFBBD7B">28.1-13 ContractibleSubcomplexOfSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X84DC5B4D783598C7">28.1-14 PathComponentsOfSimplicialComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7F8D4C4C7ED15A31">28.1-15 QuillenComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X82A625DA815A97DE">28.1-16 SymmetricMatrixToIncidenceMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X86F6C7E68222BE84">28.1-17 IncidenceMatrixToGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X80CAD0357AF44E48">28.1-18 CayleyGraphOfGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X78E0B1357DDFE43E">28.1-19 PathComponentsOfGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7BB384467E133719">28.1-20 ContractGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X7F7D27C27A8817DE">28.1-21 GraphDisplay</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X80E8D8517CA19EE3">28.1-22 SimplicialMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X876AB1AD7BCC253B">28.1-23 ChainMapOfSimplicialMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap28.html#X80F5DAB17E349DF1">28.1-24 SimplicialNerveOfGraph</a></span>
+</div></div>
+</div>
+
+<h3>28 <span class="Heading"> Simplicial Complexes</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>28.1 <span class="Heading">  </span></h4>
+
+<p><a id="X85A9D5CB8605329C" name="X85A9D5CB8605329C"></a></p>
+
+<h5>28.1-1 Homology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">T</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns the n-th integral homology of <span class="SimpleMath">T</span> as a list of torsion integers. If no value of <span class="SimpleMath">n</span> is input then the list of all homologies of <span class="SimpleMath">T</span> in dimensions 0 to Dimension(T) is returned .</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap6.html">4</a></span> , <span class="URL"><a href="tutorial/chap8.html">5</a></span> , <span class="URL"><a href="tutorial/chap9.html">6</a></span> , <span class="URL"><a href="tutorial/chap10.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutAspherical.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCocycles.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">17</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">18</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">19</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">20</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">21</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">22</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutquasi.html">23</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">24</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">25</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">26</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDavisComplex.html">27</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">28</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">29</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">30</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">31</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">32</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">33</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">34</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">35</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">36</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">37</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLie.html">38</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">39</a></span> </p>
+
+<p><a id="X86D0AEEC79FD104A" name="X86D0AEEC79FD104A"></a></p>
+
+<h5>28.1-2 RipsHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RipsHomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RipsHomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span>, a non-negative integer <span class="SimpleMath">n</span> (and optionally a prime number <span class="SimpleMath">p</span>). It returns the integral homology (or mod p homology) in degree <span class="SimpleMath">n</span> of the Rips complex of <span class="SimpleMath">G</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7C3327917BE532FD" name="X7C3327917BE532FD"></a></p>
+
+<h5>28.1-3 Bettinumbers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Bettinumbers</code>( <var class="Arg">T</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Bettinumbers</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex, or cubical complex, simplicial complex or chain complex <span class="SimpleMath">T</span> and a non-negative integer <span class="SimpleMath">n</span>. The rank of the n-th rational homology group <span class="SimpleMath">H_n(T, Q)</span> is returned. If no value for n is input then the list of Betti numbers in dimensions 0 to Dimension(T) is returned .</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTDA.html">2</a></span> </p>
+
+<p><a id="X7A1C427578108B7E" name="X7A1C427578108B7E"></a></p>
+
+<h5>28.1-4 ChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and returns the (often very large) cellular chain complex of <span class="SimpleMath">T</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap9.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">11</a></span> </p>
+
+<p><a id="X87054BC582F01A36" name="X87054BC582F01A36"></a></p>
+
+<h5>28.1-5 CechComplexOfPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CechComplexOfPureCubicalComplex</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a d-dimensional pure cubical complex <span class="SimpleMath">T</span> and returns a simplicial complex <span class="SimpleMath">S</span>. The simplicial complex <span class="SimpleMath">S</span> has one vertex for each d-cube in <span class="SimpleMath">T</span>, and an n-simplex for each collection of n+1 d-cubes with non-trivial common intersection. The homotopy types of <span class="SimpleMath">T</span> and <span class="SimpleMath">S</span> are equal.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">1</a></span> </p>
+
+<p><a id="X85E64B207BBF76CE" name="X85E64B207BBF76CE"></a></p>
+
+<h5>28.1-6 PureComplexToSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PureComplexToSimplicialComplex</code>( <var class="Arg">T</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a d-dimensional pure cubical complex <span class="SimpleMath">T</span> or a d-dimensional pure permutahedral complex <span class="SimpleMath">T</span> together with a non-negative integer <span class="SimpleMath">k</span>. It returns the first <span class="SimpleMath">k</span> dimensions of a simplicial complex <span class="SimpleMath">S</span>. The simplicial complex <span class="SimpleMath">S</span> has one vertex for each d-cell in <span class="SimpleMath">T</span>, and an n-simplex for each collection of n+1 d-cells with non-trivial common intersection. The homotopy types of <span class="SimpleMath">T</span> and <span class="SimpleMath">S</span> are equal.</p>
+
+<p>For a pure cubical complex <span class="SimpleMath">T</span> this uses a slightly different algorithm to the function CechComplexOfPureCubicalComplex(T) but constructs the same simplicial complex.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">1</a></span> </p>
+
+<p><a id="X8174B2CD7839840F" name="X8174B2CD7839840F"></a></p>
+
+<h5>28.1-7 RipsChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RipsChainComplex</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns <span class="SimpleMath">n+1</span> terms of a chain complex whose homology is that of the nerve (or Rips complex) of the graph in degrees up to <span class="SimpleMath">n</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X7C86B58A7CEA5513" name="X7C86B58A7CEA5513"></a></p>
+
+<h5>28.1-8 VectorsToSymmetricMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorsToSymmetricMatrix</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorsToSymmetricMatrix</code>( <var class="Arg">M</var>, <var class="Arg">distance</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a matrix <span class="SimpleMath">M</span> of rational numbers and returns a symmetric matrix <span class="SimpleMath">S</span> whose <span class="SimpleMath">(i,j)</span> entry is the distance between the <span class="SimpleMath">i</span>-th row and <span class="SimpleMath">j</span>-th rows of <span class="SimpleMath">M</span> where distance is given by the sum of the absolute values of the coordinate differences.</p>
+
+<p>Optionally, a function distance(v,w) can be entered as a second argument. This function has to return a rational number for each pair of rational vectors <span class="SimpleMath">v,w</span> of length Length(M[1]).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X8307F8DB85F145AE" name="X8307F8DB85F145AE"></a></p>
+
+<h5>28.1-9 EulerCharacteristic</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EulerCharacteristic</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a pure cubical complex, or cubical complex, or simplicial complex <span class="SimpleMath">T</span> and returns its Euler characteristic.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X86B9F59880C58160" name="X86B9F59880C58160"></a></p>
+
+<h5>28.1-10 MaximalSimplicesToSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSimplicesToSimplicialComplex</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a list L whose entries are lists of vertices representing the maximal simplices of a simplicial complex. The simplicial complex is returned. Here a "vertex" is a GAP object such as an integer or a subgroup.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap3.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">4</a></span> </p>
+
+<p><a id="X87CABD297B8B060D" name="X87CABD297B8B060D"></a></p>
+
+<h5>28.1-11 SkeletonOfSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SkeletonOfSimplicialComplex</code>( <var class="Arg">S</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and a positive integer <span class="SimpleMath">k</span> less than or equal to the dimension of <span class="SimpleMath">S</span>. It returns the truncated <span class="SimpleMath">k</span>-dimensional simplicial complex <span class="SimpleMath">S^k</span> (and leaves <span class="SimpleMath">S</span> unchanged).</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X782F884F7D9233A2" name="X782F884F7D9233A2"></a></p>
+
+<h5>28.1-12 GraphOfSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphOfSimplicialComplex</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and returns the graph of <span class="SimpleMath">S</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap2.html">1</a></span> , <span class="URL"><a href="tutorial/chap4.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">3</a></span> </p>
+
+<p><a id="X829ABA507DFBBD7B" name="X829ABA507DFBBD7B"></a></p>
+
+<h5>28.1-13 ContractibleSubcomplexOfSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractibleSubcomplexOfSimplicialComplex</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and returns a (probably maximal) contractible subcomplex of <span class="SimpleMath">S</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X84DC5B4D783598C7" name="X84DC5B4D783598C7"></a></p>
+
+<h5>28.1-14 PathComponentsOfSimplicialComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathComponentsOfSimplicialComplex</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial complex <span class="SimpleMath">S</span> and a nonnegative integer <span class="SimpleMath">n</span>. If <span class="SimpleMath">n=0</span> the number of path components of <span class="SimpleMath">S</span> is returned. Otherwise the n-th path component is returned (as a simplicial complex).</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7F8D4C4C7ED15A31" name="X7F8D4C4C7ED15A31"></a></p>
+
+<h5>28.1-15 QuillenComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuillenComplex</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span> and returns, as a simplicial complex, the order complex of the poset of non-trivial elementary abelian subgroups of <span class="SimpleMath">G</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">3</a></span> </p>
+
+<p><a id="X82A625DA815A97DE" name="X82A625DA815A97DE"></a></p>
+
+<h5>28.1-16 SymmetricMatrixToIncidenceMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricMatrixToIncidenceMatrix</code>( <var class="Arg">S</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricMatrixToIncidenceMatrix</code>( <var class="Arg">S</var>, <var class="Arg">t</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a symmetric integer matrix S and an integer t. It returns the matrix <span class="SimpleMath">M</span> with <span class="SimpleMath">M_ij=1</span> if <span class="SimpleMath">I_ij</span> is less than <span class="SimpleMath">t</span> and <span class="SimpleMath">I_ij=1</span> otherwise.</p>
+
+<p>An optional integer <span class="SimpleMath">d</span> can be given as a third argument. In this case the incidence matrix should have roughly at most <span class="SimpleMath">d</span> entries in each row (corresponding to the <span class="SimpleMath">d</span> smallest entries in each row of <span class="SimpleMath">S</span>).</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X86F6C7E68222BE84" name="X86F6C7E68222BE84"></a></p>
+
+<h5>28.1-17 IncidenceMatrixToGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IncidenceMatrixToGraph</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a symmetric 0/1 matrix M. It returns the graph with one vertex for each row of <span class="SimpleMath">M</span> and an edges between vertices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> if the <span class="SimpleMath">(i,j)</span> entry in <span class="SimpleMath">M</span> equals 1.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80CAD0357AF44E48" name="X80CAD0357AF44E48"></a></p>
+
+<h5>28.1-18 CayleyGraphOfGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyGraphOfGroup</code>( <var class="Arg">G</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a group <span class="SimpleMath">G</span> and a set <span class="SimpleMath">A</span> of generators. It returns the Cayley graph.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X78E0B1357DDFE43E" name="X78E0B1357DDFE43E"></a></p>
+
+<h5>28.1-19 PathComponentsOfGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathComponentsOfGraph</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span> and a nonnegative integer <span class="SimpleMath">n</span>. If <span class="SimpleMath">n=0</span> the number of path components is returned. Otherwise the n-th path component is returned (as a graph).</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7BB384467E133719" name="X7BB384467E133719"></a></p>
+
+<h5>28.1-20 ContractGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContractGraph</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span> and tries to remove vertices and edges to produce a smaller graph <span class="SimpleMath">G'</span> such that the indlusion <span class="SimpleMath">G' → G</span> induces a homotopy equivalence <span class="SimpleMath">RG → RG'</span> of Rips complexes. If the graph <span class="SimpleMath">G</span> is modified the function returns true, and otherwise returns false.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> </p>
+
+<p><a id="X7F7D27C27A8817DE" name="X7F7D27C27A8817DE"></a></p>
+
+<h5>28.1-21 GraphDisplay</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphDisplay</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function uses GraphViz software to display a graph <span class="SimpleMath">G</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">2</a></span> </p>
+
+<p><a id="X80E8D8517CA19EE3" name="X80E8D8517CA19EE3"></a></p>
+
+<h5>28.1-22 SimplicialMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplicialMap</code>( <var class="Arg">K</var>, <var class="Arg">L</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplicialMapNC</code>( <var class="Arg">K</var>, <var class="Arg">L</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs simplicial complexes <span class="SimpleMath">K</span> , <span class="SimpleMath">L</span> and a function <span class="SimpleMath">f: K!.vertices → L!.vertices</span> representing a simplicial map. It returns a simplicial map <span class="SimpleMath">K → L</span>. If <span class="SimpleMath">f</span> does not happen to represent a simplicial map then SimplicialMap(K,L,f) will return fail; SimplicialMapNC(K,L,f) will not do any check and always return something of the data type "simplicial map".</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X876AB1AD7BCC253B" name="X876AB1AD7BCC253B"></a></p>
+
+<h5>28.1-23 ChainMapOfSimplicialMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMapOfSimplicialMap</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a simplicial map <span class="SimpleMath">f: K → L</span> and returns the corresponding chain map <span class="SimpleMath">C_∗(f) : C_∗(K) → C_∗(L)</span> of the simplicial chain complexes..</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80F5DAB17E349DF1" name="X80F5DAB17E349DF1"></a></p>
+
+<h5>28.1-24 SimplicialNerveOfGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplicialNerveOfGraph</code>( <var class="Arg">G</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span> and returns a <span class="SimpleMath">d</span>-dimensional simplicial complex <span class="SimpleMath">K</span> whose 1-skeleton is equal to <span class="SimpleMath">G</span>. There is a simplicial inclusion <span class="SimpleMath">K → RG</span> where: (i) the inclusion induces isomorphisms on homotopy groups in dimensions less than <span class="SimpleMath">d</span>; (ii) the complex <span class="SimpleMath">RG</span> is the Rips complex (with one <span class="SimpleMath">n</span>-simplex for each complete subgraph of <span class="SimpleMath">G</span> on <span class="SimpleMath">n+1</span> vertices).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">2</a></span> </p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap27.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap29.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
