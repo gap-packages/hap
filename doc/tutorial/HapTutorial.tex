@@ -1852,7 +1852,7 @@ integer matrix $A$ of determinant $1$ as a word in $S$, $T$ and their inverses. 
   [ [ 4, 9 ], [ 7, 16 ] ]
   
 \end{Verbatim}
- It is convenient to introduce the matrix $U=ST = \left(\begin{array}{rr}0&-1\\ 1 &1 \end{array}\right)$. The matrices $S$ and $U$ also generate $SL_2(\mathbb Z)$. In fact we have a free presentation $SL_2(\mathbb Z)= \langle S,T\, |\, S^4=U^6=1 \rangle $. 
+ It is convenient to introduce the matrix $U=ST = \left(\begin{array}{rr}0&-1\\ 1 &1 \end{array}\right)$. The matrices $S$ and $U$ also generate $SL_2(\mathbb Z)$. In fact we have a free presentation $SL_2(\mathbb Z)= \langle S,U\, |\, S^4=U^6=1 \rangle $. 
 
 
 
@@ -1870,49 +1870,64 @@ words in $S$, $U$ and $U^2$ that, apart from the identity, end in $S$.
 \section{\textcolor{Chapter }{One-dimensional fundamental domains and generators for congruence subgroups}}\logpage{[ 10, 3, 0 ]}
 \hyperdef{L}{X7D1A56967A073A8B}{}
 {
- Recall that a \emph{cell structure} on a space $X$ is a partition of $X$ into subsets $e_i$ such that each $e_i$ is homeomorphic to an open Euclidean ball of some dimension. We say that $e_i$ is an $n$-\emph{cell} if it is homeomorphic to the open $n$-dimensional ball. We say that the cell structure is \emph{reduced} if it has precisely one $0$-cell. A CW-complex is a cell complex satisfying extra conditions. 
+ The modular group ${\cal M}=PSL_2(\mathbb Z)$ is isomorphic, as an abstract group, to the free product $\mathbb Z_2\ast \mathbb Z_3$. By the Kurosh subgroup theorem, any finite index subgroup $M \subset {\cal M}$ is isomorphic to the free product of finitely many copies of $\mathbb Z_2$s, $\mathbb Z_3$s and $\mathbb Z$s. A subset $\underline x \subset M$ is an \emph{independent} set of subgroup generators if $M$ is the free product of the cyclic subgroups $<x >$ as $x$ runs over $\underline x$. Let us say that a set of elements in $SL_2(\mathbb Z)$ is \emph{projectively independent} if it maps injectively onto an independent set of subgroup generators $\underline x\subset {\cal M}$. The generating set $\{S,U\}$ for $SL_2(\mathbb Z)$ given in the preceding section is projectively independent. 
 
- Suppose that we wish to compute a set of generators for a congruence subgroup $\Gamma$. The required generators correspond to the $1$-cells of a reduced classifying CW-complex (or free resolution) $B(\Gamma)$. Such a classifying complex can be constructed, using perturbation
-techniques, from $ \cal T$ and reduced classifying CW-complexes $B(stab(e^0))$, $B(Stab(e^1))$ for the stabilizer groups of a vertex and edge of $\cal T$. In this construction, the $1$-cells of $B(\Gamma)$ are in one-one correspondence with generators for the first homology of the
-quotient graph $ \Gamma \setminus \cal T$ together with the $1$-cells of $B(stab(e^0))$. If $\Gamma$ acts freely on the vertices of $ \cal T$ then the $1$-cells of $B(\Gamma)$ are in one-one correspondence with just the generators for the first homology
-of $ \Gamma \setminus \cal T$. To determine the quotient $ \Gamma \setminus \cal T$ we need to determine a cellular subspace $D_\Gamma \subset \cal T$ whose images under the action of $\Gamma$ cover $\cal T$ and are pairwise either disjoint or identical. The subspace $D_\Gamma$ will not be a CW-complex as it won't be closed, but it can be chosen to be
-connected, and hence contractible. We call $D_\Gamma$ a \emph{fundamental region} for $\Gamma$. We denote by $\mathring D_\Gamma$ the largest CW-subcomplex of $D_\Gamma$. The vertices of $\mathring D_\Gamma$ are the same as the vertices of $D_\Gamma$. Thus $\mathring D_\Gamma$ is a subtree of the cubic tree whose vertices correspond to coset
-representatives of $\Gamma$ in $SL_2(\mathbb Z)$. For each vertex $v$ in the tree $\mathring D_\Gamma$ define $\eta(v)=3 -{\rm degree}(v)$. Then the number of homology generators for $ \Gamma \setminus \cal T$ will be $(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)$. The role of tree diagrams in the study of congruence subgroups of $SL_2(\mathbb Z)$ is explained in detail in \cite{kulkarni}. 
+ We are interested in constructing a set of generators for a given congruence
+subgroup $\Gamma$. If a small generating set for $\Gamma$ is required then we should aim to construct one which is close to being
+projectively independent. 
 
-Suppose that we wish to calculate a set of generators for the principal
-congruence subgroup $\Gamma_1(N)$ of level $N$. Note that $\Gamma_1(N)$ intersects trivially with $\cal U$, and hence $\Gamma_1(N)$ acts freely on the vertices of the cubical tree $\cal T$. The following commands determine generators for $\Gamma_1(6)$ and display $\mathring D_{\Gamma_1(6)}$. 
+ It is useful to invoke the following general result which follows from a
+perturbation result about free $\mathbb ZG$-resolutons in \cite[Theorem 2]{ellisharrisskoldberg} and an old observation of John Milnor that a free $\mathbb ZG$-resolution can be realized as the cellular chain complex of a CW-complex if
+it can be so realized in low dimensions. 
+
+\textsc{Theorem.} Let $X$ be a contractible CW-complex on which a group $G$ acts by permuting cells. The cellular chain complex $C_\ast X$ is a $\mathbb ZG$-resolution of $\mathbb Z$ which typically is not free. Let $[e^n]$ denote the orbit of the n-cell $e^n$ under the action. Let $G^{e^n} \le G$ denote the stabilizer subgroup of $e^n$, in which group elements are not required to stabilize $e^n$ point-wise. Let $Y_{e^n}$ denote a contractible CW-complex on which $G^{e^n}$ acts cellularly and freely. Then there exists a contractible CW-complex $W$ on which $G$ acts cellularly and freely, and in which the orbits of $n$-cells are labelled by $[e^p]\otimes [f^q]$ where $p+q=n$ and $[e^p]$ ranges over the $G$-orbits of $p$-cells in $X$, $[f^q]$ ranges over the $G^{e^p}$-orbits of $q$-cells in $Y_{e^p}$. 
+
+ 
+
+Let $W$ be as in the theorem. Then the quotient CW-complex $B_G=W/G$ is a classifying space for $G$. Let $T$ denote a maximal tree in the $1$-skeleton $B^1_G$. Basic geometric group theory tells us that the $1$-cells in $B^1_G\setminus T$ correspond to a generating set for $G$. 
+
+ Suppose we wish to compute a set of generators for a principal congruence
+subgroup $\Gamma=\Gamma_1(N)$. In the above theorem take $X={\cal T}$ to be the cubic tree, and note that $\Gamma$ acts freely on $\cal T$ and thus that $W={\cal T}$. To determine the $1$-cells of $B_{\Gamma}\setminus T$ we need to determine a cellular subspace $D_\Gamma \subset \cal T$ whose images under the action of $\Gamma$ cover $\cal T$ and are pairwise either disjoint or identical. The subspace $D_\Gamma$ will not be a CW-complex as it won't be closed, but it can be chosen to be
+connected, and hence contractible. We call $D_\Gamma$ a \emph{fundamental region} for $\Gamma$. We denote by $\mathring D_\Gamma$ the largest CW-subcomplex of $D_\Gamma$. The vertices of $\mathring D_\Gamma$ are the same as the vertices of $D_\Gamma$. Thus $\mathring D_\Gamma$ is a subtree of the cubic tree with $|\Gamma|/6$ vertices. For each vertex $v$ in the tree $\mathring D_\Gamma$ define $\eta(v)=3 -{\rm degree}(v)$. Then the number of generators for $ \Gamma $ will be $(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)$. 
+
+ The following commands determine projectively independent generators for $\Gamma_1(6)$ and display $\mathring D_{\Gamma_1(6)}$. The subgroup $\Gamma_1(6)$ is free on $13$ generators. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=HAP_PrincipalCongruenceSubgroup(6);;|
   !gapprompt@gap>| !gapinput@gens:=GeneratorsOfGroup(G);|
-  [ [ [ -65, 18 ], [ 18, -5 ] ], [ [ -41, 18 ], [ 66, -29 ] ], 
-    [ [ -29, 12 ], [ 12, -5 ] ], [ [ -17, -12 ], [ -24, -17 ] ], 
-    [ [ -17, -6 ], [ -48, -17 ] ], [ [ -5, 6 ], [ -6, 7 ] ], 
-    [ [ -5, 18 ], [ -12, 43 ] ], [ [ 1, -6 ], [ 0, 1 ] ], 
-    [ [ 1, 0 ], [ -6, 1 ] ], [ [ 7, -18 ], [ -12, 31 ] ], 
-    [ [ 7, 12 ], [ 18, 31 ] ], [ [ 7, 18 ], [ 12, 31 ] ], 
-    [ [ 13, -18 ], [ -18, 25 ] ], [ [ 19, -30 ], [ -12, 19 ] ] ]
-  !gapprompt@gap>| !gapinput@HAP_SL2TreeDisplay(G);|
-  
+  [ [ [ -83, -18 ], [ 60, 13 ] ], [ [ -77, -18 ], [ 30, 7 ] ], 
+    [ [ -65, -12 ], [ 168, 31 ] ], [ [ -53, -12 ], [ 84, 19 ] ], 
+    [ [ -47, -18 ], [ 222, 85 ] ], [ [ -41, -12 ], [ 24, 7 ] ], 
+    [ [ -35, -6 ], [ 6, 1 ] ], [ [ -11, -18 ], [ 30, 49 ] ], 
+    [ [ -11, -6 ], [ 24, 13 ] ], [ [ -5, -18 ], [ 12, 43 ] ], 
+    [ [ -5, -12 ], [ 18, 43 ] ], [ [ -5, -6 ], [ 6, 7 ] ], 
+    [ [ 1, 0 ], [ -6, 1 ] ] ]
   
 \end{Verbatim}
  
 
   
 
-The congruence subgroup $\Gamma_0(N)$ does not act freely on the vertices of $\cal T$. However, we can replace $\cal T$ by a double cover ${\cal T}'$ which admits a free action of $\Gamma_0(N)$ on its vertices. The following commands display $\mathring D_{\Gamma_1(39)}$ for a fundamental region in ${\cal T}'$. 
+An alternative but very related approach to computing generators of congruence
+subgroups of $SL_2(\mathbb Z)$ is described in \cite{kulkarni}. 
+
+The congruence subgroup $\Gamma_0(N)$ does not act freely on the vertices of $\cal T$, and so one needs to incorporate a generator for the cyclic stabilizer group
+according to the above theorem. Alternatively, we can replace the cubic tree
+by a six-fold cover ${\cal T}'$ on whose vertex set $\Gamma_0(N)$ acts freely. This alternative approach will produce a redundant set of
+generators. The following commands display $\mathring D_{\Gamma_0(39)}$ for a fundamental region in ${\cal T}'$. They also use the corresponding generating set for $\Gamma_0(39)$, involving $18$ generators, to compute the abelianization $\Gamma_0(39)^{ab}= \mathbb Z_2 \oplus \mathbb Z_3^2 \oplus \mathbb Z^9$. The abelianization shows that any generating set has at least $11$ generators. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=HAP_CongruenceSubgroupGamma0(39);;|
   !gapprompt@gap>| !gapinput@HAP_SL2TreeDisplay(G);|
+  !gapprompt@gap>| !gapinput@Length(GeneratorsOfGroup(G));|
+  18
+  !gapprompt@gap>| !gapinput@AbelianInvariants(G);|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3 ]
   
 \end{Verbatim}
  
 
   
 
- To compute $D_\Gamma$ one only needs to be able to test whether a given matrix lies in $\Gamma$ or not. However, for speed, the above calculations of $D_\Gamma$ take advantage in GAP's facility for iterating over elements of $SL_2(\mathbb Z/N \mathbb Z)$. An algorithm that does not use this facility is also implemented but seems
-to be a bit slower in general. 
-
- Given an inclusion $\Gamma'\subset \Gamma$ of congruence subgroups, it is straightforward to use the trees $\mathring D_{\Gamma'}$ and $\mathring D_{\Gamma}$ to compute a system of coset representative for $\Gamma'\setminus \Gamma$. }
+ Note that to compute $D_\Gamma$ one only needs to be able to test whether a given matrix lies in $\Gamma$ or not. Given an inclusion $\Gamma'\subset \Gamma$ of congruence subgroups, it is straightforward to use the trees $\mathring D_{\Gamma'}$ and $\mathring D_{\Gamma}$ to compute a system of coset representative for $\Gamma'\setminus \Gamma$. }
 
  
 \section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 10, 4, 0 ]}
@@ -2613,8 +2628,8 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational
 methods for finitely presented groups. Such methods underly the following
 computation of 
-\[H_1( SL_2({\cal O}\mathbb Q(\sqrt{-1})),\mathbb Z) \cong \mathbb Z_? \oplus
-\mathbb Z_?\]
+\[H_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z_2 \oplus \cdots \oplus \mathbb
+Z_{4078793513671}\]
  where $I$ is the prime ideal in the Gaussian integers generated by $41+56\sqrt{-1}$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Q:=QuadraticNumberField(-1);;|
@@ -2622,8 +2637,7 @@ computation of
   !gapprompt@gap>| !gapinput@I:=QuadraticIdeal(OQ,41+56*Sqrt(-1));|
   ideal of norm 4817 in O(GaussianRationals)
   !gapprompt@gap>| !gapinput@G:=HAP_CongruenceSubgroupGamma0(I);;|
-  !gapprompt@gap>| !gapinput@F:=AsFpGroup(G);;|
-  !gapprompt@gap>| !gapinput@AbelianInvariants(F);|
+  !gapprompt@gap>| !gapinput@AbelianInvariants(G);|
   [ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, 
     4078793513671 ]
   
