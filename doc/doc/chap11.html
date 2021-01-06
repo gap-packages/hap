@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 11:  Homology and cohomology groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap11"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap11_mj.html">[MathJax on]</a></p>
+<p><a id="X782177107A5D6D19" name="X782177107A5D6D19"></a></p>
+<div class="ChapSects"><a href="chap11.html#X782177107A5D6D19">11 <span class="Heading"> Homology and cohomology groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7CFDEEC07F15CF82">11.1 <span class="Heading">  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X84CFC57B7E9CCCF7">11.1-1 Cohomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D5E7FB97BF38DF1">11.1-2 CohomologyModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X86F3E9F17BF08BC0">11.1-3 CohomologyPrimePart</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D1658EF810022E5">11.1-4 GroupCohomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7F0A19E97980FD57">11.1-5 GroupHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7F1A5C7D8288480F">11.1-6 PersistentHomologyOfQuotientGroupSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X82FFCD8F8567BC95">11.1-7 PersistentCohomologyOfQuotientGroupSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7998017B7B6C93B8">11.1-8 UniversalBarCode</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X81598A7F7D0B1A07">11.1-9 PersistentHomologyOfSubGroupSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X85542FBF7C1AEE55">11.1-10 PersistentHomologyOfFilteredChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7E687DBD787A68BD">11.1-11 PersistentHomologyOfCommutativeDiagramOfPGroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A5DF30985E2738C">11.1-12 PersistentHomologyOfFilteredPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X80F604A579165F5C">11.1-13 PersistentHomologyOfPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7B4743ED799C2A16">11.1-14 ZZPersistentHomologyOfPureCubicalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X86D0AEEC79FD104A">11.1-15 RipsHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A12329E85BD4842">11.1-16 BarCode</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X806A81EF79CE0DEF">11.1-17 BarCodeDisplay</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X85A9D5CB8605329C">11.1-18 Homology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X877EC6437EA89C45">11.1-19 HomologyPb</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7CA212D0806A89FA">11.1-20 HomologyVectorSpace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7AE7B4857D0348AC">11.1-21 HomologyPrimePart</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X841C3E3E86529CBF">11.1-22 LeibnizAlgebraHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X79FC84787D45273D">11.1-23 LieAlgebraHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A30C1CC7FB6B2E9">11.1-24 PrimePartDerivedFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7EFE814686C4EEF5">11.1-25 RankHomologyPGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X81875BCD7A7A217A">11.1-26 RankPrimeHomology</a></span>
+</div></div>
+</div>
+
+<h3>11 <span class="Heading"> Homology and cohomology groups</span></h3>
+
+<p><a id="X7CFDEEC07F15CF82" name="X7CFDEEC07F15CF82"></a></p>
+
+<h4>11.1 <span class="Heading">  </span></h4>
+
+<p><a id="X84CFC57B7E9CCCF7" name="X84CFC57B7E9CCCF7"></a></p>
+
+<h5>11.1-1 Cohomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cohomology</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a cochain complex <span class="SimpleMath">X=C</span> (or G-cocomplex C) or a cochain map <span class="SimpleMath">X=(C ⟶ D)</span> in characteristic <span class="SimpleMath">p</span> together with a non-negative intereg <span class="SimpleMath">n</span>.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> and <span class="SimpleMath">p=0</span> then the torsion coefficients of <span class="SimpleMath">H^n(C)</span> are retuned. If <span class="SimpleMath">X=C</span> and <span class="SimpleMath">p</span> is prime then the dimension of <span class="SimpleMath">H^n(C)</span> are retuned.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H^n(C)⟶ H^n(D)</span> is returned as a homomorphism of finitely presented groups.</p>
+
+</li>
+</ul>
+<p>A <span class="SimpleMath">G</span>-cocomplex <span class="SimpleMath">C</span> can also be input. The cohomology groups of such a complex may not be abelian. <strong class="button">Warning:</strong> in this case Cohomology(C,n) returns the abelian invariants of the <span class="SimpleMath">n</span>-th cohomology group of <span class="SimpleMath">C</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap3.html">2</a></span> , <span class="URL"><a href="tutorial/chap6.html">3</a></span> , <span class="URL"><a href="tutorial/chap7.html">4</a></span> , <span class="URL"><a href="tutorial/chap10.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutModPRings.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutNoncrossing.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoefficientSequence.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCohomologyRings.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCrossedMods.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGouter.html">17</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSurvey.html">18</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">19</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTopology.html">20</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">21</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">22</a></span> </p>
+
+<p><a id="X7D5E7FB97BF38DF1" name="X7D5E7FB97BF38DF1"></a></p>
+
+<h5>11.1-2 CohomologyModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyModule</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a <span class="SimpleMath">G</span>-cocomplex <span class="SimpleMath">C</span> together with a non-negative integer <span class="SimpleMath">n</span>. It returns the cohomology <span class="SimpleMath">H^n(C)</span> as a <span class="SimpleMath">G</span>-outer group. If <span class="SimpleMath">C</span> was constructed from a resolution <span class="SimpleMath">R</span> by homing to an abelian <span class="SimpleMath">G</span>-outer group <span class="SimpleMath">A</span> then, for each x in H:=CohomologyModule(C,n), there is a function f:=H!.representativeCocycle(x) which is a standard n-cocycle corresponding to the cohomology class x. (At present this works only for n=1,2,3.)</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutCrossedMods.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGouter.html">2</a></span> </p>
+
+<p><a id="X86F3E9F17BF08BC0" name="X86F3E9F17BF08BC0"></a></p>
+
+<h5>11.1-3 CohomologyPrimePart</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyPrimePart</code>( <var class="Arg">C</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a cochain complex <span class="SimpleMath">C</span> in characteristic 0, a positive integer <span class="SimpleMath">n</span>, and a prime <span class="SimpleMath">p</span>. It returns a list of those torsion coefficients of <span class="SimpleMath">H^n(C)</span> that are positive powers of <span class="SimpleMath">p</span>. The function uses the EDIM package by Frank Luebeck.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7D1658EF810022E5" name="X7D1658EF810022E5"></a></p>
+
+<h5>11.1-4 GroupCohomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupCohomology</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupCohomology</code>( <var class="Arg">X</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and either</p>
+
+
+<ul>
+<li><p>a finite group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a nilpotent Pcp-group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a space group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a list <span class="SimpleMath">X=D</span> representing a graph of groups</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Artin",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing an infinite Artin group <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Coxeter",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing a finite Coxeter group <span class="SimpleMath">G</span>.</p>
+
+</li>
+</ul>
+<p>It returns the torsion coefficients of the integral cohomology <span class="SimpleMath">H^n(G,Z)</span>.</p>
+
+<p>There is an optional third argument which, when set equal to a prime <span class="SimpleMath">p</span>, causes the function to return the the mod <span class="SimpleMath">p</span> cohomology <span class="SimpleMath">H^n(G,Z_p)</span> as a list of length equal to its rank.</p>
+
+<p>This function is a composite of more basic functions, and makes choices for a number of parameters. For a particular group you would almost certainly be better using the more basic functions and making the choices yourself!</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap6.html">1</a></span> </p>
+
+<p><a id="X7F0A19E97980FD57" name="X7F0A19E97980FD57"></a></p>
+
+<h5>11.1-5 GroupHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupHomology</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupHomology</code>( <var class="Arg">X</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and either</p>
+
+
+<ul>
+<li><p>a finite group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a nilpotent Pcp-group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a space group <span class="SimpleMath">X=G</span></p>
+
+</li>
+<li><p>or a list <span class="SimpleMath">X=D</span> representing a graph of groups</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Artin",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing an infinite Artin group <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p>or a pair <span class="SimpleMath">X=["Coxeter",D]</span> where <span class="SimpleMath">D</span> is a Coxeter diagram representing a finite Coxeter group <span class="SimpleMath">G</span>.</p>
+
+</li>
+</ul>
+<p>It returns the torsion coefficients of the integral homology <span class="SimpleMath">H_n(G,Z)</span>.</p>
+
+<p>There is an optional third argument which, when set equal to a prime <span class="SimpleMath">p</span>, causes the function to return the mod <span class="SimpleMath">p</span> homology <span class="SimpleMath">H_n(G,Z_p)</span> as a list of lenth equal to its rank.</p>
+
+<p>This function is a composite of more basic functions, and makes choices for a number of parameters. For a particular group you would almost certainly be better using the more basic functions and making the choices yourself!</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap6.html">1</a></span> , <span class="URL"><a href="tutorial/chap10.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">3</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">4</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">5</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">6</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLie.html">9</a></span> </p>
+
+<p><a id="X7F1A5C7D8288480F" name="X7F1A5C7D8288480F"></a></p>
+
+<h5>11.1-6 PersistentHomologyOfQuotientGroupSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfQuotientGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfQuotientGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">Resolution_Algorithm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of normal subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of quotient homomorphisms <span class="SimpleMath">G → G/S_k → G/S_k-1 → ... → G/S_2</span>. The bar code is returned as a matrix containing the dimensions of the images of the induced homology maps.</p>
+
+<p>If one sets <span class="SimpleMath">p=0</span> then the integral persitent homology bar code is returned. This is a matrix whose entries are pairs of the lists: the list of abelian invariants of the images of the induced homology maps and the cokernels of the induced homology maps. (The matrix probably does not uniquely determine the induced homology maps.)</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup, so this must be changed for infinite groups.)</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X82FFCD8F8567BC95" name="X82FFCD8F8567BC95"></a></p>
+
+<h5>11.1-7 PersistentCohomologyOfQuotientGroupSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentCohomologyOfQuotientGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentCohomologyOfQuotientGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">Resolution_Algorithm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of normal subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> cohomology in degree <span class="SimpleMath">n</span> of the sequence of quotient homomorphisms <span class="SimpleMath">G → G/S_k → G/S_k-1 → ... → G/S_2</span>. The bar code is returned as a matrix containing the dimensions of the images of the induced homology maps.</p>
+
+<p>If one sets <span class="SimpleMath">p=0</span> then the integral persitent cohomology bar code is returned. This is a matrix whose entries are pairs of the lists: the list of abelian invariants of the images of the induced cohomology maps and the cokernels of the induced cohomology maps. (The matrix probably does not uniquely determine the induced homology maps.)</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) can be entered as a fourth argument. (The default algorithm is ResolutionFiniteGroup, so this must be changed for infinite groups.)</p>
+
+<p>(The implementation is possibly a little less efficient than that of the corresponding persistent homology function.)</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7998017B7B6C93B8" name="X7998017B7B6C93B8"></a></p>
+
+<h5>11.1-8 UniversalBarCode</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalBarCode</code>( <var class="Arg">str</var>, <var class="Arg">n</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalBarCode</code>( <var class="Arg">str</var>, <var class="Arg">n</var>, <var class="Arg">d</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs integers <span class="SimpleMath">n,d</span> that identify a prime power group G=SmallGroup(n,d), together with one of the strings <span class="SimpleMath">str</span>= "UpperCentralSeries", LowerCentralSeries", "DerivedSeries", "UpperPCentralSeries", "LowerPCentralSeries". The function returns a matrix of rational functions; the coefficients of <span class="SimpleMath">x^k</span> in their expansions yield the persistence matrix for the degree <span class="SimpleMath">k</span> homology with trivial mod p coefficients associated to the quotients of <span class="SimpleMath">G</span> by the terms of the given series.</p>
+
+<p>If the additional integer argument <span class="SimpleMath">k</span> is supplied then the function returns the degree k homology persistence matrix.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X81598A7F7D0B1A07" name="X81598A7F7D0B1A07"></a></p>
+
+<h5>11.1-9 PersistentHomologyOfSubGroupSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfSubGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfSubGroupSeries</code>( <var class="Arg">S</var>, <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">Resolution_Algorithm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span> and a decreasing chain <span class="SimpleMath">S=[S_1, S_2, ..., S_k]</span> of subgroups in a finite <span class="SimpleMath">p</span>-group <span class="SimpleMath">G=S_1</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of inclusion homomorphisms <span class="SimpleMath">S_k → S_k-1 → ... → S_1=G</span>. The bar code is returned as a binary matrix.</p>
+
+<p>Non prime-power (and possibly infinite) groups <span class="SimpleMath">G</span> can also be handled; in this case the prime must be entered as a third argument, and the resolution algorithm (e.g. ResolutionNilpotentGroup) must be entered as a fourth argument.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X85542FBF7C1AEE55" name="X85542FBF7C1AEE55"></a></p>
+
+<h5>11.1-10 PersistentHomologyOfFilteredChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfFilteredChainComplex</code>( <var class="Arg">C</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a filtered chain complex <span class="SimpleMath">C</span> (of characteristic <span class="SimpleMath">0</span> or <span class="SimpleMath">p</span>) together with a positive integer <span class="SimpleMath">n</span> and prime <span class="SimpleMath">p</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the filtered chain complex <span class="SimpleMath">C</span>. (This function needs a more efficient implementation. Its fine as it stands for investigation in group homology, but not sufficiently efficient for the homology of large complexes arising in applied topology.)</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X7E687DBD787A68BD" name="X7E687DBD787A68BD"></a></p>
+
+<h5>11.1-11 PersistentHomologyOfCommutativeDiagramOfPGroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfCommutativeDiagramOfPGroups</code>( <var class="Arg">D</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a commutative diagram <span class="SimpleMath">D</span> of finite <span class="SimpleMath">p</span>-groups and a positive integer <span class="SimpleMath">n</span>. It returns a list containing, for each homomorphism in the nerve of <span class="SimpleMath">D</span>, a triple <span class="SimpleMath">[k,l,m]</span> where <span class="SimpleMath">k</span> is the dimension of the source of the induced mod <span class="SimpleMath">p</span> homology map in degree <span class="SimpleMath">n</span>, <span class="SimpleMath">l</span> is the dimension of the image, and <span class="SimpleMath">m</span> is the dimension of the cokernel.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7A5DF30985E2738C" name="X7A5DF30985E2738C"></a></p>
+
+<h5>11.1-12 PersistentHomologyOfFilteredPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfFilteredPureCubicalComplex</code>( <var class="Arg">M</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a filtered pure cubical complex <span class="SimpleMath">M</span> and a non-negative integer <span class="SimpleMath">n</span>. It returns the degree <span class="SimpleMath">n</span> persistent homology of <span class="SimpleMath">M</span> with rational coefficients.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X80F604A579165F5C" name="X80F604A579165F5C"></a></p>
+
+<h5>11.1-13 PersistentHomologyOfPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PersistentHomologyOfPureCubicalComplex</code>( <var class="Arg">L</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span>, a prime <span class="SimpleMath">p</span> and an increasing chain <span class="SimpleMath">L=[L_1, L_2, ..., L_k]</span> of subcomplexes in a pure cubical complex <span class="SimpleMath">L_k</span>. It returns the bar code of the persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of inclusion maps. The bar code is returned as a matrix. (This function is extremely inefficient and it is better to use PersistentHomologyOFilteredfPureCubicalComplex.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7B4743ED799C2A16" name="X7B4743ED799C2A16"></a></p>
+
+<h5>11.1-14 ZZPersistentHomologyOfPureCubicalComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZZPersistentHomologyOfPureCubicalComplex</code>( <var class="Arg">L</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a positive integer <span class="SimpleMath">n</span>, a prime <span class="SimpleMath">p</span> and any sequence <span class="SimpleMath">L=[L_1, L_2, ..., L_k]</span> of subcomplexes of some pure cubical complex. It returns the bar code of the zig-zag persistent mod <span class="SimpleMath">p</span> homology in degree <span class="SimpleMath">n</span> of the sequence of maps <span class="SimpleMath">L_1 → L_1 ∪ L_2 ← L_2 → L_2 ∪ L_3 ← L_4 → ... ← L_k</span>. The bar code is returned as a matrix.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X86D0AEEC79FD104A" name="X86D0AEEC79FD104A"></a></p>
+
+<h5>11.1-15 RipsHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RipsHomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RipsHomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a graph <span class="SimpleMath">G</span>, a non-negative integer <span class="SimpleMath">n</span> (and optionally a prime number <span class="SimpleMath">p</span>). It returns the integral homology (or mod p homology) in degree <span class="SimpleMath">n</span> of the Rips complex of <span class="SimpleMath">G</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7A12329E85BD4842" name="X7A12329E85BD4842"></a></p>
+
+<h5>11.1-16 BarCode</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCode</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an integer persistence matrix P and returns the same information in the form of a binary matrix (corresponding to the usual bar code).</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap4.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">2</a></span> </p>
+
+<p><a id="X806A81EF79CE0DEF" name="X806A81EF79CE0DEF"></a></p>
+
+<h5>11.1-17 BarCodeDisplay</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeDisplay</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeDisplay</code>( <var class="Arg">P</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeCompactDisplay</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BarCodeCompactDisplay</code>( <var class="Arg">P</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs an integer persistence matrix P, and an optional string, such as <span class="SimpleMath">str</span>="mozilla" specifying a viewer/browser. It displays a picture of the bar code (using GraphViz software). The compact display is better for large bar codes.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">1</a></span> </p>
+
+<p><a id="X85A9D5CB8605329C" name="X85A9D5CB8605329C"></a></p>
+
+<h5>11.1-18 Homology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Homology</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a chain complex <span class="SimpleMath">X=C</span> or a chain map <span class="SimpleMath">X=(C ⟶ D)</span>.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> then the torsion coefficients of <span class="SimpleMath">H_n(C)</span> are retuned.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H_n(C) ⟶ H_n(D)</span> is returned as a homomorphism of finitely presented groups.</p>
+
+</li>
+</ul>
+<p>A <span class="SimpleMath">G</span>-complex <span class="SimpleMath">C</span> can also be input. The homology groups of such a complex may not be abelian. <strong class="button">Warning:</strong> in this case Homology(C,n) returns the abelian invariants of the <span class="SimpleMath">n</span>-th homology group of <span class="SimpleMath">C</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="tutorial/chap1.html">1</a></span> , <span class="URL"><a href="tutorial/chap2.html">2</a></span> , <span class="URL"><a href="tutorial/chap3.html">3</a></span> , <span class="URL"><a href="tutorial/chap6.html">4</a></span> , <span class="URL"><a href="tutorial/chap8.html">5</a></span> , <span class="URL"><a href="tutorial/chap9.html">6</a></span> , <span class="URL"><a href="tutorial/chap10.html">7</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLinks.html">8</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArithmetic.html">9</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutMetrics.html">10</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutArtinGroups.html">11</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutAspherical.html">12</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutParallel.html">13</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutBredon.html">14</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">15</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCocycles.html">16</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPersistent.html">17</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPoincareSeries.html">18</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoveringSpaces.html">19</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoverinSpaces.html">20</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutPolytopes.html">21</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCoxeter.html">22</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutquasi.html">23</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutCubical.html">24</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRandomComplexes.html">25</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutRosenbergerMonster.html">26</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDavisComplex.html">27</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutDefinitions.html">28</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSimplicialGroups.html">29</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutExtensions.html">30</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutSpaceGroup.html">31</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">32</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutGraphsOfGroups.html">33</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">34</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTensorSquare.html">35</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">36</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTorAndExt.html">37</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLie.html">38</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">39</a></span> </p>
+
+<p><a id="X877EC6437EA89C45" name="X877EC6437EA89C45"></a></p>
+
+<h5>11.1-19 HomologyPb</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyPb</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This is a back-up function which might work in some instances where <span class="SimpleMath">Homology(C,n)</span> fails. It is most useful for chain complexes whose boundary homomorphisms are sparse.</p>
+
+<p>It inputs a chain complex <span class="SimpleMath">C</span> in characteristic <span class="SimpleMath">0</span> and returns the torsion coefficients of <span class="SimpleMath">H_n(C)</span> . There is a small probability that an incorrect answer could be returned. The computation relies on probabilistic Smith Normal Form algorithms implemented in the Simplicial Homology GAP package. This package therefore needs to be loaded. The computation is stored as a component of <span class="SimpleMath">C</span> so, when called a second time for a given <span class="SimpleMath">C</span> and <span class="SimpleMath">n</span>, the calculation is recalled without rerunning the algorithm.</p>
+
+<p>The choice of probabalistic algorithm can be changed using the command</p>
+
+<p>SetHomologyAlgorithm(HomologyAlgorithm[i]);</p>
+
+<p>where i = 1,2,3 or 4. The upper limit for the probability of an incorrect answer can be set to any rational number <span class="SimpleMath">0</span>&lt;<span class="SimpleMath">e</span>&lt;= <span class="SimpleMath">1</span> using the following command.</p>
+
+<p>SetUncertaintyTolerence(e);</p>
+
+<p>See the Simplicial Homology package manual for further details.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7CA212D0806A89FA" name="X7CA212D0806A89FA"></a></p>
+
+<h5>11.1-20 HomologyVectorSpace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyVectorSpace</code>( <var class="Arg">X</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs either a chain complex <span class="SimpleMath">X=C</span> or a chain map <span class="SimpleMath">X=(C ⟶ D)</span> in prime characteristic.</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">X=C</span> then <span class="SimpleMath">H_n(C)</span> is retuned as a vector space.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">X=(C ⟶ D)</span> then the induced homomorphism <span class="SimpleMath">H_n(C) ⟶ H_n(D)</span> is returned as a homomorphism of vector spaces.</p>
+
+</li>
+</ul>
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X7AE7B4857D0348AC" name="X7AE7B4857D0348AC"></a></p>
+
+<h5>11.1-21 HomologyPrimePart</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyPrimePart</code>( <var class="Arg">C</var>, <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a chain complex <span class="SimpleMath">C</span> in characteristic 0, a positive integer <span class="SimpleMath">n</span>, and a prime <span class="SimpleMath">p</span>. It returns a list of those torsion coefficients of <span class="SimpleMath">H_n(C)</span> that are positive powers of <span class="SimpleMath">p</span>. The function uses the EDIM GAP package by Frank Luebeck.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X841C3E3E86529CBF" name="X841C3E3E86529CBF"></a></p>
+
+<h5>11.1-22 LeibnizAlgebraHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeibnizAlgebraHomology</code>( <var class="Arg">A</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a Lie or Leibniz algebra <span class="SimpleMath">X=A</span> (over the ring of integers <span class="SimpleMath">Z</span> or over a field <span class="SimpleMath">K</span>), together with a positive integer <span class="SimpleMath">n</span>. It returns the <span class="SimpleMath">n</span>-dimensional Leibniz homology of <span class="SimpleMath">A</span>.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">2</a></span> </p>
+
+<p><a id="X79FC84787D45273D" name="X79FC84787D45273D"></a></p>
+
+<h5>11.1-23 LieAlgebraHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebraHomology</code>( <var class="Arg">A</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a Lie algebra <span class="SimpleMath">A</span> (over the integers or a field) and a positive integer <span class="SimpleMath">n</span>. It returns the homology <span class="SimpleMath">H_n(A,k)</span> where <span class="SimpleMath">k</span> denotes the ground ring.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutIntro.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLieCovers.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutLie.html">3</a></span> </p>
+
+<p><a id="X7A30C1CC7FB6B2E9" name="X7A30C1CC7FB6B2E9"></a></p>
+
+<h5>11.1-24 PrimePartDerivedFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimePartDerivedFunctor</code>( <var class="Arg">G</var>, <var class="Arg">R</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a finite group <span class="SimpleMath">G</span>, a positive integer <span class="SimpleMath">n</span>, at least <span class="SimpleMath">n+1</span> terms of a <span class="SimpleMath">ZP</span>-resolution for a Sylow subgroup <span class="SimpleMath">P</span>&lt;<span class="SimpleMath">G</span> and a "mathematically suitable" covariant additive functor <span class="SimpleMath">F</span> such as TensorWithIntegers . It returns the abelian invariants of the <span class="SimpleMath">p</span>-component of the homology <span class="SimpleMath">H_n(F(R))</span> .</p>
+
+<p>Warning: All calculations are assumed to be in characteristic 0. The function should not be used if the coefficient module is over the field of <span class="SimpleMath">p</span> elements.</p>
+
+<p>"Mathematically suitable" means that the Cartan-Eilenberg double coset formula must hold.</p>
+
+<p><strong class="button">Examples:</strong> <span class="URL"><a href="../www/SideLinks/About/aboutPerformance.html">1</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutFunctorial.html">2</a></span> , <span class="URL"><a href="../www/SideLinks/About/aboutTwistedCoefficients.html">3</a></span> </p>
+
+<p><a id="X7EFE814686C4EEF5" name="X7EFE814686C4EEF5"></a></p>
+
+<h5>11.1-25 RankHomologyPGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankHomologyPGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankHomologyPGroup</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankHomologyPGroup</code>( <var class="Arg">G</var>, <var class="Arg">n</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a (smallish) <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span>, or <span class="SimpleMath">n</span> terms of a minimal <span class="SimpleMath">Z_pG</span>-resolution <span class="SimpleMath">R</span> of <span class="SimpleMath">Z_p</span> , together with a positive integer <span class="SimpleMath">n</span>. It returns the minimal number of generators of the integral homology group <span class="SimpleMath">H_n(G,Z)</span>.</p>
+
+<p>If an option third string argument <span class="SimpleMath">str</span>="empirical" is included then an empirical algorithm will be used. This is one which always seems to yield the right answer but which we can't prove yields the correct answer.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+<p><a id="X81875BCD7A7A217A" name="X81875BCD7A7A217A"></a></p>
+
+<h5>11.1-26 RankPrimeHomology</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankPrimeHomology</code>( <var class="Arg">G</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Inputs a (smallish) <span class="SimpleMath">p</span>-group <span class="SimpleMath">G</span> together with a positive integer <span class="SimpleMath">n</span>. It returns a function <span class="SimpleMath">dim(k)</span> which gives the rank of the vector space <span class="SimpleMath">H_k(G,Z_p)</span> for all <span class="SimpleMath">0</span> &lt;= <span class="SimpleMath">k</span> &lt;= <span class="SimpleMath">n</span>.</p>
+
+<p><strong class="button">Examples:</strong></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
