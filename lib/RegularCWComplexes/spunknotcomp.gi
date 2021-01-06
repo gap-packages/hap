@@ -102,7 +102,7 @@ end);
 ######################## homotopy equivalent to the space got  ################
 ######################## by spinning K about the 'initial' hyperplane #########
 ###############################################################################
-InstallGlobalFunction(SpunAboutInitialHyperplane,
+InstallGlobalFunction(SpunAboutHyperplane,
 function(K)
 local U,i,inc;
 
@@ -114,6 +114,20 @@ U:=PureCubicalComplex(U);
 inc:=RegularCWMap(K,U);
 
 return ContractedComplex(Spin(inc));
+end);
+###############################################################################
+###############################################################################
+
+###############################################################################
+###############################################################################
+InstallGlobalFunction(SpunLinkComplement,
+function(K)
+local C,Y;
+Y:=PureCubicalKnot(K);
+Y:=PureComplexComplement(Y);
+Y:=SpunAboutHyperplane(Y);
+Y:=ContractedComplex(Y);
+return Y;
 end);
 ###############################################################################
 ###############################################################################

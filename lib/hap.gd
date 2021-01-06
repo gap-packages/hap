@@ -752,7 +752,8 @@ DeclareGlobalFunction("EquivariantCWComplexToRegularCWComplex");
 DeclareGlobalFunction("EquivariantCWComplexToRegularCWMap");
 DeclareGlobalFunction("Spin");
 DeclareGlobalFunction("SpunKnotComplement");
-DeclareGlobalFunction("SpunAboutInitialHyperplane");
+DeclareGlobalFunction("SpunAboutHyperplane");
+DeclareGlobalFunction("SpunLinkComplement");
 DeclareGlobalFunction("LiftedRegularCWMap");
 DeclareGlobalFunction("FirstHomologyCoveringCokernels");
 

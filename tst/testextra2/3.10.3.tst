@@ -2,7 +2,7 @@ gap> START_TEST("HAP library");
 gap> Hopf:=PureCubicalLink("Hopf");
 Pure cubical link.
 
-gap> Y:=SpunAboutInitialHyperplane(PureComplexComplement(Hopf));
+gap> Y:=SpunAboutHyperplane(PureComplexComplement(Hopf));
 Regular CW-complex of dimension 3
 
 gap> CY:=ChainComplexOfUniversalCover(Y);
