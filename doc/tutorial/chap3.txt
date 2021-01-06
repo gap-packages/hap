@@ -1,0 +1,391 @@
+  
+  [1X3 [33X[0;0YCovering spaces[133X[101X
+  
+  [33X[0;0YLet  [22XY[122X  denote  a  finite  regular  CW-complex.  Let  [22Xwidetilde Y[122X denote its
+  universal covering space. The covering space inherits a regular CW-structure
+  which  can  be  computed and stored using the datatype of a [22Xπ_1Y[122X-equivariant
+  CW-complex.  The cellular chain complex [22XC_∗widetilde Y[122X of [22Xwidetilde Y[122X can be
+  computed  and  stored  as  an equivariant chain complex. Given an admissible
+  discrete  vector  field  on  [22XY,[122X  we  can  endow [22XY[122X with a smaller non-regular
+  CW-structre  whose  cells  correspond  to  the  critical cells in the vector
+  field. This smaller CW-structure leads to a more efficient chain complex [22XC_∗
+  widetilde  Y[122X  involving  one  free  generator  for each critical cell in the
+  vector field.[133X
+  
+  
+  [1X3.1 [33X[0;0YCellular chains on the universal cover[133X[101X
+  
+  [33X[0;0YThe following commands construct a [22X6[122X-dimensional regular CW-complex [22XY≃ S^1 ×
+  S^1× S^1[122X homotopy equivalent to a product of three circles.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[1,1,1],[1,0,1],[1,1,1]];;[127X[104X
+    [4X[25Xgap>[125X [27XS:=PureCubicalComplex(A);;[127X[104X
+    [4X[25Xgap>[125X [27XT:=DirectProduct(S,S,S);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(T);;[127X[104X
+    [4X[28XRegular CW-complex of dimension 6[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(Y);[127X[104X
+    [4X[28X110592[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  CW-somplex  [22XY[122X  has  [22X110592[122X  cells.  The  next commands construct a free
+  [22Xπ_1Y[122X-equivariant  chain  complex  [22XC_∗widetilde  Y[122X homotopy equivalent to the
+  chain  complex of the universal cover of [22XY[122X. The chain complex [22XC_∗widetilde Y[122X
+  has just [22X8[122X free generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=ContractedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XCU:=ChainComplexOfUniversalCover(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..Dimension(Y)],n->CU!.dimension(n));[127X[104X
+    [4X[28X[ 1, 3, 3, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  construct a subgroup [22XH < π_1Y[122X of index [22X50[122X and the chain
+  complex  [22XC_∗widetilde  Y⊗_ ZH Z[122X which is homotopy equivalent to the cellular
+  chain  complex  [22XC_∗widetilde  Y_H[122X  of  the  [22X50[122X-fold cover [22Xwidetilde Y_H[122X of [22XY[122X
+  corresponding to [22XH[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=LowIndexSubgroupsFpGroup(CU!.group,50);;[127X[104X
+    [4X[25Xgap>[125X [27XH:=L[Length(L)-1];;[127X[104X
+    [4X[25Xgap>[125X [27XIndex(CU!.group,H);[127X[104X
+    [4X[28X50[128X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithIntegersOverSubgroup(CU,H);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
+    [4X[28X[ 50, 150, 150, 50 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YGeneral  theory implies that the [22X50[122X-fold covering space [22Xwidetilde Y_H[122X should
+  again  be homotopy equivalent to a product of three circles. In keeping with
+  this, the following commands verify that [22Xwidetilde Y_H[122X has the same integral
+  homology as [22XS^1× S^1× S^1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XHomology(D,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,1);[127X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,2);[127X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YSpun knots and the Satoh tube map[133X[101X
+  
+  [33X[0;0YWe'll  contruct  two  spaces  [22XY,W[122X  with  isomorphic  fundamental  groups and
+  isomorphic  intergal  homology,  and  use  the  integral  homology of finite
+  covering  spaces  to  establsh  that  the  two spaces have distinct homotopy
+  types.[133X
+  
+  [33X[0;0YBy  [13Xspinning[113X  a  link  [22XK ⊂ R^3[122X about a plane [22XP⊂ R^3[122X with [22XP∩ K=∅[122X, we obtain a
+  collection  [22XSp(K)⊂  R^4[122X  of knotted tori. The following commands produce the
+  two  tori  obtained  by  spinning the Hopf link [22XK[122X and show that the space [22XY=
+  R^4∖ Sp(K) = Sp( R^3∖ K)[122X is connected with fundamental group [22Xπ_1Y = Z× Z[122X and
+  homology  groups  [22XH_0(Y)=  Z[122X,  [22XH_1(Y)= Z^2[122X, [22XH_2(Y)= Z^4[122X, [22XH_3(Y, Z)= Z^2[122X. The
+  space  [22XY[122X  is  only  constructed  up  to  homotopy,  and  for  this reason is
+  [22X3[122X-dimensional.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XHopf:=PureCubicalLink("Hopf");[127X[104X
+    [4X[28XPure cubical link.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=SpunAboutInitialHyperplane(PureComplexComplement(Hopf));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,4);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XGY:=FundamentalGroup(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(GY);[127X[104X
+    [4X[28X[ f2, f3 ][128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(GY);[127X[104X
+    [4X[28X[ f3^-1*f2^-1*f3*f2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAn  alternative embedding of two tori [22XL⊂ R^4[122X can be obtained by applying the
+  'tube  map'  of  Shin  Satoh  to  a  welded Hopf link [Sat00]. The following
+  commands  construct  the  complement [22XW= R^4∖ L[122X of this alternative embedding
+  and  show  that  [22XW[122X has the same fundamental group and integral homology as [22XY[122X
+  above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=HopfSatohSurface();[127X[104X
+    [4X[28XPure cubical complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XW:=ContractedComplex(RegularCWComplex(PureComplexComplement(L)));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,1);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,2);[127X[104X
+    [4X[28X[ 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,3);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,4);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGW:=FundamentalGroup(W);;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(GW);[127X[104X
+    [4X[28X[ f1, f2 ][128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(GW);[127X[104X
+    [4X[28X[ f1^-1*f2^-1*f1*f2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YDespite  having the same fundamental group and integral homology groups, the
+  above  two  spaces  [22XY[122X and [22XW[122X were shown by Kauffman and Martins [KFM08] to be
+  not  homotopy  equivalent.  Their technique involves the fundamental crossed
+  module  derived  from the first three dimensions of the universal cover of a
+  space,  and  counts  the  representations of this fundamental crossed module
+  into a given finite crossed module. This homotopy inequivalence is recovered
+  by the following commands which involves the [22X5[122X-fold covers of the spaces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XCY:=ChainComplexOfUniversalCover(Y);[127X[104X
+    [4X[28XEquivariant chain complex of dimension 3[128X[104X
+    [4X[25Xgap>[125X [27XLY:=LowIndexSubgroups(CY!.group,5);;[127X[104X
+    [4X[25Xgap>[125X [27XinvY:=List(LY,g->Homology(TensorWithIntegersOverSubgroup(CY,g),2));;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCW:=ChainComplexOfUniversalCover(W);[127X[104X
+    [4X[28XEquivariant chain complex of dimension 3[128X[104X
+    [4X[25Xgap>[125X [27XLW:=LowIndexSubgroups(CW!.group,5);;[127X[104X
+    [4X[25Xgap>[125X [27XinvW:=List(LW,g->Homology(TensorWithIntegersOverSubgroup(CW,g),2));;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSSortedList(invY)=SSortedList(invW);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YCohomology with local coefficients[133X[101X
+  
+  [33X[0;0YThe  [22Xπ_1Y[122X-equivariant cellular chain complex [22XC_∗widetilde Y[122X of the universal
+  cover  [22Xwidetilde  Y[122X  of  a  regular  CW-complex [22XY[122X can be used to compute the
+  homology  [22XH_n(Y,A)[122X and cohomology [22XH^n(Y,A)[122X of [22XY[122X with local coefficients in a
+  [22XZπ_1Y[122X-module  [22XA[122X.  To illustrate this we consister the space [22XY[122X arising as the
+  complement  of  the  trefoil  knot,  with  fundamental  group [22Xπ_1Y = ⟨ x,y :
+  xyx=yxy  ⟩[122X.  We  take  [22XA=  Z[122X to be the integers with non-trivial [22Xπ_1Y[122X-action
+  given by [22Xx.1=-1, y.1=-1[122X. We then compute[133X
+  
+  [33X[0;0Y[22Xbeginarraylcl  H_0(Y,A)  &=  &  Z_2  ,  H_1(Y,A)  &= & Z_3 , H_2(Y,A) &= & Z
+  .endarray[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=PureCubicalKnot(3,1);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=PureComplexComplement(K);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=ContractedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=SimplifiedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfUniversalCover(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=C!.group;;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(G);[127X[104X
+    [4X[28X[ f1, f2 ][128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ][128X[104X
+    [4X[25Xgap>[125X [27Xhom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=function(x); return Determinant(Image(hom,x)); end;;[127X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithTwistedIntegers(C,A); #Here the function A represents [127X[104X
+    [4X[25Xgap>[125X [27X#the integers with twisted action of G.[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 .[128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,0);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,1);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.4 [33X[0;0YDistinguishing between two non-homeomorphic homotopy equivalent spaces[133X[101X
+  
+  [33X[0;0YThe  granny  knot  is  the sum of the trefoil knot and its mirror image. The
+  reef  knot  is  the  sum  of  two  identical copies of the trefoil knot. The
+  following commands show that the degree [22X1[122X homology homomorphisms[133X
+  
+  [33X[0;0Y[22XH_1(p^-1(B), Z) → H_1(widetilde X_H, Z)[122X[133X
+  
+  [33X[0;0Ydistinguish between the homeomorphism types of the complements [22XX⊂ R^3[122X of the
+  granny knot and the reef knot, where [22XB⊂ X[122X is the knot boundary, and where [22Xp:
+  widetilde  X_H  →  X[122X  is  the covering map corresponding to the finite index
+  subgroup  [22XH  <  π_1X[122X.  More precisely, [22Xp^-1(B)[122X is in general a union of path
+  components[133X
+  
+  [33X[0;0Y[22Xp^-1(B) = B_1 ∪ B_2 ∪ ⋯ ∪ B_t[122X .[133X
+  
+  [33X[0;0YThe function [10XFirstHomologyCoveringCokernels(f,c)[110X inputs an integer [22Xc[122X and the
+  inclusion  [22Xf:  B↪  X[122X  of  a  knot boundary [22XB[122X into the knot complement [22XX[122X. The
+  function  returns  the  ordered  list  of the lists of abelian invariants of
+  cokernels[133X
+  
+  [33X[0;0Y[22Xcoker( H_1(p^-1(B_i), Z) → H_1(widetilde X_H, Z) )[122X[133X
+  
+  [33X[0;0Yarising  from  subgroups  [22XH  <  π_1X[122X  of index [22Xc[122X. To distinguish between the
+  granny and reef knots we use index [22Xc=6[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=PureCubicalKnot(3,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=ReflectedCubicalKnot(K);;[127X[104X
+    [4X[25Xgap>[125X [27Xgranny:=KnotSum(K,L);;[127X[104X
+    [4X[25Xgap>[125X [27Xreef:=KnotSum(K,K);;[127X[104X
+    [4X[25Xgap>[125X [27Xfg:=KnotComplementWithBoundary(ArcPresentation(granny));;[127X[104X
+    [4X[25Xgap>[125X [27Xfr:=KnotComplementWithBoundary(ArcPresentation(reef));;[127X[104X
+    [4X[25Xgap>[125X [27Xa:=FirstHomologyCoveringCokernels(fg,6);;[127X[104X
+    [4X[25Xgap>[125X [27Xb:=FirstHomologyCoveringCokernels(fr,6);;[127X[104X
+    [4X[25Xgap>[125X [27Xa=b;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.5 [33X[0;0YSecond homotopy groups of spaces with finite fundamental group[133X[101X
+  
+  [33X[0;0YIf  [22Xp:widetilde  Y  →  Y[122X is the universal covering map, then the fundamental
+  group  of  [22Xwidetilde Y[122X is trivial and the Hurewicz homomorphism [22Xπ_2widetilde
+  Y→  H_2(widetilde Y, Z)[122X from the second homotopy group of [22Xwidetilde Y[122X to the
+  second  integral homology of [22Xwidetilde Y[122X is an isomorphism. Furthermore, the
+  map [22Xp[122X induces an isomorphism [22Xπ_2widetilde Y → π_2Y[122X. Thus [22XH_2(widetilde Y, Z)[122X
+  is isomorphic to the second homotopy group [22Xπ_2Y[122X.[133X
+  
+  [33X[0;0YIf the fundamental group of [22XY[122X happens to be finite, then in principle we can
+  calculate  [22XH_2(widetilde  Y, Z) ≅ π_2Y[122X. We illustrate this computation for [22XY[122X
+  equal  to  the real projective plane. The above computation shows that [22XY[122X has
+  second homotopy group [22Xπ_2Y ≅ Z[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=[ [1,2,3], [1,3,4], [1,2,6], [1,5,6], [1,4,5], [127X[104X
+    [4X[25X>[125X [27X        [2,3,5], [2,4,5], [2,4,6], [3,4,6], [3,5,6]];;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=MaximalSimplicesToSimplicialComplex(K);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(K);  [127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[25Xgap>[125X [27X# Y is a regular CW-complex corresponding to the projective plane.[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU:=UniversalCover(Y);[127X[104X
+    [4X[28XEquivariant CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=U!.group;; [127X[104X
+    [4X[25Xgap>[125X [27X# G is the fundamental group of Y, which by the next command [127X[104X
+    [4X[25Xgap>[125X [27X# is finite of order 2.[127X[104X
+    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); [127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[25Xgap>[125X [27X#U is the universal cover of Y[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(U,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(U,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(U,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.6 [33X[0;0YThird homotopy groups of simply connected spaces[133X[101X
+  
+  [33X[0;0YFor  any path connected space [22XY[122X with universal cover [22Xwidetilde Y[122X there is an
+  exact sequence[133X
+  
+  [33X[0;0Y[22X→  π_4widetilde  Y  →  H_4(widetilde Y, Z) → H_4( K(π_2widetilde Y,2), Z ) →
+  π_3widetilde Y → H_3(widetilde Y, Z) → 0[122X[133X
+  
+  [33X[0;0Ydue  to  J.H.C.Whitehead. Here [22XK(π_2(widetilde Y),2)[122X is an Eilenberg-MacLane
+  space with second homotopy group equal to [22Xπ_2widetilde Y[122X.[133X
+  
+  
+  [1X3.6-1 [33X[0;0YFirst example[133X[101X
+  
+  [33X[0;0YContinuing  with  the above example where [22XY[122X is the real projective plane, we
+  see  that [22XH_4(widetilde Y, Z) = H_3(widetilde Y, Z) = 0[122X since [22Xwidetilde Y[122X is
+  a  [22X2[122X-dimensional  CW-space.  The  exact  sequence  implies  [22Xπ_3widetilde Y ≅
+  H_4(K(π_2widetilde  Y,2),  Z  )[122X.  Furthermore,  [22Xπ_3widetilde  Y = π_3 Y[122X. The
+  following commands establish that [22Xπ_3Y ≅ Z[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);[127X[104X
+    [4X[28XPcp-group with orders [ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialGroup(A,2,5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfSimplicialGroup(K);[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,4);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.6-2 [33X[0;0YSecond example[133X[101X
+  
+  [33X[0;0YThe following commands construct a [22X4[122X-dimensional simplicial complex [22XY[122X with [22X9[122X
+  vertices and [22X36[122X [22X4[122X-dimensional simplices, and establish that[133X
+  
+  [33X[0;0Y[22Xπ_1Y=0 , π_2Y= Z , H_3(Y, Z)=0, H_4(Y, Z)= Z, H_4(K(π_2Y,2), Z) = Z[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], [127X[104X
+    [4X[25X>[125X [27X        [ 1, 2, 6, 4, 7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], [127X[104X
+    [4X[25X>[125X [27X        [ 2, 3, 5, 6, 7 ], [ 2, 3, 6, 4, 9 ], [ 3, 1, 4, 5, 7 ],[127X[104X
+    [4X[25X>[125X [27X        [ 3, 1, 5, 6, 9 ], [ 3, 1, 6, 4, 5 ], [ 3, 1, 6, 4, 8 ], [127X[104X
+    [4X[25X>[125X [27X        [ 4, 5, 7, 8, 3 ], [ 4, 5, 7, 8, 9 ], [ 4, 5, 8, 9, 2 ], [127X[104X
+    [4X[25X>[125X [27X        [ 4, 5, 9, 7, 1 ], [ 5, 6, 7, 8, 2 ], [ 5, 6, 8, 9, 1 ],[127X[104X
+    [4X[25X>[125X [27X        [ 5, 6, 8, 9, 7 ], [ 5, 6, 9, 7, 3 ], [ 6, 4, 7, 8, 1 ], [127X[104X
+    [4X[25X>[125X [27X        [ 6, 4, 8, 9, 3 ], [ 6, 4, 9, 7, 2 ], [ 6, 4, 9, 7, 8 ], [127X[104X
+    [4X[25X>[125X [27X        [ 7, 8, 1, 2, 3 ], [ 7, 8, 1, 2, 6 ], [ 7, 8, 2, 3, 5 ],[127X[104X
+    [4X[25X>[125X [27X        [ 7, 8, 3, 1, 4 ], [ 8, 9, 1, 2, 5 ], [ 8, 9, 2, 3, 1 ], [127X[104X
+    [4X[25X>[125X [27X        [ 8, 9, 2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [ 9, 7, 1, 2, 4 ], [127X[104X
+    [4X[25X>[125X [27X        [ 9, 7, 2, 3, 6 ], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5 ] ];;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=MaximalSimplicesToSimplicialComplex(Y);[127X[104X
+    [4X[28XSimplicial complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(Y);[127X[104X
+    [4X[28XRegular CW-complex of dimension 4[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOrder(FundamentalGroup(Y));[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,4);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWhitehead's sequence reduces to an exact sequence[133X
+  
+  [33X[0;0Y[22XZ → Z → π_3Y → 0[122X[133X
+  
+  [33X[0;0Yin  which the first map is [22XH_4(Y, Z)= Z → H_4(K(π_2Y,2), Z )= Z[122X. In order to
+  determine  [22Xπ_3Y[122X  it  remains  compute  this  first  map. This computation is
+  currently not available in HAP.[133X
+  
+  [33X[0;0Y[The  simplicial  complex in this second example is due to W. Kiihnel and T.
+  F. Banchoff and is of the homotopy type of the complex projective plane. So,
+  assuming this extra knowledge, we have [22Xπ_3Y=0[122X.][133X
+  
