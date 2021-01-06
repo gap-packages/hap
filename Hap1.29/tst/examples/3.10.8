@@ -1,0 +1,11 @@
+#This example uses Polymake software.
+a:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;
+b:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;
+G:=Group([a,b]);;
+rho:=IdentityMapping(G);;
+v:=[1,2,3,4];;
+A:=Mod2SteenrodAlgebra(G,10);;
+sw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);
+Print(sw,"\n");
+TotalStiefelWhitneyClass:= sw[1][1]+sw[2][1]+sw[3][1]+sw[4][1]+sw[5][1];
+Print(TotalStiefelWhitneyClass,"\n");

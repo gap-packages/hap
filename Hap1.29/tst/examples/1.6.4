@@ -1,0 +1,12 @@
+file:=HapFile("data1V2X.pdb");
+K:=ReadPDBfileAsPurePermutahedralComplex(file);
+C:=PureComplexComplement(K);
+D:=ZigZagContractedComplex(C);
+Y:=RegularCWComplex(D);;
+i:=BoundaryMap(Y);
+Print(i,"\n");
+Print(CriticalCells(Source(i)),"\n");
+phi:=FundamentalGroup(i,22495);
+Print(phi,"\n");
+
+

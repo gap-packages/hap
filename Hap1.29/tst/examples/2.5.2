@@ -1,0 +1,9 @@
+#The example uses GraphViz software.
+file:=HapFile("data252.txt");
+Read(file);
+G:=SymmetricMatrixToFilteredGraph(D,50,50);;
+K:=FilteredRegularCWComplex(CliqueComplex(G,2));
+BarCodeCompactDisplay(PersistentBettiNumbers(K,1));;
+Y:=FiltrationTerm(K,15);
+M:=ContractedComplex(HomotopyGraph(Y));
+Display(M);

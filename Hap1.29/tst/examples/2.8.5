@@ -1,0 +1,13 @@
+gens:=
+      [ [ [-1,0,0,0], [0,-1,0,0], [0,0,1,1/2], [0,0,0,1] ],
+      [ [0,-1,0,0], [1,-1,0,0], [0,0,1,1/3], [0,0,0,1] ],
+      [ [1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,1] ] ];;
+G:=AffineCrystGroupOnLeft(gens);;
+G:=StandardAffineCrystGroup(G);;
+G:=Image(IsomorphismPcpGroup(G));;
+E_G:=Resolution(G,4);;
+C:=HomToIntegers(E_G);
+Print(Cohomology(C,1),"\n");
+Print(Cohomology(C,2),"\n");
+Print(Cohomology(C,3),"\n"); 
+Print(CupProduct(E_G,1,2,[1],[1]),"\n");

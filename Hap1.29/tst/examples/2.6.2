@@ -1,0 +1,11 @@
+file:=HapFile("data262.csv");
+DisplayCSVknotFile(file);
+K:=ReadCSVfileAsPureCubicalKnot(file);;
+K:=ThickenedPureComplex(K);;
+C:=PureComplexComplement(K);;
+C:=ContractedComplex(C);
+Y:=RegularCWComplex(C);;
+G:=FundamentalGroup(Y);
+Print(G,"\n");
+Print(RelatorsOfFpGroup(G),"\n");
+AlexanderPolynomial(G);

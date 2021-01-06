@@ -1,0 +1,688 @@
+<Chapter><Heading> Cohomology ring structure</Heading>
+
+<Section><Heading> &nbsp;</Heading>
+
+<ManSection>
+
+<Func Name="IntegralCupProduct" Arg="R,u,v,p,q"/>
+
+<Func Name="IntegralCupProduct" Arg="R,u,v,p,q,P,Q,N"/>
+<Description>
+<P/>
+(Various functions used to construct the cup product
+are also <URL Text="available"> CR_functions.html</URL>.)
+<P/>
+
+Inputs a <M>ZG</M>-resolution <M>R</M>, a vector <M>u</M> representing an 
+element in <M>H^p(G,Z)</M>, a vector <M>v</M> representing an element in 
+<M>H^q(G,Z)</M> and the two integers <M>p,q</M> &tgt;<M> 0</M>. 
+It returns a vector <M>w</M> representing the cup product <M>u\cdot v</M>
+in <M>H^{p+q}(G,Z)</M>. This product is associative and 
+<M>u\cdot v = (-1)pqv\cdot u</M> .  
+It provides <M>H^\ast(G,Z)</M> with the structure of an 
+anti-commutative graded ring. This function implements the
+cup product for 
+characteristic 0 only.
+<P/>
+The resolution <M>R</M> needs a contracting homotopy.
+<P/>
+To save the function from having to calculate the abelian groups
+<M>H^n(G,Z)</M> additional input variables can be used in the form 
+<M>IntegralCupProduct(R,u,v,p,q,P,Q,N)</M> , where 
+
+<List>
+<Item>
+<M>P</M> is the output of the command <M>CR_CocyclesAndCoboundaries(R,p,true)</M>
+</Item>
+<Item>
+<M>Q</M> is the output of the command <M>CR_CocyclesAndCoboundaries(R,q,true)</M></Item>
+<Item><M>N</M> is the output of the command 
+<M>CR_CocyclesAndCoboundaries(R,p+q,true)</M> .
+</Item>
+</List>	    
+<P/><B>Examples:</B> <URL><Link>../www/SideLinks/About/aboutCohomologyRings.html</Link><LinkText>1</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+<ManSection>
+
+<Func Name="IntegralRingGenerators" Arg="R,n"/>
+<Description>
+<P/>
+
+Inputs at least <M>n+1</M> terms of a <M>ZG</M>-resolution and integer 
+<M>n</M>&tgt; <M>0</M>. It returns a minimal list of cohomology classes in 
+<M>H^n(G,Z)</M> which, together with all cup products of lower degree 
+classes, generate the group <M>H^n(G,Z)</M> .
+<P/>
+(Let <M>a_i</M> be the <M>i</M>-th canonical generator of the 
+<M>d</M>-generator abelian group <M>H^n(G,Z)</M>. The cohomology class 
+<M>n_1a_1 + ... +n_da_d</M> is represented by the integer vector 
+<M>u=(n_1, ..., n_d)</M>. )
+<P/><B>Examples:</B> <URL><Link>../www/SideLinks/About/aboutCohomologyRings.html</Link><LinkText>1</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+<ManSection>
+
+<Func Name="ModPCohomologyGenerators" Arg="G,n"/>
+
+<Func Name="ModPCohomologyGenerators" Arg="R"/>
+<Description>
+<P/>
+
+Inputs either a <M>p</M>-group <M>G</M> and positive integer <M>n</M>, or
+else <M>n</M> terms of a minimal <M>Z_pG</M>-resolution <M>R</M> of <M>Z_p</M>.
+It returns a pair whose first entry is a minimal set of homogeneous generators for 
+the cohomology ring <M>A=H^*(G,Z_p)</M> modulo all elements
+in degree greater than <M>n</M>. The second entry of the pair is a function <M>deg</M> which, when applied to a minimal generator, yields its degree.
+<P/>
+WARNING: the following rule must be applied when multiplying generators <M>x_i</M>
+together. Only products of the form <M>x_1*(x_2*(x_3*(x_4*...)))</M> with <M>deg(x_i) \le deg(x_{i+1})</M> should be computed (since the 
+<M>x_i</M> belong to a structure constant algebra with only a partially 
+defined structure constants table).
+
+<P/><B>Examples:</B> <URL><Link>../www/SideLinks/About/aboutIntro.html</Link><LinkText>1</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+<ManSection>
+
+<Func Name="ModPCohomologyRing" Arg="G,n"/>
+
+<Func Name="ModPCohomologyRing" Arg="G,n,level"/>
+
+<Func Name="ModPCohomologyRing" Arg="R"/>
+
+<Func Name="ModPCohomologyRing" Arg="R,level"/>
+<Description>
+<P/>
+
+Inputs either a <M>p</M>-group <M>G</M> and positive integer <M>n</M>, or 
+else <M>n</M> terms of a minimal <M>Z_pG</M>-resolution <M>R</M> of <M>Z_p</M>.
+It returns the cohomology ring <M>A=H^*(G,Z_p)</M> modulo all elements 
+in degree greater than <M>n</M>.
+<P/>
+The ring is returned as a structure constant algebra <M>A</M>.
+<P/>
+The ring <M>A</M> is graded. It has a component <M>A!.degree(x)</M>
+which is a function returning the degree of each (homogeneous) element 
+<M>x</M> in <M>GeneratorsOfAlgebra(A)</M>.
+
+<P/> An optional input variable "level"
+can be set to one of the strings  "medium" or "high". These settings
+determine parameters in the algorithm. The default setting is "medium".
+
+<P/> When "level" is set to "high" the ring <M>A</M> is returned with a component <M>A!.niceBasis</M>. This component is a pair <M>[Coeff,Bas]</M>. Here
+<M>Bas</M> is a list of integer lists; a "nice" basis for the vector space <M>A</M> can be constructed using the command <M>List(Bas,x->Product(List(x,i->Basis(A)[i]))</M>. 
+ The coefficients of the canonical basis element <M>Basis(A)[i]</M> are stored as <M>Coeff[i]</M>.
+
+<P/>
+ If the ring <M>A</M> is computed using the setting "level"="medium" then the component <M>A!.niceBasis</M> can be added to <M>A</M> using the command
+ <M> A:=ModPCohomologyRing_part_2(A) </M>.
+<P/><B>Examples:</B> <URL><Link>../www/SideLinks/About/aboutModPRings.html</Link><LinkText>1</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+<ManSection>
+
+<Func Name="ModPRingGenerators" Arg="A"/>
+<Description>
+<P/>
+
+Inputs a mod <M>p</M> cohomology ring <M>A</M> 
+(created using the preceeding function). It returns a minimal 
+generating set for the 
+ring <M>A</M>. Each generator is homogeneous.
+<P/><B>Examples:</B> <URL><Link>tutorial/chap7.html</Link><LinkText>1</LinkText></URL>&nbsp;,
+<URL><Link>../www/SideLinks/About/aboutModPRings.html</Link><LinkText>2</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+<ManSection>
+
+<Func Name="Mod2CohomologyRingPresentation" Arg="G"/>
+
+<Func Name="Mod2CohomologyRingPresentation" Arg="G,n"/>
+
+<Func Name="Mod2CohomologyRingPresentation" Arg="A"/>
+
+<Func Name="Mod2CohomologyRingPresentation" Arg="R"/>
+<Description>
+
+<P/>
+
+ When applied to a finite <M>2</M>-group <M>G</M> this function returns a presentation for the mod 2 cohomology ring <M>H^*(G,Z_2)</M>. The Lyndon-Hochschild-Serre spectral sequence is used to prove that the presentation is correct.
+
+<P/>
+When the function is applied to a <M>2</M>-group <M>G</M> and positive integer <M>n</M> the function first constructs <M>n</M> terms of a free <M>Z_2G</M>-resolution <M>R</M>, then constructs the finite-dimensional graded algebra
+<M>A=H^(*\le n)(G,Z_2)</M>, and finally uses <M>A</M> to approximate
+ a presentation for <M>H^*(G,Z_2)</M>. For "sufficiently large" the approximation will be a correct presentation for <M>H^*(G,Z_2)</M>.
+
+<P/> Alternatively, the function can be applied directly to either the resolution <M>R</M> or graded algebra <M>A</M>.
+
+<P/>This function was written by <B>Paul Smith</B>. It uses the Singular commutative algebra package to handle the Lyndon-Hochschild-Serre spectral sequence.
+<P/><B>Examples:</B> <URL><Link>tutorial/chap7.html</Link><LinkText>1</LinkText></URL>&nbsp;,
+<URL><Link>../www/SideLinks/About/aboutIntro.html</Link><LinkText>2</LinkText></URL>&nbsp; 
+
+</Description>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ManSection>
+
+</Section>
+</Chapter>
+

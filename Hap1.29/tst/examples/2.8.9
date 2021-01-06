@@ -1,0 +1,11 @@
+file1:=HapFile("data175_1.csv");
+file2:=HapFile("data175_2.csv");
+K:=ReadCSVfileAsPureCubicalKnot( [file1, file2]);;
+K:=ThickenedPureComplex(K);;
+Y:=PureComplexComplement(K);
+W:=ZigZagContractedComplex(Y,2);;
+W:=RegularCWComplex(W);;
+W:=ContractedComplex(W);;
+G:=FundamentalGroup(W);;
+cup:=CupProduct(G);
+Print(cup([1,0],[0,1]));

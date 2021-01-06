@@ -1,0 +1,12 @@
+RT:=Runtime();;
+S:=SimplifiedComplex(S);
+Size(S);
+Y:=DirectProduct(S,S,S,S);;
+Y:=SimplifiedComplex(Y);
+U:=UniversalCover(Y);
+G:=U!.group;;
+H:=Group(G.1^5,G.2^5,G.3^5,G.4);;
+p:=EquivariantCWComplexToRegularCWMap(U,H);
+UH:=Source(p);
+Size(UH);
+Print("Example runtime :", StringTime(Runtime()-RT), "\n\n");

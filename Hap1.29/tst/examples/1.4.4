@@ -1,0 +1,13 @@
+#Be patient! This example takes some time.
+#The example uses Asymptote software.
+file:=HapFile("data1V2X.pdb");
+K:=ReadPDBfileAsPurePermutahedralComplex(file);
+Display(ZigZagContractedComplex(K));
+#See Figure 1.39 (right)
+C:=PureComplexComplement(K);
+Print(Size(C),"\n");
+D:=ZigZagContractedComplex(C);
+Print(Size(D),"\n");
+Y:=RegularCWComplex(D);
+W:=SimplifiedComplex(Y);
+Print(W!.nrCells(3),"\n"); 
