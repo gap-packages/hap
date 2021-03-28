@@ -222,6 +222,20 @@ end);
 #####################################################################
 
 #####################################################################
+InstallGlobalFunction(FourthHomotopyGroupOfDoubleSuspensionB,
+function(arg) local T;
+
+T:=NonabelianSymmetricSquare(arg[1]).homomorphism;
+if IsAbelian(arg[1]) then return AbelianInvariants(Source(T));
+else
+return AbelianInvariants(Kernel(T));
+fi;
+
+end);
+#####################################################################
+
+
+#####################################################################
 InstallGlobalFunction(TensorCentre,
 function(G)
 local x,g,TC,h,Boole;

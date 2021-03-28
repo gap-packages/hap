@@ -9,8 +9,9 @@
 InstallGlobalFunction(EilenbergMacLaneSimplicialGroup, function(X,n,dim)
 local
 	EilenbergMacLane_Obj,
-	EilenbergMacLane_Map;
-
+	EilenbergMacLane_Map,
+        GroupHomomorphismByImages;
+GroupHomomorphismByImages:=GroupHomomorphismByImagesNC;
 	######################################################################
 	#1
 	#F	EilenbergMacLane_Obj

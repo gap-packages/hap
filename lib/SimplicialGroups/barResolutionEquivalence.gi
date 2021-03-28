@@ -23,16 +23,21 @@ local
 	##	Output:	The position of g in Elts
 	##
 	SearchPosition:=function(g)
-	local 	n,i;
-	
-		n:=Length(Elts);
-		for i in [1..n] do
-			if Elts[i]=g then
-				return i;
-			fi;	
-		od;
-		Add(Elts,g);        	#These two lines added by Graham
-		return n+1;   			#
+	local 	n,i,pos;
+	        pos:=Position(Elts,g);
+                if not pos=fail then return pos;
+                else Add(Elts,g); return Length(Elts);
+                fi;
+#Adjusted 27/03/2021
+    
+		#n:=Length(Elts);
+		#for i in [1..n] do
+		#	if Elts[i]=g then
+		#		return i;
+		#	fi;	
+		#od;
+		#Add(Elts,g);        	
+		#return n+1;   	
 	end;
 	##
 	############### end of SearchPosition ################################

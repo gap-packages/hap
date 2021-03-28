@@ -131,7 +131,7 @@ Append(Frels, List(P.relators,r->Image(PhomF,r)));
 
 Append(FpHoms,
 [GroupHomomorphismByImagesNC(R!.group,F,
-List([1..R!.dimension(1)],i->R!.elts[R!.boundary(1,i)[1][2]]),
+List([1..R!.dimension(1)],i->R!.elts[R!.boundary(1,i)[2][2]]), #CHANGED March 2021
 GeneratorsOfGroup(F){[x+1..x+R!.dimension(1)]}
 )]);
 x:=x+R!.dimension(1);
@@ -187,7 +187,7 @@ for R in resVertices do
 P:=PresentationOfResolution(R);
 Append(FpHoms,
 [GroupHomomorphismByImagesNC(R!.group,FundGroup,
-List([1..R!.dimension(1)],i->R!.elts[R!.boundary(1,i)[1][2]]),
+List([1..R!.dimension(1)],i->R!.elts[R!.boundary(1,i)[2][2]]), ###CHANGED March 2021
 GeneratorsOfGroup(FundGroup){[x+1..x+R!.dimension(1)]}
 )]);
 Append(Elts,Image(FpHoms[Length(FpHoms)],R!.elts));

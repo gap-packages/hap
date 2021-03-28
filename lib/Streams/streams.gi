@@ -174,7 +174,7 @@ local i,output;
 while true do
 i:=ReadAllLine(s.stream,true); 
 if  i="\"START\"\n" then 
-fi;break; 
+break; fi;
 od;
 
 if not s!.remote then i:=(ReadAllLine(s.stream,true));fi;
@@ -190,7 +190,6 @@ od;
 
 HAPchildFunctionToggle:=true;
 return output;
-
 end);
 #####################################################
 #####################################################

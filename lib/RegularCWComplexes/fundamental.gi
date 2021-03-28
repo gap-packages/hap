@@ -84,7 +84,7 @@ od;
 for j in [1..Length(2boundaries)] do
 sn:=[];
 bnd:=2boundaries[j][1];
-###### This is a really thoutless way to get the signs right!!!
+###### This is a really thoughtless way to get the signs right!!!
 ###### And it is also wasteful of time.
 A:=[Y!.boundaries[2][bnd[1]]{[2,3]}];
 for i in [2..Length(bnd)]  do
@@ -160,6 +160,7 @@ od;
 
 Add(rels,w);
 od;
+
 
 if BOOL then 
 P:=PresentationFpGroup(F/rels);
@@ -461,4 +462,28 @@ end);
 #################################################
 #################################################
 
+
+############################################
+InstallGlobalFunction(CriticalBoundaryCells,
+function(Y,n,k)
+local C, Deform, B, BB, j;
+
+if n<=0 then return []; fi;
+
+C:=ChainComplexOfRegularCWComplexWithVectorField(Y);
+Deform:=C!.deform;
+
+B:=Y!.boundaries[n+1,k];
+B:=B{[2..B[1]+1]};
+BB:=[];
+
+for j in [1..Length(B)] do
+Append(BB,1*Deform(n-1,Y!.orientation[n+1][k][j]*B[j]));
+od;
+
+
+return BB;
+
+end);
+############################################
 

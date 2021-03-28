@@ -152,6 +152,7 @@ end;
 
 ###################################
 Boundary:=function(n,k);
+if n>Length(bounds) then return []; fi;
 return 
 List(bounds[n][k], x->[Position(NewGens[n],x[1]),x[2]]);
 end;

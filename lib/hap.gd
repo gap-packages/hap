@@ -79,6 +79,7 @@ DeclareOperation("NonabelianTensorProduct",[IsGroup,IsGroup]);
 DeclareGlobalFunction("NonabelianTensorProduct_Inf");
 DeclareGlobalFunction("NonabelianTensorProduct_alt");
 DeclareGlobalFunction("ThirdHomotopyGroupOfSuspensionB");
+DeclareGlobalFunction("FourthHomotopyGroupOfDoubleSuspensionB");
 DeclareGlobalFunction("NonabelianSymmetricKernel");
 DeclareOperation("NonabelianExteriorProduct",[IsGroup,IsGroup]);
 DeclareGlobalFunction("RelativeSchurMultiplier");
@@ -101,6 +102,7 @@ DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup_alt");
 
 
 ## RESOLUTIONS ######################################################
+DeclareGlobalFunction("BarComplexOfMonoid");
 DeclareGlobalFunction("ResolutionArithmeticGroup");
 DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareOperation("Resolution",[IsGroup,IsInt]);
@@ -115,6 +117,7 @@ DeclareGlobalFunction("ResolutionFiniteSubgroup");
 DeclareGlobalFunction("ResolutionSubgroup");
 DeclareGlobalFunction("ResolutionAsphericalPresentation");
 DeclareGlobalFunction("ResolutionAbelianGroup");
+DeclareGlobalFunction("HAP_ResolutionAbelianGroupFromInvariants");
 DeclareGlobalFunction("ResolutionAlmostCrystalGroup");
 DeclareGlobalFunction("RelativeCentralQuotientSpaceGroup");
 DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
@@ -557,6 +560,7 @@ DeclareGlobalFunction("CoreducedChainComplex");
 DeclareGlobalFunction("2CoreducedChainComplex");
 DeclareGlobalFunction("SuspendedChainComplex");
 DeclareGlobalFunction("ReducedSuspendedChainComplex");
+DeclareGlobalFunction("PathObjectForChainComplex");
 DeclareGlobalFunction("RipsChainComplex");
 DeclareGlobalFunction("VectorsToSymmetricMatrix");
 DeclareGlobalFunction("SymmetricMatrixToIncidenceMatrix");
@@ -676,6 +680,9 @@ DeclareGlobalFunction("SylowSubgroupOfCatOneGroup");
 DeclareGlobalFunction("CrossedInvariant");
 AutomorphismGroupAsCrossedModule:=CrossedModuleByAutomorphismGroup;
 MakeReadOnlyGlobal("AutomorphismGroupAsCrossedModule");
+DeclareGlobalFunction("EilenbergMacLaneSimplicialFreeAbelianGroup");
+DeclareGlobalFunction("HomologySimplicialFreeAbelianGroup");
+DeclareGlobalFunction("E1HomologyPage");
 
 ## COMMUTATIVE DIAGRAMS #############################################
 DeclareGlobalFunction("HomomorphismChainToCommutativeDiagram");
@@ -710,6 +717,7 @@ DeclareGlobalFunction("HAPContractRegularCWComplex_Alt");
 DeclareGlobalFunction("ChainComplexOfRegularCWComplex");
 DeclareGlobalFunction("ChainComplexOfRegularCWComplexWithVectorField");
 DeclareGlobalFunction("FundamentalGroupOfRegularCWComplex");
+DeclareGlobalFunction("CriticalBoundaryCells");
 DeclareGlobalFunction("FundamentalGroupOfRegularCWMap");
 DeclareGlobalFunction("FundamentalGroupSimplicialTwoComplex");
 DeclareOperation("FundamentalGroup",[IsHapRegularCWComplex]);

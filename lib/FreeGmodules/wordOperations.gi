@@ -17,28 +17,29 @@ end);
 #####################################################################
 InstallGlobalFunction(AlgebraicReduction,
 function(arg)
-local w,p,v,x,j,k,pos;
+local w,p,v,vv,vvv,vvvv,x,j,k,pos,pos2;
 
 w:=arg[1];
 if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 
-if p= 0  then
-
-        v:=Filtered(w,x->x[1]>0);
-        for x in w do
-if x[1]<0 then
-        k:=Position(v,[-x[1],x[2]]);
-        if (k=fail) then Add(v,x); else
-        #Remove(v,k);
-        Unbind(v[k]);
-        fi;
+if p=0  then
+#######################################
+         v:=Collected(w);
+         vv:=List(v,x->x[1]);
+         vvv:=List(vv,x->[AbsInt(x[1]),x[2]]);
+         vvv:=SSortedList(vvv);
+         vvvv:=[];
+         for x in vvv do
+             pos:=Position(vv,x);
+             pos2:=Position(vv,[-x[1],x[2]]);
+             k:=0;
+             if not pos=fail then k:=k+v[pos][2]; fi;
+             if not pos2=fail then k:=k-v[pos2][2]; fi;
+             if not k=0 then Append(vvvv,MultiplyWord(k,[x])); fi;
+od;
+return vvvv;
+#######################################
 fi;
-        od;
-        #return v;
-
-        return Filtered(v,a->IsBound(a));
-fi;
-
 
         v:=Collected(w);
         Apply(v,x->[x[1],x[2] mod p]);
@@ -46,9 +47,7 @@ fi;
         v:=Collected(Concatenation(v));
         Apply(v,x->[x[1],x[2] mod p]);
         Apply(v, x->MultiplyWord(x[2],[x[1]]));
-
         return Concatenation(v);
-
 
 end);
 #####################################################################
@@ -252,16 +251,17 @@ end);
 #####################################################################
 InstallGlobalFunction(MultiplyWord,
 function(n,w)
-local v, u, i;
+local v, u, i,x;
 v:=[];
 
-if n>0 then u:=w; else u:=List(w,x->[-x[1],x[2]]); fi;
+u:=1*w; 
+if n<=0 then for x in u do x[1]:=-x[1]; od; fi;
 
 for i in [1..AbsoluteValue(n)] do
 Append(v,u);
 od;
 
-return v;
+return 1*v;
 end);
 #####################################################################
 

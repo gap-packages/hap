@@ -121,10 +121,10 @@ fi;
 
 
 EltsE:=[Identity(E)];
-for g in R!.elts do                       #Added these lines
-for h in S!.elts do                       #26 July 2019.
-Add(EltsE,ImagesRepresentative(GhomE,g)*ImagesRepresentative(HhomE,h)); #
-od;od;                                    # NOT A GOOD IDEA DOING THIS!!
+#for g in R!.elts do                       #Added these lines
+#for h in S!.elts do                       #26 July 2019.
+#Add(EltsE,ImagesRepresentative(GhomE,g)*ImagesRepresentative(HhomE,h)); #
+#od;od;                                    # NOT A GOOD IDEA DOING THIS!!
 
 #####################################################################
 	AppendToElts:=function(x);

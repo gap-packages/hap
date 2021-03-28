@@ -1,5 +1,5 @@
 #(C) 2008 Graham Ellis
-
+#RT:=0;
 ################################################################
 InstallGlobalFunction(FreeGResolution,
 function(arg)
@@ -45,7 +45,7 @@ ResolutionFG:=function(G,n)
 local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
 
 ##Added April 2017
-if prime>0 and Order(G)>1 then return ResolutionPrimePowerGroup(G,n); fi;
+if prime>0 and Order(G)>1 and IsPGroup(G) then return ResolutionPrimePowerGroup(G,n); fi;
 ##
 ##Added Jan 2012
 if IsBound(P!.resolutions) and HasName(G) then
@@ -126,32 +126,43 @@ else
 
 ##############################################
 AlgRed:= function(ww)
-local x,i,v,k,u,w;
-#if Length(ww)>5000 then return ww; fi;
+local x,i,v,k,u,w, vv, vvv, vvvv, pos, pos2;
 
-w:=ww;#w:=StructuralCopy(ww);
-
+w:=ww;
         for x in w do
         if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
         od;
-v:=Filtered(w,x->x[1]>0);
-        for x in w do
-        if x[1]<0 then
-#RT:=RT-Runtime(); ##This takes neary all the computation time!!
-##########################
-        k:=Position(v,[-x[1],x[2],x[3]]);  
-        if (k=fail) then Add(v,x); 
-        else
-        #Remove(v,k);
-        Unbind(v[k]);
-        fi;
-##########################
-#RT:=RT+Runtime();
-        fi;
-        od;
-        v:=Filtered(v,x->IsBound(x));
 
-        return v;
+#v:=Filtered(w,x->x[1]>0);
+#        for x in w do
+#        if x[1]<0 then
+##########################
+#        k:=Position(v,[-x[1],x[2],x[3]]);  
+#        if (k=fail) then Add(v,x); 
+#        else
+#        Unbind(v[k]);
+#        fi;
+##########################
+#        fi;
+#        od;
+#        v:=Filtered(v,x->IsBound(x));
+#        return v;
+         v:=Collected(w);
+         vv:=List(v,x->x[1]);
+         vvv:=List(vv,x->[AbsInt(x[1]),x[2],x[3]]);
+         vvv:=SSortedList(vvv);
+         vvvv:=[];
+         for x in vvv do
+             pos:=Position(vv,x);
+             pos2:=Position(vv,[-x[1],x[2],x[3]]);
+             k:=0;
+             if not pos=fail then k:=k+v[pos][2]; fi;
+             if not pos2=fail then k:=k-v[pos2][2]; fi;
+             if not k=0 then Append(vvvv,MultiplyWord(k,[ [x[1],x[2], x[3]] ]  )); fi;
+
+         od;
+         return vvvv;
+
 end;
 ##############################################
 fi;

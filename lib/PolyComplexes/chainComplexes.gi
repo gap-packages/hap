@@ -267,3 +267,102 @@ end);
 #################################################################
 #################################################################
 
+
+
+#############################################################
+#############################################################
+InstallGlobalFunction(PathObjectForChainComplex,
+function(C)
+local P,char, Dimension, Boundary, inclusion, firstProjection, secondProjection,
+inc, proj1, proj2;
+
+char:=EvaluateProperty(C,"characteristic");
+
+###############################
+Dimension:=function(n);
+#NEED TO FIX n=0
+return 2*C!.dimension(n) + C!.dimension(n+1);
+
+end;
+###############################
+
+###############################
+Boundary:=function(n,k)
+local v,w;
+if k<=C!.dimension(n) then
+v:=C!.boundary(n,k); w:=0*C!.boundary(n+1,1);w[k]:=1;
+return Concatenation(v,0*v,w);
+fi;
+if k<=2*C!.dimension(n) then
+v:=C!.boundary(n,k-C!.dimension(n)); w:=0*C!.boundary(n+1,1); w[k-C!.dimension(n)]:=-(-1)^n;
+return Concatenation(0*v,v,w);
+fi;
+v:=0*C!.boundary(n,1);
+w:=C!.boundary(n+1,k-2*C!.dimension(n));
+return Concatenation(v,v,w);
+end;
+###############################
+
+P:=Objectify(HapChainComplex,
+                rec(
+                dimension:=Dimension,
+                boundary:=Boundary,
+                properties:=
+                [["length",Length(C)],
+                ["connected",EvaluateProperty(C,"connected")],
+                ["type", "chainComplex"],
+                ["characteristic", char] ]));
+
+
+###############################
+###############################
+inc:=function(v,n)
+local w;
+w:=0*[1..C!.dimension(n+1)];
+return Concatenation(v,v,w);
+end;
+inclusion:=Objectify(HapChainMap,
+           rec(
+           source:=C,
+           target:=P,
+           mapping:=inc,
+           properties:=[ ["type","chainMap"],
+           ["characteristic", char]
+           ]));
+;
+P!.inclusion:=inclusion;
+###############################
+###############################
+proj1:=function(v,n);
+return v{[1..C!.dimension(n)]};
+end;
+firstProjection:=Objectify(HapChainMap,
+           rec(
+           source:=P,
+           target:=C,
+           mapping:=proj1,
+           properties:=[ ["type","chainMap"],
+           ["characteristic", char]
+           ]));
+;
+P!.firstProjection:=firstProjection;
+###############################
+proj2:=function(v,n);
+return v{[1+C!.dimension(n)..2*C!.dimension(n)]};
+end;
+secondProjection:=Objectify(HapChainMap,
+           rec(
+           source:=P,
+           target:=C,
+           mapping:=proj2,
+           properties:=[ ["type","chainMap"],
+           ["characteristic", char]
+           ]));
+;
+P!.secondProjection:=secondProjection;
+return P;
+
+end);
+#############################################################
+#############################################################
+

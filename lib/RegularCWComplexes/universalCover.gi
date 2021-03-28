@@ -126,7 +126,7 @@ InstallGlobalFunction(EquivariantCWComplexToRegularCWComplex,
 function(U,H)
 local boundaries, bnd, gbnd, ind, trans,pair2int, dimU, n, k,g,W;
 
-if not IsHapEquivariantCWComplex(U) then
+if not IsHapEquivariantCWComplex(U)  then
     Print("This function applies only to G-CW-complexes.\n");
     return fail;
 fi;

@@ -129,13 +129,22 @@ end);
 #################################################################
 #################################################################
 InstallGlobalFunction(ResolutionInfiniteCyclicGroup,
-function(N)
-local G, Dimension, Boundary, Homotopy, fn, posfn, pcp, Elts,g;
+function(arg)
+local N,G, Dimension, Boundary, Homotopy, fn, posfn, pcp, Elts,g;
 
+if Length(arg)=1 then N:=arg[1]; 
 G:=AbelianPcpGroup([0]);
 pcp:=Pcp(G);
 g:=GeneratorsOfGroup(G);
 g:=g[1];
+fi;
+
+if Length(arg)=2 then N:=arg[2]; 
+G:=arg[1];
+pcp:=Pcp(G);
+g:=GeneratorsOfGroup(G);
+g:=g[1];
+fi;
 
 ##########################
 ##########################
@@ -240,7 +249,7 @@ local
 	HorizontalBoundaryGen,
 	HorizontalBoundaryWord,
 	F,FhomE,
-	gensE, gensE1, gensE2, 
+	gensE, gensE1, gensE2, gensG, gensH, gens2, gens1,
 	Boole, 
 	i,j,k,g,h,fn,posfn;
 
@@ -256,6 +265,24 @@ GhomE:=Embedding(E,1);
 HhomE:=Embedding(E,2);
 EhomG:=Projection(E,1);
 EhomH:=Projection(E,2);
+
+if Parent(G)=Parent(H) then
+
+gensG:=MinimalGeneratingSet(G);
+gens1:=List(gensG,x->One(G));
+gensH:=MinimalGeneratingSet(H);
+gens2:=List(gensH,x->One(H));
+gensE:=Concatenation(gensG,gensH);
+gensE2:=Concatenation(gensG,gens2);
+gensE1:=Concatenation(gens1,gensH);
+E:=Group(gensE);
+
+GhomE:=GroupHomomorphismByImages(G,E,gensG,gensG);
+HhomE:=GroupHomomorphismByImages(H,E,gensH,gensH);
+EhomG:=GroupHomomorphismByImages(E,G,gensE,gensE2);
+EhomH:=GroupHomomorphismByImages(E,H,gensE,gensE1);
+fi;
+
 ################ DIRECT PRODUCT OF GROUPS CONSTRUCTED #########
 
 
@@ -712,25 +739,17 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ResolutionAbelianGroup,
+InstallGlobalFunction(HAP_ResolutionAbelianGroupFromInvariants,
 function(LL,n)
-local L,G,R,S,pi,L1, L2, i;
+local L,G,R,S,pi,L1, L2, i, ResolutionAbelianGroup;
+ResolutionAbelianGroup:=HAP_ResolutionAbelianGroupFromInvariants;
 
-if IsGroup(LL) then  #Need to improve this so that LL=R!.group.
-L:=GeneratorsOfGroup(LL);
-L:=List(L,Order);
-for i in [1..Length(L)] do
-if L[i]=infinity then L[i]:=0; fi;
-od;
-else L:=LL;
-fi;
-L:=SortedList(L);
+L:=SortedList(LL);
 L1:=Filtered(L,x->x=0);
 L2:=Filtered(L,x->x>0);
 L2:=AbelianGroup(L2);
-L2:=MinimalGeneratingSet(L2);
-L2:=List(L2,Order);
-L2:=SortedList(L2);
+L2:=AbelianInvariants(L2);
+L2:=AbelianInvariantsToTorsionCoefficients(L2);
 L:=Concatenation(L1,L2);
 
 L:=Reversed(L);
@@ -743,9 +762,7 @@ if Length(L)=0 then G:=AbelianPcpGroup([1]); return ResolutionFiniteGroup(G,n); 
 if Length(L)=1 then 
 if L[1]=0 then return ResolutionInfiniteCyclicGroup(n); fi;
 pi:=[2..L[1]];Add(pi,1);pi:=PermList(pi);G:=Group(pi);
-#G:=AbelianPcpGroup([L[1]]);
 return ResolutionFiniteGroup(G,n);
-
 fi;
 
 R:=ResolutionAbelianGroup(L{[1]},n);
@@ -757,4 +774,46 @@ end);
 #####################################################################
 #####################################################################
 
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ResolutionAbelianGroup,
+function(A,n)
+local mgens,L1,L2,R, S, T ;
+
+if IsList(A) then return HAP_ResolutionAbelianGroupFromInvariants(A,n); fi;
+
+if not IsAbelian(A) then Print("The first variable is not an abelian group\n");
+return fail;
+fi;
+
+
+mgens:=MinimalGeneratingSet(A);
+L1:=Filtered(mgens,x->Order(x)=infinity);
+L2:=Filtered(mgens,x->Order(x)<infinity);
+if Length(L2)>0 then L2:=MinimalGeneratingSet(Group(L2)); fi;
+
+mgens:=Concatenation(L1,L2);
+
+if Length(mgens)=0 then return ResolutionFiniteGroup(Group(One(A)),n); fi;
+
+if Length(mgens)=1 then
+if Order(mgens[1])<infinity then 
+     return ResolutionFiniteGroup(Group(mgens[1]),n); 
+else
+   return ResolutionInfiniteCyclicGroup(A,n);
+fi;
+fi;
+
+R:=ResolutionAbelianGroup(Group(mgens{[1]}),n);
+S:=ResolutionAbelianGroup(Group(mgens{[2..Length(mgens)]}),n);
+SetParent(R!.group,A);
+SetParent(S!.group,A);
+T:=ResolutionDirectProductLazy(R,S);
+
+return T;
+
+end);
+#####################################################################
+#####################################################################
 

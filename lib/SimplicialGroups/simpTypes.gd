@@ -177,4 +177,39 @@ InstallMethod( PrintObj,
  
 
 
+#1##################################################################
+#####################################################################
+
+DeclareCategory("IsHapSimplicialFreeAbelianGroup",IsObject);
+
+DeclareRepresentation(  "IsHapSimplicialFreeAbelianGroupRep",
+                        IsComponentObjectRep,
+                        ["dimension",
+                         "boundary",
+                         "properties"
+                         ]);
+
+HapSimplicialFreeAbelianGroupFamily:=NewFamily( "HapSimplicialFreeAbelianGroupFamily",
+                                          IsHapSimplicialFreeAbelianGroup,
+                                          IsHapSimplicialFreeAbelianGroup);
+
+HapSimplicialFreeAbelianGroup:=NewType(HapSimplicialFreeAbelianGroupFamily,
+                                IsHapSimplicialFreeAbelianGroupRep);
+
+
+InstallMethod( ViewObj,
+"for HapSimplicialFreeAbelianGroup",
+ [IsHapSimplicialFreeAbelianGroup],
+ function(R)
+ Print("Simplicial free abelian group of length ",EvaluateProperty(R,"length"),  "\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapSimplicialFreeAbelianGroup",
+ [IsHapSimplicialFreeAbelianGroup],
+ function(R)
+Print("Simplicial free abelian group of length ",EvaluateProperty(R,"length"),  "\n");
+ end);
+#2##################################################################
+#####################################################################
  

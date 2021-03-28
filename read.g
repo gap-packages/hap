@@ -168,6 +168,7 @@ ReadPackageHap( "lib/NonabelianTensor/equivalenceclasses.gi");
 ReadPackageHap( "lib/Resolutions/resAspherical.gi");
 ReadPackageHap( "lib/Resolutions/resAbGroup.gi");
 ReadPackageHap( "lib/Resolutions/resFiniteGroup.gi");
+ReadPackageHap( "lib/Resolutions/barComplexMonoid.gi");
 ReadPackageHap( "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackageHap( "lib/Resolutions/presentation.gi");
 ReadPackageHap( "lib/Resolutions/resSubgroup.gi");
@@ -365,6 +366,7 @@ ReadPackageHap("lib/CatGroups/CatBasic.gi");
 ReadPackageHap("lib/CatGroups/identities.gi");
 ReadPackageHap("lib/CatGroups/algIdentities.gi");
 ReadPackageHap("lib/CatGroups/CrossedInvariant.gi");
+ReadPackageHap("lib/CatGroups/eilenberg.gi");
 
 ################## G-OUTER GROUPS ##################################
 ReadPackageHap("lib/GOuterGroups/goutergroup.gi");
@@ -473,7 +475,7 @@ ReadPackageHap("lib/HapPrime/derivation.gi");
 fi;
 
 
-ReadPackageHap( "lib/Homology/BarCodes/barcode.gi");
+ReadPackageHap("lib/Homology/BarCodes/barcode.gi");
 ReadPackageHap("lib/TorsionSubcomplexes/torsioninit.gi");
 ReadPackageHap("lib/RahmSanchez/DavisComplex.gi");
 

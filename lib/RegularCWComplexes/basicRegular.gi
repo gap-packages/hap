@@ -609,6 +609,7 @@ characteristic:=0;
 Boundary:=function(n,k)
 local b,i,j,B,sn;
 
+#if Dimension(n)=0  then return [1..Dimension(n-1)]*0; fi;
 b:=StructuralCopy(zero[n]);
 B:=Y!.boundaries[n+1][k];
 sn:=Y!.orientation[n+1][k];

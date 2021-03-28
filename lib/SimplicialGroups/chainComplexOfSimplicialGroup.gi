@@ -805,3 +805,16 @@ local
 end);
 ##
 ################### end of ChainComplexOfSimplicialGroup ####################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ChainComplex,
+"for simplicial groups",
+[IsHapSimplicialGroup],
+function(G)
+return 
+ChainComplexOfSimplicialGroup(G);
+end);
+##########################################################
+##########################################################
+
