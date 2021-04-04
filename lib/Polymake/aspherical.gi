@@ -189,7 +189,7 @@ Exec(Concatenation(POLYMAKE_PATH, tmpin, " FEASIBLE > ",tmpout));
 Exec(Concatenation("rm ",tmpin));
 input := InputTextFile(tmpout);
 x:=ReadLine(input);
-x:=Int(Chomp(ReadLine(input)));
+x:=Chomp(ReadLine(input))="true";
 Exec(Concatenation("rm ",tmpout));
 
 return x;
@@ -197,7 +197,7 @@ end;
 #####################################################################
 
 x:= Polymake();
-if x=1 then
+if x then
 Print("Presentation is aspherical.\n\n"); return true;
 else
 Print("Test inconclusive.\n\n");

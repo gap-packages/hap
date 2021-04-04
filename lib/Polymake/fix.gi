@@ -8,7 +8,7 @@ else toggle:=true;
 fi;
 
     callPolymake:=function(object,splitoption)
-        local   returnedstring,  stdout,  stdin,  dir,  exitstatus;
+        local   returnedstring,  stdout,  stdin,  dir,  exitstatus, arg, i;
 
         returnedstring:="";
         stdout:=OutputTextString(returnedstring,false);
@@ -18,10 +18,15 @@ fi;
            then
             dir:=DirectoryCurrent();
         fi;
-        exitstatus:=Process( dir, POLYMAKE_COMMAND, stdin, stdout,
-                            Concatenation([FullFilenameOfPolymakeObject(object)],
-                                    splitoption)
-                            );;
+        arg:=Concatenation("my $c=load(\"",
+                           FullFilenameOfPolymakeObject(object),
+                           "\"); print");
+        for i in [1..Length(splitoption)] do
+          arg:=Concatenation(arg, " \"", splitoption[i], "\\n\", $c->",
+                             splitoption[i], ",");
+        od;
+        arg:=Concatenation(arg, " \"\\n\";");
+        exitstatus:=Process( dir, POLYMAKE_COMMAND, stdin, stdout, [ arg ] );;
         CloseStream(stdout);
         CloseStream(stdin);
         return rec(status:=exitstatus,stdout:=stdout,string:=returnedstring);
