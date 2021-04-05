@@ -10,6 +10,7 @@ SetPackageInfo( rec(
   Subtitle  := "Homological Algebra Programming",
   Version := "1.30",
   Date    := "01/04/2021",
+  License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
       Type := "git",
