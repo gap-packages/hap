@@ -1,0 +1,58 @@
+name: CI
+
+# Trigger the workflow on push or pull request
+on:
+  - push
+  - pull_request
+
+jobs:
+  # The job running the package tests.
+  test:
+    name: ${{ matrix.gap-branch }} ${{ matrix.ABI }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    # Don't run this twice on PRs for branches pushed to the same repository
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        gap-branch:
+          - master
+          - stable-4.11
+          - stable-4.10
+          - stable-4.9
+        ABI: ['']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install apt packages
+        run: sudo apt install polymake singular
+        shell: bash
+      - uses: gap-actions/setup-gap-for-packages@v1
+        with:
+          GAPBRANCH: ${{ matrix.gap-branch }}
+          ABI: ${{ matrix.ABI }}
+          GAP_PKGS_TO_BUILD: "io profiling nq"
+      - uses: gap-actions/run-test-for-packages@v1
+
+  # A job to compile the manual with latex and upload it as an artifact.
+  manual:
+    name: Build manuals
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install apt packages
+        run: sudo apt install polymake singular
+        shell: bash
+      - uses: gap-actions/setup-gap-for-packages@v1
+        with:
+          GAP_PKGS_TO_BUILD: "io profiling nq"
+      - uses: gap-actions/compile-documentation-for-packages@v1
+        with:
+          use-latex: true
+      - name: "Upload documentation"
+        uses: actions/upload-artifact@v2
+        with:
+          name: manual
+          path: ./doc/manual.pdf
