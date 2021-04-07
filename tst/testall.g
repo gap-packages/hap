@@ -1,32 +1,17 @@
 LoadPackage( "hap" );
 
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-
-
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-
-
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-
+dirs := Concatenation(
+  DirectoriesPackageLibrary( "hap", "tst/testall" ),
+  DirectoriesPackageLibrary( "hap", "tst/testall2" ),
+  DirectoriesPackageLibrary( "hap", "tst/testextra" ),
+  DirectoriesPackageLibrary( "hap", "tst/testextra2" )
+);
 
 if not GAPInfo.Architecture="x86_64-pc-linux-gnu-default32-kv8" then
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-else
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-  rec(exitGAP     := true,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
+    Append(dirs, DirectoriesPackageLibrary( "hap", "tst/testall3" ));
 fi;
 
-
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall3" ),
+TestDirectory(dirs,
   rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 

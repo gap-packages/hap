@@ -1,18 +1,13 @@
 LoadPackage( "hap" );
 
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
+dirs := Concatenation(
+  DirectoriesPackageLibrary( "hap", "tst/testextra" ),
+  DirectoriesPackageLibrary( "hap", "tst/testall" ),
+  DirectoriesPackageLibrary( "hap", "tst/testall2" ),
+  DirectoriesPackageLibrary( "hap", "tst/testextraextra" )
+);
 
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-  rec(exitGAP     := false,
-      testOptions := rec(compareFunction := "uptowhitespace") ) );
-
-TestDirectory(DirectoriesPackageLibrary( "hap", "tst/testextraextra" ),
+TestDirectory(dirs,
   rec(exitGAP     := true,
       testOptions := rec(compareFunction := "uptowhitespace") ) );
 
