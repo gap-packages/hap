@@ -15,7 +15,7 @@ local
 	T;
 
 SetInfoLevel(InfoWarning,0);
-HAPconstant:=50;
+HAPconstant:=5;              #THIS CAUSES PROBLEMS !!!
 EE:=arg[1];
 K:=arg[2];
 if Length(arg)>2 then Test:=arg[3]; else Test:="NoTest"; fi;

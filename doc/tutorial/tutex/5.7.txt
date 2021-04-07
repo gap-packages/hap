@@ -1,0 +1,32 @@
+gap> #We'll construct G=SL(2,Z_4) as a permutation group.
+gap> G:=SL(2,ZmodnZ(4));;
+gap> G:=Image(IsomorphismPermGroup(G));;
+
+gap> #We'll construct Z_8=Z/8Z as a G-outer group
+gap> z_8:=Group((1,2,3,4,5,6,7,8));;
+gap> Z_8:=TrivialGModuleAsGOuterGroup(G,z_8);;
+
+gap> #We'll compute the group h=H^2(G,Z_8)
+gap> R:=ResolutionFiniteGroup(G,3);;  #R is a free resolution
+gap> C:=HomToGModule(R,Z_8);; # C is a chain complex
+gap> H:=CohomologyModule(C,2);; #H is the second cohomology H^2(G,Z_8)
+gap> h:=ActedGroup(H);; #h is the underlying group of H
+
+gap> #We'll compute  cocycles c2, c5 for the second and fifth cohomology classs
+gap> c2:=H!.representativeCocycle(Elements(h)[2]);
+Standard 2-cocycle 
+
+gap> c5:=H!.representativeCocycle(Elements(h)[5]);
+Standard 2-cocycle 
+
+gap> #Now we'll construct the cohomology classes C2, C5 in the group h corresponding to the cocycles c2, c5.
+gap> C2:=CohomologyClass(H,c2);;
+gap> C5:=CohomologyClass(H,c5);;
+ 
+gap> #Finally, we'll show that C2, C5 are distinct cohomology classes, both of order 4.
+gap> C2=C5;
+false
+gap> Order(C2);
+4
+gap> Order(C5);
+4

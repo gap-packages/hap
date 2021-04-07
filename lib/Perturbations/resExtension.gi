@@ -215,11 +215,13 @@ else
 fi;
 
 if (not EisFinite ) and HAPconstant<50 then
+
 for i in RN!.elts do
 for j in RG!.elts do
 AppendToElts(i*PreImRep(j));
 od;
 od;
+
 fi;
 
 #Print("\n",[NisFinite, GisFinite, EisFinite],"\n");

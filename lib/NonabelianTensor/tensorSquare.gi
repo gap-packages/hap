@@ -21,7 +21,7 @@ local
 
 if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
 
-Todd:=32;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
+Todd:=16;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
 #####################################################################
 UpperBound:=function(AG)
 local Facts, p,P,hom,bnd;

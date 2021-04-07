@@ -683,6 +683,9 @@ MakeReadOnlyGlobal("AutomorphismGroupAsCrossedModule");
 DeclareGlobalFunction("EilenbergMacLaneSimplicialFreeAbelianGroup");
 DeclareGlobalFunction("HomologySimplicialFreeAbelianGroup");
 DeclareGlobalFunction("E1HomologyPage");
+DeclareGlobalFunction("CohomologySimplicialFreeAbelianGroup");
+DeclareGlobalFunction("E1CohomologyPage");
+
 
 ## COMMUTATIVE DIAGRAMS #############################################
 DeclareGlobalFunction("HomomorphismChainToCommutativeDiagram");

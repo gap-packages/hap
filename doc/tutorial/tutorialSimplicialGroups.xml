@@ -1,7 +1,21 @@
 <Chapter><Heading>Simplicial groups</Heading>
-<Section><Heading>Crossed modules</Heading>
+<Section Label="secCrossedModules"><Heading>Crossed modules</Heading>
 
-The following example concerns the crossed module
+A <E>crossed module</E> consists of a homomorphism of groups
+<M>\partial\colon M\rightarrow G</M> together with an action
+<M>(g,m)\mapsto\, {^gm}</M> of <M>G</M> on <M>M</M> satisfying
+<Enum>
+<Item> <M>\partial(^gm) = gmg^{-1}</M></Item>
+<Item> <M>^{\partial m}m' = mm'm^{-1}</M></Item>
+</Enum>
+for <M>g\in G</M>, <M>m,m'\in M</M>.
+
+<P/> A crossed module <M>\partial\colon M\rightarrow G</M>
+is equivalent to a cat<M>^1</M>-group <M>(H,s,t)</M> (see <Ref Sect="secCat1"/>) where
+<M>H=M \rtimes G</M>, <M>s(m,g) = (1,g)</M>, <M>t(m,g)=(1,(\partial m)g)</M>. A cat<M>^1</M>-group is, in turn, equivalent to a simplicial group with Moore complex has length <M>1</M>. The simplicial group is constructed by considering the cat<M>^1</M>-group as a category and taking its nerve. 
+Alternatively, the simplicial group can be constructed by  viewing the crossed module as a crossed complex and using a nonabelian version of the Dold-Kan theorem.
+ 
+<P/>The following example concerns the crossed module
 <P/><M>\partial\colon G\rightarrow Aut(G), g\mapsto (x\mapsto gxg^{-1})</M>
 <P/>associated to the dihedral group <M>G</M> of order <M>16</M>. This crossed module represents, up to homotopy type,
  a connected space <M>X</M> with <M>\pi_iX=0</M> for <M>i\ge 3</M>,
@@ -14,7 +28,6 @@ That simplicial group is used in the example to compute
 <P/><M>H_4(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2</M>,
 <P/><M>H_5(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_2\oplus \mathbb Z_2</M>.
 
-<P/>The simplicial group is obtained by viewing the crossed module as a crossed complex and using a nonabelian version of the Dold-Kan theorem.
 
 
 
@@ -61,6 +74,105 @@ For instance, <M> H_{k-1}(K(\mathbb Z,3),\mathbb Z) \cong H_k(K(\mathbb Z,4),\ma
 <Example>
 <#Include SYSTEM "tutex/9.4.txt">
 </Example>
+</Section>
+<Section>
+<Heading>Elementary theoretical information on  
+<M>H^\ast(K(\pi,n),\mathbb Z)</M></Heading>
+
+<P/>The cup product is not implemented for the cohomology ring
+<M>H^\ast(K(\pi,n),\mathbb Z)</M>.  Standard theoretical spectral sequence arguments
+have to be applied to obtain basic information relating to
+the  ring structure. To illustrate this the following commands compute  <M>H^n(K(\mathbb Z,2),\mathbb Z)</M>
+for the first few values of <M>n</M>.
+ 
+<Example>
+<#Include SYSTEM "tutex/9.7.txt">
+</Example>
+
+There is a fibration sequence <M>K(\pi,n) \hookrightarrow \ast \twoheadrightarrow K(\pi,n+1)</M> in which  <M>\ast</M> denotes a contractible space.
+For <M>n=1, \pi=\mathbb Z</M> the terms of the <M>E_2</M> page of the
+ Serre integral cohomology spectral sequence for this fibration
+are
+<List>
+<Item> <M>E_2^{pq}= H^p( K(\mathbb Z,2), H^q(K(\mathbb Z,1),\mathbb Z) )</M> .</Item>
+</List>
+Since <M>K(\mathbb Z,1)</M> can be taken to be  the circle <M>S^1</M> we know
+that it has non-trivial cohomology in degrees <M>0</M> and <M>1</M> only. The first few terms of
+ the <M>E_2</M> page are given in the following table.
+
+<Table Align="l|lllllllllll">
+<Caption><M>E^2</M> cohomology page for <M>K(\mathbb Z,1) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,2)</M></Caption>
+
+<Row>
+<Item> <M>1</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+</Row>
+
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+</Row>
+
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+<Item> <M>8</M> </Item>
+<Item> <M>9</M> </Item>
+<Item> <M>10</M> </Item>
+</Row>
+</Table>
+
+Let <M>x</M> denote the generator of <M>H^1(K(\mathbb Z,1),\mathbb Z)</M>
+and <M>y</M> denote the generator of <M>H^2(K(\mathbb Z,2),\mathbb Z)</M>.
+Since <M>\ast</M> has zero cohomology in degrees <M>\ge 1</M> we see that the differential must restrict to an isomorphism  <M>d_2\colon E_2^{0,1} \rightarrow E_2^{2,0}</M> with 
+<M>d_2(x)=y</M>. Then we see that the differential must restrict
+to an isomorphism
+<M>d_2\colon E_2^{2,1} \rightarrow E_2^{4,0}</M> defined on the generator <M>xy</M> of <M>E_2^{2,1}</M>
+by  
+<Display>d_2(xy) = d_2(x)y + (-1)^{{\rm deg}(x)}xd_2(y) =y^2\ . </Display>
+Hence <M>E_2^{4,0} \cong H^4(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^2</M>. The argument extends to show that <M>H^6(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^3</M>, <M>H^8(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^4</M>, and so on.
+
+<P/>In fact, to obtain a complete description of the ring <M>H^\ast(K(\mathbb Z,2),\mathbb Z)</M> in this fashion there is no benefit to using computer methods at all. We only need to know the cohomology ring <M>H^\ast(K(\mathbb Z,1),\mathbb Z) =H^\ast(S^1,\mathbb Z)</M> and the single cohomology group <M>H^2(K(\mathbb Z,2),\mathbb Z)</M>.
+
+<P/>A similar approach can be attempted for <M>H^\ast(K(\mathbb Z,3),\mathbb Z)</M> using the fibration sequence <M>K(\mathbb Z,2) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,3)</M> and, as explained in Chapter 5 of
+<Cite Key="hatcher"/>, yields the computation of the group <M>H^i(K(\mathbb Z,3),\mathbb Z)</M> for <M>4\le i\le 13</M>. The method does not directly yield <M>H^3(K(\mathbb Z,3),\mathbb Z)</M> and breaks down in degree <M>14</M> yielding
+ only that
+ <M>H^{14}(K(\mathbb Z,3),\mathbb Z) = 0 {\rm ~or~} \mathbb Z_3</M>. 
+The following commands provide <M>H^3(K(\mathbb Z,3),\mathbb Z)= \mathbb Z</M>
+and <M>H^{14}(K(\mathbb Z,3),\mathbb Z) =0</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.8.txt">
+</Example>
+
+However, the implementation of these commands is currently a bit naive, and computationally inefficient, since they do not currently employ any homological perturbation techniques. 
 
 </Section>
 
@@ -135,7 +247,7 @@ involving the nonabelian tensor square and nonabelian symmetric square of the gr
 
 </Section>
 
-<Section Label="postnikov"><Heading>Postnikov towers and <M>\pi_5(S^3)</M> [to be completed ...]</Heading>
+<Section Label="postnikov"><Heading>Postnikov towers and <M>\pi_5(S^3)</M> </Heading>
 A Postnikov system for the sphere <M>S^3</M> consists of a sequence
 of fibrations
 <M>\cdots X_3\stackrel{p_3}{\rightarrow} X_2\stackrel{p_2}{\rightarrow} X_1\stackrel{p_1}{\rightarrow} \ast</M> and a sequence of maps <M>\phi_n\colon S^3 \rightarrow X_n</M> such that 
@@ -151,14 +263,14 @@ The space <M>X_n</M> is obtained from <M>S^3</M> by adding cells in dimensions <
 So in particular <M>X_1=X_2=\ast, X_3=K(\mathbb Z,3)</M> and we have a fibration sequence
 <M>K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow K(\mathbb Z,3)</M>.
 The
- terms in the <M>E^2</M> page of the
-Serre integral homology spectral sequence of this fibration are 
-<List><Item><M>E^2_{p,q}=H_p(\,K(\mathbb Z,3),\,H_q(K(\mathbb Z_2,4),\mathbb Z)\,)</M>.</Item></List>
-The first few terms in the <M>E^2</M> page can be computed using the commands of Sections <Ref Sect="eilennot"/> and <Ref Sect="eilen"/> and recorded as follows.
-<Table Align="l|lllllll">
-<Caption><M>E^2</M> homology page for <M>K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow X_3</M></Caption> 
+ terms in the <M>E_2</M> page of the
+Serre integral cohomology spectral sequence of this fibration are 
+<List><Item><M>E_2^{p,q}=H^p(\,K(\mathbb Z,3),\,H_q(K(\mathbb Z_2,4),\mathbb Z)\,)</M>.</Item></List>
+The first few terms in the <M>E_2</M> page can be computed using the commands of Sections <Ref Sect="eilennot"/> and <Ref Sect="eilen"/> and recorded as follows.
+<Table Align="l|llllllllll">
+<Caption><M>E_2</M> cohomology page for <M>K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow X_3</M></Caption> 
 <Row>
-<Item> <M>6</M> </Item>
+<Item> <M>8</M> </Item>
 <Item> <M>\mathbb Z_2</M> </Item>
 <Item>  <M>0</M></Item>
 <Item>  <M>0</M></Item>
@@ -166,30 +278,66 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item>  </Item>
 <Item>  </Item>
 <Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>7</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item>  <M>0</M></Item>
+<Item>  <M>0</M></Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
 
 </Row>
 <Row>
-<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
 <Item> <M>0</M> </Item>
+<Item>  <M>0</M></Item>
+<Item>  <M>0</M></Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>5</M> </Item>
+<Item> <M>\pi_4(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\pi_4(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  <M>0</M></Item>
+<Item> <M>0</M> </Item>
+<Item>  <M></M></Item>
+<Item>  </Item>
+<Item>  </Item>
+
+</Row>
+<Row>
+<Item> <M>4</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item><M>0</M>  </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
-
+<Item>  </Item>
+<Item>  </Item>
 </Row>
-<Row>
-<Item> <M>4</M> </Item>
-<Item> <M>\pi_4(S^3)</M> </Item>
-<Item> <M>0</M> </Item>
-<Item> <M>0</M> </Item>
-<Item> <M>\pi_4(S^3)</M> </Item>
-<Item> <M>0</M> </Item>
-<Item>  <M>\pi_4(S^3)\otimes_{\mathbb Z} \mathbb Z_2</M></Item>
-<Item> <M>0</M> </Item>
 
-</Row>
+
 <Row>
 <Item> <M>3</M> </Item>
 <Item> <M>0</M> </Item>
@@ -198,7 +346,10 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
-<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
 </Row>
 <Row>
 <Item> <M>2</M> </Item>
@@ -209,6 +360,12 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+
 
 </Row>
 <Row>
@@ -220,6 +377,12 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+
 
 </Row>
 <Row>
@@ -229,8 +392,13 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item> <M>0</M> </Item>
 <Item> <M>\mathbb Z</M> </Item>
 <Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
 <Item> <M>\mathbb Z_2</M> </Item>
 <Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+
+
 
 
 </Row>
@@ -243,25 +411,53 @@ The first few terms in the <M>E^2</M> page can be computed using the commands of
 <Item> <M>4</M> </Item>
 <Item> <M>5</M> </Item>
 <Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+<Item> <M>8</M> </Item>
+<Item> <M>9</M> </Item>
+
+
+
 
 
 </Row>
 </Table>
-Since we know that <M>H_4(X_4,\mathbb Z) =0</M>, the differential in the spectral sequence must induce an isomorphism <M>E^2_{5,0}=\mathbb Z_2 \stackrel{\cong}{\longrightarrow} E^2_{0,4}=\pi_4(S^3)</M>. This provides an alternative derivation of <M>\pi_4(S^3) \cong \mathbb Z_2</M>.
+Since we know  that <M>H^5(X_4,\mathbb Z) =0</M>, the differentials in the spectral sequence must restrict to
+ an isomorphism <M>E_2^{0,5}=\pi_4(S^3) \stackrel{\cong}{\longrightarrow} E_2^{6,0}=\mathbb Z_2</M>. This provides an alternative derivation of <M>\pi_4(S^3) \cong \mathbb Z_2</M>.
+We can also immediately deduce that <M>H^6(X_4,\mathbb Z)=0</M>.
+
+Let <M>x</M> be the generator of <M>E_2^{0,5}</M> and <M>y</M> the generator of
+<M>E_2^{3,0}</M>. Then the generator <M>xy</M> of <M>E_2^{3,5}</M>
+gets mapped to a non-zero element <M>d_7(xy)=d_7(x)y -xd_7(y)</M>. Hence the
+term <M>E_2^{0,7}=\mathbb Z_2</M> must get mapped to zero in <M>E_2^{3,5}</M>.  It follows that <M>H^7(X_4,\mathbb Z)=\mathbb Z_2</M>.
+ 
  
 
-The integral homology of Eilenberg-MacLane spaces  yields
- the following information on the <M>E^2</M> page
-<M>E^2_{p,q}=H_p(\,X_4,\,H_q(K(\pi_5S^3,5),\mathbb Z)\,)</M> for the 
+<P/>The integral cohomology of Eilenberg-MacLane spaces  yields
+ the following information on the <M>E_2</M> page
+<M>E_2^{p,q}=H_p(\,X_4,\,H^q(K(\pi_5S^3,5),\mathbb Z)\,)</M> for the 
 fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
-<Table Align="l|lllllll">
-<Caption><M>E^2</M> homology page for <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M></Caption>
+<Table Align="l|llllllll">
+<Caption><M>E_2</M> cohomology page for <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M></Caption>
+
+<Row>
+<Item> <M>6</M> </Item>
+<Item> <M>\pi_5(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\pi_5(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+
 <Row>
 <Item> <M>5</M> </Item>
-<Item> <M>\pi_5(S^3)</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
-<Item> <M>\pi_5(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item>  </Item>
@@ -275,6 +471,7 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item>  </Item>
 </Row>
 <Row>
 <Item> <M>3</M> </Item>
@@ -285,6 +482,7 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item>  </Item>
 </Row>
 <Row>
 <Item> <M>2</M> </Item>
@@ -295,6 +493,7 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item>  </Item>
 </Row>
 <Row>
 <Item> <M>1</M> </Item>
@@ -305,6 +504,7 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
+<Item>  </Item>
 </Row>
 <Row>
 <Item> <M>0</M> </Item>
@@ -314,7 +514,8 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>\mathbb Z</M> </Item>
 <Item> <M>0</M> </Item>
 <Item> <M>0</M> </Item>
-<Item> <M>H_6(X_4,\mathbb Z)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>H^7(X_4,\mathbb Z)</M> </Item>
 
 </Row>
 <Row>
@@ -326,11 +527,337 @@ fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
 <Item> <M>4</M> </Item>
 <Item> <M>5</M> </Item>
 <Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
 </Row>
 </Table>
-Since we know that <M>H_5(X_5,\mathbb Z)=0</M>, the differential in the spectral sequence must induce an isomorphism <M>E^2_{6,0}=H_6(X_4,\mathbb Z)
-\stackrel{\cong}{\longrightarrow} E^2_{0,5}=\pi_5(S^3)</M>.
-Without knowledge of the boundary maps in the spectral sequence for <M>H_\ast(X_4,\mathbb Z)</M> we can only deduce that <M>H_6(X_4,\mathbb Z) = \mathbb Z_2 {\rm ~or~} 0</M> and that
-<Display>\pi_5(S^3) = \mathbb Z_2 {\rm ~or~} 0\ .</Display>
+Since we know that <M>H^6(X_5,\mathbb Z)=0</M>, the differentials in the spectral sequence must restrict to an isomorphism <M>E_2^{0,6}=\pi_5(S^3)
+\stackrel{\cong}{\longrightarrow} E_2^{7,0}=H^7(X_4,\mathbb Z)</M>.
+We can  conclude the desired result: 
+<Display>\pi_5(S^3) = \mathbb Z_2\ .</Display>
+
+<P/>
+<M>~~~</M><P/><P/>
+
+
+Note that the fibration <M>X_4 \twoheadrightarrow K(\mathbb Z,3)</M> is determined by a cohomology class <M>\kappa \in H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2</M>.
+ If <M>\kappa=0</M> then we'd have <M>X_4 =K(\mathbb Z_2,4)\times K(\mathbb Z,3)</M> and, as the following commands show, we'd then have <M>H_4(X_4,\mathbb Z)=\mathbb Z_2</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.6.txt">
+</Example>
+
+Since we know that <M>H_4(X_4,\mathbb Z)=0</M> we can conclude that the Postnikov invariant
+ <M>\kappa</M> is the non-zero class in <M>H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2</M>.
+
+
 </Section>
+
+<Section Label="postnikov"><Heading>Towards <M>\pi_4(\Sigma K(G,1))</M> </Heading>
+
+Consider the suspension <M>X=\Sigma K(G,1)</M> of a classifying space of a group <M>G</M> once again. This space has a Postnikov system in which
+<M>X_1 = \ast</M>, <M>X_2= K(G_{ab},2)</M>. We have a fibration sequence
+<M>K(\pi_3 X, 3) \hookrightarrow X_3 \twoheadrightarrow K(G_{ab},2)</M>. The corresponding integral cohomology Serre spectral sequence has <M>E_2</M> page with terms
+<List>
+<Item>
+<M>E_2^{p,q}=H^p(\,K(G_{ab},2), H^q(K(\pi_3 X,3)),\mathbb Z)\, )</M>.
+</Item>
+</List>
+
+<P/>As an example, for the Alternating group <M>G=A_4</M> of order <M>12</M> the following
+commands of 
+Section
+<Ref Sect="firsttwo"/> 
+ compute <M>G_{ab} = \mathbb Z_3</M> and <M>\pi_3 X = \mathbb Z_6</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/9.9.txt">
+</Example>
+
+
+The first terms of the <M>E_2</M> page can be calculated
+using the commands of Sections <Ref Sect="eilennot"/> and <Ref Sect="eilen"/>.  
+
+<Table Align="l|llllllll">
+<Caption><M>E^2</M> cohomology page for <M>K(\pi_3 X,3) \hookrightarrow X_3 \twoheadrightarrow X_2</M></Caption>
+
+<Row>
+<Item> <M>7</M> </Item>
+<Item> <M>\mathbb Z_2 </M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+
+<Row>
+<Item> <M>6</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+
+<Row>
+<Item> <M>5</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>4</M> </Item>
+<Item> <M>\mathbb Z_6</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>1</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_9</M> </Item>
+
+</Row>
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+</Row>
+</Table>
+
+We know that 
+<M>H^1(X_3,\mathbb Z)=0</M>,
+<M>H^2(X_3,\mathbb Z)=H^1(G,\mathbb Z) =0</M>,
+<M>H^3(X_3,\mathbb Z)=H^2(G,\mathbb Z) =\mathbb Z_3</M>, and that
+<M>H^4(X_3,\mathbb Z)</M> is a subgroup of <M>H^3(G,\mathbb Z) = \mathbb Z_2</M>.
+It follows that the differential induces a surjection
+<M>E_2^{0,4}=\mathbb Z_6 \twoheadrightarrow E_2^{5,0}=\mathbb Z_3</M>. Consequently <M>H^4(X_3,\mathbb Z)=\mathbb Z_2</M> and <M>H^5(X_3,\mathbb Z)=0</M>
+and <M>H^6(X_3,\mathbb Z)=\mathbb Z_2</M>.
+
+<P/>The <M>E_2</M> page for the fibration <M>K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3</M> contains the following terms.
+
+<Table Align="l|lllllll">
+<Caption><M>E^2</M> cohomology page for <M>K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3</M></Caption>
+
+
+
+<Row>
+<Item> <M>5</M> </Item>
+<Item> <M>\pi_4 X</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+</Row>
+<Row>
+<Item> <M>4</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+<Item> <M></M> </Item>
+</Row>
+<Row>
+<Item> <M>3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M></M> </Item>
+</Row>
+<Row>
+<Item> <M>2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>1</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+</Row>
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+
+</Row>
+
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+</Row>
+</Table>
+
+We know that <M>H^5(X_4,\mathbb Z)</M> is a subgroup of
+<M>H^4(G,\mathbb Z)=\mathbb Z_6</M>, and hence that there is a homomorphisms
+<M>\pi_4X \rightarrow \mathbb Z_2</M> whose kernel is a subgroup of <M>\mathbb Z_6</M>. If follows that <M>|\pi_4 X|\le 12</M>.
+
+
+</Section>
+
+
+<Section>
+<Heading>Enumerating homotopy 2-types</Heading>
+
+A <E>2-type</E> is a CW-complex <M>X</M> whose homotopy groups are trivial in dimensions <M>n=0 </M> 
+and <M>n>2</M>. As explained in <Ref Sect="secCat1"/> the homotopy type of such a space can be captured algebraically by a cat<M>^1</M>-group <M>G</M>. 
+ 
+Let <M>X</M>, <M>Y</M> be <M>2</M>-tytpes represented by cat<M>^1</M>-groups <M>G</M>, <M>H</M>. If <M>X</M> and <M>Y</M> are homotopy equivalent then there exists a sequence of morphisms of cat<M>^1</M>-groups
+<Display>G \rightarrow K_1 \rightarrow K_2 \leftarrow K_3 \rightarrow \cdots \rightarrow K_n  \leftarrow H</Display>
+in which each morphism induces isomorphisms of homotopy groups. When such a sequence exists we say that <M>G</M> is <E>quasi-isomorphic</E> to <M>H</M>. We have the following result.
+
+<P/><B>Theorem.</B> The <M>2</M>-types <M>X</M> and <M>Y</M> are homotopy equivalent if and only if the associated cat<M>^1</M>-groups <M>G</M> and <M>H</M> are quasi-isomorphic.
+
+<P/>The following commands produce a list <M>L</M> of all of the <M>62</M> non-isomorphic cat<M>^1</M>-groups whose underlying group has order <M>16</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.10.txt">
+</Example>
+
+The next commands use the first and second homotopy groups to prove that the list <M>L</M> contains at least <M>37</M> distinct quasi-isomorphism types.
+
+<Example>
+<#Include SYSTEM "tutex/9.11.txt">
+</Example>
+
+The following additional commands use second and third integral homology in conjunction with the first two homotopy groups to prove that the list <M>L</M> contains <B>at least</B> <M>49</M> distinct quasi-isomorphism types.
+
+<Example>
+<#Include SYSTEM "tutex/9.12.txt">
+</Example>
+
+The following commands show that the above list <M>L</M> contains <B>at most</B> <M>51</M> distinct quasi-isomorphism types.
+
+<Example>
+<#Include SYSTEM "tutex/9.13.txt">
+</Example>
+
+</Section>
+
+
+<Section>
+<Heading>Identifying cat<M>^1</M>-groups of low order</Heading>
+
+Let us define the <E>order</E> of a cat<M>^1</M>-group to be the order of 
+its underlying group. The function <Code>IdQuasiCatOneGroup(C)</Code>  inputs a 
+cat<M>^1</M>-group <M>C</M> of "low order" and returns an integer pair 
+<M>[n,k]</M> that uniquely idenifies the quasi-isomorphism type of <M>C</M>. The integer <M>n</M> is the order of a smallest cat<M>^1</M>-group quasi-isomorphic to <M>C</M>. The integer <M>k</M> identifies a particular cat<M>^1</M>-group of order <M>n</M>.
+
+<P/>The following commands use this function to show that there are  precisely <M>49</M> distinct quasi-isomorphism types of cat<M>^1</M>-groups of order <M>16</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/9.14.txt">
+</Example>
+
+The next example  first
+ identifies the order and the identity number of  the cat<M>^1</M>-group <M>C</M> corresponding to the crossed module (see <Ref Sect="secCrossedModules"/>)
+
+<Display>\iota\colon G \longrightarrow Aut(G), g \mapsto (x\mapsto gxg^{-1})</Display>
+
+for the dihedral group <M>G</M> of order <M>10</M>. 
+ 
+ It then realizes a smallest possible cat<M>^1</M>-group <M>D</M> of this quasi-isomorphism type.
+
+<Example>
+<#Include SYSTEM "tutex/9.15.txt">
+</Example>
+</Section>
+
+<Section>
+<Heading>Identifying crossed modules of low order</Heading>
+
+<P/>The following commands  construct the crossed module <M>\partial \colon G\otimes G \rightarrow G</M> involving the nonabelian tensor square of the dihedral group $G$ of order <M>10</M>, identify it as being number <M>71</M> in the list of crossed modules of order <M>100</M>, create a quasi-isomorphic crossed module of order <M>4</M>, and finally construct the corresponding cat<M>^1</M>-group of order <M>100</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.16.txt">
+</Example>
+
+</Section>
+
 </Chapter>

@@ -367,6 +367,7 @@ ReadPackageHap("lib/CatGroups/identities.gi");
 ReadPackageHap("lib/CatGroups/algIdentities.gi");
 ReadPackageHap("lib/CatGroups/CrossedInvariant.gi");
 ReadPackageHap("lib/CatGroups/eilenberg.gi");
+ReadPackageHap("lib/CatGroups/coeilenberg.gi");
 
 ################## G-OUTER GROUPS ##################################
 ReadPackageHap("lib/GOuterGroups/goutergroup.gi");
