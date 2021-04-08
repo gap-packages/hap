@@ -1,77 +1,40 @@
+
+######################################################
+######################################################
 InstallGlobalFunction(PolymakeFaceLattice,
 function(arg)
-local  polygon, callPolymake, F,D, L, i,j,s,t, toggle, DD,x,y;
+local polygon, toggle, F, FF, FA, D, FL, i, j, cnt, lst,bool;
 
 polygon:=arg[1];
 if Length(arg)=2 then toggle:=false;
 else toggle:=true;
 fi;
+bool:=false;
 
-    callPolymake:=function(object,splitoption)
-        local   returnedstring,  stdout,  stdin,  dir,  exitstatus;
+FF:=Polymake(polygon,"FACES");
+FA:=Polymake(polygon,"ADJACENCY");
+D:=Polymake(polygon,"F_VECTOR");
+if  not Size(Filtered(FF,x->Size(x)=1))=D[1] then D:=Reversed(D); fi;
+if not FF[1]=[] then FF:=Reversed(FF); FA:=Reversed(FA); bool:=true; fi;
+if toggle then F:=FF; else F:=FA;  fi;
 
-        returnedstring:="";
-        stdout:=OutputTextString(returnedstring,false);
-        stdin:=InputTextNone();;
-        dir:=DirectoryOfPolymakeObject(object);
-        if dir=fail
-           then
-            dir:=DirectoryCurrent();
-        fi;
-        exitstatus:=Process( dir, POLYMAKE_COMMAND, stdin, stdout,
-                            Concatenation([FullFilenameOfPolymakeObject(object)],
-                                    splitoption)
-                            );;
-        CloseStream(stdout);
-        CloseStream(stdin);
-        return rec(status:=exitstatus,stdout:=stdout,string:=returnedstring);
-    end;
-
-
-if toggle then
-F:=callPolymake(polygon,["HASSE_DIAGRAM->FACES"]);
-else
-F:=callPolymake(polygon,["HASSE_DIAGRAM->ADJACENCY"]);
-fi;
-F:=F.string;
-F:=SplitString(F,"\n");
-F:=F{[2..Length(F)]};
-F:=ConvertPolymakeListOfSetsToGAP(F);
-F:=F+1;
-
-D:=callPolymake(polygon,["F_VECTOR"]);
-D:=SplitString(D.string,"\n")[2];
-D:=SplitString(D," ");
-Apply(D,EvalString);
-D:=Reversed(D);
-DD:=[1];;
-x:=1;;
-for y in D do
-x:=x+y;
-Add(DD,x);
-od;
-D:=DD;
-
-Add(D,Length(F)-1);
-
-L:=List([1..Length(D)-1],i->[]);
-
-s:=1;
-for i in [1..Length(D)-1] do
-t:=D[i+1]-1;
-for j in [s+1..t+1] do
-Add(L[i],F[j]);
-od;
-s:=t+1;
+FL:=[];;
+FL[1]:=[F[1]];
+cnt:=1;
+for i in [1..Length(D)] do
+FL[i+1]:=[];
+lst:=[cnt+1..cnt+D[i]]; 
+if bool then lst:=Reversed(lst); fi;
+for j in lst do
+Add(FL[i+1],F[j]);
 od;
 
-if Length(L[1][1])=1 then
+cnt:=cnt+D[i];
+od;
 
-L:=Reversed(L);
-Remove(L,1);
-Add(L,[[]]);
-fi;
-
-
-return L;
+if FL[1]=[[]] then FL:=Reversed(FL); else Add(FL,[[]]); fi;
+if not toggle then Remove(FL,1); fi;
+return FL;
 end);
+############################################################
+############################################################

@@ -185,11 +185,10 @@ od;
 AppendTo(tmpin,"\n");
 od;
 
-Exec(Concatenation(POLYMAKE_PATH, tmpin, " FEASIBLE > ",tmpout));
+Exec(Concatenation("polymake ", "'my $c=load(\"",tmpin,"\"); print $c-> FEASIBLE;' > ",tmpout));
 Exec(Concatenation("rm ",tmpin));
 input := InputTextFile(tmpout);
 x:=ReadLine(input);
-x:=Int(Chomp(ReadLine(input)));
 Exec(Concatenation("rm ",tmpout));
 
 return x;
@@ -197,7 +196,8 @@ end;
 #####################################################################
 
 x:= Polymake();
-if x=1 then
+
+if x="true" then
 Print("Presentation is aspherical.\n\n"); return true;
 else
 Print("Test inconclusive.\n\n");

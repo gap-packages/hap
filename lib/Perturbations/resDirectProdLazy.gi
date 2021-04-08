@@ -791,7 +791,8 @@ fi;
 mgens:=MinimalGeneratingSet(A);
 L1:=Filtered(mgens,x->Order(x)=infinity);
 L2:=Filtered(mgens,x->Order(x)<infinity);
-if Length(L2)>0 then L2:=MinimalGeneratingSet(Group(L2)); fi;
+#if Length(L2)>0 then L2:=MinimalGeneratingSet(Group(L2)); fi;
+if Length(L2)>0 then L2:=TorsionGeneratorsAbelianGroup(Group(L2)); fi;
 
 mgens:=Concatenation(L1,L2);
 
