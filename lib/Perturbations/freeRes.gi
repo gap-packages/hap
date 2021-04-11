@@ -21,7 +21,7 @@ local
 	DelGen, DelWord, DelGenRec,
 	PseudoBoundary,FinalBoundary,
         FilteredLength, FilteredDimension, FilteredDimensionRecord,
-	L,i,k,n,q,r,s,t ;
+	L,i,k,n,q,r,s,t,bool;
 
 SetInfoLevel(InfoWarning,0);
 
@@ -32,6 +32,8 @@ else prime:=EvaluateProperty(P,"characteristic"); fi;
 
 N:=Minimum(EvaluateProperty(P,"length"),N);
 G:=P!.group;
+bool:=not IsComponentObjectRep(One(G));
+
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
@@ -55,12 +57,12 @@ fi;
 ##
 
 ###
-if Order(G)=infinity and IsAbelian(G) then
-#This will only be correct if G is abelian of "rank" equal
-#to the number of generators GAP has for G 
-
-res:=ResolutionGenericGroup(G,n);
-
+if IsAbelian(G) and bool  then
+res:=ResolutionAbelianGroup(G,n);
+return res;
+fi;
+if IsAbelian(G) then   #NOT SURE WHY I NEED TO DO THIS
+res:=ResolutionAbelianGroup_alt(G,n);
 return res;
 fi;
 ###
