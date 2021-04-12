@@ -1,0 +1,11 @@
+file:=HapFile("data251.txt");
+Read(file);
+F:=ThickeningFiltration(Y,20);;
+R:=FiltrationTerm(F,19);;
+for i in Reversed([1..18]) do
+ S:=FiltrationTerm(F,i);
+ R:=ContractedComplex(R,S);
+od;
+K:=RegularCWComplex(Nerve(R));;
+M:=ContractedComplex(K);
+Display(Graph(M));

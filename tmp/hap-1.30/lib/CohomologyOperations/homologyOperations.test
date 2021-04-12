@@ -1,0 +1,20 @@
+Read("homologyOperations.gi");
+
+N:=5; ##We can change this to other values of N>0.
+
+G:=DihedralGroup(32);;
+x:=(1,2);;
+a:=Group(x);;
+A:=TrivialGModuleAsGOuterGroup(G,a);;
+
+R:=ResolutionFiniteGroup(G,N+1);;
+C:=TensorWithGModule(R,A);
+H:=HomologyModule(C,N);
+
+H_alt:=GroupHomology(G,N,2);
+
+if Size(H)=Product(H_alt) then
+   Print("TensorWithGModule() and HomologyModule() seem to work\n");
+else
+   Print("Something is not working properly\n");
+fi;

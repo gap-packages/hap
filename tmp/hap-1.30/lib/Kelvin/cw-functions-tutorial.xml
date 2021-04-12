@@ -1,0 +1,159 @@
+<Chapter>
+    <Heading>Functions relating to regular CW-complexes</Heading>
+
+    This chapter details a variety of algorithms centred around regular CW-complexes.
+    Included are algorithms for obtaining specific CW-subcomplexes, constructing tubular neighbourhoods
+    and producing a regular CW-decomposition of the complement of a knotted 1-manifold.
+
+    <Section Label="sec:OneSkeletonKnot">
+        <Heading>Knotted 1-complexes</Heading>
+
+        An arc presentation can be thought of as a list of integer pairs corresponding to the position of vertices in a piecewise linear curve.
+        If we were to have an arc presentation of <M>n</M> integer pairs, the <M>i ^ \textrm{th}</M> entry, say <M>[a,b]</M>, would correspond to vertices being placed
+        at the points <M>(a,i)</M> and <M>(b,i)</M> in <M>\mathbb{R}^2</M>. By joining vertices that share the same <M>x</M> or <M>y</M> coordinates and, without loss of generality,
+        imposing that vertical strands lie above horizontal strands a link can be obtained:
+<Example>
+<#Include SYSTEM "../../lib/Kelvin/tutex/kelvin-00.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-00.jpg" width="300"/></Alt>
+<P/>
+        Given an arc presentation corresponding to some link, this algorithm computes an inclusion
+        of regular CW-complexes <M>f:X \rightarrow Y</M> where <M>X</M> is homeomorphic to a (disjoint wedge of) circle(s)
+        and <M>Y</M> is homeomorphic to a 3-ball. The following example computes such an inclusion for the case of the
+        trefoil knot.
+
+<Example>
+<#Include SYSTEM "../../lib/Kelvin/tutex/kelvin-01.txt">
+</Example>
+
+        From this we can verify that the link has the integral homology of a circle and
+        that the target space is contractible given its trivial fundamental group and trivial integral homology
+        in degrees <M>&gt;0</M>. We can also see that
+        this decomposition involves 56 cells in the link itself and 187 cells in the ambient 3-ball.
+        Another method in HAP for constructing knot complements&#x2014;the <C>KnotComplementWithBoundary</C> function&#x2014;contains
+        232 and 395 cells respectively in this same example. Another feature not found in the <C>KnotComplementWithBoundary</C> function is
+        the link being given a 1-dimensional CW-structure so that it embeds into the 1-skeleton of the 3-ball.
+        Consider the example of the Hopf link with arc presentation:
+
+<Example>
+<#Include SYSTEM "../../lib/Kelvin/tutex/kelvin-02.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-01.jpg" width="150"/></Alt>
+<P/>
+
+        We adapt our CW-decomposition, denoted by <M>X</M>, from the above image by including a <M>0</M>-cell at both ends of each
+        horizontal arc. Additionally, at each point where a vertical arc intersects a horizontal arc, three 0-cells are added.
+
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-02.jpg" width="350"/></Alt>
+<P/>
+        In order to make our space <M>X</M> homeomorphic to a solid disk, we frame it by adding six <M>0</M>-cells and eight <M>1</M>-cells.
+        Where there is a region bounded by <M>1</M>-cells in the now framed <M>X</M>, we add a <M>2</M>-cell. In this example, this means
+        adding five <M>2</M>-cells.
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-03.jpg" width="350"/></Alt>
+<P/>
+    
+        In order to obtain a decomposition of the <M>3</M>-ball, we need now construct the space <M>X \times [0,1]</M> by
+        letting each <M>n</M>-cell of <M>X</M> yield an <M>(n+1)</M>-cell. The final step is to add two <M>2</M>-cells and two <M>3</M>-cells to
+        either end of <M>X \times [0,1]</M>. The subcomplex homeomorphic to the desired link can be seen below. 
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-04.jpg" width="500"/></Alt>
+<P/>
+    </Section>
+
+    <Section Label="sec:TubularNeighbourhood">
+        <Heading>Tubular neighbourhoods</Heading>
+
+        Let <M>Y</M> denote a CW-subcomplex of a regular CW-complex <M>X</M> and let <M>N(Y)</M> denote an open tubular neighbourhood about <M>Y</M>.
+        Given an inclusion of regular CW-complexes <M>f : Y \hookrightarrow X</M>, this algorithm describes a procedure for
+        obtaining the associated inclusion <M>f' : \partial ( X \backslash N(Y) ) \hookrightarrow X \backslash N(Y)</M>
+        where <M>\partial ( X \backslash N(Y) )</M> denotes the boundary of <M>X \backslash N(Y)</M>. The following is also assumed:
+        <P/>Let <M>e^n</M> denote a cell of <M>X \backslash Y</M> of dimension <M>n</M> with <M>\bar{e}^n</M> denoting its closure. For each <M>n</M>-cell, <M>n \geq 1</M>,
+        the connected components of the space <M>\bar{e}^n \cap Y</M> are contractible.
+        <P/>Some additional terminology and notation is needed to describe this algorithm. The output regular CW-complex <M>X \backslash N(Y)</M> consists of the
+        cell complex <M>X \backslash Y</M> as well as some additional cells to maintain regularity. A cell of <M> X \backslash N(Y)</M> is referred to as
+        <E>internal</E> if it lies in <M>X \backslash Y</M>, it is <E>external</E> otherwise. Let <M>\bar{e}^n</M> denote the closure in <M>X</M> of an internal cell <M>e^n</M>.
+        Note that <M>\bar{e}^n</M> is a CW-subcomplex of <M>X</M> and so is the intersection <M>\bar{e}^n \cap Y</M> which can be
+        expressed as the union
+        <P/><M>\bar{e}^n \cap Y = A_1 \cup A_2 \cup \cdots \cup A_k</M>
+        <P/> of its path components <M>A_i</M> all of which are CW-subcomplexes of <M>Y</M>. For each <M>n</M>-cell of <M>X \backslash Y</M> there is one
+        internal <M>n</M>-cell <M>e^n</M> of <M>X \backslash N(Y)</M>. For <M>n \geq 1</M> there is also one external <M>(n-1)</M>-cell <M>f^{e^n}_{A_i}</M> for each path
+        component <M>A_i</M> of <M>\bar{e}^n \cap Y</M>. Lastly, we need a method for determining the homological boundary of the internal and external
+        cells:
+        <P/><M>\bullet</M> The boundary of an internal <M>n</M>-cell <M>e^n</M> consists of all those internal <M>(n-1)</M>-cells of <M>\bar{e}^n</M>
+        together with all external <M>(n-1)</M>-cells <M>f^{e^n}_{A_i}</M> where <M>A_i</M> is a path component of <M>\bar{e}^n \cap Y</M>.
+        <P/><M>\bullet</M> The boundary of an external <M>(n-1)</M>-cell <M>f^{e^n}_{A_i}</M> consists of all those external <M>(n-2)</M>-cells
+        <M>f^{e^{n-1}}_{B_j}</M> where <M>e^{n-1}</M> is an <M>(n-1)</M>-cell of <M>\bar{e}^n</M> and <M>B_j \subseteq A_i</M> is a path component of
+        <M>A_i</M>.
+        <P/>The following three steps comprise the algorithm.
+        <P/><M>(1)</M> For each internal <M>n</M>-cell <M>e^n \subset X \backslash Y</M>, compute the CW-complex <M>\bar{e}^n \cap Y</M> as a union of
+        path components <M>A_1 \cup A_2 \cup \cdots \cup A_k</M>. This information can be used to determine the number of cells of <M>X \backslash N(Y)</M>
+        in each dimension.
+        <P/><M>(2)</M> Create a list <M>B=[ \; [ \; \; ], [ \; \; ], \ldots, [ \; \; ] \; ]</M> of length <M>\textrm{dim}X +1</M>.
+        <P/><M>(3)</M> For <M>0 \leq n \leq \textrm{dim}X</M> set <M>B[n+1]=[ b_1, b_2, \ldots, b_{\alpha_n} ]</M> where <M>\alpha_n</M> is the number
+        of <M>n</M>-cells in <M>X \backslash N(Y)</M> and <M>b_i</M> is a list of integers describing the <M>(n-1)</M>-cells of the <M>i ^ \textrm{th}</M>
+        <M>n</M>-cell of <M>X \backslash N(Y)</M>. The internal cells will always be listed before the external cells in each sublist.
+
+        <P/>The algorithm will now be demonstrated via the example of a regular CW-complex <M>X</M> homeomorphic to a solid cube with eight <M>0</M>-cells, twelve <M>1</M>-cells,
+        six <M>2</M>-cells and a <M>3</M>-cell with a one-dimensional subcomplex <M>Y</M> (shown in red) consisting of seven <M>0</M>-cells and six <M>1</M>-cells.
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-05.jpg" width="350"/></Alt>
+<P/>
+
+        Begin with the <M>1</M>-skeleton of the cell complex <M>X \backslash Y</M>. For each <M>1</M>-cell <M>e^1</M>, we express <M>\bar{e}^1 \cap Y</M>
+        as a union of its path components <M>\bar{e}^1 \cap Y = A_1 \cup A_2 \cup \cdots \cup A_k</M>. The total number of path components determines the number of external
+        <M>0</M>-cells <M>f^{e^1}_{A_i}</M> of <M>X \backslash N(Y)</M>. In this example, <M>X \backslash N(Y)</M> will have nine external <M>0</M>-cells in total. 
+        The boundaries of the various internal <M>1</M>-cells are adjusted to contain these external <M>0</M>-cells.
+
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-06.jpg" width="350"/></Alt>
+<P/>
+        For the <M>2</M>-skeleton, repeat the same process of obtaining the path components of each intersection <M>\bar{e}^2 \cap Y</M>.
+        This results in nine external <M>1</M>-cells <M>f^{e^2}_{A_i}</M>, the boundaries of which now need to be determined. The
+        boundaries of each external <M>1</M>-cell <M>e^1_i</M> are all those external <M>0</M>-cells <M>f^{e^1}_B</M> where <M>e^1</M> is contained in
+        <M>\bar{e}^2</M> and the path component <M>B</M> of <M>\bar{e}^1 \cap Y</M> is a subcomplex of <M>A_i</M>. Like before, the 
+        boundaries of the internal <M>2</M>-cells are adjusted to include these external <M>1</M>-cells.
+
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-07.jpg" width="350"/></Alt>
+<P/>
+        There is only one <M>3</M>-cell of <M>X \backslash Y</M> and its closure intersecting <M>Y</M> yields one path component. This means that
+        <M>X \backslash N(Y)</M> should have one internal <M>3</M>-cell and one external <M>2</M>-cell whose boundary consists of all external <M>1</M>-cells of
+        <M>X \ N(Y)</M>. This algorithm is now finished and the outputted space will consist of ten <M>0</M>-cells, fourteen <M>1</M>-cells,
+        seven <M>2</M>-cells and a single <M>3</M>-cell.
+
+    </Section>
+
+    <Section Label="sec:Barycentric">
+        <Heading>Barycentric subdivision</Heading>
+        Recall that in the previous section it was mentioned that in order for the tubular neighbourhood algorithm to yield a regular CW-complex, the input had to satisfy the
+        following condition:
+        <P/>Let <M>e^n</M> denote a cell of <M>X \backslash Y</M> of dimension <M>n</M> with <M>\bar{e}^n</M> denoting its closure. For each <M>n</M>-cell, <M>n \geq 1</M>,
+        the connected components of the space <M>\bar{e}^n \cap Y</M> are contractible.
+        <P/>Should the input not satisfy this, it can be made to do so by way of barycentric subdivision (BCS). As the general process
+        of BCS usually results in a large degree of magnitude more cells than the complex it is applied to, we only consider the subdivision of individual cells.
+        We denote by <M>B(e^n)</M> the BCS of <M>e^n \subset X</M>. The function <C>BarycentricallySubdivideCell</C> inputs an inclusion of regular CW-complexes <M>f:Y \hookrightarrow X</M>
+        and some <M>e^n \subset X \backslash Y</M> where <M>Y \subset X</M>. It returns the inclusion <M>f': Y' \hookrightarrow X'</M> corresponding to the same map but where the specified <M>n</M>-cell
+        has been subdivided. BCS is a very common construction, so the exact details will be omitted. The below example
+        shows a regular CW-complex containing a <M>2</M>-cell which intersects the subcomplex (red) in a non-contractible way and how this <M>2</M>-cell is barycentrically subdivided.
+
+<P/>
+<Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-08.jpg" width="300"/></Alt><Alt Only="HTML">&lt;img src="../../lib/Kelvin/images/kelvin-image-09.jpg" width="300"/></Alt>
+<P/>
+        This GAP session constructs the pictured space (left) and shows that the barycentric subdivision of the innermost <M>2</M>-cell is as shown (right).
+<Example>
+<#Include SYSTEM "../../lib/Kelvin/tutex/kelvin-03.txt">
+</Example>
+
+        This function has been integrated into the <C>RegularCWComplexComplement</C> algorithm such that if the user inputs an invalid inclusion of regular CW-complexes, the problematic cells are
+        automatically barycentrically subdivided:
+
+<Example>
+<#Include SYSTEM "../../lib/Kelvin/tutex/kelvin-04.txt">
+</Example>
+
+    </Section>
+</Chapter>

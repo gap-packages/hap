@@ -1,0 +1,11 @@
+#Be patient! This example takes some time.
+#The example uses GraphViz software.
+file:=HapFile("image1.3.3.png");
+M:=ReadImageAsPureCubicalComplex(file,30000);;
+while BettiNumber(PureComplexComplement(M),0)>1 do
+ M:=ThickenedPureComplex(M);
+od;
+F:=ConcentricFiltration(ComplementOfPureComplex(M),20);
+P:=PersistentBettiNumbers(F,0);;
+BarCodeCompactDisplay(P);;
+

@@ -1,0 +1,10 @@
+RT:=Runtime();;
+T:=HopfSatohSurface();;
+XT:=PureComplexComplement(T);;
+XT:=RegularCWComplex(XT);
+Size(XT);
+C:=ChainComplexOfUniversalCover(XT);;
+L:=Filtered(LowIndexSubgroups(C!.group,5), g->Index(C!.group,g)=5);;
+invXT:=List(L,g->Homology(TensorWithIntegersOverSubgroup(C,g),2));;
+invXT:=SSortedList(invXT);
+Print("Example runtime :", StringTime(Runtime()-RT), "\n\n");

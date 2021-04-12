@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(214, 255, 255);;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="hapstyle.css">
+</head>
+<body>
+
+<a href="aboutPeripheral.html" class="previous">&laquo; Previous</a>
+<a href="aboutContents.html" class="previous"> Top</a>
+<a href="aboutQuandles.html" class="next">Next &raquo;</a> 
+<h2>About HAP: Covering Spaces</h2>
+
+<h3>Joint work with Kelvin Killeen</h3>
+
+<p>
+Let <math>Y</math> denote a finite regular CW-complex. 
+Let <math>U</math>  denote its universal covering space. 
+The covering space  inherits a regular CW-structure which 
+can be computed  and stored using the data type of a 
+<math>&pi;<sub>1</sub>Y</math>-equivariant CW-complex. The 
+cellular chain complex <math>CU</math> of <math>U</math> can  
+be computed and stored as an equivariant chain complex.
+Given an admissible discrete vector field  on 
+<math>Y</math>, we can endow <math>Y</math> with a smaller  
+non-regular CW-structre whose cells correspond to the critical 
+cells in the vector field.
+ This smaller CW-structure leads to a more efficient chain complex
+ <math>CU</math> involving one free generator for each critical cell in the vector field. 
+</p>
+
+<h3>Cellular chains on the universal cover</h3>
+<p>
+The following commands construct a <math>6</math>-dimensional 
+regular CW-complex  
+<math>Y&#8909;S<sup>1</sup>&times;
+S<sup>1</sup>&times;S<sup>1</sup></math> 
+homotopy equivalent to a product of three circles.
+</p>
+
+<div><code>
+gap> A:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
+gap> S:=PureCubicalComplex(A);;<br>
+gap> T:=DirectProduct(S,S,S);;<br>
+gap> Y:=RegularCWComplex(T);;<br>
+gap> Size(Y);<br>
+110592
+</code></div>
+
+<p>
+The CW-somplex <math>Y</math> has <math>110592</math> cells. 
+The next commands construct a free 
+<math>&pi;<sub>1</sub>Y</math>-equivariant chain complex
+<math>CU</math> homotopy equivalent to the chain complex of the 
+universal cover of <math>Y</math>. The chain complex <math>CU</math>
+has just <math>8</math> free generators.
+</p>
+
+<div><code>
+gap> Y:=ContractedComplex(Y);<br>
+gap> CU:=ChainComplexOfUniversalCover(Y,"vector field");;<br>
+gap> List([0..Dimension(Y)],n->CU!.dimension(n));<br>
+[ 1, 3, 3, 1 ]
+</code></div>
+
+<p>The next commands construct a subgroup <math>H < &pi;<sub>1</sub>Y</math>
+of index <math>50</math> and the chain complex
+<math>CU&otimes;<sub>&integers;H</sub>&integers;</math> which is 
+homotopy equivalent to the cellular chain complex 
+<math>CU<sub>H</sub></math> of the <math>50</math>-fold cover 
+<math>U<sub>H</sub></math> of 
+<math>Y</math> corresponding to <math>H</math>.
+</p>
+
+<div><code>
+gap> L:=LowIndexSubgroupsFpGroup(CU!.group,50);;<br>
+gap> H:=L[Length(L)-1];;<br>
+gap> Index(CU!.group,H);<br>
+50<br>
+gap> D:=TensorWithIntegersOverSubgroup(CU,H);<br>
+Chain complex of length 3 in characteristic 0 .<br> 
+</code></div>
+
+<p> General theory implies that the <math>50</math>-fold covering space 
+<math>U<sub>H</sub></math>  should again be homotopy equivalent to a 
+product of three circles. As a check for this, the following commands 
+establish that <math>U<sub>H</sub></math> has the same integral homology 
+as <math>S<sup>1</sup>&times; S<sup>1</sup>&times;S<sup>1</sup></math>
+ 
+<div><code>
+gap> Homology(D,0);<br>
+[ 0 ]<br>
+gap> Homology(D,1);<br>
+[ 0, 0, 0 ]<br>
+gap> Homology(D,2);<br>
+[ 0, 0, 0 ]<br>
+gap> Homology(D,3);<br>
+[ 0 ]
+</code></div>
+
+<h3>Cohomology with local coefficients</h3>
+
+<p>
+The <math>&pi;<sub>1</sub>Y</math>-equivariant cellular chain complex 
+<math>CU</math> of the universal cover <math>U</math> of a regular 
+CW-complex <math>Y</math> can be used to compute the homology 
+<math>H<sub>n</sub>(Y,A)</math> and cohomology <math>H<sup>n</sup>(Y,A)</math> 
+of <math>Y</math> with local coefficients in a 
+<math>&integers;&pi;<sub>1</sub>Y</math>-module <math>A</math>. 
+To illustrate this we consister the space <math>Y</math> arising as the 
+complement of the trefoil knot, with fundamental group 
+<math>&pi;<sub>1</sub>Y = &lt;x,y : xyx=yxy &gt;</math>. 
+We take <math>A= &integers;</math> to be the integers with non-trivial 
+<math>&pi;<sub>1</sub>Y</math>-action given by <math>x.1=-1, y.1=-1</math>. 
+We then compute
+</p>
+<center>
+<math>H<sub>0</sub>(Y,A) = &integers;<sub>2</sub></math> ,<br><br>
+<math>H<sub>1</sub>(Y,A) = &integers;<sub>3</sub></math> ,<br><br>
+<math>H<sub>2</sub>(Y,A) = &integers;</math> .
+</center>
+
+<div><code>
+gap> K:=PureCubicalKnot(3,1);;<br>
+gap> Y:=PureComplexComplement(K);;<br>
+gap> Y:=ContractedComplex(Y);;<br>
+gap> Y:=RegularCWComplex(Y);;<br>
+gap> Y:=SimplifiedComplex(Y);;<br>
+gap> C:=ChainComplexOfUniversalCover(Y);;<br>
+gap> G:=C!.group;;<br>
+gap> GeneratorsOfGroup(G);<br>
+[ f1, f2 ]<br>
+gap> RelatorsOfFpGroup(G);<br>
+[ f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ]<br>
+gap> hom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;<br>
+gap> A:=function(x); return Determinant(Image(hom,x)); end;;<br>
+gap> D:=TensorWithTwistedIntegers(C,A); #Here the function A represents the integers with twisted action of G.<br>
+Chain complex of length 3 in characteristic 0 .<br>
+gap> Homology(D,0);<br>
+[ 2 ]<br>
+gap> Homology(D,1);<br>
+[ 3 ]<br>
+gap> Homology(D,2);<br>
+[ 0 ]<br>
+</code></div>
+
+
+<h3>Finite covers as regular CW-complexes</h3> 
+<p>
+We next construct a 4-dimensional CW-complex <math>Y&#8909;S<sup>1</sup>&times;S<sup>1</sup></maths> 
+homotopy equivalent to a 2-dimensional torus, involving 
+2304 cells.  We choose a subgroup <math>H < &pi;<sub>1</sub>Y</math>
+of index <math>50</math> and  construct the covering space <math>U<sub>H</sub></math> 
+corresponding to <math>H</math> as a finite regular CW-complex. The fundamental group
+<math>&pi;<sub>1</sub>(U<sub>H</sub>)</math> is shown to be free abelian on two generators.
+This is in keeping with the fact that <math>U<sub>H</sub></math> is homotopy equivalent to
+<math>Y</math>.  
+</p>
+
+<div><code>
+gap> G:=U!.group;;<br>                      
+gap> L:=LowIndexSubgroupsFpGroup(G,50);;<br>
+gap> H:=L[Length(L)-3];;Index(G,H);<br>
+50<br>
+gap> W:=EquivariantCWComplexToRegularCWComplex(U,H);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(W);<br>
+115200<br>
+<br>
+gap> F:=FundamentalGroup(W);<br>
+&lt;fp group of size infinity on the generators [ f1, f2 ]&gt;<br>
+gap> RelatorsOfFpGroup(F);<br>
+[ f2^-1*f1*f2*f1^-1 ]
+</code></div>
+
+<h3>Covering maps</h3>
+<p>
+It may be that we are interested in the covering map 
+<math>p:U<sub>H</sub> &rarr; Y</math> and not just the  covering <math>U<sub>H</sub></math> itself. As an illustration we construct the map <math>p</math> for 
+<math>Y</math> homotopy equivalent to a torus, for <math>H&lt;&pi;<sub>1</sub>Y</math> a subgroup with
+</p>
+<center>
+<math>&pi;<sub>1</sub>Y / H &cong; &integers;<sub>3</sub>&oplus;&integers;<sub>3</sub></math>,
+</center>
+<p>and for <math>p</math> the corresponding covering map.
+</p>
+
+<div><code>
+gap> A:=[[1,1,1],[1,0,1],[1,1,1]];;<br>
+gap> S:=PureCubicalComplex(A);;<br>
+gap> T:=DirectProduct(S,S);;<br>
+gap> Y:=RegularCWComplex(T);;<br>
+gap> U:=UniversalCover(Y);<br>
+Equivariant CW-complex of dimension 4<br>
+gap> G:=U!.group;;<br>
+gap> L:=LowIndexSubgroupsFpGroup(G,9);;<br>
+gap> H:=L[58];;<br>
+gap> AbelianInvariants(G/H);<br>
+[ 3, 3 ]<br>
+gap> p:=EquivariantCWComplexToRegularCWMap(U,H);<br>
+Map of regular CW-complexes<br>
+
+gap> Source(p);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(Source(p));<br>
+20736<br>
+
+gap> Target(p);<br>
+Regular CW-complex of dimension 4<br>
+gap> Size(Target(p));<br>
+2304<br>
+</code></div>
+
+<p>
+The covering map <math>p</math> induces homomorphisms 
+<math>H<sub>n</sub>(p):H<sub>n</sub>(W,Z) &rarr; H<sub>n</sub>(Y,Z)</math> 
+on integral homology. These homomorphisms, together with their cokernels, 
+can be computed as follows.
+</p>
+
+<div><code>
+gap> P:=ChainMap(p);<br>
+Chain Map between complexes of length 4 .<br>
+
+gap> h0:=Homology(P,0);;<br>
+gap> AbelianInvariants(Target(h0)/Image(h0));<br>
+[  ]<br>
+
+gap> h1:=Homology(P,1);;<br>
+gap> AbelianInvariants(Target(h1)/Image(h1));<br>
+[ 3, 3 ]<br>
+
+gap> h2:=Homology(P,2);;<br>
+gap> AbelianInvariants(Target(h2)/Image(h2));<br>
+[ 9 ]<br>
+</code></div>
+
+<h3>Second homotopy groups of spaces</h3>
+<p>
+If <math>p:U &rarr; Y</math> is the map from the universal cover 
+<math>U</math> of <math>Y</math>, then the fundamental group of 
+<math>U</math> is trivial and the Hurewicz homomorphism 
+<math>&pi;<sub>2</sub>U-->H<sub>2</sub>(U,&integers;)</math> from the second 
+homotopy group of <math>U</math> to the second integral homology of 
+<math>U</math> is an isomorphism. Furthermore, the map <math>p</math> 
+induces an isomorphism  <math>&pi;<sub>2</sub>U &rarr; 
+&pi;<sub>2</sub>Y</math>. Thus <math>H<sub>2</sub>(U,&integers;)</math>
+ is isomorphic to 
+the second homotopy group <math>&pi;<sub>2</sub>Y</math>.
+</p>
+<p>
+If the fundamental group of <math>Y</math> happens to be finite, then 
+in principle we 
+can calculate <math>H<sub>2</sub>(U.&integers;) &cong; &pi;<sub>2</sub>Y</math>. 
+We illustrate this computation for <math>Y</math> equal to the 
+real projective plane.
+</p>
+
+<div><code>
+gap> K:=[ [1,2,3], [1,3,4], [1,2,6], [1,5,6], [1,4,5], [2,3,5], [2,4,5], [2,4,6], [3,4,6], [3,5,6]];;<br>
+
+gap> K:=MaximalSimplicesToSimplicialComplex(K);<br>
+Simplicial complex of dimension 2.<br>
+
+gap> Y:=RegularCWComplex(K);  # Y is a regular CW-complex corresponding to the projective plane.<br>
+Regular CW-complex of dimension 2</br>
+
+gap> U:=UniversalCover(Y);<br>
+Equivariant CW-complex of dimension 2<br>
+
+gap> G:=U!.group;; #G is the fundamental group of Y, which by the next command is finite of order 2.</br>
+gap> Order(G);<br>
+2<br>
+
+gap> U:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G))); #U is the universal cover of Y</br>
+Regular CW-complex of dimension 2</br>
+
+gap> Homology(U,0);<br>
+[ 0 ]<br>
+gap> Homology(U,1);<br>
+[  ]<br>
+gap> Homology(U,2);<br>
+[ 0 ]<br>
+</code></div>
+
+<p>
+The above computation shows that the space <math>Y</math> has 
+infinite cyclic second homotopy group <math>&pi;<sub>2</sub>Y = &integers;</math> .
+</p>
+
+<h3>Third homotopy groups of simply connected spaces</h3>
+
+<p>
+For any simply connected space <math>U</math> there is an exact sequence
+</p>
+<center>
+&rarr; &pi;<sub>4</sub>U &rarr; H<sub>4</sub>(U,&integers;) &rarr;
+ H<sub>4</sub>( K(&pi;<sub>2</sub>U,2), &integers; ) &rarr; &pi;<sub>3</sub>U 
+&rarr;   H<sub>4</sub>(U,&integers;) &rarr; 0
+</center>
+<p>
+due to J.H.C.Whitehead.  Here 
+<math>K(&pi;<sub>2</sub>U,2)</math> is an Eilenberg-MacLane space with 
+second homotopy group equal to <math>&pi;<sub>2</sub>U</math>.
+</p>
+<center><b>First Example</b></center>
+<p>
+Continuing with the above example where <math>Y</math> is the real 
+projective plane and <math>U</math> its universal cover, we see that 
+<math>H<sub>4</sub>(U,&integers;) = H<sub>4</sub>(U,&integers;) = 0</math>
+ since <math>U</math> is a 2-dimensional CW-space. The exact sequence implies 
+ <math>&pi;<sub>3</sub>U &cong; H<sub>4</sub>(K(&pi;<sub>2</sub>U,2), &integers; )</math>. Furthermore, <math>&pi;<sub>3</sub>U = &pi;<sub>3</sub>Y</math> since 
+<math>U</math> is the universal cover. The following commands establish that
+</p>
+<center>
+<math>
+&pi;<sub>3</sub>Y &cong; &integers; .
+</math></center> 
+<div><code>
+gap> A:=AbelianPcpGroup([0]);<br>
+Pcp-group with orders [ 0 ]<br>
+ 
+gap> K:=EilenbergMacLaneSimplicialGroup(A,2,5);;<br>
+gap> C:=ChainComplexOfSimplicialGroup(K);<br>
+Chain complex of length 5 in characteristic 0 .<br>
+
+gap> Homology(C,4);<br>
+[ 0 ]<br>
+</code></div>
+
+<center><b>Second Example</b></center>
+<p>
+The following commands construct a 4-dimensional simplicial complex 
+<math>Y</math> with 9 vertices and 36 4-dimensional simplices, 
+and establish that
+</p>
+<center>
+<math>&pi;<sub>1</sub>Y=0 , &pi;<sub>2</sub>Y=&integers; , H<sub>3</sub>(Y,&integers;)=0, H<sub>4</sub>(Y,&integers;)=&integers;, H<sub>4</sub>(K(&pi;<sub>2</sub>U,2), &integers;) =&integers;</math> .
+</center>
+
+
+<div><code>
+gap> Y:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], [ 1, 2, 6, 4, 7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], [ 2, 3, 5, 6, 7 ], [ 2, 3, 6, 4, 9 ], [ 3, 1, 4, 5, 7 ],<br>
+        [ 3, 1, 5, 6, 9 ], [ 3, 1, 6, 4, 5 ], [ 3, 1, 6, 4, 8 ], [ 4, 5, 7, 8, 3 ], [ 4, 5, 7, 8, 9 ], [ 4, 5, 8, 9, 2 ], [ 4, 5, 9, 7, 1 ], [ 5, 6, 7, 8, 2 ], [ 5, 6, 8, 9, 1 ],<br>
+        [ 5, 6, 8, 9, 7 ], [ 5, 6, 9, 7, 3 ], [ 6, 4, 7, 8, 1 ], [ 6, 4, 8, 9, 3 ], [ 6, 4, 9, 7, 2 ], [ 6, 4, 9, 7, 8 ], [ 7, 8, 1, 2, 3 ], [ 7, 8, 1, 2, 6 ], [ 7, 8, 2, 3, 5 ],<br>
+        [ 7, 8, 3, 1, 4 ], [ 8, 9, 1, 2, 5 ], [ 8, 9, 2, 3, 1 ], [ 8, 9, 2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [ 9, 7, 1, 2, 4 ], [ 9, 7, 2, 3, 6 ], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5 ] ];;<br>
+
+gap> Y:=MaximalSimplicesToSimplicialComplex(Y);<br>
+Simplicial complex of dimension 4.<br>
+
+gap> Y:=RegularCWComplex(Y);<br>
+Regular CW-complex of dimension 4<br>
+
+gap> Order(FundamentalGroup(Y));<br>
+1<br>
+gap> Homology(Y,2);<br>
+[ 0 ]<br>
+gap> Homology(Y,3);<br>
+[  ]<br>
+gap> Homology(Y,4);<br>
+[ 0 ]<br>
+</code></div>
+
+<p>
+Whitehead's sequence reduces to an exact sequence
+</p>
+<center>
+<math>&integers; &rarr; &integers; &rarr; &pi;<sub>3</sub>Y &rarr; 0</math> 
+</center>
+<p>
+in which the first map is
+<math>
+H<sub>4</sub>(Y,&integers;)=&integers; &rarr; H<sub>4</sub>(K(&pi;<sub>2</sub>Y,2), &integers;)=&integers;
+</math>.
+In order to determine <math>&pi;<sub>3</sub>Y</math> it remains compute this first map. This computation is currently not available in HAP.
+</p>
+<p>
+[The simplicial complex in this second example is due to W. Kiihnel and 
+T. F. Banchoff and is of the homotopy type of the complex projective plane. 
+So, assuming this extra knowledge, we have <math>&pi;<sub>3</sub>Y=0</math>.]
+</p>
+</body>
+</html>

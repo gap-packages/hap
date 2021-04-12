@@ -1,0 +1,89 @@
+<Chapter>
+    <Heading>CW functions</Heading>
+
+    The functions in this section have been written by <B>Kelvin Killeen</B>.
+
+    <Section>
+        <Heading>&nbsp;</Heading>
+
+        <ManSection>
+            <Func Name="ArcPresentationToKnottedOneComplex" Arg="P"/>
+            <Description>
+                <P/>
+                Inputs an arc presentation <M>P</M> corresponding to some link.
+                The output is an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M> where
+                <M>Y</M> is homeomorphic to a (disjoint union of) circle(s) and <M>X</M> is 
+                homeomorphic to the closed 3-ball.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="RegularCWMapToCWSubcomplex" Arg="f"/>
+            <Description>
+                <P/>
+                The inverse of the below function. This function inputs a strictly
+                cellular map <M>f:Y \rightarrow X</M> of regular CW-complexes.
+                It outputs a list <M>[X,S]</M> corresponding to the CW-subcomplex <M>f(Y)</M>. Here, <M>S</M>
+                denotes a list of lists of positive integers indicating the the location of each cell of <M>f(Y)</M>
+                in <M>X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="CWSubcomplexToRegularCWMap" Arg="XS"/>
+            <Description>
+                <P/>
+                The inverse of the above function. This function inputs a CW-subcomplex <M>[X,S]</M>
+                and outputs the associated inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="IntersectionCWSubcomplexes" Arg="XS1 XS2"/>
+            <Description>
+                <P/>
+                Inputs two CW-subcomplexes <M>[X,S]</M> and <M>[X,S']</M> and returns the CW-subcomplex
+                <M>[X,S'']</M> corresponding to their intersection.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="PathComponentsCWSubcomplex" Arg="XS"/>
+            <Description>
+                <P/>
+                Inputs a CW-subcomplex <M>[X,S]</M> and returns a list <M>[[X,S_1], \ldots, [X,S_n]]</M>
+                of CW-subcomplexes arising as the path components of <M>[X,S]</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="ClosureCWCell" Arg="X,k,i"/>
+            <Description>
+                <P/>
+                Inputs a regular CW-subcomplex <M>X</M> and two integers <M>k \geq 0, i > 1</M>.
+                The output is a CW-subcomplex <M>[X,S]</M> arising as the topological closure of
+                the <M>i</M>th <M>k</M>-cell <M>e^k_i \subset X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="AddCell" Arg="B,k,b,c"/>
+            <Description>
+                <P/>
+                Inputs a non-CW cell complex <M>B</M>, an integer <M>k \geq 0</M> and two lists of 
+                positive integers <M>b</M> and <M>c</M>. This function adds to <M>B</M> a single
+                <M>k</M>-cell <M>e^k_i</M> whose boundary <M>(k-1)</M>-cells are determined by <M>b</M> and
+                whose coboundary <M>(k+1)</M>-cells are determined by <M>c</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="ComplementTubularNeighbourhood" Arg="f"/>
+            <Description>
+                <P/>
+                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>.
+                Let <M>N(Y)</M> denote an open tubular neighbourhood of <M>Y</M> in <M>X</M>.
+            </Description>
+        </ManSection>
+    </Section>
+</Chapter>
