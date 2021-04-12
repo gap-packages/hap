@@ -25,6 +25,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7EAE286B837D27BA">11.1 <span class="Heading">An embarassingly parallel computation</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7AA9C5B27A8322D0">11.2 <span class="Heading">An non-embarassingly parallel computation</span></a>
+</span>
+</div>
 </div>
 
 <h3>11 <span class="Heading">Parallel computation</span></h3>
@@ -58,6 +61,33 @@
 </pre></div>
 
 <p>The function <code class="code">ParallelList()</code> is built from <strong class="button">HAP</strong>'s six core functions for parallel computation.</p>
+
+<p><a id="X7AA9C5B27A8322D0" name="X7AA9C5B27A8322D0"></a></p>
+
+<h4>11.2 <span class="Heading">An non-embarassingly parallel computation</span></h4>
+
+<p>The following commands use core functions to compute the product <span class="SimpleMath">A=M× N</span> of two random matrices by distributing the work over two processors.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(2000,2000);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(2000,2000);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..1000]};; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[1001..2000]};;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;                </span>
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>

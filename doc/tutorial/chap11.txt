@@ -32,3 +32,29 @@
   [33X[0;0YThe  function  [10XParallelList()[110X  is  built  from  [12XHAP[112X's six core functions for
   parallel computation.[133X
   
+  
+  [1X11.2 [33X[0;0YAn non-embarassingly parallel computation[133X[101X
+  
+  [33X[0;0YThe  following  commands use core functions to compute the product [22XA=M× N[122X of
+  two random matrices by distributing the work over two processors.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=RandomMat(2000,2000);; [127X[104X
+    [4X[25Xgap>[125X [27XN:=RandomMat(2000,2000);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs:=ChildProcess();;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XMtop:=M{[1..1000]};; [127X[104X
+    [4X[25Xgap>[125X [27XMbottom:=M{[1001..2000]};;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XChildPut(Mtop,"Mtop",s); [127X[104X
+    [4X[25Xgap>[125X [27XChildPut(N,"N",s);[127X[104X
+    [4X[25Xgap>[125X [27XNextAvailableChild([s]);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XChildCommand("Atop:=Mtop*N;;",s);; [127X[104X
+    [4X[25Xgap>[125X [27XAbottom:=Mbottom*N;; [127X[104X
+    [4X[25Xgap>[125X [27XA:=ChildGet("Atop",s);;[127X[104X
+    [4X[25Xgap>[125X [27XAppend(A,Abottom);;                [127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

@@ -389,3 +389,68 @@
   F. Banchoff and is of the homotopy type of the complex projective plane. So,
   assuming this extra knowledge, we have [22Xπ_3Y=0[122X.][133X
   
+  
+  [1X3.7 [33X[0;0YComputing the second homotopy group of a space with infinite fundamental[101X
+  [1Xgroup[133X[101X
+  
+  [33X[0;0YThe following commands compute the second integral homology[133X
+  
+  [33X[0;0Y[22XH_2(π_1W, Z) = Z[122X[133X
+  
+  [33X[0;0Yof the fundamental group [22Xπ_1W[122X of the complement [22XW[122X of the Hopf-Satoh surface.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=HopfSatohSurface();[127X[104X
+    [4X[28XPure cubical complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XW:=ContractedComplex(RegularCWComplex(PureComplexComplement(L)));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGW:=FundamentalGroup(W);;[127X[104X
+    [4X[25Xgap>[125X [27XIsAspherical(GW);[127X[104X
+    [4X[28XPresentation is aspherical.[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionAsphericalPresentation(GW);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFrom Hopf's exact sequence[133X
+  
+  [33X[0;0Y[22Xπ_2W stackrelh⟶ H_2(W, Z) ↠ H_2(π_1W, Z) → 0[122X[133X
+  
+  [33X[0;0Yand  the  computation  [22XH_2(W,  Z)= Z^4[122X we see that the image of the Hurewicz
+  homomorphism  is  [22Xim(h)= Z^3[122X . The image of [22Xh[122X is referred to as the subgroup
+  of [13Xspherical homology classes[113X and often denoted by [22XΣ^2W[122X.[133X
+  
+  [33X[0;0YThe following command computes the presentation of [22Xπ_1W[122X corresponding to the
+  [22X2[122X-skeleton  [22XW^2[122X  and establishes that [22XW^2 = S^2∨ S^2 ∨ S^2 ∨ (S^1× S^1)[122X is a
+  wedge of three spheres and a torus.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroupOfRegularCWComplex(W,"no simplification");[127X[104X
+    [4X[28X< fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(F);[127X[104X
+    [4X[28X[ < identity ...>, f1^-1*f2^-1*f1*f2, < identity ...>, <identity ...> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  command shows that the [22X3[122X-dimensional space [22XW[122X has two [22X3[122X-cells each
+  of  which  is  attached  to the base-point of [22XW[122X with trivial boundary (up to
+  homotopy in [22XW^2[122X). Hence [22XW = S^3∨ S^3∨ S^2 ∨ S^2 ∨ S^2 ∨ (S^1× S^1)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(W);[127X[104X
+    [4X[28X[ [ 3, 1 ], [ 3, 3148 ], [ 2, 6746 ], [ 2, 20510 ], [ 2, 33060 ], [128X[104X
+    [4X[28X  [ 2, 50919 ], [ 1, 29368 ], [ 1, 50822 ], [ 0, 21131 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCriticalBoundaryCells(W,3,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XCriticalBoundaryCells(W,3,3148);[127X[104X
+    [4X[28X[ -50919, 50919 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTherefore  [22Xπ_1W[122X is the free abelian group on two generators, and [22Xπ_2W[122X is the
+  free [22XZπ_1W[122X-module on three free generators.[133X
+  

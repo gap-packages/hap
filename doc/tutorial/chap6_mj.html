@@ -51,6 +51,24 @@
 
 <h4>6.1 <span class="Heading">Finite groups </span></h4>
 
+<p>It is possible to compute the low degree (co)homology of a finite group or monoid of small order directly from the bar resolution. The following commands take this approach to computing the fifth integral homology</p>
+
+<p><span class="SimpleMath">\(H_5(Q_4,\mathbb Z) = \mathbb Z_2\oplus\mathbb Z_2\)</span></p>
+
+<p>of the quaternion group <span class="SimpleMath">\(G=Q_4\)</span> of order <span class="SimpleMath">\(8\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuaternionGroup(8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=BarComplexOfMonoid(Q,6);;                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractedComplex(B);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,5);</span>
+[ 2, 2 ]
+
+</pre></div>
+
+<p>However, this approach is of limited applicability since the bar resolution involves <span class="SimpleMath">\(|G|^k\)</span> free generators in degree <span class="SimpleMath">\(k\)</span>. A range of techniques, tailored to specific classes of groups, can be used to compute the (co)homology of larger finite groups.</p>
+
 <p>The following example computes the fourth integral cohomomogy of the Mathieu group <span class="SimpleMath">\(M_{24}\)</span>.</p>
 
 <p><span class="SimpleMath">\(H^4(M_{24},\mathbb Z) = \mathbb Z_{12}\)</span></p>

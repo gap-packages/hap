@@ -1,0 +1,16 @@
+gap> M:=RandomMat(2000,2000);; 
+gap> N:=RandomMat(2000,2000);;
+
+gap> s:=ChildProcess();;
+
+gap> Mtop:=M{[1..1000]};; 
+gap> Mbottom:=M{[1001..2000]};;
+
+gap> ChildPut(Mtop,"Mtop",s); 
+gap> ChildPut(N,"N",s);
+gap> NextAvailableChild([s]);;
+
+gap> ChildCommand("Atop:=Mtop*N;;",s);; 
+gap> Abottom:=Mbottom*N;; 
+gap> A:=ChildGet("Atop",s);;
+gap> Append(A,Abottom);;                

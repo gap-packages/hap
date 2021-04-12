@@ -1004,6 +1004,65 @@ assuming this extra knowledge, we have $\pi_3Y=0$.] }
 
  }
 
+ 
+\section{\textcolor{Chapter }{Computing the second homotopy group of a space with infinite fundamental group}}\logpage{[ 3, 7, 0 ]}
+\hyperdef{L}{X7EAF7E677FB9D53F}{}
+{
+  The following commands compute the second integral homology 
+
+ $H_2(\pi_1W,\mathbb Z) = \mathbb Z$ 
+
+of the fundamental group $\pi_1W$ of the complement $W$ of the Hopf-Satoh surface. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=HopfSatohSurface();|
+  Pure cubical complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@W:=ContractedComplex(RegularCWComplex(PureComplexComplement(L)));|
+  Regular CW-complex of dimension 3
+  
+  !gapprompt@gap>| !gapinput@GW:=FundamentalGroup(W);;|
+  !gapprompt@gap>| !gapinput@IsAspherical(GW);|
+  Presentation is aspherical.
+  true
+  !gapprompt@gap>| !gapinput@R:=ResolutionAsphericalPresentation(GW);;|
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),2);|
+  [ 0 ]
+  
+\end{Verbatim}
+ 
+
+From Hopf's exact sequence 
+
+ $ \pi_2W \stackrel{h}{\longrightarrow} H_2(W,\mathbb Z) \twoheadrightarrow
+H_2(\pi_1W,\mathbb Z) \rightarrow 0$ 
+
+ and the computation $H_2(W,\mathbb Z)=\mathbb Z^4$ we see that the image of the Hurewicz homomorphism is ${\sf im}(h)= \mathbb Z^3$ . The image of $h$ is referred to as the subgroup of \emph{spherical homology classes} and often denoted by $\Sigma^2W$. 
+
+The following command computes the presentation of $\pi_1W$ corresponding to the $2$-skeleton $W^2$ and establishes that $W^2 = S^2\vee S^2 \vee S^2 \vee (S^1\times S^1)$ is a wedge of three spheres and a torus. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroupOfRegularCWComplex(W,"no simplification");|
+  < fp group on the generators [ f1, f2 ]>
+  !gapprompt@gap>| !gapinput@RelatorsOfFpGroup(F);|
+  [ < identity ...>, f1^-1*f2^-1*f1*f2, < identity ...>, <identity ...> ]
+  
+\end{Verbatim}
+ 
+
+The next command shows that the $3$-dimensional space $W$ has two $3$-cells each of which is attached to the base-point of $W$ with trivial boundary (up to homotopy in $W^2$). Hence $W = S^3\vee S^3\vee S^2 \vee S^2 \vee S^2 \vee (S^1\times S^1)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@CriticalCells(W);|
+  [ [ 3, 1 ], [ 3, 3148 ], [ 2, 6746 ], [ 2, 20510 ], [ 2, 33060 ], 
+    [ 2, 50919 ], [ 1, 29368 ], [ 1, 50822 ], [ 0, 21131 ] ]
+  !gapprompt@gap>| !gapinput@CriticalBoundaryCells(W,3,1);|
+  [  ]
+  !gapprompt@gap>| !gapinput@CriticalBoundaryCells(W,3,3148);|
+  [ -50919, 50919 ]
+  
+\end{Verbatim}
+ 
+
+ Therefore $\pi_1W$ is the free abelian group on two generators, and $\pi_2W$ is the free $\mathbb Z\pi_1W$-module on three free generators. }
+
  }
 
  
@@ -1258,7 +1317,230 @@ order $243$ with non-trivial Bogomolov multiplier. The groups in question are nu
 \end{Verbatim}
  }
 
+ 
+\section{\textcolor{Chapter }{Second group cohomology and group extensions}}\logpage{[ 5, 5, 0 ]}
+\hyperdef{L}{X8333413B838D787D}{}
+{
+ Any group extension $N\rightarrowtail E \twoheadrightarrow G$ gives rise to: 
+\begin{itemize}
+\item  an outer action $\alpha\colon G\rightarrow Out(G)$ of $G$ on $N$.
+\item an action $G\rightarrow Aut(Z(N))$ of $G$ on the centre of $N$, uniquely induced by the outer action $\alpha$ and the canonical action of $Out(N)$ on $Z(N)$.
+\item a $2$-cocycle $f\colon G\times G\rightarrow Z(N)$ with values in the $G$-module $A=Z(N)$.
+\end{itemize}
+ 
+
+Any outer homomorphism $\alpha\colon G\rightarrow Out(N)$ gives rise to a cohomology class $k$ in $H^3(G,Z(N))$. It was shown by Eilenberg and Mac$\,$Lane that the class $k$ is trivial if and only if the outer action $\alpha$ arises from some group extension $N\rightarrowtail E\twoheadrightarrow G$. If $k$ is trivial then there is a bijection between the second cohomology group $H^2(G,Z(N))$ and Yoneda equivalence classes of extensions of $G$ by $N$ that are compatible with $\alpha$. 
+
+\textsc{First Example.} 
+
+ Consider the group $H=SmallGroup(64,134)$. Consider the normal subgroup $N=NormalSubgroups(G)[15]$ and quotient group $G=H/N$. We have $N=C_2\times D_4$, $A=Z(N)=C_2\times C_2$ and $G=C_2\times C_2$. 
+
+ Suppose we wish to classify all extensions $C_2\times D_4 \rightarrowtail E \twoheadrightarrow C_2\times C_2$ that induce the given outer action of $G$ on $N$. The following commands show that, up to Yoneda equivalence, there are two
+such extensions. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@H:=SmallGroup(64,134);;|
+  !gapprompt@gap>| !gapinput@N:=NormalSubgroups(H)[15];;|
+  !gapprompt@gap>| !gapinput@A:=Centre(GOuterGroup(H,N));;|
+  !gapprompt@gap>| !gapinput@G:=ActingGroup(A);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(G,3);;|
+  !gapprompt@gap>| !gapinput@C:=HomToGModule(R,A);;|
+  !gapprompt@gap>| !gapinput@Cohomology(C,2);|
+  [ 2 ]
+  
+\end{Verbatim}
+ 
+
+The following additional commands return a standard $2$-cocycle $f:G\times G\rightarrow A =C_2\times C_2$ corresponding to the non-trivial element in $H^2(G,A)$. The value $f(g,h)$ of the $2$-cocycle is calculated for all $16$ pairs $g,h \in G$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|CH:=CohomologyModule(C,2);;B
+  @gapprompt|gap>B @gapinput|Elts:=Elements(ActedGroup(CH));B
+  [ <identity> of ..., f1 ]
+  
+  @gapprompt|gap>B @gapinput|x:=Elts[2];;B
+  @gapprompt|gap>B @gapinput|c:=CH!.representativeCocycle(x);B
+  Standard 2-cocycle 
+  
+  @gapprompt|gap>B @gapinput|f:=Mapping(c);;B
+  @gapprompt|gap>B @gapinput|for g in G do for h in G doB
+  @gapprompt|>B @gapinput|Print(f(g,h),"\n");B
+  @gapprompt|>B @gapinput|od;B
+  @gapprompt|>B @gapinput|od;B
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  f6
+  <identity> of ...
+  f6
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  <identity> of ...
+  f6
+  <identity> of ...
+  f6
+  
+\end{Verbatim}
+ 
+
+The following commands will then construct and identify all extensions of $N$ by $G$ corresponding to the given outer action of $G$ on $N$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|H := SmallGroup(64,134);;B
+  @gapprompt|gap>B @gapinput|N := NormalSubgroups(H)[15];;B
+  @gapprompt|gap>B @gapinput|ON := GOuterGroup(H,N);;B
+  @gapprompt|gap>B @gapinput|A := Centre(ON);;B
+  @gapprompt|gap>B @gapinput|G:=ActingGroup(A);;B
+  @gapprompt|gap>B @gapinput|R:=ResolutionFiniteGroup(G,3);;B
+  @gapprompt|gap>B @gapinput|C:=HomToGModule(R,A);;B
+  @gapprompt|gap>B @gapinput|CH:=CohomologyModule(C,2);;B
+  @gapprompt|gap>B @gapinput|Elts:=Elements(ActedGroup(CH));;B
+  
+  @gapprompt|gap>B @gapinput|lst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;B
+  @gapprompt|gap>B @gapinput|ccgrps := List(lst, x->CcGroup(ON, x));;B
+  @gapprompt|gap>B @gapinput|#So ccgrps is a list of groups, each being an extension of G by N, correspondingB
+  @gapprompt|gap>B @gapinput|#to the two elements in H^2(G,A).B
+  
+  @gapprompt|gap>B @gapinput|#The following command produces the GAP identification number for each group.B
+  @gapprompt|gap>B @gapinput|L:=List(ccgrps,IdGroup);B
+  [ [ 64, 134 ], [ 64, 135 ] ]
+  
+\end{Verbatim}
+ 
+
+\textsc{Second Example} 
+
+The following example illustrates how to construct a cohomology class $k$ in $H^2(G, A)$ from a cocycle $f:G \times G \rightarrow A$, where $G=SL_2(\mathbb Z_4)$ and $A=\mathbb Z_8$ with trivial action. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|#We'll construct G=SL(2,Z_4) as a permutation group.B
+  @gapprompt|gap>B @gapinput|G:=SL(2,ZmodnZ(4));;B
+  @gapprompt|gap>B @gapinput|G:=Image(IsomorphismPermGroup(G));;B
+  
+  @gapprompt|gap>B @gapinput|#We'll construct Z_8=Z/8Z as a G-outer groupB
+  @gapprompt|gap>B @gapinput|z_8:=Group((1,2,3,4,5,6,7,8));;B
+  @gapprompt|gap>B @gapinput|Z_8:=TrivialGModuleAsGOuterGroup(G,z_8);;B
+  
+  @gapprompt|gap>B @gapinput|#We'll compute the group h=H^2(G,Z_8)B
+  @gapprompt|gap>B @gapinput|R:=ResolutionFiniteGroup(G,3);;  #R is a free resolutionB
+  @gapprompt|gap>B @gapinput|C:=HomToGModule(R,Z_8);; # C is a chain complexB
+  @gapprompt|gap>B @gapinput|H:=CohomologyModule(C,2);; #H is the second cohomology H^2(G,Z_8)B
+  @gapprompt|gap>B @gapinput|h:=ActedGroup(H);; #h is the underlying group of HB
+  
+  @gapprompt|gap>B @gapinput|#We'll compute  cocycles c2, c5 for the second and fifth cohomology classsB
+  @gapprompt|gap>B @gapinput|c2:=H!.representativeCocycle(Elements(h)[2]);B
+  Standard 2-cocycle 
+  
+  @gapprompt|gap>B @gapinput|c5:=H!.representativeCocycle(Elements(h)[5]);B
+  Standard 2-cocycle 
+  
+  @gapprompt|gap>B @gapinput|#Now we'll construct the cohomology classes C2, C5 in the group h corresponding to the cocycles c2, c5.B
+  @gapprompt|gap>B @gapinput|C2:=CohomologyClass(H,c2);;B
+  @gapprompt|gap>B @gapinput|C5:=CohomologyClass(H,c5);;B
+   
+  @gapprompt|gap>B @gapinput|#Finally, we'll show that C2, C5 are distinct cohomology classes, both of order 4.B
+  @gapprompt|gap>B @gapinput|C2=C5;B
+  false
+  @gapprompt|gap>B @gapinput|Order(C2);B
+  4
+  @gapprompt|gap>B @gapinput|Order(C5);B
+  4
+  
+\end{Verbatim}
  }
+
+ 
+\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\logpage{[ 5, 6, 0 ]}
+\hyperdef{L}{X7C60E2B578074532}{}
+{
+ An \emph{Hadamard matrix} is a square $n\times n$ matrix $H$ whose entries are either $+1$ or $-1$ and whose rows are mutually orthogonal, that is $H H^t = nI_n$ where $H^t$ denotes the transpose and $I_n$ denotes the $n\times n$ identity matrix. 
+
+Given a group $G=\{g_1,g_2,\ldots,g_n\}$ of order $n$ and the abelian group $A=\{1,-1\}$ of square roots of unity, any $2$-cocycle $f\colon G\times G\rightarrow A$ corresponds to an $n\times n$ matrix $F=(f(g_i,g_j))_{1\le i,j\le n}$ whose entries are $\pm 1$. If $F$ is Hadamard it is called a \emph{cocyclic Hadamard matrix} corresponding to $G$. 
+
+The following commands compute all $192$ of the cocyclic Hadamard matrices for the abelian group $G=\mathbb Z_4\oplus \mathbb Z_4$ of order $n=16$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=AbelianGroup([4,4]);;|
+  !gapprompt@gap>| !gapinput@F:=CocyclicHadamardMatrices(G);;|
+  !gapprompt@gap>| !gapinput@Length(F);|
+  192
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Third group cohomology and homotopy $2$-types}}\label{secCat1}
+\logpage{[ 5, 7, 0 ]}
+\hyperdef{L}{X78040D8580D35D53}{}
+{
+  \textsc{Homotopy 2-types} 
+
+ The third cohomology $H^3(G,A)$ of a group $G$ with coefficients in a $G$-module $A$, together with the corresponding $3$-cocycles, can be used to classify homotopy $2$-types. A \emph{homotopy 2-type} is a CW-complex whose homotopy groups are trivial in dimensions $n=0$ and $n>2$. There is an equivalence between the two categories 
+\begin{enumerate}
+\item  (Homotopy category of connected CW-complexes $X$ with trivial homotopy groups $\pi_n(X)$ for $n>2$) 
+\item  (Localization of the category of simplicial groups with Moore complex of
+length $1$, where localization is with respect to homomorphisms inducing isomorphisms on
+homotopy groups) 
+\end{enumerate}
+ which reduces the homotopy theory of $2$-types to a 'computable' algebraic theory. Furthermore, a simplicial group
+with Moore complex of length $1$ can be represented by a group $H$ endowed with two endomorphisms $s\colon H\rightarrow H$ and $t\colon H\rightarrow H$ satisfying the axioms 
+\begin{itemize}
+\item $ss=s$, $ts=s$,
+\item $tt=t$, $st=t$,
+\item  $[\ker s, \ker t] = 1$.
+\end{itemize}
+ Ths triple $(H,s,t)$ was termed a \emph{cat$^1$-group} by J.-L. Loday since it can be regarded as a group $H$ endowed with one compatible category structure. 
+
+The \emph{homotopy groups} of a cat$^1$-group $H$ are defined as: $\pi_1(H) = {\rm image}(s)/t(\ker(s))$; $\pi_2(H)=\ker(s) \cap \ker(t)$; $\pi_n(H)=0$ for $n> 2$ or $n=0$. Note that $\pi_2(H)$ is a $\pi_1(H)$-module where the action is induced by conjugation in $H$. 
+
+A homotopy $2$-type $X$ can be represented by a cat$^1$-group $H$ or by the homotopy groups $\pi_1X=\pi_1H$, $\pi_2X=\pi_2H$ and a cohomology class $k\in H^3(\pi_1X,\pi_2X)$. This class $k$ is the \emph{Postnikov invariant}. 
+
+\textsc{Relation to Group Theory} 
+
+A number of standard group-theoretic constructions can be viewed naturally as
+a cat$^1$-group. 
+\begin{enumerate}
+\item  A $\mathbb ZG$-module $A$ can be viewed as a cat$^1$-group $(H,s,t)$ where $H$ is the semi-direct product $A\rtimes G$ and $s(a,g)=(1,g)$, $t(a,g)=(1,g)$. Here $\pi_1(H)=G$ and $\pi_2(H)=A$.
+\item  A group $G$ with normal subgroup $N$ can be viewed as a cat$^1$-group $(H,s,t)$ where $H$ is the semi-direct product $N\rtimes G$ and $s(n,g)=(1,g)$, $t(n,g)=(1,ng)$. Here $\pi_1(H)=G/N$ and $\pi_2(H)=0$.
+\item  The homomorphism $\iota \colon G\rightarrow Aut(G)$ which sends elements of a group $G$ to the corresponding inner automorphism can be viewed as a cat$^1$-group $(H,s,t)$ where $H$ is the semi-direct product $G\rtimes Aut(G)$ and $s(g,a)=(1,a)$, $t(g,a)=(1,\iota (g)a)$. Here $\pi_1(H)=Out(G)$ is the outer automorphism group of $G$ and $\pi_2(H)=Z(G)$ is the centre of $G$.
+\end{enumerate}
+ These three constructions are implemented in \textsc{HAP}. 
+
+\textsc{Example} 
+
+The following commands begin by constructing the cat$^1$-group $H$ of Construction 3 for the group $G=SmallGroup(64,134)$. They then construct the fundamental group of $H$ and the second homotopy group of as a $\pi_1$-module. These homotopy groups have orders $8$ and $2$ respectively. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SmallGroup(64,134);;|
+  !gapprompt@gap>| !gapinput@H:=AutomorphismGroupAsCatOneGroup(G);;|
+  !gapprompt@gap>| !gapinput@pi_1:=HomotopyGroup(H,1);;|
+  !gapprompt@gap>| !gapinput@pi_2:=HomotopyModule(H,2);;|
+  !gapprompt@gap>| !gapinput@Order(pi_1);|
+  8
+  !gapprompt@gap>| !gapinput@Order(ActedGroup(pi_2));|
+  2
+  
+\end{Verbatim}
+ 
+
+ The following additional commands show that there are $1024$ Yoneda equivalence classes of cat$^1$-groups with fundamental group $\pi_1$ and $\pi_1$- module equal to $\pi_2$ in our example. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(pi_1,4);;|
+  !gapprompt@gap>| !gapinput@C:=HomToGModule(R,pi_2);;|
+  !gapprompt@gap>| !gapinput@CH:=CohomologyModule(C,3);;|
+  !gapprompt@gap>| !gapinput@AbelianInvariants(ActedGroup(CH));|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  
+\end{Verbatim}
+ A $3$-cocycle $f \colon \pi_1 \times \pi_1 \times \pi_1 \rightarrow \pi_2$ corresponding to a random cohomology class $k\in H^3(\pi_1,\pi_2)$ can be produced using the following command. }
+
+ 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|x:=Random(Elements(ActedGroup(CH)));;B
+  @gapprompt|gap>B @gapinput|f:=CH!.representativeCocycle(x);B
+  Standard 3-cocycle 
+  
+\end{Verbatim}
+ The $3$-cocycle corresponding to the Postnikov invariant of $H$ itself can be easily constructed directly from its definition in terms of a
+set-theoretic 'section' of the crossed module corresponding to $H$. }
 
  
 \chapter{\textcolor{Chapter }{Cohomology of groups}}\logpage{[ 6, 0, 0 ]}
@@ -1269,6 +1551,27 @@ order $243$ with non-trivial Bogomolov multiplier. The groups in question are nu
 \hyperdef{L}{X807B265978F90E01}{}
 {
  
+
+It is possible to compute the low degree (co)homology of a finite group or
+monoid of small order directly from the bar resolution. The following commands
+take this approach to computing the fifth integral homology 
+
+$H_5(Q_4,\mathbb Z) = \mathbb Z_2\oplus\mathbb Z_2$ 
+
+of the quaternion group $G=Q_4$ of order $8$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Q:=QuaternionGroup(8);;|
+  !gapprompt@gap>| !gapinput@B:=BarComplexOfMonoid(Q,6);;                 |
+  !gapprompt@gap>| !gapinput@C:=ContractedComplex(B);;|
+  !gapprompt@gap>| !gapinput@Homology(C,5);|
+  [ 2, 2 ]
+  
+\end{Verbatim}
+ 
+
+However, this approach is of limited applicability since the bar resolution
+involves $|G|^k$ free generators in degree $k$. A range of techniques, tailored to specific classes of groups, can be used
+to compute the (co)homology of larger finite groups. 
 
  The following example computes the fourth integral cohomomogy of the Mathieu
 group $M_{24}$. 
@@ -1693,10 +1996,23 @@ $\underline H_0(G,{\cal R}) = \mathbb Z^{17}$
 \hyperdef{L}{X7D818E5F80F4CF63}{}
 {
  
-\section{\textcolor{Chapter }{Crossed modules}}\logpage{[ 9, 1, 0 ]}
+\section{\textcolor{Chapter }{Crossed modules}}\label{secCrossedModules}
+\logpage{[ 9, 1, 0 ]}
 \hyperdef{L}{X808C6B357F8BADC1}{}
 {
- The following example concerns the crossed module 
+ A \emph{crossed module} consists of a homomorphism of groups $\partial\colon M\rightarrow G$ together with an action $(g,m)\mapsto\, {^gm}$ of $G$ on $M$ satisfying 
+\begin{enumerate}
+\item  $\partial(^gm) = gmg^{-1}$
+\item  $^{\partial m}m' = mm'm^{-1}$
+\end{enumerate}
+ for $g\in G$, $m,m'\in M$. 
+
+ A crossed module $\partial\colon M\rightarrow G$ is equivalent to a cat$^1$-group $(H,s,t)$ (see \ref{secCat1}) where $H=M \rtimes G$, $s(m,g) = (1,g)$, $t(m,g)=(1,(\partial m)g)$. A cat$^1$-group is, in turn, equivalent to a simplicial group with Moore complex has
+length $1$. The simplicial group is constructed by considering the cat$^1$-group as a category and taking its nerve. Alternatively, the simplicial group
+can be constructed by viewing the crossed module as a crossed complex and
+using a nonabelian version of the Dold-Kan theorem. 
+
+The following example concerns the crossed module 
 
 $\partial\colon G\rightarrow Aut(G), g\mapsto (x\mapsto gxg^{-1})$ 
 
@@ -1713,9 +2029,6 @@ $H_4(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2$,
 
 $H_5(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus
 \mathbb Z_2\oplus \mathbb Z_2\oplus \mathbb Z_2$. 
-
-The simplicial group is obtained by viewing the crossed module as a crossed
-complex and using a nonabelian version of the Dold-Kan theorem. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(16));|
   Cat-1-group with underlying group Group( 
@@ -1750,26 +2063,795 @@ complex and using a nonabelian version of the Dold-Kan theorem.
  }
 
  
-\section{\textcolor{Chapter }{Eilenberg-MacLane spaces}}\logpage{[ 9, 2, 0 ]}
-\hyperdef{L}{X7FD979227A993C6F}{}
+\section{\textcolor{Chapter }{Eilenberg-MacLane spaces as simplicial groups (not recommended)}}\label{eilennot}
+\logpage{[ 9, 2, 0 ]}
+\hyperdef{L}{X795E339978B42775}{}
 {
  
 
-The following example concerns the Eilenberg-MacLane space $X=K(\mathbb Z,3)$ which is a path-connected space with $\pi_3X=\mathbb Z$, $\pi_iX=0$ for $3\ne i\ge 1$. This space is represented by a simplicial group, and perturbation techniques
+The following example concerns the Eilenberg-MacLane space $X=K(\mathbb Z_3,3)$ which is a path-connected space with $\pi_3X=\mathbb Z_3$, $\pi_iX=0$ for $3\ne i\ge 1$. This space is represented by a simplicial group, and perturbation techniques
 are used to compute 
 
-$H_7(X,\mathbb Z)=\mathbb Z_3$. 
+$H_7(X,\mathbb Z)=\mathbb Z_3 \oplus \mathbb Z_3$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);;AbelianInvariants(A);|
-  [ 0 ]
-  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialGroup(A,3,8);|
+  !gapprompt@gap>| !gapinput@A:=AbelianGroup([3]);;AbelianInvariants(A);   |
+  [ 3 ]
+  !gapprompt@gap>| !gapinput@ K:=EilenbergMacLaneSimplicialGroup(A,3,8);|
   Simplicial group of length 8
   
-  !gapprompt@gap>| !gapinput@C:=ChainComplexOfSimplicialGroup(K);|
+  !gapprompt@gap>| !gapinput@C:=ChainComplex(K);|
   Chain complex of length 8 in characteristic 0 . 
   
-  !gapprompt@gap>| !gapinput@Homology(C,7);|
+  !gapprompt@gap>| !gapinput@Homology(C,7);                                          |
+  [ 3, 3 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Eilenberg-MacLane spaces as simplicial free abelian groups (recommended)}}\label{eilen}
+\logpage{[ 9, 3, 0 ]}
+\hyperdef{L}{X7D91E64D7DD7F10F}{}
+{
+ 
+
+For integer $n>1$ and abelian group $A$ the Eilenberg-MacLane space $K(A,n)$ is better represented as a simplicial free abelian group. (The reason is that
+the functorial bar resolution of $A$ can be replaced in computations by the smaller functorial Chevalley-Eilenberg
+complex of $A$, obviating the need for perturbation techniques.) 
+
+The following commands compute the integral homology $H_n(K(\mathbb Z,3),\mathbb Z)$ for $ 0\le n \le 16$. (Note that one typically needs fewer than $n$ terms of the Eilenberg-MacLance space to compute its $n$-th homology -- an error is printed if too few terms of the space are
+available for a given computation.) 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);; #infinite cyclic group                    |
+  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,14);|
+  Simplicial free abelian group of length 14
+  
+  !gapprompt@gap>| !gapinput@for n in [0..16] do|
+  !gapprompt@>| !gapinput@Print("Degree ",n," integral homology of K is ",Homology(K,n),"\n");|
+  !gapprompt@>| !gapinput@od;|
+  Degree 0 integral homology of K is [ 0 ]
+  Degree 1 integral homology of K is [  ]
+  Degree 2 integral homology of K is [  ]
+  Degree 3 integral homology of K is [ 0 ]
+  Degree 4 integral homology of K is [  ]
+  Degree 5 integral homology of K is [ 2 ]
+  Degree 6 integral homology of K is [  ]
+  Degree 7 integral homology of K is [ 3 ]
+  Degree 8 integral homology of K is [ 2 ]
+  Degree 9 integral homology of K is [ 2 ]
+  Degree 10 integral homology of K is [ 3 ]
+  Degree 11 integral homology of K is [ 5, 2 ]
+  Degree 12 integral homology of K is [ 2 ]
+  Degree 13 integral homology of K is [  ]
+  Degree 14 integral homology of K is [ 10, 2 ]
+  Degree 15 integral homology of K is [ 7, 6 ]
+  Degree 16 integral homology of K is [  ]
+  
+\end{Verbatim}
+ For an $n$-connected pointed space $X$ the Freudenthal Suspension Theorem states that the map $X \rightarrow \Omega(\Sigma X)$ induces a map $\pi_k(X) \rightarrow \pi_k(\Omega(\Sigma X))$ which is an isomorphism for $k\le 2n$ and epimorphism for $k=2n+1$. Thus the Eilenberg-MacLane space $K(A,n+1)$ can be constructed from the suspension $\Sigma K(A,n)$ by attaching cells in dimensions $\ge 2n+1$. In particular, there is an isomorphism $ H_{k-1}(K(A,n),\mathbb Z) \rightarrow H_k(K(A,n+1),\mathbb Z)$ for $k\le 2n$ and epimorphism for $k=2n+1$. 
+
+ For instance, $ H_{k-1}(K(\mathbb Z,3),\mathbb Z) \cong H_k(K(\mathbb Z,4),\mathbb Z) $ for $k\le 6$ and $ H_6(K(\mathbb Z,3),\mathbb Z) \twoheadrightarrow H_7(K(\mathbb Z,4),\mathbb Z) $. This assertion is seen in the following session. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);; #infinite cyclic group                    |
+  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,4,11);|
+  Simplicial free abelian group of length 11
+  
+  !gapprompt@gap>| !gapinput@for n in [0..13] do|
+  !gapprompt@>| !gapinput@Print("Degree ",n," integral homology of K is ",Homology(K,n),"\n");|
+  !gapprompt@>| !gapinput@od;|
+  Degree 0 integral homology of K is [ 0 ]
+  Degree 1 integral homology of K is [  ]
+  Degree 2 integral homology of K is [  ]
+  Degree 3 integral homology of K is [  ]
+  Degree 4 integral homology of K is [ 0 ]
+  Degree 5 integral homology of K is [  ]
+  Degree 6 integral homology of K is [ 2 ]
+  Degree 7 integral homology of K is [  ]
+  Degree 8 integral homology of K is [ 3, 0 ]
+  Degree 9 integral homology of K is [  ]
+  Degree 10 integral homology of K is [ 2, 2 ]
+  Degree 11 integral homology of K is [  ]
+  Degree 12 integral homology of K is [ 5, 12, 0 ]
+  Degree 13 integral homology of K is [ 2 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Elementary theoretical information on $H^\ast(K(\pi,n),\mathbb Z)$}}\logpage{[ 9, 4, 0 ]}
+\hyperdef{L}{X84ABCA497C577132}{}
+{
+  
+
+The cup product is not implemented for the cohomology ring $H^\ast(K(\pi,n),\mathbb Z)$. Standard theoretical spectral sequence arguments have to be applied to
+obtain basic information relating to the ring structure. To illustrate this
+the following commands compute $H^n(K(\mathbb Z,2),\mathbb Z)$ for the first few values of $n$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,2,10);;|
+  !gapprompt@gap>| !gapinput@List([0..10],k->Cohomology(K,k));|
+  [ [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ] ]
+  
+\end{Verbatim}
+ There is a fibration sequence $K(\pi,n) \hookrightarrow \ast \twoheadrightarrow K(\pi,n+1)$ in which $\ast$ denotes a contractible space. For $n=1, \pi=\mathbb Z$ the terms of the $E_2$ page of the Serre integral cohomology spectral sequence for this fibration are 
+\begin{itemize}
+\item  $E_2^{pq}= H^p( K(\mathbb Z,2), H^q(K(\mathbb Z,1),\mathbb Z) )$ .
+\end{itemize}
+ Since $K(\mathbb Z,1)$ can be taken to be the circle $S^1$ we know that it has non-trivial cohomology in degrees $0$ and $1$ only. The first few terms of the $E_2$ page are given in the following table. \begin{center}
+\begin{tabular}{l|lllllllllll} $1$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ \\
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $\mathbb Z$ \\
+ $q/p$ &
+ $0$ &
+ $1$ &
+ $2$ &
+ $3$ &
+ $4$ &
+ $5$ &
+ $6$ &
+ $7$ &
+ $8$ &
+ $9$ &
+ $10$ \\
+\end{tabular}\\[2mm]
+\textbf{Table: }$E^2$ cohomology page for $K(\mathbb Z,1) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,2)$\end{center}
+
+ Let $x$ denote the generator of $H^1(K(\mathbb Z,1),\mathbb Z)$ and $y$ denote the generator of $H^2(K(\mathbb Z,2),\mathbb Z)$. Since $\ast$ has zero cohomology in degrees $\ge 1$ we see that the differential must restrict to an isomorphism $d_2\colon E_2^{0,1} \rightarrow E_2^{2,0}$ with $d_2(x)=y$. Then we see that the differential must restrict to an isomorphism $d_2\colon E_2^{2,1} \rightarrow E_2^{4,0}$ defined on the generator $xy$ of $E_2^{2,1}$ by 
+\[d_2(xy) = d_2(x)y + (-1)^{{\rm deg}(x)}xd_2(y) =y^2\ . \]
+ Hence $E_2^{4,0} \cong H^4(K(\mathbb Z,2),\mathbb Z)$ is generated by $y^2$. The argument extends to show that $H^6(K(\mathbb Z,2),\mathbb Z)$ is generated by $y^3$, $H^8(K(\mathbb Z,2),\mathbb Z)$ is generated by $y^4$, and so on. 
+
+In fact, to obtain a complete description of the ring $H^\ast(K(\mathbb Z,2),\mathbb Z)$ in this fashion there is no benefit to using computer methods at all. We only
+need to know the cohomology ring $H^\ast(K(\mathbb Z,1),\mathbb Z) =H^\ast(S^1,\mathbb Z)$ and the single cohomology group $H^2(K(\mathbb Z,2),\mathbb Z)$. 
+
+A similar approach can be attempted for $H^\ast(K(\mathbb Z,3),\mathbb Z)$ using the fibration sequence $K(\mathbb Z,2) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,3)$ and, as explained in Chapter 5 of \cite{hatcher}, yields the computation of the group $H^i(K(\mathbb Z,3),\mathbb Z)$ for $4\le i\le 13$. The method does not directly yield $H^3(K(\mathbb Z,3),\mathbb Z)$ and breaks down in degree $14$ yielding only that $H^{14}(K(\mathbb Z,3),\mathbb Z) = 0 {\rm ~or~} \mathbb Z_3$. The following commands provide $H^3(K(\mathbb Z,3),\mathbb Z)= \mathbb Z$ and $H^{14}(K(\mathbb Z,3),\mathbb Z) =0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);;|
+  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,15);;|
+  !gapprompt@gap>| !gapinput@Cohomology(K,3);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(K,14);|
+  [  ]
+  
+\end{Verbatim}
+ However, the implementation of these commands is currently a bit naive, and
+computationally inefficient, since they do not currently employ any
+homological perturbation techniques. }
+
+ 
+\section{\textcolor{Chapter }{The first three non-trivial homotopy groups of spheres}}\label{firstthree}
+\logpage{[ 9, 5, 0 ]}
+\hyperdef{L}{X7F828D8D8463CC20}{}
+{
+ 
+
+The Hurewicz Theorem immediately gives 
+\[\pi_n(S^n)\cong \mathbb Z ~~~ (n\ge 1)\]
+ and 
+\[\pi_k(S^n)=0 ~~~ (k\le n-1).\]
+ 
+
+As a CW-complex the Eilenberg-MacLane space $K=K(\mathbb Z,n)$ can be obtained from an $n$-sphere $S^n=e^0\cup e^n$ by attaching cells in dimensions $\ge n+2$ so as to kill the higher homotopy groups of $S^n$. From the inclusion $\iota\colon S^n\hookrightarrow K(\mathbb Z,n)$ we can form the mapping cone $X=C(\iota)$. The long exact homotopy sequence 
+
+$ \cdots \rightarrow \pi_{k+1}K \rightarrow \pi_{k+1}(K,S^n) \rightarrow \pi_{k}
+S^n \rightarrow \pi_kK \rightarrow \pi_k(K,S^n) \rightarrow \cdots$ 
+
+ implies that $\pi_k(K,S^n)=0$ for $0 \le k\le n+1$ and $\pi_{n+2}(K,S^n)\cong \pi_{n+1}(S^n)$. The relative Hurewicz Theorem gives an isomorphism $\pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z)$. The long exact homology sequence 
+
+$ \cdots H_{n+2}(S^n,\mathbb Z) \rightarrow H_{n+2}(K,\mathbb Z) \rightarrow
+H_{n+2}(K,S^n, \mathbb Z) \rightarrow H_{n+1}(S^n,\mathbb Z) \rightarrow
+\cdots$ 
+
+ arising from the cofibration $S^n \hookrightarrow K \twoheadrightarrow X$ implies that $\pi_{n+1}(S^n)\cong \pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z) \cong
+H_{n+2}(K,\mathbb Z)$. From the \textsc{GAP} computations in \ref{eilen} and the Freudenthal Suspension Theorem we find: 
+\[ \pi_3S^2 \cong \mathbb Z, ~~~~~~ \pi_{n+1}(S^n)\cong \mathbb Z_2~~~(n\ge 3).\]
+ 
+
+The Hopf fibration $S^3\rightarrow S^2$ has fibre $S^1 = K(\mathbb Z,1)$. It can be constructed by viewing $S^3$ as all pairs $(z_1,z_2)\in \mathbb C^2$ with $|z_1|^2+|z_2|^2=1$ and viewing $S^2$ as $\mathbb C\cup \infty$; the map sends $(z_1,z_2)\mapsto z_1/z_2$. The homotopy exact sequence of the Hopf fibration yields $\pi_k(S^3) \cong \pi_k(S^2)$ for $k\ge 3$, and in particular 
+\[\pi_4(S^2) \cong \pi_4(S^3) \cong \mathbb Z_2\ .\]
+ It will require further techniques (such as the Postnikov tower argument in
+Section \ref{postnikov} below) to establish that $\pi_5(S^3) \cong \mathbb Z_2$. Once we have this isomorphism for $\pi_5(S^3)$, the generalized Hopf fibration $S^3 \hookrightarrow S^7 \twoheadrightarrow S^4$ comes into play. This fibration is contructed as for the classical fibration,
+but using pairs $(z_1,z_2)$ of quaternions rather than pairs of complex numbers. The Hurewicz Theorem
+gives $\pi_3(S^7)=0$; the fibre $S^3$ is thus homotopic to a point in $S^7$ and the inclusion of the fibre induces the zero homomorphism $\pi_k(S^3) \stackrel{0}{\longrightarrow} \pi_k(S^7) ~~(k\ge 1)$. The exact homotopy sequence of the generalized Hopf fibration then gives $\pi_k(S^4)\cong \pi_k(S^7)\oplus \pi_{k-1}(S^3)$. On taking $k=6$ we obtain $\pi_6(S^4)\cong \pi_5(S^3) \cong \mathbb Z_2$. Freudenthal suspension then gives 
+\[\pi_{n+2}(S^n)\cong \mathbb Z_2,~~~(n\ge 2).\]
+ }
+
+ 
+\section{\textcolor{Chapter }{The first two non-trivial homotopy groups of the suspension and double
+suspension of a $K(G,1)$}}\label{firsttwo}
+\logpage{[ 9, 6, 0 ]}
+\hyperdef{L}{X81E2F80384ADF8C2}{}
+{
+ 
+
+For any group $G$ we consider the homotopy groups $\pi_n(\Sigma K(G,1))$ of the suspension $\Sigma K(G,1)$ of the Eilenberg-MacLance space $K(G,1)$. On taking $G=\mathbb Z$, and observing that $S^2 = \Sigma K(\mathbb Z,1)$, we specialize to the homotopy groups of the $2$-sphere $S^2$. 
+
+By construction, 
+\[\pi_1(\Sigma K(G,1))=0\ .\]
+ The Hurewicz Theorem gives 
+\[\pi_2(\Sigma K(G,1)) \cong G_{ab}\]
+ via the isomorphisms $\pi_2(\Sigma K(G,1)) \cong H_2(\Sigma K(G,1),\mathbb Z) \cong
+H_1(K(G,1),\mathbb Z) \cong G_{ab}$. R. Brown and J.-L. Loday \cite{brownloday} obtained the formulae 
+\[\pi_3(\Sigma K(G,1)) \cong \ker (G\otimes G \rightarrow G, x\otimes y\mapsto
+[x,y]) \ ,\]
+ 
+\[\pi_4(\Sigma^2 K(G,1)) \cong \ker (G\, {\widetilde \otimes}\, G \rightarrow G,
+x\, {\widetilde \otimes}\, y\mapsto [x,y]) \]
+ involving the nonabelian tensor square and nonabelian symmetric square of the
+group $G$. The following commands use the nonabelian tensor and symmetric product to
+compute the third and fourth homotopy groups for $G =Syl_2(M_{12})$ the Sylow $2$-subgroup of the Mathieu group $M_{12}$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SylowSubgroup(MathieuGroup(12),2);;|
+  !gapprompt@gap>| !gapinput@ThirdHomotopyGroupOfSuspensionB(G);   |
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  gap>
+  !gapprompt@gap>| !gapinput@FourthHomotopyGroupOfDoubleSuspensionB(G);|
+  [ 2, 2, 2, 2, 2, 2 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Postnikov towers and $\pi_5(S^3)$ }}\label{postnikov}
+\logpage{[ 9, 7, 0 ]}
+\hyperdef{L}{X83EAC40A8324571F}{}
+{
+ A Postnikov system for the sphere $S^3$ consists of a sequence of fibrations $\cdots X_3\stackrel{p_3}{\rightarrow} X_2\stackrel{p_2}{\rightarrow}
+X_1\stackrel{p_1}{\rightarrow} \ast$ and a sequence of maps $\phi_n\colon S^3 \rightarrow X_n$ such that 
+\begin{itemize}
+\item  $p_n \circ \phi_n =\phi_{n-1}$ 
+\item The map $\phi_n\colon S^3 \rightarrow X_n$ induces an isomorphism $\pi_k(S^3)\rightarrow \pi_k(X_n)$ for all $k\le n$ 
+\item $\pi_k(X_n)=0$ for $k > n$
+\item and consequently each fibration $p_n$ has fibre an Eilenberg-MacLane space $K(\pi_n(S^3),n)$.
+\end{itemize}
+ The space $X_n$ is obtained from $S^3$ by adding cells in dimensions $\ge n+2$ and thus 
+\begin{itemize}
+\item $H_k(X_n,\mathbb Z)=H_k(S^3,\mathbb Z)$ for $k\le n+1$. 
+\end{itemize}
+ So in particular $X_1=X_2=\ast, X_3=K(\mathbb Z,3)$ and we have a fibration sequence $K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow K(\mathbb Z,3)$. The terms in the $E_2$ page of the Serre integral cohomology spectral sequence of this fibration are 
+\begin{itemize}
+\item $E_2^{p,q}=H^p(\,K(\mathbb Z,3),\,H_q(K(\mathbb Z_2,4),\mathbb Z)\,)$.
+\end{itemize}
+ The first few terms in the $E_2$ page can be computed using the commands of Sections \ref{eilennot} and \ref{eilen} and recorded as follows. \begin{center}
+\begin{tabular}{l|llllllllll} $8$ &
+ $\mathbb Z_2$ &
+ $0$&
+ $0$&
+ &
+ &
+ &
+ &
+ &
+ &
+ \\
+ $7$ &
+ $\mathbb Z_2$ &
+ $0$&
+ $0$&
+ &
+ &
+ &
+ &
+ &
+ &
+ \\
+ $6$ &
+ $0$ &
+ $0$&
+ $0$&
+ &
+ &
+ &
+ &
+ &
+ &
+ \\
+ $5$ &
+ $\pi_4(S^3)$ &
+ $0$ &
+ $0$ &
+ $\pi_4(S^3)$ &
+ $0$ &
+ $0$&
+ $0$ &
+ $$&
+ &
+ \\
+ $4$ &
+ $0$ &
+ $0$ &
+$0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ &
+ \\
+ $3$ &
+ $0$ &
+ $0$ &
+$0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ &
+ \\
+ $2$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ &
+ \\
+ $1$ &
+$0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ &
+ \\
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z_2$ &
+ $0$ &
+ $\mathbb Z_3$ &
+ $\mathbb Z_2$ \\
+ $q/p$ &
+ $0$ &
+ $1$ &
+ $2$ &
+ $3$ &
+ $4$ &
+ $5$ &
+ $6$ &
+ $7$ &
+ $8$ &
+ $9$ \\
+\end{tabular}\\[2mm]
+\textbf{Table: }$E_2$ cohomology page for $K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow X_3$\end{center}
+
+ Since we know that $H^5(X_4,\mathbb Z) =0$, the differentials in the spectral sequence must restrict to an isomorphism $E_2^{0,5}=\pi_4(S^3) \stackrel{\cong}{\longrightarrow} E_2^{6,0}=\mathbb Z_2$. This provides an alternative derivation of $\pi_4(S^3) \cong \mathbb Z_2$. We can also immediately deduce that $H^6(X_4,\mathbb Z)=0$. Let $x$ be the generator of $E_2^{0,5}$ and $y$ the generator of $E_2^{3,0}$. Then the generator $xy$ of $E_2^{3,5}$ gets mapped to a non-zero element $d_7(xy)=d_7(x)y -xd_7(y)$. Hence the term $E_2^{0,7}=\mathbb Z_2$ must get mapped to zero in $E_2^{3,5}$. It follows that $H^7(X_4,\mathbb Z)=\mathbb Z_2$. 
+
+The integral cohomology of Eilenberg-MacLane spaces yields the following
+information on the $E_2$ page $E_2^{p,q}=H_p(\,X_4,\,H^q(K(\pi_5S^3,5),\mathbb Z)\,)$ for the fibration $K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4$. \begin{center}
+\begin{tabular}{l|llllllll} $6$ &
+ $\pi_5(S^3)$ &
+ $0$ &
+ $0$ &
+ $\pi_5(S^3)$ &
+ $0$ &
+ $0$ &
+ &
+ \\
+ $5$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $4$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $3$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $2$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $1$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $H^7(X_4,\mathbb Z)$ \\
+ $q/p$ &
+ $0$ &
+ $1$ &
+ $2$ &
+ $3$ &
+ $4$ &
+ $5$ &
+ $6$ &
+ $7$ \\
+\end{tabular}\\[2mm]
+\textbf{Table: }$E_2$ cohomology page for $K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4$\end{center}
+
+ Since we know that $H^6(X_5,\mathbb Z)=0$, the differentials in the spectral sequence must restrict to an isomorphism $E_2^{0,6}=\pi_5(S^3) \stackrel{\cong}{\longrightarrow}
+E_2^{7,0}=H^7(X_4,\mathbb Z)$. We can conclude the desired result: 
+\[\pi_5(S^3) = \mathbb Z_2\ .\]
+ 
+
+ $~~~$
+
+
+
+ Note that the fibration $X_4 \twoheadrightarrow K(\mathbb Z,3)$ is determined by a cohomology class $\kappa \in H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2$. If $\kappa=0$ then we'd have $X_4 =K(\mathbb Z_2,4)\times K(\mathbb Z,3)$ and, as the following commands show, we'd then have $H_4(X_4,\mathbb Z)=\mathbb Z_2$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=EilenbergMacLaneSimplicialGroup(AbelianPcpGroup([0]),3,7);;|
+  !gapprompt@gap>| !gapinput@L:=EilenbergMacLaneSimplicialGroup(CyclicGroup(2),4,7);;|
+  !gapprompt@gap>| !gapinput@CK:=ChainComplex(K);;|
+  !gapprompt@gap>| !gapinput@CL:=ChainComplex(L);;|
+  !gapprompt@gap>| !gapinput@T:=TensorProduct(CK,CL);;|
+  !gapprompt@gap>| !gapinput@Homology(T,4);|
+  [ 2 ]
+  
+\end{Verbatim}
+ Since we know that $H_4(X_4,\mathbb Z)=0$ we can conclude that the Postnikov invariant $\kappa$ is the non-zero class in $H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2$. }
+
+ 
+\section{\textcolor{Chapter }{Towards $\pi_4(\Sigma K(G,1))$ }}\label{postnikov}
+\logpage{[ 9, 8, 0 ]}
+\hyperdef{L}{X8227000D83B9A17F}{}
+{
+ Consider the suspension $X=\Sigma K(G,1)$ of a classifying space of a group $G$ once again. This space has a Postnikov system in which $X_1 = \ast$, $X_2= K(G_{ab},2)$. We have a fibration sequence $K(\pi_3 X, 3) \hookrightarrow X_3 \twoheadrightarrow K(G_{ab},2)$. The corresponding integral cohomology Serre spectral sequence has $E_2$ page with terms 
+\begin{itemize}
+\item  $E_2^{p,q}=H^p(\,K(G_{ab},2), H^q(K(\pi_3 X,3)),\mathbb Z)\, )$. 
+\end{itemize}
+ 
+
+As an example, for the Alternating group $G=A_4$ of order $12$ the following commands of Section \ref{firsttwo} compute $G_{ab} = \mathbb Z_3$ and $\pi_3 X = \mathbb Z_6$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@AbelianInvariants(G);|
   [ 3 ]
+  !gapprompt@gap>| !gapinput@ThirdHomotopyGroupOfSuspensionB(G);|
+  [ 2, 3 ]
+  
+\end{Verbatim}
+ The first terms of the $E_2$ page can be calculated using the commands of Sections \ref{eilennot} and \ref{eilen}. \begin{center}
+\begin{tabular}{l|llllllll} $7$ &
+ $\mathbb Z_2 $ &
+ $0$ &
+ $$ &
+ $$ &
+ $$ &
+ $$ &
+ &
+ \\
+ $6$ &
+ $\mathbb Z_2$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $$ &
+ $$ &
+ &
+ \\
+ $5$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $$ &
+ $$ &
+ $$ &
+ \\
+ $4$ &
+ $\mathbb Z_6$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z_3$ &
+ $$ &
+ $$ &
+ $$ &
+ \\
+ $3$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $$ &
+ \\
+ $2$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $1$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z_3$ &
+ $0$ &
+ $\mathbb Z_3$ &
+ $0$ &
+ $\mathbb Z_9$ \\
+ $q/p$ &
+ $0$ &
+ $1$ &
+ $2$ &
+ $3$ &
+ $4$ &
+ $5$ &
+ $6$ &
+ $7$ \\
+\end{tabular}\\[2mm]
+\textbf{Table: }$E^2$ cohomology page for $K(\pi_3 X,3) \hookrightarrow X_3 \twoheadrightarrow X_2$\end{center}
+
+ We know that $H^1(X_3,\mathbb Z)=0$, $H^2(X_3,\mathbb Z)=H^1(G,\mathbb Z) =0$, $H^3(X_3,\mathbb Z)=H^2(G,\mathbb Z) =\mathbb Z_3$, and that $H^4(X_3,\mathbb Z)$ is a subgroup of $H^3(G,\mathbb Z) = \mathbb Z_2$. It follows that the differential induces a surjection $E_2^{0,4}=\mathbb Z_6 \twoheadrightarrow E_2^{5,0}=\mathbb Z_3$. Consequently $H^4(X_3,\mathbb Z)=\mathbb Z_2$ and $H^5(X_3,\mathbb Z)=0$ and $H^6(X_3,\mathbb Z)=\mathbb Z_2$. 
+
+The $E_2$ page for the fibration $K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3$ contains the following terms. \begin{center}
+\begin{tabular}{l|lllllll} $5$ &
+ $\pi_4 X$ &
+ $0$ &
+ $0$ &
+ $$ &
+ $$ &
+ $$ &
+ $$ \\
+ $4$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $$ &
+ $$ &
+ $$ \\
+ $3$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $$ \\
+ $2$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ \\
+ $1$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ &
+ $0$ \\
+ $0$ &
+ $\mathbb Z$ &
+ $0$ &
+ $0$ &
+ $\mathbb Z_3$ &
+ $\mathbb Z_2$ &
+ $0$ &
+ $\mathbb Z_2$ \\
+ $q/p$ &
+ $0$ &
+ $1$ &
+ $2$ &
+ $3$ &
+ $4$ &
+ $5$ &
+ $6$ \\
+\end{tabular}\\[2mm]
+\textbf{Table: }$E^2$ cohomology page for $K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3$\end{center}
+
+ We know that $H^5(X_4,\mathbb Z)$ is a subgroup of $H^4(G,\mathbb Z)=\mathbb Z_6$, and hence that there is a homomorphisms $\pi_4X \rightarrow \mathbb Z_2$ whose kernel is a subgroup of $\mathbb Z_6$. If follows that $|\pi_4 X|\le 12$. }
+
+ 
+\section{\textcolor{Chapter }{Enumerating homotopy 2-types}}\logpage{[ 9, 9, 0 ]}
+\hyperdef{L}{X7F5E6C067B2AE17A}{}
+{
+  A \emph{2-type} is a CW-complex $X$ whose homotopy groups are trivial in dimensions $n=0 $ and $n>2$. As explained in \ref{secCat1} the homotopy type of such a space can be captured algebraically by a cat$^1$-group $G$. Let $X$, $Y$ be $2$-tytpes represented by cat$^1$-groups $G$, $H$. If $X$ and $Y$ are homotopy equivalent then there exists a sequence of morphisms of cat$^1$-groups 
+\[G \rightarrow K_1 \rightarrow K_2 \leftarrow K_3 \rightarrow \cdots
+\rightarrow K_n \leftarrow H\]
+ in which each morphism induces isomorphisms of homotopy groups. When such a
+sequence exists we say that $G$ is \emph{quasi-isomorphic} to $H$. We have the following result. 
+
+\textsc{Theorem.} The $2$-types $X$ and $Y$ are homotopy equivalent if and only if the associated cat$^1$-groups $G$ and $H$ are quasi-isomorphic. 
+
+The following commands produce a list $L$ of all of the $62$ non-isomorphic cat$^1$-groups whose underlying group has order $16$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=[];;|
+  !gapprompt@gap>| !gapinput@for G in AllSmallGroups(16) do|
+  !gapprompt@>| !gapinput@Append(L,CatOneGroupsByGroup(G));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@Length(L);|
+  62
+  
+\end{Verbatim}
+ The next commands use the first and second homotopy groups to prove that the
+list $L$ contains at least $37$ distinct quasi-isomorphism types. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Invariants:=function(G)|
+  !gapprompt@>| !gapinput@local inv;|
+  !gapprompt@>| !gapinput@inv:=[];|
+  !gapprompt@>| !gapinput@inv[1]:=IdGroup(HomotopyGroup(G,1));|
+  !gapprompt@>| !gapinput@inv[2]:=IdGroup(HomotopyGroup(G,2));|
+  !gapprompt@>| !gapinput@return inv;|
+  !gapprompt@>| !gapinput@end;;|
+  
+  !gapprompt@gap>| !gapinput@C:=Classify(L,Invariants);;|
+  !gapprompt@gap>| !gapinput@Length(C);|
+  
+\end{Verbatim}
+ The following additional commands use second and third integral homology in
+conjunction with the first two homotopy groups to prove that the list $L$ contains \textsc{at least} $49$ distinct quasi-isomorphism types. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Invariants2:=function(G)|
+  !gapprompt@>| !gapinput@local inv;|
+  !gapprompt@>| !gapinput@inv:=[];|
+  !gapprompt@>| !gapinput@inv[1]:=Homology(G,2);|
+  !gapprompt@>| !gapinput@inv[2]:=Homology(G,3);|
+  !gapprompt@>| !gapinput@return inv;|
+  !gapprompt@>| !gapinput@end;;|
+  !gapprompt@gap>| !gapinput@C:=RefineClassification(C,Invariants2);;|
+  
+  !gapprompt@gap>| !gapinput@Length(C);|
+  49
+  
+\end{Verbatim}
+ The following commands show that the above list $L$ contains \textsc{at most} $51$ distinct quasi-isomorphism types. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Q:=List(L,QuasiIsomorph);;|
+  !gapprompt@gap>| !gapinput@M:=[];;|
+  
+  !gapprompt@gap>| !gapinput@for q in Q do|
+  !gapprompt@>| !gapinput@bool:=true;;|
+  !gapprompt@>| !gapinput@for m in M do|
+  !gapprompt@>| !gapinput@if not IsomorphismCatOneGroups(m,q)=fail then bool:=false; break; fi;|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@>| !gapinput@if bool then Add(M,q); fi;|
+  !gapprompt@>| !gapinput@od;|
+  
+  !gapprompt@gap>| !gapinput@Length(M);|
+  51
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Identifying cat$^1$-groups of low order}}\logpage{[ 9, 10, 0 ]}
+\hyperdef{L}{X7D99B7AA780D8209}{}
+{
+  Let us define the \emph{order} of a cat$^1$-group to be the order of its underlying group. The function \texttt{IdQuasiCatOneGroup(C)} inputs a cat$^1$-group $C$ of "low order" and returns an integer pair $[n,k]$ that uniquely idenifies the quasi-isomorphism type of $C$. The integer $n$ is the order of a smallest cat$^1$-group quasi-isomorphic to $C$. The integer $k$ identifies a particular cat$^1$-group of order $n$. 
+
+The following commands use this function to show that there are precisely $49$ distinct quasi-isomorphism types of cat$^1$-groups of order $16$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=[];;|
+  !gapprompt@gap>| !gapinput@for G in AllSmallGroups(16) do|
+  !gapprompt@>| !gapinput@Append(L,CatOneGroupsByGroup(G));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@M:=List(L,IdQuasiCatOneGroup);|
+  [ [ 16, 1 ], [ 16, 2 ], [ 16, 3 ], [ 16, 4 ], [ 16, 5 ], [ 4, 4 ], [ 1, 1 ], 
+    [ 16, 6 ], [ 16, 7 ], [ 16, 8 ], [ 16, 9 ], [ 16, 10 ], [ 16, 11 ], 
+    [ 16, 9 ], [ 16, 12 ], [ 16, 13 ], [ 16, 14 ], [ 16, 15 ], [ 4, 1 ], 
+    [ 4, 2 ], [ 16, 16 ], [ 16, 17 ], [ 16, 18 ], [ 16, 19 ], [ 16, 20 ], 
+    [ 16, 21 ], [ 16, 22 ], [ 16, 23 ], [ 16, 24 ], [ 16, 25 ], [ 16, 26 ], 
+    [ 16, 27 ], [ 16, 28 ], [ 4, 3 ], [ 4, 1 ], [ 4, 4 ], [ 4, 4 ], [ 4, 2 ], 
+    [ 4, 5 ], [ 16, 29 ], [ 16, 30 ], [ 16, 31 ], [ 16, 32 ], [ 16, 33 ], 
+    [ 16, 34 ], [ 4, 3 ], [ 4, 4 ], [ 4, 4 ], [ 16, 35 ], [ 16, 36 ], [ 4, 3 ], 
+    [ 16, 37 ], [ 16, 38 ], [ 16, 39 ], [ 16, 40 ], [ 16, 41 ], [ 16, 42 ], 
+    [ 16, 43 ], [ 4, 3 ], [ 4, 4 ], [ 1, 1 ], [ 4, 5 ] ]
+  !gapprompt@gap>| !gapinput@Length(SSortedList(M));|
+  49
+  
+\end{Verbatim}
+ The next example first identifies the order and the identity number of the cat$^1$-group $C$ corresponding to the crossed module (see \ref{secCrossedModules}) 
+\[\iota\colon G \longrightarrow Aut(G), g \mapsto (x\mapsto gxg^{-1})\]
+ for the dihedral group $G$ of order $10$. It then realizes a smallest possible cat$^1$-group $D$ of this quasi-isomorphism type. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(10));|
+  Cat-1-group with underlying group Group( [ f1, f2, f3, f4, f5 ] ) . 
+  
+  !gapprompt@gap>| !gapinput@Order(C);|
+  200
+  !gapprompt@gap>| !gapinput@IdCatOneGroup(C);|
+  [ 200, 42, 4 ]
+  !gapprompt@gap>| !gapinput@|
+  !gapprompt@gap>| !gapinput@IdQuasiCatOneGroup(C);|
+  [ 2, 1 ]
+  !gapprompt@gap>| !gapinput@D:=SmallCatOneGroup(2,1);|
+  Cat-1-group with underlying group Group( [ f1 ] ) . 
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Identifying crossed modules of low order}}\logpage{[ 9, 11, 0 ]}
+\hyperdef{L}{X7F386CF078CB9A20}{}
+{
+  
+
+The following commands construct the crossed module $\partial \colon G\otimes G \rightarrow G$ involving the nonabelian tensor square of the dihedral group \$G\$ of order $10$, identify it as being number $71$ in the list of crossed modules of order $100$, create a quasi-isomorphic crossed module of order $4$, and finally construct the corresponding cat$^1$-group of order $100$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(10);;|
+  !gapprompt@gap>| !gapinput@T:=NonabelianTensorSquareAsCrossedModule(G);|
+  Crossed module with group homomorphism GroupHomomorphismByImages( Group( 
+  [ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ] ), Group( [ f1, f2 ] ), 
+  [ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ], [ <identity> of ..., f2^3 ] )
+  
+  !gapprompt@gap>| !gapinput@IdCrossedModule(T);|
+  [ 100, 71 ]
+  !gapprompt@gap>| !gapinput@Q:=QuasiIsomorph(T);|
+  Crossed module with group homomorphism Pcgs([ f2 ]) -> [ <identity> of ... ]
+  
+  !gapprompt@gap>| !gapinput@Order(Q);|
+  4
+  !gapprompt@gap>| !gapinput@C:=CatOneGroupByCrossedModule(T);|
+  Cat-1-group with underlying group Group( [ F1, F2, F1 ] ) . 
   
 \end{Verbatim}
  }
@@ -1852,7 +2934,7 @@ integer matrix $A$ of determinant $1$ as a word in $S$, $T$ and their inverses. 
   [ [ 4, 9 ], [ 7, 16 ] ]
   
 \end{Verbatim}
- It is convenient to introduce the matrix $U=ST = \left(\begin{array}{rr}0&-1\\ 1 &1 \end{array}\right)$. The matrices $S$ and $U$ also generate $SL_2(\mathbb Z)$. In fact we have a free presentation $SL_2(\mathbb Z)= \langle S,U\, |\, S^4=U^6=1 \rangle $. 
+ It is convenient to introduce the matrix $U=ST = \left(\begin{array}{rr}0&-1\\ 1 &1 \end{array}\right)$. The matrices $S$ and $U$ also generate $SL_2(\mathbb Z)$. In fact we have a free presentation $SL_2(\mathbb Z)= \langle S,U\, |\, S^4=U^6=1, S^2=U^3 \rangle $. 
 
 
 
@@ -2702,6 +3784,34 @@ for the $267$-th group $G$ in \textsc{GAP}'s library of small groups.
  
 
 The function \texttt{ParallelList()} is built from \textsc{HAP}'s six core functions for parallel computation. }
+
+ 
+\section{\textcolor{Chapter }{An non-embarassingly parallel computation}}\logpage{[ 11, 2, 0 ]}
+\hyperdef{L}{X7AA9C5B27A8322D0}{}
+{
+ 
+
+The following commands use core functions to compute the product $A=M\times N$ of two random matrices by distributing the work over two processors. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@M:=RandomMat(2000,2000);; |
+  !gapprompt@gap>| !gapinput@N:=RandomMat(2000,2000);;|
+  
+  !gapprompt@gap>| !gapinput@s:=ChildProcess();;|
+  
+  !gapprompt@gap>| !gapinput@Mtop:=M{[1..1000]};; |
+  !gapprompt@gap>| !gapinput@Mbottom:=M{[1001..2000]};;|
+  
+  !gapprompt@gap>| !gapinput@ChildPut(Mtop,"Mtop",s); |
+  !gapprompt@gap>| !gapinput@ChildPut(N,"N",s);|
+  !gapprompt@gap>| !gapinput@NextAvailableChild([s]);;|
+  
+  !gapprompt@gap>| !gapinput@ChildCommand("Atop:=Mtop*N;;",s);; |
+  !gapprompt@gap>| !gapinput@Abottom:=Mbottom*N;; |
+  !gapprompt@gap>| !gapinput@A:=ChildGet("Atop",s);;|
+  !gapprompt@gap>| !gapinput@Append(A,Abottom);;                |
+  
+\end{Verbatim}
+ }
 
  }
 

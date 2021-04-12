@@ -8,8 +8,9 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.29",
-  Date    := "07/01/2021",
+  Version := "1.30",
+  Date    := "07/04/2021",
+  License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
       Type := "git",
@@ -50,7 +51,7 @@ SetPackageInfo( rec(
           := "03/2006",
 
   AbstractHTML := 
-    "This package provides some functions for group cohomology. ",
+    "This package provides some functions for group cohomology and algebraic topology. ",
                   
   PackageDoc := rec(
     BookName  := "HAP",
@@ -84,6 +85,7 @@ SetPackageInfo( rec(
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
                                [ "HAPcryst", ">=0.0.0" ],
+                               [ "Polymaking", ">=0.8.3"],
                                [ "xmod", ">0.0" ],
 			      ],
 
@@ -91,6 +93,10 @@ SetPackageInfo( rec(
     "http://polymake.org/doku.php"],
     ["Some optional functions require Graphviz software",
     "http://www.graphviz.org/"],
+    ["Some optional functions require Asymptote software",
+    "https://asymptote.sourceforge.io/"],
+    ["Some optional functions require Singular software",
+    "https://www.singular.uni-kl.de/"],
      ["One optional function requires the Simplicial Homology GAP package",
          "http://www.cis.udel.edu/~dumas"]
     ]
