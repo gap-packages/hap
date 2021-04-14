@@ -1,5 +1,5 @@
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples")[1],"image2.1.1.eps");;
+gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples"),"image2.1.1.eps");;
 gap> x:=ReadImageAsWeightFunction(dir,3);;
 gap> M:=x[1];
 Regular CW-complex of dimension 2

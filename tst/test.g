@@ -2,12 +2,10 @@
 #################################################
 InstallGlobalFunction(HapFile,
 function(str)
-local exfile, input, linefile, x;
+local exfile;
 
-exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
-exfile:=Filename(exfile,"");;
-exfile:=Concatenation(exfile,"tst/examples/");;
-exfile:=Concatenation(exfile,str);
+exfile:=DirectoriesPackageLibrary("HAP","tst/examples");;
+exfile:=Filename(exfile,str);;
 
 return exfile;
 end);
@@ -20,10 +18,8 @@ InstallGlobalFunction(HapExample,
 function(str)
 local exfile, input, linefile, x;
 
-exfile:=DirectoriesPackageLibrary( "HAP","")[1];;
-exfile:=Filename(exfile,"");;
-exfile:=Concatenation(exfile,"tst/examples/");;
-exfile:=Concatenation(exfile,str);
+exfile:=DirectoriesPackageLibrary("HAP","tst/examples");;
+exfile:=Filename(exfile, str);;
 
 input:=InputTextFile(exfile);
 x:=ReadLine(input);
@@ -47,13 +43,7 @@ end);
 #################################################
 InstallGlobalFunction(TestHapBook,
 function()
-local dir;
-
-dir:=DirectoriesPackageLibrary( "HAP","")[1];;
-dir:=Filename(dir,"");;
-dir:=Concatenation(dir,"tst/testallextra.g");;
-Read(dir);
-
+ReadPackage("HAP","tst/testallextra.g");
 end);
 #################################################
 #################################################
@@ -62,13 +52,7 @@ end);
 #################################################
 InstallGlobalFunction(TestHap,
 function()
-local dir;
-
-dir:=DirectoriesPackageLibrary( "HAP","")[1];;
-dir:=Filename(dir,"");;
-dir:=Concatenation(dir,"tst/testall.g");;
-Read(dir);
-
+ReadPackage("HAP","tst/testall.g");
 end);
 #################################################
 #################################################

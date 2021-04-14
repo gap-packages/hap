@@ -1,6 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples")[1],"data1V2X.pdb");;
+gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples"),"data1V2X.pdb");;
 gap> K:=ReadPDBfileAsPurePermutahedralComplex(dir);
 Reading chain containing 191 atoms.
 Pure permutahedral complex of dimension 3.

@@ -1,6 +1,6 @@
 #E
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples")[1],"image2.1.1.eps");;
+gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/examples"),"image2.1.1.eps");;
 gap> t:=ReadImageAsPureCubicalComplex(dir,"matrix");;
 gap> t:=Int((6/10)*Maximum(Flat(t)));;
 gap> M:=ReadImageAsPureCubicalComplex(dir,t);
