@@ -1,6 +1,5 @@
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"bing.txt");;
-gap> Read(dir);
+gap> ReadPackage("HAP","tst/testall/bing.txt");;
 gap> BingsHouse;
 Regular CW-complex of dimension 2
 

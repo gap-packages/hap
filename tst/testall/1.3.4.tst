@@ -1,7 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"data134.txt");;
-gap> Read(dir);
+gap> ReadPackage("HAP","tst/testall/data134.txt");;
 gap> f:=function(j); return D[50][j]; end;
 function( j ) ... end
 gap> M:=Mapper(D,f,8,20,5);

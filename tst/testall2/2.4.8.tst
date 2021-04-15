@@ -1,7 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"data248.txt");;
-gap> Read(dir);
+gap> ReadPackage("HAP","tst/testall/data248.txt");;
 gap> F:=ThickeningFiltration(Y,7);;
 gap> R:=FiltrationTerm(F,6);;
 gap> for i in Reversed([1..5]) do
