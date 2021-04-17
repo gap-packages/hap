@@ -1,7 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"data244.txt");;
-gap> Read(dir);;
+gap> ReadPackage("HAP","tst/testall/data244.txt");;
 gap> A:=NullMat(350,350);;
 gap> for x in S do A[x[1]][x[2]]:=1; od;
 gap> Y:=PureCubicalComplex(A);;

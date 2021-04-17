@@ -1,0 +1,18 @@
+gap> H := SmallGroup(64,134);;
+gap> N := NormalSubgroups(H)[15];;
+gap> ON := GOuterGroup(H,N);;
+gap> A := Centre(ON);;
+gap> G:=ActingGroup(A);;
+gap> R:=ResolutionFiniteGroup(G,3);;
+gap> C:=HomToGModule(R,A);;
+gap> CH:=CohomologyModule(C,2);;
+gap> Elts:=Elements(ActedGroup(CH));;
+
+gap> lst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;
+gap> ccgrps := List(lst, x->CcGroup(ON, x));;
+gap> #So ccgrps is a list of groups, each being an extension of G by N, corresponding
+gap> #to the two elements in H^2(G,A).
+
+gap> #The following command produces the GAP identification number for each group.
+gap> L:=List(ccgrps,IdGroup);
+[ [ 64, 134 ], [ 64, 135 ] ]

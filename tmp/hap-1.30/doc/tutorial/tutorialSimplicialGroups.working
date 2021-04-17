@@ -1,0 +1,541 @@
+<Chapter><Heading>Simplicial groups</Heading>
+<Section><Heading>Crossed modules</Heading>
+
+The following example concerns the crossed module
+<P/><M>\partial\colon G\rightarrow Aut(G), g\mapsto (x\mapsto gxg^{-1})</M>
+<P/>associated to the dihedral group <M>G</M> of order <M>16</M>. This crossed module represents, up to homotopy type,
+ a connected space <M>X</M> with <M>\pi_iX=0</M> for <M>i\ge 3</M>,
+<M>\pi_2X=Z(G)</M>, <M>\pi_1X = Aut(G)/Inn(G)</M>.
+The space <M>X</M> can be represented, up to homotopy, by a simplicial group.
+That simplicial group is used in the example to compute
+<P/><M>H_1(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2</M>,
+<P/><M>H_2(X,\mathbb Z)= \mathbb Z_2 </M>,
+<P/><M>H_3(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2</M>,
+<P/><M>H_4(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2</M>,
+<P/><M>H_5(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_2\oplus \mathbb Z_2</M>.
+
+<P/>The simplicial group is obtained by viewing the crossed module as a crossed complex and using a nonabelian version of the Dold-Kan theorem.
+
+
+
+<Example>
+<#Include SYSTEM "tutex/9.1.txt">
+</Example>
+</Section>
+
+<Section Label="eilennot"><Heading>Eilenberg-MacLane spaces as simplicial groups (not recommended)</Heading>
+<P/>The following example concerns the Eilenberg-MacLane space <M>X=K(\mathbb Z_3,3)</M> which is a path-connected space with  <M>\pi_3X=\mathbb Z_3</M>,
+  <M>\pi_iX=0</M> for <M>3\ne  i\ge 1</M>. This space is represented by a simplicial group, and perturbation techniques are used to compute
+<P/><M>H_7(X,\mathbb Z)=\mathbb Z_3 \oplus \mathbb Z_3</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.2.txt">
+</Example>
+
+</Section>
+<Section Label="eilen"><Heading>Eilenberg-MacLane spaces as simplicial free abelian groups (recommended)</Heading>
+
+<P/>For integer <M>n>1</M> and abelian group <M>A</M> the Eilenberg-MacLane space 
+<M>K(A,n)</M> 
+is better represented as a simplicial free abelian group. (The  reason is that   the functorial bar resolution of <M>A</M> can be replaced in computations 
+by the smaller functorial Chevalley-Eilenberg complex of <M>A</M>,  obviating the need for perturbation techniques.)
+
+<P/>The following commands compute the integral homology <M>H_n(K(\mathbb Z,3),\mathbb Z)</M> for <M> 0\le n \le 16</M>. (Note that one typically needs fewer than <M>n</M> terms of the Eilenberg-MacLance space to compute its <M>n</M>-th homology -- an error is printed if too few terms of the space are available for a given computation.)
+
+<Example>
+<#Include SYSTEM "tutex/9.3.txt">
+</Example>
+
+For an <M>n</M>-connected pointed space <M>X</M> the Freudenthal Suspension 
+Theorem states that the map <M>X \rightarrow \Omega(\Sigma X)</M> induces a map 
+<M>\pi_k(X) \rightarrow \pi_k(\Omega(\Sigma X))</M> which is an isomorphism for 
+<M>k\le 2n</M> and epimorphism for  <M>k=2n+1</M>. Thus the Eilenberg-MacLane 
+space
+<M>K(A,n+1)</M> can be constructed from the suspension <M>\Sigma K(A,n)</M> 
+by attaching cells in dimensions <M>\ge 2n+1</M>. In particular,  there is an isomorphism
+<M> H_{k-1}(K(A,n),\mathbb Z) \rightarrow H_k(K(A,n+1),\mathbb Z)</M> for <M>k\le 2n</M> and epimorphism for <M>k=2n+1</M>.
+
+<P/>
+For instance, <M> H_{k-1}(K(\mathbb Z,3),\mathbb Z) \cong H_k(K(\mathbb Z,4),\mathbb Z) </M> for <M>k\le 6</M> and <M> H_6(K(\mathbb Z,3),\mathbb Z) \twoheadrightarrow H_7(K(\mathbb Z,4),\mathbb Z) </M>. This assertion is seen in the following session.
+
+<Example>
+<#Include SYSTEM "tutex/9.4.txt">
+</Example>
+</Section>
+<Section>
+<Heading>Elementary theoretical information on  
+<M>H^\ast(K(\pi,n),\mathbb Z)</M></Heading>
+
+<P/>The cup product is not implemented for the cohomology ring
+<M>H^\ast(K(\pi,n),\mathbb Z)</M>.  Standard theoretical spectral sequence arguments
+have to be applied to obtain basic information relating to
+the  ring structure. To illustrate this the following commands compute  <M>H^n(K(\mathbb Z,2),\mathbb Z)</M>
+for the first few values of <M>n</M>.
+ 
+<Example>
+<#Include SYSTEM "tutex/9.7.txt">
+</Example>
+
+There is a fibration sequence <M>K(\pi,n) \hookrightarrow \ast \twoheadrightarrow K(\pi,n+1)</M> in which  <M>\ast</M> denotes a contractible space.
+For <M>n=1, \pi=\mathbb Z</M> the terms of the <M>E_2</M> page of the
+ Serre integral cohomology spectral sequence for this fibration
+are
+<List>
+<Item> <M>E_2^{pq}= H^p( K(\mathbb Z,2), H^q(K(\mathbb Z,1),\mathbb Z) )</M> .</Item>
+</List>
+Since <M>K(\mathbb Z,1)</M> can be taken to be  the circle <M>S^1</M> we know
+that it has non-trivial cohomology in degrees <M>0</M> and <M>1</M> only. The first few terms of
+ the <M>E_2</M> page are given in the following table.
+
+<Table Align="l|lllllllllll">
+<Caption><M>E^2</M> cohomology page for <M>K(\mathbb Z,1) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,2)</M></Caption>
+
+<Row>
+<Item> <M>1</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+</Row>
+
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+</Row>
+
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+<Item> <M>8</M> </Item>
+<Item> <M>9</M> </Item>
+<Item> <M>10</M> </Item>
+</Row>
+</Table>
+
+Let <M>x</M> denote the generator of <M>H^1(K(\mathbb Z,1),\mathbb Z)</M>
+and <M>y</M> denote the generator of <M>H^2(K(\mathbb Z,2),\mathbb Z)</M>.
+Since <M>\ast</M> has zero cohomology in degrees <M>\ge 1</M> we see that the differential must restrict to an isomorphism  <M>d_2\colon E_2^{0,1} \rightarrow E_2^{2,0}</M> with 
+<M>d_2(x)=y</M>. Then we see that the differential must restrict
+to an isomorphism
+<M>d_2\colon E_2^{2,1} \rightarrow E_2^{4,0}</M> defined on the generator <M>xy</M> of <M>E_2^{2,1}</M>
+by  
+<Display>d_2(xy) = d_2(x)y + (-1)^{{\rm deg}(x)}xd_2(y) =y^2\ . </Display>
+Hence <M>E_2^{4,0} \cong H^4(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^2</M>. The argument extends to show that <M>H^6(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^3</M>, <M>H^8(K(\mathbb Z,2),\mathbb Z)</M> is generated by <M>y^4</M>, and so on.
+
+<P/>In fact, to obtain a complete description of the ring <M>H^\ast(K(\mathbb Z,2),\mathbb Z)</M> in this fashion there is no benefit to using computer methods at all. We only need to know the cohomology ring <M>H^\ast(K(\mathbb Z,1),\mathbb Z) =H^\ast(S^1,\mathbb Z)</M> and the single cohomology group <M>H^2(K(\mathbb Z,2),\mathbb Z)</M>.
+
+<P/>A similar approach can be attempted for <M>H^\ast(K(\mathbb Z,3),\mathbb Z)</M> using the fibration sequence <M>K(\mathbb Z,2) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,3)</M> and, as explained in Chapter 5 of
+<Cite Key="hatcher"/>, yields the computation of the group <M>H^i(K(\mathbb Z,3),\mathbb Z)</M> for <M>4\le i\le 13</M>. The method does not directly yield <M>H^3(K(\mathbb Z,3),\mathbb Z)</M> and breaks down in degree <M>14</M> yielding
+ only that
+ <M>H^{14}(K(\mathbb Z,3),\mathbb Z) = 0 {\rm ~or~} \mathbb Z_3</M>. 
+The following commands provide <M>H^3(K(\mathbb Z,3),\mathbb Z)= \mathbb Z</M>
+and <M>H^{14}(K(\mathbb Z,3),\mathbb Z) =0</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.8.txt">
+</Example>
+
+However, the implementation of these commands is currently a bit naive, and computationally inefficient, since they do not currently employ any homological perturbation techniques. 
+
+</Section>
+
+<Section Label="firstthree"><Heading>The first three non-trivial homotopy groups of spheres</Heading>
+
+<P/>The Hurewicz Theorem immediately gives 
+<Display>\pi_n(S^n)\cong \mathbb Z ~~~ (n\ge 1)</Display>
+ and
+<Display>\pi_k(S^n)=0 ~~~ (k\le n-1).</Display>
+<P/>As a CW-complex the Eilenberg-MacLane space <M>K=K(\mathbb Z,n)</M> can be
+ obtained from an <M>n</M>-sphere <M>S^n=e^0\cup e^n</M> by attaching cells in 
+dimensions <M>\ge n+2</M> so as to kill the higher homotopy groups of 
+<M>S^n</M>. 
+From the inclusion <M>\iota\colon S^n\hookrightarrow K(\mathbb Z,n)</M>
+we can form the mapping cone <M>X=C(\iota)</M>. The long
+exact  homotopy sequence 
+
+<P/><M> \cdots \rightarrow \pi_{k+1}K \rightarrow \pi_{k+1}(K,S^n) 
+\rightarrow \pi_{k} S^n \rightarrow \pi_kK \rightarrow \pi_k(K,S^n) \rightarrow \cdots</M>
+
+<P/>
+implies that <M>\pi_k(K,S^n)=0</M> for <M>0 \le k\le  n+1</M> and <M>\pi_{n+2}(K,S^n)\cong \pi_{n+1}(S^n)</M>. The relative Hurewicz Theorem gives an isomorphism <M>\pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z)</M>.
+ The long exact homology sequence
+
+<P/><M> \cdots H_{n+2}(S^n,\mathbb Z) \rightarrow H_{n+2}(K,\mathbb Z) \rightarrow  H_{n+2}(K,S^n, \mathbb Z) \rightarrow H_{n+1}(S^n,\mathbb Z) \rightarrow \cdots</M>
+
+<P/> arising from the cofibration <M>S^n \hookrightarrow K \twoheadrightarrow X</M> 
+implies that <M>\pi_{n+1}(S^n)\cong \pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z) \cong H_{n+2}(K,\mathbb Z)</M>. From the <B>GAP</B> computations in <Ref Sect="eilen"/>   and the Freudenthal Suspension Theorem we find:
+
+<Display> \pi_3S^2 \cong \mathbb Z, ~~~~~~ \pi_{n+1}(S^n)\cong \mathbb Z_2~~~(n\ge 3).</Display>
+
+<P/>The Hopf fibration <M>S^3\rightarrow S^2</M> has fibre <M>S^1 = K(\mathbb Z,1)</M>. It can be constructed by viewing <M>S^3</M> as all pairs
+<M>(z_1,z_2)\in \mathbb C^2</M> with <M>|z_1|^2+|z_2|^2=1</M> and viewing
+<M>S^2</M> as <M>\mathbb C\cup \infty</M>; the map sends <M>(z_1,z_2)\mapsto z_1/z_2</M>. The homotopy exact sequence of the Hopf fibration   yields
+<M>\pi_k(S^3) \cong \pi_k(S^2)</M> for <M>k\ge 3</M>, and in  particular
+ <Display>\pi_4(S^2) \cong \pi_4(S^3) \cong \mathbb Z_2\ .</Display>
+
+It will require further techniques (such as the Postnikov tower argument in  Section <Ref Sect="postnikov"/> below) to establish that <M>\pi_5(S^3) \cong \mathbb Z_2</M>.  
+Once we have this isomorphism for <M>\pi_5(S^3)</M>, the generalized Hopf fibration 
+<M>S^3 \hookrightarrow S^7 \twoheadrightarrow S^4</M> comes into play. This 
+fibration is contructed as for the classical fibration, but using pairs 
+<M>(z_1,z_2)</M> of quaternions rather than pairs of complex numbers. The Hurewicz Theorem gives <M>\pi_3(S^7)=0</M>;  the fibre <M>S^3</M> is thus homotopic to a point in <M>S^7</M> and the inclusion of the fibre induces the zero homomorphism <M>\pi_k(S^3) \stackrel{0}{\longrightarrow} \pi_k(S^7) ~~(k\ge 1)</M>. The exact homotopy sequence of the generalized Hopf fibration then gives <M>\pi_k(S^4)\cong \pi_k(S^7)\oplus \pi_{k-1}(S^3)</M>. On taking <M>k=6</M> we obtain <M>\pi_6(S^4)\cong \pi_5(S^3) \cong \mathbb Z_2</M>.
+
+Freudenthal suspension then gives <Display>\pi_{n+2}(S^n)\cong \mathbb Z_2,~~~(n\ge 2).</Display>
+
+</Section>
+
+<Section Label="firsttwo"><Heading>The first two non-trivial homotopy groups of the suspension and double suspension of a <M>K(G,1)</M></Heading>
+
+<P/>For any group <M>G</M> we  consider the homotopy groups 
+<M>\pi_n(\Sigma K(G,1))</M> of the suspension <M>\Sigma K(G,1)</M> of the 
+Eilenberg-MacLance space <M>K(G,1)</M>. On taking <M>G=\mathbb Z</M>, and 
+observing that <M>S^2 = \Sigma K(\mathbb Z,1)</M>, we specialize to the homotopy groups of the <M>2</M>-sphere <M>S^2</M>. 
+
+<P/>By construction, <Display>\pi_1(\Sigma K(G,1))=0\ .</Display> The Hurewicz Theorem gives
+<Display>\pi_2(\Sigma K(G,1)) \cong G_{ab}</Display>
+via the isomorphisms
+<M>\pi_2(\Sigma K(G,1)) \cong H_2(\Sigma K(G,1),\mathbb Z) \cong H_1(K(G,1),\mathbb Z) \cong G_{ab}</M>.
+R. Brown and J.-L. Loday <Cite Key="brownloday"/> obtained the formulae
+
+<Display>\pi_3(\Sigma K(G,1)) \cong \ker (G\otimes G \rightarrow G, x\otimes y\mapsto [x,y]) \ ,</Display>
+
+<Display>\pi_4(\Sigma^2 K(G,1)) \cong \ker (G\, {\widetilde \otimes}\, G \rightarrow G, x\, {\widetilde \otimes}\, y\mapsto [x,y]) </Display>
+
+involving the nonabelian tensor square and nonabelian symmetric square of the group <M>G</M>. The following commands use the nonabelian tensor and symmetric product to compute the third and fourth homotopy groups for 
+<M>G =Syl_2(M_{12})</M> the Sylow <M>2</M>-subgroup of the Mathieu group <M>M_{12}</M>.
+
+
+<Example>
+<#Include SYSTEM "tutex/9.5.txt">
+</Example>
+
+</Section>
+
+<Section Label="postnikov"><Heading>Postnikov towers and <M>\pi_5(S^3)</M> </Heading>
+A Postnikov system for the sphere <M>S^3</M> consists of a sequence
+of fibrations
+<M>\cdots X_3\stackrel{p_3}{\rightarrow} X_2\stackrel{p_2}{\rightarrow} X_1\stackrel{p_1}{\rightarrow} \ast</M> and a sequence of maps <M>\phi_n\colon S^3 \rightarrow X_n</M> such that 
+<List>
+<Item> <M>p_n \circ \phi_n =\phi_{n-1}</M> </Item>
+<Item>The map <M>\phi_n\colon S^3 \rightarrow X_n</M> induces an isomorphism <M>\pi_k(S^3)\rightarrow \pi_k(X_n)</M> for all <M>k\le n</M> </Item>
+<Item><M>\pi_k(X_n)=0</M> for <M>k &gt; n</M></Item> 
+<Item>and consequently each fibration <M>p_n</M> has fibre an Eilenberg-MacLane space <M>K(\pi_n(S^3),n)</M>.</Item>
+</List>
+The space <M>X_n</M> is obtained from <M>S^3</M> by adding cells in dimensions <M>\ge n+2</M> and thus 
+<List><Item><M>H_k(X_n,\mathbb Z)=H_k(S^3,\mathbb Z)</M> for <M>k\le n+1</M>. 
+</Item></List>
+So in particular <M>X_1=X_2=\ast, X_3=K(\mathbb Z,3)</M> and we have a fibration sequence
+<M>K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow K(\mathbb Z,3)</M>.
+The
+ terms in the <M>E_2</M> page of the
+Serre integral cohomology spectral sequence of this fibration are 
+<List><Item><M>E_2^{p,q}=H^p(\,K(\mathbb Z,3),\,H_q(K(\mathbb Z_2,4),\mathbb Z)\,)</M>.</Item></List>
+The first few terms in the <M>E_2</M> page can be computed using the commands of Sections <Ref Sect="eilennot"/> and <Ref Sect="eilen"/> and recorded as follows.
+<Table Align="l|llllllllll">
+<Caption><M>E_2</M> cohomology page for <M>K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow X_3</M></Caption> 
+<Row>
+<Item> <M>8</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item>  <M>0</M></Item>
+<Item>  <M>0</M></Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>7</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item>  <M>0</M></Item>
+<Item>  <M>0</M></Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+
+</Row>
+<Row>
+<Item> <M>6</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  <M>0</M></Item>
+<Item>  <M>0</M></Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>5</M> </Item>
+<Item> <M>\pi_4(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\pi_4(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  <M>0</M></Item>
+<Item> <M>0</M> </Item>
+<Item>  <M></M></Item>
+<Item>  </Item>
+<Item>  </Item>
+
+</Row>
+<Row>
+<Item> <M>4</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item><M>0</M>  </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+
+
+<Row>
+<Item> <M>3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item><M>0</M>  </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+</Row>
+<Row>
+<Item> <M>2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+
+
+</Row>
+<Row>
+<Item> <M>1</M> </Item>
+<Item><M>0</M>  </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+
+
+
+
+</Row>
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z_3</M> </Item>
+<Item> <M>\mathbb Z_2</M> </Item>
+
+
+
+
+</Row>
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+<Item> <M>8</M> </Item>
+<Item> <M>9</M> </Item>
+
+
+
+
+
+</Row>
+</Table>
+Since we know  that <M>H^5(X_4,\mathbb Z) =0</M>, the differentials in the spectral sequence must restrict to
+ an isomorphism <M>E_2^{0,5}=\pi_4(S^3) \stackrel{\cong}{\longrightarrow} E_2^{0,6}=\mathbb Z_2</M>. This provides an alternative derivation of <M>\pi_4(S^3) \cong \mathbb Z_2</M>.
+We can also immediately deduce that <M>H^6(X_4,\mathbb Z)=0</M>.
+
+Let <M>x</M> be the generator of <M>E_2^{0,5}</M> and <M>y</M> the generator of
+<M>E_2^{3,0}</M>. Then the generator <M>xy</M> of <M>E_2^{3,5}</M>
+gets mapped to a non-zero element <M>d_7(xy)=d_7(x)y -xd_7(y)</M>. Hence the
+term <M>E_2^{0,7}=\mathbb Z_2</M> must get mapped to zero in <M>E_2^{3,5}</M>.  It follows that <M>H^7(X_4,\mathbb Z)=\mathbb Z_2</M>.
+ 
+ 
+
+<P/>The integral cohomology of Eilenberg-MacLane spaces  yields
+ the following information on the <M>E_2</M> page
+<M>E_2^{p,q}=H_p(\,X_4,\,H^q(K(\pi_5S^3,5),\mathbb Z)\,)</M> for the 
+fibration <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M>.
+<Table Align="l|llllllll">
+<Caption><M>E_2</M> homology page for <M>K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4</M></Caption>
+
+<Row>
+<Item> <M>6</M> </Item>
+<Item> <M>\pi_5(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\pi_5(S^3)</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+<Item>  </Item>
+</Row>
+
+<Row>
+<Item> <M>5</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>4</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>3</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>2</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>1</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item>  </Item>
+</Row>
+<Row>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>\mathbb Z</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>H^7(X_4,\mathbb Z)</M> </Item>
+
+</Row>
+<Row>
+<Item> <M>q/p</M> </Item>
+<Item> <M>0</M> </Item>
+<Item> <M>1</M> </Item>
+<Item> <M>2</M> </Item>
+<Item> <M>3</M> </Item>
+<Item> <M>4</M> </Item>
+<Item> <M>5</M> </Item>
+<Item> <M>6</M> </Item>
+<Item> <M>7</M> </Item>
+</Row>
+</Table>
+Since we know that <M>H^6(X_5,\mathbb Z)=0</M>, the differentials in the spectral sequence must restrict to an isomorphism <M>E_2^{0,6}=\pi_5(S^3)
+\stackrel{\cong}{\longrightarrow} E_2^{7,0}=H^7(X_4,\mathbb Z)</M>.
+We can  conclude the desired result: 
+<Display>\pi_5(S^3) = \mathbb Z_2\ .</Display>
+
+<P/>
+<M>~~~</M><P/><P/>
+
+
+Note that the fibration <M>X_4 \twoheadrightarrow K(\mathbb Z,3)</M> is determined by a cohomology class <M>\kappa \in H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2</M>.
+ If <M>\kappa=0</M> then we'd have <M>X_4 =K(\mathbb Z_2,4)\times K(\mathbb Z,3)</M> and, as the following commands show, we'd then have <M>H_4(X_4,\mathbb Z)=\mathbb Z_2</M>.
+
+<Example>
+<#Include SYSTEM "tutex/9.6.txt">
+</Example>
+
+Since we know that <M>H_4(X_4,\mathbb Z)=0</M> we can conclude that the Postnikov invariant
+ <M>\kappa</M> is the non-zero class in <M>H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2</M>.
+
+
+</Section>
+</Chapter>

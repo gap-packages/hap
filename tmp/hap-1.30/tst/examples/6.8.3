@@ -1,0 +1,8 @@
+_X:=ContractibleGcomplex("SL(3,Z)");;
+R:=FreeGResolution(_X,6);;
+Print(Cohomology(HomToIntegers(R),5),"\n");
+Print(List([0..4],_X!.dimension),"\n");
+for n in [0..4] do
+ for k in [1.._X!.dimension(n)] do
+ Print(StructureDescription(_X!.stabilizer(n,k)),"
+od;od;

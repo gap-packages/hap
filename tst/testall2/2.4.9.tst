@@ -1,7 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"data249.txt");;
-gap> Read(dir);
+gap> ReadPackage("HAP","tst/testall/data249.txt");;
 gap> G:=SymmetricMatrixToFilteredGraph(D,50,50);;
 gap> K:=FilteredRegularCWComplex(CliqueComplex(G,2));
 Filtered regular CW-complex of dimension 2

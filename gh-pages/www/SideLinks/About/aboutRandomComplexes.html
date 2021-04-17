@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ link="#000066" vlink="#000066" alink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a href="aboutCubical.html"><small
+ style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Random Simplicial Complexes<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutLinks.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;">Homology of random graphs and their nerves</big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">For
+a
+positive
+integer
+n
+and
+probability
+p
+we
+denote
+by G(n,p) the
+Erdos&#8211;Renyi random graph. This has n vertices with each potential edge
+included independently with probability p. <br>
+      <br>
+The following commands construct low dimensions of the<span
+ style="font-style: italic;"> simlicial nerve</span> NG(n,p) of the
+random graph on n=100 vertices for probability values in the range
+0&lt;p&lt;0.5. By definition this nerve has n vertices and one
+k-simplex for each collection of k+1 vertices spanning a complete
+subgraph of G(n,p). <br>
+      <br>
+Finally, for k=0,1,2,3,4 , the integral homology H<sub>k</sub>(NG(n,p),Z)
+is
+computed
+and
+stored
+in
+a
+list
+H.&nbsp;
+
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">H:=[];;<br>
+n:=100;;<br>
+      <br>
+for p in [1..50]*(1/100) do<br>
+K:=RandomSimplicialGraph(n,p);;<br>
+G:=GraphOfSimplicialComplex(K);;<br>
+N:=SimplicialNerveOfGraph(G,5);;<br>
+Y:=SimplicialComplexToRegularCWComplex(N);;<br>
+CriticalCellsOfRegularCWComplex(Y);;<br>
+Add(H,&nbsp; List([0..4],i-&gt;Homology(Y,i))&nbsp; );<br>
+od;<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 255); vertical-align: top;">The
+following command shows that no torsion occurs in any of the computed
+homology groups H<sub>k</sub>(NG(n,p),Z) . </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+SSortedList(Flat(H));<br>
+[ 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">It
+is shown in [ M. Kahle and E. Meckes, "Limit theorems for Betti numbers
+of random simplicial complexes", HHA, 15(1), 2013, 343-374] that the
+Betti numbers&nbsp; <br>
+      <br>
+      <div style="text-align: center;">b<sub>k</sub>(n,p)= rank( H<sub>k</sub>(NG(n,p),Z)
+)
+
+
+
+
+
+
+
+
+      <br>
+      </div>
+      <br>
+are normally distributed for large n. The distribution is illustrated
+by the following commands which plot&nbsp;b<sub>k</sub>(n,p)&nbsp;
+against p for fixed n=100 and k=0,1,2,3,4.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+B:=List([1..5],k-&gt;List(List(H,h-&gt;h[k]),x-&gt;Length(x)));;<br>
+      <br>
+gap&gt; for k in [0,1,2,3] do<br>
+&gt; A:=NullMat(Maximum(B[k+1])+5,100);;<br>
+&gt; for P in [1..50] do<br>
+&gt; A[B[k+1][P]+1][2*P]:=1;<br>
+&gt; od;<br>
+&gt;
+M:=ThickenedPureCubicalComplex(PureCubicalComplex(TransposedMat(Reversed(A))));;<br>
+&gt; ViewPureCubicalComplex(M);<br>
+&gt; od;<br>
+      <br>
+      <div style="text-align: center;"><img
+ style="width: 104px; height: 25px;" alt="" src="randomgraph1.png">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;
+
+
+
+
+
+      <img style="width: 104px; height: 263px;" alt=""
+ src="randomgraph2.png">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; <img
+ style="width: 104px; height: 620px;" alt="" src="randomgraph3.png">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img
+ style="width: 104px; height: 1310px;" alt="" src="randomgraph4.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img style="width: 104px; height: 1072px;" alt=""
+ src="randomgraph5.png">&nbsp; <br>
+      </div>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;">Homology of random simplicial 2-complexes</big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">For
+a positive integer n and probability p we denote by Y(n,p) the
+Linial-Meshulam random simplicial 2-complex. Its 1-skeleton is the
+complete graph on n vertices; each possible 2-simplex is included
+independently with probability p. <br>
+      <br>
+The following commands compute the Betti numbers<br>
+      <br>
+      <div style="text-align: center;">rank( H<sub>1</sub>(Y(n,p),Z)
+) <br>
+      </div>
+      <br>
+for n=200 vertices and for p= 1/200, 2/200, 3/200, ... , 50/200. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">L:=[];<br>
+n:=200;;<br>
+      <br>
+for p in [1..50]*(1/200) do<br>
+K:=RandomSimplicialTwoComplex(n,p);<br>
+H:=Homology(K,1);<br>
+Add(L,H);<br>
+od;<br>
+      <br>
+List(L,x-&gt;Length(x));<br>
+[ 13065, 6597, 1299, 393, 138, 48, 16, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following additional command shows that there is no torsion in any
+of
+the computed
+homology groups H<sub>1</sub>(Y(n,p),Z) . <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+SSortedList(Flat(L));<br>
+[ 0 ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big
+ style="font-weight: bold;">Fundamental groups of random simplicial
+2-complexes</big><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following commands compute presentations for the fundamental groups of
+Y(n,p) for n=60 vertices and probabilities in the range 0&lt;p&lt;0.25.
+      <br>
+      <br>
+The commands also list the number of generators for each fundamental
+group, and show that in most cases there are no relators between
+generators. Thus, in most (and possibly all) cases, the fundamental
+group is free; for large p the fundamental group is trivial <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+L:=[];;<br>
+gap&gt; n:=60;;<br>
+gap&gt; for p in [1..50]*(1/200) do<br>
+&gt; K:=RandomSimplicialTwoComplex(n,p);;<br>
+&gt; Add(L,FundamentalGroup(K));<br>
+&gt; od;<br>
+      <br>
+gap&gt; NumbersOfGenerators:=List(L,g-&gt;Length(GeneratorsOfGroup(g)));<br>
+[ 1542, 1357, 1206, 1024, 822, 647, 502, 344, 195, 110, 82, 57, 39, 18,
+9, 14, 16, 15, 2, 4, 3, 2, 2, 2, 0, 0, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]<br>
+      <br>
+gap&gt; NumbersOfRelations:=List(L,g-&gt;Length(RelatorsOfFpGroup(g)));<br>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutCubical.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutLinks.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

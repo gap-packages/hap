@@ -1,0 +1,11 @@
+file:=HapFile("25spheres.txt");
+Read(file);;
+Print(Size(M),"\n");
+A:=ContractibleSubcomplex(M);
+Print(Size(A),"\n");
+P:=ExcisedPair(M,A);;
+Print(Size(P[1]),"\n");
+Print(Size(P[2]),"\n");
+C:=ChainComplexOfPair(P[1],P[2]);
+Print(Homology(C,1),"\n");
+Print(Homology(C,2),"\n");

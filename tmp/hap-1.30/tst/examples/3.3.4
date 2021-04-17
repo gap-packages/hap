@@ -1,0 +1,7 @@
+G:=DihedralGroup(64);;
+Print(Prank(G),"\n");
+R:=ResolutionFiniteGroup(G,13);;
+L:=List([0..12],R!.dimension);
+C:=TensorWithIntegersModP(R,2);;
+M:=List([0..12],i->Homology(C,i));;
+Print(L-M,"\n");

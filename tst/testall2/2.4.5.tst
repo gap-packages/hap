@@ -1,7 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> dir:=Filename(DirectoriesPackageLibrary("HAP","tst/testall")[1],"data245.txt");;
-gap> Read(dir);
+gap> ReadPackage("HAP","tst/testall/data245.txt");;
 gap> G:=SymmetricMatrixToFilteredGraph(A,5,10);;
 gap> K:=CliqueComplex(G,2);;
 gap> P1:=PersistentBettiNumbers(K,1);

@@ -1,0 +1,156 @@
+#(C) Graham Ellis, 2005-2006
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(HomToIntegralModule,
+function(R,f),
+local HomObj, HomArr;
+
+#####################################################################
+#####################################################################
+HomObj:=function(R,f)
+local
+	 DimensionC,
+	 BoundaryC,
+         LengthC,
+	 BoundaryOfElt,
+         M, M0,
+	 LA,
+	 IntToPair;
+
+LA:=Length(Identity(Image(f)));
+LengthC:=EvaluateProperty(R,"length");
+M:=[1..LengthC]; M0:=0;
+
+#####################################################################
+DimensionC:=function(n);
+return LA*R!.dimension(n);
+end;
+#####################################################################
+
+#####################################################################
+IntToPair:=function(i)
+local q, r;
+r:=i mod LA;
+q:=(i-r)/LA;
+
+if r>0 then return [q+1,r];
+else return [q, LA]; fi;
+end;
+#####################################################################
+
+#####################################################################
+BoundaryOfElt:=function(n,k)	#Only use this for k>0
+local
+        row, a, kq, kr, i, j, x, fn, sum, bnd;
+
+if n<0 then return List([1..DimensionC(0)],a->0); fi;
+
+#if n=0 then return List([1..DimensionC(1)],x->0); fi;
+
+x:=IntToPair(k);
+kq:=x[1]; kr:=x[2];
+
+a:=List([1..LA],x->0);
+a[kr]:=1;
+
+	##################
+	fn:=function(x)
+	if AbsoluteValue(x[1])=kq then return 
+	SignInt(x[1])*Image(f,R!.elts[x[2]])*a;
+	else return 0*a; fi;
+	end;
+	#######################
+
+row:=[];
+for i in [1..R!.dimension(n+1)] do
+bnd:= R!.boundary(n+1,i);
+bnd:=List(bnd, y->fn(y));
+bnd:=Sum(bnd);
+Append(row,[bnd]);
+od;
+
+row:=Flat(row);
+
+if Length(row)>0 then
+return row;
+else
+return [0];
+fi;
+end;
+#####################################################################
+
+#####################################################################
+BoundaryC:=function(n,k)
+local Mt,i,row,j;
+
+############ CASE n=0 ####################
+if n=0 then 
+if M0=0 then 
+Mt:=[];
+for i in [1..DimensionC(n)] do
+Append(Mt, [BoundaryOfElt(n,i)]);
+od;
+M0:=Mt;
+fi;
+return M0[k];
+fi;
+########### CASE n=0 DONE ###############
+
+
+
+if  M[n]=n then
+Mt:=[];
+
+
+	for i in [1..DimensionC(n)] do
+	Append(Mt, [BoundaryOfElt(n,i)]);
+	od;
+	M[n]:=Mt;
+
+fi;
+
+
+
+return M[n][k];
+end;
+#####################################################################
+
+
+return Objectify(HapCochainComplex,
+		rec(
+                dimension:=DimensionC,
+                boundary:=BoundaryC,
+                properties:=
+                [["length",LengthC],
+                ["connected",true],
+                ["type", "cochainComplex"],
+                ["characteristic",
+                EvaluateProperty(R,"characteristic")] ]));
+end;
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+HomArr:=function(map,P);
+
+return true;
+end;
+#####################################################################
+#####################################################################
+
+
+if IsHapResolution(R) then 
+return HomObj(R,f);
+fi;
+
+if IsHapEquivariantChainMap(R) then
+return HomArr(R,f);
+fi;
+
+						
+end);
+#####################################################################
+#####################################################################
+

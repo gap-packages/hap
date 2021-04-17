@@ -1,0 +1,10 @@
+K:=PureCubicalKnot(3,1);;                                    
+granny:=ArcPresentation(KnotSum(K,ReflectedCubicalKnot(K)));;
+reef:=ArcPresentation(KnotSum(K,K));;
+d1:=KnotComplementWithBoundary(granny);;
+d2:=KnotComplementWithBoundary(reef);;
+Invgranny:=FirstHomologyCoveringCokernels(d1,6);;
+Invreef:=FirstHomologyCoveringCokernels(d2,6);;
+[0,2,2,8] in Invgranny;                                      
+[0,2,2,8] in Invreef;
+Print("Example runtime :", StringTime(Runtime()-RT), "\n\n");

@@ -1,0 +1,16 @@
+RT:=Runtime();
+A:=[[1,1,1],[1,0,1],[1,1,1]];;
+S:=PureCubicalComplex(A);;
+S:=RegularCWComplex(S);;
+Y:=DirectProduct(S,S,S,S);
+Size(Y);
+C:=ChainComplexOfUniversalCover(Y);
+G:=C!.group;; 
+H:=Group(G.1^5,G.2^5,G.3^5,G.4);
+D:=TensorWithIntegersOverSubgroup(C,H);
+Homology(D,0);
+Homology(D,1);
+Homology(D,2);
+Homology(D,3);
+Homology(D,4);
+Print("Example runtime :", StringTime(Runtime()-RT), "\n\n");

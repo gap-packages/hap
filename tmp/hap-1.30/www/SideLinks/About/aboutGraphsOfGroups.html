@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>AboutHap</title>
+</head>
+<body
+ style="color: rgb(0, 0, 153); background-color: rgb(204, 255, 255);"
+ alink="#000066" link="#000066" vlink="#000066">
+<br>
+<table
+ style="text-align: left; margin-left: auto; margin-right: auto; color: rgb(0, 0, 102);"
+ border="0" cellpadding="20" cellspacing="10">
+  <tbody>
+    <tr align="center">
+      <th style="vertical-align: top;">
+      <table style="width: 100%; text-align: left;" cellpadding="2"
+ cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ href="aboutTwistedCoefficients.html"><small
+ style="color: rgb(0, 0, 102);">Previous</small></a><br>
+            </td>
+            <td
+ style="text-align: center; vertical-align: top; color: rgb(0, 0, 102);"><big><span
+ style="font-weight: bold;">About HAP: Graphs of Groups, Fuchsian
+groups and Kleinian groups<br>
+            </span></big></td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutSpaceGroup.html"><small style="color: rgb(0, 0, 102);">next</small></a><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><span style="font-weight: bold;"></span></big><br>
+      </th>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255); text-align: left;">
+      <div style="text-align: center;"><big><span
+ style="font-weight: bold;">Graphs of groups<br>
+      <br>
+      </span></big> </div>
+A <span style="font-style: italic;">graph of groups</span> is a
+connected graph Y together with<br>
+      <ul>
+        <li>groups G<sub>v</sub> and G<sub>e</sub> where v and e range
+respectively over the vertices and edges of Y, <br>
+        </li>
+        <li>and monomorphisms s:G<sub>e</sub>&#8594;G<sub>v</sub> and t:G<sub>e</sub>&#8594;G<sub>w</sub>
+for every edge e, where v and w are the vertices of e.</li>
+      </ul>
+The <span style="font-style: italic;">fundamental group</span> of a
+graph of groups is defined using a notion of "path" where an element of
+G<sub>v</sub> is regarded as a path from v to v; one imposes the
+relations<br>
+      <br>
+      <div style="text-align: center;">s(a) e = e t(a)<br>
+      </div>
+      <br>
+for every a in G<sub>e</sub> . That is, the composite paths<br>
+      <br>
+      <div style="text-align: center;">
+      <div style="text-align: left;">
+      <div style="text-align: center;"><img alt="" src="path.gif"
+ style="width: 353px; height: 92px;"> <br>
+      <br>
+      <br>
+and<br>
+      <br>
+      <br>
+      </div>
+      <div style="text-align: center;"><img alt="" src="pathop.gif"
+ style="width: 336px; height: 95px;"><br>
+      <br>
+      <div style="text-align: left;"><br>
+are regarded as equal paths from v to w.<br>
+      </div>
+      </div>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">Amalgamated
+products and HNN extensions can both be viewed as fundamental groups of
+graphs of
+groups. For example, the following commands create a graph of groups
+corresponding to the amalgamated product G=H*<sub>A</sub>K where H is
+the symmetric group H=S<sub>5</sub> and K is the symmetric group K=S<sub>4</sub>
+. The common subgroup A is the symmetric group A=S<sub>3 </sub>. <br>
+      <br>
+A graph of groups is represented by a list consisting of the vertex
+groups and pairs of monomorphisms which define edges. Each group must
+be given a name using the <span
+ style="font-family: helvetica,arial,sans-serif;">SetName()</span>
+command, and distinct groups must be given different names.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+S5:=SymmetricGroup(5);SetName(S5,"S5");;<br>
+gap&gt; S4:=SymmetricGroup(4);SetName(S4,"S4");;<br>
+gap&gt; A:=SymmetricGroup(3);SetName(A,"S3");;<br>
+gap&gt; AS5:=GroupHomomorphismByFunction(A,S5,x-&gt;x);;<br>
+gap&gt; AS4:=GroupHomomorphismByFunction(A,S4,x-&gt;x);;<br>
+gap&gt; D:=[S5,S4,[AS5,AS4]];;<br>
+gap&gt; GraphOfGroupsDisplay(D);;<br>
+      <div style="text-align: center;"><img alt="" src="graphgroups.gif"
+ style="width: 172px; height: 90px;"> </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 255); vertical-align: top;">The
+following additional commands create a resolution for the above
+amalgamated product G and then calculate H<sub>7</sub>(G,Z) = (Z<sub>2</sub>)<sup>3</sup>+Z<sub>4</sub>+Z<sub>60</sub><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
+R:=ResolutionGraphOfGroups(D,8);;<br>
+gap&gt; Homology(TensorWithIntegers(R),7);<br>
+[ 2, 2, 2, 4, 60 ]<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; background-color: rgb(255, 255, 255); vertical-align: top;">The
+following commands create a graph of groups corresponding to the HNN
+extension G=H*<sub>A</sub> where H is the symmetric group H=S<sub>5</sub>
+and A is the subgroup A=S<sub>3</sub> and f:A&#8594;S<sub>5</sub> is the
+homomorphism (1,2) &#8594; (3,4), (1,2,3) &#8594; (3,4,5). The HNN extension G is
+obtained from H by adding an element t subject to the relations&nbsp; t<sup>-1</sup>
+a t = f(a) for a in S<sub>3</sub>.<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+S5:=SymmetricGroup(5);SetName(S5,"S5");<br>
+gap&gt; A:=SymmetricGroup(3);SetName(A,"S3");<br>
+gap&gt;
+f:=GroupHomomorphismByImages(A,S5,[(1,2),(1,2,3)],[(3,4),(3,4,5)]);;<br>
+gap&gt; g:=GroupHomomorphismByFunction(A,S5,x-&gt;x);<br>
+gap&gt; D:=[S5,[f,g]];;<br>
+gap&gt; GraphOfGroupsDisplay(D);;<br>
+      <div style="text-align: center;"><img alt="" src="HNN.gif"
+ style="width: 118px; height: 76px;"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">The
+following additional commands create a resolution for the HNN extension
+and calculate H<sub>7</sub>(G,Z) = (Z<sub>2</sub>)<sup>2</sup>+Z<sub>60</sub>
+. </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+R:=ResolutionGraphOfGroups(D,8);;<br>
+gap&gt; Homology(TensorWithIntegers(R),7);<br>
+[ 2, 2, 60 ]<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);"><big><span
+ style="font-weight: bold;">Fuchsian and Kleinian groups<br>
+      <br>
+      </span></big>
+      <div style="text-align: left;"><big><small>A <span
+ style="font-style: italic;">Kleinian group</span> is discrete subgroup
+of PSL(2,<span style="font-family: helvetica,arial,sans-serif;">C</span>),
+the full group of orientation preserving isometries of 3-dimensional
+hyperbolic space. </small></big><big><small>A <span
+ style="font-style: italic;">Fuchsian group</span> is a discrete
+subgroup of PSL(2,<span style="font-family: helvetica,arial,sans-serif;">R</span>)
+and as such acts on the hyperbolic plane. A "fundamental domain" for a
+Kleinian or Fuchsian group G gives rise to a tessellation of hyperbolic
+3- or 2-space. Let X denote the 1-skeleton of this tessellation. Then G
+acts on X in such a way that no edge is inverted. The quotient graph
+Y=X/G is thus a graph of groups in which vertices and edges are
+labelled by
+the subgroups of G stabilizing the corresponding vertices and edges in
+Y.<br>
+      <br>
+The computational method described in [G. Ellis &amp; A.G. Williams, "<a
+ href="http://hamilton.nuigalway.ie/">On the cohomology of generalized
+triangle groups</a>", Comment. Math. Helv. 80 (2005), 1-21] can be
+partially summarized as follows.<br>
+      <br>
+      </small></big>
+      <table
+ style="margin-left: auto; margin-right: auto; width: 80%; text-align: left;"
+ border="0" cellpadding="10" cellspacing="0">
+        <tbody>
+          <tr>
+            <td
+ style="vertical-align: top; background-color: rgb(204, 255, 255);">Let
+G be a Fuchsian or Kleinian group. Let Y be the graph of groups arising
+from G and a fundamental domain. Let P be the fundamental group of Y.
+Then the "obvious" quotient homomorphism P&#8594;G induces an isomorphism<br>
+            <div style="text-align: center;"><br>
+H<sub>n</sub>(P,M) &#8594; H<sub>n</sub>(G,M)<br>
+            <br>
+            <div style="text-align: left;">for any ZG-module M and all
+n&gt;2 (Fuchsian case) or all n&gt;3 (Kleinian case).<br>
+            </div>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <big><small><br>
+      </small><span style="font-weight: bold;"> </span></big></div>
+      <div style="text-align: left;"> </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 255);">As
+an example consider the classical triangle group defined by the
+presentation<br>
+      <br>
+      <div style="text-align: center;">T = T(l,m,n) = &lt; a, b |&nbsp;
+a<sup>l</sup>
+= b<sup>m</sup> = (ab<sup>-1</sup>)<sup>n</sup> = 1 &gt;<br>
+      <br>
+      <div style="text-align: left;">where 1/|l| + 1/|m| + 1/|m| &lt;
+1. This group acts on the hyperbolic plane as follows. Let v<sub>1</sub>
+and v<sub>2</sub> be distinct point in the hyperbolic plane. Let the
+generator a of T act as a clockwise rotation about v<sub>1</sub>
+through an angle 2 pi/&brvbar;l| , and let the generator b of T act as
+a clockwise rotation about v<sub>2</sub> through an angle 2
+pi/&brvbar;m| . It follows that (ab<sup>-1</sup>) acts as an
+anti-clockwise rotation about some point v<sub>3</sub> through an angle
+2 pi/|n|. Let v<sub>4</sub> be the image of v<sub>3</sub> under a
+reflection in the line v<sub>1</sub>v<sub>2</sub> . Then the points v<sub>1</sub>
+, v<sub>2</sub> , v<sub>3</sub> , v<sub>4</sub> are the corners of a
+quadrilateral fundamental region for the action of T. The edges of this
+fundamental region have trivial stabilizer subgroups in G. The vertices
+v<sub>1</sub> , v<sub>2</sub> , v<sub>3 </sub>have cyclic stabilizer
+subgroups A = &lt;a&gt;, B=&lt;b&gt; and C=&lt;c&gt; respectively. <br>
+      <br>
+The associated graph of groups is <br>
+      <br>
+      <div style="text-align: center;">&nbsp;<img alt=""
+ src="graphtri.gif" style="width: 242px; height: 63px;"><br>
+      <br>
+      <div style="text-align: left;">The fundamental group P of this
+graph has the same homology as the triangle group T(l,m,n) in
+dimensions greater than 3. <br>
+      <br>
+So for example, the following commands show that the triangle group
+T=T(2,3,4) has 5-dimensional integral homology H<sub>5</sub>(T,Z) = Z<sub>2</sub>+Z<sub>12</sub>
+.<br>
+      </div>
+      </div>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 255, 204);">gap&gt;
+a:=(1,2);; b:=(1,2,3);; c:=(1,2,3,4);; f:=();; g:=();;<br>
+gap&gt; A:=Group(a);; SetName(A,"A");;<br>
+gap&gt; B:=Group(b);; SetName(B,"B");;<br>
+gap&gt; C:=Group(c);; SetName(C,"C");;<br>
+gap&gt; F:=Group(f);; SetName(F,"F");;<br>
+gap&gt; G:=Group(g);; SetName(G,"G");;<br>
+gap&gt; FA:=GroupHomomorphismByFunction(F,A,x-&gt;x);;<br>
+gap&gt; FC:=GroupHomomorphismByFunction(F,C,x-&gt;x);;<br>
+gap&gt; GC:=GroupHomomorphismByFunction(G,C,x-&gt;x);;<br>
+gap&gt; GB:=GroupHomomorphismByFunction(G,B,x-&gt;x);;<br>
+gap&gt; Graph:=[A,B,C,[FA,FC],[GC,GB]];;<br>
+gap&gt; GraphOfGroupsDisplay(Graph);;<br>
+      <div style="text-align: center;"><img alt="" src="T234.gif"
+ style="width: 258px; height: 84px;"><br>
+      <div style="text-align: left;">gap&gt;
+R:=ResolutionGraphOfGroups(Graph,6);;<br>
+gap&gt; Homology(TensorWithIntegers(R),5);<br>
+[ 2, 12 ]<br>
+      </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <table
+ style="margin-left: auto; margin-right: auto; width: 100%; text-align: left;"
+ border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><a
+ style="color: rgb(0, 0, 102);" href="aboutTwistedCoefficients.html">Previous
+Page</a><br>
+            </td>
+            <td style="text-align: center; vertical-align: top;"><a
+ href="aboutContents.html"><span style="color: rgb(0, 0, 102);">Contents</span></a><br>
+            </td>
+            <td style="text-align: right; vertical-align: top;"><a
+ href="aboutSpaceGroup.html"><span style="color: rgb(0, 0, 102);">Next
+page</span><br>
+            </a> </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="aboutTopology.html"><br>
+      </a> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

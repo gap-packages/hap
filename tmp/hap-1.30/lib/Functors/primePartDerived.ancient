@@ -1,0 +1,97 @@
+#(C) Graham Ellis, 2005-2006
+
+#####################################################################
+InstallGlobalFunction(PrimePartDerivedFunctor,
+function(G,R,F,n)
+local
+	C,P,P1, D,DCRS, L, AscChn,
+	K, gensK, S, f,fx,
+	HP, HK, HPK, HKhomHPK, HPKhomHP, HKhomHP,
+	HKx,HPKx, 
+	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
+	HPrels, x, y, i,prime,  
+	HPpres,G1,newDCRS;
+
+C:=F(R);
+
+P:=R!.group;
+prime:=PrimePGroup(P);
+P1:=Normalizer(G,P);
+AscChn:=AscendingChain(G,P1);
+D:= List(DoubleCosetRepsAndSizes(P1,P,P), x->x[1]);
+D:=List(SmallGeneratingSet(P1),x->x);
+DCRS:=D;
+
+for i in [2..Length(AscChn)] do
+D:=List(DoubleCosetRepsAndSizes(AscChn[i],AscChn[i-1],AscChn[i-1]),
+x->x[1]);
+Append(DCRS,D);
+newDCRS:=[];
+for x in DCRS do
+for y in D do
+Add(newDCRS,y*x);
+od;od;
+DCRS:=SSortedList(newDCRS);
+od;
+
+
+HP:=GroupHomomorphismByFunction(P,P,x->x);
+HP:=EquivariantChainMap(R,R,HP);
+HP:=F(HP);
+HP:=Homology(HP,n);
+HP:=Source(HP);
+if Length(AbelianInvariants(HP))=0 then return []; fi;
+
+HPrels:=[Identity(HP)];
+
+for L in DCRS do
+K:=Intersection(P,P^L);
+
+if Order(K)>1 then
+
+
+gensK:=ReduceGenerators(GeneratorsOfGroup(K),K);
+
+G1:=Group(Concatenation(gensK,[Identity(P)]));
+if Order(G1)<=32 then
+S:=ResolutionFiniteGroup(gensK,n+1);
+else
+S:=ResolutionNormalSeries(LowerCentralSeries(G1),n+1);
+fi;
+
+if Length(Homology(F(S),n))>0 then
+
+f:=GroupHomomorphismByFunction(K,P,x->x);
+HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
+HK:=Source(HKhomHPK);
+
+HPK:=Range(HKhomHPK);
+HPKhomHP:=GroupHomomorphismByImagesNC(HPK,HP,GeneratorsOfGroup(HPK),
+                                                  GeneratorsOfGroup(HP));
+HKhomHP:=GroupHomomorphismByFunction(HK,HP,x->
+Image(HPKhomHP, Image(HKhomHPK,x) ) );
+
+fx:=GroupHomomorphismByFunction(K,P,g->Image(f,g)^(L^-1));
+HKxhomHPKx:=Homology(F(EquivariantChainMap(S,R,fx)),n);
+HKx:=Source(HKxhomHPKx);
+HPKx:=Parent(Image(HKxhomHPKx));
+HPKxhomHP:=GroupHomomorphismByImagesNC(HPKx,HP,GeneratorsOfGroup(HPKx),
+                                                  GeneratorsOfGroup(HP));
+HKxhomHP:=GroupHomomorphismByFunction(HKx,HP,x->
+Image(HPKxhomHP, Image(HKxhomHPKx,x) ) );
+HKhomHKx:=GroupHomomorphismByImagesNC(HK,HKx,GeneratorsOfGroup(HK),GeneratorsOfGroup(HKx));
+HKhomHP2:=GroupHomomorphismByFunction(HK,HP,a->
+Image(HKxhomHP, Image(HKhomHKx,a)));
+
+for x in GeneratorsOfGroup(HK) do
+Append(HPrels, [Image(HKhomHP,x)*Image(HKhomHP2,x)^-1]);
+od;
+
+fi;
+fi;
+od;
+
+return AbelianInvariants(HP/NormalClosure(HP,Group(HPrels)));
+end);
+#####################################################################
+

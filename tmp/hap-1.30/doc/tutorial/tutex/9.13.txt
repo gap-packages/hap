@@ -1,0 +1,13 @@
+gap> Q:=List(L,QuasiIsomorph);;
+gap> M:=[];;
+
+gap> for q in Q do
+> bool:=true;;
+> for m in M do
+> if not IsomorphismCatOneGroups(m,q)=fail then bool:=false; break; fi;
+> od;
+> if bool then Add(M,q); fi;
+> od;
+
+gap> Length(M);
+51
