@@ -1,469 +1,3 @@
-# ArcPresentationToKnottedOneComplex_Alt
-################################################################################
-############ Input: an arc presentation ########################################
-################################################################################
-########### Output: an inclusion map of regular CW-complexes from ##############
-################### a 1-dimensional link to a 3-dimensional ball ###############
-################################################################################
-InstallGlobalFunction(
-    ArcPresentationToKnottedOneComplex_Alt,
-    function(arc)
-# this method differs than the one below by outputting an embedding which is
-# always compatible with the RegularCWComplexComplement function (i.e. there are
-# no cells which intersect with the subcomplex in a non-contractible way)
-    local
-        gn, grid;
-
-    gn:=Length(arc); # grid number
-
-    grid:=List([1..2*gn]);
-end);
-
-# ArcPresentationToKnottedOneComplex
-################################################################################
-############ Input: an arc presentation ########################################
-################################################################################
-########### Output: an inclusion map of regular CW-complexes from ##############
-################### a 1-dimensional link to a 3-dimensional ball ###############
-################################################################################
-InstallGlobalFunction(
-	ArcPresentationToKnottedOneComplex,
-	function(arc)
-    local
-        gn, grid, i, kbnd, bnd, map, imap,
-        IsIntersection, ints, ext_ints, j, 0c,
-        B2Decomposition, B3Decomposition, embed;
-
-    gn:=Length(arc); # the grid number
-    
-    grid:=List([1..5*gn],x->[1..5*gn]*0); # form a (3*gn) x gn
-    for i in [0..gn-1] do # matrix from the arc presentation
-        grid[5*(gn-i)-2][5*arc[i+1][1]-2]:=1;
-        grid[5*(gn-i)-2][5*arc[i+1][2]-2]:=1;
-    od;
-    grid:=FrameArray(grid);
-
-    kbnd:=List([1..3],x->[]); # boundary list of the knot
-    bnd:=List([1..5],x->[]); # boundary list of the complement of the knot
-    map:=List([1..2],x->[]); # inclusion map from kbnd to bnd
-    imap:=List([1..4],x->[]); # inverse image of the above inclusion map
-
-    IsIntersection:=function(i,j) # finds where crossings occur in the grid
-        if grid[i][j]=0 then
-            if 1 in grid[i]{[1..j]} then
-                if 1 in grid[i]{[j..5*gn+2]} then
-                    if 1 in List([1..i],x->grid[x][j]) then
-                        if 1 in List([i..5*gn+2],x->grid[x][j]) then
-                            return true;
-                        fi;
-                    fi;
-                fi;
-            fi;
-        fi;
-
-        return false;
-    end;
-
-    ints:=[]; # records the coordinates of each crossing
-    ext_ints:=[]; # records those 0-cells which arise in intersection points
-    for i in [1..5*gn+2] do
-        for j in [1..5*gn+2] do
-            if IsIntersection(i,j) then
-                Add(ext_ints,[i-1,j]); Add(ext_ints,[i+1,j]);
-                Add(ints,[i,j]);
-                grid[i-1][j]:='*';
-                grid[i][j]:='*';
-                grid[i+1][j]:='*';
-            fi;
-        od;
-    od;
-
-    0c:=4; # label the entries of grid so that it models the 0-skeleton
-    for i in [1..5*gn+2] do
-        for j in [1..5*gn+2] do
-            if grid[i][j]<>0 then
-                grid[i][j]:=0c;
-                0c:=0c+1;
-            fi;
-        od;
-    od;
-    0c:=0c+2;
-
-    ints:=List(ints,x->grid[x[1],x[2]]);
-
-    B2Decomposition:=function()
-# takes what we have so far and uses it to form a regular CW-decomposition of
-# the 2-ball with the appropriate inclusion map
-        local i, j, hslice, vslice, 2SkeletonOfDisk, DuplicateDisk;
-
-        kbnd[1]:=List([1..0c-6],x->[1,0]);
-        bnd[1]:=List([1..0c],x->[1,0]);
-        map[1]:=[1..0c-6]+3;
-        imap[1]:=Concatenation([0,0,0],map[1]-3,[0,0,0]);
-
-        Add(bnd[2],[2,1,2]); Add(bnd[2],[2,1,3]); Add(bnd[2],[2,2,0c-2]);
-        Add(bnd[2],[2,3,0c-1]); Add(bnd[2],[2,0c-2,0c]);
-        Add(bnd[2],[2,0c-1,0c]);
-        Add(bnd[2],[2,3,4]); Add(bnd[2],[2,0c-3,0c-2]);
-        # add some 1-cells to just the complement to stay regular
-        # these act as a frame to the knot
-
-        for i in [1..8] do
-            Add(imap[2],0);
-        od;
-
-        for i in [1..5*gn] do # add the horizontal arcs of the knot first
-            hslice:=[];
-            for j in [1..5*gn] do
-                if grid[i][j]<>0 and not [i,j] in ext_ints then
-                    Add(hslice,grid[i][j]);
-                fi;
-            od;
-            for j in [1..Length(hslice)-1] do
-                Add(kbnd[2],[2,hslice[j]-3,hslice[j+1]-3]);
-                Add(bnd[2],[2,hslice[j],hslice[j+1]]);
-                Add(map[2],Length(bnd[2]));
-                Add(imap[2],Length(kbnd[2]));
-            od;
-        od;
-        for j in [1..5*gn] do # now add the vertical arcs
-            vslice:=[];
-            for i in [1..5*gn] do
-                if grid[i][j]<>0 then
-                    Add(vslice,grid[i][j]);
-                fi;
-            od;
-            for i in [1..Length(vslice)-1] do
-                Add(bnd[2],[2,vslice[i],vslice[i+1]]);
-                if not(vslice[i] in ints or vslice[i+1] in ints) then
-                    Add(kbnd[2],[2,vslice[i]-3,vslice[i+1]-3]); # introduce a 
-                    Add(map[2],Length(bnd[2])); # gap in the knot to be 'lifted' 
-                    Add(imap[2],Length(kbnd[2])); # and filled in later
-                else
-                    Add(imap[2],0);
-                fi;
-            od;
-        od;
-
-        2SkeletonOfDisk:=function(bnd)
-            local
-                ori, i, j, cell, top, rgt, btm, lft,
-                Clockwise, path, FaceTrace;
-
-            grid[1][1]:=1; grid[1][5*gn+2]:=2; grid[4][1]:=3;
-            grid[5*gn-1][5*gn+2]:=0c-2; grid[5*gn+2][1]:=0c-1;
-            grid[5*gn+2][5*gn+2]:=0c;
-
-            ori:=List([1..0c],x->[1..4]*0);
-            # each 0-cell will have the 0-cells N/E/S/W of it
-            # listed in that order 
-
-            for i in [1..5*gn+2] do
-                for j in [1..5*gn+2] do
-                    cell:=grid[i][j];
-                    if cell<>0 then
-                        top:=List([1..i-1],x->grid[x][j]);
-                        top:=Filtered(top,x->x<>0);
-                        if top<>[] then
-                            ori[cell][1]:=Position
-                            (
-                                bnd[2],
-                                Concatenation([2],Set([cell,top[Length(top)]]))
-                            );
-                        fi;
-                        rgt:=grid[i]{[j+1..5*gn+2]};
-                        rgt:=Filtered(rgt,x->x<>0);
-                        if rgt<>[] then
-                            ori[cell][2]:=Position
-                            (
-                                bnd[2],
-                                Concatenation([2],Set([cell,rgt[1]]))
-                            );
-                        fi;
-                        btm:=List([i+1..5*gn+2],x->grid[x][j]);
-                        btm:=Filtered(btm,x->x<>0);
-                        if btm<>[] then
-                            ori[cell][3]:=Position(
-                                bnd[2],
-                                Concatenation([2],Set([cell,btm[1]]))
-                            );
-                        fi;
-                        lft:=grid[i]{[1..j-1]};
-                        lft:=Filtered(lft,x->x<>0);
-                        if lft<>[] then
-                            ori[cell][4]:=Position(
-                                bnd[2],
-                                Concatenation([2],Set([cell,lft[Length(lft)]]))
-                            );
-                        fi;
-                        if [i,j] in ext_ints then # 0-cells in ext_ints
-                            ori[cell][2]:=0; # never have edges from the 
-                            ori[cell][4]:=0; # left or right of them
-                        fi;
-                    fi;
-                od;
-            od;
-
-            
-################################################################################
-# repurposed from KnotComplement and KnotComplementWithBoundary
-            FaceTrace:=function(path)
-                local
-                    unselected, sourceORtarget, x, ClockwiseTurn,
-                    2cell, sORt, dir, e1, e0, i, bool;
-
-                unselected:=Concatenation
-                (
-                    [1..Length(bnd[2])],
-                    [7..Length(bnd[2])] # the first 6 1-cells occur just once
-                );
-
-                ClockwiseTurn:=function(p,e)
-                    local f;
-                    
-                    f:=(Position(p,e) mod 4)+1;
-                    while p[f]=0 do
-                        f:=(f mod 4)+1;
-                    od;
-                    
-                    return p[f];
-                end;
-
-                bool:=false;
-                sourceORtarget:=List([1..Length(bnd[2])],y->[3,2]);
-                x:=1;
-                while unselected<>[] do
-                    while (not x in unselected) and (not e1 in unselected) do
-                        x:=x+1;
-                    od;
-                    2cell:=[x];
-                    sORt:=sourceORtarget[x][Length(sourceORtarget[x])];
-                    Unbind(sourceORtarget[x][Length(sourceORtarget[x])]);
-
-                    dir:=path[bnd[2][x][sORt]];
-                    e0:=bnd[2][x][sORt];
-                    e1:=ClockwiseTurn(dir,x);
-                    while e1<>x do
-                        Add(2cell,e1);
-                        e0:=Filtered(bnd[2][e1]{[2,3]},y->y<>e0)[1];
-                        dir:=path[e0];
-                        e1:=ClockwiseTurn(dir,e1);
-                    od;
-                    Add(2cell,Length(2cell),1);
-                    if (not Set(2cell) in List(bnd[3],x->Set(x))) then
-                        for i in Filtered(
-                            2cell{[2..Length(2cell)]},
-                            y->y in unselected
-                        ) do
-                            Unbind(unselected[Position(unselected,i)]);
-                        od;
-                        if not bool then # to save some checks
-                            if Set(2cell)=[1,2,3,4,5,6] then
-                                bool:=true;
-                            else
-                                Add(bnd[3],2cell);
-                                Add(imap[3],0);
-                            fi;
-                        else
-                            Add(bnd[3],2cell);
-                            Add(imap[3],0);
-                        fi;
-                    fi;
-                od;
-################################################################################
-                bnd[3]:=List(
-                    bnd[3],
-                    x->Concatenation(
-                        [x[1]],
-                        Set(x{[2..Length(x)]})
-                    )
-                ); # order the 2-cells nicely
-            end;
-            FaceTrace(ori);
-        end;
-        2SkeletonOfDisk(bnd);
-    end;
-    B2Decomposition();
-
-    B3Decomposition:=function()
-        local 
-            k0, b0, k1, b1, b2, DuplicateDisk, b22, CrossI, 3c;
-
-        k0:=Length(kbnd[1]); b0:=Length(bnd[1]);
-        k1:=Length(kbnd[2]); b1:=Length(bnd[2]);
-        b2:=Length(bnd[3]);
-
-        DuplicateDisk:=function() # make a duplicate of everything
-            local i, n, mult;
-
-            for i in [1..Length(ext_ints)/2] do
-                Add(kbnd[1],[1,0]);
-                Add(kbnd[1],[1,0]);
-                Add(kbnd[1],[1,0]);
-            od;
-
-            bnd[1]:=Concatenation(bnd[1],bnd[1]);
-
-            imap[1]:=Concatenation(imap[1],imap[1]+Length(kbnd[1])-k0);
-            for i in [b0+1..2*b0] do
-                if imap[1][i]=Length(kbnd[1])-k0 then
-                    imap[1][i]:=0;
-                fi;
-            od;
-
-            n:=k0+1;
-            mult:=1;
-            for i in [1..b1] do
-                Add(bnd[2],bnd[2][i]+[0,b0,b0]);
-                if i>8 and not (bnd[2][i]-[0,3,3] in kbnd[2]) then
-                    Add(
-                        kbnd[2],
-                        Concatenation
-                        (
-                            [2],
-                            [n,n+1]
-                        )
-                    );
-                    n:=n+1+Int(mult/2);
-
-                    Add(map[1],bnd[2][i][2]+b0);
-                    if Int(mult/2)=1 then 
-                        mult:=1;
-                        Add(map[1],bnd[2][i][3]+b0);
-                    else
-                        mult:=2;
-                    fi;
-
-                    Add(map[2],Length(bnd[2]));
-                    Add(imap[2],Length(map[2]));
-                else
-                    Add(imap[2],0);
-                fi;
-            od;
-
-            for i in [1..b2] do
-                Add(
-                    bnd[3],
-                    Concatenation(
-                        [bnd[3][i][1]],
-                        bnd[3][i]{[2..Length(bnd[3][i])]}+b1
-                    )
-                );
-                Add(imap[3],0);
-            od;
-
-            return Length(bnd[3]);
-        end;
-        b22:=DuplicateDisk();
-
-        CrossI:=function() # connect the two disks 
-            local l, i, j, n, bool, 3cell;
-            # each n-cell gives rise to an (n+1)-cell
-
-            l:=[];
-            for i in [1..5*gn+2] do
-                for j in [1..5*gn+2] do
-                    if grid[i][j]<>0 then
-                        Add(l,grid[i][j]);
-                    fi;
-                od;
-            od;
-
-            n:=k0+1;
-            bool:=false;
-            for i in l do
-                Add(bnd[2],[2,i,i+b0]);
-                if i in List(ext_ints,x->grid[x[1]][x[2]]) then
-                    Add(kbnd[2],[2,i-3,n]);
-                    if not bool then
-                        n:=n+2; bool:=true;
-                    else
-                        n:=n+1; bool:=false;
-                    fi;
-                    Add(map[2],Length(bnd[2]));
-                    Add(imap[2],Length(map[2]));
-                else
-                    Add(imap[2],0);
-                fi;
-            od;
-
-            for i in [1..b1] do
-                Add(
-                    bnd[3],
-                    [
-                        4,
-                        i,
-                        i+b1,
-                        Position(
-                            bnd[2],
-                            [
-                                2,
-                                bnd[2][i][2],
-                                bnd[2][i+b1][2]
-                            ]
-                        ),
-                        Position(
-                            bnd[2],
-                            [
-                                2,
-                                bnd[2][i][3],
-                                bnd[2][i+b1][3]
-                            ]
-                        )
-                    ]
-                );
-                Add(imap[4],[i,Length(bnd[3])]); # not exactly the inverse
-            od; # image any more, but this list is used directly below
-
-            for i in [1..b2] do
-                3cell:=Concatenation(
-                    [
-                        i,
-                        i+b2
-                    ],
-                    List(
-                        bnd[3][i]{[2..Length(bnd[3][i])]},
-                        x->imap[4]
-                            [
-                                Position(
-                                    List(imap[4],y->y[1]),
-                                    x
-                                )
-                            ][2]
-                    )
-                );
-                Add(3cell,Length(3cell),1);
-                Add(bnd[4],3cell);
-            od;
-        end;
-        CrossI();
-
-        # add a cap to B3 /// not sure if necessary
-        Add(bnd[3],[6,1,2,3,4,5,6]);
-        Add(bnd[3],[6,b1+1,b1+2,b1+3,b1+4,b1+5,b1+6]);
-        3c:=Concatenation([Length(bnd[3])-1],[1..b2]);
-        Add(3c,Length(3c),1);
-        Add(bnd[4],3c);
-        3c:=Concatenation([Length(bnd[3])],[b2+1..b22]);
-        Add(3c,Length(3c),1);
-        Add(bnd[4],3c);
-
-    end;
-    B3Decomposition();
-
-    embed:={n,k}->map[n+1][k];
-
-    #return [map,grid,kbnd,bnd];
-    return Objectify(
-        HapRegularCWMap,
-        rec(
-            source:=RegularCWComplex(kbnd),
-            target:=RegularCWComplex(bnd),
-            mapping:=embed,
-			grid:=grid
-        )
-    );
-end);
 
 # RegularCWMapToCWSubcomplex
 ################################################################################
@@ -814,6 +348,72 @@ InstallGlobalFunction(
     );
 end);
 
+# SubdivideCell
+################################################################################
+############ Input: an inclusion of cell complexes f:Z->Y and two integers #####
+################### k>0 & n>=0 #################################################
+################################################################################
+########### Output: the regular CW-map f':Z'->Y' corresponding to the same #####
+################### spaces but where the kth n-cell of Y has been ##############
+################### subdivided into as many n-cells as there are (n-1)-cells ###
+################### in the boundary of that cell ###############################
+################################################################################
+InstallGlobalFunction(
+    SubdivideCell,
+    function(f,n,k)
+    local
+        sub, Y, closure, plus1,
+        i, j, bnd;
+
+    sub:=RegularCWMapToCWSubcomplex(ShallowCopy(f));
+    Y:=sub[1]; # the actual CW-complex
+    sub:=sub[2]*1; # the indexing of the subcomplex
+    closure:=ClosureCWCell(Y,n,k)[2];
+    Y:=Y!.boundaries*1;
+
+    Add(Y[1],[1,0]); # the barycentre of the kth n-cell
+    plus1:=List([1..Length(closure)],x->[]);
+    # this will associate an x-cell in the closure to
+    # the resulting (x+1)-cell in the subdivision
+
+    for i in [1..Length(closure)-1] do
+        for j in [1..Length(closure[i])] do
+            if i=1 then
+                Add(Y[2],[2,closure[i][j],Length(Y[1])]);
+                Add(plus1[1],Length(Y[2]));
+            else
+                bnd:=Y[i][closure[i][j]];
+                bnd:=bnd{[2..bnd[1]+1]};
+                bnd:=List(bnd,x->plus1[i-1][Position(closure[i-1],x)]);
+                Add(bnd,closure[i][j],1);
+                Add(bnd,Length(bnd),1);
+                if i=Length(closure)-1 and j=1 then
+                    Y[i+1][closure[i+1][1]]:=bnd;
+                    Add(plus1[i],closure[i+1][1]);
+                else
+                    Add(Y[i+1],bnd);
+                    Add(plus1[i],Length(Y[i+1]));
+                fi;
+            fi;
+        od;
+    od;
+    for i in [1..Length(Y[Length(closure)])] do
+        if Last(closure)[1] in
+            Y[Length(closure)+1][i]{[2..Y[Length(closure)+1][i][1]+1]} then
+                Append(Y[Length(closure)+1][i],plus1[Length(closure)]);
+                Unbind(Y[Length(closure)+1][i][1]);
+                Y[Length(closure)+1][i]:=Set(Y[Length(closure)+1][i]);
+                Add(Y[Length(closure)+1][i],Length(Y[Length(closure)+1][i]),1);
+        fi;
+    od;
+    return CWSubcomplexToRegularCWMap(
+        [
+            RegularCWComplex(Y),
+            sub
+        ]
+    );
+end);
+
 # RegularCWComplexComplement
 ################################################################################
 ############ Input: an inclusion f: Z -> Y of regular CW-complexes #############
@@ -827,8 +427,8 @@ InstallGlobalFunction(
     RegularCWComplexComplement,
     function(arg...)
     local
-        f, compatible, Y, B, IsInternal, count, total, path_comp, #sub,
-        i, j, clsr, int, hom_lst, bary, IsSubpathComponent,
+        f, compatible, Y, B, IsInternal, count, total, path_comp,
+        i, j, clsr, int, crit, bary, IsSubpathComponent,
         ext_cell_2_f_notation, f_notation_2_ext_cell,
         ext_cells, k, ext_cell_bnd, e_n_bar,
         ext_cell_cbnd;
@@ -864,7 +464,6 @@ InstallGlobalFunction(
     total:=Sum(List(Y[1]!.boundaries,Length));
     bary:=[];
 
-
     path_comp:=List([1..Length(Y[1]!.boundaries)-1],x->[]);
     # list of all of the path components of the intersection between
     # the closure of each internal cell and the subcomplex Z < Y
@@ -888,29 +487,17 @@ InstallGlobalFunction(
                     Print(count," out of ",total," cells tested.","\r");
 
                     # test the contractibility of each path component!
-                    # if you find anything non contractible, barycentrically
-                    # subdivide the problem cells and restart with optional
-                    # 'true' cheat code 8-)
+                    # if you find anything non contractible,
+                    # subdivide the problem cells and restart
                     for k in [1..Length(path_comp[i][j])] do
-                        if
-                        path_comp[i][j][k][2]<>List(path_comp[i][j][k][2],x->[])
-                        and
-                        path_comp[i][j][k][2][2]<>[]
-                        then
-                            hom_lst:=List(
-                                [1..Length(path_comp[i][j][k][2])-1],
-                                x->Homology(
-                                    Source(
-                                        CWSubcomplexToRegularCWMap(
-                                            path_comp[i][j][k]
-                                        )
-                                    ),
-                                    x
-                                )
-                            );
-                            if hom_lst<>List(hom_lst,x->[]) then
-                                Add(bary,[i-1,j]);
-                            fi;
+                        if path_comp[i][j][k][2]<>List(path_comp[i][j][k][2],x->[])
+                            and path_comp[i][j][k][2][2]<>[] then
+                                crit:=CWSubcomplexToRegularCWMap(path_comp[i][j][k]);
+                                crit:=Source(crit);
+                                crit:=CriticalCellsOfRegularCWComplex(crit);
+                                if not Length(crit)=1 then
+                                    Add(bary,[i-1,j]);
+                                fi;
                         fi;
                     od;
                 fi;
@@ -918,38 +505,24 @@ InstallGlobalFunction(
                 Add(B[i],"*"); # temporary entry to keep correct indexing
             fi;
         od;
-    od;
-    
-    for i in [1..Length(bary)] do
-        if bary[i][2] in
-        Concatenation(
-            List(
-                Filtered(
-                    bary,
-                    x->x[1]=bary[i][1]+1
-                ),
-                x->Y[1]!.boundaries[x[1]+1][x[2]]
-            )
-        )
-        then
-            Unbind(bary[i]);
-        fi;
-    od;
+    od; 
     bary:=Set(bary);
-
+    
     if not compatible then
         if bary=[] then
             Print("\nThe input is compatible with this algorithm.\n");
         else
-            Print("\n",Length(bary)," cell(s) will be barycentrically subdivided.\n");
-            for i in Reversed([1..Length(bary)]) do
+            Print("\nBarycentrically subdividing ",Length(bary)," cell(s):\n");
+            for i in [1..Length(bary)] do
                 f:=BarycentricallySubdivideCell(
                     f,
                     bary[i][1],
                     bary[i][2]
                 );
+                Print(Int(100*i/Length(bary)),"\% complete. \r");
             od;
-            return RegularCWComplexComplement(f,true);
+            Print("\n");
+            return RegularCWComplexComplement(f,true); # bypass compatibility check
         fi;
     fi;
 
@@ -985,7 +558,6 @@ InstallGlobalFunction(
     # returns its associated "f notation" i.e. a triple [n+1,k',A] corresponding
     # to the k'th (n+1)-cell (internal) whose closure intersected with Z in the
     # path component A
-
 
     ext_cells:=List([1..Length(B)],x->[]);
 
@@ -1094,5 +666,413 @@ InstallGlobalFunction(
     #od;
     #sub:=List(sub,Set);
 
-    return BoundaryMap(RegularCWComplex(B));
+    return RegularCWComplex(B);#BoundaryMap(RegularCWComplex(B));
+end);
+
+# LiftColouredSurface
+################################################################################
+############ Input: an inclusion i:Y->X of regular CW-complexes ################
+################### with component object i!.colour(n,k) returning an integer ##
+################### in the range [a,b] associated to the kth n-cell of Y #######
+################################################################################
+########### Output: an inclusion of regular CW-complexes i~:Y~->Xx[a,b] ########
+################### where Y~ is the lifted subcomplex of Xx[a,b] as ############
+################### specified by i!.colour #####################################
+################################################################################
+InstallGlobalFunction(
+    LiftColouredSurface,
+    function(f)
+    local
+        src, trg, lens, colours,
+        cbnd4_1cells, cbnd4_1cells_bnd,
+        i, j, clr, closure, k,
+        min, max, l_colours,
+        cell, col1, col2, int,
+        bnd, bbnd, l, cobnd4,
+        l_src, prods;
+
+    trg:=RegularCWMapToCWSubcomplex(f);
+    src:=trg[2]*1;
+    trg:=trg[1];
+    lens:=List([1..Length(trg!.boundaries)-1],x->Length(trg!.boundaries[x]));
+    colours:=List([1..Length(src)],x->List([1..trg!.nrCells(x-1)],y->[]));
+    cbnd4_1cells:=[]; # list of all 1-cells of src whose coboundary consists of 4 2-cells
+    cbnd4_1cells_bnd:=[]; # the boundary of the above 1-cells
+    for i in [1..Source(f)!.nrCells(1)] do
+        if Source(f)!.coboundaries[2][i][1]=4 then
+            Add(cbnd4_1cells,src[2][i]);
+            for j in [2,3] do
+                Add(
+                    cbnd4_1cells_bnd,
+                    src[1][Source(f)!.boundaries[2][i][j]]
+                );
+            od;
+        fi;
+    od;
+    cbnd4_1cells_bnd:=Set(cbnd4_1cells_bnd);
+    # we want to compute the inclusion src* -> trg x I where
+    # I is the interval [min,max] and where min and max are the
+    # smallest/largest integers that f!.colour assigns to 2-cells
+    #       we begin by associating to each cell e^n of src a list
+    # of integers e.g. [-1,2] indicating that e^n x {-1} and
+    # e^n x {2} will be in src x I
+    for i in [1..Length(src[Length(src)])] do
+        clr:=f!.colour(Length(src)-1,src[Length(src)][i]);
+        closure:=ClosureCWCell(trg,Length(src)-1,src[Length(src)][i])[2];
+        for j in [1..Length(closure)] do
+            for k in [1..Length(closure[j])] do
+                colours[j][closure[j][k]]:=Set(
+                    Concatenation(
+                        colours[j][closure[j][k]],
+                        clr
+                    )
+                );
+            od;
+        od;
+    od;
+    min:=Minimum(List(Filtered(colours[Length(colours)],x->x<>[]),Minimum));
+    # ^smallest & \/largest 'colours'
+    max:=Maximum(List(Filtered(colours[Length(colours)],x->x<>[]),Maximum));
+    # make a copy of trg for each colour in [min-1,min+1]
+    trg:=trg!.boundaries*1; Add(trg,[]);
+    l_colours:=List(
+        [1..Length(trg)],
+        x->List([1..Length(trg[x])],
+            y->[[x-1,y],min-1]
+        )
+    );
+    for i in [min..max+1] do
+        for j in [1..lens[1]] do
+            Add(trg[1],[1,0]);
+            Add(l_colours[1],[[0,j],i]);
+        od;
+    od;
+    for i in [1..Length([min..max+1])] do
+        for j in [1..Length(lens)-1] do
+            for k in [1..lens[j+1]] do
+                cell:=trg[j+1][k]*1;
+                cell:=Concatenation(
+                    [cell[1]],
+                    cell{[2..Length(cell)]}+lens[j]*i
+                );
+                Add(trg[j+1],cell);
+                Add(l_colours[j+1],[[j,k],[min..max+1][i]]);
+            od;
+        od;
+    od;
+    # `join' each Target(f) x {i-1} to Target(f) x {i}
+    for i in [1..Length(lens)] do
+        for j in [1..lens[i]] do
+            cell:=[i-1,j];
+            for k in [1..Length([min-1..max])] do
+                col1:=[min-1..max][k];
+                col2:=[min-1..max+1][k+1];
+                int:=[col1,col2];
+                bnd:=[]; # boundary of cell x int
+                Add(
+                    bnd,
+                    Position(l_colours[i],[cell,col1])
+                );
+                Add(
+                    bnd,
+                    Position(l_colours[i],[cell,col2])
+                );
+                if i>1 then
+                    bbnd:=trg[i][j]*1;
+                    bbnd:=bbnd{[2..bbnd[1]+1]};
+                    bbnd:=List(
+                        bbnd,
+                        x->[i-2,x]
+                    );
+                    for l in [1..Length(bbnd)] do
+                        Add(
+                            bnd,
+                            Position(l_colours[i],[bbnd[l],int])
+                        );
+                    od;
+                fi;
+                bnd:=Set(bnd); Add(bnd,Length(bnd),1);
+                Add(trg[i+1],bnd);
+                Add(l_colours[i+1],[cell,int]);
+            od;
+        od;
+    od;
+    # identify the correct subcomplex of X x [min-1,max+1]
+    cobnd4:=[]; # there are some 1-cells which shouldn't be lifted
+    l_src:=List(src,x->[]);
+    for i in [1..Length(colours)] do
+        for j in [1..Length(colours[i])] do
+            if colours[i][j]<>[] then
+                prods:=[];
+                if Length(colours[i][j])=1 then
+                    Add(prods,colours[i][j][1]);
+                else
+                    int:=[Minimum(colours[i][j]),Maximum(colours[i][j])];
+                    for k in [2..Length(int)] do
+                        Add(prods,int[k-1]);
+                        if not (i=2 and j in cbnd4_1cells) and
+                            not (i=1 and j in cbnd4_1cells_bnd) then
+                            Add(prods,[int[k-1],int[k]]);
+                        fi;
+                        Add(prods,int[k]);
+                    od;
+                    prods:=Set(prods);
+                fi;
+                for k in [1..Length(prods)] do
+                    if IsInt(prods[k]) then
+                        Add(
+                            l_src[i],
+                            Position(
+                                l_colours[i],
+                                [[i-1,j],prods[k]]
+                            )
+                        );
+                    else
+                        Add(
+                            l_src[i+1],
+                            Position(
+                                l_colours[i+1],
+                                [[i-1,j],prods[k]]
+                            )
+                        );
+                    fi;
+                od;
+            fi;
+        od;
+    od;
+    return CWSubcomplexToRegularCWMap(
+        [
+            RegularCWComplex(trg),
+            l_src
+        ]
+    );
+end);
+
+# ViewColouredArcDiagram
+################################################################################
+############ Input: three lists a, b, c. a corresponds to an arc ###############
+################### presentation. b's entries are either 0, 1 or -1 and they ###
+################### determine whether a given crossing in the arc presentation #
+################### is an intersection, an overcrossing or an undercrossing. c #
+################### is a list whose entries are 1, 2, 3 or 4. they #############
+################### correspond to an intersection going from blue to blue, #####
+################### blue to red, red to blue or red to red (see manual) ########
+################################################################################
+########### Output: a png depicting the associated coloured arc diagram ########
+################################################################################
+InstallGlobalFunction(
+    ViewColouredArcDiagram,
+    function(arc,cross,levels)
+    local
+        AppendTo, PrintTo, file, filetxt, ArcPresentationToArray,
+        bin_arr, i, res, crs, crs_coord, j, colours, n, bar1, loc_3,
+        bar2, nsew, clr;
+
+    AppendTo:=HAP_AppendTo;
+    PrintTo:=HAP_PrintTo;
+    file:="/tmp/HAPtmpImage";
+    filetxt:="/tmp/HAPtmpImage.txt";
+
+    ArcPresentationToArray:=function(arc)
+        local
+            arr, i, pair, j, k;
+
+        arr:=List([0..5*(Length(arc)-1)],x->List([0..5*(Length(arc)-1)])*0);
+
+        for i in [1..Length(arc)] do
+            pair:=arc[i]*1;
+            arr[Length(arr)-5*(i-1)][1+5*(pair[1]-1)]:=3;
+            arr[Length(arr)-5*(i-1)][1+5*(pair[2]-1)]:=3;
+        od;
+
+        for i in [1..Length(arr)] do
+            for j in [1..Length(arr[i])] do
+                if arr[i][j]=3 then
+                    k:=j*1;
+                    while arr[i][k+1]<>3 do
+                        k:=k+1;
+                        arr[i][k]:=1;
+                    od;
+                    break;
+                fi;
+            od;
+        od;
+        for i in [1..Length(arr)-1] do
+            for j in [1..Length(arr[i])] do
+                if arr[i][j]=3 then
+                    if 3 in List(arr{[i+1..Length(arr)]},x->x[j]) then
+                        k:=i*1;
+                        while arr[k+1][j]<>3 do
+                            k:=k+1;
+                            arr[k][j]:=arr[k][j]+1;
+                        od;
+                    fi;
+                fi;
+            od;
+        od;
+
+        return arr;
+    end;
+
+    bin_arr:=FrameArray(ArcPresentationToArray(arc))-3;
+    bin_arr:=List(bin_arr,x->Concatenation(x,[-3,-3]));
+    for i in [1,2] do
+        Add(bin_arr,bin_arr[1]*0-3);
+    od;
+
+    # resolution of the output, chosen to display on (my) laptop nicely
+    res:=String(Minimum(50*Length(bin_arr),950));
+
+    crs:=List(bin_arr,x->Positions(x,-1));
+    crs_coord:=[]; # the co-ordinates of each crossing
+    for i in [1..Length(crs)] do
+        if crs[i]<>[] then
+            for j in [1..Length(crs[i])] do
+                Add(crs_coord,[i,crs[i][j]]);
+            od;
+        fi;
+    od;
+
+    #if Length(crs_coord)<>Length(cross) then
+    #    Error("number of specified crossings is incorrect");
+    #elif levels<>[] then
+    #    if Length(Positions(cross,0))<Length(levels) then
+    #        Error("all ",Length(Positions(cross,0))," 4-d crossing(s) must be accounted for");
+    #    fi;
+    #fi;
+
+    PrintTo(
+        filetxt,
+        "# ImageMagick pixel enumeration: ",
+        Length(bin_arr[1]),
+        ",",
+        Length(bin_arr),
+        ",255,RGB\n"
+    );
+
+    colours:=NewDictionary([0,""],true);
+    colours!.entries:=[
+        [-3,"(255,255,255)"], # white
+        [-2,"(0,255,255)"], # cyan
+        [-1,"(0,0,255)"], # blue
+        [0,"(0,255,0)"], # green
+        [1,"(255,0,0)"], # red
+        [2,"(255,255,0)"], # yellow
+        [3,"(255,0,255)"] # magenta
+    ];
+
+    for i in [1..Length(bin_arr)] do
+        for j in [1..Length(bin_arr[i])] do
+            if bin_arr[i][j] in [-1,0] then
+                bin_arr[i][j]:=3; # temp. colour for the corners/crossings
+            elif bin_arr[i][j]=-2 then
+                bin_arr[i][j]:=0; # everything should be green 
+            fi; # unless there's a 4-d crossing involved
+        od;
+    od;
+
+    n:=0;
+    for i in [1..Length(crs_coord)] do
+        if cross[i]=0 then
+            n:=n+1;
+            bar1:=List([1..crs_coord[i][1]-1]);
+            loc_3:=Positions(List(bar1,x->bin_arr[x][crs_coord[i][2]]),3);
+            bar1:=bar1{
+                [loc_3[Length(loc_3)]+1..Length(bar1)]
+            };
+            bar2:=List([crs_coord[i][1]+1..Length(bin_arr)]);
+            loc_3:=Positions(List(bar2,x->bin_arr[x][crs_coord[i][2]]),3);
+            bar2:=bar2{
+                [1..loc_3[1]-1]
+            };
+            for j in bar1 do
+                if levels[n] in [1,2] then
+                    bin_arr[j][crs_coord[i][2]]:=-1;
+                else
+                    bin_arr[j][crs_coord[i][2]]:=1;
+                fi;
+            od;
+            for j in bar2 do
+                if levels[n] in [1,3] then
+                    bin_arr[j][crs_coord[i][2]]:=-1;
+                else
+                    bin_arr[j][crs_coord[i][2]]:=1;
+                fi;
+            od;
+        elif cross[i]=-1 then
+            j:=crs_coord[i]*1;
+            bin_arr[j[1]][j[2]-1]:=-3;
+            bin_arr[j[1]][j[2]+1]:=-3;
+        fi;
+    od;
+    for i in [1..Length(crs_coord)] do
+        if cross[i]=1 then
+            j:=crs_coord[i]*1;
+            bin_arr[j[1]-1][j[2]]:=-3;
+            bin_arr[j[1]+1][j[2]]:=-3;
+        fi;
+    od;
+
+    for i in [1..Length(bin_arr)] do
+        for j in [1..Length(bin_arr[i])] do
+            if bin_arr[i][j]=3 then
+                nsew:=[
+                    bin_arr[i-1][j],
+                    bin_arr[i+1][j],
+                    bin_arr[i][j+1],
+                    bin_arr[i][j-1]
+                ];
+                if -3 in nsew then
+                    if Length(Positions([nsew[1],nsew[2]],-3))=1 then # corner
+                        if -1 in nsew then
+                            bin_arr[i][j]:=-2;
+                        elif 1 in nsew then
+                            bin_arr[i][j]:=2;
+                        else
+                            bin_arr[i][j]:=0;
+                        fi;
+                    else # int. point
+                        if nsew[1]=-3 then
+                            bin_arr[i][j]:=0;
+                        else
+                            if nsew[1]=nsew[2] then
+                                bin_arr[i][j]:=nsew[1]*1;
+                            elif Set([nsew[1],nsew[2]])=Set([1,0]) then
+                                bin_arr[i][j]:=2;
+                            elif Set([nsew[1],nsew[2]])=Set([-1,0]) then
+                                bin_arr[i][j]:=-2;
+                            fi;
+                        fi;
+                    fi;
+                else
+                    bin_arr[i][j]:=0;
+                fi;
+            fi;
+        od;
+    od;
+
+    # colour entries according to levels
+    for i in [1..Length(bin_arr)] do
+        for j in [1..Length(bin_arr[i])] do
+            clr:=LookupDictionary(colours,bin_arr[i][j]);
+            AppendTo(filetxt,j,",",i,": ",clr,"\n");
+        od;
+    od;
+
+    # convert the binary array to an upscaled png
+    Exec(
+        Concatenation("convert ",filetxt," ","-scale ",res,"x",res," ",file,".png")
+    );
+    # delete the old txt file
+    Exec(
+        Concatenation("rm ",filetxt)
+    );
+    # display the image
+    Exec(
+        Concatenation(DISPLAY_PATH," ","/tmp/HAPtmpImage.png")
+    );
+    # delete the image on window close
+    Exec(
+        Concatenation("rm  ","/tmp/HAPtmpImage.png")
+    );
 end);

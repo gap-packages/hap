@@ -10,7 +10,7 @@
             <Func Name="ArcPresentationToKnottedOneComplex" Arg="P"/>
             <Description>
                 <P/>
-                Inputs an arc presentation <M>P</M> corresponding to some link.
+                Inputs an arc presentation <A>P</A> corresponding to some link.
                 The output is an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M> where
                 <M>Y</M> is homeomorphic to a (disjoint union of) circle(s) and <M>X</M> is 
                 homeomorphic to the closed 3-ball.
@@ -42,7 +42,7 @@
             <Func Name="IntersectionCWSubcomplexes" Arg="XS1 XS2"/>
             <Description>
                 <P/>
-                Inputs two CW-subcomplexes <M>[X,S]</M> and <M>[X,S']</M> and returns the CW-subcomplex
+                Inputs two CW-subcomplexes <M>XS1=[X,S]</M> and <M>XS2=[X,S']</M> and returns the CW-subcomplex
                 <M>[X,S'']</M> corresponding to their intersection.
             </Description>
         </ManSection>
@@ -78,11 +78,47 @@
         </ManSection>
 
         <ManSection>
-            <Func Name="ComplementTubularNeighbourhood" Arg="f"/>
+            <Func Name="BarycentricallySubdivideCell" Arg="f,n,k"/>
             <Description>
                 <P/>
-                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>.
-                Let <M>N(Y)</M> denote an open tubular neighbourhood of <M>Y</M> in <M>X</M>.
+                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>,
+                as well as two integers <M>n \geq 0</M> and <M>k > 0</M>. Let <M>B(e^n_k)</M> denote the barycentric
+                subdivision of the <M>k ^ \textrm{th}</M> <M>n</M>-cell of <M>X</M>. The output is an inclusion of regular
+                CW-complexes <M>f' : Y' \hookrightarrow X'</M> where <M>X'</M> and <M>Y'</M> denote the complexes <M>X</M> and <M>Y</M>
+                where the cell <M>e^n_k</M> has been barycentrically subdivided.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="RegularCWComplexComplement" Arg="f[, boole]"/>
+            <Description>
+                <P/>
+                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>. If the optional boolean
+                value <A>boole</A> is given, it determines whether or not the algorithm checks that all cells <M>e^n</M> of <M>X \backslash Y</M>
+                yield contractible connected components in <M>\bar{e}^n \cap Y</M>. By default, <A>boole</A> is set to <C>true</C>, so the
+                check will be performed. If <A>boole</A> is incorrectly set to <C>false</C> the algorithm will crash, so it is recommended only to
+                use this optional argument for a computation time decrease if it is known that the input is compatible beforehand.
+                <P/>
+                Let <M>N(Y)</M> denote a regular CW-complex homeomorphic to a tubular neighbourhood of <M>Y</M> in <M>X</M>.
+                The output of this algorithm is an inclusion <M>f' : \partial ( X \backslash N(Y) ) \hookrightarrow X \backslash N(Y)</M> where
+                <M>\partial ( X \backslash N(Y) )</M> denotes the boundary of <M>X \backslash N(Y)</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="ViewColouredArcDiagram" Arg="arc,cross,col"/>
+            <Description>
+                <P/>
+                This function inputs three lists:
+                <P/>
+                <P/><A>arc</A> is an arc presentation.
+                <P/><A>cross</A> is a list whose length is the number of crossings occuring in the arc presentation. The entries of this
+                list are <M>0, -1</M> or <M>1</M> corresponding to a given crossing being an intersection, an undercrossing or an overcrossing (with
+                resect to the horizontal arcs in the arc presentation). The ordering on the crossings is top-to-bottom, left-to-right.
+                <P/><A>col</A> is a list whose length is the number of <M>0</M> entries in <A>cross</A>. Its values are <M>1,2,3</M> or <M>4</M>. 
+                They correspond to an intersection going from blue to blue, blue to red, red to blue or red to red. These colours correspond to
+                height information in <M>4</M>-<M>d</M>, see the associated tutorial for an in-depth explanation.
+                <P/>The output of this function is a png file of the associated coloured arc diagram.
             </Description>
         </ManSection>
     </Section>

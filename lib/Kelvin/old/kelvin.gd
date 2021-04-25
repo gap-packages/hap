@@ -1,2 +1,0 @@
-DeclareGlobalFunction("KnotComplement");
-DeclareGlobalFunction("KnotComplementWithBoundary");
