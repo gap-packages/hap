@@ -397,7 +397,7 @@ InstallGlobalFunction(
             fi;
         od;
     od;
-    for i in [1..Length(Y[Length(closure)])] do
+    for i in [1..Length(Y[Length(closure)+1])] do
         if Last(closure)[1] in
             Y[Length(closure)+1][i]{[2..Y[Length(closure)+1][i][1]+1]} then
                 Append(Y[Length(closure)+1][i],plus1[Length(closure)]);
@@ -507,14 +507,27 @@ InstallGlobalFunction(
         od;
     od; 
     bary:=Set(bary);
+    #for i in [1..Length(bary)] do
+    #    for j in Difference([1..Length(bary)],[i]) do
+    #        if bary[j][1]=bary[i][1]+1 then
+    #            if bary[i][2] in
+    #                B[bary[j][1]+1][bary[j][2]]{
+    #                    [2..B[bary[j][1]+1][bary[j][2]][1]+1]
+    #                } then
+    #                   bary[i]:=[-2,0];
+    #            fi;
+    #        fi; 
+    #    od;
+    #od;
+    bary:=Filtered(bary,x->x<>[-2,0]);
     
     if not compatible then
         if bary=[] then
             Print("\nThe input is compatible with this algorithm.\n");
         else
-            Print("\nBarycentrically subdividing ",Length(bary)," cell(s):\n");
+            Print("\nSubdividing ",Length(bary)," cell(s):\n");
             for i in [1..Length(bary)] do
-                f:=BarycentricallySubdivideCell(
+                f:=SubdivideCell(
                     f,
                     bary[i][1],
                     bary[i][2]
@@ -522,7 +535,7 @@ InstallGlobalFunction(
                 Print(Int(100*i/Length(bary)),"\% complete. \r");
             od;
             Print("\n");
-            return RegularCWComplexComplement(f,true); # bypass compatibility check
+            return RegularCWComplexComplement(f);#,true); bypass compatibility check (this doesn't work yet)
         fi;
     fi;
 

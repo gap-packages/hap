@@ -130,6 +130,7 @@ if IsPackageMarkedForLoading("nq","1.1") then
 ReadPackageHap( "lib/NonabelianTensor/epiNilGrp.gi");
 ReadPackageHap( "lib/NonabelianTensor/multNilGrp.gi");
 ReadPackageHap( "lib/NonabelianTensor/tensorSquareInf.gi");
+ReadPackageHap( "lib/NonabelianTensor/nil2TensorSquare.gi");
 ReadPackageHap( "lib/NonabelianTensor/symmetricSquareInf.gi");
 ReadPackageHap( "lib/NonabelianTensor/tensor.gi");
 fi;
@@ -162,6 +163,7 @@ ReadPackageHap( "lib/NonabelianTensor/symmetricSquare.gi");
 #ReadPackageHap( "lib/NonabelianTensor/symmetricSquareInf.gi");
 ReadPackageHap( "lib/NonabelianTensor/bogomolov.gi");
 ReadPackageHap( "lib/NonabelianTensor/equivalenceclasses.gi");
+ReadPackageHap( "lib/NonabelianTensor/weak.gi");
 
 
 ##################### RESOLUTIONS ###################################

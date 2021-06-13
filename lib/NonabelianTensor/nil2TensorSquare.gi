@@ -1,8 +1,8 @@
 #(C) Graham Ellis, October 2005
 
-DeclareGlobalFunction("SidkiGroup");
+
 #####################################################################
-InstallGlobalFunction(SidkiGroup,
+InstallGlobalFunction(Nil3TensorSquare,
 function(arg)
 local
 	AG, SizeOrList,
@@ -18,10 +18,11 @@ local
 	Trans,
 	CrossedPairing, Action,
 	UpperBound,
-	Todd,i,v,w,x,y,z,c;
+	Todd,i,v,w,x,y,z,t;
 
+if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
 
-Todd:=32;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
+Todd:=16;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
 #####################################################################
 UpperBound:=function(AG)
 local Facts, p,P,hom,bnd;
@@ -102,10 +103,25 @@ for x in relsG do
 Append(relsT,[Image(BG1homF,x), Image(BG2homF,x)]);
 od;
 
-
-for z in AG do
-v:=Comm(Image(AG1homF,z),Image(AG2homF,z)) ;
-Add(relsT,v);
+for z in NiceGensAG do
+for x in gensAG do
+for y in gensAG do
+for t in NiceGensAG do
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG1homF,z) ;
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+Append(relsT,[v*w]);
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG1homF,z) ;
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+Append(relsT,[v*w]);
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG2homF,z) ;
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+Append(relsT,[v*w]);
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG2homF,z) ;
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+Append(relsT,[v*w]);
+od;
+od;
+od;
 od;
 
 #####################################################################IF
@@ -139,8 +155,6 @@ SSF:=Image(AFhomSSF);
 
 SF:=Range(SSFhomSF);
 
-return SF;
-
 gensSF2:=List(GeneratorsOfGroup(AF),x->Image(SSFhomSF,Image(AFhomSSF,x)));
 
 AFhomSF:=GroupHomomorphismByImagesNC(AF,SF,GeneratorsOfGroup(AF),gensSF2);
@@ -154,11 +168,14 @@ fi;
 AG1homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG1homF,x)));
 AG2homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG2homF,x)));
 
-TensorSquare:=NormalIntersection(
-NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x)))),
-NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))))
-);
+#TensorSquare:=NormalIntersection(
+#NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x)))),
+#NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))))
+#);
 
+TensorSquare:=CommutatorSubgroup( Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x))),   Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))) );
+
+#Print(StructureDescription(SF/TensorSquare),"\n");
 gensSF:=List(gensF,x->Image(FhomSF,x));
 gensSFG:=[];
 for i in [1..Length(gensAG)] do
@@ -191,7 +208,8 @@ end;
 #####################################################################
 
 
-return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action);
+return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action,nu:=SF);
 end);
 #####################################################################
+
 

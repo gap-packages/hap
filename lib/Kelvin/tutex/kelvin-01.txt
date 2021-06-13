@@ -1,20 +1,15 @@
-gap> arc:=ArcPresentation(PureCubicalKnot(3,1));
-[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ]
-gap> f:=ArcPresentationToKnottedOneComplex(arc);
-Map of regular CW-complexes
+gap> k_:=PureCubicalKnot(3,1);                  
+prime knot 1 with 3 crossings
 
-gap> Size(Source(f));
-56
-gap> Size(Target(f));
-187
-gap> FundamentalGroupOfRegularCWComplex(Source(f),1);
-&lt;fp group of size infinity on the generators [ f1 ]&gt;
-gap> FundamentalGroupOfRegularCWComplex(Target(f),1);
-&lt;free group on the generators [  ]&gt;
-gap> for i in [0..3] do
->       Print(Homology(Source(f),i),", ",Homology(Target(f),i),"\n");
-> od;
-[ 0 ], [ 0 ]
-[ 0 ], [  ]
-[  ], [  ]
-[  ], [  ]
+gap> arc:=ArcPresentation(k_);                  
+[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ]
+gap> k_:=RegularCWComplex(PureComplexComplement(k_));
+Regular CW-complex of dimension 3
+
+gap> Size(k_);
+13291
+gap> k:=KnotComplement(arc);                                         
+Regular CW-complex of dimension 3
+
+gap> Size(k);
+395
