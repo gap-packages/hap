@@ -1,0 +1,375 @@
+  
+  [1X6 [33X[0;0YCohomology of groups[133X[101X
+  
+  
+  [1X6.1 [33X[0;0YFinite groups[133X[101X
+  
+  [33X[0;0YIt  is  possible to compute the low degree (co)homology of a finite group or
+  monoid  of  small  order  directly  from  the  bar resolution. The following
+  commands take this approach to computing the fifth integral homology[133X
+  
+  [33X[0;0Y[22XH_5(Q_4, Z) = Z_2⊕ Z_2[122X[133X
+  
+  [33X[0;0Yof the quaternion group [22XG=Q_4[122X of order [22X8[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuaternionGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27XB:=BarComplexOfMonoid(Q,6);;                 [127X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(B);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,5);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHowever,  this approach is of limited applicability since the bar resolution
+  involves  [22X|G|^k[122X free generators in degree [22Xk[122X. A range of techniques, tailored
+  to  specific  classes  of groups, can be used to compute the (co)homology of
+  larger finite groups.[133X
+  
+  [33X[0;0YThe following example computes the fourth integral cohomomogy of the Mathieu
+  group [22XM_24[122X.[133X
+  
+  [33X[0;0Y[22XH^4(M_24, Z) = Z_12[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGroupCohomology(MathieuGroup(24),4);[127X[104X
+    [4X[28X[ 4, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following example computes the third integral homology of the Weyl group
+  [22XW=Weyl(E_8)[122X, a group of order [22X696729600[122X.[133X
+  
+  [33X[0;0Y[22XH_3(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_12[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xp> L:=SimpleLieAlgebra("E",8,Rationals);;[128X[104X
+    [4X[25Xgap>[125X [27XW:=WeylGroup(RootSystem(L));;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(W);[127X[104X
+    [4X[28X696729600[128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(W,3);[127X[104X
+    [4X[28X[ 2, 2, 4, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  preceding  calculation  could  be  achieved more quickly by noting that
+  [22XW=Weyl(E_8)[122X  is  a  Coxeter  group,  and  by  using  the  associated Coxeter
+  polytope.  The  following  example  uses this approach to compute the fourth
+  integral  homology  of  [22XW[122X. It begins by displaying the Coxeter diagram of [22XW[122X,
+  and then computes[133X
+  
+  [33X[0;0Y[22XH_4(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[5,3]],[5,[6,3]],[6,[7,3]],[7,[8,3]]];;[127X[104X
+    [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpolytope:=CoxeterComplex_alt(D,5);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(polytope,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for <matrix group with [128X[104X
+    [4X[28X8 generators> . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,4);[127X[104X
+    [4X[28X[ 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  example  computes  the  sixth  mod-[22X2[122X  homology  of the Sylow
+  [22X2[122X-subgroup [22XSyl_2(M_24)[122X of the Mathieu group [22XM_24[122X.[133X
+  
+  [33X[0;0Y[22XH_6(Syl_2(M_24), Z_2) = Z_2^143[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following example constructs the Poincare polynomial[133X
+  
+  [33X[0;0Y[22Xp(x)=frac1-x^3+3*x^2-3*x+1[122X[133X
+  
+  [33X[0;0Yfor  the  cohomology  [22XH^∗(Syl_2(M_12,  F_2)[122X.  The  coefficient of [22Xx^n[122X in the
+  expansion   of   [22Xp(x)[122X  is  equal  to  the  dimension  of  the  vector  space
+  [22XH^n(Syl_2(M_12,  F_2)[122X.  The  computation  involves [12XSingular[112X's Groebner basis
+  algorithms and the Lyndon-Hochschild-Serre spectral sequence.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SylowSubgroup(MathieuGroup(12),2);;[127X[104X
+    [4X[25Xgap>[125X [27XPoincareSeriesLHS(G);[127X[104X
+    [4X[28X(1)/(-x_1^3+3*x_1^2-3*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following example constructs the polynomial[133X
+  
+  [33X[0;0Y[22Xp(x)=fracx^4-x^3+x^2-x+1x^6-x^5+x^4-2*x^3+x^2-x+1[122X[133X
+  
+  [33X[0;0Ywhose  coefficient  of  [22Xx^n[122X  is  equal  to the dimension of the vector space
+  [22XH^n(M_11,  F_2)[122X  for  all  [22Xn[122X in the range [22X0le nle 14[122X. The coefficient is not
+  guaranteed correct for [22Xnge 15[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPoincareSeriesPrimePart(MathieuGroup(11),2,14);[127X[104X
+    [4X[28X(x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.2 [33X[0;0YNilpotent groups[133X[101X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH_4(N, Z) = (Z_3)^4 ⊕ Z^84[122X[133X
+  
+  [33X[0;0Yfor the free nilpotent group [22XN[122X of class [22X2[122X on four generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(4);; N:=NilpotentQuotient(F,2);;[127X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(N,4);[127X[104X
+    [4X[28X[ 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.3 [33X[0;0YCrystallographic groups[133X[101X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH_5(G, Z) = Z_2 ⊕ Z_2[122X[133X
+  
+  [33X[0;0Yfor  the  [22X3[122X-dimensional  crystallographic space group [22XG[122X with Hermann-Mauguin
+  symbol "P62"[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(SpaceGroupBBNWZ("P62"),5);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.4 [33X[0;0YArithmetic groups[133X[101X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH_6(SL_2(cal O, Z) = Z_2[122X[133X
+  
+  [33X[0;0Yfor [22Xcal O[122X the ring of integers of the number field [22XQ(sqrt-2)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=ContractibleGcomplex("SL(2,O-2)");;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(C,7);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),6);[127X[104X
+    [4X[28X[ 2, 12 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.5 [33X[0;0YArtin groups[133X[101X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH_5(G, Z) = Z_3[122X[133X
+  
+  [33X[0;0Yfor [22XG[122X the classical braid group on eight strings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,3]],[5,[6,3]],[6,[7,3]]];;[127X[104X
+    [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);;[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionArtinGroup(D,6);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,5);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.6 [33X[0;0YGraphs of groups[133X[101X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH_5(G, Z) = Z_2⊕ Z_2⊕ Z_2 ⊕ Z_2 ⊕ Z_2[122X[133X
+  
+  [33X[0;0Yfor  [22XG[122X  the  graph  of  groups  corresponding  to  the  amalgamated  product
+  [22XG=S_5*_S_3S_4[122X  of  the  symmetric  groups  [22XS_5[122X  and  [22XS_4[122X  over the canonical
+  subgroup [22XS_3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS5:=SymmetricGroup(5);SetName(S5,"S5");[127X[104X
+    [4X[25Xgap>[125X [27XS4:=SymmetricGroup(4);SetName(S4,"S4");[127X[104X
+    [4X[25Xgap>[125X [27XA:=SymmetricGroup(3);SetName(A,"S3");[127X[104X
+    [4X[25Xgap>[125X [27XAS5:=GroupHomomorphismByFunction(A,S5,x->x);[127X[104X
+    [4X[25Xgap>[125X [27XAS4:=GroupHomomorphismByFunction(A,S4,x->x);[127X[104X
+    [4X[25Xgap>[125X [27XD:=[S5,S4,[AS5,AS4]];[127X[104X
+    [4X[25Xgap>[125X [27XGraphOfGroupsDisplay(D);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionGraphOfGroups(D,6);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),5);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.7 [33X[0;0YCohomology with coefficients in a module[133X[101X
+  
+  [33X[0;0YThere  are  various  ways  to  represent a [22XZG[122X-module [22XA[122X with action [22XG× A → A,
+  (g,a)↦ α(g,a)[122X.[133X
+  
+  [33X[0;0YOne  possibility  is  to use the data type of a [13X[22XG[122X-Outer Group[113X which involves
+  three  components:  an  [22XActedGroup[122X  [22XA[122X;  an  [22XActing Group[122X [22XG[122X; a [22XMapping[122X [22X(g,a)↦
+  α(g,a)[122X.  The following example uses this data type to compute the cohomology
+  [22XH^4(G,A)  = Z_5 ⊕ Z_10[122X of the symmetric group [22XG=S_6[122X with coefficients in the
+  integers [22XA= Z[122X where odd permutations act non-trivially on [22XA[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SymmetricGroup(6);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);;[127X[104X
+    [4X[25Xgap>[125X [27Xalpha:=function(g,a); return a^SignPerm(g); end;;[127X[104X
+    [4X[25Xgap>[125X [27XA:=GModuleAsGOuterGroup(G,A,alpha);[127X[104X
+    [4X[28XZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,A);[127X[104X
+    [4X[28XG-cocomplex of length 5 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,4);[127X[104X
+    [4X[28X[ 2, 2, 5 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf [22XA= Z^n[122X and [22XG[122X acts as[133X
+  
+  [33X[0;0Y[22XG×  A  →  A,  (g,  (x_1,x_2,...,x_n))  ↦  (x_π(g)^-1(1),  x_π(g)^-1(2), ...,
+  x_π(g)^-1(n))[122X[133X
+  
+  [33X[0;0Ywhere  [22Xπ:  G→ S_n[122X is a (not necessarily faithful) permutation representation
+  of  degree  [22Xn[122X  then  we can avoid the use of [22XG[122X-outer groups and use just the
+  homomorphism [22Xπ[122X instead. The following example uses this data type to compute
+  the cohomology[133X
+  
+  [33X[0;0Y[22XH^6(G,A) = Z_2 ⊕ Z_6[122X[133X
+  
+  [33X[0;0Yand the homology[133X
+  
+  [33X[0;0Y[22XH_6(G,A) = Z_2[122X[133X
+  
+  [33X[0;0Yof the alternating group [22XG=A_6[122X with coefficients in [22XA= Z^5[122X where elements of
+  [22XG[122X act on [22XZ^5[122X via the canonical permutation of basis elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AlternatingGroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27Xpi:=PermToMatrixGroup(SymmetricGroup(5),5);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,7);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,pi);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,6);[127X[104X
+    [4X[28X[ 2, 6 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithIntegralModule(R,pi);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(D,6);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.8 [33X[0;0YExact cohomology coefficient sequence[133X[101X
+  
+  [33X[0;0YA short exact sequence of [22XZG[122X-modules [22XA ↣ B ↠ C[122X induces a long exact sequence
+  of cohomology groups[133X
+  
+  [33X[0;0Y[22X→ H^n(G,A) → H^n(G,B) → H^n(G,C) → H^n+1(G,A) →[122X .[133X
+  
+  [33X[0;0YConsider  the  symmetric  group  [22XG=S_4[122X  and  the sequence [22XZ_4 ↣ Z_8 ↠ Z_2[122X of
+  trivial  [22XZG[122X-modules.  The  following commands compute the induced cohomology
+  homomorphism[133X
+  
+  [33X[0;0Y[22Xf: H^3(S_4, Z_4) → H^3(S_4, Z_8)[122X[133X
+  
+  [33X[0;0Yand  determine  that  the image of this induced homomorphism has order [22X8[122X and
+  that its kernel has order [22X2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SymmetricGroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:=(1,2,3,4,5,6,7,8);;[127X[104X
+    [4X[25Xgap>[125X [27Xa:=Group(x^2);;[127X[104X
+    [4X[25Xgap>[125X [27Xb:=Group(x);;[127X[104X
+    [4X[25Xgap>[125X [27Xahomb:=GroupHomomorphismByFunction(a,b,y->y);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=TrivialGModuleAsGOuterGroup(G,a);;[127X[104X
+    [4X[25Xgap>[125X [27XB:=TrivialGModuleAsGOuterGroup(G,b);;[127X[104X
+    [4X[25Xgap>[125X [27Xphi:=GOuterGroupHomomorphism();;[127X[104X
+    [4X[25Xgap>[125X [27Xphi!.Source:=A;;[127X[104X
+    [4X[25Xgap>[125X [27Xphi!.Target:=B;;[127X[104X
+    [4X[25Xgap>[125X [27Xphi!.Mapping:=ahomb;;[127X[104X
+    [4X[28X [128X[104X
+    [4X[25Xgap>[125X [27XHphi:=CohomologyHomomorphism(phi,3);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(ImageOfGOuterGroupHomomorphism(Hphi));[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(KernelOfGOuterGroupHomomorphism(Hphi));[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following commands then compute the homomorphism[133X
+  
+  [33X[0;0Y[22XH^3(S_4, Z_8) → H^3(S_4, Z_2)[122X[133X
+  
+  [33X[0;0Yinduced  by  [22XZ_4  ↣  Z_8  ↠  Z_2[122X,  and  determine  that  the  kernel of this
+  homomorphsim has order [22X8[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xbhomc:=NaturalHomomorphismByNormalSubgroup(b,a);[127X[104X
+    [4X[25Xgap>[125X [27XB:=TrivialGModuleAsGOuterGroup(G,b);[127X[104X
+    [4X[25Xgap>[125X [27XC:=TrivialGModuleAsGOuterGroup(G,Image(bhomc));[127X[104X
+    [4X[25Xgap>[125X [27Xpsi:=GOuterGroupHomomorphism();[127X[104X
+    [4X[25Xgap>[125X [27Xpsi!.Source:=B;[127X[104X
+    [4X[25Xgap>[125X [27Xpsi!.Target:=C;[127X[104X
+    [4X[25Xgap>[125X [27Xpsi!.Mapping:=bhomc;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHpsi:=CohomologyHomomorphism(psi,3);[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(KernelOfGOuterGroupHomomorphism(Hpsi));[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following commands then compute the connecting homomorphism[133X
+  
+  [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4)[122X[133X
+  
+  [33X[0;0Yand determine that the image of this homomorphism has order [22X2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xdelta:=ConnectingCohomologyHomomorphism(psi,2);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(ImageOfGOuterGroupHomomorphism(delta));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote that the various orders are consistent with exactness of the sequence[133X
+  
+  [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)[122X .[133X
+  
