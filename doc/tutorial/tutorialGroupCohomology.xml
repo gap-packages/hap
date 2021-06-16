@@ -149,10 +149,85 @@ the amalgamated product <M>G=S_5*_{S_3}S_4</M>
 <Example>
 <#Include SYSTEM "tutex/6.14.txt">
 </Example>
+</Section>
+
+<Section><Heading>Cohomology with coefficients in a module</Heading>
+There are various ways to represent a <M>\mathbb ZG</M>-module <M>A</M>
+with action <M>G\times A \rightarrow A, (g,a)\mapsto \alpha(g,a)</M>. 
+
+<P/>One possibility is to use the data type of a <E><M>G</M>-Outer Group</E> which involves three components: an <M>ActedGroup</M> <M>A</M>; an <M>Acting Group</M> <M>G</M>; a <M>Mapping</M> <M>(g,a)\mapsto \alpha(g,a)</M>.
+The following example uses this data type to compute the cohomology <M>H^4(G,A) =\mathbb Z_5 \oplus \mathbb Z_{10}</M> of the symmetric group <M>G=S_6</M> with coefficients in the integers <M>A=\mathbb Z</M> where odd permutations act non-trivially on <M>A</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.15.txt">
+</Example>
+
+<P/> If <M>A=\mathbb Z^n</M> and <M>G</M> acts as
+<P/><M>G\times A \rightarrow A, (g, (x_1,x_2,\ldots,x_n)) \mapsto (x_{\pi(g)^{-1}(1)},
+x_{\pi(g)^{-1}(2)}, \ldots, x_{\pi(g)^{-1}(n)})</M>
+<P/> where <M>\pi\colon G\rightarrow S_n</M> is a (not necessarily faithful)
+permutation representation of degree <M>n</M> then we can avoid the use of <M>G</M>-outer groups and use just the homomorphism <M>\pi</M> instead.
+The following example 
+ uses this data type to compute the cohomology 
+<P/><M>H^6(G,A) =\mathbb Z_2 \oplus \mathbb Z_{6}</M>
+<P/>and the homology
+<P/><M>H_6(G,A) =\mathbb Z_2 </M>
+<P/> of the alternating group <M>G=A_6</M> with coefficients in  <M>A=\mathbb Z^5</M> where elements of <M>G</M> act on <M>\mathbb Z^5</M> via the canonical  permutation of basis elements.
 
 
+
+<Example>
+<#Include SYSTEM "tutex/6.16.txt">
+</Example>
 </Section>
 
 
+<Section><Heading>Exact cohomology coefficient sequence</Heading>
+A short exact sequence of <M>\mathbb ZG</M>-modules
+<M>A \rightarrowtail B \twoheadrightarrow C</M>
+induces a long exact sequence of cohomology groups
+<P/><M> \rightarrow H^n(G,A)  \rightarrow H^n(G,B) \rightarrow H^n(G,C) \rightarrow H^{n+1}(G,A) \rightarrow </M> .
+<P/> Consider the symmetric group <M>G=S_4</M> and the sequence
+<M> \mathbb Z_4  \rightarrowtail  \mathbb Z_8 \twoheadrightarrow \mathbb Z_2</M>
+of trivial <M>\mathbb ZG</M>-modules.  The following commands compute the induced cohomology homomorphism
+
+<P/><M>f\colon H^3(S_4,\mathbb Z_4)  \rightarrow  H^3(S_4,\mathbb Z_8)</M>
+
+<P/>and determine that the image of this induced homomorphism has order <M>8</M> and that its kernel has order <M>2</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/6.17.txt">
+</Example>
+
+<P/>
+The following commands then compute the homomorphism
+
+<P/><M>H^3(S_4,\mathbb Z_8)  \rightarrow  H^3(S_4,\mathbb Z_2)</M>
+
+<P/>induced by
+
+<M>\mathbb Z_4  \rightarrowtail  \mathbb Z_8 \twoheadrightarrow \mathbb Z_2</M>, 
+
+and determine that the kernel of this homomorphsim has order <M>8</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.18.txt">
+</Example>
+
+<P/>The following commands then compute the connecting homomorphism
+
+<P/><M>H^2(S_4,\mathbb Z_2)  \rightarrow  H^3(S_4,\mathbb Z_4)</M>
+
+<P/>and determine that the image of this homomorphism has order <M>2</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.19.txt">
+</Example>
+
+Note that the various orders are consistent with exactness of the sequence
+
+<P/><M>H^2(S_4,\mathbb Z_2)  \rightarrow  H^3(S_4,\mathbb Z_4) \rightarrow  H^3(S_4,\mathbb Z_8) \rightarrow  H^3(S_4,\mathbb Z_2) </M> .
+
+</Section>
 
 </Chapter>

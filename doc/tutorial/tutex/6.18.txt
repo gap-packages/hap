@@ -1,0 +1,12 @@
+gap> bhomc:=NaturalHomomorphismByNormalSubgroup(b,a);
+gap> B:=TrivialGModuleAsGOuterGroup(G,b);
+gap> C:=TrivialGModuleAsGOuterGroup(G,Image(bhomc));
+gap> psi:=GOuterGroupHomomorphism();
+gap> psi!.Source:=B;
+gap> psi!.Target:=C;
+gap> psi!.Mapping:=bhomc;
+
+gap> Hpsi:=CohomologyHomomorphism(psi,3);
+
+gap> Size(KernelOfGOuterGroupHomomorphism(Hpsi));
+8
