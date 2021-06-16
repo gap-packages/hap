@@ -1,7 +1,7 @@
 root:=HAP_ROOT{[1..Length(HAP_ROOT)-4]};
 rootwww:=Concatenation(root,"www/SideLinks/About/");
 rootdoc:=Concatenation(root,"doc/");
-roottut:=Concatenation(rootdoc,"tutorial/");
+roottut:=Concatenation(root,"tutorial/");
 
 L:=[
 "chap1.html", "chap2.html", "chap3.html", "chap4.html", "chap5.html",

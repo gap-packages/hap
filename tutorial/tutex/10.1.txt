@@ -1,0 +1,13 @@
+gap> Processes:=List([1..5],i->ChildProcess());;
+gap> fn:=function(i);return GroupHomology(SmallGroup(64,i),2);end;;
+gap> for p in Processes do
+> ChildPut(fn,"fn",p);
+> od;
+
+gap> NrSmallGroups(64);
+267
+
+gap> L:=ParallelList([1..267],"fn",Processes);;
+
+gap> L[267];
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]

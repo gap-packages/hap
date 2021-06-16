@@ -1,0 +1,13 @@
+gap> G:=SymmetricGroup(6);;
+
+gap> A:=AbelianPcpGroup([0]);;
+gap> alpha:=function(g,a); return a^SignPerm(g); end;;
+gap> A:=GModuleAsGOuterGroup(G,A,alpha);
+ZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )
+
+gap> R:=ResolutionFiniteGroup(G,5);;
+gap> C:=HomToGModule(R,A);
+G-cocomplex of length 5 . 
+
+gap> Cohomology(C,4);
+[ 2, 2, 5 ]
