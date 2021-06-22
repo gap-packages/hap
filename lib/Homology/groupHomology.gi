@@ -132,8 +132,10 @@ end;
 HomologyAbelianGroup:=function()
 local L,R;
 
-L:=AbelianInvariantsToTorsionCoefficients(AbelianInvariants(G));
-R:=ResolutionAbelianGroup(L,N+1);
+#L:=AbelianInvariantsToTorsionCoefficients(AbelianInvariants(G));
+#R:=ResolutionAbelianGroup(L,N+1);
+
+R:=ResolutionAbelianGroup(G,N+1);
 
 return Homology(Functor(R),N);
 end;

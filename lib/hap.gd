@@ -70,6 +70,7 @@ DeclareGlobalFunction("FpGModuleSection");
 DeclareOperation("HAP_EquivalenceClasses",[IsList,IsFunction]);
 DeclareGlobalFunction("HAP_Tensor");
 DeclareGlobalFunction("NonabelianTensorSquare");
+DeclareGlobalFunction("Nil3TensorSquare");
 DeclareGlobalFunction("NonabelianTensorSquareAsCatOneGroup");
 DeclareGlobalFunction("NonabelianTensorSquareAsCrossedModule");
 DeclareGlobalFunction("NonabelianSymmetricSquare");
@@ -98,6 +99,8 @@ DeclareGlobalFunction("PartialIsoclinismClasses");
 DeclareGlobalFunction("IsoclinismClasses");
 DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup");
 DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup_alt");
+DeclareGlobalFunction("WeakCommutativityGroup");
+DeclareGlobalFunction("SymmetricCommutativityGroup");
 
 
 

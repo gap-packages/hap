@@ -73,6 +73,14 @@ DeclareOperation("StandardNCocycle",[]);
 ##
 DeclareOperation("TrivialGModuleAsGOuterGroup", [IsGroup,IsGroup]);
 
+#############################################################################
+##
+##  Constructor for G-outer group from abelian group A (module) and
+##  group G act via a function alpha(g,a) on A.
+##
+DeclareOperation("GModuleAsGOuterGroup", [IsGroup,IsGroup,IsFunction]);
+
+
 
 #############################################################################
 ##

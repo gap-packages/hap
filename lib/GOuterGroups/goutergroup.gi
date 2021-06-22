@@ -13,14 +13,22 @@ InstallMethod( ViewObj,
         "for GOuterGroups",
         [IsGOuterGroup], 
     function(N)
+if not IsAbelian(ActedGroup(N)) then
     Print("G-outer group ", ActedGroup(N), " with actor ", ActingGroup(N), "\n");
+else
+    Print("ZG-module with abelian invariants ", AbelianInvariants(ActedGroup(N)), " and G= ", ActingGroup(N), "\n");
+fi;
 end);
 
 InstallMethod( PrintObj,
         "for GOuterGroups",
         [IsGOuterGroup],
     function(N)
+if not IsAbelian(ActedGroup(N)) then
     Print("G-outer group ", ActedGroup(N), " with actor ", ActingGroup(N), "\n");
+else
+    Print("ZG-module with abelian invariants ", AbelianInvariants(ActedGroup(N)), " and G= ", ActingGroup(N), "\n");
+fi;
 end);
 
 InstallMethod( ViewObj,
@@ -89,6 +97,37 @@ InstallMethod( TrivialGModuleAsGOuterGroup,
                SetOuterAction(N,alpha);
         return N;
     end);
+
+
+#############################################################################
+##
+##  Creation of a G-Outer A group from a group G assumed to be acting
+##  via a function alpha(g,a) on an abelian group A.
+##
+##
+InstallMethod( GModuleAsGOuterGroup,
+    "basic method for creating a GOuterGroup",
+    [ IsGroup, IsGroup, IsFunction ],
+
+    function( G, A, alpha )
+        local
+              N;
+
+
+        if not (IsGroup(G) and IsGroup(A) and IsAbelian(A)) then
+            Error("A must be abelian");
+        fi;
+
+
+        N:=GOuterGroup();
+               SetActingGroup(N,G);
+               SetActedGroup(N,A);
+               SetOuterAction(N,alpha);
+        return N;
+    end);
+
+
+
 
 
 

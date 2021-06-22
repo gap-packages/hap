@@ -6,11 +6,14 @@ InstallGlobalFunction(HomToIntegralModule,
 function(R,f)
 local HomObj, HomArr,Image;
 
+if IsBound(f!.fun) then
 ####################################
 Image:=function(f,x);
 return f!.fun(x);
 end;
 ####################################
+else Image:=ImageElm;
+fi;
 
 #####################################################################
 #####################################################################

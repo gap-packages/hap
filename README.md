@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gap-packages/hap.svg?branch=master)](https://travis-ci.org/gap-packages/hap)
+[![Build Status](https://github.com/gap-packages/hap/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/hap/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/hap/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/hap)
 
 # The HAP package for group cohomology and related functors
@@ -32,12 +32,12 @@ Please send your bug reports to graham.ellis(at)nuigalway.ie .
 On a Linux machine with GAP (and optionally Polymake) installed, the HAP
 library can be loaded as follows:
 
-* First download the file hap1.30.tar.gz to the subdirectory "pkg/" of GAP. (If
+* First download the file hap1.32.tar.gz to the subdirectory "pkg/" of GAP. (If
 you don't have access to this, then create a directory "pkg" in your home
 directory and download the file there.)
 
-* Change to directory "pkg/" and type "gunzip hap1.30.tar.gz" followed by
-"tar -xvf hap1.30.tar" .
+* Change to directory "pkg/" and type "gunzip hap1.32.tar.gz" followed by
+"tar -xvf hap1.32.tar" .
 
 * Start GAP. (If you have created "pkg" in your home directory then start GAP
 with the command "gap -l 'path/homedir;' "   where path/homedir is the path to
@@ -46,7 +46,7 @@ your home directory.)
 * In GAP type " LoadPackage("HAP"); " .
 
 * Help on HAP can be found on the HAP home page (a version of which is
-included in directory "pkg/Hap1.30/www" of this distribution).
+included in directory "pkg/Hap1.32/www" of this distribution).
 
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
@@ -60,4 +60,4 @@ path to the directory where the GAP compiler "gac" is stored.
 The next time HAP is loaded a compiled version will be loaded.
 
 * Should you want to return to an uncompiled version, change to the directory
-"pkg/Hap1.30/" and type "./uncompile".
+"pkg/Hap1.32/" and type "./uncompile".

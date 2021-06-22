@@ -534,8 +534,7 @@ Print(R!.element, "_op ");
 DeclareCategory("IsHapQuotientElement",IsMultiplicativeElementWithInverse);
 
 DeclareRepresentation(  "IsHapQuotientElementRep",
-                        IsComponentObjectRep,
-                        IsMultiplicativeElementWithInverse,
+                        IsComponentObjectRep and IsMultiplicativeElementWithInverse,
                         ["oppositeElement",
                          ]);
 

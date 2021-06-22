@@ -1,8 +1,8 @@
 DeclareGlobalFunction("KnotComplement");
 DeclareGlobalFunction("KnotComplementWithBoundary");
-
 DeclareGlobalFunction("ArcPresentationToKnottedOneComplex");
-DeclareGlobalFunction("ArcPresentationToKnottedOneComplex_Alt");
+DeclareGlobalFunction("ArcDiagramToTubularSurface");
+
 DeclareGlobalFunction("RegularCWMapToCWSubcomplex");
 DeclareGlobalFunction("CWSubcomplexToRegularCWMap");
 DeclareGlobalFunction("IntersectionCWSubcomplex");
@@ -10,7 +10,8 @@ DeclareGlobalFunction("PathComponentsCWSubcomplex");
 DeclareGlobalFunction("ClosureCWCell");
 DeclareGlobalFunction("AddCell");
 DeclareGlobalFunction("BarycentricallySubdivideCell");
+DeclareGlobalFunction("SubdivideCell");
 DeclareGlobalFunction("RegularCWComplexComplement");
-
-
+DeclareGlobalFunction("LiftColouredSurface");
+DeclareGlobalFunction("ViewColouredArcDiagram");
 

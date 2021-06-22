@@ -1,0 +1,29 @@
+gap> arc:=[[1,2],[1,2]];;
+gap> unknot:=ArcPresentationToKnottedOneComplex(arc);
+Map of regular CW-complexes
+
+gap> f:=RegularCWComplexComplement(unknot);
+Testing contractibility...
+79 out of 79 cells tested.
+Subdividing 3 cell(s):
+100% complete. 
+Testing contractibility...
+145 out of 145 cells tested.
+The input is compatible with this algorithm.
+Regular CW-complex of dimension 3
+
+gap> f:=Objectify(HapRegularCWMap,rec(source:=f,target:=f,mapping:={i,j}->j));    
+Map of regular CW-complexes
+
+gap> closure:=ClosureCWCell(Target(f),3,1);
+[ Regular CW-complex of dimension 3
+    , 
+  [ [ 1, 2, 3, 4, 7, 8, 9, 10, 11, 13, 14, 20, 21, 22, 23, 25 ], 
+      [ 1, 2, 3, 7, 8, 9, 10, 11, 15, 16, 17, 20, 21, 22, 23, 24, 25, 27, 28, 55, 58, 59, 
+          60, 63 ], [ 1, 4, 7, 8, 9, 13, 14, 15, 18, 52 ], [ 1 ] ] ]
+gap> Size(Target(f));                                          
+195
+gap> Size(Target(BarycentricallySubdivideCell(f,2,1)));        
+231
+gap> Size(Target(SubdivideCell(f,2,1)));        
+207
