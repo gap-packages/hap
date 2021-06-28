@@ -645,7 +645,9 @@ end);
 InstallGlobalFunction(ChainComplexOfRegularCWComplexWithVectorField,
 function(arg)
 local
-        Y,basis, bool, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn, DeformCellSgnHtpy, HomotopicalDeformCell, 
+        Y,basis, bool, bij,Dimension, Boundary, one, zero, b, n, dim, 
+        characteristic, DeformCellRec, DeformCell,DeformCellSgn, 
+        DeformCellSgnHtpy, HomotopicalDeformCell, 
         HDCrec, DCSrec, DCSHrec, AlgRed, HtpyRed, BoundaryRec;
 
 
@@ -704,18 +706,27 @@ for n in [1..dim+1] do
 zero[n]:=List([1..Dimension(n-1)],i->0);
 od;
 
-
+DeformCellRec:=List([0..EvaluateProperty(Y,"dimension")],i->[]); #Added 28 June 2021
 ###############################
 ###############################
 DeformCell:=function(n,k)
 local x,f,bnd,def;            #This will return a list of n-cells 
                               #into which the k-th n-cell is deformed.
 
+if IsBound(DeformCellRec[n+1][k]) then
+return DeformCellRec[n+1][k];
+fi;
+
+
 if [n,k] in Y!.criticalCells then
+DeformCellRec[n+1][k]:=[k];
 return [k];
 fi;
+
 if n>0 then
-if IsBound(Y!.vectorField[n][k]) then return []; fi;
+if IsBound(Y!.vectorField[n][k]) then 
+DeformCellRec[n+1][k]:=[];
+return []; fi;
 fi;
  
 f:=Y!.inverseVectorField[n+1][k];
@@ -727,6 +738,7 @@ Append(def,DeformCell(n,bnd[x]));
 fi;
 od;
 
+DeformCellRec[n+1][k]:=def; 
 return def;
 end;
 ###############################

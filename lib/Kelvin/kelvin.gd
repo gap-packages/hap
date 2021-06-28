@@ -1,4 +1,5 @@
 DeclareGlobalFunction("KnotComplement");
+DeclareGlobalFunction("SphericalKnotComplement");
 DeclareGlobalFunction("KnotComplementWithBoundary");
 DeclareGlobalFunction("ArcPresentationToKnottedOneComplex");
 DeclareGlobalFunction("ArcDiagramToTubularSurface");
