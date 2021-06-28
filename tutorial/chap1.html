@@ -25,19 +25,28 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85691C6980034524">1.1 <span class="Heading">The Klein bottle as a simplicial complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X80A72C347D99A58E">1.2 <span class="Heading">The Quillen complex</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B8F88487B1B766C">1.2 <span class="Heading">Other simplicial surfaces</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7C4A2B8B79950232">1.3 <span class="Heading">The Quillen complex as a reduced CW-complex</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X80A72C347D99A58E">1.3 <span class="Heading">The Quillen complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B7354E68025FC92">1.4 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7C4A2B8B79950232">1.4 <span class="Heading">The Quillen complex as a reduced CW-complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X823FA6A9828FF473">1.5 <span class="Heading">Cup products</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A15484C7E680AC9">1.5 <span class="Heading">Constructing a CW-structure on a knot complement</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8771FF2885105154">1.6 <span class="Heading">CW maps and induced homomorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B7354E68025FC92">1.6 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X823FA6A9828FF473">1.7 <span class="Heading">Cup products</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7F9B01CF7EE1D2FC">1.8 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8771FF2885105154">1.9 <span class="Heading">CW maps and induced homomorphisms</span></a>
 </span>
 </div>
 </div>
@@ -84,9 +93,47 @@ Chain complex of length 2 in characteristic 2 .
 
 </pre></div>
 
+<p><a id="X7B8F88487B1B766C" name="X7B8F88487B1B766C"></a></p>
+
+<h4>1.2 <span class="Heading">Other simplicial surfaces</span></h4>
+
+<p>The following example constructs the real projective plane <span class="SimpleMath">P</span>, the Klein bottle <span class="SimpleMath">K</span> and the torus <span class="SimpleMath">T</span> as simplicial complexes, using the surface genus <span class="SimpleMath">g</span> as input in the oriented case and <span class="SimpleMath">-g</span> as input in the unoriented cases. It then confirms that the connected sums <span class="SimpleMath">M=K#P</span> and <span class="SimpleMath">N=T#P</span> have the same integral homology.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=ClosedSurface(-1);</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(-2);</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=ClosedSurface(1);</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ConnectedSum(K,P);</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=ConnectedSum(T,P);</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(M,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(N,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(M,1);</span>
+[ 2, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(N,1);</span>
+[ 2, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(M,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(N,2);</span>
+[  ]
+
+</pre></div>
+
 <p><a id="X80A72C347D99A58E" name="X80A72C347D99A58E"></a></p>
 
-<h4>1.2 <span class="Heading">The Quillen complex</span></h4>
+<h4>1.3 <span class="Heading">The Quillen complex</span></h4>
 
 <p>Given a group <span class="SimpleMath">G</span> one can consider the partially ordered set <span class="SimpleMath">cal A_p(G)</span> of all non-trivial elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>, the partial order being set inclusion. The order complex <span class="SimpleMath">∆cal A_p(G)</span> is a simplicial complex which is called the <em>Quillen complex </em>.</p>
 
@@ -107,7 +154,7 @@ Simplicial complex of dimension 2.
 
 <p><a id="X7C4A2B8B79950232" name="X7C4A2B8B79950232"></a></p>
 
-<h4>1.3 <span class="Heading">The Quillen complex as a reduced CW-complex</span></h4>
+<h4>1.4 <span class="Heading">The Quillen complex as a reduced CW-complex</span></h4>
 
 <p>Any simplicial complex <span class="SimpleMath">K</span> can be regarded as a regular CW complex. Different datatypes are used in <strong class="button">HAP</strong> for these two notions. The following continuation of the above Quillen complex example constructs a regular CW complex <span class="SimpleMath">Y</span> isomorphic to (i.e. with the same face lattice as) <span class="SimpleMath">K=∆cal A_2(S_7)</span>. An advantage to working in the category of CW complexes is that it may be possible to find a CW complex <span class="SimpleMath">X</span> homotopy equivalent to <span class="SimpleMath">Y</span> but with fewer cells than <span class="SimpleMath">Y</span>. The cellular chain complex <span class="SimpleMath">C_∗(X)</span> of such a CW complex <span class="SimpleMath">X</span> is computed by the following commands. From the number of free generators of <span class="SimpleMath">C_∗(X)</span>, which correspond to the cells of <span class="SimpleMath">X</span>, we see that there is a single <span class="SimpleMath">0</span>-cell and <span class="SimpleMath">160</span> <span class="SimpleMath">2</span>-cells. Thus the Quillen complex $$\Delta{\cal A}_2(S_7) \simeq \bigvee_{1\le i\le 160} S^2$$ has the homotopy type of a wedge of <span class="SimpleMath">160</span> <span class="SimpleMath">2</span>-spheres. This homotopy equivalence is given in <a href="chapBib.html#biBksontini">[Kso00, (15.1)]</a> where it was obtained by purely theoretical methods.</p>
 
@@ -144,9 +191,42 @@ Chain complex of length 2 in characteristic 0 .
 
 </pre></div>
 
+<p><a id="X7A15484C7E680AC9" name="X7A15484C7E680AC9"></a></p>
+
+<h4>1.5 <span class="Heading">Constructing a CW-structure on a knot complement</span></h4>
+
+<p>The following commands construct the complement <span class="SimpleMath">M=S^3∖ K</span> of the trefoil knot <span class="SimpleMath">K</span>. This complement is returned as a <span class="SimpleMath">3</span>-manifold <span class="SimpleMath">M</span> with regular CW-structure involving four <span class="SimpleMath">3</span>-cells.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">arc:=ArcPresentation(PureCubicalKnot(3,1));</span>
+[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SphericalKnotComplement(arc);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S!.nrCells(3);</span>
+4
+
+</pre></div>
+
+<p>The following additional commands then show that <span class="SimpleMath">M</span> is homotopy equivalent to a reduced CW-complex <span class="SimpleMath">Y</span> of dimension <span class="SimpleMath">2</span> involving one <span class="SimpleMath">0</span>-cell, two <span class="SimpleMath">1</span>-cells and one <span class="SimpleMath">2</span>-cell. The fundamental group of <span class="SimpleMath">Y</span> is computed and used to calculate the Alexander polynomial of the trefoil knot.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=ContractedComplex(S);</span>
+Regular CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(Y);</span>
+[ [ 2, 1 ], [ 1, 9 ], [ 1, 11 ], [ 0, 22 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AlexanderPolynomial(G);</span>
+x_1^2-x_1+1
+
+</pre></div>
+
 <p><a id="X7B7354E68025FC92" name="X7B7354E68025FC92"></a></p>
 
-<h4>1.4 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></h4>
+<h4>1.6 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></h4>
 
 <p><img src="images/cwspace.jpg" align="center" width="250" alt="CW space"/></p>
 
@@ -207,9 +287,11 @@ Cochain complex of length 10 in characteristic 0 .
 
 <p><a id="X823FA6A9828FF473" name="X823FA6A9828FF473"></a></p>
 
-<h4>1.5 <span class="Heading">Cup products</span></h4>
+<h4>1.7 <span class="Heading">Cup products</span></h4>
 
-<p>Continuing with the previous example, we consider the first and fifth generators <span class="SimpleMath">g_1^1, g_5^1∈ H^1(W, Z) = Z^5</span> and establish that their cup product <span class="SimpleMath">g_1^1 ∪ g_5^1 = - g_7^2 ∈ H^2(W, Z) = Z^10</span> is equal to minus the seventh generator of <span class="SimpleMath">H^2(W, Z)</span>. We also verify that <span class="SimpleMath">g_5^1∪ g_1^1 = - g_1^1 ∪ g_5^1</span>.</p>
+<p><strong class="button">Strategy 1: use geometric group theory in low dimensions.</strong></p>
+
+<p>Continuing with the previous example, we consider the first and fifth generators <span class="SimpleMath">g_1^1, g_5^1∈ H^1(Y, Z) = Z^5</span> and establish that their cup product <span class="SimpleMath">g_1^1 ∪ g_5^1 = - g_7^2 ∈ H^2(Y, Z) = Z^10</span> is equal to minus the seventh generator of <span class="SimpleMath">H^2(Y, Z)</span>. We also verify that <span class="SimpleMath">g_5^1∪ g_1^1 = - g_1^1 ∪ g_5^1</span>.</p>
 
 
 <div class="example"><pre>
@@ -225,45 +307,214 @@ function( a, b ) ... end
 
 </pre></div>
 
-<p>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <span class="SimpleMath">∆ : Y → Y× Y</span> in dimensions <span class="SimpleMath">le 2</span>. In order to construct cup products in higher degrees <strong class="button">HAP</strong> requires a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
+<p>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <span class="SimpleMath">∆ : Y → Y× Y</span> in dimensions <span class="SimpleMath">le 2</span>. In order to construct cup products in higher degrees <strong class="button">HAP</strong> invokes two further strategies.</p>
 
-<p>The following example calculates <span class="SimpleMath">g_3^3 ∪ g_3^1 = g_1^4</span> where <span class="SimpleMath">W=S× S× S× S</span> is the direct product of four circles, and where <span class="SimpleMath">g_k^n</span> denotes the <span class="SimpleMath">k</span>-th generator of <span class="SimpleMath">H^n(W, Z)</span>.</p>
+<p><strong class="button">Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</strong></p>
+
+<p>For simplicial complexes the cup product is implemented using the standard formula for the Alexander-Whitney chain map, together with homotopy equivalences to improve efficiency.</p>
+
+<p>As a first example, the following commands construct simplicial surfaces <span class="SimpleMath">K=( S^1 × S^1) # ( S^1 × S^1)</span> and <span class="SimpleMath">L=( S^1 × S^1) ∨ S^1 ∨ S^1</span> and establish that they have the same cohomology groups. It is then shown that the cup products <span class="SimpleMath">∪_K: H^1(K, Z)× H^1(K, Z) → H^2(K, Z)</span> and <span class="SimpleMath">∪_L: H^1(L, Z)× H^1(L, Z) → H^2(L, Z)</span> are antisymmetric bilinear forms of different ranks; hence <span class="SimpleMath">K</span> and <span class="SimpleMath">L</span> have different homotopy types.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RegularCWComplex(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=DirectProduct(S,S,S,S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(W);</span>
-function( p, q, vv, ww ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(2);</span>
+Simplicial complex of dimension 2.
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(3,1,[0,0,1,0],[0,0,1,0]);</span>
-[ 1 ]
-	  
-#Now test that the diagonal construction is valid.
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=DiagonalApproximation(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=WedgeSum(WedgeSum(ClosedSurface(1),Sphere(1)),Sphere(1));</span>
+Simplicial complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(K,0);Cohomology(L,0);</span>
+[ 0 ]
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(K,1);Cohomology(L,1);</span>
+[ 0, 0, 0, 0 ]
+[ 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(K,2);Cohomology(L,2);</span>
+[ 0 ]
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cupK:=CupProduct(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cupL:=CupProduct(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=NullMat(4,4);;B:=NullMat(4,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..4] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..4] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">A[i][j]:=cupK(1,1,gens[i],gens[j])[1];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">B[i][j]:=cupL(1,1,gens[i],gens[j])[1];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(A);</span>
+[ [   0,   0,   0,   1 ],
+  [   0,   0,   1,   0 ],
+  [   0,  -1,   0,   0 ],
+  [  -1,   0,   0,   0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(B);</span>
+[ [   0,   1,   0,   0 ],
+  [  -1,   0,   0,   0 ],
+  [   0,   0,   0,   0 ],
+  [   0,   0,   0,   0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rank(A);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rank(B);</span>
+2
+
+</pre></div>
+
+<p>As a second example of the computation of cups products, the following commands construct the wedge sum <span class="SimpleMath">W=M∨ N</span> of a <span class="SimpleMath">2</span>-dimensional orientable simplicial surface of genus 2 and the <span class="SimpleMath">K3</span> complex surface which is stored as a pure simplicial complex of dimension 4. The simplicial structure on the <span class="SimpleMath">K3</span> surface is taken from <a href="chapBib.html#biBspreerkhuenel">[SK11]</a>. The commands then show that <span class="SimpleMath">H^2(W, Z)= Z^22</span> and <span class="SimpleMath">H^4(W, Z)= Z</span>. The final commands comput the matrix <span class="SimpleMath">(x∪ y)</span> as <span class="SimpleMath">x,y</span> range over a generating set for <span class="SimpleMath">H^2(W, Z)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ClosedSurface(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=SimplicialK3Surface();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=WedgeSum(M,N);</span>
+Simplicial complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,1);</span>
+[ 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,2);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,3);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,4);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondCohomologyGens:=IdentityMat(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=NullMat(23,23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..23] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..23] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">A[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(A);</span>
+[ [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
+  [   0,  -2,   2,  -1,   0,  -1,   1,  -1,   0,   0,   1,  -1,   0,   0,   1,   1,   2,  -1,  -1,   1,  -1,   0,  -1 ],
+  [   0,   2,  -4,   2,  -1,   1,  -1,   1,   0,  -1,  -1,   0,   1,  -1,   1,  -1,  -2,   1,   2,  -2,   1,   0,   3 ],
+  [   0,  -1,   2,  -2,   2,  -1,   0,  -1,   1,   1,   1,   0,   0,   0,  -2,   0,   0,   0,   0,   1,   0,   1,  -1 ],
+  [   0,   0,  -1,   2,  -4,   1,   1,   1,  -2,  -1,  -1,   0,  -1,  -1,   4,   0,   1,  -1,  -1,  -1,  -1,  -1,   1 ],
+  [   0,  -1,   1,  -1,   1,  -2,   0,  -1,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   1,   0 ],
+  [   0,   1,  -1,   0,   1,   0,  -2,   1,   0,   0,  -1,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,   0,   0 ],
+  [   0,  -1,   1,  -1,   1,  -1,   1,  -2,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   0,   0 ],
+  [   0,   0,   0,   1,  -2,   1,   0,   1,  -2,  -1,   0,   0,  -1,  -1,   2,   0,   0,  -1,   0,  -1,  -1,  -1,   0 ],
+  [   0,   0,  -1,   1,  -1,   0,   0,   0,  -1,  -2,   0,  -1,   0,   0,   2,   1,   0,   0,   0,   0,   0,  -1,   1 ],
+  [   0,   1,  -1,   1,  -1,   1,  -1,   1,   0,   0,  -2,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,  -1,   0 ],
+  [   0,  -1,   0,   0,   0,  -1,   0,  -1,   0,  -1,   0,  -2,   1,   0,   2,   1,   1,  -1,   0,   0,   0,   0,   1 ],
+  [   0,   0,   1,   0,  -1,   1,   1,   1,  -1,   0,   1,   1,  -2,   0,   0,   0,   0,   1,  -1,   1,  -1,  -1,  -2 ],
+  [   0,   0,  -1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,   0,  -2,   3,   0,   1,  -1,   0,  -1,  -1,   0,   1 ],
+  [   0,   1,   1,  -2,   4,   0,  -1,   0,   2,   2,  -1,   2,   0,   3,  -8,  -1,  -2,   1,   1,   1,   2,   0,  -2 ],
+  [   0,   1,  -1,   0,   0,   1,   0,   1,   0,   1,   0,   1,   0,   0,  -1,  -2,  -1,   1,   1,  -1,   0,   0,   0 ],
+  [   0,   2,  -2,   0,   1,   1,  -1,   1,   0,   0,  -1,   1,   0,   1,  -2,  -1,  -2,   0,   2,  -1,   1,   0,   0 ],
+  [   0,  -1,   1,   0,  -1,   0,   0,   0,  -1,   0,   0,  -1,   1,  -1,   1,   1,   0,  -2,  -1,   0,   0,  -1,   1 ],
+  [   0,  -1,   2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,  -1,   0,   1,   1,   2,  -1,  -2,   1,  -1,   0,  -2 ],
+  [   0,   1,  -2,   1,  -1,   1,   0,   1,  -1,   0,   0,   0,   1,  -1,   1,  -1,  -1,   0,   1,  -2,   0,  -1,   2 ],
+  [   0,  -1,   1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,  -1,  -1,   2,   0,   1,   0,  -1,   0,  -2,   0,   0 ],
+  [   0,   0,   0,   1,  -1,   1,   0,   0,  -1,  -1,  -1,   0,  -1,   0,   0,   0,   0,  -1,   0,  -1,   0,  -2,   1 ],
+  [   0,  -1,   3,  -1,   1,   0,   0,   0,   0,   1,   0,   1,  -2,   1,  -2,   0,   0,   1,  -2,   2,   0,   1,  -4 ] ]
+
+</pre></div>
+
+<p>A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice.</p>
+
+<p><strong class="button">Strategy 3: Guess and verify a cellular approcimation to the diagonal map.</strong></p>
+
+<p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we require a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
+
+<p>The following example calculates <span class="SimpleMath">g_1^1 ∪ g_3^2 ne 0</span> where <span class="SimpleMath">Y=S× S× A</span> is the direct product of two simplicial circles <span class="SimpleMath">S</span> and one <span class="SimpleMath">2</span>-dimensional cubical Annulus <span class="SimpleMath">A</span> and where <span class="SimpleMath">g_k^n</span> denotes the <span class="SimpleMath">k</span>-th generator of <span class="SimpleMath">H^n(Y, Z)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[[1,1,1],[1,0,1],[1,1,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=PureCubicalComplex(A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=RegularCWComplex(A); #A cubical annulus</span>
+Regular CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RegularCWComplex(S); #A circle</span>
+Regular CW-complex of dimension 1
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=DirectProduct(S,S,A);</span>
+Regular CW-complex of dimension 4
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(1,2,[1,0,0],[0,0,1]);</span>
+[ -1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=DiagonalApproximation(Y);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=D!.projection;</span>
 Map of regular CW-complexes
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=ChainMap(p);</span>
-Chain Map between complexes of length 4 . 
+Chain Map between complexes of length 3 . 
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,0));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,1));</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,2));</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,3));</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,4));</span>
-true
 
 </pre></div>
 
+<p><a id="X7F9B01CF7EE1D2FC" name="X7F9B01CF7EE1D2FC"></a></p>
+
+<h4>1.8 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></h4>
+
+<p>The cup product gives rise to the intersection form of a connected, closed, orientable <span class="SimpleMath">4</span>-manifold <span class="SimpleMath">Y</span> is a symmetric bilinear form</p>
+
+<p><span class="SimpleMath">qY: H^2(Y, Z)/Torsion × H^2(Y, Z)/Torsion ⟶ Z</span></p>
+
+<p>which we represent as a symmetric matrix.</p>
+
+<p>The following example constructs the direct product <span class="SimpleMath">L=S^2× S^2</span> of two <span class="SimpleMath">2</span>-spheres, the connected sum <span class="SimpleMath">M= CP^2 # overline CP^2</span> of the complex projective plane <span class="SimpleMath">CP^2</span> and its oppositely oriented version <span class="SimpleMath">overline CP^2</span>, and the connected sum <span class="SimpleMath">M= CP^2 # CP^2</span>. The manifolds <span class="SimpleMath">L</span>, <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> are each shown to have a CW-structure involving one <span class="SimpleMath">0</span>-cell, two <span class="SimpleMath">1</span>-cells and one <span class="SimpleMath">2</span>-cell. They are thus simply connected and have identical cohomology.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Sphere(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RegularCWComplex(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=DirectProduct(S,S);</span>
+Regular CW-complex of dimension 4
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),-1);</span>
+Simplicial complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),+1);</span>
+Simplicial complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(L);</span>
+[ [ 4, 1 ], [ 2, 13 ], [ 2, 56 ], [ 0, 16 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(RegularCWComplex(M));</span>
+[ [ 4, 1 ], [ 2, 109 ], [ 2, 119 ], [ 0, 8 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(RegularCWComplex(N));</span>
+[ [ 4, 1 ], [ 2, 119 ], [ 2, 149 ], [ 0, 12 ] ]
+
+</pre></div>
+
+<p>John Milnor showed (as a corollary to a theorem of J. H. C. Whitehead) that the homotopy type of a simply connected 4-manifold is determined by its quadratic form. More precisely, a form is said to be of <em>type I (properly primitive)</em> if some diagonal entry of its matrix is odd. If every diagonal entry is even, then the form is of <em>type II (improperly primitive)</em>. The <em>index</em> of a form is defined as the number of positive diagonal entries minus the number of negative ones, after the matrix has been diagonalized over the real numbers.</p>
+
+<p><strong class="button">Theorem.</strong> (Milnor <a href="chapBib.html#biBmilnor">[Mil58]</a>) The oriented homotopy type of a simply connected, closed, orientable 4-manifold is determined by its second Betti number and the index and type of its intersetion form; except possibly in the case of a manifold with definite quadratic form of rank r &gt; 9.</p>
+
+<p>The following commands compute matrices representing the intersection forms <span class="SimpleMath">qL</span>, <span class="SimpleMath">qM</span>, <span class="SimpleMath">qN</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qL:=IntersectionForm(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qM:=IntersectionForm(M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qN:=IntersectionForm(N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(qL);</span>
+[ [  -2,   1 ],
+  [   1,   0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(qM);</span>
+[ [  5,  2 ],
+  [  2,  1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(qN);</span>
+[ [  -3,  -2 ],
+  [  -2,  -1 ] ]
+
+</pre></div>
+
+<p>Since <span class="SimpleMath">qL</span> is of type I, whereas <span class="SimpleMath">qM</span> and <span class="SimpleMath">qN</span> are of type II we see that the oriented homotopy type of <span class="SimpleMath">L</span> is distinct to that of <span class="SimpleMath">M</span> and that of <span class="SimpleMath">N</span>. Since <span class="SimpleMath">qM</span> has index <span class="SimpleMath">2</span> and <span class="SimpleMath">qN</span> has index <span class="SimpleMath">0</span> we see that that <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> also have distinct oriented homotopy types.</p>
+
 <p><a id="X8771FF2885105154" name="X8771FF2885105154"></a></p>
 
-<h4>1.6 <span class="Heading">CW maps and induced homomorphisms</span></h4>
+<h4>1.9 <span class="Heading">CW maps and induced homomorphisms</span></h4>
 
 <p>A <em>strictly cellular</em> map <span class="SimpleMath">f: X→ Y</span> of regular CW-complexes is a cellular map for which the image of any cell is a cell (of possibly lower dimension). Inclusions of CW-subcomplexes, and projections from a direct product to a factor, are examples of such maps. Strictly cellular maps can be represented in <strong class="button">HAP</strong>, and their induced homomorphisms on (co)homology and on fundamental groups can be computed.</p>
 

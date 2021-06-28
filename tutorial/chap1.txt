@@ -44,7 +44,47 @@
   [4X[32X[104X
   
   
-  [1X1.2 [33X[0;0YThe Quillen complex[133X[101X
+  [1X1.2 [33X[0;0YOther simplicial surfaces[133X[101X
+  
+  [33X[0;0YThe  following  example  constructs  the  real projective plane [22XP[122X, the Klein
+  bottle  [22XK[122X and the torus [22XT[122X as simplicial complexes, using the surface genus [22Xg[122X
+  as  input  in  the oriented case and [22X-g[122X as input in the unoriented cases. It
+  then confirms that the connected sums [22XM=K#P[122X and [22XN=T#P[122X have the same integral
+  homology.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP:=ClosedSurface(-1);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=ClosedSurface(-2);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT:=ClosedSurface(1);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM:=ConnectedSum(K,P);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN:=ConnectedSum(T,P);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(M,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(N,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(M,1);[127X[104X
+    [4X[28X[ 2, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(N,1);[127X[104X
+    [4X[28X[ 2, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(M,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(N,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.3 [33X[0;0YThe Quillen complex[133X[101X
   
   [33X[0;0YGiven a group [22XG[122X one can consider the partially ordered set [22Xcal A_p(G)[122X of all
   non-trivial elementary abelian [22Xp[122X-subgroups of [22XG[122X, the partial order being set
@@ -68,7 +108,7 @@
   [4X[32X[104X
   
   
-  [1X1.3 [33X[0;0YThe Quillen complex as a reduced CW-complex[133X[101X
+  [1X1.4 [33X[0;0YThe Quillen complex as a reduced CW-complex[133X[101X
   
   [33X[0;0YAny  simplicial complex [22XK[122X can be regarded as a regular CW complex. Different
   datatypes  are used in [12XHAP[112X for these two notions. The following continuation
@@ -119,7 +159,42 @@
   [4X[32X[104X
   
   
-  [1X1.4 [33X[0;0YConstructing a regular CW-complex from its face lattice[133X[101X
+  [1X1.5 [33X[0;0YConstructing a CW-structure on a knot complement[133X[101X
+  
+  [33X[0;0YThe following commands construct the complement [22XM=S^3∖ K[122X of the trefoil knot
+  [22XK[122X.  This  complement is returned as a [22X3[122X-manifold [22XM[122X with regular CW-structure
+  involving four [22X3[122X-cells.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=ArcPresentation(PureCubicalKnot(3,1));[127X[104X
+    [4X[28X[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XS:=SphericalKnotComplement(arc);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS!.nrCells(3);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following additional commands then show that [22XM[122X is homotopy equivalent to
+  a  reduced CW-complex [22XY[122X of dimension [22X2[122X involving one [22X0[122X-cell, two [22X1[122X-cells and
+  one [22X2[122X-cell. The fundamental group of [22XY[122X is computed and used to calculate the
+  Alexander polynomial of the trefoil knot.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=ContractedComplex(S);[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(Y);[127X[104X
+    [4X[28X[ [ 2, 1 ], [ 1, 9 ], [ 1, 11 ], [ 0, 22 ] ][128X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XAlexanderPolynomial(G);[127X[104X
+    [4X[28Xx_1^2-x_1+1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.6 [33X[0;0YConstructing a regular CW-complex from its face lattice[133X[101X
   
   [33X[0;0YThe  following  example  begins  by  creating a [22X2[122X-dimensional annulus [22XA[122X as a
   regular  CW-complex,  and  testing that it has the correct integral homology
@@ -189,12 +264,14 @@
   [4X[32X[104X
   
   
-  [1X1.5 [33X[0;0YCup products[133X[101X
+  [1X1.7 [33X[0;0YCup products[133X[101X
+  
+  [33X[0;0Y[12XStrategy 1: use geometric group theory in low dimensions.[112X[133X
   
   [33X[0;0YContinuing  with  the  previous  example,  we  consider  the first and fifth
-  generators  [22Xg_1^1,  g_5^1∈  H^1(W,  Z)  =  Z^5[122X  and establish that their cup
-  product  [22Xg_1^1  ∪  g_5^1  = - g_7^2 ∈ H^2(W, Z) = Z^10[122X is equal to minus the
-  seventh generator of [22XH^2(W, Z)[122X. We also verify that [22Xg_5^1∪ g_1^1 = - g_1^1 ∪
+  generators  [22Xg_1^1,  g_5^1∈  H^1(Y,  Z)  =  Z^5[122X  and establish that their cup
+  product  [22Xg_1^1  ∪  g_5^1  = - g_7^2 ∈ H^2(Y, Z) = Z^10[122X is equal to minus the
+  seventh generator of [22XH^2(Y, Z)[122X. We also verify that [22Xg_5^1∪ g_1^1 = - g_1^1 ∪
   g_5^1[122X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -213,50 +290,251 @@
   [33X[0;0YThis   computation   of  low-dimensional  cup  products  is  achieved  using
   group-theoretic  methods  to  approximate  the  diagonal map [22X∆ : Y → Y× Y[122X in
   dimensions  [22Xle  2[122X.  In order to construct cup products in higher degrees [12XHAP[112X
-  requires  a cellular inclusion [22Xoverline Y ↪ Y× Y[122X with projection [22Xp: overline
-  Y  ↠  Y[122X  that  induces  isomorphisms  on  integral  homology.  The  function
-  [10XDiagonalApproximation(Y)[110X   constructs   a   candidate   inclusion,  but  the
-  projection [22Xp: overline Y ↠ Y[122X needs to be tested for homology equivalence. If
-  the  candidate  inclusion  passes this test then the function [10XCupProduct(Y)[110X,
-  involving the candidate space, can be used for cup products.[133X
+  invokes two further strategies.[133X
   
-  [33X[0;0YThe following example calculates [22Xg_3^3 ∪ g_3^1 = g_1^4[122X where [22XW=S× S× S× S[122X is
-  the  direct  product  of  four  circles,  and  where  [22Xg_k^n[122X denotes the [22Xk[122X-th
-  generator of [22XH^n(W, Z)[122X.[133X
+  [33X[0;0Y[12XStrategy 2: implement the Alexander-Whitney map for a fixed class of spaces.[112X[133X
+  
+  [33X[0;0YFor  simplicial  complexes the cup product is implemented using the standard
+  formula   for  the  Alexander-Whitney  chain  map,  together  with  homotopy
+  equivalences to improve efficiency.[133X
+  
+  [33X[0;0YAs a first example, the following commands construct simplicial surfaces [22XK=(
+  S^1  × S^1) # ( S^1 × S^1)[122X and [22XL=( S^1 × S^1) ∨ S^1 ∨ S^1[122X and establish that
+  they have the same cohomology groups. It is then shown that the cup products
+  [22X∪_K: H^1(K, Z)× H^1(K, Z) → H^2(K, Z)[122X and [22X∪_L: H^1(L, Z)× H^1(L, Z) → H^2(L,
+  Z)[122X  are  antisymmetric bilinear forms of different ranks; hence [22XK[122X and [22XL[122X have
+  different homotopy types.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=SimplicialComplex([[1,2],[2,3],[1,3]]);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=RegularCWComplex(S);;[127X[104X
-    [4X[25Xgap>[125X [27XW:=DirectProduct(S,S,S,S);;[127X[104X
-    [4X[25Xgap>[125X [27Xcup:=CupProduct(W);[127X[104X
-    [4X[28Xfunction( p, q, vv, ww ) ... end[128X[104X
+    [4X[25Xgap>[125X [27XK:=ClosedSurface(2);[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xcup(3,1,[0,0,1,0],[0,0,1,0]);[127X[104X
-    [4X[28X[ 1 ][128X[104X
-    [4X[28X	  [128X[104X
-    [4X[28X#Now test that the diagonal construction is valid.[128X[104X
-    [4X[25Xgap>[125X [27XD:=DiagonalApproximation(W);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=WedgeSum(WedgeSum(ClosedSurface(1),Sphere(1)),Sphere(1));[127X[104X
+    [4X[28XSimplicial complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(K,0);Cohomology(L,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(K,1);Cohomology(L,1);[127X[104X
+    [4X[28X[ 0, 0, 0, 0 ][128X[104X
+    [4X[28X[ 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(K,2);Cohomology(L,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xgens:=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];;[127X[104X
+    [4X[25Xgap>[125X [27XcupK:=CupProduct(K);;[127X[104X
+    [4X[25Xgap>[125X [27XcupL:=CupProduct(L);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=NullMat(4,4);;B:=NullMat(4,4);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..4] do[127X[104X
+    [4X[25X>[125X [27XA[i][j]:=cupK(1,1,gens[i],gens[j])[1];[127X[104X
+    [4X[25X>[125X [27XB[i][j]:=cupL(1,1,gens[i],gens[j])[1];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(A);[127X[104X
+    [4X[28X[ [   0,   0,   0,   1 ],[128X[104X
+    [4X[28X  [   0,   0,   1,   0 ],[128X[104X
+    [4X[28X  [   0,  -1,   0,   0 ],[128X[104X
+    [4X[28X  [  -1,   0,   0,   0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(B);[127X[104X
+    [4X[28X[ [   0,   1,   0,   0 ],[128X[104X
+    [4X[28X  [  -1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   0,   0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRank(A);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XRank(B);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAs  a  second  example  of  the  computation of cups products, the following
+  commands  construct  the  wedge  sum  [22XW=M∨  N[122X  of a [22X2[122X-dimensional orientable
+  simplicial  surface of genus 2 and the [22XK3[122X complex surface which is stored as
+  a pure simplicial complex of dimension 4. The simplicial structure on the [22XK3[122X
+  surface  is  taken  from [SK11]. The commands then show that [22XH^2(W, Z)= Z^22[122X
+  and  [22XH^4(W,  Z)= Z[122X. The final commands comput the matrix [22X(x∪ y)[122X as [22Xx,y[122X range
+  over a generating set for [22XH^2(W, Z)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=ClosedSurface(2);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=SimplicialK3Surface();;[127X[104X
+    [4X[25Xgap>[125X [27XW:=WedgeSum(M,N);[127X[104X
+    [4X[28XSimplicial complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(W,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(W,1);[127X[104X
+    [4X[28X[ 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(W,2);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(W,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(W,4);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xcup:=CupProduct(W);;[127X[104X
+    [4X[25Xgap>[125X [27XSecondCohomologyGens:=IdentityMat(23);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=NullMat(23,23);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..23] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..23] do[127X[104X
+    [4X[25X>[125X [27XA[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(A);[127X[104X
+    [4X[28X[ [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,  -2,   2,  -1,   0,  -1,   1,  -1,   0,   0,   1,  -1,   0,   0,   1,   1,   2,  -1,  -1,   1,  -1,   0,  -1 ],[128X[104X
+    [4X[28X  [   0,   2,  -4,   2,  -1,   1,  -1,   1,   0,  -1,  -1,   0,   1,  -1,   1,  -1,  -2,   1,   2,  -2,   1,   0,   3 ],[128X[104X
+    [4X[28X  [   0,  -1,   2,  -2,   2,  -1,   0,  -1,   1,   1,   1,   0,   0,   0,  -2,   0,   0,   0,   0,   1,   0,   1,  -1 ],[128X[104X
+    [4X[28X  [   0,   0,  -1,   2,  -4,   1,   1,   1,  -2,  -1,  -1,   0,  -1,  -1,   4,   0,   1,  -1,  -1,  -1,  -1,  -1,   1 ],[128X[104X
+    [4X[28X  [   0,  -1,   1,  -1,   1,  -2,   0,  -1,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   1,   0 ],[128X[104X
+    [4X[28X  [   0,   1,  -1,   0,   1,   0,  -2,   1,   0,   0,  -1,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,   0,   0 ],[128X[104X
+    [4X[28X  [   0,  -1,   1,  -1,   1,  -1,   1,  -2,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   0,   1,  -2,   1,   0,   1,  -2,  -1,   0,   0,  -1,  -1,   2,   0,   0,  -1,   0,  -1,  -1,  -1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -1,   1,  -1,   0,   0,   0,  -1,  -2,   0,  -1,   0,   0,   2,   1,   0,   0,   0,   0,   0,  -1,   1 ],[128X[104X
+    [4X[28X  [   0,   1,  -1,   1,  -1,   1,  -1,   1,   0,   0,  -2,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,  -1,   0 ],[128X[104X
+    [4X[28X  [   0,  -1,   0,   0,   0,  -1,   0,  -1,   0,  -1,   0,  -2,   1,   0,   2,   1,   1,  -1,   0,   0,   0,   0,   1 ],[128X[104X
+    [4X[28X  [   0,   0,   1,   0,  -1,   1,   1,   1,  -1,   0,   1,   1,  -2,   0,   0,   0,   0,   1,  -1,   1,  -1,  -1,  -2 ],[128X[104X
+    [4X[28X  [   0,   0,  -1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,   0,  -2,   3,   0,   1,  -1,   0,  -1,  -1,   0,   1 ],[128X[104X
+    [4X[28X  [   0,   1,   1,  -2,   4,   0,  -1,   0,   2,   2,  -1,   2,   0,   3,  -8,  -1,  -2,   1,   1,   1,   2,   0,  -2 ],[128X[104X
+    [4X[28X  [   0,   1,  -1,   0,   0,   1,   0,   1,   0,   1,   0,   1,   0,   0,  -1,  -2,  -1,   1,   1,  -1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   2,  -2,   0,   1,   1,  -1,   1,   0,   0,  -1,   1,   0,   1,  -2,  -1,  -2,   0,   2,  -1,   1,   0,   0 ],[128X[104X
+    [4X[28X  [   0,  -1,   1,   0,  -1,   0,   0,   0,  -1,   0,   0,  -1,   1,  -1,   1,   1,   0,  -2,  -1,   0,   0,  -1,   1 ],[128X[104X
+    [4X[28X  [   0,  -1,   2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,  -1,   0,   1,   1,   2,  -1,  -2,   1,  -1,   0,  -2 ],[128X[104X
+    [4X[28X  [   0,   1,  -2,   1,  -1,   1,   0,   1,  -1,   0,   0,   0,   1,  -1,   1,  -1,  -1,   0,   1,  -2,   0,  -1,   2 ],[128X[104X
+    [4X[28X  [   0,  -1,   1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,  -1,  -1,   2,   0,   1,   0,  -1,   0,  -2,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   0,   1,  -1,   1,   0,   0,  -1,  -1,  -1,   0,  -1,   0,   0,   0,   0,  -1,   0,  -1,   0,  -2,   1 ],[128X[104X
+    [4X[28X  [   0,  -1,   3,  -1,   1,   0,   0,   0,   0,   1,   0,   1,  -2,   1,  -2,   0,   0,   1,  -2,   2,   0,   1,  -4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  cubical Alexander-Whitney formula can be used similarly for computing the
+  cohomology  ring  of  a  regular  CW-complex  whose cells all have a cubical
+  combinatorial face lattice.[133X
+  
+  [33X[0;0Y[12XStrategy 3: Guess and verify a cellular approcimation to the diagonal map.[112X[133X
+  
+  [33X[0;0YMany  naturally occuring cell structures are neither simplicial nor cubical.
+  For  a general regular CW-complex we require a cellular inclusion [22Xoverline Y
+  ↪  Y×  Y[122X  with  projection  [22Xp:  overline  Y ↠ Y[122X that induces isomorphisms on
+  integral   homology.  The  function  [10XDiagonalApproximation(Y)[110X  constructs  a
+  candidate inclusion, but the projection [22Xp: overline Y ↠ Y[122X needs to be tested
+  for  homology  equivalence. If the candidate inclusion passes this test then
+  the  function  [10XCupProduct(Y)[110X, involving the candidate space, can be used for
+  cup products.[133X
+  
+  [33X[0;0YThe  following  example calculates [22Xg_1^1 ∪ g_3^2 ne 0[122X where [22XY=S× S× A[122X is the
+  direct  product  of  two  simplicial circles [22XS[122X and one [22X2[122X-dimensional cubical
+  Annulus [22XA[122X and where [22Xg_k^n[122X denotes the [22Xk[122X-th generator of [22XH^n(Y, Z)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[1,1,1],[1,0,1],[1,1,1]];;[127X[104X
+    [4X[25Xgap>[125X [27XA:=PureCubicalComplex(A);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=RegularCWComplex(A); #A cubical annulus[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS:=SimplicialComplex([[1,2],[2,3],[1,3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=RegularCWComplex(S); #A circle[127X[104X
+    [4X[28XRegular CW-complex of dimension 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=DirectProduct(S,S,A);[127X[104X
+    [4X[28XRegular CW-complex of dimension 4[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xcup:=CupProduct(Y);;[127X[104X
+    [4X[25Xgap>[125X [27Xcup(1,2,[1,0,0],[0,0,1]);[127X[104X
+    [4X[28X[ -1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=DiagonalApproximation(Y);;[127X[104X
     [4X[25Xgap>[125X [27Xp:=D!.projection;[127X[104X
     [4X[28XMap of regular CW-complexes[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XP:=ChainMap(p);[127X[104X
-    [4X[28XChain Map between complexes of length 4 . [128X[104X
+    [4X[28XChain Map between complexes of length 3 . [128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,0));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,1));[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,2));[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,3));[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,4));[127X[104X
-    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X1.6 [33X[0;0YCW maps and induced homomorphisms[133X[101X
+  [1X1.8 [33X[0;0YIntersection forms of [22X4[122X[101X[1X-manifolds[133X[101X
+  
+  [33X[0;0YThe  cup product gives rise to the intersection form of a connected, closed,
+  orientable [22X4[122X-manifold [22XY[122X is a symmetric bilinear form[133X
+  
+  [33X[0;0Y[22XqY: H^2(Y, Z)/Torsion × H^2(Y, Z)/Torsion ⟶ Z[122X[133X
+  
+  [33X[0;0Ywhich we represent as a symmetric matrix.[133X
+  
+  [33X[0;0YThe  following  example  constructs  the  direct  product  [22XL=S^2× S^2[122X of two
+  [22X2[122X-spheres,  the  connected  sum  [22XM=  CP^2  #  overline  CP^2[122X  of the complex
+  projective plane [22XCP^2[122X and its oppositely oriented version [22Xoverline CP^2[122X, and
+  the connected sum [22XM= CP^2 # CP^2[122X. The manifolds [22XL[122X, [22XM[122X and [22XN[122X are each shown to
+  have  a  CW-structure involving one [22X0[122X-cell, two [22X1[122X-cells and one [22X2[122X-cell. They
+  are thus simply connected and have identical cohomology.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Sphere(2);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=RegularCWComplex(S);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=DirectProduct(S,S);[127X[104X
+    [4X[28XRegular CW-complex of dimension 4[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),-1);[127X[104X
+    [4X[28XSimplicial complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),+1);[127X[104X
+    [4X[28XSimplicial complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(L);[127X[104X
+    [4X[28X[ [ 4, 1 ], [ 2, 13 ], [ 2, 56 ], [ 0, 16 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(RegularCWComplex(M));[127X[104X
+    [4X[28X[ [ 4, 1 ], [ 2, 109 ], [ 2, 119 ], [ 0, 8 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCriticalCells(RegularCWComplex(N));[127X[104X
+    [4X[28X[ [ 4, 1 ], [ 2, 119 ], [ 2, 149 ], [ 0, 12 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YJohn  Milnor showed (as a corollary to a theorem of J. H. C. Whitehead) that
+  the  homotopy  type  of  a  simply connected 4-manifold is determined by its
+  quadratic  form.  More  precisely,  a form is said to be of [13Xtype I (properly
+  primitive)[113X  if  some  diagonal entry of its matrix is odd. If every diagonal
+  entry is even, then the form is of [13Xtype II (improperly primitive)[113X. The [13Xindex[113X
+  of  a  form  is defined as the number of positive diagonal entries minus the
+  number  of  negative  ones,  after the matrix has been diagonalized over the
+  real numbers.[133X
+  
+  [33X[0;0Y[12XTheorem.[112X  (Milnor [Mil58]) The oriented homotopy type of a simply connected,
+  closed,  orientable  4-manifold is determined by its second Betti number and
+  the index and type of its intersetion form; except possibly in the case of a
+  manifold with definite quadratic form of rank r > 9.[133X
+  
+  [33X[0;0YThe  following commands compute matrices representing the intersection forms
+  [22XqL[122X, [22XqM[122X, [22XqN[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XqL:=IntersectionForm(L);;[127X[104X
+    [4X[25Xgap>[125X [27XqM:=IntersectionForm(M);;[127X[104X
+    [4X[25Xgap>[125X [27XqN:=IntersectionForm(N);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(qL);[127X[104X
+    [4X[28X[ [  -2,   1 ],[128X[104X
+    [4X[28X  [   1,   0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(qM);[127X[104X
+    [4X[28X[ [  5,  2 ],[128X[104X
+    [4X[28X  [  2,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(qN);[127X[104X
+    [4X[28X[ [  -3,  -2 ],[128X[104X
+    [4X[28X  [  -2,  -1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSince  [22XqL[122X  is  of  type  I, whereas [22XqM[122X and [22XqN[122X are of type II we see that the
+  oriented homotopy type of [22XL[122X is distinct to that of [22XM[122X and that of [22XN[122X. Since [22XqM[122X
+  has  index  [22X2[122X and [22XqN[122X has index [22X0[122X we see that that [22XM[122X and [22XN[122X also have distinct
+  oriented homotopy types.[133X
+  
+  
+  [1X1.9 [33X[0;0YCW maps and induced homomorphisms[133X[101X
   
   [33X[0;0YA  [13Xstrictly  cellular[113X  map [22Xf: X→ Y[122X of regular CW-complexes is a cellular map
   for  which  the  image  of any cell is a cell (of possibly lower dimension).
