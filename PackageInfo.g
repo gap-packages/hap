@@ -55,7 +55,7 @@ SetPackageInfo( rec(
                   
   PackageDoc := rec(
     BookName  := "HAP",
-    ArchiveURLSubset := ["doc", "www"],
+    ArchiveURLSubset := ["doc", "www", "tutorial"],
     HTMLStart := "www/index.html",
     PDFFile   := "doc/manual.pdf",
     SixFile   := "doc/manual.six",

@@ -1,5 +1,5 @@
 LoadPackage("HAP");
 CopyHTMLStyleFiles( "doc" );
-CopyHTMLStyleFiles( "doc/tutorial" );
+CopyHTMLStyleFiles( "tutorial" );
 MakeHAPManual();
 QUIT;
