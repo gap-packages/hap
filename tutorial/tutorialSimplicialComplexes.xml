@@ -18,6 +18,16 @@ x,y : yxy^{-1}x\rangle</M> is computed for the fundamental group of <M>K</M>.
 </Example>
 
 </Section>
+
+<Section><Heading>Other simplicial surfaces</Heading>
+The following example constructs the real projective plane <M>P</M>,
+the Klein bottle <M>K</M> and the torus <M>T</M> as simplicial complexes, using the surface genus <M>g</M> as input in the oriented case and <M>-g</M> as input in the unoriented cases. It then confirms that the connected sums <M>M=K\#P</M> and <M>N=T\#P</M> have the same integral homology.
+
+<Example>
+<#Include SYSTEM "tutex/1.4aa.txt">
+</Example>
+</Section>
+
 <Section><Heading>The Quillen complex</Heading>
  
 <P/> Given a group <M>G </M> one can consider the partially ordered set 
@@ -37,6 +47,7 @@ for the symmetric group of degree <M>7</M> and
 <Example>
 <#Include SYSTEM "tutex/1.2.txt">
 </Example>
+
 
 </Section>
 <Section><Heading>The Quillen complex as a reduced CW-complex</Heading>
@@ -67,6 +78,27 @@ of a (typically non-regular) CW complex <M>X</M> homotopy equivalent to <M>Y</M>
 </Example>
 
 </Section>
+
+<Section><Heading>Constructing a CW-structure on a knot complement</Heading>
+
+The following commands construct the complement <M>M=S^3\setminus K</M> of the trefoil knot <M>K</M>. This complement is returned as 
+ a <M>3</M>-manifold <M>M</M> with regular CW-structure involving four  <M>3</M>-cells.
+
+<Example>
+<#Include SYSTEM "tutex/1.4a.txt">
+</Example>
+
+The following additional commands then show that <M>M</M> is homotopy 
+equivalent to a reduced CW-complex <M>Y</M> of dimension <M>2</M> 
+involving one <M>0</M>-cell, two <M>1</M>-cells and one <M>2</M>-cell. The fundamental group of <M>Y</M> is computed and used to calculate the Alexander polynomial of the trefoil
+knot. 
+
+<Example>
+<#Include SYSTEM "tutex/1.4b.txt">
+</Example>
+
+</Section>
+
 <Section><Heading>Constructing a regular CW-complex from its face lattice</Heading>
 
 <P/>
@@ -102,9 +134,11 @@ are obtained.
 </Section>
 <Section><Heading>Cup products</Heading>
 
+<P/><B>Strategy 1: use geometric group theory in low dimensions.</B>
+
 <P/>Continuing with the previous example, we consider 
-the first and fifth generators <M>g_1^1, g_5^1\in H^1(W,\mathbb Z) =\mathbb Z^5</M>
-and establish that their cup product <M> g_1^1 \cup g_5^1 = - g_7^2 \in H^2(W,\mathbb Z) =\mathbb Z^{10}</M> is equal to minus the seventh generator of <M>H^2(W,\mathbb Z)</M>.
+the first and fifth generators <M>g_1^1, g_5^1\in H^1(Y,\mathbb Z) =\mathbb Z^5</M>
+and establish that their cup product <M> g_1^1 \cup g_5^1 = - g_7^2 \in H^2(Y,\mathbb Z) =\mathbb Z^{10}</M> is equal to minus the seventh generator of <M>H^2(Y,\mathbb Z)</M>.
 We also verify that <M>g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1</M>.
 
 <Example>
@@ -112,24 +146,79 @@ We also verify that <M>g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1</M>.
 </Example>
 
 <P/>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <M>\Delta \colon Y \rightarrow  Y\times Y</M> in dimensions <M>\le 2</M>. In order to construct cup products in
-higher degrees <B>HAP</B> requires a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
+higher degrees <B>HAP</B> invokes two further strategies.
+
+<P/><B>Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</B>
+
+
+<P/>For simplicial complexes the cup product is implemented using the standard formula for the Alexander-Whitney chain map, together with homotopy equivalences to improve efficiency. For example, the following commands construct the wedge sum
+<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable 
+simplicial surface  of genus 2 and the <M>K3</M> complex surface which is stored as a pure simplicial complex of dimension 4. The  simplicial structure
+on the <M>K3</M> surface  is taken from <Cite Key="spreerkhuenel"/>.
+The commands then show that <M>H^2(W,\mathbb Z)=\mathbb Z^{22}</M> and
+<M>H^4(W,\mathbb Z)=\mathbb Z</M>. The final commands comput the matrix <M>(x\cup y)</M> as <M>x,y</M> range over a generating set for <M>H^2(W,\mathbb Z)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/1.7b.txt">
+</Example>
+
+A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. 
+
+<P/><B>Strategy 3: Guess and verify a cellular approcimation to the diagonal map.</B>   
+
+<P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
+require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
 The function <C>DiagonalApproximation(Y)</C> constructs a candidate inclusion,
 but the projection <M>p\colon \overline Y \twoheadrightarrow Y</M> 
 needs to be tested for homology equivalence. If the candidate inclusion
  passes this test then the function <C>CupProduct(Y)</C>,  involving
  the candidate space,  can be used for cup products.  
 
-<P/>The following example calculates <M>g_3^3 \cup g_3^1 = g_1^4</M> where
-<M>W=S\times S\times S\times S</M> is  the 
-direct product of four circles, and where
-<M>g_k^n</M> denotes the <M>k</M>-th generator of <M>H^n(W,\mathbb Z)</M>. 
+<P/>The following example calculates <M>g_1^1 \cup g_3^2 \ne 0</M> where
+<M>Y=S\times S\times A</M> is  the 
+direct product of two simplicial circles <M>S</M>  and one  <M>2</M>-dimensional cubical Annulus <M>A</M> and where 
+<M>g_k^n</M> denotes the <M>k</M>-th generator of <M>H^n(Y,\mathbb Z)</M>. 
 
 <Example>
 <#Include SYSTEM "tutex/1.8.txt">
 </Example>
+</Section>
 
+
+<Section><Heading>Intersection forms of <M>4</M>-manifolds</Heading>
+The cup product gives rise to the intersection form of a connected, closed,  orientable <M>4</M>-manifold <M>Y</M> is a symmetric bilinear form
+<P/><M>qY\colon H^2(Y,\mathbb Z)/Torsion \times H^2(Y,\mathbb Z)/Torsion \longrightarrow \mathbb Z</M>
+<P/>which we represent as a symmetric matrix.
+
+<P/>The following example constructs the direct product <M>L=S^2\times S^2</M> of two <M>2</M>-spheres,  the connected sum 
+<M>M=\mathbb CP^2 \# \overline{\mathbb CP^2}</M> of the complex projective plane <M>\mathbb CP^2</M> and its oppositely oriented version <M>\overline{\mathbb CP^2}</M>, and the connected sum
+<M>M=\mathbb CP^2 \# \mathbb CP^2</M>. The manifolds <M>L</M>, <M>M</M> and <M>N</M> are each shown to have a CW-structure involving one <M>0</M>-cell, two <M>1</M>-cells and one <M>2</M>-cell. They are thus simply connected and have identical cohomology.
+
+
+<Example>
+<#Include SYSTEM "tutex/1.8a.txt">
+</Example>
+
+John Milnor showed  (as a corollary to a  theorem of J. H. C. Whitehead) that the homotopy type of a simply connected 4-manifold is determined by its quadratic form. More precisely,  a form is said to be of <E>type I  (properly primitive)</E> if some diagonal entry of its matrix is odd. If every diagonal entry is even, then the form is of <E>type II (improperly primitive)</E>.
+The <E>index</E> of a form is defined as the number of positive diagonal entries minus the number of negative ones, after the matrix has been diagonalized over the real numbers.
+
+<P/><B>Theorem.</B> (Milnor <Cite Key="milnor"/>)
+The oriented homotopy type of a simply connected, closed, orientable 4-manifold is determined by its second Betti number and the  index and  type of its intersetion form; except possibly in the case of a manifold with definite quadratic form of rank r > 9. 
+
+<P/>
+The following commands compute matrices representing the intersection forms <M>qL</M>, <M>qM</M>, <M>qN</M>.   
+
+
+<Example>
+<#Include SYSTEM "tutex/1.8b.txt">
+</Example>
+
+Since <M>qL</M> is of type I, whereas <M>qM</M> and <M>qN</M> are  of type II 
+we see that the oriented homotopy type of <M>L</M> is distinct to that of 
+<M>M</M> and that of <M>N</M>. Since <M>qM</M> has index <M>2</M> and  <M>qN</M> has index <M>0</M> we see that that <M>M</M> and <M>N</M> also have distinct oriented homotopy types.
 
 </Section>
+
 <Section><Heading>CW maps and induced homomorphisms</Heading>
 
 <P/>A <E>strictly cellular</E> map <M>f\colon X\rightarrow Y</M> of regular

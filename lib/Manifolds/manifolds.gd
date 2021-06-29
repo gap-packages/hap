@@ -1,0 +1,9 @@
+DeclareOperation("Sphere",[IsInt]);
+DeclareOperation("ComplexProjectiveSpace",[IsInt]);
+DeclareOperation("ConnectedSum",[IsHapSimplicialComplex,IsHapSimplicialComplex,IsInt]);
+DeclareGlobalFunction("HAP_SimplicialTorus");
+DeclareGlobalFunction("HAP_SimplicialProjectivePlane");
+DeclareOperation("ClosedSurface",[IsInt]);
+DeclareGlobalFunction("SimplicialK3Surface");
+DeclareOperation("WedgeSum",[IsHapSimplicialComplex,IsHapSimplicialComplex]);
+DeclareGlobalFunction("HAP_WedgeSumOfSimplicialComplexes");

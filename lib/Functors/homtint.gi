@@ -140,7 +140,7 @@ end);
 ##########################################
 InstallGlobalFunction(HomToInt_ChainMap,
 function(arg)
-local F,S, T, HS, HT, HF, HThomHS, zero,n,sparsemap;
+local F,S, T, HS, HT, HF, HThomHS, zero,n,sparsemap, A, B, InitA;
 
 F:=arg[1];
 S:=Source(F);
@@ -153,19 +153,20 @@ for n in [1..Length(S)+1] do
 zero[n]:=0*[1..S!.dimension(n-1)];
 od;
 
+#A:=List([0..Length(S)],i->IdentityMat(S!.dimension(i)));
+A:=[];
+#for n in [0..Length(A)-1] do
+InitA:=function(n);
+A[n+1]:=IdentityMat(S!.dimension(n));
+B:=List(A[n+1], r->F!.mapping(r,n));
+A[n+1]:=TransposedMat(B);
+end;
+#od;
 #################
 HThomHS:=function(v,n)
 local rowA, ans, k;
-
-rowA:=StructuralCopy(zero[n+1]);
-ans:=StructuralCopy(zero[n+1]);;
-
-for k in [1..Length(ans)] do
-rowA[k]:=1;
-ans[k]:=v*F!.mapping(rowA,n);
-rowA[k]:=0;
-od;
-return ans;
+if not IsBound(A[n+1]) then InitA(n); fi;
+return v*A[n+1];
 end;
 #################
 

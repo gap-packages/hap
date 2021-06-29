@@ -159,8 +159,8 @@ local W, M, R, RM, D, DD, DDinv, bound, orient, fp,
 
 OrientRegularCWComplex(X);
 
-W:=DirectProductOfRegularCWComplexes(X,X);
-quad2pair:=W!.quad2pair;
+W:=DirectProductOfRegularCWComplexes(X,X);  #THINK!!! There are more efficient
+quad2pair:=W!.quad2pair;                    #approaches to the approximation
 
 D:=[];
 DD:=List(W!.boundaries,i->[]);;

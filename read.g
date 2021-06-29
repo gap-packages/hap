@@ -505,8 +505,11 @@ ReadPackageHap("lib/Quandles/quandleKnots.gi");
 ReadPackageHap("lib/Quandles/quandleOrbits.gi");
 ReadPackageHap("lib/Quandles/isoreps.gi");
 
+################## MANIFOLDS #################################
+ReadPackageHap("lib/Manifolds/manifolds.gi");
+ReadPackageHap("lib/Manifolds/simplicialcup.gi");
+
 ################## KELVIN ##################################
-#ReadPackageHap("lib/Kelvin/knotCompBound.gi");
 ReadPackageHap("lib/Kelvin/init.g");
 
 
