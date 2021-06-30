@@ -37,19 +37,22 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7C4A2B8B79950232">1.4 <span class="Heading">The Quillen complex as a reduced CW-complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7A15484C7E680AC9">1.5 <span class="Heading">Constructing a CW-structure on a knot complement</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X782AAB84799E3C44">1.5 <span class="Heading">Simple homotopy equivalences</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7B7354E68025FC92">1.6 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7A15484C7E680AC9">1.6 <span class="Heading">Constructing a CW-structure on a knot complement</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X823FA6A9828FF473">1.7 <span class="Heading">Cup products</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7B7354E68025FC92">1.7 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7F9B01CF7EE1D2FC">1.8 <span class="Heading">Intersection forms of <span class="SimpleMath">\(4\)</span>-manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X823FA6A9828FF473">1.8 <span class="Heading">Cup products</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X8771FF2885105154">1.9 <span class="Heading">CW maps and induced homomorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7F9B01CF7EE1D2FC">1.9 <span class="Heading">Intersection forms of <span class="SimpleMath">\(4\)</span>-manifolds</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X8771FF2885105154">1.10 <span class="Heading">CW maps and induced homomorphisms</span></a>
 </span>
 </div>
 </div>
@@ -178,25 +181,44 @@ Chain complex of length 2 in characteristic 0 .
 
 </pre></div>
 
-<p>Note that for regular CW complexes <span class="SimpleMath">\(Y\)</span> the function <code class="code">ChainComplex(Y)</code> returns the cellular chain complex <span class="SimpleMath">\(C_\ast(X)\)</span> of a (typically non-regular) CW complex <span class="SimpleMath">\(X\)</span> homotopy equivalent to <span class="SimpleMath">\(Y\)</span>. The cellular chain complex <span class="SimpleMath">\(C_\ast(Y)\)</span> of <span class="SimpleMath">\(Y\)</span> itself can be obtained as follows.</p>
+<p><a id="X782AAB84799E3C44" name="X782AAB84799E3C44"></a></p>
+
+<h4>1.5 <span class="Heading">Simple homotopy equivalences</span></h4>
+
+<p>For any regular CW complex <span class="SimpleMath">\(Y\)</span> one can look for a sequence of simple homotopy collapses <span class="SimpleMath">\(Y\searrow Y_1 \searrow Y_2 \searrow \ldots \searrow Y_N=X\)</span> with <span class="SimpleMath">\(X\)</span> a smaller, and typically non-regular, CW complex. Such a sequence of collapses can be recorded using what is now known as a <em>discrete vector field</em> on <span class="SimpleMath">\(Y\)</span>. The sequence can, for example, be used to produce a chain homotopy equivalence <span class="SimpleMath">\(f\colon C_\ast Y \rightarrow C_\ast X\)</span> and its chain homotopy inverse <span class="SimpleMath">\(g\colon C_\ast X \rightarrow C_\ast Y\)</span>. The function <code class="code">ChainComplex(Y)</code> returns the cellular chain complex <span class="SimpleMath">\(C_\ast(X)\)</span>, wheras the function <code class="code">ChainComplexOfRegularCWComplex(Y)</code> returns the chain complex <span class="SimpleMath">\(C_\ast(Y)\)</span>.</p>
+
+<p>For the above Quillen complex <span class="SimpleMath">\(Y=\Delta{\cal A}_2(S_7)\)</span> the following commands produce the chain homotopy equivalence <span class="SimpleMath">\(f\colon C_\ast Y \rightarrow C_\ast X\)</span> and <span class="SimpleMath">\(g\colon C_\ast X \rightarrow C_\ast Y\)</span>. The number of generators of <span class="SimpleMath">\(C_\ast Y\)</span> equals the number of cells of <span class="SimpleMath">\(Y\)</span> in each degree, and this number is listed for each degree.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC:=ChainComplexOfRegularCWComplex(Y);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=QuillenComplex(SymmetricGroup(7),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=RegularCWComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CY:=ChainComplexOfRegularCWComplex(Y);</span>
 Chain complex of length 2 in characteristic 0 . 
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC!.dimension(0);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CX:=ChainComplex(Y);</span>
+Chain complex of length 2 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">equiv:=ChainComplexEquivalenceOfRegularCWComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=equiv[1];</span>
+Chain Map between complexes of length 2 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=equiv[2];</span>
+Chain Map between complexes of length 2 .
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CY!.dimension(0);</span>
 1316
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC!.dimension(1);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CY!.dimension(1);</span>
 5565
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC!.dimension(2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CY!.dimension(2);</span>
 4410
 
 </pre></div>
 
 <p><a id="X7A15484C7E680AC9" name="X7A15484C7E680AC9"></a></p>
 
-<h4>1.5 <span class="Heading">Constructing a CW-structure on a knot complement</span></h4>
+<h4>1.6 <span class="Heading">Constructing a CW-structure on a knot complement</span></h4>
 
 <p>The following commands construct the complement <span class="SimpleMath">\(M=S^3\setminus K\)</span> of the trefoil knot <span class="SimpleMath">\(K\)</span>. This complement is returned as a <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(M\)</span> with regular CW-structure involving four <span class="SimpleMath">\(3\)</span>-cells.</p>
 
@@ -229,7 +251,7 @@ x_1^2-x_1+1
 
 <p><a id="X7B7354E68025FC92" name="X7B7354E68025FC92"></a></p>
 
-<h4>1.6 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></h4>
+<h4>1.7 <span class="Heading">Constructing a regular CW-complex from its face lattice</span></h4>
 
 <p><img src="images/cwspace.jpg" align="center" width="250" alt="CW space"/></p>
 
@@ -290,9 +312,9 @@ Cochain complex of length 10 in characteristic 0 .
 
 <p><a id="X823FA6A9828FF473" name="X823FA6A9828FF473"></a></p>
 
-<h4>1.7 <span class="Heading">Cup products</span></h4>
+<h4>1.8 <span class="Heading">Cup products</span></h4>
 
-<p><strong class="button">Strategy 1: use geometric group theory in low dimensions.</strong></p>
+<p><strong class="button">Strategy 1: Use geometric group theory in low dimensions.</strong></p>
 
 <p>Continuing with the previous example, we consider the first and fifth generators <span class="SimpleMath">\(g_1^1, g_5^1\in H^1(Y,\mathbb Z) =\mathbb Z^5\)</span> and establish that their cup product <span class="SimpleMath">\( g_1^1 \cup g_5^1 = - g_7^2 \in H^2(Y,\mathbb Z) =\mathbb Z^{10}\)</span> is equal to minus the seventh generator of <span class="SimpleMath">\(H^2(Y,\mathbb Z)\)</span>. We also verify that <span class="SimpleMath">\(g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1\)</span>.</p>
 
@@ -416,7 +438,7 @@ Simplicial complex of dimension 4.
 
 <p>A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice.</p>
 
-<p><strong class="button">Strategy 3: Guess and verify a cellular approcimation to the diagonal map.</strong></p>
+<p><strong class="button">Strategy 3: Guess and verify a cellular approximation to the diagonal map.</strong></p>
 
 <p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we require a cellular inclusion <span class="SimpleMath">\(\overline Y \hookrightarrow Y\times Y\)</span> with projection <span class="SimpleMath">\(p\colon \overline Y \twoheadrightarrow Y\)</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">\(p\colon \overline Y \twoheadrightarrow Y\)</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
 
@@ -458,7 +480,7 @@ true
 
 <p><a id="X7F9B01CF7EE1D2FC" name="X7F9B01CF7EE1D2FC"></a></p>
 
-<h4>1.8 <span class="Heading">Intersection forms of <span class="SimpleMath">\(4\)</span>-manifolds</span></h4>
+<h4>1.9 <span class="Heading">Intersection forms of <span class="SimpleMath">\(4\)</span>-manifolds</span></h4>
 
 <p>The cup product gives rise to the intersection form of a connected, closed, orientable <span class="SimpleMath">\(4\)</span>-manifold <span class="SimpleMath">\(Y\)</span> is a symmetric bilinear form</p>
 
@@ -517,7 +539,7 @@ Simplicial complex of dimension 4.
 
 <p><a id="X8771FF2885105154" name="X8771FF2885105154"></a></p>
 
-<h4>1.9 <span class="Heading">CW maps and induced homomorphisms</span></h4>
+<h4>1.10 <span class="Heading">CW maps and induced homomorphisms</span></h4>
 
 <p>A <em>strictly cellular</em> map <span class="SimpleMath">\(f\colon X\rightarrow Y\)</span> of regular CW-complexes is a cellular map for which the image of any cell is a cell (of possibly lower dimension). Inclusions of CW-subcomplexes, and projections from a direct product to a factor, are examples of such maps. Strictly cellular maps can be represented in <strong class="button">HAP</strong>, and their induced homomorphisms on (co)homology and on fundamental groups can be computed.</p>
 

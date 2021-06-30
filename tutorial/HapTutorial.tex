@@ -164,7 +164,44 @@
  }
 
  
-\section{\textcolor{Chapter }{The Quillen complex}}\logpage{[ 1, 2, 0 ]}
+\section{\textcolor{Chapter }{Other simplicial surfaces}}\logpage{[ 1, 2, 0 ]}
+\hyperdef{L}{X7B8F88487B1B766C}{}
+{
+ The following example constructs the real projective plane $P$, the Klein bottle $K$ and the torus $T$ as simplicial complexes, using the surface genus $g$ as input in the oriented case and $-g$ as input in the unoriented cases. It then confirms that the connected sums $M=K\#P$ and $N=T\#P$ have the same integral homology. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@P:=ClosedSurface(-1);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@K:=ClosedSurface(-2);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@T:=ClosedSurface(1);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@M:=ConnectedSum(K,P);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@N:=ConnectedSum(T,P);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@Homology(M,0);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Homology(N,0);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Homology(M,1);|
+  [ 2, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(N,1);|
+  [ 2, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(M,2);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Homology(N,2);|
+  [  ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{The Quillen complex}}\logpage{[ 1, 3, 0 ]}
 \hyperdef{L}{X80A72C347D99A58E}{}
 {
  
@@ -186,7 +223,7 @@
  }
 
  
-\section{\textcolor{Chapter }{The Quillen complex as a reduced CW-complex}}\logpage{[ 1, 3, 0 ]}
+\section{\textcolor{Chapter }{The Quillen complex as a reduced CW-complex}}\logpage{[ 1, 4, 0 ]}
 \hyperdef{L}{X7C4A2B8B79950232}{}
 {
  Any simplicial complex $K$ can be regarded as a regular CW complex. Different datatypes are used in \textsc{HAP} for these two notions. The following continuation of the above Quillen complex
@@ -213,23 +250,78 @@ has the homotopy type of a wedge of $160$ $2$-spheres. This homotopy equivalence
   160
   
 \end{Verbatim}
- Note that for regular CW complexes $Y$ the function \texttt{ChainComplex(Y)} returns the cellular chain complex $C_\ast(X)$ of a (typically non-regular) CW complex $X$ homotopy equivalent to $Y$. The cellular chain complex $C_\ast(Y)$ of $Y$ itself can be obtained as follows. 
+ }
+
+ 
+\section{\textcolor{Chapter }{Simple homotopy equivalences}}\logpage{[ 1, 5, 0 ]}
+\hyperdef{L}{X782AAB84799E3C44}{}
+{
+ 
+
+For any regular CW complex $Y$ one can look for a sequence of simple homotopy collapses $Y\searrow Y_1 \searrow Y_2 \searrow \ldots \searrow Y_N=X$ with $X$ a smaller, and typically non-regular, CW complex. Such a sequence of collapses
+can be recorded using what is now known as a \emph{discrete vector field} on $Y$. The sequence can, for example, be used to produce a chain homotopy
+equivalence $f\colon C_\ast Y \rightarrow C_\ast X$ and its chain homotopy inverse $g\colon C_\ast X \rightarrow C_\ast Y$. The function \texttt{ChainComplex(Y)} returns the cellular chain complex $C_\ast(X)$, wheras the function \texttt{ChainComplexOfRegularCWComplex(Y)} returns the chain complex $C_\ast(Y)$. 
+
+ For the above Quillen complex $Y=\Delta{\cal A}_2(S_7)$ the following commands produce the chain homotopy equivalence $f\colon C_\ast Y \rightarrow C_\ast X$ and $g\colon C_\ast X \rightarrow C_\ast Y$. The number of generators of $C_\ast Y$ equals the number of cells of $Y$ in each degree, and this number is listed for each degree. 
 \begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
-  @gapprompt|gap>A @gapinput|CC:=ChainComplexOfRegularCWComplex(Y);A
+  @gapprompt|gap>A @gapinput|K:=QuillenComplex(SymmetricGroup(7),2);;A
+  @gapprompt|gap>A @gapinput|Y:=RegularCWComplex(K);;A
+  @gapprompt|gap>A @gapinput|CY:=ChainComplexOfRegularCWComplex(Y);A
   Chain complex of length 2 in characteristic 0 . 
   
-  @gapprompt|gap>A @gapinput|CC!.dimension(0);A
+  @gapprompt|gap>A @gapinput|CX:=ChainComplex(Y);A
+  Chain complex of length 2 in characteristic 0 . 
+  
+  @gapprompt|gap>A @gapinput|equiv:=ChainComplexEquivalenceOfRegularCWComplex(Y);;A
+  @gapprompt|gap>A @gapinput|f:=equiv[1];A
+  Chain Map between complexes of length 2 . 
+  
+  @gapprompt|gap>A @gapinput|g:=equiv[2];A
+  Chain Map between complexes of length 2 .
+  
+  
+  @gapprompt|gap>A @gapinput|CY!.dimension(0);A
   1316
-  @gapprompt|gap>A @gapinput|CC!.dimension(1);A
+  @gapprompt|gap>A @gapinput|CY!.dimension(1);A
   5565
-  @gapprompt|gap>A @gapinput|CC!.dimension(2);A
+  @gapprompt|gap>A @gapinput|CY!.dimension(2);A
   4410
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{Constructing a regular CW-complex from its face lattice}}\logpage{[ 1, 4, 0 ]}
+\section{\textcolor{Chapter }{Constructing a CW-structure on a knot complement}}\logpage{[ 1, 6, 0 ]}
+\hyperdef{L}{X7A15484C7E680AC9}{}
+{
+ The following commands construct the complement $M=S^3\setminus K$ of the trefoil knot $K$. This complement is returned as a $3$-manifold $M$ with regular CW-structure involving four $3$-cells. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|arc:=ArcPresentation(PureCubicalKnot(3,1));B
+  [ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ]
+  @gapprompt|gap>B @gapinput|S:=SphericalKnotComplement(arc);B
+  Regular CW-complex of dimension 3
+  
+  @gapprompt|gap>B @gapinput|S!.nrCells(3);B
+  4
+  
+\end{Verbatim}
+ The following additional commands then show that $M$ is homotopy equivalent to a reduced CW-complex $Y$ of dimension $2$ involving one $0$-cell, two $1$-cells and one $2$-cell. The fundamental group of $Y$ is computed and used to calculate the Alexander polynomial of the trefoil
+knot. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Y:=ContractedComplex(S);|
+  Regular CW-complex of dimension 2
+  
+  !gapprompt@gap>| !gapinput@CriticalCells(Y);|
+  [ [ 2, 1 ], [ 1, 9 ], [ 1, 11 ], [ 0, 22 ] ]
+  !gapprompt@gap>| !gapinput@G:=FundamentalGroup(Y);;|
+  !gapprompt@gap>| !gapinput@AlexanderPolynomial(G);|
+  x_1^2-x_1+1
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Constructing a regular CW-complex from its face lattice}}\logpage{[ 1, 7, 0 ]}
 \hyperdef{L}{X7B7354E68025FC92}{}
 {
  
@@ -298,13 +390,15 @@ $H^6(Y,\mathbb Z)=0$\\
  }
 
  
-\section{\textcolor{Chapter }{Cup products}}\logpage{[ 1, 5, 0 ]}
+\section{\textcolor{Chapter }{Cup products}}\logpage{[ 1, 8, 0 ]}
 \hyperdef{L}{X823FA6A9828FF473}{}
 {
  
 
+\textsc{Strategy 1: Use geometric group theory in low dimensions.} 
+
 Continuing with the previous example, we consider the first and fifth
-generators $g_1^1, g_5^1\in H^1(W,\mathbb Z) =\mathbb Z^5$ and establish that their cup product $ g_1^1 \cup g_5^1 = - g_7^2 \in H^2(W,\mathbb Z) =\mathbb Z^{10}$ is equal to minus the seventh generator of $H^2(W,\mathbb Z)$. We also verify that $g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1$. 
+generators $g_1^1, g_5^1\in H^1(Y,\mathbb Z) =\mathbb Z^5$ and establish that their cup product $ g_1^1 \cup g_5^1 = - g_7^2 \in H^2(Y,\mathbb Z) =\mathbb Z^{10}$ is equal to minus the seventh generator of $H^2(Y,\mathbb Z)$. We also verify that $g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@cup11:=CupProduct(FundamentalGroup(Y));|
   function( a, b ) ... end
@@ -320,44 +414,223 @@ generators $g_1^1, g_5^1\in H^1(W,\mathbb Z) =\mathbb Z^5$ and establish that th
  
 
 This computation of low-dimensional cup products is achieved using
-group-theoretic methods to approximate the diagonal map $\Delta \colon Y \rightarrow Y\times Y$ in dimensions $\le 2$. In order to construct cup products in higher degrees \textsc{HAP} requires a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
+group-theoretic methods to approximate the diagonal map $\Delta \colon Y \rightarrow Y\times Y$ in dimensions $\le 2$. In order to construct cup products in higher degrees \textsc{HAP} invokes two further strategies. 
+
+\textsc{Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.} 
+
+For simplicial complexes the cup product is implemented using the standard
+formula for the Alexander-Whitney chain map, together with homotopy
+equivalences to improve efficiency. 
+
+As a first example, the following commands construct simplicial surfaces $K=(\mathbb S^1 \times \mathbb S^1) \# (\mathbb S^1 \times \mathbb S^1)$ and $L=(\mathbb S^1 \times \mathbb S^1) \vee \mathbb S^1 \vee \mathbb S^1$ and establish that they have the same cohomology groups. It is then shown that
+the cup products $\cup_K\colon H^1(K,\mathbb Z)\times H^1(K,\mathbb Z) \rightarrow H^2(K,\mathbb
+Z)$ and $\cup_L\colon H^1(L,\mathbb Z)\times H^1(L,\mathbb Z) \rightarrow H^2(L,\mathbb
+Z)$ are antisymmetric bilinear forms of different ranks; hence $K$ and $L$ have different homotopy types. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ClosedSurface(2);|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@L:=WedgeSum(WedgeSum(ClosedSurface(1),Sphere(1)),Sphere(1));|
+  Simplicial complex of dimension 2.
+  
+  !gapprompt@gap>| !gapinput@Cohomology(K,0);Cohomology(L,0);|
+  [ 0 ]
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(K,1);Cohomology(L,1);|
+  [ 0, 0, 0, 0 ]
+  [ 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(K,2);Cohomology(L,2);|
+  [ 0 ]
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@gens:=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];;|
+  !gapprompt@gap>| !gapinput@cupK:=CupProduct(K);;|
+  !gapprompt@gap>| !gapinput@cupL:=CupProduct(L);;|
+  !gapprompt@gap>| !gapinput@A:=NullMat(4,4);;B:=NullMat(4,4);;|
+  !gapprompt@gap>| !gapinput@for i in [1..4] do|
+  !gapprompt@>| !gapinput@for j in [1..4] do|
+  !gapprompt@>| !gapinput@A[i][j]:=cupK(1,1,gens[i],gens[j])[1];|
+  !gapprompt@>| !gapinput@B[i][j]:=cupL(1,1,gens[i],gens[j])[1];|
+  !gapprompt@>| !gapinput@od;od;|
+  !gapprompt@gap>| !gapinput@Display(A);|
+  [ [   0,   0,   0,   1 ],
+    [   0,   0,   1,   0 ],
+    [   0,  -1,   0,   0 ],
+    [  -1,   0,   0,   0 ] ]
+  !gapprompt@gap>| !gapinput@Display(B);|
+  [ [   0,   1,   0,   0 ],
+    [  -1,   0,   0,   0 ],
+    [   0,   0,   0,   0 ],
+    [   0,   0,   0,   0 ] ]
+  !gapprompt@gap>| !gapinput@Rank(A);|
+  4
+  !gapprompt@gap>| !gapinput@Rank(B);|
+  2
+  
+\end{Verbatim}
+ 
+
+ As a second example of the computation of cups products, the following
+commands construct the wedge sum $W=M\vee N$ of a $2$-dimensional orientable simplicial surface of genus 2 and the $K3$ complex surface which is stored as a pure simplicial complex of dimension 4.
+The simplicial structure on the $K3$ surface is taken from \cite{spreerkhuenel}. The commands then show that $H^2(W,\mathbb Z)=\mathbb Z^{22}$ and $H^4(W,\mathbb Z)=\mathbb Z$. The final commands comput the matrix $(x\cup y)$ as $x,y$ range over a generating set for $H^2(W,\mathbb Z)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@M:=ClosedSurface(2);;|
+  !gapprompt@gap>| !gapinput@N:=SimplicialK3Surface();;|
+  !gapprompt@gap>| !gapinput@W:=WedgeSum(M,N);|
+  Simplicial complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@Cohomology(W,0);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(W,1);|
+  [ 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(W,2);|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(W,3);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Cohomology(W,4);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@cup:=CupProduct(W);;|
+  !gapprompt@gap>| !gapinput@SecondCohomologyGens:=IdentityMat(23);;|
+  !gapprompt@gap>| !gapinput@A:=NullMat(23,23);;|
+  !gapprompt@gap>| !gapinput@for i in [1..23] do|
+  !gapprompt@>| !gapinput@for j in [1..23] do|
+  !gapprompt@>| !gapinput@A[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];|
+  !gapprompt@>| !gapinput@od;od;|
+  !gapprompt@gap>| !gapinput@Display(A);|
+  [ [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
+    [   0,  -2,   2,  -1,   0,  -1,   1,  -1,   0,   0,   1,  -1,   0,   0,   1,   1,   2,  -1,  -1,   1,  -1,   0,  -1 ],
+    [   0,   2,  -4,   2,  -1,   1,  -1,   1,   0,  -1,  -1,   0,   1,  -1,   1,  -1,  -2,   1,   2,  -2,   1,   0,   3 ],
+    [   0,  -1,   2,  -2,   2,  -1,   0,  -1,   1,   1,   1,   0,   0,   0,  -2,   0,   0,   0,   0,   1,   0,   1,  -1 ],
+    [   0,   0,  -1,   2,  -4,   1,   1,   1,  -2,  -1,  -1,   0,  -1,  -1,   4,   0,   1,  -1,  -1,  -1,  -1,  -1,   1 ],
+    [   0,  -1,   1,  -1,   1,  -2,   0,  -1,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   1,   0 ],
+    [   0,   1,  -1,   0,   1,   0,  -2,   1,   0,   0,  -1,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,   0,   0 ],
+    [   0,  -1,   1,  -1,   1,  -1,   1,  -2,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   0,   0 ],
+    [   0,   0,   0,   1,  -2,   1,   0,   1,  -2,  -1,   0,   0,  -1,  -1,   2,   0,   0,  -1,   0,  -1,  -1,  -1,   0 ],
+    [   0,   0,  -1,   1,  -1,   0,   0,   0,  -1,  -2,   0,  -1,   0,   0,   2,   1,   0,   0,   0,   0,   0,  -1,   1 ],
+    [   0,   1,  -1,   1,  -1,   1,  -1,   1,   0,   0,  -2,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,  -1,   0 ],
+    [   0,  -1,   0,   0,   0,  -1,   0,  -1,   0,  -1,   0,  -2,   1,   0,   2,   1,   1,  -1,   0,   0,   0,   0,   1 ],
+    [   0,   0,   1,   0,  -1,   1,   1,   1,  -1,   0,   1,   1,  -2,   0,   0,   0,   0,   1,  -1,   1,  -1,  -1,  -2 ],
+    [   0,   0,  -1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,   0,  -2,   3,   0,   1,  -1,   0,  -1,  -1,   0,   1 ],
+    [   0,   1,   1,  -2,   4,   0,  -1,   0,   2,   2,  -1,   2,   0,   3,  -8,  -1,  -2,   1,   1,   1,   2,   0,  -2 ],
+    [   0,   1,  -1,   0,   0,   1,   0,   1,   0,   1,   0,   1,   0,   0,  -1,  -2,  -1,   1,   1,  -1,   0,   0,   0 ],
+    [   0,   2,  -2,   0,   1,   1,  -1,   1,   0,   0,  -1,   1,   0,   1,  -2,  -1,  -2,   0,   2,  -1,   1,   0,   0 ],
+    [   0,  -1,   1,   0,  -1,   0,   0,   0,  -1,   0,   0,  -1,   1,  -1,   1,   1,   0,  -2,  -1,   0,   0,  -1,   1 ],
+    [   0,  -1,   2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,  -1,   0,   1,   1,   2,  -1,  -2,   1,  -1,   0,  -2 ],
+    [   0,   1,  -2,   1,  -1,   1,   0,   1,  -1,   0,   0,   0,   1,  -1,   1,  -1,  -1,   0,   1,  -2,   0,  -1,   2 ],
+    [   0,  -1,   1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,  -1,  -1,   2,   0,   1,   0,  -1,   0,  -2,   0,   0 ],
+    [   0,   0,   0,   1,  -1,   1,   0,   0,  -1,  -1,  -1,   0,  -1,   0,   0,   0,   0,  -1,   0,  -1,   0,  -2,   1 ],
+    [   0,  -1,   3,  -1,   1,   0,   0,   0,   0,   1,   0,   1,  -2,   1,  -2,   0,   0,   1,  -2,   2,   0,   1,  -4 ] ]
+  
+\end{Verbatim}
+ A cubical Alexander-Whitney formula can be used similarly for computing the
+cohomology ring of a regular CW-complex whose cells all have a cubical
+combinatorial face lattice. 
+
+\textsc{Strategy 3: Guess and verify a cellular approximation to the diagonal map.} 
+
+Many naturally occuring cell structures are neither simplicial nor cubical.
+For a general regular CW-complex we require a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
 this test then the function \texttt{CupProduct(Y)}, involving the candidate space, can be used for cup products. 
 
-The following example calculates $g_3^3 \cup g_3^1 = g_1^4$ where $W=S\times S\times S\times S$ is the direct product of four circles, and where $g_k^n$ denotes the $k$-th generator of $H^n(W,\mathbb Z)$. 
+The following example calculates $g_1^1 \cup g_3^2 \ne 0$ where $Y=S\times S\times A$ is the direct product of two simplicial circles $S$ and one $2$-dimensional cubical Annulus $A$ and where $g_k^n$ denotes the $k$-th generator of $H^n(Y,\mathbb Z)$. 
 \begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
-  @gapprompt|gap>B @gapinput|S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;B
-  @gapprompt|gap>B @gapinput|S:=RegularCWComplex(S);;B
-  @gapprompt|gap>B @gapinput|W:=DirectProduct(S,S,S,S);;B
-  @gapprompt|gap>B @gapinput|cup:=CupProduct(W);B
-  function( p, q, vv, ww ) ... end
+  @gapprompt|gap>B @gapinput|A:=[[1,1,1],[1,0,1],[1,1,1]];;B
+  @gapprompt|gap>B @gapinput|A:=PureCubicalComplex(A);;B
+  @gapprompt|gap>B @gapinput|A:=RegularCWComplex(A); #A cubical annulusB
+  Regular CW-complex of dimension 2
   
-  @gapprompt|gap>B @gapinput|cup(3,1,[0,0,1,0],[0,0,1,0]);B
-  [ 1 ]
-  	  
-  #Now test that the diagonal construction is valid.
-  @gapprompt|gap>B @gapinput|D:=DiagonalApproximation(W);;B
+  @gapprompt|gap>B @gapinput|S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;B
+  @gapprompt|gap>B @gapinput|S:=RegularCWComplex(S); #A circleB
+  Regular CW-complex of dimension 1
+  
+  @gapprompt|gap>B @gapinput|Y:=DirectProduct(S,S,A);B
+  Regular CW-complex of dimension 4
+  
+  @gapprompt|gap>B @gapinput|cup:=CupProduct(Y);;B
+  @gapprompt|gap>B @gapinput|cup(1,2,[1,0,0],[0,0,1]);B
+  [ -1 ]
+  
+  @gapprompt|gap>B @gapinput|D:=DiagonalApproximation(Y);;B
   @gapprompt|gap>B @gapinput|p:=D!.projection;B
   Map of regular CW-complexes
   
   @gapprompt|gap>B @gapinput|P:=ChainMap(p);B
-  Chain Map between complexes of length 4 . 
+  Chain Map between complexes of length 3 . 
   
   @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,0));B
-  true
-  @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,1));B
   true
   @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,2));B
   true
   @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,3));B
-  true
-  @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,4));B
   true
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 6, 0 ]}
+\section{\textcolor{Chapter }{Intersection forms of $4$-manifolds}}\logpage{[ 1, 9, 0 ]}
+\hyperdef{L}{X7F9B01CF7EE1D2FC}{}
+{
+ The cup product gives rise to the intersection form of a connected, closed,
+orientable $4$-manifold $Y$ is a symmetric bilinear form 
+
+$qY\colon H^2(Y,\mathbb Z)/Torsion \times H^2(Y,\mathbb Z)/Torsion
+\longrightarrow \mathbb Z$ 
+
+which we represent as a symmetric matrix. 
+
+The following example constructs the direct product $L=S^2\times S^2$ of two $2$-spheres, the connected sum $M=\mathbb CP^2 \# \overline{\mathbb CP^2}$ of the complex projective plane $\mathbb CP^2$ and its oppositely oriented version $\overline{\mathbb CP^2}$, and the connected sum $M=\mathbb CP^2 \# \mathbb CP^2$. The manifolds $L$, $M$ and $N$ are each shown to have a CW-structure involving one $0$-cell, two $1$-cells and one $2$-cell. They are thus simply connected and have identical cohomology. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@S:=Sphere(2);;|
+  !gapprompt@gap>| !gapinput@S:=RegularCWComplex(S);;|
+  !gapprompt@gap>| !gapinput@L:=DirectProduct(S,S);|
+  Regular CW-complex of dimension 4
+  
+  !gapprompt@gap>| !gapinput@M:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),-1);|
+  Simplicial complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@N:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),+1);|
+  Simplicial complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@CriticalCells(L);|
+  [ [ 4, 1 ], [ 2, 13 ], [ 2, 56 ], [ 0, 16 ] ]
+  !gapprompt@gap>| !gapinput@CriticalCells(RegularCWComplex(M));|
+  [ [ 4, 1 ], [ 2, 109 ], [ 2, 119 ], [ 0, 8 ] ]
+  !gapprompt@gap>| !gapinput@CriticalCells(RegularCWComplex(N));|
+  [ [ 4, 1 ], [ 2, 119 ], [ 2, 149 ], [ 0, 12 ] ]
+  
+\end{Verbatim}
+ John Milnor showed (as a corollary to a theorem of J. H. C. Whitehead) that
+the homotopy type of a simply connected 4-manifold is determined by its
+quadratic form. More precisely, a form is said to be of \emph{type I (properly primitive)} if some diagonal entry of its matrix is odd. If every diagonal entry is even,
+then the form is of \emph{type II (improperly primitive)}. The \emph{index} of a form is defined as the number of positive diagonal entries minus the
+number of negative ones, after the matrix has been diagonalized over the real
+numbers. 
+
+\textsc{Theorem.} (Milnor \cite{milnor}) The oriented homotopy type of a simply connected, closed, orientable
+4-manifold is determined by its second Betti number and the index and type of
+its intersetion form; except possibly in the case of a manifold with definite
+quadratic form of rank r {\textgreater} 9. 
+
+ The following commands compute matrices representing the intersection forms $qL$, $qM$, $qN$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@qL:=IntersectionForm(L);;|
+  !gapprompt@gap>| !gapinput@qM:=IntersectionForm(M);;|
+  !gapprompt@gap>| !gapinput@qN:=IntersectionForm(N);;|
+  !gapprompt@gap>| !gapinput@Display(qL);|
+  [ [  -2,   1 ],
+    [   1,   0 ] ]
+  !gapprompt@gap>| !gapinput@Display(qM);|
+  [ [  5,  2 ],
+    [  2,  1 ] ]
+  !gapprompt@gap>| !gapinput@Display(qN);|
+  [ [  -3,  -2 ],
+    [  -2,  -1 ] ]
+  
+\end{Verbatim}
+ Since $qL$ is of type I, whereas $qM$ and $qN$ are of type II we see that the oriented homotopy type of $L$ is distinct to that of $M$ and that of $N$. Since $qM$ has index $2$ and $qN$ has index $0$ we see that that $M$ and $N$ also have distinct oriented homotopy types. }
+
+ 
+\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 10, 0 ]}
 \hyperdef{L}{X8771FF2885105154}{}
 {
  
@@ -1215,6 +1488,95 @@ The following image was used in the example.
 
   }
 
+ }
+
+ 
+\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 4, 4, 0 ]}
+\hyperdef{L}{X87AF06677F05C624}{}
+{
+ 
+
+For a positive integer $n$ and probability $p$ we denote by $Y(n,p)$ the \emph{Linial-Meshulam random simplicial 2-complex}. Its $1$-skeleton is the complete graph on $n$ vertices; each possible $2$-simplex is included independently with probability $p$. 
+
+The following commands first compute the number $h_i$ of non-trivial cyclic summands in $H_i(Y(100,p), \mathbb Z)$ for a range of probabilities $p$ and $i=1,2$ and then produce a plot of $h_i$ versus $p$. The plot for $h_1$ is red and the plot for $h_2$ is blue. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=[];;|
+  !gapprompt@gap>| !gapinput@for p in [1..100] do|
+  !gapprompt@>| !gapinput@K:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;|
+  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);|
+  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@ScatterPlot(L);|
+  
+\end{Verbatim}
+ 
+
+  
+
+From this plot it seems that there is a \emph{phase change threshold} at around $p=0.025$. An inspection of the first homology groups $H_1(Y(100,p), \mathbb Z)$ shows that in most cases there is no torsion. However, around the threshold
+some of the complexes do have torsion in their first homology. 
+
+Similar commands for $Y(75,p)$ suggest a phase transition at around $p=0.035$ in this case. The following commands compute $H_1(Y(75,p), \mathbb Z)$ for $900$ random $2$-complexes with $p$ in a small interval around $ 0.035$ and, in each case where there is torsion, the torsion coefficients are stored
+in a list. The final command prints these lists -- all but one of which are of
+length $1$. For example, there is one $2$-dimensional simplicial complex on $75$ vertices whose first homology contains the summand $\mathbb Z_{107879661870516800665161182578823128}$. The largest prime factor is $80555235907994145009690263$ occuring in the summand $\mathbb Z_{259837760616287294231081766978855}$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@torsion:=function(n,p)|
+  !gapprompt@>| !gapinput@local H, Y;|
+  !gapprompt@>| !gapinput@Y:=RegularCWComplex(RandomSimplicialTwoComplex(n,p));|
+  !gapprompt@>| !gapinput@H:=Homology(Y,1);|
+  !gapprompt@>| !gapinput@H:=Filtered(H,x->not x=0);|
+  !gapprompt@>| !gapinput@return H;|
+  !gapprompt@>| !gapinput@end;|
+  function( n, p ) ... end
+  
+  
+  !gapprompt@gap>| !gapinput@L:=[];;for n in [73000..73900] do|
+  !gapprompt@>| !gapinput@t:=torsion(75,n/2000000);  |
+  !gapprompt@>| !gapinput@if not t=[] then Add(L,t); fi;|
+  !gapprompt@>| !gapinput@od;|
+  
+  !gapprompt@gap>| !gapinput@Display(L);|
+  [ [                                     2 ],
+    [                                    26 ],
+    [     259837760616287294231081766978855 ],
+    [                                     2 ],
+    [                                     3 ],
+    [                                     2 ],
+    [          2761642698060127444812143568 ],
+    [       2626355281010974663776273381976 ],
+    [                                     2 ],
+    [                                     3 ],
+    [         33112382751264894819430785350 ],
+    [                                    16 ],
+    [                                     4 ],
+    [                                     3 ],
+    [                                     2 ],
+    [                                     3 ],
+    [                                     2 ],
+    [      85234949999183888967763100590977 ],
+    [                                     2 ],
+    [      24644196130785821107897718662022 ],
+    [                                     2,                                     2 ],
+    [                                     2 ],
+    [           416641662889025645492982468 ],
+    [         41582773001875039168786970816 ],
+    [                                     2 ],
+    [            75889883165411088431747730 ],
+    [         33523474091636554792305315165 ],
+    [  107879661870516800665161182578823128 ],
+    [          5588265814409119568341729980 ],
+    [                                     2 ],
+    [          5001457249224115878015053458 ],
+    [                                    10 ],
+    [                                    12 ],
+    [                                     2 ],
+    [                                     2 ],
+    [                                     3 ],
+    [          7757870243425246987971789322 ],
+    [       8164648856993269673396613497412 ],
+    [                                     2 ] ]
+  
+\end{Verbatim}
  }
 
  }

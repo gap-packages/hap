@@ -142,3 +142,101 @@
   
   [33X[0;0YThe following image was used in the example.[133X
   
+  
+  [1X4.4 [33X[0;0YRandom simplicial complexes[133X[101X
+  
+  [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
+  [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete
+  graph  on [22Xn[122X vertices; each possible [22X2[122X-simplex is included independently with
+  probability [22Xp[122X.[133X
+  
+  [33X[0;0YThe  following  commands  first compute the number [22Xh_i[122X of non-trivial cyclic
+  summands  in  [22XH_i(Y(100,p),  Z)[122X for a range of probabilities [22Xp[122X and [22Xi=1,2[122X and
+  then  produce  a  plot of [22Xh_i[122X versus [22Xp[122X. The plot for [22Xh_1[122X is red and the plot
+  for [22Xh_2[122X is blue.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor p in [1..100] do[127X[104X
+    [4X[25X>[125X [27XK:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;[127X[104X
+    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);[127X[104X
+    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XScatterPlot(L);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFrom  this  plot  it  seems that there is a [13Xphase change threshold[113X at around
+  [22Xp=0.025[122X.  An  inspection of the first homology groups [22XH_1(Y(100,p), Z)[122X shows
+  that  in  most cases there is no torsion. However, around the threshold some
+  of the complexes do have torsion in their first homology.[133X
+  
+  [33X[0;0YSimilar commands for [22XY(75,p)[122X suggest a phase transition at around [22Xp=0.035[122X in
+  this  case.  The  following  commands compute [22XH_1(Y(75,p), Z)[122X for [22X900[122X random
+  [22X2[122X-complexes  with [22Xp[122X in a small interval around [22X0.035[122X and, in each case where
+  there  is  torsion, the torsion coefficients are stored in a list. The final
+  command  prints  these  lists  --  all but one of which are of length [22X1[122X. For
+  example,  there is one [22X2[122X-dimensional simplicial complex on [22X75[122X vertices whose
+  first  homology contains the summand [22XZ_107879661870516800665161182578823128[122X.
+  The  largest  prime  factor  is  [22X80555235907994145009690263[122X  occuring in the
+  summand [22XZ_259837760616287294231081766978855[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xtorsion:=function(n,p)[127X[104X
+    [4X[25X>[125X [27Xlocal H, Y;[127X[104X
+    [4X[25X>[125X [27XY:=RegularCWComplex(RandomSimplicialTwoComplex(n,p));[127X[104X
+    [4X[25X>[125X [27XH:=Homology(Y,1);[127X[104X
+    [4X[25X>[125X [27XH:=Filtered(H,x->not x=0);[127X[104X
+    [4X[25X>[125X [27Xreturn H;[127X[104X
+    [4X[25X>[125X [27Xend;[127X[104X
+    [4X[28Xfunction( n, p ) ... end[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL:=[];;for n in [73000..73900] do[127X[104X
+    [4X[25X>[125X [27Xt:=torsion(75,n/2000000);  [127X[104X
+    [4X[25X>[125X [27Xif not t=[] then Add(L,t); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(L);[127X[104X
+    [4X[28X[ [                                     2 ],[128X[104X
+    [4X[28X  [                                    26 ],[128X[104X
+    [4X[28X  [     259837760616287294231081766978855 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [                                     3 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [          2761642698060127444812143568 ],[128X[104X
+    [4X[28X  [       2626355281010974663776273381976 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [                                     3 ],[128X[104X
+    [4X[28X  [         33112382751264894819430785350 ],[128X[104X
+    [4X[28X  [                                    16 ],[128X[104X
+    [4X[28X  [                                     4 ],[128X[104X
+    [4X[28X  [                                     3 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [                                     3 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [      85234949999183888967763100590977 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [      24644196130785821107897718662022 ],[128X[104X
+    [4X[28X  [                                     2,                                     2 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [           416641662889025645492982468 ],[128X[104X
+    [4X[28X  [         41582773001875039168786970816 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [            75889883165411088431747730 ],[128X[104X
+    [4X[28X  [         33523474091636554792305315165 ],[128X[104X
+    [4X[28X  [  107879661870516800665161182578823128 ],[128X[104X
+    [4X[28X  [          5588265814409119568341729980 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [          5001457249224115878015053458 ],[128X[104X
+    [4X[28X  [                                    10 ],[128X[104X
+    [4X[28X  [                                    12 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [                                     2 ],[128X[104X
+    [4X[28X  [                                     3 ],[128X[104X
+    [4X[28X  [          7757870243425246987971789322 ],[128X[104X
+    [4X[28X  [       8164648856993269673396613497412 ],[128X[104X
+    [4X[28X  [                                     2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

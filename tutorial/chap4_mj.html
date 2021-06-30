@@ -43,6 +43,9 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D512DA37F789B4C">4.3-1 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X87AF06677F05C624">4.4 <span class="Heading">Random simplicial complexes</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Topological data analysis</span></h3>
@@ -185,7 +188,93 @@ Filtered pure cubical complex of dimension 2.
 
 <p>The following image was used in the example.</p>
 
-<p><img src="../../tst/examples/image1.3.2.png" align="center" height="500" alt="barcode"/></p>
+<p><img src="../tst/examples/image1.3.2.png" align="center" height="500" alt="barcode"/></p>
+
+<p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
+
+<h4>4.4 <span class="Heading">Random simplicial complexes</span></h4>
+
+<p>For a positive integer <span class="SimpleMath">\(n\)</span> and probability <span class="SimpleMath">\(p\)</span> we denote by <span class="SimpleMath">\(Y(n,p)\)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">\(1\)</span>-skeleton is the complete graph on <span class="SimpleMath">\(n\)</span> vertices; each possible <span class="SimpleMath">\(2\)</span>-simplex is included independently with probability <span class="SimpleMath">\(p\)</span>.</p>
+
+<p>The following commands first compute the number <span class="SimpleMath">\(h_i\)</span> of non-trivial cyclic summands in <span class="SimpleMath">\(H_i(Y(100,p), \mathbb Z)\)</span> for a range of probabilities <span class="SimpleMath">\(p\)</span> and <span class="SimpleMath">\(i=1,2\)</span> and then produce a plot of <span class="SimpleMath">\(h_i\)</span> versus <span class="SimpleMath">\(p\)</span>. The plot for <span class="SimpleMath">\(h_1\)</span> is red and the plot for <span class="SimpleMath">\(h_2\)</span> is blue.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in [1..100] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">K:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(L);</span>
+
+</pre></div>
+
+<p><img src="tutex/graph4.7.png" align="center" height="500" alt="a graph"/></p>
+
+<p>From this plot it seems that there is a <em>phase change threshold</em> at around <span class="SimpleMath">\(p=0.025\)</span>. An inspection of the first homology groups <span class="SimpleMath">\(H_1(Y(100,p), \mathbb Z)\)</span> shows that in most cases there is no torsion. However, around the threshold some of the complexes do have torsion in their first homology.</p>
+
+<p>Similar commands for <span class="SimpleMath">\(Y(75,p)\)</span> suggest a phase transition at around <span class="SimpleMath">\(p=0.035\)</span> in this case. The following commands compute <span class="SimpleMath">\(H_1(Y(75,p), \mathbb Z)\)</span> for <span class="SimpleMath">\(900\)</span> random <span class="SimpleMath">\(2\)</span>-complexes with <span class="SimpleMath">\(p\)</span> in a small interval around <span class="SimpleMath">\( 0.035\)</span> and, in each case where there is torsion, the torsion coefficients are stored in a list. The final command prints these lists -- all but one of which are of length <span class="SimpleMath">\(1\)</span>. For example, there is one <span class="SimpleMath">\(2\)</span>-dimensional simplicial complex on <span class="SimpleMath">\(75\)</span> vertices whose first homology contains the summand <span class="SimpleMath">\(\mathbb Z_{107879661870516800665161182578823128}\)</span>. The largest prime factor is <span class="SimpleMath">\(80555235907994145009690263\)</span> occuring in the summand <span class="SimpleMath">\(\mathbb Z_{259837760616287294231081766978855}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">torsion:=function(n,p)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local H, Y;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Y:=RegularCWComplex(RandomSimplicialTwoComplex(n,p));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">H:=Homology(Y,1);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">H:=Filtered(H,x-&gt;not x=0);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return H;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function( n, p ) ... end
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;for n in [73000..73900] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">t:=torsion(75,n/2000000);  </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if not t=[] then Add(L,t); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(L);</span>
+[ [                                     2 ],
+  [                                    26 ],
+  [     259837760616287294231081766978855 ],
+  [                                     2 ],
+  [                                     3 ],
+  [                                     2 ],
+  [          2761642698060127444812143568 ],
+  [       2626355281010974663776273381976 ],
+  [                                     2 ],
+  [                                     3 ],
+  [         33112382751264894819430785350 ],
+  [                                    16 ],
+  [                                     4 ],
+  [                                     3 ],
+  [                                     2 ],
+  [                                     3 ],
+  [                                     2 ],
+  [      85234949999183888967763100590977 ],
+  [                                     2 ],
+  [      24644196130785821107897718662022 ],
+  [                                     2,                                     2 ],
+  [                                     2 ],
+  [           416641662889025645492982468 ],
+  [         41582773001875039168786970816 ],
+  [                                     2 ],
+  [            75889883165411088431747730 ],
+  [         33523474091636554792305315165 ],
+  [  107879661870516800665161182578823128 ],
+  [          5588265814409119568341729980 ],
+  [                                     2 ],
+  [          5001457249224115878015053458 ],
+  [                                    10 ],
+  [                                    12 ],
+  [                                     2 ],
+  [                                     2 ],
+  [                                     3 ],
+  [          7757870243425246987971789322 ],
+  [       8164648856993269673396613497412 ],
+  [                                     2 ] ]
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
