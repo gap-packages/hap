@@ -68,10 +68,20 @@ theoretical  methods.
 <Example>
 <#Include SYSTEM "tutex/1.3.txt">
 </Example>
-Note that for regular  CW complexes <M>Y</M> the function
-<C>ChainComplex(Y)</C> returns the cellular chain complex <M>C_\ast(X)</M>
-of a (typically non-regular) CW complex <M>X</M> homotopy equivalent to <M>Y</M>. The cellular chain complex
-<M>C_\ast(Y)</M> of <M>Y</M> itself can be obtained as follows.
+
+</Section>
+
+<Section><Heading>Simple homotopy equivalences</Heading>
+<P/>For any regular  CW complex <M>Y</M> one can look for a sequence of 
+simple homotopy collapses <M>Y\searrow Y_1 \searrow Y_2 \searrow \ldots \searrow Y_N=X</M>
+with <M>X</M> a smaller, and typically non-regular, CW complex. 
+Such a sequence of collapses can be recorded using what is now known as a <E>discrete vector field</E> on <M>Y</M>. The sequence can, for example, be used 
+ to produce a chain homotopy equivalence <M>f\colon C_\ast Y \rightarrow C_\ast X</M> and its chain homotopy inverse <M>g\colon C_\ast X \rightarrow C_\ast Y</M>.
+
+The function
+<C>ChainComplex(Y)</C> returns the cellular chain complex <M>C_\ast(X)</M>, wheras the function <C>ChainComplexOfRegularCWComplex(Y)</C> returns the chain complex <M>C_\ast(Y)</M>. 
+
+<P/> For the above Quillen complex <M>Y=\Delta{\cal A}_2(S_7)</M> the following commands produce the chain homotopy equivalence <M>f\colon C_\ast Y \rightarrow C_\ast X</M> and <M>g\colon C_\ast X \rightarrow C_\ast Y</M>. The number of generators  of <M>C_\ast Y</M> equals the number of cells of <M>Y</M> in each degree, and this number is listed for each degree.
 
 <Example>
 <#Include SYSTEM "tutex/1.4.txt">
@@ -134,7 +144,7 @@ are obtained.
 </Section>
 <Section><Heading>Cup products</Heading>
 
-<P/><B>Strategy 1: use geometric group theory in low dimensions.</B>
+<P/><B>Strategy 1: Use geometric group theory in low dimensions.</B>
 
 <P/>Continuing with the previous example, we consider 
 the first and fifth generators <M>g_1^1, g_5^1\in H^1(Y,\mathbb Z) =\mathbb Z^5</M>
@@ -176,7 +186,7 @@ The commands then show that <M>H^2(W,\mathbb Z)=\mathbb Z^{22}</M> and
 
 A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. 
 
-<P/><B>Strategy 3: Guess and verify a cellular approcimation to the diagonal map.</B>   
+<P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
 require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
