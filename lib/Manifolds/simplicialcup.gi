@@ -143,20 +143,3 @@ end);
 ##########################################################
 ##########################################################
 
-#BELOW HERE TO BE DELETED
-
-#K:=ConnectedSum(ComplexProjectiveSpace(2),ComplexProjectiveSpace(2),-1);
-K:=SimplicialK3Surface();
-#K:=ClosedSurface(2);
-
-cup:=HAP_CupProductOfSimplicialComplex(K);
-h:=Length(Cohomology(RegularCWComplex(K),2));
-
-A:=NullMat(h,h);;
-for i in [1..h] do
- for j in [1..h] do
- x:=[1..h]*0;; x[i]:=1;;
- y:=[1..h]*0;; y[j]:=1;;
- A[i][j]:=cup(2,2,x,y)[1];
- od;od;
-
