@@ -109,4 +109,34 @@ degree <M>0</M> barcode suggest that the image has <M>20</M> objects. The degree
 
 </Subsection>
 </Section>
+
+<Section><Heading>Random simplicial complexes</Heading>
+<P/>For a positive integer <M>n</M> and probability <M>p</M>
+ we denote by <M>Y(n,p)</M> the <E>Linial-Meshulam random simplicial 2-complex</E>. Its <M>1</M>-skeleton is the complete graph on <M>n</M> vertices; each possible <M>2</M>-simplex is included independently with probability <M>p</M>.
+
+<P/>The following commands first compute the number <M>h_i</M> of non-trivial cyclic summands in
+<M>H_i(Y(100,p), \mathbb Z)</M> for a range of probabilities <M>p</M> and <M>i=1,2</M> and then
+produce a plot of <M>h_i</M> versus <M>p</M>. The plot for <M>h_1</M> is red and the plot for <M>h_2</M> is blue.
+
+<Example>
+<#Include SYSTEM "tutex/4.7.txt">
+</Example>
+
+
+<P/>
+<Alt Only="HTML">&lt;img src="tutex/graph4.7.png" align="center" height="500" alt="a graph"/>
+</Alt>
+
+<P/>From this plot it seems that there is a <E>phase change threshold</E> at around <M>p=0.025</M>. An inspection of the first homology
+groups <M>H_1(Y(100,p), \mathbb Z)</M> shows that in most cases there is no torsion. However, around the threshold some of the complexes do have torsion in their first homology. 
+
+<P/>Similar commands for <M>Y(75,p)</M> suggest a phase transition at around <M>p=0.035</M> in this case. The following commands compute <M>H_1(Y(75,p), \mathbb Z)</M>
+for <M>900</M> random <M>2</M>-complexes with <M>p</M> in a small interval around <M> 0.035</M> and, in each case where there is torsion, the torsion coefficients are stored in a list. The final command prints these lists -- all but one of which are of length <M>1</M>. For example, there is one <M>2</M>-dimensional simplicial complex on <M>75</M> vertices whose first homology contains the summand <M>\mathbb Z_{107879661870516800665161182578823128}</M>.
+The largest prime factor is <M>80555235907994145009690263</M> occuring in the summand
+<M>\mathbb Z_{259837760616287294231081766978855}</M>.
+<Example>
+<#Include SYSTEM "tutex/4.8.txt">
+</Example>
+
+</Section>
 </Chapter>

@@ -6,6 +6,7 @@ roottut:=Concatenation(root,"tutorial/");
 L:=[
 "chap1.html", "chap2.html", "chap3.html", "chap4.html", "chap5.html",
 "chap6.html", "chap7.html", "chap8.html", "chap9.html", "chap10.html",
+"chap11.html", 
 "aboutAbelianCategories.html",    "aboutLinks.html",
 "aboutArithmetic.html",           "aboutMetrics.html",
 "aboutArtinGroups.html",          "aboutModPRings.html",
@@ -60,7 +61,7 @@ CloseStream(input);
 file:=ReplacedString(file,fn,"@");
 bool:= '@' in file;
 if not bool then return bool; fi;
-return Concatenation("tutorial/",fle);
+return Concatenation("../tutorial/",fle);
 fi;
 
 
