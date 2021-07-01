@@ -8,9 +8,6 @@ local
 	Homology_Arr,
 	HomologyAsFpGroup, xx;
 
-if not EvaluateProperty(X,"characteristic")=0 then 
-Print("ERROR: There is an inconsitency with characteristic of Z. \n");
-return fail; fi;
 
 #####################################################################
 #####################################################################
@@ -267,6 +264,12 @@ return HChomHD;
 end;
 #####################################################################
 #####################################################################
+
+if X="HomologyAsFpGroup" then return HomologyAsFpGroup; fi;
+
+if not EvaluateProperty(X,"characteristic")=0 then
+Print("ERROR: There is an inconsitency with characteristic of Z. \n");
+return fail; fi;
 
 if EvaluateProperty(X,"type")="chainComplex" then
 xx:=IntegralHomologyOfChainComplex(X,n);

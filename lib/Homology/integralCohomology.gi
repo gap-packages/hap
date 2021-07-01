@@ -227,6 +227,8 @@ end;
 #####################################################################
 #####################################################################
 
+if X="CohomologyAsFpGroup" then return CohomologyAsFpGroup; fi;
+
 if EvaluateProperty(X,"type")="cochainComplex" then
 #return Cohomology_Obj(X,n).torsionCoefficients; fi;
 return IntegralCohomologyOfCochainComplex(X,n); fi;

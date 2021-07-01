@@ -544,6 +544,11 @@ return two.cocycleToClass(AB);
 end;
 ###########################
 
+###########################
+if Cohomology(C,2)=[] then
+cup:=function(a,b); return [0]; end;
+fi;
+###########################
 
 return cup;
 end);

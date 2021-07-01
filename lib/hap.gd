@@ -311,6 +311,7 @@ DeclareOperation("Cohomology",[IsHapCochain,IsInt]);#doc
 DeclareOperation("Cohomology",[IsHapGCocomplex,IsInt]);
 DeclareOperation("CupProduct",[IsHapRegularCWComplex]);
 DeclareGlobalFunction("HAP_CupProductOfPresentation");
+DeclareGlobalFunction("HAP_CupProductOfSimplicialComplex");
 #DeclareGlobalFunction("Cohomology");
 DeclareGlobalFunction("Syzygy");
 DeclareGlobalFunction("CR_IntegralCycleToClass");
@@ -870,6 +871,7 @@ ReadPackage("HAP","lib/HapPrime/happrime.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
 ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
 ReadPackage("HAP","lib/Quandles/quandles.gd");
+ReadPackage("HAP","lib/Manifolds/manifolds.gd");
 ReadPackage("HAP","lib/Kelvin/kelvin.gd");
 
 
