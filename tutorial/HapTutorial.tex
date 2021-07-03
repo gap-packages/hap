@@ -554,7 +554,7 @@ combinatorial face lattice.
 \textsc{Strategy 3: Guess and verify a cellular approximation to the diagonal map.} 
 
 Many naturally occuring cell structures are neither simplicial nor cubical.
-For a general regular CW-complex we require a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
+For a general regular CW-complex we (currently) require a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
 this test then the function \texttt{CupProduct(Y)}, involving the candidate space, can be used for cup products. 
 
 The following example calculates $g_1^1 \cup g_3^2 \ne 0$ where $Y=S\times S\times A$ is the direct product of two simplicial circles $S$ and one $2$-dimensional cubical Annulus $A$ and where $g_k^n$ denotes the $k$-th generator of $H^n(Y,\mathbb Z)$. 
@@ -593,7 +593,31 @@ The following example calculates $g_1^1 \cup g_3^2 \ne 0$ where $Y=S\times S\tim
  }
 
  
-\section{\textcolor{Chapter }{Intersection forms of $4$-manifolds}}\logpage{[ 1, 10, 0 ]}
+\section{\textcolor{Chapter }{Cohomology Rings}}\logpage{[ 1, 10, 0 ]}
+\hyperdef{L}{X80B6849C835B7F19}{}
+{
+ The cup product gives the cohomology $H^\ast(X,R)$ of a space $X$ with coefficients in a ring $R$ the structure of a graded commutitive ring. This is currently implemented only
+for $Y$ a simplicial complex and $R=\mathbb Z_p$ the field of $p$ elements. 
+
+The folowing commands compute the mod $2$ cohomology ring $H^\ast(W,\mathbb Z_2)$ of the above wedge sum $W=M\vee N$ of a $2$-dimensional orientable simplicial surface of genus 2 and the $K3$ complex simplicial surface (of real dimension 4). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@M:=ClosedSurface(2);;|
+  !gapprompt@gap>| !gapinput@N:=SimplicialK3Surface();;|
+  !gapprompt@gap>| !gapinput@W:=WedgeSum(M,N);;|
+  !gapprompt@gap>| !gapinput@A:=CohomologyRing(W,2);|
+  <algebra of dimension 29 over GF(2)>
+  !gapprompt@gap>| !gapinput@x:=Basis(A)[25];|
+  v.25
+  !gapprompt@gap>| !gapinput@y:=Basis(A)[27];|
+  v.27
+  !gapprompt@gap>| !gapinput@x*y;|
+  v.29
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Intersection forms of $4$-manifolds}}\logpage{[ 1, 11, 0 ]}
 \hyperdef{L}{X7F9B01CF7EE1D2FC}{}
 {
  The cup product gives rise to the intersection form of a connected, closed,
@@ -656,7 +680,7 @@ quadratic form of rank r {\textgreater} 9.
  Since $qL$ is of type I, whereas $qM$ and $qN$ are of type II we see that the oriented homotopy type of $L$ is distinct to that of $M$ and that of $N$. Since $qM$ has index $2$ and $qN$ has index $0$ we see that that $M$ and $N$ also have distinct oriented homotopy types. }
 
  
-\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 11, 0 ]}
+\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 12, 0 ]}
 \hyperdef{L}{X8771FF2885105154}{}
 {
  
@@ -1524,20 +1548,24 @@ The following image was used in the example.
 
 For a positive integer $n$ and probability $p$ we denote by $Y(n,p)$ the \emph{Linial-Meshulam random simplicial 2-complex}. Its $1$-skeleton is the complete graph on $n$ vertices; each possible $2$-simplex is included independently with probability $p$. 
 
-The following commands first compute the number $h_i$ of non-trivial cyclic summands in $H_i(Y(100,p), \mathbb Z)$ for a range of probabilities $p$ and $i=1,2$ and then produce a plot of $h_i$ versus $p$. The plot for $h_1$ is red and the plot for $h_2$ is blue. 
+The following commands first compute the number $h_i$ of non-trivial cyclic summands in $H_i(Y(100,p), \mathbb Z)$ for a range of probabilities $p$ and $i=1,2$ and then produce a plot of $h_i$ versus $p$. The plot for $h_1$ is red and the plot for $h_2$ is blue. A plot for the Euler characteristic $1-h_1+h_2$ is shown in green. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@L:=[];;|
+  !gapprompt@gap>| !gapinput@L:=[];;M:=[];;|
   !gapprompt@gap>| !gapinput@for p in [1..100] do|
   !gapprompt@>| !gapinput@K:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;|
-  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);|
-  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);|
+  !gapprompt@>| !gapinput@h1:=Length(Homology(K,1));;|
+  !gapprompt@>| !gapinput@h2:=Length(Homology(K,2));;|
+  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),h1,"red"]);|
+  !gapprompt@>| !gapinput@Add(L, [1.0*(p/1000),h2,"blue"]);|
+  !gapprompt@>| !gapinput@Add(M, [1.0*(p/1000),1-h1+h2,"green"]);|
   !gapprompt@>| !gapinput@od;|
   !gapprompt@gap>| !gapinput@ScatterPlot(L);|
+  !gapprompt@gap>| !gapinput@ScatterPlot(M);|
   
 \end{Verbatim}
  
 
-  
+   
 
 From this plot it seems that there is a \emph{phase change threshold} at around $p=0.025$. An inspection of the first homology groups $H_1(Y(100,p), \mathbb Z)$ shows that in most cases there is no torsion. However, around the threshold
 some of the complexes do have torsion in their first homology. 

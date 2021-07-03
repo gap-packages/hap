@@ -153,16 +153,21 @@
   [33X[0;0YThe  following  commands  first compute the number [22Xh_i[122X of non-trivial cyclic
   summands  in  [22XH_i(Y(100,p),  Z)[122X for a range of probabilities [22Xp[122X and [22Xi=1,2[122X and
   then  produce  a  plot of [22Xh_i[122X versus [22Xp[122X. The plot for [22Xh_1[122X is red and the plot
-  for [22Xh_2[122X is blue.[133X
+  for  [22Xh_2[122X  is blue. A plot for the Euler characteristic [22X1-h_1+h_2[122X is shown in
+  green.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27XL:=[];;M:=[];;[127X[104X
     [4X[25Xgap>[125X [27Xfor p in [1..100] do[127X[104X
     [4X[25X>[125X [27XK:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;[127X[104X
-    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);[127X[104X
-    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);[127X[104X
+    [4X[25X>[125X [27Xh1:=Length(Homology(K,1));;[127X[104X
+    [4X[25X>[125X [27Xh2:=Length(Homology(K,2));;[127X[104X
+    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),h1,"red"]);[127X[104X
+    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),h2,"blue"]);[127X[104X
+    [4X[25X>[125X [27XAdd(M, [1.0*(p/1000),1-h1+h2,"green"]);[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
     [4X[25Xgap>[125X [27XScatterPlot(L);[127X[104X
+    [4X[25Xgap>[125X [27XScatterPlot(M);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

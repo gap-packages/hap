@@ -463,13 +463,13 @@
   [33X[0;0Y[12XStrategy 3: Guess and verify a cellular approximation to the diagonal map.[112X[133X
   
   [33X[0;0YMany  naturally occuring cell structures are neither simplicial nor cubical.
-  For  a general regular CW-complex we require a cellular inclusion [22Xoverline Y
-  ↪  Y×  Y[122X  with  projection  [22Xp:  overline  Y ↠ Y[122X that induces isomorphisms on
-  integral   homology.  The  function  [10XDiagonalApproximation(Y)[110X  constructs  a
-  candidate inclusion, but the projection [22Xp: overline Y ↠ Y[122X needs to be tested
-  for  homology  equivalence. If the candidate inclusion passes this test then
-  the  function  [10XCupProduct(Y)[110X, involving the candidate space, can be used for
-  cup products.[133X
+  For a general regular CW-complex we (currently) require a cellular inclusion
+  [22Xoverline  Y  ↪  Y×  Y[122X  with  projection  [22Xp:  overline  Y  ↠  Y[122X  that induces
+  isomorphisms  on  integral  homology.  The function [10XDiagonalApproximation(Y)[110X
+  constructs a candidate inclusion, but the projection [22Xp: overline Y ↠ Y[122X needs
+  to  be  tested  for  homology equivalence. If the candidate inclusion passes
+  this  test  then  the function [10XCupProduct(Y)[110X, involving the candidate space,
+  can be used for cup products.[133X
   
   [33X[0;0YThe  following  example calculates [22Xg_1^1 ∪ g_3^2 ne 0[122X where [22XY=S× S× A[122X is the
   direct  product  of  two  simplicial circles [22XS[122X and one [22X2[122X-dimensional cubical
@@ -509,7 +509,34 @@
   [4X[32X[104X
   
   
-  [1X1.10 [33X[0;0YIntersection forms of [22X4[122X[101X[1X-manifolds[133X[101X
+  [1X1.10 [33X[0;0YCohomology Rings[133X[101X
+  
+  [33X[0;0YThe cup product gives the cohomology [22XH^∗(X,R)[122X of a space [22XX[122X with coefficients
+  in  a  ring  [22XR[122X the structure of a graded commutitive ring. This is currently
+  implemented  only  for  [22XY[122X  a  simplicial  complex  and [22XR= Z_p[122X the field of [22Xp[122X
+  elements.[133X
+  
+  [33X[0;0YThe  folowing  commands compute the mod [22X2[122X cohomology ring [22XH^∗(W, Z_2)[122X of the
+  above  wedge  sum [22XW=M∨ N[122X of a [22X2[122X-dimensional orientable simplicial surface of
+  genus 2 and the [22XK3[122X complex simplicial surface (of real dimension 4).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=ClosedSurface(2);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=SimplicialK3Surface();;[127X[104X
+    [4X[25Xgap>[125X [27XW:=WedgeSum(M,N);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=CohomologyRing(W,2);[127X[104X
+    [4X[28X<algebra of dimension 29 over GF(2)>[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Basis(A)[25];[127X[104X
+    [4X[28Xv.25[128X[104X
+    [4X[25Xgap>[125X [27Xy:=Basis(A)[27];[127X[104X
+    [4X[28Xv.27[128X[104X
+    [4X[25Xgap>[125X [27Xx*y;[127X[104X
+    [4X[28Xv.29[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.11 [33X[0;0YIntersection forms of [22X4[122X[101X[1X-manifolds[133X[101X
   
   [33X[0;0YThe  cup product gives rise to the intersection form of a connected, closed,
   orientable [22X4[122X-manifold [22XY[122X is a symmetric bilinear form[133X
@@ -585,7 +612,7 @@
   oriented homotopy types.[133X
   
   
-  [1X1.11 [33X[0;0YCW maps and induced homomorphisms[133X[101X
+  [1X1.12 [33X[0;0YCW maps and induced homomorphisms[133X[101X
   
   [33X[0;0YA  [13Xstrictly  cellular[113X  map [22Xf: X→ Y[122X of regular CW-complexes is a cellular map
   for  which  the  image  of any cell is a cell (of possibly lower dimension).

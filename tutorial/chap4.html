@@ -193,21 +193,25 @@ Filtered pure cubical complex of dimension 2.
 
 <p>For a positive integer <span class="SimpleMath">n</span> and probability <span class="SimpleMath">p</span> we denote by <span class="SimpleMath">Y(n,p)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">1</span>-skeleton is the complete graph on <span class="SimpleMath">n</span> vertices; each possible <span class="SimpleMath">2</span>-simplex is included independently with probability <span class="SimpleMath">p</span>.</p>
 
-<p>The following commands first compute the number <span class="SimpleMath">h_i</span> of non-trivial cyclic summands in <span class="SimpleMath">H_i(Y(100,p), Z)</span> for a range of probabilities <span class="SimpleMath">p</span> and <span class="SimpleMath">i=1,2</span> and then produce a plot of <span class="SimpleMath">h_i</span> versus <span class="SimpleMath">p</span>. The plot for <span class="SimpleMath">h_1</span> is red and the plot for <span class="SimpleMath">h_2</span> is blue.</p>
+<p>The following commands first compute the number <span class="SimpleMath">h_i</span> of non-trivial cyclic summands in <span class="SimpleMath">H_i(Y(100,p), Z)</span> for a range of probabilities <span class="SimpleMath">p</span> and <span class="SimpleMath">i=1,2</span> and then produce a plot of <span class="SimpleMath">h_i</span> versus <span class="SimpleMath">p</span>. The plot for <span class="SimpleMath">h_1</span> is red and the plot for <span class="SimpleMath">h_2</span> is blue. A plot for the Euler characteristic <span class="SimpleMath">1-h_1+h_2</span> is shown in green.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;M:=[];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in [1..100] do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">K:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),Length(Homology(K,1)),"red"]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),Length(Homology(K,2)),"blue"]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">h1:=Length(Homology(K,1));;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">h2:=Length(Homology(K,2));;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),h1,"red"]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L, [1.0*(p/1000),h2,"blue"]);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(M, [1.0*(p/1000),1-h1+h2,"green"]);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(L);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(M);</span>
 
 </pre></div>
 
-<p><img src="tutex/graph4.7.png" align="center" height="500" alt="a graph"/></p>
+<p><img src="tutex/graph4.7.png" align="center" height="500" alt="a graph"/> <img src="tutex/graph4.77.png" align="center" height="500" alt="a graph"/></p>
 
 <p>From this plot it seems that there is a <em>phase change threshold</em> at around <span class="SimpleMath">p=0.025</span>. An inspection of the first homology groups <span class="SimpleMath">H_1(Y(100,p), Z)</span> shows that in most cases there is no torsion. However, around the threshold some of the complexes do have torsion in their first homology.</p>
 

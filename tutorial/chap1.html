@@ -49,10 +49,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X823FA6A9828FF473">1.9 <span class="Heading">Cup products</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7F9B01CF7EE1D2FC">1.10 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X80B6849C835B7F19">1.10 <span class="Heading">Cohomology Rings</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8771FF2885105154">1.11 <span class="Heading">CW maps and induced homomorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7F9B01CF7EE1D2FC">1.11 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8771FF2885105154">1.12 <span class="Heading">CW maps and induced homomorphisms</span></a>
 </span>
 </div>
 </div>
@@ -463,7 +466,7 @@ Simplicial complex of dimension 4.
 
 <p><strong class="button">Strategy 3: Guess and verify a cellular approximation to the diagonal map.</strong></p>
 
-<p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we require a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
+<p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we (currently) require a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
 
 <p>The following example calculates <span class="SimpleMath">g_1^1 ∪ g_3^2 ne 0</span> where <span class="SimpleMath">Y=S× S× A</span> is the direct product of two simplicial circles <span class="SimpleMath">S</span> and one <span class="SimpleMath">2</span>-dimensional cubical Annulus <span class="SimpleMath">A</span> and where <span class="SimpleMath">g_k^n</span> denotes the <span class="SimpleMath">k</span>-th generator of <span class="SimpleMath">H^n(Y, Z)</span>.</p>
 
@@ -501,9 +504,33 @@ true
 
 </pre></div>
 
+<p><a id="X80B6849C835B7F19" name="X80B6849C835B7F19"></a></p>
+
+<h4>1.10 <span class="Heading">Cohomology Rings</span></h4>
+
+<p>The cup product gives the cohomology <span class="SimpleMath">H^∗(X,R)</span> of a space <span class="SimpleMath">X</span> with coefficients in a ring <span class="SimpleMath">R</span> the structure of a graded commutitive ring. This is currently implemented only for <span class="SimpleMath">Y</span> a simplicial complex and <span class="SimpleMath">R= Z_p</span> the field of <span class="SimpleMath">p</span> elements.</p>
+
+<p>The folowing commands compute the mod <span class="SimpleMath">2</span> cohomology ring <span class="SimpleMath">H^∗(W, Z_2)</span> of the above wedge sum <span class="SimpleMath">W=M∨ N</span> of a <span class="SimpleMath">2</span>-dimensional orientable simplicial surface of genus 2 and the <span class="SimpleMath">K3</span> complex simplicial surface (of real dimension 4).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ClosedSurface(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=SimplicialK3Surface();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=WedgeSum(M,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=CohomologyRing(W,2);</span>
+&lt;algebra of dimension 29 over GF(2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Basis(A)[25];</span>
+v.25
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=Basis(A)[27];</span>
+v.27
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x*y;</span>
+v.29
+
+</pre></div>
+
 <p><a id="X7F9B01CF7EE1D2FC" name="X7F9B01CF7EE1D2FC"></a></p>
 
-<h4>1.10 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></h4>
+<h4>1.11 <span class="Heading">Intersection forms of <span class="SimpleMath">4</span>-manifolds</span></h4>
 
 <p>The cup product gives rise to the intersection form of a connected, closed, orientable <span class="SimpleMath">4</span>-manifold <span class="SimpleMath">Y</span> is a symmetric bilinear form</p>
 
@@ -562,7 +589,7 @@ Simplicial complex of dimension 4.
 
 <p><a id="X8771FF2885105154" name="X8771FF2885105154"></a></p>
 
-<h4>1.11 <span class="Heading">CW maps and induced homomorphisms</span></h4>
+<h4>1.12 <span class="Heading">CW maps and induced homomorphisms</span></h4>
 
 <p>A <em>strictly cellular</em> map <span class="SimpleMath">f: X→ Y</span> of regular CW-complexes is a cellular map for which the image of any cell is a cell (of possibly lower dimension). Inclusions of CW-subcomplexes, and projections from a direct product to a factor, are examples of such maps. Strictly cellular maps can be represented in <strong class="button">HAP</strong>, and their induced homomorphisms on (co)homology and on fundamental groups can be computed.</p>
 
