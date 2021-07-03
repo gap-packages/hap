@@ -163,9 +163,17 @@ return HomToZ_Obj(X); fi;
 
 if EvaluateProperty(X,"type") = "equivariantChainMap" then
 return HomToZ_Arr(X); fi;
-Print("This functor is not yet applicable to morphisms. \n");
+
+if EvaluateProperty(X,"type") = "chainComplex" then
+return HAP_HomToIntModP_ChainComplex(X,prime); fi;
+
+if EvaluateProperty(X,"type") = "chainMap" then
+return HAP_HomToIntModP_ChainMap(X,prime); fi;
+
+if EvaluateProperty(X,"type") = "cochainComplex" then
+return HAP_HomToIntModP_CochainComplex(X,prime); fi;
+
 return fail;
-#fi;
 
 Print("ERROR: Input should be a resolution or equivariant map between resolutions. \n");
 

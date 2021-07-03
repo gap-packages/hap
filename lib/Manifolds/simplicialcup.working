@@ -2,34 +2,19 @@
 #########################################################################
 #########################################################################
 InstallGlobalFunction(HAP_CupProductOfSimplicialComplex,
-function(arg)
-local K, Y, C, CC, D, IntCoh, fns, gns, clgy, Iterate, n, k, cup, BigToSmall, 
-      SmallToBig, crit, invcrit, Equiv, E1, E2, MyLength, prime ;
+function(K)
+local Y, C, CC, D, IntCoh, fns, gns, clgy, Iterate, n, k, cup, BigToSmall, 
+      SmallToBig, crit, invcrit, Equiv, E1, E2 ;
 
-K:=arg[1];
-if Length(arg)>1 then prime:=arg[2];
-else prime:=0; fi;
 
 Y:=RegularCWComplex(K);
 
 Equiv:=ChainComplexEquivalenceOfRegularCWComplex(Y);
 C:=Source(Equiv[2]);  ##This has fewer generators than cells of Y
 CC:=Target(Equiv[2]);  ##This has generators equal to the cells of Y
-if prime=0 then
-D:=HomToIntegersModP(C,2);;
-else
-D:=HomToIntegersModP(C,prime);;
-fi;
-#IntCoh:=IntegralCohomology("CohomologyAsFpGroup",true);;
-IntCoh:=ModularCohomology("CohomologyAsFpGroup",true);;
+D:=HomToIntegers(C);;
+IntCoh:=IntegralCohomology("CohomologyAsFpGroup",true);;
 
-###################################
-MyLength:=function(L);
-if IsList(L) then return Length(L);
-else return L;
-fi;
-end;
-###################################
 
 E1:=HomToIntegers(Equiv[1]);
 E2:=HomToIntegers(Equiv[2]);
@@ -60,7 +45,7 @@ clgy:=[];
 ###############################################
 Iterate:=function(n)
 local HD, F, FhomG, G, gensG, preimgensG, f, g;
-if MyLength(Cohomology(Y,n))>0 then
+if Length(Cohomology(Y,n))>0 then
 
 HD:=IntCoh(D,n);
 F:=HD!.fpgroup; #F is an fp group rep of the n-th cohomology of (the small) D
@@ -98,25 +83,6 @@ end;
 fns[n+1]:=f;
 gns[n+1]:=g;
 clgy[n+1]:=Cohomology(D,n);
-
-else
-##############################
-f:=function(i)
-
-return [1..Y!.dimension(n)]*0;
-end;
-##############################
-
-##############################
-g:=function(z)
-return [];
-end;
-##############################
-
-fns[n+1]:=f;
-gns[n+1]:=g;
-clgy[n+1]:=0;
-
 fi;
 end;
 ##############################################
@@ -134,10 +100,10 @@ local k, w, a, b, c, xx, yy;
 w:=[1..CC!.dimension(i+j)]*0;
 xx:=[1..CC!.dimension(i)]*0;
 yy:=[1..CC!.dimension(j)]*0;
-for k in [1..MyLength(clgy[i+1])] do
+for k in [1..Length(clgy[i+1])] do
 xx:=xx+x[k]*fns[i+1](k);
 od;
-for k in [1..MyLength(clgy[j+1])] do
+for k in [1..Length(clgy[j+1])] do
 yy:=yy+y[k]*fns[j+1](k);
 od;
 
@@ -176,16 +142,4 @@ return HAP_CupProductOfSimplicialComplex(Y);
 end);
 ##########################################################
 ##########################################################
-
-##########################################################
-##########################################################
-InstallOtherMethod(CupProduct,
-"integral cohomology cup product for a simplicial complex",
-[IsHapSimplicialComplex,IsInt],
-function(Y,p)
-return HAP_CupProductOfSimplicialComplex(Y,p);
-end);
-##########################################################
-##########################################################
-
 

@@ -89,6 +89,19 @@ The function
 
 </Section>
 
+<Section>
+<Heading>Cellular simplifications preserving homeomorphism type</Heading>
+
+<P/>For some purposes one might need to simplify the cell structure on a regular CW-complex <M>Y</M> so as to obtained a homeomorphic CW-complex <M>W</M> with fewer cells. 
+
+<P/>The following commands load a <M>4</M>-dimensional simplicial complex <M>Y</M> representing the  K3 complex surface. Its simplicial structure is taken from <Cite Key="spreerkhuenel"/> and involves <M>1704</M> cells of various dimensions. 
+The commands then convert the cell structure into that of a homeomorphic regular CW-complex <M>W</M> involving <M>774</M> cells. 
+
+<Example>
+<#Include SYSTEM "tutex/1.4aaa.txt">
+</Example>
+</Section>
+
 <Section><Heading>Constructing a CW-structure on a knot complement</Heading>
 
 The following commands construct the complement <M>M=S^3\setminus K</M> of the trefoil knot <M>K</M>. This complement is returned as 
@@ -189,7 +202,7 @@ A cubical Alexander-Whitney formula can be used similarly for computing the coho
 <P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
-require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
+(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
 The function <C>DiagonalApproximation(Y)</C> constructs a candidate inclusion,
 but the projection <M>p\colon \overline Y \twoheadrightarrow Y</M> 
 needs to be tested for homology equivalence. If the candidate inclusion
@@ -203,6 +216,17 @@ direct product of two simplicial circles <M>S</M>  and one  <M>2</M>-dimensional
 
 <Example>
 <#Include SYSTEM "tutex/1.8.txt">
+</Example>
+</Section>
+
+<Section><Heading>Cohomology Rings</Heading>
+The cup product gives the cohomology <M>H^\ast(X,R)</M> of a space <M>X</M> with coefficients in a ring <M>R</M> the structure of a graded commutitive ring. This is currently implemented only for <M>Y</M> a simplicial complex and <M>R=\mathbb Z_p</M> the field of <M>p</M> elements.
+
+<P/>The folowing commands compute the mod <M>2</M> cohomology ring <M>H^\ast(W,\mathbb Z_2)</M> of the above wedge sum
+<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
+simplicial surface  of genus 2 and the <M>K3</M> complex simplicial surface (of real dimension 4). 
+<Example>
+<#Include SYSTEM "tutex/1.80.txt">
 </Example>
 </Section>
 

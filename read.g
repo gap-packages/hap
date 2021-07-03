@@ -208,6 +208,7 @@ ReadPackageHap( "lib/Functors/homToZ.gi");
 ReadPackageHap( "lib/Functors/tensorWithRationals.gi");
 ReadPackageHap( "lib/Functors/homToZmodP.gi");
 ReadPackageHap( "lib/Functors/homtint.gi");
+ReadPackageHap( "lib/Functors/homtintmodp.gi");
 ReadPackageHap( "lib/Functors/transfer.gi");
 ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");

@@ -7,3 +7,5 @@ DeclareOperation("ClosedSurface",[IsInt]);
 DeclareGlobalFunction("SimplicialK3Surface");
 DeclareOperation("WedgeSum",[IsHapSimplicialComplex,IsHapSimplicialComplex]);
 DeclareGlobalFunction("HAP_WedgeSumOfSimplicialComplexes");
+DeclareGlobalFunction("CohomologyRingOfSimplicialComplex");
+DeclareOperation("CohomologyRing",[IsHapSimplicialComplex,IsInt]);

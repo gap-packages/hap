@@ -234,7 +234,7 @@ end);
 #####################################################
 #####################################################
 IntersectionForm:=function(Y)
-local H, gens, A, i, j, cup, c, x, y;
+local H, gens, A, i, j, cup, c, x, y, n;
 
 #if IsHapSimplicialComplex(YY) then
 #Y:=RegularCWComplex(YY); 
@@ -242,10 +242,12 @@ local H, gens, A, i, j, cup, c, x, y;
 #Y:=YY;
 #fi;
 
-if Dimension(Y)<>4 or (not Homology(Y,4)=[0])
-then Print("The argument must had dimension 4 and fourth homology equal to Z.\n"); return fail; fi;
+if not ( IsEvenInt(Dimension(Y)) and  Homology(Y,Dimension(Y))=[0]   )
+then Print("The argument must have even dimension and top homology equal to Z.\n"); return fail; fi;
 
-H:=Cohomology(Y,2);
+n:=Dimension(Y)/2;
+
+H:=Cohomology(Y,n);
 gens:=Filtered([1..Length(H)],i->H[i]=0);
 A:=NullMat(Length(gens),Length(gens));
 
@@ -255,13 +257,103 @@ for i in [1..Length(gens)] do
 for j in [i..Length(gens)] do
 x:=[1..Length(gens)]*0; x[i]:=1;
 y:=[1..Length(gens)]*0; y[j]:=1;
-c:=cup(2,2,x,y);
+c:=cup(n,n,x,y);
 A[i][j]:=c[1];
 A[j][i]:=c[1];
 od;
 od;
 return A;
 end;
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(CohomologyRingOfSimplicialComplex,
+function(K,prime)
+local R, dims, Y, C, D, n, k, i, j, ii, jj, dim, SCT, 
+      cup, V, pair2int, int2pair, cnt, x, y, c, s, dims1;
+
+Y:=RegularCWComplex(K);
+C:=ChainComplex(Y);
+D:=HomToIntegersModP(C,prime);
+dims:=List([0..Dimension(K)], i->Cohomology(D,i));
+dim:=Sum(dims);
+cnt:=0;
+dims1:=[];
+dims1[1]:=0;
+for k in [1..Length(dims)] do
+cnt:=cnt+dims[k];
+dims1[k+1]:=cnt;
+od;
+cup:=CupProduct(K,prime);
+
+###############################
+cnt:=0;
+pair2int:=[];
+int2pair:=[];
+for n in [1..Length(dims)] do
+pair2int[n]:=[];
+for k in [1..dims[n]] do
+cnt:=cnt+1;
+pair2int[n][k]:=cnt;
+int2pair[cnt]:=[n,k];
+od;
+od;
+###############################
+
+SCT:=EmptySCTable(dim,Zero(GF(prime)));
+cnt:=0;
+
+for i in [1..dim] do
+for j in [i..dim] do
+ii:=int2pair[i];
+jj:=int2pair[j];
+x:=[1..dims[ii[1]]]*0; x[ii[2]]:=1;
+y:=[1..dims[jj[1]]]*0; y[jj[2]]:=1;
+if ii[1]-1+jj[1]-1<=Length(dims)-1 then
+c:=cup(ii[1]-1,jj[1]-1, x, y);
+s:=dims1[ii[1]-1+jj[1]];
+V:=[];
+for k in [1..Length(c)] do
+if not c[k]=0 then
+Add(V, c[k]);
+Add(V, s+k);
+fi;
+od;
+SetEntrySCTable(SCT,i,j,V);
+fi;
+od;
+od;
+
+for i in [1..dim] do
+for j in [1..i-1] do
+ii:=int2pair[i];
+jj:=int2pair[j];
+x:=[];
+x[1]:=List(SCT[j][i][1],a->1*a);
+x[2]:=List(SCT[j][i][2],a->1*a);
+if IsOddInt((ii[1]-1)*(jj[1]-1)) then
+x[2]:=-1*x[2];
+fi;
+SCT[i][j]:=x;
+od;od;
+
+R:=AlgebraByStructureConstants(GF(prime),SCT);
+
+return R;
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallOtherMethod(CohomologyRing,
+"Integral cohomology of a simplicial complex over a field of p elements",
+[IsHapSimplicialComplex,IsInt],
+function(K,prime);
+return CohomologyRingOfSimplicialComplex(K,prime);
+end);
 #####################################################
 #####################################################
 

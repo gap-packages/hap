@@ -184,6 +184,9 @@ DeclareGlobalFunction("HomToIntegers"); #partial doc
 DeclareGlobalFunction("HomToInt_ChainComplex");#<HomToIntegers
 DeclareGlobalFunction("HomToInt_CochainComplex");#<HomToIntegers
 DeclareGlobalFunction("HomToInt_ChainMap");#<HomToIntegers
+DeclareGlobalFunction("HAP_HomToIntModP_ChainComplex");#<HomToIntegers
+DeclareGlobalFunction("HAP_HomToIntModP_CochainComplex");#<HomToIntegers
+DeclareGlobalFunction("HAP_HomToIntModP_ChainMap");#<HomToIntegers
 DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
 DeclareGlobalFunction("PermToMatrixGroup");

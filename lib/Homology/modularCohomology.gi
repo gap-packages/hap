@@ -37,13 +37,12 @@ M2[i]:=Boundary(N-1,i);
 od;
 fi;
 
-if Length(M2)=0 then RankM2:=0; else
+if Length(M2)=0 then RankM2:=0; dim:=0; else
 M2:=MutableCopyMat(M2);
 ConvertToMatrixRep(M2);
 RankM2:=RankMatDestructive(1*M2);
 BasisImaged1:=BaseMat(M2);
 dim:=Length(BasisImaged1);
-#BasisKerd2:=NullspaceMat(M2);
 fi;
 M2:=0;
 
@@ -55,18 +54,23 @@ od;
 if Length(M1)=0 then RankM1:=0; else
 M1:=MutableCopyMat(M1);
 ConvertToMatrixRep(M1);
-RankM1:=RankMatDestructive(1*M1);fi;
+RankM1:=RankMatDestructive(1*M1);
+fi;
 LengthM1:=Length(M1);
-#BasisImaged1:=BaseMat(M1);
-#dim:=Length(BasisImaged1);
+if Length(M1)=0 then
+BasisKerd2:=[];
+Rels:=[];
+else
 BasisKerd2:=NullspaceMat(M1);
+
+
 M1:=0;
 
 Rels:=[];
 for i in [1..dim] do
         Rels[i]:=SolutionMat(BasisKerd2,BasisImaged1[i]);
-#if Rels[i]=fail then Print(" \n\n ",Rels[i],"   "   ,BasisImaged1[i],"\n\n");fi;
 od;
+fi;
 
 Rank:= LengthM1-RankM1 -RankM2;;
 
@@ -75,9 +79,6 @@ return rec(
            rank:=Rank,
            rels:=Rels
            );
-
-return Rank;
-
 
 
 end;
@@ -90,7 +91,7 @@ end;
 CohomologyAsFpGroup:=function(C,n)
 local  
 	F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
-	prime,FieldToInt, Vector2Word, BasisKerd2, one,rel, i, j;
+	prime,FieldToInt, Vector2Word, BasisKerd2, BasisKerd2one, one,rel, i, j;
 
 IHC:=Cohomology_Obj(C,n);
 BasisKerd2:=IHC.basisKerd2;
@@ -148,11 +149,12 @@ return BasisKerd2[w];
 end;
 #####################################################################
 
+BasisKerd2one:=BasisKerd2*one;
 #####################################################################
 ChomH:=function(v)
 local w;
 
-w:=SolutionMat(BasisKerd2,v);
+w:=SolutionMat(BasisKerd2one,v);
 w:=Vector2Word(w);
 return Image(FhomH,w);
 end;
@@ -203,6 +205,8 @@ return HChomHD;
 end;
 #####################################################################
 #####################################################################
+
+if X="CohomologyAsFpGroup" then return CohomologyAsFpGroup; fi;
 
 if EvaluateProperty(X,"type")="cochainComplex" then
 return Cohomology_Obj(X,n).rank; fi;

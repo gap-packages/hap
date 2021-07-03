@@ -2,24 +2,17 @@
 #########################################################################
 #########################################################################
 InstallGlobalFunction(HAP_CupProductOfSimplicialComplex,
-function(arg)
-local K, Y, C, CC, D, IntCoh, fns, gns, clgy, Iterate, n, k, cup, BigToSmall, 
-      SmallToBig, crit, invcrit, Equiv, E1, E2, MyLength, prime ;
+function(K)
+local Y, C, CC, D, IntCoh, fns, gns, clgy, Iterate, n, k, cup, BigToSmall, 
+      SmallToBig, crit, invcrit, Equiv, E1, E2, MyLength ;
 
-K:=arg[1];
-if Length(arg)>1 then prime:=arg[2];
-else prime:=0; fi;
 
 Y:=RegularCWComplex(K);
 
 Equiv:=ChainComplexEquivalenceOfRegularCWComplex(Y);
 C:=Source(Equiv[2]);  ##This has fewer generators than cells of Y
 CC:=Target(Equiv[2]);  ##This has generators equal to the cells of Y
-if prime=0 then
 D:=HomToIntegersModP(C,2);;
-else
-D:=HomToIntegersModP(C,prime);;
-fi;
 #IntCoh:=IntegralCohomology("CohomologyAsFpGroup",true);;
 IntCoh:=ModularCohomology("CohomologyAsFpGroup",true);;
 
@@ -98,25 +91,6 @@ end;
 fns[n+1]:=f;
 gns[n+1]:=g;
 clgy[n+1]:=Cohomology(D,n);
-
-else
-##############################
-f:=function(i)
-
-return [1..Y!.dimension(n)]*0;
-end;
-##############################
-
-##############################
-g:=function(z)
-return [];
-end;
-##############################
-
-fns[n+1]:=f;
-gns[n+1]:=g;
-clgy[n+1]:=0;
-
 fi;
 end;
 ##############################################
@@ -176,16 +150,4 @@ return HAP_CupProductOfSimplicialComplex(Y);
 end);
 ##########################################################
 ##########################################################
-
-##########################################################
-##########################################################
-InstallOtherMethod(CupProduct,
-"integral cohomology cup product for a simplicial complex",
-[IsHapSimplicialComplex,IsInt],
-function(Y,p)
-return HAP_CupProductOfSimplicialComplex(Y,p);
-end);
-##########################################################
-##########################################################
-
 
