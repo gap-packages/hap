@@ -61,6 +61,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X8771FF2885105154">1.12 <span class="Heading">CW maps and induced homomorphisms</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X85A579217DCB6CC8">1.13 <span class="Heading">Equivariant CW complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X8681ABB483930318">1.14 <span class="Heading">Orbifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>1 <span class="Heading">Simplicial complexes &amp; CW complexes</span></h3>
@@ -630,6 +636,102 @@ Chain Map between complexes of length 2 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=Homology(phi,2);</span>
 [ g1 ] -&gt; [ g1 ]
 
+
+</pre></div>
+
+<p><a id="X85A579217DCB6CC8" name="X85A579217DCB6CC8"></a></p>
+
+<h4>1.13 <span class="Heading">Equivariant CW complexes</span></h4>
+
+<p>The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. One limitation is that the number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <span class="SimpleMath">\(7\)</span> vertices, <span class="SimpleMath">\(21\)</span> edges and <span class="SimpleMath">\(14\)</span> triangles. A minimal regular CW-complex structure for the torus has <span class="SimpleMath">\(4\)</span> vertices, <span class="SimpleMath">\(8\)</span> edges and <span class="SimpleMath">\(4\)</span> cells of dimension <span class="SimpleMath">\(2\)</span>. By using simplicial sets (which are like simplicial complexes except that they allow the freedom to attach simplicial cells by gluing their boundary non-homeomorphically) one obtains a minimal triangulation of the torus involving <span class="SimpleMath">\(1\)</span> vertex, <span class="SimpleMath">\(3\)</span> edges and <span class="SimpleMath">\(2\)</span> cells of dimension <span class="SimpleMath">\(2\)</span>. By using non-regular CW-complexes one obtains a minimal cell structure involving <span class="SimpleMath">\(1\)</span> vertex, <span class="SimpleMath">\(2\)</span> edges and <span class="SimpleMath">\(1\)</span> cell of dimension <span class="SimpleMath">\(2\)</span>. Minimal cell structures (in the four different categories) for the torus are illustrated as follows.</p>
+
+<p><img src="images/mstorus.png" align="center" width="300" alt="minimal simplicial torus"/> <img src="images/mrtorus.png" align="center" width="300" alt="minimal regular CW torus"/></p>
+
+<p><img src="images/mdtorus.png" align="center" width="300" alt="minimal delta complex torus"/> <img src="images/mctorus.png" align="center" width="300" alt="minimal delta complex torus"/></p>
+
+<p>A second limitation to our representations of simplicial and regular CW-complexes is that they apply only to structures with finitely many cells. They do no apply, for instance, to the simplicial complex structure on the real line <span class="SimpleMath">\(\mathbb R\)</span> in which each each integer <span class="SimpleMath">\(n\)</span> is a vertex and each interval <span class="SimpleMath">\([n,n+1]\)</span> is an edge.</p>
+
+<p>Simplicial sets provide one approach to the efficient combinatorial representation of certain spaces. So too do cubical sets (the analogues of simplicial sets in which each cell has the combinatorics of an <span class="SimpleMath">\(n\)</span>-cube rather than an <span class="SimpleMath">\(n\)</span>-simplex). Neither of these two approaches has been implemented in <strong class="button">HAP</strong>.</p>
+
+<p>Simplicial sets endowed with the action of a (possibly infinite) group <span class="SimpleMath">\(G\)</span> provide for an efficient representation of (possibly infinite) cell structures on a wider class of spaces. Such a structure can be made precise and is known as a <em>simplicial group</em>. Some functionality for simplicial groups is implemented in <strong class="button">HAP</strong> and described in Chapter <a href="chap9_mj.html#X7D818E5F80F4CF63"><span class="RefLink">9</span></a>.</p>
+
+<p>A regular CW-complex endowed with the action of a (possibly infinite) group <span class="SimpleMath">\(G\)</span> is an alternative approach to the efficient combinatorial representation of (possibly infinite) cell structures on spaces. Much of <strong class="button">HAP</strong> is focused on this approach. As a first example of the idea, the following commands construct the infinite regular CW-complex <span class="SimpleMath">\(Y=\widetilde T\)</span> arising as the universal cover of the torus <span class="SimpleMath">\(T=\mathbb S^1\times \mathbb S^1\)</span> where <span class="SimpleMath">\(T\)</span> is given the above minimal non-regular CW structure involving <span class="SimpleMath">\(1\)</span> vertex, <span class="SimpleMath">\(2\)</span> edges, and <span class="SimpleMath">\(1\)</span> cell of dimension <span class="SimpleMath">\(2\)</span>. The homology <span class="SimpleMath">\(H_n(T,\mathbb Z)\)</span> is computed and the fundamental group of the torus <span class="SimpleMath">\(T\)</span> is recovered.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(2);;x:=F.1;;y:=F.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[ x*y*x^-1*y^-1 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=EquivariantTwoComplex(G);</span>
+Equivariant CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfQuotient(Y);</span>
+Chain complex of length 2 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
+[ 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,2);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FundamentalGroupOfQuotient(Y);</span>
+&lt;fp group of size infinity on the generators [ f1, f2 ]&gt;
+
+</pre></div>
+
+<p>As a second example, the following comands load group number <span class="SimpleMath">\(9\)</span> in the library of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups. They verify that <span class="SimpleMath">\(G\)</span> acts freely on <span class="SimpleMath">\(\mathbb R^3\)</span> (i.e. <span class="SimpleMath">\(G\)</span> is a <em>Bieberbach group</em>) and then construct a <span class="SimpleMath">\(G\)</span>-equivariant CW-complex <span class="SimpleMath">\(Y=\mathbb R^3\)</span> corresponding to the tessellation of <span class="SimpleMath">\(\mathbb R^3\)</span> by a fundamental domain for <span class="SimpleMath">\(G\)</span>. Finally, the cohomology <span class="SimpleMath">\(H_n(M,\mathbb Z)\)</span> of the <span class="SimpleMath">\(3\)</span>-dimensional closed manifold <span class="SimpleMath">\(M=\mathbb R^3/G\)</span> is computed. The manifold <span class="SimpleMath">\(M\)</span> is seen to be non-orientable (since it's top-dimensional homology is trivial) and has a non-regular CW structure with <span class="SimpleMath">\(1\)</span> vertex, <span class="SimpleMath">\(3\)</span> edges, <span class="SimpleMath">\(3\)</span> cells of dimension <span class="SimpleMath">\(2\)</span>, and <span class="SimpleMath">\(1\)</span> cell of dimension <span class="SimpleMath">\(3\)</span>. (This example uses Polymake software.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroup(3,9);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=EquivariantEuclideanSpace(G,[0,0,0]);</span>
+Equivariant CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.dimension(0);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.dimension(1);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.dimension(2);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.dimension(3);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfQuotient(Y);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
+[ 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,2);</span>
+[ 2, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,3);</span>
+[  ]
+
+</pre></div>
+
+<p><a id="X8681ABB483930318" name="X8681ABB483930318"></a></p>
+
+<h4>1.14 <span class="Heading">Orbifolds</span></h4>
+
+<p>If a discrete group <span class="SimpleMath">\(G\)</span> acts on Euclidean space or hyperbolic space with finite stabilizeer groups then we say that the quotient space obtained by killing the action of <span class="SimpleMath">\(G\)</span> an an <em>orbifold</em>. If the stabilizer groups are all trivial then the quotient is of course a manifold.</p>
+
+<p>An orbifold is represented as a <span class="SimpleMath">\(G\)</span>-equivariant regular CW-complex together with the stabilizer group for a representative of each orbit of cells and its subgroup consisting of those group elements that preserve the cell orientation. <strong class="button">HAP</strong> stores orbifolds using the data type of <em>non-free resolution</em> and uses them mainly as a first step in constructing free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolutions of <span class="SimpleMath">\(\mathbb Z\)</span>.</p>
+
+<p>The following commands use an <span class="SimpleMath">\(8\)</span>-dimensional equivariant deformation retract of a <span class="SimpleMath">\(GL_3(\mathbb Z[{\bf i}])\)</span>-orbifold structure on hyperbolic space to compute <span class="SimpleMath">\(H_5(GL_3({\mathbb Z}[{\bf i}]) = \mathbb Z_2\oplus \mathbb Z\)</span>. (The deformation retract is stored in a library and was supplied by Mathieu Dutour Sikiric.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbifold:=ContractibleGcomplex("PGL(3,Z[i])");</span>
+Non-free resolution in characteristic 0 for matrix group . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(Orbifold,5);</span>
+Resolution of length 5 in characteristic 0 for matrix group . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
+[ 2, 0 ]
 
 </pre></div>
 

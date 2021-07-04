@@ -665,3 +665,141 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X1.13 [33X[0;0YEquivariant CW complexes[133X[101X
+  
+  [33X[0;0YThe  above  representations of spaces as simplicial complexes and regular CW
+  complexes have their limitations. One limitation is that the number of cells
+  needed  to describe a space can be unnecessarily large. A minimal simplicial
+  complex structure for the torus has [22X7[122X vertices, [22X21[122X edges and [22X14[122X triangles. A
+  minimal  regular  CW-complex structure for the torus has [22X4[122X vertices, [22X8[122X edges
+  and  [22X4[122X  cells  of  dimension  [22X2[122X.  By  using  simplicial sets (which are like
+  simplicial complexes except that they allow the freedom to attach simplicial
+  cells  by  gluing their boundary non-homeomorphically) one obtains a minimal
+  triangulation  of  the  torus  involving  [22X1[122X  vertex,  [22X3[122X edges and [22X2[122X cells of
+  dimension  [22X2[122X.  By  using non-regular CW-complexes one obtains a minimal cell
+  structure  involving  [22X1[122X  vertex,  [22X2[122X edges and [22X1[122X cell of dimension [22X2[122X. Minimal
+  cell  structures  (in  the  four  different  categories)  for  the torus are
+  illustrated as follows.[133X
+  
+  [33X[0;0YA  second  limitation  to  our  representations  of  simplicial  and regular
+  CW-complexes is that they apply only to structures with finitely many cells.
+  They  do  no apply, for instance, to the simplicial complex structure on the
+  real  line  [22XR[122X  in  which  each  each integer [22Xn[122X is a vertex and each interval
+  [22X[n,n+1][122X is an edge.[133X
+  
+  [33X[0;0YSimplicial   sets  provide  one  approach  to  the  efficient  combinatorial
+  representation  of  certain spaces. So too do cubical sets (the analogues of
+  simplicial sets in which each cell has the combinatorics of an [22Xn[122X-cube rather
+  than  an [22Xn[122X-simplex). Neither of these two approaches has been implemented in
+  [12XHAP[112X.[133X
+  
+  [33X[0;0YSimplicial  sets  endowed  with  the action of a (possibly infinite) group [22XG[122X
+  provide   for  an  efficient  representation  of  (possibly  infinite)  cell
+  structures  on a wider class of spaces. Such a structure can be made precise
+  and is known as a [13Xsimplicial group[113X. Some functionality for simplicial groups
+  is implemented in [12XHAP[112X and described in Chapter [14X9[114X.[133X
+  
+  [33X[0;0YA  regular CW-complex endowed with the action of a (possibly infinite) group
+  [22XG[122X  is  an alternative approach to the efficient combinatorial representation
+  of  (possibly infinite) cell structures on spaces. Much of [12XHAP[112X is focused on
+  this  approach.  As  a  first  example  of  the idea, the following commands
+  construct  the  infinite  regular  CW-complex  [22XY=widetilde  T[122X arising as the
+  universal  cover of the torus [22XT= S^1× S^1[122X where [22XT[122X is given the above minimal
+  non-regular  CW  structure  involving  [22X1[122X  vertex,  [22X2[122X  edges,  and  [22X1[122X cell of
+  dimension [22X2[122X. The homology [22XH_n(T, Z)[122X is computed and the fundamental group of
+  the torus [22XT[122X is recovered.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(2);;x:=F.1;;y:=F.2;;[127X[104X
+    [4X[25Xgap>[125X [27XG:=F/[ x*y*x^-1*y^-1 ];;[127X[104X
+    [4X[25Xgap>[125X [27XY:=EquivariantTwoComplex(G);[127X[104X
+    [4X[28XEquivariant CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfQuotient(Y);[127X[104X
+    [4X[28XChain complex of length 2 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XFundamentalGroupOfQuotient(Y);[127X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2 ]>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAs  a  second  example,  the  following  comands  load group number [22X9[122X in the
+  library  of  [22X3[122X-dimensional  crystallographic groups. They verify that [22XG[122X acts
+  freely  on  [22XR^3[122X  (i.e.  [22XG[122X  is  a  [13XBieberbach  group[113X)  and  then  construct a
+  [22XG[122X-equivariant  CW-complex [22XY= R^3[122X corresponding to the tessellation of [22XR^3[122X by
+  a  fundamental  domain  for  [22XG[122X.  Finally,  the  cohomology  [22XH_n(M, Z)[122X of the
+  [22X3[122X-dimensional  closed  manifold [22XM= R^3/G[122X is computed. The manifold [22XM[122X is seen
+  to  be  non-orientable  (since it's top-dimensional homology is trivial) and
+  has  a non-regular CW structure with [22X1[122X vertex, [22X3[122X edges, [22X3[122X cells of dimension
+  [22X2[122X, and [22X1[122X cell of dimension [22X3[122X. (This example uses Polymake software.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroup(3,9);;[127X[104X
+    [4X[25Xgap>[125X [27XIsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XY:=EquivariantEuclideanSpace(G,[0,0,0]);[127X[104X
+    [4X[28XEquivariant CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY!.dimension(0);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XY!.dimension(1);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XY!.dimension(2);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XY!.dimension(3);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfQuotient(Y);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,2);[127X[104X
+    [4X[28X[ 2, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.14 [33X[0;0YOrbifolds[133X[101X
+  
+  [33X[0;0YIf  a  discrete  group  [22XG[122X  acts  on Euclidean space or hyperbolic space with
+  finite  stabilizeer  groups  then we say that the quotient space obtained by
+  killing  the  action  of  [22XG[122X an an [13Xorbifold[113X. If the stabilizer groups are all
+  trivial then the quotient is of course a manifold.[133X
+  
+  [33X[0;0YAn  orbifold  is  represented as a [22XG[122X-equivariant regular CW-complex together
+  with  the  stabilizer  group for a representative of each orbit of cells and
+  its  subgroup  consisting  of  those  group  elements that preserve the cell
+  orientation. [12XHAP[112X stores orbifolds using the data type of [13Xnon-free resolution[113X
+  and  uses them mainly as a first step in constructing free [22XZG[122X-resolutions of
+  [22XZ[122X.[133X
+  
+  [33X[0;0YThe  following commands use an [22X8[122X-dimensional equivariant deformation retract
+  of  a  [22XGL_3(  Z[  i])[122X-orbifold  structure  on  hyperbolic  space  to compute
+  [22XH_5(GL_3(  Z[  i]) = Z_2⊕ Z[122X. (The deformation retract is stored in a library
+  and was supplied by Mathieu Dutour Sikiric.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XOrbifold:=ContractibleGcomplex("PGL(3,Z[i])");[127X[104X
+    [4X[28XNon-free resolution in characteristic 0 for matrix group . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(Orbifold,5);[127X[104X
+    [4X[28XResolution of length 5 in characteristic 0 for matrix group . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),4);[127X[104X
+    [4X[28X[ 2, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

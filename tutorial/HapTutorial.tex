@@ -731,6 +731,122 @@ ambient isotopy.
 \end{Verbatim}
  }
 
+ 
+\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 13, 0 ]}
+\hyperdef{L}{X85A579217DCB6CC8}{}
+{
+ The above representations of spaces as simplicial complexes and regular CW
+complexes have their limitations. One limitation is that the number of cells
+needed to describe a space can be unnecessarily large. A minimal simplicial
+complex structure for the torus has $7$ vertices, $21$ edges and $14$ triangles. A minimal regular CW-complex structure for the torus has $4$ vertices, $8$ edges and $4$ cells of dimension $2$. By using simplicial sets (which are like simplicial complexes except that
+they allow the freedom to attach simplicial cells by gluing their boundary
+non-homeomorphically) one obtains a minimal triangulation of the torus
+involving $1$ vertex, $3$ edges and $2$ cells of dimension $2$. By using non-regular CW-complexes one obtains a minimal cell structure
+involving $1$ vertex, $2$ edges and $1$ cell of dimension $2$. Minimal cell structures (in the four different categories) for the torus are
+illustrated as follows. 
+
+  
+
+  
+
+A second limitation to our representations of simplicial and regular
+CW-complexes is that they apply only to structures with finitely many cells.
+They do no apply, for instance, to the simplicial complex structure on the
+real line $\mathbb R$ in which each each integer $n$ is a vertex and each interval $[n,n+1]$ is an edge. 
+
+ Simplicial sets provide one approach to the efficient combinatorial
+representation of certain spaces. So too do cubical sets (the analogues of
+simplicial sets in which each cell has the combinatorics of an $n$-cube rather than an $n$-simplex). Neither of these two approaches has been implemented in \textsc{HAP}. 
+
+ Simplicial sets endowed with the action of a (possibly infinite) group $G$ provide for an efficient representation of (possibly infinite) cell structures
+on a wider class of spaces. Such a structure can be made precise and is known
+as a \emph{simplicial group}. Some functionality for simplicial groups is implemented in \textsc{HAP} and described in Chapter \ref{chapSimplicialGroups}. 
+
+A regular CW-complex endowed with the action of a (possibly infinite) group $G$ is an alternative approach to the efficient combinatorial representation of
+(possibly infinite) cell structures on spaces. Much of \textsc{HAP} is focused on this approach. As a first example of the idea, the following
+commands construct the infinite regular CW-complex $Y=\widetilde T$ arising as the universal cover of the torus $T=\mathbb S^1\times \mathbb S^1$ where $T$ is given the above minimal non-regular CW structure involving $1$ vertex, $2$ edges, and $1$ cell of dimension $2$. The homology $H_n(T,\mathbb Z)$ is computed and the fundamental group of the torus $T$ is recovered. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=FreeGroup(2);;x:=F.1;;y:=F.2;;|
+  !gapprompt@gap>| !gapinput@G:=F/[ x*y*x^-1*y^-1 ];;|
+  !gapprompt@gap>| !gapinput@Y:=EquivariantTwoComplex(G);|
+  Equivariant CW-complex of dimension 2
+  
+  !gapprompt@gap>| !gapinput@C:=ChainComplexOfQuotient(Y);|
+  Chain complex of length 2 in characteristic 0 . 
+  
+  !gapprompt@gap>| !gapinput@Homology(C,0);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Homology(C,1);|
+  [ 0, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(C,2);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@FundamentalGroupOfQuotient(Y);|
+  <fp group of size infinity on the generators [ f1, f2 ]>
+  
+\end{Verbatim}
+ 
+
+As a second example, the following comands load group number $9$ in the library of $3$-dimensional crystallographic groups. They verify that $G$ acts freely on $\mathbb R^3$ (i.e. $G$ is a \emph{Bieberbach group}) and then construct a $G$-equivariant CW-complex $Y=\mathbb R^3$ corresponding to the tessellation of $\mathbb R^3$ by a fundamental domain for $G$. Finally, the cohomology $H_n(M,\mathbb Z)$ of the $3$-dimensional closed manifold $M=\mathbb R^3/G$ is computed. The manifold $M$ is seen to be non-orientable (since it's top-dimensional homology is trivial)
+and has a non-regular CW structure with $1$ vertex, $3$ edges, $3$ cells of dimension $2$, and $1$ cell of dimension $3$. (This example uses Polymake software.) 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|G:=SpaceGroup(3,9);;D
+  @gapprompt|gap>D @gapinput|IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));D
+  true
+  @gapprompt|gap>D @gapinput|Y:=EquivariantEuclideanSpace(G,[0,0,0]);D
+  Equivariant CW-complex of dimension 3
+  
+  @gapprompt|gap>D @gapinput|Y!.dimension(0);D
+  1
+  @gapprompt|gap>D @gapinput|Y!.dimension(1);D
+  3
+  @gapprompt|gap>D @gapinput|Y!.dimension(2);D
+  3
+  @gapprompt|gap>D @gapinput|Y!.dimension(3);D
+  1
+  @gapprompt|gap>D @gapinput|C:=ChainComplexOfQuotient(Y);D
+  Chain complex of length 3 in characteristic 0 . 
+  
+  @gapprompt|gap>D @gapinput|Homology(C,0);D
+  [ 0 ]
+  @gapprompt|gap>D @gapinput|Homology(C,1);D
+  [ 0, 0 ]
+  @gapprompt|gap>D @gapinput|Homology(C,2);D
+  [ 2, 0 ]
+  @gapprompt|gap>D @gapinput|Homology(C,3);D
+  [  ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Orbifolds}}\logpage{[ 1, 14, 0 ]}
+\hyperdef{L}{X8681ABB483930318}{}
+{
+ If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizeer groups
+then we say that the quotient space obtained by killing the action of $G$ an an \emph{orbifold}. If the stabilizer groups are all trivial then the quotient is of course a
+manifold. 
+
+An orbifold is represented as a $G$-equivariant regular CW-complex together with the stabilizer group for a
+representative of each orbit of cells and its subgroup consisting of those
+group elements that preserve the cell orientation. \textsc{HAP} stores orbifolds using the data type of \emph{non-free resolution} and uses them mainly as a first step in constructing free $\mathbb ZG$-resolutions of $\mathbb Z$. 
+
+ The following commands use an $8$-dimensional equivariant deformation retract of a $GL_3(\mathbb Z[{\bf i}])$-orbifold structure on hyperbolic space to compute $H_5(GL_3({\mathbb Z}[{\bf i}]) = \mathbb Z_2\oplus \mathbb Z$. (The deformation retract is stored in a library and was supplied by Mathieu
+Dutour Sikiric.) 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Orbifold:=ContractibleGcomplex("PGL(3,Z[i])");|
+  Non-free resolution in characteristic 0 for matrix group . 
+  No contracting homotopy available. 
+  
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(Orbifold,5);|
+  Resolution of length 5 in characteristic 0 for matrix group . 
+  No contracting homotopy available. 
+  
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),4);|
+  [ 2, 0 ]
+  
+\end{Verbatim}
+ }
+
  }
 
  
@@ -2537,7 +2653,8 @@ $\underline H_0(G,{\cal R}) = \mathbb Z^{17}$
  }
 
  
-\chapter{\textcolor{Chapter }{Simplicial groups}}\logpage{[ 9, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Simplicial groups}}\label{chapSimplicialGroups}
+\logpage{[ 9, 0, 0 ]}
 \hyperdef{L}{X7D818E5F80F4CF63}{}
 {
  
