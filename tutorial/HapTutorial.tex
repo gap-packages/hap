@@ -845,33 +845,70 @@ Dutour Sikiric.)
   [ 2, 0 ]
   
 \end{Verbatim}
- The next example computes an orbifold structure and then a free resolution for
-a $3$-dimensional crystallographic group $G$ and then calculates the cohomology ring 
+ The next example computes an orbifold structure on $\mathbb R^4$, and then the first $20$ degrees of a free resolution/classifying space, for the second $4$-dimensional crystallographic group $G$ in the library of crystallographic groups. The cohomology is seen to have $11$ ring generators in degree $2$ and no further ring generators in degrees $< 12$. The cohomology groups are: 
 
-$H^\ast(G,\mathbb Z) = \mathbb Z[x,y]/(x^2=0, y^2=0)$ 
-
-with $x$ a generator of cohomological degree $1$ and $y$ a generator of degree $2$. 
+$H^n(G,\mathbb Z) =\left( \begin{array}[ll] 00, & {\rm odd~} n\le 20\\ \mathbb
+Z_2^5 \oplus \mathbb Z^6, & n=2\\ \mathbb Z_2^{15}\oplus \mathbb Z, & n=4\\
+\mathbb Z_2^{16}, & 5 \le n \le 19 .\\ \end{array}\right.$ 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@gens:= [ [ [-1,0,0,0], [0,-1,0,0], [0,0,1,1/2], [0,0,0,1] ],|
-              [ [0,-1,0,0], [1,-1,0,0], [0,0,1,1/3], [0,0,0,1] ],
-              [ [1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,1] ] ];;
-  !gapprompt@gap>| !gapinput@G:=AffineCrystGroupOnLeft(gens);;|
-  !gapprompt@gap>| !gapinput@G:=StandardAffineCrystGroup(G);;|
-  !gapprompt@gap>| !gapinput@G:=Image(IsomorphismPcpGroup(G));;|
-  !gapprompt@gap>| !gapinput@E_G:=Resolution(G,4);;|
-  !gapprompt@gap>| !gapinput@C:=HomToIntegers(E_G);|
-  Cochain complex of length 4 in characteristic 0 . 
+  !gapprompt@gap>| !gapinput@G:=SpaceGroup(4,2);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionCubicalCrystGroup(G,20);|
+  Resolution of length 20 in characteristic 0 for <matrix group with 
+  5 generators> . 
   
+  !gapprompt@gap>| !gapinput@C:=HomToIntegers(R);|
+  Cochain complex of length 20 in characteristic 0 . 
+  
+  !gapprompt@gap>| !gapinput@Cohomology(C,0);|
+  [ 0 ]
   !gapprompt@gap>| !gapinput@Cohomology(C,1);|
-  [ 0 ]
+  [  ]
   !gapprompt@gap>| !gapinput@Cohomology(C,2);|
-  [ 0 ]
+  [ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0 ]
   !gapprompt@gap>| !gapinput@Cohomology(C,3);|
-  [ 0 ]
-  !gapprompt@gap>| !gapinput@CupProduct(E_G,1,1,[1],[1]);|
-  [ 0 ]
-  !gapprompt@gap>| !gapinput@CupProduct(E_G,1,2,[1],[1]);|
-  [ -1 ]
+  [  ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,4);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,5);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,6);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,7);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,8);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,9);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,10);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  !gapprompt@gap>| !gapinput@etcetera for n up to 19|
+  
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,1);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,2);|
+  [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+    [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+    [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+    [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], 
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,3);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,4);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,5);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,6);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,7);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,8);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,9);|
+  [  ]
+  !gapprompt@gap>| !gapinput@IntegralRingGenerators(R,10);|
+  [  ]
+  
   
 \end{Verbatim}
  }
