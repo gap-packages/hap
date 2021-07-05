@@ -61,7 +61,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85A579217DCB6CC8">1.13 <span class="Heading">Equivariant CW complexes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8681ABB483930318">1.14 <span class="Heading">Orbifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86881717878ADCD6">1.14 <span class="Heading">Orbifolds and classifying spaces</span></a>
 </span>
 </div>
 </div>
@@ -707,9 +707,9 @@ Chain complex of length 3 in characteristic 0 .
 
 </pre></div>
 
-<p><a id="X8681ABB483930318" name="X8681ABB483930318"></a></p>
+<p><a id="X86881717878ADCD6" name="X86881717878ADCD6"></a></p>
 
-<h4>1.14 <span class="Heading">Orbifolds</span></h4>
+<h4>1.14 <span class="Heading">Orbifolds and classifying spaces</span></h4>
 
 <p>If a discrete group <span class="SimpleMath">G</span> acts on Euclidean space or hyperbolic space with finite stabilizeer groups then we say that the quotient space obtained by killing the action of <span class="SimpleMath">G</span> an an <em>orbifold</em>. If the stabilizer groups are all trivial then the quotient is of course a manifold.</p>
 
@@ -729,6 +729,37 @@ No contracting homotopy available.
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
 [ 2, 0 ]
+
+</pre></div>
+
+<p>The next example computes and orbifold structure and then a free resolution for a <span class="SimpleMath">3</span>-dimensional crystallographic group <span class="SimpleMath">G</span> and then calculates the cohomology ring</p>
+
+<p><span class="SimpleMath">H^∗(G, Z) = Z[x,y]/(x^2=0, y^2=0)</span></p>
+
+<p>with <span class="SimpleMath">x</span> a generator of cohomological degree <span class="SimpleMath">1</span> and <span class="SimpleMath">y</span> a generator of degree <span class="SimpleMath">2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= [ [ [-1,0,0,0], [0,-1,0,0], [0,0,1,1/2], [0,0,0,1] ],</span>
+            [ [0,-1,0,0], [1,-1,0,0], [0,0,1,1/3], [0,0,0,1] ],
+            [ [1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,1] ] ];;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AffineCrystGroupOnLeft(gens);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=StandardAffineCrystGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(IsomorphismPcpGroup(G));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E_G:=Resolution(G,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegers(E_G);</span>
+Cochain complex of length 4 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,1);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,3);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CupProduct(E_G,1,1,[1],[1]);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CupProduct(E_G,1,2,[1],[1]);</span>
+[ -1 ]
 
 </pre></div>
 

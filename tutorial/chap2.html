@@ -119,6 +119,8 @@ x_1^4-2*x_1^3+3*x_1^2-2*x_1+1
 
 </li>
 </ul>
+<p><strong class="button">Example 1</strong></p>
+
 <p>To illustrate these features the following example begins by reading in a protein backbone from the online <span class="URL"><a href="https://www.rcsb.org/">Protein Database</a></span>, and storing it as a pure cubical complex <span class="SimpleMath">K</span>. The ends of the protein have been joined, and the homology <span class="SimpleMath">H_i(K, Z)= Z</span>, <span class="SimpleMath">i=0,1</span> is seen to be that of a circle. We can thus regard the protein as a knot <span class="SimpleMath">K⊂ R^3</span>. The protein is visualized as a pure permutahedral complex.</p>
 
 
@@ -186,6 +188,35 @@ Map of regular CW-complexes
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(G);</span>
 [ f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-2*f2^-1*f1*(f1*f2^-1)^2 ]
 
+
+</pre></div>
+
+<p><strong class="button">Example 2</strong></p>
+
+<p>The next example of commands begins by readng two synthetic knots from a CSV file (containing the coordinates of the two sequences of vertices) and producing a pure permutahedral complex model of the two knots. The linking number of two knots is given by the low-dimension cup product of the complement of the knots. This linking number is computed to be <span class="SimpleMath">6</span>.</p>
+
+<p><img src="images/twoknots.png" align="center" width="600" alt="two knots"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file1:=HapFile("data175_1.csv");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file2:=HapFile("data175_2.csv");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ReadCSVfileAsPureCubicalKnot( [file1, file2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PurePermutahedralComplex(K!.binaryArray);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ThickenedPureComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractedComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#K is a permutahedral complex model of the two input knots</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(K);</span>
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PureComplexComplement(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ZigZagContractedComplex(Y,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=RegularCWComplex(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ContractedComplex(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup([1,0],[0,1]);</span>
+[ -6, 0 ]
 
 </pre></div>
 

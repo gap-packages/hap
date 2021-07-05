@@ -819,8 +819,8 @@ and has a non-regular CW structure with $1$ vertex, $3$ edges, $3$ cells of dime
  }
 
  
-\section{\textcolor{Chapter }{Orbifolds}}\logpage{[ 1, 14, 0 ]}
-\hyperdef{L}{X8681ABB483930318}{}
+\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 14, 0 ]}
+\hyperdef{L}{X86881717878ADCD6}{}
 {
  If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizeer groups
 then we say that the quotient space obtained by killing the action of $G$ an an \emph{orbifold}. If the stabilizer groups are all trivial then the quotient is of course a
@@ -843,6 +843,35 @@ Dutour Sikiric.)
   
   !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),4);|
   [ 2, 0 ]
+  
+\end{Verbatim}
+ The next example computes and orbifold structure and then a free resolution
+for a $3$-dimensional crystallographic group $G$ and then calculates the cohomology ring 
+
+$H^\ast(G,\mathbb Z) = \mathbb Z[x,y]/(x^2=0, y^2=0)$ 
+
+with $x$ a generator of cohomological degree $1$ and $y$ a generator of degree $2$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@gens:= [ [ [-1,0,0,0], [0,-1,0,0], [0,0,1,1/2], [0,0,0,1] ],|
+              [ [0,-1,0,0], [1,-1,0,0], [0,0,1,1/3], [0,0,0,1] ],
+              [ [1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,1] ] ];;
+  !gapprompt@gap>| !gapinput@G:=AffineCrystGroupOnLeft(gens);;|
+  !gapprompt@gap>| !gapinput@G:=StandardAffineCrystGroup(G);;|
+  !gapprompt@gap>| !gapinput@G:=Image(IsomorphismPcpGroup(G));;|
+  !gapprompt@gap>| !gapinput@E_G:=Resolution(G,4);;|
+  !gapprompt@gap>| !gapinput@C:=HomToIntegers(E_G);|
+  Cochain complex of length 4 in characteristic 0 . 
+  
+  !gapprompt@gap>| !gapinput@Cohomology(C,1);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,2);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(C,3);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@CupProduct(E_G,1,1,[1],[1]);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@CupProduct(E_G,1,2,[1],[1]);|
+  [ -1 ]
   
 \end{Verbatim}
  }
@@ -937,7 +966,11 @@ some situations:
 \item  Pure permutahedral complexes are topological manifolds with boundary. 
 \item  The method used for finding a smaller pure cubical complex $M'$ homotopy equivalent to a given pure cubical complex $M$ retains the homeomorphism type, and not just the homotopy type, of the space $M$.
 \end{itemize}
- To illustrate these features the following example begins by reading in a
+ 
+
+\textsc{Example 1} 
+
+To illustrate these features the following example begins by reading in a
 protein backbone from the online \href{https://www.rcsb.org/} {Protein Database}, and storing it as a pure cubical complex $K$. The ends of the protein have been joined, and the homology $H_i(K,\mathbb Z)=\mathbb Z$, $i=0,1$ is seen to be that of a circle. We can thus regard the protein as a knot $K\subset \mathbb R^3$. The protein is visualized as a pure permutahedral complex. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@file:=HapFile("data1V2X.pdb");;|
@@ -1003,6 +1036,38 @@ y^2x^{-2}yxy^{-1}=1, yx^{-2}y^{-1}x(xy^{-1})^2=1>$.
   !gapprompt@gap>| !gapinput@RelatorsOfFpGroup(G);|
   [ f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-2*f2^-1*f1*(f1*f2^-1)^2 ]
   
+  
+\end{Verbatim}
+ 
+
+\textsc{Example 2} 
+
+The next example of commands begins by readng two synthetic knots from a CSV
+file (containing the coordinates of the two sequences of vertices) and
+producing a pure permutahedral complex model of the two knots. The linking
+number of two knots is given by the low-dimension cup product of the
+complement of the knots. This linking number is computed to be $6$. 
+
+  
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|file1:=HapFile("data175_1.csv");;B
+  @gapprompt|gap>B @gapinput|file2:=HapFile("data175_2.csv");;B
+  @gapprompt|gap>B @gapinput|K:=ReadCSVfileAsPureCubicalKnot( [file1, file2]);;B
+  @gapprompt|gap>B @gapinput|K:=PurePermutahedralComplex(K!.binaryArray);;B
+  @gapprompt|gap>B @gapinput|K:=ThickenedPureComplex(K);;B
+  @gapprompt|gap>B @gapinput|K:=ContractedComplex(K);;B
+  @gapprompt|gap>B @gapinput|#K is a permutahedral complex model of the two input knotsB
+  @gapprompt|gap>B @gapinput|Display(K);B
+  
+  
+  @gapprompt|gap>B @gapinput|Y:=PureComplexComplement(K);;B
+  @gapprompt|gap>B @gapinput|W:=ZigZagContractedComplex(Y,2);;B
+  @gapprompt|gap>B @gapinput|W:=RegularCWComplex(W);;B
+  @gapprompt|gap>B @gapinput|W:=ContractedComplex(W);;B
+  @gapprompt|gap>B @gapinput|G:=FundamentalGroup(W);;B
+  @gapprompt|gap>B @gapinput|cup:=CupProduct(G);;B
+  @gapprompt|gap>B @gapinput|cup([1,0],[0,1]);B
+  [ -6, 0 ]
   
 \end{Verbatim}
  }
