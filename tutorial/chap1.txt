@@ -464,40 +464,34 @@
   
   [33X[0;0YMany  naturally occuring cell structures are neither simplicial nor cubical.
   For a general regular CW-complex we (currently) require a cellular inclusion
-  [22Xoverline  Y  ↪  Y×  Y[122X  with  projection  [22Xp:  overline  Y  ↠  Y[122X  that induces
-  isomorphisms  on  integral  homology.  The function [10XDiagonalApproximation(Y)[110X
-  constructs a candidate inclusion, but the projection [22Xp: overline Y ↠ Y[122X needs
-  to  be  tested  for  homology equivalence. If the candidate inclusion passes
-  this  test  then  the function [10XCupProduct(Y)[110X, involving the candidate space,
-  can be used for cup products.[133X
+  [22Xoverline  Y  ↪  Y×  Y[122X with [22X{(y,y) : y∈ Y}⊂ overline Y[122X and with projection [22Xp:
+  overline  Y ↠ Y[122X that induces isomorphisms on integral homology. The function
+  [10XDiagonalApproximation(Y)[110X   constructs   a   candidate   inclusion,  but  the
+  projection [22Xp: overline Y ↠ Y[122X needs to be tested for homology equivalence. If
+  the  candidate  inclusion  passes this test then the function [10XCupProduct(Y)[110X,
+  involving  the  candidate  space, can be used for cup products. (I think the
+  test  is  passed  for all regular CW-complexes that are subcomplexes of some
+  Euclidean  space  with all cells convex polytopes -- but a proof needs to be
+  written down!)[133X
   
-  [33X[0;0YThe  following  example calculates [22Xg_1^1 ∪ g_3^2 ne 0[122X where [22XY=S× S× A[122X is the
-  direct  product  of  two  simplicial circles [22XS[122X and one [22X2[122X-dimensional cubical
-  Annulus [22XA[122X and where [22Xg_k^n[122X denotes the [22Xk[122X-th generator of [22XH^n(Y, Z)[122X.[133X
+  [33X[0;0YThe  following  example  calculates  [22Xg_1^2  ∪ g_2^2 ne 0[122X where [22XY=T× T[122X is the
+  direct  product  of  two  copies  of  a  simplicial torus [22XT[122X, and where [22Xg_k^n[122X
+  denotes  the [22Xk[122X-th generator in some basis of [22XH^n(Y, Z)[122X. The direct product [22XY[122X
+  is a CW-complex which is not a simplicial complex.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XA:=[[1,1,1],[1,0,1],[1,1,1]];;[127X[104X
-    [4X[25Xgap>[125X [27XA:=PureCubicalComplex(A);;[127X[104X
-    [4X[25Xgap>[125X [27XA:=RegularCWComplex(A); #A cubical annulus[127X[104X
-    [4X[28XRegular CW-complex of dimension 2[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XS:=SimplicialComplex([[1,2],[2,3],[1,3]]);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=RegularCWComplex(S); #A circle[127X[104X
-    [4X[28XRegular CW-complex of dimension 1[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XY:=DirectProduct(S,S,A);[127X[104X
-    [4X[28XRegular CW-complex of dimension 4[128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=RegularCWComplex(ClosedSurface(1));;[127X[104X
+    [4X[25Xgap>[125X [27XY:=DirectProduct(K,K);;[127X[104X
     [4X[25Xgap>[125X [27Xcup:=CupProduct(Y);;[127X[104X
-    [4X[25Xgap>[125X [27Xcup(1,2,[1,0,0],[0,0,1]);[127X[104X
-    [4X[28X[ -1 ][128X[104X
+    [4X[25Xgap>[125X [27Xcup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);[127X[104X
+    [4X[28X[ 5 ][128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XD:=DiagonalApproximation(Y);;[127X[104X
     [4X[25Xgap>[125X [27Xp:=D!.projection;[127X[104X
     [4X[28XMap of regular CW-complexes[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XP:=ChainMap(p);[127X[104X
-    [4X[28XChain Map between complexes of length 3 . [128X[104X
+    [4X[28XChain Map between complexes of length 4 . [128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,0));[127X[104X
     [4X[28Xtrue[128X[104X
@@ -505,6 +499,31 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,3));[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphismOfAbelianFpGroups(Homology(P,4));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YOf  course,  an  alternative approach to this particular example would be to
+  first  give  the direct product [22XY=T× T[122X the structure of a simplicial complex
+  and then use the Alexander-Whitney map of Strategy 2. A simplicial structure
+  for [22XT× T[122X can be obtained using the function [22XSCCartesianProduct(T,T)[122X from the
+  [12XSimpComp[112X package. The details are as follows. (The result is consistent with
+  the  preceding computation since the choice of a basis for cohomology groups
+  is far from unique.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ClosedSurface(1);;[127X[104X
+    [4X[25Xgap>[125X [27Xfacets:=MaximalSimplicesOfSimplicialComplex(K);;[127X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("simpcomp");;[127X[104X
+    [4X[25Xgap>[125X [27XscK:=SCFromFacets(S);;[127X[104X
+    [4X[25Xgap>[125X [27XscY:=SCCartesianProduct(scK,scK);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));[127X[104X
+    [4X[28XSimplicial complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xcup:=CupProduct(Y);;[127X[104X
+    [4X[25Xgap>[125X [27Xcup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);[127X[104X
+    [4X[28X[ 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -666,7 +685,35 @@
   [4X[32X[104X
   
   
-  [1X1.13 [33X[0;0YEquivariant CW complexes[133X[101X
+  [1X1.13 [33X[0;0YConstructing a simplicial complex from a regular CW-complex[133X[101X
+  
+  [33X[0;0YThe  following  example constructs a [22X3[122X-dimensional pure regular CW-complex [22XK[122X
+  whose  [22X3[122X-cells are permutahedra. It then constructs the simplicial complex [22XB[122X
+  by  taking  barycentric subdivision. It then constructes a smaller, homotopy
+  equivalent,  simplicial  complex  [22XN[122X by taking the nerve of the cover of [22XK[122X by
+  the closures of its [22X3[122X-cells.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=RegularCWComplex(PureComplexComplement(PurePermutahedralKnot(3,1)));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(K);[127X[104X
+    [4X[28X77923[128X[104X
+    [4X[25Xgap>[125X [27XB:=BarycentricSubdivision(K);[127X[104X
+    [4X[28XSimplicial complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(B);[127X[104X
+    [4X[28X1622517[128X[104X
+    [4X[25Xgap>[125X [27XN:=Nerve(K);[127X[104X
+    [4X[28XSimplicial complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(N);[127X[104X
+    [4X[28X48745[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.14 [33X[0;0YEquivariant CW complexes[133X[101X
   
   [33X[0;0YThe  above  representations of spaces as simplicial complexes and regular CW
   complexes have their limitations. One limitation is that the number of cells
@@ -770,10 +817,10 @@
   [4X[32X[104X
   
   
-  [1X1.14 [33X[0;0YOrbifolds and classifying spaces[133X[101X
+  [1X1.15 [33X[0;0YOrbifolds and classifying spaces[133X[101X
   
   [33X[0;0YIf  a  discrete  group  [22XG[122X  acts  on Euclidean space or hyperbolic space with
-  finite  stabilizeer  groups  then we say that the quotient space obtained by
+  finite  stabilizer  groups  then  we say that the quotient space obtained by
   killing  the  action  of  [22XG[122X an an [13Xorbifold[113X. If the stabilizer groups are all
   trivial then the quotient is of course a manifold.[133X
   
@@ -786,20 +833,20 @@
   
   [33X[0;0YThe  following commands use an [22X8[122X-dimensional equivariant deformation retract
   of  a  [22XGL_3(  Z[  i])[122X-orbifold  structure  on  hyperbolic  space  to compute
-  [22XH_5(GL_3(  Z[  i]) = Z_2⊕ Z[122X. (The deformation retract is stored in a library
-  and was supplied by Mathieu Dutour Sikiric.)[133X
+  [22XH_5(GL_3(  Z[ i], Z) = Z_2^5⊕ Z_4^2[122X. (The deformation retract is stored in a
+  library and was supplied by Mathieu Dutour Sikiric.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XOrbifold:=ContractibleGcomplex("PGL(3,Z[i])");[127X[104X
     [4X[28XNon-free resolution in characteristic 0 for matrix group . [128X[104X
     [4X[28XNo contracting homotopy available. [128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XR:=FreeGResolution(Orbifold,5);[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(Orbifold,6);[127X[104X
     [4X[28XResolution of length 5 in characteristic 0 for matrix group . [128X[104X
     [4X[28XNo contracting homotopy available. [128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),4);[127X[104X
-    [4X[28X[ 2, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),5);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 4, 4 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -807,10 +854,10 @@
   [22X20[122X   degrees   of  a  free  resolution/classifying  space,  for  the  second
   [22X4[122X-dimensional  crystallographic  group  [22XG[122X in the library of crystallographic
   groups. The cohomology is seen to have [22X11[122X ring generators in degree [22X2[122X and no
-  further ring generators in degrees [22X< 12[122X. The cohomology groups are:[133X
-  
-  [33X[0;0Y[22XH^n(G,  Z) =( beginarray[ll] 00, & odd~ nle 20 Z_2^5 ⊕ Z^6, & n=2 Z_2^15⊕ Z,
-  & n=4 Z_2^16, & 5 le n le 19 . endarray.[122X[133X
+  further  ring  generators  in  degrees  [22X<  12[122X.  The  cohomology  groups are:
+  $$H^n(G,\mathbb  Z)  =\left(  \begin{array}[ll]  0,  &  {\rm odd~} n\le 20\\
+  \mathbb  Z_2^5 \oplus \mathbb Z^6, & n=2\\ \mathbb Z_2^{15}\oplus \mathbb Z,
+  & n=4\\ \mathbb Z_2^{16}, & 5 \le n \le 19 .\\ \end{array}\right.$$[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=SpaceGroup(4,2);;[127X[104X
@@ -873,4 +920,6 @@
     [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0Y#[133X
   

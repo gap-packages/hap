@@ -202,22 +202,31 @@ A cubical Alexander-Whitney formula can be used similarly for computing the coho
 <P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
-(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
+(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with <M>\{(y,y)\ :\ y\in Y\}\subset \overline Y</M> and with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
 The function <C>DiagonalApproximation(Y)</C> constructs a candidate inclusion,
 but the projection <M>p\colon \overline Y \twoheadrightarrow Y</M> 
 needs to be tested for homology equivalence. If the candidate inclusion
  passes this test then the function <C>CupProduct(Y)</C>,  involving
- the candidate space,  can be used for cup products.  
+ the candidate space,  can be used for cup products. (I think the test is passed for all regular CW-complexes that are subcomplexes of some Euclidean space with all cells convex polytopes -- but a proof needs to be written down!)   
 
-<P/>The following example calculates <M>g_1^1 \cup g_3^2 \ne 0</M> where
-<M>Y=S\times S\times A</M> is  the 
-direct product of two simplicial circles <M>S</M>  and one  <M>2</M>-dimensional cubical Annulus <M>A</M> and where 
-<M>g_k^n</M> denotes the <M>k</M>-th generator of <M>H^n(Y,\mathbb Z)</M>. 
+<P/>The following example calculates <M>g_1^2 \cup g_2^2 \ne 0</M> where
+<M>Y=T\times T</M> is  the 
+direct product of two copies of a simplicial torus <M>T</M>, and where    
+<M>g_k^n</M> denotes the <M>k</M>-th generator in some basis
+of <M>H^n(Y,\mathbb Z)</M>. The direct product <M>Y</M>
+is a CW-complex which is not a simplicial complex.
 
 <Example>
 <#Include SYSTEM "tutex/1.8.txt">
 </Example>
 </Section>
+
+Of course, an alternative approach to this particular example would be to first give the direct product <M>Y=T\times T</M> the structure of a simplicial complex and then use the Alexander-Whitney map of Strategy 2. A simplicial structure for <M>T\times T</M> can be obtained using the function <M>SCCartesianProduct(T,T)</M> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
+
+<Example>
+<#Include SYSTEM "tutex/1.8d.txt">
+</Example>
+
 
 <Section><Heading>Cohomology Rings</Heading>
 The cup product gives the cohomology <M>H^\ast(X,R)</M> of a space <M>X</M> with coefficients in a ring <M>R</M> the structure of a graded commutitive ring. This is currently implemented only for <M>Y</M> a simplicial complex and <M>R=\mathbb Z_p</M> the field of <M>p</M> elements.
@@ -298,6 +307,14 @@ are computed. This induced homomorphism is an example of a <E>peripheral system<
 
 </Section>
 
+<Section><Heading>Constructing a simplicial complex from a regular CW-complex</Heading>
+
+The following example constructs a <M>3</M>-dimensional pure regular CW-complex <M>K</M> whose <M>3</M>-cells are  permutahedra. It then constructs the simplicial complex <M>B</M> by taking barycentric subdivision. It then constructes a smaller, homotopy equivalent, simplicial complex <M>N</M> by taking the nerve of the cover of <M>K</M> by the closures of its <M>3</M>-cells.  
+<Example>
+<#Include SYSTEM "tutex/1.101.txt">
+</Example>
+
+</Section>
 
 <Section><Heading>Equivariant CW complexes</Heading>
 The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. 
@@ -351,7 +368,7 @@ corresponding to the tessellation of <M>\mathbb R^3</M> by a fundamental domain 
 
 <Section><Heading>Orbifolds and classifying spaces</Heading>
 If a discrete group <M>G</M> acts on Euclidean space or hyperbolic space with 
-finite stabilizeer groups then we say that the quotient space obtained by killing the action of <M>G</M> an an <E>orbifold</E>. If the stabilizer groups are all trivial then the quotient is of course a manifold.
+finite stabilizer groups then we say that the quotient space obtained by killing the action of <M>G</M> an an <E>orbifold</E>. If the stabilizer groups are all trivial then the quotient is of course a manifold.
 
 <P/>An orbifold is represented as a <M>G</M>-equivariant regular CW-complex 
 together with the stabilizer group for a representative of
@@ -361,7 +378,7 @@ together with the stabilizer group for a representative of
 <P/> The following commands use an <M>8</M>-dimensional equivariant 
 deformation retract
 of a
- <M>GL_3(\mathbb Z[{\bf i}])</M>-orbifold structure on hyperbolic space to compute <M>H_5(GL_3({\mathbb Z}[{\bf i}]) = \mathbb Z_2\oplus \mathbb Z</M>.
+ <M>GL_3(\mathbb Z[{\bf i}])</M>-orbifold structure on hyperbolic space to compute <M>H_5(GL_3({\mathbb Z}[{\bf i}],\mathbb Z) = \mathbb Z_2^5\oplus \mathbb Z_4^2</M>.
  (The deformation retract is stored in a library and was supplied by Mathieu Dutour Sikiric.)
 
 <Example>
@@ -371,12 +388,12 @@ of a
 The next example computes an orbifold structure on <M>\mathbb R^4</M>, 
 and then the first <M>20</M> degrees of a free resolution/classifying space, for the second <M>4</M>-dimensional crystallographic group <M>G</M> in the library of crystallographic groups. 
  The cohomology is seen to have <M>11</M> ring generators in degree <M>2</M> and no further ring generators in degrees  <M>&lt; 12</M>. The cohomology groups are:
-<P/><M>H^n(G,\mathbb Z) =\left( \begin{array}[ll]
-00, &amp; {\rm odd~} n\le 20\\
+$$H^n(G,\mathbb Z) =\left( \begin{array}[ll]
+0, &amp; {\rm odd~} n\le 20\\
 \mathbb Z_2^5 \oplus \mathbb Z^6, &amp; n=2\\
 \mathbb Z_2^{15}\oplus \mathbb Z, &amp; n=4\\
 \mathbb Z_2^{16}, &amp; 5 \le n \le 19 .\\
-\end{array}\right.</M>
+\end{array}\right.$$
 <Example>
 <#Include SYSTEM "tutex/1.15.txt">
 </Example>

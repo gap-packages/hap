@@ -58,10 +58,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8771FF2885105154">1.12 <span class="Heading">CW maps and induced homomorphisms</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85A579217DCB6CC8">1.13 <span class="Heading">Equivariant CW complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X853D6B247D0E18DB">1.13 <span class="Heading">Constructing a simplicial complex from a regular CW-complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86881717878ADCD6">1.14 <span class="Heading">Orbifolds and classifying spaces</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85A579217DCB6CC8">1.14 <span class="Heading">Equivariant CW complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86881717878ADCD6">1.15 <span class="Heading">Orbifolds and classifying spaces</span></a>
 </span>
 </div>
 </div>
@@ -472,34 +475,24 @@ Simplicial complex of dimension 4.
 
 <p><strong class="button">Strategy 3: Guess and verify a cellular approximation to the diagonal map.</strong></p>
 
-<p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we (currently) require a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products.</p>
+<p>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we (currently) require a cellular inclusion <span class="SimpleMath">overline Y ↪ Y× Y</span> with <span class="SimpleMath">{(y,y) : y∈ Y}⊂ overline Y</span> and with projection <span class="SimpleMath">p: overline Y ↠ Y</span> that induces isomorphisms on integral homology. The function <code class="code">DiagonalApproximation(Y)</code> constructs a candidate inclusion, but the projection <span class="SimpleMath">p: overline Y ↠ Y</span> needs to be tested for homology equivalence. If the candidate inclusion passes this test then the function <code class="code">CupProduct(Y)</code>, involving the candidate space, can be used for cup products. (I think the test is passed for all regular CW-complexes that are subcomplexes of some Euclidean space with all cells convex polytopes -- but a proof needs to be written down!)</p>
 
-<p>The following example calculates <span class="SimpleMath">g_1^1 ∪ g_3^2 ne 0</span> where <span class="SimpleMath">Y=S× S× A</span> is the direct product of two simplicial circles <span class="SimpleMath">S</span> and one <span class="SimpleMath">2</span>-dimensional cubical Annulus <span class="SimpleMath">A</span> and where <span class="SimpleMath">g_k^n</span> denotes the <span class="SimpleMath">k</span>-th generator of <span class="SimpleMath">H^n(Y, Z)</span>.</p>
+<p>The following example calculates <span class="SimpleMath">g_1^2 ∪ g_2^2 ne 0</span> where <span class="SimpleMath">Y=T× T</span> is the direct product of two copies of a simplicial torus <span class="SimpleMath">T</span>, and where <span class="SimpleMath">g_k^n</span> denotes the <span class="SimpleMath">k</span>-th generator in some basis of <span class="SimpleMath">H^n(Y, Z)</span>. The direct product <span class="SimpleMath">Y</span> is a CW-complex which is not a simplicial complex.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[[1,1,1],[1,0,1],[1,1,1]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=PureCubicalComplex(A);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=RegularCWComplex(A); #A cubical annulus</span>
-Regular CW-complex of dimension 2
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RegularCWComplex(S); #A circle</span>
-Regular CW-complex of dimension 1
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=DirectProduct(S,S,A);</span>
-Regular CW-complex of dimension 4
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=RegularCWComplex(ClosedSurface(1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=DirectProduct(K,K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(Y);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(1,2,[1,0,0],[0,0,1]);</span>
-[ -1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);</span>
+[ 5 ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=DiagonalApproximation(Y);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=D!.projection;</span>
 Map of regular CW-complexes
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=ChainMap(p);</span>
-Chain Map between complexes of length 3 . 
+Chain Map between complexes of length 4 . 
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,0));</span>
 true
@@ -507,6 +500,26 @@ true
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,3));</span>
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphismOfAbelianFpGroups(Homology(P,4));</span>
+true
+
+</pre></div>
+
+<p>Of course, an alternative approach to this particular example would be to first give the direct product <span class="SimpleMath">Y=T× T</span> the structure of a simplicial complex and then use the Alexander-Whitney map of Strategy 2. A simplicial structure for <span class="SimpleMath">T× T</span> can be obtained using the function <span class="SimpleMath">SCCartesianProduct(T,T)</span> from the <strong class="button">SimpComp</strong> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">facets:=MaximalSimplicesOfSimplicialComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("simpcomp");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scK:=SCFromFacets(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scY:=SCCartesianProduct(scK,scK);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));</span>
+Simplicial complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);</span>
+[ 0 ]
 
 </pre></div>
 
@@ -636,9 +649,35 @@ Chain Map between complexes of length 2 .
 
 </pre></div>
 
+<p><a id="X853D6B247D0E18DB" name="X853D6B247D0E18DB"></a></p>
+
+<h4>1.13 <span class="Heading">Constructing a simplicial complex from a regular CW-complex</span></h4>
+
+<p>The following example constructs a <span class="SimpleMath">3</span>-dimensional pure regular CW-complex <span class="SimpleMath">K</span> whose <span class="SimpleMath">3</span>-cells are permutahedra. It then constructs the simplicial complex <span class="SimpleMath">B</span> by taking barycentric subdivision. It then constructes a smaller, homotopy equivalent, simplicial complex <span class="SimpleMath">N</span> by taking the nerve of the cover of <span class="SimpleMath">K</span> by the closures of its <span class="SimpleMath">3</span>-cells.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=RegularCWComplex(PureComplexComplement(PurePermutahedralKnot(3,1)));</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(K);</span>
+77923
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=BarycentricSubdivision(K);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(B);</span>
+1622517
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=Nerve(K);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(N);</span>
+48745
+
+</pre></div>
+
 <p><a id="X85A579217DCB6CC8" name="X85A579217DCB6CC8"></a></p>
 
-<h4>1.13 <span class="Heading">Equivariant CW complexes</span></h4>
+<h4>1.14 <span class="Heading">Equivariant CW complexes</span></h4>
 
 <p>The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. One limitation is that the number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <span class="SimpleMath">7</span> vertices, <span class="SimpleMath">21</span> edges and <span class="SimpleMath">14</span> triangles. A minimal regular CW-complex structure for the torus has <span class="SimpleMath">4</span> vertices, <span class="SimpleMath">8</span> edges and <span class="SimpleMath">4</span> cells of dimension <span class="SimpleMath">2</span>. By using simplicial sets (which are like simplicial complexes except that they allow the freedom to attach simplicial cells by gluing their boundary non-homeomorphically) one obtains a minimal triangulation of the torus involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">3</span> edges and <span class="SimpleMath">2</span> cells of dimension <span class="SimpleMath">2</span>. By using non-regular CW-complexes one obtains a minimal cell structure involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">2</span> edges and <span class="SimpleMath">1</span> cell of dimension <span class="SimpleMath">2</span>. Minimal cell structures (in the four different categories) for the torus are illustrated as follows.</p>
 
@@ -709,13 +748,13 @@ Chain complex of length 3 in characteristic 0 .
 
 <p><a id="X86881717878ADCD6" name="X86881717878ADCD6"></a></p>
 
-<h4>1.14 <span class="Heading">Orbifolds and classifying spaces</span></h4>
+<h4>1.15 <span class="Heading">Orbifolds and classifying spaces</span></h4>
 
-<p>If a discrete group <span class="SimpleMath">G</span> acts on Euclidean space or hyperbolic space with finite stabilizeer groups then we say that the quotient space obtained by killing the action of <span class="SimpleMath">G</span> an an <em>orbifold</em>. If the stabilizer groups are all trivial then the quotient is of course a manifold.</p>
+<p>If a discrete group <span class="SimpleMath">G</span> acts on Euclidean space or hyperbolic space with finite stabilizer groups then we say that the quotient space obtained by killing the action of <span class="SimpleMath">G</span> an an <em>orbifold</em>. If the stabilizer groups are all trivial then the quotient is of course a manifold.</p>
 
 <p>An orbifold is represented as a <span class="SimpleMath">G</span>-equivariant regular CW-complex together with the stabilizer group for a representative of each orbit of cells and its subgroup consisting of those group elements that preserve the cell orientation. <strong class="button">HAP</strong> stores orbifolds using the data type of <em>non-free resolution</em> and uses them mainly as a first step in constructing free <span class="SimpleMath">ZG</span>-resolutions of <span class="SimpleMath">Z</span>.</p>
 
-<p>The following commands use an <span class="SimpleMath">8</span>-dimensional equivariant deformation retract of a <span class="SimpleMath">GL_3( Z[ i])</span>-orbifold structure on hyperbolic space to compute <span class="SimpleMath">H_5(GL_3( Z[ i]) = Z_2⊕ Z</span>. (The deformation retract is stored in a library and was supplied by Mathieu Dutour Sikiric.)</p>
+<p>The following commands use an <span class="SimpleMath">8</span>-dimensional equivariant deformation retract of a <span class="SimpleMath">GL_3( Z[ i])</span>-orbifold structure on hyperbolic space to compute <span class="SimpleMath">H_5(GL_3( Z[ i], Z) = Z_2^5⊕ Z_4^2</span>. (The deformation retract is stored in a library and was supplied by Mathieu Dutour Sikiric.)</p>
 
 
 <div class="example"><pre>
@@ -723,18 +762,16 @@ Chain complex of length 3 in characteristic 0 .
 Non-free resolution in characteristic 0 for matrix group . 
 No contracting homotopy available. 
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(Orbifold,5);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(Orbifold,6);</span>
 Resolution of length 5 in characteristic 0 for matrix group . 
 No contracting homotopy available. 
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
-[ 2, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),5);</span>
+[ 2, 2, 2, 2, 2, 4, 4 ]
 
 </pre></div>
 
-<p>The next example computes an orbifold structure on <span class="SimpleMath">R^4</span>, and then the first <span class="SimpleMath">20</span> degrees of a free resolution/classifying space, for the second <span class="SimpleMath">4</span>-dimensional crystallographic group <span class="SimpleMath">G</span> in the library of crystallographic groups. The cohomology is seen to have <span class="SimpleMath">11</span> ring generators in degree <span class="SimpleMath">2</span> and no further ring generators in degrees <span class="SimpleMath">&lt; 12</span>. The cohomology groups are:</p>
-
-<p><span class="SimpleMath">H^n(G, Z) =( beginarray[ll] 00, &amp; odd~ nle 20 Z_2^5 ⊕ Z^6, &amp; n=2 Z_2^15⊕ Z, &amp; n=4 Z_2^16, &amp; 5 le n le 19 . endarray.</span></p>
+<p>The next example computes an orbifold structure on <span class="SimpleMath">R^4</span>, and then the first <span class="SimpleMath">20</span> degrees of a free resolution/classifying space, for the second <span class="SimpleMath">4</span>-dimensional crystallographic group <span class="SimpleMath">G</span> in the library of crystallographic groups. The cohomology is seen to have <span class="SimpleMath">11</span> ring generators in degree <span class="SimpleMath">2</span> and no further ring generators in degrees <span class="SimpleMath">&lt; 12</span>. The cohomology groups are: $$H^n(G,\mathbb Z) =\left( \begin{array}[ll] 0, &amp; {\rm odd~} n\le 20\\ \mathbb Z_2^5 \oplus \mathbb Z^6, &amp; n=2\\ \mathbb Z_2^{15}\oplus \mathbb Z, &amp; n=4\\ \mathbb Z_2^{16}, &amp; 5 \le n \le 19 .\\ \end{array}\right.$$</p>
 
 
 <div class="example"><pre>
@@ -798,6 +835,8 @@ Cochain complex of length 20 in characteristic 0 .
 
 
 </pre></div>
+
+<p>#</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>

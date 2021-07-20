@@ -118,7 +118,7 @@
 \tableofcontents
 \newpage
 
- 
+ \#
 \chapter{\textcolor{Chapter }{Simplicial complexes \& CW complexes}}\logpage{[ 1, 0, 0 ]}
 \hyperdef{L}{X7E5EA9587D4BCFB4}{}
 {
@@ -554,33 +554,26 @@ combinatorial face lattice.
 \textsc{Strategy 3: Guess and verify a cellular approximation to the diagonal map.} 
 
 Many naturally occuring cell structures are neither simplicial nor cubical.
-For a general regular CW-complex we (currently) require a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
-this test then the function \texttt{CupProduct(Y)}, involving the candidate space, can be used for cup products. 
+For a general regular CW-complex we (currently) require a cellular inclusion $\overline Y \hookrightarrow Y\times Y$ with $\{(y,y)\ :\ y\in Y\}\subset \overline Y$ and with projection $p\colon \overline Y \twoheadrightarrow Y$ that induces isomorphisms on integral homology. The function \texttt{DiagonalApproximation(Y)} constructs a candidate inclusion, but the projection $p\colon \overline Y \twoheadrightarrow Y$ needs to be tested for homology equivalence. If the candidate inclusion passes
+this test then the function \texttt{CupProduct(Y)}, involving the candidate space, can be used for cup products. (I think the
+test is passed for all regular CW-complexes that are subcomplexes of some
+Euclidean space with all cells convex polytopes -- but a proof needs to be
+written down!) 
 
-The following example calculates $g_1^1 \cup g_3^2 \ne 0$ where $Y=S\times S\times A$ is the direct product of two simplicial circles $S$ and one $2$-dimensional cubical Annulus $A$ and where $g_k^n$ denotes the $k$-th generator of $H^n(Y,\mathbb Z)$. 
+The following example calculates $g_1^2 \cup g_2^2 \ne 0$ where $Y=T\times T$ is the direct product of two copies of a simplicial torus $T$, and where $g_k^n$ denotes the $k$-th generator in some basis of $H^n(Y,\mathbb Z)$. The direct product $Y$ is a CW-complex which is not a simplicial complex. 
 \begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
-  @gapprompt|gap>B @gapinput|A:=[[1,1,1],[1,0,1],[1,1,1]];;B
-  @gapprompt|gap>B @gapinput|A:=PureCubicalComplex(A);;B
-  @gapprompt|gap>B @gapinput|A:=RegularCWComplex(A); #A cubical annulusB
-  Regular CW-complex of dimension 2
-  
-  @gapprompt|gap>B @gapinput|S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;B
-  @gapprompt|gap>B @gapinput|S:=RegularCWComplex(S); #A circleB
-  Regular CW-complex of dimension 1
-  
-  @gapprompt|gap>B @gapinput|Y:=DirectProduct(S,S,A);B
-  Regular CW-complex of dimension 4
-  
+  @gapprompt|gap>B @gapinput|K:=RegularCWComplex(ClosedSurface(1));;B
+  @gapprompt|gap>B @gapinput|Y:=DirectProduct(K,K);;B
   @gapprompt|gap>B @gapinput|cup:=CupProduct(Y);;B
-  @gapprompt|gap>B @gapinput|cup(1,2,[1,0,0],[0,0,1]);B
-  [ -1 ]
+  @gapprompt|gap>B @gapinput|cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);B
+  [ 5 ]
   
   @gapprompt|gap>B @gapinput|D:=DiagonalApproximation(Y);;B
   @gapprompt|gap>B @gapinput|p:=D!.projection;B
   Map of regular CW-complexes
   
   @gapprompt|gap>B @gapinput|P:=ChainMap(p);B
-  Chain Map between complexes of length 3 . 
+  Chain Map between complexes of length 4 . 
   
   @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,0));B
   true
@@ -588,10 +581,31 @@ The following example calculates $g_1^1 \cup g_3^2 \ne 0$ where $Y=S\times S\tim
   true
   @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,3));B
   true
+  @gapprompt|gap>B @gapinput|IsIsomorphismOfAbelianFpGroups(Homology(P,4));B
+  true
   
 \end{Verbatim}
  }
 
+ Of course, an alternative approach to this particular example would be to
+first give the direct product $Y=T\times T$ the structure of a simplicial complex and then use the Alexander-Whitney map
+of Strategy 2. A simplicial structure for $T\times T$ can be obtained using the function $SCCartesianProduct(T,T)$ from the \textsc{SimpComp} package. The details are as follows. (The result is consistent with the
+preceding computation since the choice of a basis for cohomology groups is far
+from unique.) 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ClosedSurface(1);;|
+  !gapprompt@gap>| !gapinput@facets:=MaximalSimplicesOfSimplicialComplex(K);;|
+  !gapprompt@gap>| !gapinput@LoadPackage("simpcomp");;|
+  !gapprompt@gap>| !gapinput@scK:=SCFromFacets(S);;|
+  !gapprompt@gap>| !gapinput@scY:=SCCartesianProduct(scK,scK);;|
+  !gapprompt@gap>| !gapinput@Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));|
+  Simplicial complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@cup:=CupProduct(Y);;|
+  !gapprompt@gap>| !gapinput@cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);|
+  [ 0 ]
+  
+\end{Verbatim}
  
 \section{\textcolor{Chapter }{Cohomology Rings}}\logpage{[ 1, 10, 0 ]}
 \hyperdef{L}{X80B6849C835B7F19}{}
@@ -732,7 +746,33 @@ ambient isotopy.
  }
 
  
-\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 13, 0 ]}
+\section{\textcolor{Chapter }{Constructing a simplicial complex from a regular CW-complex}}\logpage{[ 1, 13, 0 ]}
+\hyperdef{L}{X853D6B247D0E18DB}{}
+{
+ The following example constructs a $3$-dimensional pure regular CW-complex $K$ whose $3$-cells are permutahedra. It then constructs the simplicial complex $B$ by taking barycentric subdivision. It then constructes a smaller, homotopy
+equivalent, simplicial complex $N$ by taking the nerve of the cover of $K$ by the closures of its $3$-cells. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=RegularCWComplex(PureComplexComplement(PurePermutahedralKnot(3,1)));|
+  Regular CW-complex of dimension 3
+  
+  !gapprompt@gap>| !gapinput@Size(K);|
+  77923
+  !gapprompt@gap>| !gapinput@B:=BarycentricSubdivision(K);|
+  Simplicial complex of dimension 3.
+  
+  !gapprompt@gap>| !gapinput@Size(B);|
+  1622517
+  !gapprompt@gap>| !gapinput@N:=Nerve(K);|
+  Simplicial complex of dimension 3.
+  
+  !gapprompt@gap>| !gapinput@Size(N);|
+  48745
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 14, 0 ]}
 \hyperdef{L}{X85A579217DCB6CC8}{}
 {
  The above representations of spaces as simplicial complexes and regular CW
@@ -819,37 +859,49 @@ and has a non-regular CW structure with $1$ vertex, $3$ edges, $3$ cells of dime
  }
 
  
-\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 14, 0 ]}
+\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 15, 0 ]}
 \hyperdef{L}{X86881717878ADCD6}{}
 {
- If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizeer groups
-then we say that the quotient space obtained by killing the action of $G$ an an \emph{orbifold}. If the stabilizer groups are all trivial then the quotient is of course a
+ If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizer groups then
+we say that the quotient space obtained by killing the action of $G$ an an \emph{orbifold}. If the stabilizer groups are all trivial then the quotient is of course a
 manifold. 
 
 An orbifold is represented as a $G$-equivariant regular CW-complex together with the stabilizer group for a
 representative of each orbit of cells and its subgroup consisting of those
 group elements that preserve the cell orientation. \textsc{HAP} stores orbifolds using the data type of \emph{non-free resolution} and uses them mainly as a first step in constructing free $\mathbb ZG$-resolutions of $\mathbb Z$. 
 
- The following commands use an $8$-dimensional equivariant deformation retract of a $GL_3(\mathbb Z[{\bf i}])$-orbifold structure on hyperbolic space to compute $H_5(GL_3({\mathbb Z}[{\bf i}]) = \mathbb Z_2\oplus \mathbb Z$. (The deformation retract is stored in a library and was supplied by Mathieu
+ The following commands use an $8$-dimensional equivariant deformation retract of a $GL_3(\mathbb Z[{\bf i}])$-orbifold structure on hyperbolic space to compute $H_5(GL_3({\mathbb Z}[{\bf i}],\mathbb Z) = \mathbb Z_2^5\oplus \mathbb Z_4^2$. (The deformation retract is stored in a library and was supplied by Mathieu
 Dutour Sikiric.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Orbifold:=ContractibleGcomplex("PGL(3,Z[i])");|
   Non-free resolution in characteristic 0 for matrix group . 
   No contracting homotopy available. 
   
-  !gapprompt@gap>| !gapinput@R:=FreeGResolution(Orbifold,5);|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(Orbifold,6);|
   Resolution of length 5 in characteristic 0 for matrix group . 
   No contracting homotopy available. 
   
-  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),4);|
-  [ 2, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),5);|
+  [ 2, 2, 2, 2, 2, 4, 4 ]
   
 \end{Verbatim}
- The next example computes an orbifold structure on $\mathbb R^4$, and then the first $20$ degrees of a free resolution/classifying space, for the second $4$-dimensional crystallographic group $G$ in the library of crystallographic groups. The cohomology is seen to have $11$ ring generators in degree $2$ and no further ring generators in degrees $< 12$. The cohomology groups are: 
-
-$H^n(G,\mathbb Z) =\left( \begin{array}[ll] 00, & {\rm odd~} n\le 20\\ \mathbb
-Z_2^5 \oplus \mathbb Z^6, & n=2\\ \mathbb Z_2^{15}\oplus \mathbb Z, & n=4\\
-\mathbb Z_2^{16}, & 5 \le n \le 19 .\\ \end{array}\right.$ 
+ The next example computes an orbifold structure on $\mathbb R^4$, and then the first $20$ degrees of a free resolution/classifying space, for the second $4$-dimensional crystallographic group $G$ in the library of crystallographic groups. The cohomology is seen to have $11$ ring generators in degree $2$ and no further ring generators in degrees $< 12$. The cohomology groups are:
+\$\$H\texttt{\symbol{94}}n(G,\texttt{\symbol{92}}mathbb Z)
+=\texttt{\symbol{92}}left(
+\texttt{\symbol{92}}begin\texttt{\symbol{123}}array\texttt{\symbol{125}}[ll]
+0, \& \texttt{\symbol{123}}\texttt{\symbol{92}}rm
+odd\texttt{\symbol{126}}\texttt{\symbol{125}} n\texttt{\symbol{92}}le
+20\texttt{\symbol{92}}\texttt{\symbol{92}} \texttt{\symbol{92}}mathbb
+Z{\textunderscore}2\texttt{\symbol{94}}5 \texttt{\symbol{92}}oplus
+\texttt{\symbol{92}}mathbb Z\texttt{\symbol{94}}6, \&
+n=2\texttt{\symbol{92}}\texttt{\symbol{92}} \texttt{\symbol{92}}mathbb
+Z{\textunderscore}2\texttt{\symbol{94}}\texttt{\symbol{123}}15\texttt{\symbol{125}}\texttt{\symbol{92}}oplus
+\texttt{\symbol{92}}mathbb Z, \& n=4\texttt{\symbol{92}}\texttt{\symbol{92}}
+\texttt{\symbol{92}}mathbb
+Z{\textunderscore}2\texttt{\symbol{94}}\texttt{\symbol{123}}16\texttt{\symbol{125}},
+\& 5 \texttt{\symbol{92}}le n \texttt{\symbol{92}}le 19
+.\texttt{\symbol{92}}\texttt{\symbol{92}}
+\texttt{\symbol{92}}end\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{92}}right.\$\$ 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=SpaceGroup(4,2);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionCubicalCrystGroup(G,20);|
@@ -915,7 +967,7 @@ Z_2^5 \oplus \mathbb Z^6, & n=2\\ \mathbb Z_2^{15}\oplus \mathbb Z, & n=4\\
 
  }
 
- 
+ \#
 \chapter{\textcolor{Chapter }{Cubical complexes \& permutahedral complexes}}\logpage{[ 2, 0, 0 ]}
 \hyperdef{L}{X7F8376F37AF80AAC}{}
 {
