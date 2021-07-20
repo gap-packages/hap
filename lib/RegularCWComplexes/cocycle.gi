@@ -471,6 +471,7 @@ for j in Q do
 Add(u,  [ quad2pair[p+1][q+1][i][j][2] , v[i]*w[j] ]);
 od;od;
 
+
 ###############################
 if p<q then cheat:=1;         #NEED TO THINK ABOUT THIS!
 else cheat:=-1;

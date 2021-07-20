@@ -16,12 +16,12 @@ Equiv:=ChainComplexEquivalenceOfRegularCWComplex(Y);
 C:=Source(Equiv[2]);  ##This has fewer generators than cells of Y
 CC:=Target(Equiv[2]);  ##This has generators equal to the cells of Y
 if prime=0 then
-D:=HomToIntegersModP(C,2);;
+D:=HomToIntegers(C);;
+IntCoh:=IntegralCohomology("CohomologyAsFpGroup",true);;
 else
 D:=HomToIntegersModP(C,prime);;
-fi;
-#IntCoh:=IntegralCohomology("CohomologyAsFpGroup",true);;
 IntCoh:=ModularCohomology("CohomologyAsFpGroup",true);;
+fi;
 
 ###################################
 MyLength:=function(L);
@@ -82,7 +82,7 @@ for j in [1..Length(w)/2] do
 m:=HD!.h2c(w[2*j-1]);
 v:=v+w[2*j]*m;
 od;
-#Print(SmallToBig(v,n),"\n\n");
+
 return SmallToBig(v,n);
 end;
 ###############################
@@ -135,10 +135,10 @@ w:=[1..CC!.dimension(i+j)]*0;
 xx:=[1..CC!.dimension(i)]*0;
 yy:=[1..CC!.dimension(j)]*0;
 for k in [1..MyLength(clgy[i+1])] do
-xx:=xx+x[k]*fns[i+1](k);
+xx:=xx+x[k]*fns[i+1](k); 
 od;
 for k in [1..MyLength(clgy[j+1])] do
-yy:=yy+y[k]*fns[j+1](k);
+yy:=yy+y[k]*fns[j+1](k); 
 od;
 
 #Print(xx,"\n",yy,"\n\n");

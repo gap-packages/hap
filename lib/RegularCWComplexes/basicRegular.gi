@@ -2401,3 +2401,128 @@ return bnd;
 end);
 ###############################
 ###############################
+
+
+
+#######################################################
+#######################################################
+InstallGlobalFunction(HAP_BaryCentricSubdivisionRegularCWComplex,
+function(Y)
+local K, B, chains, newchains, maxchains, shifts, s, n, b, c, i;
+
+B:=1*Y!.coboundaries;
+for n in [1..Length(B)] do
+for b in B[n] do
+Remove(b,1);
+od;
+od;
+
+shifts:=[];
+s:=0;
+for n in [0..Dimension(Y)] do
+shifts[n+1]:=s;
+s:=s+Y!.nrCells(n);;
+od;
+
+maxchains:=[];
+chains:=List([1..Y!.nrCells(0)],i->[i]);
+newchains:=[];
+
+for n in [1..Dimension(Y)+1] do
+for c in chains do
+   if Length(B[n][c[Length(c)]])=0 then Add(maxchains,c);
+else
+   for i in B[n][c[Length(c)]] do
+   Add(newchains, Concatenation(c,[i]));
+   od;
+fi;
+od;
+chains:=newchains;
+newchains:=[];
+od;
+
+for c in maxchains do
+for n in [1..Length(c)] do
+c[n]:=c[n]+shifts[n];
+od;
+od;
+
+return MaximalSimplicesToSimplicialComplex(maxchains);
+end);
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+InstallOtherMethod(BarycentricSubdivision,
+"for regular CW complexes",
+[IsHapRegularCWComplex],
+function(Y);
+return HAP_BaryCentricSubdivisionRegularCWComplex(Y);
+end);
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+InstallGlobalFunction(HAP_Triangulation, 
+function(Y)
+local K, B, chains, newchains, maxchains, reduce, vsets, s, n, b, c, i;
+
+B:=1*Y!.coboundaries;
+for n in [1..Length(B)] do
+for b in B[n] do
+Remove(b,1);
+od;
+od;
+
+maxchains:=[];
+chains:=List([1..Y!.nrCells(0)],i->[i]);
+newchains:=[];
+
+###################################
+reduce:=function(x);
+if Length(x)>1 then return [x[1],x[Length(x)]];
+else return x;
+fi;
+end;
+###################################
+
+for n in [1..Dimension(Y)+1] do
+for c in chains do
+   if Length(B[n][c[Length(c)]])=0 then Add(maxchains,c);
+else
+   for i in B[n][c[Length(c)]] do
+   Add(newchains, Concatenation(c,[i]));
+   od;
+fi;
+od;
+Apply(newchains,reduce);
+newchains:=SSortedList(newchains);
+chains:=newchains;
+newchains:=[];
+od;
+
+Apply(maxchains, x->[x[1],x[Length(x)]]);
+
+vsets:=List([1..Y!.nrCells(0)],a->[]);
+for c in maxchains do
+AddSet(vsets[c[1]],c[2]);
+od;
+vsets:=SSortedList(vsets);
+return MaximalSimplicesToSimplicialComplex(vsets);
+end);
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+InstallOtherMethod(Nerve,
+"For pure Cw complexes",
+[IsHapRegularCWComplex],
+function(Y)
+return HAP_Triangulation(Y);
+end);
+#######################################################
+#######################################################
+

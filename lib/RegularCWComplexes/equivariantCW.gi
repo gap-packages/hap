@@ -107,7 +107,7 @@ end);
 #############################################################
 InstallGlobalFunction("EquivariantEuclideanSpace",
 function(G,V)
-local R,Y,dim, Stabilizer, T;
+local R;
 
 R:=ResolutionAffineCrystGroup(G,V);
 

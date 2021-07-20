@@ -54,20 +54,21 @@ InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex,IsInt],
 function(M,n) local P, PM, i, answer,C,A;
-if Dimension(M)=2 and n=1 then
-return FirstHomologySimplicialTwoComplex(M);
-fi;
-P:=PathComponentsOfSimplicialComplex(M,0);
-if n=0 then return [1..P]*0;fi;
-answer:=[];
-for i in [1..P] do
-PM:=PathComponentsOfSimplicialComplex(M,i);
-PM:=SkeletonOfSimplicialComplex(PM,n+1);
-A:=ContractibleSubcomplexOfSimplicialComplex(PM);;
-C:=ChainComplexOfSimplicialPair(PM,A);
-answer:=Concatenation(answer,Homology(C,n));
-od;
-return answer;
+return Homology(RegularCWComplex(M),n);
+#if Dimension(M)=2 and n=1 then
+#return FirstHomologySimplicialTwoComplex(M);
+#fi;
+#P:=PathComponentsOfSimplicialComplex(M,0);
+#if n=0 then return [1..P]*0;fi;
+#answer:=[];
+#for i in [1..P] do
+#PM:=PathComponentsOfSimplicialComplex(M,i);
+#PM:=SkeletonOfSimplicialComplex(PM,n+1);
+#A:=ContractibleSubcomplexOfSimplicialComplex(PM);;
+#C:=ChainComplexOfSimplicialPair(PM,A);
+#answer:=Concatenation(answer,Homology(C,n));
+#od;
+#return answer;
 end);
 #####################################################################
 #####################################################################
