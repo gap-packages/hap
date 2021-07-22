@@ -1,29 +1,21 @@
-gap> A:=[[1,1,1],[1,0,1],[1,1,1]];;
-gap> A:=PureCubicalComplex(A);;
-gap> A:=RegularCWComplex(A); #A cubical annulus
-Regular CW-complex of dimension 2
-
-gap> S:=SimplicialComplex([[1,2],[2,3],[1,3]]);;
-gap> S:=RegularCWComplex(S); #A circle
-Regular CW-complex of dimension 1
-
-gap> Y:=DirectProduct(S,S,A);
-Regular CW-complex of dimension 4
-
+gap> K:=RegularCWComplex(ClosedSurface(1));;
+gap> Y:=DirectProduct(K,K);;
 gap> cup:=CupProduct(Y);;
-gap> cup(1,2,[1,0,0],[0,0,1]);
-[ -1 ]
+gap> cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);
+[ 5 ]
 
 gap> D:=DiagonalApproximation(Y);;
 gap> p:=D!.projection;
 Map of regular CW-complexes
 
 gap> P:=ChainMap(p);
-Chain Map between complexes of length 3 . 
+Chain Map between complexes of length 4 . 
 
 gap> IsIsomorphismOfAbelianFpGroups(Homology(P,0));
 true
 gap> IsIsomorphismOfAbelianFpGroups(Homology(P,2));
 true
 gap> IsIsomorphismOfAbelianFpGroups(Homology(P,3));
+true
+gap> IsIsomorphismOfAbelianFpGroups(Homology(P,4));
 true

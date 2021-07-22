@@ -774,6 +774,8 @@ DeclareGlobalFunction("SpunAboutHyperplane");
 DeclareGlobalFunction("SpunLinkComplement");
 DeclareGlobalFunction("LiftedRegularCWMap");
 DeclareGlobalFunction("FirstHomologyCoveringCokernels");
+DeclareGlobalFunction("HAP_BaryCentricSubdivisionRegularCWComplex");
+DeclareGlobalFunction("HAP_Triangulation");
 
 
 ## KNOTS ############################################################

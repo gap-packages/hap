@@ -4,7 +4,7 @@
 #F  ControlledSubdivision
 ##
 
-InstallGlobalFunction(BaryCentricSubdivision,
+InstallGlobalFunction(HAP_BaryCentricSubdivisionGComplex,
 function(C)
 local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,
     Elts,Rep,mult,ListUnion, Chains, IsSameOrbit, AddReturn,
@@ -263,3 +263,15 @@ end);
 
 ################### end of ControlledSubdivision ############################
 
+#########################################################
+InstallMethod(BarycentricSubdivision,
+"for non-free resolutions",
+[IsHapNonFreeResolution],
+function(R);
+return HAP_BaryCentricSubdivisionGComplex(R);
+end);
+#########################################################
+
+
+
+#########################################################

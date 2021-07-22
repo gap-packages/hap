@@ -202,22 +202,31 @@ A cubical Alexander-Whitney formula can be used similarly for computing the coho
 <P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
-(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
+(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with <M>\{(y,y)\ :\ y\in Y\}\subset \overline Y</M> and with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
 The function <C>DiagonalApproximation(Y)</C> constructs a candidate inclusion,
 but the projection <M>p\colon \overline Y \twoheadrightarrow Y</M> 
 needs to be tested for homology equivalence. If the candidate inclusion
  passes this test then the function <C>CupProduct(Y)</C>,  involving
- the candidate space,  can be used for cup products.  
+ the candidate space,  can be used for cup products. (I think the test is passed for all regular CW-complexes that are subcomplexes of some Euclidean space with all cells convex polytopes -- but a proof needs to be written down!)   
 
-<P/>The following example calculates <M>g_1^1 \cup g_3^2 \ne 0</M> where
-<M>Y=S\times S\times A</M> is  the 
-direct product of two simplicial circles <M>S</M>  and one  <M>2</M>-dimensional cubical Annulus <M>A</M> and where 
-<M>g_k^n</M> denotes the <M>k</M>-th generator of <M>H^n(Y,\mathbb Z)</M>. 
+<P/>The following example calculates <M>g_1^2 \cup g_2^2 \ne 0</M> where
+<M>Y=T\times T</M> is  the 
+direct product of two copies of a simplicial torus <M>T</M>, and where    
+<M>g_k^n</M> denotes the <M>k</M>-th generator in some basis
+of <M>H^n(Y,\mathbb Z)</M>. The direct product <M>Y</M>
+is a CW-complex which is not a simplicial complex.
 
 <Example>
 <#Include SYSTEM "tutex/1.8.txt">
 </Example>
 </Section>
+
+Of course, an alternative approach to this particular example would be to first give the direct product <M>Y=T\times T</M> the structure of a simplicial complex and then use the Alexander-Whitney map of Strategy 2. A simplicial structure for <M>T\times T</M> can be obtained using the function <M>SCCartesianProduct(T,T)</M> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
+
+<Example>
+<#Include SYSTEM "tutex/1.8d.txt">
+</Example>
+
 
 <Section><Heading>Cohomology Rings</Heading>
 The cup product gives the cohomology <M>H^\ast(X,R)</M> of a space <M>X</M> with coefficients in a ring <M>R</M> the structure of a graded commutitive ring. This is currently implemented only for <M>Y</M> a simplicial complex and <M>R=\mathbb Z_p</M> the field of <M>p</M> elements.
@@ -296,8 +305,98 @@ are computed. This induced homomorphism is an example of a <E>peripheral system<
 <#Include SYSTEM "tutex/1.10.txt">
 </Example>
 
+</Section>
 
+<Section><Heading>Constructing a simplicial complex from a regular CW-complex</Heading>
 
+The following example constructs a <M>3</M>-dimensional pure regular CW-complex <M>K</M> whose <M>3</M>-cells are  permutahedra. It then constructs the simplicial complex <M>B</M> by taking barycentric subdivision. It then constructes a smaller, homotopy equivalent, simplicial complex <M>N</M> by taking the nerve of the cover of <M>K</M> by the closures of its <M>3</M>-cells.  
+<Example>
+<#Include SYSTEM "tutex/1.101.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Equivariant CW complexes</Heading>
+The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. 
+One limitation is that the
+ number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <M>7</M> vertices, <M>21</M> edges and <M>14</M> triangles. A minimal regular CW-complex structure for the torus has <M>4</M> vertices, <M>8</M> edges and <M>4</M> cells of dimension <M>2</M>. By using simplicial sets (which are like simplicial complexes except that 
+they allow the  freedom to attach simplicial cells by gluing their
+ boundary non-homeomorphically) one obtains a minimal triangulation of the 
+torus involving <M>1</M> vertex, <M>3</M> edges and <M>2</M> cells of dimension <M>2</M>. By using non-regular CW-complexes one obtains a minimal cell structure involving <M>1</M> vertex, <M>2</M> edges and <M>1</M> cell of dimension <M>2</M>.
+Minimal cell structures (in the four different categories) for the torus are illustrated as follows.  
+
+<P/><Alt Only="HTML">&lt;img src="images/mstorus.png" align="center" width="300" alt="minimal simplicial torus"/></Alt>
+<Alt Only="HTML">&lt;img src="images/mrtorus.png" align="center" width="300" alt="minimal regular CW torus"/></Alt>
+<P/><Alt Only="HTML">&lt;img src="images/mdtorus.png" align="center" width="300" alt="minimal delta complex torus"/></Alt>
+<Alt Only="HTML">&lt;img src="images/mctorus.png" align="center" width="300" alt="minimal delta complex torus"/></Alt>
+
+<P/>A second limitation to our representations of simplicial and regular CW-complexes is that they apply only to structures with finitely many cells. 
+They do no apply, for instance, to the simplicial complex structure on the
+real line <M>\mathbb R</M> in which each each integer <M>n</M>
+is a vertex and each interval <M>[n,n+1]</M> is an edge.
+
+<P/> Simplicial sets provide one approach to the
+ efficient combinatorial representation of certain spaces. So too do cubical sets (the analogues of simplicial sets in which each cell has the combinatorics of an <M>n</M>-cube rather than an <M>n</M>-simplex). Neither of these two approaches has been implemented in <B>HAP</B>.
+
+<P/> Simplicial sets endowed with the action of a (possibly infinite)
+ group <M>G</M> provide for an efficient representation of (possibly infinite) cell structures on a wider class of spaces. Such a structure can be made precise and is known as a <E>simplicial group</E>.  Some functionality for simplicial groups is implemented in  <B>HAP</B> and described in  
+Chapter <Ref Chap="chapSimplicialGroups"/>.
+
+<P/>A regular CW-complex endowed with the action of a (possibly infinite) group <M>G</M> is an alternative approach to the efficient combinatorial
+ representation of (possibly infinite) cell structures on spaces. Much of <B>HAP</B> is focused on this approach.
+As a first example of the idea, the following commands construct the infinite regular CW-complex <M>Y=\widetilde T</M> arising as the universal cover of the torus
+<M>T=\mathbb S^1\times \mathbb S^1</M> where <M>T</M> is given the above 
+minimal non-regular CW structure involving <M>1</M> vertex, <M>2</M> edges, and <M>1</M> cell of dimension <M>2</M>.
+The homology <M>H_n(T,\mathbb Z)</M> is computed and the fundamental group of the torus <M>T</M> is recovered.
+
+<Example>
+<#Include SYSTEM "tutex/1.12.txt">
+</Example>
+
+<P/>As a second example, the following comands load group number <M>9</M> in 
+the library of <M>3</M>-dimensional crystallographic groups. They verify that 
+<M>G</M> acts freely on <M>\mathbb R^3</M> (i.e. <M>G</M> is a
+ <E>Bieberbach group</E>) and then construct a <M>G</M>-equivariant CW-complex <M>Y=\mathbb R^3</M>
+corresponding to the tessellation of <M>\mathbb R^3</M> by a fundamental domain for <M>G</M>. Finally, the cohomology <M>H_n(M,\mathbb Z)</M> of the <M>3</M>-dimensional closed manifold <M>M=\mathbb R^3/G</M> is computed.
+ The manifold <M>M</M> is seen to be non-orientable (since it's top-dimensional homology is trivial) and has a non-regular CW structure with <M>1</M> vertex, <M>3</M> edges, <M>3</M> cells of dimension <M>2</M>, and <M>1</M> cell of dimension <M>3</M>.
+(This example uses Polymake software.)
+<Example>
+<#Include SYSTEM "tutex/1.13.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Orbifolds and classifying spaces</Heading>
+If a discrete group <M>G</M> acts on Euclidean space or hyperbolic space with 
+finite stabilizer groups then we say that the quotient space obtained by killing the action of <M>G</M> an an <E>orbifold</E>. If the stabilizer groups are all trivial then the quotient is of course a manifold.
+
+<P/>An orbifold is represented as a <M>G</M>-equivariant regular CW-complex 
+together with the stabilizer group for a representative of
+ each orbit of cells and its subgroup consisting of those group elements that  
+  preserve the cell orientation. <B>HAP</B> stores orbifolds using the data type of <E>non-free resolution</E> and uses them mainly as a first step in constructing free <M>\mathbb ZG</M>-resolutions of <M>\mathbb Z</M>. 
+
+<P/> The following commands use an <M>8</M>-dimensional equivariant 
+deformation retract
+of a
+ <M>GL_3(\mathbb Z[{\bf i}])</M>-orbifold structure on hyperbolic space to compute <M>H_5(GL_3({\mathbb Z}[{\bf i}],\mathbb Z) = \mathbb Z_2^5\oplus \mathbb Z_4^2</M>.
+ (The deformation retract is stored in a library and was supplied by Mathieu Dutour Sikiric.)
+
+<Example>
+<#Include SYSTEM "tutex/1.14.txt">
+</Example>
+
+The next example computes an orbifold structure on <M>\mathbb R^4</M>, 
+and then the first <M>20</M> degrees of a free resolution/classifying space, for the second <M>4</M>-dimensional crystallographic group <M>G</M> in the library of crystallographic groups. 
+ The cohomology is seen to have <M>11</M> ring generators in degree <M>2</M> and no further ring generators in degrees  <M>&lt; 12</M>. The cohomology groups are:
+$$H^n(G,\mathbb Z) =\left( \begin{array}[ll]
+0, &amp; {\rm odd~} n\le 20\\
+\mathbb Z_2^5 \oplus \mathbb Z^6, &amp; n=2\\
+\mathbb Z_2^{15}\oplus \mathbb Z, &amp; n=4\\
+\mathbb Z_2^{16}, &amp; 5 \le n \le 19 .\\
+\end{array}\right.$$
+<Example>
+<#Include SYSTEM "tutex/1.15.txt">
+</Example>
 
 </Section>
 </Chapter>

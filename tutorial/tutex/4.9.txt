@@ -1,0 +1,18 @@
+gap> file1:=HapFile("data175_1.csv");;
+gap> file2:=HapFile("data175_2.csv");;
+gap> K:=ReadCSVfileAsPureCubicalKnot( [file1, file2]);;
+gap> K:=PurePermutahedralComplex(K!.binaryArray);;
+gap> K:=ThickenedPureComplex(K);;
+gap> K:=ContractedComplex(K);;
+gap> #K is a permutahedral complex model of the two input knots
+gap> Display(K);
+
+
+gap> Y:=PureComplexComplement(K);;
+gap> W:=ZigZagContractedComplex(Y,2);;
+gap> W:=RegularCWComplex(W);;
+gap> W:=ContractedComplex(W);;
+gap> G:=FundamentalGroup(W);;
+gap> cup:=CupProduct(G);;
+gap> cup([1,0],[0,1]);
+[ -6, 0 ]

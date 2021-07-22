@@ -1,4 +1,4 @@
-
+#RT:=0;
 ########################################################
 ########################################################
 InstallGlobalFunction(HomToInt_ChainComplex,
@@ -140,7 +140,7 @@ end);
 ##########################################
 InstallGlobalFunction(HomToInt_ChainMap,
 function(arg)
-local F,S, T, HS, HT, HF, HThomHS, zero,n,sparsemap, A, B, InitA;
+local F,S, T, HS, HT, HF, HThomHS, Frec, zero,n,sparsemap, A, B, InitA;
 
 F:=arg[1];
 S:=Source(F);
@@ -153,20 +153,42 @@ for n in [1..Length(S)+1] do
 zero[n]:=0*[1..S!.dimension(n-1)];
 od;
 
-#A:=List([0..Length(S)],i->IdentityMat(S!.dimension(i)));
 A:=[];
-#for n in [0..Length(A)-1] do
 InitA:=function(n);
 A[n+1]:=IdentityMat(S!.dimension(n));
 B:=List(A[n+1], r->F!.mapping(r,n));
 A[n+1]:=TransposedMat(B);
 end;
-#od;
+
+
+Frec:=List([0..Length(S)],i->[]);
 #################
 HThomHS:=function(v,n)
-local rowA, ans, k;
+local w, ww, i, j;
+
+if S!.dimension(n)<20001 then               #THIS IS A VERY ARBITRARY CUT-OFF: IT's AN ATTEMPT TO AVOID LARGE MATRICES
 if not IsBound(A[n+1]) then InitA(n); fi;
 return v*A[n+1];
+fi;
+
+w:=[];
+for i in [1..S!.dimension(n)] do
+if not IsBound(Frec[n+1][i]) then
+zero[n+1][i]:=1;
+ww:=F!.mapping(zero[n+1],n);;
+Add(w,v*ww);
+zero[n+1][i]:=0;
+Frec[n+1][i]:=[ Filtered([1..Length(ww)],a->not IsZero(ww[a])), Filtered(ww,a->not IsZero(a))  ];
+else
+ww:=0*v;
+for j in [1..Length(Frec[n+1][i][1])] do
+ww[Frec[n+1][i][1][j]]:=1*Frec[n+1][i][2][j];
+od;
+Add(w,v*ww);
+fi;
+od;
+return w;
+
 end;
 #################
 
@@ -174,17 +196,21 @@ end;
 sparsemap:=function(v,n)
 local ans, rowA, k, f, x;
 
-rowA:=StructuralCopy(zero[n+1]);
-ans:=StructuralCopy(zero[n+1]);;
+rowA:=zero[n+1];
+ans:=1*zero[n+1];;
+
 
 for k in [1..Length(ans)] do
 rowA[k]:=1;
 f:= F!.mapping(rowA,n);
 rowA[k]:=0;
+#RT:=RT-Runtime();
   for x in v do
   ans[k]:=ans[k]+x[2]*f[x[1]]*SignInt(x[1]);
   od;
+#RT:=RT+Runtime();
 od;
+
 return ans;
 end;
 #################
