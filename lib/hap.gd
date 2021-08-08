@@ -193,6 +193,7 @@ DeclareGlobalFunction("PermToMatrixGroup");
 DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
 DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
 DeclareGlobalFunction("TensorWithRationals");
+DeclareGlobalFunction("TensorNonFreeResolutionWithRationals");
 DeclareGlobalFunction("BigStepLCS");
 DeclareGlobalFunction("HomToIntegersModP");
 DeclareGlobalFunction("CoClass");
@@ -228,6 +229,7 @@ DeclareGlobalFunction("ChainComplexToSparseChainComplex");
 
 
 ## PERTURBATIONS ####################################################
+DeclareGlobalFunction("RelativeRightTransversal");
 DeclareGlobalFunction("TwistedTensorProduct");
 DeclareGlobalFunction("ResolutionFiniteExtension");
 DeclareGlobalFunction("ResolutionNormalSeries");
@@ -258,6 +260,7 @@ DeclareGlobalFunction("ResolutionAbelianGroup_alt");
 DeclareGlobalFunction("HAP_ElementsSL2Zfn");
 DeclareGlobalVariable("ElementsSL2Z");
 DeclareGlobalFunction("ElementsLazy");
+DeclareGlobalFunction("NonFreeResolutionFiniteSubgroup");
 
 
 ## ARTIN COXETER ####################################################

@@ -17,7 +17,13 @@ if not (IsHapCrossedModule(MG) and IsHapCrossedModule(NG))
 then Print("Arguments must be crossed modules"); return fail; fi;
 if not Target(MG!.map)=Target(NG!.map) then
 Print("Arguments must have common codomain"); return fail; fi;
-
+if not 
+(IsNilpotent(Source(CatOneGroupByCrossedModule(MG)!.sourceMap))
+and
+IsNilpotent(Source(CatOneGroupByCrossedModule(MG)!.sourceMap)) )
+then
+Print("WARNING: The largest nilpotent quotient of the tensor product will be returned.\n\n");
+fi;
 
 
 MhomG:=MG!.map;
@@ -97,6 +103,7 @@ ThomS:=IsomorphismSimplifiedFpGroup(T);
 S:=Image(ThomS);
 
 ShomTT:=NqEpimorphismNilpotentQuotient(S);
+
 TT:=Image(ShomTT);
 
 TM:=List(gensF1,x->Image(ShomTT,Image(ThomS,Image(FhomT,x))));;

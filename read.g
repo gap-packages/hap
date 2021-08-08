@@ -265,6 +265,7 @@ ReadPackageHap( "lib/Perturbations/contractibleSL2ZcomplexALT.gi");
 ReadPackageHap( "lib/Perturbations/filteredChainComplex.gi");
 ReadPackageHap( "lib/Perturbations/resDirectProdLazy.gi"); 
 ReadPackageHap( "lib/Perturbations/conrad.gi");
+ReadPackageHap( "lib/Perturbations/nonFreeResSubgroup.gi");
 
 
 
