@@ -230,7 +230,7 @@
   
   [33X[0;0YTo  compute  the  cohomology  [22XH^n(Γ,A)[122X  of  a  congruence  subgroup  [22XΓ[122X  with
   coefficients  in  a  [22XZΓ[122X-module  [22XA[122X  we  need to construct [22Xn+1[122X terms of a free
-  [22XZG[122X-resolution  of  [22XZ[122X.  We can do this by first using perturbation techniques
+  [22XZΓ[122X-resolution  of  [22XZ[122X.  We can do this by first using perturbation techniques
   (as  described in [BE14]) to combine the cubic tree with resolutions for the
   cyclic  groups of order [22X4[122X and [22X6[122X in order to produce a free [22XZG[122X-resolution [22XR_∗[122X
   for  [22XG=SL_2( Z)[122X. This resolution is also a free [22XZΓ[122X-resolution with each term
@@ -320,6 +320,40 @@
   modular  forms  is  of  dimension  [22X84[122X,  and [22XM_11(Γ_0(39))[122X is of dimension [22X0[122X.
   (There  are  never  any modular forms of odd weight, and so [22XM_k(Γ)=0[122X for all
   odd [22Xk[122X and any congruence subgroup [22XΓ[122X.)[133X
+  
+  
+  [1X10.4-1 [33X[0;0YCohomology with rational coefficients[133X[101X
+  
+  [33X[0;0YTo  calculate  cohomology  [22XH^n(Γ,A)[122X  with  coefficients  in a [22XQΓ[122X-module [22XA[122X it
+  suffices  to construct a resolution of [22XZ[122X by non-free [22XZΓ[122X-modules where [22XΓ[122X acts
+  with  finite  stabilizer  groups on each module in the resolution. Computing
+  over  [22XQ[122X  is  computationally  less  expensive  than  computing  over  [22XZ[122X. The
+  following  commands first compute [22XH^1(Γ_0(39), Q) = H_1(Γ_0(39), Q)= Q^9[122X. As
+  a  larger  example,  they  then  compute  [22XH^1(Γ_0(2^13-1), Q) = Q^1365[122X where
+  [22XΓ_0(2^13-1)[122X has index [22X8192[122X in [22XSL_2( Z)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,Z)");[127X[104X
+    [4X[28XNon-free resolution in characteristic 0 for SL(2,Integers) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
+    [4X[25Xgap>[125X [27XKK:=NonFreeResolutionFiniteSubgroup(K,gamma);[127X[104X
+    [4X[28XNon-free resolution in characteristic 0 for <matrix group with [128X[104X
+    [4X[28X18 generators> . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithRationals(KK);[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X9[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(2^13-1);;[127X[104X
+    [4X[25Xgap>[125X [27XIndexInSL2Z(G);[127X[104X
+    [4X[28X8192[128X[104X
+    [4X[25Xgap>[125X [27XKK:=NonFreeResolutionFiniteSubgroup(K,G);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithRationals(KK);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X1365[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   
   
   [1X10.5 [33X[0;0YCuspidal cohomology[133X[101X

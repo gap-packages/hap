@@ -34,7 +34,10 @@ generators for congruence subgroups</span></a>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X818BFA9A826C0DB3">10.4 <span class="Heading">Cohomology of congruence subgroups</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F55F8EA82FE9122">10.4-1 <span class="Heading">Cohomology with rational coefficients</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X84D30F1580CD42D1">10.5 <span class="Heading">Cuspidal cohomology</span></a>
 </span>
 </div>
@@ -198,7 +201,7 @@ generators for congruence subgroups</span></h4>
 
 <h4>10.4 <span class="Heading">Cohomology of congruence subgroups</span></h4>
 
-<p>To compute the cohomology <span class="SimpleMath">H^n(Γ,A)</span> of a congruence subgroup <span class="SimpleMath">Γ</span> with coefficients in a <span class="SimpleMath">ZΓ</span>-module <span class="SimpleMath">A</span> we need to construct <span class="SimpleMath">n+1</span> terms of a free <span class="SimpleMath">ZG</span>-resolution of <span class="SimpleMath">Z</span>. We can do this by first using perturbation techniques (as described in <a href="chapBib.html#biBbuiellis">[BE14]</a>) to combine the cubic tree with resolutions for the cyclic groups of order <span class="SimpleMath">4</span> and <span class="SimpleMath">6</span> in order to produce a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> for <span class="SimpleMath">G=SL_2( Z)</span>. This resolution is also a free <span class="SimpleMath">ZΓ</span>-resolution with each term of rank</p>
+<p>To compute the cohomology <span class="SimpleMath">H^n(Γ,A)</span> of a congruence subgroup <span class="SimpleMath">Γ</span> with coefficients in a <span class="SimpleMath">ZΓ</span>-module <span class="SimpleMath">A</span> we need to construct <span class="SimpleMath">n+1</span> terms of a free <span class="SimpleMath">ZΓ</span>-resolution of <span class="SimpleMath">Z</span>. We can do this by first using perturbation techniques (as described in <a href="chapBib.html#biBbuiellis">[BE14]</a>) to combine the cubic tree with resolutions for the cyclic groups of order <span class="SimpleMath">4</span> and <span class="SimpleMath">6</span> in order to produce a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> for <span class="SimpleMath">G=SL_2( Z)</span>. This resolution is also a free <span class="SimpleMath">ZΓ</span>-resolution with each term of rank</p>
 
 <p class="pcenter">{\rm rank}_{\mathbb Z\Gamma} R_k = |G:\Gamma|\times {\rm rank}_{\mathbb ZG} R_k\ .</p>
 
@@ -265,6 +268,36 @@ Resolution of length 2 in characteristic 0 for CongruenceSubgroupGamma0(
 </pre></div>
 
 <p>This computation establishes that the space <span class="SimpleMath">M_10(Γ_0(39))</span> of weight <span class="SimpleMath">10</span> modular forms is of dimension <span class="SimpleMath">84</span>, and <span class="SimpleMath">M_11(Γ_0(39))</span> is of dimension <span class="SimpleMath">0</span>. (There are never any modular forms of odd weight, and so <span class="SimpleMath">M_k(Γ)=0</span> for all odd <span class="SimpleMath">k</span> and any congruence subgroup <span class="SimpleMath">Γ</span>.)</p>
+
+<p><a id="X7F55F8EA82FE9122" name="X7F55F8EA82FE9122"></a></p>
+
+<h5>10.4-1 <span class="Heading">Cohomology with rational coefficients</span></h5>
+
+<p>To calculate cohomology <span class="SimpleMath">H^n(Γ,A)</span> with coefficients in a <span class="SimpleMath">QΓ</span>-module <span class="SimpleMath">A</span> it suffices to construct a resolution of <span class="SimpleMath">Z</span> by non-free <span class="SimpleMath">ZΓ</span>-modules where <span class="SimpleMath">Γ</span> acts with finite stabilizer groups on each module in the resolution. Computing over <span class="SimpleMath">Q</span> is computationally less expensive than computing over <span class="SimpleMath">Z</span>. The following commands first compute <span class="SimpleMath">H^1(Γ_0(39), Q) = H_1(Γ_0(39), Q)= Q^9</span>. As a larger example, they then compute <span class="SimpleMath">H^1(Γ_0(2^13-1), Q) = Q^1365</span> where <span class="SimpleMath">Γ_0(2^13-1)</span> has index <span class="SimpleMath">8192</span> in <span class="SimpleMath">SL_2( Z)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(2,Z)");</span>
+Non-free resolution in characteristic 0 for SL(2,Integers) . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=NonFreeResolutionFiniteSubgroup(K,gamma);</span>
+Non-free resolution in characteristic 0 for &lt;matrix group with 
+18 generators&gt; . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithRationals(KK);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
+9
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(2^13-1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInSL2Z(G);</span>
+8192
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=NonFreeResolutionFiniteSubgroup(K,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithRationals(KK);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
+1365
+
+</pre></div>
 
 <p><a id="X84D30F1580CD42D1" name="X84D30F1580CD42D1"></a></p>
 

@@ -3831,7 +3831,7 @@ generators. The following commands display $\mathring D_{\Gamma_0(39)}$ for a fu
 \section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 10, 4, 0 ]}
 \hyperdef{L}{X818BFA9A826C0DB3}{}
 {
- To compute the cohomology $H^n(\Gamma,A)$ of a congruence subgroup $\Gamma$ with coefficients in a $\mathbb Z\Gamma$-module $A$ we need to construct $n+1$ terms of a free $\mathbb ZG$-resolution of $\mathbb Z$. We can do this by first using perturbation techniques (as described in \cite{buiellis}) to combine the cubic tree with resolutions for the cyclic groups of order $4$ and $6$ in order to produce a free $\mathbb ZG$-resolution $R_\ast$ for $G=SL_2(\mathbb Z)$. This resolution is also a free $\mathbb Z\Gamma$-resolution with each term of rank 
+ To compute the cohomology $H^n(\Gamma,A)$ of a congruence subgroup $\Gamma$ with coefficients in a $\mathbb Z\Gamma$-module $A$ we need to construct $n+1$ terms of a free $\mathbb Z\Gamma$-resolution of $\mathbb Z$. We can do this by first using perturbation techniques (as described in \cite{buiellis}) to combine the cubic tree with resolutions for the cyclic groups of order $4$ and $6$ in order to produce a free $\mathbb ZG$-resolution $R_\ast$ for $G=SL_2(\mathbb Z)$. This resolution is also a free $\mathbb Z\Gamma$-resolution with each term of rank 
 \[{\rm rank}_{\mathbb Z\Gamma} R_k = |G:\Gamma|\times {\rm rank}_{\mathbb ZG}
 R_k\ .\]
  
@@ -3895,7 +3895,37 @@ The following commands compute
 \end{Verbatim}
  
 
-This computation establishes that the space $M_{10}(\Gamma_0(39))$ of weight $10$ modular forms is of dimension $84$, and $M_{11}(\Gamma_0(39))$ is of dimension $0$. (There are never any modular forms of odd weight, and so $M_k(\Gamma)=0$ for all odd $k$ and any congruence subgroup $\Gamma$.) }
+This computation establishes that the space $M_{10}(\Gamma_0(39))$ of weight $10$ modular forms is of dimension $84$, and $M_{11}(\Gamma_0(39))$ is of dimension $0$. (There are never any modular forms of odd weight, and so $M_k(\Gamma)=0$ for all odd $k$ and any congruence subgroup $\Gamma$.) 
+\subsection{\textcolor{Chapter }{Cohomology with rational coefficients}}\logpage{[ 10, 4, 1 ]}
+\hyperdef{L}{X7F55F8EA82FE9122}{}
+{
+ To calculate cohomology $H^n(\Gamma,A)$ with coefficients in a $\mathbb Q\Gamma$-module $A$ it suffices to construct a resolution of $\mathbb Z$ by non-free $\mathbb Z\Gamma$-modules where $\Gamma$ acts with finite stabilizer groups on each module in the resolution. Computing
+over $\mathbb Q$ is computationally less expensive than computing over $\mathbb Z$. The following commands first compute $H^1(\Gamma_0(39),\mathbb Q) = H_1(\Gamma_0(39),\mathbb Q)= \mathbb Q^9$. As a larger example, they then compute $H^1(\Gamma_0(2^{13}-1),\mathbb Q) =\mathbb Q^{1365}$ where $\Gamma_0(2^{13}-1)$ has index $8192$ in $SL_2(\mathbb Z)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(2,Z)");|
+  Non-free resolution in characteristic 0 for SL(2,Integers) . 
+  
+  !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(39);;|
+  !gapprompt@gap>| !gapinput@KK:=NonFreeResolutionFiniteSubgroup(K,gamma);|
+  Non-free resolution in characteristic 0 for <matrix group with 
+  18 generators> . 
+  
+  !gapprompt@gap>| !gapinput@C:=TensorWithRationals(KK);|
+  !gapprompt@gap>| !gapinput@Homology(C,1);|
+  9
+  
+  !gapprompt@gap>| !gapinput@G:=HAP_CongruenceSubgroupGamma0(2^13-1);;|
+  !gapprompt@gap>| !gapinput@IndexInSL2Z(G);|
+  8192
+  !gapprompt@gap>| !gapinput@KK:=NonFreeResolutionFiniteSubgroup(K,G);;|
+  !gapprompt@gap>| !gapinput@C:=TensorWithRationals(KK);;|
+  !gapprompt@gap>| !gapinput@Homology(C,1);|
+  1365
+  
+\end{Verbatim}
+ }
+
+ }
 
  
 \section{\textcolor{Chapter }{Cuspidal cohomology}}\logpage{[ 10, 5, 0 ]}
