@@ -359,7 +359,8 @@ DeclareGlobalFunction("ModPCohomologyGenerators");
 
 ## CURVATURE & POLYTOPES ############################################
 DeclareGlobalFunction("IsAspherical");
-DeclareAttribute("StarGraph",IsFpGroup);
+DeclareOperation("StarGraph",[IsFpGroup]);
+DeclareAttribute("StarGraphAttr",IsFpGroup);
 DeclareGlobalFunction("PolytopalGenerators");
 DeclareGlobalFunction("VectorStabilizer");
 DeclareGlobalFunction("PolytopalComplex");#doc
