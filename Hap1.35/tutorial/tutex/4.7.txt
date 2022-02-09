@@ -1,0 +1,11 @@
+gap> L:=[];;M:=[];;
+gap> for p in [1..100] do
+> K:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;
+> h1:=Length(Homology(K,1));;
+> h2:=Length(Homology(K,2));;
+> Add(L, [1.0*(p/1000),h1,"red"]);
+> Add(L, [1.0*(p/1000),h2,"blue"]);
+> Add(M, [1.0*(p/1000),1-h1+h2,"green"]);
+> od;
+gap> ScatterPlot(L);
+gap> ScatterPlot(M);

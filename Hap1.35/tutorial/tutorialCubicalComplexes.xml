@@ -1,0 +1,151 @@
+<Chapter><Heading>Cubical complexes &amp;  permutahedral complexes</Heading>
+<Section><Heading>Cubical complexes</Heading>
+A <E>finite simplicial complex</E> can be defined to be a CW-subcomplex of the 
+canonical regular CW-structure on a simplex <M>\Delta^n</M> of some dimension <M>n</M>. Analogously,  a <E>finite cubical complex</E> is a CW-subcomplex of the regular CW-structure on a cube <M>[0,1]^n</M> of some dimension <M>n</M>. Equivalently, but more conveniently, we can replace the unit interval <M>[0,1]</M> 
+by
+an interval <M>[0,k]</M> with CW-structure involving <M>2k+1</M> cells, namely one <M>0</M>-cell for each integer <M>0\le j\le k</M> and one <M>1</M>-cell for each open interval <M>(j,j+1)</M> for <M>0\le j\le k-1</M>. A
+<E>finite cuical complex</E> <M>M</M> is a CW-subcompex  
+<M>M\subset [0,k_1]\times [0,k_2]\times \cdots [0,k_n]</M> of a direct product of intervals, the direct product having the usual direct product CW-structure.
+The equivalence of these two definitions follows from the Gray code embedding of a mesh into a hypercube. We say that the cubical complex has <E>ambient dimension</E> <M>n</M>.
+A cubical complex <M>M</M> of ambient dimension <M>n</M> is said to be <E>pure</E> if each cell lies in the boundary of an <M>n</M>-cell. In other words, <M>M</M> is pure if it is a union of unit <M>n</M>-cubes in <M>\mathbb R^n</M>, each unit cube having vertices with integer coordinates.
+
+
+<P/><B>HAP</B> has a datatype for finite cubical complexes, and a slightly different datatype for pure cubical complexes. 
+
+<P/> The following example constructs the granny knot (the sum of a trefoil knot with its reflection) as a <M>3</M>-dimensional pure cubical complex, and then displays it.
+
+<Example>
+<#Include SYSTEM "tutex/2.1.txt">
+</Example>
+<Alt Only="HTML">&lt;img src="images/granny.jpg" align="center" width="350" alt="granny knot"/>
+</Alt>
+
+<P/>
+Next we construct the complement <M>Y=D^3\setminus \mathring{M}</M> of the interior of the pure cubical complex <M>M</M>. Here <M>D^3</M> is a rectangular region
+with   <M>M \subset \mathring{D^3}</M>.
+ This pure cubical complex <M>Y</M> is a union of <M>5891</M> unit <M>3</M>-cubes. We contract <M>Y</M> to get a homotopy equivalent pure cubical complex <M>YY</M> consisting of the union of just <M>775</M> unit <M>3</M>-cubes.
+Then we convert <M>YY</M> to a regular CW-complex <M>W</M> 
+involving <M>11939</M> cells.
+We contract <M>W</M> to obtain a homotopy equivalent regular CW-complex
+<M>WW</M> involving <M>5993</M> cells.
+ Finally we compute the fundamental group of the complement of the granny knot, and use the presentation of this group to establish that the Alexander polynomial <M>P(x)</M> of the granny is
+<P/><M>P(x) = x^4-2x^3+3x^2-2x+1 \ .</M>
+
+<Example>
+<#Include SYSTEM "tutex/2.2.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Permutahedral complexes</Heading>
+<P/>A finite pure cubical complex is a union of finitely many  cubes in 
+  a tessellation of  <M>\mathbb R^n</M> by unit cubes. One can also  
+tessellate <M>\mathbb R^n</M>  by permutahedra, and we define a 
+finite <M>n</M>-dimensional pure <E>permutahedral complex</E> to be a union of 
+finitely many permutahdra from such a tessellation. There are two features of pure permutahedral complexes that are particularly useful in some situations:
+<List>
+<Item> Pure permutahedral complexes are  topological manifolds with boundary.
+</Item>
+<Item> The method used for finding a smaller pure cubical complex <M>M'</M> 
+homotopy equivalent to a given  pure cubical complex <M>M</M> retains the homeomorphism type, and not just the homotopy type, of the space <M>M</M>.</Item>
+</List>
+
+<P/><B>Example 1</B>
+<P/>To illustrate these  features the following example begins by reading 
+in a protein backbone from the online <URL><Link>https://www.rcsb.org/</Link><LinkText>Protein Database</LinkText></URL>, and storing it as a pure cubical complex <M>K</M>. The ends of the protein have been joined, and the homology
+ <M>H_i(K,\mathbb Z)=\mathbb Z</M>, <M>i=0,1</M>
+ is seen to be that of  a circle. We can thus regard the protein as a knot  
+<M>K\subset \mathbb R^3</M>. The protein is visualized as a pure permutahedral complex.
+
+<Example>
+<#Include SYSTEM "tutex/2.3a.txt">
+</Example>
+<Alt Only="HTML">&lt;img src="images/1V2X.jpg" align="center" width="350" alt="knotted protein"/></Alt>
+
+<P/>An alternative method for seeing that the pure permutahedral complex <M>K</M> has the homotopy type of a circle is to note that it is covered by  open permutahedra (small open neighbourhoods of the closed <M>3</M>-dimensional permutahedral titles) and to form the nerve
+<M>N=Nerve({\mathcal U})</M> of this open covering <M>\mathcal U</M>. The
+ nerve <M>N</M> has the same homotopy type as <M>K</M>. The following commands establish that <M>N</M> is a <M>1</M>-dimensional simplicial complex and display <M>N</M>  as a circular graph.
+
+<Example>
+<#Include SYSTEM "tutex/2.3b.txt">
+</Example>
+<Alt Only="HTML">&lt;img src="images/graphprotein.gif" align="center" width="200" alt="knotted protein"/></Alt>
+
+
+
+<P/> The boundary of the pure permutahedral complex <M>K</M>
+is a <M>2</M>-dimensional CW-complex <M>B</M> homeomorphic to a torus. We next use the advantageous features of pure permutahedral complexes to compute the homomorphism
+<P/><M>\phi\colon \pi_1(B) \rightarrow \pi_1(\mathbb R^3\setminus \mathring{K}),
+a \mapsto yx^{-3}y^2x^{-2}yxy^{-1}, b\mapsto yx^{-1}y^{-1}x^2y^{-1}</M>
+
+<P/>where<Br/> 
+<M>\pi_1(B)=&lt; a,b\, :\, aba^{-1}b^{-1}=1></M>,<Br/> 
+<M>\pi_1(\mathbb R^3\setminus \mathring{K}) \cong &lt; x,y\, :\,  y^2x^{-2}yxy^{-1}=1,  yx^{-2}y^{-1}x(xy^{-1})^2=1></M>.
+
+<Example>
+<#Include SYSTEM "tutex/2.3.txt">
+</Example>
+
+
+<P/><B>Example 2</B>
+<P/>The next example of  commands begins by readng two synthetic knots from a CSV file (containing the coordinates of the two sequences of vertices) and producing a pure permutahedral complex model of the two knots. The linking number of two knots is given by the low-dimension cup product of the complement of the knots. This linking number is computed to be <M>6</M>.
+<P/>
+<Alt Only="HTML">&lt;img src="images/twoknots.png" align="center" width="600" alt="two knots"/></Alt>
+<Example>
+<#Include SYSTEM "tutex/4.9.txt">
+</Example>
+
+
+</Section>
+
+<Section><Heading>Constructing pure cubical and permutahedral complexes</Heading>
+
+<P/> An <M>n</M>-dimensional pure cubical or permutahedral complex can be created from an <M>n</M>-dimensional array of 0s and 1s. The following example creates and displays two <M>3</M>-dimensional complexes.
+
+<Example>
+<#Include SYSTEM "tutex/2.4.txt">
+</Example>
+<Alt Only="HTML">&lt;img src="images/cubicalring.gif" align="center" width="150" alt="cubical ring"/>
+</Alt><Alt Only="HTML">&lt;img src="images/permutahedralring.gif" align="center" width="400" alt="permutahedral ring"/>
+</Alt>
+
+
+</Section>
+
+<Section><Heading>Computations in dynamical systems</Heading>
+
+
+<P/>Pure cubical complexes can be useful for rigourous interval arithmetic calculations in numerical analysis. They can also be useful for trying to estimate 
+approximations of certain numerical quantities. To illustrate the latter we consider the  <E>Henon map</E>
+<P/><M>f\colon \mathbb R^2 \rightarrow \mathbb R^2,
+\left( \begin{array}{cc}
+x\\
+y
+\end{array}\right)
+\mapsto
+\left( \begin{array}{cc}
+y+1-ax^2\\
+bx
+\\
+\end{array}\right) .</M><Br/>
+
+<P/>Starting with <M>(x_0,y_0)=(0,0)</M> and iterating <M>(x_{n+1},y_{n+1}) = f(x_n,y_n)</M> with the parameter values <M>a=1.4</M>, <M>b=0.3</M> one obtains a sequence of points which is known to be
+dense in the so called <E>strange attractor</E> <M>{\cal A}</M> of the Henon map. The  first <M>10</M> million  points in this sequence are
+ plotted  in the following example, with arithmetic performed to 100 decimal places of accuracy. The sequence is stored as a <M>2</M>-dimensional pure cubical complex where  each <M>2</M>-cell is square of side equal to <M>\epsilon =1/500</M>.
+
+<Example>
+<#Include SYSTEM "tutex/2.5.txt">
+</Example>
+<Alt Only="HTML">&lt;img src="images/henon.png" align="center" width="700" alt="Henon attractor"/> </Alt>
+
+<P/>Repeating the computation but with squares of side <M>\epsilon =1/1000</M>
+<Example>
+<#Include SYSTEM "tutex/2.6.txt">
+</Example>
+
+<P/>
+we obtain the heuristic estimate
+<P/><M>\delta \simeq  \frac{ \log{ 24949}- \log{ 10287}} {\log{2}} = 1.277 </M>
+<P/> for the box-counting dimension of the attractor <M>\cal A</M>.
+</Section>
+</Chapter>

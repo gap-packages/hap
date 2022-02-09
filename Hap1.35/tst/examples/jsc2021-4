@@ -1,0 +1,10 @@
+RT:=Runtime();;
+Y:=KnotComplement([[1,3],[2,4],[1,3],[2,4]]);
+Size(Y);
+SY:=SpunLinkComplement([[1,3],[2,4],[1,3],[2,4]]);;
+C:=ChainComplexOfUniversalCover(SY);;
+L:=Filtered(LowIndexSubgroupsFpGroup(C!.group,5),g->Index(C!.group,g)=5);;
+SSortedList(List(L,g->Homology(TensorWithIntegersOverSubgroup(C,g),2)));
+YY:=SimplifiedComplex(Y);
+Size(YY);
+Print("Example runtime :", StringTime(Runtime()-RT), "\n\n");

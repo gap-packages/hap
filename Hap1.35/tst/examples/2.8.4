@@ -1,0 +1,15 @@
+file:=HapFile("data247.txt");
+Read(file);
+F:=ThickeningFiltration(T,20);;
+Y:=FiltrationTerm(F,12);;
+Print(Size(Y),"\n");
+Y:=ZigZagContractedComplex(Y,2);;
+Y:=ContractedComplex(RegularCWComplex(Y));;
+Print(Cohomology(Y,0),"\n");
+Print(Cohomology(Y,1),"\n");
+Print(Cohomology(Y,2),"\n");
+G:=FundamentalGroup(Y);;
+Print(IsAbelian(G),"\n");
+G:=NilpotentQuotient(G,1);;
+E_G:=Resolution(G,3);;
+Print(CupProduct(E_G,1,1,[1,0],[0,1]),"\n");

@@ -1,0 +1,38 @@
+gap> K:=ClosedSurface(2);
+Simplicial complex of dimension 2.
+
+gap> L:=WedgeSum(WedgeSum(ClosedSurface(1),Sphere(1)),Sphere(1));
+Simplicial complex of dimension 2.
+
+gap> Cohomology(K,0);Cohomology(L,0);
+[ 0 ]
+[ 0 ]
+gap> Cohomology(K,1);Cohomology(L,1);
+[ 0, 0, 0, 0 ]
+[ 0, 0, 0, 0 ]
+gap> Cohomology(K,2);Cohomology(L,2);
+[ 0 ]
+[ 0 ]
+gap> gens:=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];;
+gap> cupK:=CupProduct(K);;
+gap> cupL:=CupProduct(L);;
+gap> A:=NullMat(4,4);;B:=NullMat(4,4);;
+gap> for i in [1..4] do
+> for j in [1..4] do
+> A[i][j]:=cupK(1,1,gens[i],gens[j])[1];
+> B[i][j]:=cupL(1,1,gens[i],gens[j])[1];
+> od;od;
+gap> Display(A);
+[ [   0,   0,   0,   1 ],
+  [   0,   0,   1,   0 ],
+  [   0,  -1,   0,   0 ],
+  [  -1,   0,   0,   0 ] ]
+gap> Display(B);
+[ [   0,   1,   0,   0 ],
+  [  -1,   0,   0,   0 ],
+  [   0,   0,   0,   0 ],
+  [   0,   0,   0,   0 ] ]
+gap> Rank(A);
+4
+gap> Rank(B);
+2

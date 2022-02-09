@@ -1,0 +1,18 @@
+#This example uses GraphViz software.
+G1:=SymmetricGroup(5);SetName(G1,"S5");;
+G2:=SymmetricGroup(4);SetName(G2,"S4");;
+K:=SymmetricGroup(3);SetName(K,"S3");;
+alpha:=GroupHomomorphismByFunction(K,G1,x->x);;
+beta:=GroupHomomorphismByFunction(K,G2,x->x);;
+L:=[G1,G2,[alpha,beta]];;
+GraphOfGroupsDisplay(L);;
+R:=ResolutionGraphOfGroups(L,8);;
+Print(Homology(TensorWithIntegers(R),7),"\n");
+R1:=ResolutionFiniteGroup(G1,8);;
+R1:=SimplifiedComplex(R1);;
+R2:=ResolutionFiniteGroup(G2,8);;
+R2:=SimplifiedComplex(R2);;
+RK:=ResolutionFiniteGroup(K,8);;
+RK:=SimplifiedComplex(RK);;
+R:=ResolutionGraphOfGroups(L,8,[R1,R2,RK]);;
+Print(List([0..8],R!.dimension),"\n");;

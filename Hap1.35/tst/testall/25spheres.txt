@@ -1,0 +1,21 @@
+N:=100;
+
+A:=NullMat(N,N);;
+A:=List([1..N],i->StructuralCopy(A));;
+A[Int(N/2)][Int(N/2)][Int(N/2)]:=1;
+
+M:=PureCubicalComplex(A*0);;
+B2:=PureCubicalComplex(A);
+
+for i in [1..Int(N/2)-1] do
+B1:=B2;
+B2:=ThickenedPureComplex(B1);
+S:=PureComplexDifference(B2,B1);
+if IsOddInt(i) then
+M:=PureComplexUnion(M,S);
+fi;
+od;
+
+for i in [2..Int(N/2)-1] do
+M!.binaryArray[Int(N/2)][Int(N/2)][i]:=1;
+od;

@@ -1,0 +1,8 @@
+G:=DihedralGroup(64);;
+A:=ModPSteenrodAlgebra(G,8);;
+H4:=Filtered(Basis(A),x->A!.degree(x)=4);;
+Sq3H4:=List(H4,x->Sq(A,3,x));;
+Print(Dimension(Submodule(A,Sq3H4)),"\n");
+B:=Basis(Submodule(A,Sq3H4));;
+PrintAlgebraWordAsPolynomial(A,B[1]); Print("\n");
+PrintAlgebraWordAsPolynomial(A,B[2]); Print("\n");

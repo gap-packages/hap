@@ -1,0 +1,11 @@
+G:=SymmetricGroup(5);;
+R:=ResolutionFiniteGroup(G,4);;
+Print(Homology(TensorWithIntegers(R),2),"\n");
+Print(Homology(TensorWithIntegers(R),3),"\n");
+Print(R!.dimension(3),"\n");
+M:=CocycleCondition(R,3);;
+Mod4:=NullspaceModQ(TransposedMat(M),4);;
+Mod3:=NullspaceModQ(TransposedMat(M),3);;
+v:=Random(Mod4)+Random(Mod3);;
+f:=StandardCocycle(R,v,3,12);
+Print(f((1,2,3),(1,5,3),(2,3,4)),"\n");

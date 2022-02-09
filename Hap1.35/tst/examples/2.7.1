@@ -1,0 +1,8 @@
+A:=List([1..10],i->1);;
+A:=List([1..10],i->StructuralCopy(A));;
+A:=List([1..10],i->StructuralCopy(A));;
+A[5][5][5]:=0;;
+M:=PurePermutahedralComplex(A);;
+Size(M);
+Y:=RegularCWComplex(M);;
+Print(Size(Flat(Y!.boundaries)),"\n");

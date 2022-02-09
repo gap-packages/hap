@@ -1,0 +1,17 @@
+#Uses Singular software.
+G:=QuaternionGroup(8);;
+N:=Center(G);;
+Einf:=LHSSpectralSequenceLastSheet(G,N);
+Print(Einf,"\n");
+A:=Mod2CohomologyRingPresentation(G,5);
+Print(A,"\n");
+L:=LHSSpectralSequence(G,N,4);
+Print(L,"\n");
+ring := PolynomialRing(GF(2), 3);;
+x := ring.1;; y := ring.2;; z := ring.3;;
+d := HAPDerivation(ring, [x^2 + x*y + y^2], [Zero(ring), Zero(ring), x^2*y + x*y^2]);
+Print(d,"\n");
+H:=HomologyOfDerivation(d);
+Print(H,"\n");
+Print(H[3]!.SourceGenerators,"\n");
+Print(H[3]!.ImageGenerators,"\n");
