@@ -210,7 +210,8 @@ end);
 
 #####################################################################
 #####################################################################
-InstallMethod(StarGraph,
+InstallMethod(StarGraph, "For FPGroups", [IsFpGroup], StarGraphAttr);
+InstallMethod(StarGraphAttr,
 "For FpGroups",
 [IsFpGroup],
 function(G)
