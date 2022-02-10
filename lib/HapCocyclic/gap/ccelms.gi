@@ -81,7 +81,7 @@ InstallMethod
 ##   (f,b)^-1 = (1,b)^-1 * (f,1)^-1 = ( (b,b^-1), b^-1 ) * (f^-1 (1,1), 1) 
 ##
 InstallMethod
-(  INV,
+(  InverseOp,
    "for ccp elements",
    true,
    [IsCcElement],
