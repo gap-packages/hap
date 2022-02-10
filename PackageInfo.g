@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.35",
-  Date    := "09/02/2022",
+  Version := "1.36",
+  Date    := "10/02/2022",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
