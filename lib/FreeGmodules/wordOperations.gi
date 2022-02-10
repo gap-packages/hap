@@ -332,7 +332,7 @@ end);
 
 
 #####################################################################
-InstallOtherMethod( POW,
+InstallOtherMethod( \^,
     "inverse in opposite group",
     [ IsHapOppositeElement, IsInt],
 
@@ -345,7 +345,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallOtherMethod( POW,
+InstallOtherMethod( \^,
     "inverse in quotient group",
     [ IsHapQuotientElement, IsInt],
 
@@ -360,7 +360,7 @@ end);
 
 
 #####################################################################
-InstallOtherMethod( POW,
+InstallOtherMethod( \^,
     "inverse in opposite group",
     [ IsHapOppositeElement, IsHapOppositeElement],
 
@@ -373,7 +373,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallOtherMethod( POW,
+InstallOtherMethod( \^,
     "inverse in quotient group",
     [ IsHapQuotientElement, IsHapQuotientElement],
 
@@ -417,12 +417,12 @@ end);
 
 
 #####################################################################
-InstallOtherMethod( INV,
+InstallOtherMethod( InverseMutable,
     "inverse in opposite group",
     [ IsHapOppositeElement],
 
 function(x) local w;
-w:=INV(x!.element);
+w:=InverseMutable(x!.element);
 return Objectify(HapOppositeElement,
                     rec(
                     element:=w) );
@@ -430,12 +430,12 @@ end);
 #####################################################################
 
 #####################################################################
-InstallOtherMethod( INV,
+InstallOtherMethod( InverseMutable,
     "inverse in quotient group",
     [ IsHapQuotientElement],
 
 function(x) local w;
-w:=List(x!.element,INV);
+w:=List(x!.element,InverseMutable);
 return Objectify(HapOppositeElement,
                     rec(
                     element:=w) );
@@ -444,7 +444,7 @@ end);
 
 
 #####################################################################
-InstallOtherMethod( EQ,
+InstallOtherMethod( \=,
     "equality in opposite group",
     [ IsHapOppositeElement, IsHapOppositeElement],
 
@@ -454,7 +454,7 @@ end);
 #####################################################################
 
 #####################################################################
-InstallOtherMethod( EQ,
+InstallOtherMethod( \=,
     "equality in quotient group",
     [ IsHapQuotientElement, IsHapQuotientElement],
 
@@ -465,22 +465,22 @@ end);
 
 
 #####################################################################
-InstallOtherMethod( LT,
+InstallOtherMethod( \<,
     "equality in opposite group",
     [ IsHapOppositeElement, IsHapOppositeElement],
 
 function(x,y) ;
-return  LT(x!.element , y!.element);
+return  x!.element < y!.element;
 end);
 #####################################################################
 
 #####################################################################
-InstallOtherMethod( LT,
+InstallOtherMethod( \<,
     "equality in opposite group",
     [ IsHapQuotientElement, IsHapQuotientElement],
 
 function(x,y) ;
-return  LT(SSortedList(x!.element) , SSortedList(y!.element));
+return  SSortedList(x!.element) < SSortedList(y!.element);
 end);
 #####################################################################
 
