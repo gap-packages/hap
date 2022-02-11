@@ -21,7 +21,7 @@ L:=[
 "aboutCoveringSpaces.html",       "aboutPoincareSeriesII.html",
 "aboutCoverinSpaces.html",        "aboutPolytopes.html",
 "aboutCoxeter.html",              "aboutQuandles2.html",
-"aboutCrossedMods",               "aboutQuandles.html",
+"aboutQuandles.html",
 "aboutCrossedMods.html",          "aboutquasi.html",
 "aboutCubical.html",              "aboutRandomComplexes.html",
 "aboutRosenbergerMonster.html",
