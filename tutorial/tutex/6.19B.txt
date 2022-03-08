@@ -1,0 +1,17 @@
+gap> F:=FreeGroup(2);;x:=F.1;;y:=F.2;;
+gap> G:=F/[(x*y)^2*x^-3, x^3*y^-4];;
+gap> Order(G);
+48
+gap> R:=ResolutionFiniteGroup(G,5);;
+gap> n:=0;;Cohomology(HomToIntegers(R),n);
+[ 0 ]
+gap> n:=1;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=2;;Cohomology(HomToIntegers(R),n);
+[ 2 ]
+gap> n:=3;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=4;;Cohomology(HomToIntegers(R),n);
+[ 48 ]
+gap> IntegralCupProduct(R,[1],[1],2,2);
+[ 24 ]

@@ -1,0 +1,18 @@
+gap> F:=FreeGroup(2);;x:=F.1;;y:=F.2;;
+gap> G:=F/[(x*y)^2*x^-3, x^3*y^-5];;
+gap> Order(G);
+120
+gap> R:=ResolutionSmallGroup(G,5);;
+gap> n:=0;;Cohomology(HomToIntegers(R),n);
+[ 0 ]
+gap> n:=1;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=2;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=3;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=4;;Cohomology(HomToIntegers(R),n);
+[ 120 ]
+
+gap> List([0..5],k->R!.dimension(k));
+[ 1, 2, 2, 1, 1, 2 ]
