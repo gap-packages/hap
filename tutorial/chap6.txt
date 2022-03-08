@@ -373,3 +373,119 @@
   
   [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)[122X .[133X
   
+  
+  [1X6.9 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
+  
+  [33X[0;0YA  [13Xspherical 3-manifold[113X is a 3-manifold arising as the quotient [22XS^3/Γ[122X of the
+  3-sphere [22XS^3[122X by a finite subgroup [22XΓ[122X of [22XSO(4)[122X acting freely as rotations. The
+  geometrization  conjecture,  proved  by Grigori Perelman, implies that every
+  closed  connected 3-manifold with a finite fundamental group is homeomorphic
+  to a spherical 3-manifold.[133X
+  
+  [33X[0;0YA  spherical  3-manifold [22XS^3/Γ[122X has finite fundamental group isomorphic to [22XΓ[122X.
+  This fundamental group is one of:[133X
+  
+  [30X    [33X[0;6Y[22XΓ=C_m=⟨ x | x^m⟩[122X ([12Xcyclic fundamental group[112X)[133X
+  
+  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y | xyx^-1=y^-1, x^2^k=y^n ⟩[122X for integers [22Xk, mge 1, nge 2[122X
+        and [22Xm[122X coprime to [22X2n[122X ([12Xprism manifold case[112X)[133X
+  
+  [30X    [33X[0;6Y[22XΓ=  C_m×  ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩[122X for
+        integers [22Xk,mge 1[122X and [22Xm[122X coprime to 6 ([12Xtetrahedral case[112X)[133X
+  
+  [30X    [33X[0;6Y[22XΓ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩[122X for [22Xmge 1[122X coprime to 6 ([12Xoctahedral case[112X)[133X
+  
+  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y  | (xy)^2=x^3=y^5⟩[122X for [22Xmge 1[122X coprime to 30 ([12Xicosahedral
+        case[112X).[133X
+  
+  [33X[0;0YThis    list    of    cases    is    taken    from   the   Wikipedia   pages
+  ([7Xhttps://en.wikipedia.org/wiki/Spherical_3-manifold[107X).   The   group   [22XΓ[122X  has
+  periodic cohomology since it acts on a sphere. The cyclic group has period 2
+  and  in  the  other  four  cases  it has period 4. (Recall that in general a
+  finite group [22XG[122X has [13Xperiodic cohomology of period [22Xn[122X[113X if there is an element [22Xu∈
+  H^n(G,  Z)[122X  such  that  the cup product [22X- ∪ u: H^k(G, Z) → H^k+n(G, Z)[122X is an
+  isomorphism for all [22Xkge 1[122X. It can be shown that [22XG[122X has periodic cohomology of
+  period [22Xn[122X if and only if [22XH^n(G, Z)= Z_|G|[122X.)[133X
+  
+  [33X[0;0YThe  cohomology  of  the cyclic group is well-known, and the cohomology of a
+  direct  product  can  be obtained from that of the factors using the Kunneth
+  formula.[133X
+  
+  [33X[0;0YIn   the   icosahedral   case   with   [22Xm=1[122X   the  following  commands  yield
+  $$H^\ast(\Gamma,\mathbb Z)=Z[t]/(120t=0)$$ with generator [22Xt[122X of degree 4. The
+  final  command  demonstrates  that  a  periodic  resolution  is  used in the
+  computation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(2);;x:=F.1;;y:=F.2;;[127X[104X
+    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-3, x^3*y^-5];;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
+    [4X[28X120[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xn:=0;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 120 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..5],k->R!.dimension(k));[127X[104X
+    [4X[28X[ 1, 2, 2, 1, 1, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  octahedral  case  with  [22Xm=1[122X  we obtain $$H^\ast(\Gamma,\mathbb Z) =
+  \mathbb  Z[s,t]/(s^2=24t,  2s=0,  48t=0)$$  where  [22Xs[122X  has degree 2 and [22Xt[122X has
+  degree 4, from the following commands.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(2);;x:=F.1;;y:=F.2;;[127X[104X
+    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-3, x^3*y^-4];;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
+    [4X[28X48[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xn:=0;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 48 ][128X[104X
+    [4X[25Xgap>[125X [27XIntegralCupProduct(R,[1],[1],2,2);[127X[104X
+    [4X[28X[ 24 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  tetrahedral  case  with  [22Xm=1[122X we obtain $$H^\ast(\Gamma,\mathbb Z) =
+  \mathbb  Z[s,t]/(s^2=16t,  3s=0,  24t=0)$$  where  [22Xs[122X  has degree 2 and [22Xt[122X has
+  degree 4, from the following commands.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;[127X[104X
+    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-2, x^2*y^-2, z*x*z^-1*y^-1, z*y*z^-1*y^-1*x^-1,z^3];;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
+    [4X[28X24[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
+    [4X[28X[ 24 ][128X[104X
+    [4X[25Xgap>[125X [27XIntegralCupProduct(R,[1],[1],2,2);[127X[104X
+    [4X[28X[ 16 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  theoretical calculation of the integral and mod-p cohomology rings of all
+  of these fundamental groups of spherical 3-manifolds is given in [TZ08].[133X
+  

@@ -46,6 +46,10 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7832969482AD05FF">6.8 <span class="Heading">Exact cohomology coefficient sequence</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X79B1406C803FF178">6.9 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+</span></a>
+</span>
+</div>
 </div>
 
 <h3>6 <span class="Heading">Cohomology of groups</span></h3>
@@ -420,6 +424,110 @@ G-cocomplex of length 5 .
 <p>Note that the various orders are consistent with exactness of the sequence</p>
 
 <p><span class="SimpleMath">H^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)</span> .</p>
+
+<p><a id="X79B1406C803FF178" name="X79B1406C803FF178"></a></p>
+
+<h4>6.9 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+</span></h4>
+
+<p>A <em>spherical 3-manifold</em> is a 3-manifold arising as the quotient <span class="SimpleMath">S^3/Γ</span> of the 3-sphere <span class="SimpleMath">S^3</span> by a finite subgroup <span class="SimpleMath">Γ</span> of <span class="SimpleMath">SO(4)</span> acting freely as rotations. The geometrization conjecture, proved by Grigori Perelman, implies that every closed connected 3-manifold with a finite fundamental group is homeomorphic to a spherical 3-manifold.</p>
+
+<p>A spherical 3-manifold <span class="SimpleMath">S^3/Γ</span> has finite fundamental group isomorphic to <span class="SimpleMath">Γ</span>. This fundamental group is one of:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">Γ=C_m=⟨ x | x^m⟩</span> (<strong class="button">cyclic fundamental group</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | xyx^-1=y^-1, x^2^k=y^n ⟩</span> for integers <span class="SimpleMath">k, mge 1, nge 2</span> and <span class="SimpleMath">m</span> coprime to <span class="SimpleMath">2n</span> (<strong class="button">prism manifold case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ= C_m× ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩</span> for integers <span class="SimpleMath">k,mge 1</span> and <span class="SimpleMath">m</span> coprime to 6 (<strong class="button">tetrahedral case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩</span> for <span class="SimpleMath">mge 1</span> coprime to 6 (<strong class="button">octahedral case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | (xy)^2=x^3=y^5⟩</span> for <span class="SimpleMath">mge 1</span> coprime to 30 (<strong class="button">icosahedral case</strong>).</p>
+
+</li>
+</ul>
+<p>This list of cases is taken from the <span class="URL"><a href="https://en.wikipedia.org/wiki/Spherical_3-manifold">Wikipedia pages</a></span>. The group <span class="SimpleMath">Γ</span> has periodic cohomology since it acts on a sphere. The cyclic group has period 2 and in the other four cases it has period 4. (Recall that in general a finite group <span class="SimpleMath">G</span> has <em>periodic cohomology of period <span class="SimpleMath">n</span></em> if there is an element <span class="SimpleMath">u∈ H^n(G, Z)</span> such that the cup product <span class="SimpleMath">- ∪ u: H^k(G, Z) → H^k+n(G, Z)</span> is an isomorphism for all <span class="SimpleMath">kge 1</span>. It can be shown that <span class="SimpleMath">G</span> has periodic cohomology of period <span class="SimpleMath">n</span> if and only if <span class="SimpleMath">H^n(G, Z)= Z_|G|</span>.)</p>
+
+<p>The cohomology of the cyclic group is well-known, and the cohomology of a direct product can be obtained from that of the factors using the Kunneth formula.</p>
+
+<p>In the icosahedral case with <span class="SimpleMath">m=1</span> the following commands yield $$H^\ast(\Gamma,\mathbb Z)=Z[t]/(120t=0)$$ with generator <span class="SimpleMath">t</span> of degree 4. The final command demonstrates that a periodic resolution is used in the computation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(2);;x:=F.1;;y:=F.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-3, x^3*y^-5];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+120
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSmallGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=0;;Cohomology(HomToIntegers(R),n);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 120 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],k-&gt;R!.dimension(k));</span>
+[ 1, 2, 2, 1, 1, 2 ]
+
+</pre></div>
+
+<p>In the octahedral case with <span class="SimpleMath">m=1</span> we obtain $$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=24t, 2s=0, 48t=0)$$ where <span class="SimpleMath">s</span> has degree 2 and <span class="SimpleMath">t</span> has degree 4, from the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(2);;x:=F.1;;y:=F.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-3, x^3*y^-4];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+48
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=0;;Cohomology(HomToIntegers(R),n);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 48 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntegralCupProduct(R,[1],[1],2,2);</span>
+[ 24 ]
+
+</pre></div>
+
+<p>In the tetrahedral case with <span class="SimpleMath">m=1</span> we obtain $$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=16t, 3s=0, 24t=0)$$ where <span class="SimpleMath">s</span> has degree 2 and <span class="SimpleMath">t</span> has degree 4, from the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-2, x^2*y^-2, z*x*z^-1*y^-1, z*y*z^-1*y^-1*x^-1,z^3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+24
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 24 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntegralCupProduct(R,[1],[1],2,2);</span>
+[ 16 ]
+
+</pre></div>
+
+<p>A theoretical calculation of the integral and mod-p cohomology rings of all of these fundamental groups of spherical 3-manifolds is given in <a href="chapBib.html#biBtomoda">[TZ08]</a>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>

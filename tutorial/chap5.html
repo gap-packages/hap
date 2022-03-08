@@ -28,19 +28,22 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X803FDFFE78A08446">5.2 <span class="Heading">Representations of knot quandles</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8664E986873195E6">5.3 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7E4EFB987DA22017">5.3 <span class="Heading">Identifying knots</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7F719758856A443D">5.4 <span class="Heading">Bogomolov multiplier</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8664E986873195E6">5.4 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8333413B838D787D">5.5 <span class="Heading">Second group cohomology and group extensions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7F719758856A443D">5.5 <span class="Heading">Bogomolov multiplier</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C60E2B578074532">5.6 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8333413B838D787D">5.6 <span class="Heading">Second group cohomology and group extensions</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X78040D8580D35D53">5.7 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C60E2B578074532">5.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X78040D8580D35D53">5.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
 </span>
 </div>
 </div>
@@ -90,9 +93,40 @@
 
 </pre></div>
 
+<p>The following commands compute a knot quandle directly from a pdf file containing the following hand-drawn image of the knot.</p>
+
+<p><img src="images/myknot.png" align="center" height="160" alt="hand-drawn image of the trefoil knot"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> gc:=ReadLinkImageAsGaussCode("myknot.pdf");</span>
+[ [ [ -2, 4, -1, 3, -3, 2, -4, 1 ] ], [ -1, -1, 1, -1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=PresentationKnotQuandle(gc);</span>
+Quandle presentation of 4 generators and 4 relators.
+
+</pre></div>
+
+<p><a id="X7E4EFB987DA22017" name="X7E4EFB987DA22017"></a></p>
+
+<h4>5.3 <span class="Heading">Identifying knots</span></h4>
+
+<p>Low index subgrops of the knot group can be used to identify knots with few crossings. For instance, the following commands read in the following image of a knot and identify it as a sum of two trefoils. The commands determine the prime components only up to reflection, and so they don't distinguish between the granny and square knots.</p>
+
+<p><img src="images/myknot2.png" align="center" height="160" alt="hand-drawn image of a knot"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gc:=ReadLinkImageAsGaussCode("myknot2.png");</span>
+[ [ [ -4, 7, -5, 4, -7, 5, -3, 6, -2, 3, 8, -8, -6, 2, 1, -1 ] ], 
+  [ 1, -1, -1, -1, -1, -1, -1, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentifyKnot(gc);;</span>
+PrimeKnot(3,1) + PrimeKnot(3,1)    modulo reflections of components. 
+
+</pre></div>
+
 <p><a id="X8664E986873195E6" name="X8664E986873195E6"></a></p>
 
-<h4>5.3 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></h4>
+<h4>5.4 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></h4>
 
 <p>The following example uses Polymake's linear programming routines to establish that the <span class="SimpleMath">2</span>-complex associated to the group presentation <span class="SimpleMath">&lt;x,y,z : xyx=yxy, yzy=zyz, xzx=zxz&gt;</span> is aspherical (that is, has contractible universal cover). The presentation is Tietze equivalent to the presentation used in the computer code, and the associated <span class="SimpleMath">2</span>-complexes are thus homotopy equivalent.</p>
 
@@ -111,7 +145,7 @@ true
 
 <p><a id="X7F719758856A443D" name="X7F719758856A443D"></a></p>
 
-<h4>5.4 <span class="Heading">Bogomolov multiplier</span></h4>
+<h4>5.5 <span class="Heading">Bogomolov multiplier</span></h4>
 
 <p>The Bogomolov multiplier of a group is an isoclinism invariant. Using this property, the following example shows that there are precisely three groups of order <span class="SimpleMath">243</span> with non-trivial Bogomolov multiplier. The groups in question are numbered 28, 29 and 30 in <strong class="button">GAP</strong>'s library of small groups of order <span class="SimpleMath">243</span>.</p>
 
@@ -129,7 +163,7 @@ true
 
 <p><a id="X8333413B838D787D" name="X8333413B838D787D"></a></p>
 
-<h4>5.5 <span class="Heading">Second group cohomology and group extensions</span></h4>
+<h4>5.6 <span class="Heading">Second group cohomology and group extensions</span></h4>
 
 <p>Any group extension <span class="SimpleMath">N↣ E ↠ G</span> gives rise to:</p>
 
@@ -270,7 +304,7 @@ false
 
 <p><a id="X7C60E2B578074532" name="X7C60E2B578074532"></a></p>
 
-<h4>5.6 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
+<h4>5.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
 
 <p>An <em>Hadamard matrix</em> is a square <span class="SimpleMath">n× n</span> matrix <span class="SimpleMath">H</span> whose entries are either <span class="SimpleMath">+1</span> or <span class="SimpleMath">-1</span> and whose rows are mutually orthogonal, that is <span class="SimpleMath">H H^t = nI_n</span> where <span class="SimpleMath">H^t</span> denotes the transpose and <span class="SimpleMath">I_n</span> denotes the <span class="SimpleMath">n× n</span> identity matrix.</p>
 
@@ -289,7 +323,7 @@ false
 
 <p><a id="X78040D8580D35D53" name="X78040D8580D35D53"></a></p>
 
-<h4>5.7 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
+<h4>5.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
 
 <p><strong class="button">Homotopy 2-types</strong></p>
 
