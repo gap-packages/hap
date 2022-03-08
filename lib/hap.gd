@@ -487,6 +487,7 @@ DeclareOperation("ContractedComplex",[IsObject]);#doc
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");#doc
 DeclareGlobalFunction("ReadImageAsFilteredPureCubicalComplex");#doc
 DeclareGlobalFunction("ReadLinkImageAsPureCubicalComplex");
+DeclareGlobalFunction("ReadLinkImageAsGaussCode");
 DeclareGlobalFunction("ReadMatrixAsPureCubicalComplex");
 DeclareGlobalFunction("ReadImageSequenceAsPureCubicalComplex");
 DeclareGlobalFunction("WritePureCubicalComplexAsImage");
@@ -786,6 +787,7 @@ DeclareGlobalFunction("HAP_Triangulation");
 DeclareGlobalFunction("PureCubicalKnot");#doc
 DeclareGlobalFunction("GaussCodeOfPureCubicalKnot");
 DeclareOperation("DisplayArcPresentation",[IsHapPureCubicalComplex]);#doc
+DeclareGlobalFunction("HAP_SimplifiedGaussCode");
 DeclareGlobalFunction("WirtingerGroup");
 DeclareGlobalFunction("WirtingerGroup_gc");
 DeclareGlobalFunction("NumberOfPrimeKnots");
@@ -806,6 +808,9 @@ DeclareGlobalFunction("DisplayPDBfile");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
 DeclareGlobalFunction("PureCubicalLink");
 DeclareGlobalFunction("HopfSatohSurface");
+DeclareGlobalFunction("HAP_KnotGroupInv");
+DeclareGlobalFunction("IdentifyKnot");
+DeclareGlobalVariable("HAP_knot_census");
 
 ## METRICS #########################################################
 DeclareOperation("CayleyMetric",[IsPerm,IsPerm,IsInt]);

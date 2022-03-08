@@ -1113,14 +1113,57 @@ end);
 #############################################
 #############################################
 
+########################################################
+########################################################
+InstallGlobalFunction(HAP_SimplifiedGaussCode,
+function(gcc)
+local gc, bool, i, j, L;
+
+gc:=1*gcc;
+bool:=true;
+while bool do
+bool:=false;
+for i in [1..Length(gc[1])] do
+for j in [1..Length(gc[1][i])-1] do
+if AbsInt(gc[1][i][j]) = AbsInt(gc[1][i][j+1])  then
+gc[2][AbsInt(gc[1][i][j])]:=0;
+gc[1][i][j]:=0;
+gc[1][i][j+1]:=0; bool:=true; fi;
+od;
+if AbsInt(gc[1][i][1]) = AbsInt(gc[1][i][Length(gc[1][i])]) then
+gc[2][AbsInt(gc[1][i][1])]:=0;
+gc[1][i][1]:=0;
+gc[1][i][Length(gc[1][i])]:=0;
+bool:=true;
+fi;
+gc[1][i]:=Filtered(gc[1][i],a->not a=0);
+gc[2]:=Filtered(gc[2],a->not a=0);
+od;
+od;
+
+L:=Flat(gc[1]);
+L:=SSortedList(List(L,AbsInt));
+for i in [1..Length(gc[1])] do
+gc[1][i]:=List(gc[1][i],x->SignInt(x)*Position(L,AbsInt(x)));
+od;
+
+return gc;
+end);
+########################################################
+########################################################
+
 #############################################
 #############################################
 InstallGlobalFunction(WirtingerGroup_gc,
 function(arg)
-local GC, F, gens, rels, arcs, orientations, crossings, R, C, c, a, cr,i, x,y,z;
+local A,GC, F, gens, rels, arcs, orientations, crossings, R, C, c, a, cr,i, x,y,z;
 
-GC:=arg[1][1];
-orientations:=arg[1][2];
+A:=arg[1];
+A:=HAP_SimplifiedGaussCode(A);
+#GC:=arg[1][1];
+#orientations:=arg[1][2];
+GC:=A[1];
+orientations:=A[2];
 crossings:=Flat(GC);
 crossings:=List(crossings,AbsInt);
 crossings:=SSortedList(crossings);

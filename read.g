@@ -449,6 +449,7 @@ ReadPackageHap("/lib/Knots/knotdata.gi");
 ReadPackageHap("/lib/Knots/cubicalKnot.gi");
 ReadPackageHap("/lib/Knots/csvknot.gi");
 ReadPackageHap("/lib/Knots/surface.gi");
+ReadPackageHap("/lib/Knots/identifyKnots.gi");
 
 ################## SPARSE ##########################################
 ReadPackageHap("lib/Sparse/sparse.gi");

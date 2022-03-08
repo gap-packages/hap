@@ -1,0 +1,15 @@
+gap> F:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;
+gap> G:=F/[(x*y)^2*x^-2, x^2*y^-2, z*x*z^-1*y^-1, z*y*z^-1*y^-1*x^-1,z^3];;
+gap> Order(G);
+24
+gap> R:=ResolutionFiniteGroup(G,5);;
+gap> n:=1;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=2;;Cohomology(HomToIntegers(R),n);
+[ 3 ]
+gap> n:=3;;Cohomology(HomToIntegers(R),n);
+[  ]
+gap> n:=4;;Cohomology(HomToIntegers(R),n);
+[ 24 ]
+gap> IntegralCupProduct(R,[1],[1],2,2);
+[ 16 ]

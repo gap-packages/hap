@@ -230,4 +230,54 @@ Note that the various orders are consistent with exactness of the sequence
 
 </Section>
 
+<Section><Heading>Cohomology rings of finite fundamental groups of 3-manifolds
+</Heading>
+A <E>spherical 3-manifold</E> is a 3-manifold arising as the quotient <M>S^3/\Gamma</M> of the 3-sphere <M>S^3</M> by a  finite subgroup <M>\Gamma</M> of <M>SO(4)</M> acting freely as rotations.
+The geometrization conjecture, proved by Grigori Perelman,
+ implies that every closed connected 3-manifold with a finite fundamental group is homeomorphic to a spherical 3-manifold.
+
+<P/> A spherical 3-manifold <M>S^3/\Gamma</M> has finite fundamental group isomorphic to <M>\Gamma</M>. This fundamental group is one of: 
+<List>
+<Item> <M>\Gamma=C_m=\langle x\ |\ x^m\rangle</M> (<B>cyclic fundamental group</B>)</Item>
+<Item> <M>\Gamma=C_m\times  \langle x,y \ |\ xyx^{-1}=y^{-1}, x^{2^k}=y^n
+\rangle</M> for  integers <M>k, m\ge 1, n\ge 2</M> and <M>m</M> coprime to <M>2n</M> (<B>prism manifold case</B>)</Item>
+<Item> <M>\Gamma= C_m\times \langle x,y, z \ |\ (xy)^2=x^2=y^2, zxz^{-1}=y, zyz^{-1}=xy, z^{3^k}=1\rangle </M> for integers <M>k,m\ge 1</M> and <M>m</M> coprime to 6 (<B>tetrahedral case</B>)</Item>
+<Item> <M>\Gamma=C_m\times\langle x,y\ |\ (xy)^2=x^3=y^4\rangle </M> for <M>m\ge 1</M> coprime to 6 (<B>octahedral case</B>)</Item>
+<Item><M>\Gamma=C_m\times \langle x,y\ |\ (xy)^2=x^3=y^5\rangle </M> for <M>m\ge 1</M> coprime to 30 (<B>icosahedral case</B>).</Item></List>
+This list of cases 
+is taken from the  <URL><Link>https://en.wikipedia.org/wiki/Spherical_3-manifold</Link><LinkText>Wikipedia pages</LinkText></URL>. The group <M>\Gamma</M>
+  has periodic cohomology since it acts on a sphere. The cyclic group has
+period 2 and in the other four cases it has  period 4. (Recall that in general a finite group <M>G</M> has <E>periodic cohomology of period <M>n</M></E> if there is an element <M>u\in H^n(G,\mathbb Z)</M> such that the cup product <M>-\ \cup u\colon H^k(G,\mathbb Z) \rightarrow H^{k+n}(G,\mathbb Z)</M> is an isomorphism for all <M>k\ge 1</M>. It can be shown that <M>G</M> has periodic cohomology of period <M>n</M> if and only if <M>H^{n}(G,\mathbb Z)=\mathbb Z_{|G|}</M>.)
+
+<P/>The cohomology of the cyclic group is well-known, and the cohomology of a direct product can be obtained from that of the factors using the Kunneth formula.
+
+<P/> In the icosahedral case with <M>m=1</M> the following commands yield
+$$H^\ast(\Gamma,\mathbb Z)=Z[t]/(120t=0)$$
+with generator <M>t</M> of degree 4. The final command demonstrates that a periodic resolution is used in the computation.
+
+<Example>
+<#Include SYSTEM "tutex/6.19A.txt">
+</Example>
+
+In the octahedral case with <M>m=1</M> we obtain
+$$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=24t, 2s=0, 48t=0)$$
+where <M>s</M> has degree 2 and  <M>t</M> has degree 4,
+from the following commands.
+<Example>
+<#Include SYSTEM "tutex/6.19B.txt">
+</Example>
+
+
+In the tetrahedral case with <M>m=1</M> we obtain
+$$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=16t, 3s=0, 24t=0)$$
+where <M>s</M> has degree 2 and  <M>t</M> has degree 4,
+from the following commands.
+<Example>
+<#Include SYSTEM "tutex/6.19C.txt">
+</Example>
+
+A theoretical calculation of the integral and mod-p cohomology rings of all of these fundamental groups of spherical 3-manifolds is given in <Cite Key="tomoda"/>.
+
+</Section>
+
 </Chapter>
