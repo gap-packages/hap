@@ -1,247 +1,182 @@
   
-  [1X4 [33X[0;0YTopological data analysis[133X[101X
+  [1X4 [33X[0;0YThree Manifolds[133X[101X
   
   
-  [1X4.1 [33X[0;0YPersistent homology[133X[101X
+  [1X4.1 [33X[0;0YDehn Surgery[133X[101X
   
-  [33X[0;0YPairwise  distances  between  [22X74[122X  points  from  some  metric space have been
-  recorded  and  stored  in a [22X74× 74[122X matrix [22XD[122X. The following commands load the
-  matrix,  construct a filtration of length [22X100[122X on the first two dimensions of
-  the  assotiated clique complex (also known as the [13XRips Complex[113X), and display
-  the  resulting  degree [22X0[122X persistent homology as a barcode. A single bar with
-  label [22Xn[122X denotes [22Xn[122X bars with common starting point and common end point.[133X
+  [33X[0;0YThe  following  example  constructs, as a regular CW-complex [22XW[122X, a 3-manifold
+  obtained  from  the  3-sphere  by  drilling out a tubular neighbourhood of a
+  trefoil knot and then gluing a solid torus to the boundary of the cavity via
+  a homeomorphism corresponding to a Dehn surgery coefficient [22Xp/q=17/16[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfile:=HapFile("data253a.txt");;[127X[104X
-    [4X[25Xgap>[125X [27XRead(file);[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XG:=SymmetricMatrixToFilteredGraph(D,100);[127X[104X
-    [4X[28XFiltered graph on 74 vertices.[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XK:=FilteredRegularCWComplex(CliqueComplex(G,2));[127X[104X
-    [4X[28XFiltered regular CW-complex of dimension 2[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(K,0);;[127X[104X
-    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[25Xgap>[125X [27Xap:=ArcPresentation(PureCubicalKnot(3,1));;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=17;;q:=16;;[127X[104X
+    [4X[25Xgap>[125X [27XW:=ThreeManifoldViaDehnSurgery(ap,p,q);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  next  commands  display the resulting degree [22X1[122X persistent homology as a
-  barcode.[133X
+  [33X[0;0YThe  next  commands  show that this closed compact [22X3[122X-manifold [22XW[122X has integral
+  homology[133X
+  
+  [33X[0;0Y[22XH_0(W, Z)= Z[122X, [22XH_1(W, Z)= Z_31[122X, [22XH_2(W, Z)=0[122X, [22XH_3(W, Z)= Z[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(K,1);;[127X[104X
-    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe  following  command  displays  the  [22X1[122X skeleton of the simplicial complex
-  arizing as the [22X65[122X-th term in the filtration on the clique complex.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XY:=FiltrationTerm(K,65);[127X[104X
-    [4X[28XRegular CW-complex of dimension 1[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(HomotopyGraph(Y));[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThese  computations  suuggest  that the dataset contains two persistent path
-  components  (or  clusters),  and  that  each path component is in some sense
-  periodic. The final command displays one possible representation of the data
-  as points on two circles.[133X
-  
-  
-  [1X4.1-1 [33X[0;0YBackground to the data[133X[101X
-  
-  [33X[0;0YEach  point  in the dataset was an image consisting of [22X732× 761[122X pixels. This
-  point  was  regarded  as  a  vector  in  [22XR^732×  761[122X  and  the  matrix [22XD[122X was
-  constructed using the Euclidean metric. The images were the following:[133X
-  
-  
-  [1X4.2 [33X[0;0YMapper clustering[133X[101X
-  
-  [33X[0;0YThe  following  example  reads in a set [22XS[122X of vectors of rational numbers. It
-  uses  the  Euclidean  distance  [22Xd(u,v)[122X between vectors. It fixes some vector
-  $u_0\in S$ and uses the associated function [22Xf: D→ [0,b] ⊂ R, v↦ d(u_0,v)[122X. In
-  addition,  it  uses  an  open  cover of the interval [22X[0,b][122X consisting of [22X100[122X
-  uniformly  distributed overlapping open subintervals of radius [22Xr=29[122X. It also
-  uses a simple clustering algorithm implemented in the function [10Xcluster[110X.[133X
-  
-  [33X[0;0YThese  ingredients are input into the Mapper clustering procedure to produce
-  a simplicial complex [22XM[122X which is intended to be a representation of the data.
-  The  complex [22XM[122X is [22X1[122X-dimensional and the final command uses GraphViz software
-  to  visualize  the graph. The nodes of this simplicial complex are "buckets"
-  containing  data  points.  A  data  point may reside in several buckets. The
-  number  of  points  in the bucket determines the size of the node. Two nodes
-  are  connected  by  an  edge  when their end-point nodes contain common data
-  points.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfile:=HapFile("data134.txt");;[127X[104X
-    [4X[25Xgap>[125X [27XRead(file);[127X[104X
-    [4X[25Xgap>[125X [27Xdx:=EuclideanApproximatedMetric;;[127X[104X
-    [4X[25Xgap>[125X [27Xdz:=EuclideanApproximatedMetric;;[127X[104X
-    [4X[25Xgap>[125X [27XL:=List(S,x->Maximum(List(S,y->dx(x,y))));;[127X[104X
-    [4X[25Xgap>[125X [27Xn:=Position(L,Minimum(L));;[127X[104X
-    [4X[25Xgap>[125X [27Xf:=function(x); return [dx(S[n],x)]; end;;[127X[104X
-    [4X[25Xgap>[125X [27XP:=30*[0..100];; P:=List(P, i->[i]);;[127X[104X
-    [4X[25Xgap>[125X [27Xr:=29;;[127X[104X
-    [4X[25Xgap>[125X [27Xepsilon:=75;;[127X[104X
-    [4X[25Xgap>[125X [27X cluster:=function(S)[127X[104X
-    [4X[25X>[125X [27X  local Y, P, C;[127X[104X
-    [4X[25X>[125X [27X  if Length(S)=0 then return S; fi;[127X[104X
-    [4X[25X>[125X [27X  Y:=VectorsToOneSkeleton(S,epsilon,dx);[127X[104X
-    [4X[25X>[125X [27X  P:=PiZero(Y);[127X[104X
-    [4X[25X>[125X [27X  C:=Classify([1..Length(S)],P[2]);[127X[104X
-    [4X[25X>[125X [27X  return List(C,x->S{x});[127X[104X
-    [4X[25X>[125X [27X end;;[127X[104X
-    [4X[25Xgap>[125X [27XM:=Mapper(S,dx,f,dz,P,r,cluster);[127X[104X
-    [4X[28XSimplicial complex of dimension 1.[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(GraphOfSimplicialComplex(M));[127X[104X
+    [4X[25Xgap>[125X [27XHomology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[ 31 ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[ 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X4.2-1 [33X[0;0YBackground to the data[133X[101X
+  [1X4.2 [33X[0;0YDijkgraaf-Witten Invariant[133X[101X
   
-  [33X[0;0YThe  datacloud  [22XS[122X  consists  of  the  [22X400[122X  points  in the plane shown in the
-  following picture.[133X
+  [33X[0;0YGiven  a  closed  connected  orientable [22X3[122X-manifold [22XW[122X, a finite group [22XG[122X and a
+  3-cocycle [22Xα∈ H^3(BG,U(1))[122X Dijkgraaf and Witten define the complex number[133X
   
+  [33X[0;0Y$$  Z^{G,\alpha}(W)  =  \frac{1}{|G|}\sum_{\gamma\in  {\rm  Hom}(\pi_1W, G)}
+  \langle  \gamma^\ast[\alpha], [M]\rangle \ \in\ \mathbb C\ $$ where [22Xγ[122X ranges
+  over  all  group  homomorphisms  [22Xγ:  π_1W  →  G[122X.  This  complex number is an
+  invariant of the homotopy type of [22XW[122X and is useful for distinguishing between
+  certain homotopically distinct [22X3[122X-manifolds.[133X
   
-  [1X4.3 [33X[0;0YDigital image analysis[133X[101X
+  [33X[0;0YA  homology  version of the Dijkgraaf-Witten invariant can be defined as the
+  set  of  homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb
+  Z)  \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$
+  Since  [22XH_3(W,  Z)≅  Z[122X  we  represent  [22XD_G(W)[122X by the set [22XD_G(W)={ γ_∗(1) }_γ∈
+  Hom(π_1W,  G)[122X  where  [22X1[122X denotes one of the two possible generators of [22XH_3(W,
+  Z)[122X.[133X
   
-  [33X[0;0YThe  following  example  reads in a digital image as a filtered pure cubical
-  complexex.  The  filtration  is  obtained  by  thresholding at a sequence of
-  uniformly  spaced  values on the greyscale range. The persistent homology of
-  this  filtered complex is calculated in degrees [22X0[122X and [22X1[122X and displayed as two
-  barcodes.[133X
+  [33X[0;0YThe  following  session  constructs  the  two Lens spaces [22XL(5,1)[122X and [22XL(5,2)[122X.
+  These  are  [22X3[122X-dimensional manifolds with cyclic fundamental group of order [22X5[122X
+  and  with  identical  integral  homology groups. The homology version of the
+  Dijkgraaf-Witten  invariant  is  used with [22XG=C_5[122X to demonstrate that the two
+  lens spaces are not homotopy equivalent.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfile:=HapFile("image1.3.2.png");;[127X[104X
-    [4X[25Xgap>[125X [27XF:=ReadImageAsFilteredPureCubicalComplex(file,20);[127X[104X
-    [4X[28XFiltered pure cubical complex of dimension 2.[128X[104X
-    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(F,0);;[127X[104X
-    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[25Xgap>[125X [27Xap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL51:=ThreeManifoldViaDehnSurgery(ap,5,1);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=DijkgraafWittenInvariant(L51,CyclicGroup(5));[127X[104X
+    [4X[28X[ g1^4, g1^4, g1, g1, id ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL52:=ThreeManifoldViaDehnSurgery(ap,5,2);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=DijkgraafWittenInvariant(L52,CyclicGroup(5));[127X[104X
+    [4X[28X[ g1^3, g1^3, g1^2, g1^2, id ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YA  lens  space [22XL(p,q)[122X exists for any coprime integers [22Xp,qge 1[122X. It was proved
+  by  Paul  Olum  that  two  lens  spaces  [22XL(p,q)[122X  and  [22XL(p',q')[122X  are homotopy
+  equivalent  if and only if [22Xp=p'[122X and [22Xqq'≅ ± n^2 mod p[122X for some integer [22Xn[122X. For
+  instance, [22XL(7,q)[122X is homotopy equivalent to [22XL(7,q')[122X if and only if [22Xqq' mod 7∈
+  {1,2,4}[122X.  So  [22XL(7,1)≃  L(7,2)  ≃ L(7,4)[122X, [22XL(7,3)≃ L(7,5)≃(7,6)[122X. The following
+  session  shows  that  the  Dijkgraaf-Witten  invariant, with [22XG=C_7[122X, fails to
+  distinguish between [22XL(7,1)[122X and [22XL(7,3)[122X.[133X
+  
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(F,1);;[127X[104X
-    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[25Xgap>[125X [27XL71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;[127X[104X
+    [4X[25Xgap>[125X [27XDijkgraafWittenInvariant(L71,CyclicGroup(7));[127X[104X
+    [4X[28X[ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ][128X[104X
+    [4X[25Xgap>[125X [27XDijkgraafWittenInvariant(L73,CyclicGroup(7));[127X[104X
+    [4X[28X[ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe [22X20[122X persistent bars in the degree [22X0[122X barcode suggest that the image has [22X20[122X
-  objects.  The  degree  [22X1[122X  barcode suggests that [22X14[122X (or possibly [22X17[122X) of these
-  objects have holes in them.[133X
   
+  [1X4.3 [33X[0;0YCohomology rings[133X[101X
   
-  [1X4.3-1 [33X[0;0YBackground to the data[133X[101X
-  
-  [33X[0;0YThe following image was used in the example.[133X
-  
-  
-  [1X4.4 [33X[0;0YRandom simplicial complexes[133X[101X
-  
-  [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
-  [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete
-  graph  on [22Xn[122X vertices; each possible [22X2[122X-simplex is included independently with
-  probability [22Xp[122X.[133X
-  
-  [33X[0;0YThe  following  commands  first compute the number [22Xh_i[122X of non-trivial cyclic
-  summands  in  [22XH_i(Y(100,p),  Z)[122X for a range of probabilities [22Xp[122X and [22Xi=1,2[122X and
-  then  produce  a  plot of [22Xh_i[122X versus [22Xp[122X. The plot for [22Xh_1[122X is red and the plot
-  for  [22Xh_2[122X  is blue. A plot for the Euler characteristic [22X1-h_1+h_2[122X is shown in
-  green.[133X
+  [33X[0;0YThe  following  commands construct the multiplication table (with respect to
+  some  basis) for the cohomology rings [22XH^∗(L(7,1), Z_7)[122X and [22XH^∗(L(7,3), Z_7)[122X.
+  These  rings  are isomorphic and so fail to distinguish between the homotopy
+  types of the lens spaces [22XL(7,1)[122X and [22XL(7,3)[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XL:=[];;M:=[];;[127X[104X
-    [4X[25Xgap>[125X [27Xfor p in [1..100] do[127X[104X
-    [4X[25X>[125X [27XK:=RegularCWComplex(RandomSimplicialTwoComplex(100,p/1000));;[127X[104X
-    [4X[25X>[125X [27Xh1:=Length(Homology(K,1));;[127X[104X
-    [4X[25X>[125X [27Xh2:=Length(Homology(K,2));;[127X[104X
-    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),h1,"red"]);[127X[104X
-    [4X[25X>[125X [27XAdd(L, [1.0*(p/1000),h2,"blue"]);[127X[104X
-    [4X[25X>[125X [27XAdd(M, [1.0*(p/1000),1-h1+h2,"green"]);[127X[104X
+    [4X[25Xgap>[125X [27XL71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;[127X[104X
+    [4X[25Xgap>[125X [27XL71:=BarycentricSubdivision(L71);;[127X[104X
+    [4X[25Xgap>[125X [27XL73:=BarycentricSubdivision(L73);;[127X[104X
+    [4X[25Xgap>[125X [27XA71:=CohomologyRing(L71,7);;[127X[104X
+    [4X[25Xgap>[125X [27XA73:=CohomologyRing(L73,7);;[127X[104X
+    [4X[25Xgap>[125X [27XM71:=List([1..4],i->[]);;[127X[104X
+    [4X[25Xgap>[125X [27XB71:=CanonicalBasis(A71);;[127X[104X
+    [4X[25Xgap>[125X [27XM73:=List([1..4],i->[]);;[127X[104X
+    [4X[25Xgap>[125X [27XB73:=CanonicalBasis(A73);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..4] do[127X[104X
+    [4X[25X>[125X [27XM71[i][j]:=B71[i]*B71[j];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..4] do[127X[104X
+    [4X[25X>[125X [27XM73[i][j]:=B73[i]*B73[j];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(M71);[127X[104X
+    [4X[28X[ [           v.1,           v.2,           v.3,           v.4 ],[128X[104X
+    [4X[28X  [           v.2,         0*v.1,  (Z(7)^3)*v.4,         0*v.1 ],[128X[104X
+    [4X[28X  [           v.3,  (Z(7)^3)*v.4,         0*v.1,         0*v.1 ],[128X[104X
+    [4X[28X  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M73);[127X[104X
+    [4X[28X[ [           v.1,           v.2,           v.3,           v.4 ],[128X[104X
+    [4X[28X  [           v.2,         0*v.1,  (Z(7)^5)*v.4,         0*v.1 ],[128X[104X
+    [4X[28X  [           v.3,  (Z(7)^5)*v.4,         0*v.1,         0*v.1 ],[128X[104X
+    [4X[28X  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.4 [33X[0;0YLinking Form[133X[101X
+  
+  [33X[0;0YGiven  a closed connected orientable [22X3[122X-manifold [22XW[122X let [22Xτ H_1(W, Z)[122X denote the
+  torsion  subgroup  of  the  first  integral  homology. The [13Xlinking form[113X is a
+  bilinear mapping[133X
+  
+  [33X[0;0Y[22XL_W: τ H_1(W, Z) × τ H_1(W, Z) ⟶ Q/ Z[122X.[133X
+  
+  [33X[0;0YTo construct this form note that we have a Poincare duality isomorphism[133X
+  
+  [33X[0;0Y[22Xρ: H^2(W, Z) stackrel≅⟶ H_1(W, Z), z ↦ z∩ [W][122X[133X
+  
+  [33X[0;0Yinvolving  the cap product with the fundamental class [22X[W]∈ H^3(W, Z)≅ Z[122X. The
+  short exact sequence [22XZ ↣ Q ↠ Q/ Z[122X gives rise to a cohomology exact sequence[133X
+  
+  [33X[0;0Y[22X→ H^1(W, Q) → H^1(W, Q/ Z) stackrelβ⟶ H^2(W, Z) → H^2(W, Q) →[122X[133X
+  
+  [33X[0;0Yfrom  which we obtain the isomorphism [22Xβ : τ H^1(W, Q/ Z) stackrel≅⟶ τ H^2(W,
+  Z)[122X. The linking form [22XL_W[122X can be defined as the composite[133X
+  
+  [33X[0;0Y[22XL_W:  τ  H_1(W, Z) × τ H_1(W, Z) stackrel1× ρ^-1}⟶ τ H_1(W, Z) × τ H^2(W, Z)
+  stackrel1× β^-1}⟶ τ H_1(W, Z) × τ H^1(W, Q/ Z) stackrelev⟶ Q/ Z[122X[133X
+  
+  [33X[0;0Ywhere [22Xev(x,α)[122X evaluates a [22X1[122X-cocycle [22Xα[122X on a [22X1[122X-cycle [22Xx[122X.[133X
+  
+  [33X[0;0YThe linking form can be used to define the set[133X
+  
+  [33X[0;0Y[22XI(W) = {L_W(g,g) : g∈ τ H_1(W, Z)}[122X[133X
+  
+  [33X[0;0Ywhich is a homotopy invariant of [22XW[122X and which we refer to as the [13Xlinking form
+  invariant[113X.[133X
+  
+  [33X[0;0YThe  following  commands  compute  the  linking  form invariant for the lens
+  spaces  [22XL(7,q)[122X  with  [22X1le  qle  6[122X.  This invariant distinguishes between the
+  homotopy  type  [22XL(7,1)≃  L(7,2)  ≃  L(7,4)[122X  and  the  homotopy  type [22XL(7,3)≃
+  L(7,5)≃(7,6)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLensSpaces:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor q in [1..6] do[127X[104X
+    [4X[25X>[125X [27XAdd(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,q));[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
-    [4X[25Xgap>[125X [27XScatterPlot(L);[127X[104X
-    [4X[25Xgap>[125X [27XScatterPlot(M);[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YFrom  this  plot  it  seems that there is a [13Xphase change threshold[113X at around
-  [22Xp=0.025[122X.  An  inspection of the first homology groups [22XH_1(Y(100,p), Z)[122X shows
-  that  in  most cases there is no torsion. However, around the threshold some
-  of the complexes do have torsion in their first homology.[133X
-  
-  [33X[0;0YSimilar commands for [22XY(75,p)[122X suggest a phase transition at around [22Xp=0.035[122X in
-  this  case.  The  following  commands compute [22XH_1(Y(75,p), Z)[122X for [22X900[122X random
-  [22X2[122X-complexes  with [22Xp[122X in a small interval around [22X0.035[122X and, in each case where
-  there  is  torsion, the torsion coefficients are stored in a list. The final
-  command  prints  these  lists  --  all but one of which are of length [22X1[122X. For
-  example,  there is one [22X2[122X-dimensional simplicial complex on [22X75[122X vertices whose
-  first  homology contains the summand [22XZ_107879661870516800665161182578823128[122X.
-  The  largest  prime  factor  is  [22X80555235907994145009690263[122X  occuring in the
-  summand [22XZ_259837760616287294231081766978855[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xtorsion:=function(n,p)[127X[104X
-    [4X[25X>[125X [27Xlocal H, Y;[127X[104X
-    [4X[25X>[125X [27XY:=RegularCWComplex(RandomSimplicialTwoComplex(n,p));[127X[104X
-    [4X[25X>[125X [27XH:=Homology(Y,1);[127X[104X
-    [4X[25X>[125X [27XH:=Filtered(H,x->not x=0);[127X[104X
-    [4X[25X>[125X [27Xreturn H;[127X[104X
-    [4X[25X>[125X [27Xend;[127X[104X
-    [4X[28Xfunction( n, p ) ... end[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XL:=[];;for n in [73000..73900] do[127X[104X
-    [4X[25X>[125X [27Xt:=torsion(75,n/2000000);  [127X[104X
-    [4X[25X>[125X [27Xif not t=[] then Add(L,t); fi;[127X[104X
-    [4X[25X>[125X [27Xod;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(L);[127X[104X
-    [4X[28X[ [                                     2 ],[128X[104X
-    [4X[28X  [                                    26 ],[128X[104X
-    [4X[28X  [     259837760616287294231081766978855 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [                                     3 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [          2761642698060127444812143568 ],[128X[104X
-    [4X[28X  [       2626355281010974663776273381976 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [                                     3 ],[128X[104X
-    [4X[28X  [         33112382751264894819430785350 ],[128X[104X
-    [4X[28X  [                                    16 ],[128X[104X
-    [4X[28X  [                                     4 ],[128X[104X
-    [4X[28X  [                                     3 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [                                     3 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [      85234949999183888967763100590977 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [      24644196130785821107897718662022 ],[128X[104X
-    [4X[28X  [                                     2,                                     2 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [           416641662889025645492982468 ],[128X[104X
-    [4X[28X  [         41582773001875039168786970816 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [            75889883165411088431747730 ],[128X[104X
-    [4X[28X  [         33523474091636554792305315165 ],[128X[104X
-    [4X[28X  [  107879661870516800665161182578823128 ],[128X[104X
-    [4X[28X  [          5588265814409119568341729980 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [          5001457249224115878015053458 ],[128X[104X
-    [4X[28X  [                                    10 ],[128X[104X
-    [4X[28X  [                                    12 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [                                     2 ],[128X[104X
-    [4X[28X  [                                     3 ],[128X[104X
-    [4X[28X  [          7757870243425246987971789322 ],[128X[104X
-    [4X[28X  [       8164648856993269673396613497412 ],[128X[104X
-    [4X[28X  [                                     2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(List(LensSpaces,LinkingFormInvariant));;[127X[104X
+    [4X[28X[ [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],[128X[104X
+    [4X[28X  [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],[128X[104X
+    [4X[28X  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],[128X[104X
+    [4X[28X  [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],[128X[104X
+    [4X[28X  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],[128X[104X
+    [4X[28X  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

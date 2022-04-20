@@ -1,491 +1,396 @@
   
-  [1X6 [33X[0;0YCohomology of groups[133X[101X
+  [1X6 [33X[0;0YGroup theoretic computations[133X[101X
   
   
-  [1X6.1 [33X[0;0YFinite groups[133X[101X
+  [1X6.1 [33X[0;0YThird homotopy group of a supsension of an Eilenberg-MacLane space[133X[101X
   
-  [33X[0;0YIt  is  possible to compute the low degree (co)homology of a finite group or
-  monoid  of  small  order  directly  from  the  bar resolution. The following
-  commands take this approach to computing the fifth integral homology[133X
+  [33X[0;0YThe following example uses the nonabelian tensor square of groups to compute
+  the third homotopy group[133X
   
-  [33X[0;0Y[22XH_5(Q_4, Z) = Z_2⊕ Z_2[122X[133X
+  [33X[0;0Y[22Xπ_3(S(K(G,1))) = Z^30[122X[133X
   
-  [33X[0;0Yof the quaternion group [22XG=Q_4[122X of order [22X8[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XQ:=QuaternionGroup(8);;[127X[104X
-    [4X[25Xgap>[125X [27XB:=BarComplexOfMonoid(Q,6);;                 [127X[104X
-    [4X[25Xgap>[125X [27XC:=ContractedComplex(B);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(C,5);[127X[104X
-    [4X[28X[ 2, 2 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YHowever,  this approach is of limited applicability since the bar resolution
-  involves  [22X|G|^k[122X free generators in degree [22Xk[122X. A range of techniques, tailored
-  to  specific  classes  of groups, can be used to compute the (co)homology of
-  larger finite groups.[133X
-  
-  [33X[0;0YThe following example computes the fourth integral cohomomogy of the Mathieu
-  group [22XM_24[122X.[133X
-  
-  [33X[0;0Y[22XH^4(M_24, Z) = Z_12[122X[133X
+  [33X[0;0Yof  the  suspension  of  the  Eigenberg-MacLane  space [22XK(G,1)[122X for [22XG[122X the free
+  nilpotent group of class [22X2[122X on four generators.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XGroupCohomology(MathieuGroup(24),4);[127X[104X
-    [4X[28X[ 4, 3 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe following example computes the third integral homology of the Weyl group
-  [22XW=Weyl(E_8)[122X, a group of order [22X696729600[122X.[133X
-  
-  [33X[0;0Y[22XH_3(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_12[122X[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28Xp> L:=SimpleLieAlgebra("E",8,Rationals);;[128X[104X
-    [4X[25Xgap>[125X [27XW:=WeylGroup(RootSystem(L));;[127X[104X
-    [4X[25Xgap>[125X [27XOrder(W);[127X[104X
-    [4X[28X696729600[128X[104X
-    [4X[25Xgap>[125X [27XGroupHomology(W,3);[127X[104X
-    [4X[28X[ 2, 2, 4, 3 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe  preceding  calculation  could  be  achieved more quickly by noting that
-  [22XW=Weyl(E_8)[122X  is  a  Coxeter  group,  and  by  using  the  associated Coxeter
-  polytope.  The  following  example  uses this approach to compute the fourth
-  integral  homology  of  [22XW[122X. It begins by displaying the Coxeter diagram of [22XW[122X,
-  and then computes[133X
-  
-  [33X[0;0Y[22XH_4(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[5,3]],[5,[6,3]],[6,[7,3]],[7,[8,3]]];;[127X[104X
-    [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xpolytope:=CoxeterComplex_alt(D,5);;[127X[104X
-    [4X[25Xgap>[125X [27XR:=FreeGResolution(polytope,5);[127X[104X
-    [4X[28XResolution of length 5 in characteristic 0 for <matrix group with [128X[104X
-    [4X[28X8 generators> . [128X[104X
-    [4X[28XNo contracting homotopy available. [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);[127X[104X
-    [4X[28XChain complex of length 5 in characteristic 0 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XHomology(C,4);[127X[104X
-    [4X[28X[ 2, 2, 2, 2 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe  following  example  computes  the  sixth  mod-[22X2[122X  homology  of the Sylow
-  [22X2[122X-subgroup [22XSyl_2(M_24)[122X of the Mathieu group [22XM_24[122X.[133X
-  
-  [33X[0;0Y[22XH_6(Syl_2(M_24), Z_2) = Z_2^143[122X[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XGroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);[127X[104X
-    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
-    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe following example constructs the Poincare polynomial[133X
-  
-  [33X[0;0Y[22Xp(x)=frac1-x^3+3*x^2-3*x+1[122X[133X
-  
-  [33X[0;0Yfor  the  cohomology  [22XH^∗(Syl_2(M_12,  F_2)[122X.  The  coefficient of [22Xx^n[122X in the
-  expansion   of   [22Xp(x)[122X  is  equal  to  the  dimension  of  the  vector  space
-  [22XH^n(Syl_2(M_12,  F_2)[122X.  The  computation  involves [12XSingular[112X's Groebner basis
-  algorithms and the Lyndon-Hochschild-Serre spectral sequence.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG:=SylowSubgroup(MathieuGroup(12),2);;[127X[104X
-    [4X[25Xgap>[125X [27XPoincareSeriesLHS(G);[127X[104X
-    [4X[28X(1)/(-x_1^3+3*x_1^2-3*x_1+1)[128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe following example constructs the polynomial[133X
-  
-  [33X[0;0Y[22Xp(x)=fracx^4-x^3+x^2-x+1x^6-x^5+x^4-2*x^3+x^2-x+1[122X[133X
-  
-  [33X[0;0Ywhose  coefficient  of  [22Xx^n[122X  is  equal  to the dimension of the vector space
-  [22XH^n(M_11,  F_2)[122X  for  all  [22Xn[122X in the range [22X0le nle 14[122X. The coefficient is not
-  guaranteed correct for [22Xnge 15[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XPoincareSeriesPrimePart(MathieuGroup(11),2,14);[127X[104X
-    [4X[28X(x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)[128X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(4);;G:=NilpotentQuotient(F,2);;[127X[104X
+    [4X[25Xgap>[125X [27XThirdHomotopyGroupOfSuspensionB(G);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X6.2 [33X[0;0YNilpotent groups[133X[101X
+  [1X6.2 [33X[0;0YRepresentations of knot quandles[133X[101X
   
-  [33X[0;0YThe following example computes[133X
-  
-  [33X[0;0Y[22XH_4(N, Z) = (Z_3)^4 ⊕ Z^84[122X[133X
-  
-  [33X[0;0Yfor the free nilpotent group [22XN[122X of class [22X2[122X on four generators.[133X
+  [33X[0;0YThe  following example constructs the finitely presented quandles associated
+  to  the granny knot and square knot, and then computes the number of quandle
+  homomorphisms  from  these  two  finitely  prresented  quandles to the [22X17[122X-th
+  quandle  in  [12XHAP[112X's  library of connected quandles of order [22X24[122X. The number of
+  homomorphisms  differs  between  the  two  cases.  The computation therefore
+  establishes   that  the  complement  in  [22XR^3[122X  of  the  granny  knot  is  not
+  homeomorphic to the complement of the square knot.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XF:=FreeGroup(4);; N:=NilpotentQuotient(F,2);;[127X[104X
-    [4X[25Xgap>[125X [27XGroupHomology(N,4);[127X[104X
-    [4X[28X[ 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
-    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
-    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
-    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XQ:=ConnectedQuandle(24,17,"import");;[127X[104X
+    [4X[25Xgap>[125X [27XK:=PureCubicalKnot(3,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=ReflectedCubicalKnot(K);;[127X[104X
+    [4X[25Xgap>[125X [27Xsquare:=KnotSum(K,L);;[127X[104X
+    [4X[25Xgap>[125X [27Xgranny:=KnotSum(K,K);;[127X[104X
+    [4X[25Xgap>[125X [27Xgcsquare:=GaussCodeOfPureCubicalKnot(square);;[127X[104X
+    [4X[25Xgap>[125X [27Xgcgranny:=GaussCodeOfPureCubicalKnot(granny);;[127X[104X
+    [4X[25Xgap>[125X [27XQsquare:=PresentationKnotQuandle(gcsquare);;[127X[104X
+    [4X[25Xgap>[125X [27XQgranny:=PresentationKnotQuandle(gcgranny);;[127X[104X
+    [4X[25Xgap>[125X [27XNumberOfHomomorphisms(Qsquare,Q);[127X[104X
+    [4X[28X408[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfHomomorphisms(Qgranny,Q);[127X[104X
+    [4X[28X24[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  commands  compute  a  knot  quandle directly from a pdf file
+  containing the following hand-drawn image of the knot.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X gc:=ReadLinkImageAsGaussCode("myknot.pdf");[127X[104X
+    [4X[28X[ [ [ -2, 4, -1, 3, -3, 2, -4, 1 ] ], [ -1, -1, 1, -1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XQ:=PresentationKnotQuandle(gc);[127X[104X
+    [4X[28XQuandle presentation of 4 generators and 4 relators.[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X6.3 [33X[0;0YCrystallographic groups[133X[101X
+  [1X6.3 [33X[0;0YIdentifying knots[133X[101X
   
-  [33X[0;0YThe following example computes[133X
-  
-  [33X[0;0Y[22XH_5(G, Z) = Z_2 ⊕ Z_2[122X[133X
-  
-  [33X[0;0Yfor  the  [22X3[122X-dimensional  crystallographic space group [22XG[122X with Hermann-Mauguin
-  symbol "P62"[133X
+  [33X[0;0YLow  index subgrops of the knot group can be used to identify knots with few
+  crossings.  For instance, the following commands read in the following image
+  of  a  knot and identify it as a sum of two trefoils. The commands determine
+  the  prime  components  only up to reflection, and so they don't distinguish
+  between the granny and square knots.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XGroupHomology(SpaceGroupBBNWZ("P62"),5);[127X[104X
-    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xgc:=ReadLinkImageAsGaussCode("myknot2.png");[127X[104X
+    [4X[28X[ [ [ -4, 7, -5, 4, -7, 5, -3, 6, -2, 3, 8, -8, -6, 2, 1, -1 ] ], [128X[104X
+    [4X[28X  [ 1, -1, -1, -1, -1, -1, -1, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIdentifyKnot(gc);;[127X[104X
+    [4X[28XPrimeKnot(3,1) + PrimeKnot(3,1)    modulo reflections of components. [128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X6.4 [33X[0;0YArithmetic groups[133X[101X
+  [1X6.4 [33X[0;0YAspherical [22X2[122X[101X[1X-complexes[133X[101X
   
-  [33X[0;0YThe following example computes[133X
-  
-  [33X[0;0Y[22XH_6(SL_2(cal O, Z) = Z_2[122X[133X
-  
-  [33X[0;0Yfor [22Xcal O[122X the ring of integers of the number field [22XQ(sqrt-2)[122X.[133X
+  [33X[0;0YThe  following  example  uses  Polymake's  linear  programming  routines  to
+  establish  that  the [22X2[122X-complex associated to the group presentation [22X<x,y,z :
+  xyx=yxy,   yzy=zyz,  xzx=zxz>[122X  is  aspherical  (that  is,  has  contractible
+  universal  cover). The presentation is Tietze equivalent to the presentation
+  used  in the computer code, and the associated [22X2[122X-complexes are thus homotopy
+  equivalent.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XC:=ContractibleGcomplex("SL(2,O-2)");;[127X[104X
-    [4X[25Xgap>[125X [27XR:=FreeGResolution(C,7);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),6);[127X[104X
-    [4X[28X[ 2, 12 ][128X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(6);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:=F.1;;y:=F.2;;z:=F.3;;a:=F.4;;b:=F.5;;c:=F.6;;[127X[104X
+    [4X[25Xgap>[125X [27Xrels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,[127X[104X
+    [4X[25X>[125X [27X   b*y*(z*b)^-1, c*z*(x*c)^-1];;[127X[104X
+    [4X[25Xgap>[125X [27XPrint(IsAspherical(F,rels),"\n");[127X[104X
+    [4X[28XPresentation is aspherical.[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X6.5 [33X[0;0YArtin groups[133X[101X
+  [1X6.5 [33X[0;0YBogomolov multiplier[133X[101X
   
-  [33X[0;0YThe following example computes[133X
-  
-  [33X[0;0Y[22XH_5(G, Z) = Z_3[122X[133X
-  
-  [33X[0;0Yfor [22XG[122X the classical braid group on eight strings.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,3]],[5,[6,3]],[6,[7,3]]];;[127X[104X
-    [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);;[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
+  [33X[0;0YThe  Bogomolov  multiplier of a group is an isoclinism invariant. Using this
+  property,  the following example shows that there are precisely three groups
+  of  order  [22X243[122X with non-trivial Bogomolov multiplier. The groups in question
+  are numbered 28, 29 and 30 in [12XGAP[112X's library of small groups of order [22X243[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionArtinGroup(D,6);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(C,5);[127X[104X
-    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XL:=AllSmallGroups(3^5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=IsoclinismClasses(L);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor c in C do[127X[104X
+    [4X[25X>[125X [27Xif Length(BogomolovMultiplier(c[1]))>0 then[127X[104X
+    [4X[25X>[125X [27XPrint(List(c,g->IdGroup(g)),"\n\n\n"); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[ [ 243, 28 ], [ 243, 29 ], [ 243, 30 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   
-  [1X6.6 [33X[0;0YGraphs of groups[133X[101X
+  [1X6.6 [33X[0;0YSecond group cohomology and group extensions[133X[101X
   
-  [33X[0;0YThe following example computes[133X
+  [33X[0;0YAny group extension [22XN↣ E ↠ G[122X gives rise to:[133X
   
-  [33X[0;0Y[22XH_5(G, Z) = Z_2⊕ Z_2⊕ Z_2 ⊕ Z_2 ⊕ Z_2[122X[133X
+  [30X    [33X[0;6Yan outer action [22Xα: G→ Out(G)[122X of [22XG[122X on [22XN[122X.[133X
   
-  [33X[0;0Yfor  [22XG[122X  the  graph  of  groups  corresponding  to  the  amalgamated  product
-  [22XG=S_5*_S_3S_4[122X  of  the  symmetric  groups  [22XS_5[122X  and  [22XS_4[122X  over the canonical
-  subgroup [22XS_3[122X.[133X
+  [30X    [33X[0;6Yan  action  [22XG→  Aut(Z(N))[122X of [22XG[122X on the centre of [22XN[122X, uniquely induced by
+        the outer action [22Xα[122X and the canonical action of [22XOut(N)[122X on [22XZ(N)[122X.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS5:=SymmetricGroup(5);SetName(S5,"S5");[127X[104X
-    [4X[25Xgap>[125X [27XS4:=SymmetricGroup(4);SetName(S4,"S4");[127X[104X
-    [4X[25Xgap>[125X [27XA:=SymmetricGroup(3);SetName(A,"S3");[127X[104X
-    [4X[25Xgap>[125X [27XAS5:=GroupHomomorphismByFunction(A,S5,x->x);[127X[104X
-    [4X[25Xgap>[125X [27XAS4:=GroupHomomorphismByFunction(A,S4,x->x);[127X[104X
-    [4X[25Xgap>[125X [27XD:=[S5,S4,[AS5,AS4]];[127X[104X
-    [4X[25Xgap>[125X [27XGraphOfGroupsDisplay(D);[127X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
+  [30X    [33X[0;6Ya [22X2[122X-cocycle [22Xf: G× G→ Z(N)[122X with values in the [22XG[122X-module [22XA=Z(N)[122X.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionGraphOfGroups(D,6);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),5);[127X[104X
-    [4X[28X[ 2, 2, 2, 2, 2 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
+  [33X[0;0YAny  outer  homomorphism  [22Xα: G→ Out(N)[122X gives rise to a cohomology class [22Xk[122X in
+  [22XH^3(G,Z(N))[122X.  It  was  shown  by  Eilenberg  and Mac[22X[122XLane that the class [22Xk[122X is
+  trivial  if  and only if the outer action [22Xα[122X arises from some group extension
+  [22XN↣  E↠  G[122X.  If  [22Xk[122X  is  trivial  then there is a bijection between the second
+  cohomology group [22XH^2(G,Z(N))[122X and Yoneda equivalence classes of extensions of
+  [22XG[122X by [22XN[122X that are compatible with [22Xα[122X.[133X
   
+  [33X[0;0Y[12XFirst Example.[112X[133X
   
-  [1X6.7 [33X[0;0YCohomology with coefficients in a module[133X[101X
+  [33X[0;0YConsider  the  group  [22XH=SmallGroup(64,134)[122X.  Consider  the  normal  subgroup
+  [22XN=NormalSubgroups(G)[15][122X  and  quotient  group  [22XG=H/N[122X.  We  have [22XN=C_2× D_4[122X,
+  [22XA=Z(N)=C_2× C_2[122X and [22XG=C_2× C_2[122X.[133X
   
-  [33X[0;0YThere  are  various  ways  to  represent a [22XZG[122X-module [22XA[122X with action [22XG× A → A,
-  (g,a)↦ α(g,a)[122X.[133X
-  
-  [33X[0;0YOne  possibility  is  to use the data type of a [13X[22XG[122X-Outer Group[113X which involves
-  three  components:  an  [22XActedGroup[122X  [22XA[122X;  an  [22XActing Group[122X [22XG[122X; a [22XMapping[122X [22X(g,a)↦
-  α(g,a)[122X.  The following example uses this data type to compute the cohomology
-  [22XH^4(G,A)  = Z_5 ⊕ Z_10[122X of the symmetric group [22XG=S_6[122X with coefficients in the
-  integers [22XA= Z[122X where odd permutations act non-trivially on [22XA[122X.[133X
+  [33X[0;0YSuppose  we  wish  to  classify  all extensions [22XC_2× D_4 ↣ E ↠ C_2× C_2[122X that
+  induce  the  given outer action of [22XG[122X on [22XN[122X. The following commands show that,
+  up to Yoneda equivalence, there are two such extensions.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG:=SymmetricGroup(6);;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);;[127X[104X
-    [4X[25Xgap>[125X [27Xalpha:=function(g,a); return a^SignPerm(g); end;;[127X[104X
-    [4X[25Xgap>[125X [27XA:=GModuleAsGOuterGroup(G,A,alpha);[127X[104X
-    [4X[28XZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=HomToGModule(R,A);[127X[104X
-    [4X[28XG-cocomplex of length 5 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XCohomology(C,4);[127X[104X
-    [4X[28X[ 2, 2, 5 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YIf [22XA= Z^n[122X and [22XG[122X acts as[133X
-  
-  [33X[0;0Y[22XG×  A  →  A,  (g,  (x_1,x_2,...,x_n))  ↦  (x_π(g)^-1(1),  x_π(g)^-1(2), ...,
-  x_π(g)^-1(n))[122X[133X
-  
-  [33X[0;0Ywhere  [22Xπ:  G→ S_n[122X is a (not necessarily faithful) permutation representation
-  of  degree  [22Xn[122X  then  we can avoid the use of [22XG[122X-outer groups and use just the
-  homomorphism [22Xπ[122X instead. The following example uses this data type to compute
-  the cohomology[133X
-  
-  [33X[0;0Y[22XH^6(G,A) = Z_2 ⊕ Z_6[122X[133X
-  
-  [33X[0;0Yand the homology[133X
-  
-  [33X[0;0Y[22XH_6(G,A) = Z_2[122X[133X
-  
-  [33X[0;0Yof the alternating group [22XG=A_6[122X with coefficients in [22XA= Z^5[122X where elements of
-  [22XG[122X act on [22XZ^5[122X via the canonical permutation of basis elements.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG:=AlternatingGroup(5);;[127X[104X
-    [4X[25Xgap>[125X [27Xpi:=PermToMatrixGroup(SymmetricGroup(5),5);;[127X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,7);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,pi);;[127X[104X
-    [4X[25Xgap>[125X [27XCohomology(C,6);[127X[104X
-    [4X[28X[ 2, 6 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XD:=TensorWithIntegralModule(R,pi);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(D,6);[127X[104X
+    [4X[25Xgap>[125X [27XH:=SmallGroup(64,134);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=NormalSubgroups(H)[15];;[127X[104X
+    [4X[25Xgap>[125X [27XA:=Centre(GOuterGroup(H,N));;[127X[104X
+    [4X[25Xgap>[125X [27XG:=ActingGroup(A);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,A);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
     [4X[28X[ 2 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  
-  [1X6.8 [33X[0;0YExact cohomology coefficient sequence[133X[101X
-  
-  [33X[0;0YA short exact sequence of [22XZG[122X-modules [22XA ↣ B ↠ C[122X induces a long exact sequence
-  of cohomology groups[133X
-  
-  [33X[0;0Y[22X→ H^n(G,A) → H^n(G,B) → H^n(G,C) → H^n+1(G,A) →[122X .[133X
-  
-  [33X[0;0YConsider  the  symmetric  group  [22XG=S_4[122X  and  the sequence [22XZ_4 ↣ Z_8 ↠ Z_2[122X of
-  trivial  [22XZG[122X-modules.  The  following commands compute the induced cohomology
-  homomorphism[133X
-  
-  [33X[0;0Y[22Xf: H^3(S_4, Z_4) → H^3(S_4, Z_8)[122X[133X
-  
-  [33X[0;0Yand  determine  that  the image of this induced homomorphism has order [22X8[122X and
-  that its kernel has order [22X2[122X.[133X
+  [33X[0;0YThe  following  additional  commands  return  a standard [22X2[122X-cocycle [22Xf:G× G→ A
+  =C_2×  C_2[122X  corresponding  to the non-trivial element in [22XH^2(G,A)[122X. The value
+  [22Xf(g,h)[122X of the [22X2[122X-cocycle is calculated for all [22X16[122X pairs [22Xg,h ∈ G[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG:=SymmetricGroup(4);;[127X[104X
-    [4X[25Xgap>[125X [27Xx:=(1,2,3,4,5,6,7,8);;[127X[104X
-    [4X[25Xgap>[125X [27Xa:=Group(x^2);;[127X[104X
-    [4X[25Xgap>[125X [27Xb:=Group(x);;[127X[104X
-    [4X[25Xgap>[125X [27Xahomb:=GroupHomomorphismByFunction(a,b,y->y);;[127X[104X
-    [4X[25Xgap>[125X [27XA:=TrivialGModuleAsGOuterGroup(G,a);;[127X[104X
-    [4X[25Xgap>[125X [27XB:=TrivialGModuleAsGOuterGroup(G,b);;[127X[104X
-    [4X[25Xgap>[125X [27Xphi:=GOuterGroupHomomorphism();;[127X[104X
-    [4X[25Xgap>[125X [27Xphi!.Source:=A;;[127X[104X
-    [4X[25Xgap>[125X [27Xphi!.Target:=B;;[127X[104X
-    [4X[25Xgap>[125X [27Xphi!.Mapping:=ahomb;;[127X[104X
+    [4X[25Xgap>[125X [27XCH:=CohomologyModule(C,2);;[127X[104X
+    [4X[25Xgap>[125X [27XElts:=Elements(ActedGroup(CH));[127X[104X
+    [4X[28X[ <identity> of ..., f1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Elts[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xc:=CH!.representativeCocycle(x);[127X[104X
+    [4X[28XStandard 2-cocycle [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Mapping(c);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor g in G do for h in G do[127X[104X
+    [4X[25X>[125X [27XPrint(f(g,h),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28Xf6[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28Xf6[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28Xf6[128X[104X
+    [4X[28X<identity> of ...[128X[104X
+    [4X[28Xf6[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following commands will then construct and identify all extensions of [22XN[122X
+  by [22XG[122X corresponding to the given outer action of [22XG[122X on [22XN[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XH := SmallGroup(64,134);;[127X[104X
+    [4X[25Xgap>[125X [27XN := NormalSubgroups(H)[15];;[127X[104X
+    [4X[25Xgap>[125X [27XON := GOuterGroup(H,N);;[127X[104X
+    [4X[25Xgap>[125X [27XA := Centre(ON);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=ActingGroup(A);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,A);;[127X[104X
+    [4X[25Xgap>[125X [27XCH:=CohomologyModule(C,2);;[127X[104X
+    [4X[25Xgap>[125X [27XElts:=Elements(ActedGroup(CH));;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xlst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;[127X[104X
+    [4X[25Xgap>[125X [27Xccgrps := List(lst, x->CcGroup(ON, x));;[127X[104X
+    [4X[25Xgap>[125X [27X#So ccgrps is a list of groups, each being an extension of G by N, corresponding[127X[104X
+    [4X[25Xgap>[125X [27X#to the two elements in H^2(G,A).[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#The following command produces the GAP identification number for each group.[127X[104X
+    [4X[25Xgap>[125X [27XL:=List(ccgrps,IdGroup);[127X[104X
+    [4X[28X[ [ 64, 134 ], [ 64, 135 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[12XSecond Example[112X[133X
+  
+  [33X[0;0YThe  following  example illustrates how to construct a cohomology class [22Xk[122X in
+  [22XH^2(G,  A)[122X  from  a  cocycle [22Xf:G × G → A[122X, where [22XG=SL_2( Z_4)[122X and [22XA= Z_8[122X with
+  trivial action.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X#We'll construct G=SL(2,Z_4) as a permutation group.[127X[104X
+    [4X[25Xgap>[125X [27XG:=SL(2,ZmodnZ(4));;[127X[104X
+    [4X[25Xgap>[125X [27XG:=Image(IsomorphismPermGroup(G));;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#We'll construct Z_8=Z/8Z as a G-outer group[127X[104X
+    [4X[25Xgap>[125X [27Xz_8:=Group((1,2,3,4,5,6,7,8));;[127X[104X
+    [4X[25Xgap>[125X [27XZ_8:=TrivialGModuleAsGOuterGroup(G,z_8);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#We'll compute the group h=H^2(G,Z_8)[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,3);;  #R is a free resolution[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,Z_8);; # C is a chain complex[127X[104X
+    [4X[25Xgap>[125X [27XH:=CohomologyModule(C,2);; #H is the second cohomology H^2(G,Z_8)[127X[104X
+    [4X[25Xgap>[125X [27Xh:=ActedGroup(H);; #h is the underlying group of H[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#We'll compute  cocycles c2, c5 for the second and fifth cohomology classs[127X[104X
+    [4X[25Xgap>[125X [27Xc2:=H!.representativeCocycle(Elements(h)[2]);[127X[104X
+    [4X[28XStandard 2-cocycle [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xc5:=H!.representativeCocycle(Elements(h)[5]);[127X[104X
+    [4X[28XStandard 2-cocycle [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Now we'll construct the cohomology classes C2, C5 in the group h corresponding to the cocycles c2, c5.[127X[104X
+    [4X[25Xgap>[125X [27XC2:=CohomologyClass(H,c2);;[127X[104X
+    [4X[25Xgap>[125X [27XC5:=CohomologyClass(H,c5);;[127X[104X
     [4X[28X [128X[104X
-    [4X[25Xgap>[125X [27XHphi:=CohomologyHomomorphism(phi,3);;[127X[104X
+    [4X[25Xgap>[125X [27X#Finally, we'll show that C2, C5 are distinct cohomology classes, both of order 4.[127X[104X
+    [4X[25Xgap>[125X [27XC2=C5;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XOrder(C2);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XOrder(C5);[127X[104X
+    [4X[28X4[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XSize(ImageOfGOuterGroupHomomorphism(Hphi));[127X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.7 [33X[0;0YSecond group cohomology and cocyclic Hadamard matrices[133X[101X
+  
+  [33X[0;0YAn  [13XHadamard matrix[113X is a square [22Xn× n[122X matrix [22XH[122X whose entries are either [22X+1[122X or
+  [22X-1[122X  and  whose  rows are mutually orthogonal, that is [22XH H^t = nI_n[122X where [22XH^t[122X
+  denotes the transpose and [22XI_n[122X denotes the [22Xn× n[122X identity matrix.[133X
+  
+  [33X[0;0YGiven  a group [22XG={g_1,g_2,...,g_n}[122X of order [22Xn[122X and the abelian group [22XA={1,-1}[122X
+  of  square  roots  of unity, any [22X2[122X-cocycle [22Xf: G× G→ A[122X corresponds to an [22Xn× n[122X
+  matrix [22XF=(f(g_i,g_j))_1le i,jle n[122X whose entries are [22X± 1[122X. If [22XF[122X is Hadamard it
+  is called a [13Xcocyclic Hadamard matrix[113X corresponding to [22XG[122X.[133X
+  
+  [33X[0;0YThe following commands compute all [22X192[122X of the cocyclic Hadamard matrices for
+  the abelian group [22XG= Z_4⊕ Z_4[122X of order [22Xn=16[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AbelianGroup([4,4]);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=CocyclicHadamardMatrices(G);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(F);[127X[104X
+    [4X[28X192[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.8 [33X[0;0YThird group cohomology and homotopy [22X2[122X[101X[1X-types[133X[101X
+  
+  [33X[0;0Y[12XHomotopy 2-types[112X[133X
+  
+  [33X[0;0YThe  third  cohomology [22XH^3(G,A)[122X of a group [22XG[122X with coefficients in a [22XG[122X-module
+  [22XA[122X,  together  with  the  corresponding  [22X3[122X-cocycles,  can be used to classify
+  homotopy  [22X2[122X-types.  A  [13Xhomotopy 2-type[113X is a CW-complex whose homotopy groups
+  are  trivial  in dimensions [22Xn=0[122X and [22Xn>2[122X. There is an equivalence between the
+  two categories[133X
+  
+  [31X1[131X   [33X[0;6Y(Homotopy  category  of connected CW-complexes [22XX[122X with trivial homotopy
+        groups [22Xπ_n(X)[122X for [22Xn>2[122X)[133X
+  
+  [31X2[131X   [33X[0;6Y(Localization  of the category of simplicial groups with Moore complex
+        of  length  [22X1[122X,  where  localization  is  with respect to homomorphisms
+        inducing isomorphisms on homotopy groups)[133X
+  
+  [33X[0;0Ywhich  reduces  the  homotopy  theory of [22X2[122X-types to a 'computable' algebraic
+  theory.  Furthermore,  a simplicial group with Moore complex of length [22X1[122X can
+  be represented by a group [22XH[122X endowed with two endomorphisms [22Xs: H→ H[122X and [22Xt: H→
+  H[122X satisfying the axioms[133X
+  
+  [30X    [33X[0;6Y[22Xss=s[122X, [22Xts=s[122X,[133X
+  
+  [30X    [33X[0;6Y[22Xtt=t[122X, [22Xst=t[122X,[133X
+  
+  [30X    [33X[0;6Y[22X[ker s, ker t] = 1[122X.[133X
+  
+  [33X[0;0YThs  triple  [22X(H,s,t)[122X was termed a [13Xcat[22X^1[122X-group[113X by J.-L. Loday since it can be
+  regarded as a group [22XH[122X endowed with one compatible category structure.[133X
+  
+  [33X[0;0YThe   [13Xhomotopy   groups[113X  of  a  cat[22X^1[122X-group  [22XH[122X  are  defined  as:  [22Xπ_1(H)  =
+  image(s)/t(ker(s))[122X;  [22Xπ_2(H)=ker(s)  ∩ ker(t)[122X; [22Xπ_n(H)=0[122X for [22Xn> 2[122X or [22Xn=0[122X. Note
+  that [22Xπ_2(H)[122X is a [22Xπ_1(H)[122X-module where the action is induced by conjugation in
+  [22XH[122X.[133X
+  
+  [33X[0;0YA homotopy [22X2[122X-type [22XX[122X can be represented by a cat[22X^1[122X-group [22XH[122X or by the homotopy
+  groups  [22Xπ_1X=π_1H[122X,  [22Xπ_2X=π_2H[122X and a cohomology class [22Xk∈ H^3(π_1X,π_2X)[122X. This
+  class [22Xk[122X is the [13XPostnikov invariant[113X.[133X
+  
+  [33X[0;0Y[12XRelation to Group Theory[112X[133X
+  
+  [33X[0;0YA  number  of standard group-theoretic constructions can be viewed naturally
+  as a cat[22X^1[122X-group.[133X
+  
+  [31X1[131X   [33X[0;6YA  [22XZG[122X-module  [22XA[122X  can be viewed as a cat[22X^1[122X-group [22X(H,s,t)[122X where [22XH[122X is the
+        semi-direct product [22XA⋊ G[122X and [22Xs(a,g)=(1,g)[122X, [22Xt(a,g)=(1,g)[122X. Here [22Xπ_1(H)=G[122X
+        and [22Xπ_2(H)=A[122X.[133X
+  
+  [31X2[131X   [33X[0;6YA  group  [22XG[122X  with  normal  subgroup  [22XN[122X  can be viewed as a cat[22X^1[122X-group
+        [22X(H,s,t)[122X  where  [22XH[122X  is  the  semi-direct product [22XN⋊ G[122X and [22Xs(n,g)=(1,g)[122X,
+        [22Xt(n,g)=(1,ng)[122X. Here [22Xπ_1(H)=G/N[122X and [22Xπ_2(H)=0[122X.[133X
+  
+  [31X3[131X   [33X[0;6YThe  homomorphism  [22Xι  : G→ Aut(G)[122X which sends elements of a group [22XG[122X to
+        the  corresponding  inner  automorphism can be viewed as a cat[22X^1[122X-group
+        [22X(H,s,t)[122X where [22XH[122X is the semi-direct product [22XG⋊ Aut(G)[122X and [22Xs(g,a)=(1,a)[122X,
+        [22Xt(g,a)=(1,ι  (g)a)[122X. Here [22Xπ_1(H)=Out(G)[122X is the outer automorphism group
+        of [22XG[122X and [22Xπ_2(H)=Z(G)[122X is the centre of [22XG[122X.[133X
+  
+  [33X[0;0YThese three constructions are implemented in [12XHAP[112X.[133X
+  
+  [33X[0;0Y[12XExample[112X[133X
+  
+  [33X[0;0YThe   following   commands  begin  by  constructing  the  cat[22X^1[122X-group  [22XH[122X  of
+  Construction  3  for the group [22XG=SmallGroup(64,134)[122X. They then construct the
+  fundamental  group  of  [22XH[122X  and the second homotopy group of as a [22Xπ_1[122X-module.
+  These homotopy groups have orders [22X8[122X and [22X2[122X respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SmallGroup(64,134);;[127X[104X
+    [4X[25Xgap>[125X [27XH:=AutomorphismGroupAsCatOneGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27Xpi_1:=HomotopyGroup(H,1);;[127X[104X
+    [4X[25Xgap>[125X [27Xpi_2:=HomotopyModule(H,2);;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(pi_1);[127X[104X
     [4X[28X8[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XSize(KernelOfGOuterGroupHomomorphism(Hphi));[127X[104X
+    [4X[25Xgap>[125X [27XOrder(ActedGroup(pi_2));[127X[104X
     [4X[28X2[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe following commands then compute the homomorphism[133X
-  
-  [33X[0;0Y[22XH^3(S_4, Z_8) → H^3(S_4, Z_2)[122X[133X
-  
-  [33X[0;0Yinduced  by  [22XZ_4  ↣  Z_8  ↠  Z_2[122X,  and  determine  that  the  kernel of this
-  homomorphsim has order [22X8[122X.[133X
+  [33X[0;0YThe   following   additional  commands  show  that  there  are  [22X1024[122X  Yoneda
+  equivalence  classes  of  cat[22X^1[122X-groups  with  fundamental group [22Xπ_1[122X and [22Xπ_1[122X-
+  module equal to [22Xπ_2[122X in our example.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xbhomc:=NaturalHomomorphismByNormalSubgroup(b,a);[127X[104X
-    [4X[25Xgap>[125X [27XB:=TrivialGModuleAsGOuterGroup(G,b);[127X[104X
-    [4X[25Xgap>[125X [27XC:=TrivialGModuleAsGOuterGroup(G,Image(bhomc));[127X[104X
-    [4X[25Xgap>[125X [27Xpsi:=GOuterGroupHomomorphism();[127X[104X
-    [4X[25Xgap>[125X [27Xpsi!.Source:=B;[127X[104X
-    [4X[25Xgap>[125X [27Xpsi!.Target:=C;[127X[104X
-    [4X[25Xgap>[125X [27Xpsi!.Mapping:=bhomc;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XHpsi:=CohomologyHomomorphism(psi,3);[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XSize(KernelOfGOuterGroupHomomorphism(Hpsi));[127X[104X
-    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(pi_1,4);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,pi_2);;[127X[104X
+    [4X[25Xgap>[125X [27XCH:=CohomologyModule(C,3);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(ActedGroup(CH));[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe following commands then compute the connecting homomorphism[133X
-  
-  [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4)[122X[133X
-  
-  [33X[0;0Yand determine that the image of this homomorphism has order [22X2[122X.[133X
+  [33X[0;0YA  [22X3[122X-cocycle  [22Xf : π_1 × π_1 × π_1 → π_2[122X corresponding to a random cohomology
+  class [22Xk∈ H^3(π_1,π_2)[122X can be produced using the following command.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xdelta:=ConnectingCohomologyHomomorphism(psi,2);;[127X[104X
-    [4X[25Xgap>[125X [27XSize(ImageOfGOuterGroupHomomorphism(delta));[127X[104X
+    [4X[25Xgap>[125X [27Xx:=Random(Elements(ActedGroup(CH)));;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=CH!.representativeCocycle(x);[127X[104X
+    [4X[28XStandard 3-cocycle [128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YNote that the various orders are consistent with exactness of the sequence[133X
-  
-  [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)[122X .[133X
-  
-  
-  [1X6.9 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
-  
-  [33X[0;0YA  [13Xspherical 3-manifold[113X is a 3-manifold arising as the quotient [22XS^3/Γ[122X of the
-  3-sphere [22XS^3[122X by a finite subgroup [22XΓ[122X of [22XSO(4)[122X acting freely as rotations. The
-  geometrization  conjecture,  proved  by Grigori Perelman, implies that every
-  closed  connected 3-manifold with a finite fundamental group is homeomorphic
-  to a spherical 3-manifold.[133X
-  
-  [33X[0;0YA  spherical  3-manifold [22XS^3/Γ[122X has finite fundamental group isomorphic to [22XΓ[122X.
-  This fundamental group is one of:[133X
-  
-  [30X    [33X[0;6Y[22XΓ=C_m=⟨ x | x^m⟩[122X ([12Xcyclic fundamental group[112X)[133X
-  
-  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y | xyx^-1=y^-1, x^2^k=y^n ⟩[122X for integers [22Xk, mge 1, nge 2[122X
-        and [22Xm[122X coprime to [22X2n[122X ([12Xprism manifold case[112X)[133X
-  
-  [30X    [33X[0;6Y[22XΓ=  C_m×  ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩[122X for
-        integers [22Xk,mge 1[122X and [22Xm[122X coprime to 6 ([12Xtetrahedral case[112X)[133X
-  
-  [30X    [33X[0;6Y[22XΓ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩[122X for [22Xmge 1[122X coprime to 6 ([12Xoctahedral case[112X)[133X
-  
-  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y  | (xy)^2=x^3=y^5⟩[122X for [22Xmge 1[122X coprime to 30 ([12Xicosahedral
-        case[112X).[133X
-  
-  [33X[0;0YThis    list    of    cases    is    taken    from   the   Wikipedia   pages
-  ([7Xhttps://en.wikipedia.org/wiki/Spherical_3-manifold[107X).   The   group   [22XΓ[122X  has
-  periodic cohomology since it acts on a sphere. The cyclic group has period 2
-  and  in  the  other  four  cases  it has period 4. (Recall that in general a
-  finite group [22XG[122X has [13Xperiodic cohomology of period [22Xn[122X[113X if there is an element [22Xu∈
-  H^n(G,  Z)[122X  such  that  the cup product [22X- ∪ u: H^k(G, Z) → H^k+n(G, Z)[122X is an
-  isomorphism for all [22Xkge 1[122X. It can be shown that [22XG[122X has periodic cohomology of
-  period [22Xn[122X if and only if [22XH^n(G, Z)= Z_|G|[122X.)[133X
-  
-  [33X[0;0YThe  cohomology  of  the cyclic group is well-known, and the cohomology of a
-  direct  product  can  be obtained from that of the factors using the Kunneth
-  formula.[133X
-  
-  [33X[0;0YIn   the   icosahedral   case   with   [22Xm=1[122X   the  following  commands  yield
-  $$H^\ast(\Gamma,\mathbb Z)=Z[t]/(120t=0)$$ with generator [22Xt[122X of degree 4. The
-  final  command  demonstrates  that  a  periodic  resolution  is  used in the
-  computation.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XF:=FreeGroup(2);;x:=F.1;;y:=F.2;;[127X[104X
-    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-3, x^3*y^-5];;[127X[104X
-    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
-    [4X[28X120[128X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(G,5);;[127X[104X
-    [4X[25Xgap>[125X [27Xn:=0;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 0 ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 120 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..5],k->R!.dimension(k));[127X[104X
-    [4X[28X[ 1, 2, 2, 1, 1, 2 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YIn  the  octahedral  case  with  [22Xm=1[122X  we obtain $$H^\ast(\Gamma,\mathbb Z) =
-  \mathbb  Z[s,t]/(s^2=24t,  2s=0,  48t=0)$$  where  [22Xs[122X  has degree 2 and [22Xt[122X has
-  degree 4, from the following commands.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XF:=FreeGroup(2);;x:=F.1;;y:=F.2;;[127X[104X
-    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-3, x^3*y^-4];;[127X[104X
-    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
-    [4X[28X48[128X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
-    [4X[25Xgap>[125X [27Xn:=0;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 0 ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 2 ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 48 ][128X[104X
-    [4X[25Xgap>[125X [27XIntegralCupProduct(R,[1],[1],2,2);[127X[104X
-    [4X[28X[ 24 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YIn  the  tetrahedral  case  with  [22Xm=1[122X we obtain $$H^\ast(\Gamma,\mathbb Z) =
-  \mathbb  Z[s,t]/(s^2=16t,  3s=0,  24t=0)$$  where  [22Xs[122X  has degree 2 and [22Xt[122X has
-  degree 4, from the following commands.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XF:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;[127X[104X
-    [4X[25Xgap>[125X [27XG:=F/[(x*y)^2*x^-2, x^2*y^-2, z*x*z^-1*y^-1, z*y*z^-1*y^-1*x^-1,z^3];;[127X[104X
-    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
-    [4X[28X24[128X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
-    [4X[25Xgap>[125X [27Xn:=1;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=2;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 3 ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=3;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[  ][128X[104X
-    [4X[25Xgap>[125X [27Xn:=4;;Cohomology(HomToIntegers(R),n);[127X[104X
-    [4X[28X[ 24 ][128X[104X
-    [4X[25Xgap>[125X [27XIntegralCupProduct(R,[1],[1],2,2);[127X[104X
-    [4X[28X[ 16 ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YA  theoretical calculation of the integral and mod-p cohomology rings of all
-  of these fundamental groups of spherical 3-manifolds is given in [TZ08].[133X
+  [33X[0;0YThe  [22X3[122X-cocycle  corresponding  to the Postnikov invariant of [22XH[122X itself can be
+  easily  constructed directly from its definition in terms of a set-theoretic
+  'section' of the crossed module corresponding to [22XH[122X.[133X
   

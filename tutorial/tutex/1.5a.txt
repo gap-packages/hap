@@ -1,0 +1,21 @@
+gap> attch:=RegularCWComplex_AttachCellDestructive;; #Function for attaching cells
+
+gap> Y:=RegularCWDiscreteSpace(3); #Discrete CW-complex consisting of points {1,2,3}
+Regular CW-complex of dimension 0
+
+gap> e1:=attch(Y,1,[1,2]);; #Attach 1-cell
+gap> e2:=attch(Y,1,[1,2]);; #Attach 1-cell
+gap> e3:=attch(Y,1,[1,3]);; #Attach 1-cell
+gap> e4:=attch(Y,1,[1,3]);; #Attach 1-cell
+gap> e5:=attch(Y,1,[2,3]);; #Attach 1-cell
+gap> e6:=attch(Y,1,[2,3]);; #Attach 1-cell
+gap> f1:=attch(Y,2,[e1,e3,e5]);; #Attach 2-cell
+gap> f2:=attch(Y,2,[e2,e4,e5]);; #Attach 2-cell
+gap> f3:=attch(Y,2,[e2,e3,e6]);; #Attach 2-cell
+gap> f4:=attch(Y,2,[e1,e4,e6]);; #Attach 2-cell
+gap> Homology(Y,0);
+[ 0 ]
+gap> Homology(Y,1);
+[ 2 ]
+gap> Homology(Y,2);
+[  ]`

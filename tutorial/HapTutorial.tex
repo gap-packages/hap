@@ -347,14 +347,75 @@ knot.
  }
 
  
-\section{\textcolor{Chapter }{Constructing a regular CW-complex from its face lattice}}\logpage{[ 1, 8, 0 ]}
+\section{\textcolor{Chapter }{Constructing a regular CW-complex by attaching cells}}\logpage{[ 1, 8, 0 ]}
+\hyperdef{L}{X829793717FB6DDCE}{}
+{
+ 
+
+  
+
+The following example creates the projective plane $Y$ as a regular CW-complex, and tests that it has the correct integral homology $H_0(Y,\mathbb Z)=\mathbb Z$, $H_1(Y,\mathbb Z)=\mathbb Z_2$, $H_2(Y,\mathbb Z)=0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@attch:=RegularCWComplex_AttachCellDestructive;; #Function for attaching cells|
+  
+  !gapprompt@gap>| !gapinput@Y:=RegularCWDiscreteSpace(3); #Discrete CW-complex consisting of points {1,2,3}|
+  Regular CW-complex of dimension 0
+  
+  !gapprompt@gap>| !gapinput@e1:=attch(Y,1,[1,2]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@e2:=attch(Y,1,[1,2]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@e3:=attch(Y,1,[1,3]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@e4:=attch(Y,1,[1,3]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@e5:=attch(Y,1,[2,3]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@e6:=attch(Y,1,[2,3]);; #Attach 1-cell|
+  !gapprompt@gap>| !gapinput@f1:=attch(Y,2,[e1,e3,e5]);; #Attach 2-cell|
+  !gapprompt@gap>| !gapinput@f2:=attch(Y,2,[e2,e4,e5]);; #Attach 2-cell|
+  !gapprompt@gap>| !gapinput@f3:=attch(Y,2,[e2,e3,e6]);; #Attach 2-cell|
+  !gapprompt@gap>| !gapinput@f4:=attch(Y,2,[e1,e4,e6]);; #Attach 2-cell|
+  !gapprompt@gap>| !gapinput@Homology(Y,0);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Homology(Y,1);|
+  [ 2 ]
+  !gapprompt@gap>| !gapinput@Homology(Y,2);|
+  [  ]`
+  
+\end{Verbatim}
+ 
+
+The following example creates a 2-complex $K$ corresponding to the group presentation 
+
+$G=\langle x,y,z\ :\ xyx^{-1}y^{-1}=1, yzy^{-1}z^{-1}=1,
+zxz^{-1}x^{-1}=1\rangle$. 
+
+The complex is shown to have the correct fundamental group and homology (since
+it is the 2-skeleton of the 3-torus $S^1\times S^1\times S^1$). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@S1:=RegularCWSphere(1);;|
+  !gapprompt@gap>| !gapinput@W:=WedgeSum(S1,S1,S1);;|
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroupWithPathReps(W);; x:=F.1;;y:=F.2;;z:=F.3;;|
+  !gapprompt@gap>| !gapinput@K:=RegularCWComplexWithAttachedRelatorCells(W,F,Comm(x,y),Comm(y,z),Comm(x,z));|
+  Regular CW-complex of dimension 2
+  
+  !gapprompt@gap>| !gapinput@G:=FundamentalGroup(K);|
+  <fp group on the generators [ f1, f2, f3 ]>
+  !gapprompt@gap>| !gapinput@RelatorsOfFpGroup(G);|
+  [ f2^-1*f1*f2*f1^-1, f1^-1*f3*f1*f3^-1, f2^-1*f3*f2*f3^-1 ]
+  !gapprompt@gap>| !gapinput@Homology(K,1);|
+  [ 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(K,2);|
+  [ 0, 0, 0 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Constructing a regular CW-complex from its face lattice}}\logpage{[ 1, 9, 0 ]}
 \hyperdef{L}{X7B7354E68025FC92}{}
 {
  
 
   
 
-The following example begins by creating a $2$-dimensional annulus $A$ as a regular CW-complex, and testing that it has the correct integral homology $H_0(A,\mathbb Z)=\mathbb Z$, $H_1(A,\mathbb Z)=\mathbb Z$, $H_2(A,\mathbb Z)=0$. 
+The following example creats a $2$-dimensional annulus $A$ as a regular CW-complex, and testing that it has the correct integral homology $H_0(A,\mathbb Z)=\mathbb Z$, $H_1(A,\mathbb Z)=\mathbb Z$, $H_2(A,\mathbb Z)=0$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@FL:=[];; #The face lattice|
   !gapprompt@gap>| !gapinput@FL[1]:=[[1,0],[1,0],[1,0],[1,0]];;|
@@ -416,7 +477,7 @@ $H^6(Y,\mathbb Z)=0$\\
  }
 
  
-\section{\textcolor{Chapter }{Cup products}}\logpage{[ 1, 9, 0 ]}
+\section{\textcolor{Chapter }{Cup products}}\logpage{[ 1, 10, 0 ]}
 \hyperdef{L}{X823FA6A9828FF473}{}
 {
  
@@ -607,7 +668,7 @@ from unique.)
   
 \end{Verbatim}
  
-\section{\textcolor{Chapter }{Cohomology Rings}}\logpage{[ 1, 10, 0 ]}
+\section{\textcolor{Chapter }{Cohomology Rings}}\logpage{[ 1, 11, 0 ]}
 \hyperdef{L}{X80B6849C835B7F19}{}
 {
  The cup product gives the cohomology $H^\ast(X,R)$ of a space $X$ with coefficients in a ring $R$ the structure of a graded commutitive ring. This is currently implemented only
@@ -631,7 +692,7 @@ The folowing commands compute the mod $2$ cohomology ring $H^\ast(W,\mathbb Z_2)
  }
 
  
-\section{\textcolor{Chapter }{Intersection forms of $4$-manifolds}}\logpage{[ 1, 11, 0 ]}
+\section{\textcolor{Chapter }{Intersection forms of $4$-manifolds}}\logpage{[ 1, 12, 0 ]}
 \hyperdef{L}{X7F9B01CF7EE1D2FC}{}
 {
  The cup product gives rise to the intersection form of a connected, closed,
@@ -694,7 +755,7 @@ quadratic form of rank r {\textgreater} 9.
  Since $qL$ is of type I, whereas $qM$ and $qN$ are of type II we see that the oriented homotopy type of $L$ is distinct to that of $M$ and that of $N$. Since $qM$ has index $2$ and $qN$ has index $0$ we see that that $M$ and $N$ also have distinct oriented homotopy types. }
 
  
-\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 12, 0 ]}
+\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 13, 0 ]}
 \hyperdef{L}{X8771FF2885105154}{}
 {
  
@@ -746,7 +807,7 @@ ambient isotopy.
  }
 
  
-\section{\textcolor{Chapter }{Constructing a simplicial complex from a regular CW-complex}}\logpage{[ 1, 13, 0 ]}
+\section{\textcolor{Chapter }{Constructing a simplicial complex from a regular CW-complex}}\logpage{[ 1, 14, 0 ]}
 \hyperdef{L}{X853D6B247D0E18DB}{}
 {
  The following example constructs a $3$-dimensional pure regular CW-complex $K$ whose $3$-cells are permutahedra. It then constructs the simplicial complex $B$ by taking barycentric subdivision. It then constructes a smaller, homotopy
@@ -772,7 +833,7 @@ equivalent, simplicial complex $N$ by taking the nerve of the cover of $K$ by th
  }
 
  
-\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 14, 0 ]}
+\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 15, 0 ]}
 \hyperdef{L}{X85A579217DCB6CC8}{}
 {
  The above representations of spaces as simplicial complexes and regular CW
@@ -859,7 +920,7 @@ and has a non-regular CW structure with $1$ vertex, $3$ edges, $3$ cells of dime
  }
 
  
-\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 15, 0 ]}
+\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 16, 0 ]}
 \hyperdef{L}{X86881717878ADCD6}{}
 {
  If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizer groups then
@@ -1516,6 +1577,10 @@ If $p:\widetilde Y \rightarrow Y$ is the universal covering map, then the fundam
 \hyperdef{L}{X87F8F6C3812A7E73}{}
 {
   
+\subsection{\textcolor{Chapter }{First example: Whitehead's certain exact sequence}}\logpage{[ 3, 6, 1 ]}
+\hyperdef{L}{X7B506CF27DE54DBE}{}
+{
+ 
 
 For any path connected space $Y$ with universal cover $\widetilde Y$ there is an exact sequence 
 
@@ -1524,10 +1589,8 @@ For any path connected space $Y$ with universal cover $\widetilde Y$ there is an
 \pi_3\widetilde Y \rightarrow H_3(\widetilde Y,\mathbb Z) \rightarrow 0 $ 
 
  due to J.H.C.Whitehead. Here $K(\pi_2(\widetilde Y),2)$ is an Eilenberg-MacLane space with second homotopy group equal to $\pi_2\widetilde Y$. 
-\subsection{\textcolor{Chapter }{First example}}\logpage{[ 3, 6, 1 ]}
-\hyperdef{L}{X78F3D0B97B42A34C}{}
-{
- Continuing with the above example where $Y$ is the real projective plane, we see that $H_4(\widetilde Y,\mathbb Z) = H_3(\widetilde Y,\mathbb Z) = 0$ since $\widetilde Y$ is a $2$-dimensional CW-space. The exact sequence implies $\pi_3\widetilde Y \cong H_4(K(\pi_2\widetilde Y,2), \mathbb Z )$. Furthermore, $\pi_3\widetilde Y = \pi_3 Y$. The following commands establish that $\pi_3Y \cong \mathbb Z\, $. 
+
+Continuing with the above example where $Y$ is the real projective plane, we see that $H_4(\widetilde Y,\mathbb Z) = H_3(\widetilde Y,\mathbb Z) = 0$ since $\widetilde Y$ is a $2$-dimensional CW-space. The exact sequence implies $\pi_3\widetilde Y \cong H_4(K(\pi_2\widetilde Y,2), \mathbb Z )$. Furthermore, $\pi_3\widetilde Y = \pi_3 Y$. The following commands establish that $\pi_3Y \cong \mathbb Z\, $. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);|
   Pcp-group with orders [ 0 ]
@@ -1543,17 +1606,16 @@ For any path connected space $Y$ with universal cover $\widetilde Y$ there is an
  }
 
  
-\subsection{\textcolor{Chapter }{Second example}}\logpage{[ 3, 6, 2 ]}
-\hyperdef{L}{X84C89D4A7DD0CDD6}{}
+\subsection{\textcolor{Chapter }{Second example: the Hopf invariant}}\logpage{[ 3, 6, 2 ]}
+\hyperdef{L}{X828F0FAB86AA60E9}{}
 {
  
 
  The following commands construct a $4$-dimensional simplicial complex $Y$ with $9$ vertices and $36$ $4$-dimensional simplices, and establish that 
 
- $\pi_1Y=0 , \pi_2Y=\mathbb Z , H_3(Y,\mathbb Z)=0, H_4(Y,\mathbb Z)=\mathbb Z,
-H_4(K(\pi_2Y,2), \mathbb Z) =\mathbb Z $. 
+ $\pi_1Y=0 , \pi_2Y=\mathbb Z , H_3(Y,\mathbb Z)=0, H_4(Y,\mathbb Z)=\mathbb Z $. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@Y:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], |
+  !gapprompt@gap>| !gapinput@smp:=[ [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 9 ], [ 1, 2, 5, 6, 8 ], |
   !gapprompt@>| !gapinput@        [ 1, 2, 6, 4, 7 ], [ 2, 3, 4, 5, 8 ], [ 2, 3, 5, 6, 4 ], |
   !gapprompt@>| !gapinput@        [ 2, 3, 5, 6, 7 ], [ 2, 3, 6, 4, 9 ], [ 3, 1, 4, 5, 7 ],|
   !gapprompt@>| !gapinput@        [ 3, 1, 5, 6, 9 ], [ 3, 1, 6, 4, 5 ], [ 3, 1, 6, 4, 8 ], |
@@ -1566,7 +1628,7 @@ H_4(K(\pi_2Y,2), \mathbb Z) =\mathbb Z $.
   !gapprompt@>| !gapinput@        [ 8, 9, 2, 3, 4 ], [ 8, 9, 3, 1, 6 ], [ 9, 7, 1, 2, 4 ], |
   !gapprompt@>| !gapinput@        [ 9, 7, 2, 3, 6 ], [ 9, 7, 3, 1, 2 ], [ 9, 7, 3, 1, 5 ] ];;|
   
-  !gapprompt@gap>| !gapinput@Y:=MaximalSimplicesToSimplicialComplex(Y);|
+  !gapprompt@gap>| !gapinput@K:=MaximalSimplicesToSimplicialComplex(smp);|
   Simplicial complex of dimension 4.
   
   !gapprompt@gap>| !gapinput@Y:=RegularCWComplex(Y);|
@@ -1584,16 +1646,46 @@ H_4(K(\pi_2Y,2), \mathbb Z) =\mathbb Z $.
 \end{Verbatim}
  
 
- Whitehead's sequence reduces to an exact sequence 
+ Previous commands have established $ H_4(K(\mathbb Z,2), \mathbb Z)=\mathbb Z$. So Whitehead's sequence reduces to an exact sequence 
 
 $\mathbb Z \rightarrow \mathbb Z \rightarrow \pi_3Y \rightarrow 0$ 
 
-in which the first map is $ H_4(Y,\mathbb Z)=\mathbb Z \rightarrow H_4(K(\pi_2Y,2), \mathbb Z )=\mathbb Z $. In order to determine $\pi_3Y$ it remains compute this first map. This computation is currently not available
-in HAP. 
+in which the first map is $ H_4(Y,\mathbb Z)=\mathbb Z \rightarrow H_4(K(\pi_2Y,2), \mathbb Z )=\mathbb Z $. Hence $\pi_3Y$ is cyclic. 
 
- [The simplicial complex in this second example is due to W. Kiihnel and T. F.
-Banchoff and is of the homotopy type of the complex projective plane. So,
-assuming this extra knowledge, we have $\pi_3Y=0$.] }
+ HAP is currently unable to compute the order of $\pi_3Y$ directly from Whitehead's sequence. Instead, we can use the \emph{Hopf invariant}. For any map $\phi\colon S^3 \rightarrow S^2$ we consider the space $C(\phi) = S^2 \cup_\phi e^4$ obtained by attaching a $4$-cell $e^4$ to $S^2$ via the attaching map $\phi$. The cohomology groups $H^2(C(\phi),\mathbb Z)=\mathbb Z$, $H^4(C(\phi),\mathbb Z)=\mathbb Z$ are generated by elements $\alpha, \beta$ say, and the cup product has the form 
+
+$- \cup -\colon H^2(C(\phi),\mathbb Z)\times H^2(C(\phi),\mathbb Z) \rightarrow
+H^4(C(\phi),\mathbb Z), (\alpha,\alpha) \mapsto h_\phi \beta$ 
+
+for some integer $h_\phi$. The integer $h_\phi$ is the \textsc{Hopf invariant}. The function $h\colon \pi_3(S^3)\rightarrow \mathbb Z$ is a homomorphism and there is an isomorphism 
+
+$\pi_3(S^2\cup e^4) \cong \mathbb Z/\langle h_\phi\rangle$. 
+
+The following commands begin by simplifying the cell structure on the above
+CW-complex $Y\cong K$ to obtain a homeomorphic CW-complex $W$ with fewer cells. They then create a space $S$ by removing one $4$-cell from $W$. The space $S$ is seen to be homotopy equivalent to a CW-complex $e^2\cup e^0$ with a single $0$-cell and single $2$-cell. Hence $S\simeq S^2$ is homotopy equivalent to the $2$-sphere. Consequently $Y \simeq C(\phi ) = S^2\cup_\phi e^4 $ for some map $\phi\colon S^3 \rightarrow S^2$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@W:=SimplifiedComplex(Y);|
+  Regular CW-complex of dimension 4
+  
+  !gapprompt@gap>| !gapinput@S:=RegularCWComplexWithRemovedCell(W,4,6);|
+  Regular CW-complex of dimension 4
+  
+  !gapprompt@gap>| !gapinput@CriticalCells(S);|
+  [ [ 2, 6 ], [ 0, 5 ] ]
+  
+\end{Verbatim}
+ 
+
+ The next commands show that the map $\phi$ in the construction $Y \simeq C(\phi) $ has Hopf invariant -1. Hence $h\colon \pi_3(S^3)\rightarrow \mathbb Z$ is an isomorphism. Therefore $\pi_3Y=0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@IntersectionForm(K);|
+  [ [ -1 ] ]
+  
+\end{Verbatim}
+ 
+
+ [The simplicial complex $K$ in this second example is due to W. Kuehnel and T. F. Banchoff and is
+homeomorphic to the complex projective plane. ] }
 
  }
 
@@ -1659,11 +1751,196 @@ The next command shows that the $3$-dimensional space $W$ has two $3$-cells each
  }
 
  
-\chapter{\textcolor{Chapter }{Topological data analysis}}\logpage{[ 4, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Three Manifolds}}\logpage{[ 4, 0, 0 ]}
+\hyperdef{L}{X7BFA4D1587D8DF49}{}
+{
+ 
+\section{\textcolor{Chapter }{Dehn Surgery}}\logpage{[ 4, 1, 0 ]}
+\hyperdef{L}{X82D1348C79238C2D}{}
+{
+ The following example constructs, as a regular CW-complex $W$, a 3-manifold obtained from the 3-sphere by drilling out a tubular
+neighbourhood of a trefoil knot and then gluing a solid torus to the boundary
+of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient $p/q=17/16$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@ap:=ArcPresentation(PureCubicalKnot(3,1));;|
+  !gapprompt@gap>| !gapinput@p:=17;;q:=16;;|
+  !gapprompt@gap>| !gapinput@W:=ThreeManifoldViaDehnSurgery(ap,p,q);|
+  Regular CW-complex of dimension 3
+  
+\end{Verbatim}
+ The next commands show that this closed compact $3$-manifold $W$ has integral homology 
+
+ $ H_0(W,\mathbb Z)=\mathbb Z$, $ H_1(W,\mathbb Z)=\mathbb Z_{31}$, $ H_2(W,\mathbb Z)=0$, $ H_3(W,\mathbb Z)=\mathbb Z$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Homology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);|
+  [ 0 ]
+  [ 31 ]
+  [  ]
+  [ 0 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Dijkgraaf-Witten Invariant}}\logpage{[ 4, 2, 0 ]}
+\hyperdef{L}{X78AE684C7DBD7C70}{}
+{
+ Given a closed connected orientable $3$-manifold $W$, a finite group $G$ and a 3-cocycle $\alpha\in H^3(BG,U(1))$ Dijkgraaf and Witten define the complex number 
+
+\$\$
+Z\texttt{\symbol{94}}\texttt{\symbol{123}}G,\texttt{\symbol{92}}alpha\texttt{\symbol{125}}(W)
+=
+\texttt{\symbol{92}}frac\texttt{\symbol{123}}1\texttt{\symbol{125}}\texttt{\symbol{123}}|G|\texttt{\symbol{125}}\texttt{\symbol{92}}sum{\textunderscore}\texttt{\symbol{123}}\texttt{\symbol{92}}gamma\texttt{\symbol{92}}in
+\texttt{\symbol{123}}\texttt{\symbol{92}}rm
+Hom\texttt{\symbol{125}}(\texttt{\symbol{92}}pi{\textunderscore}1W,
+G)\texttt{\symbol{125}} \texttt{\symbol{92}}langle
+\texttt{\symbol{92}}gamma\texttt{\symbol{94}}\texttt{\symbol{92}}ast[\texttt{\symbol{92}}alpha],
+[M]\texttt{\symbol{92}}rangle \texttt{\symbol{92}}
+\texttt{\symbol{92}}in\texttt{\symbol{92}} \texttt{\symbol{92}}mathbb
+C\texttt{\symbol{92}} \$\$ where $\gamma$ ranges over all group homomorphisms $\gamma\colon \pi_1W \rightarrow G$. This complex number is an invariant of the homotopy type of $W$ and is useful for distinguishing between certain homotopically distinct $3$-manifolds. 
+
+A homology version of the Dijkgraaf-Witten invariant can be defined as the set
+of homology homomorphisms \$\$D{\textunderscore}G(W)
+=\texttt{\symbol{92}}\texttt{\symbol{123}}
+\texttt{\symbol{92}}gamma{\textunderscore}\texttt{\symbol{92}}ast\texttt{\symbol{92}}colon
+H{\textunderscore}3(W,\texttt{\symbol{92}}mathbb Z)
+\texttt{\symbol{92}}longrightarrow
+H{\textunderscore}3(BG,\texttt{\symbol{92}}mathbb Z)
+\texttt{\symbol{92}}\texttt{\symbol{125}}{\textunderscore}\texttt{\symbol{123}}\texttt{\symbol{92}}gamma\texttt{\symbol{92}}in
+\texttt{\symbol{123}}\texttt{\symbol{92}}rm
+Hom\texttt{\symbol{125}}(\texttt{\symbol{92}}pi{\textunderscore}1W,
+G)\texttt{\symbol{125}}.\$\$ Since $H_3(W,\mathbb Z)\cong \mathbb Z$ we represent $D_G(W)$ by the set $D_G(W)=\{ \gamma_\ast(1) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}$ where $1$ denotes one of the two possible generators of $H_3(W,\mathbb Z)$. 
+
+ The following session constructs the two Lens spaces $L(5,1)$ and $L(5,2)$. These are $3$-dimensional manifolds with cyclic fundamental group of order $5$ and with identical integral homology groups. The homology version of the
+Dijkgraaf-Witten invariant is used with $G=C_5$ to demonstrate that the two lens spaces are not homotopy equivalent. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@ap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot|
+  
+  !gapprompt@gap>| !gapinput@L51:=ThreeManifoldViaDehnSurgery(ap,5,1);;|
+  !gapprompt@gap>| !gapinput@D:=DijkgraafWittenInvariant(L51,CyclicGroup(5));|
+  [ g1^4, g1^4, g1, g1, id ]
+  
+  !gapprompt@gap>| !gapinput@L52:=ThreeManifoldViaDehnSurgery(ap,5,2);;|
+  !gapprompt@gap>| !gapinput@D:=DijkgraafWittenInvariant(L52,CyclicGroup(5));|
+  [ g1^3, g1^3, g1^2, g1^2, id ]
+  
+\end{Verbatim}
+ 
+
+ A lens space $L(p,q)$ exists for any coprime integers $p,q\ge 1$. It was proved by Paul Olum that two lens spaces $L(p,q)$ and $L(p',q')$ are homotopy equivalent if and only if $p=p'$ and $qq'\cong \pm n^2 \mod p$ for some integer $n$. For instance, $L(7,q)$ is homotopy equivalent to $L(7,q')$ if and only if $qq' \mod 7\in \{1,2,4\}$. So $L(7,1)\simeq L(7,2) \simeq L(7,4)$, $L(7,3)\simeq L(7,5)\simeq(7,6)$. The following session shows that the Dijkgraaf-Witten invariant, with $G=C_7$, fails to distinguish between $L(7,1)$ and $L(7,3)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;|
+  !gapprompt@gap>| !gapinput@L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;|
+  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L71,CyclicGroup(7));|
+  [ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
+  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L73,CyclicGroup(7));|
+  [ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Cohomology rings}}\logpage{[ 4, 3, 0 ]}
+\hyperdef{L}{X80B6849C835B7F19}{}
+{
+ The following commands construct the multiplication table (with respect to
+some basis) for the cohomology rings $H^\ast(L(7,1),\mathbb Z_7)$ and $H^\ast(L(7,3),\mathbb Z_7)$. These rings are isomorphic and so fail to distinguish between the homotopy
+types of the lens spaces $L(7,1)$ and $L(7,3)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;|
+  !gapprompt@gap>| !gapinput@L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;|
+  !gapprompt@gap>| !gapinput@L71:=BarycentricSubdivision(L71);;|
+  !gapprompt@gap>| !gapinput@L73:=BarycentricSubdivision(L73);;|
+  !gapprompt@gap>| !gapinput@A71:=CohomologyRing(L71,7);;|
+  !gapprompt@gap>| !gapinput@A73:=CohomologyRing(L73,7);;|
+  !gapprompt@gap>| !gapinput@M71:=List([1..4],i->[]);;|
+  !gapprompt@gap>| !gapinput@B71:=CanonicalBasis(A71);;|
+  !gapprompt@gap>| !gapinput@M73:=List([1..4],i->[]);;|
+  !gapprompt@gap>| !gapinput@B73:=CanonicalBasis(A73);;|
+  !gapprompt@gap>| !gapinput@for i in [1..4] do|
+  !gapprompt@>| !gapinput@for j in [1..4] do|
+  !gapprompt@>| !gapinput@M71[i][j]:=B71[i]*B71[j];|
+  !gapprompt@>| !gapinput@od;od;|
+  !gapprompt@gap>| !gapinput@for i in [1..4] do|
+  !gapprompt@>| !gapinput@for j in [1..4] do|
+  !gapprompt@>| !gapinput@M73[i][j]:=B73[i]*B73[j];|
+  !gapprompt@>| !gapinput@od;od;|
+  !gapprompt@gap>| !gapinput@Display(M71);|
+  [ [           v.1,           v.2,           v.3,           v.4 ],
+    [           v.2,         0*v.1,  (Z(7)^3)*v.4,         0*v.1 ],
+    [           v.3,  (Z(7)^3)*v.4,         0*v.1,         0*v.1 ],
+    [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
+  !gapprompt@gap>| !gapinput@Display(M73);|
+  [ [           v.1,           v.2,           v.3,           v.4 ],
+    [           v.2,         0*v.1,  (Z(7)^5)*v.4,         0*v.1 ],
+    [           v.3,  (Z(7)^5)*v.4,         0*v.1,         0*v.1 ],
+    [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Linking Form}}\logpage{[ 4, 4, 0 ]}
+\hyperdef{L}{X7F56BB4C801AB894}{}
+{
+ Given a closed connected orientable $3$-manifold $W$ let $\tau H_1(W,\mathbb Z)$ denote the torsion subgroup of the first integral homology. The \emph{linking form} is a bilinear mapping 
+
+$L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow
+\mathbb Q/\mathbb Z$. 
+
+To construct this form note that we have a Poincare duality isomorphism 
+
+$\rho\colon H^2(W,\mathbb Z) \stackrel{\cong}{\longrightarrow} H_1(W,\mathbb
+Z), z \mapsto z\cap [W]$ 
+
+involving the cap product with the fundamental class $[W]\in H^3(W,\mathbb Z)\cong \mathbb Z$. The short exact sequence $\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z$ gives rise to a cohomology exact sequence 
+
+$ \rightarrow H^1(W,\mathbb Q) \rightarrow H^1(W,\mathbb Q/\mathbb Z)
+\stackrel{\beta}{\longrightarrow} H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb
+Q) \rightarrow $ 
+
+ from which we obtain the isomorphism $\beta \colon \tau H^1(W,\mathbb Q/\mathbb Z) \stackrel{\cong}{\longrightarrow}
+\tau H^2(W,\mathbb Z)$. The linking form $L_W$ can be defined as the composite 
+
+ $L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \stackrel{1\times
+\rho^{-1}}{\longrightarrow} \tau H_1(W,\mathbb Z) \times \tau H^2(W,\mathbb Z)
+\stackrel{1\times \beta^{-1}}{\longrightarrow} \tau H_1(W,\mathbb Z) \times
+\tau H^1(W,\mathbb Q/\mathbb Z) \stackrel{ev}{\longrightarrow } \mathbb
+Q/\mathbb Z $ 
+
+where $ev(x,\alpha)$ evaluates a $1$-cocycle $\alpha$ on a $1$-cycle $x$. 
+
+ The linking form can be used to define the set 
+
+ $I(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}$ 
+
+which is a homotopy invariant of $W$ and which we refer to as the \emph{linking form invariant}. 
+
+ The following commands compute the linking form invariant for the lens spaces $L(7,q)$ with $1\le q\le 6$. This invariant distinguishes between the homotopy type $L(7,1)\simeq L(7,2) \simeq L(7,4)$ and the homotopy type $L(7,3)\simeq L(7,5)\simeq(7,6)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@LensSpaces:=[];;|
+  !gapprompt@gap>| !gapinput@for q in [1..6] do|
+  !gapprompt@>| !gapinput@Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,q));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@Display(List(LensSpaces,LinkingFormInvariant));;|
+  [ [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
+    [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
+    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
+    [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
+    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
+    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ] ]
+  
+\end{Verbatim}
+ }
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{Topological data analysis}}\logpage{[ 5, 0, 0 ]}
 \hyperdef{L}{X7B7E077887694A9F}{}
 {
  
-\section{\textcolor{Chapter }{Persistent homology }}\logpage{[ 4, 1, 0 ]}
+\section{\textcolor{Chapter }{Persistent homology }}\logpage{[ 5, 1, 0 ]}
 \hyperdef{L}{X80A70B20873378E0}{}
 {
  
@@ -1708,7 +1985,7 @@ These computations suuggest that the dataset contains two persistent path
 components (or clusters), and that each path component is in some sense
 periodic. The final command displays one possible representation of the data
 as points on two circles. 
-\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 4, 1, 1 ]}
+\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 1, 1 ]}
 \hyperdef{L}{X7D512DA37F789B4C}{}
 {
  
@@ -1720,7 +1997,7 @@ Each point in the dataset was an image consisting of $732\times 761$ pixels. Thi
  }
 
  
-\section{\textcolor{Chapter }{Mapper clustering}}\logpage{[ 4, 2, 0 ]}
+\section{\textcolor{Chapter }{Mapper clustering}}\logpage{[ 5, 2, 0 ]}
 \hyperdef{L}{X849556107A23FF7B}{}
 {
  
@@ -1761,7 +2038,7 @@ when their end-point nodes contain common data points.
   
 \end{Verbatim}
   
-\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 4, 2, 1 ]}
+\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 2, 1 ]}
 \hyperdef{L}{X7D512DA37F789B4C}{}
 {
  
@@ -1773,7 +2050,7 @@ when their end-point nodes contain common data points.
  }
 
  
-\section{\textcolor{Chapter }{Digital image analysis}}\logpage{[ 4, 3, 0 ]}
+\section{\textcolor{Chapter }{Digital image analysis}}\logpage{[ 5, 3, 0 ]}
 \hyperdef{L}{X825C5B837A08F579}{}
 {
  
@@ -1799,7 +2076,7 @@ this filtered complex is calculated in degrees $0$ and $1$ and displayed as two 
   
 
 The $20$ persistent bars in the degree $0$ barcode suggest that the image has $20$ objects. The degree $1$ barcode suggests that $14$ (or possibly $17$) of these objects have holes in them. 
-\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 4, 3, 1 ]}
+\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 3, 1 ]}
 \hyperdef{L}{X7D512DA37F789B4C}{}
 {
  
@@ -1811,7 +2088,7 @@ The following image was used in the example.
  }
 
  
-\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 4, 4, 0 ]}
+\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 5, 4, 0 ]}
 \hyperdef{L}{X87AF06677F05C624}{}
 {
  
@@ -1906,11 +2183,11 @@ length $1$. For example, there is one $2$-dimensional simplicial complex on $75$
  }
 
  
-\chapter{\textcolor{Chapter }{Group theoretic computations}}\logpage{[ 5, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Group theoretic computations}}\logpage{[ 6, 0, 0 ]}
 \hyperdef{L}{X7C07F4BD8466991A}{}
 {
  
-\section{\textcolor{Chapter }{Third homotopy group of a supsension of an Eilenberg-MacLane space }}\logpage{[ 5, 1, 0 ]}
+\section{\textcolor{Chapter }{Third homotopy group of a supsension of an Eilenberg-MacLane space }}\logpage{[ 6, 1, 0 ]}
 \hyperdef{L}{X86D7FBBD7E5287C9}{}
 {
  
@@ -1931,7 +2208,7 @@ of the suspension of the Eigenberg-MacLane space $K(G,1)$ for $G$ the free nilpo
  }
 
  
-\section{\textcolor{Chapter }{Representations of knot quandles}}\logpage{[ 5, 2, 0 ]}
+\section{\textcolor{Chapter }{Representations of knot quandles}}\logpage{[ 6, 2, 0 ]}
 \hyperdef{L}{X803FDFFE78A08446}{}
 {
  
@@ -1972,7 +2249,7 @@ containing the following hand-drawn image of the knot.
  }
 
  
-\section{\textcolor{Chapter }{Identifying knots}}\logpage{[ 5, 3, 0 ]}
+\section{\textcolor{Chapter }{Identifying knots}}\logpage{[ 6, 3, 0 ]}
 \hyperdef{L}{X7E4EFB987DA22017}{}
 {
  Low index subgrops of the knot group can be used to identify knots with few
@@ -1993,7 +2270,7 @@ the granny and square knots.
  }
 
  
-\section{\textcolor{Chapter }{Aspherical $2$-complexes}}\logpage{[ 5, 4, 0 ]}
+\section{\textcolor{Chapter }{Aspherical $2$-complexes}}\logpage{[ 6, 4, 0 ]}
 \hyperdef{L}{X8664E986873195E6}{}
 {
  
@@ -2016,7 +2293,7 @@ associated $2$-complexes are thus homotopy equivalent.
  }
 
  
-\section{\textcolor{Chapter }{Bogomolov multiplier}}\logpage{[ 5, 5, 0 ]}
+\section{\textcolor{Chapter }{Bogomolov multiplier}}\logpage{[ 6, 5, 0 ]}
 \hyperdef{L}{X7F719758856A443D}{}
 {
  
@@ -2038,7 +2315,7 @@ order $243$ with non-trivial Bogomolov multiplier. The groups in question are nu
  }
 
  
-\section{\textcolor{Chapter }{Second group cohomology and group extensions}}\logpage{[ 5, 6, 0 ]}
+\section{\textcolor{Chapter }{Second group cohomology and group extensions}}\logpage{[ 6, 6, 0 ]}
 \hyperdef{L}{X8333413B838D787D}{}
 {
  Any group extension $N\rightarrowtail E \twoheadrightarrow G$ gives rise to: 
@@ -2170,7 +2447,7 @@ The following example illustrates how to construct a cohomology class $k$ in $H^
  }
 
  
-\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\logpage{[ 5, 7, 0 ]}
+\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\logpage{[ 6, 7, 0 ]}
 \hyperdef{L}{X7C60E2B578074532}{}
 {
  An \emph{Hadamard matrix} is a square $n\times n$ matrix $H$ whose entries are either $+1$ or $-1$ and whose rows are mutually orthogonal, that is $H H^t = nI_n$ where $H^t$ denotes the transpose and $I_n$ denotes the $n\times n$ identity matrix. 
@@ -2189,7 +2466,7 @@ The following commands compute all $192$ of the cocyclic Hadamard matrices for t
 
  
 \section{\textcolor{Chapter }{Third group cohomology and homotopy $2$-types}}\label{secCat1}
-\logpage{[ 5, 8, 0 ]}
+\logpage{[ 6, 8, 0 ]}
 \hyperdef{L}{X78040D8580D35D53}{}
 {
   \textsc{Homotopy 2-types} 
@@ -2263,11 +2540,11 @@ The following commands begin by constructing the cat$^1$-group $H$ of Constructi
 set-theoretic 'section' of the crossed module corresponding to $H$. }
 
  
-\chapter{\textcolor{Chapter }{Cohomology of groups}}\logpage{[ 6, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Cohomology of groups}}\logpage{[ 7, 0, 0 ]}
 \hyperdef{L}{X7E34E2C6868F2726}{}
 {
  
-\section{\textcolor{Chapter }{Finite groups }}\logpage{[ 6, 1, 0 ]}
+\section{\textcolor{Chapter }{Finite groups }}\logpage{[ 7, 1, 0 ]}
 \hyperdef{L}{X807B265978F90E01}{}
 {
  
@@ -2390,7 +2667,7 @@ whose coefficient of $x^n$ is equal to the dimension of the vector space $H^n(M_
  }
 
  
-\section{\textcolor{Chapter }{Nilpotent groups}}\logpage{[ 6, 2, 0 ]}
+\section{\textcolor{Chapter }{Nilpotent groups}}\logpage{[ 7, 2, 0 ]}
 \hyperdef{L}{X8463EF6A821FFB69}{}
 {
  The following example computes 
@@ -2410,7 +2687,7 @@ for the free nilpotent group $N$ of class $2$ on four generators.
  }
 
  
-\section{\textcolor{Chapter }{Crystallographic groups}}\logpage{[ 6, 3, 0 ]}
+\section{\textcolor{Chapter }{Crystallographic groups}}\logpage{[ 7, 3, 0 ]}
 \hyperdef{L}{X7DEBF2BB7D1FB144}{}
 {
  
@@ -2428,7 +2705,7 @@ for the $3$-dimensional crystallographic space group $G$ with Hermann-Mauguin sy
  }
 
  
-\section{\textcolor{Chapter }{Arithmetic groups}}\logpage{[ 6, 4, 0 ]}
+\section{\textcolor{Chapter }{Arithmetic groups}}\logpage{[ 7, 4, 0 ]}
 \hyperdef{L}{X7AFFB32587D047FE}{}
 {
  
@@ -2448,7 +2725,7 @@ for ${\cal O}$ the ring of integers of the number field $\mathbb Q(\sqrt{-2})$.
  }
 
  
-\section{\textcolor{Chapter }{Artin groups}}\logpage{[ 6, 5, 0 ]}
+\section{\textcolor{Chapter }{Artin groups}}\logpage{[ 7, 5, 0 ]}
 \hyperdef{L}{X800CB6257DC8FB3A}{}
 {
  
@@ -2474,7 +2751,7 @@ for $G$ the classical braid group on eight strings.
  }
 
  
-\section{\textcolor{Chapter }{Graphs of groups}}\logpage{[ 6, 6, 0 ]}
+\section{\textcolor{Chapter }{Graphs of groups}}\logpage{[ 7, 6, 0 ]}
 \hyperdef{L}{X7BAFCA3680E478AE}{}
 {
  
@@ -2504,7 +2781,7 @@ for $G$ the graph of groups corresponding to the amalgamated product $G=S_5*_{S_
  }
 
  
-\section{\textcolor{Chapter }{Cohomology with coefficients in a module}}\logpage{[ 6, 7, 0 ]}
+\section{\textcolor{Chapter }{Cohomology with coefficients in a module}}\logpage{[ 7, 7, 0 ]}
 \hyperdef{L}{X7C3DEDD57BB4D537}{}
 {
  There are various ways to represent a $\mathbb ZG$-module $A$ with action $G\times A \rightarrow A, (g,a)\mapsto \alpha(g,a)$. 
@@ -2558,7 +2835,7 @@ $H_6(G,A) =\mathbb Z_2 $
  }
 
  
-\section{\textcolor{Chapter }{Exact cohomology coefficient sequence}}\logpage{[ 6, 8, 0 ]}
+\section{\textcolor{Chapter }{Exact cohomology coefficient sequence}}\logpage{[ 7, 8, 0 ]}
 \hyperdef{L}{X7832969482AD05FF}{}
 {
  A short exact sequence of $\mathbb ZG$-modules $A \rightarrowtail B \twoheadrightarrow C$ induces a long exact sequence of cohomology groups 
@@ -2633,7 +2910,7 @@ $H^2(S_4,\mathbb Z_2) \rightarrow H^3(S_4,\mathbb Z_4) \rightarrow
 H^3(S_4,\mathbb Z_8) \rightarrow H^3(S_4,\mathbb Z_2) $ . }
 
  
-\section{\textcolor{Chapter }{Cohomology rings of finite fundamental groups of 3-manifolds }}\logpage{[ 6, 9, 0 ]}
+\section{\textcolor{Chapter }{Cohomology rings of finite fundamental groups of 3-manifolds }}\logpage{[ 7, 9, 0 ]}
 \hyperdef{L}{X79B1406C803FF178}{}
 {
  A \emph{spherical 3-manifold} is a 3-manifold arising as the quotient $S^3/\Gamma$ of the 3-sphere $S^3$ by a finite subgroup $\Gamma$ of $SO(4)$ acting freely as rotations. The geometrization conjecture, proved by Grigori
@@ -2734,11 +3011,11 @@ these fundamental groups of spherical 3-manifolds is given in \cite{tomoda}. }
  }
 
  
-\chapter{\textcolor{Chapter }{Cohomology operations}}\logpage{[ 7, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Cohomology operations}}\logpage{[ 8, 0, 0 ]}
 \hyperdef{L}{X81FDD09B8454C905}{}
 {
  
-\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $2$-group}}\logpage{[ 7, 1, 0 ]}
+\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $2$-group}}\logpage{[ 8, 1, 0 ]}
 \hyperdef{L}{X80638C137E300A52}{}
 {
  The following example determines a presentation for the cohomology ring $H^\ast(Syl_2(M_{12}),\mathbb Z_2)$. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines
@@ -2833,7 +3110,7 @@ group number $8$ in \textsc{GAP}'s library of groups of order $32$.
  }
 
  
-\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $p$-group}}\logpage{[ 7, 2, 0 ]}
+\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $p$-group}}\logpage{[ 8, 2, 0 ]}
 \hyperdef{L}{X7D5ACA56870A40E9}{}
 {
  The following example constructs the first eight degrees of the mod-$3$ cohomology ring $H^\ast(G,\mathbb Z_3)$ for the group $G$ number 4 in \textsc{GAP}'s library of groups of order $81$. It determines a minimal set of ring generators lying in degree $\le 8$ and it evaluates the Bockstein operator on these generators. Steenrod powers
@@ -2850,11 +3127,11 @@ for $p\ge 3$ are not implemented as no efficient method of implementation is kno
  }
 
  
-\chapter{\textcolor{Chapter }{Bredon homology}}\logpage{[ 8, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Bredon homology}}\logpage{[ 9, 0, 0 ]}
 \hyperdef{L}{X786DB80A8693779E}{}
 {
  
-\section{\textcolor{Chapter }{Davis complex}}\logpage{[ 8, 1, 0 ]}
+\section{\textcolor{Chapter }{Davis complex}}\logpage{[ 9, 1, 0 ]}
 \hyperdef{L}{X7B0212F97F3D442A}{}
 {
  
@@ -2881,7 +3158,7 @@ in the complex representation ring.
  }
 
  
-\section{\textcolor{Chapter }{Arithmetic groups}}\logpage{[ 8, 2, 0 ]}
+\section{\textcolor{Chapter }{Arithmetic groups}}\logpage{[ 9, 2, 0 ]}
 \hyperdef{L}{X7AFFB32587D047FE}{}
 {
  
@@ -2910,7 +3187,7 @@ for ${\cal O}_{-3}$ the ring of integers of the number field $\mathbb Q(\sqrt{-3
  }
 
  
-\section{\textcolor{Chapter }{Crystallographic groups}}\logpage{[ 8, 3, 0 ]}
+\section{\textcolor{Chapter }{Crystallographic groups}}\logpage{[ 9, 3, 0 ]}
 \hyperdef{L}{X7DEBF2BB7D1FB144}{}
 {
  
@@ -2941,12 +3218,12 @@ $\underline H_0(G,{\cal R}) = \mathbb Z^{17}$
 
  
 \chapter{\textcolor{Chapter }{Simplicial groups}}\label{chapSimplicialGroups}
-\logpage{[ 9, 0, 0 ]}
+\logpage{[ 10, 0, 0 ]}
 \hyperdef{L}{X7D818E5F80F4CF63}{}
 {
  
 \section{\textcolor{Chapter }{Crossed modules}}\label{secCrossedModules}
-\logpage{[ 9, 1, 0 ]}
+\logpage{[ 10, 1, 0 ]}
 \hyperdef{L}{X808C6B357F8BADC1}{}
 {
  A \emph{crossed module} consists of a homomorphism of groups $\partial\colon M\rightarrow G$ together with an action $(g,m)\mapsto\, {^gm}$ of $G$ on $M$ satisfying 
@@ -3013,7 +3290,7 @@ $H_5(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus
 
  
 \section{\textcolor{Chapter }{Eilenberg-MacLane spaces as simplicial groups (not recommended)}}\label{eilennot}
-\logpage{[ 9, 2, 0 ]}
+\logpage{[ 10, 2, 0 ]}
 \hyperdef{L}{X795E339978B42775}{}
 {
  
@@ -3039,7 +3316,7 @@ $H_7(X,\mathbb Z)=\mathbb Z_3 \oplus \mathbb Z_3$.
 
  
 \section{\textcolor{Chapter }{Eilenberg-MacLane spaces as simplicial free abelian groups (recommended)}}\label{eilen}
-\logpage{[ 9, 3, 0 ]}
+\logpage{[ 10, 3, 0 ]}
 \hyperdef{L}{X7D91E64D7DD7F10F}{}
 {
  
@@ -3107,7 +3384,7 @@ available for a given computation.)
  }
 
  
-\section{\textcolor{Chapter }{Elementary theoretical information on $H^\ast(K(\pi,n),\mathbb Z)$}}\logpage{[ 9, 4, 0 ]}
+\section{\textcolor{Chapter }{Elementary theoretical information on $H^\ast(K(\pi,n),\mathbb Z)$}}\logpage{[ 10, 4, 0 ]}
 \hyperdef{L}{X84ABCA497C577132}{}
 {
   
@@ -3188,7 +3465,7 @@ homological perturbation techniques. }
 
  
 \section{\textcolor{Chapter }{The first three non-trivial homotopy groups of spheres}}\label{firstthree}
-\logpage{[ 9, 5, 0 ]}
+\logpage{[ 10, 5, 0 ]}
 \hyperdef{L}{X7F828D8D8463CC20}{}
 {
  
@@ -3227,7 +3504,7 @@ gives $\pi_3(S^7)=0$; the fibre $S^3$ is thus homotopic to a point in $S^7$ and 
  
 \section{\textcolor{Chapter }{The first two non-trivial homotopy groups of the suspension and double
 suspension of a $K(G,1)$}}\label{firsttwo}
-\logpage{[ 9, 6, 0 ]}
+\logpage{[ 10, 6, 0 ]}
 \hyperdef{L}{X81E2F80384ADF8C2}{}
 {
  
@@ -3261,7 +3538,7 @@ compute the third and fourth homotopy groups for $G =Syl_2(M_{12})$ the Sylow $2
 
  
 \section{\textcolor{Chapter }{Postnikov towers and $\pi_5(S^3)$ }}\label{postnikov}
-\logpage{[ 9, 7, 0 ]}
+\logpage{[ 10, 7, 0 ]}
 \hyperdef{L}{X83EAC40A8324571F}{}
 {
  A Postnikov system for the sphere $S^3$ consists of a sequence of fibrations $\cdots X_3\stackrel{p_3}{\rightarrow} X_2\stackrel{p_2}{\rightarrow}
@@ -3493,7 +3770,7 @@ E_2^{7,0}=H^7(X_4,\mathbb Z)$. We can conclude the desired result:
 
  
 \section{\textcolor{Chapter }{Towards $\pi_4(\Sigma K(G,1))$ }}\label{postnikov}
-\logpage{[ 9, 8, 0 ]}
+\logpage{[ 10, 8, 0 ]}
 \hyperdef{L}{X8227000D83B9A17F}{}
 {
  Consider the suspension $X=\Sigma K(G,1)$ of a classifying space of a group $G$ once again. This space has a Postnikov system in which $X_1 = \ast$, $X_2= K(G_{ab},2)$. We have a fibration sequence $K(\pi_3 X, 3) \hookrightarrow X_3 \twoheadrightarrow K(G_{ab},2)$. The corresponding integral cohomology Serre spectral sequence has $E_2$ page with terms 
@@ -3660,7 +3937,7 @@ The $E_2$ page for the fibration $K(\pi_4 X,4) \hookrightarrow X_4 \twoheadright
  We know that $H^5(X_4,\mathbb Z)$ is a subgroup of $H^4(G,\mathbb Z)=\mathbb Z_6$, and hence that there is a homomorphisms $\pi_4X \rightarrow \mathbb Z_2$ whose kernel is a subgroup of $\mathbb Z_6$. If follows that $|\pi_4 X|\le 12$. }
 
  
-\section{\textcolor{Chapter }{Enumerating homotopy 2-types}}\logpage{[ 9, 9, 0 ]}
+\section{\textcolor{Chapter }{Enumerating homotopy 2-types}}\logpage{[ 10, 9, 0 ]}
 \hyperdef{L}{X7F5E6C067B2AE17A}{}
 {
   A \emph{2-type} is a CW-complex $X$ whose homotopy groups are trivial in dimensions $n=0 $ and $n>2$. As explained in \ref{secCat1} the homotopy type of such a space can be captured algebraically by a cat$^1$-group $G$. Let $X$, $Y$ be $2$-tytpes represented by cat$^1$-groups $G$, $H$. If $X$ and $Y$ are homotopy equivalent then there exists a sequence of morphisms of cat$^1$-groups 
@@ -3732,7 +4009,7 @@ conjunction with the first two homotopy groups to prove that the list $L$ contai
  }
 
  
-\section{\textcolor{Chapter }{Identifying cat$^1$-groups of low order}}\logpage{[ 9, 10, 0 ]}
+\section{\textcolor{Chapter }{Identifying cat$^1$-groups of low order}}\logpage{[ 10, 10, 0 ]}
 \hyperdef{L}{X7D99B7AA780D8209}{}
 {
   Let us define the \emph{order} of a cat$^1$-group to be the order of its underlying group. The function \texttt{IdQuasiCatOneGroup(C)} inputs a cat$^1$-group $C$ of "low order" and returns an integer pair $[n,k]$ that uniquely idenifies the quasi-isomorphism type of $C$. The integer $n$ is the order of a smallest cat$^1$-group quasi-isomorphic to $C$. The integer $k$ identifies a particular cat$^1$-group of order $n$. 
@@ -3779,7 +4056,7 @@ The following commands use this function to show that there are precisely $49$ d
  }
 
  
-\section{\textcolor{Chapter }{Identifying crossed modules of low order}}\logpage{[ 9, 11, 0 ]}
+\section{\textcolor{Chapter }{Identifying crossed modules of low order}}\logpage{[ 10, 11, 0 ]}
 \hyperdef{L}{X7F386CF078CB9A20}{}
 {
   
@@ -3808,14 +4085,14 @@ The following commands construct the crossed module $\partial \colon G\otimes G 
  }
 
  
-\chapter{\textcolor{Chapter }{Congruence Subgroups, Cuspidal Cohomology and Hecke Operators}}\logpage{[ 10, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Congruence Subgroups, Cuspidal Cohomology and Hecke Operators}}\logpage{[ 11, 0, 0 ]}
 \hyperdef{L}{X86D5DB887ACB1661}{}
 {
  In this chapter we explain how HAP can be used to make computions about
 modular forms associated to congruence subgroups $\Gamma$ of $SL_2(\mathbb Z)$. Also, in Subsection 10.8 onwards, we demonstrate cohomology computations for
 the \emph{Picard group} $SL_2(\mathbb Z[i])$, some \emph{Bianchi groups} $PSL_2({\cal O}_{-d}) $ where ${\cal O}_{d}$ is the ring of integers of $\mathbb Q(\sqrt{-d})$ for square free positive integer $d$, and some other groups of the form $SL_m({\cal O})$, $GL_m({\cal O})$, $PSL_m({\cal O})$, $PGL_m({\cal O})$, for $m=2,3,4$ and certain ${\cal O}=\mathbb Z, {\cal O}_{-d}$. 
 \section{\textcolor{Chapter }{Eichler-Shimura isomorphism}}\label{sec:EichlerShimura}
-\logpage{[ 10, 1, 0 ]}
+\logpage{[ 11, 1, 0 ]}
 \hyperdef{L}{X79A1974B7B4987DE}{}
 {
  
@@ -3865,7 +4142,7 @@ Eichler-Shimura isomorphism to compute eigenvalues of the Hecke operators
 restricted to the subspace $S_k(\Gamma)$ of cusp forms. }
 
  
-\section{\textcolor{Chapter }{Generators for $SL_2(\mathbb Z)$ and the cubic tree}}\logpage{[ 10, 2, 0 ]}
+\section{\textcolor{Chapter }{Generators for $SL_2(\mathbb Z)$ and the cubic tree}}\logpage{[ 11, 2, 0 ]}
 \hyperdef{L}{X7BFA2C91868255D9}{}
 {
  
@@ -3898,7 +4175,7 @@ words in $S$, $U$ and $U^2$ that, apart from the identity, end in $S$.
   }
 
  
-\section{\textcolor{Chapter }{One-dimensional fundamental domains and generators for congruence subgroups}}\logpage{[ 10, 3, 0 ]}
+\section{\textcolor{Chapter }{One-dimensional fundamental domains and generators for congruence subgroups}}\logpage{[ 11, 3, 0 ]}
 \hyperdef{L}{X7D1A56967A073A8B}{}
 {
  The modular group ${\cal M}=PSL_2(\mathbb Z)$ is isomorphic, as an abstract group, to the free product $\mathbb Z_2\ast \mathbb Z_3$. By the Kurosh subgroup theorem, any finite index subgroup $M \subset {\cal M}$ is isomorphic to the free product of finitely many copies of $\mathbb Z_2$s, $\mathbb Z_3$s and $\mathbb Z$s. A subset $\underline x \subset M$ is an \emph{independent} set of subgroup generators if $M$ is the free product of the cyclic subgroups $<x >$ as $x$ runs over $\underline x$. Let us say that a set of elements in $SL_2(\mathbb Z)$ is \emph{projectively independent} if it maps injectively onto an independent set of subgroup generators $\underline x\subset {\cal M}$. The generating set $\{S,U\}$ for $SL_2(\mathbb Z)$ given in the preceding section is projectively independent. 
@@ -3961,7 +4238,7 @@ generators. The following commands display $\mathring D_{\Gamma_0(39)}$ for a fu
  Note that to compute $D_\Gamma$ one only needs to be able to test whether a given matrix lies in $\Gamma$ or not. Given an inclusion $\Gamma'\subset \Gamma$ of congruence subgroups, it is straightforward to use the trees $\mathring D_{\Gamma'}$ and $\mathring D_{\Gamma}$ to compute a system of coset representative for $\Gamma'\setminus \Gamma$. }
 
  
-\section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 10, 4, 0 ]}
+\section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 11, 4, 0 ]}
 \hyperdef{L}{X818BFA9A826C0DB3}{}
 {
  To compute the cohomology $H^n(\Gamma,A)$ of a congruence subgroup $\Gamma$ with coefficients in a $\mathbb Z\Gamma$-module $A$ we need to construct $n+1$ terms of a free $\mathbb Z\Gamma$-resolution of $\mathbb Z$. We can do this by first using perturbation techniques (as described in \cite{buiellis}) to combine the cubic tree with resolutions for the cyclic groups of order $4$ and $6$ in order to produce a free $\mathbb ZG$-resolution $R_\ast$ for $G=SL_2(\mathbb Z)$. This resolution is also a free $\mathbb Z\Gamma$-resolution with each term of rank 
@@ -4029,7 +4306,7 @@ The following commands compute
  
 
 This computation establishes that the space $M_{10}(\Gamma_0(39))$ of weight $10$ modular forms is of dimension $84$, and $M_{11}(\Gamma_0(39))$ is of dimension $0$. (There are never any modular forms of odd weight, and so $M_k(\Gamma)=0$ for all odd $k$ and any congruence subgroup $\Gamma$.) 
-\subsection{\textcolor{Chapter }{Cohomology with rational coefficients}}\logpage{[ 10, 4, 1 ]}
+\subsection{\textcolor{Chapter }{Cohomology with rational coefficients}}\logpage{[ 11, 4, 1 ]}
 \hyperdef{L}{X7F55F8EA82FE9122}{}
 {
  To calculate cohomology $H^n(\Gamma,A)$ with coefficients in a $\mathbb Q\Gamma$-module $A$ it suffices to construct a resolution of $\mathbb Z$ by non-free $\mathbb Z\Gamma$-modules where $\Gamma$ acts with finite stabilizer groups on each module in the resolution. Computing
@@ -4061,7 +4338,7 @@ over $\mathbb Q$ is computationally less expensive than computing over $\mathbb 
  }
 
  
-\section{\textcolor{Chapter }{Cuspidal cohomology}}\logpage{[ 10, 5, 0 ]}
+\section{\textcolor{Chapter }{Cuspidal cohomology}}\logpage{[ 11, 5, 0 ]}
 \hyperdef{L}{X84D30F1580CD42D1}{}
 {
  To define and compute cuspidal cohomology we consider the action of $SL_2(\mathbb Z)$ on the upper-half plane ${\frak h}$ given by 
@@ -4126,7 +4403,7 @@ The following commands show that the space $S_4(\Gamma_0(39))$ of cuspidal weigh
  }
 
  
-\section{\textcolor{Chapter }{Hecke operators}}\logpage{[ 10, 6, 0 ]}
+\section{\textcolor{Chapter }{Hecke operators}}\logpage{[ 11, 6, 0 ]}
 \hyperdef{L}{X8577E83782C87EBD}{}
 {
  A congruence subgroup $\Gamma \le SL_m(\mathbb Z)$ and element $g\in SL_m(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
@@ -4184,7 +4461,7 @@ final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=
  }
 
  
-\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 10, 7, 0 ]}
+\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 11, 7, 0 ]}
 \hyperdef{L}{X84CC51EE8525E0D9}{}
 {
  
@@ -4263,7 +4540,7 @@ that the modular form
  For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.$ If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. }
 
  
-\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 10, 8, 0 ]}
+\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 11, 8, 0 ]}
 \hyperdef{L}{X8180E53C834301EF}{}
 {
  Let us now consider the \emph{Picard group} $G=SL_2(\mathbb Z[ i])$ and its action on \emph{upper-half space} 
@@ -4346,7 +4623,7 @@ Z_{520030}\oplus \mathbb Z_{1040060} \oplus \mathbb Z^2\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 10, 9, 0 ]}
+\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 11, 9, 0 ]}
 \hyperdef{L}{X858B1B5D8506FE81}{}
 {
  The \emph{Bianchi groups} are the groups $G=PSL_2({\cal O}_{-d})$ where $d$ is a square free positive integer and ${\cal O}_{-d}$ is the ring of integers of the imaginary quadratic field $\mathbb Q(\sqrt{-d})$. More explicitly, 
@@ -4441,7 +4718,7 @@ action. For instance, the following commands compute
  }
 
  
-\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 10, 10, 0 ]}
+\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 11, 10, 0 ]}
 \hyperdef{L}{X86A6858884B9C05B}{}
 {
  Analogous to the functions for Bianchi groups, HAP has functions 
@@ -4537,7 +4814,7 @@ groups $SL_2(\mathbb Z[\frac{1}{2}])$, $GL_2({\cal O}_{-2})$, $GL_2({\cal O}_{2}
  }
 
  
-\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 10, 11, 0 ]}
+\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 11, 11, 0 ]}
 \hyperdef{L}{X7EF5D97281EB66DA}{}
 {
  The following commands first construct the number field $\mathbb Q(\sqrt{-7})$, its ring of integers ${\cal O}_{-7}={\cal O}(\mathbb Q(\sqrt{-7}))$, and the principal ideal $I=\langle 5 + 2\sqrt{-7}\rangle \triangleleft {\cal O}(\mathbb Q(\sqrt{-7}))$ of norm ${\cal N}(I)=53$. The ring $I$ is prime since its norm is a prime number. The primality of $I$ is also demonstrated by observing that the quotient ring $R={\cal O}_{-7}/I$ is an integral domain and hence isomorphic to the unique finite field of order $53 $, $R\cong \mathbb Z/53\mathbb Z$ . (In a ring of quadratic integers \emph{prime ideal} is the same as \emph{maximal ideal}). 
@@ -4627,7 +4904,7 @@ The following commands construct the classic example of a prime ideal $I$ that i
  }
 
  
-\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 10, 12, 0 ]}
+\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 11, 12, 0 ]}
 \hyperdef{L}{X7D1F72287F14C5E1}{}
 {
  
@@ -4683,7 +4960,7 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{First homology}}\logpage{[ 10, 13, 0 ]}
+\section{\textcolor{Chapter }{First homology}}\logpage{[ 11, 13, 0 ]}
 \hyperdef{L}{X85E912617AFE03F4}{}
 {
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational
@@ -4729,11 +5006,11 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
  }
 
  
-\chapter{\textcolor{Chapter }{Parallel computation}}\logpage{[ 11, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Parallel computation}}\logpage{[ 12, 0, 0 ]}
 \hyperdef{L}{X7F571E8F7BBC7514}{}
 {
  
-\section{\textcolor{Chapter }{An embarassingly parallel computation}}\logpage{[ 11, 1, 0 ]}
+\section{\textcolor{Chapter }{An embarassingly parallel computation}}\logpage{[ 12, 1, 0 ]}
 \hyperdef{L}{X7EAE286B837D27BA}{}
 {
  
@@ -4765,7 +5042,7 @@ for the $267$-th group $G$ in \textsc{GAP}'s library of small groups.
 The function \texttt{ParallelList()} is built from \textsc{HAP}'s six core functions for parallel computation. }
 
  
-\section{\textcolor{Chapter }{An non-embarassingly parallel computation}}\logpage{[ 11, 2, 0 ]}
+\section{\textcolor{Chapter }{An non-embarassingly parallel computation}}\logpage{[ 12, 2, 0 ]}
 \hyperdef{L}{X7AA9C5B27A8322D0}{}
 {
  
@@ -4795,11 +5072,11 @@ The following commands use core functions to compute the product $A=M\times N$ o
  }
 
  
-\chapter{\textcolor{Chapter }{Regular CW-structure on knots}}\logpage{[ 12, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Regular CW-structure on knots}}\logpage{[ 13, 0, 0 ]}
 \hyperdef{L}{X807B5257781BD6F3}{}
 {
  
-\section{\textcolor{Chapter }{Knot complements in the 3-ball}}\logpage{[ 12, 1, 0 ]}
+\section{\textcolor{Chapter }{Knot complements in the 3-ball}}\logpage{[ 13, 1, 0 ]}
 \hyperdef{L}{X86F56A85848347FF}{}
 {
  While methods for endowing knot complements with CW-structure already exist in
@@ -4878,7 +5155,7 @@ the knot group.
  }
 
  
-\section{\textcolor{Chapter }{Tubular neighbourhoods}}\logpage{[ 12, 2, 0 ]}
+\section{\textcolor{Chapter }{Tubular neighbourhoods}}\logpage{[ 13, 2, 0 ]}
 \hyperdef{L}{X83EA2A38801E7A4C}{}
 {
  Let $Y$ denote a CW-subcomplex of a regular CW-complex $X$ and let $N(Y)$ denote an open tubular neighbourhood of $Y$. Given an inclusion of regular CW-complexes $f : Y \hookrightarrow X$, this algorithm describes a procedure for obtaining the associated inclusion $f' : \partial C \hookrightarrow C$ where $C=X \backslash N(Y)$ and $\partial C$ denotes the boundary of $C$. The following is also assumed: 
@@ -5013,7 +5290,7 @@ different subdivisions of a 2-cell in the boundary of this $3$-cell.
  }
 
  
-\section{\textcolor{Chapter }{Knotted surface complements in the 4-ball}}\logpage{[ 12, 3, 0 ]}
+\section{\textcolor{Chapter }{Knotted surface complements in the 4-ball}}\logpage{[ 13, 3, 0 ]}
 \hyperdef{L}{X78C28038837300BD}{}
 {
  A construction of Satoh's, the tube map, associates a ribbon torus-knot to

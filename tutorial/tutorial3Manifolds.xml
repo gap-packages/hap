@@ -1,0 +1,100 @@
+<Chapter><Heading>Three Manifolds</Heading>
+<Section><Heading>Dehn Surgery</Heading>
+The following example constructs, as a regular CW-complex <M>W</M>, a 
+3-manifold obtained from the 3-sphere by drilling out
+ a tubular neighbourhood of a
+ trefoil knot and  then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <M>p/q=17/16</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.1.txt">
+</Example>
+
+The next commands show that this closed compact <M>3</M>-manifold <M>W</M> has integral homology
+<P/> <M> H_0(W,\mathbb Z)=\mathbb Z</M>, <M> H_1(W,\mathbb Z)=\mathbb Z_{31}</M>, 
+<M> H_2(W,\mathbb Z)=0</M>, 
+<M> H_3(W,\mathbb Z)=\mathbb Z</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/12.1a.txt">
+</Example>
+
+
+</Section>
+
+<Section><Heading>Dijkgraaf-Witten Invariant</Heading>
+Given a closed connected orientable <M>3</M>-manifold <M>W</M>, a finite group <M>G</M> and
+a 3-cocycle <M>\alpha\in H^3(BG,U(1))</M> Dijkgraaf and Witten define the complex number
+<P/>$$ Z^{G,\alpha}(W) = \frac{1}{|G|}\sum_{\gamma\in {\rm Hom}(\pi_1W, G)}   \langle \gamma^\ast[\alpha], [M]\rangle \ \in\ \mathbb C\ $$
+where <M>\gamma</M> ranges over all group homomorphisms <M>\gamma\colon \pi_1W \rightarrow G</M>.
+This complex number is  an invariant of the homotopy type of <M>W</M> and is useful for
+  distinguishing between certain homotopically distinct <M>3</M>-manifolds.
+
+<P/>A homology version of the Dijkgraaf-Witten invariant can be defined as the set of homology homomorphisms
+
+$$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z)   \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$
+
+Since <M>H_3(W,\mathbb Z)\cong \mathbb Z</M> we represent <M>D_G(W)</M> by the set <M>D_G(W)=\{ \gamma_\ast(1) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}</M> 
+where <M>1</M> denotes one of the two possible generators of <M>H_3(W,\mathbb Z)</M>.
+
+<P/> The following session constructs the two Lens spaces <M>L(5,1)</M> and <M>L(5,2)</M>. These are <M>3</M>-dimensional manifolds with cyclic fundamental group of order <M>5</M> and with identical integral homology groups. The homology version of the Dijkgraaf-Witten invariant is used with <M>G=C_5</M> to demonstrate that the two lens spaces are not homotopy equivalent.
+
+<Example>
+<#Include SYSTEM "tutex/12.2.txt">
+</Example>
+
+<P/> A lens space <M>L(p,q)</M> exists for any coprime integers <M>p,q\ge 1</M>. It was proved by Paul Olum that two lens spaces <M>L(p,q)</M> and <M>L(p',q')</M> are homotopy
+equivalent if and only if <M>p=p'</M> and <M>qq'\cong \pm n^2 \mod p</M> for some integer <M>n</M>.
+For instance, <M>L(7,q)</M> is homotopy equivalent to <M>L(7,q')</M> if and only if <M>qq' \mod 7\in 
+\{1,2,4\}</M>. So <M>L(7,1)\simeq L(7,2) \simeq L(7,4)</M>, <M>L(7,3)\simeq L(7,5)\simeq(7,6)</M>. 
+The following session shows that the Dijkgraaf-Witten invariant, with
+<M>G=C_7</M>, fails to distinguish between <M>L(7,1)</M> and <M>L(7,3)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.3.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Cohomology rings</Heading>
+The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <M>H^\ast(L(7,1),\mathbb Z_7)</M> and
+<M>H^\ast(L(7,3),\mathbb Z_7)</M>. These rings are isomorphic  and so fail to distinguish between the homotopy types of the lens spaces <M>L(7,1)</M>
+and <M>L(7,3)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.4.txt">
+</Example>
+</Section>
+
+<Section><Heading>Linking Form</Heading>
+
+Given a closed connected orientable <M>3</M>-manifold <M>W</M> let 
+<M>\tau H_1(W,\mathbb Z)</M> denote the torsion subgroup of the first integral homology. The <E>linking form</E> is a bilinear mapping
+<P/><M>L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow \mathbb Q/\mathbb Z</M>.
+<P/>To construct this form note that we have a Poincare duality isomorphism
+<P/><M>\rho\colon H^2(W,\mathbb Z) \stackrel{\cong}{\longrightarrow} H_1(W,\mathbb Z), z \mapsto z\cap [W]</M>
+<P/>involving the cap product with the fundamental class <M>[W]\in H^3(W,\mathbb Z)\cong \mathbb Z</M>.
+
+The short exact sequence <M>\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z</M> gives rise to a cohomology exact sequence
+<P/><M> \rightarrow H^1(W,\mathbb Q) \rightarrow H^1(W,\mathbb Q/\mathbb Z) \stackrel{\beta}{\longrightarrow}
+H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb Q) \rightarrow </M> 
+<P/> from which we obtain the isomorphism <M>\beta \colon \tau H^1(W,\mathbb Q/\mathbb Z)
+\stackrel{\cong}{\longrightarrow} \tau H^2(W,\mathbb Z)</M>. The linking form <M>L_W</M> can be defined as the composite 
+<P/> <M>L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \stackrel{1\times \rho^{-1}}{\longrightarrow}
+\tau H_1(W,\mathbb Z) \times \tau H^2(W,\mathbb Z)
+\stackrel{1\times \beta^{-1}}{\longrightarrow}
+\tau H_1(W,\mathbb Z) \times \tau H^1(W,\mathbb Q/\mathbb Z)
+\stackrel{ev}{\longrightarrow } \mathbb Q/\mathbb Z </M>
+<P/>where <M>ev(x,\alpha)</M> evaluates a <M>1</M>-cocycle <M>\alpha</M> on a <M>1</M>-cycle <M>x</M>.
+
+<P/> The linking form can be used to define the set
+<P/> <M>I(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}</M>
+<P/>which is a homotopy invariant of <M>W</M> and which we refer to as the <E>linking form invariant</E>.
+
+<P/> The following commands compute the linking form invariant for the lens spaces <M>L(7,q)</M> with <M>1\le q\le 6</M>. This invariant distinguishes between the homotopy type 
+<M>L(7,1)\simeq L(7,2) \simeq L(7,4)</M> and the homotopy type <M>L(7,3)\simeq L(7,5)\simeq(7,6)</M>.
+<Example>
+<#Include SYSTEM "tutex/12.5.txt">
+</Example>
+
+</Section>
+</Chapter>

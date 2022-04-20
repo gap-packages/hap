@@ -245,11 +245,69 @@
   [4X[32X[104X
   
   
-  [1X1.8 [33X[0;0YConstructing a regular CW-complex from its face lattice[133X[101X
+  [1X1.8 [33X[0;0YConstructing a regular CW-complex by attaching cells[133X[101X
   
-  [33X[0;0YThe  following  example  begins  by  creating a [22X2[122X-dimensional annulus [22XA[122X as a
-  regular  CW-complex,  and  testing that it has the correct integral homology
-  [22XH_0(A, Z)= Z[122X, [22XH_1(A, Z)= Z[122X, [22XH_2(A, Z)=0[122X.[133X
+  [33X[0;0YThe   following  example  creates  the  projective  plane  [22XY[122X  as  a  regular
+  CW-complex,  and  tests that it has the correct integral homology [22XH_0(Y, Z)=
+  Z[122X, [22XH_1(Y, Z)= Z_2[122X, [22XH_2(Y, Z)=0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xattch:=RegularCWComplex_AttachCellDestructive;; #Function for attaching cells[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWDiscreteSpace(3); #Discrete CW-complex consisting of points {1,2,3}[127X[104X
+    [4X[28XRegular CW-complex of dimension 0[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xe1:=attch(Y,1,[1,2]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xe2:=attch(Y,1,[1,2]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xe3:=attch(Y,1,[1,3]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xe4:=attch(Y,1,[1,3]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xe5:=attch(Y,1,[2,3]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xe6:=attch(Y,1,[2,3]);; #Attach 1-cell[127X[104X
+    [4X[25Xgap>[125X [27Xf1:=attch(Y,2,[e1,e3,e5]);; #Attach 2-cell[127X[104X
+    [4X[25Xgap>[125X [27Xf2:=attch(Y,2,[e2,e4,e5]);; #Attach 2-cell[127X[104X
+    [4X[25Xgap>[125X [27Xf3:=attch(Y,2,[e2,e3,e6]);; #Attach 2-cell[127X[104X
+    [4X[25Xgap>[125X [27Xf4:=attch(Y,2,[e1,e4,e6]);; #Attach 2-cell[127X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[  ]`[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  example  creates  a  2-complex  [22XK[122X corresponding to the group
+  presentation[133X
+  
+  [33X[0;0Y[22XG=⟨ x,y,z : xyx^-1y^-1=1, yzy^-1z^-1=1, zxz^-1x^-1=1⟩[122X.[133X
+  
+  [33X[0;0YThe  complex  is  shown  to  have the correct fundamental group and homology
+  (since it is the 2-skeleton of the 3-torus [22XS^1× S^1× S^1[122X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS1:=RegularCWSphere(1);;[127X[104X
+    [4X[25Xgap>[125X [27XW:=WedgeSum(S1,S1,S1);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroupWithPathReps(W);; x:=F.1;;y:=F.2;;z:=F.3;;[127X[104X
+    [4X[25Xgap>[125X [27XK:=RegularCWComplexWithAttachedRelatorCells(W,F,Comm(x,y),Comm(y,z),Comm(x,z));[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(K);[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ f2^-1*f1*f2*f1^-1, f1^-1*f3*f1*f3^-1, f2^-1*f3*f2*f3^-1 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,1);[127X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,2);[127X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.9 [33X[0;0YConstructing a regular CW-complex from its face lattice[133X[101X
+  
+  [33X[0;0YThe  following  example  creats  a  [22X2[122X-dimensional  annulus  [22XA[122X  as  a regular
+  CW-complex, and testing that it has the correct integral homology [22XH_0(A, Z)=
+  Z[122X, [22XH_1(A, Z)= Z[122X, [22XH_2(A, Z)=0[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XFL:=[];; #The face lattice[127X[104X
@@ -315,7 +373,7 @@
   [4X[32X[104X
   
   
-  [1X1.9 [33X[0;0YCup products[133X[101X
+  [1X1.10 [33X[0;0YCup products[133X[101X
   
   [33X[0;0Y[12XStrategy 1: Use geometric group theory in low dimensions.[112X[133X
   
@@ -528,7 +586,7 @@
   [4X[32X[104X
   
   
-  [1X1.10 [33X[0;0YCohomology Rings[133X[101X
+  [1X1.11 [33X[0;0YCohomology Rings[133X[101X
   
   [33X[0;0YThe cup product gives the cohomology [22XH^∗(X,R)[122X of a space [22XX[122X with coefficients
   in  a  ring  [22XR[122X the structure of a graded commutitive ring. This is currently
@@ -555,7 +613,7 @@
   [4X[32X[104X
   
   
-  [1X1.11 [33X[0;0YIntersection forms of [22X4[122X[101X[1X-manifolds[133X[101X
+  [1X1.12 [33X[0;0YIntersection forms of [22X4[122X[101X[1X-manifolds[133X[101X
   
   [33X[0;0YThe  cup product gives rise to the intersection form of a connected, closed,
   orientable [22X4[122X-manifold [22XY[122X is a symmetric bilinear form[133X
@@ -631,7 +689,7 @@
   oriented homotopy types.[133X
   
   
-  [1X1.12 [33X[0;0YCW maps and induced homomorphisms[133X[101X
+  [1X1.13 [33X[0;0YCW maps and induced homomorphisms[133X[101X
   
   [33X[0;0YA  [13Xstrictly  cellular[113X  map [22Xf: X→ Y[122X of regular CW-complexes is a cellular map
   for  which  the  image  of any cell is a cell (of possibly lower dimension).
@@ -685,7 +743,7 @@
   [4X[32X[104X
   
   
-  [1X1.13 [33X[0;0YConstructing a simplicial complex from a regular CW-complex[133X[101X
+  [1X1.14 [33X[0;0YConstructing a simplicial complex from a regular CW-complex[133X[101X
   
   [33X[0;0YThe  following  example constructs a [22X3[122X-dimensional pure regular CW-complex [22XK[122X
   whose  [22X3[122X-cells are permutahedra. It then constructs the simplicial complex [22XB[122X
@@ -713,7 +771,7 @@
   [4X[32X[104X
   
   
-  [1X1.14 [33X[0;0YEquivariant CW complexes[133X[101X
+  [1X1.15 [33X[0;0YEquivariant CW complexes[133X[101X
   
   [33X[0;0YThe  above  representations of spaces as simplicial complexes and regular CW
   complexes have their limitations. One limitation is that the number of cells
@@ -745,7 +803,7 @@
   provide   for  an  efficient  representation  of  (possibly  infinite)  cell
   structures  on a wider class of spaces. Such a structure can be made precise
   and is known as a [13Xsimplicial group[113X. Some functionality for simplicial groups
-  is implemented in [12XHAP[112X and described in Chapter [14X9[114X.[133X
+  is implemented in [12XHAP[112X and described in Chapter [14X10[114X.[133X
   
   [33X[0;0YA  regular CW-complex endowed with the action of a (possibly infinite) group
   [22XG[122X  is  an alternative approach to the efficient combinatorial representation
@@ -817,7 +875,7 @@
   [4X[32X[104X
   
   
-  [1X1.15 [33X[0;0YOrbifolds and classifying spaces[133X[101X
+  [1X1.16 [33X[0;0YOrbifolds and classifying spaces[133X[101X
   
   [33X[0;0YIf  a  discrete  group  [22XG[122X  acts  on Euclidean space or hyperbolic space with
   finite  stabilizer  groups  then  we say that the quotient space obtained by
