@@ -21,7 +21,7 @@ www.math.tu-berlin.de/polymake/) which should be installed so that it starts
 using the command "polymake" at the Linux prompt. A few (optional) 
 functions rely on Singular software (available from 
 https://www.singular.uni-kl.de/) which should be installed so that it starts 
-using the command "singular" at the Linux prompt. A few (oprional) functions
+using the command "singular" at the Linux prompt. A few (optional) functions
 rely on Graphviz software (available from http://www.graphviz.org/).
 
 Please send your bug reports to graham.ellis(at)nuigalway.ie .
