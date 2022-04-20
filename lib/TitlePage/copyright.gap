@@ -3,7 +3,7 @@
 HAPcopyright:=function();
 Print("\n HAP version = ", PackageInfo("hap")[1].Version,"\n");
 
-Print("\n The code for the HAP library was written during the academic years\n 2005-2007 and is released under the GNU General Public License (GPL).\n The documentation for HAP is made available through its web pages\n under the GNU Free Documentation License (see\n http://www.gnu.org/licenses/licenses.html#FDL). \n\n"); 
+Print("\n The code for the HAP library was written during the academic years\n 2005-2007 and is released under the GNU General Public License (GPL).\n The documentation for HAP is made available through its web pages\n under the GNU Free Documentation License (see\n https://www.gnu.org/licenses/licenses.html#FDL). \n\n"); 
 
 Print(" HAP is free software; you can redistribute it and/or modify it under\n the terms of the GNU General Public License as published by the Free\n Software Foundation (version 2); either version 2 of the license or\n (at your option) any later version.\n\n");
 

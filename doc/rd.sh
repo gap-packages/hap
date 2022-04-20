@@ -180,7 +180,7 @@ software
 installed so that it
 starts using the command "polymake" at the Linux prompt. A few
 (optional) functions rely on Graphviz software (available from
-http://www.graphviz.org/).<br>
+https://www.graphviz.org/).<br>
   </li>
 </ul>
 <ul>
