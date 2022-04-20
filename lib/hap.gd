@@ -736,6 +736,7 @@ DeclareGlobalFunction("CriticalBoundaryCells");
 DeclareGlobalFunction("FundamentalGroupOfRegularCWMap");
 DeclareGlobalFunction("FundamentalGroupSimplicialTwoComplex");
 DeclareOperation("FundamentalGroup",[IsHapRegularCWComplex]);
+DeclareOperation("FundamentalGroupWithPathReps",[IsHapRegularCWComplex]);
 DeclareOperation("FundamentalGroup",[IsHapRegularCWComplex,IsInt]);
 DeclareOperation("FundamentalGroupOfQuotient",[IsHapEquivariantCWComplex]);
 DeclareOperation("ChainComplexOfQuotient",[IsHapEquivariantCWComplex]);
@@ -781,6 +782,8 @@ DeclareGlobalFunction("LiftedRegularCWMap");
 DeclareGlobalFunction("FirstHomologyCoveringCokernels");
 DeclareGlobalFunction("HAP_BaryCentricSubdivisionRegularCWComplex");
 DeclareGlobalFunction("HAP_Triangulation");
+DeclareGlobalFunction("RegularCWComplex_AttachCellDestructive");
+DeclareGlobalFunction("RegularCWComplexWithRemovedCell");
 
 
 ## KNOTS ############################################################

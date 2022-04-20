@@ -4,11 +4,11 @@
 InstallGlobalFunction(HAP_CupProductOfSimplicialComplex,
 function(arg)
 local K, Y, C, CC, D, IntCoh, fns, gns, clgy, Iterate, n, k, cup, BigToSmall, 
-      SmallToBig, crit, invcrit, Equiv, E1, E2, MyLength, prime ;
+      SmallToBig, crit, invcrit, Equiv, E1, E2, MyLength, prime, zero,one  ;
 
 K:=arg[1];
-if Length(arg)>1 then prime:=arg[2];
-else prime:=0; fi;
+if Length(arg)>1 then prime:=arg[2]; zero:=Zero(GF(prime)); one:=One(GF(prime));
+else prime:=0; zero:=0; one:=1; fi;
 
 Y:=RegularCWComplex(K);
 
@@ -60,7 +60,7 @@ clgy:=[];
 ###############################################
 Iterate:=function(n)
 local HD, F, FhomG, G, gensG, preimgensG, f, g;
-if MyLength(Cohomology(Y,n))>0 then
+if MyLength(Cohomology(D,n))>0 then
 
 HD:=IntCoh(D,n);
 F:=HD!.fpgroup; #F is an fp group rep of the n-th cohomology of (the small) D
@@ -76,7 +76,7 @@ f:=function(i)  #Inputs a generator of cohomology group and returns a cocycle
                 #on (the non-contracted) K
 local w,v, m, j;
 w:=preimgensG[i];
-v:=[1..C!.dimension(n)]*0;
+v:=[1..C!.dimension(n)]*zero;
 
 for j in [1..Length(w)/2] do
 m:=HD!.h2c(w[2*j-1]);
@@ -91,7 +91,7 @@ end;
 ###############################
 g:=function(z) #Inputs a cocycle on K and returns a cohomology group element
 local w;
-return Exponents(Image(FhomG,HD!.c2h(BigToSmall(z,n))));
+return Exponents(Image(FhomG,HD!.c2h(BigToSmall(one*z,n))));
 end;
 ###############################
 
@@ -131,9 +131,9 @@ od;
 cup:=function(i,j,x,y)
 local k, w, a, b, c, xx, yy;
 
-w:=[1..CC!.dimension(i+j)]*0;
-xx:=[1..CC!.dimension(i)]*0;
-yy:=[1..CC!.dimension(j)]*0;
+w:=[1..CC!.dimension(i+j)]*zero;
+xx:=[1..CC!.dimension(i)]*zero;
+yy:=[1..CC!.dimension(j)]*zero;
 for k in [1..MyLength(clgy[i+1])] do
 xx:=xx+x[k]*fns[i+1](k); 
 od;

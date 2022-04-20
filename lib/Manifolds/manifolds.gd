@@ -9,3 +9,8 @@ DeclareOperation("WedgeSum",[IsHapSimplicialComplex,IsHapSimplicialComplex]);
 DeclareGlobalFunction("HAP_WedgeSumOfSimplicialComplexes");
 DeclareGlobalFunction("CohomologyRingOfSimplicialComplex");
 DeclareOperation("CohomologyRing",[IsHapSimplicialComplex,IsInt]);
+DeclareGlobalFunction("ThreeManifoldViaDehnSurgery");
+DeclareGlobalFunction("HAP_AllHomomorphisms");
+DeclareGlobalFunction("DijkgraafWittenInvariant");
+DeclareGlobalFunction("LinkingForm");
+DeclareGlobalFunction("LinkingFormInvariant");

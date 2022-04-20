@@ -1,0 +1,14 @@
+gap> S1:=RegularCWSphere(1);;
+gap> W:=WedgeSum(S1,S1,S1);;
+gap> F:=FundamentalGroupWithPathReps(W);; x:=F.1;;y:=F.2;;z:=F.3;;
+gap> K:=RegularCWComplexWithAttachedRelatorCells(W,F,Comm(x,y),Comm(y,z),Comm(x,z));
+Regular CW-complex of dimension 2
+
+gap> G:=FundamentalGroup(K);
+&lt;fp group on the generators [ f1, f2, f3 ]&gt;
+gap> RelatorsOfFpGroup(G);
+[ f2^-1*f1*f2*f1^-1, f1^-1*f3*f1*f3^-1, f2^-1*f3*f2*f3^-1 ]
+gap> Homology(K,1);
+[ 0, 0, 0 ]
+gap> Homology(K,2);
+[ 0, 0, 0 ]

@@ -23,7 +23,39 @@ end);
 #####################################################
 #####################################################
 
+#####################################################
+#####################################################
+InstallOtherMethod(WedgeSum,
+"wedge of simplicial complexes",
+[IsHapSimplicialComplex,IsHapSimplicialComplex,IsHapSimplicialComplex],
+function(K,L,M)
+return HAP_WedgeSumOfSimplicialComplexes(HAP_WedgeSumOfSimplicialComplexes(K,L),M);
+end);
+#####################################################
+#####################################################
 
+
+#####################################################
+#####################################################
+InstallOtherMethod(WedgeSum,
+"wedge of regulat CW complexes",
+[IsHapRegularCWComplex,IsHapRegularCWComplex],
+function(K,L)
+return RegularCWComplex_WedgeSum(K,L,1,1);
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallOtherMethod(WedgeSum,
+"wedge of regulat CW complexes",
+[IsHapRegularCWComplex,IsHapRegularCWComplex,IsHapRegularCWComplex],
+function(K,L,M)
+return RegularCWComplex_WedgeSum(RegularCWComplex_WedgeSum(K,L,1,1),M,1,1);
+end);
+#####################################################
+#####################################################
 
 
 

@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.38",
-  Date    := "09/03/2022",
+  Version := "1.39",
+  Date    := "20/04/2022",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -32,7 +32,7 @@ SetPackageInfo( rec(
       IsAuthor      := true,
       IsMaintainer  := true,
       Email         := "graham.ellis@nuigalway.ie",
-      WWWHome       := "http://hamilton.nuigalway.ie",
+      WWWHome       := "https://www.nuigalway.ie/our-research/people/mathematics-statistics-and-applied-mathematics/grahamellis/",
       PostalAddress := Concatenation( [
                          "Graham Ellis\n",
                          "Mathematics Department\n",

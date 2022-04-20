@@ -429,6 +429,7 @@ ReadPackageHap("lib/RegularCWComplexes/universalCover.gi");
 ReadPackageHap("lib/RegularCWComplexes/spin.gi");
 ReadPackageHap("lib/RegularCWComplexes/spunknotcomp.gi");
 ReadPackageHap("lib/RegularCWComplexes/grannyknot.gi");
+ReadPackageHap("lib/RegularCWComplexes/elementaryCWConstructions.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################
@@ -511,6 +512,8 @@ ReadPackageHap("lib/Quandles/isoreps.gi");
 ################## MANIFOLDS #################################
 ReadPackageHap("lib/Manifolds/manifolds.gi");
 ReadPackageHap("lib/Manifolds/simplicialcup.gi");
+ReadPackageHap("lib/Manifolds/dehn.gi");
+ReadPackageHap("lib/Manifolds/poincareduality.gi");
 
 ################## KELVIN ##################################
 ReadPackageHap("lib/Kelvin/init.g");
