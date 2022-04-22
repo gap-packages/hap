@@ -90,9 +90,9 @@ SetPackageInfo( rec(
 			      ],
 
     ExternalConditions := [["Some optional functions require Polymake software",
-    "http://polymake.org/doku.php"],
+    "https://polymake.org/doku.php"],
     ["Some optional functions require Graphviz software",
-    "http://www.graphviz.org/"],
+    "https://www.graphviz.org/"],
     ["Some optional functions require Asymptote software",
     "https://asymptote.sourceforge.io/"],
     ["Some optional functions require Singular software",
