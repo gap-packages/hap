@@ -45,7 +45,7 @@
 
 <h4>4.1 <span class="Heading">Dehn Surgery</span></h4>
 
-<p>The following example constructs, as a regular CW-complex <span class="SimpleMath">\(W\)</span>, a 3-manifold obtained from the 3-sphere by drilling out a tubular neighbourhood of a trefoil knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">\(p/q=17/16\)</span>.</p>
+<p>The following example constructs, as a regular CW-complex, a closed orientable 3-manifold <span class="SimpleMath">\(W\)</span> obtained from the 3-sphere by drilling out a tubular neighbourhood of a trefoil knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">\(p/q=17/16\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -56,7 +56,7 @@ Regular CW-complex of dimension 3
 
 </pre></div>
 
-<p>The next commands show that this closed compact <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> has integral homology</p>
+<p>The next commands show that this <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> has integral homology</p>
 
 <p><span class="SimpleMath">\( H_0(W,\mathbb Z)=\mathbb Z\)</span>, <span class="SimpleMath">\( H_1(W,\mathbb Z)=\mathbb Z_{31}\)</span>, <span class="SimpleMath">\( H_2(W,\mathbb Z)=0\)</span>, <span class="SimpleMath">\( H_3(W,\mathbb Z)=\mathbb Z\)</span>.</p>
 
@@ -80,7 +80,9 @@ Regular CW-complex of dimension 3
 
 <p>A homology version of the Dijkgraaf-Witten invariant can be defined as the set of homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$ Since <span class="SimpleMath">\(H_3(W,\mathbb Z)\cong \mathbb Z\)</span> we represent <span class="SimpleMath">\(D_G(W)\)</span> by the set <span class="SimpleMath">\(D_G(W)=\{ \gamma_\ast(1) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}\)</span> where <span class="SimpleMath">\(1\)</span> denotes one of the two possible generators of <span class="SimpleMath">\(H_3(W,\mathbb Z)\)</span>.</p>
 
-<p>The following session constructs the two Lens spaces <span class="SimpleMath">\(L(5,1)\)</span> and <span class="SimpleMath">\(L(5,2)\)</span>. These are <span class="SimpleMath">\(3\)</span>-dimensional manifolds with cyclic fundamental group of order <span class="SimpleMath">\(5\)</span> and with identical integral homology groups. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">\(G=C_5\)</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
+<p>For any coprime integers <span class="SimpleMath">\(p,q\ge 1\)</span> the <em>Lens space</em> <span class="SimpleMath">\(L(p,q)\)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">\(p/q\)</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">\(\pi_1(L(p,q))=C_p\)</span> and homology <span class="SimpleMath">\(H_1(L(p,q),\mathbb Z)\cong \mathbb Z_p\)</span>, <span class="SimpleMath">\(H_2(L(p,q),\mathbb Z)\cong 0\)</span>, <span class="SimpleMath">\(H_3(L(p,q),\mathbb Z)\cong \mathbb Z\)</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">\(L(p,q)\)</span> and <span class="SimpleMath">\(L(p',q')\)</span> are homotopy equivalent if and only if <span class="SimpleMath">\(p=p'\)</span> and <span class="SimpleMath">\(qq'\cong \pm n^2 \mod p\)</span> for some integer <span class="SimpleMath">\(n\)</span>.</p>
+
+<p>The following session constructs the two Lens spaces <span class="SimpleMath">\(L(5,1)\)</span> and <span class="SimpleMath">\(L(5,2)\)</span>. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">\(G=C_5\)</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
 
 
 <div class="example"><pre>
@@ -96,16 +98,19 @@ Regular CW-complex of dimension 3
 
 </pre></div>
 
-<p>A lens space <span class="SimpleMath">\(L(p,q)\)</span> exists for any coprime integers <span class="SimpleMath">\(p,q\ge 1\)</span>. It was proved by Paul Olum that two lens spaces <span class="SimpleMath">\(L(p,q)\)</span> and <span class="SimpleMath">\(L(p',q')\)</span> are homotopy equivalent if and only if <span class="SimpleMath">\(p=p'\)</span> and <span class="SimpleMath">\(qq'\cong \pm n^2 \mod p\)</span> for some integer <span class="SimpleMath">\(n\)</span>. For instance, <span class="SimpleMath">\(L(7,q)\)</span> is homotopy equivalent to <span class="SimpleMath">\(L(7,q')\)</span> if and only if <span class="SimpleMath">\(qq' \mod 7\in \{1,2,4\}\)</span>. So <span class="SimpleMath">\(L(7,1)\simeq L(7,2) \simeq L(7,4)\)</span>, <span class="SimpleMath">\(L(7,3)\simeq L(7,5)\simeq(7,6)\)</span>. The following session shows that the Dijkgraaf-Witten invariant, with <span class="SimpleMath">\(G=C_7\)</span>, fails to distinguish between <span class="SimpleMath">\(L(7,1)\)</span> and <span class="SimpleMath">\(L(7,3)\)</span>.</p>
+<p>A theorem of Fermat and Euler states that if a prime <span class="SimpleMath">\(p\)</span> is congruent to 3 modulo 4, then for any <span class="SimpleMath">\(q\)</span> exactly one of <span class="SimpleMath">\(\pm q\)</span> is a quadratic residue mod p. For all other primes <span class="SimpleMath">\(p\)</span> either both or neither of <span class="SimpleMath">\(\pm q\)</span> is a quadratic residue mod <span class="SimpleMath">\(p\)</span>. Thus for fixed <span class="SimpleMath">\(p \equiv 3 \mod 4\)</span> the lens spaces <span class="SimpleMath">\(L(p,q)\)</span> form a single homotopy class. There are precisely two homotopy classes of lens spaces for other <span class="SimpleMath">\(p\)</span>.</p>
+
+<p>The following commands confirm that <span class="SimpleMath">\(L(13,1) \not\simeq L(13,2)\)</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DijkgraafWittenInvariant(L71,CyclicGroup(7));</span>
-[ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DijkgraafWittenInvariant(L73,CyclicGroup(7));</span>
-[ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DijkgraafWittenInvariant(L13_1,CyclicGroup(13));</span>
+[ g1^12, g1^12, g1^10, g1^10, g1^9, g1^9, g1^4, g1^4, g1^3, g1^3, g1, g1, id ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DijkgraafWittenInvariant(L13_2,CyclicGroup(13));</span>
+[ g1^11, g1^11, g1^8, g1^8, g1^7, g1^7, g1^6, g1^6, g1^5, g1^5, g1^2, g1^2, 
+  id ]
 
 </pre></div>
 
@@ -113,38 +118,39 @@ Regular CW-complex of dimension 3
 
 <h4>4.3 <span class="Heading">Cohomology rings</span></h4>
 
-<p>The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <span class="SimpleMath">\(H^\ast(L(7,1),\mathbb Z_7)\)</span> and <span class="SimpleMath">\(H^\ast(L(7,3),\mathbb Z_7)\)</span>. These rings are isomorphic and so fail to distinguish between the homotopy types of the lens spaces <span class="SimpleMath">\(L(7,1)\)</span> and <span class="SimpleMath">\(L(7,3)\)</span>.</p>
+<p>The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <span class="SimpleMath">\(H^\ast(L(13,1),\mathbb Z_{13})\)</span> and <span class="SimpleMath">\(H^\ast(L(13,2),\mathbb Z_{13})\)</span>. These rings are isomorphic and so fail to distinguish between the homotopy types of the lens spaces <span class="SimpleMath">\(L(13,1)\)</span> and <span class="SimpleMath">\(L(13,2)\)</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L71:=BarycentricSubdivision(L71);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L73:=BarycentricSubdivision(L73);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A71:=CohomologyRing(L71,7);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A73:=CohomologyRing(L73,7);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M71:=List([1..4],i-&gt;[]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B71:=CanonicalBasis(A71);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M73:=List([1..4],i-&gt;[]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B73:=CanonicalBasis(A73);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_1:=BarycentricSubdivision(L13_1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L13_2:=BarycentricSubdivision(L13_2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A13_1:=CohomologyRing(L13_1,13);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A13_2:=CohomologyRing(L13_2,13);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M13_1:=List([1..4],i-&gt;[]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B13_1:=CanonicalBasis(A13_1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M13_2:=List([1..4],i-&gt;[]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B13_2:=CanonicalBasis(A13_2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..4] do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..4] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">M71[i][j]:=B71[i]*B71[j];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">M13_1[i][j]:=B13_1[i]*B13_1[j];</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..4] do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..4] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">M73[i][j]:=B73[i]*B73[j];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">M13_2[i][j]:=B13_2[i]*B13_2[j];</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M71);</span>
-[ [           v.1,           v.2,           v.3,           v.4 ],
-  [           v.2,         0*v.1,  (Z(7)^3)*v.4,         0*v.1 ],
-  [           v.3,  (Z(7)^3)*v.4,         0*v.1,         0*v.1 ],
-  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M73);</span>
-[ [           v.1,           v.2,           v.3,           v.4 ],
-  [           v.2,         0*v.1,  (Z(7)^5)*v.4,         0*v.1 ],
-  [           v.3,  (Z(7)^5)*v.4,         0*v.1,         0*v.1 ],
-  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M13_1);</span>
+[ [            v.1,            v.2,            v.3,            v.4 ],
+  [            v.2,          0*v.1,  (Z(13)^6)*v.4,          0*v.1 ],
+  [            v.3,  (Z(13)^6)*v.4,          0*v.1,          0*v.1 ],
+  [            v.4,          0*v.1,          0*v.1,          0*v.1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M13_2);</span>
+[ [          v.1,          v.2,          v.3,          v.4 ],
+  [          v.2,        0*v.1,  (Z(13))*v.4,        0*v.1 ],
+  [          v.3,  (Z(13))*v.4,        0*v.1,        0*v.1 ],
+  [          v.4,        0*v.1,        0*v.1,        0*v.1 ] ]
+
 
 </pre></div>
 
@@ -152,7 +158,7 @@ Regular CW-complex of dimension 3
 
 <h4>4.4 <span class="Heading">Linking Form</span></h4>
 
-<p>Given a closed connected orientable <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> let <span class="SimpleMath">\(\tau H_1(W,\mathbb Z)\)</span> denote the torsion subgroup of the first integral homology. The <em>linking form</em> is a bilinear mapping</p>
+<p>Given a closed connected <strong class="button">oriented</strong> <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> let <span class="SimpleMath">\(\tau H_1(W,\mathbb Z)\)</span> denote the torsion subgroup of the first integral homology. The <em>linking form</em> is a bilinear mapping</p>
 
 <p><span class="SimpleMath">\(L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow \mathbb Q/\mathbb Z\)</span>.</p>
 
@@ -160,7 +166,7 @@ Regular CW-complex of dimension 3
 
 <p><span class="SimpleMath">\(\rho\colon H^2(W,\mathbb Z) \stackrel{\cong}{\longrightarrow} H_1(W,\mathbb Z), z \mapsto z\cap [W]\)</span></p>
 
-<p>involving the cap product with the fundamental class <span class="SimpleMath">\([W]\in H^3(W,\mathbb Z)\cong \mathbb Z\)</span>. The short exact sequence <span class="SimpleMath">\(\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z\)</span> gives rise to a cohomology exact sequence</p>
+<p>involving the cap product with the fundamental class <span class="SimpleMath">\([W]\in H^3(W,\mathbb Z)\)</span>. That is, <span class="SimpleMath">\([M]\)</span> is the generator of <span class="SimpleMath">\(H^3(W,\mathbb Z)\cong \mathbb Z\)</span> determining the orientation. The short exact sequence <span class="SimpleMath">\(\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z\)</span> gives rise to a cohomology exact sequence</p>
 
 <p><span class="SimpleMath">\( \rightarrow H^1(W,\mathbb Q) \rightarrow H^1(W,\mathbb Q/\mathbb Z) \stackrel{\beta}{\longrightarrow} H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb Q) \rightarrow \)</span></p>
 
@@ -172,25 +178,58 @@ Regular CW-complex of dimension 3
 
 <p>The linking form can be used to define the set</p>
 
-<p><span class="SimpleMath">\(I(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}\)</span></p>
+<p><span class="SimpleMath">\(I^O(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}\)</span></p>
 
-<p>which is a homotopy invariant of <span class="SimpleMath">\(W\)</span> and which we refer to as the <em>linking form invariant</em>.</p>
+<p>which is an oriented-homotopy invariant of <span class="SimpleMath">\(W\)</span>. Letting <span class="SimpleMath">\(W^+\)</span> and <span class="SimpleMath">\(W^-\)</span> denote the two possible orientations on the manifold, the set</p>
 
-<p>The following commands compute the linking form invariant for the lens spaces <span class="SimpleMath">\(L(7,q)\)</span> with <span class="SimpleMath">\(1\le q\le 6\)</span>. This invariant distinguishes between the homotopy type <span class="SimpleMath">\(L(7,1)\simeq L(7,2) \simeq L(7,4)\)</span> and the homotopy type <span class="SimpleMath">\(L(7,3)\simeq L(7,5)\simeq(7,6)\)</span>.</p>
+<p><span class="SimpleMath">\(I(W) =\{I^O(W^+), I^O(W^-)\}\)</span></p>
+
+<p>is a homotopy invariant of <span class="SimpleMath">\(W\)</span> which in this manual we refer to as the <em>linking form homotopy invariant</em>.</p>
+
+<p>The following commands compute the linking form homotopy invariant for the lens spaces <span class="SimpleMath">\(L(13,q)\)</span> with <span class="SimpleMath">\(1\le q\le 12\)</span>. This invariant distinguishes between the two homotopy types that arise.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LensSpaces:=[];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for q in [1..6] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,q));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for q in [1..12] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,q));</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(List(LensSpaces,LinkingFormInvariant));;</span>
-[ [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-  [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
-  [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
-  [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(List(LensSpaces,LinkingFormHomotopyInvariant));;</span>
+[ [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [ 0, 2/13, 
+          2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+
+  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+
+  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+
+  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+
+  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ] ]
 
 </pre></div>
 
