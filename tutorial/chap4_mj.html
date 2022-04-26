@@ -28,13 +28,16 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X82D1348C79238C2D">4.1 <span class="Heading">Dehn Surgery</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X78AE684C7DBD7C70">4.2 <span class="Heading">Dijkgraaf-Witten Invariant</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X848EDEE882B36F6C">4.2 <span class="Heading">Connected Sums</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X80B6849C835B7F19">4.3 <span class="Heading">Cohomology rings</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X78AE684C7DBD7C70">4.3 <span class="Heading">Dijkgraaf-Witten Invariant</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7F56BB4C801AB894">4.4 <span class="Heading">Linking Form</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X80B6849C835B7F19">4.4 <span class="Heading">Cohomology rings</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7F56BB4C801AB894">4.5 <span class="Heading">Linking Form</span></a>
 </span>
 </div>
 </div>
@@ -81,9 +84,37 @@ Regular CW-complex of dimension 3
 
 <p><strong class="button">Theorem:</strong> <em> Every closed, orientable, connected <span class="SimpleMath">\(3\)</span>-manifold can be obtained by surgery on a link in <span class="SimpleMath">\(S^3\)</span>. (Moreover, one can always perform the surgery with surgery coefficients <span class="SimpleMath">\(\pm 1\)</span> and with each individual component of the link unknotted.) </em></p>
 
+<p><a id="X848EDEE882B36F6C" name="X848EDEE882B36F6C"></a></p>
+
+<h4>4.2 <span class="Heading">Connected Sums</span></h4>
+
+<p>The following example constructs the connected sum <span class="SimpleMath">\(W=A\#B\)</span> of two <span class="SimpleMath">\(3\)</span>-manifolds, where <span class="SimpleMath">\(A\)</span> is obtained from a <span class="SimpleMath">\(5/1\)</span> Dehn surgery on the complements of the first prime knot on 11 crossings and <span class="SimpleMath">\(B\)</span> is obtained by a <span class="SimpleMath">\(5/1\)</span> Dehn surgery on the complement of the second prime knot on 11 crossings. The homology groups</p>
+
+<p><span class="SimpleMath">\(H_1(W,\mathbb Z) = \mathbb Z_2\oplus \mathbb Z_{71}\)</span>, <span class="SimpleMath">\(H_2(W,\mathbb Z) = 0\)</span>, <span class="SimpleMath">\(H_3(W,\mathbb Z) = \mathbb Z\)</span></p>
+
+<p>are computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ap1:=ArcPresentation(PureCubicalKnot(11,1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ThreeManifoldViaDehnSurgery(ap1,5,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ap2:=ArcPresentation(PureCubicalKnot(11,2));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=ThreeManifoldViaDehnSurgery(ap2,5,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ConnectedSum(A,B);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,1);</span>
+[ 2, 70 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,3);</span>
+[ 0 ]
+
+</pre></div>
+
 <p><a id="X78AE684C7DBD7C70" name="X78AE684C7DBD7C70"></a></p>
 
-<h4>4.2 <span class="Heading">Dijkgraaf-Witten Invariant</span></h4>
+<h4>4.3 <span class="Heading">Dijkgraaf-Witten Invariant</span></h4>
 
 <p>Given a closed connected orientable <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span>, a finite group <span class="SimpleMath">\(G\)</span> and a 3-cocycle <span class="SimpleMath">\(\alpha\in H^3(BG,U(1))\)</span> Dijkgraaf and Witten define the complex number</p>
 
@@ -127,7 +158,7 @@ Regular CW-complex of dimension 3
 
 <p><a id="X80B6849C835B7F19" name="X80B6849C835B7F19"></a></p>
 
-<h4>4.3 <span class="Heading">Cohomology rings</span></h4>
+<h4>4.4 <span class="Heading">Cohomology rings</span></h4>
 
 <p>The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <span class="SimpleMath">\(H^\ast(L(13,1),\mathbb Z_{13})\)</span> and <span class="SimpleMath">\(H^\ast(L(13,2),\mathbb Z_{13})\)</span>. These rings are isomorphic and so fail to distinguish between the homotopy types of the lens spaces <span class="SimpleMath">\(L(13,1)\)</span> and <span class="SimpleMath">\(L(13,2)\)</span>.</p>
 
@@ -167,7 +198,7 @@ Regular CW-complex of dimension 3
 
 <p><a id="X7F56BB4C801AB894" name="X7F56BB4C801AB894"></a></p>
 
-<h4>4.4 <span class="Heading">Linking Form</span></h4>
+<h4>4.5 <span class="Heading">Linking Form</span></h4>
 
 <p>Given a closed connected <strong class="button">oriented</strong> <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> let <span class="SimpleMath">\(\tau H_1(W,\mathbb Z)\)</span> denote the torsion subgroup of the first integral homology. The <em>linking form</em> is a bilinear mapping</p>
 
