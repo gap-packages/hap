@@ -37,6 +37,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7F56BB4C801AB894">4.5 <span class="Heading">Linking Form</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X850C76697A6A1654">4.6 <span class="Heading">Determining the homeomorphism type of a lens space</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -85,7 +88,7 @@ Regular CW-complex of dimension 3
 
 <h4>4.2 <span class="Heading">Connected Sums</span></h4>
 
-<p>The following example constructs the connected sum <span class="SimpleMath">W=A#B</span> of two <span class="SimpleMath">3</span>-manifolds, where <span class="SimpleMath">A</span> is obtained from a <span class="SimpleMath">5/1</span> Dehn surgery on the complements of the first prime knot on 11 crossings and <span class="SimpleMath">B</span> is obtained by a <span class="SimpleMath">5/1</span> Dehn surgery on the complement of the second prime knot on 11 crossings. The homology groups</p>
+<p>The following example constructs the connected sum <span class="SimpleMath">W=A#B</span> of two <span class="SimpleMath">3</span>-manifolds, where <span class="SimpleMath">A</span> is obtained from a <span class="SimpleMath">5/1</span> Dehn surgery on the complement of the first prime knot on 11 crossings and <span class="SimpleMath">B</span> is obtained by a <span class="SimpleMath">5/1</span> Dehn surgery on the complement of the second prime knot on 11 crossings. The homology groups</p>
 
 <p><span class="SimpleMath">H_1(W, Z) = Z_2⊕ Z_71</span>, <span class="SimpleMath">H_2(W, Z) = 0</span>, <span class="SimpleMath">H_3(W, Z) = Z</span></p>
 
@@ -119,9 +122,9 @@ Regular CW-complex of dimension 3
 
 <p>A homology version of the Dijkgraaf-Witten invariant can be defined as the set of homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$ Since <span class="SimpleMath">H_3(W, Z)≅ Z</span> we represent <span class="SimpleMath">D_G(W)</span> by the set <span class="SimpleMath">D_G(W)={ γ_∗(1) }_γ∈ Hom(π_1W, G)</span> where <span class="SimpleMath">1</span> denotes one of the two possible generators of <span class="SimpleMath">H_3(W, Z)</span>.</p>
 
-<p>For any coprime integers <span class="SimpleMath">p,qge 1</span> the <em>Lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≅ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
+<p>For any coprime integers <span class="SimpleMath">p,qge 1</span> the <em>lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≅ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
 
-<p>The following session constructs the two Lens spaces <span class="SimpleMath">L(5,1)</span> and <span class="SimpleMath">L(5,2)</span>. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">G=C_5</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
+<p>The following session constructs the two lens spaces <span class="SimpleMath">L(5,1)</span> and <span class="SimpleMath">L(5,2)</span>. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">G=C_5</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
 
 
 <div class="example"><pre>
@@ -199,7 +202,7 @@ Regular CW-complex of dimension 3
 
 <p>Given a closed connected <strong class="button">oriented</strong> <span class="SimpleMath">3</span>-manifold <span class="SimpleMath">W</span> let <span class="SimpleMath">τ H_1(W, Z)</span> denote the torsion subgroup of the first integral homology. The <em>linking form</em> is a bilinear mapping</p>
 
-<p><span class="SimpleMath">L_W: τ H_1(W, Z) × τ H_1(W, Z) ⟶ Q/ Z</span>.</p>
+<p><span class="SimpleMath">Lk_W: τ H_1(W, Z) × τ H_1(W, Z) ⟶ Q/ Z</span>.</p>
 
 <p>To construct this form note that we have a Poincare duality isomorphism</p>
 
@@ -209,15 +212,15 @@ Regular CW-complex of dimension 3
 
 <p><span class="SimpleMath">→ H^1(W, Q) → H^1(W, Q/ Z) stackrelβ⟶ H^2(W, Z) → H^2(W, Q) →</span></p>
 
-<p>from which we obtain the isomorphism <span class="SimpleMath">β : τ H^1(W, Q/ Z) stackrel≅⟶ τ H^2(W, Z)</span>. The linking form <span class="SimpleMath">L_W</span> can be defined as the composite</p>
+<p>from which we obtain the isomorphism <span class="SimpleMath">β : τ H^1(W, Q/ Z) stackrel≅⟶ τ H^2(W, Z)</span>. The linking form <span class="SimpleMath">Lk_W</span> can be defined as the composite</p>
 
-<p><span class="SimpleMath">L_W: τ H_1(W, Z) × τ H_1(W, Z) stackrel1× ρ^-1}⟶ τ H_1(W, Z) × τ H^2(W, Z) stackrel1× β^-1}⟶ τ H_1(W, Z) × τ H^1(W, Q/ Z) stackrelev⟶ Q/ Z</span></p>
+<p><span class="SimpleMath">Lk_W: τ H_1(W, Z) × τ H_1(W, Z) stackrel1× ρ^-1}⟶ τ H_1(W, Z) × τ H^2(W, Z) stackrel1× β^-1}⟶ τ H_1(W, Z) × τ H^1(W, Q/ Z) stackrelev⟶ Q/ Z</span></p>
 
 <p>where <span class="SimpleMath">ev(x,α)</span> evaluates a <span class="SimpleMath">1</span>-cocycle <span class="SimpleMath">α</span> on a <span class="SimpleMath">1</span>-cycle <span class="SimpleMath">x</span>.</p>
 
 <p>The linking form can be used to define the set</p>
 
-<p><span class="SimpleMath">I^O(W) = {L_W(g,g) : g∈ τ H_1(W, Z)}</span></p>
+<p><span class="SimpleMath">I^O(W) = {Lk_W(g,g) : g∈ τ H_1(W, Z)}</span></p>
 
 <p>which is an oriented-homotopy invariant of <span class="SimpleMath">W</span>. Letting <span class="SimpleMath">W^+</span> and <span class="SimpleMath">W^-</span> denote the two possible orientations on the manifold, the set</p>
 
@@ -271,6 +274,90 @@ Regular CW-complex of dimension 3
       [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ] ]
 
 </pre></div>
+
+<p><a id="X850C76697A6A1654" name="X850C76697A6A1654"></a></p>
+
+<h4>4.6 <span class="Heading">Determining the homeomorphism type of a lens space</span></h4>
+
+<p>In 1935 K. Reidemeister <a href="chapBib.html#biBreidemeister">[Rei35]</a> classified lens spaces up to orientation preserving PL-homeomorphism. This was generalized by E. Moise <a href="chapBib.html#biBmoise">[Moi52]</a> in 1952 to a classification up to homeomorphism -- his method requred the proof of the Hauptvermutung for <span class="SimpleMath">3</span>-dimensional manifolds. In 1960, following a suggestion of R. Fox, a proof was given by E.J. Brody <a href="chapBib.html#biBbrody">[Bro60]</a> that avoided the need for the Hauptvermutung. Reidemeister's method, using what is know termed <em>Reidermeister torsion</em>, and Brody's method, using tubular neighbourhoods of <span class="SimpleMath">1</span>-cycles, both require identifying a suitable "preferred" generator of <span class="SimpleMath">H_1(L(p,q), Z)</span>. In 2003 J. Przytycki and A. Yasukhara <a href="chapBib.html#biBprzytycki">[PY03]</a> provided an alternative method for classifying lens spaces, which uses the linking form and again requires the identification of a "preferred" generator of <span class="SimpleMath">H_1(L(p,q), Z)</span>.</p>
+
+<p>Przytycki and Yasukhara proved the following.</p>
+
+<p><strong class="button">Theorem.</strong> <em>Let <span class="SimpleMath">ρ: S^ 3 → L(p, q)</span> be the <span class="SimpleMath">p</span>-fold cyclic cover and <span class="SimpleMath">K</span> a knot in <span class="SimpleMath">L(p, q)</span> that represents a generator of <span class="SimpleMath">H_1 (L(p, q), Z)</span>. If <span class="SimpleMath">ρ ^-1 (K)</span> is the trivial knot, then <span class="SimpleMath">Lk_ L(p,q) ([K], [K]) = q/p</span> or <span class="SimpleMath">= overline q/p ∈ Q/ Z</span> where <span class="SimpleMath">qoverline q ≡ 1 mod p</span>. </em></p>
+
+<p>The ingredients of this theorem can be applied in HAP, but at present only to small examples of lens spaces. The obstruction to handling large examples is that the current default method for computing the linking form involves barycentric subdivision to produce a simplicial complex from a regular CW-complex, and then a homotopy equivalence from this typically large simplicial complex to smaller non-regular CW-complex. However, for homeomorphism invariants that are not homotopy invariants there is a need to avoid homotopy equivalences. In the current version of HAP this means that in order to obtain delicate homeomorphism invariants we have to perform homology computations on typically large simplicial complexes. In a future version of HAP we hope avoid the obstruction by implementing cup products, cap products and linking forms entirely within the category of regular CW-complexes.</p>
+
+<p>The following commands construct a small lens space <span class="SimpleMath">L=L(p,q)</span> with unknown values of <span class="SimpleMath">p,q</span>. Subsequent commands will determine the homeomorphism type of <span class="SimpleMath">L</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=Random([2,3,5,7,11,13,17]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q:=Random([1..p-1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],p,q);</span>
+Regular CW-complex of dimension 3
+
+</pre></div>
+
+<p>We can readily determine the value of <span class="SimpleMath">p=11</span> by calculating the order of <span class="SimpleMath">π_1(L)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FundamentalGroupWithPathReps(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(F);</span>
+"C11"
+
+</pre></div>
+
+<p>The next commands take the default edge path <span class="SimpleMath">γ: S^1→ L</span> representing a generator of the cyclic group <span class="SimpleMath">π_1(L)</span> and lift it to an edge path <span class="SimpleMath">tildeγ: S^1→ tilde L</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=UniversalCover(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=U!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=EquivariantCWComplexToRegularCWMap(U,Group(One(G)));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=Source(p);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma[2]:=F!.loops[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma[2]:=List(gamma[2],AbsInt);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma[1]:=List(gamma[2],k-&gt;L!.boundaries[2][k]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma[1]:=SSortedList(Flat(gamma[1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gammatilde:=[[],[],[],[]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for k in [1..U!.nrCells(0)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if p!.mapping(0,k) in gamma[1] then Add(gammatilde[1],k); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for k in [1..U!.nrCells(1)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if p!.mapping(1,k) in gamma[2] then Add(gammatilde[2],k); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gammatilde:=CWSubcomplexToRegularCWMap([U,gammatilde]);</span>
+Map of regular CW-complexes
+
+</pre></div>
+
+<p>The next commands check that the path <span class="SimpleMath">tildeγ</span> is unknotted in <span class="SimpleMath">tilde L≅ S^3</span> by checking that <span class="SimpleMath">π_1(tilde L∖ image(tildeγ))</span> is infinite cyclic.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=RegularCWComplexComplement(gammatilde);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(C);</span>
+&lt;fp group of size infinity on the generators [ f2 ]&gt;
+
+</pre></div>
+
+<p>Since <span class="SimpleMath">tildeγ</span> is unkotted the cycle <span class="SimpleMath">γ</span> represents the preferred generator <span class="SimpleMath">[γ]∈ H_1(L, Z)</span>. The next commands compute <span class="SimpleMath">Lk_L([γ],[γ])=</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LinkingFormHomeomorphismInvariant(L);</span>
+[ 7/11 ]
+
+</pre></div>
+
+<p>The classification of Moise/Brody states that <span class="SimpleMath">L(p,q)≅ L(p,q')</span> if and only if <span class="SimpleMath">qq'≡ ± 1 mod p</span>. Hence the lens space <span class="SimpleMath">L</span> has the homeomorphism type</p>
+
+<p><span class="SimpleMath">L≅ L(11,7) ≅ L(11,8) ≅ L(11,4) ≅ L(11,3)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
