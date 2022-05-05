@@ -50,6 +50,9 @@
 </span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X833A19F0791C3B06">7.10 <span class="Heading">Explicit cocycles </span></a>
+</span>
+</div>
 </div>
 
 <h3>7 <span class="Heading">Cohomology of groups</span></h3>
@@ -528,6 +531,157 @@ G-cocomplex of length 5 .
 </pre></div>
 
 <p>A theoretical calculation of the integral and mod-p cohomology rings of all of these fundamental groups of spherical 3-manifolds is given in <a href="chapBib.html#biBtomoda">[TZ08]</a>.</p>
+
+<p><a id="X833A19F0791C3B06" name="X833A19F0791C3B06"></a></p>
+
+<h4>7.10 <span class="Heading">Explicit cocycles </span></h4>
+
+<p>Given a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> and a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span>, one defines an <em><span class="SimpleMath">n</span>-cocycle</em> to be a <span class="SimpleMath">ZG</span>-homomorphism <span class="SimpleMath">f: R_n → A</span> for which the composite homomorphism <span class="SimpleMath">fd_n+1: R_n+1→ A</span> is zero. If <span class="SimpleMath">R_∗</span> happens to be the standard bar resolution (i.e. the cellular chain complex of the nerve of the group <span class="SimpleMath">G</span> considered as a one object category) then the free <span class="SimpleMath">ZG</span>-generators of <span class="SimpleMath">R_n</span> are indexed by <span class="SimpleMath">n</span>-tuples <span class="SimpleMath">(g_1 | g_2 | ... | g_n)</span> of elements <span class="SimpleMath">g_i</span> in <span class="SimpleMath">G</span>. In this case we say that the <span class="SimpleMath">n</span>-cocycle is a <em>standard n-cocycle</em> and we think of it as a set-theoretic function</p>
+
+<p><span class="SimpleMath">f : G × G × ⋯ × G ⟶ A</span></p>
+
+<p>satisfying a certain algebraic cocycle condition. Bearing in mind that a standard <span class="SimpleMath">n</span>-cocycle really just assigns an element <span class="SimpleMath">f(g_1, ... ,g_n) ∈ A</span> to an <span class="SimpleMath">n</span>-simplex in the nerve of <span class="SimpleMath">G</span> , the cocycle condition is a very natural one which states that <em><span class="SimpleMath">f</span> must vanish on the boundary of a certain <span class="SimpleMath">(n+1)</span>-simplex</em>. For <span class="SimpleMath">n=2</span> the condition is that a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f(g_1,g_2)</span> must satisfy</p>
+
+<p><span class="SimpleMath">g.f(h,k) + f(g,hk) = f(gh,k) + f(g,h)</span></p>
+
+<p>for all <span class="SimpleMath">g,h,k ∈ G</span>. This equation is explained by the following picture.</p>
+
+<p><img src="images/cocycle.png" align="center" height="200" alt="2-cocycle equation"/></p>
+
+<p>The definition of a cocycle clearly depends on the choice of <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span>. However, the cohomology group <span class="SimpleMath">H^n(G,A)</span>, which is a group of equivalence classes of <span class="SimpleMath">n</span>-cocycles, is independent of the choice of <span class="SimpleMath">R_∗</span>.</p>
+
+<p>There are some occasions when one needs explicit examples of standard cocycles. For instance:</p>
+
+
+<ul>
+<li><p>Let <span class="SimpleMath">G</span> be a finite group and <span class="SimpleMath">k</span> a field of characteristic <span class="SimpleMath">0</span>. The group algebra <span class="SimpleMath">k(G)</span>, and the algebra <span class="SimpleMath">F(G)</span> of functions <span class="SimpleMath">d_g: G→ k, h→ d_g,h</span>, are both Hopf algebras. The tensor product <span class="SimpleMath">F(G) ⊗ k(G)</span> also admits a Hopf algebra structure known as the quantum double <span class="SimpleMath">D(G)</span>. A twisted quantum double <span class="SimpleMath">D_f(G)</span> was introduced by R. Dijkraaf, V. Pasquier &amp; P. Roche <a href="chapBib.html#biBdpr">[DPR91]</a>. The twisted double is a quasi-Hopf algebra depending on a <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f: G× G× G→ k</span>. The multiplication is given by <span class="SimpleMath">(d_g ⊗ x)(d_h ⊗ y) = d_gx,xhβ_g(x,y)(d_g ⊗ xy)</span> where <span class="SimpleMath">β_a</span> is defined by <span class="SimpleMath">β_a(h,g) = f(a,h,g) f(h,h^-1ah,g)^-1 f(h,g,(hg)^-1ahg)</span> . Although the algebraic structure of <span class="SimpleMath">D_f(G)</span> depends very much on the particular <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f</span>, representation-theoretic properties of <span class="SimpleMath">D_f(G)</span> depend only on the cohomology class of <span class="SimpleMath">f</span>.</p>
+
+</li>
+<li><p>An explicit <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> is needed to construct the multiplication <span class="SimpleMath">(a,g)(a',g') = (a + g⋅ a' + f(g,g'), gg')</span> in the extension a group <span class="SimpleMath">G</span> by a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> determined by the cohomology class of <span class="SimpleMath">f</span> in <span class="SimpleMath">H^2(G,A)</span>. See <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.6</span></a>.</p>
+
+</li>
+<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.7</span></a>.</p>
+
+</li>
+</ul>
+<p>Given a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> (with contracting homotopy) and a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> one can use HAP commands to compute explicit standard <span class="SimpleMath">n</span>-cocycles <span class="SimpleMath">f: G^n → A</span>. With the twisted quantum double in mind, we illustrate the computation for <span class="SimpleMath">n=3</span>, <span class="SimpleMath">G=S_3</span>, and <span class="SimpleMath">A=U(1)</span> the group of complex numbers of modulus <span class="SimpleMath">1</span> with trivial <span class="SimpleMath">G</span>-action.</p>
+
+<p>We first compute a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span>. The Universal Coefficient Theorem gives an isomorphism <span class="SimpleMath">H_3(G,U(1)) = Hom_ Z(H_3(G, Z), U(1))</span>, The multiplicative group <span class="SimpleMath">U(1)</span> can thus be viewed as <span class="SimpleMath">Z_m</span> where <span class="SimpleMath">m</span> is a multiple of the exponent of <span class="SimpleMath">H_3(G, Z)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TR:=TensorWithIntegers(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TR,3);</span>
+[ 6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R!.dimension(3);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R!.dimension(4);</span>
+5
+
+</pre></div>
+
+<p>We thus replace the very infinite group U(1) by the finite cyclic group <span class="SimpleMath">Z_6</span>. Since the resolution <span class="SimpleMath">R_∗</span> has <span class="SimpleMath">4</span> generators in degree <span class="SimpleMath">3</span>, a homomorphism <span class="SimpleMath">f: R^3→ U(1)</span> can be represented by a list <span class="SimpleMath">f=[f_1, f_2, f_3, f_4]</span> with <span class="SimpleMath">f_i</span> the image in <span class="SimpleMath">Z_6</span> of the <span class="SimpleMath">i</span>th generator. The cocycle condition on <span class="SimpleMath">f</span> can be expressed as a matrix equation</p>
+
+<p><span class="SimpleMath">Mf^t = 0 mod 6</span>.</p>
+
+<p>where the matrix <span class="SimpleMath">M</span> is obtained from the following command and <span class="SimpleMath">f^t</span> denotes the transpose.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=CocycleCondition(R,3);;</span>
+
+</pre></div>
+
+<p>A particular cocycle <span class="SimpleMath">f=[f_1, f_2, f_3, f_4]</span> can be obtained by choosing a solution to the equation Mf^t=0.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SolutionsMod2:=NullspaceModQ(TransposedMat(M),2);</span>
+[ [ 0, 0, 0, 0 ], [ 0, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 1, 1 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SolutionsMod3:=NullspaceModQ(TransposedMat(M),3);</span>
+[ [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 2 ], [ 0, 0, 1, 0 ],
+  [ 0, 0, 1, 1 ], [ 0, 0, 1, 2 ], [ 0, 0, 2, 0 ], [ 0, 0, 2, 1 ],
+  [ 0, 0, 2, 2 ] ]
+
+</pre></div>
+
+<p>A non-standard <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f</span> can be converted to a standard one using the command <code class="code">StandardCocycle(R,f,n,q)</code> . This command inputs <span class="SimpleMath">R_∗</span>, integers <span class="SimpleMath">n</span> and <span class="SimpleMath">q</span>, and an <span class="SimpleMath">n</span>-cocycle <span class="SimpleMath">f</span> for the resolution <span class="SimpleMath">R_∗</span>. It returns a standard cocycle <span class="SimpleMath">G^n → Z_q</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=3*SolutionsMod2[3] - SolutionsMod3[5];   #An example solution to Mf=0 mod 6.</span>
+[ 3, 3, -1, -1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Standard_f:=StandardCocycle(R,f,3,6);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(G); h:=Random(G); k:=Random(G);</span>
+(1,2)
+(1,3,2)
+(1,3)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Standard_f(g,h,k);</span>
+3
+
+</pre></div>
+
+<p>A function <span class="SimpleMath">f: G× G× G → A</span> is a standard <span class="SimpleMath">3</span>-cocycle if and only if</p>
+
+<p><span class="SimpleMath">g⋅ f(h,k,l) - f(gh,k,l) + f(g,hk,l) - f(g,h,kl) + f(g,h,k) = 0</span></p>
+
+<p>for all <span class="SimpleMath">g,h,k,l ∈ G</span>. In the above example the group <span class="SimpleMath">G=S_3</span> acts trivially on <span class="SimpleMath">A=Z_6</span>. The following commands show that the standard <span class="SimpleMath">3</span>-cocycle produced in the example really does satisfy this <span class="SimpleMath">3</span>-cocycle condition. B</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sf:=Standard_f;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Test:=function(g,h,k,l);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function( g, h, k, l ) ... end
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for g in G do for h in G do for k in G do for l in G do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(Test(g,h,k,l),",");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;od;od;</span>
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,6,0,0,6,
+0,0,0,0,0,6,6,6,0,6,0,12,12,6,12,6,0,12,6,0,6,6,0,0,0,0,0,0,0,12,12,6,6,6,0,
+6,6,0,6,6,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,
+0,6,0,0,6,6,6,0,0,0,0,0,0,0,-6,0,0,-6,0,-6,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,
+0,0,0,6,6,6,0,0,0,6,6,6,0,0,0,0,-6,0,6,6,0,0,0,0,0,0,0,12,6,6,0,6,0,0,0,0,12,
+6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,0,6,0,0,0,0,0,6,6,
+6,0,0,0,6,12,6,6,0,0,0,-6,0,0,6,0,0,0,0,0,0,0,12,12,6,6,6,0,0,0,0,6,6,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+6,6,0,6,6,0,12,12,6,12,12,0,0,0,0,0,0,0,6,6,0,0,0,0,6,6,6,12,12,0,-6,-6,0,0,
+0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,
+0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,-6,0,6,0,6,0,6,0,0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,
+0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,-6,0,0,0,-6,0,0,-6,0,-6,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,
+0,0,0,0,6,6,0,-6,0,0,-6,0,0,12,6,0,-6,-6,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,12,0,6,0,0,6,0,0,0,6,0,0,0,0,0,0,
+0,6,12,0,0,0,0,0,0,0,6,6,0,-6,-6,0,0,0,0,0,0,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,
+6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,
+0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,
+6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
