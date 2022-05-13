@@ -40,6 +40,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X850C76697A6A1654">4.6 <span class="Heading">Determining the homeomorphism type of a lens space</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7EC6B008878CC77E">4.7 <span class="Heading">Surgeries on distinct knots can yield homeomorphic manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -61,7 +64,7 @@ Regular CW-complex of dimension 3
 
 <p>The next commands show that this <span class="SimpleMath">3</span>-manifold <span class="SimpleMath">W</span> has integral homology</p>
 
-<p><span class="SimpleMath">H_0(W, Z)= Z</span>, <span class="SimpleMath">H_1(W, Z)= Z_31</span>, <span class="SimpleMath">H_2(W, Z)=0</span>, <span class="SimpleMath">H_3(W, Z)= Z</span></p>
+<p><span class="SimpleMath">H_0(W, Z)= Z</span>, <span class="SimpleMath">H_1(W, Z)= Z_16</span>, <span class="SimpleMath">H_2(W, Z)=0</span>, <span class="SimpleMath">H_3(W, Z)= Z</span></p>
 
 <p>and that the fundamental group <span class="SimpleMath">π_1(W)</span> is non-abelian.</p>
 
@@ -69,14 +72,14 @@ Regular CW-complex of dimension 3
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);</span>
 [ 0 ]
-[ 31 ]
+[ 16 ]
 [  ]
 [ 0 ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FundamentalGroup(W);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=LowIndexSubgroupsFpGroup(F,10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(L,AbelianInvariants);</span>
-[ [ 31 ], [ 4, 13, 31 ], [ 3, 31 ], [ 4, 13, 31 ] ]
+[ [ 16 ], [ 3, 8 ], [ 3, 4 ], [ 2, 3 ], [ 16, 43 ], [ 8, 43, 43 ] ]
 
 </pre></div>
 
@@ -90,7 +93,7 @@ Regular CW-complex of dimension 3
 
 <p>The following example constructs the connected sum <span class="SimpleMath">W=A#B</span> of two <span class="SimpleMath">3</span>-manifolds, where <span class="SimpleMath">A</span> is obtained from a <span class="SimpleMath">5/1</span> Dehn surgery on the complement of the first prime knot on 11 crossings and <span class="SimpleMath">B</span> is obtained by a <span class="SimpleMath">5/1</span> Dehn surgery on the complement of the second prime knot on 11 crossings. The homology groups</p>
 
-<p><span class="SimpleMath">H_1(W, Z) = Z_2⊕ Z_71</span>, <span class="SimpleMath">H_2(W, Z) = 0</span>, <span class="SimpleMath">H_3(W, Z) = Z</span></p>
+<p><span class="SimpleMath">H_1(W, Z) = Z_2⊕ Z_594</span>, <span class="SimpleMath">H_2(W, Z) = 0</span>, <span class="SimpleMath">H_3(W, Z) = Z</span></p>
 
 <p>are computed.</p>
 
@@ -104,7 +107,7 @@ Regular CW-complex of dimension 3
 Regular CW-complex of dimension 3
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,1);</span>
-[ 2, 70 ]
+[ 2, 594 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,2);</span>
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,3);</span>
@@ -285,7 +288,7 @@ Regular CW-complex of dimension 3
 
 <p><strong class="button">Theorem.</strong> <em>Let <span class="SimpleMath">ρ: S^ 3 → L(p, q)</span> be the <span class="SimpleMath">p</span>-fold cyclic cover and <span class="SimpleMath">K</span> a knot in <span class="SimpleMath">L(p, q)</span> that represents a generator of <span class="SimpleMath">H_1 (L(p, q), Z)</span>. If <span class="SimpleMath">ρ ^-1 (K)</span> is the trivial knot, then <span class="SimpleMath">Lk_ L(p,q) ([K], [K]) = q/p</span> or <span class="SimpleMath">= overline q/p ∈ Q/ Z</span> where <span class="SimpleMath">qoverline q ≡ 1 mod p</span>. </em></p>
 
-<p>The ingredients of this theorem can be applied in HAP, but at present only to small examples of lens spaces. The obstruction to handling large examples is that the current default method for computing the linking form involves barycentric subdivision to produce a simplicial complex from a regular CW-complex, and then a homotopy equivalence from this typically large simplicial complex to smaller non-regular CW-complex. However, for homeomorphism invariants that are not homotopy invariants there is a need to avoid homotopy equivalences. In the current version of HAP this means that in order to obtain delicate homeomorphism invariants we have to perform homology computations on typically large simplicial complexes. In a future version of HAP we hope to avoid the obstruction by implementing cup products, cap products and linking forms entirely within the category of regular CW-complexes.</p>
+<p>The ingredients of this theorem can be applied in HAP, but at present only to small examples of lens spaces. The obstruction to handling large examples is that the current default method for computing the linking form involves barycentric subdivision to produce a simplicial complex from a regular CW-complex, and then a homotopy equivalence from this typically large simplicial complex to a smaller non-regular CW-complex. However, for homeomorphism invariants that are not homotopy invariants there is a need to avoid homotopy equivalences. In the current version of HAP this means that in order to obtain delicate homeomorphism invariants we have to perform homology computations on typically large simplicial complexes. In a future version of HAP we hope to avoid the obstruction by implementing cup products, cap products and linking forms entirely within the category of regular CW-complexes.</p>
 
 <p>The following commands construct a small lens space <span class="SimpleMath">L=L(p,q)</span> with unknown values of <span class="SimpleMath">p,q</span>. Subsequent commands will determine the homeomorphism type of <span class="SimpleMath">L</span>.</p>
 
@@ -358,6 +361,76 @@ Regular CW-complex of dimension 3
 <p>The classification of Moise/Brody states that <span class="SimpleMath">L(p,q)≅ L(p,q')</span> if and only if <span class="SimpleMath">qq'≡ ± 1 mod p</span>. Hence the lens space <span class="SimpleMath">L</span> has the homeomorphism type</p>
 
 <p><span class="SimpleMath">L≅ L(11,7) ≅ L(11,8) ≅ L(11,4) ≅ L(11,3)</span>.</p>
+
+<p><a id="X7EC6B008878CC77E" name="X7EC6B008878CC77E"></a></p>
+
+<h4>4.7 <span class="Heading">Surgeries on distinct knots can yield homeomorphic manifolds</span></h4>
+
+<p>The lens space <span class="SimpleMath">L(5,1)</span> is a quotient of the <span class="SimpleMath">3</span>-sphere <span class="SimpleMath">S^3</span> by a certain action of the cyclic group <span class="SimpleMath">C_5</span>. It can be realized by a <span class="SimpleMath">p/q=5/1</span> Dehn filling of the complement of the trivial knot. It can also be realized by Dehn fillings of other knots. To see this, the following commands compute the manifold <span class="SimpleMath">W</span> obtained from a <span class="SimpleMath">p/q=1/5</span> Dehn filling of the complement of the trefoil and show that <span class="SimpleMath">W</span> at least has the same integral homology as <span class="SimpleMath">L(5,1)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ap:=ArcPresentation(PureCubicalKnot(3,1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ThreeManifoldViaDehnSurgery(ap,1,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,1);</span>
+[ 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,3);</span>
+[ 0 ]
+
+</pre></div>
+
+<p>The next commands construct the universal cover <span class="SimpleMath">widetilde W</span> and show that it has the same homology as <span class="SimpleMath">S^3</span> and trivivial fundamental group <span class="SimpleMath">π_1(widetilde W)=0</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=UniversalCover(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=U!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Wtilde:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G)));</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Wtilde,1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Wtilde,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Wtilde,3);</span>
+[ 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FundamentalGroup(Wtilde);</span>
+&lt;fp group on the generators [  ]&gt;
+
+</pre></div>
+
+<p>By construction the space <span class="SimpleMath">widetilde W</span> is a manifold. Had we not known how the regular CW-complex <span class="SimpleMath">widetilde W</span> had been constructed then we could prove that it is a closed <span class="SimpleMath">3</span>-manifold by creating its barycentric subdivision <span class="SimpleMath">K=sdwidetilde W</span>, which is homeomorphic to <span class="SimpleMath">widetilde W</span>, and verifying that the link of each vertex in the simplicial complex <span class="SimpleMath">sdwidetilde W</span> is a <span class="SimpleMath">2</span>-sphere. The following commands carry out this proof: each link is shown to admit a discrete vector field with precisely two critical cells -- one <span class="SimpleMath">0</span>-cell and one <span class="SimpleMath">2</span>-cell.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BarycentricSubdivision(Wtilde);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for v in K!.vertices do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L,CriticalCells(RegularCWComplex(VertexLink(K,v))));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList(List(L,Size));</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Concatenation(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList(List(C,x-&gt;x[1]));</span>
+[ 0, 2 ]
+
+</pre></div>
+
+<p>The Poincare conjecture (now proven) implies that <span class="SimpleMath">widetilde W</span> is homeomorphic to <span class="SimpleMath">S^3</span>. Hence <span class="SimpleMath">W=S^3/C_5</span> is a quotient of the <span class="SimpleMath">3</span>-sphere by an action of <span class="SimpleMath">C_5</span> and is hence a lens space <span class="SimpleMath">L(5,q)</span> for some <span class="SimpleMath">q</span>.</p>
+
+<p>The next commands determine that <span class="SimpleMath">W</span> is homeomorphic to <span class="SimpleMath">L(5,4)≅ L(5,1)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lk:=LinkingFormHomeomorphismInvariant(W);</span>
+[ 0, 4/5 ]
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
