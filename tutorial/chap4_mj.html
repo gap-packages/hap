@@ -46,6 +46,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7EC6B008878CC77E">4.7 <span class="Heading">Surgeries on distinct knots can yield homeomorphic manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7B425A3280A2AF07">4.8 <span class="Heading">Finite fundamental groups of <span class="SimpleMath">\(3\)</span>-manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -434,6 +437,41 @@ Simplicial complex of dimension 3.
 [ 0, 4/5 ]
 
 </pre></div>
+
+<p>Moser <a href="chapBib_mj.html#biBlmoser">[Mos71]</a> gives a precise decription of the lens spaces arising from surgery on the trefoil knot and more generally from surgery on torus knots. Greene <a href="chapBib_mj.html#biBgreene">[Gre13]</a> determines the lens spaces that arise by integer Dehn surgery along a knot in the three-sphere</p>
+
+<p><a id="X7B425A3280A2AF07" name="X7B425A3280A2AF07"></a></p>
+
+<h4>4.8 <span class="Heading">Finite fundamental groups of <span class="SimpleMath">\(3\)</span>-manifolds</span></h4>
+
+<p>Lens spaces are examples of <span class="SimpleMath">\(3\)</span>-manifolds with finite fundamental groups. The complete list of finite groups <span class="SimpleMath">\(G\)</span> arising as fundamental groups of closed connected <span class="SimpleMath">\(3\)</span>-manifolds is recalled in <a href="chap7_mj.html#X79B1406C803FF178"><span class="RefLink">7.9</span></a> where one method for computing their cohomology rings is presented. Their cohomology could also be computed from explicit <span class="SimpleMath">\(3\)</span>-manifolds <span class="SimpleMath">\(W\)</span> with <span class="SimpleMath">\(\pi_1W=G\)</span>. For instance, the following commands realize a closed connected <span class="SimpleMath">\(3\)</span>-manifold <span class="SimpleMath">\(W\)</span> with <span class="SimpleMath">\(\pi_1W = C_{11}\times SL_2(\mathbb Z_5)\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ap:=ArcPresentation(PureCubicalKnot(3,1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ThreeManifoldViaDehnSurgery(ap,1,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FundamentalGroup(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(F);</span>
+1320
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(F);</span>
+[ 11 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(F);</span>
+"C11 x SL(2,5)"
+
+</pre></div>
+
+<p>Hence the group <span class="SimpleMath">\(G=C_{11}\times SL_2(\mathbb Z_5)\)</span> of order <span class="SimpleMath">\(1320\)</span> acts freely on the <span class="SimpleMath">\(3\)</span>-sphere <span class="SimpleMath">\(\widetilde W\)</span>. It thus has periodic cohomology with</p>
+
+<p class="center">\[
+H_n(G,\mathbb Z) = \left\{ \begin{array}{ll}
+\mathbb Z_{11} &amp; n\equiv 1  \mod 4  \\
+0  &amp; n\equiv 2 \mod 4 \\
+\mathbb Z_{1320} &amp; n \equiv 3\mod 4\\
+\mathbb 0 &amp; n\equiv 0  \mod 4   \\
+\end{array}\right.
+\]</p>
+
+<p>for <span class="SimpleMath">\(n &gt; 4\)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
