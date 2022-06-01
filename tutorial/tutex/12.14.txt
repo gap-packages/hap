@@ -1,0 +1,12 @@
+gap> K:=BarycentricSubdivision(Wtilde);
+Simplicial complex of dimension 3.
+
+gap> L:=[];;
+gap> for v in K!.vertices do
+> Add(L,CriticalCells(RegularCWComplex(VertexLink(K,v))));
+> od;
+gap> SSortedList(List(L,Size));
+[ 2 ]
+gap> C:=Concatenation(L);;
+gap> SSortedList(List(C,x->x[1]));
+[ 0, 2 ]

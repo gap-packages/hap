@@ -176,6 +176,48 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ChainComplexHomeomorphismEquivalenceOfRegularCWComplex,
+function(X)
+local S,T,F,G, mapS, mapT;;
+#THIS FUNCTION STILL NEEDS TO BE WRITTEN. THIS IS JUST A PLACEHOLDER!
+
+S:=ChainComplexOfRegularCWComplex(X);
+T:=S;
+
+####################
+mapT:=function(v,n);
+return v;
+end;
+####################
+
+F:=Objectify(HapChainMap,
+       rec(
+           source:=S,
+           target:=T,
+           mapping:=mapT,
+           properties:=[["characteristic", 0],["type","chainMap"]]));
+
+####################
+mapS:=function(v,n);
+return v;
+end;
+####################
+
+G:=Objectify(HapChainMap,
+       rec(
+           source:=T,
+           target:=S,
+           mapping:=mapS,
+           properties:=[["characteristic", 0],["type","chainMap"]]));
+
+
+return [F,G];
+
+end);
+#####################################################################
+#####################################################################
 
 
 #####################################################################

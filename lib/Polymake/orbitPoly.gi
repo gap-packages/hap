@@ -109,3 +109,50 @@ Exec(Concatenation("rm ",tmpIn));
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Display,
+"method for displaying convex hulls of sets of points",
+[IsPolymakeObject],
+function(F)
+local
+        Points,p,x,i,w,Dim,tmp,input, tmpdir, tmpIn, tmp2dir, tmp2In,
+        a,b,c,d,U,V,W,AppendTo, PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
+Dim:=Length(Polymake(F,"F_VECTOR"));
+Points:=Polymake(F,"VERTICES");
+
+tmpdir := DirectoryTemporary();;
+tmpIn:=Filename( tmpdir , "tmpIn.log" );
+tmp2dir := DirectoryTemporary();;
+tmp2In:=Filename( tmpdir , "tmp2In.log" );
+
+
+
+
+################## CALCULATE HULL POINTS ###############
+AppendTo(tmpIn,"POINTS","\n");
+for p in Points do
+AppendTo(tmpIn,1);
+    for i in [1..Dim] do
+    AppendTo(tmpIn," ",p[i]);
+    od;
+AppendTo(tmpIn,"\n");
+od;
+
+
+################# HULL CALCULATED ###################################
+
+
+Exec(Concatenation(POLYMAKE_PATH,tmpIn ," VISUAL"));
+
+Exec(Concatenation("rm ",tmpIn));
+
+end);
+#####################################################################
+#####################################################################
+

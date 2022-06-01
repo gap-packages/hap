@@ -13,11 +13,48 @@ local start, edges, vertices, faces, mins, fn, TORUS, ffmod, fffmod,
       Pabdc, Pbd, Pca, Pac, Pcd, Pba, Pdb, Pdc, Pab, PVd, PVc, PVb, PVa,
       Vabdc, vabdc, sqboundary, BR1, BR0, BL1, BL0, TR1, TL0, TL1, TR0,
       xtrballs, xtrfaces, xtrloop, xtrFaces, xtrvertices, Faces, SGN,
-      A,B,e,ee,f,i,k,L,LL,m,M,MB,p,P,q,Q,s,ss,S,T,v,W, x,Y;
-p:=qq; q:=pp;   #Better stick to conventions!
+      A,B,e,ee,f,i,k,L,LL,m,M,MB,p,P,q,Q,s,ss,S,T,v,W, x,Y,fg,epi,g,YY,ff,TT;
+
+YY:=SphericalKnotComplement(K);;
+ss:=100000;;
+s:=Size(BoundaryOfPureRegularCWComplex(YY));
+while s<ss do
+   ss:=s;
+   YY:=RegularCWComplex(BarycentricSubdivision(YY));
+   YY:=SimplifiedComplex(YY);
+   s:=Size(BoundaryOfPureRegularCWComplex(YY));
+od;
+
+if s>16 then Print("PROBLEM: Torus has ",s," cells\n"); fi;
+ff:=BoundaryMap(YY);
+TT:=Source(ff);
+YY:=Target(ff);
+
+
+B3:=List(TT!.boundaries[3],x->1*x{[2..5]});
+
+abdc:=B3[1];   #I think this choice needs to be refined.
+
+####################################################
+#Let's figure out the "orientation"
+
+fg:=FundamentalGroupWithPathReps(YY);
+e:=fg!.edgeToWord(ff!.mapping(1,abdc[1]));
+epi:=NqEpimorphismNilpotentQuotient(fg,1);
+e:=Image(epi,e);
+g:=Target(epi)/Group(e);
+####################################################
+
+if Order(g)=infinity then
+p:=qq; q:=-pp;                   #WARNING:  This is fine for the trivial and the trefoil
+else                             #          knots. Need to think more about arbitrary knots
+p:=pp;q:=-(qq-p*(Order(g)+1));
+fi;
+
 SGN:=SignInt(p*q)<0;
 p:=AbsInt(p); q:=AbsInt(q);
-p:=p/Gcd(p,q); q:=q/Gcd(p,q);
+x:=Gcd(p,q);
+p:=p/x; q:=q/x;
 
 m:=p*q;
 L:=[];
@@ -219,7 +256,7 @@ Remove(loop,pos);
 Add(loop,[[m,0],[m+p,0]]*10);
 
 loop2:=[];
-if p<q then 
+if p<=q then                                 ##ADDED "=" May 2022
 Add(loop2, [10*[m,m]-[0,q], 10*[m,m]+[p,0]]);
 fi;
 for x in loop do
@@ -922,26 +959,13 @@ BACD:=Concatenation(TR0,TR1);
 CDBA:=Concatenation(BL0,BL1);
 DCAB:=Concatenation(BR0,BR1);
 
+##
+##The next peice of code is a continuation of the code at the beginning!  Sloppy!!
+##
+f:=ff;
+T:=TT;
+Y:=YY;
 
-Y:=SphericalKnotComplement(K);;
-ss:=100000;;
-s:=Size(BoundaryOfPureRegularCWComplex(Y));
-while s<ss do
-   ss:=s;
-   Y:=RegularCWComplex(BarycentricSubdivision(Y));
-   Y:=SimplifiedComplex(Y);
-   s:=Size(BoundaryOfPureRegularCWComplex(Y));
-od;
-
-if s>16 then Print("PROBLEM: Torus has ",s," cells\n"); fi;
-f:=BoundaryMap(Y);
-T:=Source(f);
-Y:=Target(f);
-
-
-B3:=List(T!.boundaries[3],x->1*x{[2..5]});
-
-abdc:=B3[1];   #I think this choice needs to be refined.
 for P in B3{[2,3,4]} do
 if Intersection(abdc,P)=[] then dcab:=P; break; fi;
 od;
@@ -1008,14 +1032,14 @@ dcab:=f!.mapping(2,dcab);
 
 if SGN then
 ############################################
-PVa:=Vd;
-PVb:=Vc;
-PVc:=Vb;
-PVd:=Va;
-Pab:=cd;
-Pba:=dc;
-Pcd:=ab;
-Pdc:=ba;
+PVa:=Vb;
+PVb:=Va;
+PVc:=Vd;
+PVd:=Vc;
+Pab:=ab;
+Pba:=ba;
+Pcd:=cd;
+Pdc:=dc;
 Pac:=bd;
 Pca:=db;
 Pbd:=ac;

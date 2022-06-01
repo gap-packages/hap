@@ -1,0 +1,125 @@
+<Chapter>
+    <Heading>CW functions</Heading>
+
+    The functions in this section have been written by <B>Kelvin Killeen</B>.
+
+    <Section>
+        <Heading>&nbsp;</Heading>
+
+        <ManSection>
+            <Func Name="ArcPresentationToKnottedOneComplex" Arg="P"/>
+            <Description>
+                <P/>
+                Inputs an arc presentation <A>P</A> corresponding to some link.
+                The output is an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M> where
+                <M>Y</M> is homeomorphic to a (disjoint union of) circle(s) and <M>X</M> is 
+                homeomorphic to the closed 3-ball.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="RegularCWMapToCWSubcomplex" Arg="f"/>
+            <Description>
+                <P/>
+                The inverse of the below function. This function inputs a strictly
+                cellular map <M>f:Y \rightarrow X</M> of regular CW-complexes.
+                It outputs a list <M>[X,S]</M> corresponding to the CW-subcomplex <M>f(Y)</M>. Here, <M>S</M>
+                denotes a list of lists of positive integers indicating the the location of each cell of <M>f(Y)</M>
+                in <M>X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="CWSubcomplexToRegularCWMap" Arg="XS"/>
+            <Description>
+                <P/>
+                The inverse of the above function. This function inputs a CW-subcomplex <M>[X,S]</M>
+                and outputs the associated inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="IntersectionCWSubcomplexes" Arg="XS1 XS2"/>
+            <Description>
+                <P/>
+                Inputs two CW-subcomplexes <M>XS1=[X,S]</M> and <M>XS2=[X,S']</M> and returns the CW-subcomplex
+                <M>[X,S'']</M> corresponding to their intersection.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="PathComponentsCWSubcomplex" Arg="XS"/>
+            <Description>
+                <P/>
+                Inputs a CW-subcomplex <M>[X,S]</M> and returns a list <M>[[X,S_1], \ldots, [X,S_n]]</M>
+                of CW-subcomplexes arising as the path components of <M>[X,S]</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="ClosureCWCell" Arg="X,k,i"/>
+            <Description>
+                <P/>
+                Inputs a regular CW-subcomplex <M>X</M> and two integers <M>k \geq 0, i > 1</M>.
+                The output is a CW-subcomplex <M>[X,S]</M> arising as the topological closure of
+                the <M>i</M>th <M>k</M>-cell <M>e^k_i \subset X</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="AddCell" Arg="B,k,b,c"/>
+            <Description>
+                <P/>
+                Inputs a non-CW cell complex <M>B</M>, an integer <M>k \geq 0</M> and two lists of 
+                positive integers <M>b</M> and <M>c</M>. This function adds to <M>B</M> a single
+                <M>k</M>-cell <M>e^k_i</M> whose boundary <M>(k-1)</M>-cells are determined by <M>b</M> and
+                whose coboundary <M>(k+1)</M>-cells are determined by <M>c</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="BarycentricallySubdivideCell" Arg="f,n,k"/>
+            <Description>
+                <P/>
+                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>,
+                as well as two integers <M>n \geq 0</M> and <M>k > 0</M>. Let <M>B(e^n_k)</M> denote the barycentric
+                subdivision of the <M>k ^ \textrm{th}</M> <M>n</M>-cell of <M>X</M>. The output is an inclusion of regular
+                CW-complexes <M>f' : Y' \hookrightarrow X'</M> where <M>X'</M> and <M>Y'</M> denote the complexes <M>X</M> and <M>Y</M>
+                where the cell <M>e^n_k</M> has been barycentrically subdivided.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="RegularCWComplexComplement" Arg="f[, boole]"/>
+            <Description>
+                <P/>
+                This function inputs an inclusion of regular CW-complexes <M>f: Y \hookrightarrow X</M>. If the optional boolean
+                value <A>boole</A> is given, it determines whether or not the algorithm checks that all cells <M>e^n</M> of <M>X \backslash Y</M>
+                yield contractible connected components in <M>\bar{e}^n \cap Y</M>. By default, <A>boole</A> is set to <C>true</C>, so the
+                check will be performed. If <A>boole</A> is incorrectly set to <C>false</C> the algorithm will crash, so it is recommended only to
+                use this optional argument for a computation time decrease if it is known that the input is compatible beforehand.
+                <P/>
+                Let <M>N(Y)</M> denote a regular CW-complex homeomorphic to a tubular neighbourhood of <M>Y</M> in <M>X</M>.
+                The output of this algorithm is an inclusion <M>f' : \partial ( X \backslash N(Y) ) \hookrightarrow X \backslash N(Y)</M> where
+                <M>\partial ( X \backslash N(Y) )</M> denotes the boundary of <M>X \backslash N(Y)</M>.
+            </Description>
+        </ManSection>
+
+        <ManSection>
+            <Func Name="ViewColouredArcDiagram" Arg="arc,cross,col"/>
+            <Description>
+                <P/>
+                This function inputs three lists:
+                <P/>
+                <P/><A>arc</A> is an arc presentation.
+                <P/><A>cross</A> is a list whose length is the number of crossings occuring in the arc presentation. The entries of this
+                list are <M>0, -1</M> or <M>1</M> corresponding to a given crossing being an intersection, an undercrossing or an overcrossing (with
+                resect to the horizontal arcs in the arc presentation). The ordering on the crossings is top-to-bottom, left-to-right.
+                <P/><A>col</A> is a list whose length is the number of <M>0</M> entries in <A>cross</A>. Its values are <M>1,2,3</M> or <M>4</M>. 
+                They correspond to an intersection going from blue to blue, blue to red, red to blue or red to red. These colours correspond to
+                height information in <M>4</M>-<M>d</M>, see the associated tutorial for an in-depth explanation.
+                <P/>The output of this function is a png file of the associated coloured arc diagram.
+            </Description>
+        </ManSection>
+    </Section>
+</Chapter>

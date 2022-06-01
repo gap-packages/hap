@@ -13,4 +13,7 @@ DeclareGlobalFunction("ThreeManifoldViaDehnSurgery");
 DeclareGlobalFunction("HAP_AllHomomorphisms");
 DeclareGlobalFunction("DijkgraafWittenInvariant");
 DeclareGlobalFunction("LinkingForm");
-DeclareGlobalFunction("LinkingFormInvariant");
+DeclareGlobalFunction("LinkingFormHomotopyInvariant");
+DeclareGlobalFunction("HAP_Hurewicz1Cycles");
+DeclareGlobalFunction("HAP_HomeoLinkingForm");
+DeclareGlobalFunction("LinkingFormHomeomorphismInvariant");

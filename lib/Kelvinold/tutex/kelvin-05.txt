@@ -1,0 +1,35 @@
+gap> f_:=BoundaryMap(comp);
+Map of regular CW-complexes
+
+gap> f_:=RegularCWMapToCWSubcomplex(f_);;
+gap> paths:=PathComponentsCWSubcomplex(f_);
+[ [ Regular CW-complex of dimension 3
+        , 
+      [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20 ], 
+          [ 1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 33, 34, 35, 46, 47, 48 
+             ], [ 11, 12, 13, 14, 15, 16, 35, 36 ] ] ], 
+  [ Regular CW-complex of dimension 3
+        , [ [ 21, 24, 25, 27, 30, 31, 32, 37, 38, 39, 40, 43, 45, 46, 48 ], 
+          [ 49, 51, 53, 56, 57, 59, 61, 63, 65, 67, 69, 71, 73, 74, 76, 79, 
+              82, 83, 86, 87, 90, 91 ], [ 37, 39, 41, 44, 45, 47, 49 ] ] ], 
+  [ Regular CW-complex of dimension 3
+        , [ [ 22, 23, 26, 28, 29, 33, 34, 35, 36, 41, 42, 44, 47, 49, 50 ], 
+          [ 50, 52, 54, 55, 58, 60, 62, 64, 66, 68, 70, 72, 75, 77, 78, 80, 
+              81, 84, 85, 88, 89, 92 ], [ 38, 40, 42, 43, 46, 48, 50 ] ] ] ]
+gap> paths:=List(paths,CWSubcomplexToRegularCWMap);
+[ Map of regular CW-complexes
+    , Map of regular CW-complexes
+    , Map of regular CW-complexes
+     ]
+gap> List([1..3],x->List(Difference([1..3],[x]),y->IntersectionCWSubcomplex(paths[x],paths[y])));
+[ [ [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ] ], [ [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ] ], [ [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3
+            , [ [  ], [  ], [  ] ] ] ] ]
+
+gap> List(paths,x->List([0..3],y->Homology(Source(x),y)));
+[ [ [ 0 ], [  ], [ 0 ], [  ] ], [ [ 0 ], [ 0, 0 ], [ 0 ], [  ] ], 
+  [ [ 0 ], [ 0, 0 ], [ 0 ], [  ] ] ]

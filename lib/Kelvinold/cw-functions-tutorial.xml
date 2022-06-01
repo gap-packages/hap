@@ -1,0 +1,142 @@
+<Chapter><Heading>Regular CW-structure on knots</Heading>
+
+        <Section><Heading>Knot complements in the 3-ball</Heading>
+
+                While methods for endowing knot complements with CW-structure already exist in HAP (see section 2.1), they often result in a large
+                number of cells which can make computing with them taxing. The following example shows how one can obtain a comparatively small 3-dimensional regular CW-complex
+                corresponding to the complement of a thickened trefoil knot from an arc presentation. Recall that an arc presentation is encoded in HAP as
+                a list of integer pairs corresponding to the position of the endpoints of each horizontal arc in a grid.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-01.txt">
+</Example>
+
+                An optional argument of <C>"rand"</C> in the <C>KnotComplement</C> function randomises the order in which <M>2</M>-cells are added to the complex.
+                This allows for alternate presentations of the knot group.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-02.txt">
+</Example>
+
+                It is often useful to obtain an inclusion of regular CW-complexes <M>\iota : \partial (N(K)) \hookrightarrow B^3 \backslash N(K)</M> from the boundary of a
+                tubular neighbourhood of some knot <M>N(K)</M> into its complement in the <M>3</M>-ball <M>B^3 \backslash N(K)</M>. The below example does this for the first
+                prime knot on 11 crossings.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-03.txt">
+</Example>
+
+                Note that we can add <M>n</M>-cells to regular CW-complexes by specifying the <M>(n-1)</M>-cells in their boundaries and <M>(n+1)</M>-cells in their coboundaries.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-10.txt">
+</Example>
+
+        </Section>
+        <Section><Heading>Tubular neighbourhoods</Heading>
+
+                Let <M>Y</M> denote a CW-subcomplex of a regular CW-complex <M>X</M> and let <M>N(Y)</M> denote an open tubular neighbourhood of <M>Y</M>.
+                Given an inclusion of regular CW-complexes <M>f : Y \hookrightarrow X</M>, this algorithm describes a procedure for
+                obtaining the associated inclusion <M>f' : \partial C \hookrightarrow C</M> where <M>C=X \backslash N(Y)</M> and <M>\partial C</M> denotes
+                the boundary of <M>C</M>. The following is also assumed:
+                <P/>Let <M>e^n</M> denote a cell of <M>X \backslash Y</M> of dimension <M>n</M> with <M>\bar{e}^n</M> denoting its closure. For each <M>n</M>-cell, all of
+                the connected components of the subcomplex <M>\bar{e}^n \cap Y</M> are contractible.
+                <P/>Some additional terminology and notation is needed to describe this algorithm. The output regular CW-complex <M>X \backslash N(Y)</M> consists of the
+                cell complex <M>X \backslash Y</M> as well as some additional cells to maintain regularity. A cell of <M> X \backslash N(Y)</M> is referred to as
+                <E>internal</E> if it lies in <M>X \backslash Y</M>, it is <E>external</E> otherwise. Let <M>\bar{e}^n</M> denote the closure in <M>X</M> of an internal cell <M>e^n</M>.
+                Note that <M>\bar{e}^n</M> is a CW-subcomplex of <M>X</M> and so is the intersection <M>\bar{e}^n \cap Y</M> which can be
+                expressed as the union
+                <P/><M>\bar{e}^n \cap Y = A_1 \cup A_2 \cup \cdots \cup A_k</M>
+                <P/> of its path components <M>A_i</M> all of which are CW-subcomplexes of <M>Y</M>. For each <M>n</M>-cell of <M>X \backslash Y</M> there is one
+                internal <M>n</M>-cell <M>e^n</M> of <M>X \backslash N(Y)</M>. For <M>n \geq 1</M> there is also one external <M>(n-1)</M>-cell <M>f^{e^n}_{A_i}</M> for each path
+                component <M>A_i</M> of <M>\bar{e}^n \cap Y</M>. Lastly, we need a method for determining the homological boundary of the internal and external
+                cells:
+                <P/><M>\bullet</M> The boundary of an internal <M>n</M>-cell <M>e^n</M> consists of all those internal <M>(n-1)</M>-cells of <M>\bar{e}^n</M>
+                together with all external <M>(n-1)</M>-cells <M>f^{e^n}_{A_i}</M> where <M>A_i</M> is a path component of <M>\bar{e}^n \cap Y</M>.
+                <P/><M>\bullet</M> The boundary of an external <M>(n-1)</M>-cell <M>f^{e^n}_{A_i}</M> consists of all those external <M>(n-2)</M>-cells
+                <M>f^{e^{n-1}}_{B_j}</M> where <M>e^{n-1}</M> is an <M>(n-1)</M>-cell of <M>\bar{e}^n</M> and <M>B_j \subseteq A_i</M> is a path component of
+                <M>A_i</M>.
+                <P/>The following three steps comprise the algorithm.
+                <P/><M>(1)</M> For each internal <M>n</M>-cell <M>e^n \subset X \backslash Y</M>, compute the CW-complex <M>\bar{e}^n \cap Y</M> as a union of
+                path components <M>A_1 \cup A_2 \cup \cdots \cup A_k</M>. This information can be used to determine the number of cells of <M>X \backslash N(Y)</M>
+                in each dimension.
+                <P/><M>(2)</M> Create a list <M>B=[ \; [ \; \; ], [ \; \; ], \ldots, [ \; \; ] \; ]</M> of length <M>\textrm{dim}X +1</M>.
+                <P/><M>(3)</M> For <M>0 \leq n \leq \textrm{dim}X</M> set <M>B[n+1]=[ b_1, b_2, \ldots, b_{\alpha_n} ]</M> where <M>\alpha_n</M> is the number
+                of <M>n</M>-cells in <M>X \backslash N(Y)</M> and <M>b_i</M> is a list of integers describing the <M>(n-1)</M>-cells of the <M>i ^ \textrm{th}</M>
+                <M>n</M>-cell of <M>X \backslash N(Y)</M>. The internal cells will always be listed before the external cells in each sublist. Return B as a regular CW-complex.
+                <P/> The following example computes the tubular neighbourhood of a <M>1</M>-dimensional subcomplex of a <M>3</M>-dimensional complex corresponding to the Hopf link
+                embedded in the closed <M>3</M>-ball.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-04.txt">
+</Example>
+
+                Note that the output of this algorithm is just a regular CW-complex, not an inclusion map. The function <C>BoundaryMap</C> can be employed to obtain the
+                boundary of a pure complex. This results in three path components for this example: two corresponding to the boundary of the knotted tori and the
+                other corresponding to the boundary of the <M>3</M>-ball in which the link was embedded. These path components can be obtained as individual CW-subcomplexes if desired.
+                A CW-subcomplex is represented in HAP as a list <M>[X,s]</M> where <M>X</M> is a regular CW-complex and <M>s</M> is a list of length <M>n</M> whose
+                <M>i^\textrm{th}</M> entry lists the indexing of each <M>(i-1)</M>-cell of the <M>n</M>-dimensional subcomplex of <M>X</M>. CW-subcomplexes and CW maps can be converted between each other interchangeably.
+                This next example obtains the inclusion detailed in the above algorithm, finds the path components of the source of said inclusion, shows that they are in fact disjoint, and then
+                obtains the first four integral homology groups of each component.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-05.txt">
+</Example>
+
+                As previously mentioned, for the tubular neighbourhood algorithm to work, we require that no external cells yield non-contractible path-components in their
+                intersection with the subcomplex. If this is ever the case then we can subdivide the offending cell to prevent this from happening. We have implemented two
+                subdivision algorithms in HAP, one for barycentrically subdividing a given cell, and the other for subdividing an <M>n</M>-cell into as many <M>n</M>-cells as 
+                there are <M>(n-1)</M>-cells in its boundary. Barycentric subdivision is integrated into the <C>RegularCWComplexComplement</C> function and will be performed automatically as
+                required. The following example shows this automatic subdivision running via the complement of a tubular neighbourhood of the unknot, then obtains an inclusion map from the closure
+                of an arbitrary <M>3</M>-cell of this complex and then compares the difference in size of the two different subdivisions of a 2-cell in the boundary of this <M>3</M>-cell.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-06.txt">
+</Example>
+
+        </Section>
+        <Section><Heading>Knotted surface complements in the 4-ball</Heading>
+
+                A construction of Satoh's, the tube map, associates a ribbon torus-knot to virtual knot diagrams. A virtual knot diagram differs from a knot diagram in that it allows for a third
+                type of crossing, a virtual crossing. The image of such a crossing via the tube map is two tori which pass through each other. An arc diagram is a triple of lists <C>[arc,cross,cols]</C>
+                that encode virtual knot diagrams. <C>arc</C> is an arc presentation. <C>cross</C> is a list of length the number of crossings in the knot associated to the arc presentation whose entries
+                are <M>-1,0</M> or <M>1</M> corresponding to an undercrossing (horizontal arc underneath vertical arc), a virtual crossing (depicted by intersecting horizontal and vertical arcs) and an overcrossing
+                (horizontal arc above vertical arc) respectively. <C>cols</C> is a list of length the number of <M>0</M> entries in <C>cross</C> and its entries are <M>1,2,3</M> or <M>4</M>.
+                It describes the types of 'colourings' we assign to the virtual crossings. We interpret each integer as the change in 4-dimensional height information as represented by a colour
+                scale from blue (lower down in 4-space), to green (0 level), to red (higher up in 4-space). Without loss of generality, we impose that at each virtual crossing, the vertical arc passes through the horizontal arc.
+                Thus, <M>1</M> corresponds to the vertical bar entering the horizontal bar as blue and leaving as blue, <M>2</M> corresponds to entering as blue and leaving as red, <M>3</M>
+                corresponds to entering as red and leaving as blue and <M>4</M> corresponds to entering and leaving as red. A coloured arc diagram can be visualised using the <C>ViewColouredArcDiagram</C>
+                function.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-07.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="../lib/Kelvin/images/kelvin-01.png" width="350"/></Alt>
+<P/>
+
+                Towards obtaining a regular CW-decomposition of ribbon torus-knots, we first begin by embedding a self-intersecting knotted torus in the 3-ball. The function 
+                <C>ArcDiagramToTubularSurface</C> inputs a coloured arc diagram and outputs an inclusion from the boundary of some (potentially self-intersecting) torus in the <M>3</M>-ball.
+                By inputting just an arc presentation, one can obtain an inclusion identical to the <C>KnotComplementWithBoundary</C> function. By additionally inputting a list of <M>-1</M>s
+                and <M>1</M>s, one can obtain an inclusion similar to <C>KnotComplementWithBoundary</C> but where there is extra freedom in determining whether or not a given crossing
+                is an under/overcrossing. If one inputs both of the above but includes <M>0</M> entries in the <C>cross</C> list and includes the list of colours, the output is then an
+                inclusion from an embedded self-intersecting torus into the 3-ball where each <M>2</M>-cell (the top-dimensional cells of the self-intersecting surface) is assigned a colour.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-08.txt">
+</Example>
+                From this self-intersecting surface with colour, we can lift it to a surface without self-intersections in <M>\mathbb{R}^4</M>. We do this by constructing a regular CW-complex
+                of the direct product <M>B^3 \times [a,b]</M> where <M>B^3</M> denotes the <M>3</M>-ball, <M>a</M> is <M>1</M> less than the smallest integer assigned to a cell by the colouring, and
+                <M>b</M> is <M>1</M> greater than the largest integer assigned to a cell by the colouring. The subcomplex of the direct product corresponding to the surface without intersection 
+                can be obtained using the colouring with additional care taken to not lift any 1-cells arising as double-point singularities. The following example constructs the complement of a
+                ribbon torus-link embedded in <M>\mathbb{R}^4</M> obtained from the Hopf link with one virtual crossing and then calculates some invariants of the resulting space. We compare the
+                size of this complex, as well as how long it takes to obtain the same invariants, with a cubical complex of the same space. As barycentric subdivision can massively increase the size of the cell complex,
+                the below method sequentially obtains the tubular neighbourhood of the entire subcomplex by obtaining the tubular neighbourhood of each individual <M>2</M>-cell. This has yet to be optimised so it currently
+                takes some time to complete.
+
+<Example>
+<#Include SYSTEM "../lib/Kelvin/tutex/kelvin-09.txt">
+</Example>
+                
+        </Section>       
+</Chapter>

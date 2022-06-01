@@ -8,7 +8,8 @@ function(X,Y)
 local bndX, bndY, bnd, orientX, orientY, orient,
       quad2pair, pair2quad,
       XYmapX, XYmapY, XYmappingX, XYmappingY,
-      i, j, ij, x, y, a, b, ia, ib, count, BND, ORIEN, M, bool;
+      i, j, ij, x, y, a, b, ia, ib, count, BND, ORIEN, M, bool,
+      F, IF, m, n, p, q, crit;
 
 bndX:=X!.boundaries;
 bndY:=Y!.boundaries;
@@ -139,6 +140,52 @@ XYmapY:=Objectify(HapRegularCWMap,
            target:=Y,
            mapping:=XYmappingY));
 
+#############################################
+####Vector Field
+if IsList(X!.vectorField) and IsList(Y!.vectorField) then
+
+F:=List([1..Dimension(X)+Dimension(Y)],i->[]);
+IF:=List([1..Dimension(X)+Dimension(Y)],i->[]);
+
+for m in [1..Dimension(X)+1] do
+for n in [1..Dimension(Y)+1] do
+for i in [1..X!.nrCells(m-1)] do
+for j in [1..Y!.nrCells(n-1)] do
+
+if m<=Dimension(X) and IsBound(X!.inverseVectorField[m][i]) then
+q:=X!.inverseVectorField[m][i];
+p:=quad2pair[m][n][i][j];
+q:=quad2pair[m+1][n][q][j];
+F[p[1]][q[2]]:=p[2];
+IF[p[1]][p[2]]:=q[2];
+else if n<=Dimension(Y) and IsBound(Y!.inverseVectorField[n][j]) then
+     q:=Y!.inverseVectorField[n][j];
+     p:=quad2pair[m][n][i][j];
+     q:=quad2pair[m][n+1][i][q];
+F[p[1]][q[2]]:=p[2];
+IF[p[1]][p[2]]:=q[2];
+     fi;
+fi;
+
+od;
+od;
+od;
+od;
+####Vector Field Done
+#############################################
+
+crit:=[];
+for x in CriticalCells(X) do
+for y in CriticalCells(Y) do
+Add(crit, quad2pair[x[1]+1][y[1]+1][x[2]][y[2]]);
+od;od;
+
+crit:=List(crit,x->[x[1]-1,x[2]]);
+
+M!.vectorField:=F;
+M!.inverseVectorField:=IF;
+M!.criticalCells:=crit;
+fi;
 
 
 M!.firstProjection:=XYmapX;
@@ -177,7 +224,7 @@ for x in D do
 Add(DD[x[1]],x[2]);
 b:=BoundaryOfRegularCWCell(W,x[1]-1,x[2]);
 for y in b do
-Add(DD[y[1]],y[2]);
+Add(DD[y[1]+1],y[2]);
 od;
 od;
 

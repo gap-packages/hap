@@ -1,6 +1,7 @@
 DeclareAttribute("IdentityMap",IsHapRegularCWComplex);
 DeclareGlobalFunction("ChainMapOfRegularCWMap");
 DeclareGlobalFunction("ChainComplexEquivalenceOfRegularCWComplex");
+DeclareGlobalFunction("ChainComplexHomeomorphismEquivalenceOfRegularCWComplex");
 DeclareGlobalFunction("HAP_CocyclesAndCoboundaries");
 DeclareGlobalFunction("HAP_IntegralCohomology");
 DeclareGlobalFunction("HAP_IntegralClassToCocycle");

@@ -1616,7 +1616,7 @@ N:=n+1;
 V:=StructuralCopy(Y!.boundaries[N][k]);
 V:=V{[2..Length(V)]};
 V:=SSortedList(V);
-cells:=List(V,i->[N-1,i]);
+cells:=List(V,i->[N-2,i]);
 N:=N-1;
 
 while N>1 do
@@ -1625,7 +1625,7 @@ for v in V do
 U:=StructuralCopy(Y!.boundaries[N][v]);
 U:=U{[2..Length(U)]};
 Append(tmp,U);
-Append(cells,List(U,i->[N-1,i]));
+Append(cells,List(U,i->[N-2,i]));   #Changed N-1 to N-2  (May 2022)
 od;
 tmp:=SSortedList(tmp);
 cells:=SSortedList(cells);
@@ -2408,7 +2408,7 @@ end);
 #######################################################
 InstallGlobalFunction(HAP_BaryCentricSubdivisionRegularCWComplex,
 function(Y)
-local K, B, chains, newchains, maxchains, shifts, s, n, b, c, i;
+local  B, chains, newchains, maxchains, shifts, s, n, b, c, i;
 
 B:=1*Y!.coboundaries;
 for n in [1..Length(B)] do

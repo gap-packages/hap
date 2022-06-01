@@ -1,0 +1,208 @@
+gap> arc:=[[2,4],[1,3],[2,4],[1,3]];;                
+gap> tub:=ArcDiagramToTubularSurface([arc,[0,-1],[2]]);
+Map of regular CW-complexes
+
+gap> tub:=LiftColouredSurface(tub);
+Map of regular CW-complexes
+
+gap> Dimension(Source(tub));
+2
+gap> Dimension(Source(tub));
+4
+gap> map:=RegularCWMapToCWSubcomplex(tub);;
+gap> sub:=SortedList(map[2][3]);;
+gap> sub:=List(sub,x->x-(Position(sub,x)-1));;
+gap> clsr:=ClosureCWCell(map[1],2,sub[1])[2];;
+gap> seq:=CWSubcomplexToRegularCWMap([map[1],clsr]);;
+gap> tub:=RegularCWComplexComplement(seq);
+Testing contractibility...
+3501 out of 3501 cells tested.
+The input is compatible with this algorithm.
+gap> for i in [2..Length(sub)] do
+>     clsr:=ClosureCWCell(tub,2,sub[i])[2];;
+>     seq:=CWSubcomplexToRegularCWMap([tub,clsr]);;
+>     tub:=RegularCWComplexComplement(seq);
+> od;
+Testing contractibility...
+3612 out of 3612 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+3693 out of 3693 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+3871 out of 3871 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+3925 out of 3925 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4084 out of 4084 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4216 out of 4216 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4348 out of 4348 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4529 out of 4529 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4688 out of 4688 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4723 out of 4723 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+4918 out of 4918 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5107 out of 5107 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5269 out of 5269 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5401 out of 5401 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5548 out of 5548 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5702 out of 5702 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+5846 out of 5846 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6027 out of 6027 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6089 out of 6089 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6124 out of 6124 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6159 out of 6159 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6349 out of 6349 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6467 out of 6467 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6639 out of 6639 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6757 out of 6757 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+6962 out of 6962 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7052 out of 7052 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7242 out of 7242 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7360 out of 7360 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7470 out of 7470 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7561 out of 7561 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7624 out of 7624 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7764 out of 7764 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7904 out of 7904 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+7979 out of 7979 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8024 out of 8024 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8086 out of 8086 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8148 out of 8148 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8202 out of 8202 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8396 out of 8396 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8534 out of 8534 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8625 out of 8625 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8736 out of 8736 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8817 out of 8817 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+8983 out of 8983 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9073 out of 9073 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9218 out of 9218 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9323 out of 9323 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9442 out of 9442 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9487 out of 9487 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9538 out of 9538 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9583 out of 9583 cells tested.
+The input is compatible with this algorithm.
+Testing contractibility...
+9634 out of 9634 cells tested.
+The input is compatible with this algorithm.
+gap> Size(tub);      
+9685
+gap> total_time_1:=0;;
+gap> List([0..4],x->Homology(tub,x)); total_time_1:=total_time_1+time;;
+[ [ 0 ], [ 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0 ], [  ] ]
+gap> c:=ChainComplexOfUniversalCover(tub);; total_time_1:=total_time_1+time;;
+gap> l:=Filtered(LowIndexSubgroups(c!.group,5),g->Index(c!.group,g)=5);; total_time_1:=total_time_1+time;;
+gap> inv:=Set(l,g->Homology(TensorWithIntegersOverSubgroup(c,g),2)); total_time_1:=total_time_1+time;;
+[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] 
+ ]
+gap> total_time_1;
+3407
+gap> hopf:=PureComplexComplement(HopfSatohSurface());;
+gap> hopf:=RegularCWComplex(hopf);;
+gap> Size(hopf);
+4508573
+gap> total_time_2:=0;;
+gap> c_:=ChainComplexOfUniversalCover(hopf);; total_time_2:=total_time_2+time;;
+gap> l_:=Filtered(LowIndexSubgroups(c_!.group,5),g->Index(c_!.group,g)=5);; total_time_2:=total_time_2+time;;
+gap> inv_:=Set(l_,g->Homology(TensorWithIntegersOverSubgroup(c_,g),2));; total_time_2:=total_time_2+time;;
+gap> total_time_2;
+1116000
+gap> inv_=inv;
+true

@@ -33,7 +33,7 @@ else prime:=EvaluateProperty(P,"characteristic"); fi;
 N:=Minimum(EvaluateProperty(P,"length"),N);
 G:=P!.group;
 bool:=not IsComponentObjectRep(One(G));
-
+bool:=IsHapSL2Subgroup(G) or IsHapSL2OSubgroup(G) or IsBound(G!.bianchiInteger);
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
@@ -57,15 +57,28 @@ fi;
 ##
 
 ###
-if IsAbelian(G) and bool  then
+if Order(G)=infinity and IsAbelian(G) and bool then
+#This will only be correct if G is abelian of "rank" equal
+#to the number of generators GAP has for G
+
+res:=ResolutionGenericGroup(G,n);
+
+#return res;
+fi;
+###
+
+###
+if IsAbelian(G) and Order(G)=infinity then
 res:=ResolutionAbelianGroup(G,n);
 return res;
 fi;
-if IsAbelian(G) then   #NOT SURE WHY I NEED TO DO THIS
+if IsAbelian(G) and not bool then   #NOT SURE WHY I NEED TO DO THIS
+
 res:=ResolutionAbelianGroup_alt(G,n);
 return res;
 fi;
 ###
+
 iso:=RegularActionHomomorphism(G);
 Q:=Image(iso);
 

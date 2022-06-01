@@ -1,6 +1,7 @@
 <Chapter><Heading>Cohomology of groups</Heading>
 <Section><Heading>Finite groups </Heading>
 
+
 <P/>It is possible to compute the low degree (co)homology of a
  finite group or monoid 
 of small order directly from the bar resolution. 
@@ -230,7 +231,7 @@ Note that the various orders are consistent with exactness of the sequence
 
 </Section>
 
-<Section><Heading>Cohomology rings of finite fundamental groups of 3-manifolds
+<Section Label="Secfinitefundman"><Heading>Cohomology rings of finite fundamental groups of 3-manifolds
 </Heading>
 A <E>spherical 3-manifold</E> is a 3-manifold arising as the quotient <M>S^3/\Gamma</M> of the 3-sphere <M>S^3</M> by a  finite subgroup <M>\Gamma</M> of <M>SO(4)</M> acting freely as rotations.
 The geometrization conjecture, proved by Grigori Perelman,
@@ -280,4 +281,115 @@ A theoretical calculation of the integral and mod-p cohomology rings of all of t
 
 </Section>
 
+<Section><Heading>Explicit cocycles </Heading>
+
+Given a <M>\mathbb ZG</M>-resolution <M>R_\ast</M> and a <M>\mathbb ZG</M>-module 
+<M>A</M>, one defines an <E><M>n</M>-cocycle</E> to be a <M>\mathbb ZG</M>-homomorphism 
+<M>f\colon R_n \rightarrow A</M> for which the composite homomorphism 
+<M>fd_{n+1}\colon R_{n+1}\rightarrow A</M> is zero. If <M>R_\ast</M>
+ happens to be the standard bar resolution (i.e. the cellular chain complex of the nerve of the group <M>G</M> considered as a one object category) then the free <M>\mathbb ZG</M>-generators of <M>R_n</M> are indexed by <M>n</M>-tuples 
+<M>(g_1 | g_2 | \ldots | g_n)</M> of elements <M>g_i</M> in <M>G</M>. In this case we say that the <M>n</M>-cocycle is a <E>standard n-cocycle</E>
+ and we think of it as a set-theoretic function
+<P/><M>f \colon  G \times G \times \cdots \times   G  \longrightarrow A</M>
+<P/>satisfying a certain algebraic cocycle condition. 
+
+Bearing in mind that a standard <M>n</M>-cocycle really just assigns an element <M>f(g_1, \ldots ,g_n) \in A</M> to an <M>n</M>-simplex in the nerve of <M>G</M>
+, the cocycle condition is a very natural one which states that 
+<E><M>f</M> must vanish on the boundary of a certain <M>(n+1)</M>-simplex</E>. For <M>n=2</M> the condition is that a <M>2</M>-cocycle <M>f(g_1,g_2)</M>
+must satisfy 
+<P/><M>g.f(h,k) + f(g,hk) = f(gh,k) + f(g,h)</M>
+<P/> for all <M>g,h,k \in G</M>. This equation is explained by the following picture.
+
+<P/><Alt Only="HTML">&lt;img src="images/cocycle.png" align="center" height="200" alt="2-cocycle equation"/>
+</Alt>
+
+<P/>
+The definition of a cocycle clearly depends on the choice of <M>\mathbb ZG</M>-resolution <M>R_\ast</M>. However, the cohomology group <M>H^n(G,A)</M>, which is a group of equivalence classes of <M>n</M>-cocycles, is independent of the choice of <M>R_\ast</M>. 
+
+<P/>
+There are some occasions when one needs explicit examples of standard cocycles. For instance:
+
+<List>
+<Item>    Let <M>G</M> be a finite group and <M>k</M>
+a field of characteristic <M>0</M>. The group algebra <M>k(G)</M>,
+ and the algebra <M>F(G)</M> of functions 
+<M>d_g\colon G\rightarrow k, h\rightarrow d_{g,h}</M>,
+ are both Hopf algebras. The tensor product <M>F(G) \otimes k(G)</M>
+ also admits a Hopf algebra structure known as the quantum double <M>D(G)</M>. 
+A twisted quantum double <M>D_f(G)</M> was introduced by 
+R. Dijkraaf, V. Pasquier &amp; P. Roche <Cite Key="dpr"/>. 
+The twisted double is a quasi-Hopf algebra depending on a <M>3</M>-cocycle 
+<M>f\colon G\times G\times G\rightarrow k</M>. The multiplication is given by 
+<M>(d_g \otimes x)(d_h \otimes y) = d_{gx,xh}\beta_g(x,y)(d_g \otimes xy)</M> where <M>\beta_a </M>
+is defined by <M>\beta_a(h,g) = f(a,h,g) f(h,h^{-1}ah,g)^{-1} f(h,g,(hg)^{-1}ahg)</M> .  Although the algebraic structure of <M>D_f(G)</M> depends very much on the particular <M>3</M>-cocycle <M>f</M>, representation-theoretic properties of <M>D_f(G)</M> depend only on the cohomology class of <M>f</M>.
+</Item>
+<Item>    An explicit <M>2</M>-cocycle <M>f\colon G\times G\rightarrow A</M> is needed to construct the multiplication <M>(a,g)(a',g') = (a + g\cdot a' + f(g,g'),  gg')</M> in the extension a group <M>G</M> by a <M>\mathbb ZG</M>-module 
+<M>A</M> determined by the cohomology class of <M>f</M> in <M>H^2(G,A)</M>.
+See <Ref Sect="secExtensions"/>.
+</Item>
+<Item>    In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <M>(a_{ij})</M> whose entries <M>a_{ij}=f(g_i,g_j)</M>
+ are the values of a <M>2</M>-cocycle <M>f\colon G\times G \rightarrow
+ \mathbb Z_2</M>
+ where <M>G</M> is a finite group acting trivially on <M>\mathbb Z_2</M>. See for instance <Cite Key="horadam"/> and <Ref Sect="secHadamard"/>.
+</Item>
+</List>
+
+
+<P/>
+Given a <M>\mathbb ZG</M>-resolution <M>R_\ast</M>
+ (with contracting homotopy) and a <M>\mathbb ZG</M>-module <M>A</M>
+ one can use HAP commands to compute explicit standard <M>n</M>-cocycles 
+<M>f\colon G^n \rightarrow A</M>. With the twisted quantum double in mind, we illustrate the computation for <M>n=3</M>, <M>G=S_3</M>, and <M>A=U(1)</M>
+ the group of complex numbers of modulus <M>1</M> with trivial <M>G</M>-action.
+
+<P/>
+We first compute a <M>\mathbb ZG</M>-resolution <M>R_\ast</M>. The Universal Coefficient Theorem gives an isomorphism <M>H_3(G,U(1)) = Hom_{\mathbb Z}(H_3(G,\mathbb Z), U(1))</M>, The multiplicative group <M>U(1)</M> can thus be viewed as 
+<M>\mathbb Z_m</M> where <M>m</M> is a multiple of the exponent of <M>H_3(G,\mathbb Z)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.20.txt">
+</Example>
+
+<P/>
+We thus replace the very infinite group U(1) by the finite cyclic group <M>\mathbb Z_6</M>. Since the resolution <M>R_\ast </M> has <M>4</M> generators in degree <M>3</M>, a homomorphism <M>f\colon R^3\rightarrow U(1)</M> can 
+be represented by a list <M>f=[f_1, f_2, f_3, f_4]</M> with <M>f_i</M>
+  the image in <M>\mathbb Z_6</M> of the <M>i</M>th generator. The cocycle condition on <M>f</M> can be expressed as a matrix equation
+
+<P/><M>Mf^t = 0  \mod 6</M>.
+
+<P/>
+where the matrix <M>M</M> is obtained from the following command and <M>f^t</M> denotes the transpose.
+<Example>
+<#Include SYSTEM "tutex/6.21.txt">
+</Example>
+
+A particular cocycle <M>f=[f_1, f_2, f_3, f_4]</M> can be obtained by choosing a solution to the equation Mf^t=0.
+
+<Example>
+<#Include SYSTEM "tutex/6.22.txt">
+</Example>
+
+A non-standard <M>3</M>-cocycle <M>f</M> can be converted to a standard one using the command  <Code>StandardCocycle(R,f,n,q)</Code> . This command inputs 
+<M>  R_\ast</M>, integers <M>n</M> and <M>q</M>, and an <M>n</M>-cocycle <M>f</M> for the resolution <M>R_\ast</M>. It returns a standard cocycle <M>G^n \rightarrow \mathbb Z_q</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.23.txt">
+</Example>
+
+A function <M>f\colon G\times G\times G \rightarrow A</M>
+ is a standard <M>3</M>-cocycle if and only if
+
+<P/><M>g\cdot f(h,k,l) -  f(gh,k,l) + f(g,hk,l) -  f(g,h,kl) + f(g,h,k) = 0</M>
+
+<P/>for all <M>g,h,k,l \in G</M>. In the above example the group <M>G=S_3</M>
+ acts trivially on <M>A=Z_6</M>. The following commands show that the standard 
+<M>3</M>-cocycle produced in the example really does satisfy this <M>3</M>-cocycle condition. 
+
+B<Example>
+<#Include SYSTEM "tutex/6.24.txt">
+</Example>
+
+
+
+</Section>
 </Chapter>

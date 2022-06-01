@@ -189,7 +189,7 @@ InstallGlobalFunction(
     return [RegularCWComplex(complex),clsr];
 end);
 
-# AddCell
+# HAP_KK_AddCell
 ################################################################################
 ############ Input: a cell complex B, an integer k>=0 and lists of #############
 ################### positive integers b and c ##################################
@@ -199,7 +199,7 @@ end);
 ################### is specified by c ##########################################
 ################################################################################
 InstallGlobalFunction(
-    AddCell,
+    HAP_KK_AddCell,
     function(B,k,b,c)
     local
         i;
@@ -427,26 +427,27 @@ InstallGlobalFunction(
     RegularCWComplexComplement,
     function(arg...)
     local
-        f, compatible, Y, B, IsInternal, count, total, path_comp,
-        i, j, clsr, int, crit, bary, IsSubpathComponent,
-        ext_cell_2_f_notation, f_notation_2_ext_cell,
-        ext_cells, k, ext_cell_bnd, e_n_bar,
+        f, check, subdiv, details, Y, B, IsInternal, count, total,
+        path_comp, cobound_subcomplex, cbnd, i, j, clsr, int, crit,
+        bary, IsSubpathComponent, ext_cell_2_f_notation,
+        f_notation_2_ext_cell, ext_cells, k, ext_cell_bnd, e_n_bar,
         ext_cell_cbnd;
 
     if Length(arg)=1 then
-        f:=ShallowCopy(arg[1]);
-        compatible:=false;
-    elif Length(arg)=2 then
-        f:=ShallowCopy(arg[1]);
-        compatible:=arg[2];
+    	arg:=[arg[1],"some","basic",false];
     fi;
-
-    Y:=RegularCWMapToCWSubcomplex(f);
-    B:=List([1..Dimension(Y[1])+1],x->[]);
+    f:=ShallowCopy(arg[1]);
+    check:=arg[2]; # which cells we check for the contractible closures:
+    # "some" or "all"
+    subdiv:=arg[3]; # the subdivision we use:
+    # "basic", "barycentric" or "none"
+    details:=arg[4]; # do/don't suppress progress bars and other output
     
-    # sub:=List([1..Dimension(Y[1])+1],x->[]);
-    # keeps track of the indexing of those cells
-    # which comprise the boundary of Y \ N(Z)
+    Y:=RegularCWMapToCWSubcomplex(f);
+    for i in [1..Dimension(Y[1])-Length(Y[2])+2] do
+        Add(Y[2],[]);
+    od;
+    B:=List([1..Dimension(Y[1])+1],x->[]);
 
     IsInternal:=function(n,k) # is the kth n-cell of Y in Y\Z?
         if n+1>Length(Y[2]) then
@@ -457,47 +458,94 @@ InstallGlobalFunction(
         return true;
     end;
 
-    if not compatible then
+    if details then
         Print("Testing contractibility...\n");
     fi;
-    count:=0;
-    total:=Sum(List(Y[1]!.boundaries,Length));
     bary:=[];
-
     path_comp:=List([1..Length(Y[1]!.boundaries)-1],x->[]);
+
+    if check="some" then
+    # we check only those cells that are `close' to the subcomplex
+    # i.e. those cells lying within the coboundaries of the coboundaries
+    # of (...) the cells of the subcomplex
+        cobound_subcomplex:=List(
+            [1..Length(Y[2])],
+            x->List(
+                [1..Length(Y[2][x])],
+                y->Y[1]!.coboundaries[x][Y[2][x][y]]{
+                    [2..Y[1]!.coboundaries[x][Y[2][x][y]][1]+1]
+                }
+            )
+        );
+        cobound_subcomplex:=List(cobound_subcomplex,Concatenation);
+        cobound_subcomplex:=List(cobound_subcomplex,Set);
+        cobound_subcomplex:=List(
+            [1..Length(cobound_subcomplex)],
+            x->Filtered(cobound_subcomplex[x],y->not y in Y[2][x+1])
+        );
+        Add(cobound_subcomplex,[],1); # keep indexing w/out 0-cells
+        for i in [1..Length(cobound_subcomplex)-1] do
+            for j in [1..Length(cobound_subcomplex[i])] do
+                cbnd:=Y[1]!.coboundaries[i][cobound_subcomplex[i][j]];
+                for k in [2..cbnd[1]+1] do
+                    Add(cobound_subcomplex[i+1],cbnd[k]);
+                od;
+            od;
+        od;
+        cobound_subcomplex:=List(cobound_subcomplex,Set);
+        for i in [1..Length(cobound_subcomplex)-1] do   
+            cobound_subcomplex[i]:=Filtered(
+                cobound_subcomplex[i],
+                x->not x in Y[2][i+1]
+            );
+        od;
+    fi;
+
+    count:=0;
+    total:=Sum(List(Y[1]!.boundaries{[1..Length(Y[1]!.boundaries)]},Length));
+
     # list of all of the path components of the intersection between
     # the closure of each internal cell and the subcomplex Z < Y
     # note: entries may be an empty list if they correspond to an
     #       empty intersection or they may not be assigned a
     #       value at all if the associated cell lies in Z
-    for i in [1..Length(Y[1]!.boundaries)-1] do
+    for i in [1..Length(Y[1]!.boundaries)] do
         for j in [1..Length(Y[1]!.boundaries[i])] do
             count:=count+1;
             if IsInternal(i-1,j) then
                 Add(B[i],Y[1]!.boundaries[i][j]);
                 # output will contain all internal cells
-                clsr:=ClosureCWCell(Y[1],i-1,j);
-                int:=IntersectionCWSubcomplex(clsr,Y);
-                
-                path_comp[i][j]:=PathComponentsCWSubcomplex(int);
-
-                # CONTRACIBILITY TEST
+                if check="some" then
+                    if j in cobound_subcomplex[i] then
+                        clsr:=ClosureCWCell(Y[1],i-1,j);
+                        int:=IntersectionCWSubcomplex(clsr,Y);
+                        path_comp[i][j]:=PathComponentsCWSubcomplex(int);
+                    else
+                        path_comp[i][j]:=[];
+                    fi;
+                else
+                    clsr:=ClosureCWCell(Y[1],i-1,j);
+                    int:=IntersectionCWSubcomplex(clsr,Y);
+                    path_comp[i][j]:=PathComponentsCWSubcomplex(int);
+                fi; 
+                # CONTRACTIBILITY TEST
                 # must be a non-empty subcomplex of dimension > 0
-                if not compatible then
+                if details then
                     Print(count," out of ",total," cells tested.","\r");
-
-                    # test the contractibility of each path component!
-                    # if you find anything non contractible,
-                    # subdivide the problem cells and restart
+                fi;
+                if subdiv<>"none" then
+                    # test the contractibility of each path component
+                    # if we find anything non-contractible,
+                    # subdivide the problematic cells and restart
                     for k in [1..Length(path_comp[i][j])] do
                         if path_comp[i][j][k][2]<>List(path_comp[i][j][k][2],x->[])
-                            and path_comp[i][j][k][2][2]<>[] then
-                                crit:=CWSubcomplexToRegularCWMap(path_comp[i][j][k]);
-                                crit:=Source(crit);
-                                crit:=CriticalCellsOfRegularCWComplex(crit);
-                                if not Length(crit)=1 then
-                                    Add(bary,[i-1,j]);
-                                fi;
+                        and path_comp[i][j][k][2][2]<>[] then
+                            crit:=CWSubcomplexToRegularCWMap(path_comp[i][j][k]);
+                            crit:=Source(crit);
+                            crit:=CriticalCellsOfRegularCWComplex(crit);
+                            if not Length(crit)=1 then
+                                Add(bary,[i-1,j]);
+                            fi;
                         fi;
                     od;
                 fi;
@@ -505,38 +553,37 @@ InstallGlobalFunction(
                 Add(B[i],"*"); # temporary entry to keep correct indexing
             fi;
         od;
-    od; 
+    od;
     bary:=Set(bary);
-    #for i in [1..Length(bary)] do
-    #    for j in Difference([1..Length(bary)],[i]) do
-    #        if bary[j][1]=bary[i][1]+1 then
-    #            if bary[i][2] in
-    #                B[bary[j][1]+1][bary[j][2]]{
-    #                    [2..B[bary[j][1]+1][bary[j][2]][1]+1]
-    #                } then
-    #                   bary[i]:=[-2,0];
-    #            fi;
-    #        fi; 
-    #    od;
-    #od;
-    bary:=Filtered(bary,x->x<>[-2,0]);
-    
-    if not compatible then
-        if bary=[] then
+
+    if bary=[] then
+        if details then
             Print("\nThe input is compatible with this algorithm.\n");
-        else
+        fi;
+    else
+        if details then
             Print("\nSubdividing ",Length(bary)," cell(s):\n");
-            for i in [1..Length(bary)] do
+        fi;
+        for i in [1..Length(bary)] do
+            if subdiv="basic" then
                 f:=SubdivideCell(
                     f,
                     bary[i][1],
                     bary[i][2]
                 );
+            elif subdiv="barycentric" then
+                f:=BarycentricallySubdivideCell(
+                    f,
+                    bary[i][1],
+                    bary[i][2]
+                );
+            fi;
+            if details then
                 Print(Int(100*i/Length(bary)),"\% complete. \r");
-            od;
-            Print("\n");
-            return RegularCWComplexComplement(f);#,true); bypass compatibility check (this doesn't work yet)
-        fi;
+            fi;
+        od;
+        Print("\n");
+        return RegularCWComplexComplement(f,check,subdiv,details); # really bad
     fi;
 
     for i in [1..Length(B)] do
@@ -609,7 +656,7 @@ InstallGlobalFunction(
                         fi;
                         ext_cell_cbnd:=[j];
 
-                        AddCell(
+                        HAP_KK_AddCell(
                             B,
                             i-2,
                             ext_cell_bnd,
@@ -651,35 +698,36 @@ InstallGlobalFunction(
     B:=List(B,x->Filtered(x,y->y<>"*"));
     Add(B,[]);
 
-    # now to find the boundary of Y \ N(Z)
-    # and form the inclusion map
-    #for i in [3..Length(B)-1] do
-    #    for j in [1..Length(B[i])] do
-    #        for k in [2..Length(B[i][j])] do
-    #            Add(sub[i-1],B[i][j][k]);
-    #        od;
-    #    od;
-    #od;
-    #sub:=List(
-    #    List(
-    #        sub,
-    #        x->Filtered(
-    #            x,
-    #            y->Length(Positions(x,y))=1
-    #        )
-    #    ),
-    #    Set
-    #);
-    #for i in Reversed([2..Length(sub)]) do
-    #    for j in [1..Length(sub[i])] do
-    #        for k in B[i][j]{[2..B[i][j][1]+1]} do
-    #            Add(sub[i-1],k);
-    #        od;
-    #    od;
-    #od;
-    #sub:=List(sub,Set);
+    return RegularCWComplex(B);
+end);
 
-    return RegularCWComplex(B);#BoundaryMap(RegularCWComplex(B));
+# SequentialRegularCWComplexComplement
+InstallGlobalFunction(
+    SequentialRegularCWComplexComplement,
+    function(arg...)
+    local
+        subdiv, method, details, map, sub, clsr, seq, tub, i;
+
+    if Length(arg)=1 then
+        arg:=[arg[1],"some","basic",false];
+    fi;
+    method:=arg[2];
+    subdiv:=arg[3];
+    details:=arg[4];
+
+    map:=RegularCWMapToCWSubcomplex(arg[1]);
+    sub:=SortedList(map[2][Length(map[2])]);
+    sub:=List(sub,x->x-Position(sub,x)+1);
+    clsr:=ClosureCWCell(map[1],2,sub[1])[2];;
+    seq:=CWSubcomplexToRegularCWMap([map[1],clsr]);;
+    tub:=RegularCWComplexComplement(seq,method,subdiv,details);
+    for i in [2..Length(sub)] do
+        clsr:=ClosureCWCell(tub,2,sub[i])[2];;
+        seq:=CWSubcomplexToRegularCWMap([tub,clsr]);;
+        tub:=RegularCWComplexComplement(seq,method,subdiv,details);
+    od;
+    
+    return tub;
 end);
 
 # LiftColouredSurface
@@ -861,7 +909,7 @@ InstallGlobalFunction(
     );
 end);
 
-# ViewColouredArcDiagram
+# ViewArc2Presentation
 ################################################################################
 ############ Input: three lists a, b, c. a corresponds to an arc ###############
 ################### presentation. b's entries are either 0, 1 or -1 and they ###
@@ -874,197 +922,109 @@ end);
 ########### Output: a png depicting the associated coloured arc diagram ########
 ################################################################################
 InstallGlobalFunction(
-    ViewColouredArcDiagram,
-    function(arc,cross,levels)
+    ViewArc2Presentation,
+    function(l)
     local
-        AppendTo, PrintTo, file, filetxt, ArcPresentationToArray,
-        bin_arr, i, res, crs, crs_coord, j, colours, n, bar1, loc_3,
-        bar2, nsew, clr;
+        arc, cross, cols, AppendTo, PrintTo, file, filetxt,
+        bin_arr, coord, res, colours, i, j, x, k, y, z, clr;
 
+    arc:=List(l[1],x->[SignInt(x[1])*x[1],SignInt(x[2])*x[2]]);
+    cross:=l[2]*1;
+    cols:=l[3]*1;
     AppendTo:=HAP_AppendTo;
     PrintTo:=HAP_PrintTo;
     file:="/tmp/HAPtmpImage";
     filetxt:="/tmp/HAPtmpImage.txt";
 
-    ArcPresentationToArray:=function(arc)
-        local
-            arr, i, pair, j, k;
+    # create a binary array from the arc presentation
+    bin_arr:=Sum(PureCubicalKnot(arc)!.binaryArray);
+    bin_arr:=TransposedMat(bin_arr); # graham has this backwards!
+    bin_arr:=List(
+        bin_arr{[2..Length(bin_arr)-3]},
+        x->x{[2..Length(bin_arr[1])-3]}
+    );
+    coord:=Concatenation(
+        List(
+            [1..Length(bin_arr)],
+            x->List(
+                [1..Length(bin_arr)],
+                y->[x,y]
+            )
+        )
+    );
+    coord:=Filtered(coord,x->bin_arr[x[1]][x[2]]=2);
 
-        arr:=List([0..5*(Length(arc)-1)],x->List([0..5*(Length(arc)-1)])*0);
-
-        for i in [1..Length(arc)] do
-            pair:=arc[i]*1;
-            arr[Length(arr)-5*(i-1)][1+5*(pair[1]-1)]:=3;
-            arr[Length(arr)-5*(i-1)][1+5*(pair[2]-1)]:=3;
-        od;
-
-        for i in [1..Length(arr)] do
-            for j in [1..Length(arr[i])] do
-                if arr[i][j]=3 then
-                    k:=j*1;
-                    while arr[i][k+1]<>3 do
-                        k:=k+1;
-                        arr[i][k]:=1;
-                    od;
-                    break;
-                fi;
-            od;
-        od;
-        for i in [1..Length(arr)-1] do
-            for j in [1..Length(arr[i])] do
-                if arr[i][j]=3 then
-                    if 3 in List(arr{[i+1..Length(arr)]},x->x[j]) then
-                        k:=i*1;
-                        while arr[k+1][j]<>3 do
-                            k:=k+1;
-                            arr[k][j]:=arr[k][j]+1;
-                        od;
-                    fi;
-                fi;
-            od;
-        od;
-
-        return arr;
-    end;
-
-    bin_arr:=FrameArray(ArcPresentationToArray(arc))-3;
-    bin_arr:=List(bin_arr,x->Concatenation(x,[-3,-3]));
-    for i in [1,2] do
-        Add(bin_arr,bin_arr[1]*0-3);
-    od;
-
-    # resolution of the output, chosen to display on (my) laptop nicely
     res:=String(Minimum(50*Length(bin_arr),950));
-
-    crs:=List(bin_arr,x->Positions(x,-1));
-    crs_coord:=[]; # the co-ordinates of each crossing
-    for i in [1..Length(crs)] do
-        if crs[i]<>[] then
-            for j in [1..Length(crs[i])] do
-                Add(crs_coord,[i,crs[i][j]]);
-            od;
-        fi;
-    od;
-
-    #if Length(crs_coord)<>Length(cross) then
-    #    Error("number of specified crossings is incorrect");
-    #elif levels<>[] then
-    #    if Length(Positions(cross,0))<Length(levels) then
-    #        Error("all ",Length(Positions(cross,0))," 4-d crossing(s) must be accounted for");
-    #    fi;
-    #fi;
 
     PrintTo(
         filetxt,
         "# ImageMagick pixel enumeration: ",
-        Length(bin_arr[1]),
+        Length(bin_arr)+2,
         ",",
-        Length(bin_arr),
+        Length(bin_arr[1])+2,
         ",255,RGB\n"
     );
 
     colours:=NewDictionary([0,""],true);
     colours!.entries:=[
-        [-3,"(255,255,255)"], # white
-        [-2,"(0,255,255)"], # cyan
-        [-1,"(0,0,255)"], # blue
-        [0,"(0,255,0)"], # green
-        [1,"(255,0,0)"], # red
-        [2,"(255,255,0)"], # yellow
-        [3,"(255,0,255)"] # magenta
+        [0,"(255,255,255)"], # white
+        [1,"(131,205,131)"], # green
+        [2,"(131,205,131)"], # green
+        [3,"(131,205,131)"], # green
+        [4,"(205,131,131)"], # red
+        [5,"(131,131,205)"], # blue
     ];
-
+    
     for i in [1..Length(bin_arr)] do
-        for j in [1..Length(bin_arr[i])] do
-            if bin_arr[i][j] in [-1,0] then
-                bin_arr[i][j]:=3; # temp. colour for the corners/crossings
-            elif bin_arr[i][j]=-2 then
-                bin_arr[i][j]:=0; # everything should be green 
-            fi; # unless there's a 4-d crossing involved
-        od;
-    od;
-
-    n:=0;
-    for i in [1..Length(crs_coord)] do
-        if cross[i]=0 then
-            n:=n+1;
-            bar1:=List([1..crs_coord[i][1]-1]);
-            loc_3:=Positions(List(bar1,x->bin_arr[x][crs_coord[i][2]]),3);
-            bar1:=bar1{
-                [loc_3[Length(loc_3)]+1..Length(bar1)]
-            };
-            bar2:=List([crs_coord[i][1]+1..Length(bin_arr)]);
-            loc_3:=Positions(List(bar2,x->bin_arr[x][crs_coord[i][2]]),3);
-            bar2:=bar2{
-                [1..loc_3[1]-1]
-            };
-            for j in bar1 do
-                if levels[n] in [1,2] then
-                    bin_arr[j][crs_coord[i][2]]:=-1;
-                else
-                    bin_arr[j][crs_coord[i][2]]:=1;
-                fi;
-            od;
-            for j in bar2 do
-                if levels[n] in [1,3] then
-                    bin_arr[j][crs_coord[i][2]]:=-1;
-                else
-                    bin_arr[j][crs_coord[i][2]]:=1;
-                fi;
-            od;
-        elif cross[i]=-1 then
-            j:=crs_coord[i]*1;
-            bin_arr[j[1]][j[2]-1]:=-3;
-            bin_arr[j[1]][j[2]+1]:=-3;
-        fi;
-    od;
-    for i in [1..Length(crs_coord)] do
-        if cross[i]=1 then
-            j:=crs_coord[i]*1;
-            bin_arr[j[1]-1][j[2]]:=-3;
-            bin_arr[j[1]+1][j[2]]:=-3;
-        fi;
-    od;
-
-    for i in [1..Length(bin_arr)] do
-        for j in [1..Length(bin_arr[i])] do
+        for j in [1..Length(bin_arr)] do
             if bin_arr[i][j]=3 then
-                nsew:=[
-                    bin_arr[i-1][j],
-                    bin_arr[i+1][j],
-                    bin_arr[i][j+1],
-                    bin_arr[i][j-1]
-                ];
-                if -3 in nsew then
-                    if Length(Positions([nsew[1],nsew[2]],-3))=1 then # corner
-                        if -1 in nsew then
-                            bin_arr[i][j]:=-2;
-                        elif 1 in nsew then
-                            bin_arr[i][j]:=2;
-                        else
-                            bin_arr[i][j]:=0;
+            # remove vertical bars that have -entry in l[1]
+                x:=-1*(Int(j/3)+1);
+                if x in Concatenation(l[1]) then
+                    for k in [i+1..Length(bin_arr)] do
+                        if bin_arr[k][j]=1 then
+                            bin_arr[k][j]:=0;
                         fi;
-                    else # int. point
-                        if nsew[1]=-3 then
-                            bin_arr[i][j]:=0;
-                        else
-                            if nsew[1]=nsew[2] then
-                                bin_arr[i][j]:=nsew[1]*1;
-                            elif Set([nsew[1],nsew[2]])=Set([1,0]) then
-                                bin_arr[i][j]:=2;
-                            elif Set([nsew[1],nsew[2]])=Set([-1,0]) then
-                                bin_arr[i][j]:=-2;
-                            fi;
-                        fi;
+                    od;
+                fi;
+            elif bin_arr[i][j]=2 then
+            # check crossing type and adjust surrounding pixels
+                x:=Position(coord,[i,j]);
+                y:=cross[x];
+                if y=-1 then
+                    bin_arr[i][j-1]:=0;
+                    bin_arr[i][j+1]:=0;
+                elif y=1 then
+                    bin_arr[i-1][j]:=0;
+                    bin_arr[i+1][j]:=0;
+                elif y=0 then
+                    z:=cols[Position(Positions(cross,0),x)];
+                    if z=1 then
+                        bin_arr[i][j-1]:=5;
+                        bin_arr[i][j+1]:=5;
+                    elif z=2 then
+                        bin_arr[i][j-1]:=5;
+                        bin_arr[i][j+1]:=4;
+                    elif z=3 then
+                        bin_arr[i][j-1]:=4;
+                        bin_arr[i][j+1]:=5;
+                    elif z=4 then
+                        bin_arr[i][j-1]:=4;
+                        bin_arr[i][j+1]:=4;
                     fi;
-                else
-                    bin_arr[i][j]:=0;
                 fi;
             fi;
         od;
     od;
-
-    # colour entries according to levels
+    # image gets cropped if i dont do this
+    for i in [1..2] do
+        Add(bin_arr,bin_arr[1]*0);
+    od;
+    for j in [1..Length(bin_arr)] do
+        bin_arr[j]:=Concatenation(bin_arr[j],[0,0]);
+    od;
+    #return bin_arr;
+    # swap each entry of the binary area with an rgb value
     for i in [1..Length(bin_arr)] do
         for j in [1..Length(bin_arr[i])] do
             clr:=LookupDictionary(colours,bin_arr[i][j]);
@@ -1072,7 +1032,7 @@ InstallGlobalFunction(
         od;
     od;
 
-    # convert the binary array to an upscaled png
+    # convert the binary array to an upscaled 500x500 png
     Exec(
         Concatenation("convert ",filetxt," ","-scale ",res,"x",res," ",file,".png")
     );
@@ -1088,4 +1048,297 @@ InstallGlobalFunction(
     Exec(
         Concatenation("rm  ","/tmp/HAPtmpImage.png")
     );
+end);
+
+# Tube
+################################################################################
+############ Input: an arc 2-presentation ######################################
+################################################################################
+########### Output: a regular CW-complex corresponding to the complement #######
+################### of the knotted surface associated to that arc ##############
+################### 2-presentation via the Tube map ############################
+################################################################################
+InstallGlobalFunction(
+    Tube,
+    function(arc)
+    local
+        ribbon;
+
+    arc:=KinkArc2Presentation(arc);
+
+    ribbon:=ArcDiagramToTubularSurface(arc);
+    ribbon:=LiftColouredSurface(ribbon);
+    ribbon:=SequentialRegularCWComplexComplement(ribbon,"some","none",false);
+
+    return ribbon;
+end);
+
+# KinkArc2Presentation
+################################################################################
+############ Input: an arc 2-presentation ######################################
+################################################################################
+########### Output: an arc 2-presentation with no two crossings occuring #######
+################### on the same row/column #####################################
+################################################################################
+InstallGlobalFunction(
+    KinkArc2Presentation,
+    function(arc)
+    local
+        mat, i, x, j, Twist, z, coord, keep, arc_;
+
+    mat:=List([1..Length(arc[1])],x->[1..Length(arc[1])]*0);
+    for i in [1..Length(arc[1])] do
+        mat[Length(mat)-i+1][AbsoluteValue(arc[1][i][1])]:=3;
+        mat[Length(mat)-i+1][AbsoluteValue(arc[1][i][2])]:=3;
+    od;
+    for x in [1,2] do
+        if x=2 then
+            mat:=MutableTransposedMat(mat);
+        fi;
+        for i in [1..Length(mat)] do
+            for j in [2..Length(mat)-1] do
+                if 3 in mat[i]{[1..j-1]} and
+                3 in mat[i]{[j+1..Length(mat)]} then
+                    mat[i][j]:=mat[i][j]+1;
+                fi;
+            od;
+        od;
+    od;
+    mat:=MutableTransposedMat(mat);
+    for i in Set(Concatenation(arc[1])) do
+        if i<0 then
+            for j in [2..Length(mat)-1] do
+                if mat[j][-i] in [1,2] then
+                    mat[j][-i]:=0;
+                fi;
+            od;
+        fi;
+    od;
+    # mat models the arc 2-presentation, even should it correspond to
+    # (a) knotted sphere(s)
+
+    Twist:=function(i,j)
+        local
+            x, k, l, left, right, up, down;
+
+        # first create a new row and column in mat 
+        for x in [1..Length(mat)] do
+            Add(mat[x],4,j);
+        od;
+        Add(
+            mat,
+            Concatenation(
+                List([1..j-1],y->4),
+                [3],
+                mat[i]{[j+1..Length(mat)+1]}
+            ),
+            i+1
+        );
+        mat[i]:=Concatenation(
+            mat[i]{[1..j-1]},
+            [3],
+            List([j+1..Length(mat)],y->4)
+        );
+
+        # now determine the values of the 2n+1 new entries
+        # where n is the length of mat before Twist
+        for k in [1..Length(mat)] do
+            for l in [1..Length(mat[k])] do
+                if mat[k][l]=4 then
+                    if k in [1,Length(mat)] then
+                    # the entry is either in the top/bottom row
+                    # so there is no need to check above/below it
+                        left:=mat[k]{[1..l-1]};
+                        right:=mat[k]{[l+1..Length(mat)]};
+                        if 3 in left and 3 in right then
+                            if 0 in mat[k]{[l-1,l+1]} then
+                            # this is to check if this row corresponds
+                            # to an omitted row in the arc 2-pres.
+                                mat[k][l]:=0;
+                            else
+                                mat[k][l]:=1;
+                            fi;
+                        else
+                            mat[k][l]:=0;
+                        fi;
+                    elif l in [1,Length(mat)] then
+                    # the entry is in the first/last column and
+                    # we don't need to check to the left/right of it
+                        up:=mat{[1..k-1]}[l];
+                        down:=mat{[k+1..Length(mat)]}[l];
+                        if 3 in up and 3 in down then
+                            if 0 in mat{[k,k+1]}[l] then
+                                mat[k][l]:=0;
+                            else
+                                mat[k][l]:=1;
+                            fi;
+                        else
+                            mat[k][l]:=0;
+                        fi;
+                    else
+                    # we are required to check above/below/left/right
+                    # of the entry to determine its value
+                        left:=mat[k]{[1..l-1]};
+                        right:=mat[k]{[l+1..Length(mat)]};
+                        up:=mat{[1..k-1]}[l];
+                        down:=mat{[k+1..Length(mat)]}[l];
+                        if 3 in left and 3 in right then
+                            if 0 in mat[k]{[l-1,l+1]} then
+                                mat[k][l]:=0;
+                            else
+                                mat[k][l]:=1;
+                            fi;
+                        elif 3 in up and 3 in down then
+                            if 0 in mat{[k,k+1]}[l] then
+                                mat[k][l]:=0;
+                            else
+                                mat[k][l]:=1;
+                            fi;
+                        else
+                            mat[k][l]:=0;
+                        fi;
+                    fi;
+                fi;
+            od;
+        od;
+
+        return mat;
+    end;
+
+    for z in [1,2] do
+        if z=2 then
+            mat:=MutableTransposedMat(mat);
+        fi;
+        for i in [1..Sum(List(mat,y->Maximum(0,Length(Positions(y,2))-1)))] do
+        # number of times we need to perform Twist on the rows of mat
+            coord:=Filtered(
+                Concatenation(
+                    List(
+                        [1..Length(mat)],
+                        x->List(
+                            [1..Length(mat)],
+                            y->[x,y,mat[x][y]]
+                        )
+                    )
+                ),
+                x->x[3]=2
+            );
+            keep:=[];
+            for j in [1..Length(coord)] do
+                if coord[j][1] in List(coord,x->x[1]){[1..j-1]} then
+                    Add(keep,j);
+                fi;
+            od;
+            coord:=First(coord{keep});
+            # the coordinate of the first instance of a crossing that
+            # lies in a row where multiple crossings occur
+            mat:=Twist(coord[1],coord[2]);
+        od;
+    od;
+    mat:=MutableTransposedMat(mat);
+
+    # before output we need to see if there are any columns that were
+    # omitted. if so we need to find their new positions and reflect
+    # that with a negative entry in arc[1]
+    
+
+    # now to recover the new arc 2-presentation from mat
+    arc_:=ShallowCopy(arc);
+    arc_[1]:=[];
+    for i in Reversed([1..Length(mat)]) do
+        Add(
+            arc_[1],
+            Filtered([1..Length(mat)],y->mat[i][y]=3)
+        );
+    od;
+
+    return arc_;
+end);
+
+# NumberOfCrossingsInArc2Presentation
+################################################################################
+############ Input: an arc 2-presentation ######################################
+################################################################################
+########### Output: the number of crossings in the arc 2-presentation ##########
+################################################################################
+InstallGlobalFunction(
+    NumberOfCrossingsInArc2Presentation,
+    function(arc)
+    local
+        mat, i, x, j;
+
+    mat:=List([1..Length(arc[1])],x->[1..Length(arc[1])]*0);
+    for i in [1..Length(arc[1])] do
+        mat[Length(mat)-i+1][AbsoluteValue(arc[1][i][1])]:=3;
+        mat[Length(mat)-i+1][AbsoluteValue(arc[1][i][2])]:=3;
+    od;
+    for x in [1,2] do
+        if x=2 then
+            mat:=MutableTransposedMat(mat);
+        fi;
+        for i in [1..Length(mat)] do
+            for j in [2..Length(mat)-1] do
+                if 3 in mat[i]{[1..j-1]} and
+                3 in mat[i]{[j+1..Length(mat)]} then
+                    mat[i][j]:=mat[i][j]+1;
+                fi;
+            od;
+        od;
+    od;
+
+    return Sum(List(mat,y->Length(Filtered(y,z->z=2))));
+end);
+
+# RandomArc2Presentation
+################################################################################
+############ Input: nothing ####################################################
+################################################################################
+########### Output: a random arc 2-presentation arising as the knot sum ########
+################### of one or more prime knots on <12 crossings ################
+################################################################################
+InstallGlobalFunction(
+    RandomArc2Presentation,
+    function()
+    local
+        len, rand, prime, cross, final_arc, i, arc;
+        
+    len:=1;
+    rand:=Random([0,1]);
+
+    while rand=1 do
+        len:=len+1;
+        rand:=Random([0,1]);
+    od;
+
+    prime:=[0,0,1,1,2,3,7,21,49,165,552];
+
+    final_arc:=Random([3..11]);
+    final_arc:=[final_arc,Random([1..prime[final_arc]])];
+    final_arc:=ArcPresentation(
+        PureCubicalKnot(final_arc[1],final_arc[2])
+    );
+    
+    for i in [2..len] do
+        arc:=Random([3..11]);
+        arc:=[arc,Random([1..prime[arc]])];
+        final_arc:=ArcPresentation(
+            KnotSum(
+                PureCubicalKnot(final_arc),
+                PureCubicalKnot(arc[1],arc[2])
+            )
+        );
+    od;
+
+    cross:=List(
+        [1..NumberOfCrossingsInArc2Presentation([final_arc,[],[]])],
+        x->Random([-1,0,1])
+    );
+
+    final_arc:=[
+        final_arc,
+        cross,
+        List([1..Length(Filtered(cross,x->x=0))],y->Random([1..4]))    
+    ];
+
+    return final_arc;
 end);

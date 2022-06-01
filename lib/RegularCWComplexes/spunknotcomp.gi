@@ -107,7 +107,7 @@ function(K)
 local U,i,inc;
 
 U:=1*K!.binaryArray;
-for i in [2..Length(U)] do
+for i in [2..Length(U)] do    ##CHANGED
 U[i]:=0*U[i];
 od;
 U:=PureCubicalComplex(U);

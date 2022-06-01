@@ -9,3 +9,18 @@ F:=TensorWithIntegers(Rf);
 h:=Homology(F,2);;
 Print(AbelianInvariants(Kernel(h)),"\n");
 Print(AbelianInvariants(Image(h)),"\n");
+
+A:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;
+B:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;
+Q:=Group([A,B]);;
+OrbitPolytope(Q,[1,0,0,0],["visual_graph"]);
+
+P:=PolytopalComplex(Q,[1,0,0,0]);;
+
+for k in [1..3] do
+for n in [1..P!.dimension(k)] do
+Print(Order(P!.stabilizer(k,n)),"\n");
+od;od;
+R:=FreeGResolution(P,4);;
+Homology(TensorWithIntegers(R),3);
+

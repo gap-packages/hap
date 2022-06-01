@@ -256,6 +256,20 @@ end);
 
 #####################################################
 #####################################################
+InstallOtherMethod(ConnectedSum,
+"Connected sum of regular CW-manifolds  [temporary method -- needs replacing]",
+[IsHapRegularCWComplex,IsHapRegularCWComplex],
+function(KK,LL)
+local K, L;
+K:=BarycentricSubdivision(KK);
+L:=BarycentricSubdivision(LL);
+return SimplifiedComplex(RegularCWComplex(ConnectedSum(K,L)));
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
 InstallOtherMethod(Cohomology,
 "Integral cohomology of a simplicial complex",
 [IsHapSimplicialComplex,IsInt],

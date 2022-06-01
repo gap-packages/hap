@@ -514,6 +514,7 @@ ReadPackageHap("lib/Manifolds/manifolds.gi");
 ReadPackageHap("lib/Manifolds/simplicialcup.gi");
 ReadPackageHap("lib/Manifolds/dehn.gi");
 ReadPackageHap("lib/Manifolds/poincareduality.gi");
+ReadPackageHap("lib/Manifolds/poincHomeo.gi");
 
 ################## KELVIN ##################################
 ReadPackageHap("lib/Kelvin/init.g");

@@ -1,3 +1,33 @@
+##################################################
+##################################################
+InstallMethod(VertexStar,
+"star of vertex in a simplicial complex",
+[IsHapSimplicialComplex,IsInt],
+function(K,v)
+local L, S;
+L:=Concatenation(K!.simplicesLst);
+S:=Filtered(L, x->v in x);
+return MaximalSimplicesToSimplicialComplex(S);
+end);
+##################################################
+##################################################
+
+##################################################
+##################################################
+InstallMethod(VertexLink,
+"link of a vertex in a simplicial complex",
+[IsHapSimplicialComplex,IsInt],
+function(K,v)
+local S,L;
+S:=VertexStar(K,v);
+L:=Concatenation(S!.simplicesLst);
+L:=Filtered(L, x-> not v in x);
+return MaximalSimplicesToSimplicialComplex(L);
+end);
+##################################################
+##################################################
+
+
 #####################################################################
 #####################################################################
 InstallOtherMethod(Dimension,
@@ -1145,7 +1175,8 @@ if EvaluateProperty(K,"integer")=true then
   return K;
 fi;
 
-if not false in List(K!.vertices,x->IsInt(x)) then
+#if not false in List(K!.vertices,x->IsInt(x)) then
+if K!.vertices=[1..Length(K!.vertices)] then     #Modified this May 2022
   Add(K!.properties,["integer",true]);
   return K;
 fi;
