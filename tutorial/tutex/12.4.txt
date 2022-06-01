@@ -1,28 +1,29 @@
-gap> L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;
-gap> L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;
-gap> L71:=BarycentricSubdivision(L71);;
-gap> L73:=BarycentricSubdivision(L73);;
-gap> A71:=CohomologyRing(L71,7);;
-gap> A73:=CohomologyRing(L73,7);;
-gap> M71:=List([1..4],i->[]);;
-gap> B71:=CanonicalBasis(A71);;
-gap> M73:=List([1..4],i->[]);;
-gap> B73:=CanonicalBasis(A73);;
+gap> L13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;
+gap> L13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;
+gap> L13_1:=BarycentricSubdivision(L13_1);;
+gap> L13_2:=BarycentricSubdivision(L13_2);;
+gap> A13_1:=CohomologyRing(L13_1,13);;
+gap> A13_2:=CohomologyRing(L13_2,13);;
+gap> M13_1:=List([1..4],i->[]);;
+gap> B13_1:=CanonicalBasis(A13_1);;
+gap> M13_2:=List([1..4],i->[]);;
+gap> B13_2:=CanonicalBasis(A13_2);;
 gap> for i in [1..4] do
 > for j in [1..4] do
-> M71[i][j]:=B71[i]*B71[j];
+> M13_1[i][j]:=B13_1[i]*B13_1[j];
 > od;od;
 gap> for i in [1..4] do
 > for j in [1..4] do
-> M73[i][j]:=B73[i]*B73[j];
+> M13_2[i][j]:=B13_2[i]*B13_2[j];
 > od;od;
-gap> Display(M71);
-[ [           v.1,           v.2,           v.3,           v.4 ],
-  [           v.2,         0*v.1,  (Z(7)^3)*v.4,         0*v.1 ],
-  [           v.3,  (Z(7)^3)*v.4,         0*v.1,         0*v.1 ],
-  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
-gap> Display(M73);
-[ [           v.1,           v.2,           v.3,           v.4 ],
-  [           v.2,         0*v.1,  (Z(7)^5)*v.4,         0*v.1 ],
-  [           v.3,  (Z(7)^5)*v.4,         0*v.1,         0*v.1 ],
-  [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
+gap> Display(M13_1);
+[ [            v.1,            v.2,            v.3,            v.4 ],
+  [            v.2,          0*v.1,  (Z(13)^6)*v.4,          0*v.1 ],
+  [            v.3,  (Z(13)^6)*v.4,          0*v.1,          0*v.1 ],
+  [            v.4,          0*v.1,          0*v.1,          0*v.1 ] ]
+gap> Display(M13_2);
+[ [          v.1,          v.2,          v.3,          v.4 ],
+  [          v.2,        0*v.1,  (Z(13))*v.4,        0*v.1 ],
+  [          v.3,  (Z(13))*v.4,        0*v.1,        0*v.1 ],
+  [          v.4,        0*v.1,        0*v.1,        0*v.1 ] ]
+

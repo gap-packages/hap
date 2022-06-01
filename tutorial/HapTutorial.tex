@@ -1758,9 +1758,10 @@ The next command shows that the $3$-dimensional space $W$ has two $3$-cells each
 \section{\textcolor{Chapter }{Dehn Surgery}}\logpage{[ 4, 1, 0 ]}
 \hyperdef{L}{X82D1348C79238C2D}{}
 {
- The following example constructs, as a regular CW-complex $W$, a 3-manifold obtained from the 3-sphere by drilling out a tubular
-neighbourhood of a trefoil knot and then gluing a solid torus to the boundary
-of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient $p/q=17/16$. 
+ The following example constructs, as a regular CW-complex, a closed orientable
+3-manifold $W$ obtained from the 3-sphere by drilling out a tubular neighbourhood of a
+trefoil knot and then gluing a solid torus to the boundary of the cavity via a
+homeomorphism corresponding to a Dehn surgery coefficient $p/q=17/16$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@ap:=ArcPresentation(PureCubicalKnot(3,1));;|
   !gapprompt@gap>| !gapinput@p:=17;;q:=16;;|
@@ -1768,21 +1769,61 @@ of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient $p
   Regular CW-complex of dimension 3
   
 \end{Verbatim}
- The next commands show that this closed compact $3$-manifold $W$ has integral homology 
+ The next commands show that this $3$-manifold $W$ has integral homology 
 
- $ H_0(W,\mathbb Z)=\mathbb Z$, $ H_1(W,\mathbb Z)=\mathbb Z_{31}$, $ H_2(W,\mathbb Z)=0$, $ H_3(W,\mathbb Z)=\mathbb Z$. 
+ $ H_0(W,\mathbb Z)=\mathbb Z$, $ H_1(W,\mathbb Z)=\mathbb Z_{16}$, $ H_2(W,\mathbb Z)=0$, $ H_3(W,\mathbb Z)=\mathbb Z$ 
+
+ and that the fundamental group $\pi_1(W)$ is non-abelian. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Homology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);|
   [ 0 ]
-  [ 31 ]
+  [ 16 ]
   [  ]
+  [ 0 ]
+  
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroup(W);;|
+  !gapprompt@gap>| !gapinput@L:=LowIndexSubgroupsFpGroup(F,10);;|
+  !gapprompt@gap>| !gapinput@List(L,AbelianInvariants);|
+  [ [ 16 ], [ 3, 8 ], [ 3, 4 ], [ 2, 3 ], [ 16, 43 ], [ 8, 43, 43 ] ]
+  
+\end{Verbatim}
+ 
+
+ The following famous result of Lickorish and (independently) Wallace shows
+that Dehn surgery on knots leads to an interesting range of spaces. 
+
+\textsc{Theorem:} \emph{ Every closed, orientable, connected $3$-manifold can be obtained by surgery on a link in $S^3$. (Moreover, one can always perform the surgery with surgery coefficients $\pm 1$ and with each individual component of the link unknotted.) } }
+
+ 
+\section{\textcolor{Chapter }{Connected Sums}}\logpage{[ 4, 2, 0 ]}
+\hyperdef{L}{X848EDEE882B36F6C}{}
+{
+ The following example constructs the connected sum $W=A\#B$ of two $3$-manifolds, where $A$ is obtained from a $5/1$ Dehn surgery on the complement of the first prime knot on 11 crossings and $B$ is obtained by a $5/1$ Dehn surgery on the complement of the second prime knot on 11 crossings. The
+homology groups 
+
+$H_1(W,\mathbb Z) = \mathbb Z_2\oplus \mathbb Z_{594}$, $H_2(W,\mathbb Z) = 0$, $H_3(W,\mathbb Z) = \mathbb Z$ 
+
+ are computed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@ap1:=ArcPresentation(PureCubicalKnot(11,1));;|
+  !gapprompt@gap>| !gapinput@A:=ThreeManifoldViaDehnSurgery(ap1,5,1);;|
+  !gapprompt@gap>| !gapinput@ap2:=ArcPresentation(PureCubicalKnot(11,2));;|
+  !gapprompt@gap>| !gapinput@B:=ThreeManifoldViaDehnSurgery(ap2,5,1);;|
+  !gapprompt@gap>| !gapinput@W:=ConnectedSum(A,B);|
+  Regular CW-complex of dimension 3
+  
+  !gapprompt@gap>| !gapinput@Homology(W,1);|
+  [ 2, 594 ]
+  !gapprompt@gap>| !gapinput@Homology(W,2);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Homology(W,3);|
   [ 0 ]
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{Dijkgraaf-Witten Invariant}}\logpage{[ 4, 2, 0 ]}
+\section{\textcolor{Chapter }{Dijkgraaf-Witten Invariant}}\logpage{[ 4, 3, 0 ]}
 \hyperdef{L}{X78AE684C7DBD7C70}{}
 {
  Given a closed connected orientable $3$-manifold $W$, a finite group $G$ and a 3-cocycle $\alpha\in H^3(BG,U(1))$ Dijkgraaf and Witten define the complex number 
@@ -1811,8 +1852,11 @@ H{\textunderscore}3(BG,\texttt{\symbol{92}}mathbb Z)
 Hom\texttt{\symbol{125}}(\texttt{\symbol{92}}pi{\textunderscore}1W,
 G)\texttt{\symbol{125}}.\$\$ Since $H_3(W,\mathbb Z)\cong \mathbb Z$ we represent $D_G(W)$ by the set $D_G(W)=\{ \gamma_\ast(1) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}$ where $1$ denotes one of the two possible generators of $H_3(W,\mathbb Z)$. 
 
- The following session constructs the two Lens spaces $L(5,1)$ and $L(5,2)$. These are $3$-dimensional manifolds with cyclic fundamental group of order $5$ and with identical integral homology groups. The homology version of the
-Dijkgraaf-Witten invariant is used with $G=C_5$ to demonstrate that the two lens spaces are not homotopy equivalent. 
+ For any coprime integers $p,q\ge 1$ the \emph{lens space} $L(p,q)$ is obtained from the 3-sphere by drilling out a tubular neighbourhood of the
+trivial knot and then gluing a solid torus to the boundary of the cavity via a
+homeomorphism corresponding to a Dehn surgery coefficient $p/q$. Lens spaces have cyclic fundamental group $\pi_1(L(p,q))=C_p$ and homology $H_1(L(p,q),\mathbb Z)\cong \mathbb Z_p$, $H_2(L(p,q),\mathbb Z)\cong 0$, $H_3(L(p,q),\mathbb Z)\cong \mathbb Z$. It was proved by J.H.C. Whitehead that two lens spaces $L(p,q)$ and $L(p',q')$ are homotopy equivalent if and only if $p=p'$ and $qq'\cong \pm n^2 \mod p$ for some integer $n$. 
+
+ The following session constructs the two lens spaces $L(5,1)$ and $L(5,2)$. The homology version of the Dijkgraaf-Witten invariant is used with $G=C_5$ to demonstrate that the two lens spaces are not homotopy equivalent. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@ap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot|
   
@@ -1825,67 +1869,70 @@ Dijkgraaf-Witten invariant is used with $G=C_5$ to demonstrate that the two lens
   [ g1^3, g1^3, g1^2, g1^2, id ]
   
 \end{Verbatim}
- 
+ A theorem of Fermat and Euler states that if a prime $p$ is congruent to 3 modulo 4, then for any $q$ exactly one of $\pm q$ is a quadratic residue mod p. For all other primes $p$ either both or neither of $\pm q$ is a quadratic residue mod $p$. Thus for fixed $p \equiv 3 \mod 4$ the lens spaces $L(p,q)$ form a single homotopy class. There are precisely two homotopy classes of lens
+spaces for other $p$. 
 
- A lens space $L(p,q)$ exists for any coprime integers $p,q\ge 1$. It was proved by Paul Olum that two lens spaces $L(p,q)$ and $L(p',q')$ are homotopy equivalent if and only if $p=p'$ and $qq'\cong \pm n^2 \mod p$ for some integer $n$. For instance, $L(7,q)$ is homotopy equivalent to $L(7,q')$ if and only if $qq' \mod 7\in \{1,2,4\}$. So $L(7,1)\simeq L(7,2) \simeq L(7,4)$, $L(7,3)\simeq L(7,5)\simeq(7,6)$. The following session shows that the Dijkgraaf-Witten invariant, with $G=C_7$, fails to distinguish between $L(7,1)$ and $L(7,3)$. 
+ The following commands confirm that $L(13,1) \not\simeq L(13,2)$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;|
-  !gapprompt@gap>| !gapinput@L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;|
-  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L71,CyclicGroup(7));|
-  [ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
-  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L73,CyclicGroup(7));|
-  [ g1^6, g1^6, g1^5, g1^5, g1^3, g1^3, id ]
+  !gapprompt@gap>| !gapinput@L13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;|
+  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L13_1,CyclicGroup(13));|
+  [ g1^12, g1^12, g1^10, g1^10, g1^9, g1^9, g1^4, g1^4, g1^3, g1^3, g1, g1, id ]
+  !gapprompt@gap>| !gapinput@L13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;|
+  !gapprompt@gap>| !gapinput@DijkgraafWittenInvariant(L13_2,CyclicGroup(13));|
+  [ g1^11, g1^11, g1^8, g1^8, g1^7, g1^7, g1^6, g1^6, g1^5, g1^5, g1^2, g1^2, 
+    id ]
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{Cohomology rings}}\logpage{[ 4, 3, 0 ]}
+\section{\textcolor{Chapter }{Cohomology rings}}\logpage{[ 4, 4, 0 ]}
 \hyperdef{L}{X80B6849C835B7F19}{}
 {
  The following commands construct the multiplication table (with respect to
-some basis) for the cohomology rings $H^\ast(L(7,1),\mathbb Z_7)$ and $H^\ast(L(7,3),\mathbb Z_7)$. These rings are isomorphic and so fail to distinguish between the homotopy
-types of the lens spaces $L(7,1)$ and $L(7,3)$. 
+some basis) for the cohomology rings $H^\ast(L(13,1),\mathbb Z_{13})$ and $H^\ast(L(13,2),\mathbb Z_{13})$. These rings are isomorphic and so fail to distinguish between the homotopy
+types of the lens spaces $L(13,1)$ and $L(13,2)$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@L71:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,1);;|
-  !gapprompt@gap>| !gapinput@L73:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,3);;|
-  !gapprompt@gap>| !gapinput@L71:=BarycentricSubdivision(L71);;|
-  !gapprompt@gap>| !gapinput@L73:=BarycentricSubdivision(L73);;|
-  !gapprompt@gap>| !gapinput@A71:=CohomologyRing(L71,7);;|
-  !gapprompt@gap>| !gapinput@A73:=CohomologyRing(L73,7);;|
-  !gapprompt@gap>| !gapinput@M71:=List([1..4],i->[]);;|
-  !gapprompt@gap>| !gapinput@B71:=CanonicalBasis(A71);;|
-  !gapprompt@gap>| !gapinput@M73:=List([1..4],i->[]);;|
-  !gapprompt@gap>| !gapinput@B73:=CanonicalBasis(A73);;|
+  !gapprompt@gap>| !gapinput@L13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;|
+  !gapprompt@gap>| !gapinput@L13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;|
+  !gapprompt@gap>| !gapinput@L13_1:=BarycentricSubdivision(L13_1);;|
+  !gapprompt@gap>| !gapinput@L13_2:=BarycentricSubdivision(L13_2);;|
+  !gapprompt@gap>| !gapinput@A13_1:=CohomologyRing(L13_1,13);;|
+  !gapprompt@gap>| !gapinput@A13_2:=CohomologyRing(L13_2,13);;|
+  !gapprompt@gap>| !gapinput@M13_1:=List([1..4],i->[]);;|
+  !gapprompt@gap>| !gapinput@B13_1:=CanonicalBasis(A13_1);;|
+  !gapprompt@gap>| !gapinput@M13_2:=List([1..4],i->[]);;|
+  !gapprompt@gap>| !gapinput@B13_2:=CanonicalBasis(A13_2);;|
   !gapprompt@gap>| !gapinput@for i in [1..4] do|
   !gapprompt@>| !gapinput@for j in [1..4] do|
-  !gapprompt@>| !gapinput@M71[i][j]:=B71[i]*B71[j];|
+  !gapprompt@>| !gapinput@M13_1[i][j]:=B13_1[i]*B13_1[j];|
   !gapprompt@>| !gapinput@od;od;|
   !gapprompt@gap>| !gapinput@for i in [1..4] do|
   !gapprompt@>| !gapinput@for j in [1..4] do|
-  !gapprompt@>| !gapinput@M73[i][j]:=B73[i]*B73[j];|
+  !gapprompt@>| !gapinput@M13_2[i][j]:=B13_2[i]*B13_2[j];|
   !gapprompt@>| !gapinput@od;od;|
-  !gapprompt@gap>| !gapinput@Display(M71);|
-  [ [           v.1,           v.2,           v.3,           v.4 ],
-    [           v.2,         0*v.1,  (Z(7)^3)*v.4,         0*v.1 ],
-    [           v.3,  (Z(7)^3)*v.4,         0*v.1,         0*v.1 ],
-    [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
-  !gapprompt@gap>| !gapinput@Display(M73);|
-  [ [           v.1,           v.2,           v.3,           v.4 ],
-    [           v.2,         0*v.1,  (Z(7)^5)*v.4,         0*v.1 ],
-    [           v.3,  (Z(7)^5)*v.4,         0*v.1,         0*v.1 ],
-    [           v.4,         0*v.1,         0*v.1,         0*v.1 ] ]
+  !gapprompt@gap>| !gapinput@Display(M13_1);|
+  [ [            v.1,            v.2,            v.3,            v.4 ],
+    [            v.2,          0*v.1,  (Z(13)^6)*v.4,          0*v.1 ],
+    [            v.3,  (Z(13)^6)*v.4,          0*v.1,          0*v.1 ],
+    [            v.4,          0*v.1,          0*v.1,          0*v.1 ] ]
+  !gapprompt@gap>| !gapinput@Display(M13_2);|
+  [ [          v.1,          v.2,          v.3,          v.4 ],
+    [          v.2,        0*v.1,  (Z(13))*v.4,        0*v.1 ],
+    [          v.3,  (Z(13))*v.4,        0*v.1,        0*v.1 ],
+    [          v.4,        0*v.1,        0*v.1,        0*v.1 ] ]
+  
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{Linking Form}}\logpage{[ 4, 4, 0 ]}
+\section{\textcolor{Chapter }{Linking Form}}\logpage{[ 4, 5, 0 ]}
 \hyperdef{L}{X7F56BB4C801AB894}{}
 {
- Given a closed connected orientable $3$-manifold $W$ let $\tau H_1(W,\mathbb Z)$ denote the torsion subgroup of the first integral homology. The \emph{linking form} is a bilinear mapping 
+ Given a closed connected \textsc{oriented} $3$-manifold $W$ let $\tau H_1(W,\mathbb Z)$ denote the torsion subgroup of the first integral homology. The \emph{linking form} is a bilinear mapping 
 
-$L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow
+$Lk_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow
 \mathbb Q/\mathbb Z$. 
 
 To construct this form note that we have a Poincare duality isomorphism 
@@ -1893,45 +1940,272 @@ To construct this form note that we have a Poincare duality isomorphism
 $\rho\colon H^2(W,\mathbb Z) \stackrel{\cong}{\longrightarrow} H_1(W,\mathbb
 Z), z \mapsto z\cap [W]$ 
 
-involving the cap product with the fundamental class $[W]\in H^3(W,\mathbb Z)\cong \mathbb Z$. The short exact sequence $\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z$ gives rise to a cohomology exact sequence 
+involving the cap product with the fundamental class $[W]\in H^3(W,\mathbb Z)$. That is, $[M]$ is the generator of $H^3(W,\mathbb Z)\cong \mathbb Z$ determining the orientation. The short exact sequence $\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z$ gives rise to a cohomology exact sequence 
 
 $ \rightarrow H^1(W,\mathbb Q) \rightarrow H^1(W,\mathbb Q/\mathbb Z)
 \stackrel{\beta}{\longrightarrow} H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb
 Q) \rightarrow $ 
 
  from which we obtain the isomorphism $\beta \colon \tau H^1(W,\mathbb Q/\mathbb Z) \stackrel{\cong}{\longrightarrow}
-\tau H^2(W,\mathbb Z)$. The linking form $L_W$ can be defined as the composite 
+\tau H^2(W,\mathbb Z)$. The linking form $Lk_W$ can be defined as the composite 
 
- $L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \stackrel{1\times
-\rho^{-1}}{\longrightarrow} \tau H_1(W,\mathbb Z) \times \tau H^2(W,\mathbb Z)
-\stackrel{1\times \beta^{-1}}{\longrightarrow} \tau H_1(W,\mathbb Z) \times
-\tau H^1(W,\mathbb Q/\mathbb Z) \stackrel{ev}{\longrightarrow } \mathbb
-Q/\mathbb Z $ 
+ $Lk_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z)
+\stackrel{1\times \rho^{-1}}{\longrightarrow} \tau H_1(W,\mathbb Z) \times
+\tau H^2(W,\mathbb Z) \stackrel{1\times \beta^{-1}}{\longrightarrow} \tau
+H_1(W,\mathbb Z) \times \tau H^1(W,\mathbb Q/\mathbb Z)
+\stackrel{ev}{\longrightarrow } \mathbb Q/\mathbb Z $ 
 
 where $ev(x,\alpha)$ evaluates a $1$-cocycle $\alpha$ on a $1$-cycle $x$. 
 
  The linking form can be used to define the set 
 
- $I(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}$ 
+ $I^O(W) = \{Lk_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}$ 
 
-which is a homotopy invariant of $W$ and which we refer to as the \emph{linking form invariant}. 
+which is an oriented-homotopy invariant of $W$. Letting $W^+$ and $W^-$ denote the two possible orientations on the manifold, the set 
 
- The following commands compute the linking form invariant for the lens spaces $L(7,q)$ with $1\le q\le 6$. This invariant distinguishes between the homotopy type $L(7,1)\simeq L(7,2) \simeq L(7,4)$ and the homotopy type $L(7,3)\simeq L(7,5)\simeq(7,6)$. 
+ $I(W) =\{I^O(W^+), I^O(W^-)\}$ 
+
+is a homotopy invariant of $W$ which in this manual we refer to as the \emph{linking form homotopy invariant}. 
+
+ The following commands compute the linking form homotopy invariant for the
+lens spaces $L(13,q)$ with $1\le q\le 12$. This invariant distinguishes between the two homotopy types that arise. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@LensSpaces:=[];;|
-  !gapprompt@gap>| !gapinput@for q in [1..6] do|
-  !gapprompt@>| !gapinput@Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],7,q));|
+  !gapprompt@gap>| !gapinput@for q in [1..12] do|
+  !gapprompt@>| !gapinput@Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,q));|
   !gapprompt@>| !gapinput@od;|
-  !gapprompt@gap>| !gapinput@Display(List(LensSpaces,LinkingFormInvariant));;|
-  [ [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-    [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
-    [    0,  3/7,  3/7,  5/7,  5/7,  6/7,  6/7 ],
-    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ],
-    [    0,  1/7,  1/7,  2/7,  2/7,  4/7,  4/7 ] ]
+  !gapprompt@gap>| !gapinput@Display(List(LensSpaces,LinkingFormHomotopyInvariant));;|
+  [ [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [ 0, 2/13, 
+            2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+  
+    [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+        [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+        [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+        [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+        [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+  
+    [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], 
+  
+    [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], 
+        [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], 
+  
+    [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], 
+        [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ] ]
   
 \end{Verbatim}
  }
+
+ 
+\section{\textcolor{Chapter }{Determining the homeomorphism type of a lens space}}\logpage{[ 4, 6, 0 ]}
+\hyperdef{L}{X850C76697A6A1654}{}
+{
+ In 1935 K. Reidemeister \cite{reidemeister} classified lens spaces up to orientation preserving PL-homeomorphism. This was
+generalized by E. Moise \cite{moise} in 1952 to a classification up to homeomorphism -- his method requred the
+proof of the Hauptvermutung for $3$-dimensional manifolds. In 1960, following a suggestion of R. Fox, a proof was
+given by E.J. Brody \cite{brody} that avoided the need for the Hauptvermutung. Reidemeister's method, using
+what is know termed \emph{Reidermeister torsion}, and Brody's method, using tubular neighbourhoods of $1$-cycles, both require identifying a suitable "preferred" generator of $H_1(L(p,q),\mathbb Z)$. In 2003 J. Przytycki and A. Yasukhara \cite{przytycki} provided an alternative method for classifying lens spaces, which uses the
+linking form and again requires the identification of a "preferred" generator
+of $H_1(L(p,q),\mathbb Z)$. 
+
+ Przytycki and Yasukhara proved the following. 
+
+ \textsc{Theorem.} \emph{Let $\rho\colon S^ 3 \rightarrow L(p, q)$ be the $p$-fold cyclic cover and $K$ a knot in $L(p, q)$ that represents a generator of $H_1 (L(p, q), \mathbb Z)$. If $\rho ^{-1} (K)$ is the trivial knot, then $Lk_{ L(p,q)} ([K], [K]) = q/p$ or $= \overline q/p \in \mathbb Q/\mathbb Z$ where $q\overline q \equiv 1 \mod p$. } 
+
+The ingredients of this theorem can be applied in HAP, but at present only to
+small examples of lens spaces. The obstruction to handling large examples is
+that the current default method for computing the linking form involves
+barycentric subdivision to produce a simplicial complex from a regular
+CW-complex, and then a homotopy equivalence from this typically large
+simplicial complex to a smaller non-regular CW-complex. However, for
+homeomorphism invariants that are not homotopy invariants there is a need to
+avoid homotopy equivalences. In the current version of HAP this means that in
+order to obtain delicate homeomorphism invariants we have to perform homology
+computations on typically large simplicial complexes. In a future version of
+HAP we hope to avoid the obstruction by implementing cup products, cap
+products and linking forms entirely within the category of regular
+CW-complexes. 
+
+The following commands construct a small lens space $L=L(p,q)$ with unknown values of $p,q$. Subsequent commands will determine the homeomorphism type of $L$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@p:=Random([2,3,5,7,11,13,17]);;|
+  !gapprompt@gap>| !gapinput@q:=Random([1..p-1]);;|
+  !gapprompt@gap>| !gapinput@L:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],p,q);|
+  Regular CW-complex of dimension 3
+  
+\end{Verbatim}
+ We can readily determine the value of $p=11$ by calculating the order of $\pi_1(L)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroupWithPathReps(L);;|
+  !gapprompt@gap>| !gapinput@StructureDescription(F);|
+  "C11"
+  
+\end{Verbatim}
+ 
+
+ The next commands take the default edge path $\gamma\colon S^1\rightarrow L$ representing a generator of the cyclic group $\pi_1(L)$ and lift it to an edge path $\tilde\gamma\colon S^1\rightarrow \tilde L$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|U:=UniversalCover(L);;B
+  @gapprompt|gap>B @gapinput|G:=U!.group;;B
+  @gapprompt|gap>B @gapinput|p:=EquivariantCWComplexToRegularCWMap(U,Group(One(G)));;B
+  @gapprompt|gap>B @gapinput|U:=Source(p);;B
+  @gapprompt|gap>B @gapinput|gamma:=[];;B
+  @gapprompt|gap>B @gapinput|gamma[2]:=F!.loops[1];;B
+  @gapprompt|gap>B @gapinput|gamma[2]:=List(gamma[2],AbsInt);;B
+  @gapprompt|gap>B @gapinput|gamma[1]:=List(gamma[2],k->L!.boundaries[2][k]);;B
+  @gapprompt|gap>B @gapinput|gamma[1]:=SSortedList(Flat(gamma[1]));;B
+  @gapprompt|gap>B @gapinput|B
+  @gapprompt|gap>B @gapinput|gammatilde:=[[],[],[],[]];;B
+  @gapprompt|gap>B @gapinput|for k in [1..U!.nrCells(0)] doB
+  @gapprompt|>B @gapinput|if p!.mapping(0,k) in gamma[1] then Add(gammatilde[1],k); fi;B
+  @gapprompt|>B @gapinput|od;B
+  @gapprompt|gap>B @gapinput|for k in [1..U!.nrCells(1)] doB
+  @gapprompt|>B @gapinput|if p!.mapping(1,k) in gamma[2] then Add(gammatilde[2],k); fi;B
+  @gapprompt|>B @gapinput|od;B
+  @gapprompt|gap>B @gapinput|gammatilde:=CWSubcomplexToRegularCWMap([U,gammatilde]);B
+  Map of regular CW-complexes
+  
+\end{Verbatim}
+ 
+
+The next commands check that the path $\tilde\gamma$ is unknotted in $\tilde L\cong S^3$ by checking that $\pi_1(\tilde L\setminus {\rm image}(\tilde\gamma))$ is infinite cyclic. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@C:=RegularCWComplexComplement(gammatilde);|
+  Regular CW-complex of dimension 3
+  
+  !gapprompt@gap>| !gapinput@G:=FundamentalGroup(C);|
+  <fp group of size infinity on the generators [ f2 ]>
+  
+\end{Verbatim}
+ 
+
+Since $\tilde\gamma$ is unkotted the cycle $\gamma$ represents the preferred generator $[\gamma]\in H_1(L,\mathbb Z)$. The next commands compute $Lk_L([\gamma],[\gamma])= 7/11 $. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@LinkingFormHomeomorphismInvariant(L);|
+  [ 7/11 ]
+  
+\end{Verbatim}
+ 
+
+ The classification of Moise/Brody states that $L(p,q)\cong L(p,q')$ if and only if $qq'\equiv \pm 1 \mod p$. Hence the lens space $L$ has the homeomorphism type 
+
+ $L\cong L(11,7) \cong L(11,8) \cong L(11,4) \cong L(11,3)$. }
+
+ 
+\section{\textcolor{Chapter }{Surgeries on distinct knots can yield homeomorphic manifolds}}\logpage{[ 4, 7, 0 ]}
+\hyperdef{L}{X7EC6B008878CC77E}{}
+{
+ The lens space $L(5,1)$ is a quotient of the $3$-sphere $S^3$ by a certain action of the cyclic group $C_5$. It can be realized by a $p/q=5/1$ Dehn filling of the complement of the trivial knot. It can also be realized by
+Dehn fillings of other knots. To see this, the following commands compute the
+manifold $W$ obtained from a $p/q=1/5$ Dehn filling of the complement of the trefoil and show that $W$ at least has the same integral homology and same fundamental group as $L(5,1)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@ap:=ArcPresentation(PureCubicalKnot(3,1));;|
+  !gapprompt@gap>| !gapinput@W:=ThreeManifoldViaDehnSurgery(ap,1,5);;|
+  !gapprompt@gap>| !gapinput@Homology(W,1);|
+  [ 5 ]
+  !gapprompt@gap>| !gapinput@Homology(W,2);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Homology(W,3);|
+  [ 0 ]
+  
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroup(W);;|
+  !gapprompt@gap>| !gapinput@StructureDescription(F);|
+  "C5"
+  
+  
+\end{Verbatim}
+ 
+
+The next commands construct the universal cover $\widetilde W$ and show that it has the same homology as $S^3$ and trivivial fundamental group $\pi_1(\widetilde W)=0$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|U:=UniversalCover(W);;A
+  @gapprompt|gap>A @gapinput|G:=U!.group;;A
+  @gapprompt|gap>A @gapinput|Wtilde:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G)));A
+  Regular CW-complex of dimension 3
+  
+  @gapprompt|gap>A @gapinput|Homology(Wtilde,1);A
+  [  ]
+  @gapprompt|gap>A @gapinput|Homology(Wtilde,2);A
+  [  ]
+  @gapprompt|gap>A @gapinput|Homology(Wtilde,3);A
+  [ 0 ]
+  
+  @gapprompt|gap>A @gapinput|F:=FundamentalGroup(Wtilde);A
+  <fp group on the generators [  ]>
+  
+\end{Verbatim}
+ By construction the space $\widetilde W$ is a manifold. Had we not known how the regular CW-complex $\widetilde W$ had been constructed then we could prove that it is a closed $3$-manifold by creating its barycentric subdivision $K=sd\widetilde W$, which is homeomorphic to $\widetilde W$, and verifying that the link of each vertex in the simplicial complex $sd\widetilde W$ is a $2$-sphere. The following commands carry out this proof: each link is shown to
+admit a discrete vector field with precisely two critical cells -- one $0$-cell and one $2$-cell. 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|K:=BarycentricSubdivision(Wtilde);D
+  Simplicial complex of dimension 3.
+  
+  @gapprompt|gap>D @gapinput|L:=[];;D
+  @gapprompt|gap>D @gapinput|for v in K!.vertices doD
+  @gapprompt|>D @gapinput|Add(L,CriticalCells(RegularCWComplex(VertexLink(K,v))));D
+  @gapprompt|>D @gapinput|od;D
+  @gapprompt|gap>D @gapinput|SSortedList(List(L,Size));D
+  [ 2 ]
+  @gapprompt|gap>D @gapinput|C:=Concatenation(L);;D
+  @gapprompt|gap>D @gapinput|SSortedList(List(C,x->x[1]));D
+  [ 0, 2 ]
+  
+\end{Verbatim}
+ The Poincare conjecture (now proven) implies that $\widetilde W$ is homeomorphic to $S^3$. Hence $W=S^3/C_5$ is a quotient of the $3$-sphere by an action of $C_5$ and is hence a lens space $L(5,q)$ for some $q$. 
+
+ The next commands determine that $W$ is homeomorphic to $L(5,4)\cong L(5,1)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Lk:=LinkingFormHomeomorphismInvariant(W);|
+  [ 0, 4/5 ]
+  
+\end{Verbatim}
+ 
+
+ Moser \cite{lmoser} gives a precise decription of the lens spaces arising from surgery on the
+trefoil knot and more generally from surgery on torus knots. Greene \cite{greene} determines the lens spaces that arise by integer Dehn surgery along a knot in
+the three-sphere }
+
+ 
+\section{\textcolor{Chapter }{Finite fundamental groups of $3$-manifolds}}\logpage{[ 4, 8, 0 ]}
+\hyperdef{L}{X7B425A3280A2AF07}{}
+{
+ Lens spaces are examples of $3$-manifolds with finite fundamental groups. The complete list of finite groups $G$ arising as fundamental groups of closed connected $3$-manifolds is recalled in \ref{Secfinitefundman} where one method for computing their cohomology rings is presented. Their
+cohomology could also be computed from explicit $3$-manifolds $W$ with $\pi_1W=G$. For instance, the following commands realize a closed connected $3$-manifold $W$ with $\pi_1W = C_{11}\times SL_2(\mathbb Z_5)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@ap:=ArcPresentation(PureCubicalKnot(3,1));;|
+  !gapprompt@gap>| !gapinput@W:=ThreeManifoldViaDehnSurgery(ap,1,11);;|
+  !gapprompt@gap>| !gapinput@F:=FundamentalGroup(W);;|
+  !gapprompt@gap>| !gapinput@Order(F);|
+  1320
+  !gapprompt@gap>| !gapinput@AbelianInvariants(F);|
+  [ 11 ]
+  !gapprompt@gap>| !gapinput@StructureDescription(F);|
+  "C11 x SL(2,5)"
+  
+\end{Verbatim}
+ Hence the group $G=C_{11}\times SL_2(\mathbb Z_5)$ of order $1320$ acts freely on the $3$-sphere $\widetilde W$. It thus has periodic cohomology with 
+\[ H_n(G,\mathbb Z) = \left\{ \begin{array}{ll} \mathbb Z_{11} & n\equiv 1 \mod 4
+\\ 0 & n\equiv 2 \mod 4 \\ \mathbb Z_{1320} & n \equiv 3\mod 4\\ \mathbb 0 &
+n\equiv 0 \mod 4 \\ \end{array}\right. \]
+ for $n > 0$. }
 
  }
 
@@ -2315,7 +2589,8 @@ order $243$ with non-trivial Bogomolov multiplier. The groups in question are nu
  }
 
  
-\section{\textcolor{Chapter }{Second group cohomology and group extensions}}\logpage{[ 6, 6, 0 ]}
+\section{\textcolor{Chapter }{Second group cohomology and group extensions}}\label{secExtensions}
+\logpage{[ 6, 6, 0 ]}
 \hyperdef{L}{X8333413B838D787D}{}
 {
  Any group extension $N\rightarrowtail E \twoheadrightarrow G$ gives rise to: 
@@ -2447,7 +2722,8 @@ The following example illustrates how to construct a cohomology class $k$ in $H^
  }
 
  
-\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\logpage{[ 6, 7, 0 ]}
+\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\label{secHadamard}
+\logpage{[ 6, 7, 0 ]}
 \hyperdef{L}{X7C60E2B578074532}{}
 {
  An \emph{Hadamard matrix} is a square $n\times n$ matrix $H$ whose entries are either $+1$ or $-1$ and whose rows are mutually orthogonal, that is $H H^t = nI_n$ where $H^t$ denotes the transpose and $I_n$ denotes the $n\times n$ identity matrix. 
@@ -2556,12 +2832,18 @@ take this approach to computing the fifth integral homology
 $H_5(Q_4,\mathbb Z) = \mathbb Z_2\oplus\mathbb Z_2$ 
 
 of the quaternion group $G=Q_4$ of order $8$. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@Q:=QuaternionGroup(8);;|
-  !gapprompt@gap>| !gapinput@B:=BarComplexOfMonoid(Q,6);;                 |
-  !gapprompt@gap>| !gapinput@C:=ContractedComplex(B);;|
-  !gapprompt@gap>| !gapinput@Homology(C,5);|
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|Q:=QuaternionGroup(8);;A
+  @gapprompt|gap>A @gapinput|B:=BarComplexOfMonoid(Q,6);;                 A
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(B);;A
+  @gapprompt|gap>A @gapinput|Homology(C,5);A
   [ 2, 2 ]
+  
+  
+  @gapprompt|gap>A @gapinput|List([0..6],B!.dimension);A
+  [ 1, 7, 49, 343, 2401, 16807, 117649 ]
+  @gapprompt|gap>A @gapinput|List([0..6],C!.dimension);A
+  [ 1, 2, 2, 1, 2, 4, 102945 ]
   
 \end{Verbatim}
  
@@ -2586,7 +2868,7 @@ The following example computes the third integral homology of the Weyl group $W=
 $H_3(Weyl(E_8),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb
 Z_{12}$ 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  p> L:=SimpleLieAlgebra("E",8,Rationals);;
+  !gapprompt@gap>| !gapinput@L:=SimpleLieAlgebra("E",8,Rationals);;|
   !gapprompt@gap>| !gapinput@W:=WeylGroup(RootSystem(L));;|
   !gapprompt@gap>| !gapinput@Order(W);|
   696729600
@@ -2910,7 +3192,8 @@ $H^2(S_4,\mathbb Z_2) \rightarrow H^3(S_4,\mathbb Z_4) \rightarrow
 H^3(S_4,\mathbb Z_8) \rightarrow H^3(S_4,\mathbb Z_2) $ . }
 
  
-\section{\textcolor{Chapter }{Cohomology rings of finite fundamental groups of 3-manifolds }}\logpage{[ 7, 9, 0 ]}
+\section{\textcolor{Chapter }{Cohomology rings of finite fundamental groups of 3-manifolds }}\label{Secfinitefundman}
+\logpage{[ 7, 9, 0 ]}
 \hyperdef{L}{X79B1406C803FF178}{}
 {
  A \emph{spherical 3-manifold} is a 3-manifold arising as the quotient $S^3/\Gamma$ of the 3-sphere $S^3$ by a finite subgroup $\Gamma$ of $SO(4)$ acting freely as rotations. The geometrization conjecture, proved by Grigori
@@ -3007,6 +3290,145 @@ Z) = \texttt{\symbol{92}}mathbb Z[s,t]/(s\texttt{\symbol{94}}2=16t, 3s=0,
 \end{Verbatim}
  A theoretical calculation of the integral and mod-p cohomology rings of all of
 these fundamental groups of spherical 3-manifolds is given in \cite{tomoda}. }
+
+ 
+\section{\textcolor{Chapter }{Explicit cocycles }}\logpage{[ 7, 10, 0 ]}
+\hyperdef{L}{X833A19F0791C3B06}{}
+{
+ Given a $\mathbb ZG$-resolution $R_\ast$ and a $\mathbb ZG$-module $A$, one defines an \emph{$n$-cocycle} to be a $\mathbb ZG$-homomorphism $f\colon R_n \rightarrow A$ for which the composite homomorphism $fd_{n+1}\colon R_{n+1}\rightarrow A$ is zero. If $R_\ast$ happens to be the standard bar resolution (i.e. the cellular chain complex of
+the nerve of the group $G$ considered as a one object category) then the free $\mathbb ZG$-generators of $R_n$ are indexed by $n$-tuples $(g_1 | g_2 | \ldots | g_n)$ of elements $g_i$ in $G$. In this case we say that the $n$-cocycle is a \emph{standard n-cocycle} and we think of it as a set-theoretic function 
+
+$f \colon G \times G \times \cdots \times G \longrightarrow A$ 
+
+satisfying a certain algebraic cocycle condition. Bearing in mind that a
+standard $n$-cocycle really just assigns an element $f(g_1, \ldots ,g_n) \in A$ to an $n$-simplex in the nerve of $G$ , the cocycle condition is a very natural one which states that \emph{$f$ must vanish on the boundary of a certain $(n+1)$-simplex}. For $n=2$ the condition is that a $2$-cocycle $f(g_1,g_2)$ must satisfy 
+
+$g.f(h,k) + f(g,hk) = f(gh,k) + f(g,h)$ 
+
+ for all $g,h,k \in G$. This equation is explained by the following picture. 
+
+ 
+
+ The definition of a cocycle clearly depends on the choice of $\mathbb ZG$-resolution $R_\ast$. However, the cohomology group $H^n(G,A)$, which is a group of equivalence classes of $n$-cocycles, is independent of the choice of $R_\ast$. 
+
+ There are some occasions when one needs explicit examples of standard
+cocycles. For instance: 
+\begin{itemize}
+\item  Let $G$ be a finite group and $k$ a field of characteristic $0$. The group algebra $k(G)$, and the algebra $F(G)$ of functions $d_g\colon G\rightarrow k, h\rightarrow d_{g,h}$, are both Hopf algebras. The tensor product $F(G) \otimes k(G)$ also admits a Hopf algebra structure known as the quantum double $D(G)$. A twisted quantum double $D_f(G)$ was introduced by R. Dijkraaf, V. Pasquier \& P. Roche \cite{dpr}. The twisted double is a quasi-Hopf algebra depending on a $3$-cocycle $f\colon G\times G\times G\rightarrow k$. The multiplication is given by $(d_g \otimes x)(d_h \otimes y) = d_{gx,xh}\beta_g(x,y)(d_g \otimes xy)$ where $\beta_a $ is defined by $\beta_a(h,g) = f(a,h,g) f(h,h^{-1}ah,g)^{-1} f(h,g,(hg)^{-1}ahg)$ . Although the algebraic structure of $D_f(G)$ depends very much on the particular $3$-cocycle $f$, representation-theoretic properties of $D_f(G)$ depend only on the cohomology class of $f$. 
+\item  An explicit $2$-cocycle $f\colon G\times G\rightarrow A$ is needed to construct the multiplication $(a,g)(a',g') = (a + g\cdot a' + f(g,g'), gg')$ in the extension a group $G$ by a $\mathbb ZG$-module $A$ determined by the cohomology class of $f$ in $H^2(G,A)$. See \ref{secExtensions}. 
+\item  In work on coding theory and Hadamard matrices a number of papers have
+investigated square matrices $(a_{ij})$ whose entries $a_{ij}=f(g_i,g_j)$ are the values of a $2$-cocycle $f\colon G\times G \rightarrow \mathbb Z_2$ where $G$ is a finite group acting trivially on $\mathbb Z_2$. See for instance \cite{horadam} and \ref{secHadamard}. 
+\end{itemize}
+ 
+
+ Given a $\mathbb ZG$-resolution $R_\ast$ (with contracting homotopy) and a $\mathbb ZG$-module $A$ one can use HAP commands to compute explicit standard $n$-cocycles $f\colon G^n \rightarrow A$. With the twisted quantum double in mind, we illustrate the computation for $n=3$, $G=S_3$, and $A=U(1)$ the group of complex numbers of modulus $1$ with trivial $G$-action. 
+
+ We first compute a $\mathbb ZG$-resolution $R_\ast$. The Universal Coefficient Theorem gives an isomorphism $H_3(G,U(1)) = Hom_{\mathbb Z}(H_3(G,\mathbb Z), U(1))$, The multiplicative group $U(1)$ can thus be viewed as $\mathbb Z_m$ where $m$ is a multiple of the exponent of $H_3(G,\mathbb Z)$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|G:=SymmetricGroup(3);;A
+  @gapprompt|gap>A @gapinput|R:=ResolutionFiniteGroup(G,4);;A
+  @gapprompt|gap>A @gapinput|TR:=TensorWithIntegers(R);;A
+  @gapprompt|gap>A @gapinput|Homology(TR,3);A
+  [ 6 ]
+  @gapprompt|gap>A @gapinput|R!.dimension(3);A
+  4
+  @gapprompt|gap>A @gapinput|R!.dimension(4);A
+  5
+  
+\end{Verbatim}
+ 
+
+ We thus replace the very infinite group U(1) by the finite cyclic group $\mathbb Z_6$. Since the resolution $R_\ast $ has $4$ generators in degree $3$, a homomorphism $f\colon R^3\rightarrow U(1)$ can be represented by a list $f=[f_1, f_2, f_3, f_4]$ with $f_i$ the image in $\mathbb Z_6$ of the $i$th generator. The cocycle condition on $f$ can be expressed as a matrix equation 
+
+$Mf^t = 0 \mod 6$. 
+
+ where the matrix $M$ is obtained from the following command and $f^t$ denotes the transpose. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@M:=CocycleCondition(R,3);;|
+  
+\end{Verbatim}
+ A particular cocycle $f=[f_1, f_2, f_3, f_4]$ can be obtained by choosing a solution to the equation
+Mf\texttt{\symbol{94}}t=0. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@SolutionsMod2:=NullspaceModQ(TransposedMat(M),2);|
+  [ [ 0, 0, 0, 0 ], [ 0, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 1, 1 ] ]
+  
+  !gapprompt@gap>| !gapinput@SolutionsMod3:=NullspaceModQ(TransposedMat(M),3);|
+  [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 2 ], [ 0, 0, 1, 0 ],
+    [ 0, 0, 1, 1 ], [ 0, 0, 1, 2 ], [ 0, 0, 2, 0 ], [ 0, 0, 2, 1 ],
+    [ 0, 0, 2, 2 ] ]
+  
+\end{Verbatim}
+ A non-standard $3$-cocycle $f$ can be converted to a standard one using the command \texttt{StandardCocycle(R,f,n,q)} . This command inputs $ R_\ast$, integers $n$ and $q$, and an $n$-cocycle $f$ for the resolution $R_\ast$. It returns a standard cocycle $G^n \rightarrow \mathbb Z_q$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@f:=3*SolutionsMod2[3] - SolutionsMod3[5];   #An example solution to Mf=0 mod 6.|
+  [ 3, 3, -1, -1 ]
+  
+  !gapprompt@gap>| !gapinput@Standard_f:=StandardCocycle(R,f,3,6);;|
+  
+  !gapprompt@gap>| !gapinput@g:=Random(G); h:=Random(G); k:=Random(G);|
+  (1,2)
+  (1,3,2)
+  (1,3)
+  
+  !gapprompt@gap>| !gapinput@Standard_f(g,h,k);|
+  3
+  
+\end{Verbatim}
+ A function $f\colon G\times G\times G \rightarrow A$ is a standard $3$-cocycle if and only if 
+
+$g\cdot f(h,k,l) - f(gh,k,l) + f(g,hk,l) - f(g,h,kl) + f(g,h,k) = 0$ 
+
+for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially on $A=Z_6$. The following commands show that the standard $3$-cocycle produced in the example really does satisfy this $3$-cocycle condition. B
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@sf:=Standard_f;;|
+  
+  !gapprompt@gap>| !gapinput@Test:=function(g,h,k,l);|
+  !gapprompt@>| !gapinput@return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);|
+  !gapprompt@>| !gapinput@end;|
+  function( g, h, k, l ) ... end
+  
+  !gapprompt@gap>| !gapinput@for g in G do for h in G do for k in G do for l in G do|
+  !gapprompt@>| !gapinput@Print(Test(g,h,k,l),",");|
+  !gapprompt@>| !gapinput@od;od;od;od;|
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,6,0,0,6,
+  0,0,0,0,0,6,6,6,0,6,0,12,12,6,12,6,0,12,6,0,6,6,0,0,0,0,0,0,0,12,12,6,6,6,0,
+  6,6,0,6,6,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,
+  0,6,0,0,6,6,6,0,0,0,0,0,0,0,-6,0,0,-6,0,-6,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,
+  0,0,0,6,6,6,0,0,0,6,6,6,0,0,0,0,-6,0,6,6,0,0,0,0,0,0,0,12,6,6,0,6,0,0,0,0,12,
+  6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,0,6,0,0,0,0,0,6,6,
+  6,0,0,0,6,12,6,6,0,0,0,-6,0,0,6,0,0,0,0,0,0,0,12,12,6,6,6,0,0,0,0,6,6,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+  6,6,0,6,6,0,12,12,6,12,12,0,0,0,0,0,0,0,6,6,0,0,0,0,6,6,6,12,12,0,-6,-6,0,0,
+  0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,
+  0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,-6,0,6,0,6,0,6,0,0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,
+  0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+  0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,-6,0,0,0,-6,0,0,-6,0,-6,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,
+  0,0,0,0,6,6,0,-6,0,0,-6,0,0,12,6,0,-6,-6,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,12,0,6,0,0,6,0,0,0,6,0,0,0,0,0,0,
+  0,6,12,0,0,0,0,0,0,0,6,6,0,-6,-6,0,0,0,0,0,0,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,
+  6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,
+  0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,
+  6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,
+  
+\end{Verbatim}
+ }
 
  }
 

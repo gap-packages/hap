@@ -1,7 +1,7 @@
 <Chapter><Heading>Three Manifolds</Heading>
 <Section><Heading>Dehn Surgery</Heading>
-The following example constructs, as a regular CW-complex <M>W</M>, a 
-3-manifold obtained from the 3-sphere by drilling out
+The following example constructs, as a regular CW-complex, a closed orientable 
+3-manifold <M>W</M> obtained from the 3-sphere by drilling out
  a tubular neighbourhood of a
  trefoil knot and  then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <M>p/q=17/16</M>.
 
@@ -9,17 +9,40 @@ The following example constructs, as a regular CW-complex <M>W</M>, a
 <#Include SYSTEM "tutex/12.1.txt">
 </Example>
 
-The next commands show that this closed compact <M>3</M>-manifold <M>W</M> has integral homology
-<P/> <M> H_0(W,\mathbb Z)=\mathbb Z</M>, <M> H_1(W,\mathbb Z)=\mathbb Z_{31}</M>, 
+The next commands show that this  <M>3</M>-manifold <M>W</M> has integral homology
+<P/> <M> H_0(W,\mathbb Z)=\mathbb Z</M>, <M> H_1(W,\mathbb Z)=\mathbb Z_{16}</M>, 
 <M> H_2(W,\mathbb Z)=0</M>, 
-<M> H_3(W,\mathbb Z)=\mathbb Z</M>. 
+<M> H_3(W,\mathbb Z)=\mathbb Z</M> 
+<P/> and that the fundamental group <M>\pi_1(W)</M> is non-abelian.
 
 <Example>
 <#Include SYSTEM "tutex/12.1a.txt">
 </Example>
 
+<P/>
+The following famous result of Lickorish and (independently) Wallace shows that Dehn surgery on knots leads to an interesting range of spaces.
+
+<P/><B>Theorem:</B> <E> Every closed, orientable, connected <M>3</M>-manifold can be obtained by surgery on a link  in <M>S^3</M>. (Moreover, one can always 
+perform the surgery with surgery coefficients <M>\pm 1</M> and with each individual component of the link unknotted.) 
+</E>
 
 </Section>
+
+<Section><Heading>Connected Sums</Heading>
+The following  example constructs the connected sum <M>W=A\#B</M> of two <M>3</M>-manifolds, where <M>A</M> is obtained from a <M>5/1</M> Dehn surgery on the complement of the first prime knot on 11 crossings and <M>B</M> is obtained by a <M>5/1</M> Dehn surgery on the complement of the 
+second prime knot
+ on 11 crossings. The homology groups 
+<P/><M>H_1(W,\mathbb Z) = \mathbb Z_2\oplus \mathbb Z_{594}</M>,
+<M>H_2(W,\mathbb Z) = 0</M>,
+<M>H_3(W,\mathbb Z) = \mathbb Z</M>
+<P/> are computed.
+
+<Example>
+<#Include SYSTEM "tutex/12.6.txt">
+</Example>
+
+</Section>
+
 
 <Section><Heading>Dijkgraaf-Witten Invariant</Heading>
 Given a closed connected orientable <M>3</M>-manifold <M>W</M>, a finite group <M>G</M> and
@@ -36,29 +59,41 @@ $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z
 Since <M>H_3(W,\mathbb Z)\cong \mathbb Z</M> we represent <M>D_G(W)</M> by the set <M>D_G(W)=\{ \gamma_\ast(1) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}</M> 
 where <M>1</M> denotes one of the two possible generators of <M>H_3(W,\mathbb Z)</M>.
 
-<P/> The following session constructs the two Lens spaces <M>L(5,1)</M> and <M>L(5,2)</M>. These are <M>3</M>-dimensional manifolds with cyclic fundamental group of order <M>5</M> and with identical integral homology groups. The homology version of the Dijkgraaf-Witten invariant is used with <M>G=C_5</M> to demonstrate that the two lens spaces are not homotopy equivalent.
+<P/> For any coprime integers <M>p,q\ge 1</M> the <E>lens space</E> <M>L(p,q)</M> is 
+obtained from the 3-sphere by drilling out
+ a tubular neighbourhood of the trivial 
+  knot and  then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <M>p/q</M>. Lens spaces have  cyclic fundamental group <M>\pi_1(L(p,q))=C_p</M> and homology <M>H_1(L(p,q),\mathbb Z)\cong \mathbb Z_p</M>,
+<M>H_2(L(p,q),\mathbb Z)\cong 0</M>,
+<M>H_3(L(p,q),\mathbb Z)\cong \mathbb Z</M>.
+It was proved by J.H.C. Whitehead that two lens spaces <M>L(p,q)</M> and <M>L(p',q')</M> are homotopy
+equivalent if and only if <M>p=p'</M> and <M>qq'\cong \pm n^2 \mod p</M> for some integer <M>n</M>.
+
+
+<P/> The following session constructs the two lens spaces <M>L(5,1)</M> and <M>L(5,2)</M>. The homology version of the Dijkgraaf-Witten invariant is used with <M>G=C_5</M> to demonstrate that the two lens spaces are not homotopy equivalent.
 
 <Example>
 <#Include SYSTEM "tutex/12.2.txt">
 </Example>
 
-<P/> A lens space <M>L(p,q)</M> exists for any coprime integers <M>p,q\ge 1</M>. It was proved by Paul Olum that two lens spaces <M>L(p,q)</M> and <M>L(p',q')</M> are homotopy
-equivalent if and only if <M>p=p'</M> and <M>qq'\cong \pm n^2 \mod p</M> for some integer <M>n</M>.
-For instance, <M>L(7,q)</M> is homotopy equivalent to <M>L(7,q')</M> if and only if <M>qq' \mod 7\in 
-\{1,2,4\}</M>. So <M>L(7,1)\simeq L(7,2) \simeq L(7,4)</M>, <M>L(7,3)\simeq L(7,5)\simeq(7,6)</M>. 
-The following session shows that the Dijkgraaf-Witten invariant, with
-<M>G=C_7</M>, fails to distinguish between <M>L(7,1)</M> and <M>L(7,3)</M>.
 
+A theorem of Fermat and Euler states that if a prime <M>p</M> is congruent to 3 modulo 4, then for any <M>q</M> exactly one  of <M>\pm q</M> is a 
+quadratic residue mod p. For all other primes <M>p</M> either both or neither
+of <M>\pm q</M> is a quadratic residue mod <M>p</M>.
+Thus for fixed <M>p \equiv 3 \mod 4</M>  the lens spaces
+<M>L(p,q)</M> form a single homotopy class.  There are precisely two
+homotopy classes  of lens spaces for other <M>p</M>. 
+
+<P/> The following commands confirm that <M>L(13,1) \not\simeq L(13,2)</M>.
 <Example>
 <#Include SYSTEM "tutex/12.3.txt">
 </Example>
 
-</Section>
+	</Section>
 
 <Section><Heading>Cohomology rings</Heading>
-The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <M>H^\ast(L(7,1),\mathbb Z_7)</M> and
-<M>H^\ast(L(7,3),\mathbb Z_7)</M>. These rings are isomorphic  and so fail to distinguish between the homotopy types of the lens spaces <M>L(7,1)</M>
-and <M>L(7,3)</M>.
+The following commands construct the multiplication table (with respect to some basis) for the cohomology rings <M>H^\ast(L(13,1),\mathbb Z_{13})</M> and
+<M>H^\ast(L(13,2),\mathbb Z_{13})</M>. These rings are isomorphic  and so fail to distinguish between the homotopy types of the lens spaces <M>L(13,1)</M>
+and <M>L(13,2)</M>.
 
 <Example>
 <#Include SYSTEM "tutex/12.4.txt">
@@ -67,19 +102,19 @@ and <M>L(7,3)</M>.
 
 <Section><Heading>Linking Form</Heading>
 
-Given a closed connected orientable <M>3</M>-manifold <M>W</M> let 
+Given a closed connected <B>oriented</B> <M>3</M>-manifold <M>W</M> let 
 <M>\tau H_1(W,\mathbb Z)</M> denote the torsion subgroup of the first integral homology. The <E>linking form</E> is a bilinear mapping
-<P/><M>L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow \mathbb Q/\mathbb Z</M>.
+<P/><M>Lk_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \longrightarrow \mathbb Q/\mathbb Z</M>.
 <P/>To construct this form note that we have a Poincare duality isomorphism
 <P/><M>\rho\colon H^2(W,\mathbb Z) \stackrel{\cong}{\longrightarrow} H_1(W,\mathbb Z), z \mapsto z\cap [W]</M>
-<P/>involving the cap product with the fundamental class <M>[W]\in H^3(W,\mathbb Z)\cong \mathbb Z</M>.
+<P/>involving the cap product with the fundamental class <M>[W]\in H^3(W,\mathbb Z)</M>. That is,  <M>[M]</M> is the generator of <M>H^3(W,\mathbb Z)\cong \mathbb Z</M> determining the orientation.
 
 The short exact sequence <M>\mathbb Z \rightarrowtail \mathbb Q \twoheadrightarrow \mathbb Q/\mathbb Z</M> gives rise to a cohomology exact sequence
 <P/><M> \rightarrow H^1(W,\mathbb Q) \rightarrow H^1(W,\mathbb Q/\mathbb Z) \stackrel{\beta}{\longrightarrow}
 H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb Q) \rightarrow </M> 
 <P/> from which we obtain the isomorphism <M>\beta \colon \tau H^1(W,\mathbb Q/\mathbb Z)
-\stackrel{\cong}{\longrightarrow} \tau H^2(W,\mathbb Z)</M>. The linking form <M>L_W</M> can be defined as the composite 
-<P/> <M>L_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \stackrel{1\times \rho^{-1}}{\longrightarrow}
+\stackrel{\cong}{\longrightarrow} \tau H^2(W,\mathbb Z)</M>. The linking form <M>Lk_W</M> can be defined as the composite 
+<P/> <M>Lk_W\colon \tau H_1(W,\mathbb Z) \times \tau H_1(W,\mathbb Z) \stackrel{1\times \rho^{-1}}{\longrightarrow}
 \tau H_1(W,\mathbb Z) \times \tau H^2(W,\mathbb Z)
 \stackrel{1\times \beta^{-1}}{\longrightarrow}
 \tau H_1(W,\mathbb Z) \times \tau H^1(W,\mathbb Q/\mathbb Z)
@@ -87,14 +122,149 @@ H^2(W,\mathbb Z) \rightarrow H^2(W,\mathbb Q) \rightarrow </M>
 <P/>where <M>ev(x,\alpha)</M> evaluates a <M>1</M>-cocycle <M>\alpha</M> on a <M>1</M>-cycle <M>x</M>.
 
 <P/> The linking form can be used to define the set
-<P/> <M>I(W) = \{L_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}</M>
-<P/>which is a homotopy invariant of <M>W</M> and which we refer to as the <E>linking form invariant</E>.
+<P/> <M>I^O(W) = \{Lk_W(g,g) \ \colon \ g\in \tau H_1(W,\mathbb Z)\}</M>
+<P/>which is an oriented-homotopy invariant of <M>W</M>. Letting <M>W^+</M> and <M>W^-</M> denote the two possible orientations on the manifold, the set
+<P/> <M>I(W) =\{I^O(W^+), I^O(W^-)\}</M>
+<P/>is a homotopy invariant of <M>W</M> which in this manual we refer to as
+ the <E>linking form homotopy invariant</E>.
 
-<P/> The following commands compute the linking form invariant for the lens spaces <M>L(7,q)</M> with <M>1\le q\le 6</M>. This invariant distinguishes between the homotopy type 
-<M>L(7,1)\simeq L(7,2) \simeq L(7,4)</M> and the homotopy type <M>L(7,3)\simeq L(7,5)\simeq(7,6)</M>.
+<P/> The following commands compute the linking form homotopy invariant for the lens spaces <M>L(13,q)</M> with <M>1\le q\le 12</M>. This invariant distinguishes between the two homotopy types that arise. 
+
 <Example>
 <#Include SYSTEM "tutex/12.5.txt">
 </Example>
+
+</Section>
+
+<Section><Heading>Determining the homeomorphism type of a lens space</Heading>
+
+In 1935 K. Reidemeister <Cite Key="reidemeister"/> classified
+ lens spaces up to orientation preserving PL-homeomorphism. This was generalized by E. Moise <Cite Key="moise"/> in 1952 to a classification up to homeomorphism -- his method requred the proof of the Hauptvermutung for <M>3</M>-dimensional manifolds. In 1960, following a suggestion of R. Fox, a proof was given
+by
+E.J. Brody <Cite Key="brody"/> that avoided the need for the Hauptvermutung.
+Reidemeister's method, using what is know termed <E>Reidermeister torsion</E>,
+and Brody's method, using  tubular neighbourhoods of <M>1</M>-cycles, both require identifying a suitable "preferred" generator of <M>H_1(L(p,q),\mathbb Z)</M>. In 2003 J. Przytycki and A. Yasukhara <Cite Key="przytycki"/> provided an alternative method for classifying lens spaces, which uses the linking form and
+ again requires the identification of a "preferred" generator of <M>H_1(L(p,q),\mathbb Z)</M>.
+
+<P/>   Przytycki and Yasukhara proved the following.
+
+<P/>
+<B>Theorem.</B> <E>Let <M>\rho\colon  S^ 3 \rightarrow L(p, q)</M> be the <M>p</M>-fold cyclic cover and <M>K</M> a knot in
+<M>L(p, q)</M> that represents a generator of <M>H_1 (L(p, q), \mathbb Z)</M>. If  <M>\rho ^{-1} (K)</M> is the trivial knot, then
+<M>Lk_{ L(p,q)} ([K], [K]) = q/p</M> or <M>= \overline q/p \in \mathbb Q/\mathbb Z</M> where <M>q\overline q \equiv 1 \mod p</M>. </E>
+
+<P/>The ingredients of this theorem can be applied in HAP, but at present only
+ to small examples of lens spaces. 
+The  obstruction to handling large examples is that the current default 
+method for computing the linking form involves
+ barycentric subdivision to produce a simplicial complex from a regular CW-complex, and then a homotopy equivalence from this typically large 
+simplicial complex to a smaller  non-regular CW-complex. However, for homeomorphism invariants that are not homotopy invariants there is a need to avoid homotopy equivalences. In the current version of HAP this
+means that in order to obtain delicate homeomorphism invariants we have to perform homology computations on typically large simplicial complexes. In a future version of HAP we hope to avoid the obstruction by  implementing cup products, cap products and linking forms entirely within the category of regular CW-complexes. 
+
+<P/>The following commands construct a small lens space <M>L=L(p,q)</M> with unknown values of <M>p,q</M>. Subsequent commands will determine the homeomorphism type of <M>L</M>.
+<Example>
+<#Include SYSTEM "tutex/12.7.txt">
+</Example>
+
+We can readily determine the value of <M>p=11</M> by calculating the order of <M>\pi_1(L)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.8.txt">
+</Example>
+
+<P/> The next commands take the default edge path <M>\gamma\colon S^1\rightarrow L</M> representing a generator of the cyclic group <M>\pi_1(L)</M> and 
+lift it to an edge path <M>\tilde\gamma\colon S^1\rightarrow \tilde L</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.9.txt">
+</Example>
+
+<P/>The next commands check that the path <M>\tilde\gamma</M> is unknotted in <M>\tilde L\cong S^3</M> by checking that <M>\pi_1(\tilde L\setminus {\rm image}(\tilde\gamma))</M> is infinite cyclic.
+<Example>
+<#Include SYSTEM "tutex/12.10.txt">
+</Example>
+
+<P/>Since <M>\tilde\gamma</M> is unkotted the cycle <M>\gamma</M> represents the preferred generator <M>[\gamma]\in H_1(L,\mathbb Z)</M>. The next commands compute <M>Lk_L([\gamma],[\gamma])= 7/11 </M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.11.txt">
+</Example>
+
+<P/> The classification of Moise/Brody states that <M>L(p,q)\cong L(p,q')</M> if and only if  <M>qq'\equiv \pm 1 \mod p</M>. Hence the lens space <M>L</M> has the homeomorphism type
+<P/> <M>L\cong L(11,7) \cong L(11,8) \cong L(11,4) \cong L(11,3)</M>.
+
+</Section>
+
+<Section><Heading>Surgeries on distinct knots can yield homeomorphic manifolds</Heading>
+
+The lens space <M>L(5,1)</M> is a quotient of the <M>3</M>-sphere <M>S^3</M>
+by a certain  action of the cyclic group <M>C_5</M>. It can be realized by a <M>p/q=5/1</M> Dehn filling of the complement of the trivial knot. It can also
+be realized by Dehn fillings of other knots.  To see this, the following commands compute the manifold <M>W</M> obtained from a <M>p/q=1/5</M> Dehn filling of the complement of the trefoil and show that <M>W</M> at least has the same integral homology and same fundamental group as <M>L(5,1)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.12.txt">
+</Example>
+
+<P/>The next commands construct the universal cover <M>\widetilde W</M> and show that it has the same homology as <M>S^3</M> and trivivial fundamental group
+<M>\pi_1(\widetilde W)=0</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.13.txt">
+</Example>
+
+By construction the space <M>\widetilde W</M> is a manifold.
+ Had we not known how the regular CW-complex  <M>\widetilde W</M> 
+had been constructed then we could prove that it is a closed <M>3</M>-manifold by
+creating its barycentric subdivision <M>K=sd\widetilde W</M>, which is 
+homeomorphic to <M>\widetilde W</M>, and verifying that the link of each vertex in the simplicial complex <M>sd\widetilde W</M> is a <M>2</M>-sphere. 
+The following commands carry out this proof: each link is shown to admit a discrete vector field with precisely two critical cells -- one <M>0</M>-cell and one <M>2</M>-cell.
+
+<Example>
+<#Include SYSTEM "tutex/12.14.txt">
+</Example>
+
+
+
+The Poincare conjecture (now proven) implies that <M>\widetilde W</M> is homeomorphic
+to <M>S^3</M>.
+ Hence <M>W=S^3/C_5</M> is a quotient of the <M>3</M>-sphere  by an action of <M>C_5</M> and is hence a lens space <M>L(5,q)</M> for some <M>q</M>.
+
+<P/> The next commands determine that <M>W</M> is homeomorphic to
+<M>L(5,4)\cong L(5,1)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.15.txt">
+</Example>
+
+<P/> Moser <Cite Key="lmoser"/> gives a precise decription of the lens 
+spaces arising from surgery on the trefoil knot and more generally from 
+surgery on torus knots. Greene <Cite Key="greene"/> determines the lens spaces that arise by integer Dehn surgery along a knot in the three-sphere
+</Section>
+
+<Section><Heading>Finite fundamental groups of <M>3</M>-manifolds</Heading>
+
+Lens spaces are examples of <M>3</M>-manifolds with finite fundamental groups. The complete list of finite groups <M>G</M>
+arising as fundamental groups of closed connected
+<M>3</M>-manifolds is recalled in <Ref Sect="Secfinitefundman"/> where one method for computing their cohomology rings is presented. Their cohomology could also be computed from explicit <M>3</M>-manifolds <M>W</M> with <M>\pi_1W=G</M>.
+ For instance, the following commands realize a closed connected
+<M>3</M>-manifold <M>W</M> with <M>\pi_1W = C_{11}\times SL_2(\mathbb Z_5)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.16.txt">
+</Example>
+
+Hence the group <M>G=C_{11}\times SL_2(\mathbb Z_5)</M> of order <M>1320</M>
+acts freely on the <M>3</M>-sphere
+<M>\widetilde W</M>. It thus  has periodic cohomology with
+<Display>
+H_n(G,\mathbb Z) = \left\{ \begin{array}{ll}
+\mathbb Z_{11} &amp; n\equiv 1  \mod 4  \\
+0  &amp; n\equiv 2 \mod 4 \\
+\mathbb Z_{1320} &amp; n \equiv 3\mod 4\\
+\mathbb 0 &amp; n\equiv 0  \mod 4   \\
+\end{array}\right.
+</Display>
+for <M>n &gt; 0</M>.
 
 </Section>
 </Chapter>

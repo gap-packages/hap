@@ -1,0 +1,19 @@
+gap> U:=UniversalCover(L);;
+gap> G:=U!.group;;
+gap> p:=EquivariantCWComplexToRegularCWMap(U,Group(One(G)));;
+gap> U:=Source(p);;
+gap> gamma:=[];;
+gap> gamma[2]:=F!.loops[1];;
+gap> gamma[2]:=List(gamma[2],AbsInt);;
+gap> gamma[1]:=List(gamma[2],k->L!.boundaries[2][k]);;
+gap> gamma[1]:=SSortedList(Flat(gamma[1]));;
+gap> 
+gap> gammatilde:=[[],[],[],[]];;
+gap> for k in [1..U!.nrCells(0)] do
+> if p!.mapping(0,k) in gamma[1] then Add(gammatilde[1],k); fi;
+> od;
+gap> for k in [1..U!.nrCells(1)] do
+> if p!.mapping(1,k) in gamma[2] then Add(gammatilde[2],k); fi;
+> od;
+gap> gammatilde:=CWSubcomplexToRegularCWMap([U,gammatilde]);
+Map of regular CW-complexes
