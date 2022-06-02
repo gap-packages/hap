@@ -96,6 +96,8 @@ fi;
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/convexCWspace.gi");
 ReadPackageHap( "lib/Polymake/fix.gi");
+else
+DeclareCategory("IsPolymakeObject",IsObject);
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
