@@ -96,8 +96,6 @@ fi;
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/convexCWspace.gi");
 ReadPackageHap( "lib/Polymake/fix.gi");
-else
-DeclareCategory("IsPolymakeObject",IsObject);
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
@@ -289,7 +287,9 @@ ReadPackageHap( "lib/Polymake/aspherical.gi");
 ReadPackageHap( "lib/Polymake/polyGens.gi");
 ReadPackageHap( "lib/Polymake/stabilizer.gi");
 ReadPackageHap( "lib/Polymake/polyFaces.gi");
+if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/orbitPoly.gi");
+fi;
 #ReadPackageHap( "lib/Polymake/fix.gi");
 ReadPackageHap( "lib/Polymake/TZ.gi");
 
