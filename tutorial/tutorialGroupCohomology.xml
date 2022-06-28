@@ -85,7 +85,7 @@ The following example computes
 
 </Section>
 
-<Section><Heading>Crystallographic groups</Heading>
+<Section><Heading>Crystallographic and Almost Crystallographic groups</Heading>
 <P/>The following example computes
 <P/><M>H_5(G,\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_2</M>
 <P/>for the <M>3</M>-dimensional crystallographic space group <M>G</M>
@@ -95,6 +95,13 @@ The following example computes
 <#Include SYSTEM "tutex/6.9.txt">
 </Example>
 
+<P/>The following example computes 
+<P/><M>H^5(G,\mathbb Z)= \mathbb Z</M>
+<P/> for an almost crystallographic group.
+
+<Example>
+<#Include SYSTEM "tutex/6.9a.txt">
+</Example>
 
 </Section>
 
@@ -173,7 +180,7 @@ The following example
 <P/><M>H^6(G,A) =\mathbb Z_2 \oplus \mathbb Z_{6}</M>
 <P/>and the homology
 <P/><M>H_6(G,A) =\mathbb Z_2 </M>
-<P/> of the alternating group <M>G=A_6</M> with coefficients in  <M>A=\mathbb Z^5</M> where elements of <M>G</M> act on <M>\mathbb Z^5</M> via the canonical  permutation of basis elements.
+<P/> of the alternating group <M>G=A_5</M> with coefficients in  <M>A=\mathbb Z^5</M> where elements of <M>G</M> act on <M>\mathbb Z^5</M> via the canonical  permutation of basis elements.
 
 
 
@@ -182,8 +189,19 @@ The following example
 </Example>
 </Section>
 
+<Section><Heading>Cohomology as a functor of the first variable</Heading>
+Suppose given a group homomorphism <M>f\colon G_1\rightarrow G_2</M> and a <M>G_2</M>-module <M>A</M>. Then <M>A</M> is naturally a <M>G_1</M>-module with  action via <M>f</M>, and there is an induced cohomology homomorphism
+<M>H^n(f,A)\colon H^n(G_2,A) \rightarrow H^n(G_1,A)</M>.
 
-<Section><Heading>Exact cohomology coefficient sequence</Heading>
+<P/>The following example computes this cohomology homomorphism in degree <M>n=6</M> for the inclusion <M>f\colon A_5 \rightarrow S_5</M> and <M>A=\mathbb Z^5</M> with action that permutes the canonical basis.
+The final commands determine that the kernel of the homomorphism <M>H^6(f,A)</M> is the Klein group of order <M>4</M> and that the cokernel is cyclic of order <M>6</M>.
+<Example>
+<#Include SYSTEM "tutex/6.16A.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Cohomology as a functor of the second variable and the long exact coefficient sequence</Heading>
 A short exact sequence of <M>\mathbb ZG</M>-modules
 <M>A \rightarrowtail B \twoheadrightarrow C</M>
 induces a long exact sequence of cohomology groups
@@ -355,7 +373,7 @@ We thus replace the very infinite group U(1) by the finite cyclic group <M>\math
 be represented by a list <M>f=[f_1, f_2, f_3, f_4]</M> with <M>f_i</M>
   the image in <M>\mathbb Z_6</M> of the <M>i</M>th generator. The cocycle condition on <M>f</M> can be expressed as a matrix equation
 
-<P/><M>Mf^t = 0  \mod 6</M>.
+<P/><M>Mf^t = 0  \bmod 6</M>.
 
 <P/>
 where the matrix <M>M</M> is obtained from the following command and <M>f^t</M> denotes the transpose.

@@ -154,7 +154,7 @@
   [4X[32X[104X
   
   
-  [1X7.3 [33X[0;0YCrystallographic groups[133X[101X
+  [1X7.3 [33X[0;0YCrystallographic and Almost Crystallographic groups[133X[101X
   
   [33X[0;0YThe following example computes[133X
   
@@ -166,6 +166,19 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGroupHomology(SpaceGroupBBNWZ("P62"),5);[127X[104X
     [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following example computes[133X
+  
+  [33X[0;0Y[22XH^5(G, Z)= Z[122X[133X
+  
+  [33X[0;0Yfor an almost crystallographic group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AlmostCrystallographicPcpGroup( 4, 50, [ 1, -4, 1, 2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGroupCohomology(G,4);[127X[104X
+    [4X[28X[ 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -283,7 +296,7 @@
   
   [33X[0;0Y[22XH_6(G,A) = Z_2[122X[133X
   
-  [33X[0;0Yof the alternating group [22XG=A_6[122X with coefficients in [22XA= Z^5[122X where elements of
+  [33X[0;0Yof the alternating group [22XG=A_5[122X with coefficients in [22XA= Z^5[122X where elements of
   [22XG[122X act on [22XZ^5[122X via the canonical permutation of basis elements.[133X
   
   [4X[32X  Example  [32X[104X
@@ -301,7 +314,40 @@
   [4X[32X[104X
   
   
-  [1X7.8 [33X[0;0YExact cohomology coefficient sequence[133X[101X
+  [1X7.8 [33X[0;0YCohomology as a functor of the first variable[133X[101X
+  
+  [33X[0;0YSuppose given a group homomorphism [22Xf: G_1→ G_2[122X and a [22XG_2[122X-module [22XA[122X. Then [22XA[122X is
+  naturally a [22XG_1[122X-module with action via [22Xf[122X, and there is an induced cohomology
+  homomorphism [22XH^n(f,A): H^n(G_2,A) → H^n(G_1,A)[122X.[133X
+  
+  [33X[0;0YThe  following  example  computes this cohomology homomorphism in degree [22Xn=6[122X
+  for  the  inclusion  [22Xf:  A_5  → S_5[122X and [22XA= Z^5[122X with action that permutes the
+  canonical  basis.  The  final  commands  determine  that  the  kernel of the
+  homomorphism [22XH^6(f,A)[122X is the Klein group of order [22X4[122X and that the cokernel is
+  cyclic of order [22X6[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG1:=AlternatingGroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XG2:=SymmetricGroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=GroupHomomorphismByFunction(G1,G2,x->x);;[127X[104X
+    [4X[25Xgap>[125X [27Xpi:=PermToMatrixGroup(G2,5);;[127X[104X
+    [4X[25Xgap>[125X [27XR1:=ResolutionFiniteGroup(G1,7);;[127X[104X
+    [4X[25Xgap>[125X [27XR2:=ResolutionFiniteGroup(G2,7);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=EquivariantChainMap(R1,R2,f);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(F,pi);;[127X[104X
+    [4X[25Xgap>[125X [27Xc:=Cohomology(C,6);[127X[104X
+    [4X[28X[ g1, g2, g3 ] -> [ id, id, g3 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Kernel(c));[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Range(c)/Image(c));[127X[104X
+    [4X[28X[ 2, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.9  [33X[0;0YCohomology  as  a  functor  of  the  second variable and the long exact[101X
+  [1Xcoefficient sequence[133X[101X
   
   [33X[0;0YA short exact sequence of [22XZG[122X-modules [22XA ↣ B ↠ C[122X induces a long exact sequence
   of cohomology groups[133X
@@ -380,7 +426,7 @@
   [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)[122X .[133X
   
   
-  [1X7.9 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
+  [1X7.10 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
   
   [33X[0;0YA  [13Xspherical 3-manifold[113X is a 3-manifold arising as the quotient [22XS^3/Γ[122X of the
   3-sphere [22XS^3[122X by a finite subgroup [22XΓ[122X of [22XSO(4)[122X acting freely as rotations. The
@@ -496,7 +542,7 @@
   of these fundamental groups of spherical 3-manifolds is given in [TZ08].[133X
   
   
-  [1X7.10 [33X[0;0YExplicit cocycles[133X[101X
+  [1X7.11 [33X[0;0YExplicit cocycles[133X[101X
   
   [33X[0;0YGiven  a [22XZG[122X-resolution [22XR_∗[122X and a [22XZG[122X-module [22XA[122X, one defines an [13X[22Xn[122X-cocycle[113X to be
   a  [22XZG[122X-homomorphism  [22Xf:  R_n → A[122X for which the composite homomorphism [22Xfd_n+1:

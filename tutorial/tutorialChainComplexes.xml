@@ -1,0 +1,179 @@
+<Chapter><Heading>Chain Complexes</Heading>
+HAP uses implementations of chain complexes of free <M>\mathbb K</M>-modules for each of the rings  <M>\mathbb K = \mathbb Z</M>, <M>\mathbb K = \mathbb Q</M>, <M>\mathbb K = \mathbb F_p</M> with <M>p</M> a prime number, <M>\mathbb K = \mathbb ZG</M>, <M>\mathbb K = \mathbb F_pG</M> with <M>G</M> a group.
+ The implemented chain complexes have the form
+<P/><M> C_n \stackrel{d_n}{\longrightarrow } C_{n-1} \stackrel{d_{n-1}}{\longrightarrow } \cdots \stackrel{d_2}{\longrightarrow } C_1 \stackrel{d_1}{\longrightarrow } C_0 \stackrel{d_0}{\longrightarrow } 0\ .</M>
+<P/>Such a complex is said to have <E>length</E> <M>n</M>
+and the   rank of the free <M>\mathbb K</M>-module <M>C_k</M> is referred to as the <E>dimenion</E> of the complex in degree <M>k</M>. 
+<P/> For the case <M>\mathbb K = \mathbb ZG</M>  (resp. <M>\mathbb K = \mathbb F_pG</M>) the main focus is on free chain complexes that are exact at each degree <M>k</M>, i.e.  <M>{\rm im}(d_{k+1})={\rm ker}(d_k)</M>, for <M>0 &lt; k &lt; n</M> and with <M>C_0/{\rm im}(d_1) \cong \mathbb Z</M> (resp. <M>C_0/{\rm im}(d_1) \cong \mathbb F_p</M>). We refer to such a chain complex as a <E>resolution of length </E> <M>n</M> even though  <M>d_n</M> will typically not be injective. More correct terminology  would refer to such a chain complex as the first <M>n</M> degrees of a free resolution.      
+<P/>The following sections illustrate some constructions of chain complexes. Constructions for resolutions are described in the next chapter <Ref Sect="resolutions"/>.
+<Section><Heading>Chain complex of a simplicial complex and simplicial pair</Heading>
+
+<P/>The following example constructs the Quillen simplicial complex <M>Q={\mathcal A}_p(G)</M> for <M>p=2</M> and <M>G=A_8</M>; this is the order complex of the poset of non-trivial elementary <M>2</M>-subgroups of <M>G</M>. The chain complex <M>C_\ast = C_\ast(Q)</M> is then computed and seen to have the same number of free generators as <M>Q</M> has simplices.
+(To ensure indexing of subcomplexes is consistent with that of the large complex it is best to work with vertices represented as integers.)
+<Example>
+<#Include SYSTEM "tutex/13.1.txt">
+</Example>
+
+Next the simplicial complex <M>Q</M> is converted to one whose vertices are represented by integers and  a contactible subcomplex <M>L &lt; Q</M> is computed.
+The chain complex <M>D_\ast=C_\ast(Q,L)</M> of the simplicial pair <M>(Q,L)</M> is constructed and seen to have the correct size. 
+
+<Example>
+<#Include SYSTEM "tutex/13.2.txt">
+</Example>
+
+The next commands produce a smalled chain complex <M>B_\ast</M> chain homotopy equivalent to <M>D_\ast</M> and compute the homology <M>H_k(Q,\mathbb Z) \cong H_k(B_\ast)</M> for <M>k=1,2,3</M>.
+
+<Example>
+<#Include SYSTEM "tutex/13.3.txt">
+</Example>
+
+
+</Section>
+
+<Section><Heading>Chain complex of a cubical complex and cubical pair</Heading>
+The following example reads in the digital image 
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/bw_image.bmp" align="center" height="300" alt="a digital image"/>
+</Alt>
+
+
+<P/>as a <M>2</M>-dimensional pure cubical complex <M>M</M> and constructs the chain complex <M>C_\ast=C_\ast(M)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/13.4.txt">
+</Example>
+
+Next an acyclic pure cubical subcomplex  <M>L &lt; M</M> is computed
+and the chain complex <M>D_\ast=C_\ast(M,L)</M> of the pair is constructed.
+
+<Example>
+<#Include SYSTEM "tutex/13.5.txt">
+</Example>
+
+Finally the chain complex <M>D_\ast</M> is simplified to a  homotopy equivalent chain complex <M>B_\ast</M> and the homology <M>H_1(M,\mathbb Z) \cong H_1(B_\ast)</M> is computed.
+
+<Example>
+<#Include SYSTEM "tutex/13.6.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Chain complex of a regular CW-complex</Heading>
+
+The next example constructs a <M>15</M>-dimensional regular CW-complex <M>Y</M>
+that  is homotopy equivalent to the <M>2</M>-dimensional torus.
+
+<Example>
+<#Include SYSTEM "tutex/13.7.txt">
+</Example>
+
+Next the cellular chain complex <M>C_\ast=C_\ast(Y)</M> is constructed. Also, a minimally generated  chain complex <M>D_\ast=C_\ast(Y')</M> of a non-regular CW-complex <M>Y'\simeq Y</M> is constructed.
+
+<Example>
+<#Include SYSTEM "tutex/13.8.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Chain Maps of simplicial and regular CW maps</Heading>
+
+The next example realizes the complement of the first prime knot on <M>11</M> crossings as a pure permutahedral complex. The complement is converted to a 
+regular CW-complex <M>Y</M> and the
+  boundary inclusion <M>f\colon \partial Y \hookrightarrow Y</M> is constructed as a map of regular CW-complexes. Then the induced chain map <M>F\colon C_\ast(\partial Y) \hookrightarrow C_\ast(Y)</M> is constructed. Finally the homology homomorphism <M>H_1(F)\colon H_1(C_\ast(\partial Y)) \rightarrow H_1(C_\ast(Y))</M> is computed.
+
+<Example>
+<#Include SYSTEM "tutex/13.9.txt">
+</Example>
+
+The command <Code>ChainMap(f)</Code> can be used to construct the chain map
+<M>C_\ast(K) \rightarrow C_\ast(K')</M> induced by a map <M>f\colon K\rightarrow K'</M> of simplicial complexes. 
+
+</Section>
+
+<Section><Heading>Constructions for chain complexes</Heading>
+It is straightforward to implement basic constructions on chain complexes.
+A few constructions are illustrated in the following example.
+
+<Example>
+<#Include SYSTEM "tutex/13.10.txt">
+</Example>
+</Section>
+
+<Section><Heading>Filtered chain complexes</Heading>
+
+A sequence of inclusions of chain complexes
+<M>C_{0,\ast} \le C_{1,\ast} \le \cdots \le C_{T-1,\ast} \le C_{T,\ast}</M> in which the preferred basis of <M>C_{k-1,\ell}</M> is the beginning of the preferred basis of <M>C_{k,\ell}</M> is referred to as a <E>filtered chain complex</E>.
+Filtered chain complexes give rise to spectral sequences such as
+ the <E>equivariant spectral sequence</E> of a <M>G-CW</M>-complex with subgroup <M>H &lt; G</M>. A particular case is the  
+ Lyndon-Hochschild-Serre spectral sequence for the homology of a group extension <M>N \rightarrowtail G \twoheadrightarrow Q</M> with <M>E^2_{p,q}=H_p(Q,H_q(N, \mathbb Z))</M>.
+
+<P/>The following commands construct the filtered chain complex underlying the Lyndon-Hochschild-Serre spectral sequence for the dihedral group <M>G=D_{32}</M> of order 64 and its centre <M>N=Z(G)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/13.11.txt">
+</Example>
+
+The differentials <M>d^r_{p,q}</M> in a given page <M>E^r</M> of
+the spectral sequence arise from the induced homology homomorphisms <M>\iota^{s,t}_\ell\colon H_{\ell}(C_{s,\ast}) \rightarrow H_{\ell}(C_{t,\ast})</M> for <M>s\le t</M>. Textbooks traditionally picture the differential in <M>E^r</M> as an array of sloping arrows with non-zero groups <M>E^r_{p,q}\neq 0</M> represented by dots.  An alternative representation of this information is as a barcode (of
+the sort used in 
+Topological Data Analysis). The  homomorphisms <M>\iota^{\ast,\ast}_2</M>
+in the example, with coefficients converted to mod <M>2</M>,  are pictured by the bar code
+<P/>
+<Alt Only="HTML">&lt;img src="images/lhsbc.png" align="center" height="150" alt="a bar code for the LHS spectral sequence"/>
+</Alt>
+<P/>
+which was produced by the following commands.
+
+<Example>
+<#Include SYSTEM "tutex/13.12.txt">
+</Example>
+</Section>
+
+<Section><Heading>Sparse chain complexes</Heading>
+Boundary homomorphisms in all of the above examples of
+chain complexes are represented by matrices. In cases where the matrices are large and have many zero entries it is better to use sparse matrices.
+
+<P/>The following commands demonstrate the conversion of the matrix
+<P/><M>A=\left(\begin{array}{ccc}
+0 &amp;2 &amp;0\\
+-3 &amp;0 &amp; 0\\
+0 &amp; 0 &amp;4
+\end{array}\right)</M>
+<P/>to sparse form, and vice-versa. 
+<Example>
+<#Include SYSTEM "tutex/13.13.txt">
+</Example>
+
+<P/>To illustrate the use of sparse chain complexes we consider the data points represented in the following digital image.
+<P/><Alt Only="HTML">&lt;img src="images/data500.png" align="center" height="200" alt="data points samples from an annulus"/>
+</Alt>
+<P/>
+The following commands read in this image as a <M>2</M>-dimensional pure cubical complex and store the Euclidean coordinates of the black pixels in a list. Then 200 points are selected at random from this list and used to construct a  <M>200\times 200</M> symmetric matrix <M>S</M> whose entries are the Euclidean distance between the sample data points.
+
+
+<Example>
+<#Include SYSTEM "tutex/13.14.txt">
+</Example>
+
+The symmetric distance matrix <M>S</M> is next converted to a filtered chain complex arising from a filtered simplicial complex (using the standard <E>persistent homology</E> pipeline).
+<Example>
+<#Include SYSTEM "tutex/13.15.txt">
+</Example>
+
+Next, the induced homology homomorphisms in degrees 1 and 2, with rational coefficients, are computed and displayed a barcodes.
+<Example>
+<#Include SYSTEM "tutex/13.15a.txt">
+</Example>
+<P/><Alt Only="HTML">&lt;img src="images/barcode0example.png" align="center" height="130" alt="Degree 0 persistent homology barcode"/>
+</Alt>
+<P/>
+<Example>
+<#Include SYSTEM "tutex/13.16.txt">
+</Example>
+<P/><Alt Only="HTML">&lt;img src="images/barcode1example.png" align="center" height="130" alt="Degree 1 persistent homology barcode"/>
+</Alt>
+<P/>
+The barcodes are consistent with the data points having been sampled from a space with the homotopy type of an annulus.
+</Section>
+</Chapter>
