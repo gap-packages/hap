@@ -1,0 +1,379 @@
+  
+  [1X10 [33X[0;0YChain Complexes[133X[101X
+  
+  [33X[0;0YHAP  uses  implementations  of chain complexes of free [22XK[122X-modules for each of
+  the rings [22XK = Z[122X, [22XK = Q[122X, [22XK = F_p[122X with [22Xp[122X a prime number, [22XK = ZG[122X, [22XK = F_pG[122X with
+  [22XG[122X a group. The implemented chain complexes have the form[133X
+  
+  [33X[0;0Y[22XC_n  stackreld_n⟶  C_n-1 stackreld_n-1}⟶ ⋯ stackreld_2⟶ C_1 stackreld_1⟶ C_0
+  stackreld_0⟶ 0 .[122X[133X
+  
+  [33X[0;0YSuch  a  complex  is said to have [13Xlength[113X [22Xn[122X and the rank of the free [22XK[122X-module
+  [22XC_k[122X is referred to as the [13Xdimenion[113X of the complex in degree [22Xk[122X.[133X
+  
+  [33X[0;0YFor  the  case  [22XK  =  ZG[122X  (resp.  [22XK  = F_pG[122X) the main focus is on free chain
+  complexes that are exact at each degree [22Xk[122X, i.e. [22Xim(d_k+1)= ker(d_k)[122X, for [22X0 <
+  k < n[122X and with [22XC_0/ im(d_1) ≅ Z[122X (resp. [22XC_0/ im(d_1) ≅ F_p[122X). We refer to such
+  a  chain complex as a [13Xresolution of length [113X [22Xn[122X even though [22Xd_n[122X will typically
+  not  be  injective.  More  correct  terminology  would refer to such a chain
+  complex as the first [22Xn[122X degrees of a free resolution.[133X
+  
+  [33X[0;0YThe  following  sections  illustrate  some constructions of chain complexes.
+  Constructions for resolutions are described in the next chapter [14X11[114X.[133X
+  
+  
+  [1X10.1 [33X[0;0YChain complex of a simplicial complex and simplicial pair[133X[101X
+  
+  [33X[0;0YThe  following  example  constructs the Quillen simplicial complex [22XQ=mathcal
+  A_p(G)[122X  for  [22Xp=2[122X  and  [22XG=A_8[122X;  this  is  the  order  complex of the poset of
+  non-trivial  elementary  [22X2[122X-subgroups of [22XG[122X. The chain complex [22XC_∗ = C_∗(Q)[122X is
+  then  computed  and seen to have the same number of free generators as [22XQ[122X has
+  simplices.  (To  ensure  indexing of subcomplexes is consistent with that of
+  the large complex it is best to work with vertices represented as integers.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=QuillenComplex(AlternatingGroup(8),2);[127X[104X
+    [4X[28XSimplicial complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplex(Q);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(Q);[127X[104X
+    [4X[28X55015[128X[104X
+    [4X[25Xgap>[125X [27XSize(C);[127X[104X
+    [4X[28X55015[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext  the  simplicial  complex  [22XQ[122X  is  converted  to  one whose vertices are
+  represented  by integers and a contactible subcomplex [22XL < Q[122X is computed. The
+  chain  complex  [22XD_∗=C_∗(Q,L)[122X of the simplicial pair [22X(Q,L)[122X is constructed and
+  seen to have the correct size.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=IntegerSimplicialComplex(Q);[127X[104X
+    [4X[28XSimplicial complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL:=ContractibleSubcomplex(Q);[127X[104X
+    [4X[28XSimplicial complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=ChainComplexOfPair(Q,L);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(D)=Size(Q)-Size(L);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSize(D);[127X[104X
+    [4X[28X670[128X[104X
+    [4X[28Xgap>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  produce  a  smalled  chain  complex  [22XB_∗[122X chain homotopy
+  equivalent to [22XD_∗[122X and compute the homology [22XH_k(Q, Z) ≅ H_k(B_∗)[122X for [22Xk=1,2,3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XB:=ContractedComplex(D);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(B);[127X[104X
+    [4X[28X64[128X[104X
+    [4X[25Xgap>[125X [27XHomology(B,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(B,2);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(B,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.2 [33X[0;0YChain complex of a cubical complex and cubical pair[133X[101X
+  
+  [33X[0;0YThe following example reads in the digital image[133X
+  
+  [33X[0;0Yas  a  [22X2[122X-dimensional pure cubical complex [22XM[122X and constructs the chain complex
+  [22XC_∗=C_∗(M)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ReadImageAsPureCubicalComplex(file,400);[127X[104X
+    [4X[28XPure cubical complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplex(K);[127X[104X
+    [4X[28XChain complex of length 2 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(C); [127X[104X
+    [4X[28X173243[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext  an  acyclic  pure  cubical  subcomplex [22XL < M[122X is computed and the chain
+  complex [22XD_∗=C_∗(M,L)[122X of the pair is constructed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=AcyclicSubcomplexOfPureCubicalComplex(K);[127X[104X
+    [4X[28XPure cubical complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=ChainComplexOfPair(K,L);[127X[104X
+    [4X[28XChain complex of length 2 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(D);[127X[104X
+    [4X[28X618[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFinally  the  chain complex [22XD_∗[122X is simplified to a homotopy equivalent chain
+  complex [22XB_∗[122X and the homology [22XH_1(M, Z) ≅ H_1(B_∗)[122X is computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XB:=ContractedComplex(D);[127X[104X
+    [4X[28XChain complex of length 2 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(B);[127X[104X
+    [4X[28X20[128X[104X
+    [4X[25Xgap>[125X [27XHomology(B,1);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.3 [33X[0;0YChain complex of a regular CW-complex[133X[101X
+  
+  [33X[0;0YThe  next  example  constructs a [22X15[122X-dimensional regular CW-complex [22XY[122X that is
+  homotopy equivalent to the [22X2[122X-dimensional torus.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XCircle:=PureCubicalComplex([[1,1,1,1,1],[1,1,0,1,1],[1,1,1,1,1]]);[127X[104X
+    [4X[28XPure cubical complex of dimension 2.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XTorus:=DirectProductOfPureCubicalComplexes(Circle,Circle);[127X[104X
+    [4X[28XPure cubical complex of dimension 4.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCTorus:=CechComplexOfPureCubicalComplex(Torus);[127X[104X
+    [4X[28XSimplicial complex of dimension 15.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(CTorus);[127X[104X
+    [4X[28XRegular CW-complex of dimension 15[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext the cellular chain complex [22XC_∗=C_∗(Y)[122X is constructed. Also, a minimally
+  generated  chain  complex  [22XD_∗=C_∗(Y')[122X  of a non-regular CW-complex [22XY'≃ Y[122X is
+  constructed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfRegularCWComplex(Y);[127X[104X
+    [4X[28XChain complex of length 15 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(C);[127X[104X
+    [4X[28X1172776[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=ChainComplex(Y);[127X[104X
+    [4X[28XChain complex of length 15 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(D);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.4 [33X[0;0YChain Maps of simplicial and regular CW maps[133X[101X
+  
+  [33X[0;0YThe  next  example  realizes  the  complement  of the first prime knot on [22X11[122X
+  crossings  as a pure permutahedral complex. The complement is converted to a
+  regular CW-complex [22XY[122X and the boundary inclusion [22Xf: ∂ Y ↪ Y[122X is constructed as
+  a  map  of  regular  CW-complexes.  Then the induced chain map [22XF: C_∗(∂ Y) ↪
+  C_∗(Y)[122X  is  constructed. Finally the homology homomorphism [22XH_1(F): H_1(C_∗(∂
+  Y)) → H_1(C_∗(Y))[122X is computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=PurePermutahedralKnot(11,1);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=PureComplexComplement(K);[127X[104X
+    [4X[28XPure permutahedral complex of dimension 3.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=RegularCWComplex(M);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf:=BoundaryMap(Y);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF:=ChainMap(f);[127X[104X
+    [4X[28XChain Map between complexes of length 2 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XH:=Homology(F,1);[127X[104X
+    [4X[28X[ g1, g2 ] -> [ g1^-1, g1^-1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XKernel(H);[127X[104X
+    [4X[28XPcp-group with orders [ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  command  [10XChainMap(f)[110X  can  be  used to construct the chain map [22XC_∗(K) →
+  C_∗(K')[122X induced by a map [22Xf: K→ K'[122X of simplicial complexes.[133X
+  
+  
+  [1X10.5 [33X[0;0YConstructions for chain complexes[133X[101X
+  
+  [33X[0;0YIt is straightforward to implement basic constructions on chain complexes. A
+  few constructions are illustrated in the following example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xres:=ResolutionFiniteGroup(SymmetricGroup(5),5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(res);[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=ContractedComplex(C);#A chain homotopic complex[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 0 . [128X[104X
+    [4X[25Xgap>[125X [27XList([0..5],C!.dimension);[127X[104X
+    [4X[28X[ 1, 4, 10, 20, 35, 56 ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..5],D!.dimension);[127X[104X
+    [4X[28X[ 1, 1, 2, 4, 6, 38 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCxC:=TensorProduct(C,C);[127X[104X
+    [4X[28XChain complex of length 10 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSC:=SuspendedChainComplex(C);[127X[104X
+    [4X[28XChain complex of length 6 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRC:=ReducedSuspendedChainComplex(C);[127X[104X
+    [4X[28XChain complex of length 6 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPC:=PathObjectForChainComplex(C);[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XdualC:=HomToIntegers(C);[127X[104X
+    [4X[28XCochain complex of length 5 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCxp:=TensorWithIntegersModP(C,5);[127X[104X
+    [4X[28XChain complex of length 5 in characteristic 5 .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCxQ:=TensorWithRationals(C); #The quirky -1/2 denotes rationals[127X[104X
+    [4X[28XChain complex of length 5 in characteristic -1/2 .[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.6 [33X[0;0YFiltered chain complexes[133X[101X
+  
+  [33X[0;0YA  sequence  of inclusions of chain complexes [22XC_0,∗ le C_1,∗ le ⋯ le C_T-1,∗
+  le  C_T,∗[122X  in  which  the preferred basis of [22XC_k-1,ℓ[122X is the beginning of the
+  preferred  basis  of  [22XC_k,ℓ[122X  is  referred  to  as  a [13Xfiltered chain complex[113X.
+  Filtered  chain  complexes  give  rise  to  spectral  sequences  such as the
+  [13Xequivariant  spectral  sequence[113X  of  a  [22XG-CW[122X-complex  with subgroup [22XH < G[122X. A
+  particular  case  is  the  Lyndon-Hochschild-Serre spectral sequence for the
+  homology of a group extension [22XN ↣ G ↠ Q[122X with [22XE^2_p,q=H_p(Q,H_q(N, Z))[122X.[133X
+  
+  [33X[0;0YThe  following  commands construct the filtered chain complex underlying the
+  Lyndon-Hochschild-Serre  spectral  sequence for the dihedral group [22XG=D_32[122X of
+  order 64 and its centre [22XN=Z(G)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=DihedralGroup(64);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=Center(G);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionNormalSeries([G,N],3);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=FilteredTensorWithIntegersModP(R,2);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 2 .[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe differentials [22Xd^r_p,q[122X in a given page [22XE^r[122X of the spectral sequence arise
+  from the induced homology homomorphisms [22Xι^s,t_ℓ: H_ℓ(C_s,∗) → H_ℓ(C_t,∗)[122X for
+  [22Xsle  t[122X.  Textbooks traditionally picture the differential in [22XE^r[122X as an array
+  of  sloping  arrows  with non-zero groups [22XE^r_p,q≠ 0[122X represented by dots. An
+  alternative  representation of this information is as a barcode (of the sort
+  used  in  Topological  Data  Analysis).  The  homomorphisms  [22Xι^∗,∗_2[122X  in the
+  example, with coefficients converted to mod [22X2[122X, are pictured by the bar code[133X
+  
+  [33X[0;0Ywhich was produced by the following commands.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xp:=2;;k:=2;;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PersistentHomologyOfFilteredChainComplex(C,k,p);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeDisplay(P);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.7 [33X[0;0YSparse chain complexes[133X[101X
+  
+  [33X[0;0YBoundary  homomorphisms  in all of the above examples of chain complexes are
+  represented by matrices. In cases where the matrices are large and have many
+  zero entries it is better to use sparse matrices.[133X
+  
+  [33X[0;0YThe following commands demonstrate the conversion of the matrix[133X
+  
+  [33X[0;0Y[22XA=(beginarrayccc 0 &2 &0 -3 &0 & 0 0 & 0 &4 endarray)[122X[133X
+  
+  [33X[0;0Yto sparse form, and vice-versa.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[0,2,0],[-3,0,0],[0,0,4]];;[127X[104X
+    [4X[25Xgap>[125X [27XS:=SparseMat(A);[127X[104X
+    [4X[28XSparse matrix with 3 rows and 3 columns in characteristic 0[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XNamesOfComponents(S);[127X[104X
+    [4X[28X[ "mat", "characteristic", "rows", "cols" ][128X[104X
+    [4X[25Xgap>[125X [27XS!.mat;[127X[104X
+    [4X[28X[ [ [ 2, 2 ] ], [ [ 1, -3 ] ], [ [ 3, 4 ] ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XB:=SparseMattoMat(S);[127X[104X
+    [4X[28X[ [ 0, 2, 0 ], [ -3, 0, 0 ], [ 0, 0, 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTo  illustrate the use of sparse chain complexes we consider the data points
+  represented in the following digital image.[133X
+  
+  [33X[0;0YThe  following  commands  read in this image as a [22X2[122X-dimensional pure cubical
+  complex  and  store the Euclidean coordinates of the black pixels in a list.
+  Then  200 points are selected at random from this list and used to construct
+  a  [22X200×  200[122X  symmetric  matrix  [22XS[122X  whose entries are the Euclidean distance
+  between the sample data points.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data500.png");;[127X[104X
+    [4X[25Xgap>[125X [27XM:=ReadImageAsPureCubicalComplex(file,400);;[127X[104X
+    [4X[25Xgap>[125X [27XA:=M!.binaryArray;;[127X[104X
+    [4X[25Xgap>[125X [27Xdata:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..Length(A)] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..Length(A[1])] do[127X[104X
+    [4X[25X>[125X [27Xif A[i][j]=1 then Add(data,[i,j]); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xsample:=List([1..200],i->Random(data));;[127X[104X
+    [4X[25Xgap>[125X [27XS:=VectorsToSymmetricMatrix(sample,EuclideanApproximatedMetric);;[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  symmetric  distance  matrix  [22XS[122X  is  next  converted to a filtered chain
+  complex  arising  from  a  filtered  simplicial  complex (using the standard
+  [13Xpersistent homology[113X pipeline).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SymmetricMatrixToFilteredGraph(S,10,100);; [127X[104X
+    [4X[28X#Filtration length T=10, distances greater than 100 discarded.[128X[104X
+    [4X[25Xgap>[125X [27XN:=SimplicialNerveOfFilteredGraph(G,2);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=SparseFilteredChainComplexOfFilteredSimplicialComplex(N);;[127X[104X
+    [4X[28XFiltered sparse chain complex of length 2 in characteristic 0 .[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext,  the  induced homology homomorphisms in degrees 1 and 2, with rational
+  coefficients, are computed and displayed a barcodes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP0:=PersistentHomologyOfFilteredSparseChainComplex(C,0);;[127X[104X
+    [4X[25Xgap>[125X [27XP1:=PersistentHomologyOfFilteredSparseChainComplex(C,1);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P0);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P1);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  barcodes are consistent with the data points having been sampled from a
+  space with the homotopy type of an annulus.[133X
+  

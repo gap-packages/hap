@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 10: Chain Complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap10"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
+<p><a id="X7A06103979B92808" name="X7A06103979B92808"></a></p>
+<div class="ChapSects"><a href="chap10.html#X7A06103979B92808">10 <span class="Heading">Chain Complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X782DE78884DD6992">10.1 <span class="Heading">Chain complex of a simplicial complex and simplicial pair</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X79E7A13E7DE9C412">10.2 <span class="Heading">Chain complex of a cubical complex and cubical pair</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X86C38E87817F2EAD">10.3 <span class="Heading">Chain complex of a regular CW-complex</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7F9662EF83A1FA76">10.4 <span class="Heading">Chain Maps of simplicial and regular CW maps</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X8127E17383F45359">10.5 <span class="Heading">Constructions for chain complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7AAAB26682CD8AC4">10.6 <span class="Heading">Filtered chain complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X856F202D823280F8">10.7 <span class="Heading">Sparse chain complexes</span></a>
+</span>
+</div>
+</div>
+
+<h3>10 <span class="Heading">Chain Complexes</span></h3>
+
+<p>HAP uses implementations of chain complexes of free <span class="SimpleMath">K</span>-modules for each of the rings <span class="SimpleMath">K = Z</span>, <span class="SimpleMath">K = Q</span>, <span class="SimpleMath">K = F_p</span> with <span class="SimpleMath">p</span> a prime number, <span class="SimpleMath">K = ZG</span>, <span class="SimpleMath">K = F_pG</span> with <span class="SimpleMath">G</span> a group. The implemented chain complexes have the form</p>
+
+<p><span class="SimpleMath">C_n stackreld_n⟶ C_n-1 stackreld_n-1}⟶ ⋯ stackreld_2⟶ C_1 stackreld_1⟶ C_0 stackreld_0⟶ 0 .</span></p>
+
+<p>Such a complex is said to have <em>length</em> <span class="SimpleMath">n</span> and the rank of the free <span class="SimpleMath">K</span>-module <span class="SimpleMath">C_k</span> is referred to as the <em>dimenion</em> of the complex in degree <span class="SimpleMath">k</span>.</p>
+
+<p>For the case <span class="SimpleMath">K = ZG</span> (resp. <span class="SimpleMath">K = F_pG</span>) the main focus is on free chain complexes that are exact at each degree <span class="SimpleMath">k</span>, i.e. <span class="SimpleMath">im(d_k+1)= ker(d_k)</span>, for <span class="SimpleMath">0 &lt; k &lt; n</span> and with <span class="SimpleMath">C_0/ im(d_1) ≅ Z</span> (resp. <span class="SimpleMath">C_0/ im(d_1) ≅ F_p</span>). We refer to such a chain complex as a <em>resolution of length </em> <span class="SimpleMath">n</span> even though <span class="SimpleMath">d_n</span> will typically not be injective. More correct terminology would refer to such a chain complex as the first <span class="SimpleMath">n</span> degrees of a free resolution.</p>
+
+<p>The following sections illustrate some constructions of chain complexes. Constructions for resolutions are described in the next chapter <a href="chap11.html#X7C0B125E7D5415B4"><span class="RefLink">11</span></a>.</p>
+
+<p><a id="X782DE78884DD6992" name="X782DE78884DD6992"></a></p>
+
+<h4>10.1 <span class="Heading">Chain complex of a simplicial complex and simplicial pair</span></h4>
+
+<p>The following example constructs the Quillen simplicial complex <span class="SimpleMath">Q=mathcal A_p(G)</span> for <span class="SimpleMath">p=2</span> and <span class="SimpleMath">G=A_8</span>; this is the order complex of the poset of non-trivial elementary <span class="SimpleMath">2</span>-subgroups of <span class="SimpleMath">G</span>. The chain complex <span class="SimpleMath">C_∗ = C_∗(Q)</span> is then computed and seen to have the same number of free generators as <span class="SimpleMath">Q</span> has simplices. (To ensure indexing of subcomplexes is consistent with that of the large complex it is best to work with vertices represented as integers.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuillenComplex(AlternatingGroup(8),2);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplex(Q);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Q);</span>
+55015
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(C);</span>
+55015
+
+</pre></div>
+
+<p>Next the simplicial complex <span class="SimpleMath">Q</span> is converted to one whose vertices are represented by integers and a contactible subcomplex <span class="SimpleMath">L &lt; Q</span> is computed. The chain complex <span class="SimpleMath">D_∗=C_∗(Q,L)</span> of the simplicial pair <span class="SimpleMath">(Q,L)</span> is constructed and seen to have the correct size.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=IntegerSimplicialComplex(Q);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ContractibleSubcomplex(Q);</span>
+Simplicial complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ChainComplexOfPair(Q,L);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D)=Size(Q)-Size(L);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D);</span>
+670
+gap&gt;
+
+</pre></div>
+
+<p>The next commands produce a smalled chain complex <span class="SimpleMath">B_∗</span> chain homotopy equivalent to <span class="SimpleMath">D_∗</span> and compute the homology <span class="SimpleMath">H_k(Q, Z) ≅ H_k(B_∗)</span> for <span class="SimpleMath">k=1,2,3</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=ContractedComplex(D);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(B);</span>
+64
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(B,1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(B,2);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(B,3);</span>
+[  ]
+
+</pre></div>
+
+<p><a id="X79E7A13E7DE9C412" name="X79E7A13E7DE9C412"></a></p>
+
+<h4>10.2 <span class="Heading">Chain complex of a cubical complex and cubical pair</span></h4>
+
+<p>The following example reads in the digital image</p>
+
+<p><img src="images/bw_image.bmp" align="center" height="300" alt="a digital image"/></p>
+
+<p>as a <span class="SimpleMath">2</span>-dimensional pure cubical complex <span class="SimpleMath">M</span> and constructs the chain complex <span class="SimpleMath">C_∗=C_∗(M)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ReadImageAsPureCubicalComplex(file,400);</span>
+Pure cubical complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplex(K);</span>
+Chain complex of length 2 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(C); </span>
+173243
+
+</pre></div>
+
+<p>Next an acyclic pure cubical subcomplex <span class="SimpleMath">L &lt; M</span> is computed and the chain complex <span class="SimpleMath">D_∗=C_∗(M,L)</span> of the pair is constructed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=AcyclicSubcomplexOfPureCubicalComplex(K);</span>
+Pure cubical complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ChainComplexOfPair(K,L);</span>
+Chain complex of length 2 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D);</span>
+618
+
+</pre></div>
+
+<p>Finally the chain complex <span class="SimpleMath">D_∗</span> is simplified to a homotopy equivalent chain complex <span class="SimpleMath">B_∗</span> and the homology <span class="SimpleMath">H_1(M, Z) ≅ H_1(B_∗)</span> is computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=ContractedComplex(D);</span>
+Chain complex of length 2 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(B);</span>
+20
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(B,1);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X86C38E87817F2EAD" name="X86C38E87817F2EAD"></a></p>
+
+<h4>10.3 <span class="Heading">Chain complex of a regular CW-complex</span></h4>
+
+<p>The next example constructs a <span class="SimpleMath">15</span>-dimensional regular CW-complex <span class="SimpleMath">Y</span> that is homotopy equivalent to the <span class="SimpleMath">2</span>-dimensional torus.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Circle:=PureCubicalComplex([[1,1,1,1,1],[1,1,0,1,1],[1,1,1,1,1]]);</span>
+Pure cubical complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Torus:=DirectProductOfPureCubicalComplexes(Circle,Circle);</span>
+Pure cubical complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CTorus:=CechComplexOfPureCubicalComplex(Torus);</span>
+Simplicial complex of dimension 15.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=RegularCWComplex(CTorus);</span>
+Regular CW-complex of dimension 15
+
+</pre></div>
+
+<p>Next the cellular chain complex <span class="SimpleMath">C_∗=C_∗(Y)</span> is constructed. Also, a minimally generated chain complex <span class="SimpleMath">D_∗=C_∗(Y')</span> of a non-regular CW-complex <span class="SimpleMath">Y'≃ Y</span> is constructed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);</span>
+Chain complex of length 15 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(C);</span>
+1172776
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ChainComplex(Y);</span>
+Chain complex of length 15 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D);</span>
+4
+
+</pre></div>
+
+<p><a id="X7F9662EF83A1FA76" name="X7F9662EF83A1FA76"></a></p>
+
+<h4>10.4 <span class="Heading">Chain Maps of simplicial and regular CW maps</span></h4>
+
+<p>The next example realizes the complement of the first prime knot on <span class="SimpleMath">11</span> crossings as a pure permutahedral complex. The complement is converted to a regular CW-complex <span class="SimpleMath">Y</span> and the boundary inclusion <span class="SimpleMath">f: ∂ Y ↪ Y</span> is constructed as a map of regular CW-complexes. Then the induced chain map <span class="SimpleMath">F: C_∗(∂ Y) ↪ C_∗(Y)</span> is constructed. Finally the homology homomorphism <span class="SimpleMath">H_1(F): H_1(C_∗(∂ Y)) → H_1(C_∗(Y))</span> is computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PurePermutahedralKnot(11,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=PureComplexComplement(K);</span>
+Pure permutahedral complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=RegularCWComplex(M);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=BoundaryMap(Y);</span>
+Map of regular CW-complexes
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ChainMap(f);</span>
+Chain Map between complexes of length 2 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=Homology(F,1);</span>
+[ g1, g2 ] -&gt; [ g1^-1, g1^-1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Kernel(H);</span>
+Pcp-group with orders [ 0 ]
+
+</pre></div>
+
+<p>The command <code class="code">ChainMap(f)</code> can be used to construct the chain map <span class="SimpleMath">C_∗(K) → C_∗(K')</span> induced by a map <span class="SimpleMath">f: K→ K'</span> of simplicial complexes.</p>
+
+<p><a id="X8127E17383F45359" name="X8127E17383F45359"></a></p>
+
+<h4>10.5 <span class="Heading">Constructions for chain complexes</span></h4>
+
+<p>It is straightforward to implement basic constructions on chain complexes. A few constructions are illustrated in the following example.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">res:=ResolutionFiniteGroup(SymmetricGroup(5),5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(res);</span>
+Chain complex of length 5 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);#A chain homotopic complex</span>
+Chain complex of length 5 in characteristic 0 . 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],C!.dimension);</span>
+[ 1, 4, 10, 20, 35, 56 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],D!.dimension);</span>
+[ 1, 1, 2, 4, 6, 38 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CxC:=TensorProduct(C,C);</span>
+Chain complex of length 10 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SC:=SuspendedChainComplex(C);</span>
+Chain complex of length 6 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RC:=ReducedSuspendedChainComplex(C);</span>
+Chain complex of length 6 in characteristic 0 .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PC:=PathObjectForChainComplex(C);</span>
+Chain complex of length 5 in characteristic 0 .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dualC:=HomToIntegers(C);</span>
+Cochain complex of length 5 in characteristic 0 .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cxp:=TensorWithIntegersModP(C,5);</span>
+Chain complex of length 5 in characteristic 5 .
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CxQ:=TensorWithRationals(C); #The quirky -1/2 denotes rationals</span>
+Chain complex of length 5 in characteristic -1/2 .
+
+</pre></div>
+
+<p><a id="X7AAAB26682CD8AC4" name="X7AAAB26682CD8AC4"></a></p>
+
+<h4>10.6 <span class="Heading">Filtered chain complexes</span></h4>
+
+<p>A sequence of inclusions of chain complexes <span class="SimpleMath">C_0,∗ le C_1,∗ le ⋯ le C_T-1,∗ le C_T,∗</span> in which the preferred basis of <span class="SimpleMath">C_k-1,ℓ</span> is the beginning of the preferred basis of <span class="SimpleMath">C_k,ℓ</span> is referred to as a <em>filtered chain complex</em>. Filtered chain complexes give rise to spectral sequences such as the <em>equivariant spectral sequence</em> of a <span class="SimpleMath">G-CW</span>-complex with subgroup <span class="SimpleMath">H &lt; G</span>. A particular case is the Lyndon-Hochschild-Serre spectral sequence for the homology of a group extension <span class="SimpleMath">N ↣ G ↠ Q</span> with <span class="SimpleMath">E^2_p,q=H_p(Q,H_q(N, Z))</span>.</p>
+
+<p>The following commands construct the filtered chain complex underlying the Lyndon-Hochschild-Serre spectral sequence for the dihedral group <span class="SimpleMath">G=D_32</span> of order 64 and its centre <span class="SimpleMath">N=Z(G)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=DihedralGroup(64);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=Center(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionNormalSeries([G,N],3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=FilteredTensorWithIntegersModP(R,2);</span>
+Chain complex of length 3 in characteristic 2 .
+
+</pre></div>
+
+<p>The differentials <span class="SimpleMath">d^r_p,q</span> in a given page <span class="SimpleMath">E^r</span> of the spectral sequence arise from the induced homology homomorphisms <span class="SimpleMath">ι^s,t_ℓ: H_ℓ(C_s,∗) → H_ℓ(C_t,∗)</span> for <span class="SimpleMath">sle t</span>. Textbooks traditionally picture the differential in <span class="SimpleMath">E^r</span> as an array of sloping arrows with non-zero groups <span class="SimpleMath">E^r_p,q≠ 0</span> represented by dots. An alternative representation of this information is as a barcode (of the sort used in Topological Data Analysis). The homomorphisms <span class="SimpleMath">ι^∗,∗_2</span> in the example, with coefficients converted to mod <span class="SimpleMath">2</span>, are pictured by the bar code</p>
+
+<p><img src="images/lhsbc.png" align="center" height="150" alt="a bar code for the LHS spectral sequence"/></p>
+
+<p>which was produced by the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;k:=2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentHomologyOfFilteredChainComplex(C,k,p);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeDisplay(P);</span>
+
+</pre></div>
+
+<p><a id="X856F202D823280F8" name="X856F202D823280F8"></a></p>
+
+<h4>10.7 <span class="Heading">Sparse chain complexes</span></h4>
+
+<p>Boundary homomorphisms in all of the above examples of chain complexes are represented by matrices. In cases where the matrices are large and have many zero entries it is better to use sparse matrices.</p>
+
+<p>The following commands demonstrate the conversion of the matrix</p>
+
+<p><span class="SimpleMath">A=(beginarrayccc 0 &amp;2 &amp;0 -3 &amp;0 &amp; 0 0 &amp; 0 &amp;4 endarray)</span></p>
+
+<p>to sparse form, and vice-versa.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[[0,2,0],[-3,0,0],[0,0,4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SparseMat(A);</span>
+Sparse matrix with 3 rows and 3 columns in characteristic 0
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NamesOfComponents(S);</span>
+[ "mat", "characteristic", "rows", "cols" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S!.mat;</span>
+[ [ [ 2, 2 ] ], [ [ 1, -3 ] ], [ [ 3, 4 ] ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=SparseMattoMat(S);</span>
+[ [ 0, 2, 0 ], [ -3, 0, 0 ], [ 0, 0, 4 ] ]
+
+</pre></div>
+
+<p>To illustrate the use of sparse chain complexes we consider the data points represented in the following digital image.</p>
+
+<p><img src="images/data500.png" align="center" height="200" alt="data points samples from an annulus"/></p>
+
+<p>The following commands read in this image as a <span class="SimpleMath">2</span>-dimensional pure cubical complex and store the Euclidean coordinates of the black pixels in a list. Then 200 points are selected at random from this list and used to construct a <span class="SimpleMath">200× 200</span> symmetric matrix <span class="SimpleMath">S</span> whose entries are the Euclidean distance between the sample data points.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data500.png");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ReadImageAsPureCubicalComplex(file,400);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=M!.binaryArray;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">data:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..Length(A)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..Length(A[1])] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if A[i][j]=1 then Add(data,[i,j]); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sample:=List([1..200],i-&gt;Random(data));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=VectorsToSymmetricMatrix(sample,EuclideanApproximatedMetric);;</span>
+
+</pre></div>
+
+<p>The symmetric distance matrix <span class="SimpleMath">S</span> is next converted to a filtered chain complex arising from a filtered simplicial complex (using the standard <em>persistent homology</em> pipeline).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricMatrixToFilteredGraph(S,10,100);; </span>
+#Filtration length T=10, distances greater than 100 discarded.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=SimplicialNerveOfFilteredGraph(G,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=SparseFilteredChainComplexOfFilteredSimplicialComplex(N);;</span>
+Filtered sparse chain complex of length 2 in characteristic 0 .
+
+</pre></div>
+
+<p>Next, the induced homology homomorphisms in degrees 1 and 2, with rational coefficients, are computed and displayed a barcodes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P0:=PersistentHomologyOfFilteredSparseChainComplex(C,0);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1:=PersistentHomologyOfFilteredSparseChainComplex(C,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P0);</span>
+
+</pre></div>
+
+<p><img src="images/barcode0example.png" align="center" height="130" alt="Degree 0 persistent homology barcode"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P1);</span>
+
+</pre></div>
+
+<p><img src="images/barcode1example.png" align="center" height="130" alt="Degree 1 persistent homology barcode"/></p>
+
+<p>The barcodes are consistent with the data points having been sampled from a space with the homotopy type of an annulus.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 2: Cubical complexes &amp;  permutahedral complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X7F8376F37AF80AAC" name="X7F8376F37AF80AAC"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7F8376F37AF80AAC">2 <span class="Heading">Cubical complexes &amp;  permutahedral complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7D67D5F3820637AD">2.1 <span class="Heading">Cubical complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X85D8195379F2A8CA">2.2 <span class="Heading">Permutahedral complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X78D3037283B506E0">2.3 <span class="Heading">Constructing pure cubical and permutahedral complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8462CF66850CC3A8">2.4 <span class="Heading">Computations in dynamical systems</span></a>
+</span>
+</div>
+</div>
+
+<h3>2 <span class="Heading">Cubical complexes &amp;  permutahedral complexes</span></h3>
+
+<p><a id="X7D67D5F3820637AD" name="X7D67D5F3820637AD"></a></p>
+
+<h4>2.1 <span class="Heading">Cubical complexes</span></h4>
+
+<p>A <em>finite simplicial complex</em> can be defined to be a CW-subcomplex of the canonical regular CW-structure on a simplex <span class="SimpleMath">∆^n</span> of some dimension <span class="SimpleMath">n</span>. Analogously, a <em>finite cubical complex</em> is a CW-subcomplex of the regular CW-structure on a cube <span class="SimpleMath">[0,1]^n</span> of some dimension <span class="SimpleMath">n</span>. Equivalently, but more conveniently, we can replace the unit interval <span class="SimpleMath">[0,1]</span> by an interval <span class="SimpleMath">[0,k]</span> with CW-structure involving <span class="SimpleMath">2k+1</span> cells, namely one <span class="SimpleMath">0</span>-cell for each integer <span class="SimpleMath">0le jle k</span> and one <span class="SimpleMath">1</span>-cell for each open interval <span class="SimpleMath">(j,j+1)</span> for <span class="SimpleMath">0le jle k-1</span>. A <em>finite cuical complex</em> <span class="SimpleMath">M</span> is a CW-subcompex <span class="SimpleMath">M⊂ [0,k_1]× [0,k_2]× ⋯ [0,k_n]</span> of a direct product of intervals, the direct product having the usual direct product CW-structure. The equivalence of these two definitions follows from the Gray code embedding of a mesh into a hypercube. We say that the cubical complex has <em>ambient dimension</em> <span class="SimpleMath">n</span>. A cubical complex <span class="SimpleMath">M</span> of ambient dimension <span class="SimpleMath">n</span> is said to be <em>pure</em> if each cell lies in the boundary of an <span class="SimpleMath">n</span>-cell. In other words, <span class="SimpleMath">M</span> is pure if it is a union of unit <span class="SimpleMath">n</span>-cubes in <span class="SimpleMath">R^n</span>, each unit cube having vertices with integer coordinates.</p>
+
+<p><strong class="button">HAP</strong> has a datatype for finite cubical complexes, and a slightly different datatype for pure cubical complexes.</p>
+
+<p>The following example constructs the granny knot (the sum of a trefoil knot with its reflection) as a <span class="SimpleMath">3</span>-dimensional pure cubical complex, and then displays it.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PureCubicalKnot(3,1);</span>
+prime knot 1 with 3 crossings
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ReflectedCubicalKnot(K);</span>
+Reflected( prime knot 1 with 3 crossings )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=KnotSum(K,L);</span>
+prime knot 1 with 3 crossings + Reflected( prime knot 1 with 3 crossings )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M);</span>
+
+</pre></div>
+
+<p><img src="images/granny.jpg" align="center" width="350" alt="granny knot"/></p>
+
+<p>Next we construct the complement <span class="SimpleMath">Y=D^3∖ mathringM</span> of the interior of the pure cubical complex <span class="SimpleMath">M</span>. Here <span class="SimpleMath">D^3</span> is a rectangular region with <span class="SimpleMath">M ⊂ mathringD^3</span>. This pure cubical complex <span class="SimpleMath">Y</span> is a union of <span class="SimpleMath">5891</span> unit <span class="SimpleMath">3</span>-cubes. We contract <span class="SimpleMath">Y</span> to get a homotopy equivalent pure cubical complex <span class="SimpleMath">YY</span> consisting of the union of just <span class="SimpleMath">775</span> unit <span class="SimpleMath">3</span>-cubes. Then we convert <span class="SimpleMath">YY</span> to a regular CW-complex <span class="SimpleMath">W</span> involving <span class="SimpleMath">11939</span> cells. We contract <span class="SimpleMath">W</span> to obtain a homotopy equivalent regular CW-complex <span class="SimpleMath">WW</span> involving <span class="SimpleMath">5993</span> cells. Finally we compute the fundamental group of the complement of the granny knot, and use the presentation of this group to establish that the Alexander polynomial <span class="SimpleMath">P(x)</span> of the granny is</p>
+
+<p><span class="SimpleMath">P(x) = x^4-2x^3+3x^2-2x+1 .</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PureComplexComplement(M);</span>
+Pure cubical complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y);</span>
+5891
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">YY:=ZigZagContractedComplex(Y);</span>
+Pure cubical complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(YY);</span>
+775
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=RegularCWComplex(YY);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(W);</span>
+11939
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WW:=ContractedComplex(W);</span>
+Regular CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(WW);</span>
+5993
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(WW);</span>
+&lt;fp group of size infinity on the generators [ f1, f2, f3 ]&gt;
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AlexanderPolynomial(G);</span>
+x_1^4-2*x_1^3+3*x_1^2-2*x_1+1
+
+
+</pre></div>
+
+<p><a id="X85D8195379F2A8CA" name="X85D8195379F2A8CA"></a></p>
+
+<h4>2.2 <span class="Heading">Permutahedral complexes</span></h4>
+
+<p>A finite pure cubical complex is a union of finitely many cubes in a tessellation of <span class="SimpleMath">R^n</span> by unit cubes. One can also tessellate <span class="SimpleMath">R^n</span> by permutahedra, and we define a finite <span class="SimpleMath">n</span>-dimensional pure <em>permutahedral complex</em> to be a union of finitely many permutahdra from such a tessellation. There are two features of pure permutahedral complexes that are particularly useful in some situations:</p>
+
+
+<ul>
+<li><p>Pure permutahedral complexes are topological manifolds with boundary.</p>
+
+</li>
+<li><p>The method used for finding a smaller pure cubical complex <span class="SimpleMath">M'</span> homotopy equivalent to a given pure cubical complex <span class="SimpleMath">M</span> retains the homeomorphism type, and not just the homotopy type, of the space <span class="SimpleMath">M</span>.</p>
+
+</li>
+</ul>
+<p><strong class="button">Example 1</strong></p>
+
+<p>To illustrate these features the following example begins by reading in a protein backbone from the online <span class="URL"><a href="https://www.rcsb.org/">Protein Database</a></span>, and storing it as a pure cubical complex <span class="SimpleMath">K</span>. The ends of the protein have been joined, and the homology <span class="SimpleMath">H_i(K, Z)= Z</span>, <span class="SimpleMath">i=0,1</span> is seen to be that of a circle. We can thus regard the protein as a knot <span class="SimpleMath">K⊂ R^3</span>. The protein is visualized as a pure permutahedral complex.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data1V2X.pdb");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ReadPDBfileAsPurePermutahedralComplex("file");</span>
+Pure permutahedral complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,1);</span>
+[ 0 ]
+
+Display(K);
+
+</pre></div>
+
+<p><img src="images/1V2X.jpg" align="center" width="350" alt="knotted protein"/></p>
+
+<p>An alternative method for seeing that the pure permutahedral complex <span class="SimpleMath">K</span> has the homotopy type of a circle is to note that it is covered by open permutahedra (small open neighbourhoods of the closed <span class="SimpleMath">3</span>-dimensional permutahedral titles) and to form the nerve <span class="SimpleMath">N=Nerve(mathcal U)</span> of this open covering <span class="SimpleMath">mathcal U</span>. The nerve <span class="SimpleMath">N</span> has the same homotopy type as <span class="SimpleMath">K</span>. The following commands establish that <span class="SimpleMath">N</span> is a <span class="SimpleMath">1</span>-dimensional simplicial complex and display <span class="SimpleMath">N</span> as a circular graph.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=Nerve(K);</span>
+Simplicial complex of dimension 1.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(GraphOfSimplicialComplex(N));</span>
+
+</pre></div>
+
+<p><img src="images/graphprotein.gif" align="center" width="200" alt="knotted protein"/></p>
+
+<p>The boundary of the pure permutahedral complex <span class="SimpleMath">K</span> is a <span class="SimpleMath">2</span>-dimensional CW-complex <span class="SimpleMath">B</span> homeomorphic to a torus. We next use the advantageous features of pure permutahedral complexes to compute the homomorphism</p>
+
+<p><span class="SimpleMath">ϕ: π_1(B) → π_1( R^3∖ mathringK), a ↦ yx^-3y^2x^-2yxy^-1, b↦ yx^-1y^-1x^2y^-1</span></p>
+
+<p>where<br /> <span class="SimpleMath">π_1(B)=&lt; a,b : aba^-1b^-1=1&gt;</span>,<br /> <span class="SimpleMath">π_1( R^3∖ mathringK) ≅ &lt; x,y : y^2x^-2yxy^-1=1, yx^-2y^-1x(xy^-1)^2=1&gt;</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PureComplexComplement(K);</span>
+Pure permutahedral complex of dimension 3.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y);</span>
+418922
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">YY:=ZigZagContractedComplex(Y);</span>
+Pure permutahedral complex of dimension 3.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(YY);</span>
+3438
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=RegularCWComplex(YY);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=BoundaryMap(W);</span>
+Map of regular CW-complexes
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(Source(f));</span>
+[ [ 2, 1 ], [ 2, 261 ], [ 1, 1043 ], [ 1, 1626 ], [ 0, 2892 ], [ 0, 24715 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FundamentalGroup(f,2892);</span>
+[ f1, f2 ] -&gt; [ f2*f1^-3*f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-1*f2^-1*f1^2*f2^-1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Target(F);</span>
+&lt;fp group on the generators [ f1, f2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(G);</span>
+[ f2^2*f1^-2*f2*f1*f2^-1, f2*f1^-2*f2^-1*f1*(f1*f2^-1)^2 ]
+
+
+</pre></div>
+
+<p><strong class="button">Example 2</strong></p>
+
+<p>The next example of commands begins by readng two synthetic knots from a CSV file (containing the coordinates of the two sequences of vertices) and producing a pure permutahedral complex model of the two knots. The linking number of two knots is given by the low-dimension cup product of the complement of the knots. This linking number is computed to be <span class="SimpleMath">6</span>.</p>
+
+<p><img src="images/twoknots.png" align="center" width="600" alt="two knots"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file1:=HapFile("data175_1.csv");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file2:=HapFile("data175_2.csv");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ReadCSVfileAsPureCubicalKnot( [file1, file2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PurePermutahedralComplex(K!.binaryArray);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ThickenedPureComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractedComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#K is a permutahedral complex model of the two input knots</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(K);</span>
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PureComplexComplement(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ZigZagContractedComplex(Y,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=RegularCWComplex(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ContractedComplex(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup([1,0],[0,1]);</span>
+[ -6, 0 ]
+
+</pre></div>
+
+<p><a id="X78D3037283B506E0" name="X78D3037283B506E0"></a></p>
+
+<h4>2.3 <span class="Heading">Constructing pure cubical and permutahedral complexes</span></h4>
+
+<p>An <span class="SimpleMath">n</span>-dimensional pure cubical or permutahedral complex can be created from an <span class="SimpleMath">n</span>-dimensional array of 0s and 1s. The following example creates and displays two <span class="SimpleMath">3</span>-dimensional complexes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[[[0,0,0],[0,0,0],[0,0,0]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       [[1,1,1],[1,0,1],[1,1,1]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       [[0,0,0],[0,0,0],[0,0,0]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=PureCubicalComplex(A);</span>
+Pure cubical complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PurePermutahedralComplex(A);</span>
+Pure permutahedral complex of dimension 3.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(P);</span>
+
+</pre></div>
+
+<p><img src="images/cubicalring.gif" align="center" width="150" alt="cubical ring"/> <img src="images/permutahedralring.gif" align="center" width="400" alt="permutahedral ring"/></p>
+
+<p><a id="X8462CF66850CC3A8" name="X8462CF66850CC3A8"></a></p>
+
+<h4>2.4 <span class="Heading">Computations in dynamical systems</span></h4>
+
+<p>Pure cubical complexes can be useful for rigourous interval arithmetic calculations in numerical analysis. They can also be useful for trying to estimate approximations of certain numerical quantities. To illustrate the latter we consider the <em>Henon map</em></p>
+
+<p><span class="SimpleMath">f: R^2 → R^2, ( beginarraycc x y endarray) ↦ ( beginarraycc y+1-ax^2 bx endarray) .</span><br /></p>
+
+<p>Starting with <span class="SimpleMath">(x_0,y_0)=(0,0)</span> and iterating <span class="SimpleMath">(x_n+1,y_n+1) = f(x_n,y_n)</span> with the parameter values <span class="SimpleMath">a=1.4</span>, <span class="SimpleMath">b=0.3</span> one obtains a sequence of points which is known to be dense in the so called <em>strange attractor</em> <span class="SimpleMath">cal A</span> of the Henon map. The first <span class="SimpleMath">10</span> million points in this sequence are plotted in the following example, with arithmetic performed to 100 decimal places of accuracy. The sequence is stored as a <span class="SimpleMath">2</span>-dimensional pure cubical complex where each <span class="SimpleMath">2</span>-cell is square of side equal to <span class="SimpleMath">ϵ =1/500</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HenonOrbit([0,0],14/10,3/10,10^7,500,100);</span>
+Pure cubical complex of dimension 2.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(M);</span>
+10287
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(M);</span>
+
+</pre></div>
+
+<p><img src="images/henon.png" align="center" width="700" alt="Henon attractor"/></p>
+
+<p>Repeating the computation but with squares of side <span class="SimpleMath">ϵ =1/1000</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HenonOrbit([0,0],14/10,3/10,10^7,1000,100);</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(M);</span>
+24949
+
+</pre></div>
+
+<p>we obtain the heuristic estimate</p>
+
+<p><span class="SimpleMath">δ ≃ frac log 24949- log 10287} log2} = 1.277</span></p>
+
+<p>for the box-counting dimension of the attractor <span class="SimpleMath">cal A</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

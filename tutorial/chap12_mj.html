@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HAP commands) - Chapter 12: Simplicial groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap12"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap13_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap12.html">[MathJax off]</a></p>
+<p><a id="X7D818E5F80F4CF63" name="X7D818E5F80F4CF63"></a></p>
+<div class="ChapSects"><a href="chap12_mj.html#X7D818E5F80F4CF63">12 <span class="Heading">Simplicial groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X808C6B357F8BADC1">12.1 <span class="Heading">Crossed modules</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X795E339978B42775">12.2 <span class="Heading">Eilenberg-MacLane spaces as simplicial groups (not recommended)</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X7D91E64D7DD7F10F">12.3 <span class="Heading">Eilenberg-MacLane spaces as simplicial free abelian groups (recommended)</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X84ABCA497C577132">12.4 <span class="Heading">Elementary theoretical information on  
+<span class="SimpleMath">\(H^\ast(K(\pi,n),\mathbb Z)\)</span></span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X7F828D8D8463CC20">12.5 <span class="Heading">The first three non-trivial homotopy groups of spheres</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X81E2F80384ADF8C2">12.6 <span class="Heading">The first two non-trivial homotopy groups of the suspension and double suspension of a <span class="SimpleMath">\(K(G,1)\)</span></span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X83EAC40A8324571F">12.7 <span class="Heading">Postnikov towers and <span class="SimpleMath">\(\pi_5(S^3)\)</span> </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X8227000D83B9A17F">12.8 <span class="Heading">Towards <span class="SimpleMath">\(\pi_4(\Sigma K(G,1))\)</span> </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X7F5E6C067B2AE17A">12.9 <span class="Heading">Enumerating homotopy 2-types</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X7D99B7AA780D8209">12.10 <span class="Heading">Identifying cat<span class="SimpleMath">\(^1\)</span>-groups of low order</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X7F386CF078CB9A20">12.11 <span class="Heading">Identifying crossed modules of low order</span></a>
+</span>
+</div>
+</div>
+
+<h3>12 <span class="Heading">Simplicial groups</span></h3>
+
+<p><a id="X808C6B357F8BADC1" name="X808C6B357F8BADC1"></a></p>
+
+<h4>12.1 <span class="Heading">Crossed modules</span></h4>
+
+<p>A <em>crossed module</em> consists of a homomorphism of groups <span class="SimpleMath">\(\partial\colon M\rightarrow G\)</span> together with an action <span class="SimpleMath">\((g,m)\mapsto\, {^gm}\)</span> of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(M\)</span> satisfying</p>
+
+<ol>
+<li><p><span class="SimpleMath">\(\partial(^gm) = gmg^{-1}\)</span></p>
+
+</li>
+<li><p><span class="SimpleMath">\(^{\partial m}m' = mm'm^{-1}\)</span></p>
+
+</li>
+</ol>
+<p>for <span class="SimpleMath">\(g\in G\)</span>, <span class="SimpleMath">\(m,m'\in M\)</span>.</p>
+
+<p>A crossed module <span class="SimpleMath">\(\partial\colon M\rightarrow G\)</span> is equivalent to a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\((H,s,t)\)</span> (see <a href="chap6_mj.html#X78040D8580D35D53"><span class="RefLink">6.8</span></a>) where <span class="SimpleMath">\(H=M \rtimes G\)</span>, <span class="SimpleMath">\(s(m,g) = (1,g)\)</span>, <span class="SimpleMath">\(t(m,g)=(1,(\partial m)g)\)</span>. A cat<span class="SimpleMath">\(^1\)</span>-group is, in turn, equivalent to a simplicial group with Moore complex has length <span class="SimpleMath">\(1\)</span>. The simplicial group is constructed by considering the cat<span class="SimpleMath">\(^1\)</span>-group as a category and taking its nerve. Alternatively, the simplicial group can be constructed by viewing the crossed module as a crossed complex and using a nonabelian version of the Dold-Kan theorem.</p>
+
+<p>The following example concerns the crossed module</p>
+
+<p><span class="SimpleMath">\(\partial\colon G\rightarrow Aut(G), g\mapsto (x\mapsto gxg^{-1})\)</span></p>
+
+<p>associated to the dihedral group <span class="SimpleMath">\(G\)</span> of order <span class="SimpleMath">\(16\)</span>. This crossed module represents, up to homotopy type, a connected space <span class="SimpleMath">\(X\)</span> with <span class="SimpleMath">\(\pi_iX=0\)</span> for <span class="SimpleMath">\(i\ge 3\)</span>, <span class="SimpleMath">\(\pi_2X=Z(G)\)</span>, <span class="SimpleMath">\(\pi_1X = Aut(G)/Inn(G)\)</span>. The space <span class="SimpleMath">\(X\)</span> can be represented, up to homotopy, by a simplicial group. That simplicial group is used in the example to compute</p>
+
+<p><span class="SimpleMath">\(H_1(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2\)</span>,</p>
+
+<p><span class="SimpleMath">\(H_2(X,\mathbb Z)= \mathbb Z_2 \)</span>,</p>
+
+<p><span class="SimpleMath">\(H_3(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2\)</span>,</p>
+
+<p><span class="SimpleMath">\(H_4(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2\)</span>,</p>
+
+<p><span class="SimpleMath">\(H_5(X,\mathbb Z)= \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_2\oplus \mathbb Z_2\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(16));</span>
+Cat-1-group with underlying group Group( 
+[ f1, f2, f3, f4, f5, f6, f7, f8, f9 ] ) . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(C);</span>
+512
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuasiIsomorph(C);</span>
+Cat-1-group with underlying group Group( [ f9, f8, f1, f2*f3, f5 ] ) . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Q);</span>
+32
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=NerveOfCatOneGroup(Q,6);</span>
+Simplicial group of length 6
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ChainComplexOfSimplicialGroup(N);</span>
+Chain complex of length 6 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,1);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,2);</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,3);</span>
+[ 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,4);</span>
+[ 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(K,5);</span>
+[ 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X795E339978B42775" name="X795E339978B42775"></a></p>
+
+<h4>12.2 <span class="Heading">Eilenberg-MacLane spaces as simplicial groups (not recommended)</span></h4>
+
+<p>The following example concerns the Eilenberg-MacLane space <span class="SimpleMath">\(X=K(\mathbb Z_3,3)\)</span> which is a path-connected space with <span class="SimpleMath">\(\pi_3X=\mathbb Z_3\)</span>, <span class="SimpleMath">\(\pi_iX=0\)</span> for <span class="SimpleMath">\(3\ne i\ge 1\)</span>. This space is represented by a simplicial group, and perturbation techniques are used to compute</p>
+
+<p><span class="SimpleMath">\(H_7(X,\mathbb Z)=\mathbb Z_3 \oplus \mathbb Z_3\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianGroup([3]);;AbelianInvariants(A);   </span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> K:=EilenbergMacLaneSimplicialGroup(A,3,8);</span>
+Simplicial group of length 8
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplex(K);</span>
+Chain complex of length 8 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,7);                                          </span>
+[ 3, 3 ]
+
+</pre></div>
+
+<p><a id="X7D91E64D7DD7F10F" name="X7D91E64D7DD7F10F"></a></p>
+
+<h4>12.3 <span class="Heading">Eilenberg-MacLane spaces as simplicial free abelian groups (recommended)</span></h4>
+
+<p>For integer <span class="SimpleMath">\(n&gt;1\)</span> and abelian group <span class="SimpleMath">\(A\)</span> the Eilenberg-MacLane space <span class="SimpleMath">\(K(A,n)\)</span> is better represented as a simplicial free abelian group. (The reason is that the functorial bar resolution of <span class="SimpleMath">\(A\)</span> can be replaced in computations by the smaller functorial Chevalley-Eilenberg complex of <span class="SimpleMath">\(A\)</span>, obviating the need for perturbation techniques.)</p>
+
+<p>The following commands compute the integral homology <span class="SimpleMath">\(H_n(K(\mathbb Z,3),\mathbb Z)\)</span> for <span class="SimpleMath">\( 0\le n \le 16\)</span>. (Note that one typically needs fewer than <span class="SimpleMath">\(n\)</span> terms of the Eilenberg-MacLance space to compute its <span class="SimpleMath">\(n\)</span>-th homology -- an error is printed if too few terms of the space are available for a given computation.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianPcpGroup([0]);; #infinite cyclic group                    </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,14);</span>
+Simplicial free abelian group of length 14
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [0..16] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Degree ",n," integral homology of K is ",Homology(K,n),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+Degree 0 integral homology of K is [ 0 ]
+Degree 1 integral homology of K is [  ]
+Degree 2 integral homology of K is [  ]
+Degree 3 integral homology of K is [ 0 ]
+Degree 4 integral homology of K is [  ]
+Degree 5 integral homology of K is [ 2 ]
+Degree 6 integral homology of K is [  ]
+Degree 7 integral homology of K is [ 3 ]
+Degree 8 integral homology of K is [ 2 ]
+Degree 9 integral homology of K is [ 2 ]
+Degree 10 integral homology of K is [ 3 ]
+Degree 11 integral homology of K is [ 5, 2 ]
+Degree 12 integral homology of K is [ 2 ]
+Degree 13 integral homology of K is [  ]
+Degree 14 integral homology of K is [ 10, 2 ]
+Degree 15 integral homology of K is [ 7, 6 ]
+Degree 16 integral homology of K is [  ]
+
+</pre></div>
+
+<p>For an <span class="SimpleMath">\(n\)</span>-connected pointed space <span class="SimpleMath">\(X\)</span> the Freudenthal Suspension Theorem states that the map <span class="SimpleMath">\(X \rightarrow \Omega(\Sigma X)\)</span> induces a map <span class="SimpleMath">\(\pi_k(X) \rightarrow \pi_k(\Omega(\Sigma X))\)</span> which is an isomorphism for <span class="SimpleMath">\(k\le 2n\)</span> and epimorphism for <span class="SimpleMath">\(k=2n+1\)</span>. Thus the Eilenberg-MacLane space <span class="SimpleMath">\(K(A,n+1)\)</span> can be constructed from the suspension <span class="SimpleMath">\(\Sigma K(A,n)\)</span> by attaching cells in dimensions <span class="SimpleMath">\(\ge 2n+1\)</span>. In particular, there is an isomorphism <span class="SimpleMath">\( H_{k-1}(K(A,n),\mathbb Z) \rightarrow H_k(K(A,n+1),\mathbb Z)\)</span> for <span class="SimpleMath">\(k\le 2n\)</span> and epimorphism for <span class="SimpleMath">\(k=2n+1\)</span>.</p>
+
+<p>For instance, <span class="SimpleMath">\( H_{k-1}(K(\mathbb Z,3),\mathbb Z) \cong H_k(K(\mathbb Z,4),\mathbb Z) \)</span> for <span class="SimpleMath">\(k\le 6\)</span> and <span class="SimpleMath">\( H_6(K(\mathbb Z,3),\mathbb Z) \twoheadrightarrow H_7(K(\mathbb Z,4),\mathbb Z) \)</span>. This assertion is seen in the following session.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianPcpGroup([0]);; #infinite cyclic group                    </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,4,11);</span>
+Simplicial free abelian group of length 11
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [0..13] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Degree ",n," integral homology of K is ",Homology(K,n),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+Degree 0 integral homology of K is [ 0 ]
+Degree 1 integral homology of K is [  ]
+Degree 2 integral homology of K is [  ]
+Degree 3 integral homology of K is [  ]
+Degree 4 integral homology of K is [ 0 ]
+Degree 5 integral homology of K is [  ]
+Degree 6 integral homology of K is [ 2 ]
+Degree 7 integral homology of K is [  ]
+Degree 8 integral homology of K is [ 3, 0 ]
+Degree 9 integral homology of K is [  ]
+Degree 10 integral homology of K is [ 2, 2 ]
+Degree 11 integral homology of K is [  ]
+Degree 12 integral homology of K is [ 5, 12, 0 ]
+Degree 13 integral homology of K is [ 2 ]
+
+</pre></div>
+
+<p><a id="X84ABCA497C577132" name="X84ABCA497C577132"></a></p>
+
+<h4>12.4 <span class="Heading">Elementary theoretical information on  
+<span class="SimpleMath">\(H^\ast(K(\pi,n),\mathbb Z)\)</span></span></h4>
+
+<p>The cup product is not implemented for the cohomology ring <span class="SimpleMath">\(H^\ast(K(\pi,n),\mathbb Z)\)</span>. Standard theoretical spectral sequence arguments have to be applied to obtain basic information relating to the ring structure. To illustrate this the following commands compute <span class="SimpleMath">\(H^n(K(\mathbb Z,2),\mathbb Z)\)</span> for the first few values of <span class="SimpleMath">\(n\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,2,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..10],k-&gt;Cohomology(K,k));</span>
+[ [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ] ]
+
+</pre></div>
+
+<p>There is a fibration sequence <span class="SimpleMath">\(K(\pi,n) \hookrightarrow \ast \twoheadrightarrow K(\pi,n+1)\)</span> in which <span class="SimpleMath">\(\ast\)</span> denotes a contractible space. For <span class="SimpleMath">\(n=1, \pi=\mathbb Z\)</span> the terms of the <span class="SimpleMath">\(E_2\)</span> page of the Serre integral cohomology spectral sequence for this fibration are</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(E_2^{pq}= H^p( K(\mathbb Z,2), H^q(K(\mathbb Z,1),\mathbb Z) )\)</span> .</p>
+
+</li>
+</ul>
+<p>Since <span class="SimpleMath">\(K(\mathbb Z,1)\)</span> can be taken to be the circle <span class="SimpleMath">\(S^1\)</span> we know that it has non-trivial cohomology in degrees <span class="SimpleMath">\(0\)</span> and <span class="SimpleMath">\(1\)</span> only. The first few terms of the <span class="SimpleMath">\(E_2\)</span> page are given in the following table.</p>
+
+<div class="pcenter"><table class="GAPDocTable">
+<caption class="GAPDocTable"><b>Table: </b><span class="SimpleMath">\(E^2\)</span> cohomology page for <span class="SimpleMath">\(K(\mathbb Z,1) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,2)\)</span></caption>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(q/p\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(8\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(9\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(10\)</span></td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Let <span class="SimpleMath">\(x\)</span> denote the generator of <span class="SimpleMath">\(H^1(K(\mathbb Z,1),\mathbb Z)\)</span> and <span class="SimpleMath">\(y\)</span> denote the generator of <span class="SimpleMath">\(H^2(K(\mathbb Z,2),\mathbb Z)\)</span>. Since <span class="SimpleMath">\(\ast\)</span> has zero cohomology in degrees <span class="SimpleMath">\(\ge 1\)</span> we see that the differential must restrict to an isomorphism <span class="SimpleMath">\(d_2\colon E_2^{0,1} \rightarrow E_2^{2,0}\)</span> with <span class="SimpleMath">\(d_2(x)=y\)</span>. Then we see that the differential must restrict to an isomorphism <span class="SimpleMath">\(d_2\colon E_2^{2,1} \rightarrow E_2^{4,0}\)</span> defined on the generator <span class="SimpleMath">\(xy\)</span> of <span class="SimpleMath">\(E_2^{2,1}\)</span> by</p>
+
+<p class="center">\[d_2(xy) = d_2(x)y + (-1)^{{\rm deg}(x)}xd_2(y) =y^2\ . \]</p>
+
+<p>Hence <span class="SimpleMath">\(E_2^{4,0} \cong H^4(K(\mathbb Z,2),\mathbb Z)\)</span> is generated by <span class="SimpleMath">\(y^2\)</span>. The argument extends to show that <span class="SimpleMath">\(H^6(K(\mathbb Z,2),\mathbb Z)\)</span> is generated by <span class="SimpleMath">\(y^3\)</span>, <span class="SimpleMath">\(H^8(K(\mathbb Z,2),\mathbb Z)\)</span> is generated by <span class="SimpleMath">\(y^4\)</span>, and so on.</p>
+
+<p>In fact, to obtain a complete description of the ring <span class="SimpleMath">\(H^\ast(K(\mathbb Z,2),\mathbb Z)\)</span> in this fashion there is no benefit to using computer methods at all. We only need to know the cohomology ring <span class="SimpleMath">\(H^\ast(K(\mathbb Z,1),\mathbb Z) =H^\ast(S^1,\mathbb Z)\)</span> and the single cohomology group <span class="SimpleMath">\(H^2(K(\mathbb Z,2),\mathbb Z)\)</span>.</p>
+
+<p>A similar approach can be attempted for <span class="SimpleMath">\(H^\ast(K(\mathbb Z,3),\mathbb Z)\)</span> using the fibration sequence <span class="SimpleMath">\(K(\mathbb Z,2) \hookrightarrow \ast \twoheadrightarrow K(\mathbb Z,3)\)</span> and, as explained in Chapter 5 of <a href="chapBib_mj.html#biBhatcher">[Hat01]</a>, yields the computation of the group <span class="SimpleMath">\(H^i(K(\mathbb Z,3),\mathbb Z)\)</span> for <span class="SimpleMath">\(4\le i\le 13\)</span>. The method does not directly yield <span class="SimpleMath">\(H^3(K(\mathbb Z,3),\mathbb Z)\)</span> and breaks down in degree <span class="SimpleMath">\(14\)</span> yielding only that <span class="SimpleMath">\(H^{14}(K(\mathbb Z,3),\mathbb Z) = 0 {\rm ~or~} \mathbb Z_3\)</span>. The following commands provide <span class="SimpleMath">\(H^3(K(\mathbb Z,3),\mathbb Z)= \mathbb Z\)</span> and <span class="SimpleMath">\(H^{14}(K(\mathbb Z,3),\mathbb Z) =0\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianPcpGroup([0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,15);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(K,3);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(K,14);</span>
+[  ]
+
+</pre></div>
+
+<p>However, the implementation of these commands is currently a bit naive, and computationally inefficient, since they do not currently employ any homological perturbation techniques.</p>
+
+<p><a id="X7F828D8D8463CC20" name="X7F828D8D8463CC20"></a></p>
+
+<h4>12.5 <span class="Heading">The first three non-trivial homotopy groups of spheres</span></h4>
+
+<p>The Hurewicz Theorem immediately gives</p>
+
+<p class="center">\[\pi_n(S^n)\cong \mathbb Z ~~~ (n\ge 1)\]</p>
+
+<p>and</p>
+
+<p class="center">\[\pi_k(S^n)=0 ~~~ (k\le n-1).\]</p>
+
+<p>As a CW-complex the Eilenberg-MacLane space <span class="SimpleMath">\(K=K(\mathbb Z,n)\)</span> can be obtained from an <span class="SimpleMath">\(n\)</span>-sphere <span class="SimpleMath">\(S^n=e^0\cup e^n\)</span> by attaching cells in dimensions <span class="SimpleMath">\(\ge n+2\)</span> so as to kill the higher homotopy groups of <span class="SimpleMath">\(S^n\)</span>. From the inclusion <span class="SimpleMath">\(\iota\colon S^n\hookrightarrow K(\mathbb Z,n)\)</span> we can form the mapping cone <span class="SimpleMath">\(X=C(\iota)\)</span>. The long exact homotopy sequence</p>
+
+<p><span class="SimpleMath">\( \cdots \rightarrow \pi_{k+1}K \rightarrow \pi_{k+1}(K,S^n) \rightarrow \pi_{k} S^n \rightarrow \pi_kK \rightarrow \pi_k(K,S^n) \rightarrow \cdots\)</span></p>
+
+<p>implies that <span class="SimpleMath">\(\pi_k(K,S^n)=0\)</span> for <span class="SimpleMath">\(0 \le k\le n+1\)</span> and <span class="SimpleMath">\(\pi_{n+2}(K,S^n)\cong \pi_{n+1}(S^n)\)</span>. The relative Hurewicz Theorem gives an isomorphism <span class="SimpleMath">\(\pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z)\)</span>. The long exact homology sequence</p>
+
+<p><span class="SimpleMath">\( \cdots H_{n+2}(S^n,\mathbb Z) \rightarrow H_{n+2}(K,\mathbb Z) \rightarrow H_{n+2}(K,S^n, \mathbb Z) \rightarrow H_{n+1}(S^n,\mathbb Z) \rightarrow \cdots\)</span></p>
+
+<p>arising from the cofibration <span class="SimpleMath">\(S^n \hookrightarrow K \twoheadrightarrow X\)</span> implies that <span class="SimpleMath">\(\pi_{n+1}(S^n)\cong \pi_{n+2}(K,S^n) \cong H_{n+2}(K,S^n,\mathbb Z) \cong H_{n+2}(K,\mathbb Z)\)</span>. From the <strong class="button">GAP</strong> computations in <a href="chap12_mj.html#X7D91E64D7DD7F10F"><span class="RefLink">12.3</span></a> and the Freudenthal Suspension Theorem we find:</p>
+
+<p class="center">\[ \pi_3S^2 \cong \mathbb Z, ~~~~~~ \pi_{n+1}(S^n)\cong \mathbb Z_2~~~(n\ge 3).\]</p>
+
+<p>The Hopf fibration <span class="SimpleMath">\(S^3\rightarrow S^2\)</span> has fibre <span class="SimpleMath">\(S^1 = K(\mathbb Z,1)\)</span>. It can be constructed by viewing <span class="SimpleMath">\(S^3\)</span> as all pairs <span class="SimpleMath">\((z_1,z_2)\in \mathbb C^2\)</span> with <span class="SimpleMath">\(|z_1|^2+|z_2|^2=1\)</span> and viewing <span class="SimpleMath">\(S^2\)</span> as <span class="SimpleMath">\(\mathbb C\cup \infty\)</span>; the map sends <span class="SimpleMath">\((z_1,z_2)\mapsto z_1/z_2\)</span>. The homotopy exact sequence of the Hopf fibration yields <span class="SimpleMath">\(\pi_k(S^3) \cong \pi_k(S^2)\)</span> for <span class="SimpleMath">\(k\ge 3\)</span>, and in particular</p>
+
+<p class="center">\[\pi_4(S^2) \cong \pi_4(S^3) \cong \mathbb Z_2\ .\]</p>
+
+<p>It will require further techniques (such as the Postnikov tower argument in Section <a href="chap12_mj.html#X83EAC40A8324571F"><span class="RefLink">12.7</span></a> below) to establish that <span class="SimpleMath">\(\pi_5(S^3) \cong \mathbb Z_2\)</span>. Once we have this isomorphism for <span class="SimpleMath">\(\pi_5(S^3)\)</span>, the generalized Hopf fibration <span class="SimpleMath">\(S^3 \hookrightarrow S^7 \twoheadrightarrow S^4\)</span> comes into play. This fibration is contructed as for the classical fibration, but using pairs <span class="SimpleMath">\((z_1,z_2)\)</span> of quaternions rather than pairs of complex numbers. The Hurewicz Theorem gives <span class="SimpleMath">\(\pi_3(S^7)=0\)</span>; the fibre <span class="SimpleMath">\(S^3\)</span> is thus homotopic to a point in <span class="SimpleMath">\(S^7\)</span> and the inclusion of the fibre induces the zero homomorphism <span class="SimpleMath">\(\pi_k(S^3) \stackrel{0}{\longrightarrow} \pi_k(S^7) ~~(k\ge 1)\)</span>. The exact homotopy sequence of the generalized Hopf fibration then gives <span class="SimpleMath">\(\pi_k(S^4)\cong \pi_k(S^7)\oplus \pi_{k-1}(S^3)\)</span>. On taking <span class="SimpleMath">\(k=6\)</span> we obtain <span class="SimpleMath">\(\pi_6(S^4)\cong \pi_5(S^3) \cong \mathbb Z_2\)</span>. Freudenthal suspension then gives</p>
+
+<p class="center">\[\pi_{n+2}(S^n)\cong \mathbb Z_2,~~~(n\ge 2).\]</p>
+
+<p><a id="X81E2F80384ADF8C2" name="X81E2F80384ADF8C2"></a></p>
+
+<h4>12.6 <span class="Heading">The first two non-trivial homotopy groups of the suspension and double suspension of a <span class="SimpleMath">\(K(G,1)\)</span></span></h4>
+
+<p>For any group <span class="SimpleMath">\(G\)</span> we consider the homotopy groups <span class="SimpleMath">\(\pi_n(\Sigma K(G,1))\)</span> of the suspension <span class="SimpleMath">\(\Sigma K(G,1)\)</span> of the Eilenberg-MacLance space <span class="SimpleMath">\(K(G,1)\)</span>. On taking <span class="SimpleMath">\(G=\mathbb Z\)</span>, and observing that <span class="SimpleMath">\(S^2 = \Sigma K(\mathbb Z,1)\)</span>, we specialize to the homotopy groups of the <span class="SimpleMath">\(2\)</span>-sphere <span class="SimpleMath">\(S^2\)</span>.</p>
+
+<p>By construction,</p>
+
+<p class="center">\[\pi_1(\Sigma K(G,1))=0\ .\]</p>
+
+<p>The Hurewicz Theorem gives</p>
+
+<p class="center">\[\pi_2(\Sigma K(G,1)) \cong G_{ab}\]</p>
+
+<p>via the isomorphisms <span class="SimpleMath">\(\pi_2(\Sigma K(G,1)) \cong H_2(\Sigma K(G,1),\mathbb Z) \cong H_1(K(G,1),\mathbb Z) \cong G_{ab}\)</span>. R. Brown and J.-L. Loday <a href="chapBib_mj.html#biBbrownloday">[BL87]</a> obtained the formulae</p>
+
+<p class="center">\[\pi_3(\Sigma K(G,1)) \cong \ker (G\otimes G \rightarrow G, x\otimes y\mapsto [x,y]) \ ,\]</p>
+
+<p class="center">\[\pi_4(\Sigma^2 K(G,1)) \cong \ker (G\, {\widetilde \otimes}\, G \rightarrow G, x\, {\widetilde \otimes}\, y\mapsto [x,y]) \]</p>
+
+<p>involving the nonabelian tensor square and nonabelian symmetric square of the group <span class="SimpleMath">\(G\)</span>. The following commands use the nonabelian tensor and symmetric product to compute the third and fourth homotopy groups for <span class="SimpleMath">\(G =Syl_2(M_{12})\)</span> the Sylow <span class="SimpleMath">\(2\)</span>-subgroup of the Mathieu group <span class="SimpleMath">\(M_{12}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThirdHomotopyGroupOfSuspensionB(G);   </span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+gap&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FourthHomotopyGroupOfDoubleSuspensionB(G);</span>
+[ 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X83EAC40A8324571F" name="X83EAC40A8324571F"></a></p>
+
+<h4>12.7 <span class="Heading">Postnikov towers and <span class="SimpleMath">\(\pi_5(S^3)\)</span> </span></h4>
+
+<p>A Postnikov system for the sphere <span class="SimpleMath">\(S^3\)</span> consists of a sequence of fibrations <span class="SimpleMath">\(\cdots X_3\stackrel{p_3}{\rightarrow} X_2\stackrel{p_2}{\rightarrow} X_1\stackrel{p_1}{\rightarrow} \ast\)</span> and a sequence of maps <span class="SimpleMath">\(\phi_n\colon S^3 \rightarrow X_n\)</span> such that</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(p_n \circ \phi_n =\phi_{n-1}\)</span></p>
+
+</li>
+<li><p>The map <span class="SimpleMath">\(\phi_n\colon S^3 \rightarrow X_n\)</span> induces an isomorphism <span class="SimpleMath">\(\pi_k(S^3)\rightarrow \pi_k(X_n)\)</span> for all <span class="SimpleMath">\(k\le n\)</span></p>
+
+</li>
+<li><p><span class="SimpleMath">\(\pi_k(X_n)=0\)</span> for <span class="SimpleMath">\(k &gt; n\)</span></p>
+
+</li>
+<li><p>and consequently each fibration <span class="SimpleMath">\(p_n\)</span> has fibre an Eilenberg-MacLane space <span class="SimpleMath">\(K(\pi_n(S^3),n)\)</span>.</p>
+
+</li>
+</ul>
+<p>The space <span class="SimpleMath">\(X_n\)</span> is obtained from <span class="SimpleMath">\(S^3\)</span> by adding cells in dimensions <span class="SimpleMath">\(\ge n+2\)</span> and thus</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(H_k(X_n,\mathbb Z)=H_k(S^3,\mathbb Z)\)</span> for <span class="SimpleMath">\(k\le n+1\)</span>.</p>
+
+</li>
+</ul>
+<p>So in particular <span class="SimpleMath">\(X_1=X_2=\ast, X_3=K(\mathbb Z,3)\)</span> and we have a fibration sequence <span class="SimpleMath">\(K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow K(\mathbb Z,3)\)</span>. The terms in the <span class="SimpleMath">\(E_2\)</span> page of the Serre integral cohomology spectral sequence of this fibration are</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(E_2^{p,q}=H^p(\,K(\mathbb Z,3),\,H_q(K(\mathbb Z_2,4),\mathbb Z)\,)\)</span>.</p>
+
+</li>
+</ul>
+<p>The first few terms in the <span class="SimpleMath">\(E_2\)</span> page can be computed using the commands of Sections <a href="chap12_mj.html#X795E339978B42775"><span class="RefLink">12.2</span></a> and <a href="chap12_mj.html#X7D91E64D7DD7F10F"><span class="RefLink">12.3</span></a> and recorded as follows.</p>
+
+<div class="pcenter"><table class="GAPDocTable">
+<caption class="GAPDocTable"><b>Table: </b><span class="SimpleMath">\(E_2\)</span> cohomology page for <span class="SimpleMath">\(K(\pi_4(S^3),4) \hookrightarrow X_4 \twoheadrightarrow X_3\)</span></caption>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(8\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\pi_4(S^3)\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\pi_4(S^3)\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(q/p\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(8\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(9\)</span></td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Since we know that <span class="SimpleMath">\(H^5(X_4,\mathbb Z) =0\)</span>, the differentials in the spectral sequence must restrict to an isomorphism <span class="SimpleMath">\(E_2^{0,5}=\pi_4(S^3) \stackrel{\cong}{\longrightarrow} E_2^{6,0}=\mathbb Z_2\)</span>. This provides an alternative derivation of <span class="SimpleMath">\(\pi_4(S^3) \cong \mathbb Z_2\)</span>. We can also immediately deduce that <span class="SimpleMath">\(H^6(X_4,\mathbb Z)=0\)</span>. Let <span class="SimpleMath">\(x\)</span> be the generator of <span class="SimpleMath">\(E_2^{0,5}\)</span> and <span class="SimpleMath">\(y\)</span> the generator of <span class="SimpleMath">\(E_2^{3,0}\)</span>. Then the generator <span class="SimpleMath">\(xy\)</span> of <span class="SimpleMath">\(E_2^{3,5}\)</span> gets mapped to a non-zero element <span class="SimpleMath">\(d_7(xy)=d_7(x)y -xd_7(y)\)</span>. Hence the term <span class="SimpleMath">\(E_2^{0,7}=\mathbb Z_2\)</span> must get mapped to zero in <span class="SimpleMath">\(E_2^{3,5}\)</span>. It follows that <span class="SimpleMath">\(H^7(X_4,\mathbb Z)=\mathbb Z_2\)</span>.</p>
+
+<p>The integral cohomology of Eilenberg-MacLane spaces yields the following information on the <span class="SimpleMath">\(E_2\)</span> page <span class="SimpleMath">\(E_2^{p,q}=H_p(\,X_4,\,H^q(K(\pi_5S^3,5),\mathbb Z)\,)\)</span> for the fibration <span class="SimpleMath">\(K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4\)</span>.</p>
+
+<div class="pcenter"><table class="GAPDocTable">
+<caption class="GAPDocTable"><b>Table: </b><span class="SimpleMath">\(E_2\)</span> cohomology page for <span class="SimpleMath">\(K(\pi_5(S^3),5) \hookrightarrow X_5 \twoheadrightarrow X_4\)</span></caption>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\pi_5(S^3)\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\pi_5(S^3)\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(H^7(X_4,\mathbb Z)\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(q/p\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>Since we know that <span class="SimpleMath">\(H^6(X_5,\mathbb Z)=0\)</span>, the differentials in the spectral sequence must restrict to an isomorphism <span class="SimpleMath">\(E_2^{0,6}=\pi_5(S^3) \stackrel{\cong}{\longrightarrow} E_2^{7,0}=H^7(X_4,\mathbb Z)\)</span>. We can conclude the desired result:</p>
+
+<p class="center">\[\pi_5(S^3) = \mathbb Z_2\ .\]</p>
+
+<p><span class="SimpleMath">\(~~~\)</span></p>
+
+<p>Note that the fibration <span class="SimpleMath">\(X_4 \twoheadrightarrow K(\mathbb Z,3)\)</span> is determined by a cohomology class <span class="SimpleMath">\(\kappa \in H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2\)</span>. If <span class="SimpleMath">\(\kappa=0\)</span> then we'd have <span class="SimpleMath">\(X_4 =K(\mathbb Z_2,4)\times K(\mathbb Z,3)\)</span> and, as the following commands show, we'd then have <span class="SimpleMath">\(H_4(X_4,\mathbb Z)=\mathbb Z_2\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=EilenbergMacLaneSimplicialGroup(AbelianPcpGroup([0]),3,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=EilenbergMacLaneSimplicialGroup(CyclicGroup(2),4,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CK:=ChainComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CL:=ChainComplex(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=TensorProduct(CK,CL);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(T,4);</span>
+[ 2 ]
+
+</pre></div>
+
+<p>Since we know that <span class="SimpleMath">\(H_4(X_4,\mathbb Z)=0\)</span> we can conclude that the Postnikov invariant <span class="SimpleMath">\(\kappa\)</span> is the non-zero class in <span class="SimpleMath">\(H^5(K(\mathbb Z,3), \mathbb Z_2) = \mathbb Z_2\)</span>.</p>
+
+<p><a id="X8227000D83B9A17F" name="X8227000D83B9A17F"></a></p>
+
+<h4>12.8 <span class="Heading">Towards <span class="SimpleMath">\(\pi_4(\Sigma K(G,1))\)</span> </span></h4>
+
+<p>Consider the suspension <span class="SimpleMath">\(X=\Sigma K(G,1)\)</span> of a classifying space of a group <span class="SimpleMath">\(G\)</span> once again. This space has a Postnikov system in which <span class="SimpleMath">\(X_1 = \ast\)</span>, <span class="SimpleMath">\(X_2= K(G_{ab},2)\)</span>. We have a fibration sequence <span class="SimpleMath">\(K(\pi_3 X, 3) \hookrightarrow X_3 \twoheadrightarrow K(G_{ab},2)\)</span>. The corresponding integral cohomology Serre spectral sequence has <span class="SimpleMath">\(E_2\)</span> page with terms</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(E_2^{p,q}=H^p(\,K(G_{ab},2), H^q(K(\pi_3 X,3)),\mathbb Z)\, )\)</span>.</p>
+
+</li>
+</ul>
+<p>As an example, for the Alternating group <span class="SimpleMath">\(G=A_4\)</span> of order <span class="SimpleMath">\(12\)</span> the following commands of Section <a href="chap12_mj.html#X81E2F80384ADF8C2"><span class="RefLink">12.6</span></a> compute <span class="SimpleMath">\(G_{ab} = \mathbb Z_3\)</span> and <span class="SimpleMath">\(\pi_3 X = \mathbb Z_6\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(G);</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThirdHomotopyGroupOfSuspensionB(G);</span>
+[ 2, 3 ]
+
+</pre></div>
+
+<p>The first terms of the <span class="SimpleMath">\(E_2\)</span> page can be calculated using the commands of Sections <a href="chap12_mj.html#X795E339978B42775"><span class="RefLink">12.2</span></a> and <a href="chap12_mj.html#X7D91E64D7DD7F10F"><span class="RefLink">12.3</span></a>.</p>
+
+<div class="pcenter"><table class="GAPDocTable">
+<caption class="GAPDocTable"><b>Table: </b><span class="SimpleMath">\(E^2\)</span> cohomology page for <span class="SimpleMath">\(K(\pi_3 X,3) \hookrightarrow X_3 \twoheadrightarrow X_2\)</span></caption>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2 \)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_9\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(q/p\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(7\)</span></td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>We know that <span class="SimpleMath">\(H^1(X_3,\mathbb Z)=0\)</span>, <span class="SimpleMath">\(H^2(X_3,\mathbb Z)=H^1(G,\mathbb Z) =0\)</span>, <span class="SimpleMath">\(H^3(X_3,\mathbb Z)=H^2(G,\mathbb Z) =\mathbb Z_3\)</span>, and that <span class="SimpleMath">\(H^4(X_3,\mathbb Z)\)</span> is a subgroup of <span class="SimpleMath">\(H^3(G,\mathbb Z) = \mathbb Z_2\)</span>. It follows that the differential induces a surjection <span class="SimpleMath">\(E_2^{0,4}=\mathbb Z_6 \twoheadrightarrow E_2^{5,0}=\mathbb Z_3\)</span>. Consequently <span class="SimpleMath">\(H^4(X_3,\mathbb Z)=\mathbb Z_2\)</span> and <span class="SimpleMath">\(H^5(X_3,\mathbb Z)=0\)</span> and <span class="SimpleMath">\(H^6(X_3,\mathbb Z)=\mathbb Z_2\)</span>.</p>
+
+<p>The <span class="SimpleMath">\(E_2\)</span> page for the fibration <span class="SimpleMath">\(K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3\)</span> contains the following terms.</p>
+
+<div class="pcenter"><table class="GAPDocTable">
+<caption class="GAPDocTable"><b>Table: </b><span class="SimpleMath">\(E^2\)</span> cohomology page for <span class="SimpleMath">\(K(\pi_4 X,4) \hookrightarrow X_4 \twoheadrightarrow X_3\)</span></caption>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\pi_4 X\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(\mathbb Z_2\)</span></td>
+</tr>
+<tr>
+<td class="tdleft"><span class="SimpleMath">\(q/p\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(0\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(1\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(2\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(3\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(4\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(5\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(6\)</span></td>
+</tr>
+</table><br /><p>&nbsp;</p><br />
+</div>
+
+<p>We know that <span class="SimpleMath">\(H^5(X_4,\mathbb Z)\)</span> is a subgroup of <span class="SimpleMath">\(H^4(G,\mathbb Z)=\mathbb Z_6\)</span>, and hence that there is a homomorphisms <span class="SimpleMath">\(\pi_4X \rightarrow \mathbb Z_2\)</span> whose kernel is a subgroup of <span class="SimpleMath">\(\mathbb Z_6\)</span>. If follows that <span class="SimpleMath">\(|\pi_4 X|\le 12\)</span>.</p>
+
+<p><a id="X7F5E6C067B2AE17A" name="X7F5E6C067B2AE17A"></a></p>
+
+<h4>12.9 <span class="Heading">Enumerating homotopy 2-types</span></h4>
+
+<p>A <em>2-type</em> is a CW-complex <span class="SimpleMath">\(X\)</span> whose homotopy groups are trivial in dimensions <span class="SimpleMath">\(n=0 \)</span> and <span class="SimpleMath">\(n&gt;2\)</span>. As explained in <a href="chap6_mj.html#X78040D8580D35D53"><span class="RefLink">6.8</span></a> the homotopy type of such a space can be captured algebraically by a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(G\)</span>. Let <span class="SimpleMath">\(X\)</span>, <span class="SimpleMath">\(Y\)</span> be <span class="SimpleMath">\(2\)</span>-tytpes represented by cat<span class="SimpleMath">\(^1\)</span>-groups <span class="SimpleMath">\(G\)</span>, <span class="SimpleMath">\(H\)</span>. If <span class="SimpleMath">\(X\)</span> and <span class="SimpleMath">\(Y\)</span> are homotopy equivalent then there exists a sequence of morphisms of cat<span class="SimpleMath">\(^1\)</span>-groups</p>
+
+<p class="center">\[G \rightarrow K_1 \rightarrow K_2 \leftarrow K_3 \rightarrow \cdots \rightarrow K_n  \leftarrow H\]</p>
+
+<p>in which each morphism induces isomorphisms of homotopy groups. When such a sequence exists we say that <span class="SimpleMath">\(G\)</span> is <em>quasi-isomorphic</em> to <span class="SimpleMath">\(H\)</span>. We have the following result.</p>
+
+<p><strong class="button">Theorem.</strong> The <span class="SimpleMath">\(2\)</span>-types <span class="SimpleMath">\(X\)</span> and <span class="SimpleMath">\(Y\)</span> are homotopy equivalent if and only if the associated cat<span class="SimpleMath">\(^1\)</span>-groups <span class="SimpleMath">\(G\)</span> and <span class="SimpleMath">\(H\)</span> are quasi-isomorphic.</p>
+
+<p>The following commands produce a list <span class="SimpleMath">\(L\)</span> of all of the <span class="SimpleMath">\(62\)</span> non-isomorphic cat<span class="SimpleMath">\(^1\)</span>-groups whose underlying group has order <span class="SimpleMath">\(16\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for G in AllSmallGroups(16) do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Append(L,CatOneGroupsByGroup(G));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(L);</span>
+62
+
+</pre></div>
+
+<p>The next commands use the first and second homotopy groups to prove that the list <span class="SimpleMath">\(L\)</span> contains at least <span class="SimpleMath">\(37\)</span> distinct quasi-isomorphism types.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Invariants:=function(G)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local inv;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv:=[];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv[1]:=IdGroup(HomotopyGroup(G,1));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv[2]:=IdGroup(HomotopyGroup(G,2));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return inv;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Classify(L,Invariants);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(C);</span>
+
+</pre></div>
+
+<p>The following additional commands use second and third integral homology in conjunction with the first two homotopy groups to prove that the list <span class="SimpleMath">\(L\)</span> contains <strong class="button">at least</strong> <span class="SimpleMath">\(49\)</span> distinct quasi-isomorphism types.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Invariants2:=function(G)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local inv;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv:=[];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv[1]:=Homology(G,2);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">inv[2]:=Homology(G,3);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return inv;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=RefineClassification(C,Invariants2);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(C);</span>
+49
+
+</pre></div>
+
+<p>The following commands show that the above list <span class="SimpleMath">\(L\)</span> contains <strong class="button">at most</strong> <span class="SimpleMath">\(51\)</span> distinct quasi-isomorphism types.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=List(L,QuasiIsomorph);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[];;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for q in Q do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">bool:=true;;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for m in M do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if not IsomorphismCatOneGroups(m,q)=fail then bool:=false; break; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if bool then Add(M,q); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(M);</span>
+51
+
+</pre></div>
+
+<p><a id="X7D99B7AA780D8209" name="X7D99B7AA780D8209"></a></p>
+
+<h4>12.10 <span class="Heading">Identifying cat<span class="SimpleMath">\(^1\)</span>-groups of low order</span></h4>
+
+<p>Let us define the <em>order</em> of a cat<span class="SimpleMath">\(^1\)</span>-group to be the order of its underlying group. The function <code class="code">IdQuasiCatOneGroup(C)</code> inputs a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(C\)</span> of "low order" and returns an integer pair <span class="SimpleMath">\([n,k]\)</span> that uniquely idenifies the quasi-isomorphism type of <span class="SimpleMath">\(C\)</span>. The integer <span class="SimpleMath">\(n\)</span> is the order of a smallest cat<span class="SimpleMath">\(^1\)</span>-group quasi-isomorphic to <span class="SimpleMath">\(C\)</span>. The integer <span class="SimpleMath">\(k\)</span> identifies a particular cat<span class="SimpleMath">\(^1\)</span>-group of order <span class="SimpleMath">\(n\)</span>.</p>
+
+<p>The following commands use this function to show that there are precisely <span class="SimpleMath">\(49\)</span> distinct quasi-isomorphism types of cat<span class="SimpleMath">\(^1\)</span>-groups of order <span class="SimpleMath">\(16\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for G in AllSmallGroups(16) do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Append(L,CatOneGroupsByGroup(G));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=List(L,IdQuasiCatOneGroup);</span>
+[ [ 16, 1 ], [ 16, 2 ], [ 16, 3 ], [ 16, 4 ], [ 16, 5 ], [ 4, 4 ], [ 1, 1 ], 
+  [ 16, 6 ], [ 16, 7 ], [ 16, 8 ], [ 16, 9 ], [ 16, 10 ], [ 16, 11 ], 
+  [ 16, 9 ], [ 16, 12 ], [ 16, 13 ], [ 16, 14 ], [ 16, 15 ], [ 4, 1 ], 
+  [ 4, 2 ], [ 16, 16 ], [ 16, 17 ], [ 16, 18 ], [ 16, 19 ], [ 16, 20 ], 
+  [ 16, 21 ], [ 16, 22 ], [ 16, 23 ], [ 16, 24 ], [ 16, 25 ], [ 16, 26 ], 
+  [ 16, 27 ], [ 16, 28 ], [ 4, 3 ], [ 4, 1 ], [ 4, 4 ], [ 4, 4 ], [ 4, 2 ], 
+  [ 4, 5 ], [ 16, 29 ], [ 16, 30 ], [ 16, 31 ], [ 16, 32 ], [ 16, 33 ], 
+  [ 16, 34 ], [ 4, 3 ], [ 4, 4 ], [ 4, 4 ], [ 16, 35 ], [ 16, 36 ], [ 4, 3 ], 
+  [ 16, 37 ], [ 16, 38 ], [ 16, 39 ], [ 16, 40 ], [ 16, 41 ], [ 16, 42 ], 
+  [ 16, 43 ], [ 4, 3 ], [ 4, 4 ], [ 1, 1 ], [ 4, 5 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(SSortedList(M));</span>
+49
+
+</pre></div>
+
+<p>The next example first identifies the order and the identity number of the cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(C\)</span> corresponding to the crossed module (see <a href="chap12_mj.html#X808C6B357F8BADC1"><span class="RefLink">12.1</span></a>)</p>
+
+<p class="center">\[\iota\colon G \longrightarrow Aut(G), g \mapsto (x\mapsto gxg^{-1})\]</p>
+
+<p>for the dihedral group <span class="SimpleMath">\(G\)</span> of order <span class="SimpleMath">\(10\)</span>. It then realizes a smallest possible cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(D\)</span> of this quasi-isomorphism type.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(10));</span>
+Cat-1-group with underlying group Group( [ f1, f2, f3, f4, f5 ] ) . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(C);</span>
+200
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdCatOneGroup(C);</span>
+[ 200, 42, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdQuasiCatOneGroup(C);</span>
+[ 2, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=SmallCatOneGroup(2,1);</span>
+Cat-1-group with underlying group Group( [ f1 ] ) . 
+
+</pre></div>
+
+<p><a id="X7F386CF078CB9A20" name="X7F386CF078CB9A20"></a></p>
+
+<h4>12.11 <span class="Heading">Identifying crossed modules of low order</span></h4>
+
+<p>The following commands construct the crossed module <span class="SimpleMath">\(\partial \colon G\otimes G \rightarrow G\)</span> involving the nonabelian tensor square of the dihedral group $G$ of order <span class="SimpleMath">\(10\)</span>, identify it as being number <span class="SimpleMath">\(71\)</span> in the list of crossed modules of order <span class="SimpleMath">\(100\)</span>, create a quasi-isomorphic crossed module of order <span class="SimpleMath">\(4\)</span>, and finally construct the corresponding cat<span class="SimpleMath">\(^1\)</span>-group of order <span class="SimpleMath">\(100\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=DihedralGroup(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=NonabelianTensorSquareAsCrossedModule(G);</span>
+Crossed module with group homomorphism GroupHomomorphismByImages( Group( 
+[ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ] ), Group( [ f1, f2 ] ), 
+[ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ], [ &lt;identity&gt; of ..., f2^3 ] )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdCrossedModule(T);</span>
+[ 100, 71 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuasiIsomorph(T);</span>
+Crossed module with group homomorphism Pcgs([ f2 ]) -&gt; [ &lt;identity&gt; of ... ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(Q);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=CatOneGroupByCrossedModule(T);</span>
+Cat-1-group with underlying group Group( [ F1, F2, F1 ] ) . 
+
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap13_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

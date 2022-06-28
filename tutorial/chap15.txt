@@ -1,0 +1,569 @@
+  
+  [1X15 [33X[0;0YRegular CW-structure on knots[133X[101X
+  
+  
+  [1X15.1 [33X[0;0YKnot complements in the 3-ball[133X[101X
+  
+  [33X[0;0YWhile  methods for endowing knot complements with CW-structure already exist
+  in HAP (see section 2.1), they often result in a large number of cells which
+  can make computing with them taxing. The following example shows how one can
+  obtain  a comparatively small 3-dimensional regular CW-complex corresponding
+  to  the  complement  of  a  thickened trefoil knot from an arc presentation.
+  Recall that an arc presentation is encoded in HAP as a list of integer pairs
+  corresponding  to  the position of the endpoints of each horizontal arc in a
+  grid.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xk_:=PureCubicalKnot(3,1);                  [127X[104X
+    [4X[28Xprime knot 1 with 3 crossings[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xarc:=ArcPresentation(k_);                  [127X[104X
+    [4X[28X[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xk_:=RegularCWComplex(PureComplexComplement(k_));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(k_);[127X[104X
+    [4X[28X13291[128X[104X
+    [4X[25Xgap>[125X [27Xk:=KnotComplement(arc);                                         [127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(k);[127X[104X
+    [4X[28X395[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAn optional argument of [10X"rand"[110X in the [10XKnotComplement[110X function randomises the
+  order  in  which [22X2[122X-cells are added to the complex. This allows for alternate
+  presentations of the knot group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=ArcPresentation(PureCubicalKnot(3,1));[127X[104X
+    [4X[28X[ [ 2, 5 ], [ 1, 3 ], [ 2, 4 ], [ 3, 5 ], [ 1, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xk:=KnotComplement(arc,"rand");[127X[104X
+    [4X[28XRandom 2-cell selection is enabled.[128X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg:=FundamentalGroup(k); RelatorsOfFpGroup(g); [127X[104X
+    [4X[28X#I  there are 2 generators and 1 relator of total length 6[128X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2 ]>[128X[104X
+    [4X[28X[ f2^-1*f1*f2^-1*f1^-1*f2*f1^-1 ][128X[104X
+    [4X[25Xgap>[125X [27Xk:=KnotComplement(arc,"rand");               [127X[104X
+    [4X[28XRandom 2-cell selection is enabled.[128X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg:=FundamentalGroup(k); RelatorsOfFpGroup(g);[127X[104X
+    [4X[28X#I  there are 2 generators and 1 relator of total length 7[128X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2 ]>[128X[104X
+    [4X[28X[ f1*f2^-2*f1*f2*f1^-1*f2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  is  often  useful  to  obtain an inclusion of regular CW-complexes [22Xι : ∂
+  (N(K))  ↪ B^3 backslash N(K)[122X from the boundary of a tubular neighbourhood of
+  some  knot  [22XN(K)[122X  into  its complement in the [22X3[122X-ball [22XB^3 backslash N(K)[122X. The
+  below example does this for the first prime knot on 11 crossings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=ArcPresentation(PureCubicalKnot(11,1));[127X[104X
+    [4X[28X[ [ 2, 9 ], [ 1, 3 ], [ 2, 6 ], [ 4, 7 ], [ 3, 5 ], [ 6, 10 ], [ 4, 8 ], [128X[104X
+    [4X[28X  [ 9, 11 ], [ 7, 10 ], [ 1, 8 ], [ 5, 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xk:=KnotComplementWithBoundary(arc);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(Source(i));[127X[104X
+    [4X[28X616[128X[104X
+    [4X[25Xgap>[125X [27XSize(Target(i));[127X[104X
+    [4X[28X1043[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  we  can  add  [22Xn[122X-cells  to regular CW-complexes by specifying the
+  [22X(n-1)[122X-cells in their boundaries and [22X(n+1)[122X-cells in their coboundaries.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xk:=KnotComplement([[1,2],[1,2]])!.boundaries;;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(RegularCWComplex(k),0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XAddCell(k,0,[0],[]);                          [127X[104X
+    [4X[25Xgap>[125X [27XHomology(RegularCWComplex(k),0);[127X[104X
+    [4X[28X[ 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X15.2 [33X[0;0YTubular neighbourhoods[133X[101X
+  
+  [33X[0;0YLet  [22XY[122X  denote a CW-subcomplex of a regular CW-complex [22XX[122X and let [22XN(Y)[122X denote
+  an   open  tubular  neighbourhood  of  [22XY[122X.  Given  an  inclusion  of  regular
+  CW-complexes  [22Xf  : Y ↪ X[122X, this algorithm describes a procedure for obtaining
+  the  associated  inclusion  [22Xf'  :  ∂  C ↪ C[122X where [22XC=X backslash N(Y)[122X and [22X∂ C[122X
+  denotes the boundary of [22XC[122X. The following is also assumed:[133X
+  
+  [33X[0;0YLet  [22Xe^n[122X  denote a cell of [22XX backslash Y[122X of dimension [22Xn[122X with [22Xbare^n[122X denoting
+  its  closure.  For  each  [22Xn[122X-cell,  all  of  the  connected components of the
+  subcomplex [22Xbare^n ∩ Y[122X are contractible.[133X
+  
+  [33X[0;0YSome  additional  terminology  and  notation  is  needed  to  describe  this
+  algorithm.  The  output  regular CW-complex [22XX backslash N(Y)[122X consists of the
+  cell  complex  [22XX  backslash  Y[122X  as well as some additional cells to maintain
+  regularity. A cell of [22XX backslash N(Y)[122X is referred to as [13Xinternal[113X if it lies
+  in [22XX backslash Y[122X, it is [13Xexternal[113X otherwise. Let [22Xbare^n[122X denote the closure in
+  [22XX[122X  of  an internal cell [22Xe^n[122X. Note that [22Xbare^n[122X is a CW-subcomplex of [22XX[122X and so
+  is the intersection [22Xbare^n ∩ Y[122X which can be expressed as the union[133X
+  
+  [33X[0;0Y[22Xbare^n ∩ Y = A_1 ∪ A_2 ∪ ⋯ ∪ A_k[122X[133X
+  
+  [33X[0;0Yof  its  path components [22XA_i[122X all of which are CW-subcomplexes of [22XY[122X. For each
+  [22Xn[122X-cell  of  [22XX  backslash  Y[122X  there is one internal [22Xn[122X-cell [22Xe^n[122X of [22XX backslash
+  N(Y)[122X.  For  [22Xn  ≥  1[122X there is also one external [22X(n-1)[122X-cell [22Xf^e^n_A_i[122X for each
+  path  component  [22XA_i[122X of [22Xbare^n ∩ Y[122X. Lastly, we need a method for determining
+  the homological boundary of the internal and external cells:[133X
+  
+  [33X[0;0Y[22X∙[122X  The  boundary  of  an  internal [22Xn[122X-cell [22Xe^n[122X consists of all those internal
+  [22X(n-1)[122X-cells of [22Xbare^n[122X together with all external [22X(n-1)[122X-cells [22Xf^e^n_A_i[122X where
+  [22XA_i[122X is a path component of [22Xbare^n ∩ Y[122X.[133X
+  
+  [33X[0;0Y[22X∙[122X  The  boundary  of  an external [22X(n-1)[122X-cell [22Xf^e^n_A_i[122X consists of all those
+  external [22X(n-2)[122X-cells [22Xf^e^n-1}_B_j[122X where [22Xe^n-1[122X is an [22X(n-1)[122X-cell of [22Xbare^n[122X and
+  [22XB_j ⊆ A_i[122X is a path component of [22XA_i[122X.[133X
+  
+  [33X[0;0YThe following three steps comprise the algorithm.[133X
+  
+  [33X[0;0Y[22X(1)[122X  For  each  internal  [22Xn[122X-cell [22Xe^n ⊂ X backslash Y[122X, compute the CW-complex
+  [22Xbare^n  ∩  Y[122X  as  a  union  of  path  components  [22XA_1  ∪ A_2 ∪ ⋯ ∪ A_k[122X. This
+  information can be used to determine the number of cells of [22XX backslash N(Y)[122X
+  in each dimension.[133X
+  
+  [33X[0;0Y[22X(2)[122X Create a list [22XB=[ [ ], [ ], ..., [ ] ][122X of length [22XdimX +1[122X.[133X
+  
+  [33X[0;0Y[22X(3)[122X  For  [22X0  ≤ n ≤ dimX[122X set [22XB[n+1]=[ b_1, b_2, ..., b_α_n ][122X where [22Xα_n[122X is the
+  number  of  [22Xn[122X-cells  in  [22XX  backslash  N(Y)[122X  and  [22Xb_i[122X  is a list of integers
+  describing  the  [22X(n-1)[122X-cells  of  the [22Xi ^ th[122X [22Xn[122X-cell of [22XX backslash N(Y)[122X. The
+  internal  cells  will  always  be  listed  before the external cells in each
+  sublist. Return B as a regular CW-complex.[133X
+  
+  [33X[0;0YThe  following example computes the tubular neighbourhood of a [22X1[122X-dimensional
+  subcomplex  of  a  [22X3[122X-dimensional  complex  corresponding  to  the  Hopf link
+  embedded in the closed [22X3[122X-ball.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=[[2,4],[1,3],[2,4],[1,3]];;            [127X[104X
+    [4X[25Xgap>[125X [27Xf:=ArcPresentationToKnottedOneComplex(arc);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xcomp:=RegularCWComplexComplement(f);[127X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X151 out of 151 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that the output of this algorithm is just a regular CW-complex, not an
+  inclusion  map.  The  function  [10XBoundaryMap[110X  can  be  employed to obtain the
+  boundary  of  a pure complex. This results in three path components for this
+  example: two corresponding to the boundary of the knotted tori and the other
+  corresponding  to the boundary of the [22X3[122X-ball in which the link was embedded.
+  These  path  components  can  be  obtained  as individual CW-subcomplexes if
+  desired.  A CW-subcomplex is represented in HAP as a list [22X[X,s][122X where [22XX[122X is a
+  regular  CW-complex  and  [22Xs[122X is a list of length [22Xn[122X whose [22Xi^th[122X entry lists the
+  indexing   of   each  [22X(i-1)[122X-cell  of  the  [22Xn[122X-dimensional  subcomplex  of  [22XX[122X.
+  CW-subcomplexes   and   CW   maps   can  be  converted  between  each  other
+  interchangeably.  This  next  example  obtains the inclusion detailed in the
+  above  algorithm, finds the path components of the source of said inclusion,
+  shows  that  they  are  in  fact  disjoint,  and then obtains the first four
+  integral homology groups of each component.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf_:=BoundaryMap(comp);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf_:=RegularCWMapToCWSubcomplex(f_);;[127X[104X
+    [4X[25Xgap>[125X [27Xpaths:=PathComponentsCWSubcomplex(f_);[127X[104X
+    [4X[28X[ [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X        , [128X[104X
+    [4X[28X      [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20 ], [128X[104X
+    [4X[28X          [ 1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 33, 34, 35, 46, 47, 48 [128X[104X
+    [4X[28X             ], [ 11, 12, 13, 14, 15, 16, 35, 36 ] ] ], [128X[104X
+    [4X[28X  [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X        , [ [ 21, 24, 25, 27, 30, 31, 32, 37, 38, 39, 40, 43, 45, 46, 48 ], [128X[104X
+    [4X[28X          [ 49, 51, 53, 56, 57, 59, 61, 63, 65, 67, 69, 71, 73, 74, 76, 79, [128X[104X
+    [4X[28X              82, 83, 86, 87, 90, 91 ], [ 37, 39, 41, 44, 45, 47, 49 ] ] ], [128X[104X
+    [4X[28X  [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X        , [ [ 22, 23, 26, 28, 29, 33, 34, 35, 36, 41, 42, 44, 47, 49, 50 ], [128X[104X
+    [4X[28X          [ 50, 52, 54, 55, 58, 60, 62, 64, 66, 68, 70, 72, 75, 77, 78, 80, [128X[104X
+    [4X[28X              81, 84, 85, 88, 89, 92 ], [ 38, 40, 42, 43, 46, 48, 50 ] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xpaths:=List(paths,CWSubcomplexToRegularCWMap);[127X[104X
+    [4X[28X[ Map of regular CW-complexes[128X[104X
+    [4X[28X    , Map of regular CW-complexes[128X[104X
+    [4X[28X    , Map of regular CW-complexes[128X[104X
+    [4X[28X     ][128X[104X
+    [4X[25Xgap>[125X [27XList([1..3],x->List(Difference([1..3],[x]),y->IntersectionCWSubcomplex(paths[x],paths[y])));[127X[104X
+    [4X[28X[ [ [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ] ], [ [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ] ], [ [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ], [ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X            , [ [  ], [  ], [  ] ] ] ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(paths,x->List([0..3],y->Homology(Source(x),y)));[127X[104X
+    [4X[28X[ [ [ 0 ], [  ], [ 0 ], [  ] ], [ [ 0 ], [ 0, 0 ], [ 0 ], [  ] ], [128X[104X
+    [4X[28X  [ [ 0 ], [ 0, 0 ], [ 0 ], [  ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAs previously mentioned, for the tubular neighbourhood algorithm to work, we
+  require  that  no  external  cells yield non-contractible path-components in
+  their intersection with the subcomplex. If this is ever the case then we can
+  subdivide  the  offending  cell  to  prevent  this  from  happening. We have
+  implemented  two  subdivision  algorithms  in  HAP,  one for barycentrically
+  subdividing  a  given  cell, and the other for subdividing an [22Xn[122X-cell into as
+  many   [22Xn[122X-cells  as  there  are  [22X(n-1)[122X-cells  in  its  boundary.  Barycentric
+  subdivision  is  integrated into the [10XRegularCWComplexComplement[110X function and
+  will  be  performed  automatically  as required. The following example shows
+  this   automatic  subdivision  running  via  the  complement  of  a  tubular
+  neighbourhood  of the unknot, then obtains an inclusion map from the closure
+  of  an  arbitrary [22X3[122X-cell of this complex and then compares the difference in
+  size  of  the two different subdivisions of a 2-cell in the boundary of this
+  [22X3[122X-cell.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=[[1,2],[1,2]];;[127X[104X
+    [4X[25Xgap>[125X [27Xunknot:=ArcPresentationToKnottedOneComplex(arc);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf:=RegularCWComplexComplement(unknot);[127X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X79 out of 79 cells tested.[128X[104X
+    [4X[28XSubdividing 3 cell(s):[128X[104X
+    [4X[28X100% complete. [128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X145 out of 145 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Objectify(HapRegularCWMap,rec(source:=f,target:=f,mapping:={i,j}->j));    [127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xclosure:=ClosureCWCell(Target(f),3,1);[127X[104X
+    [4X[28X[ Regular CW-complex of dimension 3[128X[104X
+    [4X[28X    , [128X[104X
+    [4X[28X  [ [ 1, 2, 3, 4, 7, 8, 9, 10, 11, 13, 14, 20, 21, 22, 23, 25 ], [128X[104X
+    [4X[28X      [ 1, 2, 3, 7, 8, 9, 10, 11, 15, 16, 17, 20, 21, 22, 23, 24, 25, 27, 28, 55, 58, 59, [128X[104X
+    [4X[28X          60, 63 ], [ 1, 4, 7, 8, 9, 13, 14, 15, 18, 52 ], [ 1 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XSize(Target(f));                                          [127X[104X
+    [4X[28X195[128X[104X
+    [4X[25Xgap>[125X [27XSize(Target(BarycentricallySubdivideCell(f,2,1)));        [127X[104X
+    [4X[28X231[128X[104X
+    [4X[25Xgap>[125X [27XSize(Target(SubdivideCell(f,2,1)));        [127X[104X
+    [4X[28X207[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X15.3 [33X[0;0YKnotted surface complements in the 4-ball[133X[101X
+  
+  [33X[0;0YA  construction  of Satoh's, the tube map, associates a ribbon torus-knot to
+  virtual knot diagrams. A virtual knot diagram differs from a knot diagram in
+  that  it  allows for a third type of crossing, a virtual crossing. The image
+  of  such  a  crossing  via  the tube map is two tori which pass through each
+  other.  An  arc  diagram  is  a triple of lists [10X[arc,cross,cols][110X that encode
+  virtual knot diagrams. [10Xarc[110X is an arc presentation. [10Xcross[110X is a list of length
+  the number of crossings in the knot associated to the arc presentation whose
+  entries  are  [22X-1,0[122X  or  [22X1[122X  corresponding to an undercrossing (horizontal arc
+  underneath  vertical  arc),  a  virtual  crossing  (depicted by intersecting
+  horizontal  and  vertical  arcs)  and  an overcrossing (horizontal arc above
+  vertical arc) respectively. [10Xcols[110X is a list of length the number of [22X0[122X entries
+  in  [10Xcross[110X  and  its  entries  are  [22X1,2,3[122X  or  [22X4[122X.  It  describes the types of
+  'colourings'  we  assign to the virtual crossings. We interpret each integer
+  as the change in 4-dimensional height information as represented by a colour
+  scale  from blue (lower down in 4-space), to green (0 level), to red (higher
+  up  in  4-space). Without loss of generality, we impose that at each virtual
+  crossing,  the  vertical  arc  passes  through  the  horizontal arc. Thus, [22X1[122X
+  corresponds  to  the  vertical  bar  entering the horizontal bar as blue and
+  leaving  as  blue,  [22X2[122X  corresponds to entering as blue and leaving as red, [22X3[122X
+  corresponds  to  entering  as  red  and leaving as blue and [22X4[122X corresponds to
+  entering  and leaving as red. A coloured arc diagram can be visualised using
+  the [10XViewColouredArcDiagram[110X function.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=ArcPresentation(PureCubicalKnot(6,1));[127X[104X
+    [4X[28X[ [ 5, 8 ], [ 4, 6 ], [ 3, 5 ], [ 2, 4 ], [ 1, 3 ], [ 2, 7 ], [ 6, 8 ], [ 1, 7 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xcross:=[0,0,1,-1,-1,0];;[127X[104X
+    [4X[25Xgap>[125X [27Xcols:=[1,4,3];;[127X[104X
+    [4X[25Xgap>[125X [27XViewColouredArcDiagram(arc,cross,cols);  [127X[104X
+    [4X[28Xconvert-im6.q16: pixels are not authentic `/tmp/HAPtmpImage.txt' @ error/cache.c/QueueAuthenticPixelCacheNexus/4381.[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTowards obtaining a regular CW-decomposition of ribbon torus-knots, we first
+  begin  by  embedding  a  self-intersecting  knotted torus in the 3-ball. The
+  function  [10XArcDiagramToTubularSurface[110X  inputs  a  coloured  arc  diagram  and
+  outputs    an   inclusion   from   the   boundary   of   some   (potentially
+  self-intersecting)   torus   in   the  [22X3[122X-ball.  By  inputting  just  an  arc
+  presentation,    one    can   obtain   an   inclusion   identical   to   the
+  [10XKnotComplementWithBoundary[110X function. By additionally inputting a list of [22X-1[122Xs
+  and  [22X1[122Xs,  one  can obtain an inclusion similar to [10XKnotComplementWithBoundary[110X
+  but  where  there  is  extra  freedom  in determining whether or not a given
+  crossing  is  an  under/overcrossing.  If  one  inputs both of the above but
+  includes  [22X0[122X  entries in the [10Xcross[110X list and includes the list of colours, the
+  output  is  then  an inclusion from an embedded self-intersecting torus into
+  the   3-ball   where   each   [22X2[122X-cell   (the  top-dimensional  cells  of  the
+  self-intersecting surface) is assigned a colour.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xtub:=ArcDiagramToTubularSurface(arc);        [127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtub:=ArcDiagramToTubularSurface([arc,cross]);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtub:=ArcDiagramToTubularSurface([arc,cross,cols]);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([1..Length(Source(tub)!.boundaries[3])],x->tub!.colour(2,tub!.mapping(2,x)));[127X[104X
+    [4X[28X[ [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ -1 ], [ -1 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ -1 ], [ -1 ], [ -1 ], [ -1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 1 ], [128X[104X
+    [4X[28X  [ 0 ], [ 0 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 1 ], [ 0 ], [128X[104X
+    [4X[28X  [ 0 ], [ -1 ], [ -1 ], [ 1 ], [ -1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ -1 ], [ -1 ], [ 0 ], [128X[104X
+    [4X[28X  [ 1 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ -1 ], [ 0 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFrom this self-intersecting surface with colour, we can lift it to a surface
+  without  self-intersections  in  [22XR^4[122X.  We  do this by constructing a regular
+  CW-complex of the direct product [22XB^3 × [a,b][122X where [22XB^3[122X denotes the [22X3[122X-ball, [22Xa[122X
+  is [22X1[122X less than the smallest integer assigned to a cell by the colouring, and
+  [22Xb[122X is [22X1[122X greater than the largest integer assigned to a cell by the colouring.
+  The  subcomplex  of  the direct product corresponding to the surface without
+  intersection  can be obtained using the colouring with additional care taken
+  to not lift any 1-cells arising as double-point singularities. The following
+  example  constructs  the  complement  of a ribbon torus-link embedded in [22XR^4[122X
+  obtained  from  the  Hopf link with one virtual crossing and then calculates
+  some invariants of the resulting space. We compare the size of this complex,
+  as  well  as how long it takes to obtain the same invariants, with a cubical
+  complex of the same space. As barycentric subdivision can massively increase
+  the  size  of  the  cell  complex, the below method sequentially obtains the
+  tubular  neighbourhood  of  the  entire  subcomplex by obtaining the tubular
+  neighbourhood  of each individual [22X2[122X-cell. This has yet to be optimised so it
+  currently takes some time to complete.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xarc:=[[2,4],[1,3],[2,4],[1,3]];;                [127X[104X
+    [4X[25Xgap>[125X [27Xtub:=ArcDiagramToTubularSurface([arc,[0,-1],[2]]);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtub:=LiftColouredSurface(tub);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDimension(Source(tub));[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XDimension(Source(tub));[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xmap:=RegularCWMapToCWSubcomplex(tub);;[127X[104X
+    [4X[25Xgap>[125X [27Xsub:=SortedList(map[2][3]);;[127X[104X
+    [4X[25Xgap>[125X [27Xsub:=List(sub,x->x-(Position(sub,x)-1));;[127X[104X
+    [4X[25Xgap>[125X [27Xclsr:=ClosureCWCell(map[1],2,sub[1])[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xseq:=CWSubcomplexToRegularCWMap([map[1],clsr]);;[127X[104X
+    [4X[25Xgap>[125X [27Xtub:=RegularCWComplexComplement(seq);[127X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X3501 out of 3501 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[25Xgap>[125X [27Xfor i in [2..Length(sub)] do[127X[104X
+    [4X[25X>[125X [27X    clsr:=ClosureCWCell(tub,2,sub[i])[2];;[127X[104X
+    [4X[25X>[125X [27X    seq:=CWSubcomplexToRegularCWMap([tub,clsr]);;[127X[104X
+    [4X[25X>[125X [27X    tub:=RegularCWComplexComplement(seq);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X3612 out of 3612 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X3693 out of 3693 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X3871 out of 3871 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X3925 out of 3925 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4084 out of 4084 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4216 out of 4216 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4348 out of 4348 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4529 out of 4529 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4688 out of 4688 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4723 out of 4723 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X4918 out of 4918 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5107 out of 5107 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5269 out of 5269 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5401 out of 5401 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5548 out of 5548 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5702 out of 5702 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X5846 out of 5846 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6027 out of 6027 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6089 out of 6089 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6124 out of 6124 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6159 out of 6159 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6349 out of 6349 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6467 out of 6467 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6639 out of 6639 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6757 out of 6757 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X6962 out of 6962 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7052 out of 7052 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7242 out of 7242 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7360 out of 7360 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7470 out of 7470 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7561 out of 7561 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7624 out of 7624 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7764 out of 7764 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7904 out of 7904 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X7979 out of 7979 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8024 out of 8024 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8086 out of 8086 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8148 out of 8148 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8202 out of 8202 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8396 out of 8396 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8534 out of 8534 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8625 out of 8625 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8736 out of 8736 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8817 out of 8817 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X8983 out of 8983 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9073 out of 9073 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9218 out of 9218 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9323 out of 9323 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9442 out of 9442 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9487 out of 9487 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9538 out of 9538 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9583 out of 9583 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[28XTesting contractibility...[128X[104X
+    [4X[28X9634 out of 9634 cells tested.[128X[104X
+    [4X[28XThe input is compatible with this algorithm.[128X[104X
+    [4X[25Xgap>[125X [27XSize(tub);      [127X[104X
+    [4X[28X9685[128X[104X
+    [4X[25Xgap>[125X [27Xtotal_time_1:=0;;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..4],x->Homology(tub,x)); total_time_1:=total_time_1+time;;[127X[104X
+    [4X[28X[ [ 0 ], [ 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0 ], [  ] ][128X[104X
+    [4X[25Xgap>[125X [27Xc:=ChainComplexOfUniversalCover(tub);; total_time_1:=total_time_1+time;;[127X[104X
+    [4X[25Xgap>[125X [27Xl:=Filtered(LowIndexSubgroups(c!.group,5),g->Index(c!.group,g)=5);; total_time_1:=total_time_1+time;;[127X[104X
+    [4X[25Xgap>[125X [27Xinv:=Set(l,g->Homology(TensorWithIntegersOverSubgroup(c,g),2)); total_time_1:=total_time_1+time;;[127X[104X
+    [4X[28X[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] [128X[104X
+    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27Xtotal_time_1;[127X[104X
+    [4X[28X3407[128X[104X
+    [4X[25Xgap>[125X [27Xhopf:=PureComplexComplement(HopfSatohSurface());;[127X[104X
+    [4X[25Xgap>[125X [27Xhopf:=RegularCWComplex(hopf);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(hopf);[127X[104X
+    [4X[28X4508573[128X[104X
+    [4X[25Xgap>[125X [27Xtotal_time_2:=0;;[127X[104X
+    [4X[25Xgap>[125X [27Xc_:=ChainComplexOfUniversalCover(hopf);; total_time_2:=total_time_2+time;;[127X[104X
+    [4X[25Xgap>[125X [27Xl_:=Filtered(LowIndexSubgroups(c_!.group,5),g->Index(c_!.group,g)=5);; total_time_2:=total_time_2+time;;[127X[104X
+    [4X[25Xgap>[125X [27Xinv_:=Set(l_,g->Homology(TensorWithIntegersOverSubgroup(c_,g),2));; total_time_2:=total_time_2+time;;[127X[104X
+    [4X[25Xgap>[125X [27Xtotal_time_2;[127X[104X
+    [4X[28X1116000[128X[104X
+    [4X[25Xgap>[125X [27Xinv_=inv;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

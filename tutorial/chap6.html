@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 6: Group theoretic computations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
+<p><a id="X7C07F4BD8466991A" name="X7C07F4BD8466991A"></a></p>
+<div class="ChapSects"><a href="chap6.html#X7C07F4BD8466991A">6 <span class="Heading">Group theoretic computations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X86D7FBBD7E5287C9">6.1 <span class="Heading">Third homotopy group of a supsension of an Eilenberg-MacLane space </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X803FDFFE78A08446">6.2 <span class="Heading">Representations of knot quandles</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7E4EFB987DA22017">6.3 <span class="Heading">Identifying knots</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8664E986873195E6">6.4 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F719758856A443D">6.5 <span class="Heading">Bogomolov multiplier</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8333413B838D787D">6.6 <span class="Heading">Second group cohomology and group extensions</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C60E2B578074532">6.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X78040D8580D35D53">6.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
+</span>
+</div>
+</div>
+
+<h3>6 <span class="Heading">Group theoretic computations</span></h3>
+
+<p><a id="X86D7FBBD7E5287C9" name="X86D7FBBD7E5287C9"></a></p>
+
+<h4>6.1 <span class="Heading">Third homotopy group of a supsension of an Eilenberg-MacLane space </span></h4>
+
+<p>The following example uses the nonabelian tensor square of groups to compute the third homotopy group</p>
+
+<p><span class="SimpleMath">π_3(S(K(G,1))) = Z^30</span></p>
+
+<p>of the suspension of the Eigenberg-MacLane space <span class="SimpleMath">K(G,1)</span> for <span class="SimpleMath">G</span> the free nilpotent group of class <span class="SimpleMath">2</span> on four generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(4);;G:=NilpotentQuotient(F,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThirdHomotopyGroupOfSuspensionB(G);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X803FDFFE78A08446" name="X803FDFFE78A08446"></a></p>
+
+<h4>6.2 <span class="Heading">Representations of knot quandles</span></h4>
+
+<p>The following example constructs the finitely presented quandles associated to the granny knot and square knot, and then computes the number of quandle homomorphisms from these two finitely prresented quandles to the <span class="SimpleMath">17</span>-th quandle in <strong class="button">HAP</strong>'s library of connected quandles of order <span class="SimpleMath">24</span>. The number of homomorphisms differs between the two cases. The computation therefore establishes that the complement in <span class="SimpleMath">R^3</span> of the granny knot is not homeomorphic to the complement of the square knot.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=ConnectedQuandle(24,17,"import");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=PureCubicalKnot(3,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ReflectedCubicalKnot(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">square:=KnotSum(K,L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">granny:=KnotSum(K,K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gcsquare:=GaussCodeOfPureCubicalKnot(square);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gcgranny:=GaussCodeOfPureCubicalKnot(granny);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qsquare:=PresentationKnotQuandle(gcsquare);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qgranny:=PresentationKnotQuandle(gcgranny);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberOfHomomorphisms(Qsquare,Q);</span>
+408
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberOfHomomorphisms(Qgranny,Q);</span>
+24
+
+</pre></div>
+
+<p>The following commands compute a knot quandle directly from a pdf file containing the following hand-drawn image of the knot.</p>
+
+<p><img src="images/myknot.png" align="center" height="160" alt="hand-drawn image of the trefoil knot"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> gc:=ReadLinkImageAsGaussCode("myknot.pdf");</span>
+[ [ [ -2, 4, -1, 3, -3, 2, -4, 1 ] ], [ -1, -1, 1, -1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=PresentationKnotQuandle(gc);</span>
+Quandle presentation of 4 generators and 4 relators.
+
+</pre></div>
+
+<p><a id="X7E4EFB987DA22017" name="X7E4EFB987DA22017"></a></p>
+
+<h4>6.3 <span class="Heading">Identifying knots</span></h4>
+
+<p>Low index subgrops of the knot group can be used to identify knots with few crossings. For instance, the following commands read in the following image of a knot and identify it as a sum of two trefoils. The commands determine the prime components only up to reflection, and so they don't distinguish between the granny and square knots.</p>
+
+<p><img src="images/myknot2.png" align="center" height="160" alt="hand-drawn image of a knot"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gc:=ReadLinkImageAsGaussCode("myknot2.png");</span>
+[ [ [ -4, 7, -5, 4, -7, 5, -3, 6, -2, 3, 8, -8, -6, 2, 1, -1 ] ], 
+  [ 1, -1, -1, -1, -1, -1, -1, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentifyKnot(gc);;</span>
+PrimeKnot(3,1) + PrimeKnot(3,1)    modulo reflections of components. 
+
+</pre></div>
+
+<p><a id="X8664E986873195E6" name="X8664E986873195E6"></a></p>
+
+<h4>6.4 <span class="Heading">Aspherical <span class="SimpleMath">2</span>-complexes</span></h4>
+
+<p>The following example uses Polymake's linear programming routines to establish that the <span class="SimpleMath">2</span>-complex associated to the group presentation <span class="SimpleMath">&lt;x,y,z : xyx=yxy, yzy=zyz, xzx=zxz&gt;</span> is aspherical (that is, has contractible universal cover). The presentation is Tietze equivalent to the presentation used in the computer code, and the associated <span class="SimpleMath">2</span>-complexes are thus homotopy equivalent.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=F.1;;y:=F.2;;z:=F.3;;a:=F.4;;b:=F.5;;c:=F.6;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rels:=[a^-1*x*y, b^-1*y*z, c^-1*z*x, a*x*(y*a)^-1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   b*y*(z*b)^-1, c*z*(x*c)^-1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print(IsAspherical(F,rels),"\n");</span>
+Presentation is aspherical.
+
+true
+
+</pre></div>
+
+<p><a id="X7F719758856A443D" name="X7F719758856A443D"></a></p>
+
+<h4>6.5 <span class="Heading">Bogomolov multiplier</span></h4>
+
+<p>The Bogomolov multiplier of a group is an isoclinism invariant. Using this property, the following example shows that there are precisely three groups of order <span class="SimpleMath">243</span> with non-trivial Bogomolov multiplier. The groups in question are numbered 28, 29 and 30 in <strong class="button">GAP</strong>'s library of small groups of order <span class="SimpleMath">243</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=AllSmallGroups(3^5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=IsoclinismClasses(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for c in C do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if Length(BogomolovMultiplier(c[1]))&gt;0 then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(List(c,g-&gt;IdGroup(g)),"\n\n\n"); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+[ [ 243, 28 ], [ 243, 29 ], [ 243, 30 ] ]
+
+</pre></div>
+
+<p><a id="X8333413B838D787D" name="X8333413B838D787D"></a></p>
+
+<h4>6.6 <span class="Heading">Second group cohomology and group extensions</span></h4>
+
+<p>Any group extension <span class="SimpleMath">N↣ E ↠ G</span> gives rise to:</p>
+
+
+<ul>
+<li><p>an outer action <span class="SimpleMath">α: G→ Out(G)</span> of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>.</p>
+
+</li>
+<li><p>an action <span class="SimpleMath">G→ Aut(Z(N))</span> of <span class="SimpleMath">G</span> on the centre of <span class="SimpleMath">N</span>, uniquely induced by the outer action <span class="SimpleMath">α</span> and the canonical action of <span class="SimpleMath">Out(N)</span> on <span class="SimpleMath">Z(N)</span>.</p>
+
+</li>
+<li><p>a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ Z(N)</span> with values in the <span class="SimpleMath">G</span>-module <span class="SimpleMath">A=Z(N)</span>.</p>
+
+</li>
+</ul>
+<p>Any outer homomorphism <span class="SimpleMath">α: G→ Out(N)</span> gives rise to a cohomology class <span class="SimpleMath">k</span> in <span class="SimpleMath">H^3(G,Z(N))</span>. It was shown by Eilenberg and Mac<span class="SimpleMath"></span>Lane that the class <span class="SimpleMath">k</span> is trivial if and only if the outer action <span class="SimpleMath">α</span> arises from some group extension <span class="SimpleMath">N↣ E↠ G</span>. If <span class="SimpleMath">k</span> is trivial then there is a bijection between the second cohomology group <span class="SimpleMath">H^2(G,Z(N))</span> and Yoneda equivalence classes of extensions of <span class="SimpleMath">G</span> by <span class="SimpleMath">N</span> that are compatible with <span class="SimpleMath">α</span>.</p>
+
+<p><strong class="button">First Example.</strong></p>
+
+<p>Consider the group <span class="SimpleMath">H=SmallGroup(64,134)</span>. Consider the normal subgroup <span class="SimpleMath">N=NormalSubgroups(G)[15]</span> and quotient group <span class="SimpleMath">G=H/N</span>. We have <span class="SimpleMath">N=C_2× D_4</span>, <span class="SimpleMath">A=Z(N)=C_2× C_2</span> and <span class="SimpleMath">G=C_2× C_2</span>.</p>
+
+<p>Suppose we wish to classify all extensions <span class="SimpleMath">C_2× D_4 ↣ E ↠ C_2× C_2</span> that induce the given outer action of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>. The following commands show that, up to Yoneda equivalence, there are two such extensions.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=SmallGroup(64,134);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=NormalSubgroups(H)[15];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Centre(GOuterGroup(H,N));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ActingGroup(A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+[ 2 ]
+
+</pre></div>
+
+<p>The following additional commands return a standard <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f:G× G→ A =C_2× C_2</span> corresponding to the non-trivial element in <span class="SimpleMath">H^2(G,A)</span>. The value <span class="SimpleMath">f(g,h)</span> of the <span class="SimpleMath">2</span>-cocycle is calculated for all <span class="SimpleMath">16</span> pairs <span class="SimpleMath">g,h ∈ G</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CH:=CohomologyModule(C,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elts:=Elements(ActedGroup(CH));</span>
+[ &lt;identity&gt; of ..., f1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Elts[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=CH!.representativeCocycle(x);</span>
+Standard 2-cocycle 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Mapping(c);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for g in G do for h in G do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(f(g,h),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+f6
+&lt;identity&gt; of ...
+f6
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+&lt;identity&gt; of ...
+f6
+&lt;identity&gt; of ...
+f6
+
+</pre></div>
+
+<p>The following commands will then construct and identify all extensions of <span class="SimpleMath">N</span> by <span class="SimpleMath">G</span> corresponding to the given outer action of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := SmallGroup(64,134);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := NormalSubgroups(H)[15];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ON := GOuterGroup(H,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Centre(ON);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ActingGroup(A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CH:=CohomologyModule(C,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elts:=Elements(ActedGroup(CH));;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lst := List(Elts{[1..Length(Elts)]},x-&gt;CH!.representativeCocycle(x));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ccgrps := List(lst, x-&gt;CcGroup(ON, x));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#So ccgrps is a list of groups, each being an extension of G by N, corresponding</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#to the two elements in H^2(G,A).</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#The following command produces the GAP identification number for each group.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=List(ccgrps,IdGroup);</span>
+[ [ 64, 134 ], [ 64, 135 ] ]
+
+</pre></div>
+
+<p><strong class="button">Second Example</strong></p>
+
+<p>The following example illustrates how to construct a cohomology class <span class="SimpleMath">k</span> in <span class="SimpleMath">H^2(G, A)</span> from a cocycle <span class="SimpleMath">f:G × G → A</span>, where <span class="SimpleMath">G=SL_2( Z_4)</span> and <span class="SimpleMath">A= Z_8</span> with trivial action.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#We'll construct G=SL(2,Z_4) as a permutation group.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SL(2,ZmodnZ(4));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(IsomorphismPermGroup(G));;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#We'll construct Z_8=Z/8Z as a G-outer group</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z_8:=Group((1,2,3,4,5,6,7,8));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Z_8:=TrivialGModuleAsGOuterGroup(G,z_8);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#We'll compute the group h=H^2(G,Z_8)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,3);;  #R is a free resolution</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,Z_8);; # C is a chain complex</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=CohomologyModule(C,2);; #H is the second cohomology H^2(G,Z_8)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=ActedGroup(H);; #h is the underlying group of H</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#We'll compute  cocycles c2, c5 for the second and fifth cohomology classs</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c2:=H!.representativeCocycle(Elements(h)[2]);</span>
+Standard 2-cocycle 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c5:=H!.representativeCocycle(Elements(h)[5]);</span>
+Standard 2-cocycle 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Now we'll construct the cohomology classes C2, C5 in the group h corresponding to the cocycles c2, c5.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2:=CohomologyClass(H,c2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C5:=CohomologyClass(H,c5);;</span>
+ 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Finally, we'll show that C2, C5 are distinct cohomology classes, both of order 4.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2=C5;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(C2);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(C5);</span>
+4
+
+</pre></div>
+
+<p><a id="X7C60E2B578074532" name="X7C60E2B578074532"></a></p>
+
+<h4>6.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
+
+<p>An <em>Hadamard matrix</em> is a square <span class="SimpleMath">n× n</span> matrix <span class="SimpleMath">H</span> whose entries are either <span class="SimpleMath">+1</span> or <span class="SimpleMath">-1</span> and whose rows are mutually orthogonal, that is <span class="SimpleMath">H H^t = nI_n</span> where <span class="SimpleMath">H^t</span> denotes the transpose and <span class="SimpleMath">I_n</span> denotes the <span class="SimpleMath">n× n</span> identity matrix.</p>
+
+<p>Given a group <span class="SimpleMath">G={g_1,g_2,...,g_n}</span> of order <span class="SimpleMath">n</span> and the abelian group <span class="SimpleMath">A={1,-1}</span> of square roots of unity, any <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> corresponds to an <span class="SimpleMath">n× n</span> matrix <span class="SimpleMath">F=(f(g_i,g_j))_1le i,jle n</span> whose entries are <span class="SimpleMath">± 1</span>. If <span class="SimpleMath">F</span> is Hadamard it is called a <em>cocyclic Hadamard matrix</em> corresponding to <span class="SimpleMath">G</span>.</p>
+
+<p>The following commands compute all <span class="SimpleMath">192</span> of the cocyclic Hadamard matrices for the abelian group <span class="SimpleMath">G= Z_4⊕ Z_4</span> of order <span class="SimpleMath">n=16</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AbelianGroup([4,4]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=CocyclicHadamardMatrices(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(F);</span>
+192
+
+</pre></div>
+
+<p><a id="X78040D8580D35D53" name="X78040D8580D35D53"></a></p>
+
+<h4>6.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
+
+<p><strong class="button">Homotopy 2-types</strong></p>
+
+<p>The third cohomology <span class="SimpleMath">H^3(G,A)</span> of a group <span class="SimpleMath">G</span> with coefficients in a <span class="SimpleMath">G</span>-module <span class="SimpleMath">A</span>, together with the corresponding <span class="SimpleMath">3</span>-cocycles, can be used to classify homotopy <span class="SimpleMath">2</span>-types. A <em>homotopy 2-type</em> is a CW-complex whose homotopy groups are trivial in dimensions <span class="SimpleMath">n=0</span> and <span class="SimpleMath">n&gt;2</span>. There is an equivalence between the two categories</p>
+
+<ol>
+<li><p>(Homotopy category of connected CW-complexes <span class="SimpleMath">X</span> with trivial homotopy groups <span class="SimpleMath">π_n(X)</span> for <span class="SimpleMath">n&gt;2</span>)</p>
+
+</li>
+<li><p>(Localization of the category of simplicial groups with Moore complex of length <span class="SimpleMath">1</span>, where localization is with respect to homomorphisms inducing isomorphisms on homotopy groups)</p>
+
+</li>
+</ol>
+<p>which reduces the homotopy theory of <span class="SimpleMath">2</span>-types to a 'computable' algebraic theory. Furthermore, a simplicial group with Moore complex of length <span class="SimpleMath">1</span> can be represented by a group <span class="SimpleMath">H</span> endowed with two endomorphisms <span class="SimpleMath">s: H→ H</span> and <span class="SimpleMath">t: H→ H</span> satisfying the axioms</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">ss=s</span>, <span class="SimpleMath">ts=s</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">tt=t</span>, <span class="SimpleMath">st=t</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">[ker s, ker t] = 1</span>.</p>
+
+</li>
+</ul>
+<p>Ths triple <span class="SimpleMath">(H,s,t)</span> was termed a <em>cat<span class="SimpleMath">^1</span>-group</em> by J.-L. Loday since it can be regarded as a group <span class="SimpleMath">H</span> endowed with one compatible category structure.</p>
+
+<p>The <em>homotopy groups</em> of a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">H</span> are defined as: <span class="SimpleMath">π_1(H) = image(s)/t(ker(s))</span>; <span class="SimpleMath">π_2(H)=ker(s) ∩ ker(t)</span>; <span class="SimpleMath">π_n(H)=0</span> for <span class="SimpleMath">n&gt; 2</span> or <span class="SimpleMath">n=0</span>. Note that <span class="SimpleMath">π_2(H)</span> is a <span class="SimpleMath">π_1(H)</span>-module where the action is induced by conjugation in <span class="SimpleMath">H</span>.</p>
+
+<p>A homotopy <span class="SimpleMath">2</span>-type <span class="SimpleMath">X</span> can be represented by a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">H</span> or by the homotopy groups <span class="SimpleMath">π_1X=π_1H</span>, <span class="SimpleMath">π_2X=π_2H</span> and a cohomology class <span class="SimpleMath">k∈ H^3(π_1X,π_2X)</span>. This class <span class="SimpleMath">k</span> is the <em>Postnikov invariant</em>.</p>
+
+<p><strong class="button">Relation to Group Theory</strong></p>
+
+<p>A number of standard group-theoretic constructions can be viewed naturally as a cat<span class="SimpleMath">^1</span>-group.</p>
+
+<ol>
+<li><p>A <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> can be viewed as a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">(H,s,t)</span> where <span class="SimpleMath">H</span> is the semi-direct product <span class="SimpleMath">A⋊ G</span> and <span class="SimpleMath">s(a,g)=(1,g)</span>, <span class="SimpleMath">t(a,g)=(1,g)</span>. Here <span class="SimpleMath">π_1(H)=G</span> and <span class="SimpleMath">π_2(H)=A</span>.</p>
+
+</li>
+<li><p>A group <span class="SimpleMath">G</span> with normal subgroup <span class="SimpleMath">N</span> can be viewed as a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">(H,s,t)</span> where <span class="SimpleMath">H</span> is the semi-direct product <span class="SimpleMath">N⋊ G</span> and <span class="SimpleMath">s(n,g)=(1,g)</span>, <span class="SimpleMath">t(n,g)=(1,ng)</span>. Here <span class="SimpleMath">π_1(H)=G/N</span> and <span class="SimpleMath">π_2(H)=0</span>.</p>
+
+</li>
+<li><p>The homomorphism <span class="SimpleMath">ι : G→ Aut(G)</span> which sends elements of a group <span class="SimpleMath">G</span> to the corresponding inner automorphism can be viewed as a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">(H,s,t)</span> where <span class="SimpleMath">H</span> is the semi-direct product <span class="SimpleMath">G⋊ Aut(G)</span> and <span class="SimpleMath">s(g,a)=(1,a)</span>, <span class="SimpleMath">t(g,a)=(1,ι (g)a)</span>. Here <span class="SimpleMath">π_1(H)=Out(G)</span> is the outer automorphism group of <span class="SimpleMath">G</span> and <span class="SimpleMath">π_2(H)=Z(G)</span> is the centre of <span class="SimpleMath">G</span>.</p>
+
+</li>
+</ol>
+<p>These three constructions are implemented in <strong class="button">HAP</strong>.</p>
+
+<p><strong class="button">Example</strong></p>
+
+<p>The following commands begin by constructing the cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">H</span> of Construction 3 for the group <span class="SimpleMath">G=SmallGroup(64,134)</span>. They then construct the fundamental group of <span class="SimpleMath">H</span> and the second homotopy group of as a <span class="SimpleMath">π_1</span>-module. These homotopy groups have orders <span class="SimpleMath">8</span> and <span class="SimpleMath">2</span> respectively.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SmallGroup(64,134);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AutomorphismGroupAsCatOneGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_1:=HomotopyGroup(H,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_2:=HomotopyModule(H,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(pi_1);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(ActedGroup(pi_2));</span>
+2
+
+</pre></div>
+
+<p>The following additional commands show that there are <span class="SimpleMath">1024</span> Yoneda equivalence classes of cat<span class="SimpleMath">^1</span>-groups with fundamental group <span class="SimpleMath">π_1</span> and <span class="SimpleMath">π_1</span>- module equal to <span class="SimpleMath">π_2</span> in our example.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(pi_1,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,pi_2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CH:=CohomologyModule(C,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(ActedGroup(CH));</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p>A <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f : π_1 × π_1 × π_1 → π_2</span> corresponding to a random cohomology class <span class="SimpleMath">k∈ H^3(π_1,π_2)</span> can be produced using the following command.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Random(Elements(ActedGroup(CH)));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=CH!.representativeCocycle(x);</span>
+Standard 3-cocycle 
+
+</pre></div>
+
+<p>The <span class="SimpleMath">3</span>-cocycle corresponding to the Postnikov invariant of <span class="SimpleMath">H</span> itself can be easily constructed directly from its definition in terms of a set-theoretic 'section' of the crossed module corresponding to <span class="SimpleMath">H</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

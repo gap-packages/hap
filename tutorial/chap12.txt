@@ -1,0 +1,712 @@
+  
+  [1X12 [33X[0;0YSimplicial groups[133X[101X
+  
+  
+  [1X12.1 [33X[0;0YCrossed modules[133X[101X
+  
+  [33X[0;0YA  [13Xcrossed module[113X consists of a homomorphism of groups [22X∂: M→ G[122X together with
+  an action [22X(g,m)↦ ^gm[122X of [22XG[122X on [22XM[122X satisfying[133X
+  
+  [31X1[131X   [33X[0;6Y[22X∂(^gm) = gmg^-1[122X[133X
+  
+  [31X2[131X   [33X[0;6Y[22X^∂ mm' = mm'm^-1[122X[133X
+  
+  [33X[0;0Yfor [22Xg∈ G[122X, [22Xm,m'∈ M[122X.[133X
+  
+  [33X[0;0YA  crossed  module  [22X∂: M→ G[122X is equivalent to a cat[22X^1[122X-group [22X(H,s,t)[122X (see [14X6.8[114X)
+  where [22XH=M ⋊ G[122X, [22Xs(m,g) = (1,g)[122X, [22Xt(m,g)=(1,(∂ m)g)[122X. A cat[22X^1[122X-group is, in turn,
+  equivalent  to  a  simplicial  group  with  Moore  complex has length [22X1[122X. The
+  simplicial group is constructed by considering the cat[22X^1[122X-group as a category
+  and taking its nerve. Alternatively, the simplicial group can be constructed
+  by  viewing  the  crossed module as a crossed complex and using a nonabelian
+  version of the Dold-Kan theorem.[133X
+  
+  [33X[0;0YThe following example concerns the crossed module[133X
+  
+  [33X[0;0Y[22X∂: G→ Aut(G), g↦ (x↦ gxg^-1)[122X[133X
+  
+  [33X[0;0Yassociated  to  the  dihedral  group  [22XG[122X  of  order  [22X16[122X.  This crossed module
+  represents,  up to homotopy type, a connected space [22XX[122X with [22Xπ_iX=0[122X for [22Xige 3[122X,
+  [22Xπ_2X=Z(G)[122X,  [22Xπ_1X  =  Aut(G)/Inn(G)[122X.  The  space  [22XX[122X can be represented, up to
+  homotopy,  by  a  simplicial  group.  That  simplicial  group is used in the
+  example to compute[133X
+  
+  [33X[0;0Y[22XH_1(X, Z)= Z_2 ⊕ Z_2[122X,[133X
+  
+  [33X[0;0Y[22XH_2(X, Z)= Z_2[122X,[133X
+  
+  [33X[0;0Y[22XH_3(X, Z)= Z_2 ⊕ Z_2 ⊕ Z_2[122X,[133X
+  
+  [33X[0;0Y[22XH_4(X, Z)= Z_2 ⊕ Z_2 ⊕ Z_2[122X,[133X
+  
+  [33X[0;0Y[22XH_5(X, Z)= Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2⊕ Z_2⊕ Z_2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=AutomorphismGroupAsCatOneGroup(DihedralGroup(16));[127X[104X
+    [4X[28XCat-1-group with underlying group Group( [128X[104X
+    [4X[28X[ f1, f2, f3, f4, f5, f6, f7, f8, f9 ] ) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(C);[127X[104X
+    [4X[28X512[128X[104X
+    [4X[25Xgap>[125X [27XQ:=QuasiIsomorph(C);[127X[104X
+    [4X[28XCat-1-group with underlying group Group( [ f9, f8, f1, f2*f3, f5 ] ) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(Q);[127X[104X
+    [4X[28X32[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN:=NerveOfCatOneGroup(Q,6);[127X[104X
+    [4X[28XSimplicial group of length 6[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=ChainComplexOfSimplicialGroup(N);[127X[104X
+    [4X[28XChain complex of length 6 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,1);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,2);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,3);[127X[104X
+    [4X[28X[ 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,4);[127X[104X
+    [4X[28X[ 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(K,5);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.2 [33X[0;0YEilenberg-MacLane spaces as simplicial groups (not recommended)[133X[101X
+  
+  [33X[0;0YThe following example concerns the Eilenberg-MacLane space [22XX=K( Z_3,3)[122X which
+  is  a  path-connected space with [22Xπ_3X= Z_3[122X, [22Xπ_iX=0[122X for [22X3ne ige 1[122X. This space
+  is  represented  by a simplicial group, and perturbation techniques are used
+  to compute[133X
+  
+  [33X[0;0Y[22XH_7(X, Z)= Z_3 ⊕ Z_3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianGroup([3]);;AbelianInvariants(A);   [127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27X K:=EilenbergMacLaneSimplicialGroup(A,3,8);[127X[104X
+    [4X[28XSimplicial group of length 8[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplex(K);[127X[104X
+    [4X[28XChain complex of length 8 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,7);                                          [127X[104X
+    [4X[28X[ 3, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.3   [33X[0;0YEilenberg-MacLane   spaces   as   simplicial   free   abelian  groups[101X
+  [1X(recommended)[133X[101X
+  
+  [33X[0;0YFor  integer  [22Xn>1[122X  and abelian group [22XA[122X the Eilenberg-MacLane space [22XK(A,n)[122X is
+  better  represented  as a simplicial free abelian group. (The reason is that
+  the  functorial  bar  resolution of [22XA[122X can be replaced in computations by the
+  smaller  functorial Chevalley-Eilenberg complex of [22XA[122X, obviating the need for
+  perturbation techniques.)[133X
+  
+  [33X[0;0YThe following commands compute the integral homology [22XH_n(K( Z,3), Z)[122X for [22X0le
+  n  le  16[122X.  (Note  that  one  typically  needs  fewer  than  [22Xn[122X  terms of the
+  Eilenberg-MacLance space to compute its [22Xn[122X-th homology -- an error is printed
+  if too few terms of the space are available for a given computation.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);; #infinite cyclic group                    [127X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,14);[127X[104X
+    [4X[28XSimplicial free abelian group of length 14[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..16] do[127X[104X
+    [4X[25X>[125X [27XPrint("Degree ",n," integral homology of K is ",Homology(K,n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XDegree 0 integral homology of K is [ 0 ][128X[104X
+    [4X[28XDegree 1 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 2 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 3 integral homology of K is [ 0 ][128X[104X
+    [4X[28XDegree 4 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 5 integral homology of K is [ 2 ][128X[104X
+    [4X[28XDegree 6 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 7 integral homology of K is [ 3 ][128X[104X
+    [4X[28XDegree 8 integral homology of K is [ 2 ][128X[104X
+    [4X[28XDegree 9 integral homology of K is [ 2 ][128X[104X
+    [4X[28XDegree 10 integral homology of K is [ 3 ][128X[104X
+    [4X[28XDegree 11 integral homology of K is [ 5, 2 ][128X[104X
+    [4X[28XDegree 12 integral homology of K is [ 2 ][128X[104X
+    [4X[28XDegree 13 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 14 integral homology of K is [ 10, 2 ][128X[104X
+    [4X[28XDegree 15 integral homology of K is [ 7, 6 ][128X[104X
+    [4X[28XDegree 16 integral homology of K is [  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor an [22Xn[122X-connected pointed space [22XX[122X the Freudenthal Suspension Theorem states
+  that  the  map  [22XX  →  Ω(Σ  X)[122X induces a map [22Xπ_k(X) → π_k(Ω(Σ X))[122X which is an
+  isomorphism   for   [22Xkle   2n[122X   and   epimorphism   for   [22Xk=2n+1[122X.   Thus  the
+  Eilenberg-MacLane  space  [22XK(A,n+1)[122X  can be constructed from the suspension [22XΣ
+  K(A,n)[122X  by attaching cells in dimensions [22Xge 2n+1[122X. In particular, there is an
+  isomorphism  [22XH_k-1(K(A,n),  Z) → H_k(K(A,n+1), Z)[122X for [22Xkle 2n[122X and epimorphism
+  for [22Xk=2n+1[122X.[133X
+  
+  [33X[0;0YFor instance, [22XH_k-1(K( Z,3), Z) ≅ H_k(K( Z,4), Z)[122X for [22Xkle 6[122X and [22XH_6(K( Z,3),
+  Z) ↠ H_7(K( Z,4), Z)[122X. This assertion is seen in the following session.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);; #infinite cyclic group                    [127X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,4,11);[127X[104X
+    [4X[28XSimplicial free abelian group of length 11[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..13] do[127X[104X
+    [4X[25X>[125X [27XPrint("Degree ",n," integral homology of K is ",Homology(K,n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XDegree 0 integral homology of K is [ 0 ][128X[104X
+    [4X[28XDegree 1 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 2 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 3 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 4 integral homology of K is [ 0 ][128X[104X
+    [4X[28XDegree 5 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 6 integral homology of K is [ 2 ][128X[104X
+    [4X[28XDegree 7 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 8 integral homology of K is [ 3, 0 ][128X[104X
+    [4X[28XDegree 9 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 10 integral homology of K is [ 2, 2 ][128X[104X
+    [4X[28XDegree 11 integral homology of K is [  ][128X[104X
+    [4X[28XDegree 12 integral homology of K is [ 5, 12, 0 ][128X[104X
+    [4X[28XDegree 13 integral homology of K is [ 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.4 [33X[0;0YElementary theoretical information on [22XH^∗(K(π,n), Z)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  cup  product is not implemented for the cohomology ring [22XH^∗(K(π,n), Z)[122X.
+  Standard  theoretical  spectral  sequence  arguments  have  to be applied to
+  obtain  basic information relating to the ring structure. To illustrate this
+  the  following  commands compute [22XH^n(K( Z,2), Z)[122X for the first few values of
+  [22Xn[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,2,10);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..10],k->Cohomology(K,k));[127X[104X
+    [4X[28X[ [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ], [  ], [ 0 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  is  a  fibration  sequence [22XK(π,n) ↪ ∗ ↠ K(π,n+1)[122X in which [22X∗[122X denotes a
+  contractible  space.  For  [22Xn=1,  π= Z[122X the terms of the [22XE_2[122X page of the Serre
+  integral cohomology spectral sequence for this fibration are[133X
+  
+  [30X    [33X[0;6Y[22XE_2^pq= H^p( K( Z,2), H^q(K( Z,1), Z) )[122X .[133X
+  
+  [33X[0;0YSince  [22XK(  Z,1)[122X  can  be  taken  to  be  the  circle [22XS^1[122X we know that it has
+  non-trivial  cohomology  in degrees [22X0[122X and [22X1[122X only. The first few terms of the
+  [22XE_2[122X page are given in the following table.[133X
+  
+        [22X1[122X   │ [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X    
+        [22X0[122X   │ [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X   [22X0[122X   [22XZ[122X    
+        [22Xq/p[122X │ [22X0[122X   [22X1[122X   [22X2[122X   [22X3[122X   [22X4[122X   [22X5[122X   [22X6[122X   [22X7[122X   [22X8[122X   [22X9[122X   [22X10[122X   
+  
+       [1XTable:[101X [22XE^2[122X cohomology page for [22XK( Z,1) ↪ ∗ ↠ K( Z,2)[122X
+  
+  
+  [33X[0;0YLet  [22Xx[122X denote the generator of [22XH^1(K( Z,1), Z)[122X and [22Xy[122X denote the generator of
+  [22XH^2(K( Z,2), Z)[122X. Since [22X∗[122X has zero cohomology in degrees [22Xge 1[122X we see that the
+  differential  must  restrict  to  an isomorphism [22Xd_2: E_2^0,1 → E_2^2,0[122X with
+  [22Xd_2(x)=y[122X.  Then we see that the differential must restrict to an isomorphism
+  [22Xd_2: E_2^2,1 → E_2^4,0[122X defined on the generator [22Xxy[122X of [22XE_2^2,1[122X by[133X
+  
+  
+  [24X[33X[0;6Yd_2(xy) = d_2(x)y + (-1)^{{\rm deg}(x)}xd_2(y) =y^2\ .[133X
+  
+  [124X
+  
+  [33X[0;0YHence [22XE_2^4,0 ≅ H^4(K( Z,2), Z)[122X is generated by [22Xy^2[122X. The argument extends to
+  show  that [22XH^6(K( Z,2), Z)[122X is generated by [22Xy^3[122X, [22XH^8(K( Z,2), Z)[122X is generated
+  by [22Xy^4[122X, and so on.[133X
+  
+  [33X[0;0YIn  fact,  to  obtain  a complete description of the ring [22XH^∗(K( Z,2), Z)[122X in
+  this  fashion  there is no benefit to using computer methods at all. We only
+  need to know the cohomology ring [22XH^∗(K( Z,1), Z) =H^∗(S^1, Z)[122X and the single
+  cohomology group [22XH^2(K( Z,2), Z)[122X.[133X
+  
+  [33X[0;0YA  similar approach can be attempted for [22XH^∗(K( Z,3), Z)[122X using the fibration
+  sequence  [22XK(  Z,2)  ↪ ∗ ↠ K( Z,3)[122X and, as explained in Chapter 5 of [Hat01],
+  yields  the  computation  of  the  group [22XH^i(K( Z,3), Z)[122X for [22X4le ile 13[122X. The
+  method  does not directly yield [22XH^3(K( Z,3), Z)[122X and breaks down in degree [22X14[122X
+  yielding  only  that  [22XH^14(K(  Z,3), Z) = 0 ~or~ Z_3[122X. The following commands
+  provide [22XH^3(K( Z,3), Z)= Z[122X and [22XH^14(K( Z,3), Z) =0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianPcpGroup([0]);;[127X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialFreeAbelianGroup(A,3,15);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(K,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(K,14);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHowever,  the implementation of these commands is currently a bit naive, and
+  computationally   inefficient,  since  they  do  not  currently  employ  any
+  homological perturbation techniques.[133X
+  
+  
+  [1X12.5 [33X[0;0YThe first three non-trivial homotopy groups of spheres[133X[101X
+  
+  [33X[0;0YThe Hurewicz Theorem immediately gives[133X
+  
+  
+  [24X[33X[0;6Y\pi_n(S^n)\cong \mathbb Z ~~~ (n\ge 1)[133X
+  
+  [124X
+  
+  [33X[0;0Yand[133X
+  
+  
+  [24X[33X[0;6Y\pi_k(S^n)=0 ~~~ (k\le n-1).[133X
+  
+  [124X
+  
+  [33X[0;0YAs  a  CW-complex the Eilenberg-MacLane space [22XK=K( Z,n)[122X can be obtained from
+  an  [22Xn[122X-sphere  [22XS^n=e^0∪  e^n[122X by attaching cells in dimensions [22Xge n+2[122X so as to
+  kill  the  higher homotopy groups of [22XS^n[122X. From the inclusion [22Xι: S^n↪ K( Z,n)[122X
+  we can form the mapping cone [22XX=C(ι)[122X. The long exact homotopy sequence[133X
+  
+  [33X[0;0Y[22X⋯ → π_k+1K → π_k+1(K,S^n) → π_k S^n → π_kK → π_k(K,S^n) → ⋯[122X[133X
+  
+  [33X[0;0Yimplies that [22Xπ_k(K,S^n)=0[122X for [22X0 le kle n+1[122X and [22Xπ_n+2(K,S^n)≅ π_n+1(S^n)[122X. The
+  relative  Hurewicz  Theorem gives an isomorphism [22Xπ_n+2(K,S^n) ≅ H_n+2(K,S^n,
+  Z)[122X. The long exact homology sequence[133X
+  
+  [33X[0;0Y[22X⋯ H_n+2(S^n, Z) → H_n+2(K, Z) → H_n+2(K,S^n, Z) → H_n+1(S^n, Z) → ⋯[122X[133X
+  
+  [33X[0;0Yarising  from  the  cofibration  [22XS^n  ↪  K  ↠  X[122X  implies  that  [22Xπ_n+1(S^n)≅
+  π_n+2(K,S^n)  ≅  H_n+2(K,S^n, Z) ≅ H_n+2(K, Z)[122X. From the [12XGAP[112X computations in
+  [14X12.3[114X and the Freudenthal Suspension Theorem we find:[133X
+  
+  
+  [24X[33X[0;6Y\pi_3S^2 \cong \mathbb Z, ~~~~~~ \pi_{n+1}(S^n)\cong \mathbb Z_2~~~(n\ge 3).[133X
+  
+  [124X
+  
+  [33X[0;0YThe  Hopf  fibration [22XS^3→ S^2[122X has fibre [22XS^1 = K( Z,1)[122X. It can be constructed
+  by  viewing  [22XS^3[122X  as  all  pairs  [22X(z_1,z_2)∈  C^2[122X with [22X|z_1|^2+|z_2|^2=1[122X and
+  viewing  [22XS^2[122X  as  [22XC∪ ∞[122X; the map sends [22X(z_1,z_2)↦ z_1/z_2[122X. The homotopy exact
+  sequence  of the Hopf fibration yields [22Xπ_k(S^3) ≅ π_k(S^2)[122X for [22Xkge 3[122X, and in
+  particular[133X
+  
+  
+  [24X[33X[0;6Y\pi_4(S^2) \cong \pi_4(S^3) \cong \mathbb Z_2\ .[133X
+  
+  [124X
+  
+  [33X[0;0YIt  will require further techniques (such as the Postnikov tower argument in
+  Section  [14X12.7[114X  below)  to  establish  that [22Xπ_5(S^3) ≅ Z_2[122X. Once we have this
+  isomorphism  for  [22Xπ_5(S^3)[122X,  the  generalized Hopf fibration [22XS^3 ↪ S^7 ↠ S^4[122X
+  comes  into  play.  This  fibration  is  contructed  as  for  the  classical
+  fibration,  but  using  pairs  [22X(z_1,z_2)[122X of quaternions rather than pairs of
+  complex  numbers.  The  Hurewicz  Theorem gives [22Xπ_3(S^7)=0[122X; the fibre [22XS^3[122X is
+  thus  homotopic to a point in [22XS^7[122X and the inclusion of the fibre induces the
+  zero homomorphism [22Xπ_k(S^3) stackrel0⟶ π_k(S^7) ~~(kge 1)[122X. The exact homotopy
+  sequence  of  the  generalized Hopf fibration then gives [22Xπ_k(S^4)≅ π_k(S^7)⊕
+  π_k-1(S^3)[122X.  On  taking  [22Xk=6[122X we obtain [22Xπ_6(S^4)≅ π_5(S^3) ≅ Z_2[122X. Freudenthal
+  suspension then gives[133X
+  
+  
+  [24X[33X[0;6Y\pi_{n+2}(S^n)\cong \mathbb Z_2,~~~(n\ge 2).[133X
+  
+  [124X
+  
+  
+  [1X12.6  [33X[0;0YThe first two non-trivial homotopy groups of the suspension and double[101X
+  [1Xsuspension of a [22XK(G,1)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YFor  any  group  [22XG[122X  we  consider  the  homotopy  groups [22Xπ_n(Σ K(G,1))[122X of the
+  suspension  [22XΣ K(G,1)[122X of the Eilenberg-MacLance space [22XK(G,1)[122X. On taking [22XG= Z[122X,
+  and  observing that [22XS^2 = Σ K( Z,1)[122X, we specialize to the homotopy groups of
+  the [22X2[122X-sphere [22XS^2[122X.[133X
+  
+  [33X[0;0YBy construction,[133X
+  
+  
+  [24X[33X[0;6Y\pi_1(\Sigma K(G,1))=0\ .[133X
+  
+  [124X
+  
+  [33X[0;0YThe Hurewicz Theorem gives[133X
+  
+  
+  [24X[33X[0;6Y\pi_2(\Sigma K(G,1)) \cong G_{ab}[133X
+  
+  [124X
+  
+  [33X[0;0Yvia  the  isomorphisms  [22Xπ_2(Σ  K(G,1)) ≅ H_2(Σ K(G,1), Z) ≅ H_1(K(G,1), Z) ≅
+  G_ab[122X. R. Brown and J.-L. Loday [BL87] obtained the formulae[133X
+  
+  
+  [24X[33X[0;6Y\pi_3(\Sigma K(G,1)) \cong \ker (G\otimes G \rightarrow G, x\otimes y\mapsto
+  [x,y]) \ ,[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6Y\pi_4(\Sigma^2  K(G,1)) \cong \ker (G\, {\widetilde \otimes}\, G \rightarrow
+  G, x\, {\widetilde \otimes}\, y\mapsto [x,y])[133X
+  
+  [124X
+  
+  [33X[0;0Yinvolving  the  nonabelian  tensor square and nonabelian symmetric square of
+  the  group [22XG[122X. The following commands use the nonabelian tensor and symmetric
+  product  to  compute the third and fourth homotopy groups for [22XG =Syl_2(M_12)[122X
+  the Sylow [22X2[122X-subgroup of the Mathieu group [22XM_12[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SylowSubgroup(MathieuGroup(12),2);;[127X[104X
+    [4X[25Xgap>[125X [27XThirdHomotopyGroupOfSuspensionB(G);   [127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28Xgap>[128X[104X
+    [4X[25Xgap>[125X [27XFourthHomotopyGroupOfDoubleSuspensionB(G);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.7 [33X[0;0YPostnikov towers and [22Xπ_5(S^3)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YA Postnikov system for the sphere [22XS^3[122X consists of a sequence of fibrations [22X⋯
+  X_3stackrelp_3→  X_2stackrelp_2→  X_1stackrelp_1→  ∗[122X  and a sequence of maps
+  [22Xϕ_n: S^3 → X_n[122X such that[133X
+  
+  [30X    [33X[0;6Y[22Xp_n ∘ ϕ_n =ϕ_n-1[122X[133X
+  
+  [30X    [33X[0;6YThe  map  [22Xϕ_n: S^3 → X_n[122X induces an isomorphism [22Xπ_k(S^3)→ π_k(X_n)[122X for
+        all [22Xkle n[122X[133X
+  
+  [30X    [33X[0;6Y[22Xπ_k(X_n)=0[122X for [22Xk > n[122X[133X
+  
+  [30X    [33X[0;6Yand  consequently  each  fibration  [22Xp_n[122X has fibre an Eilenberg-MacLane
+        space [22XK(π_n(S^3),n)[122X.[133X
+  
+  [33X[0;0YThe  space [22XX_n[122X is obtained from [22XS^3[122X by adding cells in dimensions [22Xge n+2[122X and
+  thus[133X
+  
+  [30X    [33X[0;6Y[22XH_k(X_n, Z)=H_k(S^3, Z)[122X for [22Xkle n+1[122X.[133X
+  
+  [33X[0;0YSo  in  particular  [22XX_1=X_2=∗,  X_3=K( Z,3)[122X and we have a fibration sequence
+  [22XK(π_4(S^3),4)  ↪  X_4  ↠  K(  Z,3)[122X.  The  terms in the [22XE_2[122X page of the Serre
+  integral cohomology spectral sequence of this fibration are[133X
+  
+  [30X    [33X[0;6Y[22XE_2^p,q=H^p(K( Z,3),H_q(K( Z_2,4), Z))[122X.[133X
+  
+  [33X[0;0YThe  first  few  terms in the [22XE_2[122X page can be computed using the commands of
+  Sections [14X12.2[114X and [14X12.3[114X and recorded as follows.[133X
+  
+        [22X8[122X   │ [22XZ_2[122X        [22X0[122X   [22X0[122X                                            
+        [22X7[122X   │ [22XZ_2[122X        [22X0[122X   [22X0[122X                                            
+        [22X6[122X   │ [22X0[122X          [22X0[122X   [22X0[122X                                            
+        [22X5[122X   │ [22Xπ_4(S^3)[122X   [22X0[122X   [22X0[122X   [22Xπ_4(S^3)[122X   [22X0[122X   [22X0[122X   [22X0[122X     [22X[122X                
+        [22X4[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X                         
+        [22X3[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X                         
+        [22X2[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X               
+        [22X1[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X               
+        [22X0[122X   │ [22XZ[122X          [22X0[122X   [22X0[122X   [22XZ[122X          [22X0[122X   [22X0[122X   [22XZ_2[122X   [22X0[122X   [22XZ_3[122X   [22XZ_2[122X   
+        [22Xq/p[122X │ [22X0[122X          [22X1[122X   [22X2[122X   [22X3[122X          [22X4[122X   [22X5[122X   [22X6[122X     [22X7[122X   [22X8[122X     [22X9[122X     
+  
+       [1XTable:[101X [22XE_2[122X cohomology page for [22XK(π_4(S^3),4) ↪ X_4 ↠ X_3[122X
+  
+  
+  [33X[0;0YSince  we  know  that  [22XH^5(X_4,  Z)  =0[122X,  the  differentials in the spectral
+  sequence   must  restrict  to  an  isomorphism  [22XE_2^0,5=π_4(S^3)  stackrel≅⟶
+  E_2^6,0=  Z_2[122X. This provides an alternative derivation of [22Xπ_4(S^3) ≅ Z_2[122X. We
+  can  also  immediately  deduce that [22XH^6(X_4, Z)=0[122X. Let [22Xx[122X be the generator of
+  [22XE_2^0,5[122X  and  [22Xy[122X  the  generator of [22XE_2^3,0[122X. Then the generator [22Xxy[122X of [22XE_2^3,5[122X
+  gets  mapped  to a non-zero element [22Xd_7(xy)=d_7(x)y -xd_7(y)[122X. Hence the term
+  [22XE_2^0,7=  Z_2[122X  must  get mapped to zero in [22XE_2^3,5[122X. It follows that [22XH^7(X_4,
+  Z)= Z_2[122X.[133X
+  
+  [33X[0;0YThe  integral  cohomology  of  Eilenberg-MacLane spaces yields the following
+  information  on  the  [22XE_2[122X  page [22XE_2^p,q=H_p(X_4,H^q(K(π_5S^3,5), Z))[122X for the
+  fibration [22XK(π_5(S^3),5) ↪ X_5 ↠ X_4[122X.[133X
+  
+        [22X6[122X   │ [22Xπ_5(S^3)[122X   [22X0[122X   [22X0[122X   [22Xπ_5(S^3)[122X   [22X0[122X   [22X0[122X                     
+        [22X5[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X                 
+        [22X4[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X                 
+        [22X3[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X                 
+        [22X2[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X                 
+        [22X1[122X   │ [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X          [22X0[122X   [22X0[122X   [22X0[122X                 
+        [22X0[122X   │ [22XZ[122X          [22X0[122X   [22X0[122X   [22XZ[122X          [22X0[122X   [22X0[122X   [22X0[122X   [22XH^7(X_4, Z)[122X   
+        [22Xq/p[122X │ [22X0[122X          [22X1[122X   [22X2[122X   [22X3[122X          [22X4[122X   [22X5[122X   [22X6[122X   [22X7[122X             
+  
+       [1XTable:[101X [22XE_2[122X cohomology page for [22XK(π_5(S^3),5) ↪ X_5 ↠ X_4[122X
+  
+  
+  [33X[0;0YSince we know that [22XH^6(X_5, Z)=0[122X, the differentials in the spectral sequence
+  must restrict to an isomorphism [22XE_2^0,6=π_5(S^3) stackrel≅⟶ E_2^7,0=H^7(X_4,
+  Z)[122X. We can conclude the desired result:[133X
+  
+  
+  [24X[33X[0;6Y\pi_5(S^3) = \mathbb Z_2\ .[133X
+  
+  [124X
+  
+  [33X[0;0Y[22X~~~[122X[133X
+  
+  [33X[0;0YNote  that the fibration [22XX_4 ↠ K( Z,3)[122X is determined by a cohomology class [22Xκ
+  ∈  H^5(K(  Z,3),  Z_2)  = Z_2[122X. If [22Xκ=0[122X then we'd have [22XX_4 =K( Z_2,4)× K( Z,3)[122X
+  and, as the following commands show, we'd then have [22XH_4(X_4, Z)= Z_2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=EilenbergMacLaneSimplicialGroup(AbelianPcpGroup([0]),3,7);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=EilenbergMacLaneSimplicialGroup(CyclicGroup(2),4,7);;[127X[104X
+    [4X[25Xgap>[125X [27XCK:=ChainComplex(K);;[127X[104X
+    [4X[25Xgap>[125X [27XCL:=ChainComplex(L);;[127X[104X
+    [4X[25Xgap>[125X [27XT:=TensorProduct(CK,CL);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(T,4);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSince  we  know  that  [22XH_4(X_4,  Z)=0[122X  we  can  conclude  that the Postnikov
+  invariant [22Xκ[122X is the non-zero class in [22XH^5(K( Z,3), Z_2) = Z_2[122X.[133X
+  
+  
+  [1X12.8 [33X[0;0YTowards [22Xπ_4(Σ K(G,1))[122X[101X[1X[133X[101X
+  
+  [33X[0;0YConsider  the suspension [22XX=Σ K(G,1)[122X of a classifying space of a group [22XG[122X once
+  again.  This  space has a Postnikov system in which [22XX_1 = ∗[122X, [22XX_2= K(G_ab,2)[122X.
+  We   have  a  fibration  sequence  [22XK(π_3  X,  3)  ↪  X_3  ↠  K(G_ab,2)[122X.  The
+  corresponding  integral cohomology Serre spectral sequence has [22XE_2[122X page with
+  terms[133X
+  
+  [30X    [33X[0;6Y[22XE_2^p,q=H^p(K(G_ab,2), H^q(K(π_3 X,3)), Z) )[122X.[133X
+  
+  [33X[0;0YAs  an  example,  for  the Alternating group [22XG=A_4[122X of order [22X12[122X the following
+  commands of Section [14X12.6[114X compute [22XG_ab = Z_3[122X and [22Xπ_3 X = Z_6[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XThirdHomotopyGroupOfSuspensionB(G);[127X[104X
+    [4X[28X[ 2, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  first  terms  of  the  [22XE_2[122X page can be calculated using the commands of
+  Sections [14X12.2[114X and [14X12.3[114X.[133X
+  
+        [22X7[122X   │ [22XZ_2[122X   [22X0[122X   [22X[122X    [22X[122X      [22X[122X    [22X[122X                
+        [22X6[122X   │ [22XZ_2[122X   [22X0[122X   [22X0[122X   [22X0[122X     [22X[122X    [22X[122X                
+        [22X5[122X   │ [22X0[122X     [22X0[122X   [22X0[122X   [22X0[122X     [22X[122X    [22X[122X      [22X[122X          
+        [22X4[122X   │ [22XZ_6[122X   [22X0[122X   [22X0[122X   [22XZ_3[122X   [22X[122X    [22X[122X      [22X[122X          
+        [22X3[122X   │ [22X0[122X     [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X   [22X0[122X     [22X[122X          
+        [22X2[122X   │ [22X0[122X     [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X   [22X0[122X     [22X0[122X         
+        [22X1[122X   │ [22X0[122X     [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X   [22X0[122X     [22X0[122X         
+        [22X0[122X   │ [22XZ[122X     [22X0[122X   [22X0[122X   [22XZ_3[122X   [22X0[122X   [22XZ_3[122X   [22X0[122X   [22XZ_9[122X   
+        [22Xq/p[122X │ [22X0[122X     [22X1[122X   [22X2[122X   [22X3[122X     [22X4[122X   [22X5[122X     [22X6[122X   [22X7[122X     
+  
+       [1XTable:[101X [22XE^2[122X cohomology page for [22XK(π_3 X,3) ↪ X_3 ↠ X_2[122X
+  
+  
+  [33X[0;0YWe  know that [22XH^1(X_3, Z)=0[122X, [22XH^2(X_3, Z)=H^1(G, Z) =0[122X, [22XH^3(X_3, Z)=H^2(G, Z)
+  =  Z_3[122X,  and  that  [22XH^4(X_3, Z)[122X is a subgroup of [22XH^3(G, Z) = Z_2[122X. It follows
+  that  the  differential  induces  a  surjection [22XE_2^0,4= Z_6 ↠ E_2^5,0= Z_3[122X.
+  Consequently [22XH^4(X_3, Z)= Z_2[122X and [22XH^5(X_3, Z)=0[122X and [22XH^6(X_3, Z)= Z_2[122X.[133X
+  
+  [33X[0;0YThe [22XE_2[122X page for the fibration [22XK(π_4 X,4) ↪ X_4 ↠ X_3[122X contains the following
+  terms.[133X
+  
+        [22X5[122X   │ [22Xπ_4 X[122X   [22X0[122X   [22X0[122X   [22X[122X      [22X[122X      [22X[122X    [22X[122X      
+        [22X4[122X   │ [22X0[122X       [22X0[122X   [22X0[122X   [22X0[122X     [22X[122X      [22X[122X    [22X[122X      
+        [22X3[122X   │ [22X0[122X       [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X     [22X0[122X   [22X[122X      
+        [22X2[122X   │ [22X0[122X       [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X     [22X0[122X         
+        [22X1[122X   │ [22X0[122X       [22X0[122X   [22X0[122X   [22X0[122X     [22X0[122X     [22X0[122X   [22X0[122X     
+        [22X0[122X   │ [22XZ[122X       [22X0[122X   [22X0[122X   [22XZ_3[122X   [22XZ_2[122X   [22X0[122X   [22XZ_2[122X   
+        [22Xq/p[122X │ [22X0[122X       [22X1[122X   [22X2[122X   [22X3[122X     [22X4[122X     [22X5[122X   [22X6[122X     
+  
+       [1XTable:[101X [22XE^2[122X cohomology page for [22XK(π_4 X,4) ↪ X_4 ↠ X_3[122X
+  
+  
+  [33X[0;0YWe  know  that  [22XH^5(X_4,  Z)[122X is a subgroup of [22XH^4(G, Z)= Z_6[122X, and hence that
+  there  is  a  homomorphisms [22Xπ_4X → Z_2[122X whose kernel is a subgroup of [22XZ_6[122X. If
+  follows that [22X|π_4 X|le 12[122X.[133X
+  
+  
+  [1X12.9 [33X[0;0YEnumerating homotopy 2-types[133X[101X
+  
+  [33X[0;0YA  [13X2-type[113X  is a CW-complex [22XX[122X whose homotopy groups are trivial in dimensions
+  [22Xn=0[122X  and  [22Xn>2[122X.  As explained in [14X6.8[114X the homotopy type of such a space can be
+  captured  algebraically by a cat[22X^1[122X-group [22XG[122X. Let [22XX[122X, [22XY[122X be [22X2[122X-tytpes represented
+  by cat[22X^1[122X-groups [22XG[122X, [22XH[122X. If [22XX[122X and [22XY[122X are homotopy equivalent then there exists a
+  sequence of morphisms of cat[22X^1[122X-groups[133X
+  
+  
+  [24X[33X[0;6YG   \rightarrow  K_1  \rightarrow  K_2  \leftarrow  K_3  \rightarrow  \cdots
+  \rightarrow K_n \leftarrow H[133X
+  
+  [124X
+  
+  [33X[0;0Yin  which each morphism induces isomorphisms of homotopy groups. When such a
+  sequence  exists  we  say  that  [22XG[122X  is  [13Xquasi-isomorphic[113X  to  [22XH[122X. We have the
+  following result.[133X
+  
+  [33X[0;0Y[12XTheorem.[112X  The  [22X2[122X-types  [22XX[122X  and  [22XY[122X are homotopy equivalent if and only if the
+  associated cat[22X^1[122X-groups [22XG[122X and [22XH[122X are quasi-isomorphic.[133X
+  
+  [33X[0;0YThe  following  commands  produce  a  list [22XL[122X of all of the [22X62[122X non-isomorphic
+  cat[22X^1[122X-groups whose underlying group has order [22X16[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor G in AllSmallGroups(16) do[127X[104X
+    [4X[25X>[125X [27XAppend(L,CatOneGroupsByGroup(G));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XLength(L);[127X[104X
+    [4X[28X62[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next commands use the first and second homotopy groups to prove that the
+  list [22XL[122X contains at least [22X37[122X distinct quasi-isomorphism types.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XInvariants:=function(G)[127X[104X
+    [4X[25X>[125X [27Xlocal inv;[127X[104X
+    [4X[25X>[125X [27Xinv:=[];[127X[104X
+    [4X[25X>[125X [27Xinv[1]:=IdGroup(HomotopyGroup(G,1));[127X[104X
+    [4X[25X>[125X [27Xinv[2]:=IdGroup(HomotopyGroup(G,2));[127X[104X
+    [4X[25X>[125X [27Xreturn inv;[127X[104X
+    [4X[25X>[125X [27Xend;;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=Classify(L,Invariants);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(C);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following additional commands use second and third integral homology in
+  conjunction  with  the  first  two  homotopy groups to prove that the list [22XL[122X
+  contains [12Xat least[112X [22X49[122X distinct quasi-isomorphism types.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XInvariants2:=function(G)[127X[104X
+    [4X[25X>[125X [27Xlocal inv;[127X[104X
+    [4X[25X>[125X [27Xinv:=[];[127X[104X
+    [4X[25X>[125X [27Xinv[1]:=Homology(G,2);[127X[104X
+    [4X[25X>[125X [27Xinv[2]:=Homology(G,3);[127X[104X
+    [4X[25X>[125X [27Xreturn inv;[127X[104X
+    [4X[25X>[125X [27Xend;;[127X[104X
+    [4X[25Xgap>[125X [27XC:=RefineClassification(C,Invariants2);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLength(C);[127X[104X
+    [4X[28X49[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  commands  show  that  the  above  list [22XL[122X contains [12Xat most[112X [22X51[122X
+  distinct quasi-isomorphism types.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ:=List(L,QuasiIsomorph);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=[];;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor q in Q do[127X[104X
+    [4X[25X>[125X [27Xbool:=true;;[127X[104X
+    [4X[25X>[125X [27Xfor m in M do[127X[104X
+    [4X[25X>[125X [27Xif not IsomorphismCatOneGroups(m,q)=fail then bool:=false; break; fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25X>[125X [27Xif bool then Add(M,q); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLength(M);[127X[104X
+    [4X[28X51[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.10 [33X[0;0YIdentifying cat[22X^1[122X[101X[1X-groups of low order[133X[101X
+  
+  [33X[0;0YLet  us  define the [13Xorder[113X of a cat[22X^1[122X-group to be the order of its underlying
+  group.  The  function  [10XIdQuasiCatOneGroup(C)[110X  inputs a cat[22X^1[122X-group [22XC[122X of "low
+  order"  and  returns  an  integer  pair  [22X[n,k][122X  that  uniquely idenifies the
+  quasi-isomorphism  type  of  [22XC[122X.  The  integer  [22Xn[122X  is the order of a smallest
+  cat[22X^1[122X-group  quasi-isomorphic  to  [22XC[122X.  The integer [22Xk[122X identifies a particular
+  cat[22X^1[122X-group of order [22Xn[122X.[133X
+  
+  [33X[0;0YThe following commands use this function to show that there are precisely [22X49[122X
+  distinct quasi-isomorphism types of cat[22X^1[122X-groups of order [22X16[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor G in AllSmallGroups(16) do[127X[104X
+    [4X[25X>[125X [27XAppend(L,CatOneGroupsByGroup(G));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XM:=List(L,IdQuasiCatOneGroup);[127X[104X
+    [4X[28X[ [ 16, 1 ], [ 16, 2 ], [ 16, 3 ], [ 16, 4 ], [ 16, 5 ], [ 4, 4 ], [ 1, 1 ], [128X[104X
+    [4X[28X  [ 16, 6 ], [ 16, 7 ], [ 16, 8 ], [ 16, 9 ], [ 16, 10 ], [ 16, 11 ], [128X[104X
+    [4X[28X  [ 16, 9 ], [ 16, 12 ], [ 16, 13 ], [ 16, 14 ], [ 16, 15 ], [ 4, 1 ], [128X[104X
+    [4X[28X  [ 4, 2 ], [ 16, 16 ], [ 16, 17 ], [ 16, 18 ], [ 16, 19 ], [ 16, 20 ], [128X[104X
+    [4X[28X  [ 16, 21 ], [ 16, 22 ], [ 16, 23 ], [ 16, 24 ], [ 16, 25 ], [ 16, 26 ], [128X[104X
+    [4X[28X  [ 16, 27 ], [ 16, 28 ], [ 4, 3 ], [ 4, 1 ], [ 4, 4 ], [ 4, 4 ], [ 4, 2 ], [128X[104X
+    [4X[28X  [ 4, 5 ], [ 16, 29 ], [ 16, 30 ], [ 16, 31 ], [ 16, 32 ], [ 16, 33 ], [128X[104X
+    [4X[28X  [ 16, 34 ], [ 4, 3 ], [ 4, 4 ], [ 4, 4 ], [ 16, 35 ], [ 16, 36 ], [ 4, 3 ], [128X[104X
+    [4X[28X  [ 16, 37 ], [ 16, 38 ], [ 16, 39 ], [ 16, 40 ], [ 16, 41 ], [ 16, 42 ], [128X[104X
+    [4X[28X  [ 16, 43 ], [ 4, 3 ], [ 4, 4 ], [ 1, 1 ], [ 4, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XLength(SSortedList(M));[127X[104X
+    [4X[28X49[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  example first identifies the order and the identity number of the
+  cat[22X^1[122X-group [22XC[122X corresponding to the crossed module (see [14X12.1[114X)[133X
+  
+  
+  [24X[33X[0;6Y\iota\colon G \longrightarrow Aut(G), g \mapsto (x\mapsto gxg^{-1})[133X
+  
+  [124X
+  
+  [33X[0;0Yfor  the  dihedral group [22XG[122X of order [22X10[122X. It then realizes a smallest possible
+  cat[22X^1[122X-group [22XD[122X of this quasi-isomorphism type.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=AutomorphismGroupAsCatOneGroup(DihedralGroup(10));[127X[104X
+    [4X[28XCat-1-group with underlying group Group( [ f1, f2, f3, f4, f5 ] ) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOrder(C);[127X[104X
+    [4X[28X200[128X[104X
+    [4X[25Xgap>[125X [27XIdCatOneGroup(C);[127X[104X
+    [4X[28X[ 200, 42, 4 ][128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27XIdQuasiCatOneGroup(C);[127X[104X
+    [4X[28X[ 2, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XD:=SmallCatOneGroup(2,1);[127X[104X
+    [4X[28XCat-1-group with underlying group Group( [ f1 ] ) . [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.11 [33X[0;0YIdentifying crossed modules of low order[133X[101X
+  
+  [33X[0;0YThe  following  commands construct the crossed module [22X∂ : G⊗ G → G[122X involving
+  the nonabelian tensor square of the dihedral group $G$ of order [22X10[122X, identify
+  it  as being number [22X71[122X in the list of crossed modules of order [22X100[122X, create a
+  quasi-isomorphic  crossed  module  of  order  [22X4[122X,  and  finally construct the
+  corresponding cat[22X^1[122X-group of order [22X100[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=DihedralGroup(10);;[127X[104X
+    [4X[25Xgap>[125X [27XT:=NonabelianTensorSquareAsCrossedModule(G);[127X[104X
+    [4X[28XCrossed module with group homomorphism GroupHomomorphismByImages( Group( [128X[104X
+    [4X[28X[ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ] ), Group( [ f1, f2 ] ), [128X[104X
+    [4X[28X[ f3*f1*f3^-1*f1^-1, f3*f2*f3^-1*f2^-1 ], [ <identity> of ..., f2^3 ] )[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIdCrossedModule(T);[127X[104X
+    [4X[28X[ 100, 71 ][128X[104X
+    [4X[25Xgap>[125X [27XQ:=QuasiIsomorph(T);[127X[104X
+    [4X[28XCrossed module with group homomorphism Pcgs([ f2 ]) -> [ <identity> of ... ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOrder(Q);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XC:=CatOneGroupByCrossedModule(T);[127X[104X
+    [4X[28XCat-1-group with underlying group Group( [ F1, F2, F1 ] ) . [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
