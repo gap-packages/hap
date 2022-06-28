@@ -1,0 +1,15 @@
+gap> G1:=AlternatingGroup(5);;
+gap> G2:=SymmetricGroup(5);;
+gap> f:=GroupHomomorphismByFunction(G1,G2,x->x);;
+gap> pi:=PermToMatrixGroup(G2,5);;
+gap> R1:=ResolutionFiniteGroup(G1,7);;
+gap> R2:=ResolutionFiniteGroup(G2,7);;
+gap> F:=EquivariantChainMap(R1,R2,f);;
+gap> C:=HomToIntegralModule(F,pi);;
+gap> c:=Cohomology(C,6);
+[ g1, g2, g3 ] -> [ id, id, g3 ]
+
+gap> AbelianInvariants(Kernel(c));
+[ 2, 2 ]
+gap> AbelianInvariants(Range(c)/Image(c));
+[ 2, 3 ]

@@ -39,8 +39,7 @@ AbsInt:=AbsInt_HAP;             #
 SignInt:=SignInt_HAP;           #
 #################################
 		
-SMALL:=4096;;
-#SMALL:=2^22;
+SMALL:=2^12;
 if Order(S!.group) >SMALL  then SizeE:=Order(S!.group); fi;
 if Order(R!.group) >SMALL
  then SizeE:=Order(R!.group); fi;

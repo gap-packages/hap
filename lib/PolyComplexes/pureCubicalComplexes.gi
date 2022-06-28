@@ -294,7 +294,7 @@ function(file,threshold)
 # Inputs a string "file" that points either to a single image file, or 
 # to a list of suitable image files, and returns either a 2-dimensional 
 # or 3-dimensional cubical complex.
-local f,i,x,prog,B,A,AA,pth;
+local f,i,x,prog,B,A,AA,pth,file1, file2, tmpdir;
 
 pth:=HAP_ROOT;
 prog:=Concatenation(pth,"PolyComplexes/prog");
@@ -303,14 +303,22 @@ prog:=Concatenation(pth,"PolyComplexes/prog");
 ##################################
 if IsString(file) then
 
-i:=Concatenation("convert -colorspace RGB -depth 8  ",file," /tmp/im.txt");
+tmpdir := DirectoryTemporary();;
+file1:=Filename( tmpdir , "im.txt" );
+file2:=Filename( tmpdir , "im.g" );
+file1:="/tmp/im.txt";  #I HAVE NO IDEA WHY I NEED TO DO THIS, BUT IF
+                       #I DON'T THEN THE FUNCTION CRASHES
+
+#i:=Concatenation("convert -colorspace RGB -depth 8  ",file," /tmp/im.txt");
+i:=Concatenation("convert -colorspace RGB -depth 8  ",file," ",file1);
 Exec(i);
-i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
+#i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
+i:=Concatenation("perl ",prog," ",file1," > ",file2);
 Exec(i);
 
-Read("/tmp/im.g");
-Exec("rm /tmp/im.g");
-Exec("rm /tmp/im.txt");
+Exec(Concatenation("rm ",file1));
+#Read("/tmp/im.g");
+Read(file2);
 B:=StructuralCopy(HAPAAA);
 HAPAAA:=0;
 
@@ -330,14 +338,20 @@ fi;
 if IsList(file) then
 AA:=[];
 for f in file do
-i:=Concatenation("convert ",f," /tmp/im.txt");
+tmpdir := DirectoryTemporary();;
+file1:=Filename( tmpdir , "im.txt" );
+file2:=Filename( tmpdir , "im.g" );
+#i:=Concatenation("convert ",f," /tmp/im.txt");
+i:=Concatenation("convert ",f," ",file1);
 Exec(i);
-i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
+#i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
+i:=Concatenation("perl ",prog," ",file1," > ",file2 );
 Exec(i);
 
-Read("/tmp/im.g");
-Exec("rm /tmp/im.g");
-Exec("rm /tmp/im.txt");
+#Read("/tmp/im.g");
+#Exec("rm /tmp/im.g");
+#Exec("rm /tmp/im.txt");
+Read(file2);
 B:=StructuralCopy(HAPAAA);
 A:=[];
 for i in [1..B[1]] do
@@ -648,6 +662,18 @@ return ChainComplexOfCubicalPair(M,S);;
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(ChainComplexOfPair,
+"Cellular chain complex of a pair of simplicial complexes",
+[IsHapSimplicialComplex,IsHapSimplicialComplex],
+function(M,S)
+return ChainComplexOfSimplicialPair(M,S);;
+end);
+#####################################################################
+#####################################################################
+
 
 
 #####################################################################
@@ -980,7 +1006,7 @@ end);
 #################################################################
 InstallGlobalFunction(ViewPureCubicalComplex,
 function(arg)
-local i,A,viewer,T;
+local i,A,viewer,T,file,file1,file2,tmpdir;
 # Function for viewing 2-dimensional pure cubical complexes.
 
 T:=arg[1];
@@ -1000,10 +1026,16 @@ T!.binaryArray:=FrameArray(T!.binaryArray);
 
 if Length(arg)>1 then viewer:=arg[2];
 else viewer:=DISPLAY_PATH;fi;
-WritePureCubicalComplexAsImage(T,"/tmp/HAPtmpImage","png");
-Exec(Concatenation(viewer," ","/tmp/HAPtmpImage.png"));
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "HAPtmpImage.png" );
+file1:=file{[1..Length(file)-4]};
+file2:=file{[Length(file)-3..Length(file)]};
+#WritePureCubicalComplexAsImage(T,"/tmp/HAPtmpImage","png");
+WritePureCubicalComplexAsImage(T,file1,file2);
+#Exec(Concatenation(viewer," ","/tmp/HAPtmpImage.png"));
+Exec(Concatenation(viewer," ",file));
 Sleep(2);
-Exec(Concatenation("rm  ","/tmp/HAPtmpImage.png"));
+#Exec(Concatenation("rm  ","/tmp/HAPtmpImage.png"));
 
 fi;
 end);

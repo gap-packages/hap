@@ -31,17 +31,15 @@ else
 tmp:=ResolutionAbelianGroup_alt([0],n);
 FreeElts:=tmp!.elts;
 	tmp!.appendToElts:=function(x)
-	local a,i,j;
+	local a,i,j; 
 	a:=gens[1];		######################HERE
 	for i in [0..10000] do
 	j:=false;
 	if a^i=x then j:=i; break; fi;
 	if a^-i=x then j:=-i; break; fi;
 	od;
-	Append(FreeElts,[FreeElts[2]^j]);
-	Append(tmp!.elts,
-	[MappedWord(x,GeneratorsOfGroup(tmp!.group),
-	                                        gens)]);
+	Add(FreeElts,FreeElts[2]^j);                                       
+        Add(tmp!.elts,x);
 	end;
 
 tmp!.elts:=List(tmp!.elts,x->MappedWord(x,GeneratorsOfGroup(tmp!.group),

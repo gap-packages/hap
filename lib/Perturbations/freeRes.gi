@@ -61,7 +61,7 @@ if Order(G)=infinity and IsAbelian(G) and bool then
 #This will only be correct if G is abelian of "rank" equal
 #to the number of generators GAP has for G
 
-res:=ResolutionGenericGroup(G,n);
+#res:=ResolutionGenericGroup(G,n);
 
 #return res;
 fi;

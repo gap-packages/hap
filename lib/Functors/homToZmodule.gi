@@ -12,7 +12,7 @@ Image:=function(f,x);
 return f!.fun(x);
 end;
 ####################################
-else Image:=ImageElm;
+else Image:=ImageElm; 
 fi;
 
 #####################################################################

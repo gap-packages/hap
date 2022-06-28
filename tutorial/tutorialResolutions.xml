@@ -1,0 +1,312 @@
+<Chapter Label="resolutions"><Heading>Resolutions</Heading>
+
+There is a range of functions in HAP that input a group <M>G</M>, integer <M>n</M>, and attempt to return the first <M>n</M> terms of a free <M>\mathbb ZG</M>-resolution <M>R_\ast</M> of the trivial module <M>\mathbb Z</M>. In some cases an explicit contracting homotopy  is provided on the resolution.
+
+The function <Code>Size(R)</Code> returns a list whose <M>k</M>th term is the sum of the lengths of the boundaries of the generators in degree <M>k</M>.
+
+<Section><Heading>Resolutions for small finite groups</Heading>
+
+The following uses discrete Morse theory to construct a resolution.
+
+<Example>
+<#Include SYSTEM "tutex/14.1.txt">
+</Example>
+
+</Section>
+
+
+<Section><Heading>Resolutions for very small finite groups</Heading>
+
+The following uses linear algebra over <M>\mathbb Z</M> to construct a 
+resolution.
+<Example>
+<#Include SYSTEM "tutex/14.2.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for finite groups acting on orbit polytopes</Heading>
+The following uses Polymake convex hull computations and homological perturbation theory to construct a resolution.
+
+<Example>
+<#Include SYSTEM "tutex/14.3.txt">
+</Example>
+
+The convex polytope <M>P_G(v)={\rm Convex~Hull}\{g\cdot v\ |\ g\in G\}</M>
+used in the resolution depends on the choice of vector <M>v\in \mathbb R^n</M>. Two such polytopes for the alternating group <M>G=A_4</M> acting on <M>\mathbb R^4</M> can be visualized as follows.
+
+<Example>
+<#Include SYSTEM "tutex/14.3a.txt">
+</Example>
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/orb-poly-1.png" align="center" height="300" alt="an orbit polytope"/></Alt>
+<Alt Only="HTML">&lt;img src="images/orb-poly-2.png" align="center" height="300" alt="an orbit polytope"/>
+
+</Alt>
+
+
+</Section>
+
+
+<Section><Heading>Minimal resolutions for finite <M>p</M>-groups over <M>\mathbb F_p</M></Heading>
+The following uses linear algebra to construct a minimal free <M>\mathbb F_pG</M>-resolution of the trivial module <M>\mathbb F</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.16.txt">
+</Example>
+
+The resolution has the minimum number of generators possible in each degree and can be used to guess a formula for the Poincare series
+<P/><M>P(x) = \Sigma_{k\ge 0} \dim_{\mathbb F_p}H^k(G,\mathbb F_p)\,x^k</M>. 
+<P/>The guess is certainly correct for the coefficients of <M>x^k</M> for <M>k\le 20</M> and can be used to guess the dimension of say <M>H^{2000}(G,\mathbb F_p)</M>.  
+
+<P/> Most likely <M>\dim_{\mathbb F_2}H^{2000}(G,\mathbb F_2) = 2001000</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.17.txt">
+</Example>
+</Section>
+
+
+<Section><Heading>Resolutions for abelian groups</Heading>
+The following uses the formula for the tensor product of chain complexes to construct a resolution. 
+
+<Example>
+<#Include SYSTEM "tutex/14.4.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for nilpotent groups</Heading>
+The following uses the NQ package to express the free nilpotent group of class <M>3</M> on three generators as a Pcp group <M>G</M>, and then uses homological perturbation on the lower central series to construct a resolution. The resolution is used to exhibit <M>2</M>-torsion in <M>H_4(G,\mathbb Z)</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/14.5.txt">
+</Example>
+
+The following uses  homological perturbation on the lower central series
+ to construct a resolution for the Sylow <M>2</M>-subgroup <M>P=Syl_2(M_{12})</M> of the Mathieu simple group <M>M_{12}</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.6.txt">
+</Example>
+</Section>
+
+<Section><Heading>Resolutions for groups with subnormal series</Heading>
+
+
+The following uses  homological perturbation on a subnormal series
+ to construct a resolution for the Sylow <M>2</M>-subgroup <M>P=Syl_2(M_{12})</M> of the Mathieu simple group <M>M_{12}</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.7.txt">
+</Example>
+</Section>
+
+<Section><Heading>Resolutions for groups with normal series</Heading>
+
+
+The following uses  homological perturbation on a normal series
+ to construct a resolution for the Sylow <M>2</M>-subgroup <M>P=Syl_2(M_{12})</M> of the Mathieu simple group <M>M_{12}</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.8.txt">
+</Example>
+</Section>
+
+<Section><Heading>Resolutions for polycyclic (almost) crystallographic groups </Heading>
+
+
+The following uses the Polycyclic package and homological perturbation 
+ to construct a resolution for the crystallographic group
+ <Code>G:=SpaceGroup(3,165)</Code>.
+
+<Example>
+<#Include SYSTEM "tutex/14.9.txt">
+</Example>
+
+The following constructs a resolution for an almost crystallographic Pcp group
+<M>G</M>. The final commands establish that <M>G</M> is not isomorphic to a crystallographic group.
+
+<Example>
+<#Include SYSTEM "tutex/14.10.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for Bieberbach groups </Heading>
+
+
+The following constructs a resolution for the Bieberbach group
+<Code>G=SpaceGroup(3,165)</Code> by using convex hull algorithms to construct a Dirichlet domain for its free action on Euclidean space <M>\mathbb R^3</M>.
+By construction the  resolution is trivial in degrees <M>\ge 3</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.11.txt">
+</Example>
+
+The fundamental domain constructed for the above resolution 
+can be visualized using the following commands.
+
+<Example>
+<#Include SYSTEM "tutex/14.12.txt">
+</Example>
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/3-165-0.png" align="center" height="300" alt="a Dirichlet domain"/>
+</Alt>
+
+<P/> A different fundamental 
+domain and resolution for <M>G</M> can be obtained by changing the choice of vector <M>v\in \mathbb R^3</M> in the definition of the Dirichlet domain
+<P/><M>D(v) = \{x\in \mathbb R^3\ | \ ||x-v|| \le ||x-g.v||\ {\rm for~all~} g\in G\}</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.13.txt">
+</Example>
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/3-165-1.png" align="center" height="300" alt="a Dirichlet domain"/>
+</Alt>
+
+<P/> A higher dimensional example is handled in the next session. A list of the <M>62</M> 
+<M>7</M>-dimensional Hantze-Wendt Bieberbach groups is loaded and a resolution is computed for the first group in the list.
+
+<Example>
+<#Include SYSTEM "tutex/14.13a.txt">
+</Example>
+
+<P/>The homological perturbation techniques needed to extend this method to crystallographic groups acting non-freely on <M>\mathbb R^n</M> has not yet been implemenyed. This is on the TO-DO list.
+</Section>
+
+<Section><Heading>Resolutions for crystallographic groups  admitting cubical fundamental domain</Heading>
+
+
+The following uses subdivision techniques 
+ to construct a resolution for the Bieberbach group
+ <Code>G:=SpaceGroup(4,122)</Code>. The resolution is endowed with a contracting homotopy.
+
+<Example>
+<#Include SYSTEM "tutex/14.14.txt">
+</Example>
+
+Subdivision and homological perturbation are used to construct the following resolution (with contracting homotopy) for a crystallographic group with non-free action.
+
+<Example>
+<#Include SYSTEM "tutex/14.15.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for Coxeter groups </Heading>
+The following session constructs the Coxeter diagram for the Coxeter group
+<M>B=B_7</M> of order <M>645120</M>. A resolution for <M>G</M> is then computed.
+
+<Example>
+<#Include SYSTEM "tutex/14.18.txt">
+</Example>
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/coxeter-diagram-b7.png" align="center" height="150" alt="a Dirichlet domain"/>
+</Alt>
+
+<Example>
+<#Include SYSTEM "tutex/14.19.txt">
+</Example>
+
+The routine extension of
+ this method to infinite Coxeter groups is on the TO-DO list.
+</Section>
+
+<Section><Heading>Resolutions for Artin groups </Heading>
+The following session constructs a resolution for the infinite Artin group <M>G</M>
+associated to the Coxeter group
+<M>B_7</M>. Exactness of the resolution depends on the solution to the
+<M>K(\pi,1)</M> Conjecture for Artin groups of spherical type.
+
+<Example>
+<#Include SYSTEM "tutex/14.20.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for <M>G=SL_2(\mathbb Z[1/m])</M></Heading>
+
+The following uses homological perturbation to construct a resolution
+for <M>G=SL_2(\mathbb Z[1/6])</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.21.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for selected groups 
+<M>G=SL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )</M></Heading>
+
+The following uses finite "Voronoi complexes" and homological perturbation to construct a resolution
+for <M>G=SL_2({\mathcal O}(\mathbb Q(\sqrt{-5}))</M>. The finite complexes were contributed independently by A. Rahm, M. Dutour-Scikiric and S. Schoenenbeck and are stored in the folder <Code>~pkg/Hap1.v/lib/Perturbations/Gcomplexes</Code>.
+
+<Example>
+<#Include SYSTEM "tutex/14.22.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for selected groups
+<M>G=PSL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )</M></Heading>
+
+The following uses finite "Voronoi complexes" and homological perturbation to construct a resolution
+for <M>G=PSL_2({\mathcal O}(\mathbb Q(\sqrt{-11}))</M>. The finite complexes were contributed independently by A. Rahm, M. Dutour-Scikiric and S. Schoenenbeck and are stored in the folder <Code>~pkg/Hap1.v/lib/Perturbations/Gcomplexes</Code>.
+
+<Example>
+<#Include SYSTEM "tutex/14.23.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for a few higher-dimensional arithmetic groups
+</Heading>
+
+The following uses finite "Voronoi complexes" and homological perturbation to construct a resolution
+for <M>G=PSL_4(\mathbb Z)</M>. The finite complexes were contributed by  M. Dutour-Scikiric  and are stored in the folder <Code>~pkg/Hap1.v/lib/Perturbations/Gcomplexes</Code>.
+
+<Example>
+<#Include SYSTEM "tutex/14.24.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Resolutions for finite-index subgroups
+</Heading>
+
+The next commands first construct the congruence subgroup
+<M>\Gamma_0(I)</M> of index <M>144</M> in <M>SL_2({\cal O}\mathbb Q(\sqrt{-2}))</M> for the ideal <M>I</M> in <M>{\cal O}\mathbb Q(\sqrt{-2})</M> generated by
+<M>4+5\sqrt{-2}</M>.
+ The commands then compute a resolution for the congruence subgroup
+<M>G=\Gamma_0(I) \le SL_2({\cal O}\mathbb Q(\sqrt{-2}))</M>
+
+
+<Example>
+<#Include SYSTEM "tutex/14.25.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Simplifying resolutions
+</Heading>
+
+The next commands construct a resolution <M>R_\ast</M> 
+for the symmetric group <M>S_5</M> and convert it to a resolution <M>S_\ast</M> for the finite index subgroup <M>A_4 &lt; S_5</M>. An heuristic algorithm is applied to <M>S_\ast</M> in the hope of obtaining 
+a smaller resolution <M>T_\ast</M> for the alternating group <M>A_4</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.26.txt">
+</Example>
+
+</Section>
+
+
+
+
+
+</Chapter>

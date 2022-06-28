@@ -95,7 +95,8 @@ if Length(arg)>5 then
 S:=arg[6];
 else
 #if IsAbelian(N) then			#This should always work but it doesn't! 
-S:=ResolutionFiniteGroup(GensN,n,tietze);
+#S:=ResolutionFiniteGroup(GensN,n,tietze);  #June 2022
+S:=ResolutionGenericGroup(Group(GensN),n);
 fi;
 
 EltsN:=S!.elts;

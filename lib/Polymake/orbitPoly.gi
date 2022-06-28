@@ -68,7 +68,7 @@ input:=InputTextFile(tmp2In);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
 Print("Vertex degree in graph of polytope is: ", Rat(Concatenation([tmp{[1..Position(tmp,' ')-1]}])), "\n");
-Exec(Concatenation("rm ",tmp2In));
+#Exec(Concatenation("rm ",tmp2In));
 fi;
 
 
@@ -102,7 +102,7 @@ fi;
 Exec(Concatenation(POLYMAKE_PATH,tmpIn ," VISUAL"));
 fi;
 
-Exec(Concatenation("rm ",tmpIn));
+#Exec(Concatenation("rm ",tmpIn));
 
 
 
@@ -150,7 +150,7 @@ od;
 
 Exec(Concatenation(POLYMAKE_PATH,tmpIn ," VISUAL"));
 
-Exec(Concatenation("rm ",tmpIn));
+#Exec(Concatenation("rm ",tmpIn));
 
 end);
 #####################################################################

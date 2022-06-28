@@ -87,17 +87,15 @@ fi;
 ################# GAPDOC COMMANDS DONE ###############################
 
 ################# CONGRUENE COMMANDS #######################################
-if not IsPackageMarkedForLoading("congruence","0.0") then
-CongruenceSubgroupGamma0:=function(m); return fail; end;
-fi;
+#if not IsPackageMarkedForLoading("congruence","0.0") then
+#CongruenceSubgroupGamma0:=function(m); return fail; end;
+#fi;
 ################# CONGRUENCE COMMANDS DONE ###############################
 
 ################# POLYMAKING COMMANDS ####################################
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/convexCWspace.gi");
 ReadPackageHap( "lib/Polymake/fix.gi");
-else
-DeclareCategory("IsPolymakeObject",IsObject);
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
@@ -181,7 +179,9 @@ ReadPackageHap( "lib/Resolutions/resGeneric.gi");
 ReadPackageHap( "lib/Resolutions/tietzered.gi");
 ReadPackageHap( "lib/Resolutions/coreducedRes.gi");
 ReadPackageHap( "lib/Resolutions/pseudoLists.gi");
+if IsPackageMarkedForLoading("congruence","0.0") then
 ReadPackageHap( "lib/Resolutions/resSL2Z.gi");
+fi;
 ReadPackageHap( "lib/Resolutions/resBianchi.gi");
 ReadPackageHap( "lib/Resolutions/gens.gi");
 
@@ -202,6 +202,7 @@ ReadPackageHap( "lib/Functors/tensorWithTwistedZ.gi");
 ReadPackageHap( "lib/Functors/tensorWithTwistedZmodP.gi");
 ReadPackageHap( "lib/Functors/tensorWithZmodP.gi");
 ReadPackageHap( "lib/Functors/various.gi");
+ReadPackageHap( "lib/Functors/various_extra.gi");
 ReadPackageHap( "lib/Functors/equiChainMap.gi");
 ReadPackageHap( "lib/Functors/modularEquiChainMap.gi");
 ReadPackageHap( "lib/Functors/primePartDerived.gi");
@@ -289,7 +290,9 @@ ReadPackageHap( "lib/Polymake/aspherical.gi");
 ReadPackageHap( "lib/Polymake/polyGens.gi");
 ReadPackageHap( "lib/Polymake/stabilizer.gi");
 ReadPackageHap( "lib/Polymake/polyFaces.gi");
+if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/orbitPoly.gi");
+fi;
 #ReadPackageHap( "lib/Polymake/fix.gi");
 ReadPackageHap( "lib/Polymake/TZ.gi");
 
@@ -527,6 +530,3 @@ SetInfoLevel(InfoWarning,1); #This is GAP's default level
 
 ##AFTER THOUGHT######################################################
 ReadPackageHap("lib/hap_afterthought.gd");
-
-
-

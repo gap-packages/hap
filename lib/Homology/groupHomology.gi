@@ -20,7 +20,8 @@ GroupCohomologyOriginal:=function()
 		HomologyArtinGroup,
 		HomologyAbelianGroup,
 		HomologyNilpotentPcpGroup,
-		HomologySpaceGroup;
+		HomologySpaceGroup,
+                HomologyAlmostCrystallographicGroup;
 		
 
 
@@ -95,6 +96,18 @@ if IsMatrixGroup(G) then
 G1:=Image(IsomorphismPcpGroup(G)); fi;
 
 R:=ResolutionAlmostCrystalGroup(G1,N+1);
+return Homology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+HomologyAlmostCrystallographicGroup:=function(G,N)
+local R ;
+
+R:=ResolutionAlmostCrystalGroup(G,N+1);
 return Homology(Functor(R),N);
 
 end;
@@ -241,12 +254,15 @@ fi;
 return HomologyArtinGroup();
 fi;
 
-if "CrystCatRecord" in KnownAttributesOfObject(G) or
-   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) 
-   then
-return HomologySpaceGroup(); fi;
+#if "CrystCatRecord" in KnownAttributesOfObject(G) or
+#   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) 
+#   then
+#return HomologySpaceGroup(); fi;
 
 if IsPcpGroup(G) then
+        if IsAlmostCrystallographic(G) then 
+        return HomologyAlmostCrystallographicGroup(G,N);
+        fi;
 	if IsNilpotentGroup(G) then
 	return HomologyNilpotentPcpGroup();
 	else
@@ -254,6 +270,11 @@ if IsPcpGroup(G) then
 	return fail;
 	fi;
 fi;
+
+if "CrystCatRecord" in KnownAttributesOfObject(G) or
+   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G)
+   then
+return HomologySpaceGroup(); fi;
 
 if IsFinite(G) then
 

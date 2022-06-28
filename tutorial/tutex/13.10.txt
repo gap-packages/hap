@@ -1,0 +1,31 @@
+gap> res:=ResolutionFiniteGroup(SymmetricGroup(5),5);;
+gap> C:=TensorWithIntegers(res);
+Chain complex of length 5 in characteristic 0 . 
+
+gap> D:=ContractedComplex(C);#A chain homotopic complex
+Chain complex of length 5 in characteristic 0 . 
+gap> List([0..5],C!.dimension);
+[ 1, 4, 10, 20, 35, 56 ]
+gap> List([0..5],D!.dimension);
+[ 1, 1, 2, 4, 6, 38 ]
+
+gap> CxC:=TensorProduct(C,C);
+Chain complex of length 10 in characteristic 0 . 
+
+gap> SC:=SuspendedChainComplex(C);
+Chain complex of length 6 in characteristic 0 . 
+
+gap> RC:=ReducedSuspendedChainComplex(C);
+Chain complex of length 6 in characteristic 0 .
+
+gap> PC:=PathObjectForChainComplex(C);
+Chain complex of length 5 in characteristic 0 .
+
+gap> dualC:=HomToIntegers(C);
+Cochain complex of length 5 in characteristic 0 .
+
+gap> Cxp:=TensorWithIntegersModP(C,5);
+Chain complex of length 5 in characteristic 5 .
+
+gap> CxQ:=TensorWithRationals(C); #The quirky -1/2 denotes rationals
+Chain complex of length 5 in characteristic -1/2 .

@@ -22,7 +22,7 @@ if Order(G)<infinity then
 Tz:=function(R) return R; end;
 
    if IsAbelian(G) then
-   #return ResolutionAbelianGroup_alt(G,N);
+   return ResolutionAbelianGroup_alt(G,N);    ###  CHECK THIS
    if IsPcpGroup(G) then return ResolutionAbelianPcpGroup(G,N);
    else return ResolutionAbelianGroup(G,N); fi;
    fi;
@@ -60,7 +60,6 @@ if IsPcpGroup(G) then
 
    if IsAbelian(G) then
    return ResolutionAbelianPcpGroup(G,N);
-   #return ResolutionAbelianGroup(G,N);
    fi;
 
    if IsNilpotent(G) then 

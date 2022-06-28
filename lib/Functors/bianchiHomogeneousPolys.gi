@@ -2,8 +2,12 @@
 ############################################
 ############################################
 InstallGlobalFunction(HAP_4x4MatTo2x2Mat,
-function(M,d)
-local fun, x, A, B, C, D;
+function(M,dd)
+local d, fun, x, A, B, C, D;
+
+if IsString(dd) then d:=EvalString(dd);
+else d:=dd;
+fi;
 
 ######Schoennenbeck transormation###
 if  (d mod 4 =2) or (d mod 4 =3) then x:=Sqrt(d); fi;

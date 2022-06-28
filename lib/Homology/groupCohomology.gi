@@ -16,7 +16,8 @@ local
 		CoHomologyArtinGroup,
 		CoHomologyCoxeterGroup,
 		CoHomologyNilpotentPcpGroup,
-		CoHomologySpaceGroup;
+		CoHomologySpaceGroup,
+                CoHomologyAlmostCrystallographicGroup;
 
 
 ############################### INPUT DATA ##########################
@@ -82,6 +83,18 @@ end;
 
 #####################################################################
 #####################################################################
+CoHomologyAlmostCrystallographicGroup:=function(G,N)
+local R ;
+
+R:=ResolutionAlmostCrystalGroup(G,N+1);
+return Cohomology(Functor(R),N);
+
+end;
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
 CoHomologyCoxeterGroup:=function()
 local R;
 
@@ -134,12 +147,15 @@ fi;
 return CoHomologyArtinGroup();
 fi;
 
-if "CrystCatRecord" in KnownAttributesOfObject(G) or
-   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) 
-   then
-return CoHomologySpaceGroup(); fi;
+#if "CrystCatRecord" in KnownAttributesOfObject(G) or
+#   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G) 
+#   then
+#return CoHomologySpaceGroup(); fi;
 
 if IsPcpGroup(G) then
+        if IsAlmostCrystallographic(G) then return
+        CoHomologyAlmostCrystallographicGroup(G,N);
+        fi;
 	if IsNilpotentGroup(G) then
 	return CoHomologyNilpotentPcpGroup();
 	else
@@ -147,6 +163,11 @@ if IsPcpGroup(G) then
 	return fail;
 	fi;
 fi;
+
+if "CrystCatRecord" in KnownAttributesOfObject(G) or
+   "AlmostCrystallographicInfo" in KnownAttributesOfObject(G)
+   then
+return CoHomologySpaceGroup(); fi;
 
 if IsFinite(G) then
 
