@@ -26,7 +26,7 @@ if Length(gens)=1 then
 if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
 else
 
-HAPconstant:=10;    #CHANGED JUNE 2022
+HAPconstant:=50;    #CHANGED JUNE 2022
 
 tmp:=ResolutionAbelianGroup_alt([0],n);
 
