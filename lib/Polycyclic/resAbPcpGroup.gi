@@ -26,9 +26,11 @@ if Length(gens)=1 then
 if IsFinite(Group(gens)) then return ResolutionFiniteGroup(gens,n);
 else
 
-
+HAPconstant:=10;    #CHANGED JUNE 2022
 
 tmp:=ResolutionAbelianGroup_alt([0],n);
+
+HAPconstant:=5;
 FreeElts:=tmp!.elts;
 	tmp!.appendToElts:=function(x)
 	local a,i,j; 
