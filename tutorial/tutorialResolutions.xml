@@ -22,6 +22,29 @@ resolution.
 <Example>
 <#Include SYSTEM "tutex/14.2.txt">
 </Example>
+The suspicion that this resolution <M>R_\ast</M>
+is periodic of period <M>4</M> can be verified by 
+ constructing the chain complex <M>C_\ast=R_\ast\otimes_{\mathbb Z}\mathbb ZG</M> and verifying that boundary matrices repeat with period <M>4</M>.
+
+<P/> A second example of a periodic resolution, for the Dihedral group 
+<M>D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1}\rangle</M> of order <M>2k+2</M> in the case <M>k=1</M>, is constructed and verified for periodicity in the next example.
+<Example>
+<#Include SYSTEM "tutex/14.2a.txt">
+</Example>
+
+This periodic resolution for <M>D_3</M> can be found in a paper by R. Swan
+<Cite Key="swan2"/>. The resolution was proved for arbitrary <M>D_{2k+1}</M>
+by Irina Kholodna <Cite Key="kholodna"/> and is the cellular chain complex of the universal cover of a CW-complex <M>X</M> with two cells in dimensions <M>1, 2 \bmod 4</M> and one cell in dimensions <M>0,3 \bmod 4</M>. The <M>2</M>-skelecton is the <M>2</M>-complex for the given presentation of <M>D_{2k+1}</M> and an attaching map for the <M>3</M>-cell is represented as follows.
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/syzygyjsc.jpg" align="center" height="300" alt="homotopical syzygy"/></Alt>
+<P/>
+A slightly different periodic resolution for <M>D_{2k+1}</M> has been obtain more recently by FEA Johnson <Cite Key="johnson"/>. Johnson's resolution has two free generators in each degree. Interestingly, running the following code for many values of <M>k &gt;1</M> seems to produce a periodic resolution with  two free generators in each degree for most values of <M>k</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.2b.txt">
+</Example>
+
 
 </Section>
 
@@ -178,6 +201,15 @@ domain and resolution for <M>G</M> can be obtained by changing the choice of vec
 <P/>The homological perturbation techniques needed to extend this method to crystallographic groups acting non-freely on <M>\mathbb R^n</M> has not yet been implemenyed. This is on the TO-DO list.
 </Section>
 
+<Section><Heading>Resolutions for arbitrary crystallographic groups (only characteristic <M>2</M> at present)</Heading>
+An implementation of the above method for Bieberbach groups to the case of arbitrary crystallographic groups is currently only available over <M>\mathbb Z_2</M> -- the signs still need fixing  over <M>\mathbb Z</M>. The following example constructs a <M>\mathbb Z_2G</M>-resolution for the group <Code>G:=SpaceGroupIT(3,227)</Code>.
+
+<Example>
+<#Include SYSTEM "tutex/14.13b.txt">
+</Example>
+
+</Section> 
+
 <Section><Heading>Resolutions for crystallographic groups  admitting cubical fundamental domain</Heading>
 
 
@@ -305,7 +337,50 @@ a smaller resolution <M>T_\ast</M> for the alternating group <M>A_4</M>.
 
 </Section>
 
+<Section><Heading>Resolutions for graphs of groups and for groups with aspherical presentations
+</Heading>
 
+The following example constructs a resolution for a finitely presented group whose presentation is known to have the property that its associated <M>2</M>-complex is aspherical.
+
+<Example>
+<#Include SYSTEM "tutex/14.29.txt">
+</Example>
+
+The following commands create a resolution for a
+graph of groups corresponding to the amalgamated product <M>G=H\ast_AK</M> where <M>H=S_5</M> is the symmetric group of degree <M>5</M>,  <M>K=S_4</M> is the symmetric group of degree <M>4</M> and the   common subgroup is <M>A=S_3</M>. 
+</Section>
+
+
+<Example>
+<#Include SYSTEM "tutex/14.30.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="images/graphOFgroups.gif" align="center" height="100" alt="graph of groups"/></Alt>
+<P/>
+
+<Example>
+<#Include SYSTEM "tutex/14.31.txt">
+</Example>
+
+
+<Section><Heading>Resolutions for <M>\mathbb FG</M>-modules
+</Heading>
+Let <M>\mathbb F=\mathbb F_p</M> be the field of <M>p</M> elements and let 
+<M>M</M> be some <M>\mathbb FG</M>-module.    We might wish to construct a free <M>\mathbb FG</M>-resolution for <M>M</M>. We can handle this by
+constructing a short exact sequence
+<P/><M>    DM  \rightarrowtail P \twoheadrightarrow M</M>
+<P/> in which <M>P</M> is free (or projective). Then any resolution of <M>DM</M>
+yields a resolution of <M>M</M> and we can represent <M>DM</M> as a submodule
+of <M>P</M>. We refer to <M>DM</M> as the <E>desuspension</E> of <M>M</M>.
+
+Consider for instance <M>G=Syl_2(GL(4,2))</M> and <M>\mathbb F=\mathbb F_2</M>. The matrix group <M>G</M> acts via matrix
+multiplication on <M>M=\mathbb F^4</M>. The following example constructs a free <M>\mathbb FG</M>-resolution for <M>M</M>.
+
+<Example>
+<#Include SYSTEM "tutex/14.28.txt">
+</Example>
+
+</Section>
 
 
 

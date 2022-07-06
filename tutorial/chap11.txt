@@ -40,6 +40,53 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe  suspicion  that  this  resolution  [22XR_∗[122X  is  periodic of period [22X4[122X can be
+  verified by constructing the chain complex [22XC_∗=R_∗⊗_ Z ZG[122X and verifying that
+  boundary matrices repeat with period [22X4[122X.[133X
+  
+  [33X[0;0YA  second  example of a periodic resolution, for the Dihedral group [22XD_2k+1=⟨
+  x,  y  |  x^2= xy^kx^-1y^-k-1⟩[122X of order [22X2k+2[122X in the case [22Xk=1[122X, is constructed
+  and verified for periodicity in the next example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(D,15);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X[ 4, 7, 8, 6, 4, 8, 8, 6, 4, 8, 8, 6, 4, 8, 8 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegersOverSubgroup(R,Group(One(D)));;[127X[104X
+    [4X[25Xgap>[125X [27Xn:=4;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xn:=5;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xn:=6;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xn:=7;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xn:=8;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis periodic resolution for [22XD_3[122X can be found in a paper by R. Swan [Swa60].
+  The resolution was proved for arbitrary [22XD_2k+1[122X by Irina Kholodna [Kho01] and
+  is  the cellular chain complex of the universal cover of a CW-complex [22XX[122X with
+  two cells in dimensions [22X1, 2 mod 4[122X and one cell in dimensions [22X0,3 mod 4[122X. The
+  [22X2[122X-skelecton  is  the  [22X2[122X-complex  for the given presentation of [22XD_2k+1[122X and an
+  attaching map for the [22X3[122X-cell is represented as follows.[133X
+  
+  [33X[0;0YA  slightly  different  periodic  resolution for [22XD_2k+1[122X has been obtain more
+  recently   by  FEA  Johnson  [Joh16].  Johnson's  resolution  has  two  free
+  generators  in  each  degree.  Interestingly, running the following code for
+  many  values  of  [22Xk  >1[122X seems to produce a periodic resolution with two free
+  generators in each degree for most values of [22Xk[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xk:=20;;rels:=[x^2,x*y^k*x^-1*y^(-1-k)];;D:=F/rels;;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(D,7);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..7],R!.dimension);[127X[104X
+    [4X[28X[ 1, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   
   [1X11.3 [33X[0;0YResolutions for finite groups acting on orbit polytopes[133X[101X
   
@@ -351,7 +398,28 @@
   implemenyed. This is on the TO-DO list.[133X
   
   
-  [1X11.11  [33X[0;0YResolutions for crystallographic groups admitting cubical fundamental[101X
+  [1X11.11 [33X[0;0YResolutions for arbitrary crystallographic groups (only characteristic[101X
+  [1X[22X2[122X[101X[1X at present)[133X[101X
+  
+  [33X[0;0YAn  implementation  of the above method for Bieberbach groups to the case of
+  arbitrary  crystallographic  groups  is currently only available over [22XZ_2[122X --
+  the  signs  still  need  fixing  over  [22XZ[122X. The following example constructs a
+  [22XZ_2G[122X-resolution for the group [10XG:=SpaceGroupIT(3,227)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroupIT(3,227);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSpaceGroup(G,11);[127X[104X
+    [4X[28XResolution of length 11 in characteristic 2 for <matrix group with [128X[104X
+    [4X[28X8 generators> . [128X[104X
+    [4X[28XNo contracting homotopy available.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X[ 26, 240, 531, 668, 1016, 1550, 2319, 3169, 4219, 5217, 6833 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.12  [33X[0;0YResolutions for crystallographic groups admitting cubical fundamental[101X
   [1Xdomain[133X[101X
   
   [33X[0;0YThe  following uses subdivision techniques to construct a resolution for the
@@ -386,7 +454,7 @@
   [4X[32X[104X
   
   
-  [1X11.12 [33X[0;0YResolutions for Coxeter groups[133X[101X
+  [1X11.13 [33X[0;0YResolutions for Coxeter groups[133X[101X
   
   [33X[0;0YThe  following  session constructs the Coxeter diagram for the Coxeter group
   [22XB=B_7[122X of order [22X645120[122X. A resolution for [22XG[122X is then computed.[133X
@@ -412,7 +480,7 @@
   TO-DO list.[133X
   
   
-  [1X11.13 [33X[0;0YResolutions for Artin groups[133X[101X
+  [1X11.14 [33X[0;0YResolutions for Artin groups[133X[101X
   
   [33X[0;0YThe following session constructs a resolution for the infinite Artin group [22XG[122X
   associated  to the Coxeter group [22XB_7[122X. Exactness of the resolution depends on
@@ -430,7 +498,7 @@
   [4X[32X[104X
   
   
-  [1X11.14 [33X[0;0YResolutions for [22XG=SL_2( Z[1/m])[122X[101X[1X[133X[101X
+  [1X11.15 [33X[0;0YResolutions for [22XG=SL_2( Z[1/m])[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  following  uses  homological perturbation to construct a resolution for
   [22XG=SL_2( Z[1/6])[122X.[133X
@@ -445,7 +513,7 @@
   [4X[32X[104X
   
   
-  [1X11.15 [33X[0;0YResolutions for selected groups [22XG=SL_2( mathcal O( Q(sqrtd) )[122X[101X[1X[133X[101X
+  [1X11.16 [33X[0;0YResolutions for selected groups [22XG=SL_2( mathcal O( Q(sqrtd) )[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  following  uses finite "Voronoi complexes" and homological perturbation
   to  construct  a  resolution  for  [22XG=SL_2(mathcal  O( Q(sqrt-5))[122X. The finite
@@ -464,7 +532,7 @@
   [4X[32X[104X
   
   
-  [1X11.16 [33X[0;0YResolutions for selected groups [22XG=PSL_2( mathcal O( Q(sqrtd) )[122X[101X[1X[133X[101X
+  [1X11.17 [33X[0;0YResolutions for selected groups [22XG=PSL_2( mathcal O( Q(sqrtd) )[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  following  uses finite "Voronoi complexes" and homological perturbation
   to  construct  a  resolution  for [22XG=PSL_2(mathcal O( Q(sqrt-11))[122X. The finite
@@ -483,7 +551,7 @@
   [4X[32X[104X
   
   
-  [1X11.17 [33X[0;0YResolutions for a few higher-dimensional arithmetic groups[133X[101X
+  [1X11.18 [33X[0;0YResolutions for a few higher-dimensional arithmetic groups[133X[101X
   
   [33X[0;0YThe  following  uses finite "Voronoi complexes" and homological perturbation
   to  construct  a  resolution  for  [22XG=PSL_4(  Z)[122X.  The  finite complexes were
@@ -505,7 +573,7 @@
   [4X[32X[104X
   
   
-  [1X11.18 [33X[0;0YResolutions for finite-index subgroups[133X[101X
+  [1X11.19 [33X[0;0YResolutions for finite-index subgroups[133X[101X
   
   [33X[0;0YThe  next  commands  first construct the congruence subgroup [22XΓ_0(I)[122X of index
   [22X144[122X in [22XSL_2(cal O Q(sqrt-2))[122X for the ideal [22XI[122X in [22Xcal O Q(sqrt-2)[122X generated by
@@ -532,7 +600,7 @@
   [4X[32X[104X
   
   
-  [1X11.19 [33X[0;0YSimplifying resolutions[133X[101X
+  [1X11.20 [33X[0;0YSimplifying resolutions[133X[101X
   
   [33X[0;0YThe next commands construct a resolution [22XR_∗[122X for the symmetric group [22XS_5[122X and
   convert  it  to a resolution [22XS_∗[122X for the finite index subgroup [22XA_4 < S_5[122X. An
@@ -551,6 +619,84 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XSize(T);[127X[104X
     [4X[28X[ 4, 34, 22, 19, 196 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.21  [33X[0;0YResolutions  for  graphs  of  groups  and  for groups with aspherical[101X
+  [1Xpresentations[133X[101X
+  
+  [33X[0;0YThe following example constructs a resolution for a finitely presented group
+  whose  presentation  is  known  to  have  the  property  that its associated
+  [22X2[122X-complex is aspherical.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;[127X[104X
+    [4X[25Xgap>[125X [27Xrels:=[x*y*x*(y*x*y)^-1, y*z*y*(z*y*z)^-1, z*x*z*(x*z*x)^-1];;[127X[104X
+    [4X[25Xgap>[125X [27XG:=F/rels;;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionAsphericalPresentation(G,10);[127X[104X
+    [4X[28XResolution of length 10 in characteristic 0 for <fp group on the generators [128X[104X
+    [4X[28X[ f1, f2, f3 ]> . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X[ 6, 18, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe   following   commands  create  a  resolution  for  a  graph  of  groups
+  corresponding  to  the  amalgamated  product  [22XG=H∗_AK[122X  where  [22XH=S_5[122X  is  the
+  symmetric  group  of  degree [22X5[122X, [22XK=S_4[122X is the symmetric group of degree [22X4[122X and
+  the common subgroup is [22XA=S_3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS5:=SymmetricGroup(5);SetName(S5,"S5");;[127X[104X
+    [4X[28XSym( [ 1 .. 5 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS4:=SymmetricGroup(4);SetName(S4,"S4");;[127X[104X
+    [4X[28XSym( [ 1 .. 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27XA:=SymmetricGroup(3);SetName(A,"S3");;[127X[104X
+    [4X[28XSym( [ 1 .. 3 ] )[128X[104X
+    [4X[25Xgap>[125X [27XAS5:=GroupHomomorphismByFunction(A,S5,x->x);;[127X[104X
+    [4X[25Xgap>[125X [27XAS4:=GroupHomomorphismByFunction(A,S4,x->x);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=[S5,S4,[AS5,AS4]];;[127X[104X
+    [4X[25Xgap>[125X [27XGraphOfGroupsDisplay(D);;[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionGraphOfGroups(D,8);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X[ 16, 68, 162, 302, 480, 627, 869, 1290 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.22 [33X[0;0YResolutions for [22XFG[122X[101X[1X-modules[133X[101X
+  
+  [33X[0;0YLet  [22XF= F_p[122X be the field of [22Xp[122X elements and let [22XM[122X be some [22XFG[122X-module. We might
+  wish  to  construct  a  free  [22XFG[122X-resolution  for  [22XM[122X.  We  can handle this by
+  constructing a short exact sequence[133X
+  
+  [33X[0;0Y[22XDM ↣ P ↠ M[122X[133X
+  
+  [33X[0;0Yin  which  [22XP[122X  is  free  (or  projective). Then any resolution of [22XDM[122X yields a
+  resolution  of [22XM[122X and we can represent [22XDM[122X as a submodule of [22XP[122X. We refer to [22XDM[122X
+  as the [13Xdesuspension[113X of [22XM[122X. Consider for instance [22XG=Syl_2(GL(4,2))[122X and [22XF= F_2[122X.
+  The  matrix  group [22XG[122X acts via matrix multiplication on [22XM= F^4[122X. The following
+  example constructs a free [22XFG[122X-resolution for [22XM[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=GL(4,2);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=SylowSubgroup(G,2);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=GModuleByMats(GeneratorsOfGroup(S),GF(2));;[127X[104X
+    [4X[25Xgap>[125X [27XDM:=DesuspensionMtxModule(M);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFpGModule(DM,20);[127X[104X
+    [4X[28XResolution of length 20 in characteristic 2 for <matrix group of [128X[104X
+    [4X[28Xsize 64 with 3 generators> .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..20],R!.dimension);[127X[104X
+    [4X[28X[ 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120, 136, [128X[104X
+    [4X[28X153, 171, 190, 210, 231, 253 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

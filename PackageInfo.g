@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.43",
-  Date    := "29/06/2022",
+  Version := "1.44",
+  Date    := "06/07/2022",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -73,7 +73,6 @@ SetPackageInfo( rec(
                              [ "aclib",      ">=1.1" ],
                              [ "nq",         ">=1.1" ],
                             #[ "gapdoc",     ">=0.0" ],
-                             [ "edim",       ">=1.2.2"]
                            ],
     SuggestedOtherPackages := [
                               #[ "polycyclic", ">=1.1" ],
@@ -81,7 +80,7 @@ SetPackageInfo( rec(
                                [ "gapdoc",      ">=0.0" ],
 			      #[ "nq",         ">=1.1" ],
                                [ "homology",    ">=0.0"   ], 
-			      #[ "edim",      ">=1.2.2" ],
+			      [ "edim",      ">=1.2.2" ],
 			       [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
                                [ "HAPcryst", ">=0.0.0" ],

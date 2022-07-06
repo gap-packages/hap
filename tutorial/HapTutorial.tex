@@ -4065,6 +4065,40 @@ degree $k$.
   [ 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128 ]
   
 \end{Verbatim}
+ The suspicion that this resolution $R_\ast$ is periodic of period $4$ can be verified by constructing the chain complex $C_\ast=R_\ast\otimes_{\mathbb Z}\mathbb ZG$ and verifying that boundary matrices repeat with period $4$. 
+
+ A second example of a periodic resolution, for the Dihedral group $D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1}\rangle$ of order $2k+2$ in the case $k=1$, is constructed and verified for periodicity in the next example. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionSmallGroup(D,15);;|
+  !gapprompt@gap>| !gapinput@Size(R);|
+  [ 4, 7, 8, 6, 4, 8, 8, 6, 4, 8, 8, 6, 4, 8, 8 ]
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegersOverSubgroup(R,Group(One(D)));;|
+  !gapprompt@gap>| !gapinput@n:=4;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);|
+  true
+  !gapprompt@gap>| !gapinput@n:=5;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);|
+  true
+  !gapprompt@gap>| !gapinput@n:=6;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);|
+  true
+  !gapprompt@gap>| !gapinput@n:=7;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);|
+  true
+  !gapprompt@gap>| !gapinput@n:=8;;BoundaryMatrix(C,n)=BoundaryMatrix(C,n+4);|
+  true
+  
+\end{Verbatim}
+ This periodic resolution for $D_3$ can be found in a paper by R. Swan \cite{swan2}. The resolution was proved for arbitrary $D_{2k+1}$ by Irina Kholodna \cite{kholodna} and is the cellular chain complex of the universal cover of a CW-complex $X$ with two cells in dimensions $1, 2 \bmod 4$ and one cell in dimensions $0,3 \bmod 4$. The $2$-skelecton is the $2$-complex for the given presentation of $D_{2k+1}$ and an attaching map for the $3$-cell is represented as follows. 
+
+  
+
+ A slightly different periodic resolution for $D_{2k+1}$ has been obtain more recently by FEA Johnson \cite{johnson}. Johnson's resolution has two free generators in each degree. Interestingly,
+running the following code for many values of $k >1$ seems to produce a periodic resolution with two free generators in each degree
+for most values of $k$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|k:=20;;rels:=[x^2,x*y^k*x^-1*y^(-1-k)];;D:=F/rels;;A
+  @gapprompt|gap>A @gapinput|R:=ResolutionSmallGroup(D,7);;A
+  @gapprompt|gap>A @gapinput|List([0..7],R!.dimension);A
+  [ 1, 2, 2, 2, 2, 2, 2, 2 ]
+  
+\end{Verbatim}
  }
 
  
@@ -4365,7 +4399,26 @@ The homological perturbation techniques needed to extend this method to
 crystallographic groups acting non-freely on $\mathbb R^n$ has not yet been implemenyed. This is on the TO-DO list. }
 
  
-\section{\textcolor{Chapter }{Resolutions for crystallographic groups admitting cubical fundamental domain}}\logpage{[ 11, 11, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for arbitrary crystallographic groups (only characteristic $2$ at present)}}\logpage{[ 11, 11, 0 ]}
+\hyperdef{L}{X821D0C13812F4433}{}
+{
+ An implementation of the above method for Bieberbach groups to the case of
+arbitrary crystallographic groups is currently only available over $\mathbb Z_2$ -- the signs still need fixing over $\mathbb Z$. The following example constructs a $\mathbb Z_2G$-resolution for the group \texttt{G:=SpaceGroupIT(3,227)}. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SpaceGroupIT(3,227);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionSpaceGroup(G,11);|
+  Resolution of length 11 in characteristic 2 for <matrix group with 
+  8 generators> . 
+  No contracting homotopy available.
+  
+  !gapprompt@gap>| !gapinput@Size(R);|
+  [ 26, 240, 531, 668, 1016, 1550, 2319, 3169, 4219, 5217, 6833 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Resolutions for crystallographic groups admitting cubical fundamental domain}}\logpage{[ 11, 12, 0 ]}
 \hyperdef{L}{X7B9B3AF487338A9B}{}
 {
  The following uses subdivision techniques to construct a resolution for the
@@ -4397,7 +4450,7 @@ non-free action.
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for Coxeter groups }}\logpage{[ 11, 12, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for Coxeter groups }}\logpage{[ 11, 13, 0 ]}
 \hyperdef{L}{X78DD8D068349065A}{}
 {
  The following session constructs the Coxeter diagram for the Coxeter group $B=B_7$ of order $645120$. A resolution for $G$ is then computed. 
@@ -4423,7 +4476,7 @@ non-free action.
 TO-DO list. }
 
  
-\section{\textcolor{Chapter }{Resolutions for Artin groups }}\logpage{[ 11, 13, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for Artin groups }}\logpage{[ 11, 14, 0 ]}
 \hyperdef{L}{X7C69E7227F919CC9}{}
 {
  The following session constructs a resolution for the infinite Artin group $G$ associated to the Coxeter group $B_7$. Exactness of the resolution depends on the solution to the $K(\pi,1)$ Conjecture for Artin groups of spherical type. 
@@ -4440,7 +4493,7 @@ TO-DO list. }
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for $G=SL_2(\mathbb Z[1/m])$}}\logpage{[ 11, 14, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for $G=SL_2(\mathbb Z[1/m])$}}\logpage{[ 11, 15, 0 ]}
 \hyperdef{L}{X8032647F8734F4EB}{}
 {
  The following uses homological perturbation to construct a resolution for $G=SL_2(\mathbb Z[1/6])$. 
@@ -4455,7 +4508,7 @@ TO-DO list. }
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for selected groups $G=SL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )$}}\logpage{[ 11, 15, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for selected groups $G=SL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )$}}\logpage{[ 11, 16, 0 ]}
 \hyperdef{L}{X7BE4DE82801CD38E}{}
 {
  The following uses finite "Voronoi complexes" and homological perturbation to
@@ -4473,7 +4526,7 @@ Dutour-Scikiric and S. Schoenenbeck and are stored in the folder \texttt{\texttt
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for selected groups $G=PSL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )$}}\logpage{[ 11, 16, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for selected groups $G=PSL_2( {\mathcal O}(\mathbb Q(\sqrt{d}) )$}}\logpage{[ 11, 17, 0 ]}
 \hyperdef{L}{X7D9CCB2C7DAA2310}{}
 {
  The following uses finite "Voronoi complexes" and homological perturbation to
@@ -4491,7 +4544,7 @@ Dutour-Scikiric and S. Schoenenbeck and are stored in the folder \texttt{\texttt
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for a few higher-dimensional arithmetic groups }}\logpage{[ 11, 17, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for a few higher-dimensional arithmetic groups }}\logpage{[ 11, 18, 0 ]}
 \hyperdef{L}{X7F699587845E6DB1}{}
 {
  The following uses finite "Voronoi complexes" and homological perturbation to
@@ -4513,7 +4566,7 @@ in the folder \texttt{\texttt{\symbol{126}}pkg/Hap1.v/lib/Perturbations/Gcomplex
  }
 
  
-\section{\textcolor{Chapter }{Resolutions for finite-index subgroups }}\logpage{[ 11, 18, 0 ]}
+\section{\textcolor{Chapter }{Resolutions for finite-index subgroups }}\logpage{[ 11, 19, 0 ]}
 \hyperdef{L}{X7812EB3F7AC45F87}{}
 {
  The next commands first construct the congruence subgroup $\Gamma_0(I)$ of index $144$ in $SL_2({\cal O}\mathbb Q(\sqrt{-2}))$ for the ideal $I$ in ${\cal O}\mathbb Q(\sqrt{-2})$ generated by $4+5\sqrt{-2}$. The commands then compute a resolution for the congruence subgroup $G=\Gamma_0(I) \le SL_2({\cal O}\mathbb Q(\sqrt{-2}))$ 
@@ -4538,7 +4591,7 @@ in the folder \texttt{\texttt{\symbol{126}}pkg/Hap1.v/lib/Perturbations/Gcomplex
  }
 
  
-\section{\textcolor{Chapter }{Simplifying resolutions }}\logpage{[ 11, 19, 0 ]}
+\section{\textcolor{Chapter }{Simplifying resolutions }}\logpage{[ 11, 20, 0 ]}
 \hyperdef{L}{X84CAAA697FAC8E0D}{}
 {
  The next commands construct a resolution $R_\ast$ for the symmetric group $S_5$ and convert it to a resolution $S_\ast$ for the finite index subgroup $A_4 < S_5$. An heuristic algorithm is applied to $S_\ast$ in the hope of obtaining a smaller resolution $T_\ast$ for the alternating group $A_4$. 
@@ -4554,6 +4607,78 @@ in the folder \texttt{\texttt{\symbol{126}}pkg/Hap1.v/lib/Perturbations/Gcomplex
   
   !gapprompt@gap>| !gapinput@Size(T);|
   [ 4, 34, 22, 19, 196 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Resolutions for graphs of groups and for groups with aspherical presentations }}\logpage{[ 11, 21, 0 ]}
+\hyperdef{L}{X780C3F038148A1C7}{}
+{
+ The following example constructs a resolution for a finitely presented group
+whose presentation is known to have the property that its associated $2$-complex is aspherical. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;|
+  !gapprompt@gap>| !gapinput@rels:=[x*y*x*(y*x*y)^-1, y*z*y*(z*y*z)^-1, z*x*z*(x*z*x)^-1];;|
+  !gapprompt@gap>| !gapinput@G:=F/rels;;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionAsphericalPresentation(G,10);|
+  Resolution of length 10 in characteristic 0 for <fp group on the generators 
+  [ f1, f2, f3 ]> . 
+  No contracting homotopy available. 
+  
+  !gapprompt@gap>| !gapinput@Size(R);|
+  [ 6, 18, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+\end{Verbatim}
+ The following commands create a resolution for a graph of groups corresponding
+to the amalgamated product $G=H\ast_AK$ where $H=S_5$ is the symmetric group of degree $5$, $K=S_4$ is the symmetric group of degree $4$ and the common subgroup is $A=S_3$. }
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@S5:=SymmetricGroup(5);SetName(S5,"S5");;|
+  Sym( [ 1 .. 5 ] )
+  !gapprompt@gap>| !gapinput@S4:=SymmetricGroup(4);SetName(S4,"S4");;|
+  Sym( [ 1 .. 4 ] )
+  !gapprompt@gap>| !gapinput@A:=SymmetricGroup(3);SetName(A,"S3");;|
+  Sym( [ 1 .. 3 ] )
+  !gapprompt@gap>| !gapinput@AS5:=GroupHomomorphismByFunction(A,S5,x->x);;|
+  !gapprompt@gap>| !gapinput@AS4:=GroupHomomorphismByFunction(A,S4,x->x);;|
+  !gapprompt@gap>| !gapinput@D:=[S5,S4,[AS5,AS4]];;|
+  !gapprompt@gap>| !gapinput@GraphOfGroupsDisplay(D);;|
+  
+\end{Verbatim}
+ 
+
+  
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionGraphOfGroups(D,8);;|
+  !gapprompt@gap>| !gapinput@Size(R);|
+  [ 16, 68, 162, 302, 480, 627, 869, 1290 ]
+  
+\end{Verbatim}
+ 
+\section{\textcolor{Chapter }{Resolutions for $\mathbb FG$-modules }}\logpage{[ 11, 22, 0 ]}
+\hyperdef{L}{X85AB973F8566690A}{}
+{
+ Let $\mathbb F=\mathbb F_p$ be the field of $p$ elements and let $M$ be some $\mathbb FG$-module. We might wish to construct a free $\mathbb FG$-resolution for $M$. We can handle this by constructing a short exact sequence 
+
+$ DM \rightarrowtail P \twoheadrightarrow M$ 
+
+ in which $P$ is free (or projective). Then any resolution of $DM$ yields a resolution of $M$ and we can represent $DM$ as a submodule of $P$. We refer to $DM$ as the \emph{desuspension} of $M$. Consider for instance $G=Syl_2(GL(4,2))$ and $\mathbb F=\mathbb F_2$. The matrix group $G$ acts via matrix multiplication on $M=\mathbb F^4$. The following example constructs a free $\mathbb FG$-resolution for $M$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|G:=GL(4,2);;A
+  @gapprompt|gap>A @gapinput|S:=SylowSubgroup(G,2);;A
+  @gapprompt|gap>A @gapinput|M:=GModuleByMats(GeneratorsOfGroup(S),GF(2));;A
+  @gapprompt|gap>A @gapinput|DM:=DesuspensionMtxModule(M);;A
+  @gapprompt|gap>A @gapinput|R:=ResolutionFpGModule(DM,20);A
+  Resolution of length 20 in characteristic 2 for <matrix group of 
+  size 64 with 3 generators> .
+  
+  @gapprompt|gap>A @gapinput|List([0..20],R!.dimension);A
+  [ 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120, 136, 
+  153, 171, 190, 210, 231, 253 ]
   
 \end{Verbatim}
  }
