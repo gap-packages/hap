@@ -214,7 +214,7 @@ else
 	#########################################
 fi;
 
-if (not EisFinite ) and HAPconstant<50 then
+if (not EisFinite ) and (not Length(RN!.elts)=infinity) and HAPconstant<50 then
 
 for i in RN!.elts do
 for j in RG!.elts do

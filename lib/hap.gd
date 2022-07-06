@@ -372,6 +372,8 @@ DeclareGlobalFunction("PolymakeFaceLattice");
 DeclareGlobalFunction("HAP_TzPair");
 DeclareGlobalFunction("HAP_AddGenerator");
 DeclareGlobalFunction("SmoothedFpGroup");
+DeclareGlobalFunction("CrystallographicComplex");
+DeclareGlobalFunction("ResolutionSpaceGroup");
 
 
 ## POLYCYLIC ########################################################

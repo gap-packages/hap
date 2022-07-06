@@ -500,7 +500,6 @@ end;
 
 
 
-
 #######START WORKING ON THE CONTRACTING HOMOTOPY####################
 
 #####################################################################
@@ -673,6 +672,7 @@ end;
 if HomotopyR=fail or HomotopyS=fail then
 FinalHomotopy:=fail;
 fi;
+
 
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
 grp:=Group(EltsE);

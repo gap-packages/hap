@@ -20,7 +20,8 @@ EE:=arg[1];
 K:=arg[2];
 if Length(arg)>2 then Test:=arg[3]; else Test:="NoTest"; fi;
 if IsAbelian(EE) then 
-	if IsPcpGroup(EE) then 
+###                return ResolutionAbelianGroup(EE,K);
+if IsPcpGroup(EE) then 
 		return ResolutionAbelianPcpGroup(EE,K);
 	else
 		return ResolutionAbelianGroup_alt(EE,K);

@@ -67,37 +67,4 @@ end);
 #####################################################################
 
 
-#####################################################################
-InstallGlobalFunction(HomologyPrimePart,
-function(C,n,p)
-local
-         M2, Smith, Divs,  Dimension, Boundary,
-	        i;
-
-if n <0 then return false; fi;
-
-Dimension:=C!.dimension;
-Boundary:=C!.boundary;
-
-#######################
-M2:=[];
-for i in [1..Dimension(n+1)] do
-M2[i]:=Boundary(n+1,i);
-od;
-
-ConvertToMatrixRep(M2);
-Divs:=ElementaryDivisorsPPartRk(M2,p);
-M2:=0;
-Smith:=[];
-for i in [1..Length(Divs)-1] do
-Append(Smith,ListWithIdenticalEntries(Divs[i]-Divs[i+1] ,p^i));
-od;
-
-#######################
-
-return Smith ;
-
-end);
-#####################################################################
-#####################################################################
 

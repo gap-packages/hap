@@ -5,6 +5,7 @@ InstallGlobalFunction(PolymakeFaceLattice,
 function(arg)
 local polygon, toggle, F, FF, FA, D, FL, i, j, cnt, lst,bool;
 
+#WARNING: This fixed is used in HAPcryst. Don't fiddle with toggle
 polygon:=arg[1];
 if Length(arg)=2 then toggle:=false;
 else toggle:=true;

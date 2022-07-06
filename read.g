@@ -75,8 +75,8 @@ fi;
 ################ SIMPHOM COMMANDS DONR ##############################
 
 ################# EDIM COMMANDS #######################################
-if not IsPackageMarkedForLoading("edim","1.2.2") then 
-ElementaryDivisorsPPartRk:=function(G); return fail; end;
+if IsPackageMarkedForLoading("edim","1.2.2") then 
+ReadPackageHap( "ib/Homology/edim.gi");
 fi;
 ################# EDIM COMMANDS DONE ###############################
 
@@ -96,6 +96,7 @@ fi;
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/convexCWspace.gi");
 ReadPackageHap( "lib/Polymake/fix.gi");
+ReadPackageHap( "lib/Polymake/cryst.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 

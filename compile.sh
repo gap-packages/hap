@@ -6,7 +6,7 @@ PKGDIR=/home/graham/pkg;
 #You must set GACDIR equal to the directory in which the GAP compiler gac is
 #stored on your computer.
 
-GACDIR=/usr/share/gap-4.10.2/;
+GACDIR=/usr/share/gap-4.11.1/;
 
 
 
