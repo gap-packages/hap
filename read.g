@@ -96,13 +96,13 @@ fi;
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackageHap( "lib/Polymake/convexCWspace.gi");
 ReadPackageHap( "lib/Polymake/fix.gi");
-ReadPackageHap( "lib/Polymake/cryst.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
 ################# HAPCRYST COMMANDS ####################################
 if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackageHap( "lib/RegularCWComplexes/equivariantCW.gi");
+ReadPackageHap( "lib/Polymake/cryst.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
