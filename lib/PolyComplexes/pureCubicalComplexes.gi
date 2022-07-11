@@ -1029,7 +1029,7 @@ else viewer:=DISPLAY_PATH;fi;
 tmpdir := DirectoryTemporary();;
 file:=Filename( tmpdir , "HAPtmpImage.png" );
 file1:=file{[1..Length(file)-4]};
-file2:=file{[Length(file)-3..Length(file)]};
+file2:=file{[Length(file)-2..Length(file)]};
 #WritePureCubicalComplexAsImage(T,"/tmp/HAPtmpImage","png");
 WritePureCubicalComplexAsImage(T,file1,file2);
 #Exec(Concatenation(viewer," ","/tmp/HAPtmpImage.png"));
