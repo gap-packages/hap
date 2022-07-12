@@ -988,7 +988,7 @@ Length(A),",",Length(A[1]),",255,RGB\n");
 for i in [1..rows] do
 for j in [1..cols] do
 if A[i][j]=0 then colour:="(255,255,255)"; else colour:="(0,0,100)";fi;
-AppendTo(filetxt,i,",",j,": ",colour,"\n");
+AppendTo(filetxt,i-1,",",j-1,": ",colour,"\n");
 od;
 od;
 
