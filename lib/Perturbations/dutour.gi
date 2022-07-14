@@ -207,14 +207,17 @@ function(R)
 local
         NewBoundaryList,
         NewBoundary,
-        S,N,pos,
+        S,N,pos,StandardWord,
         cnt,n,i,b,e,V,v,L,LL,x,xx;
+
+if IsBound(R!.standardWord) then StandardWord:=R!.standardWord;
+else StandardWord:=function(n,bnd); return bnd; end; fi;
 
 NewBoundaryList:=[];
 for n in [1..Length(R)] do
 NewBoundaryList[n]:=[];
 for i in [1..R!.dimension(n)] do
-b:=StructuralCopy(R!.boundary(n,i));
+b:=StandardWord(n-1,1*R!.boundary(n,i));
 b:=List(b,x->[AbsInt(x[1]),x[2]]);
 Add(NewBoundaryList[n],b);
 od;
@@ -252,12 +255,25 @@ for e in NewBoundaryList[N] do
   if Length(ResolutionBoundaryOfWord(R,N-1,e))>0 then
   #########################
     V:=List(e,x->[AbsInt(x[1]),x[2]]);
-    b:=[V[1]]; V:=V{[2..Length(V)]}; 
+    v:=Random(V); b:=[v]; pos:=Position(V,v); Remove(V,pos);
+    #b:=[V[1]]; V:=V{[2..Length(V)]}; 
     while Length(V)>0 do
-      L:=ResolutionBoundaryOfWord(R,N-1,b);
+      L:=ResolutionBoundaryOfWord(R,N-1,b); 
+      L:=StandardWord(N-2,L);
+      L:=AlgebraicReduction(L);
       LL:=List(L,x->[AbsInt(x[1]),x[2]]);
+while L=[] do
+ v:=Random(V); 
+ Add(b,v); pos:=Position(V,v);Remove(V,pos);  
+ L:=ResolutionBoundaryOfWord(R,N-1,b); 
+ L:=StandardWord(N-2,L);
+ L:=AlgebraicReduction(L);
+ LL:=List(L,x->[AbsInt(x[1]),x[2]]);
+od;
+
       for v in V do
         x:=ResolutionBoundaryOfWord(R,N-1,[v]);
+        x:=StandardWord(N-2,x);
         xx:=List(x,a->[AbsInt(a[1]),a[2]]);  
         if Length(Intersection(xx,LL))>0 then
           if Length(Intersection(x,L))>0 then Add(b,[-v[1],v[2]]); 
@@ -276,6 +292,14 @@ for e in NewBoundaryList[N] do
 od;
 ##########################################
 od;
+
+#for N in [2..Length(NewBoundaryList)] do
+#for e in NewBoundaryList[N] do
+#   e:=StandardWord(N-1,e);
+#   e:=StandardWord(N-2,ResolutionBoundaryOfWord(R,N-1,e));
+#  if Length(e  )>0 then Print(e,"\n\n");
+#  return false; fi;
+#od;od;
 
 end);
 ################################################
