@@ -76,7 +76,7 @@ RGD:=ResolutionExtension(GDhomP,RTD,RP,"Don't Test Finiteness");
 fi;
 
 RGD!.quotientHomomorphism:=GhomGD;
-#RGD!.TD:=TD;
+RGD!.TD:=TD;
 
 return RGD;
 end);
