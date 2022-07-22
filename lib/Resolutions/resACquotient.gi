@@ -67,6 +67,7 @@ RP:=ResolutionFiniteGroup(P,K);
 if 0 in AbelianInvariants(TD) then
 RTD:=ResolutionNilpotentGroup(TD,K);
 else
+#RTD:=ResolutionAbelianGroup(TD,K);   ######?????
 RTD:=ResolutionFiniteGroup(TD,K);
 fi;
 
@@ -75,6 +76,7 @@ RGD:=ResolutionExtension(GDhomP,RTD,RP,"Don't Test Finiteness");
 fi;
 
 RGD!.quotientHomomorphism:=GhomGD;
+#RGD!.TD:=TD;
 
 return RGD;
 end);

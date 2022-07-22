@@ -374,6 +374,7 @@ DeclareGlobalFunction("HAP_AddGenerator");
 DeclareGlobalFunction("SmoothedFpGroup");
 DeclareGlobalFunction("CrystallographicComplex");
 DeclareGlobalFunction("ResolutionSpaceGroup");
+DeclareGlobalFunction("IsPeriodicSpaceGroup");
 
 
 ## POLYCYLIC ########################################################

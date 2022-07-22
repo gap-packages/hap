@@ -115,7 +115,9 @@ od;
 
 #INEQUALITIES
 InEqualities:=NullspaceModQ(BoundaryMat,2);  #THIS IS CLUMSY!!
+
 InEqualities:=Filtered(InEqualities,r->not IsZero(r));  
+
 
         ###MODIFIED AUG 2016
 #SortBy(InEqualities,Sum);

@@ -783,6 +783,7 @@ InstallMethod(IsPeriodic,
 [IsGroup and IsFinite],
 function(G)
 local p,S;
+if Order(G)=1 then return true; fi;
 for p in SSortedList(Factors(Order(G))) do
 S:=SylowSubgroup(G,p);
 if not (IsCyclic(S) or IsQuaternionGroup(S))  then return false; fi;

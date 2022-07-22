@@ -266,7 +266,7 @@ HhomE:=Embedding(E,2);
 EhomG:=Projection(E,1);
 EhomH:=Projection(E,2);
 
-if Parent(G)=Parent(H) and not G=H then
+if Parent(G)=Parent(H) then
 
 gensG:=MinimalGeneratingSet(G);
 gens1:=List(gensG,x->One(G));
@@ -326,7 +326,7 @@ r:=n mod Order(H);
 if r=0 then return Image(GhomE,R!.elts[d])*Image(HhomE,S!.elts[Order(H)]); fi;
 return Image(GhomE,R!.elts[d+1])*Image(HhomE,S!.elts[r]);
 end;
-EltsE:=LazyList(fn, [["length",Size(H)*Size(G)]]);
+EltsE:=LazyList(fn);
 
 posfn:=function(x)
 local g,h, posg,posh,d;
@@ -800,7 +800,7 @@ if Length(mgens)=0 then return ResolutionFiniteGroup(Group(One(A)),n); fi;
 
 if Length(mgens)=1 then
 if Order(mgens[1])<infinity then 
-     return ResolutionFiniteCyclicGroup(Group(mgens[1]),n); 
+     return ResolutionFiniteGroup(Group(mgens[1]),n); 
 else
    return ResolutionInfiniteCyclicGroup(A,n);
 fi;
