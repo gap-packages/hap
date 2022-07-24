@@ -163,7 +163,7 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
-<p>The following example constructs the Poincare polynomial</p>
+<p>The following example constructs the Poincare series</p>
 
 <p><span class="SimpleMath">\(p(x)=\frac{1}{-x^3+3*x^2-3*x+1}\)</span></p>
 
@@ -172,12 +172,23 @@ Chain complex of length 5 in characteristic 0 .
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PoincareSeriesLHS(G);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PoincareSeriesLHS(G);</span>
 (1)/(-x_1^3+3*x_1^2-3*x_1+1)
 
 </pre></div>
 
-<p>The following example constructs the polynomial</p>
+<p>The additional following command uses the Poincare series</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankHomologyPGroup(G,P,1000);</span>
+251000
+
+</pre></div>
+
+<p>to determine that <span class="SimpleMath">\(H_{1000}(Syl_2(M_{12},\mathbb Z)\)</span> is a direct sum of 251000 non-trivial cyclic <span class="SimpleMath">\(2\)</span>-groups.</p>
+
+<p>The following example constructs the series</p>
 
 <p><span class="SimpleMath">\(p(x)=\frac{x^4-x^3+x^2-x+1}{x^6-x^5+x^4-2*x^3+x^2-x+1}\)</span></p>
 
