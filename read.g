@@ -484,7 +484,7 @@ ReadPackageHap("lib/HapPrime/polynomials.gi");
 ReadPackageHap("lib/HapPrime/happrime.gi");
 ReadPackageHap("lib/HapPrime/derivation.gi");
 #ReadPackageHap("lib/HapPrime/poincare.gd");
-#ReadPackageHap("lib/HapPrime/poincare.gi");
+ReadPackageHap("lib/HapPrime/poincare.gi");
 fi;
 
 

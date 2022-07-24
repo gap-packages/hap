@@ -70,6 +70,7 @@ InstallMethod(PoincareSeriesLHS,
 end);
 #####################################################################
 
+if false then
 #####################################################################
 ##  <#GAPDoc Label="PoincareSeriesAutoMem_DTmanPoincare">
 ##  <ManSection>
@@ -240,5 +241,5 @@ InstallMethod(PoincareSeriesAutoMemStop,
   return Pseries[1];
 end);
 #####################################################################
-
+fi;
   

@@ -125,7 +125,10 @@ gens:=TorsionGeneratorsAbelianGroup(G);
 
 if Length(gens)=1 then
 C:=Group(gens[1]);
-return ResolutionFiniteGroup(C,n);
+#return ResolutionFiniteGroup(C,n);
+R:=ResolutionFiniteCyclicGroup(C,n);
+R!.elts:=List([1..Order(C)],i->gens[1]^(i-1));
+return R;
 fi;
 
 head:=Group([gens[1]]);

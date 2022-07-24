@@ -67,7 +67,7 @@ RP:=ResolutionFiniteGroup(P,K);
 if 0 in AbelianInvariants(TD) then
 RTD:=ResolutionNilpotentGroup(TD,K);
 else
-#RTD:=ResolutionAbelianGroup(TD,K);   ######?????
+#RTD:=ResolutionAbelianGroup_alt(TD,K);   ######?????
 RTD:=ResolutionFiniteGroup(TD,K);
 fi;
 

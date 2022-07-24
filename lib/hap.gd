@@ -890,6 +890,7 @@ ReadPackage("HAP","lib/HapPrime/polynomials.gd");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
+ReadPackage("HAP","lib/HapPrime/poincare.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
 ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
 ReadPackage("HAP","lib/Quandles/quandles.gd");
