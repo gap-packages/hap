@@ -76,7 +76,7 @@ fi;
 
 ################# EDIM COMMANDS #######################################
 if IsPackageMarkedForLoading("edim","1.2.2") then 
-ReadPackageHap( "ib/Homology/edim.gi");
+ReadPackageHap( "lib/Homology/edim.gi");
 fi;
 ################# EDIM COMMANDS DONE ###############################
 
