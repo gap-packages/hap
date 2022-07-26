@@ -8,6 +8,6 @@
 ##
 ## Read functions
 ##
-ReadPkg( "hap", "lib/HapCocyclic/gap/cocycle.gi"     );
-ReadPkg( "hap", "lib/HapCocyclic/gap/ccgroup.gi"     );
-ReadPkg( "hap", "lib/HapCocyclic/gap/ccelms.gi"      );
+ReadPackage( "hap", "lib/HapCocyclic/gap/cocycle.gi"     );
+ReadPackage( "hap", "lib/HapCocyclic/gap/ccgroup.gi"     );
+ReadPackage( "hap", "lib/HapCocyclic/gap/ccelms.gi"      );
