@@ -1231,7 +1231,7 @@ local gensG, EltsH, S, L, x, h, s;
 #G can be infinite but H must be finite (and very small).
 #A VERY INEFFICIENT IMPLEMENTATION
 
-gensG:=Generators(G);
+gensG:=GeneratorsOfGroup(G);
 S:=SymmetricGroup(Length(gensG));
 EltsH:=Elements(H);
 L:=[];
