@@ -22,8 +22,8 @@ TestDirectory(
 DirectoriesPackageLibrary( "hap", "tst/testall2" ),
 DirectoriesPackageLibrary( "hap", "tst/testextra" ),
 DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-DirectoriesPackageLibrary( "hap", "tst/testall3" ),
-DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
+DirectoriesPackageLibrary( "hap", "tst/testall3" )],
+#DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
 fi;
