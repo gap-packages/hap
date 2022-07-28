@@ -363,7 +363,8 @@ InstallGlobalFunction(
     function(f,n,k)
     local
         sub, Y, closure, plus1,
-        i, j, bnd;
+        i, j, bnd, Last;
+Last:=function(L); return L[Length(L)];fi;
 
     sub:=RegularCWMapToCWSubcomplex(ShallowCopy(f));
     Y:=sub[1]; # the actual CW-complex
