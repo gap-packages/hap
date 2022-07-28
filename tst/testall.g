@@ -1,6 +1,6 @@
 LoadPackage( "hap" );
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and HAPInfo.Version{[1..4]}="4.11" then
+if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and GAPInfo.Version{[1..4]}="4.11" then
 
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
@@ -13,7 +13,7 @@ rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
 fi;
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and not HAPInfo.Version{[1..4]}="4.11" then
+if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and not GAPInfo.Version{[1..4]}="4.11" then
 
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
