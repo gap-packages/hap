@@ -1693,8 +1693,8 @@ InstallGlobalFunction(
         check, l0, l1, l2, l1_, l2_, IsEdgeInDuplicate,
         copy1, hbars2, vbars2, copy2, 3cell, colour, lcap, reg,
         closure, ucap, l1__, l2__, path_comp, pipes, HorizontalOrVertical,
-        l, AboveBelow0Cell, IntersectingCylinders, pos, colour_;
-
+        l, AboveBelow0Cell, IntersectingCylinders, pos, colour_,Last;
+Last:=function(L); return L[Length(L)]; end;
     if IsList(arc[1][1]) then
         prs:=arc[1]*1;
         crs:=arc[2]*1;
