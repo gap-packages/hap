@@ -24,7 +24,7 @@ DirectoriesPackageLibrary( "hap", "tst/testall3" ),
 DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
-
+fi;
 else
 
 
@@ -36,7 +36,6 @@ DirectoriesPackageLibrary( "hap", "tst/testextra2" )],
 #DirectoriesPackageLibrary( "hap", "tst/testall3" )],
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
-fi;
 fi;
 
 FORCE_QUIT_GAP(1); # if we ever get here, there was an error
