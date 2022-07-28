@@ -1,13 +1,14 @@
 LoadPackage( "hap" );
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and EvalString(GAPInfo.Version{[3,4]})>=9 then
+if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
 
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
 DirectoriesPackageLibrary( "hap", "tst/testall2" ),
 DirectoriesPackageLibrary( "hap", "tst/testextra" ),
 DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-DirectoriesPackageLibrary( "hap", "tst/testall3" )],
+DirectoriesPackageLibrary( "hap", "tst/testall3" ),
+DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
 
