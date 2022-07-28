@@ -2,6 +2,8 @@ LoadPackage( "hap" );
 
 if not GAPInfo.Architecture="x86_64-pc-linux-gnu-default32-kv8" then
 
+if not EvalString(GAPInfo.Version{[3,4]})>=11 then
+
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
 DirectoriesPackageLibrary( "hap", "tst/testall2" ),
@@ -12,8 +14,6 @@ rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
 
 else
-
-if EvalString(GAPInfo.Version{[3,4]})>=11 then
 
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
