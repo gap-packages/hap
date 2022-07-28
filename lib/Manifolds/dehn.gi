@@ -1265,8 +1265,8 @@ for h in homs do
 Add(inv,Homology(TensorWithIntegers(EquivariantChainMap(C,R,h)),3));
 od;
 
-A:=SortedList(List(inv,f->Image(f,Generators(Source(f))[1])));
-B:=SortedList(List(inv,f->Image(f,Generators(Source(f))[1]^-1)));
+A:=SortedList(List(inv,f->Image(f,GeneratorsOfGroup(Source(f))[1])));
+B:=SortedList(List(inv,f->Image(f,GeneratorsOfGroup(Source(f))[1]^-1)));
 return Minimum(A,B);
 end);
 ##########################################################
