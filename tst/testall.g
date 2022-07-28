@@ -8,8 +8,8 @@ TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
 DirectoriesPackageLibrary( "hap", "tst/testall2" ),
 DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-DirectoriesPackageLibrary( "hap", "tst/testall3" )],
+DirectoriesPackageLibrary( "hap", "tst/testextra2" )],
+#DirectoriesPackageLibrary( "hap", "tst/testall3" )],
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
 
