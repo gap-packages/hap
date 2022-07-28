@@ -1,6 +1,6 @@
 LoadPackage( "hap" );
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and EvalString(GAPInfo.Version{[3,4]})>=11 then
+if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and EvalString(GAPInfo.Version{[3,4]})>=9 then
 
 TestDirectory(
 [DirectoriesPackageLibrary( "hap", "tst/testall" ),
