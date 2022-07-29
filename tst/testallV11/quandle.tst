@@ -40,8 +40,7 @@ gap> NumberOfHomomorphisms(QK,Q);
 gap> Q:=ConjugationQuandle(SymmetricGroup(5),1);;
 gap> P:=PathComponents(Q);;
 gap> P:=List(P,x->AsMagma(x));;
-gap> Q:=P[5];
-<semigroup of size 30, with 3 generators>
+gap> Q:=P[5];;
 gap> F:=FundamentalGroup(Q);;
 gap> IdGroup(F);
 [ 4, 1 ]
