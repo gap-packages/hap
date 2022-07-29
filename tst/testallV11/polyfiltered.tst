@@ -15,4 +15,17 @@ gap> P:=PersistentBettiNumbers(K,1)[13];
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> L:=[];;
+gap> for p in [1..14] do
+> K:=RegularCWComplex(RandomSimplicialTwoComplex(50,p/1000));;
+> h1:=Length(Homology(K,1));;
+> Add(L, [1.0*(p/1000),h1,"red"]);
+> od;
+gap> L[13]{[1,3]};
+[ 0.013, "red" ]
+gap> M:=HenonOrbit([0,0],14/10,3/10,5*10^5,50,30);;
+gap> Size(M);
+611
+gap> Size(ContractedComplex(M));
+139
 gap> STOP_TEST( "tst.tst", 1000 );
