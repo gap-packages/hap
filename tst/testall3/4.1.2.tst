@@ -38,4 +38,9 @@ gap> LeibnizAlgebraHomology(C,2);
 6
 gap> Dimension(LieEpiCentre(L));
 1
+gap> D:=Source(LeibnizQuasiCoveringHomomorphism(L));;
+gap> LeibnizAlgebraHomology(D,2);
+6
+gap> Source(LieExteriorSquare(L).homomorphism);
+<algebra of dimension 14 over Rationals>
 gap> STOP_TEST( "tst.tst", 1000 );
