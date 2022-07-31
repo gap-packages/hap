@@ -14,3 +14,5 @@ DeclareGlobalFunction("PolytopalRepresentationComplex");
 DeclareGlobalFunction("HAP_StiefelWhitney");
 DeclareGlobalFunction("FundamentalMultiplesOfStiefelWhitneyClasses");
 DeclareGlobalFunction("CohomologyHomomorphismOfRepresentation");
+DeclareGlobalFunction("MinimizeRingRelations");
+DeclareGlobalFunction("CohomologicalData");

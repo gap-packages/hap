@@ -2,7 +2,8 @@
 if IsPackageMarkedForLoading("singular","06.07.23") then
 #######################################################
 #######################################################
-MinimizeRingRelations:=function(P)
+InstallGlobalFunction(MinimizeRingRelations,
+function(P)
 local newP, rels, gens, newrels, newgens, H, newH, i;
 rels:=SSortedList(P!.relations);
 if Length(rels)=0 then return P; fi;
@@ -34,16 +35,18 @@ od;
 
 return newP;
 
-end;
+end);
 #######################################################
 #######################################################
 else
-MinimizeRingRelations:=function(x) return x; end;
+InstallGlobalFunction(MinimizeRingRelations,
+function(x) return x; end);
 fi;
 
 #########################################################
 #########################################################
-CohomologicalData:=function(arg)
+InstallGlobalFunction(CohomologicalData,
+function(arg)
 local G,N,file, alpha, alpha1, A, gens, gensletters, gensletters1, gensdegrees,
 d, p, tmp, tmpdir, x, relabel, relabeltwo, pres, rels, r, s,i, k, w,
 AppendTo, PrintTo; 
@@ -206,7 +209,7 @@ i:=InputTextFile(file);
 s:=ReadAll(i);
 Print(s);
 if Length(arg)=2 then RemoveFile(file); fi;
-end;
+end);
 #########################################################
 #########################################################
 
