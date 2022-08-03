@@ -1,40 +1,22 @@
 LoadPackage( "hap" );
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
+dirs := [
+    DirectoriesPackageLibrary( "hap", "tst/testall" ),
+    DirectoriesPackageLibrary( "hap", "tst/testall2" ),
+    DirectoriesPackageLibrary( "hap", "tst/testextra" ),
+    DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
+];
 
-TestDirectory(
-[DirectoriesPackageLibrary( "hap", "tst/testall" ),
-DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-DirectoriesPackageLibrary( "hap", "tst/testall3" ),
-DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
-rec(exitGAP     := true,
-    testOptions := rec(compareFunction := "uptowhitespace") ) );
+if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
+  Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testall3" ));
+
+  if (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
+    Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testallV11" ));
+  fi;
 fi;
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") and not (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
-
-TestDirectory(
-[DirectoriesPackageLibrary( "hap", "tst/testall" ),
-DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
-DirectoriesPackageLibrary( "hap", "tst/testall3" )],
-#DirectoriesPackageLibrary( "hap", "tst/testallV11" )],
+TestDirectory(dirs,
 rec(exitGAP     := true,
     testOptions := rec(compareFunction := "uptowhitespace") ) );
-fi;
-
-if not StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
-TestDirectory(
-[DirectoriesPackageLibrary( "hap", "tst/testall" ),
-DirectoriesPackageLibrary( "hap", "tst/testall2" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra" ),
-DirectoriesPackageLibrary( "hap", "tst/testextra2" )],
-#DirectoriesPackageLibrary( "hap", "tst/testall3" )],
-rec(exitGAP     := true,
-    testOptions := rec(compareFunction := "uptowhitespace") ) );
-fi;
 
 FORCE_QUIT_GAP(1); # if we ever get here, there was an error
