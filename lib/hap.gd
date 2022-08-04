@@ -164,6 +164,7 @@ DeclareGlobalFunction("HapExample");
 DeclareGlobalFunction("HapFile");
 DeclareGlobalFunction("TestHap");
 DeclareGlobalFunction("TestHapBook");
+DeclareGlobalFunction("TestHapQuick");
 #DeclareGlobalFunction("EvaluateProperty");
 DeclareGlobalFunction("EvenSubgroup");
 DeclareGlobalFunction("EquivariantChainMap");

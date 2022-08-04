@@ -12,6 +12,8 @@ if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
 
   if (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
     Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testallV11" ));
+    Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testslow" ));
+    Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testveryslow" ));
   fi;
 fi;
 
