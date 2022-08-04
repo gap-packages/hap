@@ -1,5 +1,5 @@
 gap> START_TEST("HAP library");
-gap> ReadPackage("HAP","tst/testall/25spheres.txt");;
+gap> ReadPackage("HAP","tst/testall1/25spheres.txt");;
 gap> K:=PureCubicalComplexToCubicalComplex(M);;
 gap> Size(K);
 5999166

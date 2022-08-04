@@ -1,6 +1,6 @@
 #E
 gap> START_TEST("HAP library");
-gap> ReadPackage("HAP","tst/testall/data246.txt");;
+gap> ReadPackage("HAP","tst/testall1/data246.txt");;
 gap> F:=ThickeningFiltration(T,20);;
 gap> Y:=FiltrationTerm(F,12);;
 gap> Size(Y);

@@ -1,6 +1,6 @@
 #D
 gap> START_TEST("HAP library");
-gap> ReadPackage("HAP","tst/testall/data246.txt");;
+gap> ReadPackage("HAP","tst/testall1/data246.txt");;
 gap> F:=ThickeningFiltration(T,5);;
 gap> P1:=PersistentBettiNumbers(F,1);
 [ [ 0, 0, 0, 0 ], [ 0, 364, 105, 13 ], [ 0, 0, 122, 13 ], [ 0, 0, 0, 13 ] ]
