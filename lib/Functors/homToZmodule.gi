@@ -138,15 +138,17 @@ end;
 #####################################################################
 #####################################################################
 HomArr:=function(map,f)
-local R, S, C, D, DhomC, mapping,IntToPair,LA;
+local R, S, C, D, DhomC, mapping,IntToPair,LA, hom, ff;
 
+hom:=map!.originalHom;
 R:=Source(map);
 S:=Target(map);
 mapping:=map!.mapping;
 
 #D:=f(S) --> f(R)=:C
 
-C:=HomToIntegralModule(R,f);
+ff:=Compose(f,hom);
+C:=HomToIntegralModule(R,ff);
 IntToPair:=C!.intToPair;
 LA:=Length(Identity(Range(f)));
 D:=HomToIntegralModule(S,f);
@@ -154,12 +156,20 @@ D:=HomToIntegralModule(S,f);
 ##################################
 ##################################
 DhomC:=function(v,n)
-local u, m,i,j,k, bnd, x,z,zz,posD, posC;
+local u, m,i,j,k, bnd, bnd2, x,z,zz,posD, posC, pos;
 u:=[1..C!.dimension(n)]*0;
 
 
 for j in [1..C!.dimension(n)/LA] do
 bnd:=mapping([[j,1]],n);
+            #bnd2:=[];
+            #for x in bnd do
+            #   z:=ImagesRepresentative(hom, R!.elts[x[2]]);
+            #   pos:=Position(S!.elts,z);
+            #   if pos=fail then Add(S!.elts,z); pos:=Length(S!.elts); fi;
+            #   Add(bnd2,[x[1],pos]);
+            #od;
+            #bnd:=bnd2;
    for x in bnd do
    z:=SignInt(x[1])*v{[(AbsInt(x[1])-1)*LA+1..AbsInt(x[1])*LA  ]};
    z:=TransposedMat([z]);

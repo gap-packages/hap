@@ -317,9 +317,9 @@ InstallMethod(Compose,
 "for group homomorphisms xoy=x(y)",
 [IsGroupHomomorphism,IsGroupHomomorphism],
 function(x,y)
-if not (Source(x)=Range(y)) then return fail; fi;
+#if not (Source(x)=Range(y)) then return fail; fi;
 return GroupHomomorphismByFunction(Source(y),Range(x),
-a->Image(x,Image(y,a)));
+a->ImagesRepresentative(x,ImagesRepresentative(y,a)));
 end);
 #####################################################################
 

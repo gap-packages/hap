@@ -190,6 +190,7 @@ return Objectify(HapResolution,
 	     elts:=EltsK,
 	     group:=K,
              Int2Pair:=Int2Pair,
+             transversal:=TransK,
 	     properties:=
 	     [["length",EvaluateProperty(R,"length")],
 	      ["characteristic",EvaluateProperty(R,"characteristic")],

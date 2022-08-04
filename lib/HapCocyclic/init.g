@@ -13,6 +13,6 @@
 ##
 ##  Read .gd files
 ##
-ReadPackage( "HAP", "lib/HapCocyclic/gap/cocycle.gd"      );
-ReadPackage( "hap", "lib/HapCocyclic/gap/ccgroup.gd"      );
-ReadPackage( "hap", "lib/HapCocyclic/gap/ccelms.gd"       );
+ReadPkg( "HAP", "lib/HapCocyclic/gap/cocycle.gd"      );
+ReadPkg( "hap", "lib/HapCocyclic/gap/ccgroup.gd"      );
+ReadPkg( "hap", "lib/HapCocyclic/gap/ccelms.gd"       );

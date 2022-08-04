@@ -1,7 +1,7 @@
 LoadPackage( "hap" );
 
 dirs := [
-    DirectoriesPackageLibrary( "hap", "tst/testall" ),
+    DirectoriesPackageLibrary( "hap", "tst/testall1" ),
     DirectoriesPackageLibrary( "hap", "tst/testall2" ),
     DirectoriesPackageLibrary( "hap", "tst/testextra" ),
     DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
