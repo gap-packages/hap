@@ -1,5 +1,5 @@
 gap> START_TEST("HAP library");
-gap> ReadPackage("HAP","tst/testall,25spheres.txt");;
+gap> ReadPackage("HAP","tst/testall1/25spheres.txt");;
 gap> Size(M);
 499874
 gap> A:=ContractibleSubcomplex(M);;
