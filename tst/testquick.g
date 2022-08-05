@@ -7,10 +7,12 @@ dirs := [
     DirectoriesPackageLibrary( "hap", "tst/testextra2" ),
 ];
 
-if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
+#if StartsWith(GAPInfo.Architecture,"x86_64-pc-linux-gnu-default64") then
+if GAPInfo.BytesPerVariable >= 8 then
   Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testall3" ));
 
-  if (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
+# if (GAPInfo.Version{[1..4]}="4.11" or GAPInfo.Version{[1..4]}="4.12") then
+  if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.11") then
     Add(dirs, DirectoriesPackageLibrary( "hap", "tst/testallV11" ));
   fi;
 fi;
