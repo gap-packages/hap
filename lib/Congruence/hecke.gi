@@ -121,8 +121,6 @@ map321:=HomToIntegers(map321);
 
 t:=Cohomology(map321,N);
 return t;
-t:=List(GeneratorsOfGroup(Source(t)),x->Exponents(Image(t,x)));
-return [t,Homology(Source(map321),1)];
 end);
 ###########################################################
 ###########################################################
