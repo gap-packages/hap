@@ -3,8 +3,12 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(HomToIntegralModule,
-function(R,f)
-local HomObj, HomArr,Image;
+function(arg)
+local R,f,ag, HomObj, HomArr,Image;
+
+R:=arg[1];
+f:=arg[2];
+if Length(arg)=3 then ag:=arg[3]; else ag:=fail; fi;
 
 if IsBound(f!.fun) then
 ####################################
@@ -62,9 +66,10 @@ kq:=x[1]; kr:=x[2];
 
 row:=[];
 for i in [1..R!.dimension(n+1)] do
-	sum := ListWithIdenticalEntries(LA, 0);
+	#sum := ListWithIdenticalEntries(LA, 0);
+         sum:=[1..LA]*0;
 
-	for x in R!.boundary(n+1,i) do
+	for x in R!.boundary(n+1,i) do   ##Stupidly inefficient!!!
 		if AbsoluteValue(x[1])=kq then 
 			# It is left action
 			sum := sum + SignInt(x[1])*Image(f,R!.elts[x[2]]){[1..LA]}[kr];
@@ -138,7 +143,7 @@ end;
 #####################################################################
 #####################################################################
 HomArr:=function(map,f)
-local R, S, C, D, DhomC, mapping,IntToPair,LA, hom, ff;
+local R, S, C, D, DhomC, mapping,IntToPair,LA, hom, ff, rnk;
 
 hom:=map!.originalHom;
 R:=Source(map);
@@ -148,28 +153,21 @@ mapping:=map!.mapping;
 #D:=f(S) --> f(R)=:C
 
 ff:=Compose(f,hom);
-C:=HomToIntegralModule(R,ff);
+C:=HomToIntegralModule(R,f);   ##This should usually be ff
 IntToPair:=C!.intToPair;
 LA:=Length(Identity(Range(f)));
 D:=HomToIntegralModule(S,f);
+if not ag=fail then ag:=ImagesRepresentative(f,ag); fi;
 
 ##################################
 ##################################
 DhomC:=function(v,n)
-local u, m,i,j,k, bnd, bnd2, x,z,zz,posD, posC, pos;
+local u,uu, m,i,j,k, bnd, bnd2, x,z,zz,posD, posC, pos;
 u:=[1..C!.dimension(n)]*0;
 
 
 for j in [1..C!.dimension(n)/LA] do
 bnd:=mapping([[j,1]],n);
-            #bnd2:=[];
-            #for x in bnd do
-            #   z:=ImagesRepresentative(hom, R!.elts[x[2]]);
-            #   pos:=Position(S!.elts,z);
-            #   if pos=fail then Add(S!.elts,z); pos:=Length(S!.elts); fi;
-            #   Add(bnd2,[x[1],pos]);
-            #od;
-            #bnd:=bnd2;
    for x in bnd do
    z:=SignInt(x[1])*v{[(AbsInt(x[1])-1)*LA+1..AbsInt(x[1])*LA  ]};
    z:=TransposedMat([z]);
@@ -182,6 +180,12 @@ bnd:=mapping([[j,1]],n);
    od;
 od;
 
+if not ag=fail then uu:=[];
+   for j in [1..C!.dimension(n)/LA] do
+   Append(uu,  u{[(j-1)*LA+1..j*LA]}*ag);
+   od;
+u:=uu;
+fi;
 
 
 return u;

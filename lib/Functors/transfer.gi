@@ -2,8 +2,8 @@
 #####################################################
 InstallGlobalFunction(TransferCochainMap,
 function(arg)
-local R,H,A,rnk,S,CR,CS, T, TT, fn, SS,map, HhomH, trans,
-LT, TietzeReduced;
+local R,H,A,B,rnk,S,CR,CS, T, TT, fn, SS,map, HhomH, trans,
+LT, TietzeReduced, hom, elts, mult;
 
 TietzeReduced:=function(R); return R; end;
 TietzeReduced:=TietzeReducedResolution;
@@ -14,11 +14,13 @@ S:=ResolutionFiniteSubgroup(R,H);;
 trans:=S!.transversal;
 trans:=List(trans,x->x^-1);
 LT:=Length(trans);
-if Length(arg)=3 then A:=arg[3]; rnk:=Length(One(Image(A)));
+if Length(arg)=3 then B:=arg[3]; rnk:=Length(One(Image(B)));
+A:=B;
 CR:=HomToIntegralModule(R,A);
-CS:=HomToIntegralModule(S,A);
-trans:=List(trans,g->Image(A,g));
-else
+CS:=HomToIntegralModule(S,B);
+trans:=List(trans,g->ImagesRepresentative(A,g));
+fi;
+if Length(arg)=2 then
 CR:=HomToIntegers(R);;
 CS:=HomToIntegers(S);;
 fi;
@@ -48,7 +50,6 @@ for i in [1..S!.dimension(n)] do
    a:=TransposedMat(a);
    for j in [1..rnk] do
       u:=[1..rnk]*0; u[j]:=1;
-#a:=TransposedMat(a);
       u:=u*a;
       for k in [1..rnk] do
          w[(x[1]-1)*rnk+k]:= w[(x[1]-1)*rnk+k]+v[(i-1)*rnk+j]*u[k];
@@ -72,11 +73,20 @@ T:=Objectify(HapCochainMap,
            ]
            ));
 
+elts:=S!.elts;               
+mult:=elts!.mult;
+if IsPseudoList(elts) then   ##A hack to allow TietzeReduced to work!!
+if IsBound(elts!.mult) then  ##
+Unbind(elts!.mult);          ##
+fi;
+fi;
 SS:=TietzeReduced(S);;
+elts!.mult:=mult;
+
 HhomH:=GroupHomomorphismByFunction(H,H,x->x);
 map:=EquivariantChainMap(S,SS,HhomH);;
-if Length(arg)=3 then
-map:=HomToIntegralModule(map,A);
+if Length(arg)>=3 then
+map:=HomToIntegralModule(map,B);
 else
 map:=HomToIntegers(map);
 fi;

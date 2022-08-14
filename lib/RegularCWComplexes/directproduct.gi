@@ -191,6 +191,7 @@ fi;
 M!.firstProjection:=XYmapX;
 M!.secondProjection:=XYmapY;
 M!.quad2pair:=quad2pair;
+M!.pair2quad:=pair2quad;
 
 return M;
 end);

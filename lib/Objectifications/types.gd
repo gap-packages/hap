@@ -649,6 +649,34 @@ Print(G!.name,"(",G!.level,") ");
 
 #####################################################################
 #####################################################################
+IsHapSL2ConjugatedSubgroup:=NewFilter("IsHapSL2ConjugatedSubgroup");;
+IsHapSL2ZConjugatedSubgroup:=NewFilter("IsHapSL2ZConjugatedSubgroup");;
+
+HapSL2ZConjugatedSubgroup:=NewType(FamilyObj(rec()),
+                   IsHapSL2ConjugatedSubgroup
+                   and IsHapSL2ZConjugatedSubgroup
+                   and IsGroup
+                   );;
+
+InstallMethod( ViewObj,
+"for HapSL2ZConjugatedSubgroup",
+[IsHapSL2ZConjugatedSubgroup and IsGroup],
+function(G)
+Print(G!.name,"(",G!.level,") ");
+ end);
+
+InstallMethod( PrintObj,
+"for HapSL2ZConjugatedSubgroup",
+[IsHapSL2ZConjugatedSubgroup and IsGroup],
+function(G)
+Print(G!.name,"(",G!.level,") ");
+ end);
+
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
 IsHapSL2OSubgroup:=NewFilter("IsHapSL2OSubgroup");;
 
 HapSL2ZSubgroup:=NewType(FamilyObj(rec()),

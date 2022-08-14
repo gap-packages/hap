@@ -329,9 +329,9 @@ and the Eisenstein space <M>E_2(\Gamma_0(39))\cong \mathbb C^3</M> is of  dimens
 
 </Section>
 
-<Section><Heading>Hecke operators</Heading>
+<Section><Heading>Hecke operators on forms of weight 2</Heading>
 
-A congruence subgroup <M>\Gamma \le SL_m(\mathbb Z)</M> and element <M>g\in SL_m(\mathbb Q)</M>  determine the subgroup
+A congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> and element <M>g\in SL_2(\mathbb Q)</M>  determine the subgroup
 <M>\Gamma' = \Gamma \cap g\Gamma g^{-1} </M> and  homomorphisms
 <Display> \Gamma\ \hookleftarrow\ \Gamma'\ \ \stackrel{\gamma \mapsto g^{-1}\gamma g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . </Display> 
 These homomorphisms give rise to homomorphisms of cohomology groups
@@ -341,18 +341,29 @@ We define the composite <M>T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \ma
 Further details on this description of Hecke operators can be found in 
 <Cite Key="stein" Where="Appendix by P. Gunnells"/>.
 
-<P/>For each integer <M>s\ge 1</M> we set <M>T_s =T_s</M> with
-for <M>g=\left(\begin{array}{cc}1&amp;0\\0&amp;\frac{1}{s}\end{array}\right)</M>.
+<P/>For each prime integer <M>p\ge 1</M> we set <M>T_p =T_g</M> with
+for <M>g=\left(\begin{array}{cc}1&amp;0\\0&amp;p\end{array}\right)</M>.
 
 <P/>The following commands compute <M>T_2</M> and <M>T_5</M>
  for <M>n=1</M>
 and
- <M>\Gamma=\Gamma_0(39)</M>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <M>T_2</M> and <M>T_5</M> commute. (It is a fact that <M>T_pT_q=T_qT_p</M> for all integers <M>p,q</M>.)   
+ <M>\Gamma=\Gamma_0(39)</M>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <M>T_2</M> and <M>T_5</M> commute. (It is a fact that <M>T_pT_q=T_qT_p</M> for all primes <M>p,q</M>.)   
 
 <Example>
 <#Include SYSTEM "tutex/11.7.txt">
 </Example>
 
+</Section>
+
+
+<Section><Heading>Hecke operators on forms of weight <M> \ge 2</M></Heading>
+The above definition of Hecke operator <M>T_g</M> for <M>g\in SL_2(\mathbb Q)</M> extends to a Hecke operator
+<M>T_g\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )</M> for <M>k\ge 2</M>. We  work over the rationals rather than the integers in 
+order to ensure that the action of <M>\Gamma</M> on homogeneous polynomials extends to an action of <M>g</M>. 
+The following commands compute the matrix of <M>T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )</M> for <M>\Gamma=SL_2(\mathbb Z)</M> and <M>k=4</M>;
+<Example>
+<#Include SYSTEM "tutex/11.7b.txt">
+</Example>
 </Section>
 
 <Section><Heading>Reconstructing modular forms from cohomology computations</Heading>
@@ -369,7 +380,7 @@ Hecke operators restrict to  operators <M>T_s\colon S_2(\Gamma) \rightarrow S_2(
 
 
 <P/>Let us now introduce the function <M>q=q(z)=e^{2\pi i z}</M> which is holomorphic on <M>\mathbb C</M>.
-For any modular form <M>f(z)</M> there are numbers <M>a_n</M> such that
+For any modular form <M>f(z)</M> there are numbers <M>a_s</M> such that
 <Display>f(z) = \sum_{s=0}^\infty a_sq^s </Display>
 for all <M>z\in {\frak h}</M>. The form <M>f</M> is a cusp form if <M>a_0=0</M>.
 
@@ -384,7 +395,7 @@ cusp form <M>f\in S_2(\Gamma)</M> is an <E>eigenform</E> if it is simultaneously
 
 <P/> Suppose that we would like a basis for <M>S_2(\Gamma_0(11))</M>. The following commands first show that <M>H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z</M> from which we deduce that <M>S_2(\Gamma_0(11)) =\mathbb C</M> is <M>1</M>-dimensional. Then eigenvalues of 
 Hecke operators are calculated to establish that the modular form
-<Display>f = q -2q^2 -q^3 +q^4 +q^5 +2q^6 -2q^7 +2q^8 -3q^9 -2q^{10} + \cdots </Display>
+<Display>f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots </Display>
 constitutes a basis for <M>S_2(\Gamma_0(11))</M>. 
 
 <Example>
@@ -397,6 +408,18 @@ If <M>r,s</M> are coprime then <M>T_{rs} =T_rT_s</M>.
 If <M>p</M> is a prime that is not a divisor of the level <M>N</M> of <M>\Gamma</M> then
 <M>a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.</M>
 If the prime <M> p</M> divides <M>N</M> then <M>a_{p^m} = (a_p)^m</M>. It thus suffices to compute the coefficients <M>a_p</M> for prime integers <M>p</M> only.
+
+<P/>
+The following commands establish that <M>S_{12}(SL_2(\mathbb Z))</M> has a basis
+consisting of one cusp eigenform
+<P/><M>q - 24q^2 + 252q^3 - 1472q^4 + 4830q^5 - 6048q^6 - 16744q^7 + 84480q^8 - 113643q^9 </M>
+<P/><M>- 115920q^{10} + 534612q^{11} - 370944q^{12} - 577738q^{13} + 401856q^{14} + 1217160q^{15} + 987136q^{16}</M>
+<P/><M> - 6905934q^{17} + 2727432q^{18} + 10661420q^{19} + ...</M>
+
+<Example>
+<#Include SYSTEM "tutex/11.7c.txt">
+</Example>
+
 </Section>
 
 <Section><Heading>The Picard group</Heading>

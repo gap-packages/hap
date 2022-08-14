@@ -9,7 +9,18 @@ local
 	FasterHomology_Obj,
 	Homology_Obj,
 	Homology_Arr,
-	HomologyAsFpGroup;
+	HomologyAsFpGroup,
+        prime,Fld,C;
+
+if IsHapChainMap(X) then C:=X; else C:=Source(X); fi;
+prime:=EvaluateProperty(C,"characteristic");
+
+if prime=-1/2 then Fld:=Field(1); fi;
+if IsPrimeInt(prime) then Fld:=GF(prime); fi;
+if not IsPrimeInt(prime) and not prime=-1/2 then
+Print("The field should be the rationals or of prime characteristic.\n");
+return fail;
+fi;
 
 #####################################################################
 #####################################################################
@@ -21,15 +32,13 @@ local
         Dimension, Boundary,
         BasisKerd1, BasisImaged2, Rels, Rank, RankM1, RankM2,
 	LengthM1,LengthM2,
-	prime,
         i;
 
-prime:=EvaluateProperty(C,"characteristic");
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
 if n <0 then return 0; fi;
-if Dimension(n)=0 then return GF(prime)^0; fi;
+if Dimension(n)=0 then return Fld^0; fi;
 
 ########################
 if n=0 then
@@ -38,7 +47,7 @@ fi;
 
 if n>0 then
 M1:=[];
- if Dimension(n-1)=0 then BasisKerd1:=Basis(GF(prime)^Dimension(n)); 
+ if Dimension(n-1)=0 then BasisKerd1:=Basis(Fld^Dimension(n)); 
  else
 
  for i in [1..Dimension(n)] do
@@ -68,7 +77,7 @@ M2:=0;
 
 Rank:= LengthM1-RankM1 -RankM2;;
 
-return GF(prime)^Rank;
+return Fld^Rank;
 end;
 #####################################################################
 #####################################################################
@@ -83,10 +92,8 @@ local
 	rankM1, rankM2, 
 	Dimension, Boundary,
 	BasisKerd1, BasisImaged2, Rels, Rank, 
-	prime,
 	i,k,tmp;
 
-prime:=EvaluateProperty(C,"characteristic");
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
@@ -94,7 +101,7 @@ if n <0 then return false; fi;
 
 ########################
 if n=0 then
-BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
+BasisKerd1:=IdentityMat(Dimension(n))*One(Fld);
 fi;
 
 if n>0 then
@@ -103,7 +110,7 @@ M1:=[];
 
 if Dimension(n-1)=0 then
   for i in [1..Dimension(n)] do
-  M1[i]:=[Zero(GF(prime))];
+  M1[i]:=[Zero(Fld)];
   od;
 else
   for i in [1..Dimension(n)] do
@@ -131,7 +138,7 @@ k:=0;
  k:=Minimum(Dimension(n+1),k+100);
  Append(tmp,BaseMat(M2));
  od;
- Add(tmp,[1..Dimension(n)]*Zero(GF(prime)) );
+ Add(tmp,[1..Dimension(n)]*Zero(Fld) );
 
 BasisImaged2:=BaseMat(tmp); tmp:=0;
 dim:=Length(BasisImaged2);
@@ -157,7 +164,7 @@ end;
 HomologyAsFpGroup:=function(C,n)
 local
         F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
-        Vector2Word, BasisKerd1, rel, i, j, prime, FieldToInt, 
+        Vector2Word, BasisKerd1, rel, i, j, FieldToInt, 
 	one, Bas;
 
 #############SAVE RECOMPUTATIONS##########
@@ -173,17 +180,17 @@ fi;
 IHC:=Homology_Obj(C,n);
 BasisKerd1:=IHC.basisKerd1;
 Rels:=IHC.rels;
-prime:=EvaluateProperty(C,"characteristic");
 
-F:=GF(prime)^Length(BasisKerd1);
+F:=Fld^Length(BasisKerd1);
 Fgens:=List(CanonicalBasis(F),x->x);
 Frels:=[Zero(F)];
 
-one:=One(GaloisField(prime));
+one:=One(Fld);
 #####################################################################
 FieldToInt:=function(x)
 local
 	i;
+if prime=-1/2 then return x; fi;
 for i in [0..prime] do
 if i*one=x then return i; fi;
 od;
@@ -254,25 +261,23 @@ local
 	        HC, HChomC, ChomHC, IHC,
                 HD, HDhomD, DhomHD, IHD,
                 HChomHD, gensHC, imageGensHC,
-		prime,
                 x,V,W;
 
 
 C:=f!.source;
 D:=f!.target;
 ChomD:=f!.mapping;
-prime:=EvaluateProperty(C,"characteristic");
 
 ########################################
 if C!.dimension(n)=0 and D!.dimension(n)=0 then  
-V:=GF(prime)^0;
+V:=Fld^0;
 return NaturalHomomorphismBySubspace(V,V);
 fi;
 
 if C!.dimension(n)=0 then
 W:=HomologyAsFpGroup(D,n)!.fpgroup;
 if Dimension(W)=0 then
-V:=GF(prime)^0;
+V:=Fld^0;
 return NaturalHomomorphismBySubspace(V,V);
 fi;
 V:=Subspace(W,[Zero(W)]);
@@ -315,16 +320,18 @@ end;
 #####################################################################
 
 if EvaluateProperty(X,"type")="chainComplex" then
- if IsPrimeInt(EvaluateProperty(X,"characteristic")) then
+ if IsPrimeInt(EvaluateProperty(X,"characteristic")) or
+ EvaluateProperty(X,"characteristic")=-1/2 then
  return FasterHomology_Obj(X,n); 
- else Print("This function can only be applied in prime characteristic.\n");
+ else Print("This function can only be applied over the rationals or in prime characteristic.\n");
  return fail; fi;
 fi;
 
 if EvaluateProperty(X,"type")="chainMap" then
- if IsPrimeInt(EvaluateProperty(Source(X),"characteristic")) then
+ if IsPrimeInt(EvaluateProperty(Source(X),"characteristic")) or
+ EvaluateProperty(Source(X),"characteristic") =-1/2 then
  return Homology_Arr(X,n); 
- else Print("This function can only be applied in prime characteristic.\n");
+ else Print("This function can only be applied over the rationals or in prime characteristic.\n");
  return fail; fi;
 fi;
 

@@ -5,7 +5,11 @@ InstallGlobalFunction(HAP_HomToIntModP_ChainComplex,
 function(C,p)
 local D, DimensionD, BoundaryD, BoundaryDrec, len, n, k,i, A, one;
 
+if IsPrimeInt(p) then
 one:=One(GF(p));
+else
+one:=One(Field(1));
+fi;
 ################################
 ################################
 if not IsHapChainComplex(C) then
@@ -74,7 +78,11 @@ InstallGlobalFunction(HAP_HomToIntModP_CochainComplex,
 function(C,p)
 local D, DimensionD, BoundaryD, BoundaryDrec, len, n, k,i, A, one;
 
+if IsPrimeInt(p) then
 one:=One(GF(p));
+else
+one:=One(Field(1));
+fi;
 ################################
 ################################
 if not IsHapCochainComplex(C) then
@@ -144,7 +152,10 @@ InstallGlobalFunction(HAP_HomToIntModP_ChainMap,
 function(F,p)
 local S, T, HS, HT, HF, HThomHS, zero,n,sparsemap, A, B, InitA, one;
 
+if IsPrimeInt(p) then
 one:=One(GF(p));
+else one:=One(Field(1));
+fi;
 S:=Source(F);
 HS:=HomToIntegersModP(S,p);
 T:=Target(F);
@@ -207,3 +218,57 @@ return Objectify(HapCochainMap,
 end);
 ##########################################
 ##########################################
+
+
+
+##########################################
+##########################################
+InstallGlobalFunction(HAP_HomToIntModP_CochainMap,
+function(F,p)
+local char, S, T, HS, HT, HF, HThomHS, zero,n,sparsemap, A, B, InitA, one;
+
+if IsPrimeInt(p) then
+one:=One(GF(p));
+else one:=One(Field(1));
+fi;
+S:=Source(F);
+HS:=HomToIntegersModP(S,p);
+T:=Target(F);
+HT:=HomToIntegersModP(T,p);
+
+zero:=[];
+for n in [1..Length(S)+1] do
+zero[n]:=0*[1..S!.dimension(n-1)];
+od;
+
+#A:=List([0..Length(S)],i->IdentityMat(S!.dimension(i)));
+A:=[];
+#for n in [0..Length(A)-1] do
+InitA:=function(n);
+A[n+1]:=IdentityMat(S!.dimension(n));
+B:=List(A[n+1], r->F!.mapping(r,n));
+A[n+1]:=TransposedMat(B);
+end;
+#od;
+#################
+HThomHS:=function(v,n)
+local rowA, ans, k;
+if not IsBound(A[n+1]) then InitA(n); fi;
+return v*A[n+1];
+end;
+#################
+
+
+
+return Objectify(HapChainMap,
+        rec(
+           source:=HT,
+           target:=HS,
+           mapping:=HThomHS,
+           properties:=[ ["type","chainMap"],
+                         ["characteristic", p] ]));
+
+end);
+##########################################
+##########################################
+

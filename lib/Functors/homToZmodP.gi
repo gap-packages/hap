@@ -173,6 +173,9 @@ return HAP_HomToIntModP_ChainMap(X,prime); fi;
 if EvaluateProperty(X,"type") = "cochainComplex" then
 return HAP_HomToIntModP_CochainComplex(X,prime); fi;
 
+if EvaluateProperty(X,"type") = "cochainMap" then
+return HAP_HomToIntModP_CochainMap(X,prime); fi;
+
 return fail;
 
 Print("ERROR: Input should be a resolution or equivariant map between resolutions. \n");

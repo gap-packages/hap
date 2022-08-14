@@ -29,6 +29,7 @@ EltsG:=R!.elts;
 if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
 if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
 if Size(G)=Length(EltsG) then FIN:=true; else FIN:= false; fi;
+
 if FIN then 
    if IsPseudoList(EltsG) then EltsK:=EltsG;
    else

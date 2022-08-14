@@ -188,6 +188,7 @@ DeclareGlobalFunction("HomToInt_ChainMap");#<HomToIntegers
 DeclareGlobalFunction("HAP_HomToIntModP_ChainComplex");#<HomToIntegers
 DeclareGlobalFunction("HAP_HomToIntModP_CochainComplex");#<HomToIntegers
 DeclareGlobalFunction("HAP_HomToIntModP_ChainMap");#<HomToIntegers
+DeclareGlobalFunction("HAP_HomToIntModP_CochainMap");#<HomToIntegers
 DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
 DeclareGlobalFunction("PermToMatrixGroup");
@@ -220,7 +221,7 @@ DeclareAttribute("CohomologicalPeriod",IsGroup);
 DeclareGlobalFunction("TransferChainMap");
 DeclareGlobalFunction("TransferCochainMap");
 DeclareGlobalFunction("HeckeOperatorWeight2");
-DeclareGlobalFunction("HeckeOperatorHigherWeight");
+DeclareGlobalFunction("HeckeOperator");
 DeclareGlobalFunction("HomogeneousPolynomials");
 DeclareGlobalFunction("HAP_4x4MatTo2x2Mat");
 DeclareGlobalFunction("HAP_nxnMatTo2nx2nMat");
@@ -881,6 +882,10 @@ DeclareGlobalFunction("QuadraticCharacter");
 DeclareGlobalFunction("Lfunction");
 DeclareOperation("AsFpGroup",[IsHapSL2OSubgroup]);
 
+DeclareGlobalFunction("HAP_GenericSL2ZConjugatedSubgroup");
+DeclareGlobalFunction("HAP_ConjugatedCongruenceSubgroupGamma0");
+DeclareGlobalFunction("HAP_ConjugatedCongruenceSubgroup");
+DeclareGlobalFunction("ResolutionSL2ZConjugated");
 
 ## OTHER ############################################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gd");

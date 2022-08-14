@@ -5,7 +5,7 @@
 InstallGlobalFunction(TensorWithRationals,
 function(R)
 local
-        BoundaryC,
+        C,D,map,BoundaryC,
         LengthC,
         M,
         One,
@@ -16,6 +16,47 @@ if IsHapChainComplex(R) then
 return TensorWithIntegersModP(R,-1/2);
 fi;
 ##########################################################
+
+##########################################################
+if IsHapCochainComplex(R) then
+return TensorWithIntegersModP(R,-1/2);
+fi;
+##########################################################
+
+##########################################################
+if IsHapCochainMap(R) then
+C:=TensorWithRationals(Source(R));
+D:=TensorWithRationals(Target(R));
+map:=R!.mapping;
+return
+Objectify(HapCochainMap,
+            rec(
+            source:=C,
+            target:=D,
+            mapping:=map,
+            properties:=
+            [["type","cochainMap"],
+             ["characteristic", -1/2]]));
+fi;
+##########################################################
+
+##########################################################
+if IsHapChainMap(R) then
+C:=TensorWithRationals(Source(R));
+D:=TensorWithRationals(Target(R));
+map:=R!.mapping;
+return
+Objectify(HapChainMap,
+            rec(
+            source:=C,
+            target:=D,
+            mapping:=map,
+            properties:=
+            [["type","chainMap"],
+             ["characteristic", -1/2]]));
+fi;
+##########################################################
+
 
 ##########################################################
 if IsHapNonFreeResolution(R) then
