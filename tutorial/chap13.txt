@@ -462,9 +462,9 @@
   [4X[32X[104X
   
   
-  [1X13.6 [33X[0;0YHecke operators[133X[101X
+  [1X13.6 [33X[0;0YHecke operators on forms of weight 2[133X[101X
   
-  [33X[0;0YA  congruence  subgroup  [22XΓ le SL_m( Z)[122X and element [22Xg∈ SL_m( Q)[122X determine the
+  [33X[0;0YA  congruence  subgroup  [22XΓ le SL_2( Z)[122X and element [22Xg∈ SL_2( Q)[122X determine the
   subgroup [22XΓ' = Γ ∩ gΓ g^-1[122X and homomorphisms[133X
   
   
@@ -487,17 +487,17 @@
   by [22Xg[122X. Further details on this description of Hecke operators can be found in
   [Ste07, Appendix by P. Gunnells].[133X
   
-  [33X[0;0YFor    each    integer    [22Xsge    1[122X    we    set    [22XT_s    =T_s[122X    with   for
-  [22Xg=(beginarraycc1&00&frac1sendarray)[122X.[133X
+  [33X[0;0YFor    each   prime   integer   [22Xpge   1[122X   we   set   [22XT_p   =T_g[122X   with   for
+  [22Xg=(beginarraycc1&00&pendarray)[122X.[133X
   
   [33X[0;0YThe  following  commands  compute  [22XT_2[122X  and  [22XT_5[122X  for [22Xn=1[122X and [22XΓ=Γ_0(39)[122X. The
   commands  also  compute  the  eigenvalues  of these two Hecke operators. The
   final  command  confirms  that  [22XT_2[122X  and  [22XT_5[122X  commute.  (It  is a fact that
-  [22XT_pT_q=T_qT_p[122X for all integers [22Xp,q[122X.)[133X
+  [22XT_pT_q=T_qT_p[122X for all primes [22Xp,q[122X.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
-    [4X[25Xgap>[125X [27Xp:=2;;N:=1;;h:=HeckeOperator(gamma,p,N);;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=2;;N:=1;;h:=HeckeOperatorWeight2(gamma,p,N);;[127X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(Source(h));[127X[104X
     [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
     [4X[25Xgap>[125X [27XT2:=HomomorphismAsMatrix(h);;[127X[104X
@@ -535,7 +535,26 @@
   [4X[32X[104X
   
   
-  [1X13.7 [33X[0;0YReconstructing modular forms from cohomology computations[133X[101X
+  [1X13.7 [33X[0;0YHecke operators on forms of weight [22Xge 2[122X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  above  definition  of  Hecke  operator [22XT_g[122X for [22Xg∈ SL_2( Q)[122X extends to a
+  Hecke operator [22XT_g: H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_ Q(k-2) )[122X for [22Xkge 2[122X. We work
+  over  the  rationals  rather  than  the integers in order to ensure that the
+  action  of  [22XΓ[122X  on  homogeneous  polynomials  extends  to an action of [22Xg[122X. The
+  following  commands  compute the matrix of [22XT_2: H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_
+  Q(k-2) )[122X for [22XΓ=SL_2( Z)[122X and [22Xk=4[122X;[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XH:=HAP_CongruenceSubgroupGamma0(1);;[127X[104X
+    [4X[25Xgap>[125X [27Xh:=HeckeOperator(H,2,12);;Display(h);[127X[104X
+    [4X[28X[ [   2049,  -7560,      0 ],[128X[104X
+    [4X[28X  [      0,    -24,      0 ],[128X[104X
+    [4X[28X  [      0,      0,    -24 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.8 [33X[0;0YReconstructing modular forms from cohomology computations[133X[101X
   
   [33X[0;0YGiven  a  modular  form [22Xf: frak h → C[122X associated to a congruence subgroup [22XΓ[122X,
   and  given  a  compact edge [22Xe[122X in the tessellation of [22Xfrak h[122X ([13Xi.e.[113X an edge in
@@ -558,7 +577,7 @@
   to operators [22XT_s: S_2(Γ) → S_2(Γ)[122X for [22Xsge 1[122X.[133X
   
   [33X[0;0YLet us now introduce the function [22Xq=q(z)=e^2π i z[122X which is holomorphic on [22XC[122X.
-  For any modular form [22Xf(z)[122X there are numbers [22Xa_n[122X such that[133X
+  For any modular form [22Xf(z)[122X there are numbers [22Xa_s[122X such that[133X
   
   
   [24X[33X[0;6Yf(z) = \sum_{s=0}^\infty a_sq^s[133X
@@ -584,7 +603,7 @@
   calculated to establish that the modular form[133X
   
   
-  [24X[33X[0;6Yf = q -2q^2 -q^3 +q^4 +q^5 +2q^6 -2q^7 +2q^8 -3q^9 -2q^{10} + \cdots[133X
+  [24X[33X[0;6Yf = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots[133X
   
   [124X
   
@@ -607,34 +626,14 @@
     [4X[28X[ [   4,  -4,   4 ],[128X[104X
     [4X[28X  [   0,  -1,   0 ],[128X[104X
     [4X[28X  [   0,   0,  -1 ] ][128X[104X
-    [4X[25Xgap>[125X [27XT4:=HomomorphismAsMatrix(HeckeOperator(gamma,4,1));; Display(T4);[127X[104X
-    [4X[28X[ [   6,  -4,   4 ],[128X[104X
-    [4X[28X  [   0,   1,   0 ],[128X[104X
-    [4X[28X  [   0,   0,   1 ] ][128X[104X
     [4X[25Xgap>[125X [27XT5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);[127X[104X
     [4X[28X[ [   6,  -4,   4 ],[128X[104X
     [4X[28X  [   0,   1,   0 ],[128X[104X
     [4X[28X  [   0,   0,   1 ] ][128X[104X
-    [4X[25Xgap>[125X [27XT6:=HomomorphismAsMatrix(HeckeOperator(gamma,6,1));; Display(T6);[127X[104X
-    [4X[28X[ [  12,  -8,   8 ],[128X[104X
-    [4X[28X  [   0,   2,   0 ],[128X[104X
-    [4X[28X  [   0,   0,   2 ] ][128X[104X
     [4X[25Xgap>[125X [27XT7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);[127X[104X
     [4X[28X[ [   8,  -8,   8 ],[128X[104X
     [4X[28X  [   0,  -2,   0 ],[128X[104X
     [4X[28X  [   0,   0,  -2 ] ][128X[104X
-    [4X[25Xgap>[125X [27XT8:=HomomorphismAsMatrix(HeckeOperator(gamma,8,1));; Display(T8);[127X[104X
-    [4X[28X[ [  12,  -8,   8 ],[128X[104X
-    [4X[28X  [   0,   2,   0 ],[128X[104X
-    [4X[28X  [   0,   0,   2 ] ][128X[104X
-    [4X[25Xgap>[125X [27XT9:=HomomorphismAsMatrix(HeckeOperator(gamma,9,1));; Display(T9);[127X[104X
-    [4X[28X[ [   12,  -12,   12 ],[128X[104X
-    [4X[28X  [    0,   -3,    0 ],[128X[104X
-    [4X[28X  [    0,    0,   -3 ] ][128X[104X
-    [4X[25Xgap>[125X [27XT10:=HomomorphismAsMatrix(HeckeOperator(gamma,10,1));; Display(T10);[127X[104X
-    [4X[28X[ [   18,  -16,   16 ],[128X[104X
-    [4X[28X  [    0,   -2,    0 ],[128X[104X
-    [4X[28X  [    0,    0,   -2 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -645,8 +644,36 @@
   prime  [22Xp[122X  divides  [22XN[122X  then  [22Xa_p^m = (a_p)^m[122X. It thus suffices to compute the
   coefficients [22Xa_p[122X for prime integers [22Xp[122X only.[133X
   
+  [33X[0;0YThe  following commands establish that [22XS_12(SL_2( Z))[122X has a basis consisting
+  of one cusp eigenform[133X
   
-  [1X13.8 [33X[0;0YThe Picard group[133X[101X
+  [33X[0;0Y[22Xq  -  24q^2  +  252q^3 - 1472q^4 + 4830q^5 - 6048q^6 - 16744q^7 + 84480q^8 -
+  113643q^9[122X[133X
+  
+  [33X[0;0Y[22X-  115920q^10  +  534612q^11  -  370944q^12  -  577738q^13  +  401856q^14  +
+  1217160q^15 + 987136q^16[122X[133X
+  
+  [33X[0;0Y[22X- 6905934q^17 + 2727432q^18 + 10661420q^19 + ...[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XH:=HAP_CongruenceSubgroupGamma0(1);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor p in [2,3,5,7,11,13,17,19] do[127X[104X
+    [4X[25X>[125X [27XT:=HeckeOperator(H,p,1,12);;[127X[104X
+    [4X[25X>[125X [27XPrint("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28Xeigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2[128X[104X
+    [4X[28Xeigenvalues= [ 177148, 252 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 3[128X[104X
+    [4X[28Xeigenvalues= [ 48828126, 4830 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 5[128X[104X
+    [4X[28Xeigenvalues= [ 1977326744, -16744 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 7[128X[104X
+    [4X[28Xeigenvalues= [ 285311670612, 534612 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 11[128X[104X
+    [4X[28Xeigenvalues= [ 1792160394038, -577738 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 13[128X[104X
+    [4X[28Xeigenvalues= [ 34271896307634, -6905934 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 17[128X[104X
+    [4X[28Xeigenvalues= [ 116490258898220, 10661420 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 19[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.9 [33X[0;0YThe Picard group[133X[101X
   
   [33X[0;0YLet  us  now  consider  the  [13XPicard  group[113X  [22XG=SL_2( Z[ i])[122X and its action on
   [13Xupper-half space[113X[133X
@@ -787,7 +814,7 @@
   [4X[32X[104X
   
   
-  [1X13.9 [33X[0;0YBianchi groups[133X[101X
+  [1X13.10 [33X[0;0YBianchi groups[133X[101X
   
   [33X[0;0YThe [13XBianchi groups[113X are the groups [22XG=PSL_2(cal O_-d)[122X where [22Xd[122X is a square free
   positive  integer  and  [22Xcal  O_-d[122X  is  the ring of integers of the imaginary
@@ -927,7 +954,7 @@
   [4X[32X[104X
   
   
-  [1X13.10 [33X[0;0YSome other infinite matrix groups[133X[101X
+  [1X13.11 [33X[0;0YSome other infinite matrix groups[133X[101X
   
   [33X[0;0YAnalogous to the functions for Bianchi groups, HAP has functions[133X
   
@@ -1039,7 +1066,7 @@
   [4X[32X[104X
   
   
-  [1X13.11 [33X[0;0YIdeals and finite quotient groups[133X[101X
+  [1X13.12 [33X[0;0YIdeals and finite quotient groups[133X[101X
   
   [33X[0;0YThe  following commands first construct the number field [22XQ(sqrt-7)[122X, its ring
   of  integers  [22Xcal  O_-7=cal  O(  Q(sqrt-7))[122X, and the principal ideal [22XI=⟨ 5 +
@@ -1151,7 +1178,7 @@
   [4X[32X[104X
   
   
-  [1X13.12 [33X[0;0YCongruence subgroups for ideals[133X[101X
+  [1X13.13 [33X[0;0YCongruence subgroups for ideals[133X[101X
   
   [33X[0;0YGiven  a  ring  of  integers  [22Xcal O[122X and ideal [22XI ◃ cal O[122X there is a canonical
   homomorphism  [22Xπ_I:  SL_2(cal O) → SL_2(cal O/I)[122X. A subgroup [22XΓ le SL_2(cal O)[122X
@@ -1223,7 +1250,7 @@
   [4X[32X[104X
   
   
-  [1X13.13 [33X[0;0YFirst homology[133X[101X
+  [1X13.14 [33X[0;0YFirst homology[133X[101X
   
   [33X[0;0YThe  isomorphism  [22XH_1(G,  Z)  ≅  G_ab[122X  allows  for  the computation of first
   integral homology using computational methods for finitely presented groups.

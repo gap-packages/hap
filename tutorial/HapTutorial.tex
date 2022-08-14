@@ -1033,7 +1033,7 @@ even\texttt{\symbol{126}}\texttt{\symbol{125}} n \texttt{\symbol{92}}ge 6
 is periodic in sufficiently high degrees if and only if all of its finite
 index subgroups admit periodic resolutions. The following commands identify
 the $99$ $3$-dimensional space groups (respectively, the $1191$ $4$-dimensional space groups) that admit a resolution which is periodic in
-degrees $\gt 3$ (respectively, in degrees $\gt 4$). 
+degrees $> 3$ (respectively, in degrees $> 4$). 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@L3:=Filtered([1..219],k->IsPeriodicSpaceGroup(SpaceGroup(3,k)));|
   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 17, 18, 19, 21, 24, 26, 27, 28, 
@@ -3353,8 +3353,37 @@ $H^2(S_4,\mathbb Z_2) \rightarrow H^3(S_4,\mathbb Z_4) \rightarrow
 H^3(S_4,\mathbb Z_8) \rightarrow H^3(S_4,\mathbb Z_2) $ . }
 
  
+\section{\textcolor{Chapter }{Transfer Homomorphism}}\logpage{[ 7, 10, 0 ]}
+\hyperdef{L}{X80F6FD3E7C7E4E8D}{}
+{
+ Consider the action of the symmetric group $G=S_5$ on $A=\mathbb Z^5$ which permutes the canonical basis. The action restricts to the sylow $2$-subgroup $P=Syl_2(G)$. The following commands compute the cohomology transfer homomorphism $t^4\colon H^4(P,A) \rightarrow H^4(S_5,A)$ and determine its kernel and image. The integral homology transfer $t_4\colon H_4(S_5,\mathbb Z) \rightarrow H_5(P,\mathbb Z)$ is also computed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SymmetricGroup(5);;|
+  !gapprompt@gap>| !gapinput@P:=SylowSubgroup(G,2);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(G,5);;|
+  !gapprompt@gap>| !gapinput@A:=PermToMatrixGroup(G);;|
+  !gapprompt@gap>| !gapinput@tr:=TransferCochainMap(R,P,A);|
+  Cochain Map between complexes of length 5 . 
+  
+  !gapprompt@gap>| !gapinput@t4:=Cohomology(tr,4);|
+  [ g1, g2, g3, g4 ] -> [ id, g1, g2, g4 ]
+  !gapprompt@gap>| !gapinput@StructureDescription(Kernel(t4));|
+  "C2 x C2"
+  !gapprompt@gap>| !gapinput@StructureDescription(Image(t4));|
+  "C4 x C2"
+  
+  !gapprompt@gap>| !gapinput@tr:=TransferChainMap(R,P);|
+  Chain Map between complexes of length 5 . 
+  
+  !gapprompt@gap>| !gapinput@Homology(tr,4);|
+  [ g1 ] -> [ g1 ]
+  
+\end{Verbatim}
+ }
+
+ 
 \section{\textcolor{Chapter }{Cohomology rings of finite fundamental groups of 3-manifolds }}\label{Secfinitefundman}
-\logpage{[ 7, 10, 0 ]}
+\logpage{[ 7, 11, 0 ]}
 \hyperdef{L}{X79B1406C803FF178}{}
 {
  A \emph{spherical 3-manifold} is a 3-manifold arising as the quotient $S^3/\Gamma$ of the 3-sphere $S^3$ by a finite subgroup $\Gamma$ of $SO(4)$ acting freely as rotations. The geometrization conjecture, proved by Grigori
@@ -3453,7 +3482,7 @@ Z) = \texttt{\symbol{92}}mathbb Z[s,t]/(s\texttt{\symbol{94}}2=16t, 3s=0,
 these fundamental groups of spherical 3-manifolds is given in \cite{tomoda}. }
 
  
-\section{\textcolor{Chapter }{Explicit cocycles }}\logpage{[ 7, 11, 0 ]}
+\section{\textcolor{Chapter }{Explicit cocycles }}\logpage{[ 7, 12, 0 ]}
 \hyperdef{L}{X833A19F0791C3B06}{}
 {
  Given a $\mathbb ZG$-resolution $R_\ast$ and a $\mathbb ZG$-module $A$, one defines an \emph{$n$-cocycle} to be a $\mathbb ZG$-homomorphism $f\colon R_n \rightarrow A$ for which the composite homomorphism $fd_{n+1}\colon R_{n+1}\rightarrow A$ is zero. If $R_\ast$ happens to be the standard bar resolution (i.e. the cellular chain complex of
@@ -5996,10 +6025,10 @@ The following commands show that the space $S_4(\Gamma_0(39))$ of cuspidal weigh
  }
 
  
-\section{\textcolor{Chapter }{Hecke operators}}\logpage{[ 13, 6, 0 ]}
-\hyperdef{L}{X8577E83782C87EBD}{}
+\section{\textcolor{Chapter }{Hecke operators on forms of weight 2}}\logpage{[ 13, 6, 0 ]}
+\hyperdef{L}{X80861D3F87C29C43}{}
 {
- A congruence subgroup $\Gamma \le SL_m(\mathbb Z)$ and element $g\in SL_m(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
+ A congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ and element $g\in SL_2(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
 \[ \Gamma\ \hookleftarrow\ \Gamma'\ \ \stackrel{\gamma \mapsto g^{-1}\gamma
 g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . \]
  These homomorphisms give rise to homomorphisms of cohomology groups 
@@ -6009,13 +6038,13 @@ g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . \]
  with $\alpha$, $\beta$ functorial maps, and $tr$ the transfer map. We define the composite $T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow
 H^n(\Gamma, \mathbb Z)$ to be the \emph{ Hecke operator } determined by $g$. Further details on this description of Hecke operators can be found in \cite[Appendix by P. Gunnells]{stein}. 
 
-For each integer $s\ge 1$ we set $T_s =T_s$ with for $g=\left(\begin{array}{cc}1&0\\0&\frac{1}{s}\end{array}\right)$. 
+For each prime integer $p\ge 1$ we set $T_p =T_g$ with for $g=\left(\begin{array}{cc}1&0\\0&p\end{array}\right)$. 
 
 The following commands compute $T_2$ and $T_5$ for $n=1$ and $\Gamma=\Gamma_0(39)$. The commands also compute the eigenvalues of these two Hecke operators. The
-final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=T_qT_p$ for all integers $p,q$.) 
+final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=T_qT_p$ for all primes $p,q$.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(39);;|
-  !gapprompt@gap>| !gapinput@p:=2;;N:=1;;h:=HeckeOperator(gamma,p,N);;|
+  !gapprompt@gap>| !gapinput@p:=2;;N:=1;;h:=HeckeOperatorWeight2(gamma,p,N);;|
   !gapprompt@gap>| !gapinput@AbelianInvariants(Source(h));|
   [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   !gapprompt@gap>| !gapinput@T2:=HomomorphismAsMatrix(h);;|
@@ -6054,7 +6083,25 @@ final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=
  }
 
  
-\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 13, 7, 0 ]}
+\section{\textcolor{Chapter }{Hecke operators on forms of weight $ \ge 2$}}\logpage{[ 13, 7, 0 ]}
+\hyperdef{L}{X7CE754B0859B2843}{}
+{
+ The above definition of Hecke operator $T_g$ for $g\in SL_2(\mathbb Q)$ extends to a Hecke operator $T_g\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
+Q}(k-2) )$ for $k\ge 2$. We work over the rationals rather than the integers in order to ensure that
+the action of $\Gamma$ on homogeneous polynomials extends to an action of $g$. The following commands compute the matrix of $T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
+Q}(k-2) )$ for $\Gamma=SL_2(\mathbb Z)$ and $k=4$; 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@H:=HAP_CongruenceSubgroupGamma0(1);;|
+  !gapprompt@gap>| !gapinput@h:=HeckeOperator(H,2,12);;Display(h);|
+  [ [   2049,  -7560,      0 ],
+    [      0,    -24,      0 ],
+    [      0,      0,    -24 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 13, 8, 0 ]}
 \hyperdef{L}{X84CC51EE8525E0D9}{}
 {
  
@@ -6068,7 +6115,7 @@ recover modular forms from cohomology classes.
 Hecke operators restrict to operators on cuspidal cohomology. On the left-hand
 side of the Eichler-Shimura isomorphism Hecke operators restrict to operators $T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)$ for $s\ge 1$. 
 
-Let us now introduce the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z)$ there are numbers $a_n$ such that 
+Let us now introduce the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z)$ there are numbers $a_s$ such that 
 \[f(z) = \sum_{s=0}^\infty a_sq^s \]
  for all $z\in {\frak h}$. The form $f$ is a cusp form if $a_0=0$. 
 
@@ -6079,7 +6126,7 @@ explicit basis for the space $S_2(\Gamma)$ of cusp forms by computing eigenvalue
 
  Suppose that we would like a basis for $S_2(\Gamma_0(11))$. The following commands first show that $H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z$ from which we deduce that $S_2(\Gamma_0(11)) =\mathbb C$ is $1$-dimensional. Then eigenvalues of Hecke operators are calculated to establish
 that the modular form 
-\[f = q -2q^2 -q^3 +q^4 +q^5 +2q^6 -2q^7 +2q^8 -3q^9 -2q^{10} + \cdots \]
+\[f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots \]
  constitutes a basis for $S_2(\Gamma_0(11))$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(11);;|
@@ -6098,42 +6145,49 @@ that the modular form
   [ [   4,  -4,   4 ],
     [   0,  -1,   0 ],
     [   0,   0,  -1 ] ]
-  !gapprompt@gap>| !gapinput@T4:=HomomorphismAsMatrix(HeckeOperator(gamma,4,1));; Display(T4);|
-  [ [   6,  -4,   4 ],
-    [   0,   1,   0 ],
-    [   0,   0,   1 ] ]
   !gapprompt@gap>| !gapinput@T5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);|
   [ [   6,  -4,   4 ],
     [   0,   1,   0 ],
     [   0,   0,   1 ] ]
-  !gapprompt@gap>| !gapinput@T6:=HomomorphismAsMatrix(HeckeOperator(gamma,6,1));; Display(T6);|
-  [ [  12,  -8,   8 ],
-    [   0,   2,   0 ],
-    [   0,   0,   2 ] ]
   !gapprompt@gap>| !gapinput@T7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);|
   [ [   8,  -8,   8 ],
     [   0,  -2,   0 ],
     [   0,   0,  -2 ] ]
-  !gapprompt@gap>| !gapinput@T8:=HomomorphismAsMatrix(HeckeOperator(gamma,8,1));; Display(T8);|
-  [ [  12,  -8,   8 ],
-    [   0,   2,   0 ],
-    [   0,   0,   2 ] ]
-  !gapprompt@gap>| !gapinput@T9:=HomomorphismAsMatrix(HeckeOperator(gamma,9,1));; Display(T9);|
-  [ [   12,  -12,   12 ],
-    [    0,   -3,    0 ],
-    [    0,    0,   -3 ] ]
-  !gapprompt@gap>| !gapinput@T10:=HomomorphismAsMatrix(HeckeOperator(gamma,10,1));; Display(T10);|
-  [ [   18,  -16,   16 ],
-    [    0,   -2,    0 ],
-    [    0,    0,   -2 ] ]
   
 \end{Verbatim}
  
 
- For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.$ If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. }
+ For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.$ If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. 
+
+ The following commands establish that $S_{12}(SL_2(\mathbb Z))$ has a basis consisting of one cusp eigenform 
+
+$q - 24q^2 + 252q^3 - 1472q^4 + 4830q^5 - 6048q^6 - 16744q^7 + 84480q^8 -
+113643q^9 $ 
+
+$- 115920q^{10} + 534612q^{11} - 370944q^{12} - 577738q^{13} + 401856q^{14} +
+1217160q^{15} + 987136q^{16}$ 
+
+$ - 6905934q^{17} + 2727432q^{18} + 10661420q^{19} + ...$ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@H:=HAP_CongruenceSubgroupGamma0(1);;|
+  !gapprompt@gap>| !gapinput@for p in [2,3,5,7,11,13,17,19] do|
+  !gapprompt@>| !gapinput@T:=HeckeOperator(H,p,1,12);;|
+  !gapprompt@>| !gapinput@Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");|
+  !gapprompt@>| !gapinput@od;|
+  eigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2
+  eigenvalues= [ 177148, 252 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 3
+  eigenvalues= [ 48828126, 4830 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 5
+  eigenvalues= [ 1977326744, -16744 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 7
+  eigenvalues= [ 285311670612, 534612 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 11
+  eigenvalues= [ 1792160394038, -577738 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 13
+  eigenvalues= [ 34271896307634, -6905934 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 17
+  eigenvalues= [ 116490258898220, 10661420 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 19
+  
+\end{Verbatim}
+ }
 
  
-\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 13, 8, 0 ]}
+\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 13, 9, 0 ]}
 \hyperdef{L}{X8180E53C834301EF}{}
 {
  Let us now consider the \emph{Picard group} $G=SL_2(\mathbb Z[ i])$ and its action on \emph{upper-half space} 
@@ -6216,7 +6270,7 @@ Z_{520030}\oplus \mathbb Z_{1040060} \oplus \mathbb Z^2\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 13, 9, 0 ]}
+\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 13, 10, 0 ]}
 \hyperdef{L}{X858B1B5D8506FE81}{}
 {
  The \emph{Bianchi groups} are the groups $G=PSL_2({\cal O}_{-d})$ where $d$ is a square free positive integer and ${\cal O}_{-d}$ is the ring of integers of the imaginary quadratic field $\mathbb Q(\sqrt{-d})$. More explicitly, 
@@ -6311,7 +6365,7 @@ action. For instance, the following commands compute
  }
 
  
-\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 10, 0 ]}
+\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 11, 0 ]}
 \hyperdef{L}{X86A6858884B9C05B}{}
 {
  Analogous to the functions for Bianchi groups, HAP has functions 
@@ -6407,7 +6461,7 @@ groups $SL_2(\mathbb Z[\frac{1}{2}])$, $GL_2({\cal O}_{-2})$, $GL_2({\cal O}_{2}
  }
 
  
-\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 11, 0 ]}
+\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 12, 0 ]}
 \hyperdef{L}{X7EF5D97281EB66DA}{}
 {
  The following commands first construct the number field $\mathbb Q(\sqrt{-7})$, its ring of integers ${\cal O}_{-7}={\cal O}(\mathbb Q(\sqrt{-7}))$, and the principal ideal $I=\langle 5 + 2\sqrt{-7}\rangle \triangleleft {\cal O}(\mathbb Q(\sqrt{-7}))$ of norm ${\cal N}(I)=53$. The ring $I$ is prime since its norm is a prime number. The primality of $I$ is also demonstrated by observing that the quotient ring $R={\cal O}_{-7}/I$ is an integral domain and hence isomorphic to the unique finite field of order $53 $, $R\cong \mathbb Z/53\mathbb Z$ . (In a ring of quadratic integers \emph{prime ideal} is the same as \emph{maximal ideal}). 
@@ -6497,7 +6551,7 @@ The following commands construct the classic example of a prime ideal $I$ that i
  }
 
  
-\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 12, 0 ]}
+\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 13, 0 ]}
 \hyperdef{L}{X7D1F72287F14C5E1}{}
 {
  
@@ -6553,7 +6607,7 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 13, 0 ]}
+\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 14, 0 ]}
 \hyperdef{L}{X85E912617AFE03F4}{}
 {
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational

@@ -52,11 +52,14 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X796731727A7EBE59">7.9 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X79B1406C803FF178">7.10 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X80F6FD3E7C7E4E8D">7.10 <span class="Heading">Transfer Homomorphism</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X79B1406C803FF178">7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
 </span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X833A19F0791C3B06">7.11 <span class="Heading">Explicit cocycles </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X833A19F0791C3B06">7.12 <span class="Heading">Explicit cocycles </span></a>
 </span>
 </div>
 </div>
@@ -493,9 +496,39 @@ G-cocomplex of length 5 .
 
 <p><span class="SimpleMath">\(H^2(S_4,\mathbb Z_2) \rightarrow H^3(S_4,\mathbb Z_4) \rightarrow H^3(S_4,\mathbb Z_8) \rightarrow H^3(S_4,\mathbb Z_2) \)</span> .</p>
 
+<p><a id="X80F6FD3E7C7E4E8D" name="X80F6FD3E7C7E4E8D"></a></p>
+
+<h4>7.10 <span class="Heading">Transfer Homomorphism</span></h4>
+
+<p>Consider the action of the symmetric group <span class="SimpleMath">\(G=S_5\)</span> on <span class="SimpleMath">\(A=\mathbb Z^5\)</span> which permutes the canonical basis. The action restricts to the sylow <span class="SimpleMath">\(2\)</span>-subgroup <span class="SimpleMath">\(P=Syl_2(G)\)</span>. The following commands compute the cohomology transfer homomorphism <span class="SimpleMath">\(t^4\colon H^4(P,A) \rightarrow H^4(S_5,A)\)</span> and determine its kernel and image. The integral homology transfer <span class="SimpleMath">\(t_4\colon H_4(S_5,\mathbb Z) \rightarrow H_5(P,\mathbb Z)\)</span> is also computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=SylowSubgroup(G,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tr:=TransferCochainMap(R,P,A);</span>
+Cochain Map between complexes of length 5 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t4:=Cohomology(tr,4);</span>
+[ g1, g2, g3, g4 ] -&gt; [ id, g1, g2, g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Kernel(t4));</span>
+"C2 x C2"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Image(t4));</span>
+"C4 x C2"
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tr:=TransferChainMap(R,P);</span>
+Chain Map between complexes of length 5 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(tr,4);</span>
+[ g1 ] -&gt; [ g1 ]
+
+</pre></div>
+
 <p><a id="X79B1406C803FF178" name="X79B1406C803FF178"></a></p>
 
-<h4>7.10 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+<h4>7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
 </span></h4>
 
 <p>A <em>spherical 3-manifold</em> is a 3-manifold arising as the quotient <span class="SimpleMath">\(S^3/\Gamma\)</span> of the 3-sphere <span class="SimpleMath">\(S^3\)</span> by a finite subgroup <span class="SimpleMath">\(\Gamma\)</span> of <span class="SimpleMath">\(SO(4)\)</span> acting freely as rotations. The geometrization conjecture, proved by Grigori Perelman, implies that every closed connected 3-manifold with a finite fundamental group is homeomorphic to a spherical 3-manifold.</p>
@@ -599,7 +632,7 @@ G-cocomplex of length 5 .
 
 <p><a id="X833A19F0791C3B06" name="X833A19F0791C3B06"></a></p>
 
-<h4>7.11 <span class="Heading">Explicit cocycles </span></h4>
+<h4>7.12 <span class="Heading">Explicit cocycles </span></h4>
 
 <p>Given a <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R_\ast\)</span> and a <span class="SimpleMath">\(\mathbb ZG\)</span>-module <span class="SimpleMath">\(A\)</span>, one defines an <em><span class="SimpleMath">\(n\)</span>-cocycle</em> to be a <span class="SimpleMath">\(\mathbb ZG\)</span>-homomorphism <span class="SimpleMath">\(f\colon R_n \rightarrow A\)</span> for which the composite homomorphism <span class="SimpleMath">\(fd_{n+1}\colon R_{n+1}\rightarrow A\)</span> is zero. If <span class="SimpleMath">\(R_\ast\)</span> happens to be the standard bar resolution (i.e. the cellular chain complex of the nerve of the group <span class="SimpleMath">\(G\)</span> considered as a one object category) then the free <span class="SimpleMath">\(\mathbb ZG\)</span>-generators of <span class="SimpleMath">\(R_n\)</span> are indexed by <span class="SimpleMath">\(n\)</span>-tuples <span class="SimpleMath">\((g_1 | g_2 | \ldots | g_n)\)</span> of elements <span class="SimpleMath">\(g_i\)</span> in <span class="SimpleMath">\(G\)</span>. In this case we say that the <span class="SimpleMath">\(n\)</span>-cocycle is a <em>standard n-cocycle</em> and we think of it as a set-theoretic function</p>
 

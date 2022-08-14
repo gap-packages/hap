@@ -1,0 +1,19 @@
+gap> G:=SymmetricGroup(5);;
+gap> P:=SylowSubgroup(G,2);;
+gap> R:=ResolutionFiniteGroup(G,5);;
+gap> A:=PermToMatrixGroup(G);;
+gap> tr:=TransferCochainMap(R,P,A);
+Cochain Map between complexes of length 5 . 
+
+gap> t4:=Cohomology(tr,4);
+[ g1, g2, g3, g4 ] -> [ id, g1, g2, g4 ]
+gap> StructureDescription(Kernel(t4));
+"C2 x C2"
+gap> StructureDescription(Image(t4));
+"C4 x C2"
+
+gap> tr:=TransferChainMap(R,P);
+Chain Map between complexes of length 5 . 
+
+gap> Homology(tr,4);
+[ g1 ] -> [ g1 ]
