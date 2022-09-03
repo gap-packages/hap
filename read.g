@@ -437,6 +437,7 @@ ReadPackageHap("lib/RegularCWComplexes/spin.gi");
 ReadPackageHap("lib/RegularCWComplexes/spunknotcomp.gi");
 ReadPackageHap("lib/RegularCWComplexes/grannyknot.gi");
 ReadPackageHap("lib/RegularCWComplexes/elementaryCWConstructions.gi");
+ReadPackageHap("lib/RegularCWComplexes/diagonal.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################

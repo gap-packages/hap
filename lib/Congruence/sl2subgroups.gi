@@ -427,6 +427,7 @@ end);
 ###################################################################
 ###################################################################
 
+if false then
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_TransversalCongruenceSubgroups,
@@ -470,17 +471,103 @@ return Objectify( NewType( FamilyObj( G ),
 end);
 ###################################################################
 ###################################################################
+fi;
+
+###################################################################
+###################################################################
+InstallGlobalFunction(HAP_TransversalCongruenceSubgroups, 
+function(G,H)
+local tree,InH,S,T,U,v,p,g,s,n,q,vv,gens,
+      nodes, nodesinv, leaves, ambientGenerators, InLowDegreeNodesModH,
+      one, poscan, nind ;
+
+####################
+S:=[[0,-1],[1,0]];;
+T:=[[1,1],[0,1]];
+U:=S*T;
+one:=IdentityMat(2);
+####################
+
+ambientGenerators:=[S,S*U];
+tree:=[1 ];
+cnt:=1;
+leaves:=NewDictionary(S,true,SL(2,Integers));
+nodes:=[one];
+AddDictionary(leaves,one,1);
+
+InH:=H!.membership;
+
+###########################################
+InLowDegreeNodesModH:=function(g)
+local x,gg,B1,B2;
+gg:=g^-1;
+
+for x in nodes do
+if InH(x*gg) then return x; fi;
+od;
+
+return false;
+end;
+###########################################
+
+
+
+
+############Tree Construction########################
+while Size(leaves)>0 do
+vv:=leaves!.entries[1];
+v:=vv[1];
+    for s in [1..Length(ambientGenerators)] do
+        g:=v*ambientGenerators[s];
+        q:=InLowDegreeNodesModH(g);
+        if q=false then
+         Add(nodes,g);
+         AddDictionary(leaves,g,Length(nodes));
+            p:=LookupDictionary(leaves,v);
+            Add(tree,[p, s]);
+        fi;
+    od;
+RemoveDictionary(leaves,v);
+od;
+#####################################################
+
+nodes:=Filtered(nodes,g-> g in G);
+nodesinv:=List(nodes,g->g^-1);
+nind:=[1..Length(nodes)];
+
+####################################################
+poscan:=function(x)
+local i;
+
+for i in nind do
+if InH(  x*nodesinv[i]  ) then return i; fi;
+od;
+return fail;
+end;
+####################################################
+
+return Objectify( NewType( FamilyObj( G ),
+                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsDuplicateFreeList and IsAttributeStoringRep ),
+          rec( group := G,
+               subgroup := H,
+               cosets:=nodes,
+               poscan:=poscan ));
+end);
+###################################################################
+###################################################################
+
 
 ############################################################
 ############################################################
 InstallOtherMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
-[IsMatrixGroup,IsHapSL2ZSubgroup],
+[IsHapSL2ZSubgroup,IsHapSL2ZSubgroup],
 0,  #There must be a better way to ensure this method is not used!
 #[IsHapSL2ZSubgroup,IsMatrixGroup],
-#10000,
+#1000000,
 function(H,HH)
-#Print("HAP_TransversalCongruenceSubgroups\n");
+Print("Using   HAP_TransversalCongruenceSubgroups\n");
 return HAP_TransversalCongruenceSubgroups(H,HH);
 
 end);

@@ -561,6 +561,50 @@ end);
 ##########################################################
 ##########################################################
 
+##########################################################
+##########################################################
+InstallGlobalFunction(ChainComplexWithChainHomotopy,
+function(Y)
+local C, n, k, chainHomotopy;
+
+#Inputs a regular CW complex Y. It creates a discrete vector field on Y.
+#Let Y' be the homotopy equivalent space with cells correponding to the
+#critical cells of Y. It outputs the chain complex C=C(Y') with a component
+#C!.chainHomotopy which is a chain homotopy on the bigger chain complex C(Y)
+#corresponding to the homotopy equivalence C(Y) -->C(Y').
+
+CriticalCells(Y);
+C:=ChainComplexOfRegularCWComplexWithVectorField(Y,true);
+for n in [0..Dimension(Y)] do
+for k in [1..Y!.nrCells(n)] do
+C!.deform(n,k);
+od;
+od;
+
+##############################
+chainHomotopy:=function(w,n)
+local u, k, h, a;
+u:=[1..Y!.nrCells(n+1)]*0;
+
+for k in [1..Length(w)] do
+if not w[k]=0 then
+h:=C!.htpy[n+1][k];
+for a in h do
+u[AbsInt(a)]:=w[k]*SignInt(a);
+od;
+fi;
+od;
+return u;
+end;
+##############################
+
+C!.chainHomotopy:=chainHomotopy;
+return C;
+end);
+##########################################################
+##########################################################
+
+
 
 ##########################################################
 ##########################################################
@@ -2526,3 +2570,26 @@ end);
 #######################################################
 #######################################################
 
+#######################################################
+#######################################################
+InstallGlobalFunction(ComposeCWMaps,
+function(F,G)
+local X,Y,map;       #THIS FUNTION IS NOT NEEDED
+
+#  FG: X ---G---> W  ---F---> Y
+X:=Source(G);
+Y:=Target(F);
+#######################
+map:=function(n,k);
+return F!.mapping(n,G!.mapping(n,k));
+end;
+#######################
+
+return Objectify(HapRegularCWMap,
+       rec(
+           source:=X,
+           target:=Y,
+           mapping:=map  ));
+end);
+#######################################################
+#######################################################

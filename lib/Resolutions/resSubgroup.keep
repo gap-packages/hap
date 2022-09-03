@@ -9,7 +9,7 @@ local
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
 		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
-		Mult, MultRec, FIN, i,HomotopyRec;
+		Mult, MultRec, FIN, i;
 		
 if Length(arg)=3 then
 R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
@@ -165,29 +165,20 @@ else return NegateWord(BoundaryRec[n][i]); fi;
 end;
 #####################################################################
 
-HomotopyRec:=List([0..Length(R)],i->List([1..Dimension(i)],j->[]));;
 
 ######################
 Homotopy:=function(n,e)
-local x,g,pos,ae;
+local x,g,pos;
 
-ae:=AbsInt(e[1]);
-if not IsBound(HomotopyRec[n+1][ae][e[2]]) then
-
-x:=Int2Pair(ae);
-g:=EltsK[e[2]]*TransK[x[2]]; #Need to check the maths again here!
+x:=Int2Pair(e[1]);
+g:=EltsK[e[2]]*TransK[x[2]]; #Need to chack the maths again here!
 
 
 pos:=Position(EltsG,g);
 
 
 if pos =fail then Add(EltsG,g); pos:=Length(EltsG);fi;
-HomotopyRec[n+1][ae][e[2]]:= Gword2Kword( R!.homotopy(n,[x[1],pos]));
-fi;
-
-if e[1]>0 then return HomotopyRec[n+1][ae][e[2]];
-else return NegateWord(HomotopyRec[n+1][ae][e[2]]);
-fi;
+return Gword2Kword( R!.homotopy(n,[x[1],pos]));
 
 end;
 ######################

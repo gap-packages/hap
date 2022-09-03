@@ -513,6 +513,7 @@ DeclareGlobalFunction("FilteredPureCubicalComplexToCubicalComplex");
 DeclareGlobalFunction("ConcentricallyFilteredPureCubicalComplex");#<ConcentricFiltration
 DeclareGlobalFunction("ContractedFilteredPureCubicalComplex");#<ContractedComplex
 DeclareOperation("ChainComplex",[IsObject]);#doc
+DeclareGlobalFunction("ChainComplexWithChainHomotopy");
 DeclareOperation("ChainMap",[IsHapRegularCWMap]);#doc
 DeclareOperation("CochainComplex",[IsObject]);
 DeclareOperation("CoboundaryMatrix",[IsHapCochainComplex,IsInt]);
@@ -793,6 +794,12 @@ DeclareGlobalFunction("HAP_BaryCentricSubdivisionRegularCWComplex");
 DeclareGlobalFunction("HAP_Triangulation");
 DeclareGlobalFunction("RegularCWComplex_AttachCellDestructive");
 DeclareGlobalFunction("RegularCWComplexWithRemovedCell");
+DeclareGlobalFunction("ComposeCWMaps");
+DeclareGlobalFunction("DiagonalCWMap");
+DeclareGlobalFunction("RegularCWPolygon");
+DeclareGlobalFunction("RegularCWPermutahedron");
+DeclareGlobalFunction("RegularCWCube");
+DeclareGlobalFunction("RegularCWSimplex");
 
 
 ## KNOTS ############################################################

@@ -444,7 +444,7 @@ end);
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(CupProductOfRegularCWComplex,
+InstallGlobalFunction(CupProductOfRegularCWComplex_alt,
 function(arg)
 local X,Xd,XX,A, CX, HCX, CXd, CXX, CXcab, XdmapXX, XdmapX, CXdmapCXX, 
       DIAG, tc,i,n, w, HCXXmapHCXd, tensor, quad2pair, HCXcab, HCXd, 
@@ -524,6 +524,78 @@ Apply(u,x->[x[1],cheat*x[2]]);
 w:= HCXXmapHCXd!.sparseMap(u, p+q);
 w:=HCXdmapHCXdsmall!.mapping(w,p+q);
 return HCXdsmallcab[p+q]!.cocycleToClass(w);
+end;
+##############################
+##############################
+
+return tensor;
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(CupProductOfRegularCWComplex,
+function(arg)
+local X,Xd,XX,A, CX, HCX, CXX, CXcab, XdmapXX, XdmapX, CXmapCXX,
+      DIAG, tc,i,n, w, HCXXmapHCX, tensor, quad2pair, HCXcab, 
+      HCXsmallcab, CXsmall, HXsmall, CXsmallmapCX, HCXmapHCXsmall,
+      HCXsmall,range;
+
+X:=arg[1];
+X:=ContractedComplex(X);
+CriticalCells(X);
+XX:=DirectProduct(X,X);
+CXmapCXX:=DiagonalCWMap(X);
+HCXXmapHCX:=HomToIntegers(CXmapCXX);
+CX:=Source(CXmapCXX);
+CXX:=Target(CXmapCXX);
+HCX:=HomToIntegers(CX);
+CXsmallmapCX:=ChainComplexEquivalenceOfRegularCWComplex(X)[2];
+CXsmall:=Source(CXsmallmapCX);
+HCXmapHCXsmall:=HomToIntegers(CXsmallmapCX);
+HCXsmall:=Target(HCXmapHCXsmall);
+HCX:=Source(HCXmapHCXsmall);
+
+range:=[1..Length(CX)];
+
+HCXcab:=
+List(range,n->HAP_CocyclesAndCoboundaries(HCX,n,true));
+
+HCXsmallcab:=
+List(range,n->HAP_CocyclesAndCoboundaries(HCXsmall,n,true));
+
+quad2pair:=XX!.quad2pair;
+
+##############################
+##############################
+tensor:=function(p,q,vv,ww)
+local  u, P, v, w, Q, i, j, cp, cq, cheat;
+#inputs a  p-class vv and a q-class ww.
+#outputs a p+q-cocycle u in HCXdsmall
+#u:=0*[1..CXX!.dimension(p+q)];
+u:=[];
+v:=HCXcab[p]!.classToCocycle(vv);
+w:=HCXcab[q]!.classToCocycle(ww);
+P:=Filtered([1..Length(v)],i->not IsZero(v[i]));
+Q:=Filtered([1..Length(w)],i->not IsZero(w[i]));
+
+for i in P do
+for j in Q do
+Add(u,  [ quad2pair[p+1][q+1][i][j][2] , v[i]*w[j] ]);
+od;od;
+
+
+###############################
+if p<q then cheat:=1;         #NEED TO THINK ABOUT THIS!
+else cheat:=-1;
+fi;
+Apply(u,x->[x[1],cheat*x[2]]);
+###############################
+
+w:= HCXXmapHCX!.sparseMap(u, p+q);
+w:=HCXmapHCXsmall!.mapping(w,p+q);
+return HCXsmallcab[p+q]!.cocycleToClass(w);
 end;
 ##############################
 ##############################

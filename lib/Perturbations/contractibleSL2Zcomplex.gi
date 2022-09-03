@@ -336,6 +336,7 @@ end;
 FinalHomotopy:=function(n,p)
 local
         k,g;
+
 if n<>0 then return [];
 else
         if IsList(p[1]) then return Path2Gindex(Chomotopy(p));

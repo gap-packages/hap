@@ -6,7 +6,7 @@ InstallMethod(RightTransversal,
 [IsMatrixGroup,IsMatrixGroup],
 function(H,HH);
 if not (IsHapSL2ZSubgroup(HH) or IsHapSL2ZSubgroup(H)) then TryNextMethod(); fi;
-#Print("HAP_RightTransversalSL2ZSubgroups");
+#Print("HAP_RightTransversalSL2ZSubgroups\n");
 return HAP_RightTransversalSL2ZSubgroups(H,HH);
 end);
 ############################################################
@@ -19,6 +19,7 @@ function(H,HH)
 local F, rels, S, T, G, FhomG, Q, gensQ, epi, ElementToWord,
 gensH, gensHH, QH, QHH, R, R1, R2, s, t, poscan, iso;
 
+#Print("start\n");
 G:=SL(2,Integers);
 F:=FreeGroup(2);s:=F.1;t:=F.2;
 rels:=[s^4,(s*t)^3*s^-2];
@@ -142,15 +143,17 @@ Apply(R2,x->Image(FhomG,x));
 #####################################################
 #####################################################
 poscan:=function(g)
-local w;
+local w, a;
 
 w:=ElementToWord(g);
 w:=Image(epi,w);
 return PositionCanonical(R1,w);
+
 end;
 #####################################################
 #####################################################
 
+#Print("stop\n");
 return Objectify( NewType( FamilyObj( G ),
                     IsHapRightTransversalSL2ZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),

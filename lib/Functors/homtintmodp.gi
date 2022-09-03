@@ -1,4 +1,4 @@
-
+#RT:=0;
 ########################################################
 ########################################################
 InstallGlobalFunction(HAP_HomToIntModP_ChainComplex,
@@ -244,20 +244,23 @@ od;
 #A:=List([0..Length(S)],i->IdentityMat(S!.dimension(i)));
 A:=[];
 #for n in [0..Length(A)-1] do
-InitA:=function(n);
+####################
+InitA:=function(n)
+local B;
 A[n+1]:=IdentityMat(S!.dimension(n));
+#RT:=RT-Runtime();
 B:=List(A[n+1], r->F!.mapping(r,n));
+#RT:=RT+Runtime();
 A[n+1]:=TransposedMat(B);
 end;
+####################
 #od;
 #################
-HThomHS:=function(v,n)
-local rowA, ans, k;
+HThomHS:=function(v,n);
 if not IsBound(A[n+1]) then InitA(n); fi;
-return v*A[n+1];
+ return v*A[n+1];
 end;
 #################
-
 
 
 return Objectify(HapChainMap,

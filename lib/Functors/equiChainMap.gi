@@ -184,12 +184,10 @@ Apply(v,x->MultiplyWord(x[2],  mapgens(x[1],m)));
 else
 Apply(v,x->MultiplyWord(x[2] mod Charact,  mapgens(x[1],m)));
 fi;
+
 v:= Concatenation(v);
 
-
 return AlgRed(v);
-
-#return a; 
 end;
 #####################################################################
 

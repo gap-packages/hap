@@ -7,3 +7,4 @@ DeclareGlobalFunction("HAP_IntegralCohomology");
 DeclareGlobalFunction("HAP_IntegralClassToCocycle");
 DeclareGlobalFunction("HAP_IntegralCocycleToClass");
 DeclareGlobalFunction("CupProductOfRegularCWComplex");
+DeclareGlobalFunction("CupProductOfRegularCWComplex_alt");

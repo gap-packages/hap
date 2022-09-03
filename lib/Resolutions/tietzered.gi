@@ -282,6 +282,7 @@ homotopyrec[3]:=List([1..Dimension(N+1)],i->[]);
 ####################################################
 Homotopy:=function(k,x)
 local htpy;
+
 if k<N-1 or k>N+1 then return R!.homotopy(k,x); fi;
 if k=N-1 then 
  if not IsBound(homotopyrec[1][AbsInt(x[1])][x[2]]) then
@@ -289,6 +290,7 @@ if k=N-1 then
  fi;  
  htpy:=homotopyrec[1][AbsInt(x[1])][x[2]]; 
 fi;
+
 if k=N then 
  if not IsBound(homotopyrec[2][AbsInt(x[1])][x[2]]) then
  homotopyrec[2][AbsInt(x[1])][x[2]]:= HomotopyN([AbsInt(x[1]),x[2]]);

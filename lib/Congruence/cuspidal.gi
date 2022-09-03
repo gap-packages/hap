@@ -51,6 +51,6 @@ cmap1:=HomToIntegralModule(eqmap,A);
 cmap2:=HomToIntegralModule(eqmap2,A);
 cmap:=Compose(cmap1,cmap2);
 
-c:=Cohomology(cmap,1);
+c:=Cohomology(cmap,N);
 return c;
 end);

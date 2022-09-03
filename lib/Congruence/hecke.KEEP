@@ -2,15 +2,9 @@
 ###########################################################
 ###########################################################
 InstallGlobalFunction(HeckeOperator,
-function(arg)
-local  H, pp, k, N, p, g, gg, HH, R, RH, TH, map1, THH, map3, 
-ag, A, facts, T,E, Sfacts,Hecke ,fn, ConjugateIntersection,HHhomH; 
-#TietzeReducedResolution;
-
-H:=arg[1];
-pp:=arg[2];
-k:=arg[3];
-#TietzeReducedResolution:=function(R); return R; end;
+function(H,pp,k)
+local  N, p, g, gg, HH, R, RH, TH, map1, map11, map12, THH, map3, 
+ag, A, facts, T,E, Sfacts,Hecke ,fn, ConjugateIntersection,HHhomH;
 
 
 N:=1;
@@ -60,39 +54,44 @@ HH:=ConjugateIntersection(H,g);
 gg:=g^-1;;
 
 
-if Length(arg)<4 then
+
 R:=ResolutionSL2Z_alt(N+1);;
-R!.group:=HAP_CongruenceSubgroupGamma0(1);
 R:=TietzeReducedResolution(R);;  #This just invokes a recording of homotopies.
 RH:=ResolutionFiniteSubgroup(R,H);;
 TH:=TietzeReducedResolution(RH);;
-else
-TH:=arg[4];
-fi;
 
 HHhomH:=GroupHomomorphismByFunction(HH,H,x->x^gg);
 
 A:=HomogeneousPolynomials(H,k-2);
 
 #Print(Runtime(),"\n");
-map1:=TransferCochainMap(TH,HH,A);;      
-THH:=map1!.resH;   #resolution for HH
-map1:=HomToIntegersModP(map1,-1/2);
-#if false then
-map1:=HomologyVectorSpace(map1,N);
-map1:=List(Basis(Source(map1)),x->Image(map1,x));
-map1:=TransposedMat(map1);
-#Print(Runtime(),"\n");;
-#fi;
+map1:=TransferCochainMap(TH,HH,A,true);;      
+map11:=map1[1];
+map12:=map1[2];
+THH:=map1[3];   #resolution for HH
+map11:=HomToIntegersModP(map11,-1/2);
+map11:=HomologyVectorSpace(map11,N);
+map11:=List(Basis(Source(map11)),x->Image(map11,x));
+map11:=TransposedMat(map11);
+#Print("map11 ",Runtime(),"\n");
+map12:=HomToIntegersModP(map12,-1/2);
+map12:=HomologyVectorSpace(map12,N);
+map12:=List(Basis(Source(map12)),x->Image(map12,x));
+map12:=TransposedMat(map12);
+map12:=map12^-1;
+#Print("map1 ",Runtime(),"\n");;
+map1:=map12*map11;
+
+#Print("map1^-1 ",Runtime(),"\n");;
+
 
 map3:=EquivariantChainMap(THH,TH,HHhomH);
 map3:=HomToIntegralModule(map3,A,ag);   
 map3:=HomToIntegersModP(map3,-1/2);
-#return [map3,map1];
 map3:=HomologyVectorSpace(map3,N);
 map3:=List(Basis(Source(map3)),x->Image(map3,x));
 map3:=TransposedMat(map3);
-#Print(Runtime(),"\n");;
+#Print("map3 ",Runtime(),"\n");;
 
 
 
@@ -132,7 +131,6 @@ Add(Hecke,  fn(T[p],E[p]));
 fi;
 od;
 
-if Hecke[1]=[] then return []; fi;
 return Product(Hecke);
 end);
 ###########################################################

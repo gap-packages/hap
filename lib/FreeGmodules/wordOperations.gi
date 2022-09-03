@@ -23,6 +23,10 @@ w:=arg[1];
 if Length(arg)=2 then p:=arg[2]; else p:=0; fi;
 
 if p=0  then
+
+vv:=SSortedList(List(w,x->[AbsInt(x[1]),x[2]]));   #ADDED AUGUST 2022
+if Length(vv) = Length(w) then return SortedList(w); fi;
+
 #######################################
          v:=Collected(w);
          vv:=List(v,x->x[1]);

@@ -4,12 +4,19 @@
 ##################################################
 ##################################################
 InstallGlobalFunction(DirectProductOfRegularCWComplexes, 
-function(X,Y)
-local bndX, bndY, bnd, orientX, orientY, orient,
+function(arg)
+local X,Y,N,bndX, bndY, bnd, orientX, orientY, orient,
       quad2pair, pair2quad,
       XYmapX, XYmapY, XYmappingX, XYmappingY,
       i, j, ij, x, y, a, b, ia, ib, count, BND, ORIEN, M, bool,
       F, IF, m, n, p, q, crit;
+
+X:=arg[1];
+Y:=arg[2];
+##if arg[3] is given then only calculate enough structure of
+##calculating cup products.   This is messy and should be properly implemented!
+if Length(arg)=3 then N:=arg[3];
+else N:=Dimension(X)+Dimension(Y); fi;
 
 bndX:=X!.boundaries;
 bndY:=Y!.boundaries;
@@ -29,13 +36,16 @@ orient:=List([0..Dimension(X)+Dimension(Y)],i->[]);
 ###############################
 ###############################
 quad2pair:=[];
-pair2quad:=List([1..1+Dimension(X)+Dimension(Y)],i->[]);;
-count:=List([1..1+Dimension(X)+Dimension(Y)],i->0);
+#pair2quad:=List([1..1+Dimension(X)+Dimension(Y)],i->[]);;
+#count:=List([1..1+Dimension(X)+Dimension(Y)],i->0);
+pair2quad:=List([1..1+N],i->[]);;
+count:=List([1..1+N],i->0);
 
 for i in [1..1+Dimension(X)] do
 quad2pair[i]:=[];
 for j in [1..1+Dimension(Y)] do
 quad2pair[i][j]:=[];
+if i+j<=2+N then
 ij:=i-1+j;
 for x in [1..Length(bndX[i])] do
 quad2pair[i][j][x]:=[];
@@ -44,6 +54,7 @@ count[ij]:=count[ij]+1;
 quad2pair[i][j][x][y]:=[ij,count[ij]];
 pair2quad[ij][count[ij]]:=[i,j,x,y];
 od; od;
+fi;
 od; od;
 ###############################
 ###############################
@@ -52,6 +63,7 @@ od; od;
 ###############################
 for i in [1..1+Dimension(X)] do
 for j in [1..1+Dimension(Y)] do
+if i+j<=2+N then
 for x in [1..Length(bndX[i])] do
 for y in [1..Length(bndY[j])] do
 BND:=[0];
@@ -88,6 +100,7 @@ fi;
 bnd[i-1+j][quad2pair[i][j][x][y][2]]:=BND;
 orient[i-1+j][quad2pair[i][j][x][y][2]]:=ORIEN;
 od;od;
+fi;
 od;od;
 
 bnd[1]:=List(bnd[1],i->[1,0]);
@@ -149,6 +162,7 @@ IF:=List([1..Dimension(X)+Dimension(Y)],i->[]);
 
 for m in [1..Dimension(X)+1] do
 for n in [1..Dimension(Y)+1] do
+if m+n<=1+N then
 for i in [1..X!.nrCells(m-1)] do
 for j in [1..Y!.nrCells(n-1)] do
 
@@ -167,17 +181,18 @@ IF[p[1]][p[2]]:=q[2];
      fi;
 fi;
 
-od;
-od;
-od;
-od;
+od; od;
+fi;
+od; od;
 ####Vector Field Done
 #############################################
 
 crit:=[];
 for x in CriticalCells(X) do
 for y in CriticalCells(Y) do
+if x[1]+y[1]<=N then
 Add(crit, quad2pair[x[1]+1][y[1]+1][x[2]][y[2]]);
+fi;
 od;od;
 
 crit:=List(crit,x->[x[1]-1,x[2]]);

@@ -16,7 +16,8 @@ Image:=function(f,x);
 return f!.fun(x);
 end;
 ####################################
-else Image:=ImageElm; 
+#else Image:=ImageElm; 
+else Image:=ImagesRepresentative;
 fi;
 
 #####################################################################
@@ -143,7 +144,8 @@ end;
 #####################################################################
 #####################################################################
 HomArr:=function(map,f)
-local R, S, C, D, DhomC, mapping,IntToPair,LA, hom, ff, rnk;
+local R, S, C, D, DhomC, mapping,IntToPair,LA, hom, ff, rnk,
+      Elts, EltsSS, recf;
 
 hom:=map!.originalHom;
 R:=Source(map);
@@ -153,26 +155,42 @@ mapping:=map!.mapping;
 #D:=f(S) --> f(R)=:C
 
 ff:=Compose(f,hom);
+if ag=fail then
+C:=HomToIntegralModule(R,ff);
+else
 C:=HomToIntegralModule(R,f);   ##This should usually be ff
+fi;
 IntToPair:=C!.intToPair;
 LA:=Length(Identity(Range(f)));
 D:=HomToIntegralModule(S,f);
 if not ag=fail then ag:=ImagesRepresentative(f,ag); fi;
 
+Elts:=[];
+EltsSS:=[];
+recf:=[];
 ##################################
 ##################################
 DhomC:=function(v,n)
 local u,uu, m,i,j,k, bnd, bnd2, x,z,zz,posD, posC, pos;
+
 u:=[1..C!.dimension(n)]*0;
 
-
 for j in [1..C!.dimension(n)/LA] do
+
 bnd:=mapping([[j,1]],n);
+
    for x in bnd do
    z:=SignInt(x[1])*v{[(AbsInt(x[1])-1)*LA+1..AbsInt(x[1])*LA  ]};
-   z:=TransposedMat([z]);
-   zz:=Image(f,S!.elts[x[2]])*z;
-   zz:=TransposedMat(zz); zz:=zz[1];
+
+if not x[2] in EltsSS then AddSet(EltsSS,x[2]); Add(Elts,x[2]);
+   pos:=Length(Elts);recf[pos]:=Image(f,S!.elts[x[2]]);
+   recf[pos]:=TransposedMat(recf[pos]);
+else pos:=Position(Elts,x[2]); 
+fi;
+
+   #zz:=Image(f,S!.elts[x[2]])*z;
+   zz:=z*recf[pos];
+
       for k in [1..LA] do
       posC:=(j-1)*LA + k;
       u[posC] := u[posC] + zz[k];
@@ -186,7 +204,6 @@ if not ag=fail then uu:=[];
    od;
 u:=uu;
 fi;
-
 
 return u;
 end;

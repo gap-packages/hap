@@ -194,7 +194,7 @@ We also verify that <M>g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1</M>.
 </Example>
 
 <P/>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <M>\Delta \colon Y \rightarrow  Y\times Y</M> in dimensions <M>\le 2</M>. In order to construct cup products in
-higher degrees <B>HAP</B> invokes two further strategies.
+higher degrees <B>HAP</B> invokes three further strategies.
 
 <P/><B>Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</B>
 
@@ -222,9 +222,19 @@ The commands then show that <M>H^2(W,\mathbb Z)=\mathbb Z^{22}</M> and
 <#Include SYSTEM "tutex/1.7b.txt">
 </Example>
 
-A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. 
+A cubical Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not yet been implemented in HAP. However, the following more general approach has been implemented.
 
-<P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
+<P/><B>Strategy 3: Implement a cellular approximation to the diagonal map on an arbitrary finite regular CW-complex.</B>
+
+<P/>The following example re-calculates the cup product 
+on the wedge sum
+<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
+simplicial surface  of genus 2 and the <M>K3</M> complex surface which, this time, is stored as a finite regular CW-complex. Discrete vector field methods are used to construct a diagonal approximation. The simplicial structure of <M>W</M> is not used -- in fact, the command <Code>W:=SimplifiedComplex(W)</Code> converts <M>W</M> to a regular CW-complex whose cells are typically not simplices. The method uses a different basis for the cohomology to that used above and thus produces a different `cup product matrix".
+<Example>
+<#Include SYSTEM "tutex/1.7d.txt">
+</Example>
+
+<P/><B>Strategy 4: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
 (currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with <M>\{(y,y)\ :\ y\in Y\}\subset \overline Y</M> and with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
@@ -246,7 +256,10 @@ is a CW-complex which is not a simplicial complex.
 </Example>
 </Section>
 
-Of course, an alternative approach to this particular example would be to first give the direct product <M>Y=T\times T</M> the structure of a simplicial complex and then use the Alexander-Whitney map of Strategy 2. A simplicial structure for <M>T\times T</M> can be obtained using the function <M>SCCartesianProduct(T,T)</M> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
+Of course, either of Strategies 2 or 3 could also be used for this example. 
+To use the Alexander-Whitney formula of Strategy 2 we would need to give the 
+direct product <M>Y=T\times T</M> a simplicial structure. This could be obtained
+ using the function <Code>SCCartesianProduct(T,T)</Code> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
 
 <Example>
 <#Include SYSTEM "tutex/1.8d.txt">

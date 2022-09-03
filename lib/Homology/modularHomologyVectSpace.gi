@@ -119,7 +119,8 @@ else
 fi;
 ConvertToMatrixRep(M1);
 #BasisKerd1:=NullspaceMatDestructive(M1);
-BasisKerd1:=NullspaceMat(M1);
+#BasisKerd1:=NullspaceMat(M1);
+BasisKerd1:=TriangulizedNullspaceMat(M1);
 M1:=0;
 
 fi;
@@ -222,9 +223,11 @@ local x,i,c;
 
 x:=PreImagesRepresentative(FhomH,Bas[w]);
 c:=BasisKerd1[1]*0;
+
 for i in [1..Length(x)] do
 c:=c+BasisKerd1[i]*x[i];
 od;
+
 
 return c;
 end;
@@ -303,9 +306,12 @@ HDhomD:=IHD.h2c;
 DhomHD:=IHD.c2h;
 
 imageGensHC:=[];
+
 for x in [1..Length(gensHC)] do 
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
+#ChomD(a,n)  take most of the time
 od;
+
 
 #HChomHD:=GroupHomomorphismByImagesNC(HC,HD,gensHC,imageGensHC);
 if Dimension(HD)=0 then

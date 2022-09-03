@@ -1,4 +1,4 @@
-RT:=0;
+
 ###############################################################
 ###############################################################
 InstallGlobalFunction(EilenbergMacLaneSimplicialFreeAbelianGroup,
