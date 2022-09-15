@@ -3,7 +3,7 @@
 #################################################
 InstallGlobalFunction(CrossedInvariant,
 function(G,CC)
-local C, eta, pi1, pi2, homs, liftedhoms, delta, gensF, gensG, imgens, 
+local C, eta, pi1, pi2, iso, homs, liftedhoms, delta, gensF, gensG, imgens, 
 S,T, M, L, P, F, f, ff, r, m, x,g,Nf, Md, relsG, cnt, cnthom, cntrel, cntden,U;
 
 if not IsFpGroup(G) then 
@@ -33,11 +33,12 @@ eta:=NaturalHomomorphismByNormalSubgroup(P,Image(delta));
 pi1:=Target(eta);
 pi2:=HomotopyGroup(C,2);
 
-homs:=AllHomomorphisms(G,pi1);
+iso:=IsomorphismPermGroup(G);
+homs:=AllHomomorphisms(Image(iso),pi1);
 liftedhoms:=[];
 F:=FreeGroupOfFpGroup(G);
 gensF:=GeneratorsOfGroup(F);
-gensG:=GeneratorsOfGroup(G);
+gensG:=List(GeneratorsOfGroup(G), x -> Image(iso,x));
 relsG:=RelatorsOfFpGroup(G);
 cnt:=0;
 
