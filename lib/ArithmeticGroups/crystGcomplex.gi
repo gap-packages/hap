@@ -324,7 +324,7 @@ local i,x,k,combin,n,j,r,m,vect,c,
             Add(s,SolutionMat(B1,B2[i]));
         od;
         #Print(s);
-        return SignRat(Determinant(s));
+        return SignInt(Determinant(s));
     end;
     ###################################################################
     
@@ -531,7 +531,7 @@ local i,x,k,combin,n,j,r,m,vect,c,
                             DVFRec[k+1][ww[1]][ww[2]]:=[];
                             return DVFRec[k+1][ww[1]][ww[2]];
                         else 
-                            s:=SignRat(f[i]);
+                            s:=SignInt(f[i]);
                             f[i]:=f[i]-s*1/2;
                             x:=f*B;
                             y:=SearchOrbit(x,k+1);
