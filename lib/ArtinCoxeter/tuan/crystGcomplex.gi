@@ -262,7 +262,7 @@ Add(s,SolutionMat(B1,B2[i]));
 od;
 #Print(s);
 
-return SignRat(Determinant(s));
+return SignInt(Determinant(s));
 end;
 #######################
 Boundary:=function(k,s)
@@ -391,7 +391,7 @@ for i in [1..n] do
     DVFRec[k+1][ww[1]][ww[2]]:=[];
     return DVFRec[k+1][ww[1]][ww[2]];
     else 
-	s:=SignRat(f[i]);
+	s:=SignInt(f[i]);
 	f[i]:=f[i]-s*1/2;
 	x:=f*B;
 	y:=SearchOrbit(x,k+1);
