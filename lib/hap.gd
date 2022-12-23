@@ -800,6 +800,7 @@ DeclareGlobalFunction("RegularCWPolygon");
 DeclareGlobalFunction("RegularCWPermutahedron");
 DeclareGlobalFunction("RegularCWCube");
 DeclareGlobalFunction("RegularCWSimplex");
+DeclareGlobalFunction("DirectProductOfRegularCWComplexesLazy");
 
 
 ## KNOTS ############################################################

@@ -281,9 +281,10 @@ end);
 
 #####################################################
 #####################################################
-IntersectionForm:=function(Y)
-local H, gens, A, i, j, cup, c, x, y, n;
+IntersectionForm:=function(arg)
+local Y, H, gens, A, i, j, cup, c, x, y, n,B;
 
+Y:=arg[1];
 #if IsHapSimplicialComplex(YY) then
 #Y:=RegularCWComplex(YY); 
 #else
@@ -300,14 +301,16 @@ gens:=Filtered([1..Length(H)],i->H[i]=0);
 A:=NullMat(Length(gens),Length(gens));
 
 cup:=CupProduct(Y);
+if Length(arg)=1 then
+B:=IdentityMat(Length(gens));
+else B:=arg[2];
+fi;
 
 for i in [1..Length(gens)] do
 for j in [i..Length(gens)] do
-x:=[1..Length(gens)]*0; x[i]:=1;
-y:=[1..Length(gens)]*0; y[j]:=1;
-c:=cup(n,n,x,y);
+c:=cup(n,n,B[i],B[j]);
 A[i][j]:=c[1];
-A[j][i]:=c[1];
+A[j][i]:=(-1)^n*c[1];
 od;
 od;
 return A;

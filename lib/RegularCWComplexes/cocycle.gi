@@ -545,7 +545,7 @@ local X,Xd,XX,A, CX, HCX, CXX, CXcab, XdmapXX, XdmapX, CXmapCXX,
 X:=arg[1];
 X:=ContractedComplex(X);
 CriticalCells(X);
-XX:=DirectProduct(X,X);
+XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X)+1);
 CXmapCXX:=DiagonalCWMap(X);
 HCXXmapHCX:=HomToIntegers(CXmapCXX);
 CX:=Source(CXmapCXX);

@@ -7,7 +7,8 @@ local XX, CX, CXX, D, map, chainHomotopy,
       CellDiagonal, 2CellDiagonal, CellDiagRec, q2pX,nn,kk;
 
 CX:=ChainComplexOfRegularCWComplex(X);
-XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X));  #THIS NEEDS A LAZY IMPLEMENTATION
+##XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X));  #THIS NEEDS A LAZY IMPLEMENTATION
+XX:=DirectProductOfRegularCWComplexesLazy(X,X);
 CXX:=ChainComplexOfRegularCWComplex(XX); #THIS ALSO NEEDS A LAZY IMPLEMENTATION
 q2pX:=XX!.quad2pair;
 CellDiagRec:=List([0..Dimension(X)],i->[]);
@@ -32,6 +33,7 @@ CE:=Source(F);
 E:=Source(f);
 #Create a dvf on E using the following command
 CriticalCells(E);;
+#CocriticalCellsOfRegularCWComplex(E,n);
 #EE is the direct product E x E with dvf inherited from E
 EE:=DirectProductOfRegularCWComplexes(E,E,1+Dimension(E));
 EE!.properties[1][2]:=Dimension(E);
@@ -106,15 +108,13 @@ end;
 
 2CellDiagonal:=function(i); return CellDiagonal(2,i); end;
 ###########################
-##THE FOLLOWING NEEDS TO BE COMPLETELY RE-DESIGNED AND BE BASED 
-##ON A MORE GENERAL FORMULA THAN THAT OF KRAVATZ -- ONE BASED ON 
-##A GENERAL ORDERING OF THE VERTICES OF A POLYGON
-######################
-if false then    #####
-######################
+##THE FOLLOWING NEEDS TO BE RE-DESIGNED  
+#####################
+if false then   #####
+#####################
 2CellDiagonal:=function(k)
 local u, edges, edgebnds, right, EDGES, N,2N,2N1, pos,
-a, i, j,l,ORIENT,word,L,s,t;
+a, i, j,l,ORIENT,word,L,s,t,LL;
 #k refers to the k-th cell of dimension 2
 
 if IsBound(CellDiagRec[2][k]) then return CellDiagRec[2][k]; fi;
@@ -153,6 +153,8 @@ od;
 Unbind(edges);
 Unbind(edgebnds);
 
+
+
 word:=[];
 for i in [1..N] do
 if ORIENT[i]=1 then Append(word,[EDGES[i],-EDGES[i]]);
@@ -160,12 +162,23 @@ else Append(word,[-EDGES[i],EDGES[i]]);
 fi;
 od;
 
+Unbind(ORIENT);
+
 if word[2N]>0 then
 word:=Concatenation([word[2N]],word{[1..2N1]});
 fi;
+if word[1]<0 then
+word:=Concatenation(word{[2..2N]},[word[1]]);
+fi;
 
-pos:=PositionProperty(word,x->x<0);
 L:=[];
+LL:=[];
+ORIENT:=[];
+for i in [1..N] do
+Add(ORIENT,X!.orientation[3][k][i]);
+Add(ORIENT,X!.orientation[3][k][i]);
+od;
+
 while true do
 pos:=PositionProperty(word,x->x<0);
 pos:=PositionProperty(word,x->x>0,pos);
@@ -175,20 +188,24 @@ j:=word[pos-1];
 word[pos]:=j;
 word[pos-1]:=i;
 Add(L,[i,j]);
+Add(LL,ORIENT[pos-1]);
 od;
 
-Print(word,"\n");
-Print(L,"\n");
 Apply(L,x->q2pX[2][2][AbsInt(x[2])][AbsInt(x[1])][2]);
-s:=Minimum(X!.boundaries[2][EDGES[1]]{[2,3]});
-Print(L,"\n");
-Add(L,q2pX[3][1][k][s][2]);
-Add(L,q2pX[1][3][s][k][2]);
 
-for i in L do
-u[i]:=u[i]+1;
+
+s:=Minimum(X!.boundaries[2][EDGES[1]]{[2,3]});
+#Add(L,q2pX[3][1][k][s][2]);
+#Add(L,q2pX[1][3][s][k][2]);
+for i in [1..Length(L)] do
+u[L[i]]:= u[L[i]]+LL[i] ;
 od;
-Print([N,Length(Filtered(u*TransposedMat(BoundaryMatrix(CXX,2)),z->(z mod 2)<>0))],"   ");
+
+i:=q2pX[3][1][k][s][2];
+u[i]:=u[i]-1;                ##+1 or -1??
+i:=q2pX[1][3][s][k][2];
+u[i]:=u[i]-1;                ##+1 or -1??
+
 CellDiagRec[2][k]:=u;
 return u;
 end;

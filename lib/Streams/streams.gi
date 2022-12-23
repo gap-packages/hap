@@ -98,10 +98,11 @@ PrintTo:=HAP_PrintTo;
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
 WriteLine(s.stream,"\"STOP\";");;
-i:=0;
+i:=0;     
 while true do 			#FLUSH THE CHILD
 if not i="\"STOP\"\n" then
 i:=ReadAllLine(s.stream,true);
+i:=StripEscapeSequences(i);
 else break; fi;
 od;
 
@@ -172,7 +173,7 @@ function(s)
 local i,output;
 
 while true do
-i:=ReadAllLine(s.stream,true); 
+i:=StripEscapeSequences(ReadAllLine(s.stream,true)); 
 if  i="\"START\"\n" then 
 break; fi;
 od;
@@ -185,6 +186,7 @@ while true do
 if not i="\"STOP\"\n" then 
 Append(output,i);
 i:=(ReadAllLine(s.stream,true)); 
+i:=StripEscapeSequences(i);
 else break; fi;
 od;
 
@@ -402,6 +404,7 @@ od;
 
 for i in lst{[1+Length(processes)..Length(lst)]} do
 s:=NextAvailableChild(processes);
+#Print(s.number,"\n");
 Add(answer,ChildReadEval(s));
 Add(prm2,s.number);
 f:=Concatenation([func,"(",String(i),");"]);
@@ -428,7 +431,7 @@ cnt[prm1[i]]:=cnt[prm1[i]] + 1;
 final[i]:=answer[PositionNthOccurrence(prm2,prm1[i],cnt[prm1[i]])];
 
 od;
-
+Print(prm2,"\n");
 return final;
 end);
 #####################################################

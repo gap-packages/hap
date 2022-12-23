@@ -178,6 +178,24 @@ end);
 #############################################################
 
 #############################################################
+InstallOtherMethod(IsEmpty,
+"for PseudoLists",
+[IsPseudoList],
+function(PL)
+return 0=Length(PL!.lst);
+end);
+#############################################################
+
+#############################################################
+InstallOtherMethod(IsEmpty,
+"for PseudoLists",
+[IsPseudoListWithFunction],
+function(PL)
+return  0=PL!.lnthfun();
+end);
+#############################################################
+
+#############################################################
 InstallOtherMethod(Size,
 "for PseudoLists",
 [IsPseudoList],

@@ -431,6 +431,7 @@ ReadPackageHap("lib/RegularCWComplexes/cocontract.gi");
 ReadPackageHap("lib/RegularCWComplexes/piZero.gi");
 ReadPackageHap("lib/RegularCWComplexes/filteredCW.gi");
 ReadPackageHap("lib/RegularCWComplexes/directproduct.gi");
+ReadPackageHap("lib/RegularCWComplexes/directLazy.gi");
 ReadPackageHap("lib/RegularCWComplexes/cocycle.gi");
 ReadPackageHap("lib/RegularCWComplexes/universalCover.gi");
 ReadPackageHap("lib/RegularCWComplexes/spin.gi");

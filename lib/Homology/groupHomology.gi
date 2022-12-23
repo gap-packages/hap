@@ -127,7 +127,7 @@ if N<=1 then
 R:=ResolutionNilpotentGroup(G,N+1);
 else
 L:=LowerCentralSeries(G);
-L:=BigStepLCS(G,9);
+L:=BigStepLCS(G,6);    #changed from 9, 22/12/2022
 
 R:=ResolutionNormalSeries(L,N+1,false,p);
 fi;
