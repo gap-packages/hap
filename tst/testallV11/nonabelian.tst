@@ -13,8 +13,8 @@ gap> Order(SymmetricCommutativityGroup(G));
 gap> G:=SmallGroup(8,5);;
 gap> U:=IdGroup(UpperEpicentralSeries(G,1));
 [ 1, 1 ]
-gap> Set(List(StemGroups(G),IdGroup));
-[ [ 32, 28 ], [ 64, 73 ] ]
+gap> Size(List(StemGroups(G),IdGroup));
+2
 gap> G:=SmallGroup(16,13);;
 gap> N:=Center(G);;
 gap> RelativeSchurMultiplier(G,N);
