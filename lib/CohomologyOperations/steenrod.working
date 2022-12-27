@@ -405,21 +405,17 @@ c:=Coefficients(B,w);
 d:=Filtered([1..Length(c)], i-> not IsZero(c[i]));
 for i in d do
      if i<Length(c) then
-        if not IsOne(c[i]) then #Print(c[i],"*"); 
-                                 Append(str,"*"); fi;
+        if not IsOne(c[i]) then Print(c[i],"*"); Append(str,"*"); fi;
      else
-        if not IsOne(c[i]) then #Print(c[i]); 
-                                  Append(str, String(c[i])); fi;
+        if not IsOne(c[i]) then Print(c[i]); Append(str, String(c[i])); fi;
      fi;
      for j in [1..Length(M[1][i])] do
-        if j < Length(M[1][i]) then #Print(M[1][i][j],"*"); 
+        if j < Length(M[1][i]) then Print(M[1][i][j],"*"); 
         Append(str,String(M[1][i][j])); Append(str,"*");
-        else #Print(M[1][i][j]); 
-              Append(str,String(M[1][i][j]));
+        else Print(M[1][i][j]); Append(str,String(M[1][i][j]));
         fi;
      od;
-     if not i=d[Length(d)] then #Print(" + "); 
-                                 Add(str,'+'); fi;
+     if not i=d[Length(d)] then Print(" + "); Add(str,'+'); fi;
 od;
 if Length(arg)=3 then 
 return str;

@@ -13,7 +13,7 @@ Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial
 groups, and general computations in algebraic topology relating to finite 
 CW-complexes, covering spaces, knots, knotted surfaces, and topics such as
  persitent homology arising in topological data analysis. A full description 
-of the library can be found at https://gap-packages.github.io/hap/ .
+of the library can be found at http://hamilton.nuigalway.ie/Hap/www/ .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from
@@ -51,7 +51,7 @@ included in directory "pkg/Hap1.47/www" of this distribution).
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
 
-1. Change to the directory "pkg/Hap1.25/" .
+1. Change to the directory "pkg/Hap1.47/" .
 2. Edit the file "compile" so that: PKGDIR is equal to the path to the
 directory "pkg" where your GAP packages are stored; GACDIR is equal to the
 path to the directory where the GAP compiler "gac" is stored.

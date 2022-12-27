@@ -78,7 +78,7 @@ alpha1:=List(alpha,i->[i]);
 A:=ModPCohomologyRing(G,N);
 gens:=ModPRingGenerators(A);
 
-gens:=ModPRingGenerators(A);
+#gens:=ModPRingGenerators(A);
 gensletters:=alpha{[1..Length(gens)]};
 gensletters1:=alpha1{[1..Length(gens)]};
 
