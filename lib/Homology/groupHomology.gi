@@ -162,6 +162,14 @@ HomologyGenericGroup:=function()
 local
 	primes, q, S, gens, functor, R, H, TorsionCoeffs;
 
+if IsPrime(p) then
+S:=SylowSubgroup(G,p);
+R:=ResolutionPrimePowerGroup(S,N+1);
+return PrimePartDerivedFunctor(G,R,Functor,N);
+fi;
+
+
+
 TorsionCoeffs:=[];
 primes:= SSortedList(Factors(Order(G)));
 

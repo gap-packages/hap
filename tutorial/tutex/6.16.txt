@@ -1,10 +1,17 @@
 gap> G:=AlternatingGroup(5);;
-gap> pi:=PermToMatrixGroup(SymmetricGroup(5),5);;
+gap> rho:=IrreducibleRepresentations(G)[5];
+[ (1,2,3,4,5), (3,4,5) ] -> 
+[ 
+  [ [ 0, 0, 1, 0, 0 ], [ -1, -1, 0, 0, 1 ], [ 0, 1, 1, 1, 0 ], 
+      [ 1, 0, -1, 0, -1 ], [ -1, -1, 0, -1, 0 ] ], 
+  [ [ -1, -1, 0, 0, 1 ], [ 1, 0, -1, 0, -1 ], [ 0, 0, 0, 0, 1 ], 
+      [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ] ] ]
 gap> R:=ResolutionFiniteGroup(G,7);;
-gap> C:=HomToIntegralModule(R,pi);;
+gap> C:=HomToIntegralModule(R,rho);;
 gap> Cohomology(C,6);
-[ 2, 6 ]
-
-gap> D:=TensorWithIntegralModule(R,pi);;
-gap> Homology(D,6);
 [ 2 ]
+gap> D:=TensorWithIntegralModule(R,rho);
+Chain complex of length 7 in characteristic 0 . 
+
+gap> Homology(D,6);
+[  ]

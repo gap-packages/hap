@@ -190,6 +190,7 @@ DeclareGlobalFunction("HAP_HomToIntModP_CochainComplex");#<HomToIntegers
 DeclareGlobalFunction("HAP_HomToIntModP_ChainMap");#<HomToIntegers
 DeclareGlobalFunction("HAP_HomToIntModP_CochainMap");#<HomToIntegers
 DeclareGlobalFunction("HomToIntegralModule");
+DeclareGlobalFunction("HomToModPModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
 DeclareGlobalFunction("PermToMatrixGroup");
 DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
@@ -801,6 +802,7 @@ DeclareGlobalFunction("RegularCWPermutahedron");
 DeclareGlobalFunction("RegularCWCube");
 DeclareGlobalFunction("RegularCWSimplex");
 DeclareGlobalFunction("DirectProductOfRegularCWComplexesLazy");
+DeclareGlobalFunction("QuotientChainMap");
 
 
 ## KNOTS ############################################################

@@ -197,6 +197,7 @@ ReadPackageHap( "lib/ResolutionsModP/radical.gi");
 ##################### FUNCTORS ######################################
 ReadPackageHap( "lib/Functors/permMatrix.gi");
 ReadPackageHap( "lib/Functors/homToZmodule.gi");
+ReadPackageHap( "lib/Functors/homToModpModule.gi");
 ReadPackageHap( "lib/Functors/tensorWithZ.gi");
 ReadPackageHap( "lib/Functors/tensorWithZmodule.gi");
 ReadPackageHap( "lib/Functors/tensorWithTwistedZ.gi");
@@ -439,6 +440,7 @@ ReadPackageHap("lib/RegularCWComplexes/spunknotcomp.gi");
 ReadPackageHap("lib/RegularCWComplexes/grannyknot.gi");
 ReadPackageHap("lib/RegularCWComplexes/elementaryCWConstructions.gi");
 ReadPackageHap("lib/RegularCWComplexes/diagonal.gi");
+ReadPackageHap("lib/RegularCWComplexes/quotient.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################

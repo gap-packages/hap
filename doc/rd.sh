@@ -20,7 +20,7 @@ Steenrod algebras of finite groups, Bredon homology, cohomology of simplicial
 groups, and general computations in algebraic topology relating to finite 
 CW-complexes, covering spaces, knots, knotted surfaces, and topics such as
  persitent homology arising in topological data analysis. A full description 
-of the library can be found at http://hamilton.nuigalway.ie/Hap/www/ .
+of the library can be found at https://gap-packages.github.io/hap/ .
 
 HAP is written almost entirely in the GAP language. A few of HAP's (optional)
 functions rely on Polymake software (available from
@@ -146,7 +146,7 @@ subdirectory
 then create a directory "pkg" in your home directory and download the
 file there. (If you'd prefer to download the most
 recent development version of HAP then download the file&nbsp; <a
- href="http://hamilton.nuigalway.ie/Hap/hap$version-dev.tar.gz">hap$version-dev.tar.gz</a>
+ href="https://github.com/gap-packages/hap/releases/download/v1.47/hap-1.47.tar.gz">hap$version-dev.tar.gz</a>
 instead.)<br>
   </li>
 </ul>
