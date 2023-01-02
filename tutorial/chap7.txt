@@ -104,6 +104,20 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe  following  example  computes the sixth mod-[22X2[122X homology of of the Unitary
+  group [22XU_3(4)[122X of order 312000.[133X
+  
+  [33X[0;0Y[22XH_6(U_3(4), Z_2) = Z_2^4[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=GU(3,4);;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(G);[127X[104X
+    [4X[28X312000[128X[104X
+    [4X[25Xgap>[125X [27XGroupHomology(G,6,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   [33X[0;0YThe following example constructs the Poincare series[133X
   
   [33X[0;0Y[22Xp(x)=frac1-x^3+3*x^2-3*x+1[122X[133X
@@ -136,8 +150,8 @@
   [33X[0;0Y[22Xp(x)=fracx^4-x^3+x^2-x+1x^6-x^5+x^4-2*x^3+x^2-x+1[122X[133X
   
   [33X[0;0Ywhose  coefficient  of  [22Xx^n[122X  is  equal  to the dimension of the vector space
-  [22XH^n(M_11,  F_2)[122X  for  all  [22Xn[122X in the range [22X0le nle 14[122X. The coefficient is not
-  guaranteed correct for [22Xnge 15[122X.[133X
+  [22XH^n(M_11,  F_2)[122X  for  all  [22Xn[122X  in  the range [22X0≤ n≤ 14[122X. The coefficient is not
+  guaranteed correct for [22Xn≥ 15[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPoincareSeriesPrimePart(MathieuGroup(11),2,14);[127X[104X
@@ -293,34 +307,59 @@
   
   [33X[0;0YIf [22XA= Z^n[122X and [22XG[122X acts as[133X
   
-  [33X[0;0Y[22XG×  A  →  A,  (g,  (x_1,x_2,...,x_n))  ↦  (x_π(g)^-1(1),  x_π(g)^-1(2), ...,
-  x_π(g)^-1(n))[122X[133X
+  [33X[0;0Y[22XG× A → A, (g, v) ↦ ρ(g) v[122X[133X
   
-  [33X[0;0Ywhere  [22Xπ:  G→ S_n[122X is a (not necessarily faithful) permutation representation
+  [33X[0;0Ywhere  [22Xρ:  G→ Gl_n( Z)[122X is a (not necessarily faithful) matrix representation
   of  degree  [22Xn[122X  then  we can avoid the use of [22XG[122X-outer groups and use just the
-  homomorphism [22Xπ[122X instead. The following example uses this data type to compute
+  homomorphism [22Xρ[122X instead. The following example uses this data type to compute
   the cohomology[133X
   
-  [33X[0;0Y[22XH^6(G,A) = Z_2 ⊕ Z_6[122X[133X
+  [33X[0;0Y[22XH^6(G,A) = Z_2[122X[133X
   
   [33X[0;0Yand the homology[133X
   
-  [33X[0;0Y[22XH_6(G,A) = Z_2[122X[133X
+  [33X[0;0Y[22XH_6(G,A) = 0[122X[133X
   
   [33X[0;0Yof the alternating group [22XG=A_5[122X with coefficients in [22XA= Z^5[122X where elements of
-  [22XG[122X act on [22XZ^5[122X via the canonical permutation of basis elements.[133X
+  [22XG[122X act on [22XZ^5[122X via an irreducible representation.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=AlternatingGroup(5);;[127X[104X
-    [4X[25Xgap>[125X [27Xpi:=PermToMatrixGroup(SymmetricGroup(5),5);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=IrreducibleRepresentations(G)[5];[127X[104X
+    [4X[28X[ (1,2,3,4,5), (3,4,5) ] -> [128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ 0, 0, 1, 0, 0 ], [ -1, -1, 0, 0, 1 ], [ 0, 1, 1, 1, 0 ], [128X[104X
+    [4X[28X      [ 1, 0, -1, 0, -1 ], [ -1, -1, 0, -1, 0 ] ], [128X[104X
+    [4X[28X  [ [ -1, -1, 0, 0, 1 ], [ 1, 0, -1, 0, -1 ], [ 0, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X      [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ] ] ][128X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,7);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,pi);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,rho);;[127X[104X
     [4X[25Xgap>[125X [27XCohomology(C,6);[127X[104X
-    [4X[28X[ 2, 6 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XD:=TensorWithIntegralModule(R,pi);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(D,6);[127X[104X
     [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithIntegralModule(R,rho);[127X[104X
+    [4X[28XChain complex of length 7 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(D,6);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf  [22XA=K^d[122X  is a vetor space of dimension [22Xd[122X over the field [22XK=GF(p)[122X and [22XG[122X acts
+  on  [22XA[122X  via a homomorphism [22Xρ: G→ GL_d(K)[122X then the homology [22XH^n(G,A)[122X can again
+  be  computed without the use of G-outer groups. As an example, the following
+  commands compute[133X
+  
+  [33X[0;0Y[22XH^4(GL(3,2),A) =K^2[122X[133X
+  
+  [33X[0;0Ywhere [22XK=GF(2)[122X and [22XGL(3,2)[122X acts with its natural action on [22XA=K^3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=GL(3,2);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=GroupHomomorphismByFunction(G,G,x->x);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToModPModule(R,rho,2);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,4);[127X[104X
+    [4X[28X2[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -483,15 +522,15 @@
   
   [30X    [33X[0;6Y[22XΓ=C_m=⟨ x | x^m⟩[122X ([12Xcyclic fundamental group[112X)[133X
   
-  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y | xyx^-1=y^-1, x^2^k=y^n ⟩[122X for integers [22Xk, mge 1, nge 2[122X
-        and [22Xm[122X coprime to [22X2n[122X ([12Xprism manifold case[112X)[133X
+  [30X    [33X[0;6Y[22XΓ=C_m× ⟨ x,y | xyx^-1=y^-1, x^2^k=y^n ⟩[122X for integers [22Xk, m≥ 1, n≥ 2[122X and
+        [22Xm[122X coprime to [22X2n[122X ([12Xprism manifold case[112X)[133X
   
   [30X    [33X[0;6Y[22XΓ=  C_m×  ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩[122X for
-        integers [22Xk,mge 1[122X and [22Xm[122X coprime to 6 ([12Xtetrahedral case[112X)[133X
+        integers [22Xk,m≥ 1[122X and [22Xm[122X coprime to 6 ([12Xtetrahedral case[112X)[133X
   
-  [30X    [33X[0;6Y[22XΓ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩[122X for [22Xmge 1[122X coprime to 6 ([12Xoctahedral case[112X)[133X
+  [30X    [33X[0;6Y[22XΓ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩[122X for [22Xm≥ 1[122X coprime to 6 ([12Xoctahedral case[112X)[133X
   
-  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y  | (xy)^2=x^3=y^5⟩[122X for [22Xmge 1[122X coprime to 30 ([12Xicosahedral
+  [30X    [33X[0;6Y[22XΓ=C_m×  ⟨  x,y  |  (xy)^2=x^3=y^5⟩[122X for [22Xm≥ 1[122X coprime to 30 ([12Xicosahedral
         case[112X).[133X
   
   [33X[0;0YThis    list    of    cases    is    taken    from   the   Wikipedia   pages
@@ -500,7 +539,7 @@
   and  in  the  other  four  cases  it has period 4. (Recall that in general a
   finite group [22XG[122X has [13Xperiodic cohomology of period [22Xn[122X[113X if there is an element [22Xu∈
   H^n(G,  Z)[122X  such  that  the cup product [22X- ∪ u: H^k(G, Z) → H^k+n(G, Z)[122X is an
-  isomorphism for all [22Xkge 1[122X. It can be shown that [22XG[122X has periodic cohomology of
+  isomorphism  for all [22Xk≥ 1[122X. It can be shown that [22XG[122X has periodic cohomology of
   period [22Xn[122X if and only if [22XH^n(G, Z)= Z_|G|[122X.)[133X
   
   [33X[0;0YThe  cohomology  of  the cyclic group is well-known, and the cohomology of a

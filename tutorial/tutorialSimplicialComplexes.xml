@@ -194,7 +194,7 @@ We also verify that <M>g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1</M>.
 </Example>
 
 <P/>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <M>\Delta \colon Y \rightarrow  Y\times Y</M> in dimensions <M>\le 2</M>. In order to construct cup products in
-higher degrees <B>HAP</B> invokes two further strategies.
+higher degrees <B>HAP</B> invokes three further strategies.
 
 <P/><B>Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</B>
 
@@ -222,16 +222,26 @@ The commands then show that <M>H^2(W,\mathbb Z)=\mathbb Z^{22}</M> and
 <#Include SYSTEM "tutex/1.7b.txt">
 </Example>
 
-A cubical Alexander-Whitney formula can be used similarly for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. 
+A cubical Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not yet been implemented in HAP. However, the following more general approach has been implemented.
 
-<P/><B>Strategy 3: Guess and verify a cellular approximation to the diagonal map.</B>   
+<P/><B>Strategy 3: Implement a cellular approximation to the diagonal map on an arbitrary finite regular CW-complex.</B>
+
+<P/>The following example re-calculates the cup product 
+on the wedge sum
+<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
+simplicial surface  of genus 2 and the <M>K3</M> complex surface which, this time, is stored as a finite regular CW-complex. Discrete vector field methods are used to construct a diagonal approximation. The simplicial structure of <M>W</M> is not used -- in fact, the command <Code>W:=SimplifiedComplex(W)</Code> converts <M>W</M> to a regular CW-complex whose cells are typically not simplices. The method uses a different basis for the cohomology to that used above and thus produces a different `cup product matrix".
+<Example>
+<#Include SYSTEM "tutex/1.7d.txt">
+</Example>
+
+<P/><B>Strategy 4: Guess and verify a cellular approximation to the diagonal map.</B>   
 
 <P/>Many naturally occuring cell structures are neither simplicial nor cubical. For a general regular CW-complex we 
-(currently) require a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with <M>\{(y,y)\ :\ y\in Y\}\subset \overline Y</M> and with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
+can attempt to construct a cellular inclusion <M>\overline Y \hookrightarrow Y\times Y</M> with <M>\{(y,y)\ :\ y\in Y\}\subset \overline Y</M> and with projection <M>p\colon \overline Y \twoheadrightarrow Y</M> that induces isomorphisms on integral homology.
 The function <C>DiagonalApproximation(Y)</C> constructs a candidate inclusion,
 but the projection <M>p\colon \overline Y \twoheadrightarrow Y</M> 
 needs to be tested for homology equivalence. If the candidate inclusion
- passes this test then the function <C>CupProduct(Y)</C>,  involving
+ passes this test then the function <C>CupProductOfRegularCWComplex_alt(Y)</C>,  involving
  the candidate space,  can be used for cup products. (I think the test is passed for all regular CW-complexes that are subcomplexes of some Euclidean space with all cells convex polytopes -- but a proof needs to be written down!)   
 
 <P/>The following example calculates <M>g_1^2 \cup g_2^2 \ne 0</M> where
@@ -246,23 +256,15 @@ is a CW-complex which is not a simplicial complex.
 </Example>
 </Section>
 
-Of course, an alternative approach to this particular example would be to first give the direct product <M>Y=T\times T</M> the structure of a simplicial complex and then use the Alexander-Whitney map of Strategy 2. A simplicial structure for <M>T\times T</M> can be obtained using the function <M>SCCartesianProduct(T,T)</M> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
+Of course, either of Strategies 2 or 3 could also be used for this example. 
+To use the Alexander-Whitney formula of Strategy 2 we would need to give the 
+direct product <M>Y=T\times T</M> a simplicial structure. This could be obtained
+ using the function <Code>SCCartesianProduct(T,T)</Code> from the <B>SimpComp</B> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)
 
 <Example>
 <#Include SYSTEM "tutex/1.8d.txt">
 </Example>
 
-
-<Section><Heading>Cohomology Rings</Heading>
-The cup product gives the cohomology <M>H^\ast(X,R)</M> of a space <M>X</M> with coefficients in a ring <M>R</M> the structure of a graded commutitive ring. This is currently implemented only for <M>Y</M> a simplicial complex and <M>R=\mathbb Z_p</M> the field of <M>p</M> elements.
-
-<P/>The folowing commands compute the mod <M>2</M> cohomology ring <M>H^\ast(W,\mathbb Z_2)</M> of the above wedge sum
-<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
-simplicial surface  of genus 2 and the <M>K3</M> complex simplicial surface (of real dimension 4). 
-<Example>
-<#Include SYSTEM "tutex/1.80.txt">
-</Example>
-</Section>
 
 
 <Section><Heading>Intersection forms of <M>4</M>-manifolds</Heading>
@@ -272,7 +274,7 @@ The cup product gives rise to the intersection form of a connected, closed,  ori
 
 <P/>The following example constructs the direct product <M>L=S^2\times S^2</M> of two <M>2</M>-spheres,  the connected sum 
 <M>M=\mathbb CP^2 \# \overline{\mathbb CP^2}</M> of the complex projective plane <M>\mathbb CP^2</M> and its oppositely oriented version <M>\overline{\mathbb CP^2}</M>, and the connected sum
-<M>M=\mathbb CP^2 \# \mathbb CP^2</M>. The manifolds <M>L</M>, <M>M</M> and <M>N</M> are each shown to have a CW-structure involving one <M>0</M>-cell, two <M>1</M>-cells and one <M>2</M>-cell. They are thus simply connected and have identical cohomology.
+<M>N=\mathbb CP^2 \# \mathbb CP^2</M>. The manifolds <M>L</M>, <M>M</M> and <M>N</M> are each shown to have a CW-structure involving one <M>0</M>-cell, two <M>1</M>-cells and one <M>2</M>-cell. They are thus simply connected and have identical cohomology.
 
 
 <Example>
@@ -293,11 +295,40 @@ The following commands compute matrices representing the intersection forms <M>q
 <#Include SYSTEM "tutex/1.8b.txt">
 </Example>
 
-Since <M>qL</M> is of type I, whereas <M>qM</M> and <M>qN</M> are  of type II 
+Since <M>qL</M> is of type II, whereas <M>qM</M> and <M>qN</M> are  of type I 
 we see that the oriented homotopy type of <M>L</M> is distinct to that of 
 <M>M</M> and that of <M>N</M>. Since <M>qM</M> has index <M>2</M> and  <M>qN</M> has index <M>0</M> we see that that <M>M</M> and <M>N</M> also have distinct oriented homotopy types.
 
 </Section>
+
+<Section><Heading>Cohomology Rings</Heading>
+The cup product gives the cohomology <M>H^\ast(X,R)</M> of a space <M>X</M> with coefficients in a ring <M>R</M> the structure of a graded commutitive ring. The function <Code>CohomologyRing(Y,p)</Code>
+ returns the cohomology as an algebra 
+for <M>Y</M> a simplicial complex and <M>R=\mathbb Z_p</M> the field of <M>p</M> elements. For more general regular
+CW-complexes or <M>R=\mathbb Z</M> the cohomology ring structure can be determined using the function <Code>CupProduct(Y)</Code>.
+
+<P/>The folowing commands compute the mod <M>2</M> cohomology ring <M>H^\ast(W,\mathbb Z_2)</M> of the above wedge sum
+<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
+simplicial surface  of genus 2 and the <M>K3</M> complex simplicial surface (of real dimension 4).
+<Example>
+<#Include SYSTEM "tutex/1.80.txt">
+</Example>
+
+<P/>The functions <Code>CupProduct</Code> and <Code>IntersectionForm</Code> 
+can be used to determine integral cohomology rings. For example,
+the  integral cohomology ring of an arbitrary closed surface was calculated in <Cite Key="goncalves" Where="Theorem 3.5"/>. For any given surface <M>M</M>
+this result can be recalculated using the intersection form. For instance, for an orientable surface of genus <M>g</M> it is well-known that
+ <M>H^1(M,\mathbb Z)=\mathbb Z^{2g}</M>, <M>H^2(M,\mathbb Z)=\mathbb Z</M>. The ring structure multiplication is thus given by the matrix of the intersection form. For say <M>g=3</M> the ring multiplication is given, with respect to some cohomology basis, in the following.
+<Example>
+<#Include SYSTEM "tutex/1.80a.txt">
+</Example>
+By changing the basis <M>B</M> for <M>H^1(M,\mathbb Z)</M> we obtain the following simpler matrix representing multiplication in <M>H^\ast(M,\mathbb Z)</M>.
+<Example>
+<#Include SYSTEM "tutex/1.80b.txt">
+</Example> 
+
+</Section>
+
 
 <Section><Heading>CW maps and induced homomorphisms</Heading>
 

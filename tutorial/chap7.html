@@ -163,6 +163,20 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>The following example computes the sixth mod-<span class="SimpleMath">2</span> homology of of the Unitary group <span class="SimpleMath">U_3(4)</span> of order 312000.</p>
+
+<p><span class="SimpleMath">H_6(U_3(4), Z_2) = Z_2^4</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GU(3,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+312000
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,6,2);</span>
+[ 2, 2, 2, 2 ]
+
+</pre></div>
+
 <p>The following example constructs the Poincare series</p>
 
 <p><span class="SimpleMath">p(x)=frac1-x^3+3*x^2-3*x+1</span></p>
@@ -192,7 +206,7 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><span class="SimpleMath">p(x)=fracx^4-x^3+x^2-x+1x^6-x^5+x^4-2*x^3+x^2-x+1</span></p>
 
-<p>whose coefficient of <span class="SimpleMath">x^n</span> is equal to the dimension of the vector space <span class="SimpleMath">H^n(M_11, F_2)</span> for all <span class="SimpleMath">n</span> in the range <span class="SimpleMath">0le nle 14</span>. The coefficient is not guaranteed correct for <span class="SimpleMath">nge 15</span>.</p>
+<p>whose coefficient of <span class="SimpleMath">x^n</span> is equal to the dimension of the vector space <span class="SimpleMath">H^n(M_11, F_2)</span> for all <span class="SimpleMath">n</span> in the range <span class="SimpleMath">0≤ n≤ 14</span>. The coefficient is not guaranteed correct for <span class="SimpleMath">n≥ 15</span>.</p>
 
 
 <div class="example"><pre>
@@ -360,30 +374,54 @@ G-cocomplex of length 5 .
 
 <p>If <span class="SimpleMath">A= Z^n</span> and <span class="SimpleMath">G</span> acts as</p>
 
-<p><span class="SimpleMath">G× A → A, (g, (x_1,x_2,...,x_n)) ↦ (x_π(g)^-1(1), x_π(g)^-1(2), ..., x_π(g)^-1(n))</span></p>
+<p><span class="SimpleMath">G× A → A, (g, v) ↦ ρ(g) v</span></p>
 
-<p>where <span class="SimpleMath">π: G→ S_n</span> is a (not necessarily faithful) permutation representation of degree <span class="SimpleMath">n</span> then we can avoid the use of <span class="SimpleMath">G</span>-outer groups and use just the homomorphism <span class="SimpleMath">π</span> instead. The following example uses this data type to compute the cohomology</p>
+<p>where <span class="SimpleMath">ρ: G→ Gl_n( Z)</span> is a (not necessarily faithful) matrix representation of degree <span class="SimpleMath">n</span> then we can avoid the use of <span class="SimpleMath">G</span>-outer groups and use just the homomorphism <span class="SimpleMath">ρ</span> instead. The following example uses this data type to compute the cohomology</p>
 
-<p><span class="SimpleMath">H^6(G,A) = Z_2 ⊕ Z_6</span></p>
+<p><span class="SimpleMath">H^6(G,A) = Z_2</span></p>
 
 <p>and the homology</p>
 
-<p><span class="SimpleMath">H_6(G,A) = Z_2</span></p>
+<p><span class="SimpleMath">H_6(G,A) = 0</span></p>
 
-<p>of the alternating group <span class="SimpleMath">G=A_5</span> with coefficients in <span class="SimpleMath">A= Z^5</span> where elements of <span class="SimpleMath">G</span> act on <span class="SimpleMath">Z^5</span> via the canonical permutation of basis elements.</p>
+<p>of the alternating group <span class="SimpleMath">G=A_5</span> with coefficients in <span class="SimpleMath">A= Z^5</span> where elements of <span class="SimpleMath">G</span> act on <span class="SimpleMath">Z^5</span> via an irreducible representation.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi:=PermToMatrixGroup(SymmetricGroup(5),5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IrreducibleRepresentations(G)[5];</span>
+[ (1,2,3,4,5), (3,4,5) ] -&gt; 
+[ 
+  [ [ 0, 0, 1, 0, 0 ], [ -1, -1, 0, 0, 1 ], [ 0, 1, 1, 1, 0 ], 
+      [ 1, 0, -1, 0, -1 ], [ -1, -1, 0, -1, 0 ] ], 
+  [ [ -1, -1, 0, 0, 1 ], [ 1, 0, -1, 0, -1 ], [ 0, 0, 0, 0, 1 ], 
+      [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,7);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,pi);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,rho);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,6);</span>
-[ 2, 6 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithIntegralModule(R,pi);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,6);</span>
 [ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithIntegralModule(R,rho);</span>
+Chain complex of length 7 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,6);</span>
+[  ]
+
+</pre></div>
+
+<p>If <span class="SimpleMath">A=K^d</span> is a vetor space of dimension <span class="SimpleMath">d</span> over the field <span class="SimpleMath">K=GF(p)</span> and <span class="SimpleMath">G</span> acts on <span class="SimpleMath">A</span> via a homomorphism <span class="SimpleMath">ρ: G→ GL_d(K)</span> then the homology <span class="SimpleMath">H^n(G,A)</span> can again be computed without the use of G-outer groups. As an example, the following commands compute</p>
+
+<p><span class="SimpleMath">H^4(GL(3,2),A) =K^2</span></p>
+
+<p>where <span class="SimpleMath">K=GF(2)</span> and <span class="SimpleMath">GL(3,2)</span> acts with its natural action on <span class="SimpleMath">A=K^3</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByFunction(G,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModPModule(R,rho,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
+2
 
 </pre></div>
 
@@ -537,20 +575,20 @@ Chain Map between complexes of length 5 .
 <li><p><span class="SimpleMath">Γ=C_m=⟨ x | x^m⟩</span> (<strong class="button">cyclic fundamental group</strong>)</p>
 
 </li>
-<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | xyx^-1=y^-1, x^2^k=y^n ⟩</span> for integers <span class="SimpleMath">k, mge 1, nge 2</span> and <span class="SimpleMath">m</span> coprime to <span class="SimpleMath">2n</span> (<strong class="button">prism manifold case</strong>)</p>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | xyx^-1=y^-1, x^2^k=y^n ⟩</span> for integers <span class="SimpleMath">k, m≥ 1, n≥ 2</span> and <span class="SimpleMath">m</span> coprime to <span class="SimpleMath">2n</span> (<strong class="button">prism manifold case</strong>)</p>
 
 </li>
-<li><p><span class="SimpleMath">Γ= C_m× ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩</span> for integers <span class="SimpleMath">k,mge 1</span> and <span class="SimpleMath">m</span> coprime to 6 (<strong class="button">tetrahedral case</strong>)</p>
+<li><p><span class="SimpleMath">Γ= C_m× ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩</span> for integers <span class="SimpleMath">k,m≥ 1</span> and <span class="SimpleMath">m</span> coprime to 6 (<strong class="button">tetrahedral case</strong>)</p>
 
 </li>
-<li><p><span class="SimpleMath">Γ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩</span> for <span class="SimpleMath">mge 1</span> coprime to 6 (<strong class="button">octahedral case</strong>)</p>
+<li><p><span class="SimpleMath">Γ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩</span> for <span class="SimpleMath">m≥ 1</span> coprime to 6 (<strong class="button">octahedral case</strong>)</p>
 
 </li>
-<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | (xy)^2=x^3=y^5⟩</span> for <span class="SimpleMath">mge 1</span> coprime to 30 (<strong class="button">icosahedral case</strong>).</p>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | (xy)^2=x^3=y^5⟩</span> for <span class="SimpleMath">m≥ 1</span> coprime to 30 (<strong class="button">icosahedral case</strong>).</p>
 
 </li>
 </ul>
-<p>This list of cases is taken from the <span class="URL"><a href="https://en.wikipedia.org/wiki/Spherical_3-manifold">Wikipedia pages</a></span>. The group <span class="SimpleMath">Γ</span> has periodic cohomology since it acts on a sphere. The cyclic group has period 2 and in the other four cases it has period 4. (Recall that in general a finite group <span class="SimpleMath">G</span> has <em>periodic cohomology of period <span class="SimpleMath">n</span></em> if there is an element <span class="SimpleMath">u∈ H^n(G, Z)</span> such that the cup product <span class="SimpleMath">- ∪ u: H^k(G, Z) → H^k+n(G, Z)</span> is an isomorphism for all <span class="SimpleMath">kge 1</span>. It can be shown that <span class="SimpleMath">G</span> has periodic cohomology of period <span class="SimpleMath">n</span> if and only if <span class="SimpleMath">H^n(G, Z)= Z_|G|</span>.)</p>
+<p>This list of cases is taken from the <span class="URL"><a href="https://en.wikipedia.org/wiki/Spherical_3-manifold">Wikipedia pages</a></span>. The group <span class="SimpleMath">Γ</span> has periodic cohomology since it acts on a sphere. The cyclic group has period 2 and in the other four cases it has period 4. (Recall that in general a finite group <span class="SimpleMath">G</span> has <em>periodic cohomology of period <span class="SimpleMath">n</span></em> if there is an element <span class="SimpleMath">u∈ H^n(G, Z)</span> such that the cup product <span class="SimpleMath">- ∪ u: H^k(G, Z) → H^k+n(G, Z)</span> is an isomorphism for all <span class="SimpleMath">k≥ 1</span>. It can be shown that <span class="SimpleMath">G</span> has periodic cohomology of period <span class="SimpleMath">n</span> if and only if <span class="SimpleMath">H^n(G, Z)= Z_|G|</span>.)</p>
 
 <p>The cohomology of the cyclic group is well-known, and the cohomology of a direct product can be obtained from that of the factors using the Kunneth formula.</p>
 

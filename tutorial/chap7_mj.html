@@ -166,6 +166,20 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>The following example computes the sixth mod-<span class="SimpleMath">\(2\)</span> homology of of the Unitary group <span class="SimpleMath">\(U_3(4)\)</span> of order 312000.</p>
+
+<p><span class="SimpleMath">\(H_6(U_3(4),\mathbb Z_2) = \mathbb Z_2^{4}\)</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GU(3,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+312000
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,6,2);</span>
+[ 2, 2, 2, 2 ]
+
+</pre></div>
+
 <p>The following example constructs the Poincare series</p>
 
 <p><span class="SimpleMath">\(p(x)=\frac{1}{-x^3+3*x^2-3*x+1}\)</span></p>
@@ -363,30 +377,54 @@ G-cocomplex of length 5 .
 
 <p>If <span class="SimpleMath">\(A=\mathbb Z^n\)</span> and <span class="SimpleMath">\(G\)</span> acts as</p>
 
-<p><span class="SimpleMath">\(G\times A \rightarrow A, (g, (x_1,x_2,\ldots,x_n)) \mapsto (x_{\pi(g)^{-1}(1)}, x_{\pi(g)^{-1}(2)}, \ldots, x_{\pi(g)^{-1}(n)})\)</span></p>
+<p><span class="SimpleMath">\(G\times A \rightarrow A, (g, v) \mapsto \rho(g)\, v \)</span></p>
 
-<p>where <span class="SimpleMath">\(\pi\colon G\rightarrow S_n\)</span> is a (not necessarily faithful) permutation representation of degree <span class="SimpleMath">\(n\)</span> then we can avoid the use of <span class="SimpleMath">\(G\)</span>-outer groups and use just the homomorphism <span class="SimpleMath">\(\pi\)</span> instead. The following example uses this data type to compute the cohomology</p>
+<p>where <span class="SimpleMath">\(\rho\colon G\rightarrow Gl_n(\mathbb Z)\)</span> is a (not necessarily faithful) matrix representation of degree <span class="SimpleMath">\(n\)</span> then we can avoid the use of <span class="SimpleMath">\(G\)</span>-outer groups and use just the homomorphism <span class="SimpleMath">\(\rho\)</span> instead. The following example uses this data type to compute the cohomology</p>
 
-<p><span class="SimpleMath">\(H^6(G,A) =\mathbb Z_2 \oplus \mathbb Z_{6}\)</span></p>
+<p><span class="SimpleMath">\(H^6(G,A) =\mathbb Z_2 \)</span></p>
 
 <p>and the homology</p>
 
-<p><span class="SimpleMath">\(H_6(G,A) =\mathbb Z_2 \)</span></p>
+<p><span class="SimpleMath">\(H_6(G,A) = 0 \)</span></p>
 
-<p>of the alternating group <span class="SimpleMath">\(G=A_5\)</span> with coefficients in <span class="SimpleMath">\(A=\mathbb Z^5\)</span> where elements of <span class="SimpleMath">\(G\)</span> act on <span class="SimpleMath">\(\mathbb Z^5\)</span> via the canonical permutation of basis elements.</p>
+<p>of the alternating group <span class="SimpleMath">\(G=A_5\)</span> with coefficients in <span class="SimpleMath">\(A=\mathbb Z^5\)</span> where elements of <span class="SimpleMath">\(G\)</span> act on <span class="SimpleMath">\(\mathbb Z^5\)</span> via an irreducible representation.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi:=PermToMatrixGroup(SymmetricGroup(5),5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IrreducibleRepresentations(G)[5];</span>
+[ (1,2,3,4,5), (3,4,5) ] -&gt; 
+[ 
+  [ [ 0, 0, 1, 0, 0 ], [ -1, -1, 0, 0, 1 ], [ 0, 1, 1, 1, 0 ], 
+      [ 1, 0, -1, 0, -1 ], [ -1, -1, 0, -1, 0 ] ], 
+  [ [ -1, -1, 0, 0, 1 ], [ 1, 0, -1, 0, -1 ], [ 0, 0, 0, 0, 1 ], 
+      [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,7);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,pi);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,rho);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,6);</span>
-[ 2, 6 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithIntegralModule(R,pi);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,6);</span>
 [ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithIntegralModule(R,rho);</span>
+Chain complex of length 7 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,6);</span>
+[  ]
+
+</pre></div>
+
+<p>If <span class="SimpleMath">\(A=K^d\)</span> is a vetor space of dimension <span class="SimpleMath">\(d\)</span> over the field <span class="SimpleMath">\(K=GF(p)\)</span> and <span class="SimpleMath">\(G\)</span> acts on <span class="SimpleMath">\(A\)</span> via a homomorphism <span class="SimpleMath">\(\rho\colon G\rightarrow GL_d(K)\)</span> then the homology <span class="SimpleMath">\(H^n(G,A)\)</span> can again be computed without the use of G-outer groups. As an example, the following commands compute</p>
+
+<p><span class="SimpleMath">\(H^4(GL(3,2),A) =K^2\)</span></p>
+
+<p>where <span class="SimpleMath">\(K=GF(2)\)</span> and <span class="SimpleMath">\(GL(3,2)\)</span> acts with its natural action on <span class="SimpleMath">\(A=K^3\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByFunction(G,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModPModule(R,rho,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
+2
 
 </pre></div>
 

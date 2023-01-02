@@ -52,6 +52,16 @@ Z_2 \oplus \mathbb Z_2</M>.
 <#Include SYSTEM "tutex/6.3.txt">
 </Example>
 
+
+<P/>The following example computes the sixth mod-<M>2</M> homology of 
+of the Unitary group <M>U_3(4)</M> of order 312000.
+<P/><M>H_6(U_3(4),\mathbb Z_2) = \mathbb Z_2^{4}</M>
+
+<Example>
+<#Include SYSTEM "tutex/6.3a.txt">
+</Example>
+
+
 <P/>The following example constructs the Poincare series 
 <P/><M>p(x)=\frac{1}{-x^3+3*x^2-3*x+1}</M>
 <P/>for the cohomology <M>H^\ast(Syl_2(M_{12},\mathbb F_2)</M>. The coefficient
@@ -180,24 +190,36 @@ The following example uses this data type to compute the cohomology <M>H^4(G,A) 
 </Example>
 
 <P/> If <M>A=\mathbb Z^n</M> and <M>G</M> acts as
-<P/><M>G\times A \rightarrow A, (g, (x_1,x_2,\ldots,x_n)) \mapsto (x_{\pi(g)^{-1}(1)},
-x_{\pi(g)^{-1}(2)}, \ldots, x_{\pi(g)^{-1}(n)})</M>
-<P/> where <M>\pi\colon G\rightarrow S_n</M> is a (not necessarily faithful)
-permutation representation of degree <M>n</M> then we can avoid the use of <M>G</M>-outer groups and use just the homomorphism <M>\pi</M> instead.
+<P/><M>G\times A \rightarrow A, (g, v) \mapsto  \rho(g)\, v 
+</M>
+<P/> where <M>\rho\colon G\rightarrow Gl_n(\mathbb Z)</M> is a (not necessarily faithful)
+matrix representation of degree <M>n</M> then we can avoid the use of <M>G</M>-outer groups and use just the homomorphism <M>\rho</M> instead.
 The following example 
  uses this data type to compute the cohomology 
-<P/><M>H^6(G,A) =\mathbb Z_2 \oplus \mathbb Z_{6}</M>
+<P/><M>H^6(G,A) =\mathbb Z_2 </M>
 <P/>and the homology
-<P/><M>H_6(G,A) =\mathbb Z_2 </M>
-<P/> of the alternating group <M>G=A_5</M> with coefficients in  <M>A=\mathbb Z^5</M> where elements of <M>G</M> act on <M>\mathbb Z^5</M> via the canonical  permutation of basis elements.
-
+<P/><M>H_6(G,A) = 0 </M>
+<P/> of the alternating group <M>G=A_5</M> with coefficients in  <M>A=\mathbb Z^5</M> where elements of <M>G</M> act on <M>\mathbb Z^5</M> via an irreducible representation.
 
 
 <Example>
 <#Include SYSTEM "tutex/6.16.txt">
 </Example>
-</Section>
 
+<P/>If <M>A=K^d</M> is a vetor space of dimension <M>d</M> over the field 
+<M>K=GF(p)</M> and <M>G</M> acts on <M>A</M> via a homomorphism 
+<M>\rho\colon G\rightarrow GL_d(K)</M> then the homology 
+<M>H^n(G,A)</M> can again be computed without the use of G-outer groups. 
+ As an example, the following commands compute
+<P/><M>H^4(GL(3,2),A) =K^2</M>
+<P/>where <M>K=GF(2)</M> and <M>GL(3,2)</M> acts with its natural action on
+<M>A=K^3</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.16B.txt">
+</Example>
+</Section>
+ 
 <Section><Heading>Cohomology as a functor of the first variable</Heading>
 Suppose given a group homomorphism <M>f\colon G_1\rightarrow G_2</M> and a <M>G_2</M>-module <M>A</M>. Then <M>A</M> is naturally a <M>G_1</M>-module with  action via <M>f</M>, and there is an induced cohomology homomorphism
 <M>H^n(f,A)\colon H^n(G_2,A) \rightarrow H^n(G_1,A)</M>.
