@@ -178,6 +178,7 @@ DeclareGlobalFunction("TensorWithIntegersModPSparse");
 DeclareGlobalFunction("TensorWithTwistedIntegers");
 DeclareGlobalFunction("TensorWithTwistedIntegersModP");
 DeclareGlobalFunction("PrimePartDerivedFunctor");
+DeclareGlobalFunction("PrimePartDerivedTwistedFunctor");
 DeclareGlobalFunction("PrimePartDerivedFunctorViaSubgroupChain");
 DeclareGlobalFunction("ReduceGenerators");
 DeclareGlobalFunction("ReduceGenerators_alt");

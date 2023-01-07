@@ -10,7 +10,7 @@ local
 	HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
 	HPrels, x, y, i,prime, core, conjs, conjelt,CentP,
-	HPpres,G1,epi,HPP,rho, bool;
+	HPpres,G1,epi,HPP,rho, bool, eqmap;
 
 
 C:=F(R);
@@ -18,6 +18,7 @@ C:=F(R);
 P:=Group(SmallGeneratingSet(R!.group));
 HP:=GroupHomomorphismByFunction(P,P,x->x);
 HP:=EquivariantChainMap(R,R,HP);
+HP!.conjugator:=Identity(P);
 HP:=F(HP);
 HP:=Homology(HP,n);
 HP:=Source(HP);
@@ -88,8 +89,13 @@ if not (Homology(F(S),n)=[]) then
 
 f:=GroupHomomorphismByFunction(K,P,x->x);
 
-HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
-
+eqmap:=EquivariantChainMap(S,R,f);
+eqmap!.conjugator:=Identity(S!.group);
+#HKhomHPK:=Homology(F(EquivariantChainMap(S,R,f)),n);
+#Print("F  ",F,"\n");
+#Print("eqmap  ",eqmap,"\n");
+HKhomHPK:=Homology(F(eqmap),n);
+#Print("YES\n");
 #################################rho##################
 if "twist" in NamesOfComponents(F(R)) then
 rho:=F(R)!.twist; 
@@ -108,7 +114,10 @@ Image(HPKhomHP, Image(HKhomHPK,x) ) );
 
 for X in L do
 fx:=GroupHomomorphismByFunction(K,P,g->Image(f,g)^(X^-1));
-HKxhomHPKx:=Homology(F(EquivariantChainMap(S,R,fx)),n);
+eqmap:=EquivariantChainMap(S,R,fx);
+eqmap!.conjugator:=X^-1;
+#HKxhomHPKx:=Homology(F(EquivariantChainMap(S,R,fx)),n);
+HKxhomHPKx:=Homology(F(eqmap),n);
 HKx:=Source(HKxhomHPKx);
 HPKx:=Parent(Range(HKxhomHPKx));
 HPKxhomHP:=GroupHomomorphismByImagesNC(HPKx,HP,GeneratorsOfGroup(HPKx),
