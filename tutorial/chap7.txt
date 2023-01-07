@@ -363,6 +363,44 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YIt  can  be  computationally  difficult  to  compute  high  degree  terms in
+  resolutions  for large finite groups. But the [22Xp[122X-primary part of the homology
+  can  be  computed  using  resolutions of Sylow [22Xp[122X-subgroups. This approach is
+  used in the following example that computes the [22X2[122X-primary part[133X
+  
+  [33X[0;0Y[22XH_11(A_7,B)_(2) = Z_2 ⊕ Z_2⊕ Z_4[122X[133X
+  
+  [33X[0;0Yof  the  degree  11  homology  of the alternating group [22XA_7[122X of degree [22X7[122X with
+  coefficients  in  the  module  [22XB=  Z^7[122X  on which [22XA_7[122X acts by permuting basis
+  vectors.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AlternatingGroup(7);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=function(X); return TensorWithIntegralModule(X,rho); end;;[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,11);[127X[104X
+    [4X[28X[ 2, 2, 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSimilar commands compute[133X
+  
+  [33X[0;0Y[22XH_3(A_10,B)_(2) = Z_2[122X[133X
+  
+  [33X[0;0Ywith  coefficient  module  [22XB=  Z^10[122X  on  which  [22XA_10[122X acts by permuting basis
+  vectors.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AlternatingGroup(10);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=function(X); return TensorWithIntegralModule(X,rho); end;;[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,2);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   
   [1X7.8 [33X[0;0YCohomology as a functor of the first variable[133X[101X
   

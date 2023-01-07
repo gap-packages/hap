@@ -3371,6 +3371,37 @@ where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $A=K^3$.
   2
   
 \end{Verbatim}
+ 
+
+ It can be computationally difficult to compute high degree terms in
+resolutions for large finite groups. But the $p$-primary part of the homology can be computed using resolutions of Sylow $p$-subgroups. This approach is used in the following example that computes the $2$-primary part 
+
+$H_{11}(A_7,B)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4$ 
+
+of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coefficients in the module $B=\mathbb Z^7$ on which $A_7$ acts by permuting basis vectors. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=AlternatingGroup(7);;|
+  !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;|
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,11);|
+  [ 2, 2, 4 ]
+  
+\end{Verbatim}
+ Similar commands compute 
+
+$H_{3}(A_{10},B)_{(2)} = \mathbb Z_2$ 
+
+with coefficient module $B=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting basis vectors. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=AlternatingGroup(10);;|
+  !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;|
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,2);|
+  [ 2 ]
+  
+\end{Verbatim}
  }
 
  

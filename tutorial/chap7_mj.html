@@ -428,6 +428,40 @@ Chain complex of length 7 in characteristic 0 .
 
 </pre></div>
 
+<p>It can be computationally difficult to compute high degree terms in resolutions for large finite groups. But the <span class="SimpleMath">\(p\)</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">\(p\)</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">\(2\)</span>-primary part</p>
+
+<p><span class="SimpleMath">\(H_{11}(A_7,B)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4\)</span></p>
+
+<p>of the degree 11 homology of the alternating group <span class="SimpleMath">\(A_7\)</span> of degree <span class="SimpleMath">\(7\)</span> with coefficients in the module <span class="SimpleMath">\(B=\mathbb Z^7\)</span> on which <span class="SimpleMath">\(A_7\)</span> acts by permuting basis vectors.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,11);</span>
+[ 2, 2, 4 ]
+
+</pre></div>
+
+<p>Similar commands compute</p>
+
+<p><span class="SimpleMath">\(H_{3}(A_{10},B)_{(2)} = \mathbb Z_2\)</span></p>
+
+<p>with coefficient module <span class="SimpleMath">\(B=\mathbb Z^{10}\)</span> on which <span class="SimpleMath">\(A_{10}\)</span> acts by permuting basis vectors.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,2);</span>
+[ 2 ]
+
+</pre></div>
+
 <p><a id="X7E573EA582CCEF2E" name="X7E573EA582CCEF2E"></a></p>
 
 <h4>7.8 <span class="Heading">Cohomology as a functor of the first variable</span></h4>
