@@ -408,18 +408,18 @@ Chain complex of length 7 in characteristic 0 .
 
 </pre></div>
 
-<p>If <span class="SimpleMath">A=K^d</span> is a vetor space of dimension <span class="SimpleMath">d</span> over the field <span class="SimpleMath">K=GF(p)</span> and <span class="SimpleMath">G</span> acts on <span class="SimpleMath">A</span> via a homomorphism <span class="SimpleMath">ρ: G→ GL_d(K)</span> then the homology <span class="SimpleMath">H^n(G,A)</span> can again be computed without the use of G-outer groups. As an example, the following commands compute</p>
+<p>If <span class="SimpleMath">V=K^d</span> is a vetor space of dimension <span class="SimpleMath">d</span> over the field <span class="SimpleMath">K=GF(p)</span> with <span class="SimpleMath">p</span> a prime and <span class="SimpleMath">G</span> acts on <span class="SimpleMath">V</span> via a homomorphism <span class="SimpleMath">ρ: G→ GL_d(K)</span> then the homology <span class="SimpleMath">H^n(G,V)</span> can again be computed without the use of G-outer groups. As an example, the following commands compute</p>
 
-<p><span class="SimpleMath">H^4(GL(3,2),A) =K^2</span></p>
+<p><span class="SimpleMath">H^4(GL(3,2),V) =K^2</span></p>
 
-<p>where <span class="SimpleMath">K=GF(2)</span> and <span class="SimpleMath">GL(3,2)</span> acts with its natural action on <span class="SimpleMath">A=K^3</span>.</p>
+<p>where <span class="SimpleMath">K=GF(2)</span> and <span class="SimpleMath">GL(3,2)</span> acts with its natural action on <span class="SimpleMath">V=K^3</span>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByFunction(G,G,x-&gt;x);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModPModule(R,rho,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModPModule(R,rho);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
 2
 
@@ -427,9 +427,9 @@ Chain complex of length 7 in characteristic 0 .
 
 <p>It can be computationally difficult to compute high degree terms in resolutions for large finite groups. But the <span class="SimpleMath">p</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">p</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
 
-<p><span class="SimpleMath">H_11(A_7,B)_(2) = Z_2 ⊕ Z_2⊕ Z_4</span></p>
+<p><span class="SimpleMath">H_11(A_7,A)_(2) = Z_2 ⊕ Z_2⊕ Z_4</span></p>
 
-<p>of the degree 11 homology of the alternating group <span class="SimpleMath">A_7</span> of degree <span class="SimpleMath">7</span> with coefficients in the module <span class="SimpleMath">B= Z^7</span> on which <span class="SimpleMath">A_7</span> acts by permuting basis vectors.</p>
+<p>of the degree 11 homology of the alternating group <span class="SimpleMath">A_7</span> of degree <span class="SimpleMath">7</span> with coefficients in the module <span class="SimpleMath">A= Z^7</span> on which <span class="SimpleMath">A_7</span> acts by permuting basis vectors.</p>
 
 
 <div class="example"><pre>
@@ -444,18 +444,39 @@ Chain complex of length 7 in characteristic 0 .
 
 <p>Similar commands compute</p>
 
-<p><span class="SimpleMath">H_2(A_10,B)_(2) = Z_2</span></p>
+<p><span class="SimpleMath">H_3(A_10,A)_(2) = Z_4</span></p>
 
-<p>with coefficient module <span class="SimpleMath">B= Z^10</span> on which <span class="SimpleMath">A_10</span> acts by permuting basis vectors.</p>
+<p>with coefficient module <span class="SimpleMath">A= Z^10</span> on which <span class="SimpleMath">A_10</span> acts by permuting basis vectors.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,2);</span>
-[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,3);</span>
+[ 4 ]
+
+</pre></div>
+
+<p>The following commands compute</p>
+
+<p><span class="SimpleMath">H_100(GL(3,2),V)= K^34</span></p>
+
+<p>where <span class="SimpleMath">V</span> is the vector space of dimension <span class="SimpleMath">3</span> over <span class="SimpleMath">K=GF(2)</span> acting via some irreducible representation <span class="SimpleMath">ρ: GL(3,2) → GL(V)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IrreducibleRepresentations(G,GF(2))[3];</span>
+CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt; 
+[ &lt;an immutable 3x3 matrix over GF2&gt;, &lt;an immutable 3x3 matrix over GF2&gt; ],
+ &lt;action isomorphism&gt; )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithModPModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,S,F,100);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2 ]
 
 </pre></div>
 

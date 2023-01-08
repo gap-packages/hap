@@ -344,20 +344,20 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YIf  [22XA=K^d[122X  is a vetor space of dimension [22Xd[122X over the field [22XK=GF(p)[122X and [22XG[122X acts
-  on  [22XA[122X  via a homomorphism [22Xρ: G→ GL_d(K)[122X then the homology [22XH^n(G,A)[122X can again
-  be  computed without the use of G-outer groups. As an example, the following
-  commands compute[133X
+  [33X[0;0YIf  [22XV=K^d[122X  is  a  vetor space of dimension [22Xd[122X over the field [22XK=GF(p)[122X with [22Xp[122X a
+  prime  and  [22XG[122X  acts  on [22XV[122X via a homomorphism [22Xρ: G→ GL_d(K)[122X then the homology
+  [22XH^n(G,V)[122X  can  again  be  computed  without the use of G-outer groups. As an
+  example, the following commands compute[133X
   
-  [33X[0;0Y[22XH^4(GL(3,2),A) =K^2[122X[133X
+  [33X[0;0Y[22XH^4(GL(3,2),V) =K^2[122X[133X
   
-  [33X[0;0Ywhere [22XK=GF(2)[122X and [22XGL(3,2)[122X acts with its natural action on [22XA=K^3[122X.[133X
+  [33X[0;0Ywhere [22XK=GF(2)[122X and [22XGL(3,2)[122X acts with its natural action on [22XV=K^3[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=GL(3,2);;[127X[104X
     [4X[25Xgap>[125X [27Xrho:=GroupHomomorphismByFunction(G,G,x->x);;[127X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,5);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=HomToModPModule(R,rho,2);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToModPModule(R,rho);;[127X[104X
     [4X[25Xgap>[125X [27XCohomology(C,4);[127X[104X
     [4X[28X2[128X[104X
     [4X[28X[128X[104X
@@ -368,10 +368,10 @@
   can  be  computed  using  resolutions of Sylow [22Xp[122X-subgroups. This approach is
   used in the following example that computes the [22X2[122X-primary part[133X
   
-  [33X[0;0Y[22XH_11(A_7,B)_(2) = Z_2 ⊕ Z_2⊕ Z_4[122X[133X
+  [33X[0;0Y[22XH_11(A_7,A)_(2) = Z_2 ⊕ Z_2⊕ Z_4[122X[133X
   
   [33X[0;0Yof  the  degree  11  homology  of the alternating group [22XA_7[122X of degree [22X7[122X with
-  coefficients  in  the  module  [22XB=  Z^7[122X  on which [22XA_7[122X acts by permuting basis
+  coefficients  in  the  module  [22XA=  Z^7[122X  on which [22XA_7[122X acts by permuting basis
   vectors.[133X
   
   [4X[32X  Example  [32X[104X
@@ -386,18 +386,39 @@
   
   [33X[0;0YSimilar commands compute[133X
   
-  [33X[0;0Y[22XH_2(A_10,B)_(2) = Z_2[122X[133X
+  [33X[0;0Y[22XH_3(A_10,A)_(2) = Z_4[122X[133X
   
-  [33X[0;0Ywith  coefficient  module  [22XB=  Z^10[122X  on  which  [22XA_10[122X acts by permuting basis
+  [33X[0;0Ywith  coefficient  module  [22XA=  Z^10[122X  on  which  [22XA_10[122X acts by permuting basis
   vectors.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=AlternatingGroup(10);;[127X[104X
     [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;[127X[104X
     [4X[25Xgap>[125X [27XF:=function(X); return TensorWithIntegralModule(X,rho); end;;[127X[104X
-    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,2);[127X[104X
-    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,3);[127X[104X
+    [4X[28X[ 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following commands compute[133X
+  
+  [33X[0;0Y[22XH_100(GL(3,2),V)= K^34[122X[133X
+  
+  [33X[0;0Ywhere  [22XV[122X  is  the  vector  space of dimension [22X3[122X over [22XK=GF(2)[122X acting via some
+  irreducible representation [22Xρ: GL(3,2) → GL(V)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=GL(3,2);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=IrreducibleRepresentations(G,GF(2))[3];[127X[104X
+    [4X[28XCompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -> [128X[104X
+    [4X[28X[ <an immutable 3x3 matrix over GF2>, <an immutable 3x3 matrix over GF2> ],[128X[104X
+    [4X[28X <action isomorphism> )[128X[104X
+    [4X[25Xgap>[125X [27XF:=function(X); return TensorWithModPModule(X,rho); end;;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,S,F,100);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
