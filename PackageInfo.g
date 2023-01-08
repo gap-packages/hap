@@ -107,7 +107,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "Loading HAP ",
                             String( ~.Version ), " ...\n" ),
 
-TestFile := "tst/testall.g",
+TestFile :=  "tst/testall.g",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities", "CW complex", "simplicial complex", "cubical complex", "permutahedral complex", "knots", "nonabelian tensor", "nonabelian exterior", "covering space" ]
