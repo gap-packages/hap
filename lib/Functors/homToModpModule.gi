@@ -4,12 +4,16 @@
 #####################################################################
 InstallGlobalFunction(HomToModPModule,
 function(arg)
-local R,f,p,ag, HomObj, HomArr,Image;
+local R,f,p,k,ag, HomObj, HomArr,Image;
 
 R:=arg[1];
 f:=arg[2];
-p:=arg[3];
-if Length(arg)=4 then ag:=arg[4]; else ag:=fail; fi;
+if Length(arg)=3 then ag:=arg[3]; else ag:=fail; fi;
+k:=FieldOfMatrixGroup(Target(f));
+p:=Characteristic(k);
+if not k=GF(p) then
+Print("The ground field is not of prime order.\n");
+return fail; fi;
 
 if IsBound(f!.fun) then
 ####################################
