@@ -193,6 +193,7 @@ DeclareGlobalFunction("HAP_HomToIntModP_CochainMap");#<HomToIntegers
 DeclareGlobalFunction("HomToIntegralModule");
 DeclareGlobalFunction("HomToModPModule");
 DeclareGlobalFunction("TensorWithIntegralModule");
+DeclareGlobalFunction("TensorWithModPModule");
 DeclareGlobalFunction("PermToMatrixGroup");
 DeclareGlobalFunction("AbelianInvariantsToTorsionCoefficients");
 DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
