@@ -200,6 +200,7 @@ ReadPackageHap( "lib/Functors/homToZmodule.gi");
 ReadPackageHap( "lib/Functors/homToModpModule.gi");
 ReadPackageHap( "lib/Functors/tensorWithZ.gi");
 ReadPackageHap( "lib/Functors/tensorWithZmodule.gi");
+ReadPackageHap( "lib/Functors/tensorWithModPModule.gi");
 ReadPackageHap( "lib/Functors/tensorWithTwistedZ.gi");
 ReadPackageHap( "lib/Functors/tensorWithTwistedZmodP.gi");
 ReadPackageHap( "lib/Functors/tensorWithZmodP.gi");
