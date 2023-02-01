@@ -1,12 +1,5 @@
 gap> START_TEST("HAP library");
-gap> G:=Image(IsomorphismPcpGroup(SpaceGroup(2,10)));;
-gap> R:=ResolutionAlmostCrystalQuotient(G,4,3);;
-gap> Homology(TensorWithIntegers(R),3);
-[ 2, 2, 4, 4 ]
-gap> R:=ResolutionAlmostCrystalQuotient(G,4,3,true);;
-gap> Homology(TensorWithIntegers(R),3);
-[ 2, 2, 4, 4 ]
-gap> R:=ResolutionAlmostCrystalGroup(G,4);;
-gap> Homology(TensorWithIntegers(R),3);
-[ 2, 4, 4 ]
+gap> D:=HomologicalGroupDecomposition(SymmetricGroup(5),2);;
+gap> List(Flat(D),StructureDescription);
+[ "D12", "S4", "C2 x C2" ]
 gap> STOP_TEST( "tst.tst", 1000 );
