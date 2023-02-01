@@ -59,6 +59,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X833A19F0791C3B06">7.12 <span class="Heading">Explicit cocycles </span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C5233E27D2D603E">7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></a>
+</span>
+</div>
 </div>
 
 <h3>7 <span class="Heading">Cohomology of groups</span></h3>
@@ -819,7 +822,7 @@ Chain Map between complexes of length 5 .
 
 <p><span class="SimpleMath">g⋅ f(h,k,l) - f(gh,k,l) + f(g,hk,l) - f(g,h,kl) + f(g,h,k) = 0</span></p>
 
-<p>for all <span class="SimpleMath">g,h,k,l ∈ G</span>. In the above example the group <span class="SimpleMath">G=S_3</span> acts trivially on <span class="SimpleMath">A=Z_6</span>. The following commands show that the standard <span class="SimpleMath">3</span>-cocycle produced in the example really does satisfy this <span class="SimpleMath">3</span>-cocycle condition. B</p>
+<p>for all <span class="SimpleMath">g,h,k,l ∈ G</span>. In the above example the group <span class="SimpleMath">G=S_3</span> acts trivially on <span class="SimpleMath">A=Z_6</span>. The following commands show that the standard <span class="SimpleMath">3</span>-cocycle produced in the example really does satisfy this <span class="SimpleMath">3</span>-cocycle condition.</p>
 
 
 <div class="example"><pre>
@@ -868,6 +871,127 @@ function( g, h, k, l ) ... end
 6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,
 0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,
 6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,
+
+</pre></div>
+
+<p><a id="X7C5233E27D2D603E" name="X7C5233E27D2D603E"></a></p>
+
+<h4>7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></h4>
+
+<p>Let <span class="SimpleMath">G</span> be a finite group with order divisible by prime <span class="SimpleMath">p</span>. Let <span class="SimpleMath">mathcal A=mathcal A_p(G)</span> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>. The group <span class="SimpleMath">G</span> acts on <span class="SimpleMath">mathcal A</span>. Denote the orbit of a <span class="SimpleMath">k</span>-simplex <span class="SimpleMath">e^k</span> by <span class="SimpleMath">[e^k]</span>, and the stabilizer of <span class="SimpleMath">e^k</span> by <span class="SimpleMath">Stab(e^k) ≤ G</span>. For a finite abelian group <span class="SimpleMath">H</span> let <span class="SimpleMath">H_p</span> denote the Sylow <span class="SimpleMath">p</span>-subgroup or the "<span class="SimpleMath">p</span>-part". Peter Webb proved the following.</p>
+
+<p><strong class="button">Theorem.</strong>[Peter Webb] For any <span class="SimpleMath">G</span>-module <span class="SimpleMath">M</span> there is a (non natural) homomorphism</p>
+
+<p><span class="SimpleMath">H_n(G,M)_p ⊕ ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p</span></p>
+
+<p>for <span class="SimpleMath">n≥ 0</span>. The isomorphism can also be expressed as</p>
+
+<p><span class="SimpleMath">H_n(G,M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p - ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p</span> and terms can often be cancelled.</p>
+
+<p>Thus the additive structure of the <span class="SimpleMath">p</span>-part of the homology of <span class="SimpleMath">G</span> is determined by that of the stabilizer groups. The result also holds with homology replaced by cohomology.</p>
+
+<p><strong class="button">Illustration 1</strong></p>
+
+<p>As an illustration of the theorem, the following commands calculate</p>
+
+<p><span class="SimpleMath">H_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(S_i,M)_3 - ⨁_4≤ i≤ 5H_n(S_4,M)_3</span></p>
+
+<p>for the Mathieu simple group <span class="SimpleMath">M_12</span> of order <span class="SimpleMath">95040</span>, where</p>
+
+<p><span class="SimpleMath">S_1≅ S_3=(((C_3 × C_3) : Q_8) : C_3) : C_2</span></p>
+
+<p><span class="SimpleMath">S_2=A_4 × S_3</span></p>
+
+<p><span class="SimpleMath">S_4=C_3 × S_3</span></p>
+
+<p><span class="SimpleMath">S_5=((C_3 × C_3) : C_3) : (C_2 × C_2)</span> \ .</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);</span>
+[ "(((C3 x C3) : Q8) : C3) : C2", "A4 x S3", "(((C3 x C3) : Q8) : C3) : C2" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[2],StructureDescription);</span>
+[ "C3 x S3", "((C3 x C3) : C3) : (C2 x C2)" ]
+
+</pre></div>
+
+<p><strong class="button">Illustration 2</strong></p>
+
+<p>As a second illustration, the following commands show that <span class="SimpleMath">H_n(M_23,M)_p</span> is periodic for primes <span class="SimpleMath">p=5, 7, 1, 23</span> of periods dividing <span class="SimpleMath">8, 6, 10, 22</span> respectively.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(Order(G));</span>
+[ 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 7, 11, 23 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sd:=StructureDescription;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C15 : C4" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+8
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C2 x (C7 : C3)" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+6
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C11 : C5" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+10
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C23 : C11" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+22
+
+</pre></div>
+
+<p>The order <span class="SimpleMath">|M_23|=10200960</span> is divisible by primes <span class="SimpleMath">p=2, 3, 5, 7, 11, 23</span>. For <span class="SimpleMath">p=3</span> the following commands establish that the Poincare series</p>
+
+<p><span class="SimpleMath">(x^16 - 2x^15</span> <span class="SimpleMath">+ 3x^14 - 4x^13</span> <span class="SimpleMath">+ 4x^12 - 4x^11</span> <span class="SimpleMath">+ 4x^10 - 3x^9</span> <span class="SimpleMath">+ 3x^8 - 3x^7 +</span> <span class="SimpleMath">4x^6 - 4x^5</span> <span class="SimpleMath">+ 4x^4 -4x^3</span> <span class="SimpleMath">+ 3x^2 -2x + 1) /</span> <span class="SimpleMath">(x^18 - 2x^17</span> <span class="SimpleMath">+ 3x^16 - 4x^15</span> <span class="SimpleMath">+ 4x^14 -</span> <span class="SimpleMath">4x^13 + 4x^12</span> <span class="SimpleMath">- 4x^11 + 4x^10</span> <span class="SimpleMath">- 4x^9 + 4x^8</span> <span class="SimpleMath">- 4x^7 + 4x^6</span> <span class="SimpleMath">- 4x^5 + 4x^4</span> <span class="SimpleMath">- 4x^3 +</span> <span class="SimpleMath">3x^2 - 2x + 1)</span></p>
+
+<p>describes the dimension of the vector space <span class="SimpleMath">H^n(M_23, Z_3)</span> up to at least degree <span class="SimpleMath">n=40</span>. To prove that it describes the dimension in all degrees one would need to verify "completion criteria".</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);</span>
+[ "(C3 x C3) : QD16", "A5 : S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[2],StructureDescription);</span>
+[ "S3 x S3" ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1:=PoincareSeriesPrimePart(D[1][1],3,40);</span>
+(x_1^16-2*x_1^15+3*x_1^14-4*x_1^13+4*x_1^12-4*x_1^11+4*x_1^10-3*x_1^9+3*x_1^8-3*x_1^7+4*x_1^6-4*x_1^5+\
+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)/(x_1^18-2*x_1^17+3*x_1^16-4*x_1^15+4*x_1^14-4*x_1^13+4*x_1^12-4*x_1^1\
+1+4*x_1^10-4*x_1^9+4*x_1^8-4*x_1^7+4*x_1^6-4*x_1^5+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2:=PoincareSeriesPrimePart(D[1][2],3,40);</span>
+(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P3:=PoincareSeriesPrimePart(D[2][1],3,40);</span>
+(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
 
 </pre></div>
 

@@ -1,0 +1,10 @@
+gap> G:=GL(3,2);;
+gap> rho:=IrreducibleRepresentations(G,GF(2))[3];
+CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -> 
+[ &lt;an immutable 3x3 matrix over GF2>, &lt;an immutable 3x3 matrix over GF2> ],
+ &lt;action isomorphism> )
+gap> F:=function(X); return TensorWithModPModule(X,rho); end;;
+gap> S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;
+gap> PrimePartDerivedFunctor(G,S,F,100);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2 ]

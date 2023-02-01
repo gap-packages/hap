@@ -818,7 +818,7 @@
   
   [33X[0;0Yfor  all [22Xg,h,k,l ∈ G[122X. In the above example the group [22XG=S_3[122X acts trivially on
   [22XA=Z_6[122X.  The  following commands show that the standard [22X3[122X-cocycle produced in
-  the example really does satisfy this [22X3[122X-cocycle condition. B[133X
+  the example really does satisfy this [22X3[122X-cocycle condition.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xsf:=Standard_f;;[127X[104X
@@ -866,6 +866,142 @@
     [4X[28X6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,[128X[104X
     [4X[28X0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,[128X[104X
     [4X[28X6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.13 [33X[0;0YQuillen's complex and the [22Xp[122X[101X[1X-part of homology[133X[101X
+  
+  [33X[0;0YLet  [22XG[122X  be  a  finite  group  with  order  divisible by prime [22Xp[122X. Let [22Xmathcal
+  A=mathcal  A_p(G)[122X  denote  Quillen's simplicial complex arising as the order
+  complex of the poset of non-trivial elementary abelian [22Xp[122X-subgroups of [22XG[122X. The
+  group [22XG[122X acts on [22Xmathcal A[122X. Denote the orbit of a [22Xk[122X-simplex [22Xe^k[122X by [22X[e^k][122X, and
+  the stabilizer of [22Xe^k[122X by [22XStab(e^k) ≤ G[122X. For a finite abelian group [22XH[122X let [22XH_p[122X
+  denote  the  Sylow  [22Xp[122X-subgroup  or  the  "[22Xp[122X-part".  Peter  Webb  proved  the
+  following.[133X
+  
+  [33X[0;0Y[12XTheorem.[112X[Peter   Webb]   For  any  [22XG[122X-module  [22XM[122X  there  is  a  (non  natural)
+  homomorphism[133X
+  
+  [33X[0;0Y[22XH_n(G,M)_p   ⊕   ⨁_[e^k]   :   k~  odd~H_n(Stab(e^k),M)_p  ≅  ⨁_[e^k]  :  k~
+  even~H_n(Stab(e^k),M)_p[122X[133X
+  
+  [33X[0;0Yfor [22Xn≥ 0[122X. The isomorphism can also be expressed as[133X
+  
+  [33X[0;0Y[22XH_n(G,M)_p   ≅   ⨁_[e^k]   :  k~  even~H_n(Stab(e^k),M)_p  -  ⨁_[e^k]  :  k~
+  odd~H_n(Stab(e^k),M)_p[122X and terms can often be cancelled.[133X
+  
+  [33X[0;0YThus the additive structure of the [22Xp[122X-part of the homology of [22XG[122X is determined
+  by  that  of  the  stabilizer  groups.  The  result also holds with homology
+  replaced by cohomology.[133X
+  
+  [33X[0;0Y[12XIllustration 1[112X[133X
+  
+  [33X[0;0YAs an illustration of the theorem, the following commands calculate[133X
+  
+  [33X[0;0Y[22XH_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(S_i,M)_3 - ⨁_4≤ i≤ 5H_n(S_4,M)_3[122X[133X
+  
+  [33X[0;0Yfor the Mathieu simple group [22XM_12[122X of order [22X95040[122X, where[133X
+  
+  [33X[0;0Y[22XS_1≅ S_3=(((C_3 × C_3) : Q_8) : C_3) : C_2[122X[133X
+  
+  [33X[0;0Y[22XS_2=A_4 × S_3[122X[133X
+  
+  [33X[0;0Y[22XS_4=C_3 × S_3[122X[133X
+  
+  [33X[0;0Y[22XS_5=((C_3 × C_3) : C_3) : (C_2 × C_2)[122X \ .[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=MathieuGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],StructureDescription);[127X[104X
+    [4X[28X[ "(((C3 x C3) : Q8) : C3) : C2", "A4 x S3", "(((C3 x C3) : Q8) : C3) : C2" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D[2],StructureDescription);[127X[104X
+    [4X[28X[ "C3 x S3", "((C3 x C3) : C3) : (C2 x C2)" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[12XIllustration 2[112X[133X
+  
+  [33X[0;0YAs  a second illustration, the following commands show that [22XH_n(M_23,M)_p[122X is
+  periodic  for  primes  [22Xp=5,  7,  1,  23[122X  of  periods  dividing  [22X8, 6, 10, 22[122X
+  respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=MathieuGroup(23);;[127X[104X
+    [4X[25Xgap>[125X [27XFactors(Order(G));[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 7, 11, 23 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsd:=StructureDescription;;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,5);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],sd);List(D[2],sd);[127X[104X
+    [4X[28X[ "C15 : C4" ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodic(D[1][1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D[1][1]);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,7);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],sd);List(D[2],sd);[127X[104X
+    [4X[28X[ "C2 x (C7 : C3)" ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodic(D[1][1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D[1][1]);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,11);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],sd);List(D[2],sd);[127X[104X
+    [4X[28X[ "C11 : C5" ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodic(D[1][1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D[1][1]);[127X[104X
+    [4X[28X10[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,23);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],sd);List(D[2],sd);[127X[104X
+    [4X[28X[ "C23 : C11" ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodic(D[1][1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D[1][1]);[127X[104X
+    [4X[28X22[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  order  [22X|M_23|=10200960[122X is divisible by primes [22Xp=2, 3, 5, 7, 11, 23[122X. For
+  [22Xp=3[122X the following commands establish that the Poincare series[133X
+  
+  [33X[0;0Y[22X(x^16 - 2x^15[122X [22X+ 3x^14 - 4x^13[122X [22X+ 4x^12 - 4x^11[122X [22X+ 4x^10 - 3x^9[122X [22X+ 3x^8 - 3x^7 +[122X
+  [22X4x^6  -  4x^5[122X [22X+ 4x^4 -4x^3[122X [22X+ 3x^2 -2x + 1) /[122X [22X(x^18 - 2x^17[122X [22X+ 3x^16 - 4x^15[122X [22X+
+  4x^14  -[122X  [22X4x^13 + 4x^12[122X [22X- 4x^11 + 4x^10[122X [22X- 4x^9 + 4x^8[122X [22X- 4x^7 + 4x^6[122X [22X- 4x^5 +
+  4x^4[122X [22X- 4x^3 +[122X [22X3x^2 - 2x + 1)[122X[133X
+  
+  [33X[0;0Ydescribes  the  dimension  of the vector space [22XH^n(M_23, Z_3)[122X up to at least
+  degree  [22Xn=40[122X.  To  prove  that it describes the dimension in all degrees one
+  would need to verify "completion criteria".[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=MathieuGroup(23);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=HomologicalGroupDecomposition(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D[1],StructureDescription);[127X[104X
+    [4X[28X[ "(C3 x C3) : QD16", "A5 : S3" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D[2],StructureDescription);[127X[104X
+    [4X[28X[ "S3 x S3" ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP1:=PoincareSeriesPrimePart(D[1][1],3,40);[127X[104X
+    [4X[28X(x_1^16-2*x_1^15+3*x_1^14-4*x_1^13+4*x_1^12-4*x_1^11+4*x_1^10-3*x_1^9+3*x_1^8-3*x_1^7+4*x_1^6-4*x_1^5+\[128X[104X
+    [4X[28X4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)/(x_1^18-2*x_1^17+3*x_1^16-4*x_1^15+4*x_1^14-4*x_1^13+4*x_1^12-4*x_1^1\[128X[104X
+    [4X[28X1+4*x_1^10-4*x_1^9+4*x_1^8-4*x_1^7+4*x_1^6-4*x_1^5+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP2:=PoincareSeriesPrimePart(D[1][2],3,40);[127X[104X
+    [4X[28X(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP3:=PoincareSeriesPrimePart(D[2][1],3,40);[127X[104X
+    [4X[28X(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

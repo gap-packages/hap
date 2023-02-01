@@ -1,0 +1,59 @@
+gap> G:=SpaceGroup(4,2);;
+gap> R:=ResolutionCubicalCrystGroup(G,12);
+Resolution of length 12 in characteristic 0 for &lt;matrix group with 
+5 generators&gt; . 
+
+gap> R!.dimension(5);
+16
+gap> R!.dimension(7);
+16
+gap> List([1..16],k->R!.boundary(5,k)=R!.boundary(7,k));
+[ true, true, true, true, true, true, true, true, true, true, true, true, 
+  true, true, true, true ]
+
+gap> C:=HomToIntegers(R);
+Cochain complex of length 12 in characteristic 0 . 
+
+gap> Cohomology(C,0);
+[ 0 ]
+gap> Cohomology(C,1);
+[  ]
+gap> Cohomology(C,2);
+[ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0 ]
+gap> Cohomology(C,3);
+[  ]
+gap> Cohomology(C,4);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 ]
+gap> Cohomology(C,5);
+[  ]
+gap> Cohomology(C,6);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+gap> Cohomology(C,7);
+[  ]
+
+gap> IntegralRingGenerators(R,1);
+[  ]
+gap> IntegralRingGenerators(R,2);
+[ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]
+gap> IntegralRingGenerators(R,3);
+[  ]
+gap> IntegralRingGenerators(R,4);
+[  ]
+gap> IntegralRingGenerators(R,5);
+[  ]
+gap> IntegralRingGenerators(R,6);
+[  ]
+gap> IntegralRingGenerators(R,7);
+[  ]
+gap> IntegralRingGenerators(R,8);
+[  ]
+gap> IntegralRingGenerators(R,9);
+[  ]
+gap> IntegralRingGenerators(R,10);
+[  ]
+

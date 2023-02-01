@@ -3356,17 +3356,17 @@ $H_6(G,A) = 0 $
 \end{Verbatim}
  
 
-If $A=K^d$ is a vetor space of dimension $d$ over the field $K=GF(p)$ and $G$ acts on $A$ via a homomorphism $\rho\colon G\rightarrow GL_d(K)$ then the homology $H^n(G,A)$ can again be computed without the use of G-outer groups. As an example, the
+If $V=K^d$ is a vetor space of dimension $d$ over the field $K=GF(p)$ with $p$ a prime and $G$ acts on $V$ via a homomorphism $\rho\colon G\rightarrow GL_d(K)$ then the homology $H^n(G,V)$ can again be computed without the use of G-outer groups. As an example, the
 following commands compute 
 
-$H^4(GL(3,2),A) =K^2$ 
+$H^4(GL(3,2),V) =K^2$ 
 
-where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $A=K^3$. 
+where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $V=K^3$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=GL(3,2);;|
   !gapprompt@gap>| !gapinput@rho:=GroupHomomorphismByFunction(G,G,x->x);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(G,5);;|
-  !gapprompt@gap>| !gapinput@C:=HomToModPModule(R,rho,2);;|
+  !gapprompt@gap>| !gapinput@C:=HomToModPModule(R,rho);;|
   !gapprompt@gap>| !gapinput@Cohomology(C,4);|
   2
   
@@ -3376,9 +3376,9 @@ where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $A=K^3$.
  It can be computationally difficult to compute high degree terms in
 resolutions for large finite groups. But the $p$-primary part of the homology can be computed using resolutions of Sylow $p$-subgroups. This approach is used in the following example that computes the $2$-primary part 
 
-$H_{11}(A_7,B)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4$ 
+$H_{11}(A_7,A)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4$ 
 
-of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coefficients in the module $B=\mathbb Z^7$ on which $A_7$ acts by permuting basis vectors. 
+of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coefficients in the module $A=\mathbb Z^7$ on which $A_7$ acts by permuting basis vectors. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(7);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
@@ -3390,16 +3390,36 @@ of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coef
 \end{Verbatim}
  Similar commands compute 
 
-$H_{3}(A_{10},B)_{(2)} = \mathbb Z_2$ 
+$H_{3}(A_{10},A)_{(2)} = \mathbb Z_4$ 
 
-with coefficient module $B=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting basis vectors. 
+with coefficient module $A=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting basis vectors. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(10);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
-  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),3);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;|
   !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
-  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,2);|
-  [ 2 ]
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,3);|
+  [ 4 ]
+  
+\end{Verbatim}
+ 
+
+The following commands compute 
+
+$H_{100}(GL(3,2),V)= K^{34}$ 
+
+where $V$ is the vector space of dimension $3$ over $K=GF(2)$ acting via some irreducible representation $\rho\colon GL(3,2) \rightarrow GL(V)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=GL(3,2);;|
+  !gapprompt@gap>| !gapinput@rho:=IrreducibleRepresentations(G,GF(2))[3];|
+  CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -> 
+  [ <an immutable 3x3 matrix over GF2>, <an immutable 3x3 matrix over GF2> ],
+   <action isomorphism> )
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithModPModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,S,F,100);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2 ]
   
 \end{Verbatim}
  }
@@ -3725,7 +3745,7 @@ Mf\texttt{\symbol{94}}t=0.
 
 $g\cdot f(h,k,l) - f(gh,k,l) + f(g,hk,l) - f(g,h,kl) + f(g,h,k) = 0$ 
 
-for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially on $A=Z_6$. The following commands show that the standard $3$-cocycle produced in the example really does satisfy this $3$-cocycle condition. B
+for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially on $A=Z_6$. The following commands show that the standard $3$-cocycle produced in the example really does satisfy this $3$-cocycle condition. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@sf:=Standard_f;;|
   
@@ -3772,6 +3792,130 @@ for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially o
   6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,
   0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,
   6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Quillen's complex and the $p$-part of homology }}\logpage{[ 7, 13, 0 ]}
+\hyperdef{L}{X7C5233E27D2D603E}{}
+{
+ Let $G$ be a finite group with order divisible by prime $p$. Let ${\mathcal A}={\mathcal A}_p(G)$ denote Quillen's simplicial complex arising as the order complex of the poset
+of non-trivial elementary abelian $p$-subgroups of $G$. The group $G$ acts on $\mathcal A$. Denote the orbit of a $k$-simplex $e^k$ by $[e^k]$, and the stabilizer of $e^k$ by $Stab(e^k) \le G$. For a finite abelian group $H$ let $H_p$ denote the Sylow $p$-subgroup or the "$p$-part". Peter Webb proved the following. 
+
+ \textsc{Theorem.}[Peter Webb] For any $G$-module $M$ there is a (non natural) homomorphism
+
+ $H_n(G,M)_p \oplus \bigoplus_{[e^k]\, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p \cong
+\bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p$ 
+
+ for $n\ge 0$. The isomorphism can also be expressed as 
+
+ $H_n(G,M)_p \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p\ -\
+\bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p$ and terms can often be cancelled. 
+
+Thus the additive structure of the $p$-part of the homology of $G$ is determined by that of the stabilizer groups. The result also holds with
+homology replaced by cohomology. 
+
+\textsc{Illustration 1} 
+
+ As an illustration of the theorem, the following commands calculate 
+
+ $H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(S_i,M)_3 - \bigoplus_{4\le
+i\le 5}H_n(S_4,M)_3$ 
+
+ for the Mathieu simple group $M_{12}$ of order $95040$, where 
+
+$S_1\cong S_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2$ 
+
+$S_2=A_4 \times S_3$ 
+
+$S_4=C_3 \times S_3$ 
+
+$S_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ \texttt{\symbol{92}} . 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=MathieuGroup(12);;|
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,3);;|
+  !gapprompt@gap>| !gapinput@List(D[1],StructureDescription);|
+  [ "(((C3 x C3) : Q8) : C3) : C2", "A4 x S3", "(((C3 x C3) : Q8) : C3) : C2" ]
+  !gapprompt@gap>| !gapinput@List(D[2],StructureDescription);|
+  [ "C3 x S3", "((C3 x C3) : C3) : (C2 x C2)" ]
+  
+\end{Verbatim}
+ 
+
+\textsc{Illustration 2} 
+
+ As a second illustration, the following commands show that $H_n(M_{23},M)_{p}$ is periodic for primes $p=5, 7, 1, 23$ of periods dividing $8, 6, 10, 22$ respectively. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=MathieuGroup(23);;|
+  !gapprompt@gap>| !gapinput@Factors(Order(G));|
+  [ 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 7, 11, 23 ]
+  
+  !gapprompt@gap>| !gapinput@sd:=StructureDescription;;|
+  
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,5);;|
+  !gapprompt@gap>| !gapinput@List(D[1],sd);List(D[2],sd);|
+  [ "C15 : C4" ]
+  [  ]
+  !gapprompt@gap>| !gapinput@IsPeriodic(D[1][1]);|
+  true
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D[1][1]);|
+  8
+  
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,7);;|
+  !gapprompt@gap>| !gapinput@List(D[1],sd);List(D[2],sd);|
+  [ "C2 x (C7 : C3)" ]
+  [  ]
+  !gapprompt@gap>| !gapinput@IsPeriodic(D[1][1]);|
+  true
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D[1][1]);|
+  6
+  
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,11);;|
+  !gapprompt@gap>| !gapinput@List(D[1],sd);List(D[2],sd);|
+  [ "C11 : C5" ]
+  [  ]
+  !gapprompt@gap>| !gapinput@IsPeriodic(D[1][1]);|
+  true
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D[1][1]);|
+  10
+  
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,23);;|
+  !gapprompt@gap>| !gapinput@List(D[1],sd);List(D[2],sd);|
+  [ "C23 : C11" ]
+  [  ]
+  !gapprompt@gap>| !gapinput@IsPeriodic(D[1][1]);|
+  true
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D[1][1]);|
+  22
+  
+\end{Verbatim}
+ 
+
+The order $|M_{23}|=10200960$ is divisible by primes $p=2, 3, 5, 7, 11, 23$. For $p=3$ the following commands establish that the Poincare series 
+
+$(x^{16} - 2x^{15}$ $ + 3x^{14} - 4x^{13}$ $ + 4x^{12} - 4x^{11}$ $ + 4x^{10} - 3x^9$ $ + 3x^8 - 3x^7 +$ $ 4x^6 - 4x^5 $ $+ 4x^4 -4x^3$ $ + 3x^2 -2x + 1) /$ $ (x^{18} - 2x^{17}$ $ + 3x^{16} - 4x^{15}$ $ + 4x^{14} - $ $4x^{13} + 4x^{12}$ $ - 4x^{11} + 4x^{10}$ $ - 4x^9 + 4x^8$ $ - 4x^7 + 4x^6 $ $ - 4x^5 + 4x^4$ $ - 4x^3 +$ $ 3x^2 - 2x + 1)$ 
+
+describes the dimension of the vector space $H^n(M_{23},\mathbb Z_3)$ up to at least degree $n=40$. To prove that it describes the dimension in all degrees one would need to
+verify "completion criteria". 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=MathieuGroup(23);;|
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,3);;|
+  !gapprompt@gap>| !gapinput@List(D[1],StructureDescription);|
+  [ "(C3 x C3) : QD16", "A5 : S3" ]
+  !gapprompt@gap>| !gapinput@List(D[2],StructureDescription);|
+  [ "S3 x S3" ]
+  
+  !gapprompt@gap>| !gapinput@P1:=PoincareSeriesPrimePart(D[1][1],3,40);|
+  (x_1^16-2*x_1^15+3*x_1^14-4*x_1^13+4*x_1^12-4*x_1^11+4*x_1^10-3*x_1^9+3*x_1^8-3*x_1^7+4*x_1^6-4*x_1^5+\
+  4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)/(x_1^18-2*x_1^17+3*x_1^16-4*x_1^15+4*x_1^14-4*x_1^13+4*x_1^12-4*x_1^1\
+  1+4*x_1^10-4*x_1^9+4*x_1^8-4*x_1^7+4*x_1^6-4*x_1^5+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+  
+  !gapprompt@gap>| !gapinput@P2:=PoincareSeriesPrimePart(D[1][2],3,40);|
+  (x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+  
+  !gapprompt@gap>| !gapinput@P3:=PoincareSeriesPrimePart(D[2][1],3,40);|
+  (x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
   
 \end{Verbatim}
  }
@@ -4792,7 +4936,7 @@ TO-DO list. }
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@R:=ResolutionArtinGroup(D,8);|
   Resolution of length 8 in characteristic 0 for <fp group on the generators 
-  [ f1, f2, f3, f4, f5, f6, f7 ]UNKNOWNEntity(gr) . 
+  [ f1, f2, f3, f4, f5, f6, f7 ]> . 
   No contracting homotopy available. 
   
   !gapprompt@gap>| !gapinput@Size(R);|
