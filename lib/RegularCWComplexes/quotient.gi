@@ -3,21 +3,11 @@
 ###########################################
 InstallGlobalFunction(QuotientChainMap,
 function(X,ddata)
-local data,CX, CT, B, Babs, DimensionT, BoundaryT, fnc, dimsT, ChnMap, mapping,D, n, v, x, tmp;
+local data,CX, CT, B, Babs, SSBabs, DimensionT, BoundaryT, fnc, dimsT, ChnMap, mapping, n, v, x, tmp;
 
 data:=1*ddata;
 
 CX:=ChainComplexOfRegularCWComplex(X);
-
-D:=List([0..Dimension(X)],i->[]);
-for n in [0..Dimension(X)] do
-for x in data[n+1] do
-v:=[1..CX!.dimension(n)]*0;
-v[AbsInt(x[1])]:=1*SignInt(x[1]);
-v[AbsInt(x[2])]:=-1*SignInt(x[2]);
-Add(D[n+1],v);
-od;
-od;
 
 ####################################
 ####################################
@@ -33,6 +23,7 @@ A:=List([1..ln],i->[i]);
 for x in rels do
 i:=PositionProperty(A,a->x[1] in a or -x[1] in a);
 j:=PositionProperty(A,a->x[2] in a or -x[2] in a);
+
 if not i=j then
 if (x[1] in A[i] and x[2] in A[j])
 or
@@ -50,6 +41,7 @@ od;
 B:=[];
 for i in [1..ln] do
 j:=PositionProperty(A,a->i in a or -i in a);
+
 k:=Minimum(List(A[j],AbsInt));
 if (i in A[j] and k in A[j])
 or
@@ -66,7 +58,10 @@ end;
 
 B:=List([0..Dimension(X)],k->fnc(data[k+1],k));
 Babs:=List(B,x->List(x,AbsInt));
-dimsT:=List(B,x->Length(SSortedList(List(x,AbsInt))) );   
+SSBabs:=List(Babs,x->SSortedList(x));
+#dimsT:=List(B,x->Length(SSortedList(List(x,AbsInt))) );   
+dimsT:=List(SSBabs,x->Length(x));
+
 #############################
 DimensionT:=function(n);
 if n<0 or n>Dimension(X) then return 0; fi;
@@ -88,9 +83,10 @@ end;
 #############################
 
 #############################
-BoundaryT:=function(n,k)
-local m, bnd, bnd1,i,j;
+BoundaryT:=function(n,kk)
+local m, bnd, bnd1,i,j,jj,k;
 
+k:=SSBabs[n+1][kk];
 m:=Position(Babs[n+1],k);
 if k in B[n+1] then bnd:= 1*CX!.boundary(n,m);;
 else
@@ -101,7 +97,8 @@ bnd1:=0*[1..DimensionT(n-1)];
 
 for i in [1..CX!.dimension(n-1)] do
 j:=B[n][i];
-bnd1[AbsInt(j)]:=bnd1[AbsInt(j)]-SignInt(j)*bnd[i];
+jj:=Position(SSBabs[n],AbsInt(j));
+bnd1[AbsInt(jj)]:=bnd1[AbsInt(jj)]-SignInt(j)*bnd[i];
 od;
 
 return bnd1;

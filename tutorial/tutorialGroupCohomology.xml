@@ -206,14 +206,14 @@ The following example
 <#Include SYSTEM "tutex/6.16.txt">
 </Example>
 
-<P/>If <M>A=K^d</M> is a vetor space of dimension <M>d</M> over the field 
-<M>K=GF(p)</M> and <M>G</M> acts on <M>A</M> via a homomorphism 
+<P/>If <M>V=K^d</M> is a vetor space of dimension <M>d</M> over the field 
+<M>K=GF(p)</M> with <M>p</M> a prime and <M>G</M> acts on <M>V</M> via a homomorphism 
 <M>\rho\colon G\rightarrow GL_d(K)</M> then the homology 
-<M>H^n(G,A)</M> can again be computed without the use of G-outer groups. 
+<M>H^n(G,V)</M> can again be computed without the use of G-outer groups. 
  As an example, the following commands compute
-<P/><M>H^4(GL(3,2),A) =K^2</M>
+<P/><M>H^4(GL(3,2),V) =K^2</M>
 <P/>where <M>K=GF(2)</M> and <M>GL(3,2)</M> acts with its natural action on
-<M>A=K^3</M>.
+<M>V=K^3</M>.
 
 <Example>
 <#Include SYSTEM "tutex/6.16B.txt">
@@ -222,23 +222,30 @@ The following example
 <P/> It can be computationally difficult to compute high degree terms in resolutions for large finite groups. But the <M>p</M>-primary part of the homology can 
 be computed using resolutions of Sylow <M>p</M>-subgroups. This approach is used in the following example that computes
  the <M>2</M>-primary part 
-<P/><M>H_{11}(A_7,B)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4</M>
+<P/><M>H_{11}(A_7,A)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4</M>
 <P/>of the degree 11 homology of the alternating group <M>A_7</M>
 of degree <M>7</M> with coefficients in the module
- <M>B=\mathbb Z^7</M> on which <M>A_7</M> acts by permuting basis vectors.
+ <M>A=\mathbb Z^7</M> on which <M>A_7</M> acts by permuting basis vectors.
 
 <Example>
 <#Include SYSTEM "tutex/6.16C.txt">
 </Example>
 
 Similar commands compute
-<P/><M>H_{3}(A_{10},B)_{(2)} = \mathbb Z_2</M>
-<P/>with coefficient module <M>B=\mathbb Z^{10}</M> on which <M>A_{10}</M> acts by permuting basis vectors.
+<P/><M>H_{3}(A_{10},A)_{(2)} = \mathbb Z_4</M>
+<P/>with coefficient module <M>A=\mathbb Z^{10}</M> on which <M>A_{10}</M> acts by permuting basis vectors.
 
 <Example>
 <#Include SYSTEM "tutex/6.16D.txt">
 </Example>
 
+<P/>The following commands compute 
+<P/><M>H_{100}(GL(3,2),V)= K^{34}</M>
+<P/>where <M>V</M> is the vector space  of dimension <M>3</M> over <M>K=GF(2)</M> acting via some irreducible representation <M>\rho\colon GL(3,2) \rightarrow GL(V)</M>.
+
+<Example>
+<#Include SYSTEM "tutex/6.16E.txt">
+</Example>
 </Section>
  
 <Section><Heading>Cohomology as a functor of the first variable</Heading>
@@ -464,11 +471,77 @@ A function <M>f\colon G\times G\times G \rightarrow A</M>
  acts trivially on <M>A=Z_6</M>. The following commands show that the standard 
 <M>3</M>-cocycle produced in the example really does satisfy this <M>3</M>-cocycle condition. 
 
-B<Example>
+<Example>
 <#Include SYSTEM "tutex/6.24.txt">
 </Example>
 
+</Section>
 
+<Section><Heading>Quillen's complex and the <M>p</M>-part of homology </Heading>
+Let <M>G</M> be a finite group with order divisible by  prime <M>p</M>. Let
+<M>{\mathcal A}={\mathcal A}_p(G)</M> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <M>p</M>-subgroups of <M>G</M>. The group <M>G</M> acts on <M>\mathcal A</M>. Denote the orbit of a <M>k</M>-simplex <M>e^k</M> by <M>[e^k]</M>, and the stabilizer of <M>e^k</M> by <M>Stab(e^k) \le G</M>. For a finite abelian group <M>H</M> let
+<M>H_p</M> denote the Sylow <M>p</M>-subgroup or the "<M>p</M>-part". Peter Webb proved the following.
+<P/>
+<B>Theorem.</B>[Peter Webb] For any <M>G</M>-module <M>M</M> there is a (non natural) homomorphism<P/>
+<M>H_n(G,M)_p \oplus \bigoplus_{[e^k]\, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p</M>
+<P/> for <M>n\ge 0</M>. The isomorphism can also be expressed as
+<P/>
+<M>H_n(G,M)_p  \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p\ -\ \bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p</M> and terms can often be cancelled.
+<P/>Thus the additive structure of the <M>p</M>-part of the
+homology of <M>G</M> is determined by that of the stabilizer groups. The result also holds with homology replaced by cohomology.
+
+<P/><B>Illustration 1</B>
+<P/>
+As an illustration of the theorem, the following commands calculate
+
+<P/>
+<M>H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(S_i,M)_3 - \bigoplus_{4\le i\le 5}H_n(S_4,M)_3</M>
+<P/> for the Mathieu simple group <M>M_{12}</M> of order <M>95040</M>, where
+<P/><M>S_1\cong S_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2</M>
+<P/><M>S_2=A_4 \times S_3</M>
+<P/><M>S_4=C_3 \times S_3</M>
+<P/><M>S_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)</M> \ .
+<Example>
+<#Include SYSTEM "tutex/6.26.txt">
+</Example>
+
+<P/><B>Illustration 2</B>
+<P/>
+As a second illustration, the following commands show that <M>H_n(M_{23},M)_{p}</M> is periodic for primes <M>p=5, 7, 1, 23</M> of periods dividing <M>8, 6, 10, 22</M> respectively.
+
+
+<Example>
+<#Include SYSTEM "tutex/6.27.txt">
+</Example>
+
+<P/>The order <M>|M_{23}|=10200960</M> is divisible by primes 
+<M>p=2, 3, 5, 7, 11, 23</M>. For <M>p=3</M> the following commands establish 
+that the Poincare series
+<P/><M>(x^{16} - 2x^{15}</M>
+<M> + 3x^{14} - 4x^{13}</M>
+<M> + 4x^{12} - 4x^{11}</M>
+<M> + 4x^{10} - 3x^9</M>
+<M> + 3x^8 - 3x^7 +</M>
+<M> 4x^6 - 4x^5 </M>
+<M>+ 4x^4 -4x^3</M>
+<M> + 3x^2 -2x + 1) /</M>
+<M> (x^{18} - 2x^{17}</M>
+<M> + 3x^{16} - 4x^{15}</M>
+<M> + 4x^{14} - </M>
+<M>4x^{13} + 4x^{12}</M>
+<M> - 4x^{11} + 4x^{10}</M>
+<M> - 4x^9 + 4x^8</M>
+<M> - 4x^7 + 4x^6 </M>
+<M> - 4x^5 + 4x^4</M>
+<M> - 4x^3 +</M>
+<M> 3x^2 - 2x + 1)</M>
+ 
+<P/>describes the dimension of the vector space <M>H^n(M_{23},\mathbb Z_3)</M> up to at least degree
+<M>n=40</M>. To  prove that it describes the dimension in all degrees one would need to verify "completion criteria".
+
+<Example>
+<#Include SYSTEM "tutex/6.28.txt">
+</Example>
 
 </Section>
 </Chapter>

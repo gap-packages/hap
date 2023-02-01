@@ -1,26 +1,32 @@
 ####################################################
 ####################################################
-InstallGlobalFunction(QuillenComplex,
-function(G,p)
+InstallGlobalFunction(PSubgroupSimplicialComplex,
+function(arg)
 local
-	SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, K,  k,
-        s,t,x,m,mm,tmp;
+        G,p,filt,P,SubsCl, Subs, fn, cl, MaxSubs, bool, MaxSimps, K,  k,
+        s,t,x,y,m,mm,tmp;
 
+G:=arg[1];
+p:=arg[2];
+if Length(arg)=3 then filt:=arg[3];
+else
+filt:=function(G); return true; end;
+fi;
 ######################################
-if not IsPrimeInt(p) then 
+if not IsPrimeInt(p) then
 Print("Second variable is not a prime.\n");
 return fail;
 fi;
 ######################################
 
-SubsCl:=ConjugacyClassesSubgroups(LatticeByCyclicExtension(G, 
-      IsElementaryAbelian, true));;
+P:=SylowSubgroup(G,p);                    #CHANGED Jan 2023
+SubsCl:=ConjugacyClassesSubgroups(LatticeByCyclicExtension(P,
+      filt,true));;
 
-#SubsCl:=Filtered(SubsCl,cl-> IsPGroup(ClassElementLattice(cl,1)));
-SubsCl:=Filtered(SubsCl,cl->
-        PrimePGroup(ClassElementLattice(cl,1))=p);
+SubsCl:=List(SubsCl,c->ClassElementLattice(c,1));
+SubsCl:=Filtered(SubsCl,cl->Order(cl)>1);
+SubsCl:=List(SubsCl,g->g^G);
 
-SubsCl:=Filtered(SubsCl,cl->Order(ClassElementLattice(cl,1))>1);
 Subs:=[];
 for cl in SubsCl do
 for x in [1..Size(cl)] do
@@ -59,7 +65,7 @@ for x in [1..Length(MaxSimps)] do
 if IsBound(MaxSimps[x]) then
 
 m:=MaxSimps[x];
-if Order(m[Length(m)])>p then 
+if Order(m[Length(m)])>p then
 for t in MaximalSubgroups(m[Length(m)]) do
 mm:=Concatenation(m,[t]);
 Add(MaxSimps,mm); if Order(t)>p then bool:=true; fi;
@@ -70,17 +76,25 @@ fi;
 fi;
 od;
 od;
+MaxSimps:=Filtered(MaxSimps,i->IsBound(i));
 
-tmp:=MaxSimps;
-MaxSimps:=[];
-for m in tmp do
-Add(MaxSimps,m);
-od;
-Unbind(tmp);
 K:= MaximalSimplicesToSimplicialComplex(MaxSimps);
+
+for k in [1..Dimension(K)+1] do
+Apply(K!.simplicesLst[k],x->SortedList(x,fn));
+od;
 
 return K;
 
+end);
+####################################################
+####################################################
+
+####################################################
+####################################################
+InstallGlobalFunction(QuillenComplex,
+function(G,p);
+return PSubgroupSimplicialComplex(G,p,IsElementaryAbelian);
 end);
 ####################################################
 ####################################################
@@ -173,6 +187,7 @@ end;
 ######################
 
 R:=Objectify(HapGChainComplex,
+            #HapNonFreeResolution,
             rec(
             dimension:=Dim,
             boundary:=boundfn,
@@ -182,11 +197,129 @@ R:=Objectify(HapGChainComplex,
             stabilizer:=stabfn,
             action:=Action,
             properties:=
-            [["length",Dimension(K)],
+            [["length",1000],
              ["characteristic",0],
              ["type","chaincomplex"]]));
 
 return R;
+end);
+######################################################
+######################################################
+
+######################################################
+######################################################
+InstallGlobalFunction(PSubgroupGChainComplex,
+function(arg)
+local G,p, filt,P, OS,  K, act, dm, stab, STAB, orbs, Dim, R, n,k, tmp,tmpp;
+
+G:=arg[1];
+p:=arg[2];
+if Length(arg)=3 then
+filt:=arg[3];
+else
+filt:=function(G); return true; end;
+fi;
+
+P:=SylowSubgroup(G,p);
+K:=PSubgroupSimplicialComplex(P,p,filt);
+dm:=Dimension(K);
+K:=K!.simplicesLst;
+
+orbs:=[];
+
+#################################
+act:=function(x,g);
+return List(x,y->y^g);
+end;
+#################################
+
+for n in [0..dm] do
+orbs[n+1]:=[];
+while Length(K[n+1])>0 do
+Add(orbs[n+1],K[n+1][1]);
+tmp:=Orbit(G,K[n+1][1],act);
+K[n+1]:=Filtered(K[n+1],x-> not x in tmp);
+od;
+od;
+
+#########################
+Dim:=function(n);
+if n<0 or n>dm then return 0; fi;
+return Length(orbs[n+1]);
+end;
+#########################
+
+STAB:=[];
+for n in [0..dm] do
+STAB[n+1]:=[];
+for k in [1..Dim(n)] do
+OS:=OrbitStabilizer(G,orbs[n+1][k],act);
+STAB[n+1][k]:=OS.stabilizer;
+#STAB[n+1][k]:=Stabilizer(G,orbs[n+1][k],act);
+od;
+od;
+
+#########################
+stab:=function(n,k);
+return STAB[n+1][k];
+end;
+#########################
+
+R:=Objectify(HapGChainComplex,
+            rec(
+            dimension:=Dim,
+            boundary:=fail,
+            homotopy:=fail,
+            elts:=fail,
+            group:=G,
+            stabilizer:=stab,
+            action:=fail,
+            properties:=
+            [["length",1000],
+             ["characteristic",0],
+             ["type","chaincomplex"]]));
+
+return R;
+
+end);
+######################################################
+######################################################
+
+######################################################
+######################################################
+InstallGlobalFunction(HomologicalGroupDecomposition,
+function(G,p)
+local C, D, dm, n, k, j, iso;
+
+C:=PSubgroupGChainComplex(G,p,IsElementaryAbelian);
+
+dm:=0;n:=1;
+while C!.dimension(n)>0 do
+dm:=dm+1; n:=n+1;
+od;
+
+D:=[[],[]];
+for n in [0..dm] do
+if IsOddInt(n) then
+for k in [1..C!.dimension(n)] do
+Add(D[2],C!.stabilizer(n,k));
+od;
+else
+for k in [1..C!.dimension(n)] do
+Add(D[1],C!.stabilizer(n,k));
+od;
+fi;
+od;
+
+for k in [1..Length(D[1])] do
+for j in [1..Length(D[2])] do
+iso:=IsomorphismGroups(D[1][k],D[2][j]);
+if not iso=fail then D[1][k]:=0; D[2][j]:=0; D[2]:=Filtered(D[2],a->not a=0);
+break; fi;
+od;
+od;
+D[1]:=Filtered(D[1],a->not a=0);
+return D;
 end);
 ######################################################
 ######################################################

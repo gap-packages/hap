@@ -32,7 +32,7 @@ if IsList(arg[1]) then
 else
 	if IsGroup(arg[1]) then G:=arg[1]; 
 	if Order(G)<infinity then
-        if IsMatrixGroup(G) then G:=Image(IsomorphismPermGroup(G)); fi;
+        if IsMatrixGroup(G) then G:=Image(IsomorphismPermGroup(G),G); fi;
 	gensG:=ReduceGenerators(GeneratorsOfGroup(G),G); fi; 
 	D:=false;
 	else

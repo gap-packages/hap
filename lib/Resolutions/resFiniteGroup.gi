@@ -73,7 +73,7 @@ if IsMatrixGroup(G) then
 
 iso:=IsomorphismPermGroup(G);
 #R:=ResolutionFiniteGroup(Image(iso),N); #CHANGED 26/11/2018
-R:=ResolutionFiniteGroup(Image(iso),K);
+R:=ResolutionFiniteGroup(Image(iso,G),K);
 R!.elts:=List(R!.elts,x->PreImagesRepresentative(iso,x));
 R!.group:=G;
 return R;

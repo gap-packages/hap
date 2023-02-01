@@ -547,7 +547,10 @@ DeclareOperation("Nerve",[IsHapPureCubicalComplex,IsInt]);#doc
 DeclareOperation("Nerve",[IsHapPurePermutahedralComplex]);#doc
 DeclareOperation("Nerve",[IsHapPurePermutahedralComplex,IsInt]);#doc
 DeclareGlobalFunction("QuillenComplex");#doc
+DeclareGlobalFunction("PSubgroupSimplicialComplex");
+DeclareGlobalFunction("PSubgroupGChainComplex");
 DeclareGlobalFunction("GChainComplex");
+DeclareGlobalFunction("HomologicalGroupDecomposition");
 DeclareGlobalFunction("SimplicialMap");
 DeclareGlobalFunction("SimplicialMapNC");
 DeclareGlobalFunction("MaximalSimplicesToSimplicialComplex");#<SimplicialComplex

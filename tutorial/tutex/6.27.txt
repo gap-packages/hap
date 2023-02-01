@@ -1,0 +1,41 @@
+gap> G:=MathieuGroup(23);;
+gap> Factors(Order(G));
+[ 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 7, 11, 23 ]
+
+gap> sd:=StructureDescription;;
+
+gap> D:=HomologicalGroupDecomposition(G,5);;
+gap> List(D[1],sd);List(D[2],sd);
+[ "C15 : C4" ]
+[  ]
+gap> IsPeriodic(D[1][1]);
+true
+gap> CohomologicalPeriod(D[1][1]);
+8
+
+gap> D:=HomologicalGroupDecomposition(G,7);;
+gap> List(D[1],sd);List(D[2],sd);
+[ "C2 x (C7 : C3)" ]
+[  ]
+gap> IsPeriodic(D[1][1]);
+true
+gap> CohomologicalPeriod(D[1][1]);
+6
+
+gap> D:=HomologicalGroupDecomposition(G,11);;
+gap> List(D[1],sd);List(D[2],sd);
+[ "C11 : C5" ]
+[  ]
+gap> IsPeriodic(D[1][1]);
+true
+gap> CohomologicalPeriod(D[1][1]);
+10
+
+gap> D:=HomologicalGroupDecomposition(G,23);;
+gap> List(D[1],sd);List(D[2],sd);
+[ "C23 : C11" ]
+[  ]
+gap> IsPeriodic(D[1][1]);
+true
+gap> CohomologicalPeriod(D[1][1]);
+22
