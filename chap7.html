@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 7: Cohomology of groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap7"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
+<p><a id="X7E34E2C6868F2726" name="X7E34E2C6868F2726"></a></p>
+<div class="ChapSects"><a href="chap7.html#X7E34E2C6868F2726">7 <span class="Heading">Cohomology of groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X807B265978F90E01">7.1 <span class="Heading">Finite groups </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X8463EF6A821FFB69">7.2 <span class="Heading">Nilpotent groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X82E8FAC67BC16C01">7.3 <span class="Heading">Crystallographic and Almost Crystallographic groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7AFFB32587D047FE">7.4 <span class="Heading">Arithmetic groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X800CB6257DC8FB3A">7.5 <span class="Heading">Artin groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7BAFCA3680E478AE">7.6 <span class="Heading">Graphs of groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C3DEDD57BB4D537">7.7 <span class="Heading">Cohomology with coefficients in a module</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7E573EA582CCEF2E">7.8 <span class="Heading">Cohomology as a functor of the first variable</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X796731727A7EBE59">7.9 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X80F6FD3E7C7E4E8D">7.10 <span class="Heading">Transfer Homomorphism</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X79B1406C803FF178">7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X833A19F0791C3B06">7.12 <span class="Heading">Explicit cocycles </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C5233E27D2D603E">7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></a>
+</span>
+</div>
+</div>
+
+<h3>7 <span class="Heading">Cohomology of groups</span></h3>
+
+<p><a id="X807B265978F90E01" name="X807B265978F90E01"></a></p>
+
+<h4>7.1 <span class="Heading">Finite groups </span></h4>
+
+<p>It is possible to compute the low degree (co)homology of a finite group or monoid of small order directly from the bar resolution. The following commands take this approach to computing the fifth integral homology</p>
+
+<p><span class="SimpleMath">H_5(Q_4, Z) = Z_2⊕ Z_2</span></p>
+
+<p>of the quaternion group <span class="SimpleMath">G=Q_4</span> of order <span class="SimpleMath">8</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuaternionGroup(8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=BarComplexOfMonoid(Q,6);;                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractedComplex(B);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,5);</span>
+[ 2, 2 ]
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..6],B!.dimension);</span>
+[ 1, 7, 49, 343, 2401, 16807, 117649 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..6],C!.dimension);</span>
+[ 1, 2, 2, 1, 2, 4, 102945 ]
+
+</pre></div>
+
+<p>However, this approach is of limited applicability since the bar resolution involves <span class="SimpleMath">|G|^k</span> free generators in degree <span class="SimpleMath">k</span>. A range of techniques, tailored to specific classes of groups, can be used to compute the (co)homology of larger finite groups.</p>
+
+<p>The following example computes the fourth integral cohomomogy of the Mathieu group <span class="SimpleMath">M_24</span>.</p>
+
+<p><span class="SimpleMath">H^4(M_24, Z) = Z_12</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupCohomology(MathieuGroup(24),4);</span>
+[ 4, 3 ]
+
+</pre></div>
+
+<p>The following example computes the third integral homology of the Weyl group <span class="SimpleMath">W=Weyl(E_8)</span>, a group of order <span class="SimpleMath">696729600</span>.</p>
+
+<p><span class="SimpleMath">H_3(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_12</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=SimpleLieAlgebra("E",8,Rationals);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=WeylGroup(RootSystem(L));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(W);</span>
+696729600
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(W,3);</span>
+[ 2, 2, 4, 3 ]
+
+</pre></div>
+
+<p>The preceding calculation could be achieved more quickly by noting that <span class="SimpleMath">W=Weyl(E_8)</span> is a Coxeter group, and by using the associated Coxeter polytope. The following example uses this approach to compute the fourth integral homology of <span class="SimpleMath">W</span>. It begins by displaying the Coxeter diagram of <span class="SimpleMath">W</span>, and then computes</p>
+
+<p><span class="SimpleMath">H_4(Weyl(E_8), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[5,3]],[5,[6,3]],[6,[7,3]],[7,[8,3]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoxeterDiagramDisplay(D);</span>
+
+</pre></div>
+
+<p><img src="images/e8diagram.gif" align="center" height="200" alt="Coxeter diagram for E8"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">polytope:=CoxeterComplex_alt(D,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(polytope,5);</span>
+Resolution of length 5 in characteristic 0 for &lt;matrix group with 
+8 generators&gt; . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(R);</span>
+Chain complex of length 5 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,4);</span>
+[ 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p>The following example computes the sixth mod-<span class="SimpleMath">2</span> homology of the Sylow <span class="SimpleMath">2</span>-subgroup <span class="SimpleMath">Syl_2(M_24)</span> of the Mathieu group <span class="SimpleMath">M_24</span>.</p>
+
+<p><span class="SimpleMath">H_6(Syl_2(M_24), Z_2) = Z_2^143</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(SylowSubgroup(MathieuGroup(24),2),6,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p>The following example computes the sixth mod-<span class="SimpleMath">2</span> homology of the Unitary group <span class="SimpleMath">U_3(4)</span> of order 312000.</p>
+
+<p><span class="SimpleMath">H_6(U_3(4), Z_2) = Z_2^4</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GU(3,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+312000
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(G,6,2);</span>
+[ 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p>The following example constructs the Poincare series</p>
+
+<p><span class="SimpleMath">p(x)=frac1-x^3+3*x^2-3*x+1</span></p>
+
+<p>for the cohomology <span class="SimpleMath">H^∗(Syl_2(M_12, F_2)</span>. The coefficient of <span class="SimpleMath">x^n</span> in the expansion of <span class="SimpleMath">p(x)</span> is equal to the dimension of the vector space <span class="SimpleMath">H^n(Syl_2(M_12, F_2)</span>. The computation involves <strong class="button">Singular</strong>'s Groebner basis algorithms and the Lyndon-Hochschild-Serre spectral sequence.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PoincareSeriesLHS(G);</span>
+(1)/(-x_1^3+3*x_1^2-3*x_1+1)
+
+</pre></div>
+
+<p>The additional following command uses the Poincare series</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankHomologyPGroup(G,P,1000);</span>
+251000
+
+</pre></div>
+
+<p>to determine that <span class="SimpleMath">H_1000(Syl_2(M_12, Z)</span> is a direct sum of 251000 non-trivial cyclic <span class="SimpleMath">2</span>-groups.</p>
+
+<p>The following example constructs the series</p>
+
+<p><span class="SimpleMath">p(x)=fracx^4-x^3+x^2-x+1x^6-x^5+x^4-2*x^3+x^2-x+1</span></p>
+
+<p>whose coefficient of <span class="SimpleMath">x^n</span> is equal to the dimension of the vector space <span class="SimpleMath">H^n(M_11, F_2)</span> for all <span class="SimpleMath">n</span> in the range <span class="SimpleMath">0≤ n≤ 14</span>. The coefficient is not guaranteed correct for <span class="SimpleMath">n≥ 15</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PoincareSeriesPrimePart(MathieuGroup(11),2,14);</span>
+(x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
+
+</pre></div>
+
+<p><a id="X8463EF6A821FFB69" name="X8463EF6A821FFB69"></a></p>
+
+<h4>7.2 <span class="Heading">Nilpotent groups</span></h4>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_4(N, Z) = (Z_3)^4 ⊕ Z^84</span></p>
+
+<p>for the free nilpotent group <span class="SimpleMath">N</span> of class <span class="SimpleMath">2</span> on four generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(4);; N:=NilpotentQuotient(F,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(N,4);</span>
+[ 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X82E8FAC67BC16C01" name="X82E8FAC67BC16C01"></a></p>
+
+<h4>7.3 <span class="Heading">Crystallographic and Almost Crystallographic groups</span></h4>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_5(G, Z) = Z_2 ⊕ Z_2</span></p>
+
+<p>for the <span class="SimpleMath">3</span>-dimensional crystallographic space group <span class="SimpleMath">G</span> with Hermann-Mauguin symbol "P62"</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(SpaceGroupBBNWZ("P62"),5);</span>
+[ 2, 2 ]
+
+</pre></div>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H^5(G, Z)= Z</span></p>
+
+<p>for an almost crystallographic group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlmostCrystallographicPcpGroup( 4, 50, [ 1, -4, 1, 2 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupCohomology(G,4);</span>
+[ 0 ]
+
+</pre></div>
+
+<p><a id="X7AFFB32587D047FE" name="X7AFFB32587D047FE"></a></p>
+
+<h4>7.4 <span class="Heading">Arithmetic groups</span></h4>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_6(SL_2(cal O, Z) = Z_2 ⊕ Z_12</span></p>
+
+<p>for <span class="SimpleMath">cal O</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt-2)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractibleGcomplex("SL(2,O-2)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),6);</span>
+[ 2, 12 ]
+
+</pre></div>
+
+<p><a id="X800CB6257DC8FB3A" name="X800CB6257DC8FB3A"></a></p>
+
+<h4>7.5 <span class="Heading">Artin groups</span></h4>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_5(G, Z) = Z_3</span></p>
+
+<p>for <span class="SimpleMath">G</span> the classical braid group on eight strings.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,3]],[5,[6,3]],[6,[7,3]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoxeterDiagramDisplay(D);;</span>
+
+</pre></div>
+
+<p><img src="images/a7diagram.gif" align="center" height="200" alt="Coxeter diagram for A7"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionArtinGroup(D,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,5);</span>
+[ 3 ]
+
+</pre></div>
+
+<p><a id="X7BAFCA3680E478AE" name="X7BAFCA3680E478AE"></a></p>
+
+<h4>7.6 <span class="Heading">Graphs of groups</span></h4>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_5(G, Z) = Z_2⊕ Z_2⊕ Z_2 ⊕ Z_2 ⊕ Z_2</span></p>
+
+<p>for <span class="SimpleMath">G</span> the graph of groups corresponding to the amalgamated product <span class="SimpleMath">G=S_5*_S_3S_4</span> of the symmetric groups <span class="SimpleMath">S_5</span> and <span class="SimpleMath">S_4</span> over the canonical subgroup <span class="SimpleMath">S_3</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S5:=SymmetricGroup(5);SetName(S5,"S5");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S4:=SymmetricGroup(4);SetName(S4,"S4");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=SymmetricGroup(3);SetName(A,"S3");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AS5:=GroupHomomorphismByFunction(A,S5,x-&gt;x);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AS4:=GroupHomomorphismByFunction(A,S4,x-&gt;x);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[S5,S4,[AS5,AS4]];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsDisplay(D);</span>
+
+</pre></div>
+
+<p><img src="images/graphgroups.png" align="center" height="100" alt="graph of groups"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionGraphOfGroups(D,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),5);</span>
+[ 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X7C3DEDD57BB4D537" name="X7C3DEDD57BB4D537"></a></p>
+
+<h4>7.7 <span class="Heading">Cohomology with coefficients in a module</span></h4>
+
+<p>There are various ways to represent a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> with action <span class="SimpleMath">G× A → A, (g,a)↦ α(g,a)</span>.</p>
+
+<p>One possibility is to use the data type of a <em><span class="SimpleMath">G</span>-Outer Group</em> which involves three components: an <span class="SimpleMath">ActedGroup</span> <span class="SimpleMath">A</span>; an <span class="SimpleMath">Acting Group</span> <span class="SimpleMath">G</span>; a <span class="SimpleMath">Mapping</span> <span class="SimpleMath">(g,a)↦ α(g,a)</span>. The following example uses this data type to compute the cohomology <span class="SimpleMath">H^4(G,A) = Z_5 ⊕ Z_10</span> of the symmetric group <span class="SimpleMath">G=S_6</span> with coefficients in the integers <span class="SimpleMath">A= Z</span> where odd permutations act non-trivially on <span class="SimpleMath">A</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(6);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianPcpGroup([0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha:=function(g,a); return a^SignPerm(g); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=GModuleAsGOuterGroup(G,A,alpha);</span>
+ZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,A);</span>
+G-cocomplex of length 5 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
+[ 2, 2, 5 ]
+
+</pre></div>
+
+<p>If <span class="SimpleMath">A= Z^n</span> and <span class="SimpleMath">G</span> acts as</p>
+
+<p><span class="SimpleMath">G× A → A, (g, v) ↦ ρ(g) v</span></p>
+
+<p>where <span class="SimpleMath">ρ: G→ Gl_n( Z)</span> is a (not necessarily faithful) matrix representation of degree <span class="SimpleMath">n</span> then we can avoid the use of <span class="SimpleMath">G</span>-outer groups and use just the homomorphism <span class="SimpleMath">ρ</span> instead. The following example uses this data type to compute the cohomology</p>
+
+<p><span class="SimpleMath">H^6(G,A) = Z_2</span></p>
+
+<p>and the homology</p>
+
+<p><span class="SimpleMath">H_6(G,A) = 0</span></p>
+
+<p>of the alternating group <span class="SimpleMath">G=A_5</span> with coefficients in <span class="SimpleMath">A= Z^5</span> where elements of <span class="SimpleMath">G</span> act on <span class="SimpleMath">Z^5</span> via an irreducible representation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IrreducibleRepresentations(G)[5];</span>
+[ (1,2,3,4,5), (3,4,5) ] -&gt; 
+[ 
+  [ [ 0, 0, 1, 0, 0 ], [ -1, -1, 0, 0, 1 ], [ 0, 1, 1, 1, 0 ], 
+      [ 1, 0, -1, 0, -1 ], [ -1, -1, 0, -1, 0 ] ], 
+  [ [ -1, -1, 0, 0, 1 ], [ 1, 0, -1, 0, -1 ], [ 0, 0, 0, 0, 1 ], 
+      [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,rho);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,6);</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithIntegralModule(R,rho);</span>
+Chain complex of length 7 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,6);</span>
+[  ]
+
+</pre></div>
+
+<p>If <span class="SimpleMath">V=K^d</span> is a vetor space of dimension <span class="SimpleMath">d</span> over the field <span class="SimpleMath">K=GF(p)</span> with <span class="SimpleMath">p</span> a prime and <span class="SimpleMath">G</span> acts on <span class="SimpleMath">V</span> via a homomorphism <span class="SimpleMath">ρ: G→ GL_d(K)</span> then the homology <span class="SimpleMath">H^n(G,V)</span> can again be computed without the use of G-outer groups. As an example, the following commands compute</p>
+
+<p><span class="SimpleMath">H^4(GL(3,2),V) =K^2</span></p>
+
+<p>where <span class="SimpleMath">K=GF(2)</span> and <span class="SimpleMath">GL(3,2)</span> acts with its natural action on <span class="SimpleMath">V=K^3</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByFunction(G,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModPModule(R,rho);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
+2
+
+</pre></div>
+
+<p>It can be computationally difficult to compute high degree terms in resolutions for large finite groups. But the <span class="SimpleMath">p</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">p</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
+
+<p><span class="SimpleMath">H_11(A_7,A)_(2) = Z_2 ⊕ Z_2⊕ Z_4</span></p>
+
+<p>of the degree 11 homology of the alternating group <span class="SimpleMath">A_7</span> of degree <span class="SimpleMath">7</span> with coefficients in the module <span class="SimpleMath">A= Z^7</span> on which <span class="SimpleMath">A_7</span> acts by permuting basis vectors.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,11);</span>
+[ 2, 2, 4 ]
+
+</pre></div>
+
+<p>Similar commands compute</p>
+
+<p><span class="SimpleMath">H_3(A_10,A)_(2) = Z_4</span></p>
+
+<p>with coefficient module <span class="SimpleMath">A= Z^10</span> on which <span class="SimpleMath">A_10</span> acts by permuting basis vectors.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,3);</span>
+[ 4 ]
+
+</pre></div>
+
+<p>The following commands compute</p>
+
+<p><span class="SimpleMath">H_100(GL(3,2),V)= K^34</span></p>
+
+<p>where <span class="SimpleMath">V</span> is the vector space of dimension <span class="SimpleMath">3</span> over <span class="SimpleMath">K=GF(2)</span> acting via some irreducible representation <span class="SimpleMath">ρ: GL(3,2) → GL(V)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=GL(3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IrreducibleRepresentations(G,GF(2))[3];</span>
+CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt; 
+[ &lt;an immutable 3x3 matrix over GF2&gt;, &lt;an immutable 3x3 matrix over GF2&gt; ],
+ &lt;action isomorphism&gt; )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithModPModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,S,F,100);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X7E573EA582CCEF2E" name="X7E573EA582CCEF2E"></a></p>
+
+<h4>7.8 <span class="Heading">Cohomology as a functor of the first variable</span></h4>
+
+<p>Suppose given a group homomorphism <span class="SimpleMath">f: G_1→ G_2</span> and a <span class="SimpleMath">G_2</span>-module <span class="SimpleMath">A</span>. Then <span class="SimpleMath">A</span> is naturally a <span class="SimpleMath">G_1</span>-module with action via <span class="SimpleMath">f</span>, and there is an induced cohomology homomorphism <span class="SimpleMath">H^n(f,A): H^n(G_2,A) → H^n(G_1,A)</span>.</p>
+
+<p>The following example computes this cohomology homomorphism in degree <span class="SimpleMath">n=6</span> for the inclusion <span class="SimpleMath">f: A_5 → S_5</span> and <span class="SimpleMath">A= Z^5</span> with action that permutes the canonical basis. The final commands determine that the kernel of the homomorphism <span class="SimpleMath">H^6(f,A)</span> is the Klein group of order <span class="SimpleMath">4</span> and that the cokernel is cyclic of order <span class="SimpleMath">6</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G1:=AlternatingGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G2:=SymmetricGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(G1,G2,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi:=PermToMatrixGroup(G2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R1:=ResolutionFiniteGroup(G1,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2:=ResolutionFiniteGroup(G2,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=EquivariantChainMap(R1,R2,f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(F,pi);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=Cohomology(C,6);</span>
+[ g1, g2, g3 ] -&gt; [ id, id, g3 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Range(c)/Image(c));</span>
+[ 2, 3 ]
+
+</pre></div>
+
+<p><a id="X796731727A7EBE59" name="X796731727A7EBE59"></a></p>
+
+<h4>7.9 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></h4>
+
+<p>A short exact sequence of <span class="SimpleMath">ZG</span>-modules <span class="SimpleMath">A ↣ B ↠ C</span> induces a long exact sequence of cohomology groups</p>
+
+<p><span class="SimpleMath">→ H^n(G,A) → H^n(G,B) → H^n(G,C) → H^n+1(G,A) →</span> .</p>
+
+<p>Consider the symmetric group <span class="SimpleMath">G=S_4</span> and the sequence <span class="SimpleMath">Z_4 ↣ Z_8 ↠ Z_2</span> of trivial <span class="SimpleMath">ZG</span>-modules. The following commands compute the induced cohomology homomorphism</p>
+
+<p><span class="SimpleMath">f: H^3(S_4, Z_4) → H^3(S_4, Z_8)</span></p>
+
+<p>and determine that the image of this induced homomorphism has order <span class="SimpleMath">8</span> and that its kernel has order <span class="SimpleMath">2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=(1,2,3,4,5,6,7,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=Group(x^2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b:=Group(x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ahomb:=GroupHomomorphismByFunction(a,b,y-&gt;y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=TrivialGModuleAsGOuterGroup(G,a);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=TrivialGModuleAsGOuterGroup(G,b);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi:=GOuterGroupHomomorphism();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi!.Source:=A;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi!.Target:=B;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi!.Mapping:=ahomb;;</span>
+ 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hphi:=CohomologyHomomorphism(phi,3);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(ImageOfGOuterGroupHomomorphism(Hphi));</span>
+8
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(KernelOfGOuterGroupHomomorphism(Hphi));</span>
+2
+
+</pre></div>
+
+<p>The following commands then compute the homomorphism</p>
+
+<p><span class="SimpleMath">H^3(S_4, Z_8) → H^3(S_4, Z_2)</span></p>
+
+<p>induced by <span class="SimpleMath">Z_4 ↣ Z_8 ↠ Z_2</span>, and determine that the kernel of this homomorphsim has order <span class="SimpleMath">8</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bhomc:=NaturalHomomorphismByNormalSubgroup(b,a);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=TrivialGModuleAsGOuterGroup(G,b);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TrivialGModuleAsGOuterGroup(G,Image(bhomc));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi:=GOuterGroupHomomorphism();</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi!.Source:=B;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi!.Target:=C;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi!.Mapping:=bhomc;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hpsi:=CohomologyHomomorphism(psi,3);</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(KernelOfGOuterGroupHomomorphism(Hpsi));</span>
+8
+
+</pre></div>
+
+<p>The following commands then compute the connecting homomorphism</p>
+
+<p><span class="SimpleMath">H^2(S_4, Z_2) → H^3(S_4, Z_4)</span></p>
+
+<p>and determine that the image of this homomorphism has order <span class="SimpleMath">2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">delta:=ConnectingCohomologyHomomorphism(psi,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(ImageOfGOuterGroupHomomorphism(delta));</span>
+
+</pre></div>
+
+<p>Note that the various orders are consistent with exactness of the sequence</p>
+
+<p><span class="SimpleMath">H^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)</span> .</p>
+
+<p><a id="X80F6FD3E7C7E4E8D" name="X80F6FD3E7C7E4E8D"></a></p>
+
+<h4>7.10 <span class="Heading">Transfer Homomorphism</span></h4>
+
+<p>Consider the action of the symmetric group <span class="SimpleMath">G=S_5</span> on <span class="SimpleMath">A= Z^5</span> which permutes the canonical basis. The action restricts to the sylow <span class="SimpleMath">2</span>-subgroup <span class="SimpleMath">P=Syl_2(G)</span>. The following commands compute the cohomology transfer homomorphism <span class="SimpleMath">t^4: H^4(P,A) → H^4(S_5,A)</span> and determine its kernel and image. The integral homology transfer <span class="SimpleMath">t_4: H_4(S_5, Z) → H_5(P, Z)</span> is also computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=SylowSubgroup(G,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tr:=TransferCochainMap(R,P,A);</span>
+Cochain Map between complexes of length 5 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t4:=Cohomology(tr,4);</span>
+[ g1, g2, g3, g4 ] -&gt; [ id, g1, g2, g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Kernel(t4));</span>
+"C2 x C2"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Image(t4));</span>
+"C4 x C2"
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tr:=TransferChainMap(R,P);</span>
+Chain Map between complexes of length 5 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(tr,4);</span>
+[ g1 ] -&gt; [ g1 ]
+
+</pre></div>
+
+<p><a id="X79B1406C803FF178" name="X79B1406C803FF178"></a></p>
+
+<h4>7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+</span></h4>
+
+<p>A <em>spherical 3-manifold</em> is a 3-manifold arising as the quotient <span class="SimpleMath">S^3/Γ</span> of the 3-sphere <span class="SimpleMath">S^3</span> by a finite subgroup <span class="SimpleMath">Γ</span> of <span class="SimpleMath">SO(4)</span> acting freely as rotations. The geometrization conjecture, proved by Grigori Perelman, implies that every closed connected 3-manifold with a finite fundamental group is homeomorphic to a spherical 3-manifold.</p>
+
+<p>A spherical 3-manifold <span class="SimpleMath">S^3/Γ</span> has finite fundamental group isomorphic to <span class="SimpleMath">Γ</span>. This fundamental group is one of:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">Γ=C_m=⟨ x | x^m⟩</span> (<strong class="button">cyclic fundamental group</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | xyx^-1=y^-1, x^2^k=y^n ⟩</span> for integers <span class="SimpleMath">k, m≥ 1, n≥ 2</span> and <span class="SimpleMath">m</span> coprime to <span class="SimpleMath">2n</span> (<strong class="button">prism manifold case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ= C_m× ⟨ x,y, z | (xy)^2=x^2=y^2, zxz^-1=y, zyz^-1=xy, z^3^k=1⟩</span> for integers <span class="SimpleMath">k,m≥ 1</span> and <span class="SimpleMath">m</span> coprime to 6 (<strong class="button">tetrahedral case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m×⟨ x,y | (xy)^2=x^3=y^4⟩</span> for <span class="SimpleMath">m≥ 1</span> coprime to 6 (<strong class="button">octahedral case</strong>)</p>
+
+</li>
+<li><p><span class="SimpleMath">Γ=C_m× ⟨ x,y | (xy)^2=x^3=y^5⟩</span> for <span class="SimpleMath">m≥ 1</span> coprime to 30 (<strong class="button">icosahedral case</strong>).</p>
+
+</li>
+</ul>
+<p>This list of cases is taken from the <span class="URL"><a href="https://en.wikipedia.org/wiki/Spherical_3-manifold">Wikipedia pages</a></span>. The group <span class="SimpleMath">Γ</span> has periodic cohomology since it acts on a sphere. The cyclic group has period 2 and in the other four cases it has period 4. (Recall that in general a finite group <span class="SimpleMath">G</span> has <em>periodic cohomology of period <span class="SimpleMath">n</span></em> if there is an element <span class="SimpleMath">u∈ H^n(G, Z)</span> such that the cup product <span class="SimpleMath">- ∪ u: H^k(G, Z) → H^k+n(G, Z)</span> is an isomorphism for all <span class="SimpleMath">k≥ 1</span>. It can be shown that <span class="SimpleMath">G</span> has periodic cohomology of period <span class="SimpleMath">n</span> if and only if <span class="SimpleMath">H^n(G, Z)= Z_|G|</span>.)</p>
+
+<p>The cohomology of the cyclic group is well-known, and the cohomology of a direct product can be obtained from that of the factors using the Kunneth formula.</p>
+
+<p>In the icosahedral case with <span class="SimpleMath">m=1</span> the following commands yield $$H^\ast(\Gamma,\mathbb Z)=Z[t]/(120t=0)$$ with generator <span class="SimpleMath">t</span> of degree 4. The final command demonstrates that a periodic resolution is used in the computation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(2);;x:=F.1;;y:=F.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-3, x^3*y^-5];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+120
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSmallGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=0;;Cohomology(HomToIntegers(R),n);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 120 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],k-&gt;R!.dimension(k));</span>
+[ 1, 2, 2, 1, 1, 2 ]
+
+</pre></div>
+
+<p>In the octahedral case with <span class="SimpleMath">m=1</span> we obtain $$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=24t, 2s=0, 48t=0)$$ where <span class="SimpleMath">s</span> has degree 2 and <span class="SimpleMath">t</span> has degree 4, from the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(2);;x:=F.1;;y:=F.2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-3, x^3*y^-4];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+48
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=0;;Cohomology(HomToIntegers(R),n);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 48 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntegralCupProduct(R,[1],[1],2,2);</span>
+[ 24 ]
+
+</pre></div>
+
+<p>In the tetrahedral case with <span class="SimpleMath">m=1</span> we obtain $$H^\ast(\Gamma,\mathbb Z) = \mathbb Z[s,t]/(s^2=16t, 3s=0, 24t=0)$$ where <span class="SimpleMath">s</span> has degree 2 and <span class="SimpleMath">t</span> has degree 4, from the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FreeGroup(3);;x:=F.1;;y:=F.2;;z:=F.3;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=F/[(x*y)^2*x^-2, x^2*y^-2, z*x*z^-1*y^-1, z*y*z^-1*y^-1*x^-1,z^3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(G);</span>
+24
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 24 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntegralCupProduct(R,[1],[1],2,2);</span>
+[ 16 ]
+
+</pre></div>
+
+<p>A theoretical calculation of the integral and mod-p cohomology rings of all of these fundamental groups of spherical 3-manifolds is given in <a href="chapBib.html#biBtomoda">[TZ08]</a>.</p>
+
+<p><a id="X833A19F0791C3B06" name="X833A19F0791C3B06"></a></p>
+
+<h4>7.12 <span class="Heading">Explicit cocycles </span></h4>
+
+<p>Given a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> and a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span>, one defines an <em><span class="SimpleMath">n</span>-cocycle</em> to be a <span class="SimpleMath">ZG</span>-homomorphism <span class="SimpleMath">f: R_n → A</span> for which the composite homomorphism <span class="SimpleMath">fd_n+1: R_n+1→ A</span> is zero. If <span class="SimpleMath">R_∗</span> happens to be the standard bar resolution (i.e. the cellular chain complex of the nerve of the group <span class="SimpleMath">G</span> considered as a one object category) then the free <span class="SimpleMath">ZG</span>-generators of <span class="SimpleMath">R_n</span> are indexed by <span class="SimpleMath">n</span>-tuples <span class="SimpleMath">(g_1 | g_2 | ... | g_n)</span> of elements <span class="SimpleMath">g_i</span> in <span class="SimpleMath">G</span>. In this case we say that the <span class="SimpleMath">n</span>-cocycle is a <em>standard n-cocycle</em> and we think of it as a set-theoretic function</p>
+
+<p><span class="SimpleMath">f : G × G × ⋯ × G ⟶ A</span></p>
+
+<p>satisfying a certain algebraic cocycle condition. Bearing in mind that a standard <span class="SimpleMath">n</span>-cocycle really just assigns an element <span class="SimpleMath">f(g_1, ... ,g_n) ∈ A</span> to an <span class="SimpleMath">n</span>-simplex in the nerve of <span class="SimpleMath">G</span> , the cocycle condition is a very natural one which states that <em><span class="SimpleMath">f</span> must vanish on the boundary of a certain <span class="SimpleMath">(n+1)</span>-simplex</em>. For <span class="SimpleMath">n=2</span> the condition is that a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f(g_1,g_2)</span> must satisfy</p>
+
+<p><span class="SimpleMath">g.f(h,k) + f(g,hk) = f(gh,k) + f(g,h)</span></p>
+
+<p>for all <span class="SimpleMath">g,h,k ∈ G</span>. This equation is explained by the following picture.</p>
+
+<p><img src="images/cocycle.png" align="center" height="200" alt="2-cocycle equation"/></p>
+
+<p>The definition of a cocycle clearly depends on the choice of <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span>. However, the cohomology group <span class="SimpleMath">H^n(G,A)</span>, which is a group of equivalence classes of <span class="SimpleMath">n</span>-cocycles, is independent of the choice of <span class="SimpleMath">R_∗</span>.</p>
+
+<p>There are some occasions when one needs explicit examples of standard cocycles. For instance:</p>
+
+
+<ul>
+<li><p>Let <span class="SimpleMath">G</span> be a finite group and <span class="SimpleMath">k</span> a field of characteristic <span class="SimpleMath">0</span>. The group algebra <span class="SimpleMath">k(G)</span>, and the algebra <span class="SimpleMath">F(G)</span> of functions <span class="SimpleMath">d_g: G→ k, h→ d_g,h</span>, are both Hopf algebras. The tensor product <span class="SimpleMath">F(G) ⊗ k(G)</span> also admits a Hopf algebra structure known as the quantum double <span class="SimpleMath">D(G)</span>. A twisted quantum double <span class="SimpleMath">D_f(G)</span> was introduced by R. Dijkraaf, V. Pasquier &amp; P. Roche <a href="chapBib.html#biBdpr">[DPR91]</a>. The twisted double is a quasi-Hopf algebra depending on a <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f: G× G× G→ k</span>. The multiplication is given by <span class="SimpleMath">(d_g ⊗ x)(d_h ⊗ y) = d_gx,xhβ_g(x,y)(d_g ⊗ xy)</span> where <span class="SimpleMath">β_a</span> is defined by <span class="SimpleMath">β_a(h,g) = f(a,h,g) f(h,h^-1ah,g)^-1 f(h,g,(hg)^-1ahg)</span> . Although the algebraic structure of <span class="SimpleMath">D_f(G)</span> depends very much on the particular <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f</span>, representation-theoretic properties of <span class="SimpleMath">D_f(G)</span> depend only on the cohomology class of <span class="SimpleMath">f</span>.</p>
+
+</li>
+<li><p>An explicit <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> is needed to construct the multiplication <span class="SimpleMath">(a,g)(a',g') = (a + g⋅ a' + f(g,g'), gg')</span> in the extension a group <span class="SimpleMath">G</span> by a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> determined by the cohomology class of <span class="SimpleMath">f</span> in <span class="SimpleMath">H^2(G,A)</span>. See <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.6</span></a>.</p>
+
+</li>
+<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.7</span></a>.</p>
+
+</li>
+</ul>
+<p>Given a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span> (with contracting homotopy) and a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> one can use HAP commands to compute explicit standard <span class="SimpleMath">n</span>-cocycles <span class="SimpleMath">f: G^n → A</span>. With the twisted quantum double in mind, we illustrate the computation for <span class="SimpleMath">n=3</span>, <span class="SimpleMath">G=S_3</span>, and <span class="SimpleMath">A=U(1)</span> the group of complex numbers of modulus <span class="SimpleMath">1</span> with trivial <span class="SimpleMath">G</span>-action.</p>
+
+<p>We first compute a <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗</span>. The Universal Coefficient Theorem gives an isomorphism <span class="SimpleMath">H_3(G,U(1)) = Hom_ Z(H_3(G, Z), U(1))</span>, The multiplicative group <span class="SimpleMath">U(1)</span> can thus be viewed as <span class="SimpleMath">Z_m</span> where <span class="SimpleMath">m</span> is a multiple of the exponent of <span class="SimpleMath">H_3(G, Z)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TR:=TensorWithIntegers(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TR,3);</span>
+[ 6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R!.dimension(3);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R!.dimension(4);</span>
+5
+
+</pre></div>
+
+<p>We thus replace the very infinite group U(1) by the finite cyclic group <span class="SimpleMath">Z_6</span>. Since the resolution <span class="SimpleMath">R_∗</span> has <span class="SimpleMath">4</span> generators in degree <span class="SimpleMath">3</span>, a homomorphism <span class="SimpleMath">f: R^3→ U(1)</span> can be represented by a list <span class="SimpleMath">f=[f_1, f_2, f_3, f_4]</span> with <span class="SimpleMath">f_i</span> the image in <span class="SimpleMath">Z_6</span> of the <span class="SimpleMath">i</span>th generator. The cocycle condition on <span class="SimpleMath">f</span> can be expressed as a matrix equation</p>
+
+<p><span class="SimpleMath">Mf^t = 0 mod 6</span>.</p>
+
+<p>where the matrix <span class="SimpleMath">M</span> is obtained from the following command and <span class="SimpleMath">f^t</span> denotes the transpose.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=CocycleCondition(R,3);;</span>
+
+</pre></div>
+
+<p>A particular cocycle <span class="SimpleMath">f=[f_1, f_2, f_3, f_4]</span> can be obtained by choosing a solution to the equation Mf^t=0.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SolutionsMod2:=NullspaceModQ(TransposedMat(M),2);</span>
+[ [ 0, 0, 0, 0 ], [ 0, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 1, 1 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SolutionsMod3:=NullspaceModQ(TransposedMat(M),3);</span>
+[ [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 2 ], [ 0, 0, 1, 0 ],
+  [ 0, 0, 1, 1 ], [ 0, 0, 1, 2 ], [ 0, 0, 2, 0 ], [ 0, 0, 2, 1 ],
+  [ 0, 0, 2, 2 ] ]
+
+</pre></div>
+
+<p>A non-standard <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f</span> can be converted to a standard one using the command <code class="code">StandardCocycle(R,f,n,q)</code> . This command inputs <span class="SimpleMath">R_∗</span>, integers <span class="SimpleMath">n</span> and <span class="SimpleMath">q</span>, and an <span class="SimpleMath">n</span>-cocycle <span class="SimpleMath">f</span> for the resolution <span class="SimpleMath">R_∗</span>. It returns a standard cocycle <span class="SimpleMath">G^n → Z_q</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=3*SolutionsMod2[3] - SolutionsMod3[5];   #An example solution to Mf=0 mod 6.</span>
+[ 3, 3, -1, -1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Standard_f:=StandardCocycle(R,f,3,6);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(G); h:=Random(G); k:=Random(G);</span>
+(1,2)
+(1,3,2)
+(1,3)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Standard_f(g,h,k);</span>
+3
+
+</pre></div>
+
+<p>A function <span class="SimpleMath">f: G× G× G → A</span> is a standard <span class="SimpleMath">3</span>-cocycle if and only if</p>
+
+<p><span class="SimpleMath">g⋅ f(h,k,l) - f(gh,k,l) + f(g,hk,l) - f(g,h,kl) + f(g,h,k) = 0</span></p>
+
+<p>for all <span class="SimpleMath">g,h,k,l ∈ G</span>. In the above example the group <span class="SimpleMath">G=S_3</span> acts trivially on <span class="SimpleMath">A=Z_6</span>. The following commands show that the standard <span class="SimpleMath">3</span>-cocycle produced in the example really does satisfy this <span class="SimpleMath">3</span>-cocycle condition.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sf:=Standard_f;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Test:=function(g,h,k,l);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function( g, h, k, l ) ... end
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for g in G do for h in G do for k in G do for l in G do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(Test(g,h,k,l),",");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;od;od;</span>
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,6,0,0,6,
+0,0,0,0,0,6,6,6,0,6,0,12,12,6,12,6,0,12,6,0,6,6,0,0,0,0,0,0,0,12,12,6,6,6,0,
+6,6,0,6,6,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,
+0,6,0,0,6,6,6,0,0,0,0,0,0,0,-6,0,0,-6,0,-6,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,
+0,0,0,6,6,6,0,0,0,6,6,6,0,0,0,0,-6,0,6,6,0,0,0,0,0,0,0,12,6,6,0,6,0,0,0,0,12,
+6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,0,6,0,0,0,0,0,6,6,
+6,0,0,0,6,12,6,6,0,0,0,-6,0,0,6,0,0,0,0,0,0,0,12,12,6,6,6,0,0,0,0,6,6,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+6,6,0,6,6,0,12,12,6,12,12,0,0,0,0,0,0,0,6,6,0,0,0,0,6,6,6,12,12,0,-6,-6,0,0,
+0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,
+0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,6,6,0,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,-6,0,6,0,6,0,6,0,0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,
+0,0,0,0,0,0,12,12,6,12,12,0,6,6,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,
+0,0,0,0,0,0,6,0,0,6,6,0,6,6,0,6,0,0,6,6,6,0,0,0,-6,0,0,0,-6,0,0,-6,0,-6,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,6,0,0,0,0,0,0,0,6,6,0,0,0,
+0,0,0,0,6,6,0,-6,0,0,-6,0,0,12,6,0,-6,-6,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,-6,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,6,12,0,6,0,0,6,0,0,0,6,0,0,0,0,0,0,
+0,6,12,0,0,0,0,0,0,0,6,6,0,-6,-6,0,0,0,0,0,0,0,0,6,0,0,6,0,6,6,0,0,0,0,0,0,0,
+6,0,0,0,6,0,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,
+0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,6,6,0,6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,
+6,6,0,6,6,6,12,12,0,0,0,0,0,0,0,6,6,0,0,6,0,0,6,0,6,6,
+
+</pre></div>
+
+<p><a id="X7C5233E27D2D603E" name="X7C5233E27D2D603E"></a></p>
+
+<h4>7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></h4>
+
+<p>Let <span class="SimpleMath">G</span> be a finite group with order divisible by prime <span class="SimpleMath">p</span>. Let <span class="SimpleMath">mathcal A=mathcal A_p(G)</span> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>. The group <span class="SimpleMath">G</span> acts on <span class="SimpleMath">mathcal A</span>. Denote the orbit of a <span class="SimpleMath">k</span>-simplex <span class="SimpleMath">e^k</span> by <span class="SimpleMath">[e^k]</span>, and the stabilizer of <span class="SimpleMath">e^k</span> by <span class="SimpleMath">Stab(e^k) ≤ G</span>. For a finite abelian group <span class="SimpleMath">H</span> let <span class="SimpleMath">H_p</span> denote the Sylow <span class="SimpleMath">p</span>-subgroup or the "<span class="SimpleMath">p</span>-part". Peter Webb proved the following.</p>
+
+<p><strong class="button">Theorem.</strong>[Peter Webb] For any <span class="SimpleMath">G</span>-module <span class="SimpleMath">M</span> there is a (non natural) homomorphism</p>
+
+<p><span class="SimpleMath">H_n(G,M)_p ⊕ ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p</span></p>
+
+<p>for <span class="SimpleMath">n≥ 0</span>. The isomorphism can also be expressed as</p>
+
+<p><span class="SimpleMath">H_n(G,M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p - ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p</span> and terms can often be cancelled.</p>
+
+<p>Thus the additive structure of the <span class="SimpleMath">p</span>-part of the homology of <span class="SimpleMath">G</span> is determined by that of the stabilizer groups. The result also holds with homology replaced by cohomology.</p>
+
+<p><strong class="button">Illustration 1</strong></p>
+
+<p>As an illustration of the theorem, the following commands calculate</p>
+
+<p><span class="SimpleMath">H_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(S_i,M)_3 - ⨁_4≤ i≤ 5H_n(S_4,M)_3</span></p>
+
+<p>for the Mathieu simple group <span class="SimpleMath">M_12</span> of order <span class="SimpleMath">95040</span>, where</p>
+
+<p><span class="SimpleMath">S_1≅ S_3=(((C_3 × C_3) : Q_8) : C_3) : C_2</span></p>
+
+<p><span class="SimpleMath">S_2=A_4 × S_3</span></p>
+
+<p><span class="SimpleMath">S_4=C_3 × S_3</span></p>
+
+<p><span class="SimpleMath">S_5=((C_3 × C_3) : C_3) : (C_2 × C_2)</span> \ .</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);</span>
+[ "(((C3 x C3) : Q8) : C3) : C2", "A4 x S3", "(((C3 x C3) : Q8) : C3) : C2" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[2],StructureDescription);</span>
+[ "C3 x S3", "((C3 x C3) : C3) : (C2 x C2)" ]
+
+</pre></div>
+
+<p><strong class="button">Illustration 2</strong></p>
+
+<p>As a second illustration, the following commands show that <span class="SimpleMath">H_n(M_23,M)_p</span> is periodic for primes <span class="SimpleMath">p=5, 7, 11, 23</span> of periods dividing <span class="SimpleMath">8, 6, 10, 22</span> respectively.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(Order(G));</span>
+[ 2, 2, 2, 2, 2, 2, 2, 3, 3, 5, 7, 11, 23 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sd:=StructureDescription;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C15 : C4" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+8
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C2 x (C7 : C3)" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+6
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C11 : C5" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+10
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],sd);List(D[2],sd);</span>
+[ "C23 : C11" ]
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodic(D[1][1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
+22
+
+</pre></div>
+
+<p>The order <span class="SimpleMath">|M_23|=10200960</span> is divisible by primes <span class="SimpleMath">p=2, 3, 5, 7, 11, 23</span>. For <span class="SimpleMath">p=3</span> the following commands establish that the Poincare series</p>
+
+<p><span class="SimpleMath">(x^16 - 2x^15</span> <span class="SimpleMath">+ 3x^14 - 4x^13</span> <span class="SimpleMath">+ 4x^12 - 4x^11</span> <span class="SimpleMath">+ 4x^10 - 3x^9</span> <span class="SimpleMath">+ 3x^8 - 3x^7 +</span> <span class="SimpleMath">4x^6 - 4x^5</span> <span class="SimpleMath">+ 4x^4 -4x^3</span> <span class="SimpleMath">+ 3x^2 -2x + 1) /</span> <span class="SimpleMath">(x^18 - 2x^17</span> <span class="SimpleMath">+ 3x^16 - 4x^15</span> <span class="SimpleMath">+ 4x^14 -</span> <span class="SimpleMath">4x^13 + 4x^12</span> <span class="SimpleMath">- 4x^11 + 4x^10</span> <span class="SimpleMath">- 4x^9 + 4x^8</span> <span class="SimpleMath">- 4x^7 + 4x^6</span> <span class="SimpleMath">- 4x^5 + 4x^4</span> <span class="SimpleMath">- 4x^3 +</span> <span class="SimpleMath">3x^2 - 2x + 1)</span></p>
+
+<p>describes the dimension of the vector space <span class="SimpleMath">H^n(M_23, Z_3)</span> up to at least degree <span class="SimpleMath">n=40</span>. To prove that it describes the dimension in all degrees one would need to verify "completion criteria".</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);</span>
+[ "(C3 x C3) : QD16", "A5 : S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[2],StructureDescription);</span>
+[ "S3 x S3" ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1:=PoincareSeriesPrimePart(D[1][1],3,40);</span>
+(x_1^16-2*x_1^15+3*x_1^14-4*x_1^13+4*x_1^12-4*x_1^11+4*x_1^10-3*x_1^9+3*x_1^8-3*x_1^7+4*x_1^6-4*x_1^5+\
+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)/(x_1^18-2*x_1^17+3*x_1^16-4*x_1^15+4*x_1^14-4*x_1^13+4*x_1^12-4*x_1^1\
+1+4*x_1^10-4*x_1^9+4*x_1^8-4*x_1^7+4*x_1^6-4*x_1^5+4*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2:=PoincareSeriesPrimePart(D[1][2],3,40);</span>
+(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P3:=PoincareSeriesPrimePart(D[2][1],3,40);</span>
+(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
+
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
