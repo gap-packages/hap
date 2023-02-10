@@ -232,8 +232,7 @@ NS:=arg[2];
 fi;
 
 ConvertToMatrixRepNC(B,prime); 
-B:=MutableCopyMat(B);
-heads:=SemiEchelonMatDestructive(B).heads;
+heads:=SemiEchelonMat(B).heads;
 ln:=Length(B[1]);
 BC:=[];
 

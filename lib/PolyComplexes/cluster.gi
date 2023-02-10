@@ -298,7 +298,7 @@ fi;
 M:=G!.pathComponents;
 c:=n-Length(G!.singletons)+1;
 A:=Filtered(M,row->c in row);
-A:=MutableCopyMat(TransposedMat(A));
+A:=TransposedMatMutable(A);
 A:=Filtered(A,row->c in row);
 for i in [1..Length(A)] do
 for j in [1..Length(A)] do
@@ -709,8 +709,7 @@ F:=Filtered([1..Length(S)],i->A[i]<=p);
 
 B:=StructuralCopy(S);
 B:=B{F};
-B:=TransposedMat(B);
-B:=MutableCopyMat(B);
+B:=TransposedMatMutable(B);
 B:=B{F};
 
 return B;

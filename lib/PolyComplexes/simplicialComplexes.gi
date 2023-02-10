@@ -818,9 +818,9 @@ ContractGraph(G);
 
 #Now create the correct number of path components.
 A:=Filtered(A,v->not IsZero(v));
-A:=TransposedMat(A);
+A:=TransposedMatMutable(A);
 A:=Filtered(A,v->not IsZero(v));
-G!.incidenceMatrix:=MutableCopyMat(A);
+G!.incidenceMatrix:=A;
 PC:=PC-PathComponentsOfGraph(G,0);
 
 if Length(A)>0 then row:=0*A[1]; 
@@ -829,7 +829,7 @@ for i in [1..PC] do
 Add(A,0*row);
 Add(G!.singletons,Length(A));
 od;
-A:=MutableCopyMat(TransposedMat(A));
+A:=TransposedMatMutable(A);
 for i in [1..PC] do
 Add(A,0*A[1]);
 od;
@@ -841,7 +841,7 @@ for i in [1..PC] do
 Add(A,0*row);
 Add(G!.singletons,Length(A));
 od;
-A:=MutableCopyMat(TransposedMat(A));
+A:=TransposedMatMutable(A);
 for i in [1..PC-1] do #WHY PC-1???
 Add(A,0*A[1]);
 od;

@@ -276,8 +276,7 @@ NS:=StructuralCopy(arg[2]);
 fi;
 
 ConvertToMatrixRepNC(B,prime);
-B:=MutableCopyMat(B);
-heads:=SemiEchelonMatDestructive(B).heads;
+heads:=SemiEchelonMat(B).heads;
 ln:=Length(B[1]);
 BC:=[];
 
@@ -442,7 +441,7 @@ A:=[];
 B:=[];
 
 for w in M!.matrix do
-v:=MutableCopyMat([w])[1];
+v:=ShallowCopy(w);
 while Length(v)<M!.ambientDimension + N!.ambientDimension do
 Add(v,zero);
 od;
@@ -450,7 +449,7 @@ Add(A,v);
 od;
 
 for w in N!.matrix do
-v:=Reversed(MutableCopyMat([w])[1]);
+v:=Reversed(w);
 while Length(v)<M!.ambientDimension + N!.ambientDimension do
 Add(v,zero);
 od;
