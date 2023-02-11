@@ -62,10 +62,10 @@ od;
 
 nicbas1:=BasisNC(A,List(nicbas,x->x[1]));
 basA:=Basis(A);
-nicbas1Mat:=List(nicbas1,v->MutableCopyMat(Coefficients(basA,v)));
-basAcoeffs:=List(basA,x->MutableCopyMat(Coefficients(basA,x)));
+nicbas1Mat:=MutableCopyMat(List(nicbas1,v->Coefficients(basA,v)));
+basAcoeffs:=MutableCopyMat(List(basA,x->Coefficients(basA,x)));
 #Coeff:=List(basA,v->Coefficients(nicbas1,v));
-Coeff:=SolutionsMatDestructive(StructuralCopy(nicbas1Mat),basAcoeffs);
+Coeff:=SolutionsMatDestructive(nicbas1Mat,basAcoeffs);
 Apply(Coeff,v->List(v,x->IntFFE(x)));
 
 Apply(nicbas,x->x[2]);
