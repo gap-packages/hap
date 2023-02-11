@@ -163,11 +163,11 @@ fi;
 
 Ncoeffs:=NumeratorOfRationalFunction(p);
 Ncoeffs:=CoefficientsOfUnivariatePolynomial(Ncoeffs);
-Ncoeffs:=MutableCopyMat([Ncoeffs])[1];
+Ncoeffs:=ShallowCopy(Ncoeffs);
 
 Dcoeffs:=DenominatorOfRationalFunction(p);
 Dcoeffs:=CoefficientsOfUnivariatePolynomial(Dcoeffs);
-Dcoeffs:=MutableCopyMat([Dcoeffs])[1];
+Dcoeffs:=ShallowCopy(Dcoeffs);
 
 #for k in [1..deg-Length(Ncoeffs)+1] do
 for k in [1..deg+2] do

@@ -629,7 +629,7 @@ InstallGlobalFunction(BarCode,
 function(P)
 local PT,B,newrow,cols,rows,i,j,k,m;
 
-PT:=MutableCopyMat(TransposedMat(P));
+PT:=TransposedMatMutable(P);
 Add(PT,PT[1]*0);
 PT:=TransposedMat(PT);
 PT:=Concatenation([PT[1]*0],PT);
