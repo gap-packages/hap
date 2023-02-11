@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.50",
-  Date    := "02/02/2023",
+  Version := "1.51",
+  Date    := "11/02/2023",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -107,7 +107,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "Loading HAP ",
                             String( ~.Version ), " ...\n" ),
 
-TestFile :=  "tst/testall.g",
+TestFile :=  "tst/testquick.g",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities", "CW complex", "simplicial complex", "cubical complex", "permutahedral complex", "knots", "nonabelian tensor", "nonabelian exterior", "covering space" ]
