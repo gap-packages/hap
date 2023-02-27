@@ -49,6 +49,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7B425A3280A2AF07">4.8 <span class="Heading">Finite fundamental groups of <span class="SimpleMath">\(3\)</span>-manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X78912D227D753167">4.9 <span class="Heading">Poincare's cube manifolds</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X8761051F84C6CEC2">4.10 <span class="Heading">There are (at least) 25 distinct cube manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -413,22 +419,13 @@ Regular CW-complex of dimension 3
 
 </pre></div>
 
-<p>By construction the space <span class="SimpleMath">\(\widetilde W\)</span> is a manifold. Had we not known how the regular CW-complex <span class="SimpleMath">\(\widetilde W\)</span> had been constructed then we could prove that it is a closed <span class="SimpleMath">\(3\)</span>-manifold by creating its barycentric subdivision <span class="SimpleMath">\(K=sd\widetilde W\)</span>, which is homeomorphic to <span class="SimpleMath">\(\widetilde W\)</span>, and verifying that the link of each vertex in the simplicial complex <span class="SimpleMath">\(sd\widetilde W\)</span> is a <span class="SimpleMath">\(2\)</span>-sphere. The following commands carry out this proof: each link is shown to admit a discrete vector field with precisely two critical cells -- one <span class="SimpleMath">\(0\)</span>-cell and one <span class="SimpleMath">\(2\)</span>-cell.</p>
+<p>By construction the space <span class="SimpleMath">\(\widetilde W\)</span> is a manifold. Had we not known how the regular CW-complex <span class="SimpleMath">\(\widetilde W\)</span> had been constructed then we could prove that it is a closed <span class="SimpleMath">\(3\)</span>-manifold by creating its barycentric subdivision <span class="SimpleMath">\(K=sd\widetilde W\)</span>, which is homeomorphic to <span class="SimpleMath">\(\widetilde W\)</span>, and verifying that the link of each vertex in the simplicial complex <span class="SimpleMath">\(sd\widetilde W\)</span> is a <span class="SimpleMath">\(2\)</span>-sphere. The following command carries out this proof.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BarycentricSubdivision(Wtilde);</span>
-Simplicial complex of dimension 3.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Wtilde);</span>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for v in K!.vertices do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L,CriticalCells(RegularCWComplex(VertexLink(K,v))));</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList(List(L,Size));</span>
-[ 2 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Concatenation(L);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList(List(C,x-&gt;x[1]));</span>
-[ 0, 2 ]
+true
 
 </pre></div>
 
@@ -477,6 +474,153 @@ H_n(G,\mathbb Z) = \left\{ \begin{array}{ll}
 \]</p>
 
 <p>for <span class="SimpleMath">\(n &gt; 0\)</span>.</p>
+
+<p><a id="X78912D227D753167" name="X78912D227D753167"></a></p>
+
+<h4>4.9 <span class="Heading">Poincare's cube manifolds</span></h4>
+
+<p>In his seminal paper on "Analysis situs", published in 1895, Poincare constructed a series of closed 3-manifolds which played an important role in the development of his theory. A good account of these manifolds is given in the online <span class="URL"><a href="http://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds">Manifold Atlas Project (MAP)</a></span>. Most of his examples are constructed by identifications on the faces of a (solid) cube. The function <code class="code">PoincareCubeCWComplex()</code> can be used to construct any 3-dimensional CW-complex arising from a cube by identifying the six faces pairwise; the vertices and faces of the cube are numbered as follows</p>
+
+<p><img src="images/pcube.png" align="center" height="200" alt="cube"/></p>
+
+<p>and barycentric subdivision is used to ensure that the quotient is represented as a regular CW-complex.</p>
+
+<p>Examples 3 and 4 from Poincare's paper, described in the following figures taken from <span class="URL"><a href="http://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds">MAP</a></span>,</p>
+
+<p><img src="images/Poincares_cube_manifolds3.png" align="center" width="250" alt="cube manifold"/> <img src="images/Poincares_cube_manifolds5.png" align="center" width="250" alt="cube manifold"/></p>
+
+<p>are constructed in the following example. Both are checked to be orientable manifolds, and are shown to have different homology. (Note that the second example in Poincare's paper is not a manifold -- the links of some of its vertices are not homeomorphic to a 2-sphere.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=1;;C:=2;;D:=3;;B:=4;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ap:=5;;Cp:=6;;Dp:=7;;Bp:=8;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[[A,B,D,C],[Bp,Dp,Cp,Ap]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[[A,B,Bp,Ap],[Cp,C,D,Dp]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[[A,C,Cp,Ap],[D,Dp,Bp,B]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ex3:=PoincareCubeCWComplex(L,M,N);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Ex3);</span>
+
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[[A,B,D,C],[Bp,Dp,Cp,Ap]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[[A,B,Bp,Ap],[C,D,Dp,Cp]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[[A,C,Cp,Ap],[B,D,Dp,Bp]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ex4:=PoincareCubeCWComplex(L,M,N);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Ex4);</span>
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],k-&gt;Homology(Ex3,k));</span>
+[ [ 0 ], [ 2, 2 ], [  ], [ 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],k-&gt;Homology(Ex4,k));</span>
+[ [ 0 ], [ 2, 0 ], [ 0 ], [ 0 ] ]
+
+</pre></div>
+
+<p><a id="X8761051F84C6CEC2" name="X8761051F84C6CEC2"></a></p>
+
+<h4>4.10 <span class="Heading">There are (at least) 25 distinct cube manifolds</span></h4>
+
+<p>The function <code class="code">PoincareCubeCWComplex(A,G)</code> can also be applied to two inputs where <span class="SimpleMath">\(A\)</span> is a pairing of the six faces such as <span class="SimpleMath">\(A=[[1,2],[3,4],[5,6]]\)</span> and <span class="SimpleMath">\(G\)</span> is a list of three elements of the dihedral group of order <span class="SimpleMath">\(8\)</span> such as <span class="SimpleMath">\(G=[(2,4),(2,4),(2,4)*(1,3)]\)</span>. The dihedral elements specify how each pair of faces are glued together. With these inputs it is easy to iterate over all possible values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> in order to construct all possible 3-manifolds arising from the pairwise identification of faces of a cube. Distinct values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> can of course yield homeomorphic spaces. To ensure that each possible cube manifold is constructed, at least once, up to homeomorphism it suffices to consider</p>
+
+<p><span class="SimpleMath">\(A=[ [1,2], [3,4], [5,6] ]\)</span>, <span class="SimpleMath">\(A=[ [1,2], [3,5], [4,6] ]\)</span>, <span class="SimpleMath">\(A=[ [1,4], [2,6], [3,5] ]\)</span></p>
+
+<p>and all <span class="SimpleMath">\(G\)</span> in <span class="SimpleMath">\(D_8\times D_8\times D_8\)</span>.</p>
+
+<p>The following commands iterate through these <span class="SimpleMath">\(3\times8^3 = 1536\)</span> pairs <span class="SimpleMath">\((A,G)\)</span> and show that in precisely 163 cases (just over 10% of cases) the quotient CW-complex is a 3-manifold.</p>
+
+
+<div class="example"><pre>
+A1:= [ [1,2], [3,4], [5,6] ];
+A2:=[ [1,2], [3,5], [4,6] ];
+A3:=[ [1,4], [2,6], [3,5] ];
+D8:=DihedralGroup(IsPermGroup,8);
+
+Manifolds:=[];
+for A in [A1,A2,A3] do
+for x in D8 do
+for y in D8 do
+for z in D8 do
+G:=[x,y,z];
+F:=PoincareCubeCWComplex(A,G);
+b:=IsClosedManifold(F);
+if b=true then Add(Manifolds,F); fi;
+od;od;od;od;
+
+Size(Manifolds);
+163
+
+</pre></div>
+
+<p>The following additional commands use integral homology and low index subgroups of fundamental groups to establish that the 163 cubes manifolds represent at least 25 distinct homotopy equivalence classes of manifolds. One homotopy class is represented by up to 40 of the manifolds, and at least four of the homotopy classes are each represented by a single manifold..</p>
+
+
+<div class="example"><pre>
+invariant1:=function(m);
+return List([1..3],k-&gt;Homology(m,k));
+end;;
+
+C:=Classify(M,invariant1);;
+
+invariant2:=function(m)
+local L;
+L:=FundamentalGroup(m);
+if GeneratorsOfGroup(L)= [] then return [];fi;
+L:=LowIndexSubgroupsFpGroup(L,10);
+L:=List(L,AbelianInvariants);
+L:=SortedList(L);
+return L;
+end;;
+
+D:=RefineClassification(C,invariant2);
+List(D,Size);
+[ 40, 2, 10, 15, 8, 6, 2, 6, 2, 5, 7, 1, 4, 11, 7, 7, 10, 4, 4, 2, 1, 3, 1, 
+  1, 4 ]
+
+</pre></div>
+
+<p>The next commands construct a list of 18 orientable cube manifolds and a list of 7 non-orientable cube manifolds.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=List(Manifolds,x-&gt;x[1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientablManifolds);</span>
+18
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(NonOrientablManifolds);</span>
+7
+
+</pre></div>
+
+<p>The next commands show that the 7 non-orientable cube manifolds all have infinite fundamental groups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(NonOrientablManifolds,m-&gt;IsFinite(FundamentalGroup(m)));</span>
+[ false, false, false, false, false, false, false ]
+
+</pre></div>
+
+<p>The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+          IsFinite(FundamentalGroup(m)));
+[ true, true, true, true, true, true, true, true, true ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+          StructureDescription(FundamentalGroup(m)));
+[ "Q8", "C2", "C4", "C3 : C4", "C12", "C8", "C14", "C6", "1" ]
+
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
