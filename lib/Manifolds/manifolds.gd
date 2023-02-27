@@ -17,3 +17,5 @@ DeclareGlobalFunction("LinkingFormHomotopyInvariant");
 DeclareGlobalFunction("HAP_Hurewicz1Cycles");
 DeclareGlobalFunction("HAP_HomeoLinkingForm");
 DeclareGlobalFunction("LinkingFormHomeomorphismInvariant");
+DeclareGlobalFunction("IsClosedManifold");
+DeclareGlobalFunction("PoincareCubeCWComplex");

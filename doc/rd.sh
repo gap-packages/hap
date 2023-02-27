@@ -58,7 +58,7 @@ included in directory "pkg/Hap$version/www" of this distribution).
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
 
-1. Change to the directory "pkg/Hap1.25/" .
+1. Change to the directory "pkg/Hap$version/" .
 2. Edit the file "compile" so that: PKGDIR is equal to the path to the
 directory "pkg" where your GAP packages are stored; GACDIR is equal to the
 path to the directory where the GAP compiler "gac" is stored.

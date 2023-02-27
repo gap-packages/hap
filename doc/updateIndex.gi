@@ -127,13 +127,17 @@ if Length(fn)>0 then
 fn[Length(fn)][Length(fn[Length(fn)])-1]:=' ';
 fi;
 fn:=Concatenation(fn);
-m:=ReplacedString(m,"</Description>",Concatenation("<P/><B>Examples:</B> ",fn,"\n</Description>\n"));
+NormalizeWhitespace(fn);
+m:=ReplacedString(m,"</Description>",Concatenation("<P/><B>Examples:</B> ",fn,"\n</Description>"));
+
 
 #adjust man section here ################
+#str[i]:=Concatenation("\n<ManSection>",m);
 str[i]:=Concatenation("<ManSection>",m);
 od;
 
 str:=Concatenation(str);
+#NormalizeWhitespace(str);   #FEB 2023
 out := OutputTextFile( file, false );;
 SetPrintFormattingStatus(out, false);
 PrintTo(out,str);

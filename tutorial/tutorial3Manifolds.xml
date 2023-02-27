@@ -217,7 +217,7 @@ By construction the space <M>\widetilde W</M> is a manifold.
 had been constructed then we could prove that it is a closed <M>3</M>-manifold by
 creating its barycentric subdivision <M>K=sd\widetilde W</M>, which is 
 homeomorphic to <M>\widetilde W</M>, and verifying that the link of each vertex in the simplicial complex <M>sd\widetilde W</M> is a <M>2</M>-sphere. 
-The following commands carry out this proof: each link is shown to admit a discrete vector field with precisely two critical cells -- one <M>0</M>-cell and one <M>2</M>-cell.
+The following command carries out this proof.
 
 <Example>
 <#Include SYSTEM "tutex/12.14.txt">
@@ -265,6 +265,76 @@ H_n(G,\mathbb Z) = \left\{ \begin{array}{ll}
 \end{array}\right.
 </Display>
 for <M>n &gt; 0</M>.
+</Section>
+
+<Section><Heading>Poincare's cube manifolds</Heading>
+In his seminal paper on "Analysis situs", published in 1895, Poincare constructed a series of closed 3-manifolds which played an important role in the development of his theory. A good account of these manifolds is given in the online <URL><Link>http://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds</Link><LinkText>Manifold Atlas Project (MAP)</LinkText>    </URL>. 
+Most of his examples are constructed by identifications on the faces of a (solid) cube. The function <Code>PoincareCubeCWComplex()</Code> can be used to construct any 3-dimensional CW-complex arising from a cube by identifying the six faces  pairwise; the vertices and faces of the cube are numbered
+as follows
+<P/>
+<Alt Only="HTML">&lt;img src="images/pcube.png" align="center" height="200" alt="cube"/>
+</Alt>
+
+<P/> 
+and barycentric subdivision is used to ensure that the quotient is represented as a regular CW-complex.   
+
+<P/>Examples 3 and 4 from Poincare's paper, described in the following figures taken from <URL><Link>http://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds</Link><LinkText>MAP</LinkText>    </URL>, 
+<P/>
+<Alt Only="HTML">&lt;img src="images/Poincares_cube_manifolds3.png" align="center" width="250" alt="cube manifold"/>
+&lt;img src="images/Poincares_cube_manifolds5.png" align="center" width="250" alt="cube manifold"/> </Alt>
+<P/>are constructed in the following example. Both are checked to be orientable manifolds, and are shown to have different homology. (Note that the second example in Poincare's paper is not a manifold -- the links of some of its
+ vertices are not homeomorphic to a 2-sphere.) 
+
+
+<Example>
+<#Include SYSTEM "tutex/12.17.txt">
+</Example>
+
+</Section>
+<Section><Heading>There are (at least) 25 distinct cube manifolds</Heading>
+The function <Code>PoincareCubeCWComplex(A,G)</Code>
+ can also be applied to two inputs  where <M>A</M> is a pairing of 
+the six faces such as <M>A=[[1,2],[3,4],[5,6]]</M> and <M>G</M> is a list of 
+three elements of the dihedral group of order <M>8</M> such as <M>G=[(2,4),(2,4),(2,4)*(1,3)]</M>. The dihedral elements specify how each pair of faces are glued together. With these
+inputs it is easy to iterate over all possible values of <M>A</M> and <M>G</M> 
+in order  to construct all possible 3-manifolds  arising from the pairwise
+identification of  faces of a cube.
+
+Distinct values of <M>A</M> and <M>G</M> can of course yield homeomorphic spaces. To ensure that each possible cube manifold is constructed, at least once, up to homeomorphism it suffices to consider
+<P/><M>A=[ [1,2], [3,4], [5,6] ]</M>,
+<M>A=[ [1,2], [3,5], [4,6] ]</M>,
+<M>A=[ [1,4], [2,6], [3,5] ]</M>
+<P/> and all <M>G</M> in <M>D_8\times D_8\times D_8</M>.  
+
+<P/>The following commands iterate through these <M>3\times8^3 = 1536</M> pairs 
+<M>(A,G)</M> and show that in precisely 163 cases (just over 10% of cases) the quotient CW-complex is a 3-manifold.
+
+<Example>
+<#Include SYSTEM "tutex/12.18.txt">
+</Example>
+
+The following additional commands use integral homology and low index subgroups of fundamental groups to establish that the 163 cubes manifolds represent at least 25 distinct homotopy equivalence classes of manifolds. One homotopy class is represented by up to 40 of the manifolds, and at least four of the homotopy classes are each represented by a single manifold.. 
+<Example>
+<#Include SYSTEM "tutex/12.19.txt">
+</Example>
+
+The next commands construct a list of 18 orientable cube manifolds and a list of 7 non-orientable cube manifolds.
+
+<Example>
+<#Include SYSTEM "tutex/12.20.txt">
+</Example>
+
+The next commands show that the 7 non-orientable cube manifolds all have infinite fundamental groups.
+
+<Example>
+<#Include SYSTEM "tutex/12.21.txt">
+</Example>
+
+The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere).
+<Example>
+<#Include SYSTEM "tutex/12.22.txt">
+</Example>
+
 
 </Section>
 </Chapter>
