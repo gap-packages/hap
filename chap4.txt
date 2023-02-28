@@ -1,0 +1,896 @@
+  
+  [1X4 [33X[0;0YThree Manifolds[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YDehn Surgery[133X[101X
+  
+  [33X[0;0YThe  following  example  constructs,  as  a  regular  CW-complex,  a  closed
+  orientable 3-manifold [22XW[122X obtained from the 3-sphere by drilling out a tubular
+  neighbourhood  of  a  trefoil  knot  and  then  gluing  a solid torus to the
+  boundary  of  the cavity via a homeomorphism corresponding to a Dehn surgery
+  coefficient [22Xp/q=17/16[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xap:=ArcPresentation(PureCubicalKnot(3,1));;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=17;;q:=16;;[127X[104X
+    [4X[25Xgap>[125X [27XW:=ThreeManifoldViaDehnSurgery(ap,p,q);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next commands show that this [22X3[122X-manifold [22XW[122X has integral homology[133X
+  
+  [33X[0;0Y[22XH_0(W, Z)= Z[122X, [22XH_1(W, Z)= Z_16[122X, [22XH_2(W, Z)=0[122X, [22XH_3(W, Z)= Z[122X[133X
+  
+  [33X[0;0Yand that the fundamental group [22Xπ_1(W)[122X is non-abelian.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XHomology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[ 16 ][128X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroup(W);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=LowIndexSubgroupsFpGroup(F,10);;[127X[104X
+    [4X[25Xgap>[125X [27XList(L,AbelianInvariants);[127X[104X
+    [4X[28X[ [ 16 ], [ 3, 8 ], [ 3, 4 ], [ 2, 3 ], [ 16, 43 ], [ 8, 43, 43 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  famous result of Lickorish and (independently) Wallace shows
+  that Dehn surgery on knots leads to an interesting range of spaces.[133X
+  
+  [33X[0;0Y[12XTheorem:[112X  [13X Every closed, orientable, connected [22X3[122X-manifold can be obtained by
+  surgery on a link in [22XS^3[122X. (Moreover, one can always perform the surgery with
+  surgery  coefficients  [22X±  1[122X  and  with each individual component of the link
+  unknotted.) [113X[133X
+  
+  
+  [1X4.2 [33X[0;0YConnected Sums[133X[101X
+  
+  [33X[0;0YThe following example constructs the connected sum [22XW=A#B[122X of two [22X3[122X-manifolds,
+  where  [22XA[122X  is obtained from a [22X5/1[122X Dehn surgery on the complement of the first
+  prime  knot  on  11 crossings and [22XB[122X is obtained by a [22X5/1[122X Dehn surgery on the
+  complement of the second prime knot on 11 crossings. The homology groups[133X
+  
+  [33X[0;0Y[22XH_1(W, Z) = Z_2⊕ Z_594[122X, [22XH_2(W, Z) = 0[122X, [22XH_3(W, Z) = Z[122X[133X
+  
+  [33X[0;0Yare computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xap1:=ArcPresentation(PureCubicalKnot(11,1));;[127X[104X
+    [4X[25Xgap>[125X [27XA:=ThreeManifoldViaDehnSurgery(ap1,5,1);;[127X[104X
+    [4X[25Xgap>[125X [27Xap2:=ArcPresentation(PureCubicalKnot(11,2));;[127X[104X
+    [4X[25Xgap>[125X [27XB:=ThreeManifoldViaDehnSurgery(ap2,5,1);;[127X[104X
+    [4X[25Xgap>[125X [27XW:=ConnectedSum(A,B);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,1);[127X[104X
+    [4X[28X[ 2, 594 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.3 [33X[0;0YDijkgraaf-Witten Invariant[133X[101X
+  
+  [33X[0;0YGiven  a  closed  connected  orientable [22X3[122X-manifold [22XW[122X, a finite group [22XG[122X and a
+  3-cocycle [22Xα∈ H^3(BG,U(1))[122X Dijkgraaf and Witten define the complex number[133X
+  
+  [33X[0;0Y$$  Z^{G,\alpha}(W)  =  \frac{1}{|G|}\sum_{\gamma\in  {\rm  Hom}(\pi_1W, G)}
+  \langle  \gamma^\ast[\alpha], [M]\rangle \ \in\ \mathbb C\ $$ where [22Xγ[122X ranges
+  over  all  group  homomorphisms  [22Xγ:  π_1W  →  G[122X.  This  complex number is an
+  invariant of the homotopy type of [22XW[122X and is useful for distinguishing between
+  certain homotopically distinct [22X3[122X-manifolds.[133X
+  
+  [33X[0;0YA  homology  version of the Dijkgraaf-Witten invariant can be defined as the
+  set  of  homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb
+  Z)  \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$
+  Since  [22XH_3(W,  Z)≅  Z[122X  we  represent  [22XD_G(W)[122X by the set [22XD_G(W)={ γ_∗(1) }_γ∈
+  Hom(π_1W,  G)[122X  where  [22X1[122X denotes one of the two possible generators of [22XH_3(W,
+  Z)[122X.[133X
+  
+  [33X[0;0YFor  any coprime integers [22Xp,qge 1[122X the [13Xlens space[113X [22XL(p,q)[122X is obtained from the
+  3-sphere  by  drilling  out  a tubular neighbourhood of the trivial knot and
+  then  gluing a solid torus to the boundary of the cavity via a homeomorphism
+  corresponding  to  a  Dehn  surgery coefficient [22Xp/q[122X. Lens spaces have cyclic
+  fundamental   group   [22Xπ_1(L(p,q))=C_p[122X  and  homology  [22XH_1(L(p,q),  Z)≅  Z_p[122X,
+  [22XH_2(L(p,q), Z)≅ 0[122X, [22XH_3(L(p,q), Z)≅ Z[122X. It was proved by J.H.C. Whitehead that
+  two  lens  spaces [22XL(p,q)[122X and [22XL(p',q')[122X are homotopy equivalent if and only if
+  [22Xp=p'[122X and [22Xqq'≡ ± n^2 mod p[122X for some integer [22Xn[122X.[133X
+  
+  [33X[0;0YThe  following session constructs the two lens spaces [22XL(5,1)[122X and [22XL(5,2)[122X. The
+  homology  version  of  the  Dijkgraaf-Witten invariant is used with [22XG=C_5[122X to
+  demonstrate that the two lens spaces are not homotopy equivalent.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL51:=ThreeManifoldViaDehnSurgery(ap,5,1);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=DijkgraafWittenInvariant(L51,CyclicGroup(5));[127X[104X
+    [4X[28X[ g1^4, g1^4, g1, g1, id ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL52:=ThreeManifoldViaDehnSurgery(ap,5,2);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=DijkgraafWittenInvariant(L52,CyclicGroup(5));[127X[104X
+    [4X[28X[ g1^3, g1^3, g1^2, g1^2, id ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  theorem  of  Fermat  and Euler states that if a prime [22Xp[122X is congruent to 3
+  modulo  4,  then  for any [22Xq[122X exactly one of [22X± q[122X is a quadratic residue mod p.
+  For  all other primes [22Xp[122X either both or neither of [22X± q[122X is a quadratic residue
+  mod  [22Xp[122X.  Thus  for  fixed  [22Xp  ≡ 3 mod 4[122X the lens spaces [22XL(p,q)[122X form a single
+  homotopy  class. There are precisely two homotopy classes of lens spaces for
+  other [22Xp[122X.[133X
+  
+  [33X[0;0YThe following commands confirm that [22XL(13,1) ≄ L(13,2)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;[127X[104X
+    [4X[25Xgap>[125X [27XDijkgraafWittenInvariant(L13_1,CyclicGroup(13));[127X[104X
+    [4X[28X[ g1^12, g1^12, g1^10, g1^10, g1^9, g1^9, g1^4, g1^4, g1^3, g1^3, g1, g1, id ][128X[104X
+    [4X[25Xgap>[125X [27XL13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;[127X[104X
+    [4X[25Xgap>[125X [27XDijkgraafWittenInvariant(L13_2,CyclicGroup(13));[127X[104X
+    [4X[28X[ g1^11, g1^11, g1^8, g1^8, g1^7, g1^7, g1^6, g1^6, g1^5, g1^5, g1^2, g1^2, [128X[104X
+    [4X[28X  id ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.4 [33X[0;0YCohomology rings[133X[101X
+  
+  [33X[0;0YThe  following  commands construct the multiplication table (with respect to
+  some  basis)  for  the  cohomology rings [22XH^∗(L(13,1), Z_13)[122X and [22XH^∗(L(13,2),
+  Z_13)[122X.  These  rings  are  isomorphic and so fail to distinguish between the
+  homotopy types of the lens spaces [22XL(13,1)[122X and [22XL(13,2)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL13_1:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,1);;[127X[104X
+    [4X[25Xgap>[125X [27XL13_2:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,2);;[127X[104X
+    [4X[25Xgap>[125X [27XL13_1:=BarycentricSubdivision(L13_1);;[127X[104X
+    [4X[25Xgap>[125X [27XL13_2:=BarycentricSubdivision(L13_2);;[127X[104X
+    [4X[25Xgap>[125X [27XA13_1:=CohomologyRing(L13_1,13);;[127X[104X
+    [4X[25Xgap>[125X [27XA13_2:=CohomologyRing(L13_2,13);;[127X[104X
+    [4X[25Xgap>[125X [27XM13_1:=List([1..4],i->[]);;[127X[104X
+    [4X[25Xgap>[125X [27XB13_1:=CanonicalBasis(A13_1);;[127X[104X
+    [4X[25Xgap>[125X [27XM13_2:=List([1..4],i->[]);;[127X[104X
+    [4X[25Xgap>[125X [27XB13_2:=CanonicalBasis(A13_2);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..4] do[127X[104X
+    [4X[25X>[125X [27XM13_1[i][j]:=B13_1[i]*B13_1[j];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [1..4] do[127X[104X
+    [4X[25X>[125X [27XM13_2[i][j]:=B13_2[i]*B13_2[j];[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(M13_1);[127X[104X
+    [4X[28X[ [            v.1,            v.2,            v.3,            v.4 ],[128X[104X
+    [4X[28X  [            v.2,          0*v.1,  (Z(13)^6)*v.4,          0*v.1 ],[128X[104X
+    [4X[28X  [            v.3,  (Z(13)^6)*v.4,          0*v.1,          0*v.1 ],[128X[104X
+    [4X[28X  [            v.4,          0*v.1,          0*v.1,          0*v.1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M13_2);[127X[104X
+    [4X[28X[ [          v.1,          v.2,          v.3,          v.4 ],[128X[104X
+    [4X[28X  [          v.2,        0*v.1,  (Z(13))*v.4,        0*v.1 ],[128X[104X
+    [4X[28X  [          v.3,  (Z(13))*v.4,        0*v.1,        0*v.1 ],[128X[104X
+    [4X[28X  [          v.4,        0*v.1,        0*v.1,        0*v.1 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.5 [33X[0;0YLinking Form[133X[101X
+  
+  [33X[0;0YGiven  a  closed  connected [12Xoriented[112X [22X3[122X-manifold [22XW[122X let [22Xτ H_1(W, Z)[122X denote the
+  torsion  subgroup  of  the  first  integral  homology. The [13Xlinking form[113X is a
+  bilinear mapping[133X
+  
+  [33X[0;0Y[22XLk_W: τ H_1(W, Z) × τ H_1(W, Z) ⟶ Q/ Z[122X.[133X
+  
+  [33X[0;0YTo construct this form note that we have a Poincare duality isomorphism[133X
+  
+  [33X[0;0Y[22Xρ: H^2(W, Z) stackrel≅⟶ H_1(W, Z), z ↦ z∩ [W][122X[133X
+  
+  [33X[0;0Yinvolving  the  cap  product with the fundamental class [22X[W]∈ H^3(W, Z)[122X. That
+  is,  [22X[M][122X  is  the generator of [22XH^3(W, Z)≅ Z[122X determining the orientation. The
+  short exact sequence [22XZ ↣ Q ↠ Q/ Z[122X gives rise to a cohomology exact sequence[133X
+  
+  [33X[0;0Y[22X→ H^1(W, Q) → H^1(W, Q/ Z) stackrelβ⟶ H^2(W, Z) → H^2(W, Q) →[122X[133X
+  
+  [33X[0;0Yfrom  which we obtain the isomorphism [22Xβ : τ H^1(W, Q/ Z) stackrel≅⟶ τ H^2(W,
+  Z)[122X. The linking form [22XLk_W[122X can be defined as the composite[133X
+  
+  [33X[0;0Y[22XLk_W:  τ H_1(W, Z) × τ H_1(W, Z) stackrel1× ρ^-1}⟶ τ H_1(W, Z) × τ H^2(W, Z)
+  stackrel1× β^-1}⟶ τ H_1(W, Z) × τ H^1(W, Q/ Z) stackrelev⟶ Q/ Z[122X[133X
+  
+  [33X[0;0Ywhere [22Xev(x,α)[122X evaluates a [22X1[122X-cocycle [22Xα[122X on a [22X1[122X-cycle [22Xx[122X.[133X
+  
+  [33X[0;0YThe linking form can be used to define the set[133X
+  
+  [33X[0;0Y[22XI^O(W) = {Lk_W(g,g) : g∈ τ H_1(W, Z)}[122X[133X
+  
+  [33X[0;0Ywhich is an oriented-homotopy invariant of [22XW[122X. Letting [22XW^+[122X and [22XW^-[122X denote the
+  two possible orientations on the manifold, the set[133X
+  
+  [33X[0;0Y[22XI(W) ={I^O(W^+), I^O(W^-)}[122X[133X
+  
+  [33X[0;0Yis a homotopy invariant of [22XW[122X which in this manual we refer to as the [13Xlinking
+  form homotopy invariant[113X.[133X
+  
+  [33X[0;0YThe  following  commands compute the linking form homotopy invariant for the
+  lens  spaces  [22XL(13,q)[122X  with [22X1le qle 12[122X. This invariant distinguishes between
+  the two homotopy types that arise.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLensSpaces:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor q in [1..12] do[127X[104X
+    [4X[25X>[125X [27XAdd(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,q));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(List(LensSpaces,LinkingFormHomotopyInvariant));;[127X[104X
+    [4X[28X[ [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [ 0, 2/13, [128X[104X
+    [4X[28X          2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [128X[104X
+    [4X[28X      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [128X[104X
+    [4X[28X      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [128X[104X
+    [4X[28X      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [128X[104X
+    [4X[28X      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ], [128X[104X
+    [4X[28X      [ 0, 2/13, 2/13, 5/13, 5/13, 6/13, 6/13, 7/13, 7/13, 8/13, 8/13, 11/13, 11/13 ] ], [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  [ [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ], [128X[104X
+    [4X[28X      [ 0, 1/13, 1/13, 3/13, 3/13, 4/13, 4/13, 9/13, 9/13, 10/13, 10/13, 12/13, 12/13 ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.6 [33X[0;0YDetermining the homeomorphism type of a lens space[133X[101X
+  
+  [33X[0;0YIn  1935  K.  Reidemeister  [Rei35] classified lens spaces up to orientation
+  preserving  PL-homeomorphism.  This  was  generalized by E. Moise [Moi52] in
+  1952 to a classification up to homeomorphism -- his method requred the proof
+  of  the  Hauptvermutung  for  [22X3[122X-dimensional  manifolds. In 1960, following a
+  suggestion  of  R. Fox, a proof was given by E.J. Brody [Bro60] that avoided
+  the  need  for the Hauptvermutung. Reidemeister's method, using what is know
+  termed   [13XReidermeister   torsion[113X,   and   Brody's   method,   using  tubular
+  neighbourhoods  of [22X1[122X-cycles, both require identifying a suitable "preferred"
+  generator  of  [22XH_1(L(p,q),  Z)[122X. In 2003 J. Przytycki and A. Yasukhara [PY03]
+  provided  an  alternative method for classifying lens spaces, which uses the
+  linking  form  and  again  requires  the  identification  of  a  "preferred"
+  generator of [22XH_1(L(p,q), Z)[122X.[133X
+  
+  [33X[0;0YPrzytycki and Yasukhara proved the following.[133X
+  
+  [33X[0;0Y[12XTheorem.[112X  [13XLet  [22Xρ:  S^ 3 → L(p, q)[122X be the [22Xp[122X-fold cyclic cover and [22XK[122X a knot in
+  [22XL(p, q)[122X that represents a generator of [22XH_1 (L(p, q), Z)[122X. If [22Xρ ^-1 (K)[122X is the
+  trivial  knot,  then  [22XLk_  L(p,q)  ([K], [K]) = q/p[122X or [22X= overline q/p ∈ Q/ Z[122X
+  where [22Xqoverline q ≡ 1 mod p[122X. [113X[133X
+  
+  [33X[0;0YThe  ingredients  of this theorem can be applied in HAP, but at present only
+  to small examples of lens spaces. The obstruction to handling large examples
+  is  that  the current default method for computing the linking form involves
+  barycentric  subdivision  to  produce  a  simplicial  complex from a regular
+  CW-complex,  and  then  a  homotopy  equivalence  from  this typically large
+  simplicial  complex  to  a  smaller  non-regular  CW-complex.  However,  for
+  homeomorphism invariants that are not homotopy invariants there is a need to
+  avoid  homotopy  equivalences. In the current version of HAP this means that
+  in  order  to  obtain  delicate  homeomorphism invariants we have to perform
+  homology  computations  on typically large simplicial complexes. In a future
+  version  of  HAP  we  hope  to  avoid  the  obstruction  by implementing cup
+  products,  cap  products  and  linking forms entirely within the category of
+  regular CW-complexes.[133X
+  
+  [33X[0;0YThe  following  commands  construct a small lens space [22XL=L(p,q)[122X with unknown
+  values  of [22Xp,q[122X. Subsequent commands will determine the homeomorphism type of
+  [22XL[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xp:=Random([2,3,5,7,11,13,17]);;[127X[104X
+    [4X[25Xgap>[125X [27Xq:=Random([1..p-1]);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=ThreeManifoldViaDehnSurgery([[1,2],[1,2]],p,q);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  can  readily  determine  the  value  of [22Xp=11[122X by calculating the order of
+  [22Xπ_1(L)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroupWithPathReps(L);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(F);[127X[104X
+    [4X[28X"C11"[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  take  the  default  edge  path [22Xγ: S^1→ L[122X representing a
+  generator  of  the  cyclic  group [22Xπ_1(L)[122X and lift it to an edge path [22Xtildeγ:
+  S^1→ tilde L[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XU:=UniversalCover(L);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=U!.group;;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=EquivariantCWComplexToRegularCWMap(U,Group(One(G)));;[127X[104X
+    [4X[25Xgap>[125X [27XU:=Source(p);;[127X[104X
+    [4X[25Xgap>[125X [27Xgamma:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xgamma[2]:=F!.loops[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xgamma[2]:=List(gamma[2],AbsInt);;[127X[104X
+    [4X[25Xgap>[125X [27Xgamma[1]:=List(gamma[2],k->L!.boundaries[2][k]);;[127X[104X
+    [4X[25Xgap>[125X [27Xgamma[1]:=SSortedList(Flat(gamma[1]));;[127X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27Xgammatilde:=[[],[],[],[]];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor k in [1..U!.nrCells(0)] do[127X[104X
+    [4X[25X>[125X [27Xif p!.mapping(0,k) in gamma[1] then Add(gammatilde[1],k); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xfor k in [1..U!.nrCells(1)] do[127X[104X
+    [4X[25X>[125X [27Xif p!.mapping(1,k) in gamma[2] then Add(gammatilde[2],k); fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xgammatilde:=CWSubcomplexToRegularCWMap([U,gammatilde]);[127X[104X
+    [4X[28XMap of regular CW-complexes[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next commands check that the path [22Xtildeγ[122X is unknotted in [22Xtilde L≅ S^3[122X by
+  checking that [22Xπ_1(tilde L∖ image(tildeγ))[122X is infinite cyclic.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=RegularCWComplexComplement(gammatilde);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(C);[127X[104X
+    [4X[28X<fp group of size infinity on the generators [ f2 ]>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSince [22Xtildeγ[122X is unkotted the cycle [22Xγ[122X represents the preferred generator [22X[γ]∈
+  H_1(L, Z)[122X. The next commands compute [22XLk_L([γ],[γ])= 7/11[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLinkingFormHomeomorphismInvariant(L);[127X[104X
+    [4X[28X[ 7/11 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe classification of Moise/Brody states that [22XL(p,q)≅ L(p,q')[122X if and only if
+  [22Xqq'≡ ± 1 mod p[122X. Hence the lens space [22XL[122X has the homeomorphism type[133X
+  
+  [33X[0;0Y[22XL≅ L(11,7) ≅ L(11,8) ≅ L(11,4) ≅ L(11,3)[122X.[133X
+  
+  
+  [1X4.7 [33X[0;0YSurgeries on distinct knots can yield homeomorphic manifolds[133X[101X
+  
+  [33X[0;0YThe  lens space [22XL(5,1)[122X is a quotient of the [22X3[122X-sphere [22XS^3[122X by a certain action
+  of the cyclic group [22XC_5[122X. It can be realized by a [22Xp/q=5/1[122X Dehn filling of the
+  complement  of the trivial knot. It can also be realized by Dehn fillings of
+  other  knots.  To  see  this,  the following commands compute the manifold [22XW[122X
+  obtained  from  a  [22Xp/q=1/5[122X Dehn filling of the complement of the trefoil and
+  show  that  [22XW[122X  at  least has the same integral homology and same fundamental
+  group as [22XL(5,1)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xap:=ArcPresentation(PureCubicalKnot(3,1));;[127X[104X
+    [4X[25Xgap>[125X [27XW:=ThreeManifoldViaDehnSurgery(ap,1,5);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(W,1);[127X[104X
+    [4X[28X[ 5 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(W,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroup(W);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(F);[127X[104X
+    [4X[28X"C5"[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next commands construct the universal cover [22Xwidetilde W[122X and show that it
+  has  the  same homology as [22XS^3[122X and trivivial fundamental group [22Xπ_1(widetilde
+  W)=0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XU:=UniversalCover(W);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=U!.group;;[127X[104X
+    [4X[25Xgap>[125X [27XWtilde:=EquivariantCWComplexToRegularCWComplex(U,Group(One(G)));[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Wtilde,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Wtilde,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Wtilde,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroup(Wtilde);[127X[104X
+    [4X[28X<fp group on the generators [  ]>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YBy  construction  the  space [22Xwidetilde W[122X is a manifold. Had we not known how
+  the  regular CW-complex [22Xwidetilde W[122X had been constructed then we could prove
+  that  it  is  a  closed  [22X3[122X-manifold  by creating its barycentric subdivision
+  [22XK=sdwidetilde  W[122X,  which  is homeomorphic to [22Xwidetilde W[122X, and verifying that
+  the  link  of  each  vertex  in  the  simplicial  complex [22Xsdwidetilde W[122X is a
+  [22X2[122X-sphere. The following command carries out this proof.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsClosedManifold(Wtilde);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe   Poincare   conjecture   (now  proven)  implies  that  [22Xwidetilde  W[122X  is
+  homeomorphic  to  [22XS^3[122X.  Hence  [22XW=S^3/C_5[122X is a quotient of the [22X3[122X-sphere by an
+  action of [22XC_5[122X and is hence a lens space [22XL(5,q)[122X for some [22Xq[122X.[133X
+  
+  [33X[0;0YThe next commands determine that [22XW[122X is homeomorphic to [22XL(5,4)≅ L(5,1)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLk:=LinkingFormHomeomorphismInvariant(W);[127X[104X
+    [4X[28X[ 0, 4/5 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMoser  [Mos71]  gives  a  precise decription of the lens spaces arising from
+  surgery  on the trefoil knot and more generally from surgery on torus knots.
+  Greene [Gre13] determines the lens spaces that arise by integer Dehn surgery
+  along a knot in the three-sphere[133X
+  
+  
+  [1X4.8 [33X[0;0YFinite fundamental groups of [22X3[122X[101X[1X-manifolds[133X[101X
+  
+  [33X[0;0YLens  spaces are examples of [22X3[122X-manifolds with finite fundamental groups. The
+  complete  list  of  finite  groups [22XG[122X arising as fundamental groups of closed
+  connected  [22X3[122X-manifolds  is  recalled  in [14X7.11[114X where one method for computing
+  their cohomology rings is presented. Their cohomology could also be computed
+  from  explicit  [22X3[122X-manifolds  [22XW[122X  with  [22Xπ_1W=G[122X.  For  instance,  the following
+  commands  realize  a  closed  connected [22X3[122X-manifold [22XW[122X with [22Xπ_1W = C_11× SL_2(
+  Z_5)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xap:=ArcPresentation(PureCubicalKnot(3,1));;[127X[104X
+    [4X[25Xgap>[125X [27XW:=ThreeManifoldViaDehnSurgery(ap,1,11);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=FundamentalGroup(W);;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(F);[127X[104X
+    [4X[28X1320[128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(F);[127X[104X
+    [4X[28X[ 11 ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(F);[127X[104X
+    [4X[28X"C11 x SL(2,5)"[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHence the group [22XG=C_11× SL_2( Z_5)[122X of order [22X1320[122X acts freely on the [22X3[122X-sphere
+  [22Xwidetilde W[122X. It thus has periodic cohomology with[133X
+  
+  
+  [24X[33X[0;6YH_n(G,\mathbb  Z)  =  \left\{  \begin{array}{ll}  \mathbb Z_{11} & n\equiv 1
+  \bmod  4  \\ 0 & n\equiv 2 \bmod 4 \\ \mathbb Z_{1320} & n \equiv 3\bmod 4\\
+  \mathbb 0 & n\equiv 0 \bmod 4 \\ \end{array}\right.[133X
+  
+  [124X
+  
+  [33X[0;0Yfor [22Xn > 0[122X.[133X
+  
+  
+  [1X4.9 [33X[0;0YPoincare's cube manifolds[133X[101X
+  
+  [33X[0;0YIn  his  seminal  paper  on  "Analysis  situs",  published in 1895, Poincare
+  constructed a series of closed 3-manifolds which played an important role in
+  the development of his theory. A good account of these manifolds is given in
+  the         online         Manifold        Atlas        Project        (MAP)
+  ([7Xhttp://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds[107X).  Most of
+  his  examples  are  constructed by identifications on the faces of a (solid)
+  cube.  The  function  [10XPoincareCubeCWComplex()[110X  can  be used to construct any
+  3-dimensional  CW-complex  arising  from a cube by identifying the six faces
+  pairwise; the vertices and faces of the cube are numbered as follows[133X
+  
+  [33X[0;0Yand  barycentric  subdivision  is  used  to  ensure  that  the  quotient  is
+  represented as a regular CW-complex.[133X
+  
+  [33X[0;0YExamples  3  and 4 from Poincare's paper, described in the following figures
+  taken                                from                                MAP
+  ([7Xhttp://www.map.mpim-bonn.mpg.de/Poincar%C3%A9%27s_cube_manifolds[107X),[133X
+  
+  [33X[0;0Yare  constructed in the following example. Both are checked to be orientable
+  manifolds,  and  are shown to have different homology. (Note that the second
+  example  in  Poincare's  paper is not a manifold -- the links of some of its
+  vertices are not homeomorphic to a 2-sphere.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=1;;C:=2;;D:=3;;B:=4;;[127X[104X
+    [4X[25Xgap>[125X [27XAp:=5;;Cp:=6;;Dp:=7;;Bp:=8;;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL:=[[A,B,D,C],[Bp,Dp,Cp,Ap]];;[127X[104X
+    [4X[25Xgap>[125X [27XM:=[[A,B,Bp,Ap],[Cp,C,D,Dp]];;[127X[104X
+    [4X[25Xgap>[125X [27XN:=[[A,C,Cp,Ap],[D,Dp,Bp,B]];;[127X[104X
+    [4X[25Xgap>[125X [27XEx3:=PoincareCubeCWComplex(L,M,N);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsClosedManifold(Ex3);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL:=[[A,B,D,C],[Bp,Dp,Cp,Ap]];;[127X[104X
+    [4X[25Xgap>[125X [27XM:=[[A,B,Bp,Ap],[C,D,Dp,Cp]];;[127X[104X
+    [4X[25Xgap>[125X [27XN:=[[A,C,Cp,Ap],[B,D,Dp,Bp]];;[127X[104X
+    [4X[25Xgap>[125X [27XEx4:=PoincareCubeCWComplex(L,M,N);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsClosedManifold(Ex4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],k->Homology(Ex3,k));[127X[104X
+    [4X[28X[ [ 0 ], [ 2, 2 ], [  ], [ 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],k->Homology(Ex4,k));[127X[104X
+    [4X[28X[ [ 0 ], [ 2, 0 ], [ 0 ], [ 0 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.10 [33X[0;0YThere are at least 25 distinct cube manifolds[133X[101X
+  
+  [33X[0;0YThe  function  [10XPoincareCubeCWComplex(A,G)[110X  can also be applied to two inputs
+  where [22XA[122X is a pairing of the six faces such as [22XA=[[1,2],[3,4],[5,6]][122X and [22XG[122X is
+  a  list  of  three  elements  of  the  dihedral  group  of  order  [22X8[122X such as
+  [22XG=[(2,4),(2,4),(2,4)*(1,3)][122X.  The dihedral elements specify how each pair of
+  faces  are  glued together. With these inputs it is easy to iterate over all
+  possible  values  of  [22XA[122X and [22XG[122X in order to construct all possible 3-manifolds
+  arising from the pairwise identification of faces of a cube. Distinct values
+  of  [22XA[122X  and  [22XG[122X  can  of course yield homeomorphic spaces. To ensure that each
+  possible cube manifold is constructed, at least once, up to homeomorphism it
+  suffices to consider[133X
+  
+  [33X[0;0Y[22XA=[  [1,2],  [3,4],  [5,6]  ][122X,  [22XA=[ [1,2], [3,5], [4,6] ][122X, [22XA=[ [1,4], [2,6],
+  [3,5] ][122X[133X
+  
+  [33X[0;0Yand all [22XG[122X in [22XD_8× D_8× D_8[122X.[133X
+  
+  [33X[0;0YThe  following  commands  iterate through these [22X3×8^3 = 1536[122X pairs [22X(A,G)[122X and
+  show  that  in  precisely  163  cases  (just over 10% of cases) the quotient
+  CW-complex is a 3-manifold.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XA1:= [ [1,2], [3,4], [5,6] ];[128X[104X
+    [4X[28XA2:=[ [1,2], [3,5], [4,6] ];[128X[104X
+    [4X[28XA3:=[ [1,4], [2,6], [3,5] ];[128X[104X
+    [4X[28XD8:=DihedralGroup(IsPermGroup,8);[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifolds:=[];[128X[104X
+    [4X[28Xfor A in [A1,A2,A3] do[128X[104X
+    [4X[28Xfor x in D8 do[128X[104X
+    [4X[28Xfor y in D8 do[128X[104X
+    [4X[28Xfor z in D8 do[128X[104X
+    [4X[28XG:=[x,y,z];[128X[104X
+    [4X[28XF:=PoincareCubeCWComplex(A,G);[128X[104X
+    [4X[28Xb:=IsClosedManifold(F);[128X[104X
+    [4X[28Xif b=true then Add(Manifolds,F); fi;[128X[104X
+    [4X[28Xod;od;od;od;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XSize(Manifolds);[128X[104X
+    [4X[28X163[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  additional  commands  use  integral  homology  and low index
+  subgroups  of  fundamental  groups to establish that the 163 cubes manifolds
+  represent  at  least  25 distinct homotopy equivalence classes of manifolds.
+  One homotopy class is represented by up to 40 of the manifolds, and at least
+  four of the homotopy classes are each represented by a single manifold..[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xinvariant1:=function(m);[128X[104X
+    [4X[28Xreturn List([1..3],k->Homology(m,k));[128X[104X
+    [4X[28Xend;;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XC:=Classify(Manifolds,invariant1);;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xinvariant2:=function(m)[128X[104X
+    [4X[28Xlocal L;[128X[104X
+    [4X[28XL:=FundamentalGroup(m);[128X[104X
+    [4X[28Xif GeneratorsOfGroup(L)= [] then return [];fi;[128X[104X
+    [4X[28XL:=LowIndexSubgroupsFpGroup(L,10);[128X[104X
+    [4X[28XL:=List(L,AbelianInvariants);[128X[104X
+    [4X[28XL:=SortedList(L);[128X[104X
+    [4X[28Xreturn L;[128X[104X
+    [4X[28Xend;;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XD:=RefineClassification(C,invariant2);;[128X[104X
+    [4X[28XList(D,Size);[128X[104X
+    [4X[28X[ 40, 2, 10, 15, 8, 6, 2, 6, 2, 5, 7, 1, 4, 11, 7, 7, 10, 4, 4, 2, 1, 3, 1, [128X[104X
+    [4X[28X  1, 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  construct  a list of 18 orientable cube manifolds and a
+  list of 7 non-orientable cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XManifolds:=List(Manifolds,x->x[1]);;[127X[104X
+    [4X[25Xgap>[125X [27XOrientablManifolds:=Filtered(Manifolds,m->Homology(m,3)=[0]);;[127X[104X
+    [4X[25Xgap>[125X [27XNonOrientablManifolds:=Filtered(Manifolds,m->Homology(m,3)=[]);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(OrientablManifolds);[127X[104X
+    [4X[28X18[128X[104X
+    [4X[25Xgap>[125X [27XLength(NonOrientablManifolds);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  show  that the 7 non-orientable cube manifolds all have
+  infinite fundamental groups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XList(NonOrientablManifolds,m->IsFinite(FundamentalGroup(m)));[127X[104X
+    [4X[28X[ false, false, false, false, false, false, false ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  final  commands show that (at least) 9 of the orientable manifolds have
+  finite  fundamental  groups  and  list the isomorphism types of these finite
+  groups.  Note  that  it  is  now  known  that  any  3-manifold  with  finite
+  fundamental group is spherical (i.e. is a quotient of the 3-sphere).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XList(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m->[127X[104X
+    [4X[28X          IsFinite(FundamentalGroup(m)));[128X[104X
+    [4X[28X[ true, true, true, true, true, true, true, true, true ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m->[127X[104X
+    [4X[28X          StructureDescription(FundamentalGroup(m)));[128X[104X
+    [4X[28X[ "Q8", "C2", "C4", "C3 : C4", "C12", "C8", "C14", "C6", "1" ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.10-1 [33X[0;0YFace pairings for 25 distinct cube manifolds[133X[101X
+  
+  [33X[0;0YThe  following  are the face pairings of 25 non-homeomorphic cube manifolds,
+  with vertices of the cube numbered as describe above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..25] do[127X[104X
+    [4X[25X>[125X [27Xp:=Manifolds[i]!.cubeFacePairings;[127X[104X
+    [4X[25X>[125X [27XPrint("Manifold ",i," has face pairings:\n");[127X[104X
+    [4X[25X>[125X [27XPrint(p[1],"\n",p[2],"\n",p[3],"\n\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XManifold 1 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 2 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 3 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 4 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 5 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 6, 5, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 6 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 7 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 8 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 6, 7, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 9 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 10 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 3, 2, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 11 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 12 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 13 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 7, 8, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 14 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 15 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 16 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 17 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 18 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 19 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 20 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 2, 3, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 21 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 22 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 23 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 24 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 25 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.11 [33X[0;0YThere are at most 49 distinct cube manifolds[133X[101X
+  
+  [33X[0;0YUsing  the  Simpcomp  ([7Xhttps://simpcomp-team.github.io/simpcomp/README.html[107X)
+  package  for GAP we can show that many of the 163 cube manifolds constructed
+  above  are homeomorphic. We do this by showing that barycentric subdivisions
+  of many of the manifolds are combinatorially the same.[133X
+  
+  [33X[0;0YThe   following   commands   establish  homeomorphisms  (simplicial  complex
+  isomorphisms)  between  manifolds in each equivalence class D[i] above for [22X1
+  le  ile  25[122X,  and  then  discard  all but one manifold in each homeomorphism
+  class.   We  are  left  with  59  cube  manifolds,  some  of  which  may  be
+  homeomorphic,  representing  at least 25 distinct homeomorphism classes. The
+  59 manifolds are stored in the list DD of length 25 each of whose terms is a
+  list of cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XLoadPackage("Simpcomp");;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xinv3:=function(m)[128X[104X
+    [4X[28Xlocal K;[128X[104X
+    [4X[28XK:=BarycentricSubdivision(m);[128X[104X
+    [4X[28XK:=MaximalSimplicesOfSimplicialComplex(K);[128X[104X
+    [4X[28XK:=SC(K);[128X[104X
+    [4X[28Xif not SCIsStronglyConnected(K) then Print("WARNING!\n"); fi;[128X[104X
+    [4X[28Xreturn SCExportIsoSig( K );[128X[104X
+    [4X[28Xend;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDD:=[];[128X[104X
+    [4X[28Xfor x in D do[128X[104X
+    [4X[28Xy:=Classify(x,inv3);[128X[104X
+    [4X[28XAdd(DD,List(y,z->z[1]));[128X[104X
+    [4X[28Xod;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XList(DD,Size);[128X[104X
+    [4X[28X[ 9, 1, 3, 3, 3, 1, 1, 1, 1, 1, 2, 1, 2, 7, 4, 4, 3, 1, 1, 1, 1, 3, 1, 1, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  function  [10XPoincareCubeCWCompex()[110X  applies  cell  simplifications in its
+  construction    of    the    quotient    of    a   CW-complex.   A   variant
+  [10XPoincareCubeCWCompexNS()[110X performs no cell simplifications and thus returns a
+  bigger  cell  complex  which  we  can  attempt  to  use to establish further
+  homeomorphisms.  This  is  done  in  the  following  session and succeeds in
+  showing  that  there  are  at  most  51 distinct homeomorphism types of cube
+  manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XDD:=List(DD,x->List(x,y->PoincareCubeCWComplexNS([128X[104X
+    [4X[28Xy!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XD:=[];[128X[104X
+    [4X[28Xfor x in DD do[128X[104X
+    [4X[28Xy:=Classify(x,inv3);[128X[104X
+    [4X[28XAdd(D,List(y,z->z[1]));[128X[104X
+    [4X[28Xod;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XList(D,Size);[128X[104X
+    [4X[28X[ 8, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMaking  further  modifications  to the cell structures of the manifolds that
+  leave  their  homeomorphism  types  unchanged  can  help to identify further
+  simplicial  isomorphisms between barycentric subdivisions. For instance, the
+  following  commands  succeed  in  establishing  that  there  are are most 49
+  distinct homeomorphisms types of cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDD:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor x in D do[127X[104X
+    [4X[25X>[125X [27Xif Length(x)>1 then[127X[104X
+    [4X[25X>[125X [27XAdd(DD, List(x,y->BarycentricallySimplifiedComplex(y)));[127X[104X
+    [4X[25X>[125X [27Xelse Add(DD,x);[127X[104X
+    [4X[25X>[125X [27Xfi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XD:=[];;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor x in DD do[127X[104X
+    [4X[25X>[125X [27Xy:=Classify(x,inv3);[127X[104X
+    [4X[25X>[125X [27XAdd(D,List(y,z->z[1]));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(D,Size);[127X[104X
+    [4X[28X[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
