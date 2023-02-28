@@ -94,7 +94,7 @@
   Hom(π_1W,  G)[122X  where  [22X1[122X denotes one of the two possible generators of [22XH_3(W,
   Z)[122X.[133X
   
-  [33X[0;0YFor  any  coprime integers [22Xp,q≥ 1[122X the [13Xlens space[113X [22XL(p,q)[122X is obtained from the
+  [33X[0;0YFor  any coprime integers [22Xp,qge 1[122X the [13Xlens space[113X [22XL(p,q)[122X is obtained from the
   3-sphere  by  drilling  out  a tubular neighbourhood of the trivial knot and
   then  gluing a solid torus to the boundary of the cavity via a homeomorphism
   corresponding  to  a  Dehn  surgery coefficient [22Xp/q[122X. Lens spaces have cyclic
@@ -221,8 +221,8 @@
   form homotopy invariant[113X.[133X
   
   [33X[0;0YThe  following  commands compute the linking form homotopy invariant for the
-  lens  spaces [22XL(13,q)[122X with [22X1≤ q≤ 12[122X. This invariant distinguishes between the
-  two homotopy types that arise.[133X
+  lens  spaces  [22XL(13,q)[122X  with [22X1le qle 12[122X. This invariant distinguishes between
+  the two homotopy types that arise.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLensSpaces:=[];;[127X[104X
@@ -553,7 +553,7 @@
   [4X[32X[104X
   
   
-  [1X4.10 [33X[0;0YThere are (at least) 25 distinct cube manifolds[133X[101X
+  [1X4.10 [33X[0;0YThere are at least 25 distinct cube manifolds[133X[101X
   
   [33X[0;0YThe  function  [10XPoincareCubeCWComplex(A,G)[110X  can also be applied to two inputs
   where [22XA[122X is a pairing of the six faces such as [22XA=[[1,2],[3,4],[5,6]][122X and [22XG[122X is
@@ -608,7 +608,7 @@
     [4X[28Xreturn List([1..3],k->Homology(m,k));[128X[104X
     [4X[28Xend;;[128X[104X
     [4X[28X[128X[104X
-    [4X[28XC:=Classify(M,invariant1);;[128X[104X
+    [4X[28XC:=Classify(Manifolds,invariant1);;[128X[104X
     [4X[28X[128X[104X
     [4X[28Xinvariant2:=function(m)[128X[104X
     [4X[28Xlocal L;[128X[104X
@@ -620,7 +620,7 @@
     [4X[28Xreturn L;[128X[104X
     [4X[28Xend;;[128X[104X
     [4X[28X[128X[104X
-    [4X[28XD:=RefineClassification(C,invariant2);[128X[104X
+    [4X[28XD:=RefineClassification(C,invariant2);;[128X[104X
     [4X[28XList(D,Size);[128X[104X
     [4X[28X[ 40, 2, 10, 15, 8, 6, 2, 6, 2, 5, 7, 1, 4, 11, 7, 7, 10, 4, 4, 2, 1, 3, 1, [128X[104X
     [4X[28X  1, 4 ][128X[104X
@@ -664,6 +664,233 @@
     [4X[28X          StructureDescription(FundamentalGroup(m)));[128X[104X
     [4X[28X[ "Q8", "C2", "C4", "C3 : C4", "C12", "C8", "C14", "C6", "1" ][128X[104X
     [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.10-1 [33X[0;0YFace pairings for 25 distinct cube manifolds[133X[101X
+  
+  [33X[0;0YThe  following  are the face pairings of 25 non-homeomorphic cube manifolds,
+  with vertices of the cube numbered as describe above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..25] do[127X[104X
+    [4X[25X>[125X [27Xp:=Manifolds[i]!.cubeFacePairings;[127X[104X
+    [4X[25X>[125X [27XPrint("Manifold ",i," has face pairings:\n");[127X[104X
+    [4X[25X>[125X [27XPrint(p[1],"\n",p[2],"\n",p[3],"\n\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XManifold 1 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 2 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 3 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 4 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 5 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 6, 5, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 6 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 7 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 8 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 6, 7, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 9 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 10 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 3, 2, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 11 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 12 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 13 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 7, 8, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 14 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 15 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 16 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 17 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 18 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 19 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 20 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 2, 3, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 21 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 22 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 23 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 24 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XManifold 25 has face pairings:[128X[104X
+    [4X[28X[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.11 [33X[0;0YThere are at most 49 distinct cube manifolds[133X[101X
+  
+  [33X[0;0YUsing  the  Simpcomp  ([7Xhttps://simpcomp-team.github.io/simpcomp/README.html[107X)
+  package  for GAP we can show that many of the 163 cube manifolds constructed
+  above  are homeomorphic. We do this by showing that barycentric subdivisions
+  of many of the manifolds are combinatorially the same.[133X
+  
+  [33X[0;0YThe   following   commands   establish  homeomorphisms  (simplicial  complex
+  isomorphisms)  between  manifolds in each equivalence class D[i] above for [22X1
+  le  ile  25[122X,  and  then  discard  all but one manifold in each homeomorphism
+  class.   We  are  left  with  59  cube  manifolds,  some  of  which  may  be
+  homeomorphic,  representing  at least 25 distinct homeomorphism classes. The
+  59 manifolds are stored in the list DD of length 25 each of whose terms is a
+  list of cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XLoadPackage("Simpcomp");;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xinv3:=function(m)[128X[104X
+    [4X[28Xlocal K;[128X[104X
+    [4X[28XK:=BarycentricSubdivision(m);[128X[104X
+    [4X[28XK:=MaximalSimplicesOfSimplicialComplex(K);[128X[104X
+    [4X[28XK:=SC(K);[128X[104X
+    [4X[28Xif not SCIsStronglyConnected(K) then Print("WARNING!\n"); fi;[128X[104X
+    [4X[28Xreturn SCExportIsoSig( K );[128X[104X
+    [4X[28Xend;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDD:=[];[128X[104X
+    [4X[28Xfor x in D do[128X[104X
+    [4X[28Xy:=Classify(x,inv3);[128X[104X
+    [4X[28XAdd(DD,List(y,z->z[1]));[128X[104X
+    [4X[28Xod;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XList(DD,Size);[128X[104X
+    [4X[28X[ 9, 1, 3, 3, 3, 1, 1, 1, 1, 1, 2, 1, 2, 7, 4, 4, 3, 1, 1, 1, 1, 3, 1, 1, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  function  [10XPoincareCubeCWCompex()[110X  applies  cell  simplifications in its
+  construction    of    the    quotient    of    a   CW-complex.   A   variant
+  [10XPoincareCubeCWCompexNS()[110X performs no cell simplifications and thus returns a
+  bigger  cell  complex  which  we  can  attempt  to  use to establish further
+  homeomorphisms.  This  is  done  in  the  following  session and succeeds in
+  showing  that  there  are  at  most  51 distinct homeomorphism types of cube
+  manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XDD:=List(DD,x->List(x,y->PoincareCubeCWComplexNS([128X[104X
+    [4X[28Xy!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XD:=[];[128X[104X
+    [4X[28Xfor x in DD do[128X[104X
+    [4X[28Xy:=Classify(x,inv3);[128X[104X
+    [4X[28XAdd(D,List(y,z->z[1]));[128X[104X
+    [4X[28Xod;[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XList(D,Size);[128X[104X
+    [4X[28X[ 8, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMaking  further  modifications  to the cell structures of the manifolds that
+  leave  there  homeomorphism  types  unchanged  Cane help to identify further
+  simplicial  isomorphisms between barycentric subdivisions. For instance, the
+  following  commands  succeed  in  establishing  that  there  are are most 49
+  distinct homeomorphisms types of cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDD:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor x in D do[127X[104X
+    [4X[25X>[125X [27Xif Length(x)>1 then[127X[104X
+    [4X[25X>[125X [27XAdd(DD, List(x,y->BarycentricallySimplifiedComplex(y)));[127X[104X
+    [4X[25X>[125X [27Xelse Add(DD,x);[127X[104X
+    [4X[25X>[125X [27Xfi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XD:=[];;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor x in DD do[127X[104X
+    [4X[25X>[125X [27Xy:=Classify(x,inv3);[127X[104X
+    [4X[25X>[125X [27XAdd(D,List(y,z->z[1]));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(D,Size);[127X[104X
+    [4X[28X[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
