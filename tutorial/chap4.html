@@ -55,7 +55,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D50795883E534A3">4.10-1 <span class="Heading">Face pairings for 25 distinct cube manifolds</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X82441A5B7B6FD0ED">4.11 <span class="Heading">There are at most 49 distinct cube manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7F3F77CF865CB333">4.11 <span class="Heading">There are at most 45 distinct cube manifolds</span></a>
 </span>
 </div>
 </div>
@@ -765,9 +765,9 @@ Manifold 25 has face pairings:
 
 </pre></div>
 
-<p><a id="X82441A5B7B6FD0ED" name="X82441A5B7B6FD0ED"></a></p>
+<p><a id="X7F3F77CF865CB333" name="X7F3F77CF865CB333"></a></p>
 
-<h4>4.11 <span class="Heading">There are at most 49 distinct cube manifolds</span></h4>
+<h4>4.11 <span class="Heading">There are at most 45 distinct cube manifolds</span></h4>
 
 <p>Using the <span class="URL"><a href="https://simpcomp-team.github.io/simpcomp/README.html">Simpcomp</a></span> package for GAP we can show that many of the 163 cube manifolds constructed above are homeomorphic. We do this by showing that barycentric subdivisions of many of the manifolds are combinatorially the same.</p>
 
@@ -815,7 +815,7 @@ List(D,Size);
 
 </pre></div>
 
-<p>Making further modifications to the cell structures of the manifolds that leave their homeomorphism types unchanged can help to identify further simplicial isomorphisms between barycentric subdivisions. For instance, the following commands succeed in establishing that there are at most 49 distinct homeomorphism types of cube manifolds.</p>
+<p>Making further modifications to the cell structures of the manifolds that leave their homeomorphism types unchanged can help to identify further simplicial isomorphisms between barycentric subdivisions. For instance, the following commands succeed in establishing that there are at most 45 distinct homeomorphism types of cube manifolds.</p>
 
 
 <div class="example"><pre>
@@ -834,7 +834,27 @@ List(D,Size);
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D,Size);</span>
-[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
+[ 7, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
+
+DD:=List(DD,x-&gt;List(x,y-&gt;PoincareCubeCWComplexNS(
+y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;
+
+D1:=[];
+for x in DD do
+if Length(x)&gt;1 then
+Add(D1, List(x,y-&gt;BarycentricallySimplifiedComplex(RegularCWComplex(BarycentricSubdivision(y)))));
+else Add(D1,x);
+fi;
+od;
+
+DD:=[];
+for x in D1 do
+y:=Classify(x,inv3);
+Add(DD,List(y,z-&gt;z[1]));
+od;
+
+Print(List(DD,Size),"\n");
+[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
 
 </pre></div>
 
