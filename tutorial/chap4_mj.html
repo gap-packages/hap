@@ -58,7 +58,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D50795883E534A3">4.10-1 <span class="Heading">Face pairings for 25 distinct cube manifolds</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7F3F77CF865CB333">4.11 <span class="Heading">There are at most 45 distinct cube manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
 </div>
 </div>
@@ -542,23 +542,23 @@ true
 
 
 <div class="example"><pre>
-A1:= [ [1,2], [3,4], [5,6] ];
-A2:=[ [1,2], [3,5], [4,6] ];
-A3:=[ [1,4], [2,6], [3,5] ];
-D8:=DihedralGroup(IsPermGroup,8);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A1:= [ [1,2], [3,4], [5,6] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A2:=[ [1,2], [3,5], [4,6] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A3:=[ [1,4], [2,6], [3,5] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D8:=DihedralGroup(IsPermGroup,8);;</span>
 
-Manifolds:=[];
-for A in [A1,A2,A3] do
-for x in D8 do
-for y in D8 do
-for z in D8 do
-G:=[x,y,z];
-F:=PoincareCubeCWComplex(A,G);
-b:=IsClosedManifold(F);
-if b=true then Add(Manifolds,F); fi;
-od;od;od;od;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for A in [A1,A2,A3] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for x in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for y in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for z in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">G:=[x,y,z];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">F:=PoincareCubeCWComplex(A,G);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">b:=IsClosedManifold(F);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if b=true then Add(Manifolds,F); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;od;od;</span>
 
-Size(Manifolds);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Manifolds);</span>
 163
 
 </pre></div>
@@ -567,24 +567,24 @@ Size(Manifolds);
 
 
 <div class="example"><pre>
-invariant1:=function(m);
-return List([1..3],k-&gt;Homology(m,k));
-end;;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">invariant1:=function(m);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return List([1..3],k-&gt;Homology(m,k));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
 
-C:=Classify(Manifolds,invariant1);;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Classify(Manifolds,invariant1);;</span>
 
-invariant2:=function(m)
-local L;
-L:=FundamentalGroup(m);
-if GeneratorsOfGroup(L)= [] then return [];fi;
-L:=LowIndexSubgroupsFpGroup(L,10);
-L:=List(L,AbelianInvariants);
-L:=SortedList(L);
-return L;
-end;;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">invariant2:=function(m)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local L;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=FundamentalGroup(m);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if GeneratorsOfGroup(L)= [] then return [];fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=LowIndexSubgroupsFpGroup(L,10);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=List(L,AbelianInvariants);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=SortedList(L);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return L;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
 
-D:=RefineClassification(C,invariant2);;
-List(D,Size);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=RefineClassification(C,invariant2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D,Size);</span>
 [ 40, 2, 10, 15, 8, 6, 2, 6, 2, 5, 7, 1, 4, 11, 7, 7, 10, 4, 4, 2, 1, 3, 1, 
   1, 4 ]
 
@@ -594,7 +594,7 @@ List(D,Size);
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=List(Manifolds,x-&gt;x[1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=List(D,x-&gt;x[1]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientablManifolds);</span>
@@ -613,7 +613,7 @@ List(D,Size);
 
 </pre></div>
 
-<p>The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere).</p>
+<p>The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere). Spherical manifolds with cyclic fundamental group are, by definition, lens spaces.</p>
 
 
 <div class="example"><pre>
@@ -639,138 +639,195 @@ List(D,Size);
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..25] do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">p:=Manifolds[i]!.cubeFacePairings;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Manifold ",i," has face pairings:\n");</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(p[1],"\n",p[2],"\n",p[3],"\n\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(p[1],"\n",p[2],"\n",p[3],"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Fundamental group is:  ");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if i in [ 1, 9, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25 ] then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(StructureDescription(FundamentalGroup(Manifolds[i])),"\n");  </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">else Print("infinite non-cyclic\n"); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if Homology(Manifolds[i],3)=[0] then Print("Orientable\n\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">else Print("Non orientable\n\n"); fi;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
 Manifold 1 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ]
 [ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
+Fundamental group is:  Z x C2
+Non orientable
 
 Manifold 2 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
-[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
+[ [ 1, 5, 6, 2 ], [ 7, 8, 4, 3 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Non orientable
 
 Manifold 3 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
+[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  infinite non-cyclic
+Non orientable
 
 Manifold 4 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
 [ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
+Fundamental group is:  infinite non-cyclic
+Non orientable
 
 Manifold 5 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 7, 6, 5, 8 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 6 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ]
-[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
-
-Manifold 7 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 8 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
 [ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
 [ [ 1, 4, 8, 5 ], [ 2, 6, 7, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Non orientable
 
-Manifold 9 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
-
-Manifold 10 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 7, 3, 2, 6 ] ]
-
-Manifold 11 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 12 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
-
-Manifold 13 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 7, 8, 5 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 14 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ]
-[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
-
-Manifold 15 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 8, 7, 6, 5 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 16 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
-[ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
-
-Manifold 17 has face pairings:
+Manifold 6 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
 
-Manifold 18 has face pairings:
+Manifold 7 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
+
+Manifold 8 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
 [ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ]
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
 
-Manifold 19 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
-[ [ 1, 2, 3, 4 ], [ 6, 5, 8, 7 ] ]
-[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
-
-Manifold 20 has face pairings:
+Manifold 9 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
 [ [ 1, 2, 3, 4 ], [ 8, 5, 6, 7 ] ]
 [ [ 1, 4, 8, 5 ], [ 6, 2, 3, 7 ] ]
+Fundamental group is:  Q8
+Orientable
 
-Manifold 21 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ]
-[ [ 1, 2, 3, 4 ], [ 5, 8, 7, 6 ] ]
-[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
+Manifold 10 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
+[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ]
+[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
 
-Manifold 22 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ]
+Manifold 11 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 4, 3, 7, 8 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  infinite non-cyclic
+Non orientable
 
-Manifold 23 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ]
+Manifold 12 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
+[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
+[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  Z x Z x Z
+Orientable
+
+Manifold 13 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
 [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
+
+Manifold 14 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
+[ [ 1, 2, 3, 4 ], [ 7, 8, 5, 6 ] ]
+[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  C2
+Orientable
+
+Manifold 15 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+[ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  Z
+Non orientable
+
+Manifold 16 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+[ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ]
+Fundamental group is:  Z
+Orientable
+
+Manifold 17 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
+Fundamental group is:  C4
+Orientable
+
+Manifold 18 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
+[ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ]
+[ [ 5, 8, 7, 6 ], [ 6, 2, 3, 7 ] ]
+Fundamental group is:  C3 : C4
+Orientable
+
+Manifold 19 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
+[ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ]
+[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
+Fundamental group is:  C12
+Orientable
+
+Manifold 20 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
+[ [ 1, 2, 3, 4 ], [ 5, 8, 4, 1 ] ]
+[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
+Fundamental group is:  C8
+Orientable
+
+Manifold 21 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
+[ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ]
+[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
+
+Manifold 22 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ]
+[ [ 3, 7, 8, 4 ], [ 7, 6, 2, 3 ] ]
+[ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ]
+Fundamental group is:  C14
+Orientable
+
+Manifold 23 has face pairings:
+[ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ]
+[ [ 3, 7, 8, 4 ], [ 7, 6, 2, 3 ] ]
+[ [ 1, 2, 3, 4 ], [ 5, 8, 4, 1 ] ]
+Fundamental group is:  C6
+Orientable
 
 Manifold 24 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ]
-[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
-[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
+[ [ 1, 5, 6, 2 ], [ 7, 8, 5, 6 ] ]
+[ [ 3, 7, 8, 4 ], [ 2, 3, 7, 6 ] ]
+[ [ 1, 2, 3, 4 ], [ 4, 1, 5, 8 ] ]
+Fundamental group is:  infinite non-cyclic
+Orientable
 
 Manifold 25 has face pairings:
-[ [ 1, 5, 6, 2 ], [ 8, 4, 3, 7 ] ]
-[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]
-[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
+[ [ 1, 5, 6, 2 ], [ 6, 7, 8, 5 ] ]
+[ [ 3, 7, 8, 4 ], [ 3, 7, 6, 2 ] ]
+[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
+Fundamental group is:  1
+Orientable
 
 </pre></div>
 
-<p><a id="X7F3F77CF865CB333" name="X7F3F77CF865CB333"></a></p>
+<p><a id="X8084A36082B26D86" name="X8084A36082B26D86"></a></p>
 
-<h4>4.11 <span class="Heading">There are at most 45 distinct cube manifolds</span></h4>
+<h4>4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></h4>
 
 <p>Using the <span class="URL"><a href="https://simpcomp-team.github.io/simpcomp/README.html">Simpcomp</a></span> package for GAP we can show that many of the 163 cube manifolds constructed above are homeomorphic. We do this by showing that barycentric subdivisions of many of the manifolds are combinatorially the same.</p>
 
@@ -778,24 +835,25 @@ Manifold 25 has face pairings:
 
 
 <div class="example"><pre>
-LoadPackage("Simpcomp");;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("Simpcomp");;</span>
 
-inv3:=function(m)
-local K;
-K:=BarycentricSubdivision(m);
-K:=MaximalSimplicesOfSimplicialComplex(K);
-K:=SC(K);
-if not SCIsStronglyConnected(K) then Print("WARNING!\n"); fi;
-return SCExportIsoSig( K );
-end;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv3:=function(m)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local K;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">K:=BarycentricSubdivision(m);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">K:=MaximalSimplicesOfSimplicialComplex(K);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">K:=SC(K);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if not SCIsStronglyConnected(K) then Print("WARNING!\n"); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return SCExportIsoSig( K );</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function( m ) ... end
 
-DD:=[];
-for x in D do
-y:=Classify(x,inv3);
-Add(DD,List(y,z-&gt;z[1]));
-od;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in D do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y:=Classify(x,inv3);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(DD,List(y,z-&gt;z[1]));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 
-List(DD,Size);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DD,Size);</span>
 [ 9, 1, 3, 3, 3, 1, 1, 1, 1, 1, 2, 1, 2, 7, 4, 4, 3, 1, 1, 1, 1, 3, 1, 1, 3 ]
 
 </pre></div>
@@ -804,16 +862,16 @@ List(DD,Size);
 
 
 <div class="example"><pre>
-DD:=List(DD,x-&gt;List(x,y-&gt;PoincareCubeCWComplexNS(
-y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD:=List(DD,x-&gt;List(x,y-&gt;PoincareCubeCWComplexNS(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;</span>
 
-D:=[];
-for x in DD do
-y:=Classify(x,inv3);
-Add(D,List(y,z-&gt;z[1]));
-od;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in DD do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y:=Classify(x,inv3);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(D,List(y,z-&gt;z[1]));</span>
+&gt;od;;
 
-List(D,Size);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D,Size);</span>
 [ 8, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
 
 </pre></div>
@@ -839,27 +897,29 @@ List(D,Size);
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D,Size);</span>
 [ 7, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
 
-DD:=List(DD,x-&gt;List(x,y-&gt;PoincareCubeCWComplexNS(
-y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD:=List(DD,x-&gt;List(x,y-&gt;PoincareCubeCWComplexNS(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;</span>
 
-D1:=[];
-for x in DD do
-if Length(x)&gt;1 then
-Add(D1, List(x,y-&gt;BarycentricallySimplifiedComplex(RegularCWComplex(BarycentricSubdivision(y)))));
-else Add(D1,x);
-fi;
-od;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in DD do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if Length(x)&gt;1 then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(D1, List(x,y-&gt;BarycentricallySimplifiedComplex(RegularCWComplex(BarycentricSubdivision(y)))));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">else Add(D1,x);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 
-DD:=[];
-for x in D1 do
-y:=Classify(x,inv3);
-Add(DD,List(y,z-&gt;z[1]));
-od;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in D1 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y:=Classify(x,inv3);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(DD,List(y,z-&gt;z[1]));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;;</span>
 
-Print(List(DD,Size),"\n");
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print(List(DD,Size),"\n");</span>
 [ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
 
 </pre></div>
+
+<p>The two manifolds in DD[14] have fundamental group <span class="SimpleMath">\(C_2\)</span> and are thus lens spaces. There is only one homeomorphism class of such lens spaces and so these two manifolds are homeomorphic. The three manifolds in DD[17] are lens spaces with fundamental group <span class="SimpleMath">\(C_4\)</span>. Again, there is only one homeomorphism class of such lens spaces and so these three manifolds are homeomorphic. The two manifolds in DD[25] have trivial fundamental group and are hence both homeomorphic to the 3-sphere. These observations mean that there are at most 41 manifolds arising from a cube by identifying the cube's faces pairwise.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
