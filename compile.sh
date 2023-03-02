@@ -1,12 +1,12 @@
 #You must set PKGDIR equal to the directory in which GAP packages are stored
 # on your computer.
 
-PKGDIR=/home/graham/pkg;
+PKGDIR=$(dirname $(pwd));
 
 #You must set GACDIR equal to the directory in which the GAP compiler gac is
 #stored on your computer.
 
-GACDIR=/usr/share/gap-4.12.0/;
+GACDIR=$(dirname $(which gac))
 
 
 
