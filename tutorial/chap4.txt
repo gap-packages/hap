@@ -94,7 +94,7 @@
   Hom(π_1W,  G)[122X  where  [22X1[122X denotes one of the two possible generators of [22XH_3(W,
   Z)[122X.[133X
   
-  [33X[0;0YFor  any  coprime integers [22Xp,q≥ 1[122X the [13Xlens space[113X [22XL(p,q)[122X is obtained from the
+  [33X[0;0YFor  any coprime integers [22Xp,qge 1[122X the [13Xlens space[113X [22XL(p,q)[122X is obtained from the
   3-sphere  by  drilling  out  a tubular neighbourhood of the trivial knot and
   then  gluing a solid torus to the boundary of the cavity via a homeomorphism
   corresponding  to  a  Dehn  surgery coefficient [22Xp/q[122X. Lens spaces have cyclic
@@ -221,8 +221,8 @@
   form homotopy invariant[113X.[133X
   
   [33X[0;0YThe  following  commands compute the linking form homotopy invariant for the
-  lens  spaces [22XL(13,q)[122X with [22X1≤ q≤ 12[122X. This invariant distinguishes between the
-  two homotopy types that arise.[133X
+  lens  spaces  [22XL(13,q)[122X  with [22X1le qle 12[122X. This invariant distinguishes between
+  the two homotopy types that arise.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLensSpaces:=[];;[127X[104X
@@ -874,12 +874,12 @@
   of many of the manifolds are combinatorially the same.[133X
   
   [33X[0;0YThe   following   commands   establish  homeomorphisms  (simplicial  complex
-  isomorphisms) between manifolds in each equivalence class D[i] above for [22X1 ≤
-  i≤ 25[122X, and then discard all but one manifold in each homeomorphism class. We
-  are  left  with  59  cube  manifolds,  some  of  which  may be homeomorphic,
-  representing  at  least  25 distinct homeomorphism classes. The 59 manifolds
-  are stored in the list DD of length 25 each of whose terms is a list of cube
-  manifolds.[133X
+  isomorphisms)  between  manifolds in each equivalence class D[i] above for [22X1
+  le  ile  25[122X,  and  then  discard  all but one manifold in each homeomorphism
+  class.   We  are  left  with  59  cube  manifolds,  some  of  which  may  be
+  homeomorphic,  representing  at least 25 distinct homeomorphism classes. The
+  59 manifolds are stored in the list DD of length 25 each of whose terms is a
+  list of cube manifolds.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLoadPackage("Simpcomp");;[127X[104X
@@ -982,4 +982,59 @@
   two  manifolds  in  DD[25] have trivial fundamental group and are hence both
   homeomorphic to the 3-sphere. These observations mean that there are at most
   41 manifolds arising from a cube by identifying the cube's faces pairwise.[133X
+  
+  [33X[0;0YThese  observations  can  be  incorporated  into  our list DD of equivalence
+  classes of manifolds as follows.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDD[14]:=DD[14]{[1]};;[127X[104X
+    [4X[25Xgap>[125X [27XDD[17]:=DD[17]{[1]};;[127X[104X
+    [4X[25Xgap>[125X [27XDD[25]:=DD[25]{[1]};;[127X[104X
+    [4X[25Xgap>[125X [27XList(DD,Size);[127X[104X
+    [4X[28X[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.12 [33X[0;0YThere are precisely 18 orientable cube manifolds[133X[101X
+  
+  [33X[0;0YThe  following  commands  show  that  there  are  at least 18 and at most 21
+  orientable cube manifolds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDDorient:=Filtered(DD,x->Homology(x[1],3)=[0]);;[127X[104X
+    [4X[25Xgap>[125X [27XList(DDorient,Size);[127X[104X
+    [4X[28X[ 1, 1, 1, 1, 1, 1, 2, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands show that the fundamental groups of the two manifolds in
+  DDorient[7]  are isomorphic to [22XZ × Z : Z[122X, and that the fundamental groups of
+  the three manifolds in DDorient[9] are isomorphic to [22XZ[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg1:=FundamentalGroup(DDorient[7][1]);;[127X[104X
+    [4X[25Xgap>[125X [27Xg2:=FundamentalGroup(DDorient[7][2]);;[127X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(g1);[127X[104X
+    [4X[28X[ f1^-1*f2*f1*f2^-1, f3^-1*f1*f3*f1, f3^-1*f2^-1*f3*f2^-1 ][128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(g2);[127X[104X
+    [4X[28X[ f1*f2*f1^-1*f2^-1, f1^-1*f3*f1^-1*f3^-1, f3*f2*f3^-1*f2 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xh1:=FundamentalGroup(DDorient[9][1]);;[127X[104X
+    [4X[25Xgap>[125X [27Xh2:=FundamentalGroup(DDorient[9][2]);;[127X[104X
+    [4X[25Xgap>[125X [27Xh3:=FundamentalGroup(DDorient[9][3]);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(h1);[127X[104X
+    [4X[28X"Z"[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(h2);[127X[104X
+    [4X[28X"Z"[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(h3);[127X[104X
+    [4X[28X"Z"[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSince  neither [22XZ× Z : Z[122X nor [22XZ[122X is a free product of two non-trivial groups we
+  conclude  that the manifolds in DDorient[7] and DDorient[9] are prime. Since
+  oriented  prime  3-manifolds  are  determined  up  to homeomorphism by their
+  fundamental  groups  we  can conclude that there are precisely 18 orientable
+  manifolds arising from a cube by identifying the cube's faces pairwise.[133X
   

@@ -58,6 +58,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X83EC61557F00354F">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -140,7 +143,7 @@ Regular CW-complex of dimension 3
 
 <p>A homology version of the Dijkgraaf-Witten invariant can be defined as the set of homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$ Since <span class="SimpleMath">H_3(W, Z)≅ Z</span> we represent <span class="SimpleMath">D_G(W)</span> by the set <span class="SimpleMath">D_G(W)={ γ_∗(1) }_γ∈ Hom(π_1W, G)</span> where <span class="SimpleMath">1</span> denotes one of the two possible generators of <span class="SimpleMath">H_3(W, Z)</span>.</p>
 
-<p>For any coprime integers <span class="SimpleMath">p,q≥ 1</span> the <em>lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≡ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
+<p>For any coprime integers <span class="SimpleMath">p,qge 1</span> the <em>lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≡ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
 
 <p>The following session constructs the two lens spaces <span class="SimpleMath">L(5,1)</span> and <span class="SimpleMath">L(5,2)</span>. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">G=C_5</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
 
@@ -246,7 +249,7 @@ Regular CW-complex of dimension 3
 
 <p>is a homotopy invariant of <span class="SimpleMath">W</span> which in this manual we refer to as the <em>linking form homotopy invariant</em>.</p>
 
-<p>The following commands compute the linking form homotopy invariant for the lens spaces <span class="SimpleMath">L(13,q)</span> with <span class="SimpleMath">1≤ q≤ 12</span>. This invariant distinguishes between the two homotopy types that arise.</p>
+<p>The following commands compute the linking form homotopy invariant for the lens spaces <span class="SimpleMath">L(13,q)</span> with <span class="SimpleMath">1le qle 12</span>. This invariant distinguishes between the two homotopy types that arise.</p>
 
 
 <div class="example"><pre>
@@ -828,7 +831,7 @@ Orientable
 
 <p>Using the <span class="URL"><a href="https://simpcomp-team.github.io/simpcomp/README.html">Simpcomp</a></span> package for GAP we can show that many of the 163 cube manifolds constructed above are homeomorphic. We do this by showing that barycentric subdivisions of many of the manifolds are combinatorially the same.</p>
 
-<p>The following commands establish homeomorphisms (simplicial complex isomorphisms) between manifolds in each equivalence class D[i] above for <span class="SimpleMath">1 ≤ i≤ 25</span>, and then discard all but one manifold in each homeomorphism class. We are left with 59 cube manifolds, some of which may be homeomorphic, representing at least 25 distinct homeomorphism classes. The 59 manifolds are stored in the list DD of length 25 each of whose terms is a list of cube manifolds.</p>
+<p>The following commands establish homeomorphisms (simplicial complex isomorphisms) between manifolds in each equivalence class D[i] above for <span class="SimpleMath">1 le ile 25</span>, and then discard all but one manifold in each homeomorphism class. We are left with 59 cube manifolds, some of which may be homeomorphic, representing at least 25 distinct homeomorphism classes. The 59 manifolds are stored in the list DD of length 25 each of whose terms is a list of cube manifolds.</p>
 
 
 <div class="example"><pre>
@@ -917,6 +920,57 @@ function( m ) ... end
 </pre></div>
 
 <p>The two manifolds in DD[14] have fundamental group <span class="SimpleMath">C_2</span> and are thus lens spaces. There is only one homeomorphism class of such lens spaces and so these two manifolds are homeomorphic. The three manifolds in DD[17] are lens spaces with fundamental group <span class="SimpleMath">C_4</span>. Again, there is only one homeomorphism class of such lens spaces and so these three manifolds are homeomorphic. The two manifolds in DD[25] have trivial fundamental group and are hence both homeomorphic to the 3-sphere. These observations mean that there are at most 41 manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+
+<p>These observations can be incorporated into our list DD of equivalence classes of manifolds as follows.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[14]:=DD[14]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[17]:=DD[17]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[25]:=DD[25]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DD,Size);</span>
+[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+
+</pre></div>
+
+<p><a id="X83EC61557F00354F" name="X83EC61557F00354F"></a></p>
+
+<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></h4>
+
+<p>The following commands show that there are at least 18 and at most 21 orientable cube manifolds.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DDorient:=Filtered(DD,x-&gt;Homology(x[1],3)=[0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DDorient,Size);</span>
+[ 1, 1, 1, 1, 1, 1, 2, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+
+</pre></div>
+
+<p>The next commands show that the fundamental groups of the two manifolds in DDorient[7] are isomorphic to <span class="SimpleMath">Z × Z : Z</span>, and that the fundamental groups of the three manifolds in DDorient[9] are isomorphic to <span class="SimpleMath">Z</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1:=FundamentalGroup(DDorient[7][1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2:=FundamentalGroup(DDorient[7][2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(g1);</span>
+[ f1^-1*f2*f1*f2^-1, f3^-1*f1*f3*f1, f3^-1*f2^-1*f3*f2^-1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(g2);</span>
+[ f1*f2*f1^-1*f2^-1, f1^-1*f3*f1^-1*f3^-1, f3*f2*f3^-1*f2 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h1:=FundamentalGroup(DDorient[9][1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h2:=FundamentalGroup(DDorient[9][2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h3:=FundamentalGroup(DDorient[9][3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h1);</span>
+"Z"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h2);</span>
+"Z"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h3);</span>
+"Z"
+
+</pre></div>
+
+<p>Since neither <span class="SimpleMath">Z× Z : Z</span> nor <span class="SimpleMath">Z</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable manifolds arising from a cube by identifying the cube's faces pairwise.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>

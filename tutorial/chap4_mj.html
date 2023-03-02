@@ -61,6 +61,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X83EC61557F00354F">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -920,6 +923,57 @@ function( m ) ... end
 </pre></div>
 
 <p>The two manifolds in DD[14] have fundamental group <span class="SimpleMath">\(C_2\)</span> and are thus lens spaces. There is only one homeomorphism class of such lens spaces and so these two manifolds are homeomorphic. The three manifolds in DD[17] are lens spaces with fundamental group <span class="SimpleMath">\(C_4\)</span>. Again, there is only one homeomorphism class of such lens spaces and so these three manifolds are homeomorphic. The two manifolds in DD[25] have trivial fundamental group and are hence both homeomorphic to the 3-sphere. These observations mean that there are at most 41 manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+
+<p>These observations can be incorporated into our list DD of equivalence classes of manifolds as follows.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[14]:=DD[14]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[17]:=DD[17]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DD[25]:=DD[25]{[1]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DD,Size);</span>
+[ 6, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+
+</pre></div>
+
+<p><a id="X83EC61557F00354F" name="X83EC61557F00354F"></a></p>
+
+<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></h4>
+
+<p>The following commands show that there are at least 18 and at most 21 orientable cube manifolds.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DDorient:=Filtered(DD,x-&gt;Homology(x[1],3)=[0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DDorient,Size);</span>
+[ 1, 1, 1, 1, 1, 1, 2, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+
+</pre></div>
+
+<p>The next commands show that the fundamental groups of the two manifolds in DDorient[7] are isomorphic to <span class="SimpleMath">\(\mathbb Z \times \mathbb Z : \mathbb Z\)</span>, and that the fundamental groups of the three manifolds in DDorient[9] are isomorphic to <span class="SimpleMath">\(\mathbb Z\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1:=FundamentalGroup(DDorient[7][1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2:=FundamentalGroup(DDorient[7][2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(g1);</span>
+[ f1^-1*f2*f1*f2^-1, f3^-1*f1*f3*f1, f3^-1*f2^-1*f3*f2^-1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(g2);</span>
+[ f1*f2*f1^-1*f2^-1, f1^-1*f3*f1^-1*f3^-1, f3*f2*f3^-1*f2 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h1:=FundamentalGroup(DDorient[9][1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h2:=FundamentalGroup(DDorient[9][2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h3:=FundamentalGroup(DDorient[9][3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h1);</span>
+"Z"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h2);</span>
+"Z"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(h3);</span>
+"Z"
+
+</pre></div>
+
+<p>Since neither <span class="SimpleMath">\(\mathbb Z\times \mathbb Z : \mathbb Z\)</span> nor <span class="SimpleMath">\(\mathbb Z\)</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable manifolds arising from a cube by identifying the cube's faces pairwise.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
