@@ -15,10 +15,10 @@ GACDIR=/usr/share/gap-4.12.0/;
 #####################################################################
 read version < version;
 
-LIB=$PKGDIR/Hap$version/lib;
+LIB=$PKGDIR/hap-$version/lib;
 
-rm $PKGDIR/Hap$version/boolean;
-echo "COMPILED:=true;" > $PKGDIR/Hap$version/boolean;
+rm $PKGDIR/hap-$version/boolean;
+echo "COMPILED:=true;" > $PKGDIR/hap-$version/boolean;
 
 #$GACDIR/gac -d $LIB/CompiledGAP/*.c;
 #mkdir  $LIB/CompiledGAP/Compiled;
