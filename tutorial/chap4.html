@@ -58,7 +58,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X83EC61557F00354F">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7B63C22C80E53758">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds, of which   9 are spherical and 5 are euclidean</span></a>
 </span>
 </div>
 </div>
@@ -143,7 +143,7 @@ Regular CW-complex of dimension 3
 
 <p>A homology version of the Dijkgraaf-Witten invariant can be defined as the set of homology homomorphisms $$D_G(W) =\{ \gamma_\ast\colon H_3(W,\mathbb Z) \longrightarrow H_3(BG,\mathbb Z) \}_{\gamma\in {\rm Hom}(\pi_1W, G)}.$$ Since <span class="SimpleMath">H_3(W, Z)≅ Z</span> we represent <span class="SimpleMath">D_G(W)</span> by the set <span class="SimpleMath">D_G(W)={ γ_∗(1) }_γ∈ Hom(π_1W, G)</span> where <span class="SimpleMath">1</span> denotes one of the two possible generators of <span class="SimpleMath">H_3(W, Z)</span>.</p>
 
-<p>For any coprime integers <span class="SimpleMath">p,qge 1</span> the <em>lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≡ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
+<p>For any coprime integers <span class="SimpleMath">p,q≥ 1</span> the <em>lens space</em> <span class="SimpleMath">L(p,q)</span> is obtained from the 3-sphere by drilling out a tubular neighbourhood of the trivial knot and then gluing a solid torus to the boundary of the cavity via a homeomorphism corresponding to a Dehn surgery coefficient <span class="SimpleMath">p/q</span>. Lens spaces have cyclic fundamental group <span class="SimpleMath">π_1(L(p,q))=C_p</span> and homology <span class="SimpleMath">H_1(L(p,q), Z)≅ Z_p</span>, <span class="SimpleMath">H_2(L(p,q), Z)≅ 0</span>, <span class="SimpleMath">H_3(L(p,q), Z)≅ Z</span>. It was proved by J.H.C. Whitehead that two lens spaces <span class="SimpleMath">L(p,q)</span> and <span class="SimpleMath">L(p',q')</span> are homotopy equivalent if and only if <span class="SimpleMath">p=p'</span> and <span class="SimpleMath">qq'≡ ± n^2 mod p</span> for some integer <span class="SimpleMath">n</span>.</p>
 
 <p>The following session constructs the two lens spaces <span class="SimpleMath">L(5,1)</span> and <span class="SimpleMath">L(5,2)</span>. The homology version of the Dijkgraaf-Witten invariant is used with <span class="SimpleMath">G=C_5</span> to demonstrate that the two lens spaces are not homotopy equivalent.</p>
 
@@ -249,7 +249,7 @@ Regular CW-complex of dimension 3
 
 <p>is a homotopy invariant of <span class="SimpleMath">W</span> which in this manual we refer to as the <em>linking form homotopy invariant</em>.</p>
 
-<p>The following commands compute the linking form homotopy invariant for the lens spaces <span class="SimpleMath">L(13,q)</span> with <span class="SimpleMath">1le qle 12</span>. This invariant distinguishes between the two homotopy types that arise.</p>
+<p>The following commands compute the linking form homotopy invariant for the lens spaces <span class="SimpleMath">L(13,q)</span> with <span class="SimpleMath">1≤ q≤ 12</span>. This invariant distinguishes between the two homotopy types that arise.</p>
 
 
 <div class="example"><pre>
@@ -595,11 +595,11 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=List(D,x-&gt;x[1]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientablManifolds);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientableManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientableManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientableManifolds);</span>
 18
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(NonOrientablManifolds);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(NonOrientableManifolds);</span>
 7
 
 </pre></div>
@@ -608,7 +608,7 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(NonOrientablManifolds,m-&gt;IsFinite(FundamentalGroup(m)));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(NonOrientableManifolds,m-&gt;IsFinite(FundamentalGroup(m)));</span>
 [ false, false, false, false, false, false, false ]
 
 </pre></div>
@@ -617,11 +617,11 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
           IsFinite(FundamentalGroup(m)));
 [ true, true, true, true, true, true, true, true, true ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
           StructureDescription(FundamentalGroup(m)));
 [ "Q8", "C2", "C4", "C3 : C4", "C12", "C8", "C14", "C6", "1" ]
 
@@ -831,7 +831,7 @@ Orientable
 
 <p>Using the <span class="URL"><a href="https://simpcomp-team.github.io/simpcomp/README.html">Simpcomp</a></span> package for GAP we can show that many of the 163 cube manifolds constructed above are homeomorphic. We do this by showing that barycentric subdivisions of many of the manifolds are combinatorially the same.</p>
 
-<p>The following commands establish homeomorphisms (simplicial complex isomorphisms) between manifolds in each equivalence class D[i] above for <span class="SimpleMath">1 le ile 25</span>, and then discard all but one manifold in each homeomorphism class. We are left with 59 cube manifolds, some of which may be homeomorphic, representing at least 25 distinct homeomorphism classes. The 59 manifolds are stored in the list DD of length 25 each of whose terms is a list of cube manifolds.</p>
+<p>The following commands establish homeomorphisms (simplicial complex isomorphisms) between manifolds in each equivalence class D[i] above for <span class="SimpleMath">1 ≤ i≤ 25</span>, and then discard all but one manifold in each homeomorphism class. We are left with 59 cube manifolds, some of which may be homeomorphic, representing at least 25 distinct homeomorphism classes. The 59 manifolds are stored in the list DD of length 25 each of whose terms is a list of cube manifolds.</p>
 
 
 <div class="example"><pre>
@@ -933,9 +933,9 @@ function( m ) ... end
 
 </pre></div>
 
-<p><a id="X83EC61557F00354F" name="X83EC61557F00354F"></a></p>
+<p><a id="X7B63C22C80E53758" name="X7B63C22C80E53758"></a></p>
 
-<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></h4>
+<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds, of which   9 are spherical and 5 are euclidean</span></h4>
 
 <p>The following commands show that there are at least 18 and at most 21 orientable cube manifolds.</p>
 
@@ -971,6 +971,65 @@ function( m ) ... end
 </pre></div>
 
 <p>Since neither <span class="SimpleMath">Z× Z : Z</span> nor <span class="SimpleMath">Z</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+
+<p>A compact 3-manifold <span class="SimpleMath">M</span> is <em>spherical</em> if it is of the form <span class="SimpleMath">M=S^3/Γ</span> where <span class="SimpleMath">Γ</span> is a finite group acting freely as rotations on <span class="SimpleMath">S^3</span>. The fundamental group of <span class="SimpleMath">M</span> is then the finite group <span class="SimpleMath">Γ</span>. Perlemen showed that a compact 3-manifold is spherical if and only if its fundamental group is finite.</p>
+
+<p>A compact 3-manifold is <em>euclidean</em> if it is of the form <span class="SimpleMath">M= R^3/Γ</span> where <span class="SimpleMath">Γ</span> is a group of affine transformations acting freely on <span class="SimpleMath">R^3</span>. The fundamental group is then <span class="SimpleMath">Γ</span> and is called a <em>Bieberbach group</em> of dimension 3. It can be shown that a group <span class="SimpleMath">Γ</span> is isomorphic to a Bieberbach group of dimension <span class="SimpleMath">n</span> if and only if there is a short exact sequence <span class="SimpleMath">Z^n ↣ Γ ↠ P</span> with <span class="SimpleMath">P</span> a finite group.</p>
+
+<p>The following commands establish that there are precisely 9 orientable spherical manifolds and 5 closed orientable euclidean manifolds arising from pairwise identifications of the faces of the cube.</p>
+
+
+<div class="example"><pre>
+#############################
+MyIsInfinite:=function(G)
+local L;
+if GeneratorsOfGroup(G)=[] then return true; fi;
+L:=LowIndexSubgroupsFpGroup(G,6);
+Apply(L,AbelianInvariants);
+if 0 in Flat(L) then return true;
+else return fail; fi;
+end;
+#############################
+
+#############################
+MyIsFinite:=function(G);
+if MyIsInfinite(G)=true then return false; fi;
+return IsFinite(G);
+end;
+#############################
+
+#############################
+MyIsBieberbach:=function(F)
+local L;
+L:=LowIndexSubgroupsFpGroup(F,6); #6 suffices for 3D groups
+L:=Filtered(L,g-&gt;IsNormal(F,g));
+L:=List(L,g-&gt;Image(IsomorphismFpGroup(g)));
+L:=Filtered([1..Length(L)],i-&gt;AbelianInvariants(L[i])=[0,0,0] and Length(RelatorsOfFpGroup(L[i]))&gt;=3);
+if Length(L)&gt;0 then return true; fi;;
+return false;
+end;
+#############################
+
+#############################
+ManifoldType:=function(M)
+local F;
+F:=FundamentalGroup(M);
+if MyIsInfinite(F)=true then
+  if MyIsBieberbach(F) then return "euclidean";
+  else return "other"; fi;
+fi;
+if MyIsFinite(F)=true then return "spherical";
+else return fail; fi;
+end; 
+#############################
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds,type);</span>
+[ "euclidean", "other", "other", "spherical", "other", "euclidean", 
+  "euclidean", "spherical", "other", "spherical", "spherical", "spherical", 
+  "spherical", "euclidean", "spherical", "spherical", "euclidean", "other" ]
+
+			 </pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>

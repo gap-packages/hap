@@ -61,7 +61,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X83EC61557F00354F">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7B63C22C80E53758">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds, of which   9 are spherical and 5 are euclidean</span></a>
 </span>
 </div>
 </div>
@@ -598,11 +598,11 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Manifolds:=List(D,x-&gt;x[1]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientablManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientablManifolds);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrientableManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonOrientableManifolds:=Filtered(Manifolds,m-&gt;Homology(m,3)=[]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(OrientableManifolds);</span>
 18
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(NonOrientablManifolds);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(NonOrientableManifolds);</span>
 7
 
 </pre></div>
@@ -611,7 +611,7 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(NonOrientablManifolds,m-&gt;IsFinite(FundamentalGroup(m)));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(NonOrientableManifolds,m-&gt;IsFinite(FundamentalGroup(m)));</span>
 [ false, false, false, false, false, false, false ]
 
 </pre></div>
@@ -620,11 +620,11 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
           IsFinite(FundamentalGroup(m)));
 [ true, true, true, true, true, true, true, true, true ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientablManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds{[4,8,10,11,12,13,15,16,18]},m-&gt;</span>
           StructureDescription(FundamentalGroup(m)));
 [ "Q8", "C2", "C4", "C3 : C4", "C12", "C8", "C14", "C6", "1" ]
 
@@ -936,9 +936,9 @@ function( m ) ... end
 
 </pre></div>
 
-<p><a id="X83EC61557F00354F" name="X83EC61557F00354F"></a></p>
+<p><a id="X7B63C22C80E53758" name="X7B63C22C80E53758"></a></p>
 
-<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds</span></h4>
+<h4>4.12 <span class="Heading">There are precisely 18 orientable cube manifolds, of which   9 are spherical and 5 are euclidean</span></h4>
 
 <p>The following commands show that there are at least 18 and at most 21 orientable cube manifolds.</p>
 
@@ -974,6 +974,65 @@ function( m ) ... end
 </pre></div>
 
 <p>Since neither <span class="SimpleMath">\(\mathbb Z\times \mathbb Z : \mathbb Z\)</span> nor <span class="SimpleMath">\(\mathbb Z\)</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+
+<p>A compact 3-manifold <span class="SimpleMath">\(M\)</span> is <em>spherical</em> if it is of the form <span class="SimpleMath">\(M=S^3/\Gamma\)</span> where <span class="SimpleMath">\(\Gamma\)</span> is a finite group acting freely as rotations on <span class="SimpleMath">\(S^3\)</span>. The fundamental group of <span class="SimpleMath">\(M\)</span> is then the finite group <span class="SimpleMath">\(\Gamma\)</span>. Perlemen showed that a compact 3-manifold is spherical if and only if its fundamental group is finite.</p>
+
+<p>A compact 3-manifold is <em>euclidean</em> if it is of the form <span class="SimpleMath">\(M=\mathbb R^3/\Gamma\)</span> where <span class="SimpleMath">\(\Gamma\)</span> is a group of affine transformations acting freely on <span class="SimpleMath">\(\mathbb R^3\)</span>. The fundamental group is then <span class="SimpleMath">\(\Gamma\)</span> and is called a <em>Bieberbach group</em> of dimension 3. It can be shown that a group <span class="SimpleMath">\(\Gamma\)</span> is isomorphic to a Bieberbach group of dimension <span class="SimpleMath">\(n\)</span> if and only if there is a short exact sequence <span class="SimpleMath">\(\mathbb Z^n \rightarrowtail \Gamma \twoheadrightarrow P\)</span> with <span class="SimpleMath">\(P\)</span> a finite group.</p>
+
+<p>The following commands establish that there are precisely 9 orientable spherical manifolds and 5 closed orientable euclidean manifolds arising from pairwise identifications of the faces of the cube.</p>
+
+
+<div class="example"><pre>
+#############################
+MyIsInfinite:=function(G)
+local L;
+if GeneratorsOfGroup(G)=[] then return true; fi;
+L:=LowIndexSubgroupsFpGroup(G,6);
+Apply(L,AbelianInvariants);
+if 0 in Flat(L) then return true;
+else return fail; fi;
+end;
+#############################
+
+#############################
+MyIsFinite:=function(G);
+if MyIsInfinite(G)=true then return false; fi;
+return IsFinite(G);
+end;
+#############################
+
+#############################
+MyIsBieberbach:=function(F)
+local L;
+L:=LowIndexSubgroupsFpGroup(F,6); #6 suffices for 3D groups
+L:=Filtered(L,g-&gt;IsNormal(F,g));
+L:=List(L,g-&gt;Image(IsomorphismFpGroup(g)));
+L:=Filtered([1..Length(L)],i-&gt;AbelianInvariants(L[i])=[0,0,0] and Length(RelatorsOfFpGroup(L[i]))&gt;=3);
+if Length(L)&gt;0 then return true; fi;;
+return false;
+end;
+#############################
+
+#############################
+ManifoldType:=function(M)
+local F;
+F:=FundamentalGroup(M);
+if MyIsInfinite(F)=true then
+  if MyIsBieberbach(F) then return "euclidean";
+  else return "other"; fi;
+fi;
+if MyIsFinite(F)=true then return "spherical";
+else return fail; fi;
+end; 
+#############################
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds,type);</span>
+[ "euclidean", "other", "other", "spherical", "other", "euclidean", 
+  "euclidean", "spherical", "other", "spherical", "spherical", "spherical", 
+  "spherical", "euclidean", "spherical", "spherical", "euclidean", "other" ]
+
+			 </pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
