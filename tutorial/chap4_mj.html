@@ -57,6 +57,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D50795883E534A3">4.10-1 <span class="Heading">Face pairings for 25 distinct cube manifolds</span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X837811BB8181666E">4.10-2 <span class="Heading">Platonic cube manifolds</span></a>
+</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X8084A36082B26D86">4.11 <span class="Heading">There are at most 41 distinct cube manifolds</span></a>
 </span>
@@ -535,13 +537,13 @@ true
 
 <h4>4.10 <span class="Heading">There are at least 25 distinct cube manifolds</span></h4>
 
-<p>The function <code class="code">PoincareCubeCWComplex(A,G)</code> can also be applied to two inputs where <span class="SimpleMath">\(A\)</span> is a pairing of the six faces such as <span class="SimpleMath">\(A=[[1,2],[3,4],[5,6]]\)</span> and <span class="SimpleMath">\(G\)</span> is a list of three elements of the dihedral group of order <span class="SimpleMath">\(8\)</span> such as <span class="SimpleMath">\(G=[(2,4),(2,4),(2,4)*(1,3)]\)</span>. The dihedral elements specify how each pair of faces are glued together. With these inputs it is easy to iterate over all possible values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> in order to construct all possible 3-manifolds arising from the pairwise identification of faces of a cube. Distinct values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> can of course yield homeomorphic spaces. To ensure that each possible cube manifold is constructed, at least once, up to homeomorphism it suffices to consider</p>
+<p>The function <code class="code">PoincareCubeCWComplex(A,G)</code> can also be applied to two inputs where <span class="SimpleMath">\(A\)</span> is a pairing of the six faces such as <span class="SimpleMath">\(A=[[1,2],[3,4],[5,6]]\)</span> and <span class="SimpleMath">\(G\)</span> is a list of three elements of the dihedral group of order <span class="SimpleMath">\(8\)</span> such as <span class="SimpleMath">\(G=[(2,4),(2,4),(2,4)*(1,3)]\)</span>. The dihedral elements specify how each pair of faces are glued together. With these inputs it is easy to iterate over all possible values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> in order to construct all possible closed 3-manifolds arising from the pairwise identification of faces of a cube. We call such a manifold a <em><strong class="button">cube manifold</strong></em>. Distinct values of <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(G\)</span> can of course yield homeomorphic spaces. To ensure that each possible cube manifold is constructed, at least once, up to homeomorphism it suffices to consider</p>
 
 <p><span class="SimpleMath">\(A=[ [1,2], [3,4], [5,6] ]\)</span>, <span class="SimpleMath">\(A=[ [1,2], [3,5], [4,6] ]\)</span>, <span class="SimpleMath">\(A=[ [1,4], [2,6], [3,5] ]\)</span></p>
 
 <p>and all <span class="SimpleMath">\(G\)</span> in <span class="SimpleMath">\(D_8\times D_8\times D_8\)</span>.</p>
 
-<p>The following commands iterate through these <span class="SimpleMath">\(3\times8^3 = 1536\)</span> pairs <span class="SimpleMath">\((A,G)\)</span> and show that in precisely 163 cases (just over 10% of cases) the quotient CW-complex is a 3-manifold.</p>
+<p>The following commands iterate through these <span class="SimpleMath">\(3\times8^3 = 1536\)</span> pairs <span class="SimpleMath">\((A,G)\)</span> and show that in precisely 163 cases (just over 10% of cases) the quotient CW-complex is a closed 3-manifold.</p>
 
 
 <div class="example"><pre>
@@ -566,7 +568,7 @@ true
 
 </pre></div>
 
-<p>The following additional commands use integral homology and low index subgroups of fundamental groups to establish that the 163 cubes manifolds represent at least 25 distinct homotopy equivalence classes of manifolds. One homotopy class is represented by up to 40 of the manifolds, and at least four of the homotopy classes are each represented by a single manifold..</p>
+<p>The following additional commands use integral homology and low index subgroups of fundamental groups to establish that the 163 cube manifolds represent at least 25 distinct homotopy equivalence classes of manifolds. One homotopy class is represented by up to 40 of the manifolds, and at least four of the homotopy classes are each represented by a single manifold..</p>
 
 
 <div class="example"><pre>
@@ -616,7 +618,7 @@ true
 
 </pre></div>
 
-<p>The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere). Spherical manifolds with cyclic fundamental group are, by definition, lens spaces.</p>
+<p>The final commands show that (at least) 9 of the orientable manifolds have finite fundamental groups and list the isomorphism types of these finite groups. Note that it is now known that any closed 3-manifold with finite fundamental group is spherical (i.e. is a quotient of the 3-sphere). Spherical manifolds with cyclic fundamental group are, by definition, lens spaces.</p>
 
 
 <div class="example"><pre>
@@ -635,21 +637,25 @@ true
 
 <h5>4.10-1 <span class="Heading">Face pairings for 25 distinct cube manifolds</span></h5>
 
-<p>The following are the face pairings of 25 non-homeomorphic cube manifolds, with vertices of the cube numbered as describe above. The function <code class="code">ManifoldType()</code> is defined below and must be entered into the <strong class="button">GAP</strong> session.</p>
+<p>The following are the face pairings of 25 non-homeomorphic cube manifolds, with vertices of the cube numbered as describe above.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..25] do</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..25] do                                              </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">p:=Manifolds[i]!.cubeFacePairings;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Manifold ",i," has face pairings:\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(p[1],"\n",p[2],"\n",p[3],"\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("Fundamental group is:  ");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">if i in [ 1, 9, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25 ] then</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(StructureDescription(FundamentalGroup(Manifolds[i])),"\n");  </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(StructureDescription(FundamentalGroup(Manifolds[i])),"\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">else Print("infinite non-cyclic\n"); fi;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">if Homology(Manifolds[i],3)=[0] then Print("Orientable, ");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">else Print("Non orientable, "); fi;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(ManifoldType(Manifolds[i]),"\n\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(ManifoldType(Manifolds[i]),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for x in Manifolds[i]!.edgeDegrees do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(x[2]," edges of \"degree\" ",x[1],",  ");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("\n\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 
 Manifold 1 has face pairings:
@@ -658,6 +664,7 @@ Manifold 1 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ]
 Fundamental group is:  Z x C2
 Non orientable, other
+4 edges of "degree" 2,  4 edges of "degree" 4,  
 
 Manifold 2 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 7, 8, 4, 3 ] ]
@@ -665,6 +672,7 @@ Manifold 2 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Non orientable, other
+2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  
 
 Manifold 3 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
@@ -672,6 +680,7 @@ Manifold 3 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  infinite non-cyclic
 Non orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 4 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
@@ -679,6 +688,7 @@ Manifold 4 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ]
 Fundamental group is:  infinite non-cyclic
 Non orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 5 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
@@ -686,6 +696,7 @@ Manifold 5 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 2, 6, 7, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Non orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 6 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -693,6 +704,7 @@ Manifold 6 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 7 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
@@ -700,6 +712,7 @@ Manifold 7 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, other
+2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  
 
 Manifold 8 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -707,6 +720,7 @@ Manifold 8 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, other
+4 edges of "degree" 2,  2 edges of "degree" 8,  
 
 Manifold 9 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -714,6 +728,7 @@ Manifold 9 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 6, 2, 3, 7 ] ]
 Fundamental group is:  Q8
 Orientable, spherical
+8 edges of "degree" 3,  
 
 Manifold 10 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
@@ -721,6 +736,7 @@ Manifold 10 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, other
+4 edges of "degree" 2,  4 edges of "degree" 4,  
 
 Manifold 11 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 4, 3, 7, 8 ] ]
@@ -728,6 +744,7 @@ Manifold 11 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  infinite non-cyclic
 Non orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 12 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
@@ -735,6 +752,7 @@ Manifold 12 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  Z x Z x Z
 Orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 13 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ]
@@ -742,6 +760,7 @@ Manifold 13 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 14 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
@@ -749,6 +768,7 @@ Manifold 14 has face pairings:
 [ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  C2
 Orientable, spherical
+12 edges of "degree" 2,  
 
 Manifold 15 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ]
@@ -756,6 +776,7 @@ Manifold 15 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  Z
 Non orientable, other
+4 edges of "degree" 1,  2 edges of "degree" 2,  2 edges of "degree" 8,  
 
 Manifold 16 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -763,6 +784,7 @@ Manifold 16 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ]
 Fundamental group is:  Z
 Orientable, other
+4 edges of "degree" 1,  2 edges of "degree" 2,  2 edges of "degree" 8,  
 
 Manifold 17 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -770,6 +792,7 @@ Manifold 17 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
 Fundamental group is:  C4
 Orientable, spherical
+2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  
 
 Manifold 18 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -777,6 +800,7 @@ Manifold 18 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 6, 2, 3, 7 ] ]
 Fundamental group is:  C3 : C4
 Orientable, spherical
+2 edges of "degree" 2,  4 edges of "degree" 5,  
 
 Manifold 19 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -784,6 +808,7 @@ Manifold 19 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
 Fundamental group is:  C12
 Orientable, spherical
+2 edges of "degree" 2,  2 edges of "degree" 3,  2 edges of "degree" 7,  
 
 Manifold 20 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ]
@@ -791,6 +816,7 @@ Manifold 20 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ]
 Fundamental group is:  C8
 Orientable, spherical
+8 edges of "degree" 3,  
 
 Manifold 21 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ]
@@ -798,6 +824,7 @@ Manifold 21 has face pairings:
 [ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 22 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ]
@@ -805,6 +832,7 @@ Manifold 22 has face pairings:
 [ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ]
 Fundamental group is:  C14
 Orientable, spherical
+2 edges of "degree" 2,  4 edges of "degree" 5,  
 
 Manifold 23 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ]
@@ -812,6 +840,7 @@ Manifold 23 has face pairings:
 [ [ 1, 2, 3, 4 ], [ 5, 8, 4, 1 ] ]
 Fundamental group is:  C6
 Orientable, spherical
+6 edges of "degree" 2,  2 edges of "degree" 6,  
 
 Manifold 24 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 7, 8, 5, 6 ] ]
@@ -819,6 +848,7 @@ Manifold 24 has face pairings:
 [ [ 1, 2, 3, 4 ], [ 4, 1, 5, 8 ] ]
 Fundamental group is:  infinite non-cyclic
 Orientable, euclidean
+6 edges of "degree" 4,  
 
 Manifold 25 has face pairings:
 [ [ 1, 5, 6, 2 ], [ 6, 7, 8, 5 ] ]
@@ -826,8 +856,19 @@ Manifold 25 has face pairings:
 [ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ]
 Fundamental group is:  1
 Orientable, spherical
+4 edges of "degree" 1,  4 edges of "degree" 5,
 
 </pre></div>
+
+<p><a id="X837811BB8181666E" name="X837811BB8181666E"></a></p>
+
+<h5>4.10-2 <span class="Heading">Platonic cube manifolds</span></h5>
+
+<p>A <em>platonic solid</em> is a convex, regular polyhedron in <span class="SimpleMath">\(3\)</span>-dimensional euclidean <span class="SimpleMath">\(\mathbb E^3\)</span> or spherical <span class="SimpleMath">\(\mathbb S^3\)</span> or hyperbolic space <span class="SimpleMath">\(\mathbb H^3\)</span>. Being <em>regular</em> means that all edges are congruent, all faces are congruent, all angles between adjacent edges in a face are congruent, all dihedral angles between adjacent faces are congruent. A platonic cube in euclidean space has six congruent square faces with diherdral angle <span class="SimpleMath">\(\pi/2\)</span>. A platonic cube in spherical space has dihedral angles <span class="SimpleMath">\(2\pi/3\)</span>. A platonic cube in hyperbolic space has dihedral angles <span class="SimpleMath">\(2\pi/5\)</span>. This can alternatively be expressed by saying that in a tessellation of <span class="SimpleMath">\(\mathbb E^3\)</span> by platonic cubes each edge is adjacent to 4 square faces. In a tessellation of <span class="SimpleMath">\(\mathbb S^3\)</span> by platonic cubes each edge is adjacent to 3 square faces. In a tessellation of <span class="SimpleMath">\(\mathbb H^3\)</span> by platonic cubes each edge is adjacent to 5 five square faces.</p>
+
+<p>Any cube manifold <span class="SimpleMath">\(M\)</span> induces a cubical CW-decomposition of its universal cover <span class="SimpleMath">\(\widetilde M\)</span>. We say that <span class="SimpleMath">\(M\)</span> is a <em>platonic cube manifold</em> if every edge in <span class="SimpleMath">\(\widetilde M\)</span> is adjacent to 4 faces in the euclidean case <span class="SimpleMath">\(\widetilde M=\mathbb E^3\)</span>, is adjacent to 3 faces in the spherical case <span class="SimpleMath">\(\widetilde M=\mathbb S^3\)</span>, is adjacent to 5 faces in the hyperbolic case <span class="SimpleMath">\(\widetilde M=\mathbb H^3\)</span>.</p>
+
+<p>In the above list of 25 cube manifolds we see that the euclidean manifolds 3, 4, 5, 6, 11 are platonic and that the spherical manifolds 9, 20 are platonic.</p>
 
 <p><a id="X8084A36082B26D86" name="X8084A36082B26D86"></a></p>
 
@@ -923,7 +964,7 @@ function( m ) ... end
 
 </pre></div>
 
-<p>The two manifolds in DD[14] have fundamental group <span class="SimpleMath">\(C_2\)</span> and are thus lens spaces. There is only one homeomorphism class of such lens spaces and so these two manifolds are homeomorphic. The three manifolds in DD[17] are lens spaces with fundamental group <span class="SimpleMath">\(C_4\)</span>. Again, there is only one homeomorphism class of such lens spaces and so these three manifolds are homeomorphic. The two manifolds in DD[25] have trivial fundamental group and are hence both homeomorphic to the 3-sphere. These observations mean that there are at most 41 manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+<p>The two manifolds in DD[14] have fundamental group <span class="SimpleMath">\(C_2\)</span> and are thus lens spaces. There is only one homeomorphism class of such lens spaces and so these two manifolds are homeomorphic. The three manifolds in DD[17] are lens spaces with fundamental group <span class="SimpleMath">\(C_4\)</span>. Again, there is only one homeomorphism class of such lens spaces and so these three manifolds are homeomorphic. The two manifolds in DD[25] have trivial fundamental group and are hence both homeomorphic to the 3-sphere. These observations mean that there are at most 41 closed manifolds arising from a cube by identifying the cube's faces pairwise.</p>
 
 <p>These observations can be incorporated into our list DD of equivalence classes of manifolds as follows.</p>
 
@@ -974,66 +1015,22 @@ function( m ) ... end
 
 </pre></div>
 
-<p>Since neither <span class="SimpleMath">\(\mathbb Z\times \mathbb Z : \mathbb Z\)</span> nor <span class="SimpleMath">\(\mathbb Z\)</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable manifolds arising from a cube by identifying the cube's faces pairwise.</p>
+<p>Since neither <span class="SimpleMath">\(\mathbb Z\times \mathbb Z : \mathbb Z\)</span> nor <span class="SimpleMath">\(\mathbb Z\)</span> is a free product of two non-trivial groups we conclude that the manifolds in DDorient[7] and DDorient[9] are prime. Since oriented prime 3-manifolds are determined up to homeomorphism by their fundamental groups we can conclude that there are precisely 18 orientable closed manifolds arising from a cube by identifying the cube's faces pairwise.</p>
 
 <p>A compact 3-manifold <span class="SimpleMath">\(M\)</span> is <em>spherical</em> if it is of the form <span class="SimpleMath">\(M=S^3/\Gamma\)</span> where <span class="SimpleMath">\(\Gamma\)</span> is a finite group acting freely as rotations on <span class="SimpleMath">\(S^3\)</span>. The fundamental group of <span class="SimpleMath">\(M\)</span> is then the finite group <span class="SimpleMath">\(\Gamma\)</span>. Perelmen showed that a compact 3-manifold is spherical if and only if its fundamental group is finite.</p>
 
 <p>A compact 3-manifold is <em>euclidean</em> if it is of the form <span class="SimpleMath">\(M=\mathbb R^3/\Gamma\)</span> where <span class="SimpleMath">\(\Gamma\)</span> is a group of affine transformations acting freely on <span class="SimpleMath">\(\mathbb R^3\)</span>. The fundamental group is then <span class="SimpleMath">\(\Gamma\)</span> and is called a <em>Bieberbach group</em> of dimension 3. It can be shown that a group <span class="SimpleMath">\(\Gamma\)</span> is isomorphic to a Bieberbach group of dimension <span class="SimpleMath">\(n\)</span> if and only if there is a short exact sequence <span class="SimpleMath">\(\mathbb Z^n \rightarrowtail \Gamma \twoheadrightarrow P\)</span> with <span class="SimpleMath">\(P\)</span> a finite group.</p>
 
-<p>The following commands establish that there are precisely 9 orientable spherical manifolds and 5 closed orientable euclidean manifolds arising from pairwise identifications of the faces of the cube.</p>
+<p>The following command establishes that there are precisely 9 orientable spherical manifolds and 5 closed orientable euclidean manifolds arising from pairwise identifications of the faces of the cube.</p>
 
 
 <div class="example"><pre>
-#############################
-MyIsInfinite:=function(G)
-local L;
-if GeneratorsOfGroup(G)=[] then return false; fi;
-L:=LowIndexSubgroupsFpGroup(G,6);
-Apply(L,AbelianInvariants);
-if 0 in Flat(L) then return true;
-else return fail; fi;
-end;
-#############################
-
-#############################
-MyIsFinite:=function(G);
-if MyIsInfinite(G)=true then return false; fi;
-return IsFinite(G);
-end;
-#############################
-
-#############################
-MyIsBieberbach:=function(F)
-local L;
-L:=LowIndexSubgroupsFpGroup(F,6); #6 suffices for 3D groups
-L:=Filtered(L,g-&gt;IsNormal(F,g));
-L:=List(L,g-&gt;Image(IsomorphismFpGroup(g)));
-L:=Filtered([1..Length(L)],i-&gt;AbelianInvariants(L[i])=[0,0,0] and Length(RelatorsOfFpGroup(L[i]))&gt;=3);
-if Length(L)&gt;0 then return true; fi;;
-return false;
-end;
-#############################
-
-#############################
-ManifoldType:=function(M)
-local F;
-F:=FundamentalGroup(M);
-if MyIsInfinite(F)=true then
-  if MyIsBieberbach(F) then return "euclidean";
-  else return "other"; fi;
-fi;
-if MyIsFinite(F)=true then return "spherical";
-else return fail; fi;
-end; 
-#############################
-
-
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(OrientableManifolds,ManifoldType);</span>
 [ "euclidean", "other", "other", "spherical", "other", "euclidean", 
   "euclidean", "spherical", "other", "spherical", "spherical", "spherical", 
   "spherical", "euclidean", "spherical", "spherical", "euclidean", "spherical" ]
 
-			 </pre></div>
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>

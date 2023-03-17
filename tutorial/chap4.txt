@@ -560,11 +560,11 @@
   a  list  of  three  elements  of  the  dihedral  group  of  order  [22X8[122X such as
   [22XG=[(2,4),(2,4),(2,4)*(1,3)][122X.  The dihedral elements specify how each pair of
   faces  are  glued together. With these inputs it is easy to iterate over all
-  possible  values  of  [22XA[122X and [22XG[122X in order to construct all possible 3-manifolds
-  arising from the pairwise identification of faces of a cube. Distinct values
-  of  [22XA[122X  and  [22XG[122X  can  of course yield homeomorphic spaces. To ensure that each
-  possible cube manifold is constructed, at least once, up to homeomorphism it
-  suffices to consider[133X
+  possible  values  of  [22XA[122X  and  [22XG[122X  in  order  to construct all possible closed
+  3-manifolds  arising from the pairwise identification of faces of a cube. We
+  call  such  a  manifold  a  [13X[12Xcube manifold[112X[113X. Distinct values of [22XA[122X and [22XG[122X can of
+  course yield homeomorphic spaces. To ensure that each possible cube manifold
+  is constructed, at least once, up to homeomorphism it suffices to consider[133X
   
   [33X[0;0Y[22XA=[  [1,2],  [3,4],  [5,6]  ][122X,  [22XA=[ [1,2], [3,5], [4,6] ][122X, [22XA=[ [1,4], [2,6],
   [3,5] ][122X[133X
@@ -573,7 +573,7 @@
   
   [33X[0;0YThe  following  commands  iterate through these [22X3×8^3 = 1536[122X pairs [22X(A,G)[122X and
   show  that  in  precisely  163  cases  (just over 10% of cases) the quotient
-  CW-complex is a 3-manifold.[133X
+  CW-complex is a closed 3-manifold.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA1:= [ [1,2], [3,4], [5,6] ];;[127X[104X
@@ -598,7 +598,7 @@
   [4X[32X[104X
   
   [33X[0;0YThe  following  additional  commands  use  integral  homology  and low index
-  subgroups  of  fundamental  groups to establish that the 163 cubes manifolds
+  subgroups  of  fundamental  groups  to establish that the 163 cube manifolds
   represent  at  least  25 distinct homotopy equivalence classes of manifolds.
   One homotopy class is represented by up to 40 of the manifolds, and at least
   four of the homotopy classes are each represented by a single manifold..[133X
@@ -652,7 +652,7 @@
   
   [33X[0;0YThe  final  commands show that (at least) 9 of the orientable manifolds have
   finite  fundamental  groups  and  list the isomorphism types of these finite
-  groups.  Note  that  it  is  now  known  that  any  3-manifold  with  finite
+  groups.  Note  that  it  is now known that any closed 3-manifold with finite
   fundamental  group  is  spherical  (i.e.  is  a  quotient  of the 3-sphere).
   Spherical  manifolds  with cyclic fundamental group are, by definition, lens
   spaces.[133X
@@ -673,21 +673,24 @@
   [1X4.10-1 [33X[0;0YFace pairings for 25 distinct cube manifolds[133X[101X
   
   [33X[0;0YThe  following  are the face pairings of 25 non-homeomorphic cube manifolds,
-  with  vertices  of  the  cube  numbered  as  describe  above.  The  function
-  [10XManifoldType()[110X is defined below and must be entered into the [12XGAP[112X session.[133X
+  with vertices of the cube numbered as describe above.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfor i in [1..25] do[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..25] do                                              [127X[104X
     [4X[25X>[125X [27Xp:=Manifolds[i]!.cubeFacePairings;[127X[104X
     [4X[25X>[125X [27XPrint("Manifold ",i," has face pairings:\n");[127X[104X
     [4X[25X>[125X [27XPrint(p[1],"\n",p[2],"\n",p[3],"\n");[127X[104X
     [4X[25X>[125X [27XPrint("Fundamental group is:  ");[127X[104X
     [4X[25X>[125X [27Xif i in [ 1, 9, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25 ] then[127X[104X
-    [4X[25X>[125X [27XPrint(StructureDescription(FundamentalGroup(Manifolds[i])),"\n");  [127X[104X
+    [4X[25X>[125X [27XPrint(StructureDescription(FundamentalGroup(Manifolds[i])),"\n");[127X[104X
     [4X[25X>[125X [27Xelse Print("infinite non-cyclic\n"); fi;[127X[104X
     [4X[25X>[125X [27Xif Homology(Manifolds[i],3)=[0] then Print("Orientable, ");[127X[104X
     [4X[25X>[125X [27Xelse Print("Non orientable, "); fi;[127X[104X
-    [4X[25X>[125X [27XPrint(ManifoldType(Manifolds[i]),"\n\n");[127X[104X
+    [4X[25X>[125X [27XPrint(ManifoldType(Manifolds[i]),"\n");[127X[104X
+    [4X[25X>[125X [27Xfor x in Manifolds[i]!.edgeDegrees do[127X[104X
+    [4X[25X>[125X [27XPrint(x[2]," edges of \"degree\" ",x[1],",  ");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25X>[125X [27XPrint("\n\n");[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 1 has face pairings:[128X[104X
@@ -696,6 +699,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 3, 2, 6, 7 ] ][128X[104X
     [4X[28XFundamental group is:  Z x C2[128X[104X
     [4X[28XNon orientable, other[128X[104X
+    [4X[28X4 edges of "degree" 2,  4 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 2 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 7, 8, 4, 3 ] ][128X[104X
@@ -703,6 +707,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XNon orientable, other[128X[104X
+    [4X[28X2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 3 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
@@ -710,6 +715,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XNon orientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 4 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
@@ -717,6 +723,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 7, 3, 2 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XNon orientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 5 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
@@ -724,6 +731,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 6, 7, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XNon orientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 6 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -731,6 +739,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 7 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ][128X[104X
@@ -738,6 +747,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, other[128X[104X
+    [4X[28X2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 8 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -745,6 +755,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, other[128X[104X
+    [4X[28X4 edges of "degree" 2,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 9 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -752,6 +763,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 6, 2, 3, 7 ] ][128X[104X
     [4X[28XFundamental group is:  Q8[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X8 edges of "degree" 3,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 10 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ][128X[104X
@@ -759,6 +771,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, other[128X[104X
+    [4X[28X4 edges of "degree" 2,  4 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 11 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 4, 3, 7, 8 ] ][128X[104X
@@ -766,6 +779,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XNon orientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 12 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ][128X[104X
@@ -773,6 +787,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  Z x Z x Z[128X[104X
     [4X[28XOrientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 13 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 4, 8, 7, 3 ] ][128X[104X
@@ -780,6 +795,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 14 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ][128X[104X
@@ -787,6 +803,7 @@
     [4X[28X[ [ 1, 4, 8, 5 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  C2[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X12 edges of "degree" 2,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 15 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 7, 8, 4 ] ][128X[104X
@@ -794,6 +811,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  Z[128X[104X
     [4X[28XNon orientable, other[128X[104X
+    [4X[28X4 edges of "degree" 1,  2 edges of "degree" 2,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 16 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -801,6 +819,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 2, 3, 7, 6 ] ][128X[104X
     [4X[28XFundamental group is:  Z[128X[104X
     [4X[28XOrientable, other[128X[104X
+    [4X[28X4 edges of "degree" 1,  2 edges of "degree" 2,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 17 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -808,6 +827,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ][128X[104X
     [4X[28XFundamental group is:  C4[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X2 edges of "degree" 1,  2 edges of "degree" 3,  2 edges of "degree" 8,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 18 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -815,6 +835,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 6, 2, 3, 7 ] ][128X[104X
     [4X[28XFundamental group is:  C3 : C4[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X2 edges of "degree" 2,  4 edges of "degree" 5,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 19 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -822,6 +843,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ][128X[104X
     [4X[28XFundamental group is:  C12[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X2 edges of "degree" 2,  2 edges of "degree" 3,  2 edges of "degree" 7,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 20 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 3, 4, 8, 7 ] ][128X[104X
@@ -829,6 +851,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 3, 7, 6, 2 ] ][128X[104X
     [4X[28XFundamental group is:  C8[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X8 edges of "degree" 3,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 21 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 7, 3, 4, 8 ] ][128X[104X
@@ -836,6 +859,7 @@
     [4X[28X[ [ 5, 8, 7, 6 ], [ 7, 6, 2, 3 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 22 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ][128X[104X
@@ -843,6 +867,7 @@
     [4X[28X[ [ 1, 2, 3, 4 ], [ 8, 4, 1, 5 ] ][128X[104X
     [4X[28XFundamental group is:  C14[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X2 edges of "degree" 2,  4 edges of "degree" 5,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 23 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 5, 6, 7, 8 ] ][128X[104X
@@ -850,6 +875,7 @@
     [4X[28X[ [ 1, 2, 3, 4 ], [ 5, 8, 4, 1 ] ][128X[104X
     [4X[28XFundamental group is:  C6[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X6 edges of "degree" 2,  2 edges of "degree" 6,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 24 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 7, 8, 5, 6 ] ][128X[104X
@@ -857,6 +883,7 @@
     [4X[28X[ [ 1, 2, 3, 4 ], [ 4, 1, 5, 8 ] ][128X[104X
     [4X[28XFundamental group is:  infinite non-cyclic[128X[104X
     [4X[28XOrientable, euclidean[128X[104X
+    [4X[28X6 edges of "degree" 4,  [128X[104X
     [4X[28X[128X[104X
     [4X[28XManifold 25 has face pairings:[128X[104X
     [4X[28X[ [ 1, 5, 6, 2 ], [ 6, 7, 8, 5 ] ][128X[104X
@@ -864,8 +891,35 @@
     [4X[28X[ [ 1, 2, 3, 4 ], [ 1, 5, 8, 4 ] ][128X[104X
     [4X[28XFundamental group is:  1[128X[104X
     [4X[28XOrientable, spherical[128X[104X
+    [4X[28X4 edges of "degree" 1,  4 edges of "degree" 5,[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X4.10-2 [33X[0;0YPlatonic cube manifolds[133X[101X
+  
+  [33X[0;0YA  [13Xplatonic solid[113X is a convex, regular polyhedron in [22X3[122X-dimensional euclidean
+  [22XE^3[122X  or  spherical [22XS^3[122X or hyperbolic space [22XH^3[122X. Being [13Xregular[113X means that all
+  edges  are  congruent,  all faces are congruent, all angles between adjacent
+  edges  in  a  face are congruent, all dihedral angles between adjacent faces
+  are  congruent.  A platonic cube in euclidean space has six congruent square
+  faces  with  diherdral  angle  [22Xπ/2[122X.  A  platonic cube in spherical space has
+  dihedral  angles  [22X2π/3[122X.  A  platonic  cube  in hyperbolic space has dihedral
+  angles  [22X2π/5[122X.  This  can  alternatively  be  expressed  by  saying that in a
+  tessellation  of  [22XE^3[122X  by  platonic  cubes each edge is adjacent to 4 square
+  faces. In a tessellation of [22XS^3[122X by platonic cubes each edge is adjacent to 3
+  square  faces.  In  a  tessellation  of  [22XH^3[122X  by platonic cubes each edge is
+  adjacent to 5 five square faces.[133X
+  
+  [33X[0;0YAny  cube  manifold  [22XM[122X  induces  a cubical CW-decomposition of its universal
+  cover  [22Xwidetilde  M[122X. We say that [22XM[122X is a [13Xplatonic cube manifold[113X if every edge
+  in  [22Xwidetilde  M[122X  is  adjacent to 4 faces in the euclidean case [22Xwidetilde M=
+  E^3[122X,  is  adjacent  to  3  faces  in the spherical case [22Xwidetilde M= S^3[122X, is
+  adjacent to 5 faces in the hyperbolic case [22Xwidetilde M= H^3[122X.[133X
+  
+  [33X[0;0YIn  the  above list of 25 cube manifolds we see that the euclidean manifolds
+  3,  4,  5,  6,  11  are  platonic and that the spherical manifolds 9, 20 are
+  platonic.[133X
   
   
   [1X4.11 [33X[0;0YThere are at most 41 distinct cube manifolds[133X[101X
@@ -983,7 +1037,8 @@
   class of such lens spaces and so these three manifolds are homeomorphic. The
   two  manifolds  in  DD[25] have trivial fundamental group and are hence both
   homeomorphic to the 3-sphere. These observations mean that there are at most
-  41 manifolds arising from a cube by identifying the cube's faces pairwise.[133X
+  41  closed  manifolds  arising  from  a cube by identifying the cube's faces
+  pairwise.[133X
   
   [33X[0;0YThese  observations  can  be  incorporated  into  our list DD of equivalence
   classes of manifolds as follows.[133X
@@ -1039,7 +1094,8 @@
   conclude  that the manifolds in DDorient[7] and DDorient[9] are prime. Since
   oriented  prime  3-manifolds  are  determined  up  to homeomorphism by their
   fundamental  groups  we  can conclude that there are precisely 18 orientable
-  manifolds arising from a cube by identifying the cube's faces pairwise.[133X
+  closed  manifolds  arising  from  a  cube  by  identifying  the cube's faces
+  pairwise.[133X
   
   [33X[0;0YA  compact 3-manifold [22XM[122X is [13Xspherical[113X if it is of the form [22XM=S^3/Γ[122X where [22XΓ[122X is
   a finite group acting freely as rotations on [22XS^3[122X. The fundamental group of [22XM[122X
@@ -1052,60 +1108,15 @@
   that  a  group  [22XΓ[122X  is isomorphic to a Bieberbach group of dimension [22Xn[122X if and
   only if there is a short exact sequence [22XZ^n ↣ Γ ↠ P[122X with [22XP[122X a finite group.[133X
   
-  [33X[0;0YThe  following  commands  establish  that  there  are precisely 9 orientable
+  [33X[0;0YThe  following  command  establishes  that  there are precisely 9 orientable
   spherical manifolds and 5 closed orientable euclidean manifolds arising from
   pairwise identifications of the faces of the cube.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28XMyIsInfinite:=function(G)[128X[104X
-    [4X[28Xlocal L;[128X[104X
-    [4X[28Xif GeneratorsOfGroup(G)=[] then return false; fi;[128X[104X
-    [4X[28XL:=LowIndexSubgroupsFpGroup(G,6);[128X[104X
-    [4X[28XApply(L,AbelianInvariants);[128X[104X
-    [4X[28Xif 0 in Flat(L) then return true;[128X[104X
-    [4X[28Xelse return fail; fi;[128X[104X
-    [4X[28Xend;[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28XMyIsFinite:=function(G);[128X[104X
-    [4X[28Xif MyIsInfinite(G)=true then return false; fi;[128X[104X
-    [4X[28Xreturn IsFinite(G);[128X[104X
-    [4X[28Xend;[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28XMyIsBieberbach:=function(F)[128X[104X
-    [4X[28Xlocal L;[128X[104X
-    [4X[28XL:=LowIndexSubgroupsFpGroup(F,6); #6 suffices for 3D groups[128X[104X
-    [4X[28XL:=Filtered(L,g->IsNormal(F,g));[128X[104X
-    [4X[28XL:=List(L,g->Image(IsomorphismFpGroup(g)));[128X[104X
-    [4X[28XL:=Filtered([1..Length(L)],i->AbelianInvariants(L[i])=[0,0,0] and Length(RelatorsOfFpGroup(L[i]))>=3);[128X[104X
-    [4X[28Xif Length(L)>0 then return true; fi;;[128X[104X
-    [4X[28Xreturn false;[128X[104X
-    [4X[28Xend;[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28XManifoldType:=function(M)[128X[104X
-    [4X[28Xlocal F;[128X[104X
-    [4X[28XF:=FundamentalGroup(M);[128X[104X
-    [4X[28Xif MyIsInfinite(F)=true then[128X[104X
-    [4X[28X  if MyIsBieberbach(F) then return "euclidean";[128X[104X
-    [4X[28X  else return "other"; fi;[128X[104X
-    [4X[28Xfi;[128X[104X
-    [4X[28Xif MyIsFinite(F)=true then return "spherical";[128X[104X
-    [4X[28Xelse return fail; fi;[128X[104X
-    [4X[28Xend; [128X[104X
-    [4X[28X#############################[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XList(OrientableManifolds,ManifoldType);[127X[104X
     [4X[28X[ "euclidean", "other", "other", "spherical", "other", "euclidean", [128X[104X
     [4X[28X  "euclidean", "spherical", "other", "spherical", "spherical", "spherical", [128X[104X
     [4X[28X  "spherical", "euclidean", "spherical", "spherical", "euclidean", "spherical" ][128X[104X
     [4X[28X[128X[104X
-    [4X[28X			 [128X[104X
   [4X[32X[104X
   
