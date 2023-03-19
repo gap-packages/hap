@@ -1,0 +1,20 @@
+gap> LoadPackage("Simpcomp");;
+
+gap> inv3:=function(m)
+> local K;
+> K:=BarycentricSubdivision(m);
+> K:=MaximalSimplicesOfSimplicialComplex(K);
+> K:=SC(K);
+> if not SCIsStronglyConnected(K) then Print("WARNING!\n"); fi;
+> return SCExportIsoSig( K );
+> end;
+function( m ) ... end
+
+gap> DD:=[];;
+gap> for x in D do
+> y:=Classify(x,inv3);
+> Add(DD,List(y,z->z[1]));
+> od;
+
+gap> List(DD,Size);
+[ 9, 1, 3, 3, 3, 1, 1, 1, 1, 1, 2, 1, 2, 7, 4, 4, 3, 1, 1, 1, 1, 3, 1, 1, 3 ]

@@ -208,7 +208,7 @@ fi;
 V:=maxK[1];
 W:=maxL[1];
 if e<0 then
-a:=W[1];b:=W[2]; W[1]:=b; W[2]:=a;
+a:=W[1];b:=W[2]; W[1]:=b; W[2]:=a;   #THIS NEEDS TO BE CORRECTED!!
 fi;
 maxK:=maxK{[2..Length(maxK)]};
 maxK:=Concatenation(maxK,Combinations(V,Length(V)-1));

@@ -1,7 +1,78 @@
 
 ####################################################
 ####################################################
+HAP_PoincareCubeManifoldEdgeDegrees:=function(Y)
+local s,pos, b;
+
+#Returns a list [[d1,n1], [d2,n2], ..., [dk,nk]]
+# where nk is the number of *cube* edges in YY such that
+# lie in precisely dk faces.
+# NOTE: Y must be constructed using PoincareCubeCWComplexNS. 
+
+s:=List([1..Y!.nrCells(1)],i->Y!.coboundaries[2][i][1]);
+s:=Collected(s);;
+
+pos:=PositionProperty(s,x->x[1]=8);;
+s[pos][2]:=s[pos][2]-6;;
+
+pos:=PositionProperty(s,x->x[1]=6);;
+s[pos][2]:=s[pos][2]-8;;
+
+pos:=PositionProperty(s,x->x[1]=4);;
+s[pos][2]:=s[pos][2]-12-24;;
+
+s:=Filtered(s,x->x[2]<>0);
+s:=List(s,x->[x[1]/2,x[2]]);
+return SortedList(s);;
+end;
+#####################################################
+####################################################
+
+
+####################################################
+####################################################
+InstallGlobalFunction(BarycentricallySimplifiedComplex,
+function(Y)
+local V,W,s,t;
+W:=SimplifiedComplex(Y);
+s:=Size(W);
+t:=0;
+while s> t do
+V:=W;
+s:=Size(V);
+W:=SimplifiedComplex(RegularCWComplex(BarycentricSubdivision(V)));
+t:=Size(W);
+od;
+if IsBound(Y!.cubeFacePairings) then
+V!.cubeFacePairings:=Y!.cubeFacePairings;
+fi;
+return V;
+end);
+####################################################
+####################################################
+
+####################################################
+####################################################
 InstallGlobalFunction(PoincareCubeCWComplex,
+function(arg)
+local Y, YY;
+
+if Length(arg)=2 then
+Y:=PoincareCubeCWComplexNS(arg[1],arg[2]);
+else
+Y:=PoincareCubeCWComplexNS(arg[1],arg[2],arg[3]);
+fi;
+YY:=SimplifiedComplex(Y);
+YY!.cubeFacePairings:=Y!.cubeFacePairings;
+YY!.edgeDegrees:=Y!.edgeDegrees;
+return YY;
+end);
+####################################################
+####################################################
+
+####################################################
+####################################################
+InstallGlobalFunction(PoincareCubeCWComplexNS,
 function(arg)
 local A, G, L, M, N, Y, B, F, data, NF, NFF, Vertices, Edges, Faces, 
       CubeEdges, CubeFaces, bool, act, p, q, i,
@@ -218,17 +289,12 @@ od;
 od;
 Add(B,[]);
 
-Y:=SimplifiedComplex(RegularCWComplex(B));
+#Y:=SimplifiedComplex(RegularCWComplex(B));
+Y:=RegularCWComplex(B);
 Y!.cubeFacePairings:=[L,M,N];
+Y!.edgeDegrees:=HAP_PoincareCubeManifoldEdgeDegrees(Y);
 return Y;
 end);
 ###################################################
 ###################################################
-
-#A:=[ [3,4], [5,6], [1,2] ];
-#A2:=[ [3,5], [4,6], [1,2]];
-#A3:=[ [3,5], [1,4], [2,6]];
-#G:=[(2,4), (2,4), (1,4)*(2,3)];
-#F:=PoincareCubeCWComplex(A,G);
-
 

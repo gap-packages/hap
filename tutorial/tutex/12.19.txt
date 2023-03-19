@@ -1,20 +1,20 @@
-invariant1:=function(m);
-return List([1..3],k->Homology(m,k));
-end;;
+gap> invariant1:=function(m);
+> return List([1..3],k->Homology(m,k));
+> end;;
 
-C:=Classify(M,invariant1);;
+gap> C:=Classify(Manifolds,invariant1);;
 
-invariant2:=function(m)
-local L;
-L:=FundamentalGroup(m);
-if GeneratorsOfGroup(L)= [] then return [];fi;
-L:=LowIndexSubgroupsFpGroup(L,10);
-L:=List(L,AbelianInvariants);
-L:=SortedList(L);
-return L;
-end;;
+gap> invariant2:=function(m)
+> local L;
+> L:=FundamentalGroup(m);
+> if GeneratorsOfGroup(L)= [] then return [];fi;
+> L:=LowIndexSubgroupsFpGroup(L,5);
+> L:=List(L,AbelianInvariants);
+> L:=SortedList(L);
+> return L;
+> end;;
 
-D:=RefineClassification(C,invariant2);
-List(D,Size);
+gap> D:=RefineClassification(C,invariant2);;
+gap> List(D,Size);
 [ 40, 2, 10, 15, 8, 6, 2, 6, 2, 5, 7, 1, 4, 11, 7, 7, 10, 4, 4, 2, 1, 3, 1, 
   1, 4 ]

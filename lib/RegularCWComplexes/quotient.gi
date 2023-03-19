@@ -121,7 +121,7 @@ ChnMap:=Objectify(HapChainMap,
            target:=CT,
            mapping:=mapping,
            properties:=[["characteristic", 0],["type","chainMap"]]));
-
+ChnMap!.B:=B;
 return ChnMap;
 end);
 ###########################################

@@ -27,7 +27,7 @@ Boundary:=C!.boundary;
 
 
 ########################
-if n=0 then 
+if n=0  or Dimension(n-1)=0 then    #CHANGED March 2023
 BasisKerd1:=IdentityMat(Dimension(n));
 
 else
@@ -50,7 +50,8 @@ M2[i]:=Boundary(n+1,i);
 od;
 
 ConvertToMatrixRep(M2);
-BasisImaged2:=BaseIntMat(M2);
+if M2=[[]] then BasisImaged2:=[]; else
+BasisImaged2:=BaseIntMat(M2); fi;   #CHANGED 2023
 dim:=Length(BasisImaged2);
 M2:=0;
 
@@ -241,6 +242,25 @@ local
 
 C:=f!.source;
 D:=f!.target;
+
+#################################### ADDED MARCH 2023
+if C!.dimension(n)=0 then
+HC:=FreeGroup(0);
+fi;
+if D!.dimension(n)=0 then
+HD:=FreeGroup(0);
+fi;
+if IsBound(HC) and not IsBound(HD) then
+HD:=HomologyAsFpGroup(D);
+fi;
+if IsBound(HD) and not IsBound(HC) then
+HC:=HomologyAsFpGroup(D);
+fi;
+if IsBound(HC) and IsBound(HD) then return
+GroupHomomorphismByFunction(HC,HD,x->x);
+fi;
+####################################
+
 ChomD:=f!.mapping;
 
 IHC:=HomologyAsFpGroup(C,n);

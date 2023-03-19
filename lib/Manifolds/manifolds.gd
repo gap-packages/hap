@@ -19,3 +19,8 @@ DeclareGlobalFunction("HAP_HomeoLinkingForm");
 DeclareGlobalFunction("LinkingFormHomeomorphismInvariant");
 DeclareGlobalFunction("IsClosedManifold");
 DeclareGlobalFunction("PoincareCubeCWComplex");
+DeclareGlobalFunction("PoincareCubeCWComplexNS");
+DeclareGlobalFunction("BarycentricallySimplifiedComplex");
+DeclareGlobalFunction("RemoveStar");
+DeclareGlobalFunction("NonManifoldVertices");
+DeclareGlobalFunction("ThreeManifoldWithBoundary");

@@ -494,9 +494,13 @@ InstallValue(ViewGraph,GraphDisplay);
 #######################################
 #######################################
 InstallGlobalFunction(SimplicialNerveOfGraph,
-function(G,dim)
-local  A, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
+function(arg)
+local  G, dim, BOOL, A, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
        bool, s, VL,x, y, d, i,j,k,l,m,n,RedundantFaces;
+
+G:=arg[1];
+dim:=arg[2];
+if Length(arg)=3 then BOOL:=arg[3]; else BOOL:=true; fi;
 
 A:=G!.incidenceMatrix;
 
@@ -598,13 +602,14 @@ bool:=true;
 for x in Combinations(y,2) do
 if A[x[1]][x[2]]=0 then bool:=false; break; fi;
 od;
-if bool then Add(SimplicesLst[d],y); fi;
+if bool then Add(SimplicesLst[d+1],y); fi;    ##CHANGED d to d+1 , March 2023
 od;
 SimplicesLst[d+1]:=SSortedList(SimplicesLst[d+1]);
 if Length(SimplicesLst[d+1])=0 then dim:=d-1; fi;
 od;
 ##########################
 
+if BOOL then ############
 ##########################
 ##########################
 if dim=2 then 
@@ -652,6 +657,7 @@ SimplicesLst[dim]:=SSortedList(SimplicesLst[dim]);
 fi;
 ###########################
 ###########################
+fi;
 
 
 ##########################
