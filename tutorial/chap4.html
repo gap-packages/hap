@@ -63,6 +63,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7B63C22C80E53758">4.12 <span class="Heading">There are precisely 18 orientable cube manifolds, of which   9 are spherical and 5 are euclidean</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X796BF3817BD7F57D">4.13 <span class="Heading">Cube manifolds with boundary</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -579,7 +582,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">local L;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=FundamentalGroup(m);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">if GeneratorsOfGroup(L)= [] then return [];fi;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=LowIndexSubgroupsFpGroup(L,10);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=LowIndexSubgroupsFpGroup(L,5);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=List(L,AbelianInvariants);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=SortedList(L);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">return L;</span>
@@ -1026,6 +1029,70 @@ function( m ) ... end
 [ "euclidean", "other", "other", "spherical", "other", "euclidean", 
   "euclidean", "spherical", "other", "spherical", "spherical", "spherical", 
   "spherical", "euclidean", "spherical", "spherical", "euclidean", "spherical" ]
+
+</pre></div>
+
+<p><a id="X796BF3817BD7F57D" name="X796BF3817BD7F57D"></a></p>
+
+<h4>4.13 <span class="Heading">Cube manifolds with boundary</span></h4>
+
+<p>If a space <span class="SimpleMath">Y</span> obtained from identifying faces of the cube fails to be a manifold then it fails because one or more vertices of <span class="SimpleMath">Y</span> fail to have a spherical link. By using barycentric subdivision if necessary, we can ensure that the stars of any two non-manifold vertices of <span class="SimpleMath">Y</span> have trivial intersection. Removing the stars of the non-manifold vertices from <span class="SimpleMath">Y</span> yields a 3-manifold with boundary <span class="SimpleMath">hat Y</span>.</p>
+
+<p>The following commands show that there are 367 combinatorially different regular CW-complexes <span class="SimpleMath">Y</span> that arise by identifying faces of a cube in pairs and which fail to be manifolds. The commands also show that these spaces give rise to at least 180 non-homeomorphic manifolds <span class="SimpleMath">hat Y</span> with boundary.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A1:= [ [1,2], [3,4], [5,6] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A2:=[ [1,2], [3,5], [4,6] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A3:=[ [1,4], [2,6], [3,5] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D8:=DihedralGroup(IsPermGroup,8);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NonManifolds:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for A in [A1,A2,A3] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for x in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for y in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for z in D8 do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">G:=[x,y,z];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">F:=PoincareCubeCWComplex(A,G);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">b:=IsClosedManifold(F);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if b=false then Add(NonManifolds,F); fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;od;od;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=Classify(NonManifolds,inv3); #See above for inv3</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=List(D,x-&gt;x[1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D);</span>
+367
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=List(D,ThreeManifoldWithBoundary);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Classify(M,invariant1);; #See above for invariant1       </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(C,Size);</span>
+[ 33, 13, 3, 18, 21, 7, 6, 13, 51, 2, 1, 15, 11, 11, 1, 35, 2, 2, 6, 15, 
+  17, 2, 3, 2, 14, 17, 3, 1, 25, 8, 4, 1, 4 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC:=RefineClassification(C,invariant2);; #See above for invariant2</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv5:=function(m)                       </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local B;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">B:=BoundaryOfPureRegularCWComplex(m);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return invariant1(B);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC:=RefineClassification(C,inv5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(CC,Size);</span>
+[ 25, 5, 3, 5, 4, 4, 2, 1, 11, 3, 4, 7, 3, 6, 4, 1, 5, 1, 1, 5, 1, 13, 4, 
+  6, 40, 1, 2, 1, 11, 4, 5, 3, 1, 2, 7, 4, 1, 14, 11, 10, 2, 2, 6, 9, 3, 3, 
+  2, 15, 2, 3, 2, 14, 17, 2, 1, 1, 4, 7, 14, 8, 3, 1, 1, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CC:=RefineClassification(CC,invariant2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(CC,Size);                              </span>
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 3, 1, 1, 2, 1, 2, 1, 4, 2, 3, 2, 3, 
+  4, 3, 2, 1, 1, 3, 2, 4, 3, 1, 1, 5, 1, 1, 3, 1, 1, 1, 13, 3, 1, 4, 2, 1, 
+  2, 2, 3, 3, 3, 4, 4, 2, 4, 4, 4, 4, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 2, 3, 4, 3, 1, 2, 3, 2, 3, 4, 3, 3, 2, 2, 1, 1, 2, 1, 1, 2, 
+  1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 10, 5, 2, 3, 2, 14, 17, 1, 1, 1, 
+  1, 4, 5, 2, 9, 1, 4, 7, 1, 3, 1, 1, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(CC);</span>
+180
 
 </pre></div>
 

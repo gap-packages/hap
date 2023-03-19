@@ -1,0 +1,11 @@
+gap> DD:=List(DD,x->List(x,y->PoincareCubeCWComplexNS(
+> y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;
+
+gap> D:=[];;
+gap> for x in DD do
+> y:=Classify(x,inv3);
+> Add(D,List(y,z->z[1]));
+>od;;
+
+gap> List(D,Size);
+[ 8, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
