@@ -66,6 +66,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X796BF3817BD7F57D">4.13 <span class="Heading">Cube manifolds with boundary</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7EC4359B7DF208B0">4.14 <span class="Heading">Octahedral manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -1093,6 +1096,38 @@ function( m ) ... end
   1, 4, 5, 2, 9, 1, 4, 7, 1, 3, 1, 1, 4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(CC);</span>
 180
+
+</pre></div>
+
+<p><a id="X7EC4359B7DF208B0" name="X7EC4359B7DF208B0"></a></p>
+
+<h4>4.14 <span class="Heading">Octahedral manifolds</span></h4>
+
+<p>The above construction of 3-manifolds as quotients of a cube can be extended to other polytopes. One polytope of particular interest, and one that appears several times in the classic book on Three-Manifolds by William Thurston <a href="chapBib.html#biBthurston">[Thu02]</a>, is the Octahedron. The function <code class="code">PoincareOctahahedronCWComplex()</code> can be used to construct any 3-dimensional CW-complex arising from an Octahedronahedron by identifying the eight faces pairwise; the vertices of the octahedron are numbered as follows.</p>
+
+<p><img src="images/octahedron.png" align="center" height="350" alt="octahedron"/></p>
+
+<p>The following commands construct a spherical 3-manifold Y with fundamental group equal to the binary tetrahedral group <span class="SimpleMath">G</span>. The commands then use the universal cover of this manifold to construct the first four terms of a free periodic <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">Z</span>. The resolution has one free generator in dimensions <span class="SimpleMath">4n</span> and <span class="SimpleMath">4n+3</span> for <span class="SimpleMath">n≥ 0</span>. It has two free generators in dimensions <span class="SimpleMath">4n+1</span> and <span class="SimpleMath">4n+2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[ [ 1, 4, 5 ], [ 2, 6, 3 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[ [ 3, 4, 5 ], [ 6, 1, 2 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[ [ 2, 3, 5 ], [ 6, 4, 1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=[ [ 1, 2, 5 ], [ 6, 3, 4 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PoincareOctahedronCWComplex(L,M,N,P);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Y);</span>
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"SL(2,3)"
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ChainComplexOfUniversalCover(Y);</span>
+Equivariant chain complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],R!.dimension);</span>
+[ 1, 2, 2, 1 ]
 
 </pre></div>
 
