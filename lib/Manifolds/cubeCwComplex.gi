@@ -171,28 +171,6 @@ od;
 
 fi;
 
-
-###########################################
-#Normal form for faces
-NF:=function(F)
-local m;
-m:=Minimum(F);
-m:=Position(F,m);
-return Concatenation(F{[m..Length(F)]},F{[1..m-1]}   );
-end;
-###########################################
-
-###########################################
-#Normal form for faces incorporating orientation
-NFF:=function(F)
-local T;
-T:=NF(F);
-if T in CubeFaces then return T;
-else return NF(Reversed(F));
-fi;
-end;
-###########################################
-
 ###########################################
 #Let's check that the input arguments are genuine faces of our cube.
 #This check is not needed but might catch a programming slip.

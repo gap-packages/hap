@@ -14,7 +14,6 @@ gap> Cohomology(Y,1);
 gap> Cohomology(Y,2);
 [ 0 ]
 gap> G:=FundamentalGroup(Y);;
-#I  there are 2 generators and 1 relator of total length 4
 gap> IsAbelian(G);
 true
 gap> G:=NilpotentQuotient(G,1);;

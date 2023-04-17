@@ -529,6 +529,8 @@ ReadPackageHap("lib/Manifolds/poincareduality.gi");
 ReadPackageHap("lib/Manifolds/poincHomeo.gi");
 ReadPackageHap("lib/Manifolds/ismanifold.gi");
 ReadPackageHap("lib/Manifolds/cubeCwComplex.gi");
+ReadPackageHap("lib/Manifolds/octahedronCwComplex.gi");
+ReadPackageHap("lib/Manifolds/dodecahedronCwComplex.gi");
 ReadPackageHap("lib/Manifolds/manifoldType.gi");
 ReadPackageHap("lib/Manifolds/star.gi");
 

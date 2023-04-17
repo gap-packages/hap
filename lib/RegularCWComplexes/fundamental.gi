@@ -164,6 +164,7 @@ od;
 
 if BOOL then 
 P:=PresentationFpGroup(F/rels);
+TzOptions(P).printLevel:=0;
 SimplifyPresentation(P);; 
 G:=FpGroupPresentation(P);
 

@@ -137,7 +137,7 @@ end);
 ####################################################
 InstallGlobalFunction(SparseSemiEchelon,
 function(M)
-local i, V, fn;
+local i, V;
 
 if not IsHapSparseMat(M) then
 Print("This function must be applied to a HAP sparse matrix.\n");
@@ -151,23 +151,6 @@ M!.heads:=[]; ;
 # is in column j.
 
 V:=[1..M!.rows];
-##########
-fn:=function(i,j) 
-local v; 
-if IsBound(M!.mat[i]) and IsBound(M!.mat[j]) then 
-
-if Length(M!.mat[i])=0 then return true; fi;
-if Length(M!.mat[j])=0 then return false; fi;
-
-return 
-Maximum(List(M!.mat[i],x->x[1])) 
->
-Maximum(List(M!.mat[j],x->x[1]));
-fi;
-return false;
-end; 
-#########
-#Sort(V,fn);
 
 for i in V do
 if IsBound(M!.mat[i]) then

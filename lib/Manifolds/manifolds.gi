@@ -207,9 +207,6 @@ fi;
 
 V:=maxK[1];
 W:=maxL[1];
-if e<0 then
-a:=W[1];b:=W[2]; W[1]:=b; W[2]:=a;   #THIS NEEDS TO BE CORRECTED!!
-fi;
 maxK:=maxK{[2..Length(maxK)]};
 maxK:=Concatenation(maxK,Combinations(V,Length(V)-1));
 maxL:=maxL{[2..Length(maxL)]};
@@ -221,6 +218,14 @@ pos:=Position(W,w);
 if not pos=fail then reindex[w]:=V[pos];
 else reindex[w]:=N; N:=N+1; fi;
 od;
+
+if e<0 then
+W:=Flat(W);
+a:=reindex[W[1]];
+b:=reindex[W[2]];
+reindex[W[1]]:=b;
+reindex[W[2]]:=a;
+fi;
 
 newmaxL:=[];
 for x in maxL do
@@ -250,6 +255,20 @@ InstallOtherMethod(ConnectedSum,
 [IsHapSimplicialComplex,IsHapSimplicialComplex],
 function(K,L);
 return SimplicialComplexConnectedSum(K,L,1);
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallOtherMethod(ConnectedSum,
+"Connected sum of regular CW-manifolds  [temporary method -- needs replacing]",
+[IsHapRegularCWComplex,IsHapRegularCWComplex,IsInt],
+function(KK,LL,e)
+local K, L;
+K:=BarycentricSubdivision(KK);
+L:=BarycentricSubdivision(LL);
+return SimplifiedComplex(RegularCWComplex(ConnectedSum(K,L,e)));
 end);
 #####################################################
 #####################################################

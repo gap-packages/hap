@@ -12,7 +12,6 @@ Regular CW-complex of dimension 2
 gap> CriticalCells(Y);
 [ [ 2, 1 ], [ 1, 9 ], [ 1, 11 ], [ 0, 22 ] ]
 gap> G:=FundamentalGroup(Y);;
-#I  there are 2 generators and 1 relator of total length 7
 gap> AlexanderPolynomial(G);
 x_1^2-x_1+1
 gap> STOP_TEST( "tst.tst", 1000 );
