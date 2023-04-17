@@ -69,6 +69,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7EC4359B7DF208B0">4.14 <span class="Heading">Octahedral manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X85FFF9B97B7AD818">4.15 <span class="Heading">Dodecahedral manifolds</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X78B75E2E79FBCC54">4.16 <span class="Heading">Prism manifolds</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -129,7 +135,7 @@ Regular CW-complex of dimension 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ThreeManifoldViaDehnSurgery(ap1,5,1);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ap2:=ArcPresentation(PureCubicalKnot(11,2));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=ThreeManifoldViaDehnSurgery(ap2,5,1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ConnectedSum(A,B);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ConnectedSum(A,B); #W:=ConnectedSum(A,B,-1) would yield A#-B where -B has the opposite orientation</span>
 Regular CW-complex of dimension 3
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(W,1);</span>
@@ -1128,6 +1134,97 @@ Equivariant chain complex of dimension 3
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],R!.dimension);</span>
 [ 1, 2, 2, 1 ]
+
+</pre></div>
+
+<p><a id="X85FFF9B97B7AD818" name="X85FFF9B97B7AD818"></a></p>
+
+<h4>4.15 <span class="Heading">Dodecahedral manifolds</span></h4>
+
+<p>Another polytope of interest, and one that can be used to construct the Poincare homology sphere, is the dodecahedron. The function <code class="code">PoincareDodecahedronCWComplex()</code> can be used to construct any 3-dimensional CW-complex arising from a dodecahedron by identifying the <span class="SimpleMath">12</span> pentagonal faces pairwise; the vertices of the prism are numbered as follows.</p>
+
+<p><img src="images/dodecahedron.png" align="center" height="250" alt="dodecahedron"/></p>
+
+<p>The following commands construct the Poincare homology <span class="SimpleMath">3</span>-sphere (with fundamental group equal to the binary icosahedral group of order 120).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PoincareDodecahedronCWComplex(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,2,3,4,5],[6,7,8,9,10]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,11,16,12,2],[19,9,8,18,14]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[2,12,17,13,3],[20,10,9,19,15]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[3,13,18,14,4],[16,6,10,20,11]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[4,14,19,15,5],[17,7,6,16,12]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[5,15,20,11,1],[18,8,7,17,13]]);</span>
+Regular CW-complex of dimension 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Y);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(Y,n));</span>
+[ [ 0 ], [  ], [  ], [ 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(FundamentalGroup(Y));</span>
+"SL(2,5)"
+
+</pre></div>
+
+<p>The following commands construct Seifert-Weber space, a rational homology sphere.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=PoincareDodecahedronCWComplex(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,2,3,4,5],[7,8,9,10,6]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,11,16,12,2],[9,8,18,14,19]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[2,12,17,13,3],[10,9,19,15,20]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[3,13,18,14,4],[6,10,20,11,16]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[4,14,19,15,5],[7,6,16,12,17]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[5,15,20,11,1],[8,7,17,13,18]]);</span>
+Regular CW-complex of dimension 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(W);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(W,n));</span>
+[ [ 0 ], [ 5, 5, 5 ], [  ], [ 0 ] ]
+
+</pre></div>
+
+<p><a id="X78B75E2E79FBCC54" name="X78B75E2E79FBCC54"></a></p>
+
+<h4>4.16 <span class="Heading">Prism manifolds</span></h4>
+
+<p>Another polytope of interest is the prism constructed as the direct product <span class="SimpleMath">D_n× [0,1]</span> of an n-gonal disk <span class="SimpleMath">D_n</span> with the unit interval. The function <code class="code">PoincarePrismCWComplex()</code> can be used to construct any 3-dimensional CW-complex arising from a prism with even <span class="SimpleMath">n≥ 4</span> by identifying the <span class="SimpleMath">n+2</span> faces pairwise; the vertices of the prism are numbered as follows.</p>
+
+<p><img src="images/prismnam.png" align="center" height="150" alt="prism"/></p>
+
+<p>The case <span class="SimpleMath">n=4</span> is that of a cube. The following commands construct a manifold <span class="SimpleMath">Y</span> arising from a hexagonal prism (<span class="SimpleMath">n=6</span>) with fundamental group <span class="SimpleMath">π_1Y=C_5× Q_32</span> equal to the direct product of the cyclic group of order <span class="SimpleMath">5</span> and the quaternion group of order <span class="SimpleMath">32</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[[1,2,3,4,5,6],[11,12,7,8,9,10]];;                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[[1,7,8,2],[4,5,11,10]];;             </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[[2,8,9,3],[6,1,7,12]];;             </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=[[3,9,10,4],[6,12,11,5]];;             </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PoincarePrismCWComplex(L,M,N,P);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Y);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"C5 x Q32"
+
+</pre></div>
+
+<p>An exhaustive search through all manifolds constructed from a hexagonal prism by identify faces pairwise shows that the finite groups arising as fundamental groups are precisely: <span class="SimpleMath">Q_8</span>, <span class="SimpleMath">Q_16</span>, <span class="SimpleMath">C_4</span>, <span class="SimpleMath">C_3 : C_4</span>, <span class="SimpleMath">C_5 : C_4</span>, <span class="SimpleMath">C_8</span>, <span class="SimpleMath">C_16</span>, <span class="SimpleMath">C_12</span>, <span class="SimpleMath">C_20</span>, <span class="SimpleMath">C_2</span>, <span class="SimpleMath">C_6</span>, <span class="SimpleMath">C_3 × Q_8</span>, <span class="SimpleMath">C_3 × Q_16</span>, <span class="SimpleMath">C_5 × Q_32</span>. Each of these finite groups <span class="SimpleMath">G=π_1Y</span> is either cyclic (in which case the corresponding manifold is a lens space) or else has the propert that <span class="SimpleMath">G/Z(G)</span> is dihedral (in which case the corresponding manifold is called a <em>prism manifold</em>). The majority of the manifolds arising from a hexagonal prism have infinite fundamental group.</p>
+
+<p>Infinite families of spherical <span class="SimpleMath">3</span>-maniolds can be constructed from the infinite family of prisms. For instance, a prism manifold which we denote by <span class="SimpleMath">P_r</span> can be obtained from a prism <span class="SimpleMath">D_2r× [0,1]</span> by identifying the left and right side under a twist of <span class="SimpleMath">π/r</span>, and identifying opposite square faces under a twist of <span class="SimpleMath">π/2</span>. Its fundamental group <span class="SimpleMath">π_1P_r</span> is the binary dihedral group of order <span class="SimpleMath">4r</span>. The following commands construct <span class="SimpleMath">P_r</span> for <span class="SimpleMath">r=3</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[[1,2,3,4,5,6],[8,9,10,11,12,7]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[[1,7,8,2],[11,10,4,5]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[[2,8,9,3],[12,11,5,6]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=[[3,9,10,4],[7,12,6,1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PoincarePrismCWComplex(L,M,N,P);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsClosedManifold(Y);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(FundamentalGroup(Y));</span>
+"C3 : C4"
 
 </pre></div>
 

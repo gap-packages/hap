@@ -1,0 +1,17 @@
+gap> L:=[ [ 1, 4, 5 ], [ 2, 6, 3 ] ];;
+gap> M:=[ [ 3, 4, 5 ], [ 6, 1, 2 ] ];;
+gap> N:=[ [ 2, 3, 5 ], [ 6, 4, 1 ] ];;
+gap> P:=[ [ 1, 2, 5 ], [ 6, 3, 4 ] ];;
+gap> Y:=PoincareOctahedronCWComplex(L,M,N,P);;
+gap> IsClosedManifold(Y);
+true
+
+gap> G:=FundamentalGroup(Y);;
+gap> StructureDescription(G);
+"SL(2,3)"
+
+gap> R:=ChainComplexOfUniversalCover(Y);
+Equivariant chain complex of dimension 3
+
+gap> List([0..3],R!.dimension);
+[ 1, 2, 2, 1 ]

@@ -2011,7 +2011,7 @@ $H_1(W,\mathbb Z) = \mathbb Z_2\oplus \mathbb Z_{594}$, $H_2(W,\mathbb Z) = 0$, 
   !gapprompt@gap>| !gapinput@A:=ThreeManifoldViaDehnSurgery(ap1,5,1);;|
   !gapprompt@gap>| !gapinput@ap2:=ArcPresentation(PureCubicalKnot(11,2));;|
   !gapprompt@gap>| !gapinput@B:=ThreeManifoldViaDehnSurgery(ap2,5,1);;|
-  !gapprompt@gap>| !gapinput@W:=ConnectedSum(A,B);|
+  !gapprompt@gap>| !gapinput@W:=ConnectedSum(A,B); #W:=ConnectedSum(A,B,-1) would yield A#-B where -B has the opposite orientation|
   Regular CW-complex of dimension 3
   
   !gapprompt@gap>| !gapinput@Homology(W,1);|
@@ -3021,7 +3021,6 @@ non-homeomorphic manifolds $\hat Y$ with boundary.
   [ 33, 13, 3, 18, 21, 7, 6, 13, 51, 2, 1, 15, 11, 11, 1, 35, 2, 2, 6, 15, 
     17, 2, 3, 2, 14, 17, 3, 1, 25, 8, 4, 1, 4 ]
   
-  !gapprompt@gap>| !gapinput@CC:=RefineClassification(C,invariant2);; #See above for invariant2|
   !gapprompt@gap>| !gapinput@inv5:=function(m)                       |
   !gapprompt@>| !gapinput@local B;|
   !gapprompt@>| !gapinput@B:=BoundaryOfPureRegularCWComplex(m);;|
@@ -3033,6 +3032,7 @@ non-homeomorphic manifolds $\hat Y$ with boundary.
   [ 25, 5, 3, 5, 4, 4, 2, 1, 11, 3, 4, 7, 3, 6, 4, 1, 5, 1, 1, 5, 1, 13, 4, 
     6, 40, 1, 2, 1, 11, 4, 5, 3, 1, 2, 7, 4, 1, 14, 11, 10, 2, 2, 6, 9, 3, 3, 
     2, 15, 2, 3, 2, 14, 17, 2, 1, 1, 4, 7, 14, 8, 3, 1, 1, 4 ]
+  
   !gapprompt@gap>| !gapinput@CC:=RefineClassification(CC,invariant2);;|
   !gapprompt@gap>| !gapinput@List(CC,Size);                              |
   [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
@@ -3045,6 +3045,138 @@ non-homeomorphic manifolds $\hat Y$ with boundary.
     1, 4, 5, 2, 9, 1, 4, 7, 1, 3, 1, 1, 4 ]
   !gapprompt@gap>| !gapinput@Length(CC);|
   180
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Octahedral manifolds}}\logpage{[ 4, 14, 0 ]}
+\hyperdef{L}{X7EC4359B7DF208B0}{}
+{
+ The above construction of 3-manifolds as quotients of a cube can be extended
+to other polytopes. A polytope of particular interest, and one that appears
+several times in the classic book on Three-Manifolds by William Thurston \cite{thurston}, is the octahedron. The function \texttt{PoincareOctahahedronCWComplex()} can be used to construct any 3-dimensional CW-complex arising from an
+octahedron by identifying the eight faces pairwise; the vertices and faces of
+the octahedron are numbered as follows. 
+
+  
+
+The following commands construct a spherical 3-manifold Y with fundamental
+group equal to the binary tetrahedral group $G$. The commands then use the universal cover of this manifold to construct the
+first four terms of a free periodic $\mathbb ZG$-resolution of $\mathbb Z$ of period $4$. The resolution has one free generator in dimensions $4n$ and $4n+3$ for $n\ge 0$. It has two free generators in dimensions $4n+1$ and $4n+2$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|L:=[ [ 1, 4, 5 ], [ 2, 6, 3 ] ];;A
+  @gapprompt|gap>A @gapinput|M:=[ [ 3, 4, 5 ], [ 6, 1, 2 ] ];;A
+  @gapprompt|gap>A @gapinput|N:=[ [ 2, 3, 5 ], [ 6, 4, 1 ] ];;A
+  @gapprompt|gap>A @gapinput|P:=[ [ 1, 2, 5 ], [ 6, 3, 4 ] ];;A
+  @gapprompt|gap>A @gapinput|Y:=PoincareOctahedronCWComplex(L,M,N,P);;A
+  @gapprompt|gap>A @gapinput|IsClosedManifold(Y);A
+  true
+  
+  @gapprompt|gap>A @gapinput|G:=FundamentalGroup(Y);;A
+  @gapprompt|gap>A @gapinput|StructureDescription(G);A
+  "SL(2,3)"
+  
+  @gapprompt|gap>A @gapinput|R:=ChainComplexOfUniversalCover(Y);A
+  Equivariant chain complex of dimension 3
+  
+  @gapprompt|gap>A @gapinput|List([0..3],R!.dimension);A
+  [ 1, 2, 2, 1 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Dodecahedral manifolds}}\logpage{[ 4, 15, 0 ]}
+\hyperdef{L}{X85FFF9B97B7AD818}{}
+{
+ Another polytope of interest, and one that can be used to construct the
+Poincare homology sphere, is the dodecahedron. The function \texttt{PoincareDodecahedronCWComplex()} can be used to construct any 3-dimensional CW-complex arising from a
+dodecahedron by identifying the $12$ pentagonal faces pairwise; the vertices of the prism are numbered as follows. 
+
+  
+
+The following commands construct the Poincare homology $3$-sphere (with fundamental group equal to the binary icosahedral group of order
+120). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Y:=PoincareDodecahedronCWComplex(|
+  !gapprompt@>| !gapinput@[[1,2,3,4,5],[6,7,8,9,10]],|
+  !gapprompt@>| !gapinput@[[1,11,16,12,2],[19,9,8,18,14]],|
+  !gapprompt@>| !gapinput@[[2,12,17,13,3],[20,10,9,19,15]],|
+  !gapprompt@>| !gapinput@[[3,13,18,14,4],[16,6,10,20,11]],|
+  !gapprompt@>| !gapinput@[[4,14,19,15,5],[17,7,6,16,12]],|
+  !gapprompt@>| !gapinput@[[5,15,20,11,1],[18,8,7,17,13]]);|
+  Regular CW-complex of dimension 3
+  !gapprompt@gap>| !gapinput@IsClosedManifold(Y);|
+  true
+  !gapprompt@gap>| !gapinput@List([0..3],n->Homology(Y,n));|
+  [ [ 0 ], [  ], [  ], [ 0 ] ]
+  !gapprompt@gap>| !gapinput@StructureDescription(FundamentalGroup(Y));|
+  "SL(2,5)"
+  
+\end{Verbatim}
+ The following commands construct Seifert-Weber space, a rational homology
+sphere. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@W:=PoincareDodecahedronCWComplex(|
+  !gapprompt@>| !gapinput@[[1,2,3,4,5],[7,8,9,10,6]],|
+  !gapprompt@>| !gapinput@[[1,11,16,12,2],[9,8,18,14,19]],|
+  !gapprompt@>| !gapinput@[[2,12,17,13,3],[10,9,19,15,20]],|
+  !gapprompt@>| !gapinput@[[3,13,18,14,4],[6,10,20,11,16]],|
+  !gapprompt@>| !gapinput@[[4,14,19,15,5],[7,6,16,12,17]],|
+  !gapprompt@>| !gapinput@[[5,15,20,11,1],[8,7,17,13,18]]);|
+  Regular CW-complex of dimension 3
+  !gapprompt@gap>| !gapinput@IsClosedManifold(W);|
+  true
+  !gapprompt@gap>| !gapinput@List([0..3],n->Homology(W,n));|
+  [ [ 0 ], [ 5, 5, 5 ], [  ], [ 0 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Prism manifolds}}\logpage{[ 4, 16, 0 ]}
+\hyperdef{L}{X78B75E2E79FBCC54}{}
+{
+ Another polytope of interest is the prism constructed as the direct product $D_n\times [0,1]$ of an n-gonal disk $D_n$ with the unit interval. The function \texttt{PoincarePrismCWComplex()} can be used to construct any 3-dimensional CW-complex arising from a prism
+with even $n\ge 4$ by identifying the $n+2$ faces pairwise; the vertices of the prism are numbered as follows. 
+
+  
+
+The case $n=4$ is that of a cube. The following commands construct a manifold $Y$ arising from a hexagonal prism ($n=6$) with fundamental group $\pi_1Y=C_5\times Q_{32}$ equal to the direct product of the cyclic group of order $5$ and the quaternion group of order $32$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=[[1,2,3,4,5,6],[11,12,7,8,9,10]];;                 |
+  !gapprompt@gap>| !gapinput@M:=[[1,7,8,2],[4,5,11,10]];;             |
+  !gapprompt@gap>| !gapinput@N:=[[2,8,9,3],[6,1,7,12]];;             |
+  !gapprompt@gap>| !gapinput@P:=[[3,9,10,4],[6,12,11,5]];;             |
+  !gapprompt@gap>| !gapinput@Y:=PoincarePrismCWComplex(L,M,N,P);;|
+  !gapprompt@gap>| !gapinput@IsClosedManifold(Y);|
+  true
+  !gapprompt@gap>| !gapinput@G:=FundamentalGroup(Y);;|
+  !gapprompt@gap>| !gapinput@StructureDescription(G);|
+  "C5 x Q32"
+  
+\end{Verbatim}
+ 
+
+An exhaustive search through all manifolds constructed from a hexagonal prism
+by identify faces pairwise shows that the finite groups arising as fundamental
+groups are precisely: $ Q_8$, $Q_{16}$, $C_4$, $ C_3 : C_4$, $ C_5 : C_4$, $ C_8$, $C_{16}$, $C_{12}$, $C_{20}$, $C_2$, $ C_6$, $ C_3 \times Q_8$, $ C_3 \times Q_{16}$, $C_5 \times Q_{32} $. Each of these finite groups $G=\pi_1Y$ is either cyclic (in which case the corresponding manifold is a lens space) or
+else has the propert that $G/Z(G)$ is dihedral (in which case the corresponding manifold is called a \emph{prism manifold}). The majority of the manifolds arising from a hexagonal prism have infinite
+fundamental group. 
+
+ Infinite families of spherical $3$-maniolds can be constructed from the infinite family of prisms. For instance,
+a prism manifold which we denote by $P_r$ can be obtained from a prism $D_{2r}\times [0,1]$ by identifying the left and right side under a twist of $\pi/r$, and identifying opposite square faces under a twist of $\pi/2$. Its fundamental group $\pi_1P_r$ is the binary dihedral group of order $4r$. The following commands construct $P_r$ for $r=3$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@L:=[[1,2,3,4,5,6],[8,9,10,11,12,7]];;|
+  !gapprompt@gap>| !gapinput@M:=[[1,7,8,2],[11,10,4,5]];;|
+  !gapprompt@gap>| !gapinput@N:=[[2,8,9,3],[12,11,5,6]];;|
+  !gapprompt@gap>| !gapinput@P:=[[3,9,10,4],[7,12,6,1]];;|
+  !gapprompt@gap>| !gapinput@Y:=PoincarePrismCWComplex(L,M,N,P);;|
+  !gapprompt@gap>| !gapinput@IsClosedManifold(Y);|
+  true
+  !gapprompt@gap>| !gapinput@StructureDescription(FundamentalGroup(Y));|
+  "C3 : C4"
   
 \end{Verbatim}
  }
@@ -3694,11 +3826,19 @@ However, this approach is of limited applicability since the bar resolution
 involves $|G|^k$ free generators in degree $k$. A range of techniques, tailored to specific classes of groups, can be used
 to compute the (co)homology of larger finite groups. 
 
- The following example computes the fourth integral cohomomogy of the Mathieu
-group $M_{24}$. 
+ The following example computes the seventh integral homology 
+
+$H_7(M_{23},\mathbb Z) = \mathbb Z_{16}\oplus\mathbb Z_{15}$ 
+
+and fourth integral cohomomogy 
 
 $H^4(M_{24},\mathbb Z) = \mathbb Z_{12}$ 
+
+of the Mathieu groups $M_{23}$ and $M_{24}$. (Warning: the computation of $H_7(M_{23},\mathbb Z)$ takes a couple of hours to run.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@GroupHomology(MathieuGroup(23),7);|
+  [ 16, 3, 5 ]
+  
   !gapprompt@gap>| !gapinput@GroupCohomology(MathieuGroup(24),4);|
   [ 4, 3 ]
   

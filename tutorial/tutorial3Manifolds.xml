@@ -464,4 +464,96 @@ fail to have a spherical link. By using barycentric subdivision if necessary, we
 
 </Section>
 
+
+<Section><Heading>Octahedral manifolds</Heading>
+
+	The above construction of 3-manifolds as quotients of a cube can be extended to other polytopes. A polytope of particular interest, and one that appears several times in the classic book on Three-Manifolds by William Thurston 
+	 <Cite Key="thurston"/>, is the octahedron.
+ The function <Code>PoincareOctahahedronCWComplex()</Code> can be used to construct any 3-dimensional CW-complex arising from an octahedron by identifying the eight faces pairwise; the vertices and faces of the octahedron are
+ numbered as follows. 
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/octahedron.png" align="center" height="350" alt="octahedron"/>
+</Alt>
+
+	 <P/>The following commands construct a spherical 3-manifold Y with fundamental group equal to the binary tetrahedral group <M>G</M>. The commands
+		 then use the universal cover of this manifold to construct the first four terms of a free periodic <M>\mathbb ZG</M>-resolution of  <M>\mathbb Z</M> of period <M>4</M>. The resolution has one free generator in dimensions <M>4n</M> and <M>4n+3</M> for <M>n\ge 0</M>.
+			 It has two free generators in dimensions <M>4n+1</M> and <M>4n+2</M>.
+		                         <Example>
+<#Include SYSTEM "tutex/12.32.txt">
+</Example>
+</Section>
+
+<Section><Heading>Dodecahedral manifolds</Heading>
+	Another polytope of  interest, and one that can be used to construct the Poincare  homology sphere, 
+          is the dodecahedron.
+		The function <Code>PoincareDodecahedronCWComplex()</Code> can be used to construct any 3-dimensional CW-complex arising from a dodecahedron by identifying the <M>12</M> pentagonal faces pairwise; the vertices of the prism are
+ numbered as follows.
+
+			<P/>
+<Alt Only="HTML">&lt;img src="images/dodecahedron.png" align="center" height="250" alt="dodecahedron"/>
+</Alt>
+
+<P/>The following commands construct the Poincare homology <M>3</M>-sphere (with fundamental group equal to the binary icosahedral group of order 120).
+
+	<Example>
+<#Include SYSTEM "tutex/12.35.txt">
+</Example>
+
+	The following commands construct Seifert-Weber space, a rational homology sphere.
+
+	 <Example>
+<#Include SYSTEM "tutex/12.36.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Prism manifolds</Heading>
+	Another polytope of interest is the prism  constructed as the direct product <M>D_n\times [0,1]</M> of an n-gonal disk <M>D_n</M> with the unit interval. The function <Code>PoincarePrismCWComplex()</Code> can be used to construct any 3-dimensional CW-complex arising from a prism with even <M>n\ge 4</M> by identifying the <M>n+2</M> faces pairwise; the vertices of the prism are
+ numbered as follows.
+
+
+<P/>
+<Alt Only="HTML">&lt;img src="images/prismnam.png" align="center" height="150" alt="prism"/>
+</Alt>
+
+<P/>The case <M>n=4</M> is that of a cube. The following commands construct a manifold <M>Y</M>
+arising from a hexagonal prism (<M>n=6</M>) with fundamental group 
+<M>\pi_1Y=C_5\times Q_{32}</M> equal to the direct product of the cyclic group of order <M>5</M> and the quaternion group of order <M>32</M>.
+
+<Example>
+<#Include SYSTEM "tutex/12.33.txt">
+</Example>
+
+<P/>An exhaustive search through all manifolds constructed from a hexagonal prism by identify faces pairwise shows that the finite groups arising as fundamental groups are precisely:
+<M> Q_8</M>,
+<M>Q_{16}</M>,
+<M>C_4</M>,
+<M> C_3 : C_4</M>,
+<M> C_5 : C_4</M>,
+<M> C_8</M>,
+<M>C_{16}</M>,
+<M>C_{12}</M>,
+<M>C_{20}</M>,
+<M>C_2</M>,
+<M> C_6</M>,
+<M> C_3 \times Q_8</M>,
+<M>	C_3 \times Q_{16}</M>,
+<M>C_5 \times Q_{32} </M>. Each of these finite groups <M>G=\pi_1Y</M> 
+	is either cyclic (in which case the corresponding manifold is a lens space) or else has the propert that <M>G/Z(G)</M> is dihedral (in which case the
+		corresponding manifold is called a <E>prism manifold</E>).
+		The majority of the manifolds arising from a hexagonal prism have infinite fundamental group.
+
+		<P/> Infinite families of spherical <M>3</M>-maniolds can be constructed from the infinite family of prisms. For instance, a prism manifold which we denote by
+		<M>P_r</M> can be obtained from a prism <M>D_{2r}\times [0,1]</M>
+ by identifying the left and right side under a twist of
+		<M>\pi/r</M>, and identifying
+			opposite square faces under a twist of <M>\pi/2</M>. Its fundamental group <M>\pi_1P_r</M> is the binary dihedral group of order <M>4r</M>. The following commands construct <M>P_r</M> for <M>r=3</M>. 
+
+<Example>
+<#Include SYSTEM "tutex/12.34.txt">
+</Example>
+
+</Section>
+
 </Chapter>
