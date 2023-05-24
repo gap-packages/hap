@@ -10,7 +10,7 @@ local bndX, bndY, boundary,
       i, j, ij, x, y, a, b, ia, ib, count, BND, M, 
       m, n, p, q;
 
-#THIS FUNCTION IS NOT FULLY IMPLEMENTED AND NEEDS TO BE USED WIT CARE
+#THIS FUNCTION IS NOT FULLY IMPLEMENTED AND NEEDS TO BE USED WITH CARE
 
 bndX:=X!.boundaries;
 bndY:=Y!.boundaries;

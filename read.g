@@ -442,6 +442,8 @@ ReadPackageHap("lib/RegularCWComplexes/grannyknot.gi");
 ReadPackageHap("lib/RegularCWComplexes/elementaryCWConstructions.gi");
 ReadPackageHap("lib/RegularCWComplexes/diagonal.gi");
 ReadPackageHap("lib/RegularCWComplexes/quotient.gi");
+ReadPackageHap("lib/RegularCWComplexes/planartrees.gi");
+ReadPackageHap("lib/RegularCWComplexes/ldcup.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################
@@ -534,8 +536,9 @@ ReadPackageHap("lib/Manifolds/dodecahedronCwComplex.gi");
 ReadPackageHap("lib/Manifolds/manifoldType.gi");
 ReadPackageHap("lib/Manifolds/star.gi");
 
-################## KELVIN ##################################
+################## KELVIN & KHALED ##################################
 ReadPackageHap("lib/Kelvin/init.g");
+ReadPackageHap("lib/Khaled/init.g");
 
 
 

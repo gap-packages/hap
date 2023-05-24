@@ -820,3 +820,44 @@ end);
 ##########################################################################
 ##########################################################################
 
+###############################################
+###############################################
+InstallGlobalFunction(SignatureOfSymmetricMatrix,
+function(A)
+local cp,f, zer,pos,neg,i,j;
+
+if not IsMatrix(A) then
+Print("The argument must be a matrix.\n");
+return fail;
+fi;
+
+if not A=TransposedMat(A) then
+Print("The argument must be a symmetric matrix.\n");
+return fail;
+fi;
+
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+if not IsRat(A[i][j]) then
+Print("The argument must be a symmetric matrix of rational numbers.\n");
+return fail;
+fi;
+od;od;
+
+cp:=CharacteristicPolynomial(A);
+f:=CoefficientsOfUnivariatePolynomial(cp);
+f:=List(f,SignInt);
+
+zer:=PositionProperty(f,x->x<>0);
+if zer=fail then zer:=Length(f)-1;
+else zer:=zer-1; fi;
+
+f:=Filtered(f,a->not IsZero(a));
+f:=List([1..Length(f)-1],i->f[i]*f[i+1]);
+
+pos:= Length(Filtered(f,IsNegInt));
+neg:= Degree(cp)-pos-zer;
+return rec( zero_eigenvalues:=zer, positive_eigenvalues:=pos, negative_eigenvalues:=neg, determinant:=Determinant(A) );
+end);
+###############################################
+###############################################

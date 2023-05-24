@@ -196,43 +196,44 @@ We also verify that <M>g_5^1\cup g_1^1 = - g_1^1 \cup g_5^1</M>.
 <P/>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <M>\Delta \colon Y \rightarrow  Y\times Y</M> in dimensions <M>\le 2</M>. In order to construct cup products in
 higher degrees <B>HAP</B> invokes three further strategies.
 
-<P/><B>Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</B>
+<P/><B>Strategy 2: implement the Alexander-Whitney map for simplicial complexes.</B>
 
 
 <P/>For simplicial complexes the cup product is implemented using the standard formula for the Alexander-Whitney chain map, together with homotopy equivalences to improve efficiency.
 
-<P/>As a first example, the following commands construct simplicial surfaces
+<P/>As a first example, the following commands construct simplicial complexes 
 <M>K=(\mathbb S^1 \times \mathbb S^1) \# (\mathbb S^1 \times \mathbb S^1)</M>
 and <M>L=(\mathbb S^1 \times \mathbb S^1) \vee \mathbb S^1 \vee \mathbb S^1</M>
 and establish that they have the same cohomology groups. It is then shown that
-the cup products <M>\cup_K\colon H^1(K,\mathbb Z)\times H^1(K,\mathbb Z) \rightarrow H^2(K,\mathbb Z)</M> and <M>\cup_L\colon H^1(L,\mathbb Z)\times H^1(L,\mathbb Z) \rightarrow H^2(L,\mathbb Z)</M> are antisymmetric bilinear forms of
+the cup products <M>\cup_K\colon H^2(K,\mathbb Z)\times H^2(K,\mathbb Z) \rightarrow H^4(K,\mathbb Z)</M> and <M>\cup_L\colon H^2(L,\mathbb Z)\times H^2(L,\mathbb Z) \rightarrow H^4(L,\mathbb Z)</M> are antisymmetric bilinear forms of
  different ranks;  hence <M>K</M> and <M>L</M> have different homotopy types.
 <Example>
 <#Include SYSTEM "tutex/1.7c.txt">
 </Example>
 
-<P/> As a second example of the computation of cups products, the following commands construct the wedge sum
-<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable 
-simplicial surface  of genus 2 and the <M>K3</M> complex surface which is stored as a pure simplicial complex of dimension 4. The  simplicial structure
+<P/> As a second example of the computation of cups products, the following commands construct the connected sums 
+<M>V=M\# M</M> and <M>W=M\# \overline M</M> where <M>M</M> is the <M>K3</M> complex  
+ surface which is stored as a pure simplicial complex of dimension 4 and where <M>\overline M</M> denotes the opposite orientation on <M>M</M>. The  simplicial structure
 on the <M>K3</M> surface  is taken from <Cite Key="spreerkhuenel"/>.
-The commands then show that <M>H^2(W,\mathbb Z)=\mathbb Z^{22}</M> and
-<M>H^4(W,\mathbb Z)=\mathbb Z</M>. The final commands comput the matrix <M>(x\cup y)</M> as <M>x,y</M> range over a generating set for <M>H^2(W,\mathbb Z)</M>.
+The commands then show that <M>H^2(V,\mathbb Z)=H^2(W,\mathbb Z)=\mathbb Z^{44}</M> and
+<M>H^4(V,\mathbb Z)=H^4(W,\mathbb Z)=\mathbb Z</M>. The final commands compute
+	the matrix <M>AV=(x\cup y)</M> as <M>x,y</M> range over a generating set for <M>H^2(V,\mathbb Z)</M> and the corresponding matrix <M>AW</M> for <M>W</M>. These two matrices are seen to have a different number of positive eigenvalues from which we can conclude that <M>V</M> is not homotopy equivalent to <M>W</M>.
 
 <Example>
 <#Include SYSTEM "tutex/1.7b.txt">
 </Example>
 
-A cubical Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not yet been implemented in HAP. However, the following more general approach has been implemented.
+A cubical cubical version of the Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not been implemented in HAP. However, the following more general approach has been implemented.
 
 <P/><B>Strategy 3: Implement a cellular approximation to the diagonal map on an arbitrary finite regular CW-complex.</B>
 
-<P/>The following example re-calculates the cup product 
-on the wedge sum
-<M>W=M\vee N</M> of a <M>2</M>-dimensional orientable
-simplicial surface  of genus 2 and the <M>K3</M> complex surface which, this time, is stored as a finite regular CW-complex. Discrete vector field methods are used to construct a diagonal approximation. The simplicial structure of <M>W</M> is not used -- in fact, the command <Code>W:=SimplifiedComplex(W)</Code> converts <M>W</M> to a regular CW-complex whose cells are typically not simplices. The method uses a different basis for the cohomology to that used above and thus produces a different `cup product matrix".
+<P/>The following example calculates the cup product <M>H^2(W,\mathbb Z)\times H^2(W,\mathbb Z) \rightarrow H^4(W,\mathbb Z)</M> for the <M>4</M>-dimensional orientable manifold
+<M>W=M\times M</M> where <M>M</M> is the closed surface of genus <M>2</M>. The manifold <M>W</M>  is stored as a regular CW-complex. 
+
 <Example>
 <#Include SYSTEM "tutex/1.7d.txt">
 </Example>
+	The matrix <M>A</M> representing the cup product <M>H^2(W,\mathbb Z)\times H^2(W,\mathbb Z) \rightarrow H^4(W,\mathbb Z)</M> is shown to have <M>9</M> positive eigenvalues, <M>9</M>  negative eigenvalues, and no zero eigenvalue.
 
 <P/><B>Strategy 4: Guess and verify a cellular approximation to the diagonal map.</B>   
 

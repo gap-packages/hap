@@ -853,15 +853,17 @@ end);
 ################################################
 ################################################
 InstallGlobalFunction(NumberOfPrimeKnots,
-function(n);
+function(n)
+local L;
 
-if n<=2 then return 0; fi;
-if n>11 then
-Print("Only prime knots with at most 11 crossings are currently avaiable.\n");
+if n<1 then Print(0,"\n"); fi;
+if n>19 then
+Print("Only the numberof prime knots up to 19 crossings is currently avaiable.\n");
 return fail;
 fi;
 
-return Length(HAP_Knots[n-2]);
+L:=[0, 0, 1, 1, 2, 3, 7, 21, 49, 165, 552, 2176, 9988, 46972, 253293, 1388705, 8053393, 48266466, 294130458];
+return L[n];
 end);
 ################################################
 ################################################

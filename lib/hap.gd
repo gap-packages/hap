@@ -8,6 +8,7 @@ ReadPackage("HAP","lib/SimplicialGroups/simpTypes.gd");
 ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWComplexes/cwTypes.gd");
 ReadPackage("HAP","lib/RegularCWComplexes/cocycle.gd");
+ReadPackage("HAP","lib/RegularCWComplexes/planartrees.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
 ReadPackage("HAP","lib/TorsionSubcomplexes/torsionsubcomplex.gd");
@@ -232,6 +233,7 @@ DeclareGlobalFunction("HomogeneousPolynomials_Bianchi");
 DeclareGlobalFunction("SparseChainComplexToChainComplex");
 DeclareGlobalFunction("SimplifiedSparseChainComplex");
 DeclareGlobalFunction("ChainComplexToSparseChainComplex");
+DeclareGlobalFunction("SignatureOfSymmetricMatrix");
 
 
 
@@ -323,6 +325,8 @@ DeclareGlobalFunction("IntegralCohomology");#<Cohomology
 DeclareOperation("Cohomology",[IsHapCochain,IsInt]);#doc
 DeclareOperation("Cohomology",[IsHapGCocomplex,IsInt]);
 DeclareOperation("CupProduct",[IsHapRegularCWComplex]);
+DeclareGlobalFunction("LowDimensionalCupProduct");
+DeclareGlobalFunction("CupProductMatrix");
 DeclareGlobalFunction("HAP_CupProductOfPresentation");
 DeclareGlobalFunction("HAP_CupProductOfSimplicialComplex");
 #DeclareGlobalFunction("Cohomology");
@@ -801,7 +805,7 @@ DeclareGlobalFunction("HAP_Triangulation");
 DeclareGlobalFunction("RegularCWComplex_AttachCellDestructive");
 DeclareGlobalFunction("RegularCWComplexWithRemovedCell");
 DeclareGlobalFunction("ComposeCWMaps");
-DeclareGlobalFunction("DiagonalCWMap");
+DeclareGlobalFunction("DiagonalChainMap");
 DeclareGlobalFunction("RegularCWPolygon");
 DeclareGlobalFunction("RegularCWPermutahedron");
 DeclareGlobalFunction("RegularCWCube");
@@ -919,6 +923,7 @@ ReadPackage("HAP","lib/CohomologyOperations/cohoOps.gd");
 ReadPackage("HAP","lib/Quandles/quandles.gd");
 ReadPackage("HAP","lib/Manifolds/manifolds.gd");
 ReadPackage("HAP","lib/Kelvin/kelvin.gd");
+ReadPackage("HAP","lib/Khaled/khaled.gd");
 
 
 

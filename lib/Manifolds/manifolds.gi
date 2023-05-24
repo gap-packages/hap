@@ -321,12 +321,13 @@ A:=NullMat(Length(gens),Length(gens));
 
 cup:=CupProduct(Y);
 if Length(arg)=1 then
-B:=IdentityMat(Length(gens));
+B:=IdentityMat(Length(H));
+B:=B{gens};
 else B:=arg[2];
 fi;
 
-for i in [1..Length(gens)] do
-for j in [i..Length(gens)] do
+for i in [1..Length(B)] do
+for j in [i..Length(B)] do
 c:=cup(n,n,B[i],B[j]);
 A[i][j]:=c[1];
 A[j][i]:=(-1)^n*c[1];

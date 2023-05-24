@@ -196,19 +196,20 @@ end;
 sparsemap:=function(v,n)
 local ans, rowA, k, f, x;
 
-rowA:=zero[n+1];
+rowA:=1*zero[n+1];
 ans:=1*zero[n+1];;
-
 
 for k in [1..Length(ans)] do
 rowA[k]:=1;
-f:= F!.mapping(rowA,n);
-rowA[k]:=0;
 #RT:=RT-Runtime();
-  for x in v do
-  ans[k]:=ans[k]+x[2]*f[x[1]]*SignInt(x[1]);
-  od;
+f:= F!.mapping(rowA,n);
 #RT:=RT+Runtime();
+rowA[k]:=0;
+
+  for x in v do
+  ans[k]:=ans[k]+x[2]*f[x[1]];  
+  od;
+
 od;
 
 return ans;

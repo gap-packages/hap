@@ -1,14 +1,52 @@
 
+########################################
+########################################
+HAP_Test:=function(F)
+local C, D, v, w, n, k, i, Fv, dFv, dv, Fdv;
+
+C:=Source(F);
+D:=Target(F);
+
+for n in [4..Length(C)] do
+v:=[1..C!.dimension(n)]*0;
+for k in [1..C!.dimension(n)] do
+v[k]:=1;
+#################################
+Fv:=F!.mapping(v,n);
+dFv:=[1..D!.dimension(n-1)]*0;
+for i in [1..Length(Fv)] do
+if not 0=Fv[i] then
+dFv:=dFv+D!.boundary(n,i)*Fv[i];
+fi;
+od;
+################################
+
+dv:=C!.boundary(n,k);
+Fdv:=F!.mapping(dv,n-1);
+if not dFv=Fdv then Print("Fail!\n"); return false; fi;
+
+v[k]:=0;
+od;
+Print("OK for n= ",n,"\n");
+od;
+
+
+return true;
+end;
+########################################
+########################################
+
 #######################################
 #######################################
-InstallGlobalFunction(DiagonalCWMap,
+InstallGlobalFunction(DiagonalChainMap,
 function(X)
-local XX, CX, CXX, D, map, chainHomotopy,
-      CellDiagonal, 2CellDiagonal, CellDiagRec, q2pX,nn,kk;
+local XX, CX, CXX, D, diag, firstproj, secondproj, map, chainHomotopy,
+      CellDiagonal, 2CellDiagonal, CellDiagRec, fproj,sproj,q2pX,nn,kk;
 
 CX:=ChainComplexOfRegularCWComplex(X);
-##XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X));  #THIS NEEDS A LAZY IMPLEMENTATION
+#XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X));  #THIS NEEDS A LAZY IMPLEMENTATION
 XX:=DirectProductOfRegularCWComplexesLazy(X,X);
+#XX:=DirectProductOfRegularCWComplexes(X,X);
 CXX:=ChainComplexOfRegularCWComplex(XX); #THIS ALSO NEEDS A LAZY IMPLEMENTATION
 q2pX:=XX!.quad2pair;
 CellDiagRec:=List([0..Dimension(X)],i->[]);
@@ -16,14 +54,14 @@ CellDiagRec:=List([0..Dimension(X)],i->[]);
 ###########################
 ###########################
 CellDiagonal:=function(n,k)
-local f,F,E,EE,CEE,p2qE,ff,FF,mapff,d, bnd,u,i,
+local f,F,E,EE,CEE,p2qE,ff,FF,mapff,d, bnd,u,v,i,
 CE, Homotopy, FFmat, x,GG,GGrec;
 
-if IsBound(CellDiagRec[n][k]) then return CellDiagRec[n][k]; fi;
+if IsBound(CellDiagRec[n][k]) then 
 
+return CellDiagRec[n][k]; fi;
 #This function returns the image vector in C(XxX) of the k-th n-cell of X
 #where n>1.
-
 #f: Closure(e^n_k) >---> X
 f:=CWSubcomplexToRegularCWMap(ClosureCWCell(X,n,k));
 #F:C(e^n_k) >--> C(X)
@@ -33,6 +71,9 @@ CE:=Source(F);
 E:=Source(f);
 #Create a dvf on E using the following command
 CriticalCells(E);;
+if Length(CriticalCells(E))<>1 then 
+Print("Error in contracting vector field\n"); return fail; 
+fi;
 #CocriticalCellsOfRegularCWComplex(E,n);
 #EE is the direct product E x E with dvf inherited from E
 EE:=DirectProductOfRegularCWComplexes(E,E,1+Dimension(E));
@@ -95,10 +136,13 @@ end;
 
 bnd:=1*CE!.boundary(n,1);
 bnd:=F!.mapping(bnd,n-1);
-u:=map(bnd,n-1);           #POSSIBLE RECURSION
-u:=GG(u);
-u:=Homotopy(u,n-1);
-CellDiagRec[n][k]:= FF!.mapping(u,n);
+
+v:=map(bnd,n-1);           #POSSIBLE RECURSION
+
+u:=GG(v);
+
+v:=Homotopy(u,n-1);
+CellDiagRec[n][k]:= FF!.mapping(v,n);
 Unbind(GGrec); Unbind(GG);Unbind(f);Unbind(FF);Unbind(CEE);Unbind(D);
 Unbind(EE);Unbind(Homotopy);
 return CellDiagRec[n][k];
@@ -107,111 +151,6 @@ end;
 ###########################
 
 2CellDiagonal:=function(i); return CellDiagonal(2,i); end;
-###########################
-##THE FOLLOWING NEEDS TO BE RE-DESIGNED  
-#####################
-if false then   #####
-#####################
-2CellDiagonal:=function(k)
-local u, edges, edgebnds, right, EDGES, N,2N,2N1, pos,
-a, i, j,l,ORIENT,word,L,s,t,LL;
-#k refers to the k-th cell of dimension 2
-
-if IsBound(CellDiagRec[2][k]) then return CellDiagRec[2][k]; fi;
-
-u:=[1..CXX!.dimension(2)]*0;
-edges:=X!.boundaries[3][k];
-N:=edges[1];
-2N:=2*N;
-2N1:=2N-1;
-edges:=edges{[2..N+1]};
-edgebnds:=List(edges,j->X!.boundaries[2][j]{[2,3]});
-EDGES:=[edges[1]];
-right:=edgebnds[1][2];
-ORIENT:=[];
-if right=Maximum(edgebnds[1]) then Add(ORIENT,1);
-else Add(ORIENT,-1);
-fi;
-Remove(edges,1);
-Remove(edgebnds,1);
-
-while Length(edges)>0 do
-pos:=PositionProperty(edgebnds,x->right in x);
-Add(EDGES,edges[pos]);
-if edgebnds[pos][1]=right then
-    right:=edgebnds[pos][2];
-else
-    right:=edgebnds[pos][1];
-fi;
-if right=Maximum(edgebnds[pos]) then Add(ORIENT,1);
-else Add(ORIENT,-1);
-fi;
-Remove(edges,pos);
-Remove(edgebnds,pos);
-od;
-
-Unbind(edges);
-Unbind(edgebnds);
-
-
-
-word:=[];
-for i in [1..N] do
-if ORIENT[i]=1 then Append(word,[EDGES[i],-EDGES[i]]);
-else Append(word,[-EDGES[i],EDGES[i]]);
-fi;
-od;
-
-Unbind(ORIENT);
-
-if word[2N]>0 then
-word:=Concatenation([word[2N]],word{[1..2N1]});
-fi;
-if word[1]<0 then
-word:=Concatenation(word{[2..2N]},[word[1]]);
-fi;
-
-L:=[];
-LL:=[];
-ORIENT:=[];
-for i in [1..N] do
-Add(ORIENT,X!.orientation[3][k][i]);
-Add(ORIENT,X!.orientation[3][k][i]);
-od;
-
-while true do
-pos:=PositionProperty(word,x->x<0);
-pos:=PositionProperty(word,x->x>0,pos);
-if pos=fail then break; fi;
-i:=word[pos];
-j:=word[pos-1];
-word[pos]:=j;
-word[pos-1]:=i;
-Add(L,[i,j]);
-Add(LL,ORIENT[pos-1]);
-od;
-
-Apply(L,x->q2pX[2][2][AbsInt(x[2])][AbsInt(x[1])][2]);
-
-
-s:=Minimum(X!.boundaries[2][EDGES[1]]{[2,3]});
-#Add(L,q2pX[3][1][k][s][2]);
-#Add(L,q2pX[1][3][s][k][2]);
-for i in [1..Length(L)] do
-u[L[i]]:= u[L[i]]+LL[i] ;
-od;
-
-i:=q2pX[3][1][k][s][2];
-u[i]:=u[i]-1;                ##+1 or -1??
-i:=q2pX[1][3][s][k][2];
-u[i]:=u[i]-1;                ##+1 or -1??
-
-CellDiagRec[2][k]:=u;
-return u;
-end;
-###########################
-fi; #######################
-###########################
 
 ###########################
 ###########################
@@ -273,13 +212,63 @@ end;
 ###########################
 ###########################
 
-return Objectify(HapChainMap,
+diag:= Objectify(HapChainMap,
        rec(
            source:=CX,
            target:=CXX,
            mapping:=map,
            properties:=[["characteristic", 0],["type","chainMap"]]));
 
+
+###########################
+###########################
+fproj := function(w,n)
+local v,i,j;
+
+v:=[1..CX!.dimension(n)]*0;
+for i in [1..Length(v)] do
+for j in [1..CX!.dimension(0)] do
+v[i]:=v[i]+w[q2pX[n+1][1][i][j][2]];
+od;od;
+
+return v;
+end;
+###########################
+###########################
+
+###########################
+###########################
+sproj := function(w,n)
+local v,i,j;
+
+v:=[1..CX!.dimension(n)]*0;
+for i in [1..Length(v)] do
+for j in [1..CX!.dimension(0)] do
+v[i]:=v[i]+w[q2pX[1][n+1][j][i][2]];
+od;od;
+
+return v;
+end;
+###########################
+###########################
+
+
+firstproj:= Objectify(HapChainMap,
+       rec(
+           source:=CXX,
+           target:=CX,
+           mapping:=fproj,
+           properties:=[["characteristic", 0],["type","chainMap"]]));
+secondproj:= Objectify(HapChainMap,
+       rec(
+           source:=CXX,
+           target:=CX,
+           mapping:=sproj,
+           properties:=[["characteristic", 0],["type","chainMap"]]));
+
+diag!.firstProjection:=firstproj;
+diag!.secondProjection:=secondproj;
+return diag;
 end);
 #######################################
 #######################################
@@ -296,22 +285,18 @@ end);
 #######################################
 InstallGlobalFunction(RegularCWCube,
 function(n)
-local A,Y,k;
+local I,Y;
 
-if n=0 then A:=[ [[1,0]], [] ];
-return RegularCWComplex(A);
+if n=0 then
+I:=[ [[1,0]], [] ];;
+return RegularCWComplex(I);;
 fi;
 
-if n=1 then A:=[ [[1,0],[1,0]], [[2,1,2]], [] ];
-return RegularCWComplex(A);
-fi;
 
-A:=[1]; 
-for k in [1..n-1] do
-A:=[A];
-od;
-Y:=PureCubicalComplex(A);
-return RegularCWComplex(Y);
+I:=[ [[1,0],[1,0]], [[2,1,2]], [] ];;
+I:=RegularCWComplex(I);;
+Y:=DirectProduct(List([1..n],i->I));
+return Y;
 end);
 #######################################
 

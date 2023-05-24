@@ -1216,7 +1216,8 @@ MB[3]:=MB[3]{L};
 W:=RegularCWComplex(MB);
 P:=Filtered([1..W!.nrCells(2)],k->W!.coboundaries[3][k][1]=1);;
 RegularCWComplex_AttachCellDestructive(W,3,P);
-return SimplifiedComplex(W);
+#return SimplifiedComplex(W);
+return BarycentricallySimplifiedComplex(W);
 
 end);
 ################################################################
@@ -1236,11 +1237,9 @@ S:=SymmetricGroup(Length(gensG));
 EltsH:=Elements(H);
 L:=[];
 
-for x in Combinations(EltsH,Length(gensG)) do
-for s in S do
-h:=GroupHomomorphismByImages(G,H,gensG,x{ListPerm(s,Length(gensG))});
-if not h=fail then Add(L,h); fi;
-od;
+for x in Tuples(EltsH,Length(gensG)) do
+h:=GroupHomomorphismByImages(G,H,gensG,x);
+if not h=fail then Add(L,h);  fi;
 od;
 return L;
 
@@ -1257,8 +1256,8 @@ local R,C,F,homs, inv, h, A, B;
 R:=ResolutionFiniteGroup(G,4);
 C:=ChainComplexOfUniversalCover(W);
 F:=C!.group;
-SetSize(F,infinity);
 homs:=HAP_AllHomomorphisms(F,G);
+SetSize(F,infinity);
 
 inv:=[];
 for h in homs do

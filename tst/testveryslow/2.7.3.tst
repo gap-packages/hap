@@ -11,7 +11,7 @@ gap> Cohomology(T,4);
 gap> cup:=CupProduct(T);
 function( p, q, vv, ww ) ... end
 gap> cup(3,1,[0,0,1,0],[0,0,1,0]);
-[ 1 ]
+[ 0 ]
 gap> STOP_TEST( "tst.tst", 1000 );
 
 

@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2014
-
+#RT:=0;
 #####################################################################
 #####################################################################
 InstallMethod(CoboundaryMatrix,
@@ -70,11 +70,11 @@ sparsemap:=function(v,n)
 local w,i,x;
 w:=[];
 for i in Filtered([1..Length(v)],a-> not IsZero(v[a])) do
-if not x=fail then
+#if not x=fail then
 x:=f!.mapping(n,i);
 #Add(w,[x,v[i]]);
 Add(w,[AbsInt(x),SignInt(x)*v[i]]);
-fi;
+#fi;
 od;
 
 return w;
@@ -446,7 +446,7 @@ end);
 #####################################################################
 InstallGlobalFunction(CupProductOfRegularCWComplex_alt,
 function(arg)
-local X,Xd,XX,A, CX, HCX, CXd, CXX, CXcab, XdmapXX, XdmapX, CXdmapCXX, 
+local X,Xd,XX,A, CX, HCX, CXd, CXX, XdmapXX, XdmapX, CXdmapCXX, 
       DIAG, tc,i,n, w, HCXXmapHCXd, tensor, quad2pair, HCXcab, HCXd, 
       HCXdsmallcab, CXdsmall, HXdsmall, CXdsmallmapCXd, HCXdmapHCXdsmall,
       HCXdsmall,range; 
@@ -537,31 +537,25 @@ end);
 #####################################################################
 InstallGlobalFunction(CupProductOfRegularCWComplex,
 function(arg)
-local X,Xd,XX,A, CX, HCX, CXX, CXcab, XdmapXX, XdmapX, CXmapCXX,
+local X,Xd,XX,A, CX, CXX, XdmapXX, XdmapX, CXmapCXX,
       DIAG, tc,i,n, w, HCXXmapHCX, tensor, quad2pair, HCXcab, 
       HCXsmallcab, CXsmall, HXsmall, CXsmallmapCX, HCXmapHCXsmall,
-      HCXsmall,range;
+      HCXsmall,range, CXmapCXsmall, HCXsmallmapHCX, Equiv;
 
 X:=arg[1];
 X:=ContractedComplex(X);
 CriticalCells(X);
 XX:=DirectProductOfRegularCWComplexes(X,X,Dimension(X)+1);
-CXmapCXX:=DiagonalCWMap(X);
+CXmapCXX:=DiagonalChainMap(X);
 HCXXmapHCX:=HomToIntegers(CXmapCXX);
-CX:=Source(CXmapCXX);
-CXX:=Target(CXmapCXX);
-HCX:=HomToIntegers(CX);
-CXsmallmapCX:=ChainComplexEquivalenceOfRegularCWComplex(X)[2];
-CXsmall:=Source(CXsmallmapCX);
+Equiv:=ChainComplexEquivalenceOfRegularCWComplex(X);
+CXsmallmapCX:=Equiv[2];
 HCXmapHCXsmall:=HomToIntegers(CXsmallmapCX);
-HCXsmall:=Target(HCXmapHCXsmall);
-HCX:=Source(HCXmapHCXsmall);
+HCXsmall:=Target(HCXmapHCXsmall);   
+CXmapCXsmall:=Equiv[1];
+HCXsmallmapHCX:=HomToIntegers(CXmapCXsmall);
 
-range:=[1..Length(CX)];
-
-HCXcab:=
-List(range,n->HAP_CocyclesAndCoboundaries(HCX,n,true));
-
+range:=[1..Length(HCXsmall)];
 HCXsmallcab:=
 List(range,n->HAP_CocyclesAndCoboundaries(HCXsmall,n,true));
 
@@ -570,15 +564,18 @@ quad2pair:=XX!.quad2pair;
 ##############################
 ##############################
 tensor:=function(p,q,vv,ww)
-local  u, P, v, w, Q, i, j, cp, cq, cheat;
+local  vvv,www,u, P, v, w, Q, i, j, cp, cq, cheat;
 #inputs a  p-class vv and a q-class ww.
 #outputs a p+q-cocycle u in HCXdsmall
 #u:=0*[1..CXX!.dimension(p+q)];
 u:=[];
-v:=HCXcab[p]!.classToCocycle(vv);
-w:=HCXcab[q]!.classToCocycle(ww);
+vvv:=HCXsmallcab[p]!.classToCocycle(vv);
+www:=HCXsmallcab[q]!.classToCocycle(ww);
+v:=HCXsmallmapHCX!.mapping(vvv,p);
+w:=HCXsmallmapHCX!.mapping(www,q);
+
 P:=Filtered([1..Length(v)],i->not IsZero(v[i]));
-Q:=Filtered([1..Length(w)],i->not IsZero(w[i]));
+Q:=Filtered([1..Length(w)],j->not IsZero(w[j]));
 
 for i in P do
 for j in Q do
@@ -593,9 +590,12 @@ fi;
 Apply(u,x->[x[1],cheat*x[2]]);
 ###############################
 
+#RT:=RT-Runtime();  #Takes all the time!
 w:= HCXXmapHCX!.sparseMap(u, p+q);
+#RT:=RT+Runtime();
 w:=HCXmapHCXsmall!.mapping(w,p+q);
-return HCXsmallcab[p+q]!.cocycleToClass(w);
+w:=HCXsmallcab[p+q]!.cocycleToClass(w);
+return w;
 end;
 ##############################
 ##############################

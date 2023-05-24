@@ -13,7 +13,7 @@ gap> Homology(W,0);Homology(W,1);Homology(W,2);Homology(W,3);
 [ 0 ]
 gap> F:=FundamentalGroup(W);;
 gap> L:=LowIndexSubgroupsFpGroup(F,5);;
-gap> List(L,AbelianInvariants);
-[ [ 2, 3 ], [ 3, 3 ], [ 2, 2, 2 ], [ 3, 4 ], [ 3, 3, 16 ], [ 2, 2, 27 ] ]
+gap> SortedList(List(L,AbelianInvariants));
+[ [ 2, 2, 2 ], [ 2, 2, 27 ], [ 2, 3 ], [ 3, 3 ], [ 3, 3, 16 ], [ 3, 4 ] ]
 gap> STOP_TEST( "tst.tst", 1000 );
 

@@ -583,14 +583,15 @@ od;
 
 ##############################
 chainHomotopy:=function(w,n)
-local u, k, h, a;
+local u, k, h, a, abs;
 u:=[1..Y!.nrCells(n+1)]*0;
 
 for k in [1..Length(w)] do
 if not w[k]=0 then
 h:=C!.htpy[n+1][k];
 for a in h do
-u[AbsInt(a)]:=w[k]*SignInt(a);
+abs:=AbsInt(a);
+u[abs]:=u[abs]+w[k]*SignInt(a);
 od;
 fi;
 od;
@@ -1130,6 +1131,17 @@ Objectify(HapChainComplex,
 
 
 end);
+##########################################################
+##########################################################
+
+###########################################################
+##########################################################
+InstallOtherMethod( RegularCWComplex,
+"for regular CW spaces, do nothing",
+ [IsHapRegularCWComplex],
+ function(Y)
+ return Y;
+ end);
 ##########################################################
 ##########################################################
 

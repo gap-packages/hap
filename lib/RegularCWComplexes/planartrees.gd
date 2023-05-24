@@ -1,0 +1,12 @@
+DeclareGlobalFunction("HAP_PlanarTreeJoin"); 
+DeclareGlobalFunction("HAP_PlanarTreeLeaves");
+DeclareGlobalFunction("HAP_PlanarTreeGraft");
+DeclareGlobalFunction("HAP_PlanarBinaryTrees");
+DeclareGlobalFunction("HAP_PlanarTreeRemoveEdge");
+DeclareGlobalFunction("HAP_DisplayPlanarTree");
+DeclareGlobalFunction("HAP_PlanarTreeRemovableEdge");
+DeclareGlobalFunction("DisplayVectorField");
+DeclareGlobalFunction("RegularCWAssociahedron");
+DeclareGlobalFunction("HAP_AssociahedronCells");
+DeclareGlobalFunction("HAP_AssociahedronBoundaries");
+DeclareGlobalFunction("HAP_DisplayVectorField");

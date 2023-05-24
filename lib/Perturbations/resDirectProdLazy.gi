@@ -266,7 +266,8 @@ HhomE:=Embedding(E,2);
 EhomG:=Projection(E,1);
 EhomH:=Projection(E,2);
 
-if Parent(G)=Parent(H) and not G=H  then
+#if Parent(G)=Parent(H) and not G=H  then
+if One(G) in H and not G=H then
 
 gensG:=MinimalGeneratingSet(G);
 gens1:=List(gensG,x->One(G));
