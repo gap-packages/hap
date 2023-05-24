@@ -503,15 +503,15 @@ generators $g_1^1, g_5^1\in H^1(Y,\mathbb Z) =\mathbb Z^5$ and establish that th
 This computation of low-dimensional cup products is achieved using
 group-theoretic methods to approximate the diagonal map $\Delta \colon Y \rightarrow Y\times Y$ in dimensions $\le 2$. In order to construct cup products in higher degrees \textsc{HAP} invokes three further strategies. 
 
-\textsc{Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.} 
+\textsc{Strategy 2: implement the Alexander-Whitney map for simplicial complexes.} 
 
 For simplicial complexes the cup product is implemented using the standard
 formula for the Alexander-Whitney chain map, together with homotopy
 equivalences to improve efficiency. 
 
-As a first example, the following commands construct simplicial surfaces $K=(\mathbb S^1 \times \mathbb S^1) \# (\mathbb S^1 \times \mathbb S^1)$ and $L=(\mathbb S^1 \times \mathbb S^1) \vee \mathbb S^1 \vee \mathbb S^1$ and establish that they have the same cohomology groups. It is then shown that
-the cup products $\cup_K\colon H^1(K,\mathbb Z)\times H^1(K,\mathbb Z) \rightarrow H^2(K,\mathbb
-Z)$ and $\cup_L\colon H^1(L,\mathbb Z)\times H^1(L,\mathbb Z) \rightarrow H^2(L,\mathbb
+As a first example, the following commands construct simplicial complexes $K=(\mathbb S^1 \times \mathbb S^1) \# (\mathbb S^1 \times \mathbb S^1)$ and $L=(\mathbb S^1 \times \mathbb S^1) \vee \mathbb S^1 \vee \mathbb S^1$ and establish that they have the same cohomology groups. It is then shown that
+the cup products $\cup_K\colon H^2(K,\mathbb Z)\times H^2(K,\mathbb Z) \rightarrow H^4(K,\mathbb
+Z)$ and $\cup_L\colon H^2(L,\mathbb Z)\times H^2(L,\mathbb Z) \rightarrow H^4(L,\mathbb
 Z)$ are antisymmetric bilinear forms of different ranks; hence $K$ and $L$ have different homotopy types. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@K:=ClosedSurface(2);|
@@ -557,114 +557,105 @@ Z)$ are antisymmetric bilinear forms of different ranks; hence $K$ and $L$ have 
  
 
  As a second example of the computation of cups products, the following
-commands construct the wedge sum $W=M\vee N$ of a $2$-dimensional orientable simplicial surface of genus 2 and the $K3$ complex surface which is stored as a pure simplicial complex of dimension 4.
-The simplicial structure on the $K3$ surface is taken from \cite{spreerkhuenel}. The commands then show that $H^2(W,\mathbb Z)=\mathbb Z^{22}$ and $H^4(W,\mathbb Z)=\mathbb Z$. The final commands comput the matrix $(x\cup y)$ as $x,y$ range over a generating set for $H^2(W,\mathbb Z)$. 
+commands construct the connected sums $V=M\# M$ and $W=M\# \overline M$ where $M$ is the $K3$ complex surface which is stored as a pure simplicial complex of dimension 4
+and where $\overline M$ denotes the opposite orientation on $M$. The simplicial structure on the $K3$ surface is taken from \cite{spreerkhuenel}. The commands then show that $H^2(V,\mathbb Z)=H^2(W,\mathbb Z)=\mathbb Z^{44}$ and $H^4(V,\mathbb Z)=H^4(W,\mathbb Z)=\mathbb Z$. The final commands compute the matrix $AV=(x\cup y)$ as $x,y$ range over a generating set for $H^2(V,\mathbb Z)$ and the corresponding matrix $AW$ for $W$. These two matrices are seen to have a different number of positive
+eigenvalues from which we can conclude that $V$ is not homotopy equivalent to $W$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@M:=ClosedSurface(2);;|
-  !gapprompt@gap>| !gapinput@N:=SimplicialK3Surface();;|
-  !gapprompt@gap>| !gapinput@W:=WedgeSum(M,N);|
+  !gapprompt@gap>| !gapinput@M:=SimplicialK3Surface();;|
+  !gapprompt@gap>| !gapinput@V:=ConnectedSum(M,M,+1);|
   Simplicial complex of dimension 4.
   
-  !gapprompt@gap>| !gapinput@Cohomology(W,0);|
-  [ 0 ]
-  !gapprompt@gap>| !gapinput@Cohomology(W,1);|
-  [ 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@W:=ConnectedSum(M,M,-1);|
+  Simplicial complex of dimension 4.
+  
+  !gapprompt@gap>| !gapinput@Cohomology(V,2);|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   !gapprompt@gap>| !gapinput@Cohomology(W,2);|
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-  !gapprompt@gap>| !gapinput@Cohomology(W,3);|
-  [  ]
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Cohomology(V,4);|
+  [ 0 ]
   !gapprompt@gap>| !gapinput@Cohomology(W,4);|
   [ 0 ]
-  !gapprompt@gap>| !gapinput@cup:=CupProduct(W);;|
-  !gapprompt@gap>| !gapinput@SecondCohomologyGens:=IdentityMat(23);;|
-  !gapprompt@gap>| !gapinput@A:=NullMat(23,23);;|
-  !gapprompt@gap>| !gapinput@for i in [1..23] do|
-  !gapprompt@>| !gapinput@for j in [1..23] do|
-  !gapprompt@>| !gapinput@A[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];|
-  !gapprompt@>| !gapinput@od;od;|
-  !gapprompt@gap>| !gapinput@Display(A);|
-  [ [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
-    [   0,  -2,   2,  -1,   0,  -1,   1,  -1,   0,   0,   1,  -1,   0,   0,   1,   1,   2,  -1,  -1,   1,  -1,   0,  -1 ],
-    [   0,   2,  -4,   2,  -1,   1,  -1,   1,   0,  -1,  -1,   0,   1,  -1,   1,  -1,  -2,   1,   2,  -2,   1,   0,   3 ],
-    [   0,  -1,   2,  -2,   2,  -1,   0,  -1,   1,   1,   1,   0,   0,   0,  -2,   0,   0,   0,   0,   1,   0,   1,  -1 ],
-    [   0,   0,  -1,   2,  -4,   1,   1,   1,  -2,  -1,  -1,   0,  -1,  -1,   4,   0,   1,  -1,  -1,  -1,  -1,  -1,   1 ],
-    [   0,  -1,   1,  -1,   1,  -2,   0,  -1,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   1,   0 ],
-    [   0,   1,  -1,   0,   1,   0,  -2,   1,   0,   0,  -1,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,   0,   0 ],
-    [   0,  -1,   1,  -1,   1,  -1,   1,  -2,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   0,   0 ],
-    [   0,   0,   0,   1,  -2,   1,   0,   1,  -2,  -1,   0,   0,  -1,  -1,   2,   0,   0,  -1,   0,  -1,  -1,  -1,   0 ],
-    [   0,   0,  -1,   1,  -1,   0,   0,   0,  -1,  -2,   0,  -1,   0,   0,   2,   1,   0,   0,   0,   0,   0,  -1,   1 ],
-    [   0,   1,  -1,   1,  -1,   1,  -1,   1,   0,   0,  -2,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,  -1,   0 ],
-    [   0,  -1,   0,   0,   0,  -1,   0,  -1,   0,  -1,   0,  -2,   1,   0,   2,   1,   1,  -1,   0,   0,   0,   0,   1 ],
-    [   0,   0,   1,   0,  -1,   1,   1,   1,  -1,   0,   1,   1,  -2,   0,   0,   0,   0,   1,  -1,   1,  -1,  -1,  -2 ],
-    [   0,   0,  -1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,   0,  -2,   3,   0,   1,  -1,   0,  -1,  -1,   0,   1 ],
-    [   0,   1,   1,  -2,   4,   0,  -1,   0,   2,   2,  -1,   2,   0,   3,  -8,  -1,  -2,   1,   1,   1,   2,   0,  -2 ],
-    [   0,   1,  -1,   0,   0,   1,   0,   1,   0,   1,   0,   1,   0,   0,  -1,  -2,  -1,   1,   1,  -1,   0,   0,   0 ],
-    [   0,   2,  -2,   0,   1,   1,  -1,   1,   0,   0,  -1,   1,   0,   1,  -2,  -1,  -2,   0,   2,  -1,   1,   0,   0 ],
-    [   0,  -1,   1,   0,  -1,   0,   0,   0,  -1,   0,   0,  -1,   1,  -1,   1,   1,   0,  -2,  -1,   0,   0,  -1,   1 ],
-    [   0,  -1,   2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,  -1,   0,   1,   1,   2,  -1,  -2,   1,  -1,   0,  -2 ],
-    [   0,   1,  -2,   1,  -1,   1,   0,   1,  -1,   0,   0,   0,   1,  -1,   1,  -1,  -1,   0,   1,  -2,   0,  -1,   2 ],
-    [   0,  -1,   1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,  -1,  -1,   2,   0,   1,   0,  -1,   0,  -2,   0,   0 ],
-    [   0,   0,   0,   1,  -1,   1,   0,   0,  -1,  -1,  -1,   0,  -1,   0,   0,   0,   0,  -1,   0,  -1,   0,  -2,   1 ],
-    [   0,  -1,   3,  -1,   1,   0,   0,   0,   0,   1,   0,   1,  -2,   1,  -2,   0,   0,   1,  -2,   2,   0,   1,  -4 ] ]
+  !gapprompt@gap>| !gapinput@cupV:=CupProduct(V);;|
+  !gapprompt@gap>| !gapinput@cupW:=CupProduct(W);;|
+  !gapprompt@gap>| !gapinput@AV:=NullMat(44,44);;      |
+  !gapprompt@gap>| !gapinput@AW:=NullMat(44,44);;|
+  !gapprompt@gap>| !gapinput@gens:=IdentityMat(44);;|
+  !gapprompt@gap>| !gapinput@for i in [1..44] do|
+  !gapprompt@>| !gapinput@for j in [1..44] do|
+  !gapprompt@>| !gapinput@AV[i][j]:=cupV(2,2,gens[i],gens[j])[1];                               |
+  !gapprompt@>| !gapinput@AW[i][j]:=cupW(2,2,gens[i],gens[j])[1];|
+  !gapprompt@>| !gapinput@od;od;                                 |
+  !gapprompt@gap>| !gapinput@SignatureOfSymmetricMatrix(AV);|
+  rec( determinant := 1, negative_eigenvalues := 22, positive_eigenvalues := 22,
+    zero_eigenvalues := 0 )
+  !gapprompt@gap>| !gapinput@SignatureOfSymmetricMatrix(AW);|
+  rec( determinant := 1, negative_eigenvalues := 6, positive_eigenvalues := 38, 
+    zero_eigenvalues := 0 )
   
 \end{Verbatim}
- A cubical Alexander-Whitney formula, due to J.-P. Serre, could be used for
-computing the cohomology ring of a regular CW-complex whose cells all have a
-cubical combinatorial face lattice. This has not yet been implemented in HAP.
-However, the following more general approach has been implemented. 
+ A cubical cubical version of the Alexander-Whitney formula, due to J.-P.
+Serre, could be used for computing the cohomology ring of a regular CW-complex
+whose cells all have a cubical combinatorial face lattice. This has not been
+implemented in HAP. However, the following more general approach has been
+implemented. 
 
 \textsc{Strategy 3: Implement a cellular approximation to the diagonal map on an
 arbitrary finite regular CW-complex.} 
 
-The following example re-calculates the cup product on the wedge sum $W=M\vee N$ of a $2$-dimensional orientable simplicial surface of genus 2 and the $K3$ complex surface which, this time, is stored as a finite regular CW-complex.
-Discrete vector field methods are used to construct a diagonal approximation.
-The simplicial structure of $W$ is not used -- in fact, the command \texttt{W:=SimplifiedComplex(W)} converts $W$ to a regular CW-complex whose cells are typically not simplices. The method
-uses a different basis for the cohomology to that used above and thus produces
-a different `cup product matrix". 
+The following example calculates the cup product $H^2(W,\mathbb Z)\times H^2(W,\mathbb Z) \rightarrow H^4(W,\mathbb Z)$ for the $4$-dimensional orientable manifold $W=M\times M$ where $M$ is the closed surface of genus $2$. The manifold $W$ is stored as a regular CW-complex. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@M:=ClosedSurface(2);;|
-  !gapprompt@gap>| !gapinput@N:=SimplicialK3Surface();;|
-  !gapprompt@gap>| !gapinput@W:=WedgeSum(M,N);;|
-  !gapprompt@gap>| !gapinput@W:=RegularCWComplex(W);|
+  !gapprompt@gap>| !gapinput@M:=RegularCWComplex(ClosedSurface(2));;|
+  !gapprompt@gap>| !gapinput@W:=DirectProduct(M,M);|
   Regular CW-complex of dimension 4
   
-  !gapprompt@gap>| !gapinput@W:=SimplifiedComplex(W);|
-  Regular CW-complex of dimension 4
+  !gapprompt@gap>| !gapinput@Size(W);|
+  5776
+  !gapprompt@gap>| !gapinput@W:=SimplifiedComplex(W);;|
+  !gapprompt@gap>| !gapinput@Size(W);                                |
+  1024
+  
+  !gapprompt@gap>| !gapinput@Homology(W,2);           |
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(W,4);|
+  [ 0 ]
   
   !gapprompt@gap>| !gapinput@cup:=CupProduct(W);;|
-  !gapprompt@gap>| !gapinput@SecondCohomologyGens:=IdentityMat(23);;|
-  !gapprompt@gap>| !gapinput@A:=NullMat(23,23);;|
-  !gapprompt@gap>| !gapinput@for i in [1..23] do|
-  !gapprompt@>| !gapinput@for j in [1..23] do|
-  !gapprompt@>| !gapinput@A[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];|
+  !gapprompt@gap>| !gapinput@SecondCohomologtGens:=IdentityMat(18);;   |
+  !gapprompt@gap>| !gapinput@A:=NullMat(18,18);;|
+  !gapprompt@gap>| !gapinput@for i in [1..18] do|
+  !gapprompt@>| !gapinput@for j in [1..18] do|
+  !gapprompt@>| !gapinput@A[i][j]:=cup(2,2,SecondCohomologtGens[i],SecondCohomologtGens[j])[1];|
   !gapprompt@>| !gapinput@od;od;|
   !gapprompt@gap>| !gapinput@Display(A);|
-  [ [   -3,    1,    1,    0,    0,   -4,    1,    1,   -1,    2,    0,   -1,   -1,   -6,    0,    1,   -1,    1,   -1,    0,    1,   -2,    0 ],
-    [    0,   -1,   -3,    2,   -2,    5,    0,    0,    0,   -1,    1,    0,    1,    6,    0,   -1,    0,   -1,    1,    0,   -1,    2,    1 ],
-    [    0,   -1,   -2,    3,   -3,  -10,    0,    2,   -1,    1,    1,   -1,    2,    6,    1,   -1,    0,   -2,    1,   -2,   -3,    1,    0 ],
-    [    2,    1,    2,  -10,    4,    7,    0,   -3,    0,   -2,   -1,    2,    0,    5,   -2,    0,    3,    2,    0,    3,    2,    0,    0 ],
-    [    1,   -1,   -2,    4,   -2,   -4,    0,    2,    0,    0,    4,   -3,    2,   -9,    2,   -1,   -1,   -2,    1,   -4,   -1,    1,   -1 ],
-    [   -1,   -4,   -6,    0,   -6,   -7,   -5,    7,   -9,   -2,   -7,    8,   -3,   54,   -8,   -5,    4,   -4,    5,   10,   -8,    6,   -4 ],
-    [    1,    0,   -1,    0,   -1,    0,   -2,    1,    0,   -2,   -2,    2,    0,    7,   -2,   -1,    0,    0,    0,    2,   -1,    3,    1 ],
-    [    0,    0,    0,   -2,    2,    3,    2,   -3,    1,    0,    0,    0,    0,    3,    1,    1,    1,    1,    0,    0,    1,   -1,    1 ],
-    [    0,   -1,    0,   -2,   -2,   -4,   -3,    4,   -5,    1,   -2,    3,   -1,    9,   -4,   -3,    1,   -1,    1,    4,   -1,    1,   -3 ],
-    [    1,    0,   -1,    0,    0,   -1,   -1,   -2,    2,   -2,   -1,    1,    0,    3,    0,    0,    1,    0,    0,    0,    0,    2,    2 ],
-    [    0,    1,    2,   -1,   -1,  -16,   -3,    5,   -5,   -1,  -14,   11,   -3,   27,   -9,   -4,    5,   -3,    1,    8,   -7,    6,    0 ],
-    [   -1,    2,    0,    0,    3,   21,    3,   -5,    7,    1,   11,  -10,    2,  -30,    7,    5,   -6,    4,   -2,   -6,    7,   -5,    1 ],
-    [    0,    1,    2,    0,    0,   -5,    1,    0,    0,    0,    0,   -1,    0,   -8,    0,    1,    0,    0,   -1,   -2,    0,   -1,    1 ],
-    [   -9,    3,    2,    3,   10,   58,    3,   -7,    6,    1,   -2,    3,  -11,  -22,    3,    7,   -4,    7,   -4,    5,   10,   -7,    5 ],
-    [    1,   -1,    1,   -1,   -2,  -11,   -1,    4,   -5,    0,   -3,    2,    1,   14,   -4,   -3,    3,   -3,    2,    1,   -6,    1,   -2 ],
-    [    1,   -1,   -1,    1,   -2,   -8,   -2,    3,   -3,    0,   -2,    3,    1,    7,   -2,   -4,    2,   -3,    2,    1,   -4,    2,   -1 ],
-    [   -2,    1,   -1,    3,    0,    7,    1,   -1,    1,    1,    2,   -5,    0,   -8,    2,    3,   -4,    3,   -2,   -1,    2,   -2,    0 ],
-    [    1,   -1,   -1,    2,   -2,   -4,   -2,    3,   -2,    0,   -1,    3,    0,    6,   -2,   -3,    2,   -4,    2,    0,   -4,    2,   -1 ],
-    [   -1,    1,    1,    0,    2,    5,    0,   -1,    1,    0,    0,   -1,   -1,   -6,    1,    2,   -1,    2,   -2,    0,    2,   -1,    0 ],
-    [    0,    1,   -1,    4,    1,   10,    1,   -2,    6,    0,    9,   -7,    2,  -29,    7,    3,   -5,    1,   -1,   -7,    5,   -2,    1 ],
-    [    1,   -1,   -2,    2,   -4,  -12,   -2,    4,   -2,    0,   -4,    4,    0,   20,   -4,   -4,    2,   -4,    2,    2,   -6,    4,   -1 ],
-    [   -1,    1,    2,   -3,    2,    6,    2,   -2,    1,    2,    4,   -3,    0,  -13,    2,    2,   -2,    2,   -1,   -1,    4,   -5,   -1 ],
-    [    2,   -2,   -1,    0,   -3,  -11,   -1,    2,   -2,    0,    0,    0,    2,   10,   -1,   -1,    0,   -1,    0,    0,   -3,    1,   -3 ] ]
+  [ [    0,   -1,    0,    0,    0,    0,    3,   -2,    0,    0,    0,    1,   -1,    0,    0,    1,    0,    0 ],
+    [   -1,  -10,    1,    2,   -2,    1,    6,   -1,    0,   -3,    4,   -1,   -1,   -1,    4,   -2,   -2,    0 ],
+    [    0,    1,   -2,    1,    0,   -1,    0,    0,    1,    0,   -1,    1,    0,    0,    1,   -1,    0,    0 ],
+    [    0,    2,    1,   -2,    1,    0,    0,   -1,    0,    1,    0,    0,    0,    0,   -1,    2,    0,    0 ],
+    [    0,   -2,    0,    1,    0,    0,    1,   -1,    0,    0,   -1,    0,    0,    0,    0,   -1,    0,    0 ],
+    [    0,    1,   -1,    0,    0,    0,    0,    1,   -1,    1,    0,    0,    0,    0,    1,   -1,    0,    0 ],
+    [    3,    6,    0,    0,    1,    0,   -4,    0,   -1,    2,    4,   -5,    2,   -1,    1,    0,    3,    0 ],
+    [   -2,   -1,    0,   -1,   -1,    1,    0,    4,   -2,    0,    0,    3,   -1,    1,   -1,    0,   -2,    0 ],
+    [    0,    0,    1,    0,    0,   -1,   -1,   -2,    4,   -3,  -10,    1,    0,    0,   -3,    3,    0,    0 ],
+    [    0,   -3,    0,    1,    0,    1,    2,    0,   -3,    2,    3,    0,    0,    0,    1,   -3,    0,    0 ],
+    [    0,    4,   -1,    0,   -1,    0,    4,    0,  -10,    3,   18,    1,    0,    0,    0,    4,    0,    1 ],
+    [    1,   -1,    1,    0,    0,    0,   -5,    3,    1,    0,    1,    0,    0,    0,   -2,   -1,   -1,    0 ],
+    [   -1,   -1,    0,    0,    0,    0,    2,   -1,    0,    0,    0,    0,    0,    0,    1,    0,    0,    0 ],
+    [    0,   -1,    0,    0,    0,    0,   -1,    1,    0,    0,    0,    0,    0,    0,    0,   -1,   -1,    0 ],
+    [    0,    4,    1,   -1,    0,    1,    1,   -1,   -3,    1,    0,   -2,    1,    0,    0,    2,    2,    0 ],
+    [    1,   -2,   -1,    2,   -1,   -1,    0,    0,    3,   -3,    4,   -1,    0,   -1,    2,    0,    0,    0 ],
+    [    0,   -2,    0,    0,    0,    0,    3,   -2,    0,    0,    0,   -1,    0,   -1,    2,    0,    0,    0 ],
+    [    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1,    0,    0,    0,    0,    0,    0,    0 ] ]
+  
+  !gapprompt@gap>| !gapinput@SignatureOfSymmetricMatrix(A);|
+  rec( determinant := -1, negative_eigenvalues := 9, positive_eigenvalues := 9,
+    zero_eigenvalues := 0 )
+  
   
 \end{Verbatim}
- 
+ The matrix $A$ representing the cup product $H^2(W,\mathbb Z)\times H^2(W,\mathbb Z) \rightarrow H^4(W,\mathbb Z)$ is shown to have $9$ positive eigenvalues, $9$ negative eigenvalues, and no zero eigenvalue. 
 
 \textsc{Strategy 4: Guess and verify a cellular approximation to the diagonal map.} 
 
@@ -712,7 +703,7 @@ from unique.)
   !gapprompt@gap>| !gapinput@K:=ClosedSurface(1);;|
   !gapprompt@gap>| !gapinput@facets:=MaximalSimplicesOfSimplicialComplex(K);;|
   !gapprompt@gap>| !gapinput@LoadPackage("simpcomp");;|
-  !gapprompt@gap>| !gapinput@scK:=SCFromFacets(S);;|
+  !gapprompt@gap>| !gapinput@scK:=SCFromFacets(facets);;|
   !gapprompt@gap>| !gapinput@scY:=SCCartesianProduct(scK,scK);;|
   !gapprompt@gap>| !gapinput@Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));|
   Simplicial complex of dimension 4.
@@ -3180,6 +3171,18 @@ a prism manifold which we denote by $P_r$ can be obtained from a prism $D_{2r}\t
   
 \end{Verbatim}
  }
+
+ 
+\section{\textcolor{Chapter }{Bipyramid manifolds}}\logpage{[ 4, 17, 0 ]}
+\hyperdef{L}{X7F31DFDA846E8E75}{}
+{
+ Yet another polytope of interest is the bipyramid constructed as the
+suspension of an n-gonal disk $D_n$. The function \texttt{PoincareBipyramidCWComplex()} can be used to construct any 3-dimensional CW-complex arising from a bipyramid
+with $n\ge 3$ by identifying the $2n$ faces pairwise; the vertices of the prism are numbered as follows. 
+
+  
+
+ For $n=4$ the bipyramid is the octahedron. }
 
  }
 

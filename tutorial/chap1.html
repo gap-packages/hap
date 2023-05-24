@@ -431,11 +431,11 @@ function( a, b ) ... end
 
 <p>This computation of low-dimensional cup products is achieved using group-theoretic methods to approximate the diagonal map <span class="SimpleMath">∆ : Y → Y× Y</span> in dimensions <span class="SimpleMath">≤ 2</span>. In order to construct cup products in higher degrees <strong class="button">HAP</strong> invokes three further strategies.</p>
 
-<p><strong class="button">Strategy 2: implement the Alexander-Whitney map for a fixed class of spaces.</strong></p>
+<p><strong class="button">Strategy 2: implement the Alexander-Whitney map for simplicial complexes.</strong></p>
 
 <p>For simplicial complexes the cup product is implemented using the standard formula for the Alexander-Whitney chain map, together with homotopy equivalences to improve efficiency.</p>
 
-<p>As a first example, the following commands construct simplicial surfaces <span class="SimpleMath">K=( S^1 × S^1) # ( S^1 × S^1)</span> and <span class="SimpleMath">L=( S^1 × S^1) ∨ S^1 ∨ S^1</span> and establish that they have the same cohomology groups. It is then shown that the cup products <span class="SimpleMath">∪_K: H^1(K, Z)× H^1(K, Z) → H^2(K, Z)</span> and <span class="SimpleMath">∪_L: H^1(L, Z)× H^1(L, Z) → H^2(L, Z)</span> are antisymmetric bilinear forms of different ranks; hence <span class="SimpleMath">K</span> and <span class="SimpleMath">L</span> have different homotopy types.</p>
+<p>As a first example, the following commands construct simplicial complexes <span class="SimpleMath">K=( S^1 × S^1) # ( S^1 × S^1)</span> and <span class="SimpleMath">L=( S^1 × S^1) ∨ S^1 ∨ S^1</span> and establish that they have the same cohomology groups. It is then shown that the cup products <span class="SimpleMath">∪_K: H^2(K, Z)× H^2(K, Z) → H^4(K, Z)</span> and <span class="SimpleMath">∪_L: H^2(L, Z)× H^2(L, Z) → H^4(L, Z)</span> are antisymmetric bilinear forms of different ranks; hence <span class="SimpleMath">K</span> and <span class="SimpleMath">L</span> have different homotopy types.</p>
 
 
 <div class="example"><pre>
@@ -480,60 +480,47 @@ Simplicial complex of dimension 2.
 
 </pre></div>
 
-<p>As a second example of the computation of cups products, the following commands construct the wedge sum <span class="SimpleMath">W=M∨ N</span> of a <span class="SimpleMath">2</span>-dimensional orientable simplicial surface of genus 2 and the <span class="SimpleMath">K3</span> complex surface which is stored as a pure simplicial complex of dimension 4. The simplicial structure on the <span class="SimpleMath">K3</span> surface is taken from <a href="chapBib.html#biBspreerkhuenel">[SK11]</a>. The commands then show that <span class="SimpleMath">H^2(W, Z)= Z^22</span> and <span class="SimpleMath">H^4(W, Z)= Z</span>. The final commands comput the matrix <span class="SimpleMath">(x∪ y)</span> as <span class="SimpleMath">x,y</span> range over a generating set for <span class="SimpleMath">H^2(W, Z)</span>.</p>
+<p>As a second example of the computation of cups products, the following commands construct the connected sums <span class="SimpleMath">V=M# M</span> and <span class="SimpleMath">W=M# overline M</span> where <span class="SimpleMath">M</span> is the <span class="SimpleMath">K3</span> complex surface which is stored as a pure simplicial complex of dimension 4 and where <span class="SimpleMath">overline M</span> denotes the opposite orientation on <span class="SimpleMath">M</span>. The simplicial structure on the <span class="SimpleMath">K3</span> surface is taken from <a href="chapBib.html#biBspreerkhuenel">[SK11]</a>. The commands then show that <span class="SimpleMath">H^2(V, Z)=H^2(W, Z)= Z^44</span> and <span class="SimpleMath">H^4(V, Z)=H^4(W, Z)= Z</span>. The final commands compute the matrix <span class="SimpleMath">AV=(x∪ y)</span> as <span class="SimpleMath">x,y</span> range over a generating set for <span class="SimpleMath">H^2(V, Z)</span> and the corresponding matrix <span class="SimpleMath">AW</span> for <span class="SimpleMath">W</span>. These two matrices are seen to have a different number of positive eigenvalues from which we can conclude that <span class="SimpleMath">V</span> is not homotopy equivalent to <span class="SimpleMath">W</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=ClosedSurface(2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=SimplicialK3Surface();;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=WedgeSum(M,N);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=SimplicialK3Surface();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=ConnectedSum(M,M,+1);</span>
 Simplicial complex of dimension 4.
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,0);</span>
-[ 0 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,1);</span>
-[ 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=ConnectedSum(M,M,-1);</span>
+Simplicial complex of dimension 4.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(V,2);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,2);</span>
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,3);</span>
-[  ]
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(V,4);</span>
+[ 0 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(W,4);</span>
 [ 0 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(W);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondCohomologyGens:=IdentityMat(23);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=NullMat(23,23);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..23] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..23] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">A[i][j]:=cup(2,2,SecondCohomologyGens[i],SecondCohomologyGens[j])[1];</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(A);</span>
-[ [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
-  [   0,  -2,   2,  -1,   0,  -1,   1,  -1,   0,   0,   1,  -1,   0,   0,   1,   1,   2,  -1,  -1,   1,  -1,   0,  -1 ],
-  [   0,   2,  -4,   2,  -1,   1,  -1,   1,   0,  -1,  -1,   0,   1,  -1,   1,  -1,  -2,   1,   2,  -2,   1,   0,   3 ],
-  [   0,  -1,   2,  -2,   2,  -1,   0,  -1,   1,   1,   1,   0,   0,   0,  -2,   0,   0,   0,   0,   1,   0,   1,  -1 ],
-  [   0,   0,  -1,   2,  -4,   1,   1,   1,  -2,  -1,  -1,   0,  -1,  -1,   4,   0,   1,  -1,  -1,  -1,  -1,  -1,   1 ],
-  [   0,  -1,   1,  -1,   1,  -2,   0,  -1,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   1,   0 ],
-  [   0,   1,  -1,   0,   1,   0,  -2,   1,   0,   0,  -1,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,   0,   0 ],
-  [   0,  -1,   1,  -1,   1,  -1,   1,  -2,   1,   0,   1,  -1,   1,   0,   0,   1,   1,   0,   0,   1,   0,   0,   0 ],
-  [   0,   0,   0,   1,  -2,   1,   0,   1,  -2,  -1,   0,   0,  -1,  -1,   2,   0,   0,  -1,   0,  -1,  -1,  -1,   0 ],
-  [   0,   0,  -1,   1,  -1,   0,   0,   0,  -1,  -2,   0,  -1,   0,   0,   2,   1,   0,   0,   0,   0,   0,  -1,   1 ],
-  [   0,   1,  -1,   1,  -1,   1,  -1,   1,   0,   0,  -2,   0,   1,   1,  -1,   0,  -1,   0,   0,   0,   1,  -1,   0 ],
-  [   0,  -1,   0,   0,   0,  -1,   0,  -1,   0,  -1,   0,  -2,   1,   0,   2,   1,   1,  -1,   0,   0,   0,   0,   1 ],
-  [   0,   0,   1,   0,  -1,   1,   1,   1,  -1,   0,   1,   1,  -2,   0,   0,   0,   0,   1,  -1,   1,  -1,  -1,  -2 ],
-  [   0,   0,  -1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,   0,  -2,   3,   0,   1,  -1,   0,  -1,  -1,   0,   1 ],
-  [   0,   1,   1,  -2,   4,   0,  -1,   0,   2,   2,  -1,   2,   0,   3,  -8,  -1,  -2,   1,   1,   1,   2,   0,  -2 ],
-  [   0,   1,  -1,   0,   0,   1,   0,   1,   0,   1,   0,   1,   0,   0,  -1,  -2,  -1,   1,   1,  -1,   0,   0,   0 ],
-  [   0,   2,  -2,   0,   1,   1,  -1,   1,   0,   0,  -1,   1,   0,   1,  -2,  -1,  -2,   0,   2,  -1,   1,   0,   0 ],
-  [   0,  -1,   1,   0,  -1,   0,   0,   0,  -1,   0,   0,  -1,   1,  -1,   1,   1,   0,  -2,  -1,   0,   0,  -1,   1 ],
-  [   0,  -1,   2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,  -1,   0,   1,   1,   2,  -1,  -2,   1,  -1,   0,  -2 ],
-  [   0,   1,  -2,   1,  -1,   1,   0,   1,  -1,   0,   0,   0,   1,  -1,   1,  -1,  -1,   0,   1,  -2,   0,  -1,   2 ],
-  [   0,  -1,   1,   0,  -1,   0,   1,   0,  -1,   0,   1,   0,  -1,  -1,   2,   0,   1,   0,  -1,   0,  -2,   0,   0 ],
-  [   0,   0,   0,   1,  -1,   1,   0,   0,  -1,  -1,  -1,   0,  -1,   0,   0,   0,   0,  -1,   0,  -1,   0,  -2,   1 ],
-  [   0,  -1,   3,  -1,   1,   0,   0,   0,   0,   1,   0,   1,  -2,   1,  -2,   0,   0,   1,  -2,   2,   0,   1,  -4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cupV:=CupProduct(V);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cupW:=CupProduct(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AV:=NullMat(44,44);;      </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AW:=NullMat(44,44);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=IdentityMat(44);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..44] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..44] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">AV[i][j]:=cupV(2,2,gens[i],gens[j])[1];                               </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">AW[i][j]:=cupW(2,2,gens[i],gens[j])[1];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;                                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SignatureOfSymmetricMatrix(AV);</span>
+rec( determinant := 1, negative_eigenvalues := 22, positive_eigenvalues := 22,
+  zero_eigenvalues := 0 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SignatureOfSymmetricMatrix(AW);</span>
+rec( determinant := 1, negative_eigenvalues := 6, positive_eigenvalues := 38, 
+  zero_eigenvalues := 0 )
 
 </pre></div>
 
-<p>A cubical Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not yet been implemented in HAP. However, the following more general approach has been implemented.</p>
+<p>A cubical cubical version of the Alexander-Whitney formula, due to J.-P. Serre, could be used for computing the cohomology ring of a regular CW-complex whose cells all have a cubical combinatorial face lattice. This has not been implemented in HAP. However, the following more general approach has been implemented.</p>
 
 <p><strong class="button">Strategy 3: Implement a cellular approximation to the diagonal map on an arbitrary finite regular CW-complex.</strong></p>
 
@@ -583,8 +570,14 @@ Regular CW-complex of dimension 4
   [    0,   -2,    0,    0,    0,    0,    3,   -2,    0,    0,    0,   -1,    0,   -1,    2,    0,    0,    0 ],
   [    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1,    0,    0,    0,    0,    0,    0,    0 ] ]
 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SignatureOfSymmetricMatrix(A);</span>
+rec( determinant := -1, negative_eigenvalues := 9, positive_eigenvalues := 9,
+  zero_eigenvalues := 0 )
+
 
 </pre></div>
+
+<p>The matrix <span class="SimpleMath">A</span> representing the cup product <span class="SimpleMath">H^2(W, Z)× H^2(W, Z) → H^4(W, Z)</span> is shown to have <span class="SimpleMath">9</span> positive eigenvalues, <span class="SimpleMath">9</span> negative eigenvalues, and no zero eigenvalue.</p>
 
 <p><strong class="button">Strategy 4: Guess and verify a cellular approximation to the diagonal map.</strong></p>
 
@@ -625,7 +618,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(1);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">facets:=MaximalSimplicesOfSimplicialComplex(K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("simpcomp");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scK:=SCFromFacets(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scK:=SCFromFacets(facets);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scY:=SCCartesianProduct(scK,scK);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));</span>
 Simplicial complex of dimension 4.
