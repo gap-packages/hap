@@ -835,7 +835,27 @@ the following.
  }
 
  
-\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 13, 0 ]}
+\section{\textcolor{Chapter }{Bockstein homomorphism}}\logpage{[ 1, 13, 0 ]}
+\hyperdef{L}{X83035DEC7C9659C6}{}
+{
+ The following example evaluates the Bockstein homomorphism $\beta_2\colon H^\ast(X,\mathbb Z_2) \rightarrow H^{\ast +1}(X,\mathbb Z_2)$ on an additive basis for $X=\Sigma(\mathbb RP^2 \times \mathbb RP^2)$ the suspension of the direct product of two projective planes. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@P:=ClosedSurface(-1);;|
+  !gapprompt@gap>| !gapinput@P:=SimplifiedComplex(RegularCWComplex(P));;|
+  !gapprompt@gap>| !gapinput@PP:=DirectProduct(P,P);;|
+  !gapprompt@gap>| !gapinput@SPP:=Suspension(PP);|
+  Regular CW-complex of dimension 5
+  
+  !gapprompt@gap>| !gapinput@A:=CohomologyRing(SPP,2);|
+  <algebra of dimension 9 over GF(2)>
+  !gapprompt@gap>| !gapinput@List(Basis(A),x->Bockstein(A,x));          |
+  [ 0*v.1, v.5, v.6, v.7+v.8, 0*v.1, 0*v.1, v.9, v.9, 0*v.1 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{CW maps and induced homomorphisms}}\logpage{[ 1, 14, 0 ]}
 \hyperdef{L}{X8771FF2885105154}{}
 {
  
@@ -887,7 +907,7 @@ ambient isotopy.
  }
 
  
-\section{\textcolor{Chapter }{Constructing a simplicial complex from a regular CW-complex}}\logpage{[ 1, 14, 0 ]}
+\section{\textcolor{Chapter }{Constructing a simplicial complex from a regular CW-complex}}\logpage{[ 1, 15, 0 ]}
 \hyperdef{L}{X853D6B247D0E18DB}{}
 {
  The following example constructs a $3$-dimensional pure regular CW-complex $K$ whose $3$-cells are permutahedra. It then constructs the simplicial complex $B$ by taking barycentric subdivision. It then constructes a smaller, homotopy
@@ -913,7 +933,7 @@ equivalent, simplicial complex $N$ by taking the nerve of the cover of $K$ by th
  }
 
  
-\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 15, 0 ]}
+\section{\textcolor{Chapter }{Equivariant CW complexes}}\logpage{[ 1, 16, 0 ]}
 \hyperdef{L}{X85A579217DCB6CC8}{}
 {
  The above representations of spaces as simplicial complexes and regular CW
@@ -1000,7 +1020,7 @@ and has a non-regular CW structure with $1$ vertex, $3$ edges, $3$ cells of dime
  }
 
  
-\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 16, 0 ]}
+\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 17, 0 ]}
 \hyperdef{L}{X86881717878ADCD6}{}
 {
  If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizer groups then
@@ -2870,7 +2890,7 @@ homeomorphism types of cube manifolds.
   @gapprompt|gap>E @gapinput|List(D,Size);E
   [ 7, 1, 3, 3, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2 ]
   
-  @gapprompt|gap>E @gapinput|DD:=List(DD,x->List(x,y->PoincareCubeCWComplexNS(E
+  @gapprompt|gap>E @gapinput|DD:=List(D,x->List(x,y->PoincareCubeCWComplexNS(E
   @gapprompt|>E @gapinput|y!.cubeFacePairings[1],y!.cubeFacePairings[2],y!.cubeFacePairings[3])));;E
   
   @gapprompt|gap>E @gapinput|D1:=[];;E
