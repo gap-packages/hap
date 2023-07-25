@@ -16,3 +16,5 @@ DeclareGlobalFunction("FundamentalMultiplesOfStiefelWhitneyClasses");
 DeclareGlobalFunction("CohomologyHomomorphismOfRepresentation");
 DeclareGlobalFunction("MinimizeRingRelations");
 DeclareGlobalFunction("CohomologicalData");
+DeclareGlobalFunction("HAP_ChainComplexToEquivariantChainComplex");
+DeclareGlobalFunction("HAP_bockstein");

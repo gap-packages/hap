@@ -152,7 +152,7 @@ od;
 
 Add(Boundaries,[]);
 
-return Boundaries;
+return [Boundaries,Cells];
 end);
 #############################################
 #############################################
@@ -160,8 +160,19 @@ end);
 #############################################
 #############################################
 InstallGlobalFunction(RegularCWAssociahedron,
-function(n);
-return RegularCWComplex(HAP_AssociahedronBoundaries(n));
+function(n)
+local bounds,Y,k,B;
+bounds:=HAP_AssociahedronBoundaries(n);
+Y:=RegularCWComplex(bounds[1]);
+Y!.trees:=bounds[2];
+Y!.directed:=[];
+for k in [1..Y!.nrCells(1)] do
+B:=Y!.boundaries[2][k]{[2,3]};
+if Y!.trees[1][B[1]] < Y!.trees[1][B[2]] then Add(Y!.directed,1*B);
+else Add(Y!.directed,Reversed(1*B)); fi;
+od;
+CriticalCells(Y);;
+return Y;
 end);
 #############################################
 #############################################
@@ -341,4 +352,91 @@ return Y;
 end;
 #############################################
 #############################################
+
+################################################
+################################################
+InstallGlobalFunction(HAP_CriticalCellsDirected,
+function(Y)
+local arrows,k,e,a,aa,aaa,n,d,i,pos1,pos2,nonCriticals, ncells, n1cells,
+vectorField, inverseVectorField, criticalCells, comb;
+#Construct a contracting discrete vector field on
+#a directed regular CW-complex and return the unique critical cell.
+
+if not Y!.criticalCells=fail then return Y!.criticalCells; fi;
+if not IsBound(Y!.directed) then return fail; fi;
+
+arrows:=List([1..Y!.nrCells(0)],i->[]); #arrows[k] is a list of edge numbers
+                                        #of edges with source vertex k.
+for e in [1..Length(Y!.directed)] do
+Add(arrows[Y!.directed[e][1]] , e);
+od;
+Apply(arrows,SSortedList);
+criticalCells:=[];
+vectorField:=List([1..Dimension(Y)],i->[]);
+inverseVectorField:=List([0..Dimension(Y)-1],i->[]);
+nonCriticals:=List([0..Dimension(Y)],i->[]);
+
+#Add those arrows to the discrete vector field that
+#have a source 0-cell and a target 1-cell.
+for k in [1..Length(arrows)] do
+a:=arrows[k];
+if Length(a)>0 then
+a:=a[1];  #Number of first edge with source vertex k.
+d:=Y!.directed[a];  #The ordered pair of boundary vertices of edge a
+inverseVectorField[1][d[1]]:=a;
+vectorField[1][a]:=d[1];
+Add(nonCriticals[1],d[1]);
+Add(nonCriticals[2],a);
+fi;
+od;
+
+#if false then
+#Now add those arrows to the discrete vector field that
+#have a source k-cell and a target k+1-cell for k>0.
+#TO BE COMPLETED
+for n in [1..Dimension(Y)-1] do
+ncells:=[];
+n1cells:=[];
+for k in [1..Y!.nrCells(n)] do
+a:=ClosureCWCell(Y,n,k)[2];;
+a:=a[2];
+Add(ncells,SSortedList(a));
+od;
+for k in [1..Y!.nrCells(n+1)] do
+a:=ClosureCWCell(Y,n+1,k)[2];;
+a:=a[2];
+Add(n1cells,SSortedList(a));
+od;
+for k in [1..Y!.nrCells(0)] do
+a:=arrows[k];
+if Length(a)>=n+1 then
+comb:=Combinations(a{[2..Length(a)]},n);
+for aa in comb do
+aaa:=Concatenation([a[1]],aa);;
+pos1:=PositionProperty(ncells,x->IsSubset(x,aa));
+pos2:=PositionProperty(n1cells,x->IsSubset(x,aaa));
+inverseVectorField[n+1][pos1]:=pos2;
+vectorField[n+1][pos2]:=pos1;
+Add(nonCriticals[n+1],pos1);
+Add(nonCriticals[n+2],pos2);
+od;
+fi;
+od;od;
+#END OF TO BE COMPLETED
+#fi;
+
+criticalCells:=List([0..Dimension(Y)],n->Difference([1..Y!.nrCells(n)],nonCriticals[n+1]));
+criticalCells:=List([0..Dimension(Y)],n->List(criticalCells[n+1],x->[n,x]));
+criticalCells:=Concatenation(criticalCells);
+#pos1:=PositionProperty(arrows,x->Length(x)=0);
+#criticalCells:=[[0,pos1]];
+
+Y!.vectorField:=vectorField;
+Y!.inverseVectorField:=inverseVectorField;
+Y!.criticalCells:=criticalCells;
+
+return criticalCells;;
+end);
+################################################
+################################################
 

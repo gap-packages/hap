@@ -42,11 +42,14 @@ end;
 ##################################################
 ##################################################
 InstallGlobalFunction(CohomologyHomomorphism,
-function(phi, n)
-local hom, R, G, A, B, C,D,HC,HD, hc, hd,nat, natd, p, fdelta, hcdelta, N, indhom,
+#function(phi, n)
+function(arg)
+local phi,n,
+      hom, R, G, A, B, C,D,HC,HD, hc, hd,nat, natd, p, fdelta, hcdelta, N, indhom,
       genshc, imgenshc, x, y, xtilde, ytilde, homdir, iso, isod;
 
-
+phi:=arg[1];
+n:=arg[2];
 
 # n is a nonnegative integer
 # phi is a homomomorphism phi:A-->B of G-modules represented as G-outer groups
@@ -56,7 +59,9 @@ local hom, R, G, A, B, C,D,HC,HD, hc, hd,nat, natd, p, fdelta, hcdelta, N, indho
 A:=phi!.Source;
 B:=phi!.Target;
 G:=A!.ActingGroup;
+if Length(arg)=3 then R:=arg[3]; else
 R:=ResolutionFiniteGroup(G,n+1);
+fi;
 C:=HomToGModule(R,A);
 D:=HomToGModule(R,B);
 HC:=CohomologyModule(C,n);

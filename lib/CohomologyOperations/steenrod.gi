@@ -313,6 +313,12 @@ Print("The Bockstein operation is not defined for this algebra.\n");
 return fail;
 fi;
 ####################################################
+#
+#### Bockstein for CW complexes ####################
+if not IsBound(A!.maxdeg) then
+return A!.bockstein(w);
+fi;
+####################################################
 
 ###### If w=0 then return 0 ########################
 if IsZero(w) then return w; fi;

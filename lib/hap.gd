@@ -812,6 +812,8 @@ DeclareGlobalFunction("RegularCWCube");
 DeclareGlobalFunction("RegularCWSimplex");
 DeclareGlobalFunction("DirectProductOfRegularCWComplexesLazy");
 DeclareGlobalFunction("QuotientChainMap");
+DeclareOperation("Suspension",[IsHapRegularCWComplex]);
+DeclareGlobalFunction("Suspension_alt");
 
 
 ## KNOTS ############################################################

@@ -145,12 +145,15 @@ end);
 ########################################################
 ########################################################
 RegularCWSphere:=function(n)
-local S;
+local S,k;
 
-S:=Sphere(n);
-S:=RegularCWComplex(S);
-S:=SimplifiedComplex(S);  #SHOULD RE-CODE THIS TO AVOID UNNECESSARY COMPUTATIONS
-return S;
+S:=[];
+S[1]:=[ [1,0],[1,0] ];
+for k in [1..n] do
+Add(S, [ [2,1,2],[2,1,2] ]);
+od;
+Add(S,[]);
+return RegularCWComplex(S);
 
 end;
 ########################################################
@@ -409,4 +412,79 @@ return Y;
 end;
 ########################################################
 ########################################################
+
+#########################################
+#########################################
+InstallMethod(Suspension,
+"Suspension of regular CW complex",
+[IsHapRegularCWComplex],
+function(Y)
+local B, n;;
+
+B:=[];
+B[1]:= [[1,0],[1,0]];
+B[2]:=List([1..Y!.nrCells(0)], i->[2,1,2]);
+
+for n in [1..Dimension(Y)] do
+B[n+2]:=1*Y!.boundaries[n+1];
+od;
+Add(B,[]);
+
+return RegularCWComplex(B);
+end);
+############################################
+############################################
+
+############################################
+############################################
+InstallGlobalFunction(Suspension_alt,
+function(Y)
+local SY, B, top, bot, dim, dims,dimss, k,n,x,bnd;;
+
+dim:=Dimension(Y);
+dims:=List([0..dim],i->Y!.nrCells(i));
+B:=1*Y!.boundaries;
+Add(B,[]);
+Add(B[1],[1,0]);
+Add(B[1],[1,0]);
+top:=Length(B[1]);
+bot:=top-1;
+
+for k in [1..dims[1]] do
+bnd:=[2,k,top];
+Add(B[2],bnd);
+od;
+for k in [1..dims[1]] do
+bnd:=[2,k,bot];
+Add(B[2],bnd);
+od;
+
+for n in [1..dim] do
+for k in [1..dims[n+1]] do
+x:=1*Y!.boundaries[n+1][k];
+bnd:=[x[1]+1,k];
+x:=x{[2..Length(x)]}+dims[n+1];
+Append(bnd,SortedList(x));
+Add(B[n+2],bnd);
+od;
+od;
+
+dimss:=List([1..dim+1],i->Length(B[i]));
+dimss[2]:=dimss[2]-dims[1];
+
+for n in [1..dim] do
+for k in [1..dims[n+1]] do
+x:=1*Y!.boundaries[n+1][k];
+bnd:=[x[1]+1,k];
+x:=x{[2..Length(x)]}+dimss[n+1];
+Append(bnd,SortedList(x));
+Add(B[n+2],bnd);
+od;
+od;
+
+SY:=RegularCWComplex(B);
+return SY;
+end);
+#########################################
+#########################################
 

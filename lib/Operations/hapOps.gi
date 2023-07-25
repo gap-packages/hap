@@ -512,6 +512,10 @@ InstallMethod(CriticalCells,
 "critical cells of regular CW complex",
 [IsHapRegularCWComplex],
 function(K);
+if IsBound(K!.directed) then
+return HAP_CriticalCellsDirected(K);
+fi;
+
 return CriticalCellsOfRegularCWComplex(K);
 end);
 ##########################################################

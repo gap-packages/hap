@@ -54,7 +54,7 @@ CellDiagRec:=List([0..Dimension(X)],i->[]);
 ###########################
 ###########################
 CellDiagonal:=function(n,k)
-local f,F,E,EE,CEE,p2qE,ff,FF,mapff,d, bnd,u,v,i,
+local f,F,E,EE,CEE,p2qE,ff,FF,mapff,d, bnd,u,v,i,ii,b,j,jj,
 CE, Homotopy, FFmat, x,GG,GGrec;
 
 if IsBound(CellDiagRec[n][k]) then 
@@ -69,6 +69,19 @@ F:=ChainMapOfRegularCWMap(f);
 CE:=Source(F);
 #E is the closure of e^n_k
 E:=Source(f);
+
+if IsBound(X!.directed) then
+E!.directed:=[];
+for i in [1..E!.nrCells(1)] do
+ii:=f!.mapping(1,i);
+ii:=X!.directed[ii];
+b:=E!.boundaries[2][i];
+j:=b[2]; j:=f!.mapping(0,j);
+jj:=b[3];jj:=f!.mapping(0,jj);
+if ii=[j,jj] then Add(E!.directed,[b[2],b[3]]);  
+else Add(E!.directed,[b[3],b[2]]); fi;
+od;
+fi;
 #Create a dvf on E using the following command
 CriticalCells(E);;
 if Length(CriticalCells(E))<>1 then 
@@ -276,9 +289,14 @@ end);
 #######################################
 InstallGlobalFunction(RegularCWSimplex,
 function(n)
-local Y;
+local Y,k;
 Y:=MaximalSimplicesToSimplicialComplex([[1..n+1]]);
-return RegularCWComplex(Y);
+Y:=RegularCWComplex(Y);
+Y!.directed:=[];
+for k in [1..Y!.nrCells(1)] do
+Add(Y!.directed,SSortedList(Y!.boundaries[2][k]{[2,3]}));
+od;
+return Y;
 end);
 #######################################
 

@@ -342,7 +342,7 @@ end;
 #####################################################
 InstallGlobalFunction(CohomologyRingOfSimplicialComplex,
 function(K,prime)
-local R, dims, Y, C, D, n, k, i, j, ii, jj, dim, SCT, 
+local R, dims, Y, C, D, n, k, i, j, ii, jj, dim, SCT, Degree, 
       cup, V, pair2int, int2pair, cnt, x, y, c, s, dims1;
 
 Y:=RegularCWComplex(K);
@@ -411,7 +411,32 @@ SCT[i][j]:=x;
 od;od;
 
 R:=AlgebraByStructureConstants(GF(prime),SCT);
+R!.chainComplex:=C;
 
+#####################################################################
+Degree:=function(x)
+local i, w, bas;
+# returns the highest degree of a non-zero coefficient of x
+
+if IsZero(x) then return 0; fi;
+i:=Position(GeneratorsOfAlgebra(R),x);
+
+if i=1 then return 0; fi;
+
+if not i=fail then return int2pair[i][1]-1; fi;
+
+bas:=Basis(R);
+w:=Coefficients(bas,x);
+w:=Filtered([2..Length(bas)],i->not IsZero(w[i]));
+w:=List(w,i->int2pair[i][1]-1);
+return Maximum(w);
+end;
+#####################################################################
+
+R!.degree:=Degree;
+R!.int2pair:=int2pair;
+R!.pair2int:=pair2int;
+R!.bockstein:=HAP_bockstein(R); 
 return R;
 end);
 #####################################################
@@ -420,9 +445,23 @@ end);
 #####################################################
 #####################################################
 InstallOtherMethod(CohomologyRing,
-"Integral cohomology of a simplicial complex over a field of p elements",
+"cohomology of a simplicial complex over a field of p elements",
 [IsHapSimplicialComplex,IsInt],
 function(K,prime);
+return CohomologyRingOfSimplicialComplex(K,prime);
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallOtherMethod(CohomologyRing,
+"cohomology of a regular CW-complex complex over a field of p elements",
+[IsHapRegularCWComplex,IsInt],
+function(W,prime)
+local K;
+K:=BarycentricSubdivision(W);     #WE SHOULD USE THE DIAGONAL FOR W HERE!!!
+                                  #THIS IS A TEMPORARY METHOD
 return CohomologyRingOfSimplicialComplex(K,prime);
 end);
 #####################################################

@@ -509,6 +509,7 @@ ReadPackageHap("lib/CohomologyOperations/toplevelsquares.gi");
 ReadPackageHap("lib/CohomologyOperations/detection.gi");
 ReadPackageHap("lib/CohomologyOperations/cohodata.gi");
 ReadPackageHap("lib/CohomologyOperations/stiefel.gi");
+ReadPackageHap("lib/CohomologyOperations/spacebockstein.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0") then

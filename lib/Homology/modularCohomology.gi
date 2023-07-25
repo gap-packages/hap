@@ -15,7 +15,7 @@ Cohomology_Obj:=function(C,N)
 local  
 	M1, M2, 
 	dim, 
-	BasisKerd2, BasisImaged1, 
+	BasisKerd2, BasisImaged1, BasisKerd2one, one, prime,
 	Rels, Smith, TorsionCoefficients,
 	Dimension, Boundary,
 	i,row,n,
@@ -62,13 +62,16 @@ BasisKerd2:=[];
 Rels:=[];
 else
 BasisKerd2:=NullspaceMat(M1);
-
+prime:=EvaluateProperty(C,"characteristic");
+one:=One(GF(prime));
+BasisKerd2one:=one*BasisKerd2;
 
 M1:=0;
 
 Rels:=[];
 for i in [1..dim] do
-        Rels[i]:=SolutionMat(BasisKerd2,BasisImaged1[i]);
+        Rels[i]:=SolutionMat(BasisKerd2one,BasisImaged1[i]);
+#Rels[i]:=SolutionMat(BasisKerd2,BasisImaged1[i]);
 od;
 fi;
 

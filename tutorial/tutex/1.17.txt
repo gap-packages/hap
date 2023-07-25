@@ -1,0 +1,10 @@
+gap> P:=ClosedSurface(-1);;
+gap> P:=SimplifiedComplex(RegularCWComplex(P));;
+gap> PP:=DirectProduct(P,P);;
+gap> SPP:=Suspension(PP);
+Regular CW-complex of dimension 5
+
+gap> A:=CohomologyRing(SPP,2);
+&lt;algebra of dimension 9 over GF(2)&gt;
+gap> List(Basis(A),x->Bockstein(A,x));          
+[ 0*v.1, v.5, v.6, v.7+v.8, 0*v.1, 0*v.1, v.9, v.9, 0*v.1 ]

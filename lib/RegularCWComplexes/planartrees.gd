@@ -10,3 +10,4 @@ DeclareGlobalFunction("RegularCWAssociahedron");
 DeclareGlobalFunction("HAP_AssociahedronCells");
 DeclareGlobalFunction("HAP_AssociahedronBoundaries");
 DeclareGlobalFunction("HAP_DisplayVectorField");
+DeclareGlobalFunction("HAP_CriticalCellsDirected");

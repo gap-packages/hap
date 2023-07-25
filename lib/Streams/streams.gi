@@ -431,7 +431,7 @@ cnt[prm1[i]]:=cnt[prm1[i]] + 1;
 final[i]:=answer[PositionNthOccurrence(prm2,prm1[i],cnt[prm1[i]])];
 
 od;
-Print(prm2,"\n");
+#Print(prm2,"\n");
 return final;
 end);
 #####################################################

@@ -180,7 +180,6 @@ od;
 
 od;
 
-
 C:=Target(QuotientChainMap(KK,data));
 
 B:=[];

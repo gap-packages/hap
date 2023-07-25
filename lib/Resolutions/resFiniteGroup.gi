@@ -97,6 +97,16 @@ i:=Position(Elts,Identity(G));
 Elts[i]:=Elts[1];
 Elts[1]:=Identity(G);
 fi;
+
+#if IsCyclic(G) then
+#if not Order(Elts[2])=Order(G) then
+#Elts:=List(Elts,x->x);
+#i:=PositionProperty(Elts,x->Order(x)=Order(G));
+#ii:=Elts[i];
+#Elts[i]:=Elts[2];
+#Elts[2]:=ii;
+#fi;
+#fi;
 	#####
 	#####
 #############
