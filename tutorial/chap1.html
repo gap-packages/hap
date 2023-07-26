@@ -614,19 +614,15 @@ true
 
 </pre></div>
 
-<p>Of course, either of Strategies 2 or 3 could also be used for this example. To use the Alexander-Whitney formula of Strategy 2 we would need to give the direct product <span class="SimpleMath">Y=T× T</span> a simplicial structure. This could be obtained using the function <code class="code">SCCartesianProduct(T,T)</code> from the <strong class="button">SimpComp</strong> package. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)</p>
+<p>Of course, either of Strategies 2 or 3 could also be used for this example. To use the Alexander-Whitney formula of Strategy 2 we would need to give the direct product <span class="SimpleMath">Y=T× T</span> a simplicial structure. This could be obtained using the function <code class="code">DirectProduct(T,T)</code>. The details are as follows. (The result is consistent with the preceding computation since the choice of a basis for cohomology groups is far from unique.)</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">facets:=MaximalSimplicesOfSimplicialComplex(K);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("simpcomp");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scK:=SCFromFacets(facets);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">scY:=SCCartesianProduct(scK,scK);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(1);;                </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=DirectProduct(K,K);</span>
 Simplicial complex of dimension 4.
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(KK);;                </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);</span>
 [ 0 ]
 
