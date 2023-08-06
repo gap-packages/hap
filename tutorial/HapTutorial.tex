@@ -696,19 +696,15 @@ The following example calculates $g_1^2 \cup g_2^2 \ne 0$ where $Y=T\times T$ is
 
  Of course, either of Strategies 2 or 3 could also be used for this example. To
 use the Alexander-Whitney formula of Strategy 2 we would need to give the
-direct product $Y=T\times T$ a simplicial structure. This could be obtained using the function \texttt{SCCartesianProduct(T,T)} from the \textsc{SimpComp} package. The details are as follows. (The result is consistent with the
-preceding computation since the choice of a basis for cohomology groups is far
-from unique.) 
+direct product $Y=T\times T$ a simplicial structure. This could be obtained using the function \texttt{DirectProduct(T,T)}. The details are as follows. (The result is consistent with the preceding
+computation since the choice of a basis for cohomology groups is far from
+unique.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@K:=ClosedSurface(1);;|
-  !gapprompt@gap>| !gapinput@facets:=MaximalSimplicesOfSimplicialComplex(K);;|
-  !gapprompt@gap>| !gapinput@LoadPackage("simpcomp");;|
-  !gapprompt@gap>| !gapinput@scK:=SCFromFacets(facets);;|
-  !gapprompt@gap>| !gapinput@scY:=SCCartesianProduct(scK,scK);;|
-  !gapprompt@gap>| !gapinput@Y:=MaximalSimplicesToSimplicialComplex(SCFacetsEx(scY));|
+  !gapprompt@gap>| !gapinput@K:=ClosedSurface(1);;                |
+  !gapprompt@gap>| !gapinput@KK:=DirectProduct(K,K);|
   Simplicial complex of dimension 4.
   
-  !gapprompt@gap>| !gapinput@cup:=CupProduct(Y);;|
+  !gapprompt@gap>| !gapinput@cup:=CupProduct(KK);;                |
   !gapprompt@gap>| !gapinput@cup(2,2,[1,0,0,0,0,0],[0,1,0,0,0,0]);|
   [ 0 ]
   
@@ -840,16 +836,13 @@ the following.
 {
  The following example evaluates the Bockstein homomorphism $\beta_2\colon H^\ast(X,\mathbb Z_2) \rightarrow H^{\ast +1}(X,\mathbb Z_2)$ on an additive basis for $X=\Sigma(\mathbb RP^2 \times \mathbb RP^2)$ the suspension of the direct product of two projective planes. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@P:=ClosedSurface(-1);;|
-  !gapprompt@gap>| !gapinput@P:=SimplifiedComplex(RegularCWComplex(P));;|
+  !gapprompt@gap>| !gapinput@P:=ClosedSurface(-1);;           |
   !gapprompt@gap>| !gapinput@PP:=DirectProduct(P,P);;|
-  !gapprompt@gap>| !gapinput@SPP:=Suspension(PP);|
-  Regular CW-complex of dimension 5
-  
-  !gapprompt@gap>| !gapinput@A:=CohomologyRing(SPP,2);|
+  !gapprompt@gap>| !gapinput@SPP:=Suspension(PP);;|
+  !gapprompt@gap>| !gapinput@A:=CohomologyRing(SPP,2);     |
   <algebra of dimension 9 over GF(2)>
-  !gapprompt@gap>| !gapinput@List(Basis(A),x->Bockstein(A,x));          |
-  [ 0*v.1, v.5, v.6, v.7+v.8, 0*v.1, 0*v.1, v.9, v.9, 0*v.1 ]
+  !gapprompt@gap>| !gapinput@List(Basis(A),x->Bockstein(A,x));|
+  [ 0*v.1, v.4, v.4+v.6, 0*v.1, v.8, 0*v.1, v.9, 0*v.1, 0*v.1 ]
   
 \end{Verbatim}
  }
