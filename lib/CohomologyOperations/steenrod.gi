@@ -374,6 +374,18 @@ end);
 
 ########################################################
 ########################################################
+InstallOtherMethod(Bockstein,
+"Bockstein for chain complexes",
+[IsHapChainComplex,IsInt,IsInt],
+function(C,n,prime)
+return HAP_chain_bockstein(C,n,prime);
+end);
+########################################################
+########################################################
+
+
+########################################################
+########################################################
 InstallGlobalFunction(BocksteinHomology,
 function(A,n)
 local Bas, gensn, gensnm1, B, Z ;

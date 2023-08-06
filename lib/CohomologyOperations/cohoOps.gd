@@ -18,3 +18,4 @@ DeclareGlobalFunction("MinimizeRingRelations");
 DeclareGlobalFunction("CohomologicalData");
 DeclareGlobalFunction("HAP_ChainComplexToEquivariantChainComplex");
 DeclareGlobalFunction("HAP_bockstein");
+DeclareGlobalFunction("HAP_chain_bockstein");
