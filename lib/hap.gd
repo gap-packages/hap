@@ -648,6 +648,7 @@ DeclareGlobalFunction("Mapper_alt");
 DeclareGlobalFunction("VectorsToOneSkeleton");
 DeclareOperation("VertexStar",[IsHapSimplicialComplex,IsInt]);
 DeclareOperation("VertexLink",[IsHapSimplicialComplex,IsInt]);
+DeclareGlobalFunction("DirectProductOfSimplicialComplexes");
 
 
 ########################## ARRAYS ################################

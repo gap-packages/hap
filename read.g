@@ -367,6 +367,7 @@ ReadPackageHap("lib/PolyComplexes/graphviz.gi");
 ReadPackageHap("lib/PolyComplexes/hap2chomp.gi");
 ReadPackageHap("lib/PolyComplexes/filteredCubical.gi");
 ReadPackageHap("lib/PolyComplexes/purePermutahedralComplexes.gi");
+ReadPackageHap("lib/PolyComplexes/simpprod.gi");
 
 
 ################## CATEGORY THEORY #################################

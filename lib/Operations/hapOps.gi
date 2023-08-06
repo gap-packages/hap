@@ -584,6 +584,26 @@ end);
 
 ##########################################################
 ##########################################################
+InstallOtherMethod(DirectProductOp,
+"direct product of  simplicial complexes",
+[IsList, IsHapSimplicialComplex],
+function(L,K)
+local D;
+if Length(L)=1 then return L[1]; fi;
+if Length(L)=2 then
+return DirectProductOfSimplicialComplexes(L[1],L[2]);
+else
+D:=DirectProductOp(L{[2..Length(L)]},K);
+return  DirectProductOfSimplicialComplexes(L[1],D);
+fi;
+end);
+##########################################################
+##########################################################
+
+
+
+##########################################################
+##########################################################
 InstallOtherMethod(TensorProductOp,
 "tensor product of free resolutions",
 [IsList, IsHapResolution],
@@ -603,7 +623,7 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(TensorProductOp,
-"tensor product of chain complexe",
+"tensor product of chain complex",
 [IsList, IsHapChainComplex],
 function(L,K)
 local D;

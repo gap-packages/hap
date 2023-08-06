@@ -49,7 +49,8 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_bockstein,
 function(A)
-local G,i,prime,x,a,b,c,h,s,bhomc,B,C,psi,R,dim,cons,homs,bas,bok,gens;
+local G,i,prime,x,a,b,c,h,s,bhomc,B,C,psi,R,dim,cons,homs,bas,bok,gens,
+      cth,D,mc,k,y,f,P,gensP,homs2;
 
 G:=Group(());
 prime:=Characteristic(A);
@@ -61,9 +62,7 @@ a:=Group(x^prime);;
 b:=Group(x);;
 c:=Group(x^prime);;
 
-#bhomc:=NaturalHomomorphismByNormalSubgroup(b,a);
 B:=TrivialGModuleAsGOuterGroup(G,b);
-#C:=TrivialGModuleAsGOuterGroup(G,Image(bhomc));
 C:=TrivialGModuleAsGOuterGroup(G,c);
 bhomc:=GroupHomomorphismByImages(b,c,[x],[x^prime]);
 psi:=GOuterGroupHomomorphism();
@@ -73,6 +72,22 @@ psi!.Mapping:=bhomc;
 
 C:=A!.chainComplex;
 dim:=Length(C);
+D:=HomToIntegersModP(C,prime);
+mc:=ModularCohomology("CohomologyAsFpGroup",true);
+cth:=[];
+for i in [1..dim-1] do
+c:=mc(D,i);
+cth[i]:=[];
+
+for k in [1..Length(GeneratorsOfGroup(c!.fpgroup))] do
+y:=c!.h2c(k);
+y:=List(y,kk->IntFFE(kk));
+y:=Filtered( [1..Length(y)], j->y[j]=1 );
+Add(cth[i], y);
+od;
+od;
+
+
 R:=HAP_ChainComplexToEquivariantChainComplex(C);
 R!.properties[1]:=["length",dim+1];
 
@@ -80,17 +95,32 @@ cons:=[];
 for i in [1..dim-1] do
 Add(cons, ConnectingCohomologyHomomorphism(psi,i,R));
 od;
-homs:=[];
+homs:=[];homs2:=[];
 for h in cons do
 s:=Source(h);
 Add(homs,s!.nat);
 od;
+for h in cons do
 s:=Target(h);
-Add(homs,s!.nat);
+Add(homs2,s!.nat);
+od;
+
 
 bas:=Basis(A);
-gens:=List(homs,h->Target(h!.Mapping));
-gens:=List(gens,g->GeneratorsOfGroup(g));
+#gens:=List(homs,h->Target(h!.Mapping));
+#gens:=List(gens,g->GeneratorsOfGroup(g));
+
+gens:=[];;
+for i in [1..dim-1] do
+gens[i]:=[];
+f:=homs[i];
+P:=Parent(Source(f!.Mapping));
+gensP:=GeneratorsOfGroup(P);
+for y in cth[i] do
+Add(gens[i], Image(f!.Mapping, Product(gensP{y})));
+
+od;
+od;
 
 ########################################
 bok:=function(x)
@@ -107,7 +137,7 @@ ww:=Filtered(ww,x->x[2][1]<dim);
 
 h:=[];
 for i in [1..Length(ww)] do
-Add(h,[ww[i][2][1]+1 ,
+Add(h,[ww[i][2][1] ,
  
  Image(cons[ww[i][2][1]]!.Mapping, gens[ww[i][2][1]][ww[i][2][2]])^ww[i][1] 
 
@@ -115,15 +145,14 @@ Add(h,[ww[i][2][1]+1 ,
 od;
 
 h:=List(h,x->[x[1], ExtRepOfObj(
-Factorization(Source(homs[x[1]]!.Mapping),
-PreImagesRepresentative(homs[x[1]]!.Mapping, x[2]))
+Factorization(Target(homs2[x[1]]!.Mapping), x[2])
 )
 ]);
 
 h:=Filtered(h,z->Length(z[2])>0);
 w:=0*A.1;
 for z in h do
-cnt:=A!.pair2int[z[1]+1][1]-1;
+cnt:=A!.pair2int[z[1]+2][1]-1;
 
 w:=w+
 Sum(List([1..Length(z[2])/2],k-> bas[ cnt+ z[2][2*k-1]  ]*z[2][2*k]));

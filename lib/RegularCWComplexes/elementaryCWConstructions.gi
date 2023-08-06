@@ -435,6 +435,30 @@ end);
 ############################################
 ############################################
 
+##########################################
+#########################################
+InstallOtherMethod(Suspension,
+"Suspension of simplicial complex",
+[IsHapSimplicialComplex],
+function(K)
+local M, S, top, bot, m;;
+
+M:=MaximalSimplicesOfSimplicialComplex(IntegerSimplicialComplex(K));
+bot:=Maximum(Flat(M))+1;
+top:=bot+1;
+S:=[];
+
+for m in M do
+Add(S,m);
+Add(S,Concatenation(m,[bot]));
+Add(S,Concatenation(m,[top]));
+od;
+return SimplicialComplex(S);
+end);
+############################################
+############################################
+
+
 ############################################
 ############################################
 InstallGlobalFunction(Suspension_alt,

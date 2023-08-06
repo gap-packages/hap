@@ -94,7 +94,8 @@ end;
 CohomologyAsFpGroup:=function(C,n)
 local  
 	F, H, FhomH, Rels, Fgens, Frels, IHC, HhomC, ChomH,
-	prime,FieldToInt, Vector2Word, BasisKerd2, BasisKerd2one, one,rel, i, j;
+	prime,FieldToInt, Vector2Word, BasisKerd2, BasisKerd2one, one,rel, i, j,
+quot, Q, Qgens, iso, Qiso, Hgens;
 
 IHC:=Cohomology_Obj(C,n);
 BasisKerd2:=IHC.basisKerd2;
@@ -144,13 +145,40 @@ od;
 
 
 H:=F/Frels;
-FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,GeneratorsOfGroup(H));
+Hgens:=GeneratorsOfGroup(H);
+FhomH:=GroupHomomorphismByImagesNC(F,H,Fgens,Hgens);
+
+if Length(Hgens)=0 then
+quot:=GroupHomomorphismByFunction(H,H,x->x); else
+quot:=NqEpimorphismNilpotentQuotient(H,1);
+fi;
+Q:=Image(quot);
+Qgens:=GeneratorsOfGroup(Q);
+iso:=IsomorphismFpGroup(Q);
+Qiso:=Image(iso);
+
 
 #####################################################################
-HhomC:=function(w);
-return BasisKerd2[w];
+#HhomC:=function(w);
+#return BasisKerd2[w];
+#end;
+#####################################################################
+######################################################################
+HhomC:=function(w)
+local ww,v,i,s;
+
+ww:=PreImagesRepresentative(quot,Qgens[w]);
+ww:=PreImagesRepresentative(FhomH,ww);
+v:=BasisKerd2[1]*0;
+for i in [1..Length(BasisKerd2)] do
+s:=ExponentSumWord(ww,Fgens[i]);
+v:=v+s*BasisKerd2[i];
+od;
+return v ;
 end;
 #####################################################################
+
+
 
 BasisKerd2one:=BasisKerd2*one;
 #####################################################################
@@ -159,12 +187,12 @@ local w;
 
 w:=SolutionMat(BasisKerd2one,v);
 w:=Vector2Word(w);
-return Image(FhomH,w);
+return Image(iso, Image(quot, Image(FhomH,w) ));
 end;
 #####################################################################
 
 return rec(
-	    fpgroup:=H,
+	    fpgroup:=Qiso,    #Changed from H
 	    h2c:=HhomC,
 	    c2h:=ChomH );
 end;
