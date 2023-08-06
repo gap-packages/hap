@@ -767,6 +767,25 @@ v.29
 
 </pre></div>
 
+<p>If only the Bockstein homomorphism is required, and not the cohomology rings structure, then it is better to compute the Bockstein directly from a chain complex. The following computes the Bockstein <span class="SimpleMath">\(\beta_2\colon H^2(Y,\mathbb Z_2) \rightarrow H^{3}(Y,\mathbb Z_2)\)</span> for the direct product <span class="SimpleMath">\(Y=K \times K \times K \times K\)</span> of four copies of the Klein bottle represented as a regular CW-complex with <span class="SimpleMath">\(331776\)</span> cells. The order of the kernel and image of <span class="SimpleMath">\(\beta_2\)</span> are computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ClosedSurface(-2);;                </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=SimplifiedComplex(RegularCWComplex(K));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KKKK:=DirectProduct(K,K,K,K); </span>
+Regular CW-complex of dimension 8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(KKKK);</span>
+331776
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplex(KKKK);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bk:=Bockstein(C,2,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(Kernel(bk));</span>
+1024
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(Image(bk)); </span>
+262144
+
+</pre></div>
+
 <p><a id="X8771FF2885105154" name="X8771FF2885105154"></a></p>
 
 <h4>1.14 <span class="Heading">CW maps and induced homomorphisms</span></h4>
