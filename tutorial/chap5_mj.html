@@ -40,7 +40,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X825C5B837A08F579">5.3 <span class="Heading">Digital image analysis</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D512DA37F789B4C">5.3-1 <span class="Heading">Background to the data</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X84F2B640851E82A6">5.3-1 <span class="Heading">Image segmentation by automatic thresholding</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D512DA37F789B4C">5.3-2 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.4 <span class="Heading">Random simplicial complexes</span></a>
@@ -182,9 +184,30 @@ Filtered pure cubical complex of dimension 2.
 
 <p>The <span class="SimpleMath">\(20\)</span> persistent bars in the degree <span class="SimpleMath">\(0\)</span> barcode suggest that the image has <span class="SimpleMath">\(20\)</span> objects. The degree <span class="SimpleMath">\(1\)</span> barcode suggests that <span class="SimpleMath">\(14\)</span> (or possibly <span class="SimpleMath">\(17\)</span>) of these objects have holes in them.</p>
 
+<p><a id="X84F2B640851E82A6" name="X84F2B640851E82A6"></a></p>
+
+<h5>5.3-1 <span class="Heading">Image segmentation by automatic thresholding</span></h5>
+
+<p>Assuming that short bars and isolated points in the barcodes represent noise while long bars represent essential features, a "noiseless" representation of the image should correspond to a term in the filtration corresponding to a column in the barcode incident with no short bars or isolated points. The following commands confirm that the 4th term in the filtration is such a term and display this term as a binary image.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=FiltrationTerm(F,4);            </span>
+Pure cubical complex of dimension 2.
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BettiNumber(Y,0);</span>
+20
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BettiNumber(Y,1);</span>
+14
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(Y);</span>
+
+
+</pre></div>
+
+<p><img src="images/binaryimage.png" align="center" height="400" alt="binary image"/></p>
+
 <p><a id="X7D512DA37F789B4C" name="X7D512DA37F789B4C"></a></p>
 
-<h5>5.3-1 <span class="Heading">Background to the data</span></h5>
+<h5>5.3-2 <span class="Heading">Background to the data</span></h5>
 
 <p>The following image was used in the example.</p>
 
