@@ -34,7 +34,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D512DA37F789B4C">5.2-1 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X825C5B837A08F579">5.3 <span class="Heading">Digital image analysis</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X79616D12822FDB9A">5.3 <span class="Heading">Digital image analysis and persistent homology</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8066F9B17B78418E">5.3-1 <span class="Heading">Naive example of image segmentation by automatic thresholding</span></a>
@@ -42,7 +42,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D512DA37F789B4C">5.3-2 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X87AF06677F05C624">5.4 <span class="Heading">Random simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D2CC9CB85DF1BAF">5.4 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X87AF06677F05C624">5.5 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
 </div>
@@ -152,9 +155,9 @@ Simplicial complex of dimension 1.
 
 <p><img src="images/mappercloud.png" align="center" height="400" alt="data cloud"/></p>
 
-<p><a id="X825C5B837A08F579" name="X825C5B837A08F579"></a></p>
+<p><a id="X79616D12822FDB9A" name="X79616D12822FDB9A"></a></p>
 
-<h4>5.3 <span class="Heading">Digital image analysis</span></h4>
+<h4>5.3 <span class="Heading">Digital image analysis and persistent homology</span></h4>
 
 <p>The following example reads in a digital image as a filtered pure cubical complexex. The filtration is obtained by thresholding at a sequence of uniformly spaced values on the greyscale range. The persistent homology of this filtered complex is calculated in degrees <span class="SimpleMath">0</span> and <span class="SimpleMath">1</span> and displayed as two barcodes.</p>
 
@@ -210,9 +213,39 @@ Pure cubical complex of dimension 2.
 
 <p><img src="../tst/examples/image1.3.2.png" align="center" height="400" alt="barcode"/></p>
 
+<p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
+
+<h4>5.4 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
+
+<p>From any sequence <span class="SimpleMath">X_0 ⊂ X_1 ⊂ X_2 ⊂ ⋯ ⊂ X_T</span> of cellular spaces (such as pure cubical complexes, or cubical complexes, or simplicial complexes, or regular CW complexes) we can construct a filtered chain complex <span class="SimpleMath">C_∗ X_0 ⊂ C_∗ X_1 ⊂ C_∗ X_2 ⊂ ⋯ C_∗ X_T</span>. The induced homology homomorphisms <span class="SimpleMath">H_n(C_∗ X_0, F) → H_n(C_∗ X_1, F) → H_n(C_∗ X_2, F) → ⋯ → H_n(C_∗ X_T, F)</span> with coefficients in a field <span class="SimpleMath">F</span> can be computed by applying an appropriate sequence of elementary row operations to the boundary matrices in the chain complex <span class="SimpleMath">C_∗ X_T⊗ F</span>; the boundary matrices are sparse and are best represented as such; the row operations need to be applied in a fashion that respects the filtration. This method is used in the above examples of persistent homology. The method is not practical when the number of cells in <span class="SimpleMath">X_T</span> is large.</p>
+
+<p>An alternative approach is to construct an admissible discrete vector field on each term <span class="SimpleMath">X_k</span> in the filtration. For each vector field there is a non-regular CW-complex <span class="SimpleMath">Y_k</span> whose cells correspond to the critical cells in <span class="SimpleMath">X_k</span> and for which there is a homotopy equivalence <span class="SimpleMath">X_k≃ Y_k</span>. For each <span class="SimpleMath">k</span> the composite homomorphism <span class="SimpleMath">H_n(C_∗ Y_k, F) stackrel≅→ H_n(C_∗ X_k, F) → H_n(C_∗ X_k+1, F) stackrel≅→ H_n(C_∗ Y_k+1, F)</span> can be computed and the persistent homology can be derived from these homology homomorphisms. This method is implemented in the function <code class="code">PersistentBettiNUmbersAlt(X,n,p)</code> where <span class="SimpleMath">p</span> is the characteristic of the field, <span class="SimpleMath">n</span> is the homology degree, and <span class="SimpleMath">X</span> can be a filtered pure cubical complex, or a filtered simplicial complex, or a filtered regular CW complex, or indeed a filtered chain complex (represented in sparse form). This function incorporates the functions <code class="code">ContractedFilteredPureCubicalComplex(X)</code> and <code class="code">ContractedFilteredRegularComplex(X)</code> which respectively input a filtered pure cubical complex and filtered regular CW-complex and return a filtered complex of the same data type in which each term of the output filtration is a deformation retract of the corresponding term in the input filtration.</p>
+
+<p>In this approach the vector fields on the various spaces <span class="SimpleMath">X_k</span> are completely independent and so the method lends itself to a degree of easy parallelism. This is not incorporated into the current implementation.</p>
+
+<p>As an illustration we consider a synthetic data set <span class="SimpleMath">S</span> consisting of <span class="SimpleMath">3527</span> points sampled, with errors, from an `unknown' manifold <span class="SimpleMath">M</span> in <span class="SimpleMath">R^3</span>. From such a data set one can associate a <span class="SimpleMath">3</span>-dimensional cubical complex <span class="SimpleMath">X_0</span> consisting of one unit cube centred on each (suitably scaled) data point. Given a pure cubical complex <span class="SimpleMath">X_s</span> we construct <span class="SimpleMath">X_s+1 =X_s ∪ {overline e^3_λ}_λ∈ Λ</span> by adding to <span class="SimpleMath">X_s</span> each closed unit cube <span class="SimpleMath">overline e^3_λ</span> in <span class="SimpleMath">R^3</span> that intersects non-trivially with <span class="SimpleMath">X_s</span>. We construct the filtered cubical complex <span class="SimpleMath">X_∗ ={X_i}_0≤ i≤ 19</span> and compute the persistence matrices <span class="SimpleMath">β_d^∗∗</span> for <span class="SimpleMath">d=0,1,2</span> and for <span class="SimpleMath">Z_2</span> coefficients. The filtered complex <span class="SimpleMath">X_∗</span> is quite large. In particular, the final space <span class="SimpleMath">X_19</span> in the filtration involves <span class="SimpleMath">1092727</span> vertices, <span class="SimpleMath">3246354</span> edges, <span class="SimpleMath">3214836</span> faces of dimension <span class="SimpleMath">2</span> and <span class="SimpleMath">1061208</span> faces of dimension <span class="SimpleMath">3</span>. The usual matrix reduction approach to computing persistent Betti numbers would involve an appropriate row reduction of sparse matrices one of which has over 3 million rows and 3 million columns.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data247.txt");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ThickeningFiltration(T,20);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2:=PersistentBettiNumbersAlt(F,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1:=PersistentBettiNumbersAlt(F,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P1);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P0:=PersistentBettiNumbersAlt(F,0);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P0);</span>
+
+</pre></div>
+
+<p><img src="images/barcodes123.gif" align="center" height="400" alt="barcodes"/></p>
+
+<p>The barcodes suggest that the data points might have been sampled from a manifold with the homotopy type of a torus.</p>
+
 <p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
 
-<h4>5.4 <span class="Heading">Random simplicial complexes</span></h4>
+<h4>5.5 <span class="Heading">Random simplicial complexes</span></h4>
 
 <p>For a positive integer <span class="SimpleMath">n</span> and probability <span class="SimpleMath">p</span> we denote by <span class="SimpleMath">Y(n,p)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">1</span>-skeleton is the complete graph on <span class="SimpleMath">n</span> vertices; each possible <span class="SimpleMath">2</span>-simplex is included independently with probability <span class="SimpleMath">p</span>.</p>
 

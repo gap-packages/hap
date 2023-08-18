@@ -110,7 +110,7 @@
   following picture.[133X
   
   
-  [1X5.3 [33X[0;0YDigital image analysis[133X[101X
+  [1X5.3 [33X[0;0YDigital image analysis and persistent homology[133X[101X
   
   [33X[0;0YThe  following  example  reads in a digital image as a filtered pure cubical
   complexex.  The  filtration  is  obtained  by  thresholding at a sequence of
@@ -166,7 +166,75 @@
   [33X[0;0YThe following image was used in the example.[133X
   
   
-  [1X5.4 [33X[0;0YRandom simplicial complexes[133X[101X
+  [1X5.4 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X
+  
+  [33X[0;0YFrom any sequence [22XX_0 ⊂ X_1 ⊂ X_2 ⊂ ⋯ ⊂ X_T[122X of cellular spaces (such as pure
+  cubical complexes, or cubical complexes, or simplicial complexes, or regular
+  CW  complexes) we can construct a filtered chain complex [22XC_∗ X_0 ⊂ C_∗ X_1 ⊂
+  C_∗  X_2  ⊂  ⋯ C_∗ X_T[122X. The induced homology homomorphisms [22XH_n(C_∗ X_0, F) →
+  H_n(C_∗ X_1, F) → H_n(C_∗ X_2, F) → ⋯ → H_n(C_∗ X_T, F)[122X with coefficients in
+  a  field [22XF[122X can be computed by applying an appropriate sequence of elementary
+  row operations to the boundary matrices in the chain complex [22XC_∗ X_T⊗ F[122X; the
+  boundary  matrices  are  sparse  and  are  best represented as such; the row
+  operations  need  to  be  applied in a fashion that respects the filtration.
+  This method is used in the above examples of persistent homology. The method
+  is not practical when the number of cells in [22XX_T[122X is large.[133X
+  
+  [33X[0;0YAn  alternative approach is to construct an admissible discrete vector field
+  on  each  term  [22XX_k[122X  in  the  filtration.  For  each vector field there is a
+  non-regular  CW-complex  [22XY_k[122X whose cells correspond to the critical cells in
+  [22XX_k[122X  and  for which there is a homotopy equivalence [22XX_k≃ Y_k[122X. For each [22Xk[122X the
+  composite  homomorphism [22XH_n(C_∗ Y_k, F) stackrel≅→ H_n(C_∗ X_k, F) → H_n(C_∗
+  X_k+1,  F)  stackrel≅→  H_n(C_∗ Y_k+1, F)[122X can be computed and the persistent
+  homology  can  be  derived from these homology homomorphisms. This method is
+  implemented  in the function [10XPersistentBettiNUmbersAlt(X,n,p)[110X where [22Xp[122X is the
+  characteristic  of  the  field,  [22Xn[122X  is  the  homology degree, and [22XX[122X can be a
+  filtered  pure  cubical  complex,  or  a  filtered  simplicial complex, or a
+  filtered regular CW complex, or indeed a filtered chain complex (represented
+  in    sparse    form).    This    function    incorporates   the   functions
+  [10XContractedFilteredPureCubicalComplex(X)[110X                                  and
+  [10XContractedFilteredRegularComplex(X)[110X which respectively input a filtered pure
+  cubical  complex  and  filtered  regular  CW-complex  and  return a filtered
+  complex of the same data type in which each term of the output filtration is
+  a deformation retract of the corresponding term in the input filtration.[133X
+  
+  [33X[0;0YIn  this approach the vector fields on the various spaces [22XX_k[122X are completely
+  independent  and so the method lends itself to a degree of easy parallelism.
+  This is not incorporated into the current implementation.[133X
+  
+  [33X[0;0YAs  an  illustration  we  consider a synthetic data set [22XS[122X consisting of [22X3527[122X
+  points  sampled, with errors, from an `unknown' manifold [22XM[122X in [22XR^3[122X. From such
+  a  data set one can associate a [22X3[122X-dimensional cubical complex [22XX_0[122X consisting
+  of  one unit cube centred on each (suitably scaled) data point. Given a pure
+  cubical  complex  [22XX_s[122X  we  construct  [22XX_s+1  =X_s ∪ {overline e^3_λ}_λ∈ Λ[122X by
+  adding  to  [22XX_s[122X  each closed unit cube [22Xoverline e^3_λ[122X in [22XR^3[122X that intersects
+  non-trivially  with  [22XX_s[122X.  We  construct  the  filtered  cubical complex [22XX_∗
+  ={X_i}_0≤  i≤ 19[122X and compute the persistence matrices [22Xβ_d^∗∗[122X for [22Xd=0,1,2[122X and
+  for   [22XZ_2[122X  coefficients.  The  filtered  complex  [22XX_∗[122X  is  quite  large.  In
+  particular,  the  final  space  [22XX_19[122X  in  the  filtration  involves  [22X1092727[122X
+  vertices,  [22X3246354[122X  edges, [22X3214836[122X faces of dimension [22X2[122X and [22X1061208[122X faces of
+  dimension  [22X3[122X.  The  usual  matrix reduction approach to computing persistent
+  Betti  numbers would involve an appropriate row reduction of sparse matrices
+  one of which has over 3 million rows and 3 million columns.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data247.txt");;[127X[104X
+    [4X[25Xgap>[125X [27XRead(file);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=ThickeningFiltration(T,20);;[127X[104X
+    [4X[25Xgap>[125X [27XP2:=PersistentBettiNumbersAlt(F,2);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P2);[127X[104X
+    [4X[25Xgap>[125X [27XP1:=PersistentBettiNumbersAlt(F,1);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P1);[127X[104X
+    [4X[25Xgap>[125X [27XP0:=PersistentBettiNumbersAlt(F,0);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P0);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  barcodes  suggest  that  the data points might have been sampled from a
+  manifold with the homotopy type of a torus.[133X
+  
+  
+  [1X5.5 [33X[0;0YRandom simplicial complexes[133X[101X
   
   [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
   [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete
