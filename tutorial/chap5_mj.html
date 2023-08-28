@@ -50,7 +50,10 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7D2CC9CB85DF1BAF">5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X86FD0A867EC9E64F">5.5-1 <span class="Heading">Non-trivial cup product</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.6 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
@@ -273,6 +276,21 @@ Pure cubical complex of dimension 2.
 <p><img src="images/barcodes123.gif" align="center" height="400" alt="barcodes"/></p>
 
 <p>The barcodes suggest that the data points might have been sampled from a manifold with the homotopy type of a torus.</p>
+
+<p><a id="X86FD0A867EC9E64F" name="X86FD0A867EC9E64F"></a></p>
+
+<h5>5.5-1 <span class="Heading">Non-trivial cup product</span></h5>
+
+<p>Of course, a wedge <span class="SimpleMath">\(S^2\vee S^1\vee S^1\)</span> has the same homology as the torus <span class="SimpleMath">\(S^1\times S^1\)</span>. By establishing that a 'noise free' model for our data points, say the 10-th term <span class="SimpleMath">\(X_{10}\)</span> in the filtration, has a non-trivial cup product <span class="SimpleMath">\(\cup\colon H^1(X_{10},\mathbb Z) \times H^1(X_{10},\mathbb Z) \rightarrow H^2(X_{10},\mathbb Z)\)</span> we can eliminate <span class="SimpleMath">\(S^2\vee S^1\vee S^1\)</span> as a candidate from which the data was sampled.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X10:=RegularCWComplex(FiltrationTerm(F,10));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=LowDimensionalCupProduct(X10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup([1,0],[0,1]);</span>
+[ 1 ]
+
+</pre></div>
 
 <p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
 
