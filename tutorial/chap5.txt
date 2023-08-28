@@ -166,7 +166,34 @@
   [33X[0;0YThe following image was used in the example.[133X
   
   
-  [1X5.4 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X
+  [1X5.4 [33X[0;0YA second example of digital image analysis[133X[101X
+  
+  [33X[0;0YIn order to automatically count the number of coins in this picture[133X
+  
+  [33X[0;0Ywe  can  load  the  image as a filtered pure cubical complex [22XF[122X of filtration
+  length  30  say,  and  observe  the  degree zero persistent Betti numbers to
+  establish  that the 21-st term or so of [22XF[122X seems to be 'noise free' in degree
+  zero.  We can then set [22XM[122X equal to the 21-st term of [22XF[122X and thicken [22XM[122X a couple
+  of times say to remove any tiny holes it may have. We can then construct the
+  complement  [22XC[122X  of  [22XM[122X.  Then  we  can  construct a 'neighbourhood thickening'
+  filtration  [22XT[122X  of  [22XC[122X  with  say  [22X50[122X consecutive thickenings. The degree zero
+  persistent  barcode  for  [22XT[122X  has  [22X24[122X long bars, suggesting that the original
+  picture consists of [22X24[122X coins.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",30);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=FiltrationTerm(F,21);;  #Chosen after viewing degree 0 barcode for F[127X[104X
+    [4X[25Xgap>[125X [27XM:=PureComplexThickened(M);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=PureComplexThickened(M);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=PureComplexComplement(M);;[127X[104X
+    [4X[25Xgap>[125X [27XT:=ThickeningFiltration(C,50);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(T,1);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X
   
   [33X[0;0YFrom any sequence [22XX_0 ⊂ X_1 ⊂ X_2 ⊂ ⋯ ⊂ X_T[122X of cellular spaces (such as pure
   cubical complexes, or cubical complexes, or simplicial complexes, or regular
@@ -234,7 +261,7 @@
   manifold with the homotopy type of a torus.[133X
   
   
-  [1X5.5 [33X[0;0YRandom simplicial complexes[133X[101X
+  [1X5.6 [33X[0;0YRandom simplicial complexes[133X[101X
   
   [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
   [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete

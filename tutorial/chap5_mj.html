@@ -45,10 +45,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D512DA37F789B4C">5.3-2 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7D2CC9CB85DF1BAF">5.4 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7B54E003861173E1">5.4 <span class="Heading">A second example of digital image analysis</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.5 <span class="Heading">Random simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7D2CC9CB85DF1BAF">5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.6 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
 </div>
@@ -216,9 +219,34 @@ Pure cubical complex of dimension 2.
 
 <p><img src="../tst/examples/image1.3.2.png" align="center" height="400" alt="barcode"/></p>
 
+<p><a id="X7B54E003861173E1" name="X7B54E003861173E1"></a></p>
+
+<h4>5.4 <span class="Heading">A second example of digital image analysis</span></h4>
+
+<p>In order to automatically count the number of coins in this picture</p>
+
+<p><img src="images/my_coins.png" align="center" height="400" alt="collection of coins"/></p>
+
+<p>we can load the image as a filtered pure cubical complex <span class="SimpleMath">\(F\)</span> of filtration length 30 say, and observe the degree zero persistent Betti numbers to establish that the 21-st term or so of <span class="SimpleMath">\(F\)</span> seems to be 'noise free' in degree zero. We can then set <span class="SimpleMath">\(M\)</span> equal to the 21-st term of <span class="SimpleMath">\(F\)</span> and thicken <span class="SimpleMath">\(M\)</span> a couple of times say to remove any tiny holes it may have. We can then construct the complement <span class="SimpleMath">\(C\)</span> of <span class="SimpleMath">\(M\)</span>. Then we can construct a 'neighbourhood thickening' filtration <span class="SimpleMath">\(T\)</span> of <span class="SimpleMath">\(C\)</span> with say <span class="SimpleMath">\(50\)</span> consecutive thickenings. The degree zero persistent barcode for <span class="SimpleMath">\(T\)</span> has <span class="SimpleMath">\(24\)</span> long bars, suggesting that the original picture consists of <span class="SimpleMath">\(24\)</span> coins.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",30);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=FiltrationTerm(F,21);;  #Chosen after viewing degree 0 barcode for F</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=PureComplexThickened(M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=PureComplexThickened(M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=PureComplexComplement(M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=ThickeningFiltration(C,50);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbers(T,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/coinsbettizero.gif" align="center" height="400" alt="barcode"/></p>
+
 <p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
 
-<h4>5.4 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
+<h4>5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
 
 <p>From any sequence <span class="SimpleMath">\(X_0 \subset X_1 \subset X_2 \subset \cdots \subset X_T\)</span> of cellular spaces (such as pure cubical complexes, or cubical complexes, or simplicial complexes, or regular CW complexes) we can construct a filtered chain complex <span class="SimpleMath">\(C_\ast X_0 \subset C_\ast X_1 \subset C_\ast X_2 \subset \cdots C_\ast X_T\)</span>. The induced homology homomorphisms <span class="SimpleMath">\(H_n(C_\ast X_0,\mathbb F) \rightarrow H_n(C_\ast X_1,\mathbb F) \rightarrow H_n(C_\ast X_2,\mathbb F) \rightarrow \cdots \rightarrow H_n(C_\ast X_T,\mathbb F)\)</span> with coefficients in a field <span class="SimpleMath">\(\mathbb F\)</span> can be computed by applying an appropriate sequence of elementary row operations to the boundary matrices in the chain complex <span class="SimpleMath">\(C_\ast X_T\otimes \mathbb F\)</span>; the boundary matrices are sparse and are best represented as such; the row operations need to be applied in a fashion that respects the filtration. This method is used in the above examples of persistent homology. The method is not practical when the number of cells in <span class="SimpleMath">\(X_T\)</span> is large.</p>
 
@@ -248,7 +276,7 @@ Pure cubical complex of dimension 2.
 
 <p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
 
-<h4>5.5 <span class="Heading">Random simplicial complexes</span></h4>
+<h4>5.6 <span class="Heading">Random simplicial complexes</span></h4>
 
 <p>For a positive integer <span class="SimpleMath">\(n\)</span> and probability <span class="SimpleMath">\(p\)</span> we denote by <span class="SimpleMath">\(Y(n,p)\)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">\(1\)</span>-skeleton is the complete graph on <span class="SimpleMath">\(n\)</span> vertices; each possible <span class="SimpleMath">\(2\)</span>-simplex is included independently with probability <span class="SimpleMath">\(p\)</span>.</p>
 
