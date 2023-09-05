@@ -45,7 +45,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D512DA37F789B4C">5.3-2 <span class="Heading">Background to the data</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7B54E003861173E1">5.4 <span class="Heading">A second example of digital image analysis</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7A8224DA7B00E0D9">5.4 <span class="Heading">A second example of digital image segmentation</span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7D2CC9CB85DF1BAF">5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
@@ -222,9 +222,9 @@ Pure cubical complex of dimension 2.
 
 <p><img src="../tst/examples/image1.3.2.png" align="center" height="400" alt="barcode"/></p>
 
-<p><a id="X7B54E003861173E1" name="X7B54E003861173E1"></a></p>
+<p><a id="X7A8224DA7B00E0D9" name="X7A8224DA7B00E0D9"></a></p>
 
-<h4>5.4 <span class="Heading">A second example of digital image analysis</span></h4>
+<h4>5.4 <span class="Heading">A second example of digital image segmentation</span></h4>
 
 <p>In order to automatically count the number of coins in this picture</p>
 
@@ -246,6 +246,25 @@ Pure cubical complex of dimension 2.
 </pre></div>
 
 <p><img src="images/coinsbettizero.gif" align="center" height="400" alt="barcode"/></p>
+
+<p>The pure cubical complex <span class="SimpleMath">\(M\)</span> has the correct number of path components, namely <span class="SimpleMath">\(25\)</span>, but its path components are very much subsets of the regions in the image corresponding to coins. The complex <span class="SimpleMath">\(M\)</span> can be thickened repeatedly, subject to no two path components being allowed to merge, in order to obtain a morerealistic image segmentation with path components corresponding closely to coins. The is done in the follow commands which use a makeshift function <code class="code">Basins(L)</code> available <span class="URL"><a href="tutex/basins.g">here</a></span>. The commands essentially implement the watershed segmentation algorithm using the language of filtered complexes.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=PureComplexComplement(FiltrationTerm(T,25));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..PathComponentOfPureComplex(W,0)] do</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PathComponentOfPureComplex(W,i);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=ThickeningFiltration(P,50,M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Add(L,Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">od;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=Basins(L);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(B);</span>
+
+</pre></div>
+
+<p><img src="images/segmented_coins.png" align="center" height="400" alt="segmented coins"/></p>
 
 <p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
 

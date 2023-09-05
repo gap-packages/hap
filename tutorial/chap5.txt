@@ -166,7 +166,7 @@
   [33X[0;0YThe following image was used in the example.[133X
   
   
-  [1X5.4 [33X[0;0YA second example of digital image analysis[133X[101X
+  [1X5.4 [33X[0;0YA second example of digital image segmentation[133X[101X
   
   [33X[0;0YIn order to automatically count the number of coins in this picture[133X
   
@@ -189,6 +189,30 @@
     [4X[25Xgap>[125X [27XT:=ThickeningFiltration(C,50);;[127X[104X
     [4X[25Xgap>[125X [27XP:=PersistentBettiNumbers(T,1);;[127X[104X
     [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe pure cubical complex [22XM[122X has the correct number of path components, namely
+  [22X25[122X,  but  its  path  components  are very much subsets of the regions in the
+  image  corresponding  to  coins.  The complex [22XM[122X can be thickened repeatedly,
+  subject to no two path components being allowed to merge, in order to obtain
+  a  morerealistic  image  segmentation  with  path  components  corresponding
+  closely  to  coins. The is done in the follow commands which use a makeshift
+  function [10XBasins(L)[110X available here ([7Xtutex/basins.g[107X). The commands essentially
+  implement  the  watershed  segmentation  algorithm  using  the  language  of
+  filtered complexes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XW:=PureComplexComplement(FiltrationTerm(T,25));;[127X[104X
+    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..PathComponentOfPureComplex(W,0)] do[127X[104X
+    [4X[25Xgap>[125X [27XP:=PathComponentOfPureComplex(W,i);;[127X[104X
+    [4X[25Xgap>[125X [27XQ:=ThickeningFiltration(P,50,M);;[127X[104X
+    [4X[25Xgap>[125X [27XAdd(L,Q);;[127X[104X
+    [4X[25Xgap>[125X [27Xod;;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XB:=Basins(L);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(B);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
