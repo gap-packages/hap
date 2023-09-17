@@ -214,102 +214,8 @@ end);
 #############################################
 InstallGlobalFunction(HAPContractFilteredRegularCWComplex,
 function(arg)
-local
-      Y, Start, Contract, nn, dim, bool, BOOL, FREE, degrees,F, CNT;
-
-Y:=arg[1];
-if Length(arg)=2 then Start:=arg[2]; else Start:=1; fi;
-
-CNT:=0;
-#############################################
-##### The work-horse function.###############
-Contract:=function(n,F)
-local
-
-      b, C, i, j, t, cob, pos, bool, cnt, CoboundCondition,
-      Free, mybool, 
-      MCoboundaries, U;
-
-#This function removes pairs of n- and (n+1)-cells if possible.
-#U=Upper, M=Middle and L=Lower dimensional cells.
-
-####################
-####################
-if CNT=0 then
-Y!.degrees:=[];
-for i in [1..Dimension(Y)+1] do
-Y!.degrees[i]:=List([1..Y!.filteredDimension(1,i-1)],a->1);
-t:=1;
-  while t<EvaluateProperty(Y,"filtration_length") do
-  t:=t+1;
-    for j in [1+Y!.filteredDimension(t-1,i-1)..Y!.filteredDimension(t,i-1)] do
-     Y!.degrees[i][j]:=t;
-    od;
-  od;
-od;
-fi;
-CNT:=1;
-####################
-####################
-
-MCoboundaries:=Y!.coboundaries[n+1];
-C:=Length(MCoboundaries);
-
-#############
-#############
-CoboundCondition:=function(i)
-local cnt;
-if Y!.degrees[n+1][i]>F then return [false]; fi;
-if F>1 and Y!.degrees[n+1][i]<F then return [false]; fi;
-cnt:=MCoboundaries[i]{[2..Length(MCoboundaries[i])]};
-cnt:=Filtered(cnt,x->Y!.degrees[n+2][x]<=F);
-if Length(cnt)=1 then 
-Y!.degrees[n+1][i]:=Y!.degrees[n+1][i]+1;
-Y!.degrees[n+2][cnt[1]]:=Y!.degrees[n+2][cnt[1]]+1;
-return [true,cnt[1]]; fi;
-return [false]; 
-end;
-#############
-#############
-
-#######################
-#######################THIS TAKES ALL THE TIME
-FREE:=Filtered([Start..Y!.filteredDimension(F,n)], i->Y!.degrees[n+1][i]=F); 
-
-mybool:=false;
-for i in FREE do
-if  CoboundCondition(i)[1] then mybool:=true;fi;
-od;
-
-
-return mybool;
-#######################
-#######################
-
-end;
-####End of work-horse function.#############
-############################################
-dim:=EvaluateProperty(Y,"dimension");
-
-for F in [Start..EvaluateProperty(Y,"filtration_length")] do
-
-bool:=true;
-BOOL:=true;
-nn:=dim-1;
-
-while BOOL or nn>0 do
-BOOL:=false;
-  for nn in Reversed([0..dim-1]) do
-    while bool do
-      bool:=Contract(nn,F);
-      if bool=true then BOOL:=true; fi;
-    od;
-    bool:=true;
-  od;
-od;
-
-od;
-
+local Y;
+#TO BE WRITTEN
 end);
 ############################################
 ############################################
@@ -317,102 +223,138 @@ end);
 ############################################
 ############################################
 InstallGlobalFunction(ContractedFilteredRegularCWComplex,
-function(YY)
-local Y, W, bnd,  perm,F, cnt, d, i,j, newboundaries, adjust, f, properties,
-filtdim, orien, nrcells;
+function(Y)
+local  Nbounds, Ncobounds, fl, dim, n, t, k, FiltDim, T, S, x, y, s, bnd, cob,
+       pos, bool, perm, cnt, d, d1, F, i, W, dims, allowables, retained, bas,
+       Tboundaries,Tcoboundaries,red;
 
-Y:=StructuralCopyOfFilteredRegularCWComplex(YY);
-F:=EvaluateProperty(Y,"filtration_length");
-HAPContractFilteredRegularCWComplex(Y);
+Nbounds:=1*Y!.boundaries;
+Ncobounds:=1*Y!.coboundaries;
+fl:=EvaluateProperty(Y,"filtration_length");
+dim:=Dimension(Y);
 
-
-perm:=[];
-cnt:=[];
-
-####
-for d in [1..Length(Y!.boundaries)] do
-cnt[d]:=List([1..F+1],i->0);
-for i in [1..Length(Y!.boundaries[d])] do
-cnt[d][Y!.degrees[d][i]]:=1*cnt[d][Y!.degrees[d][i]]+1;
+allowables:=[];         #allowables[t+1][n+1] is the list of the n-cell numbers 
+for t in [1..fl+2] do   #removed during collapse of the t-term of filtration.
+allowables[t]:=List([0..dim],n->[]);
 od;
-od;
-####
-
-####
-adjust:=[];
-for d in [1..Length(Y!.boundaries)] do
-adjust[d]:=[0];
-for i in [2..F+1] do
-adjust[d][i]:=adjust[d][i-1]+cnt[d][i-1];
-od;
-od;
-####
-
-####
-for d in [1..Length(Y!.boundaries)] do
-perm[d]:=[];
-cnt[d]:=List([1..F+1],i->0);
-for i in [1..Length(Y!.boundaries[d])] do
-cnt[d][Y!.degrees[d][i]]:=1*cnt[d][Y!.degrees[d][i]]+1;
-perm[d][i]:=1*cnt[d][Y!.degrees[d][i]]+adjust[d][Y!.degrees[d][i]];
-
-od;
-od;
-####
-
-
-
-
-
-newboundaries:=List([1..Length(Y!.boundaries)],i->[]);
-orien:=List([1..Length(Y!.boundaries)],i->[]);
-for d in [1..Length(Y!.boundaries)] do
-newboundaries[d]:=[];
-orien[d]:=[];
-for i in [1..Length(Y!.boundaries[d])] do
-newboundaries[d][perm[d][i]]:=StructuralCopy(Y!.boundaries[d][i]);
-orien[d][perm[d][i]]:=StructuralCopy(Y!.orientation[d][i]);
-od;
-od;
-
-for d in [2..Length(Y!.boundaries)] do
-for i in [1..Length(Y!.boundaries[d])] do
-bnd:=newboundaries[d][i];
-for j in [2..Length(bnd)] do
-bnd[j]:=perm[d-1][bnd[j]];
-od;
-od;
-od;
-
-####################
-filtdim:=function(i,d);
-
-return adjust[d+1][i];
-
+#####################################
+FiltDim:=function(t,d);
+if t<1 then return 0;
+else return Y!.filteredDimension(t,d);
+fi;
 end;
-####################
+#####################################
 
-for d in [1..Length(newboundaries)] do
-newboundaries[d]:=newboundaries[d]{[1..filtdim(F,d-1)]};
+retained:=[];;  #retained[t+1][n+1] is the list of the n-cell numbers remaining
+for t in [1..fl+2] do  #in t-th term of the filtration after collapse
+retained[t]:=List([0..dim],i->[]);
+od;
+
+for t in [1..fl] do
+ T:=FiltrationTerm(Y,t);
+ Tboundaries:=T!.boundaries;
+ Tcoboundaries:=T!.coboundaries;
+ bool:=true;
+ while bool do
+  bool:=false;
+  for n in Reversed([0..dim-1]) do
+   for k in Concatenation(allowables[t][n+1],[FiltDim(t-1,n)+1..FiltDim(t,n)]) do
+    if Tcoboundaries[n+1][k][1]=1 then #coboundary of cell k in dimension n 
+     x:=Tcoboundaries[n+1][k][2];       #consists only of cell x in dimension n+1.
+bool:=true;
+     bnd:=Tboundaries[n+2][x];   #if cell k not in t-1 st term then all cells in 
+     bnd:=bnd{[2..Length(bnd)]}; #its coboundary also not in t-1 st term
+     for y in bnd do
+      cob:=Tcoboundaries[n+1][y];
+      s:=cob[1]-1;
+      cob:=cob{[2..Length(cob)]};
+      pos:=Position(cob,x);
+      Remove(cob,pos);
+      Tcoboundaries[n+1][y]:=Concatenation([s],cob);
+     od;
+     Add( allowables[t+1][n+1] , k);
+     Add( allowables[t+1][n+2] , x);
+     Tcoboundaries[n+1][k][1]:=0;
+    fi;
+   od;
+  od;
+ od;
+od;
+
+retained:=[List([0..dim+1],i->[])];;
+for t in [1..fl] do
+retained[t+1]:=[];
+for n in [0..dim] do
+retained[t+1][n+1]:=Difference([1..FiltDim(t,n)],allowables[t+1][n+1]);
+od;
+od;
+
+perm:=[];  ##perm[d][i] will be the new position of
+           ##the old i-th cell of dimension d;
+
+red:=List([1..dim+1],i->[]);
+
+for d in [1..dim+1] do
+   perm[d]:=[];
+   cnt:=0;
+      for t in [1..fl] do
+         bas:=Difference(retained[t+1][d],retained[t][d]);
+Append(red[d],bas);
+         for i in [1..Length(bas)] do
+            perm[d][bas[i]]:=i+cnt;
+         od;
+         cnt:=cnt+Length(bas);
+      od;
+od;
+
+for d in [1..dim+1] do
+Nbounds[d]:=Nbounds[d]{red[d]};
+od;
+
+dims:=[];
+for t in [1..fl] do
+dims[t]:=[];
+for d in [0..dim] do
+dims[t][d+1]:= Length(retained[t+1][d+1]);
+od;
 od;
 
 
+for d in [1..dim+1] do
+if d>1 then
+d1:=d-1;
+for x in Nbounds[d] do
+for i in [2..Length(x)] do
+x[i]:=perm[d1][x[i]];
+od;
+od;
+fi;
+od;
 
-W:=RegularCWComplex(newboundaries);
-properties:=W!.properties;
-Add(properties,["filtration_length",F]);
+W:=RegularCWComplex(Nbounds);;      
+
+############################################
+FiltDim:=function(t,d)
+local m;
+if t<1 then return 0; fi;
+
+return dims[t][d+1];
+end;
+############################################
+
+
 
 return Objectify(HapFilteredRegularCWComplex,
-       rec(
+rec(
            nrCells:=W!.nrCells,
-           filteredDimension:=filtdim,
+           filteredDimension:=FiltDim,
            boundaries:=W!.boundaries,
            coboundaries:=W!.coboundaries,
            vectorField:=fail,
            inverseVectorField:=fail,
            criticalCells:=fail,
-           orientation:=orien,
-           properties:=properties));
+           orientation:=W!.orientation,
+           properties:=[ ["dimension",Dimension(W)], ["filtration_length",fl]]));
 
 
 end);

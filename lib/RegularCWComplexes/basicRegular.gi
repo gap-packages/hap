@@ -350,6 +350,11 @@ if not Y!.criticalCells=fail then
 return Y!.criticalCells;
 fi;
 
+if Dimension(Y)=0 then 
+Y!.criticalCells:=List([1..Y!.nrCells(0)],i->[0,i]);
+return Y!.criticalCells;
+fi;
+
 ##############################
 if Length(arg)>1 then 
 cells:=CocriticalCellsOfRegularCWComplex(Y,arg[2]);

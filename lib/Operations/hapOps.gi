@@ -951,13 +951,44 @@ InstallOtherMethod(PersistentBettiNumbers,
 function(Y,n,prime)
 local W;
 W:=ContractedFilteredPureCubicalComplex(Y);
-W:=Y;
 W:= FilteredPureCubicalComplexToCubicalComplex(W);
 W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
 return PersistentBettiNumbers(W,n,prime);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered pure cubical complex",
+[IsHapFilteredPureCubicalComplex,IsInt,IsInt],
+function(Y,n,prime)
+local W;
+W:=ContractedFilteredPureCubicalComplex(Y);
+W:= FilteredPureCubicalComplexToCubicalComplex(W);
+W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
+return PersistentBettiNumbersAlt(W,n,prime);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered pure cubical complex",
+[IsHapFilteredPureCubicalComplex,IsInt],
+function(Y,n)
+local W;
+
+W:=ContractedFilteredPureCubicalComplex(Y);
+W:= FilteredPureCubicalComplexToCubicalComplex(W);
+W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
+return PersistentBettiNumbersAlt(W,n);
+end);
+##########################################################
+##########################################################
+
 
 
 
@@ -976,6 +1007,20 @@ end);
 
 ##########################################################
 ##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered simplicial complex",
+[IsHapFilteredSimplicialComplex,IsInt],
+function(Y,n)
+local W;
+W:=FilteredRegularCWComplex(Y);
+return PersistentBettiNumbersAlt(W,n);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a filtered simplicial complex",
 [IsHapFilteredSimplicialComplex,IsInt,IsInt],
@@ -987,6 +1032,20 @@ end);
 ##########################################################
 ##########################################################
 
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered simplicial complex",
+[IsHapFilteredSimplicialComplex,IsInt,IsInt],
+function(Y,n,prime)
+local W;
+W:=FilteredRegularCWComplex(Y);
+return PersistentBettiNumbersAlt(W,n,prime);
+end);
+##########################################################
+##########################################################
+
+
 
 
 
@@ -997,7 +1056,8 @@ InstallOtherMethod(PersistentBettiNumbers,
 [IsHapFilteredRegularCWComplex,IsInt],
 function(Y,n)
 local W;
-W:=ContractedFilteredRegularCWComplex(Y);
+#W:=ContractedFilteredRegularCWComplex(Y);
+W:=Y;
 W:=SparseChainComplexOfFilteredRegularCWComplex(W);
 return PersistentBettiNumbers(W,n);
 end);
@@ -1011,9 +1071,33 @@ InstallOtherMethod(PersistentBettiNumbers,
 [IsHapFilteredRegularCWComplex,IsInt,IsInt],
 function(Y,n,prime)
 local W;
-W:=ContractedFilteredRegularCWComplex(Y);
+#W:=ContractedFilteredRegularCWComplex(Y);
+W:=Y;
 W:=SparseChainComplexOfFilteredRegularCWComplex(W);
 return PersistentBettiNumbers(W,n,prime);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsInt,IsInt],
+function(Y,n,prime);
+return PersistentBettiNumbersViaContractions(Y,n,prime);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsInt],
+function(Y,n);
+Print("Using homology over GF(2).\n");
+return PersistentBettiNumbersViaContractions(Y,n,2);
 end);
 ##########################################################
 ##########################################################

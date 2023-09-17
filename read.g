@@ -256,6 +256,7 @@ ReadPackageHap( "lib/Homology/groupCohomology.gi");
 ReadPackageHap( "lib/Homology/integralHomologyObj.gi");
 ReadPackageHap( "lib/Homology/integralCohomologyObj.gi");
 ReadPackageHap( "lib/Homology/persistent.gi");
+ReadPackageHap( "lib/Homology/new_persistent.gi");
 
 ##################### PERTURBATIONS #################################
 ReadPackageHap( "lib/Perturbations/resExtension.gi");

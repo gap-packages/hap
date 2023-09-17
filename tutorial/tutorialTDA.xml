@@ -76,7 +76,7 @@ complex are "buckets" containing data points. A data point may reside in several
 </Subsection>
 </Section>
 
-<Section><Heading>Digital image analysis</Heading>
+<Section><Heading>Digital image analysis and persistent homology</Heading>
 
 <P/>The following example reads in a digital image as a filtered
 pure cubical complexex.
@@ -100,16 +100,135 @@ The filtration is obtained by thresholding at a sequence of uniformly spaced val
 <P/>The <M>20</M> persistent bars in the
 degree <M>0</M> barcode suggest that the image has <M>20</M> objects. The degree <M>1</M> barcode suggests that <M>14</M> (or possibly <M>17</M>) of these objects have holes in them.
 
+<Subsection><Heading>Naive example of image segmentation by automatic thresholding</Heading>
+	Assuming that short bars and isolated points in the barcodes represent noise while long bars represent essential features, a "noiseless" representation of the image should correspond to a term in the filtration corresponding to
+ a column in the barcode incident with all long bars but incident with no short bars or isolated points. The following commands confirm that the 4th term in the filtration is such a term and display this term as a binary image.
+
+	<Example>
+<#Include SYSTEM "tutex/4.6a.txt">
+</Example>
+
+	<Alt Only="HTML">&lt;img src="images/binaryimage.png" align="center" height="400" alt="binary image"/>
+</Alt>
+</Subsection>
+
 <Subsection><Heading>Background to the data</Heading>
 
 <P/>The following image was used in the example.
 <P/>
-<Alt Only="HTML">&lt;img src="../tst/examples/image1.3.2.png" align="center" height="500" alt="barcode"/>
+<Alt Only="HTML">&lt;img src="../tst/examples/image1.3.2.png" align="center" height="400" alt="barcode"/>
 </Alt>
 
 </Subsection>
 </Section>
 
+	<Section><Heading>A second example of digital image segmentation</Heading>
+		In order to automatically count the number of coins in this picture
+		<P/>
+		<Alt Only="HTML">&lt;img src="images/my_coins.png" align="center" height="400" alt="collection of coins"/>
+</Alt>
+<P/>
+we can load the image as a filtered pure cubical complex <M>F</M>
+of filtration length 30 say, and observe the degree zero persistent 
+	Betti numbers to establish that the 21-st term or so of <M>F</M>  
+	 seems to be 'noise free' in degree zero. We can then set <M>M</M> equal to 
+		the 21-st term of <M>F</M> and thicken <M>M</M> a couple of 
+			times say to remove any tiny holes it may have. 
+			We can then construct the complement <M>C</M> of <M>M</M>. Then we can construct a 
+				'neighbourhood thickening'  filtration
+			<M>T</M>  of <M>C</M> with say <M>50</M> consecutive thickenings.
+				The degree one persistent barcode for <M>T</M> has <M>24</M> long bars, suggesting that the original picture consists of <M>24</M> coins.
+
+					 <Example>
+<#Include SYSTEM "tutex/4.6b.txt">
+</Example>
+
+					<P/>
+					<Alt Only="HTML">&lt;img src="images/coinsbettizero.gif" align="center" height="400" alt="barcode"/>
+</Alt>
+
+<P/>
+	The  pure cubical complex <M>M</M> has the correct number of path 
+		components, namely <M>25</M>, but its path components are very much subsets of the regions in the image corresponding to coins. The complex <M>M</M> can be thickened repeatedly, subject to no two path components being allowed to merge, in order to obtain a
+			more realistic image segmentation with path components corresponding more closely to coins. This is done in the follow commands which use a makeshift
+		function <Code>Basins(L)</Code> available <URL><Link>tutex/basins.g</Link><LinkText>here</LinkText>    </URL>. The commands essentially implement the standard watershed segmentation algorithm but do so by using the language of filtered pure cubical complexes.  
+
+			<Example>
+<#Include SYSTEM "tutex/4.6c.txt">
+</Example>
+
+	<P/>
+                                        <Alt Only="HTML">&lt;img src="images/segmented_coins.png" align="center" height="400" alt="segmented coins"/>
+</Alt>
+
+</Section>
+<Section><Heading>Alternative approaches to computing persistent homology</Heading>
+
+		From any  sequence <M>X_0 \subset X_1 \subset X_2 \subset \cdots \subset X_T</M> of cellular spaces 
+			(such as pure cubical complexes, or cubical complexes, or simplicial complexes, or regular CW complexes) we can construct a filtered 
+			chain complex 
+		<M>C_\ast X_0 \subset C_\ast X_1 \subset C_\ast X_2 \subset \cdots C_\ast X_T</M>. The induced homology homomorphisms <M>H_n(C_\ast X_0,\mathbb F) \rightarrow H_n(C_\ast X_1,\mathbb F) \rightarrow H_n(C_\ast X_2,\mathbb F) \rightarrow \cdots \rightarrow H_n(C_\ast X_T,\mathbb F)</M> 
+				with coefficients in a field <M>\mathbb F</M> can be computed by applying an appropriate sequence of elementary row operations to the boundary matrices in the chain complex <M>C_\ast X_T\otimes \mathbb F</M>; the boundary matrices are sparse and are best represented as such; the row operations need to be applied in a fashion that respects the filtration. This method is used in the above examples of persistent homology.
+					The method is not practical when the number of cells in <M>X_T</M> is large.
+
+				<P/>An alternative approach is to construct an admissible discrete vector field on each term <M>X_k</M> in the filtration. For each vector field there is a non-regular CW-complex <M>Y_k</M> whose cells correspond
+					to the critical cells in <M>X_k</M> and for which there is a homotopy equivalence <M>X_k\simeq Y_k</M>. For each <M>k</M>
+						the composite homomorphism <M>H_n(C_\ast Y_k, \mathbb F) \stackrel{\cong}{\rightarrow}
+						H_n(C_\ast X_k, \mathbb F)
+						\rightarrow
+						H_n(C_\ast X_{k+1}, \mathbb F)
+						\stackrel{\cong}{\rightarrow}
+						H_n(C_\ast Y_{k+1}, \mathbb F)</M>
+can be computed and the persistent homology can be derived from these homology homomorphisms.
+						This method is implemented in the function <Code>PersistentBettiNUmbersAlt(X,n,p)</Code> where <M>p</M> is the characteristic of the field, <M>n</M> is the homology degree, and <M>X</M> can be a filtered pure cubical complex, or a filtered simplicial complex, or a filtered regular CW complex, or indeed a filtered chain complex (represented in sparse form).
+							 This function incorporates the functions <Code>ContractedFilteredPureCubicalComplex(X)</Code> and
+							 <Code>ContractedFilteredRegularComplex(X)</Code> which respectively
+								 input a filtered pure cubical complex and filtered regular CW-complex and return a filtered complex of the same data type in which each term of the output 
+								 filtration is
+								 a deformation retract of the corresponding term in the input filtration.
+
+							 <P/>In this approach the vector fields on the various spaces <M>X_k</M> are completely independent and so the method lends itself to a degree of easy parallelism. This is not incorporated into the current implementation.
+
+							 <P/> 
+								 As an illustration we consider a synthetic data set <M>S</M> consisting of
+	<M>3527</M>
+		points sampled, with errors, from an `unknown' manifold <M>M</M> in <M>\mathbb R^3</M>. From such a data set one can associate
+			a <M>3</M>-dimensional
+			cubical complex <M>X_0</M> consisting of one unit cube centred on each (suitably scaled) data point. 
+				Given a pure cubical complex <M>X_s</M> we construct
+				<M>X_{s+1} =X_s \cup \{\overline e^3_\lambda\}_{\lambda\in \Lambda}</M>  by adding to
+				<M>X_s</M> each closed unit cube <M>\overline e^3_\lambda</M> in
+				<M>\mathbb R^3</M> that intersects non-trivially with <M>X_s</M>.  
+       We construct
+					the filtered cubical complex <M>X_\ast =\{X_i\}_{0\le i\le 19}</M> and 
+						compute the persistence matrices <M>\beta_d^{\ast\ast}</M> for <M>d=0,1,2</M> and for <M>\mathbb Z_2</M>
+							coefficients.  
+
+							The filtered complex <M>X_\ast</M> is quite large. In particular, the final space
+							<M>X_{19}</M> in the filtration involves <M>1\,092727</M> vertices, <M>3\,246354</M> edges, <M>3\,214836</M> faces of dimension <M>2</M> and <M>1\,061208</M> faces of dimension <M>3</M>. The usual matrix reduction approach to computing persistent Betti numbers
+         would involve an appropriate
+        row reduction of sparse matrices one of which has  over  3 million  rows and 3 million columns.
+
+								<Example>
+<#Include SYSTEM "tutex/4.7a.txt">
+</Example>
+							<Alt Only="HTML">&lt;img src="images/barcodes123.gif" align="center" height="400" alt="barcodes"/>
+</Alt>
+<P/>The barcodes suggest that the data points might have been sampled from a manifold with the homotopy type of a torus.
+
+<Subsection><Heading>Non-trivial cup product</Heading>
+	Of course, a wedge  <M>S^2\vee S^1\vee S^1</M> has the same homology as the torus
+	<M>S^1\times S^1</M>. By establishing that a 'noise free' model for
+		our data points, say the 10-th term <M>X_{10}</M> in the filtration,  has a non-trivial cup product
+	<M>\cup\colon H^1(X_{10},\mathbb Z) \times H^1(X_{10},\mathbb Z) \rightarrow H^2(X_{10},\mathbb Z)</M> we can eliminate <M>S^2\vee S^1\vee S^1</M> as
+		a candidate from which the data was sampled.
+
+<Example>
+<#Include SYSTEM "tutex/4.7b.txt">
+</Example>
+
+</Subsection>
+</Section>
 <Section><Heading>Random simplicial complexes</Heading>
 <P/>For a positive integer <M>n</M> and probability <M>p</M>
  we denote by <M>Y(n,p)</M> the <E>Linial-Meshulam random simplicial 2-complex</E>. Its <M>1</M>-skeleton is the complete graph on <M>n</M> vertices; each possible <M>2</M>-simplex is included independently with probability <M>p</M>.

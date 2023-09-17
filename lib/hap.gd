@@ -566,6 +566,7 @@ DeclareGlobalFunction("PathComponentOfPureComplex");
 DeclareOperation("PathComponent",[IsHapPureCubicalComplex,IsInt]);
 DeclareOperation("BettiNumber",[IsHapRegularCWComplex,IsInt]);#doc
 DeclareOperation("PersistentBettiNumbers",[IsHapFilteredRegularCWComplex,IsInt]);#doc
+DeclareOperation("PersistentBettiNumbersAlt",[IsHapFilteredRegularCWComplex,IsInt,IsInt]);
 DeclareOperation("Bettinumbers",[IsObject,IsInt]);
 DeclareGlobalFunction("BettinumbersOfPureCubicalComplex_dim_2");#<BettiNumber
 DeclareGlobalFunction("ThickenedPureCubicalComplex");#<PureComplexThickened
@@ -815,6 +816,7 @@ DeclareGlobalFunction("DirectProductOfRegularCWComplexesLazy");
 DeclareGlobalFunction("QuotientChainMap");
 DeclareOperation("Suspension",[IsHapRegularCWComplex]);
 DeclareGlobalFunction("Suspension_alt");
+DeclareGlobalFunction("PersistentBettiNumbersViaContractions");
 
 
 ## KNOTS ############################################################

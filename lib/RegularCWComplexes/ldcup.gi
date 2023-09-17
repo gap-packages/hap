@@ -11,12 +11,13 @@ if not Length(CocriticalCellsOfRegularCWComplex(W,0))=1 then
 Print("At present this is implemented for connected spaces only.\n");
 return fail; fi;
 
-G:=FundamentalGroup(W);;
+G:=FundamentalGroup(Y);;
 R:=ResolutionAsphericalPresentation(G,3);
 HG2:= Cohomology(HomToIntegers(R),2);;
-H2:=Cohomology(W,2);
+H2:=Cohomology(Y,2);
 cup:=CupProduct(G);
 if Length(HG2)=Length(H2) then return cup; fi;
+
 
 HG1:=Cohomology(HomToIntegers(R),1);;
 

@@ -1009,7 +1009,7 @@ function(arg)
 local i,A,viewer,T,file,file1,file2,tmpdir;
 # Function for viewing 2-dimensional pure cubical complexes.
 
-T:=arg[1];
+T:=PureCubicalComplex(1*arg[1]!.binaryArray);
 
 if not (Dimension(T)=2 or Dimension(T)=3) then
 Print("There is no method for viewing a pure cubical complex of dimension ",

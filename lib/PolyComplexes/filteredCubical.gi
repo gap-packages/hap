@@ -6,11 +6,17 @@
 InstallGlobalFunction(ThickeningFiltration,
 #function(M,n)
 function(arg)
-local M, n, F, D, T, C, k, A,step,s;
+local B,M, n, F, D, T, C, k, A,step,s;
 
 M:=arg[1];
 n:=arg[2];
-if Length(arg)>2 then step :=arg[3]; else step:=1; fi;
+if Length(arg)>2 then 
+
+if IsInt(arg[3]) then step :=arg[3]; 
+
+else step:=1; B:=arg[3]; fi;
+else step:=1;
+fi;
 
 F:=PureCubicalComplex(M!.binaryArray);
 F!.filtration:=StructuralCopy(F!.binaryArray);
@@ -19,6 +25,9 @@ T:=M;
 for k in [2..n+1] do
    for s in [1..step] do
    T:=ThickenedPureCubicalComplex(T);
+   if IsBound(B) then
+   T:=PureCubicalComplexIntersection(T,B);
+   fi;
    od;
 D:=PureCubicalComplexDifference(T,F);
 D:=k*D!.binaryArray;

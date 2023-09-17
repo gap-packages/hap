@@ -323,6 +323,33 @@ a->ImagesRepresentative(x,ImagesRepresentative(y,a)));
 end);
 #####################################################################
 
+####################################################################
+#####################################################################
+InstallOtherMethod(Compose,
+"for chain homomorphisms FoG=F(G)",
+[IsHapChainMap,IsHapChainMap],
+function(F,G)
+local S,T,map,char;
+S:=Source(F);
+T:=Target(G);
+if not S=T then return fail; fi;
+char:=EvaluateProperty(F,"characteristic");
+
+map:=function(n,k);
+return F!.mapping(n,G!.mapping(n,k));
+end;
+
+return Objectify(HapChainMap,
+       rec(
+           source:=Source(G),
+           target:=Target(F),
+           mapping:=map,
+           properties:=[["characteristic", char],["type","chainMap"]]));
+
+end);
+#####################################################################
+
+
 #####################################################################
 InstallOtherMethod(Compose,
 "for FpG-module homomorphisms xoy=x(y)",

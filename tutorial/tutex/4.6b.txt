@@ -1,0 +1,8 @@
+gap> F:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",30);;
+gap> M:=FiltrationTerm(F,21);;  #Chosen after viewing degree 0 barcode for F
+gap> M:=PureComplexThickened(M);;
+gap> M:=PureComplexThickened(M);;
+gap> C:=PureComplexComplement(M);;
+gap> T:=ThickeningFiltration(C,50);;
+gap> P:=PersistentBettiNumbers(T,1);;
+gap> BarCodeCompactDisplay(P);

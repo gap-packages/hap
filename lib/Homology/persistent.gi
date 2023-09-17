@@ -277,7 +277,11 @@ if y=x then
 else
 mat[x][y]:= Product(List([x..y-1],i->HOMS[i]));
 fi;
-mat[x][y]:=Dimension(Image(mat[x][y]));
+if Dimension(Range(mat[x][y])) = 0 or Dimension(Source(mat[x][y])) = 0
+ then mat[x][y]:=0;
+else
+ mat[x][y]:=Dimension(Image(mat[x][y]));
+fi;
 od;
 od;
 
