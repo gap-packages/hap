@@ -21,7 +21,8 @@ GroupCohomologyOriginal:=function()
 		HomologyAbelianGroup,
 		HomologyNilpotentPcpGroup,
 		HomologySpaceGroup,
-                HomologyAlmostCrystallographicGroup;
+                HomologyAlmostCrystallographicGroup,
+                HomologyOfGroupHomomorphism;
 		
 
 
@@ -36,7 +37,10 @@ else
 	gensG:=ReduceGenerators(GeneratorsOfGroup(G),G); fi; 
 	D:=false;
 	else
-	Print("ERROR: first variable must be a group or a Coxeter diagram or a graph of groups. \n");
+        if IsGroupHomomorphism(arg[1]) then D:=false; G:=false;
+        else
+	Print("ERROR: first variable must be a group or a Coxeter diagram or a graph of groups or a group homomorphism. \n");
+        fi;
 	fi;
 fi;
 
@@ -50,8 +54,8 @@ Print("ERROR: third variable should be a prime integer. \n");
 return fail;
 fi;
 
-if N=0 and p=0 then return [0]; fi;
-if N=0 and p>0 then return [p]; fi;
+if N=0 and p=0 and not IsGroupHomomorphism(arg[1]) then return [0]; fi;
+if N=0 and p>0 and not IsGroupHomomorphism(arg[1]) then return [p]; fi;
 
 ############################## DATA INPUT ###########################
 
@@ -60,6 +64,41 @@ Functor:=function(R); return TensorWithIntegersModP(R,p); end;
 else
 Functor:=TensorWithIntegers;
 fi;
+
+#####################################################################
+#####################################################################
+HomologyOfGroupHomomorphism:=function()
+local f,H,G,RH,RG,PH,PG,ans,hlgy,k,A;
+f:=arg[1];
+H:=Source(f);
+G:=Target(f);
+
+if (not IsFinite(H)) or (not IsFinite(G)) then 
+Print("This function is currently implemented only for homomorphisms of finite groups.\n");
+return fail;
+fi;
+
+hlgy:=GroupHomology(H,N,p);
+if Length(hlgy)=0 then 
+A:=AbelianGroup(GroupHomology(G,N,p));
+return GroupHomomorphismByFunction(SmallGroup(1,1),A,x->One(A)); fi;
+hlgy:=Product(hlgy);
+hlgy:=Factors(hlgy);
+hlgy:=SSortedList(hlgy);
+hlgy:=Filtered(hlgy,i->not i=1);
+ans:=[];
+for k in hlgy do
+PH:=SylowSubgroup(H,k);
+PG:=SylowSubgroup(G,k);
+RG:=ResolutionGenericGroup(PG,N+1);
+RH:=ResolutionGenericGroup(PH,N+1);
+Add(ans, PrimePartDerivedFunctorHomomorphism(f,RG,RH,Functor,N) );
+od;
+if Length(ans)>0 then ans:=DirectProduct(ans); fi;
+return ans;
+end;
+#####################################################################
+#####################################################################
 
 #####################################################################
 #####################################################################
@@ -251,6 +290,9 @@ end;
 #####################################################################
 #####################################################################
 
+if IsGroupHomomorphism(arg[1]) then 
+return HomologyOfGroupHomomorphism(); fi;
+
 if IsList(D) then
 if GraphOfGroupsTest(D) then
 return HomologyGraphOfGroups();
@@ -286,6 +328,8 @@ return HomologySpaceGroup(); fi;
 
 if IsFinite(G) then
 
+if p>0 and not p in Factors(Order(G)) then return []; fi;
+
 if IsAbelian(G) then
 return HomologyAbelianGroup(); fi;
 
@@ -312,7 +356,7 @@ end;
 
 answer:= GroupCohomologyOriginal();
 
-if IsList(answer) then return answer; fi;
+if not IsInt(answer) then return answer; fi;
 
 if IsInt(answer) then return
 ListWithIdenticalEntries(answer,arg[3]); fi;
@@ -367,3 +411,18 @@ end);
 #######################################################
 #######################################################
 
+#######################################################
+#######################################################
+InstallGlobalFunction(DirectProductOfGroupHomomorphisms,
+function(f,g)
+local S,T;
+S:=DirectProduct(Source(f),Source(g));
+T:=DirectProduct(Target(f),Target(g));
+return GroupHomomorphismByFunction(S,T,x->
+Image(Embedding(T,1), Image(f,Image(Projection(S,1),x)))
+*
+Image(Embedding(T,2),Image(g,Image(Projection(S,2),x))) 
+);
+end);
+#######################################################
+#######################################################

@@ -1,0 +1,12 @@
+gap> G:=SymmetricGroup(10);;
+gap> H:=AlternatingGroup(7);;
+gap> f:=GroupHomomorphismByFunction(H,G,x->x);;
+gap> F:=GroupHomology(f,3);
+MappingByFunction( Pcp-group with orders [ 4, 3 ], Pcp-group with orders 
+[ 2, 2, 4, 3 ], function( x ) ... end )
+gap> AbelianInvariants(Range(F)/Image(F));
+[ 2, 2 ]
+
+gap> Fmod2:=GroupHomology(f,3,2);;
+gap> AbelianInvariants(Range(Fmod2)/Image(Fmod2));
+[ 2, 2 ]

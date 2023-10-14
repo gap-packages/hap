@@ -650,6 +650,7 @@ DeclareGlobalFunction("VectorsToOneSkeleton");
 DeclareOperation("VertexStar",[IsHapSimplicialComplex,IsInt]);
 DeclareOperation("VertexLink",[IsHapSimplicialComplex,IsInt]);
 DeclareGlobalFunction("DirectProductOfSimplicialComplexes");
+DeclareGlobalFunction("DirectProductOfGroupHomomorphisms");
 
 
 ########################## ARRAYS ################################

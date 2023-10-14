@@ -543,8 +543,23 @@ end);
 ##########################################################
 ##########################################################
 
-
-
+##########################################################
+##########################################################
+InstallOtherMethod(DirectProductOp,
+"direct product of  pure cubical complexes",
+[IsList, IsGroupHomomorphism],
+function(L,K)
+local D;
+if Length(L)=1 then return L[1]; fi;
+if Length(L)=2 then
+return DirectProductOfGroupHomomorphisms(L[1],L[2]);
+else
+D:=DirectProductOp(L{[2..Length(L)]},K);
+return  DirectProductOfGroupHomomorphisms(L[1],D);
+fi;
+end);
+##########################################################
+##########################################################
 
 ##########################################################
 ##########################################################

@@ -2,15 +2,21 @@
 #####################################################################
 InstallGlobalFunction(ModPCohomologyRing,
 function(arg)
-local A;
+local A,R;
 
 if Length(arg)=1 then
 A:=ModPCohomologyRing_part_1(arg[1]);fi;
 if Length(arg)=2 then
-A:=ModPCohomologyRing_part_1(arg[1],arg[2]);fi;
+A:=ModPCohomologyRing_part_1(arg[1],arg[2]); fi;
 if Length(arg)=3 then
-A:=ModPCohomologyRing_part_1(arg[1],arg[2],arg[3]);fi;
 
+if IsString(arg[3]) then
+A:=ModPCohomologyRing_part_1(arg[1],arg[2],arg[3]);
+else
+R:=ResolutionPrimePowerGroup(SylowSubgroup(arg[1],arg[2]),1+arg[3]);
+A:=ModPCohomologyRing_alt(arg[1],R); fi;
+
+fi;
 if arg[Length(arg)]="high" or arg[Length(arg)]="low" then
 A:=ModPCohomologyRing_part_2(A); fi;
 

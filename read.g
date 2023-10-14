@@ -219,6 +219,7 @@ ReadPackageHap( "lib/Functors/transfer.gi");
 ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/simplify.gi");
+ReadPackageHap( "lib/Functors/alexander.gi");
 
 ##################### CONGRUENCE ######################################
 ReadPackageHap( "lib/Congruence/cong.gi");
@@ -256,7 +257,6 @@ ReadPackageHap( "lib/Homology/groupCohomology.gi");
 ReadPackageHap( "lib/Homology/integralHomologyObj.gi");
 ReadPackageHap( "lib/Homology/integralCohomologyObj.gi");
 ReadPackageHap( "lib/Homology/persistent.gi");
-ReadPackageHap( "lib/Homology/new_persistent.gi");
 
 ##################### PERTURBATIONS #################################
 ReadPackageHap( "lib/Perturbations/resExtension.gi");
@@ -512,7 +512,6 @@ ReadPackageHap("lib/CohomologyOperations/detection.gi");
 ReadPackageHap("lib/CohomologyOperations/cohodata.gi");
 ReadPackageHap("lib/CohomologyOperations/stiefel.gi");
 ReadPackageHap("lib/CohomologyOperations/spacebockstein.gi");
-ReadPackageHap("lib/CohomologyOperations/chainbockstein.gi");
 
 ################## HAP COCYCLIC ##############################
 if not IsPackageMarkedForLoading("HAPcocyclic","0") then
