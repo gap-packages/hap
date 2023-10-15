@@ -234,7 +234,10 @@ DeclareGlobalFunction("SparseChainComplexToChainComplex");
 DeclareGlobalFunction("SimplifiedSparseChainComplex");
 DeclareGlobalFunction("ChainComplexToSparseChainComplex");
 DeclareGlobalFunction("SignatureOfSymmetricMatrix");
-
+DeclareGlobalFunction("HAP_PrimePartModified");
+DeclareGlobalFunction("HAP_SylowSubgroups");
+DeclareGlobalFunction("PrimePartDerivedFunctorHomomorphism");
+DeclareGlobalFunction("ModPCohomologyRing_alt");
 
 
 ## PERTURBATIONS ####################################################
@@ -366,6 +369,7 @@ DeclareGlobalFunction("ModPCohomologyRing_part_2");
 DeclareGlobalFunction("ModPRingGeneratorsAlt");
 DeclareGlobalFunction("ModPRingGenerators");
 DeclareGlobalFunction("ModPCohomologyGenerators");
+DeclareGlobalFunction("HAP_FunctorialModPCohomologyRing");
 
 
 ## CURVATURE & POLYTOPES ############################################

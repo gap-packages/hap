@@ -61,11 +61,13 @@ fi;
 ##
 
 if Length(tmp)>1 and Length(arg)<3 then 
-Print("The third input variable must be a prime when this function is applied to non prime-power groups. \n");
+Print("The third input variable must be a prime when this function is applied to non prime-power nilpotent groups. \n");
 return fail;
 fi;
 
 if Length(arg)>2 then prime:=arg[3];
+ if not IsNilpotentGroup(arg[1]) then Print("The group is not nilpotent.\n");
+ return fail; fi;
 else prime:=tmp[1]; fi;
 
 pp:=Order(G);

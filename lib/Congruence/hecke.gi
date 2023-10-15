@@ -188,9 +188,20 @@ end);
 ###########################################################
 ###########################################################
 InstallGlobalFunction(HomomorphismAsMatrix,
-function(t);
-return
-List(GeneratorsOfGroup(Source(t)),x->Exponents(Image(t,x)));
+function(t)
+local A, MyExponents;
+
+#######
+MyExponents:=function(w)
+local e;
+e:=Exponents(w);
+if e=[] then e:=[0]; fi;
+return e;
+end;
+#######
+A:=List(GeneratorsOfGroup(Source(t)),x->MyExponents(Image(t,x)));
+if Length(A)=0 then A:=[[0]]; fi;
+return A;
 end);
 ###########################################################
 ###########################################################

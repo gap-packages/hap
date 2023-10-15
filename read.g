@@ -311,6 +311,7 @@ ReadPackageHap( "lib/Polycyclic/resNilpotentPcpGrp.gi");
 ReadPackageHap( "lib/ModPRings/record.gi");
 ReadPackageHap( "lib/ModPRings/recordPart1.gi");
 ReadPackageHap( "lib/ModPRings/recordPartII.gi");
+ReadPackageHap( "lib/ModPRings/functorial.gi");
 
 
 ################### GRAPHS OF GROUPS ###############################

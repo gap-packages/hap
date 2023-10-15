@@ -39,6 +39,12 @@ local
 
 MDL:=arg[1];
 G:=MDL!.group;
+
+if not IsPGroup(G) then
+Print("Group must be of prime-power order.\n");
+return fail;
+fi;
+
 n:=arg[2]+1;
 tmp:=SSortedList(Factors(Order(G)));
 

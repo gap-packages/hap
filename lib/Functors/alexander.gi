@@ -1,5 +1,5 @@
 #####################################################################
-HAP_PrimePartModified:=
+InstallGlobalFunction(HAP_PrimePartModified,
 function(G,R,F,n)
 local
 	C,P, DCRS, DCRS1, DCRSpruned,L,Y,GroupL,
@@ -124,11 +124,12 @@ od;
 
 f:=NormalClosure(HP,Group(SSortedList(HPrels)));
 return NaturalHomomorphismByNormalSubgroup(HP,f);
-end;
+end);
 #####################################################################
 
 #####################################################################
-HAP_SylowSubgroups:=function(f,p)
+InstallGlobalFunction(HAP_SylowSubgroups,
+function(f,p)
 local H,G, SH,SG,P,Q;
 H:=Source(f);
 G:=Target(f);
@@ -138,11 +139,12 @@ P:=Image(f,SH);
 for Q in SG^G do
 if IsSubgroup(Q,P) then return [Q,SH]; fi;
 od;
-end;
+end);
 #####################################################################
 
 #####################################################################
-PrimePartDerivedFunctorHomomorphism:=function(arg)
+InstallGlobalFunction(PrimePartDerivedFunctorHomomorphism,
+function(arg)
 local f,RG,RH,F,n,SH,SG,P,Q,ef,A,B,ans,G,H,x,iso1,iso2,hom,cf,hf;
 f:=arg[1];
 RG:=arg[2];  #resolution for sylow subgroup of G
@@ -176,11 +178,12 @@ hom:=GroupHomomorphismByFunction(Source(B),Source(A),x->
 return
 GroupHomomorphismByFunction(Target(B),Target(A),
 x->Image(A,Image(hom,PreImagesRepresentative(B,x))));
-end;
+end);
 #####################################################################
 
 #####################################################################
-ModPCohomologyRing_alt:=function(G,R)
+InstallGlobalFunction(ModPCohomologyRing_alt,
+function(G,R)
 local P,A,B,S,row,k,Bases,mat,hom,f,F,n,b,x,ef,cf,p;
 
 P:=R!.group;
@@ -214,12 +217,6 @@ od;
 S:=Subalgebra(A,S);
 S!.degree:=A!.degree;
 return S;
-end;
+end);
 #####################################################################
 
-
-#G:=SmallGroup(288,1026);;
-#p:=2;;
-#P:=SylowSubgroup(G,p);;
-#R:=ResolutionPrimePowerGroup(P,8);; 
-#A:=ModPCohomologyRing_alt(G,R);;

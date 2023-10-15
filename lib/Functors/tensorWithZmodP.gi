@@ -23,7 +23,10 @@ local
 	Charact;
 
 if "tensorWithIntModPRec" in NamesOfComponents(R) then
-return R!.tensorWithIntModPRec; fi;
+if EvaluateProperty(R!.tensorWithIntModPRec,"characteristic")=prime then
+return R!.tensorWithIntModPRec; 
+fi;
+fi;
 
 One:=Elements(GaloisField(prime))[2];
 LengthC:=EvaluateProperty(R,"length");
