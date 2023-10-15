@@ -845,6 +845,24 @@ the following.
   [ 0*v.1, v.4, v.4+v.6, 0*v.1, v.8, 0*v.1, v.9, 0*v.1, 0*v.1 ]
   
 \end{Verbatim}
+ If only the Bockstein homomorphism is required, and not the cohomology rings
+structure, then it is better to compute the Bockstein directly from a chain
+complex. The following computes the Bockstein $\beta_2\colon H^2(Y,\mathbb Z_2) \rightarrow H^{3}(Y,\mathbb Z_2)$ for the direct product $Y=K \times K \times K \times K$ of four copies of the Klein bottle represented as a regular CW-complex with $331776$ cells. The order of the kernel and image of $\beta_2$ are computed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ClosedSurface(-2);;                |
+  !gapprompt@gap>| !gapinput@K:=SimplifiedComplex(RegularCWComplex(K));;|
+  !gapprompt@gap>| !gapinput@KKKK:=DirectProduct(K,K,K,K); |
+  Regular CW-complex of dimension 8
+  !gapprompt@gap>| !gapinput@Size(KKKK);|
+  331776
+  !gapprompt@gap>| !gapinput@C:=ChainComplex(KKKK);;|
+  !gapprompt@gap>| !gapinput@bk:=Bockstein(C,2,2);;|
+  !gapprompt@gap>| !gapinput@Order(Kernel(bk));|
+  1024
+  !gapprompt@gap>| !gapinput@Order(Image(bk)); |
+  262144
+  
+\end{Verbatim}
  }
 
  
@@ -3314,8 +3332,8 @@ when their end-point nodes contain common data points.
  }
 
  
-\section{\textcolor{Chapter }{Digital image analysis}}\logpage{[ 5, 3, 0 ]}
-\hyperdef{L}{X825C5B837A08F579}{}
+\section{\textcolor{Chapter }{Digital image analysis and persistent homology}}\logpage{[ 5, 3, 0 ]}
+\hyperdef{L}{X79616D12822FDB9A}{}
 {
  
 
@@ -3340,7 +3358,30 @@ this filtered complex is calculated in degrees $0$ and $1$ and displayed as two 
   
 
 The $20$ persistent bars in the degree $0$ barcode suggest that the image has $20$ objects. The degree $1$ barcode suggests that $14$ (or possibly $17$) of these objects have holes in them. 
-\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 3, 1 ]}
+\subsection{\textcolor{Chapter }{Naive example of image segmentation by automatic thresholding}}\logpage{[ 5, 3, 1 ]}
+\hyperdef{L}{X8066F9B17B78418E}{}
+{
+ Assuming that short bars and isolated points in the barcodes represent noise
+while long bars represent essential features, a "noiseless" representation of
+the image should correspond to a term in the filtration corresponding to a
+column in the barcode incident with all long bars but incident with no short
+bars or isolated points. The following commands confirm that the 4th term in
+the filtration is such a term and display this term as a binary image. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Y:=FiltrationTerm(F,4);            |
+  Pure cubical complex of dimension 2.
+  !gapprompt@gap>| !gapinput@BettiNumber(Y,0);|
+  20
+  !gapprompt@gap>| !gapinput@BettiNumber(Y,1);|
+  14
+  !gapprompt@gap>| !gapinput@Display(Y);|
+  
+  
+\end{Verbatim}
+  }
+
+ 
+\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 3, 2 ]}
 \hyperdef{L}{X7D512DA37F789B4C}{}
 {
  
@@ -3352,7 +3393,121 @@ The following image was used in the example.
  }
 
  
-\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 5, 4, 0 ]}
+\section{\textcolor{Chapter }{A second example of digital image segmentation}}\logpage{[ 5, 4, 0 ]}
+\hyperdef{L}{X7A8224DA7B00E0D9}{}
+{
+ In order to automatically count the number of coins in this picture 
+
+  
+
+ we can load the image as a filtered pure cubical complex $F$ of filtration length 30 say, and observe the degree zero persistent Betti
+numbers to establish that the 21-st term or so of $F$ seems to be 'noise free' in degree zero. We can then set $M$ equal to the 21-st term of $F$ and thicken $M$ a couple of times say to remove any tiny holes it may have. We can then
+construct the complement $C$ of $M$. Then we can construct a 'neighbourhood thickening' filtration $T$ of $C$ with say $50$ consecutive thickenings. The degree one persistent barcode for $T$ has $24$ long bars, suggesting that the original picture consists of $24$ coins. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",30);;|
+  !gapprompt@gap>| !gapinput@M:=FiltrationTerm(F,21);;  #Chosen after viewing degree 0 barcode for F|
+  !gapprompt@gap>| !gapinput@M:=PureComplexThickened(M);;|
+  !gapprompt@gap>| !gapinput@M:=PureComplexThickened(M);;|
+  !gapprompt@gap>| !gapinput@C:=PureComplexComplement(M);;|
+  !gapprompt@gap>| !gapinput@T:=ThickeningFiltration(C,50);;|
+  !gapprompt@gap>| !gapinput@P:=PersistentBettiNumbers(T,1);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P);|
+  
+\end{Verbatim}
+ 
+
+  
+
+ The pure cubical complex $M$ has the correct number of path components, namely $25$, but its path components are very much subsets of the regions in the image
+corresponding to coins. The complex $M$ can be thickened repeatedly, subject to no two path components being allowed
+to merge, in order to obtain a more realistic image segmentation with path
+components corresponding more closely to coins. This is done in the follow
+commands which use a makeshift function \texttt{Basins(L)} available \href{tutex/basins.g} {here}. The commands essentially implement the standard watershed segmentation
+algorithm but do so by using the language of filtered pure cubical complexes. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@W:=PureComplexComplement(FiltrationTerm(T,25));;|
+  !gapprompt@gap>| !gapinput@L:=[];;|
+  !gapprompt@gap>| !gapinput@for i in [1..PathComponentOfPureComplex(W,0)] do|
+  !gapprompt@gap>| !gapinput@P:=PathComponentOfPureComplex(W,i);;|
+  !gapprompt@gap>| !gapinput@Q:=ThickeningFiltration(P,50,M);;|
+  !gapprompt@gap>| !gapinput@Add(L,Q);;|
+  !gapprompt@gap>| !gapinput@od;;|
+  
+  !gapprompt@gap>| !gapinput@B:=Basins(L);|
+  !gapprompt@gap>| !gapinput@Display(B);|
+  
+\end{Verbatim}
+ 
+
+  }
+
+ 
+\section{\textcolor{Chapter }{Alternative approaches to computing persistent homology}}\logpage{[ 5, 5, 0 ]}
+\hyperdef{L}{X7D2CC9CB85DF1BAF}{}
+{
+ From any sequence $X_0 \subset X_1 \subset X_2 \subset \cdots \subset X_T$ of cellular spaces (such as pure cubical complexes, or cubical complexes, or
+simplicial complexes, or regular CW complexes) we can construct a filtered
+chain complex $C_\ast X_0 \subset C_\ast X_1 \subset C_\ast X_2 \subset \cdots C_\ast X_T$. The induced homology homomorphisms $H_n(C_\ast X_0,\mathbb F) \rightarrow H_n(C_\ast X_1,\mathbb F) \rightarrow
+H_n(C_\ast X_2,\mathbb F) \rightarrow \cdots \rightarrow H_n(C_\ast
+X_T,\mathbb F)$ with coefficients in a field $\mathbb F$ can be computed by applying an appropriate sequence of elementary row
+operations to the boundary matrices in the chain complex $C_\ast X_T\otimes \mathbb F$; the boundary matrices are sparse and are best represented as such; the row
+operations need to be applied in a fashion that respects the filtration. This
+method is used in the above examples of persistent homology. The method is not
+practical when the number of cells in $X_T$ is large. 
+
+An alternative approach is to construct an admissible discrete vector field on
+each term $X_k$ in the filtration. For each vector field there is a non-regular CW-complex $Y_k$ whose cells correspond to the critical cells in $X_k$ and for which there is a homotopy equivalence $X_k\simeq Y_k$. For each $k$ the composite homomorphism $H_n(C_\ast Y_k, \mathbb F) \stackrel{\cong}{\rightarrow} H_n(C_\ast X_k,
+\mathbb F) \rightarrow H_n(C_\ast X_{k+1}, \mathbb F)
+\stackrel{\cong}{\rightarrow} H_n(C_\ast Y_{k+1}, \mathbb F)$ can be computed and the persistent homology can be derived from these homology
+homomorphisms. This method is implemented in the function \texttt{PersistentBettiNUmbersAlt(X,n,p)} where $p$ is the characteristic of the field, $n$ is the homology degree, and $X$ can be a filtered pure cubical complex, or a filtered simplicial complex, or a
+filtered regular CW complex, or indeed a filtered chain complex (represented
+in sparse form). This function incorporates the functions \texttt{ContractedFilteredPureCubicalComplex(X)} and \texttt{ContractedFilteredRegularComplex(X)} which respectively input a filtered pure cubical complex and filtered regular
+CW-complex and return a filtered complex of the same data type in which each
+term of the output filtration is a deformation retract of the corresponding
+term in the input filtration. 
+
+In this approach the vector fields on the various spaces $X_k$ are completely independent and so the method lends itself to a degree of easy
+parallelism. This is not incorporated into the current implementation. 
+
+ As an illustration we consider a synthetic data set $S$ consisting of $3527$ points sampled, with errors, from an `unknown' manifold $M$ in $\mathbb R^3$. From such a data set one can associate a $3$-dimensional cubical complex $X_0$ consisting of one unit cube centred on each (suitably scaled) data point.
+Given a pure cubical complex $X_s$ we construct $X_{s+1} =X_s \cup \{\overline e^3_\lambda\}_{\lambda\in \Lambda}$ by adding to $X_s$ each closed unit cube $\overline e^3_\lambda$ in $\mathbb R^3$ that intersects non-trivially with $X_s$. We construct the filtered cubical complex $X_\ast =\{X_i\}_{0\le i\le 19}$ and compute the persistence matrices $\beta_d^{\ast\ast}$ for $d=0,1,2$ and for $\mathbb Z_2$ coefficients. The filtered complex $X_\ast$ is quite large. In particular, the final space $X_{19}$ in the filtration involves $1\,092727$ vertices, $3\,246354$ edges, $3\,214836$ faces of dimension $2$ and $1\,061208$ faces of dimension $3$. The usual matrix reduction approach to computing persistent Betti numbers
+would involve an appropriate row reduction of sparse matrices one of which has
+over 3 million rows and 3 million columns. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@file:=HapFile("data247.txt");;|
+  !gapprompt@gap>| !gapinput@Read(file);;|
+  !gapprompt@gap>| !gapinput@F:=ThickeningFiltration(T,20);;|
+  !gapprompt@gap>| !gapinput@P2:=PersistentBettiNumbersAlt(F,2);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P2);|
+  !gapprompt@gap>| !gapinput@P1:=PersistentBettiNumbersAlt(F,1);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P1);|
+  !gapprompt@gap>| !gapinput@P0:=PersistentBettiNumbersAlt(F,0);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P0);|
+  
+\end{Verbatim}
+  
+
+The barcodes suggest that the data points might have been sampled from a
+manifold with the homotopy type of a torus. 
+\subsection{\textcolor{Chapter }{Non-trivial cup product}}\logpage{[ 5, 5, 1 ]}
+\hyperdef{L}{X86FD0A867EC9E64F}{}
+{
+ Of course, a wedge $S^2\vee S^1\vee S^1$ has the same homology as the torus $S^1\times S^1$. By establishing that a 'noise free' model for our data points, say the 10-th
+term $X_{10}$ in the filtration, has a non-trivial cup product $\cup\colon H^1(X_{10},\mathbb Z) \times H^1(X_{10},\mathbb Z) \rightarrow
+H^2(X_{10},\mathbb Z)$ we can eliminate $S^2\vee S^1\vee S^1$ as a candidate from which the data was sampled. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@X10:=RegularCWComplex(FiltrationTerm(F,10));;|
+  !gapprompt@gap>| !gapinput@cup:=LowDimensionalCupProduct(X10);;|
+  !gapprompt@gap>| !gapinput@cup([1,0],[0,1]);|
+  [ 1 ]
+  
+\end{Verbatim}
+ }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 5, 6, 0 ]}
 \hyperdef{L}{X87AF06677F05C624}{}
 {
  
@@ -3814,6 +3969,10 @@ set-theoretic 'section' of the crossed module corresponding to $H$. }
 \hyperdef{L}{X807B265978F90E01}{}
 {
  
+\subsection{\textcolor{Chapter }{Naive homology computation for a very small group}}\logpage{[ 7, 1, 1 ]}
+\hyperdef{L}{X80A721AC7A8D30A3}{}
+{
+ 
 
 It is possible to compute the low degree (co)homology of a finite group or
 monoid of small order directly from the bar resolution. The following commands
@@ -3840,7 +3999,13 @@ of the quaternion group $G=Q_4$ of order $8$.
 
 However, this approach is of limited applicability since the bar resolution
 involves $|G|^k$ free generators in degree $k$. A range of techniques, tailored to specific classes of groups, can be used
-to compute the (co)homology of larger finite groups. 
+to compute the (co)homology of larger finite groups. }
+
+ 
+\subsection{\textcolor{Chapter }{A more efficient homology computation}}\logpage{[ 7, 1, 2 ]}
+\hyperdef{L}{X838CEA3F850DFC82}{}
+{
+ 
 
  The following example computes the seventh integral homology 
 
@@ -3859,6 +4024,42 @@ of the Mathieu groups $M_{23}$ and $M_{24}$. (Warning: the computation of $H_7(M
   [ 4, 3 ]
   
 \end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Computation of an induced homology homomorphism}}\logpage{[ 7, 1, 3 ]}
+\hyperdef{L}{X842E93467AD09EC1}{}
+{
+ 
+
+The following example computes the cokernel 
+
+${\rm coker}( H_3(A_7,\mathbb Z) \rightarrow H_3(S_{10},\mathbb Z)) \cong
+\mathbb Z_2\oplus \mathbb Z_2$ 
+
+of the degree-3 integral homomogy homomorphism induced by the canonical
+inclusion $A_7 \rightarrow S_{10}$ of the alternating group on $7$ letters into the symmetric group on $10$ letters. The analogous cokernel with $\mathbb Z_2$ homology coefficients is also computed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SymmetricGroup(10);;|
+  !gapprompt@gap>| !gapinput@H:=AlternatingGroup(7);;|
+  !gapprompt@gap>| !gapinput@f:=GroupHomomorphismByFunction(H,G,x->x);;|
+  !gapprompt@gap>| !gapinput@F:=GroupHomology(f,3);|
+  MappingByFunction( Pcp-group with orders [ 4, 3 ], Pcp-group with orders 
+  [ 2, 2, 4, 3 ], function( x ) ... end )
+  !gapprompt@gap>| !gapinput@AbelianInvariants(Range(F)/Image(F));|
+  [ 2, 2 ]
+  
+  !gapprompt@gap>| !gapinput@Fmod2:=GroupHomology(f,3,2);;|
+  !gapprompt@gap>| !gapinput@AbelianInvariants(Range(Fmod2)/Image(Fmod2));|
+  [ 2, 2 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Some other finite group homology computations}}\logpage{[ 7, 1, 4 ]}
+\hyperdef{L}{X8754D2937E6FD7CE}{}
+{
  
 
 The following example computes the third integral homology of the Weyl group $W=Weyl(E_8)$, a group of order $696729600$. 
@@ -3963,6 +4164,8 @@ whose coefficient of $x^n$ is equal to the dimension of the vector space $H^n(M_
   (x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
   
 \end{Verbatim}
+ }
+
  }
 
  
@@ -4719,12 +4922,12 @@ verify "completion criteria".
  }
 
  
-\chapter{\textcolor{Chapter }{Cohomology operations}}\logpage{[ 8, 0, 0 ]}
-\hyperdef{L}{X81FDD09B8454C905}{}
+\chapter{\textcolor{Chapter }{Cohomology rings and Steenrod operation for finite groups}}\logpage{[ 8, 0, 0 ]}
+\hyperdef{L}{X82190213867B6F41}{}
 {
  
-\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $2$-group}}\logpage{[ 8, 1, 0 ]}
-\hyperdef{L}{X80638C137E300A52}{}
+\section{\textcolor{Chapter }{Cohomology rings of finite $2$-groups}}\logpage{[ 8, 1, 0 ]}
+\hyperdef{L}{X80A9B7117D8EC0AB}{}
 {
  The following example determines a presentation for the cohomology ring $H^\ast(Syl_2(M_{12}),\mathbb Z_2)$. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines
 from \textsc{Singular}, are used to determine how much of a resolution to compute for the
@@ -4747,12 +4950,18 @@ presentation.
    ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
   
 \end{Verbatim}
- The command \texttt{CohomologicalData(G,n)} prints complete information for the cohomology ring $H^\ast(G, Z_2 )$ of a $2$-group $G$ provided that the integer $n$ is at least the maximal degree of a relator in a minimal set of relators for
-the ring. Groebner basis routines from \textsc{Singular} are called involved in the example. 
+ }
+
+ 
+\section{\textcolor{Chapter }{Steenrod operations for finite $2$-groups}}\logpage{[ 8, 2, 0 ]}
+\hyperdef{L}{X80114B0483EF9A67}{}
+{
+ The command \texttt{CohomologicalData(G,n)} prints complete information for the cohomology ring $H^\ast(G, Z_2 )$ and steenrod operations for a $2$-group $G$ provided that the integer $n$ is at least the maximal degree of a relator in a minimal set of relators for
+the ring. 
 
 The following example produces complete information on the Steenrod algebra of
-group number $8$ in \textsc{GAP}'s library of groups of order $32$. (This example take over 2 hours to run. Most other groups of order 32 run
-significantly quicker.) 
+group number $8$ in \textsc{GAP}'s library of groups of order $32$. Groebner basis routines from \textsc{Singular} are called involved in the example. (This example take over 2 hours to run.
+Most other groups of order 32 run significantly quicker.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@CohomologicalData(SmallGroup(32,8),12);|
   
@@ -4821,7 +5030,110 @@ significantly quicker.)
  }
 
  
-\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $p$-group}}\logpage{[ 8, 2, 0 ]}
+\section{\textcolor{Chapter }{Mod-$p$ cohomology rings of finite groups}}\logpage{[ 8, 3, 0 ]}
+\hyperdef{L}{X877CAF8B7E64DE04}{}
+{
+ For a finite group $G$, prime $p$ and positive integer $deg$ the function \texttt{ModPCohomologyRing(G,p,deg)} computes a finite dimensional graded ring equal to the cohomology ring $H^{\le deg}(G,\mathbb Z_p) := H^\ast(G,\mathbb Z_p)/\{x=0\ :\ {\rm
+degree}(x)>deg \}$ . 
+
+The following example computes the first $14$ degrees of the cohomology ring $H^\ast(M_{11},\mathbb Z_2)$ where $M_{11}$ is the Mathieu group of order $7920$. The ring is seen to be generated by three elements $a_3, a_4, a_6$ in degrees $3,4,5$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|G:=MathieuGroup(11);;          B
+  @gapprompt|gap>B @gapinput|p:=2;;deg:=14;;B
+  @gapprompt|gap>B @gapinput|A:=ModPCohomologyRing(G,p,deg);B
+  <algebra over GF(2), with 20 generators>
+  
+  @gapprompt|gap>B @gapinput|gns:=ModPRingGenerators(A);B
+  [ v.1, v.6, v.8+v.10, v.13 ]
+  @gapprompt|gap>B @gapinput|List(gns,A!.degree);B
+  [ 0, 3, 4, 5 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Functorial ring homomorphisms in Mod-$p$ ring cohomology}}\logpage{[ 8, 4, 0 ]}
+\hyperdef{L}{X808943288042431E}{}
+{
+ The following example constructs the ring homomorphism 
+
+$F\colon H^{\le deg}(H,\mathbb Z_p) \rightarrow H^{\le deg}(G,\mathbb Z_p)$ 
+
+ induced by the group homomorphism $f\colon H\rightarrow G$ with $H=A_5$, $G=S_5$, $f$ the canonical inclusion of the alternating group into the symmetric group, $p=2$ and $deg=7$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SymmetricGroup(5);;H:=AlternatingGroup(5);;|
+  !gapprompt@gap>| !gapinput@f:=GroupHomomorphismByFunction(H,G,x->x);;|
+  !gapprompt@gap>| !gapinput@p:=2;; deg:=7;;|
+  !gapprompt@gap>| !gapinput@F:=ModPCohomologyRing(f,p,deg);|
+  [ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.16+v.17, 
+    v.18, v.19, v.20, v.22+v.24+v.28, v.23, v.25, v.26, v.27 ] -> 
+  [ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.7+v.8, 0*v.1, 0*v.1, v.14+v.15, 0*v.1, 
+    0*v.1, v.16+v.17+v.19, 0*v.1, 0*v.1, 0*v.1, v.22+v.23+v.26+v.27+v.28, 
+    v.25, 0*v.1, 0*v.1, 0*v.1 ]
+  
+\end{Verbatim}
+ 
+
+The following commands are consistent with $F$ being a ring homomorphism. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@x:=Random(Source(F));|
+  v.4+v.6+v.8+v.9+v.12+v.13+v.14+v.15+v.18+v.20+v.22+v.24+v.25+v.28+v.32+v.35
+  !gapprompt@gap>| !gapinput@y:=Random(Source(F));|
+  v.1+v.2+v.7+v.9+v.13+v.23+v.26+v.27+v.32+v.33+v.34+v.35
+  !gapprompt@gap>| !gapinput@Image(F,x)+Image(F,y)=Image(F,x+y);|
+  true
+  !gapprompt@gap>| !gapinput@Image(F,x)*Image(F,y)=Image(F,x*y);|
+  true
+  
+\end{Verbatim}
+ 
+
+Mod-$p$ Cohomology rings of finite groups are constructed as the rings of stable
+elements in the cohomology of a (non-functorially) chosen Sylow $p$-subgroup and thus require the construction of a free resolution only for the
+Sylow subgroup. However, to ensure the functoriality of induced cohomology
+homomorphisms the above computation constructs free resolutions for the entire
+groups $G,H$. This is a more expensive computation than finding resolutions just for Sylow
+subgroups. 
+
+The default algorithm used by the function \texttt{ModPCohomologyRing()} for constructing resolutions of a finite group $G$ is \texttt{ResolutionFiniteGroup()} or \texttt{ResolutionPrimePowerGroup()} in the case when $G$ happens to be a group of prime-power order. If the user is able to construct
+the first $deg$ terms of free resolutions $RG, RH$ for the groups $G, H$ then the pair \texttt{[RG,RH]} can be entered as the third input variable of \texttt{ModPCohomologyRing()}. 
+
+For instance, the following example constructs the ring homomorphism 
+
+$F\colon H^{\le 7}(A_6,\mathbb Z_2) \rightarrow H^{\le 7}(S_6,\mathbb Z_2)$ 
+
+ induced by the the canonical inclusion of the alternating group $A_7$ into the symmetric group $S_7$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SymmetricGroup(6);;|
+  !gapprompt@gap>| !gapinput@H:=AlternatingGroup(6);;|
+  !gapprompt@gap>| !gapinput@f:=GroupHomomorphismByFunction(H,G,x->x);;|
+  !gapprompt@gap>| !gapinput@RG:=ResolutionFiniteGroup(G,7);;   |
+  !gapprompt@gap>| !gapinput@RH:=ResolutionFiniteSubgroup(RG,H);;|
+  !gapprompt@gap>| !gapinput@F:=ModPCohomologyRing(f,2,[RG,RH]);       |
+  [ v.1, v.2+v.3, v.6+v.8+v.10, v.7+v.9, v.11+v.12, v.13+v.15+v.16+v.18+v.19, 
+    v.14+v.16+v.19, v.17, v.22, v.23+v.28+v.32+v.35, 
+    v.24+v.26+v.27+v.29+v.32+v.33+v.35, v.25+v.26+v.27+v.29+v.32+v.33+v.35, 
+    v.30+v.32+v.33+v.34+v.35, v.36+v.39+v.43+v.45+v.47+v.49+v.50+v.55, 
+    v.38+v.45+v.47+v.49+v.50+v.55, v.40, 
+    v.41+v.43+v.45+v.47+v.48+v.49+v.50+v.53+v.55, 
+    v.42+v.43+v.45+v.46+v.47+v.49+v.53+v.54, v.44+v.45+v.46+v.47+v.49+v.53+v.54,
+    v.51+v.52, v.58+v.60, v.59+v.68+v.73+v.77+v.81+v.83, 
+    v.62+v.68+v.74+v.77+v.78+v.80+v.81+v.83+v.84, 
+    v.63+v.69+v.73+v.74+v.78+v.80+v.84, v.64+v.68+v.73+v.77+v.81+v.83, v.65, 
+    v.66+v.75+v.81, v.67+v.68+v.69+v.70+v.73+v.74+v.78+v.80+v.84, 
+    v.71+v.72+v.73+v.76+v.77+v.78+v.80+v.82+v.83+v.84, v.79 ] -> 
+  [ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.8, v.8, 0*v.1, v.7, 0*v.1, 
+    v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, 
+    v.12+v.13+v.14+v.15, v.18+v.19, 0*v.1, 0*v.1, v.18+v.19, v.18+v.19, 
+    v.18+v.19, v.16+v.17, 0*v.1, v.25, v.22+v.24+v.25+v.26+v.27+v.28, 
+    v.22+v.24+v.25+v.26+v.27+v.28, 0*v.1, 0*v.1, v.25, v.22+v.24+v.26+v.27+v.28,
+    v.22+v.24+v.26+v.27+v.28, v.23 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Steenrod operations on the classifying space of a finite $p$-group}}\logpage{[ 8, 5, 0 ]}
 \hyperdef{L}{X7D5ACA56870A40E9}{}
 {
  The following example constructs the first eight degrees of the mod-$3$ cohomology ring $H^\ast(G,\mathbb Z_3)$ for the group $G$ number 4 in \textsc{GAP}'s library of groups of order $81$. It determines a minimal set of ring generators lying in degree $\le 8$ and it evaluates the Bockstein operator on these generators. Steenrod powers
@@ -5911,7 +6223,7 @@ to the amalgamated product $G=H\ast_AK$ where $H=S_5$ is the symmetric group of 
 \section{\textcolor{Chapter }{Resolutions for $\mathbb FG$-modules }}\logpage{[ 11, 22, 0 ]}
 \hyperdef{L}{X85AB973F8566690A}{}
 {
- Let $\mathbb F=\mathbb F_p$ be the field of $p$ elements and let $M$ be some $\mathbb FG$-module. We might wish to construct a free $\mathbb FG$-resolution for $M$. We can handle this by constructing a short exact sequence 
+ Let $\mathbb F=\mathbb F_p$ be the field of $p$ elements and let $M$ be some $\mathbb FG$-module for $G$ a finite $p$-group. We might wish to construct a free $\mathbb FG$-resolution for $M$. We can handle this by constructing a short exact sequence 
 
 $ DM \rightarrowtail P \twoheadrightarrow M$ 
 

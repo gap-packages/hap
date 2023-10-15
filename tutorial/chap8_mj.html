@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (HAP commands) - Chapter 8: Cohomology operations</title>
+<title>GAP (HAP commands) - Chapter 8: Cohomology rings and Steenrod operation for finite groups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -23,21 +23,30 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap8.html">[MathJax off]</a></p>
-<p><a id="X81FDD09B8454C905" name="X81FDD09B8454C905"></a></p>
-<div class="ChapSects"><a href="chap8_mj.html#X81FDD09B8454C905">8 <span class="Heading">Cohomology operations</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80638C137E300A52">8.1 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(2\)</span>-group</span></a>
+<p><a id="X82190213867B6F41" name="X82190213867B6F41"></a></p>
+<div class="ChapSects"><a href="chap8_mj.html#X82190213867B6F41">8 <span class="Heading">Cohomology rings and Steenrod operation for finite groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80A9B7117D8EC0AB">8.1 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.2 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.2 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X877CAF8B7E64DE04">8.3 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X808943288042431E">8.4 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> ring cohomology</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
 </span>
 </div>
 </div>
 
-<h3>8 <span class="Heading">Cohomology operations</span></h3>
+<h3>8 <span class="Heading">Cohomology rings and Steenrod operation for finite groups</span></h3>
 
-<p><a id="X80638C137E300A52" name="X80638C137E300A52"></a></p>
+<p><a id="X80A9B7117D8EC0AB" name="X80A9B7117D8EC0AB"></a></p>
 
-<h4>8.1 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(2\)</span>-group</span></h4>
+<h4>8.1 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
 
 <p>The following example determines a presentation for the cohomology ring <span class="SimpleMath">\(H^\ast(Syl_2(M_{12}),\mathbb Z_2)\)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong>, are used to determine how much of a resolution to compute for the presentation.</p>
 
@@ -61,9 +70,13 @@ x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
 
 </pre></div>
 
-<p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">\(H^\ast(G, Z_2 )\)</span> of a <span class="SimpleMath">\(2\)</span>-group <span class="SimpleMath">\(G\)</span> provided that the integer <span class="SimpleMath">\(n\)</span> is at least the maximal degree of a relator in a minimal set of relators for the ring. Groebner basis routines from <strong class="button">Singular</strong> are called involved in the example.</p>
+<p><a id="X80114B0483EF9A67" name="X80114B0483EF9A67"></a></p>
 
-<p>The following example produces complete information on the Steenrod algebra of group number <span class="SimpleMath">\(8\)</span> in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(32\)</span>. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)</p>
+<h4>8.2 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
+
+<p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">\(H^\ast(G, Z_2 )\)</span> and steenrod operations for a <span class="SimpleMath">\(2\)</span>-group <span class="SimpleMath">\(G\)</span> provided that the integer <span class="SimpleMath">\(n\)</span> is at least the maximal degree of a relator in a minimal set of relators for the ring.</p>
+
+<p>The following example produces complete information on the Steenrod algebra of group number <span class="SimpleMath">\(8\)</span> in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(32\)</span>. Groebner basis routines from <strong class="button">Singular</strong> are called involved in the example. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)</p>
 
 
 <div class="example"><pre>
@@ -132,9 +145,109 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 
 </pre></div>
 
+<p><a id="X877CAF8B7E64DE04" name="X877CAF8B7E64DE04"></a></p>
+
+<h4>8.3 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></h4>
+
+<p>For a finite group <span class="SimpleMath">\(G\)</span>, prime <span class="SimpleMath">\(p\)</span> and positive integer <span class="SimpleMath">\(deg\)</span> the function <code class="code">ModPCohomologyRing(G,p,deg)</code> computes a finite dimensional graded ring equal to the cohomology ring <span class="SimpleMath">\(H^{\le deg}(G,\mathbb Z_p) := H^\ast(G,\mathbb Z_p)/\{x=0\ :\ {\rm degree}(x)&gt;deg \}\)</span> .</p>
+
+<p>The following example computes the first <span class="SimpleMath">\(14\)</span> degrees of the cohomology ring <span class="SimpleMath">\(H^\ast(M_{11},\mathbb Z_2)\)</span> where <span class="SimpleMath">\(M_{11}\)</span> is the Mathieu group of order <span class="SimpleMath">\(7920\)</span>. The ring is seen to be generated by three elements <span class="SimpleMath">\(a_3, a_4, a_6\)</span> in degrees <span class="SimpleMath">\(3,4,5\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(11);;          </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;deg:=14;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ModPCohomologyRing(G,p,deg);</span>
+&lt;algebra over GF(2), with 20 generators&gt;
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gns:=ModPRingGenerators(A);</span>
+[ v.1, v.6, v.8+v.10, v.13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(gns,A!.degree);</span>
+[ 0, 3, 4, 5 ]
+
+</pre></div>
+
+<p><a id="X808943288042431E" name="X808943288042431E"></a></p>
+
+<h4>8.4 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> ring cohomology</span></h4>
+
+<p>The following example constructs the ring homomorphism</p>
+
+<p><span class="SimpleMath">\(F\colon H^{\le deg}(H,\mathbb Z_p) \rightarrow H^{\le deg}(G,\mathbb Z_p)\)</span></p>
+
+<p>induced by the group homomorphism <span class="SimpleMath">\(f\colon H\rightarrow G\)</span> with <span class="SimpleMath">\(H=A_5\)</span>, <span class="SimpleMath">\(G=S_5\)</span>, <span class="SimpleMath">\(f\)</span> the canonical inclusion of the alternating group into the symmetric group, <span class="SimpleMath">\(p=2\)</span> and <span class="SimpleMath">\(deg=7\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(5);;H:=AlternatingGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;; deg:=7;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,p,deg);</span>
+[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.16+v.17, 
+  v.18, v.19, v.20, v.22+v.24+v.28, v.23, v.25, v.26, v.27 ] -&gt; 
+[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.7+v.8, 0*v.1, 0*v.1, v.14+v.15, 0*v.1, 
+  0*v.1, v.16+v.17+v.19, 0*v.1, 0*v.1, 0*v.1, v.22+v.23+v.26+v.27+v.28, 
+  v.25, 0*v.1, 0*v.1, 0*v.1 ]
+
+</pre></div>
+
+<p>The following commands are consistent with <span class="SimpleMath">\(F\)</span> being a ring homomorphism.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Random(Source(F));</span>
+v.4+v.6+v.8+v.9+v.12+v.13+v.14+v.15+v.18+v.20+v.22+v.24+v.25+v.28+v.32+v.35
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=Random(Source(F));</span>
+v.1+v.2+v.7+v.9+v.13+v.23+v.26+v.27+v.32+v.33+v.34+v.35
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)+Image(F,y)=Image(F,x+y);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)*Image(F,y)=Image(F,x*y);</span>
+true
+
+</pre></div>
+
+<p>Mod-<span class="SimpleMath">\(p\)</span> Cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <span class="SimpleMath">\(p\)</span>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure the functoriality of induced cohomology homomorphisms the above computation constructs free resolutions for the entire groups <span class="SimpleMath">\(G,H\)</span>. This is a more expensive computation than finding resolutions just for Sylow subgroups.</p>
+
+<p>The default algorithm used by the function <code class="code">ModPCohomologyRing()</code> for constructing resolutions of a finite group <span class="SimpleMath">\(G\)</span> is <code class="code">ResolutionFiniteGroup()</code> or <code class="code">ResolutionPrimePowerGroup()</code> in the case when <span class="SimpleMath">\(G\)</span> happens to be a group of prime-power order. If the user is able to construct the first <span class="SimpleMath">\(deg\)</span> terms of free resolutions <span class="SimpleMath">\(RG, RH\)</span> for the groups <span class="SimpleMath">\(G, H\)</span> then the pair <code class="code">[RG,RH]</code> can be entered as the third input variable of <code class="code">ModPCohomologyRing()</code>.</p>
+
+<p>For instance, the following example constructs the ring homomorphism</p>
+
+<p><span class="SimpleMath">\(F\colon H^{\le 7}(A_6,\mathbb Z_2) \rightarrow H^{\le 7}(S_6,\mathbb Z_2)\)</span></p>
+
+<p>induced by the the canonical inclusion of the alternating group <span class="SimpleMath">\(A_7\)</span> into the symmetric group <span class="SimpleMath">\(S_7\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AlternatingGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RG:=ResolutionFiniteGroup(G,7);;   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RH:=ResolutionFiniteSubgroup(RG,H);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,[RG,RH]);       </span>
+[ v.1, v.2+v.3, v.6+v.8+v.10, v.7+v.9, v.11+v.12, v.13+v.15+v.16+v.18+v.19, 
+  v.14+v.16+v.19, v.17, v.22, v.23+v.28+v.32+v.35, 
+  v.24+v.26+v.27+v.29+v.32+v.33+v.35, v.25+v.26+v.27+v.29+v.32+v.33+v.35, 
+  v.30+v.32+v.33+v.34+v.35, v.36+v.39+v.43+v.45+v.47+v.49+v.50+v.55, 
+  v.38+v.45+v.47+v.49+v.50+v.55, v.40, 
+  v.41+v.43+v.45+v.47+v.48+v.49+v.50+v.53+v.55, 
+  v.42+v.43+v.45+v.46+v.47+v.49+v.53+v.54, v.44+v.45+v.46+v.47+v.49+v.53+v.54,
+  v.51+v.52, v.58+v.60, v.59+v.68+v.73+v.77+v.81+v.83, 
+  v.62+v.68+v.74+v.77+v.78+v.80+v.81+v.83+v.84, 
+  v.63+v.69+v.73+v.74+v.78+v.80+v.84, v.64+v.68+v.73+v.77+v.81+v.83, v.65, 
+  v.66+v.75+v.81, v.67+v.68+v.69+v.70+v.73+v.74+v.78+v.80+v.84, 
+  v.71+v.72+v.73+v.76+v.77+v.78+v.80+v.82+v.83+v.84, v.79 ] -&gt; 
+[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.8, v.8, 0*v.1, v.7, 0*v.1, 
+  v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, 
+  v.12+v.13+v.14+v.15, v.18+v.19, 0*v.1, 0*v.1, v.18+v.19, v.18+v.19, 
+  v.18+v.19, v.16+v.17, 0*v.1, v.25, v.22+v.24+v.25+v.26+v.27+v.28, 
+  v.22+v.24+v.25+v.26+v.27+v.28, 0*v.1, 0*v.1, v.25, v.22+v.24+v.26+v.27+v.28,
+  v.22+v.24+v.26+v.27+v.28, v.23 ]
+
+</pre></div>
+
 <p><a id="X7D5ACA56870A40E9" name="X7D5ACA56870A40E9"></a></p>
 
-<h4>8.2 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></h4>
+<h4>8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></h4>
 
 <p>The following example constructs the first eight degrees of the mod-<span class="SimpleMath">\(3\)</span> cohomology ring <span class="SimpleMath">\(H^\ast(G,\mathbb Z_3)\)</span> for the group <span class="SimpleMath">\(G\)</span> number 4 in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(81\)</span>. It determines a minimal set of ring generators lying in degree <span class="SimpleMath">\(\le 8\)</span> and it evaluates the Bockstein operator on these generators. Steenrod powers for <span class="SimpleMath">\(p\ge 3\)</span> are not implemented as no efficient method of implementation is known.</p>
 

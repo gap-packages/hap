@@ -27,7 +27,16 @@
 <div class="ChapSects"><a href="chap7_mj.html#X7E34E2C6868F2726">7 <span class="Heading">Cohomology of groups</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X807B265978F90E01">7.1 <span class="Heading">Finite groups </span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X80A721AC7A8D30A3">7.1-1 <span class="Heading">Naive homology computation for a very small group</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X838CEA3F850DFC82">7.1-2 <span class="Heading">A more efficient homology computation</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X842E93467AD09EC1">7.1-3 <span class="Heading">Computation of an induced homology homomorphism</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8754D2937E6FD7CE">7.1-4 <span class="Heading">Some other finite group homology computations</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X8463EF6A821FFB69">7.2 <span class="Heading">Nilpotent groups</span></a>
 </span>
 </div>
@@ -73,6 +82,10 @@
 
 <h4>7.1 <span class="Heading">Finite groups </span></h4>
 
+<p><a id="X80A721AC7A8D30A3" name="X80A721AC7A8D30A3"></a></p>
+
+<h5>7.1-1 <span class="Heading">Naive homology computation for a very small group</span></h5>
+
 <p>It is possible to compute the low degree (co)homology of a finite group or monoid of small order directly from the bar resolution. The following commands take this approach to computing the fifth integral homology</p>
 
 <p><span class="SimpleMath">\(H_5(Q_4,\mathbb Z) = \mathbb Z_2\oplus\mathbb Z_2\)</span></p>
@@ -97,6 +110,10 @@
 
 <p>However, this approach is of limited applicability since the bar resolution involves <span class="SimpleMath">\(|G|^k\)</span> free generators in degree <span class="SimpleMath">\(k\)</span>. A range of techniques, tailored to specific classes of groups, can be used to compute the (co)homology of larger finite groups.</p>
 
+<p><a id="X838CEA3F850DFC82" name="X838CEA3F850DFC82"></a></p>
+
+<h5>7.1-2 <span class="Heading">A more efficient homology computation</span></h5>
+
 <p>The following example computes the seventh integral homology</p>
 
 <p><span class="SimpleMath">\(H_7(M_{23},\mathbb Z) = \mathbb Z_{16}\oplus\mathbb Z_{15}\)</span></p>
@@ -116,6 +133,37 @@
 [ 4, 3 ]
 
 </pre></div>
+
+<p><a id="X842E93467AD09EC1" name="X842E93467AD09EC1"></a></p>
+
+<h5>7.1-3 <span class="Heading">Computation of an induced homology homomorphism</span></h5>
+
+<p>The following example computes the cokernel</p>
+
+<p><span class="SimpleMath">\({\rm coker}( H_3(A_7,\mathbb Z) \rightarrow H_3(S_{10},\mathbb Z)) \cong \mathbb Z_2\oplus \mathbb Z_2\)</span></p>
+
+<p>of the degree-3 integral homomogy homomorphism induced by the canonical inclusion <span class="SimpleMath">\(A_7 \rightarrow S_{10}\)</span> of the alternating group on <span class="SimpleMath">\(7\)</span> letters into the symmetric group on <span class="SimpleMath">\(10\)</span> letters. The analogous cokernel with <span class="SimpleMath">\(\mathbb Z_2\)</span> homology coefficients is also computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AlternatingGroup(7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=GroupHomology(f,3);</span>
+MappingByFunction( Pcp-group with orders [ 4, 3 ], Pcp-group with orders 
+[ 2, 2, 4, 3 ], function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Range(F)/Image(F));</span>
+[ 2, 2 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fmod2:=GroupHomology(f,3,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Range(Fmod2)/Image(Fmod2));</span>
+[ 2, 2 ]
+
+</pre></div>
+
+<p><a id="X8754D2937E6FD7CE" name="X8754D2937E6FD7CE"></a></p>
+
+<h5>7.1-4 <span class="Heading">Some other finite group homology computations</span></h5>
 
 <p>The following example computes the third integral homology of the Weyl group <span class="SimpleMath">\(W=Weyl(E_8)\)</span>, a group of order <span class="SimpleMath">\(696729600\)</span>.</p>
 

@@ -41,7 +41,7 @@ mod p group ring<br>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">Let
 FG be the group algebra of a finite group over the field F of p
-elements, and let&nbsp; M be an FG-module.&nbsp; The abelian groups<br>
+elements, and let&nbsp; M be an FG-module with G a p-group.&nbsp; The abelian groups<br>
       <br>
       <div style="text-align: center;">Tor<sub>n</sub><sup>FG</sup>(M,F)
       <br>
@@ -53,7 +53,7 @@ and <br>
 can be calculated from a free resolution of M.&nbsp; <br>
       <br>
 We illustrate this for the module M arising from the canonical action
-of the group G=GL<sub>3</sub>(2) on the 3-dimensional <span
+of the group G=Syl<sub>2</sub>(GL<sub>3</sub>(2)) on the 3-dimensional <span
  style="font-weight: bold;">column</span> vector space over
 GF(2). The module M can be entered as a meat-axe module using the
 following standard GAP commands.<br>
@@ -62,7 +62,7 @@ following standard GAP commands.<br>
     <tr>
       <td
  style="background-color: rgb(255, 255, 204); vertical-align: top;">gap&gt;
-G:=GL(3,2);;<br>
+ G:=SylowSubgroup(GL(3,2),2);;<br>
 gap&gt; M:=GModuleByMats(GeneratorsOfGroup(G),GF(2));;<br>
       </td>
     </tr>
@@ -96,14 +96,14 @@ DM:=DesuspensionMtxModule(M);;<br>
     <tr>
       <td
  style="vertical-align: top; background-color: rgb(255, 255, 255);">The
-following commands now compute the 2-dimensional vector spaces<br>
+following commands now compute the 6-dimensional vector spaces<br>
       <div style="text-align: center;"><br>
 Tor<sub>5</sub><sup>FG</sup>(M,F)&nbsp; =&nbsp; Tor<sub>4</sub><sup>FG</sup>(DM,F)
-= F<sup>2</sup><br>
+= F<sup>6</sup><br>
       </div>
 and <br>
       <div style="text-align: center;">Ext<sup>5</sup><sub>FG</sub>(M,F)&nbsp;
-=&nbsp; Ext<sup>4</sup><sub>FG</sub>(DM,F)&nbsp; = F<sup>2</sup> .<br>
+=&nbsp; Ext<sup>4</sup><sub>FG</sub>(DM,F)&nbsp; = F<sup>6</sup> .<br>
       </div>
       <br>
       </td>
@@ -115,9 +115,9 @@ R:=ResolutionFpGModule(DM,5);;<br>
 gap&gt;
 p:=2;;<br>
 gap&gt; Homology(TensorWithIntegersModP(R,p),4);<br>
-2<br>
+6<br>
 gap&gt; Cohomology(HomToIntegersModP(R,p),4);<br>
-2<br>
+6<br>
       </td>
     </tr>
     <tr>

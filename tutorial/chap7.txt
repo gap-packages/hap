@@ -4,6 +4,9 @@
   
   [1X7.1 [33X[0;0YFinite groups[133X[101X
   
+  
+  [1X7.1-1 [33X[0;0YNaive homology computation for a very small group[133X[101X
+  
   [33X[0;0YIt  is  possible to compute the low degree (co)homology of a finite group or
   monoid  of  small  order  directly  from  the  bar resolution. The following
   commands take this approach to computing the fifth integral homology[133X
@@ -32,6 +35,9 @@
   to  specific  classes  of groups, can be used to compute the (co)homology of
   larger finite groups.[133X
   
+  
+  [1X7.1-2 [33X[0;0YA more efficient homology computation[133X[101X
+  
   [33X[0;0YThe following example computes the seventh integral homology[133X
   
   [33X[0;0Y[22XH_7(M_23, Z) = Z_16⊕ Z_15[122X[133X
@@ -51,6 +57,37 @@
     [4X[28X[ 4, 3 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X7.1-3 [33X[0;0YComputation of an induced homology homomorphism[133X[101X
+  
+  [33X[0;0YThe following example computes the cokernel[133X
+  
+  [33X[0;0Y[22Xcoker( H_3(A_7, Z) → H_3(S_10, Z)) ≅ Z_2⊕ Z_2[122X[133X
+  
+  [33X[0;0Yof  the  degree-3  integral  homomogy  homomorphism induced by the canonical
+  inclusion  [22XA_7  →  S_10[122X  of  the  alternating  group  on  [22X7[122X letters into the
+  symmetric  group  on  [22X10[122X  letters.  The analogous cokernel with [22XZ_2[122X homology
+  coefficients is also computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SymmetricGroup(10);;[127X[104X
+    [4X[25Xgap>[125X [27XH:=AlternatingGroup(7);;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=GroupHomomorphismByFunction(H,G,x->x);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=GroupHomology(f,3);[127X[104X
+    [4X[28XMappingByFunction( Pcp-group with orders [ 4, 3 ], Pcp-group with orders [128X[104X
+    [4X[28X[ 2, 2, 4, 3 ], function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Range(F)/Image(F));[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFmod2:=GroupHomology(f,3,2);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Range(Fmod2)/Image(Fmod2));[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.1-4 [33X[0;0YSome other finite group homology computations[133X[101X
   
   [33X[0;0YThe following example computes the third integral homology of the Weyl group
   [22XW=Weyl(E_8)[122X, a group of order [22X696729600[122X.[133X

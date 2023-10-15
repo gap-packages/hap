@@ -485,9 +485,9 @@ the ring of integers Z, has 3-dimensional Leibniz homology HL<sub>3</sub>(A,Z)=(
         <li>The group presentation P = &lt;x,y,z,a,b,c, | a=xy,
 b=yz, c=zx, ax=ya, by=zb, cz=xc &gt; is aspherical.</li>
         <li>The 3-dimensional module M over the field F of two
-elements, arising from the canonical left action of the group G=GL<sub>3</sub>(2)
-of 3&times;3 matrices (of order 168), has a 2-dimensional fifth Ext
-module Ext<sup>5</sup><sub>FG</sub>(M,F)=F<sup>2</sup>.</li>
+		elements, arising from the canonical left action of the group G=Syl<sub>2</sub>(GL<sub>3</sub>(2))
+of 3&times;3 matrices (of order 8), has a 6-dimensional fifth Ext
+module Ext<sup>5</sup><sub>FG</sub>(M,F)=F<sup>6</sup>.</li>
         <li>The&nbsp; 3-dimensional integral homology of the&nbsp;
 homotopy 2-type X represented by the automorphism crossed module&nbsp; D<sub>16</sub>
 --&gt; Aut(D<sub>16</sub>) is H<sub>3</sub>(X,Z)=Z<sub>2</sub>+Z<sub>2</sub>+Z<sub>4</sub>.
@@ -549,10 +549,10 @@ b*y*(z*b)^-1, c*z*(x*c)^-1];;<br>
 gap&gt; IsAspherical(F,rels);;<br>
 Presentation is aspherical.<br>
       <br>
-gap&gt; M:=GModuleByMats(GeneratorsOfGroup(GL(3,2)),GF(2));;<br>
+gap&gt; M:=GModuleByMats(GeneratorsOfGroup(SylowSubgroup(GL(3,2),2)),GF(2));;<br>
 gap&gt; R:=ResolutionFpGModule(DesuspensionMtxModule(M),5);;<br>
 gap&gt; Cohomology(HomToIntegersModP(R,2),4);<br>
-2<br>
+6<br>
       <br>
 gap&gt;
 C:=AutomorphismGroupAsCatOneGroup(DihedralGroup(32));;<br>
