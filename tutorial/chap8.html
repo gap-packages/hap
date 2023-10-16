@@ -218,33 +218,32 @@ true
 
 <h5>8.4-2 <span class="Heading">Testing functorial properties</span></h5>
 
-<p>The following example takes two random automorphisms <span class="SimpleMath">f,g: S_4→ S_4</span> of the symmetric group on four letters and constructs the three ring isomorphisms <span class="SimpleMath">F,G,FG: H^≤ 5(S_4, Z_2) → H^≤ 5(S_4, Z_2)</span> induced by <span class="SimpleMath">f, g</span> and the composite <span class="SimpleMath">fg</span>. It tests that <span class="SimpleMath">FG</span> is indeed the composite of <span class="SimpleMath">F</span> with <span class="SimpleMath">G</span>. Note that when we create the ring <span class="SimpleMath">H^≤ 5(S_4, Z_2)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test.</p>
+<p>The following example takes two "random" automorphisms <span class="SimpleMath">f,g: K→ K</span> of the group <span class="SimpleMath">K</span> of order <span class="SimpleMath">24</span> arising as the direct product <span class="SimpleMath">K=C_3× Q_8</span> and constructs the three ring isomorphisms <span class="SimpleMath">F,G,FG: H^≤ 5(K, Z_2) → H^≤ 5(K, Z_2)</span> induced by <span class="SimpleMath">f, g</span> and the composite <span class="SimpleMath">fg</span>. It tests that <span class="SimpleMath">FG</span> is indeed the composite of <span class="SimpleMath">F</span> with <span class="SimpleMath">G</span>. Note that when we create the ring <span class="SimpleMath">H^≤ 5(K, Z_2)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">grp:=SymmetricGroup(4);;                                      </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(grp);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Random(aut);</span>
-^(1,4,3)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(aut);</span>
-^(2,4)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(f*g,2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=SmallGroup(24,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Elements(aut)[5];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Elements(aut)[8];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, 
+  v.6, v.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, 
+  v.6, v.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(f*g,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2, v.2+v.3, v.5, v.4, v.6, 
+  v.7 ]
+
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; tG:=Target(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sFG:=Source(FG);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tG,sF,Basis(tG),Basis(sF));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(sG),x-&gt;Image(F,Image(tGsF,Image(G,x))));</span>
-[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, 
-  v.20, v.16+v.17 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(sFG),x-&gt;Image(FG,x));</span>
-[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, 
-  v.20, v.16+v.17 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfAlgebra(sG),x-&gt;Image(F,Image(tGsF,Image(G,x))));</span>
+[ v.1, v.2, v.2+v.3, v.5, v.4, v.6, v.7 ]
 
 </pre></div>
-
-<p>Note that since every automorphism of <span class="SimpleMath">S_4</span> is an inner automorphism it follows that any automorphism has to induce the identity homomorphism in cohomology. Thus <span class="SimpleMath">F,G,FG</span> are each implementations of the identity homomorphism.</p>
 
 <p><a id="X855764877FA44225" name="X855764877FA44225"></a></p>
 
