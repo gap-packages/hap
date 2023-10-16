@@ -36,7 +36,14 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X780DF87680C3F52B">8.4 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X834CED9D7A104695">8.4-1 <span class="Heading">Testing homomorphism properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7A0D505D844F0CD4">8.4-2 <span class="Heading">Testing functorial properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X855764877FA44225">8.4-3 <span class="Heading">Computing with larger groups</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
 </span>
 </div>
@@ -191,6 +198,10 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 
 </pre></div>
 
+<p><a id="X834CED9D7A104695" name="X834CED9D7A104695"></a></p>
+
+<h5>8.4-1 <span class="Heading">Testing homomorphism properties</span></h5>
+
 <p>The following commands are consistent with <span class="SimpleMath">\(F\)</span> being a ring homomorphism.</p>
 
 
@@ -206,7 +217,43 @@ true
 
 </pre></div>
 
-<p>Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <span class="SimpleMath">\(p\)</span>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure the functoriality of induced cohomology homomorphisms the above computation constructs free resolutions for the entire groups <span class="SimpleMath">\(G,H\)</span>. This is a more expensive computation than finding resolutions just for Sylow subgroups.</p>
+<p><a id="X7A0D505D844F0CD4" name="X7A0D505D844F0CD4"></a></p>
+
+<h5>8.4-2 <span class="Heading">Testing functorial properties</span></h5>
+
+<p>The following example takes two random automorphisms <span class="SimpleMath">\(f,g\colon S_4\rightarrow S_4\)</span> of the symmetric group on four letters and constructs the three ring isomorphisms <span class="SimpleMath">\(F,G,FG\colon H^{\le 5}(S_4,\mathbb Z_2) \rightarrow H^{\le 5}(S_4,\mathbb Z_2)\)</span> induced by <span class="SimpleMath">\(f, g\)</span> and the composite <span class="SimpleMath">\(fg\)</span>. It tests that <span class="SimpleMath">\(FG\)</span> is indeed the composite of <span class="SimpleMath">\(F\)</span> with <span class="SimpleMath">\(G\)</span>. Note that when we create the ring <span class="SimpleMath">\(H^{\le 5}(S_4,\mathbb Z_2)\)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">grp:=SymmetricGroup(4);;                                      </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(grp);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Random(aut);</span>
+^(1,4,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(aut);</span>
+^(2,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(f*g,2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; tG:=Target(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sFG:=Source(FG);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tG,sF,Basis(tG),Basis(sF));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(sG),x-&gt;Image(F,Image(tGsF,Image(G,x))));</span>
+[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, 
+  v.20, v.16+v.17 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(sFG),x-&gt;Image(FG,x));</span>
+[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, 
+  v.20, v.16+v.17 ]
+
+</pre></div>
+
+<p>Note that since every automorphism of <span class="SimpleMath">\(S_4\)</span> is an inner automorphism it follows that any automorphism has to induce the identity homomorphism in cohomology. Thus <span class="SimpleMath">\(F,G,FG\)</span> are each implementations of the identity homomorphism.</p>
+
+<p><a id="X855764877FA44225" name="X855764877FA44225"></a></p>
+
+<h5>8.4-3 <span class="Heading">Computing with larger groups</span></h5>
+
+<p>Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <span class="SimpleMath">\(p\)</span>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure the functoriality of induced cohomology homomorphisms the above computations construct free resolutions for the entire groups <span class="SimpleMath">\(G,H\)</span>. This is a more expensive computation than finding resolutions just for Sylow subgroups.</p>
 
 <p>The default algorithm used by the function <code class="code">ModPCohomologyRing()</code> for constructing resolutions of a finite group <span class="SimpleMath">\(G\)</span> is <code class="code">ResolutionFiniteGroup()</code> or <code class="code">ResolutionPrimePowerGroup()</code> in the case when <span class="SimpleMath">\(G\)</span> happens to be a group of prime-power order. If the user is able to construct the first <span class="SimpleMath">\(deg\)</span> terms of free resolutions <span class="SimpleMath">\(RG, RH\)</span> for the groups <span class="SimpleMath">\(G, H\)</span> then the pair <code class="code">[RG,RH]</code> can be entered as the third input variable of <code class="code">ModPCohomologyRing()</code>.</p>
 

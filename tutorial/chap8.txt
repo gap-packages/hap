@@ -156,6 +156,9 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X8.4-1 [33X[0;0YTesting homomorphism properties[133X[101X
+  
   [33X[0;0YThe following commands are consistent with [22XF[122X being a ring homomorphism.[133X
   
   [4X[32X  Example  [32X[104X
@@ -170,11 +173,54 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X8.4-2 [33X[0;0YTesting functorial properties[133X[101X
+  
+  [33X[0;0YThe  following  example  takes two random automorphisms [22Xf,g: S_4→ S_4[122X of the
+  symmetric  group  on four letters and constructs the three ring isomorphisms
+  [22XF,G,FG:  H^≤ 5(S_4, Z_2) → H^≤ 5(S_4, Z_2)[122X induced by [22Xf, g[122X and the composite
+  [22Xfg[122X.  It tests that [22XFG[122X is indeed the composite of [22XF[122X with [22XG[122X. Note that when we
+  create  the  ring  [22XH^≤  5(S_4,  Z_2)[122X  twice in [12XGAP[112X we obtain two canonically
+  isomorphic  but  distinct  implimentations  of  the  ring. Thus the canocial
+  isomorphism  between these distinct implementations needs to be incorporated
+  into the test.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgrp:=SymmetricGroup(4);;                                      [127X[104X
+    [4X[25Xgap>[125X [27Xaut:=AutomorphismGroup(grp);;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=Random(aut);[127X[104X
+    [4X[28X^(1,4,3)[128X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(aut);[127X[104X
+    [4X[28X^(2,4)[128X[104X
+    [4X[25Xgap>[125X [27XF:=ModPCohomologyRing(f,2,5);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=ModPCohomologyRing(g,2,5);;[127X[104X
+    [4X[25Xgap>[125X [27XFG:=ModPCohomologyRing(f*g,2,5);;[127X[104X
+    [4X[25Xgap>[125X [27XsF:=Source(F);;[127X[104X
+    [4X[25Xgap>[125X [27XsG:=Source(G);; tG:=Target(G);;[127X[104X
+    [4X[25Xgap>[125X [27XsFG:=Source(FG);;[127X[104X
+    [4X[25Xgap>[125X [27XtGsF:=AlgebraHomomorphismByImages(tG,sF,Basis(tG),Basis(sF));;[127X[104X
+    [4X[25Xgap>[125X [27XList(Basis(sG),x->Image(F,Image(tGsF,Image(G,x))));[127X[104X
+    [4X[28X[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, [128X[104X
+    [4X[28X  v.20, v.16+v.17 ][128X[104X
+    [4X[25Xgap>[125X [27XList(Basis(sFG),x->Image(FG,x));[127X[104X
+    [4X[28X[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.18, v.19, [128X[104X
+    [4X[28X  v.20, v.16+v.17 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  since  every  automorphism  of  [22XS_4[122X  is an inner automorphism it
+  follows  that  any  automorphism  has to induce the identity homomorphism in
+  cohomology.   Thus   [22XF,G,FG[122X   are   each  implementations  of  the  identity
+  homomorphism.[133X
+  
+  
+  [1X8.4-3 [33X[0;0YComputing with larger groups[133X[101X
+  
   [33X[0;0YMod-[22Xp[122X  cohomology  rings  of  finite  groups are constructed as the rings of
   stable  elements  in  the  cohomology  of  a (non-functorially) chosen Sylow
   [22Xp[122X-subgroup  and  thus require the construction of a free resolution only for
   the  Sylow  subgroup.  However,  to  ensure  the  functoriality  of  induced
-  cohomology  homomorphisms  the above computation constructs free resolutions
+  cohomology  homomorphisms  the above computations construct free resolutions
   for the entire groups [22XG,H[122X. This is a more expensive computation than finding
   resolutions just for Sylow subgroups.[133X
   
