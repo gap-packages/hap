@@ -180,7 +180,7 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 
 <p>The following example constructs the ring homomorphism</p>
 
-<p><span class="SimpleMath">\(F\colon H^{\le deg}(H,\mathbb Z_p) \rightarrow H^{\le deg}(G,\mathbb Z_p)\)</span></p>
+<p><span class="SimpleMath">\(F\colon H^{\le deg}(G,\mathbb Z_p) \rightarrow H^{\le deg}(H,\mathbb Z_p)\)</span></p>
 
 <p>induced by the group homomorphism <span class="SimpleMath">\(f\colon H\rightarrow G\)</span> with <span class="SimpleMath">\(H=A_5\)</span>, <span class="SimpleMath">\(G=S_5\)</span>, <span class="SimpleMath">\(f\)</span> the canonical inclusion of the alternating group into the symmetric group, <span class="SimpleMath">\(p=2\)</span> and <span class="SimpleMath">\(deg=7\)</span>.</p>
 
@@ -221,7 +221,7 @@ true
 
 <h5>8.4-2 <span class="Heading">Testing functorial properties</span></h5>
 
-<p>The following example takes two "random" automorphisms <span class="SimpleMath">\(f,g\colon K\rightarrow K\)</span> of the group <span class="SimpleMath">\(K\)</span> of order <span class="SimpleMath">\(24\)</span> arising as the direct product <span class="SimpleMath">\(K=C_3\times Q_8\)</span> and constructs the three ring isomorphisms <span class="SimpleMath">\(F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)\)</span> induced by <span class="SimpleMath">\(f, g\)</span> and the composite <span class="SimpleMath">\(fg\)</span>. It tests that <span class="SimpleMath">\(FG\)</span> is indeed the composite of <span class="SimpleMath">\(F\)</span> with <span class="SimpleMath">\(G\)</span>. Note that when we create the ring <span class="SimpleMath">\(H^{\le 5}(K,\mathbb Z_2)\)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test.</p>
+<p>The following example takes two "random" automorphisms <span class="SimpleMath">\(f,g\colon K\rightarrow K\)</span> of the group <span class="SimpleMath">\(K\)</span> of order <span class="SimpleMath">\(24\)</span> arising as the direct product <span class="SimpleMath">\(K=C_3\times Q_8\)</span> and constructs the three ring isomorphisms <span class="SimpleMath">\(F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)\)</span> induced by <span class="SimpleMath">\(f, g\)</span> and the composite <span class="SimpleMath">\(f\circ g\)</span>. It tests that <span class="SimpleMath">\(FG\)</span> is indeed the composite <span class="SimpleMath">\(G\circ F\)</span>. Note that when we create the ring <span class="SimpleMath">\(H^{\le 5}(K,\mathbb Z_2)\)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test. Note also that <strong class="button">GAP</strong> defines <span class="SimpleMath">\(g\ast f = f\circ g\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -229,21 +229,22 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Elements(aut)[5];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Elements(aut)[8];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg:=g*f;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);</span>
 [ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, 
   v.6, v.7 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);</span>
 [ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, 
   v.6, v.7 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(f*g,2,5);</span>
-[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2, v.2+v.3, v.5, v.4, v.6, 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(fg,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.3, v.2, v.4, v.4+v.5, v.6, 
   v.7 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; tG:=Target(G);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tG,sF,Basis(tG),Basis(sF));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfAlgebra(sG),x-&gt;Image(F,Image(tGsF,Image(G,x))));</span>
-[ v.1, v.2, v.2+v.3, v.5, v.4, v.6, v.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;tF:=Target(F);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tF,sG,Basis(tF),Basis(sG));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfAlgebra(sF),x-&gt;Image(G,Image(tGsF,Image(F,x))));</span>
+[ v.1, v.3, v.2, v.4, v.4+v.5, v.6, v.7 ]
 
 </pre></div>
 

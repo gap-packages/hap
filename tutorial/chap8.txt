@@ -138,7 +138,7 @@
   
   [33X[0;0YThe following example constructs the ring homomorphism[133X
   
-  [33X[0;0Y[22XF: H^≤ deg(H, Z_p) → H^≤ deg(G, Z_p)[122X[133X
+  [33X[0;0Y[22XF: H^≤ deg(G, Z_p) → H^≤ deg(H, Z_p)[122X[133X
   
   [33X[0;0Yinduced by the group homomorphism [22Xf: H→ G[122X with [22XH=A_5[122X, [22XG=S_5[122X, [22Xf[122X the canonical
   inclusion of the alternating group into the symmetric group, [22Xp=2[122X and [22Xdeg=7[122X.[133X
@@ -179,32 +179,33 @@
   [33X[0;0YThe  following  example  takes  two  "random" automorphisms [22Xf,g: K→ K[122X of the
   group  [22XK[122X of order [22X24[122X arising as the direct product [22XK=C_3× Q_8[122X and constructs
   the three ring isomorphisms [22XF,G,FG: H^≤ 5(K, Z_2) → H^≤ 5(K, Z_2)[122X induced by
-  [22Xf,  g[122X  and  the  composite [22Xfg[122X. It tests that [22XFG[122X is indeed the composite of [22XF[122X
-  with  [22XG[122X.  Note  that  when  we create the ring [22XH^≤ 5(K, Z_2)[122X twice in [12XGAP[112X we
-  obtain  two canonically isomorphic but distinct implimentations of the ring.
-  Thus  the  canocial isomorphism between these distinct implementations needs
-  to be incorporated into the test.[133X
+  [22Xf,  g[122X and the composite [22Xf∘ g[122X. It tests that [22XFG[122X is indeed the composite [22XG∘ F[122X.
+  Note  that  when we create the ring [22XH^≤ 5(K, Z_2)[122X twice in [12XGAP[112X we obtain two
+  canonically  isomorphic  but  distinct implimentations of the ring. Thus the
+  canocial  isomorphism  between  these  distinct  implementations needs to be
+  incorporated into the test. Note also that [12XGAP[112X defines [22Xg∗ f = f∘ g[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=SmallGroup(24,11);;[127X[104X
     [4X[25Xgap>[125X [27Xaut:=AutomorphismGroup(K);;[127X[104X
     [4X[25Xgap>[125X [27Xf:=Elements(aut)[5];;[127X[104X
     [4X[25Xgap>[125X [27Xg:=Elements(aut)[8];;[127X[104X
+    [4X[25Xgap>[125X [27Xfg:=g*f;;[127X[104X
     [4X[25Xgap>[125X [27XF:=ModPCohomologyRing(f,2,5);[127X[104X
     [4X[28X[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, [128X[104X
     [4X[28X  v.6, v.7 ][128X[104X
     [4X[25Xgap>[125X [27XG:=ModPCohomologyRing(g,2,5);[127X[104X
     [4X[28X[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, [128X[104X
     [4X[28X  v.6, v.7 ][128X[104X
-    [4X[25Xgap>[125X [27XFG:=ModPCohomologyRing(f*g,2,5);[127X[104X
-    [4X[28X[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.2, v.2+v.3, v.5, v.4, v.6, [128X[104X
+    [4X[25Xgap>[125X [27XFG:=ModPCohomologyRing(fg,2,5);[127X[104X
+    [4X[28X[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.3, v.2, v.4, v.4+v.5, v.6, [128X[104X
     [4X[28X  v.7 ][128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XsF:=Source(F);;[127X[104X
-    [4X[25Xgap>[125X [27XsG:=Source(G);; tG:=Target(G);;[127X[104X
-    [4X[25Xgap>[125X [27XtGsF:=AlgebraHomomorphismByImages(tG,sF,Basis(tG),Basis(sF));;[127X[104X
-    [4X[25Xgap>[125X [27XList(GeneratorsOfAlgebra(sG),x->Image(F,Image(tGsF,Image(G,x))));[127X[104X
-    [4X[28X[ v.1, v.2, v.2+v.3, v.5, v.4, v.6, v.7 ][128X[104X
+    [4X[25Xgap>[125X [27XsF:=Source(F);;tF:=Target(F);;[127X[104X
+    [4X[25Xgap>[125X [27XsG:=Source(G);; [127X[104X
+    [4X[25Xgap>[125X [27XtGsF:=AlgebraHomomorphismByImages(tF,sG,Basis(tF),Basis(sG));;[127X[104X
+    [4X[25Xgap>[125X [27XList(GeneratorsOfAlgebra(sF),x->Image(G,Image(tGsF,Image(F,x))));[127X[104X
+    [4X[28X[ v.1, v.3, v.2, v.4, v.4+v.5, v.6, v.7 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
