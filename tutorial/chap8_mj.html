@@ -25,25 +25,28 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap8.html">[MathJax off]</a></p>
 <p><a id="X7EA6128E8703A13E" name="X7EA6128E8703A13E"></a></p>
 <div class="ChapSects"><a href="chap8_mj.html#X7EA6128E8703A13E">8 <span class="Heading">Cohomology rings and Steenrod operations for finite groups</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80A9B7117D8EC0AB">8.1 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.2 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X877CAF8B7E64DE04">8.3 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X780DF87680C3F52B">8.4 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X877CAF8B7E64DE04">8.1 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X834CED9D7A104695">8.4-1 <span class="Heading">Testing homomorphism properties</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7A0D505D844F0CD4">8.4-2 <span class="Heading">Testing functorial properties</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X855764877FA44225">8.4-3 <span class="Heading">Computing with larger groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X870E0299782638AF">8.1-1 <span class="Heading">Ring presentations (for the commutative <span class="SimpleMath">\(p=2\)</span> case)</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X780DF87680C3F52B">8.2 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X834CED9D7A104695">8.2-1 <span class="Heading">Testing homomorphism properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7A0D505D844F0CD4">8.2-2 <span class="Heading">Testing functorial properties</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X855764877FA44225">8.2-3 <span class="Heading">Computing with larger groups</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80A9B7117D8EC0AB">8.3 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
+</span>
+</div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
 </span>
 </div>
@@ -51,16 +54,195 @@
 
 <h3>8 <span class="Heading">Cohomology rings and Steenrod operations for finite groups</span></h3>
 
+<p><a id="X877CAF8B7E64DE04" name="X877CAF8B7E64DE04"></a></p>
+
+<h4>8.1 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></h4>
+
+<p>For a finite group <span class="SimpleMath">\(G\)</span>, prime <span class="SimpleMath">\(p\)</span> and positive integer <span class="SimpleMath">\(deg\)</span> the function <code class="code">ModPCohomologyRing(G,p,deg)</code> computes a finite dimensional graded ring equal to the cohomology ring <span class="SimpleMath">\(H^{\le deg}(G,\mathbb Z_p) := H^\ast(G,\mathbb Z_p)/\{x=0\ :\ {\rm degree}(x)&gt;deg \}\)</span> .</p>
+
+<p>The following example computes the first <span class="SimpleMath">\(14\)</span> degrees of the cohomology ring <span class="SimpleMath">\(H^\ast(M_{11},\mathbb Z_2)\)</span> where <span class="SimpleMath">\(M_{11}\)</span> is the Mathieu group of order <span class="SimpleMath">\(7920\)</span>. The ring is seen to be generated by three elements <span class="SimpleMath">\(a_3, a_4, a_6\)</span> in degrees <span class="SimpleMath">\(3,4,5\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(11);;          </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;deg:=14;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ModPCohomologyRing(G,p,deg);</span>
+&lt;algebra over GF(2), with 20 generators&gt;
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gns:=ModPRingGenerators(A);</span>
+[ v.1, v.6, v.8+v.10, v.13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(gns,A!.degree);</span>
+[ 0, 3, 4, 5 ]
+
+</pre></div>
+
+<p>The following additional command produces a rational function <span class="SimpleMath">\(f(x)\)</span> whose series expansion <span class="SimpleMath">\(f(x) = \sum_{i=0}^\infty f_ix^i\)</span> has coefficients <span class="SimpleMath">\(f_i\)</span> which are guaranteed to satisfy <span class="SimpleMath">\(f_i = \dim H^i(G,\mathbb Z_p)\)</span> in the range <span class="SimpleMath">\(0\le i\le deg\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PoincareSeries(A);</span>
+(x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Let's use f to list the first few cohomology dimensions</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpansionOfRationalFunction(f,deg); </span>
+[ 1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 1, 2, 3, 2, 2 ]
+
+</pre></div>
+
+<p><a id="X870E0299782638AF" name="X870E0299782638AF"></a></p>
+
+<h5>8.1-1 <span class="Heading">Ring presentations (for the commutative <span class="SimpleMath">\(p=2\)</span> case)</span></h5>
+
+<p>The cohomology ring <span class="SimpleMath">\(H^\ast(G,\mathbb Z_p)\)</span> is graded commutative which, in the case <span class="SimpleMath">\(p=2\)</span>, implies strictly commutative. The following additional commands can be applied in the <span class="SimpleMath">\(p=2\)</span> setting to determine a presentation for a graded commutative ring <span class="SimpleMath">\(F\)</span> that is guaranteed to be isomorphic to the cohomology ring <span class="SimpleMath">\(H^\ast(G,\mathbb Z_p)\)</span> in degrees <span class="SimpleMath">\(i\le deg\)</span>. If <span class="SimpleMath">\(deg\)</span> is chosen "sufficiently large" then <span class="SimpleMath">\(F\)</span> will be isomorphic to the cohomology ring.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=PresentationOfGradedStructureConstantAlgebra(A);</span>
+Graded algebra GF(2)[ x_1, x_2, x_3 ] / [ x_1^2*x_2+x_3^2 
+ ] with indeterminate degrees [ 3, 4, 5 ]
+
+</pre></div>
+
+<p>The additional command</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=HilbertPoincareSeries(F);</span>
+(x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
+
+</pre></div>
+
+<p>invokes a call to <strong class="button">Singular</strong> in order to calculate the Poincare series of the graded algebra <span class="SimpleMath">\(F\)</span>.</p>
+
+<p><a id="X780DF87680C3F52B" name="X780DF87680C3F52B"></a></p>
+
+<h4>8.2 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></h4>
+
+<p>The following example constructs the ring homomorphism</p>
+
+<p><span class="SimpleMath">\(F\colon H^{\le deg}(G,\mathbb Z_p) \rightarrow H^{\le deg}(H,\mathbb Z_p)\)</span></p>
+
+<p>induced by the group homomorphism <span class="SimpleMath">\(f\colon H\rightarrow G\)</span> with <span class="SimpleMath">\(H=A_5\)</span>, <span class="SimpleMath">\(G=S_5\)</span>, <span class="SimpleMath">\(f\)</span> the canonical inclusion of the alternating group into the symmetric group, <span class="SimpleMath">\(p=2\)</span> and <span class="SimpleMath">\(deg=7\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(5);;H:=AlternatingGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;; deg:=7;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,p,deg);</span>
+[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.16+v.17, 
+  v.18, v.19, v.20, v.22+v.24+v.28, v.23, v.25, v.26, v.27 ] -&gt; 
+[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.7+v.8, 0*v.1, 0*v.1, v.14+v.15, 0*v.1, 
+  0*v.1, v.16+v.17+v.19, 0*v.1, 0*v.1, 0*v.1, v.22+v.23+v.26+v.27+v.28, 
+  v.25, 0*v.1, 0*v.1, 0*v.1 ]
+
+</pre></div>
+
+<p><a id="X834CED9D7A104695" name="X834CED9D7A104695"></a></p>
+
+<h5>8.2-1 <span class="Heading">Testing homomorphism properties</span></h5>
+
+<p>The following commands are consistent with <span class="SimpleMath">\(F\)</span> being a ring homomorphism.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Random(Source(F));</span>
+v.4+v.6+v.8+v.9+v.12+v.13+v.14+v.15+v.18+v.20+v.22+v.24+v.25+v.28+v.32+v.35
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=Random(Source(F));</span>
+v.1+v.2+v.7+v.9+v.13+v.23+v.26+v.27+v.32+v.33+v.34+v.35
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)+Image(F,y)=Image(F,x+y);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)*Image(F,y)=Image(F,x*y);</span>
+true
+
+</pre></div>
+
+<p><a id="X7A0D505D844F0CD4" name="X7A0D505D844F0CD4"></a></p>
+
+<h5>8.2-2 <span class="Heading">Testing functorial properties</span></h5>
+
+<p>The following example takes two "random" automorphisms <span class="SimpleMath">\(f,g\colon K\rightarrow K\)</span> of the group <span class="SimpleMath">\(K\)</span> of order <span class="SimpleMath">\(24\)</span> arising as the direct product <span class="SimpleMath">\(K=C_3\times Q_8\)</span> and constructs the three ring isomorphisms <span class="SimpleMath">\(F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)\)</span> induced by <span class="SimpleMath">\(f, g\)</span> and the composite <span class="SimpleMath">\(f\circ g\)</span>. It tests that <span class="SimpleMath">\(FG\)</span> is indeed the composite <span class="SimpleMath">\(G\circ F\)</span>. Note that when we create the ring <span class="SimpleMath">\(H^{\le 5}(K,\mathbb Z_2)\)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test. Note also that <strong class="button">GAP</strong> defines <span class="SimpleMath">\(g\ast f = f\circ g\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=SmallGroup(24,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Elements(aut)[5];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Elements(aut)[8];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg:=g*f;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, 
+  v.6, v.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, 
+  v.6, v.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(fg,2,5);</span>
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.3, v.2, v.4, v.4+v.5, v.6, 
+  v.7 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;tF:=Target(F);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tF,sG,Basis(tF),Basis(sG));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfAlgebra(sF),x-&gt;Image(G,Image(tGsF,Image(F,x))));</span>
+[ v.1, v.3, v.2, v.4, v.4+v.5, v.6, v.7 ]
+
+</pre></div>
+
+<p><a id="X855764877FA44225" name="X855764877FA44225"></a></p>
+
+<h5>8.2-3 <span class="Heading">Computing with larger groups</span></h5>
+
+<p>Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <span class="SimpleMath">\(p\)</span>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure the functoriality of induced cohomology homomorphisms the above computations construct free resolutions for the entire groups <span class="SimpleMath">\(G,H\)</span>. This is a more expensive computation than finding resolutions just for Sylow subgroups.</p>
+
+<p>The default algorithm used by the function <code class="code">ModPCohomologyRing()</code> for constructing resolutions of a finite group <span class="SimpleMath">\(G\)</span> is <code class="code">ResolutionFiniteGroup()</code> or <code class="code">ResolutionPrimePowerGroup()</code> in the case when <span class="SimpleMath">\(G\)</span> happens to be a group of prime-power order. If the user is able to construct the first <span class="SimpleMath">\(deg\)</span> terms of free resolutions <span class="SimpleMath">\(RG, RH\)</span> for the groups <span class="SimpleMath">\(G, H\)</span> then the pair <code class="code">[RG,RH]</code> can be entered as the third input variable of <code class="code">ModPCohomologyRing()</code>.</p>
+
+<p>For instance, the following example constructs the ring homomorphism</p>
+
+<p><span class="SimpleMath">\(F\colon H^{\le 7}(A_6,\mathbb Z_2) \rightarrow H^{\le 7}(S_6,\mathbb Z_2)\)</span></p>
+
+<p>induced by the the canonical inclusion of the alternating group <span class="SimpleMath">\(A_6\)</span> into the symmetric group <span class="SimpleMath">\(S_6\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AlternatingGroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RG:=ResolutionFiniteGroup(G,7);;   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RH:=ResolutionFiniteSubgroup(RG,H);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,[RG,RH]);       </span>
+[ v.1, v.2+v.3, v.6+v.8+v.10, v.7+v.9, v.11+v.12, v.13+v.15+v.16+v.18+v.19, 
+  v.14+v.16+v.19, v.17, v.22, v.23+v.28+v.32+v.35, 
+  v.24+v.26+v.27+v.29+v.32+v.33+v.35, v.25+v.26+v.27+v.29+v.32+v.33+v.35, 
+  v.30+v.32+v.33+v.34+v.35, v.36+v.39+v.43+v.45+v.47+v.49+v.50+v.55, 
+  v.38+v.45+v.47+v.49+v.50+v.55, v.40, 
+  v.41+v.43+v.45+v.47+v.48+v.49+v.50+v.53+v.55, 
+  v.42+v.43+v.45+v.46+v.47+v.49+v.53+v.54, v.44+v.45+v.46+v.47+v.49+v.53+v.54,
+  v.51+v.52, v.58+v.60, v.59+v.68+v.73+v.77+v.81+v.83, 
+  v.62+v.68+v.74+v.77+v.78+v.80+v.81+v.83+v.84, 
+  v.63+v.69+v.73+v.74+v.78+v.80+v.84, v.64+v.68+v.73+v.77+v.81+v.83, v.65, 
+  v.66+v.75+v.81, v.67+v.68+v.69+v.70+v.73+v.74+v.78+v.80+v.84, 
+  v.71+v.72+v.73+v.76+v.77+v.78+v.80+v.82+v.83+v.84, v.79 ] -&gt; 
+[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.8, v.8, 0*v.1, v.7, 0*v.1, 
+  v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, 
+  v.12+v.13+v.14+v.15, v.18+v.19, 0*v.1, 0*v.1, v.18+v.19, v.18+v.19, 
+  v.18+v.19, v.16+v.17, 0*v.1, v.25, v.22+v.24+v.25+v.26+v.27+v.28, 
+  v.22+v.24+v.25+v.26+v.27+v.28, 0*v.1, 0*v.1, v.25, v.22+v.24+v.26+v.27+v.28,
+  v.22+v.24+v.26+v.27+v.28, v.23 ]
+
+</pre></div>
+
 <p><a id="X80A9B7117D8EC0AB" name="X80A9B7117D8EC0AB"></a></p>
 
-<h4>8.1 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
+<h4>8.3 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
 
-<p>The following example determines a presentation for the cohomology ring <span class="SimpleMath">\(H^\ast(Syl_2(M_{12}),\mathbb Z_2)\)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong>, are used to determine how much of a resolution to compute for the presentation.</p>
+<p>The following example determines a presentation for the cohomology ring <span class="SimpleMath">\(H^\ast(Syl_2(M_{12}),\mathbb Z_2)\)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong> (for commutative rings), are used to determine how much of a resolution to compute for the presentation.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mod2CohomologyRingPresentation(G);</span>
+Alpha version of completion test code will be used. This needs further work.
 Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
 [ x_2*x_3, x_1*x_2, x_2*x_4, x_3^3+x_3*x_5, 
   x_1^2*x_4+x_1*x_3*x_4+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_4^2+x_4*x_5, 
@@ -79,15 +261,17 @@ x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
 
 <p><a id="X80114B0483EF9A67" name="X80114B0483EF9A67"></a></p>
 
-<h4>8.2 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
+<h4>8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
 
-<p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">\(H^\ast(G, Z_2 )\)</span> and steenrod operations for a <span class="SimpleMath">\(2\)</span>-group <span class="SimpleMath">\(G\)</span> provided that the integer <span class="SimpleMath">\(n\)</span> is at least the maximal degree of a relator in a minimal set of relators for the ring.</p>
+<p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">\(H^\ast(G, Z_2 )\)</span> and steenrod operations for a <span class="SimpleMath">\(2\)</span>-group <span class="SimpleMath">\(G\)</span> provided that the integer <span class="SimpleMath">\(n\)</span> is at least the maximal degree of a generator or relator in a minimal set of generatoirs and relators for the ring.</p>
 
-<p>The following example produces complete information on the Steenrod algebra of group number <span class="SimpleMath">\(8\)</span> in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(32\)</span>. Groebner basis routines from <strong class="button">Singular</strong> are called involved in the example. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)</p>
+<p>The following example produces complete information on the Steenrod algebra of group number <span class="SimpleMath">\(8\)</span> in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(32\)</span>. Groebner basis routines (for commutative rings) from <strong class="button">Singular</strong> are called in the example. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalData(SmallGroup(32,8),12);</span>
+
+Integer argument is large enough to ensure completeness of cohomology ring presentation.
 
 Group number: 8
 Group description: C2 . ((C4 x C2) : C2) = (C2 x C2) . (C4 x C2)
@@ -149,145 +333,6 @@ Sq^4(h)=d*d*d*d*b*b+g*e*d+p*c
 Sq^1(p)=c*d*d*d*b
 Sq^2(p)=d*d*d*d*b*b+c*d*d*d*d
 Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
-
-</pre></div>
-
-<p><a id="X877CAF8B7E64DE04" name="X877CAF8B7E64DE04"></a></p>
-
-<h4>8.3 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups</span></h4>
-
-<p>For a finite group <span class="SimpleMath">\(G\)</span>, prime <span class="SimpleMath">\(p\)</span> and positive integer <span class="SimpleMath">\(deg\)</span> the function <code class="code">ModPCohomologyRing(G,p,deg)</code> computes a finite dimensional graded ring equal to the cohomology ring <span class="SimpleMath">\(H^{\le deg}(G,\mathbb Z_p) := H^\ast(G,\mathbb Z_p)/\{x=0\ :\ {\rm degree}(x)&gt;deg \}\)</span> .</p>
-
-<p>The following example computes the first <span class="SimpleMath">\(14\)</span> degrees of the cohomology ring <span class="SimpleMath">\(H^\ast(M_{11},\mathbb Z_2)\)</span> where <span class="SimpleMath">\(M_{11}\)</span> is the Mathieu group of order <span class="SimpleMath">\(7920\)</span>. The ring is seen to be generated by three elements <span class="SimpleMath">\(a_3, a_4, a_6\)</span> in degrees <span class="SimpleMath">\(3,4,5\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(11);;          </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;deg:=14;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ModPCohomologyRing(G,p,deg);</span>
-&lt;algebra over GF(2), with 20 generators&gt;
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gns:=ModPRingGenerators(A);</span>
-[ v.1, v.6, v.8+v.10, v.13 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(gns,A!.degree);</span>
-[ 0, 3, 4, 5 ]
-
-</pre></div>
-
-<p><a id="X780DF87680C3F52B" name="X780DF87680C3F52B"></a></p>
-
-<h4>8.4 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></h4>
-
-<p>The following example constructs the ring homomorphism</p>
-
-<p><span class="SimpleMath">\(F\colon H^{\le deg}(G,\mathbb Z_p) \rightarrow H^{\le deg}(H,\mathbb Z_p)\)</span></p>
-
-<p>induced by the group homomorphism <span class="SimpleMath">\(f\colon H\rightarrow G\)</span> with <span class="SimpleMath">\(H=A_5\)</span>, <span class="SimpleMath">\(G=S_5\)</span>, <span class="SimpleMath">\(f\)</span> the canonical inclusion of the alternating group into the symmetric group, <span class="SimpleMath">\(p=2\)</span> and <span class="SimpleMath">\(deg=7\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(5);;H:=AlternatingGroup(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;; deg:=7;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,p,deg);</span>
-[ v.1, v.2, v.4+v.6, v.5, v.7, v.8, v.9, v.12+v.15, v.13, v.14, v.16+v.17, 
-  v.18, v.19, v.20, v.22+v.24+v.28, v.23, v.25, v.26, v.27 ] -&gt; 
-[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.7+v.8, 0*v.1, 0*v.1, v.14+v.15, 0*v.1, 
-  0*v.1, v.16+v.17+v.19, 0*v.1, 0*v.1, 0*v.1, v.22+v.23+v.26+v.27+v.28, 
-  v.25, 0*v.1, 0*v.1, 0*v.1 ]
-
-</pre></div>
-
-<p><a id="X834CED9D7A104695" name="X834CED9D7A104695"></a></p>
-
-<h5>8.4-1 <span class="Heading">Testing homomorphism properties</span></h5>
-
-<p>The following commands are consistent with <span class="SimpleMath">\(F\)</span> being a ring homomorphism.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Random(Source(F));</span>
-v.4+v.6+v.8+v.9+v.12+v.13+v.14+v.15+v.18+v.20+v.22+v.24+v.25+v.28+v.32+v.35
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=Random(Source(F));</span>
-v.1+v.2+v.7+v.9+v.13+v.23+v.26+v.27+v.32+v.33+v.34+v.35
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)+Image(F,y)=Image(F,x+y);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(F,x)*Image(F,y)=Image(F,x*y);</span>
-true
-
-</pre></div>
-
-<p><a id="X7A0D505D844F0CD4" name="X7A0D505D844F0CD4"></a></p>
-
-<h5>8.4-2 <span class="Heading">Testing functorial properties</span></h5>
-
-<p>The following example takes two "random" automorphisms <span class="SimpleMath">\(f,g\colon K\rightarrow K\)</span> of the group <span class="SimpleMath">\(K\)</span> of order <span class="SimpleMath">\(24\)</span> arising as the direct product <span class="SimpleMath">\(K=C_3\times Q_8\)</span> and constructs the three ring isomorphisms <span class="SimpleMath">\(F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)\)</span> induced by <span class="SimpleMath">\(f, g\)</span> and the composite <span class="SimpleMath">\(f\circ g\)</span>. It tests that <span class="SimpleMath">\(FG\)</span> is indeed the composite <span class="SimpleMath">\(G\circ F\)</span>. Note that when we create the ring <span class="SimpleMath">\(H^{\le 5}(K,\mathbb Z_2)\)</span> twice in <strong class="button">GAP</strong> we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test. Note also that <strong class="button">GAP</strong> defines <span class="SimpleMath">\(g\ast f = f\circ g\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=SmallGroup(24,11);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut:=AutomorphismGroup(K);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Elements(aut)[5];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Elements(aut)[8];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg:=g*f;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,5);</span>
-[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, 
-  v.6, v.7 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=ModPCohomologyRing(g,2,5);</span>
-[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, 
-  v.6, v.7 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG:=ModPCohomologyRing(fg,2,5);</span>
-[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -&gt; [ v.1, v.3, v.2, v.4, v.4+v.5, v.6, 
-  v.7 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sF:=Source(F);;tF:=Target(F);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sG:=Source(G);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tGsF:=AlgebraHomomorphismByImages(tF,sG,Basis(tF),Basis(sG));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfAlgebra(sF),x-&gt;Image(G,Image(tGsF,Image(F,x))));</span>
-[ v.1, v.3, v.2, v.4, v.4+v.5, v.6, v.7 ]
-
-</pre></div>
-
-<p><a id="X855764877FA44225" name="X855764877FA44225"></a></p>
-
-<h5>8.4-3 <span class="Heading">Computing with larger groups</span></h5>
-
-<p>Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <span class="SimpleMath">\(p\)</span>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure the functoriality of induced cohomology homomorphisms the above computations construct free resolutions for the entire groups <span class="SimpleMath">\(G,H\)</span>. This is a more expensive computation than finding resolutions just for Sylow subgroups.</p>
-
-<p>The default algorithm used by the function <code class="code">ModPCohomologyRing()</code> for constructing resolutions of a finite group <span class="SimpleMath">\(G\)</span> is <code class="code">ResolutionFiniteGroup()</code> or <code class="code">ResolutionPrimePowerGroup()</code> in the case when <span class="SimpleMath">\(G\)</span> happens to be a group of prime-power order. If the user is able to construct the first <span class="SimpleMath">\(deg\)</span> terms of free resolutions <span class="SimpleMath">\(RG, RH\)</span> for the groups <span class="SimpleMath">\(G, H\)</span> then the pair <code class="code">[RG,RH]</code> can be entered as the third input variable of <code class="code">ModPCohomologyRing()</code>.</p>
-
-<p>For instance, the following example constructs the ring homomorphism</p>
-
-<p><span class="SimpleMath">\(F\colon H^{\le 7}(A_6,\mathbb Z_2) \rightarrow H^{\le 7}(S_6,\mathbb Z_2)\)</span></p>
-
-<p>induced by the the canonical inclusion of the alternating group <span class="SimpleMath">\(A_6\)</span> into the symmetric group <span class="SimpleMath">\(S_6\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(6);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AlternatingGroup(6);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByFunction(H,G,x-&gt;x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RG:=ResolutionFiniteGroup(G,7);;   </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RH:=ResolutionFiniteSubgroup(RG,H);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ModPCohomologyRing(f,2,[RG,RH]);       </span>
-[ v.1, v.2+v.3, v.6+v.8+v.10, v.7+v.9, v.11+v.12, v.13+v.15+v.16+v.18+v.19, 
-  v.14+v.16+v.19, v.17, v.22, v.23+v.28+v.32+v.35, 
-  v.24+v.26+v.27+v.29+v.32+v.33+v.35, v.25+v.26+v.27+v.29+v.32+v.33+v.35, 
-  v.30+v.32+v.33+v.34+v.35, v.36+v.39+v.43+v.45+v.47+v.49+v.50+v.55, 
-  v.38+v.45+v.47+v.49+v.50+v.55, v.40, 
-  v.41+v.43+v.45+v.47+v.48+v.49+v.50+v.53+v.55, 
-  v.42+v.43+v.45+v.46+v.47+v.49+v.53+v.54, v.44+v.45+v.46+v.47+v.49+v.53+v.54,
-  v.51+v.52, v.58+v.60, v.59+v.68+v.73+v.77+v.81+v.83, 
-  v.62+v.68+v.74+v.77+v.78+v.80+v.81+v.83+v.84, 
-  v.63+v.69+v.73+v.74+v.78+v.80+v.84, v.64+v.68+v.73+v.77+v.81+v.83, v.65, 
-  v.66+v.75+v.81, v.67+v.68+v.69+v.70+v.73+v.74+v.78+v.80+v.84, 
-  v.71+v.72+v.73+v.76+v.77+v.78+v.80+v.82+v.83+v.84, v.79 ] -&gt; 
-[ v.1, 0*v.1, v.4+v.5+v.6, 0*v.1, v.8, v.8, 0*v.1, v.7, 0*v.1, 
-  v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, v.12+v.13+v.14+v.15, 
-  v.12+v.13+v.14+v.15, v.18+v.19, 0*v.1, 0*v.1, v.18+v.19, v.18+v.19, 
-  v.18+v.19, v.16+v.17, 0*v.1, v.25, v.22+v.24+v.25+v.26+v.27+v.28, 
-  v.22+v.24+v.25+v.26+v.27+v.28, 0*v.1, 0*v.1, v.25, v.22+v.24+v.26+v.27+v.28,
-  v.22+v.24+v.26+v.27+v.28, v.23 ]
 
 </pre></div>
 
