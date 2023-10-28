@@ -302,7 +302,86 @@
   [4X[32X[104X
   
   
-  [1X5.6 [33X[0;0YRandom simplicial complexes[133X[101X
+  [1X5.6 [33X[0;0YKnotted proteins[133X[101X
+  
+  [33X[0;0YThe  Protein  Data  Bank  ([7Xhttps://www.rcsb.org/[107X)  contains a wealth of data
+  which  can  be  investigated  with  respect to knottedness. Information on a
+  particular  protein  can be downloaded as a .pdb file. Each protein consists
+  of  one  or  more  chains  of  amino  acids and the file gives 3-dimensional
+  Euclidean  coordinates  of  the  atoms in amino acids. Each amino acid has a
+  unique  "alpha  carbon"  atom  (labelled  as "CA" in the pdb file). A simple
+  3-dimensional  curve,  the  [13Xprotein backbone[113X, can be constructed through the
+  sequence  of  alpha carbon atoms. Typically the ends of the protein backbone
+  lie near the "surface" of the protein and can be joined by a path outside of
+  the protein to obtain a simple closed curve in Euclidean 3-space.[133X
+  
+  [33X[0;0YThe  following  command  reads  in  the pdb file for the T.thermophilus 1V2X
+  protein, which consists of a single chain of amino acids, and uses Asymptote
+  software  to  produce  an  interactive visualization of its backbone. A path
+  joining the end vertices of the backbone is displayed in blue.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data1V2X.pdb");;[127X[104X
+    [4X[25Xgap>[125X [27XDisplayPDBfile(file);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  command reads in the pdb file for the T.thermophilus 1V2X protein
+  and represents it as a [22X3[122X-dimensional pure cubical complex [22XK[122X. A resolution of
+  [22Xr=5[122X  is  chosen and this results in a representation as a subcomplex [22XK[122X of an
+  ambient  rectangular  box  of  volume equal to [22X184× 186× 294[122X unit cubes. The
+  complex [22XK[122X should have the homotopy type of a circle and the protein backbone
+  is a 1-dimenional curve that should lie in [22XK[122X. The final command displays [22XK[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr:=5;;[127X[104X
+    [4X[25Xgap>[125X [27XK:=ReadPDBfileAsPureCubicalComplex(file,r);;      [127X[104X
+    [4X[25Xgap>[125X [27XK:=ContractedComplex(K);;[127X[104X
+    [4X[25Xgap>[125X [27XK!.properties;[127X[104X
+    [4X[28X[ [ "dimension", 3 ], [ "arraySize", [ 184, 186, 294 ] ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(K);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext  we  create a filtered pure cubical complex by repeatedly thickening [22XK[122X.
+  We  perform  [22X15[122X thickenings, each thickening being a term in the filtration.
+  The  [22Xβ_1[122X  barcode  for  the  filtration  is  displayed.  This  barcode  is a
+  descriptor for the geometry of the protein. For current purposes it suffices
+  to note that the first few terms of the filtration have first homology equal
+  to  that  of  a circle. This indicates that the Euclidean coordinates in the
+  pdb file robustly determine some knot.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=ThickeningFiltration(K,15);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=FilteredPureCubicalComplexToCubicalComplex(F);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=FilteredCubicalComplexToFilteredRegularCWComplex(F);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PersistentBettiNumbersAlt(F,1);;[127X[104X
+    [4X[25Xgap>[125X [27XBarCodeCompactDisplay(P);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next commands compute a presentation for the fundamental group [22Xπ_1( R^3∖
+  K)[122X  and  the  Alexander  polynomial for the knot. This is the same Alexander
+  polynomial as for the trefoil knot. Also, Tietze transformations can be used
+  to see that the fundamental group is the same as for the trefoil knot.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC:=PureComplexComplement(K);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(C);;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(G);[127X[104X
+    [4X[28X[ f1, f2 ][128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ f2*f1^-1*f2^-1*f1^-1*f2*f1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAlexanderPolynomial(G);[127X[104X
+    [4X[28Xx_1^2-x_1+1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7 [33X[0;0YRandom simplicial complexes[133X[101X
   
   [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
   [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete

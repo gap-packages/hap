@@ -54,7 +54,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X86FD0A867EC9E64F">5.5-1 <span class="Heading">Non-trivial cup product</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.6 <span class="Heading">Random simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X80D0D8EB7BCD05E9">5.6 <span class="Heading">Knotted proteins</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87AF06677F05C624">5.7 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
 </div>
@@ -311,9 +314,73 @@ Pure cubical complex of dimension 2.
 
 </pre></div>
 
+<p><a id="X80D0D8EB7BCD05E9" name="X80D0D8EB7BCD05E9"></a></p>
+
+<h4>5.6 <span class="Heading">Knotted proteins</span></h4>
+
+<p>The <span class="URL"><a href="https://www.rcsb.org/">Protein Data Bank</a></span> contains a wealth of data which can be investigated with respect to knottedness. Information on a particular protein can be downloaded as a .pdb file. Each protein consists of one or more chains of amino acids and the file gives 3-dimensional Euclidean coordinates of the atoms in amino acids. Each amino acid has a unique "alpha carbon" atom (labelled as "CA" in the pdb file). A simple 3-dimensional curve, the <em>protein backbone</em>, can be constructed through the sequence of alpha carbon atoms. Typically the ends of the protein backbone lie near the "surface" of the protein and can be joined by a path outside of the protein to obtain a simple closed curve in Euclidean 3-space.</p>
+
+<p>The following command reads in the pdb file for the T.thermophilus 1V2X protein, which consists of a single chain of amino acids, and uses Asymptote software to produce an interactive visualization of its backbone. A path joining the end vertices of the backbone is displayed in blue.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data1V2X.pdb");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DisplayPDBfile(file);</span>
+
+</pre></div>
+
+<p><img src="images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></p>
+
+<p>The next command reads in the pdb file for the T.thermophilus 1V2X protein and represents it as a <span class="SimpleMath">\(3\)</span>-dimensional pure cubical complex <span class="SimpleMath">\(K\)</span>. A resolution of <span class="SimpleMath">\(r=5\)</span> is chosen and this results in a representation as a subcomplex <span class="SimpleMath">\(K\)</span> of an ambient rectangular box of volume equal to <span class="SimpleMath">\(184\times 186\times 294\)</span> unit cubes. The complex <span class="SimpleMath">\(K\)</span> should have the homotopy type of a circle and the protein backbone is a 1-dimenional curve that should lie in <span class="SimpleMath">\(K\)</span>. The final command displays <span class="SimpleMath">\(K\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=5;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ReadPDBfileAsPureCubicalComplex(file,r);;      </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractedComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K!.properties;</span>
+[ [ "dimension", 3 ], [ "arraySize", [ 184, 186, 294 ] ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(K);</span>
+
+</pre></div>
+
+<p><img src="images/1v2xcubical.gif" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></p>
+
+<p>Next we create a filtered pure cubical complex by repeatedly thickening <span class="SimpleMath">\(K\)</span>. We perform <span class="SimpleMath">\(15\)</span> thickenings, each thickening being a term in the filtration. The <span class="SimpleMath">\(\beta_1\)</span> barcode for the filtration is displayed. This barcode is a descriptor for the geometry of the protein. For current purposes it suffices to note that the first few terms of the filtration have first homology equal to that of a circle. This indicates that the Euclidean coordinates in the pdb file robustly determine some knot.</p>
+
+<p><img src="images/1v2xbarcode.gif" align="center" height="500" alt="barcode"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ThickeningFiltration(K,15);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FilteredPureCubicalComplexToCubicalComplex(F);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=FilteredCubicalComplexToFilteredRegularCWComplex(F);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbersAlt(F,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p>The next commands compute a presentation for the fundamental group <span class="SimpleMath">\(\pi_1(\mathbb R^3\setminus K)\)</span> and the Alexander polynomial for the knot. This is the same Alexander polynomial as for the trefoil knot. Also, Tietze transformations can be used to see that the fundamental group is the same as for the trefoil knot.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=PureComplexComplement(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractedComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfGroup(G);</span>
+[ f1, f2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(G);</span>
+[ f2*f1^-1*f2^-1*f1^-1*f2*f1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AlexanderPolynomial(G);</span>
+x_1^2-x_1+1
+
+</pre></div>
+
 <p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
 
-<h4>5.6 <span class="Heading">Random simplicial complexes</span></h4>
+<h4>5.7 <span class="Heading">Random simplicial complexes</span></h4>
 
 <p>For a positive integer <span class="SimpleMath">\(n\)</span> and probability <span class="SimpleMath">\(p\)</span> we denote by <span class="SimpleMath">\(Y(n,p)\)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">\(1\)</span>-skeleton is the complete graph on <span class="SimpleMath">\(n\)</span> vertices; each possible <span class="SimpleMath">\(2\)</span>-simplex is included independently with probability <span class="SimpleMath">\(p\)</span>.</p>
 
