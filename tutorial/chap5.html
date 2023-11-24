@@ -57,6 +57,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X87AF06677F05C624">5.7 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X875EE92F7DBA1E27">5.8 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></a>
+</span>
+</div>
 </div>
 
 <h3>5 <span class="Heading">Topological data analysis</span></h3>
@@ -65,7 +68,7 @@
 
 <h4>5.1 <span class="Heading">Persistent homology  </span></h4>
 
-<p>Pairwise distances between <span class="SimpleMath">74</span> points from some metric space have been recorded and stored in a <span class="SimpleMath">74× 74</span> matrix <span class="SimpleMath">D</span>. The following commands load the matrix, construct a filtration of length <span class="SimpleMath">100</span> on the first two dimensions of the assotiated clique complex (also known as the <em>Rips Complex</em>), and display the resulting degree <span class="SimpleMath">0</span> persistent homology as a barcode. A single bar with label <span class="SimpleMath">n</span> denotes <span class="SimpleMath">n</span> bars with common starting point and common end point.</p>
+<p>Pairwise distances between <span class="SimpleMath">74</span> points from some metric space have been recorded and stored in a <span class="SimpleMath">74× 74</span> matrix <span class="SimpleMath">D</span>. The following commands load the matrix, construct a filtration of length <span class="SimpleMath">100</span> on the first two dimensions of the assotiated clique complex (also known as the <em>Vietoris-Rips Complex</em>), and display the resulting degree <span class="SimpleMath">0</span> persistent homology as a barcode. A single bar with label <span class="SimpleMath">n</span> denotes <span class="SimpleMath">n</span> bars with common starting point and common end point.</p>
 
 
 <div class="example"><pre>
@@ -462,6 +465,63 @@ function( n, p ) ... end
   [          7757870243425246987971789322 ],
   [       8164648856993269673396613497412 ],
   [                                     2 ] ]
+
+</pre></div>
+
+<p><a id="X875EE92F7DBA1E27" name="X875EE92F7DBA1E27"></a></p>
+
+<h4>5.8 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></h4>
+
+<p>Topological data analysis provides one motivation for wanting to compute the homology of a clique complex. Consider for instance the cloud of data points shown in Example <a href="chap5.html#X7D512DA37F789B4C"><span class="RefLink">5.2-1</span></a>. This data is a set <span class="SimpleMath">S</span> of 400 points in the plane. Let <span class="SimpleMath">Γ</span> be the graph with vertex set <span class="SimpleMath">S</span> and with two vertices joined by an edge if they lie within a Euclidean distance of 40 of each other. The clique complex <span class="SimpleMath">K=K(Γ)</span> could be studied to see what it reveals about the data. The following commands construct <span class="SimpleMath">K</span> and show that it is a 23-dimensional simplicial complex consisting of a total of 36191976 simplices.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data134.txt");;                              </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=VectorsToSymmetricMatrix(S,EuclideanApproximatedMetric);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">threshold:=40;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">grph:=SymmetricMatrixToGraph(A,threshold);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dimension_cap:=100;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=CliqueComplex(grph,dimension_cap);</span>
+Simplicial complex of dimension 23.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(K);</span>
+36191976
+
+</pre></div>
+
+<p>The computation of the homology of this clique complex <span class="SimpleMath">K</span> is a challenge because of its size. If we are only interested in <span class="SimpleMath">K</span> up to homotopy then we could try to modify the graph <span class="SimpleMath">Γ</span> in such a way that the homotopy type of the clique complex is unchanged but the size of the clique complex is reduced. This is done in the following commands, producing a smaller <span class="SimpleMath">19</span>-dimensional simplicial complex <span class="SimpleMath">K</span> with 4180652 simplices.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ContractGraph(grph);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dimension_cap:=100;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=CliqueComplex(grph,dimension_cap);</span>
+Simplicial complex of dimension 19.
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(K);</span>
+4180652
+
+</pre></div>
+
+<p>To compute the homology of <span class="SimpleMath">K</span> in degrees <span class="SimpleMath">0</span> to <span class="SimpleMath">4</span> say, we could represent the <span class="SimpleMath">6</span>-skeleton of <span class="SimpleMath">K</span> as a regular CW-complex <span class="SimpleMath">Y</span> and then compute the homology of <span class="SimpleMath">Y</span> as follows. The homology <span class="SimpleMath">H_n(K)= Z</span> for <span class="SimpleMath">n=0,1</span> and <span class="SimpleMath">H_n(K)= 0</span> for <span class="SimpleMath">n=2,3,4</span> is consistent with the data having been sampled from a space with the homotopy type of a circle.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=SimplicialComplexToRegularCWComplex(K,6);</span>
+Regular CW-complex of dimension 6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,0);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,3);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,4);</span>
+[  ]
+
 
 </pre></div>
 

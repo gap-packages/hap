@@ -7,9 +7,10 @@
   [33X[0;0YPairwise  distances  between  [22X74[122X  points  from  some  metric space have been
   recorded  and  stored  in a [22X74× 74[122X matrix [22XD[122X. The following commands load the
   matrix,  construct a filtration of length [22X100[122X on the first two dimensions of
-  the  assotiated clique complex (also known as the [13XRips Complex[113X), and display
-  the  resulting  degree [22X0[122X persistent homology as a barcode. A single bar with
-  label [22Xn[122X denotes [22Xn[122X bars with common starting point and common end point.[133X
+  the assotiated clique complex (also known as the [13XVietoris-Rips Complex[113X), and
+  display  the  resulting  degree [22X0[122X persistent homology as a barcode. A single
+  bar  with  label  [22Xn[122X denotes [22Xn[122X bars with common starting point and common end
+  point.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xfile:=HapFile("data253a.txt");;[127X[104X
@@ -480,6 +481,75 @@
     [4X[28X  [          7757870243425246987971789322 ],[128X[104X
     [4X[28X  [       8164648856993269673396613497412 ],[128X[104X
     [4X[28X  [                                     2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.8 [33X[0;0YComputing homology of a clique complex (Vietoris-Rips complex)[133X[101X
+  
+  [33X[0;0YTopological data analysis provides one motivation for wanting to compute the
+  homology of a clique complex. Consider for instance the cloud of data points
+  shown in Example [14X5.2-1[114X. This data is a set [22XS[122X of 400 points in the plane. Let
+  [22XΓ[122X  be the graph with vertex set [22XS[122X and with two vertices joined by an edge if
+  they lie within a Euclidean distance of 40 of each other. The clique complex
+  [22XK=K(Γ)[122X could be studied to see what it reveals about the data. The following
+  commands construct [22XK[122X and show that it is a 23-dimensional simplicial complex
+  consisting of a total of 36191976 simplices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data134.txt");;                              [127X[104X
+    [4X[25Xgap>[125X [27XRead(file);[127X[104X
+    [4X[25Xgap>[125X [27XA:=VectorsToSymmetricMatrix(S,EuclideanApproximatedMetric);;[127X[104X
+    [4X[25Xgap>[125X [27Xthreshold:=40;; [127X[104X
+    [4X[25Xgap>[125X [27Xgrph:=SymmetricMatrixToGraph(A,threshold);;[127X[104X
+    [4X[25Xgap>[125X [27Xdimension_cap:=100;; [127X[104X
+    [4X[25Xgap>[125X [27XK:=CliqueComplex(grph,dimension_cap);[127X[104X
+    [4X[28XSimplicial complex of dimension 23.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(K);[127X[104X
+    [4X[28X36191976[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  computation  of  the  homology  of this clique complex [22XK[122X is a challenge
+  because  of  its size. If we are only interested in [22XK[122X up to homotopy then we
+  could  try to modify the graph [22XΓ[122X in such a way that the homotopy type of the
+  clique  complex  is unchanged but the size of the clique complex is reduced.
+  This  is  done in the following commands, producing a smaller [22X19[122X-dimensional
+  simplicial complex [22XK[122X with 4180652 simplices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XContractGraph(grph);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xdimension_cap:=100;; [127X[104X
+    [4X[25Xgap>[125X [27XK:=CliqueComplex(grph,dimension_cap);[127X[104X
+    [4X[28XSimplicial complex of dimension 19.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(K);[127X[104X
+    [4X[28X4180652[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTo  compute  the homology of [22XK[122X in degrees [22X0[122X to [22X4[122X say, we could represent the
+  [22X6[122X-skeleton of [22XK[122X as a regular CW-complex [22XY[122X and then compute the homology of [22XY[122X
+  as  follows.  The  homology [22XH_n(K)= Z[122X for [22Xn=0,1[122X and [22XH_n(K)= 0[122X for [22Xn=2,3,4[122X is
+  consistent  with the data having been sampled from a space with the homotopy
+  type of a circle.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=SimplicialComplexToRegularCWComplex(K,6);[127X[104X
+    [4X[28XRegular CW-complex of dimension 6[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,4);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
