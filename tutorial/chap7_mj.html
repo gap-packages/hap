@@ -52,26 +52,29 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7BAFCA3680E478AE">7.6 <span class="Heading">Graphs of groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7C3DEDD57BB4D537">7.7 <span class="Heading">Cohomology with coefficients in a module</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7CE849E58706796C">7.7 <span class="Heading">Lie algebra homology and free nilpotent groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7E573EA582CCEF2E">7.8 <span class="Heading">Cohomology as a functor of the first variable</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7C3DEDD57BB4D537">7.8 <span class="Heading">Cohomology with coefficients in a module</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X796731727A7EBE59">7.9 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7E573EA582CCEF2E">7.9 <span class="Heading">Cohomology as a functor of the first variable</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X80F6FD3E7C7E4E8D">7.10 <span class="Heading">Transfer Homomorphism</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X796731727A7EBE59">7.10 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X79B1406C803FF178">7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X80F6FD3E7C7E4E8D">7.11 <span class="Heading">Transfer Homomorphism</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X79B1406C803FF178">7.12 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
 </span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X833A19F0791C3B06">7.12 <span class="Heading">Explicit cocycles </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X833A19F0791C3B06">7.13 <span class="Heading">Explicit cocycles </span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7C5233E27D2D603E">7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">\(p\)</span>-part of homology </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7C5233E27D2D603E">7.14 <span class="Heading">Quillen's complex and the <span class="SimpleMath">\(p\)</span>-part of homology </span></a>
 </span>
 </div>
 </div>
@@ -409,9 +412,55 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p><a id="X7CE849E58706796C" name="X7CE849E58706796C"></a></p>
+
+<h4>7.7 <span class="Heading">Lie algebra homology and free nilpotent groups</span></h4>
+
+<p>One method of producting a Lie algebra <span class="SimpleMath">\(L\)</span> from a group <span class="SimpleMath">\(G\)</span> is by forming the direct sum <span class="SimpleMath">\(L(G) = G/\gamma_2G \oplus \gamma_2G/\gamma_3G \oplus \gamma_3G/\gamma_4G \oplus \cdots\)</span> of the quotients of the lower central series <span class="SimpleMath">\(\gamma_1G=G\)</span>, <span class="SimpleMath">\(\gamma_{n+1}G=[\gamma_nG,G]\)</span>. Commutation in <span class="SimpleMath">\(G\)</span> induces a Lie bracket <span class="SimpleMath">\(L(G)\times L(G) \rightarrow L(G)\)</span>.</p>
+
+<p>The homology <span class="SimpleMath">\(H_n(L)\)</span> of a Lie algebra (with trivial coefficients) can be calculated as the homology of the Chevalley-Eilenberg chain complex <span class="SimpleMath">\(C_\ast(L)\)</span>. This chain complex is implemented in <strong class="button">HAP</strong> in the cases where the underlying additive group of <span class="SimpleMath">\(L\)</span> is either finitely generated torsion free or finitely generated of prime exponent <span class="SimpleMath">\(p\)</span>. In these two cases the ground ring for the Lie algebra/ Chevalley-Eilenberg complex is taken to be <span class="SimpleMath">\(\mathbb Z\)</span> and <span class="SimpleMath">\(\mathbb Z_p\)</span> respectively.</p>
+
+<p>For example, consider the quotient <span class="SimpleMath">\(G=F/\gamma_8F\)</span> of the free group <span class="SimpleMath">\(F=F(x,y)\)</span> on two generators by eighth term of its lower central series. So <span class="SimpleMath">\(G\)</span> is the <em>free nilpotent group of class 7 on two generators</em>. The following commands compute <span class="SimpleMath">\(H_4(L(G)) = \mathbb Z_2^{77} \oplus \mathbb Z_6^8 \oplus \mathbb Z_{12}^{51} \oplus \mathbb Z_{132}^{11} \oplus \mathbb Z^{2024}\)</span> and show that the fourth homology in this case contains 2-, 3- and 11-torsion. (The commands take an hour or so to complete.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(2),7));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=LowerCentralSeriesLieAlgebra(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=LieAlgebraHomology(L,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(h);</span>
+[ [ 0, 2024 ], [ 2, 77 ], [ 6, 8 ], [ 12, 51 ], [ 132, 11 ] ]
+
+</pre></div>
+
+<p>For a free nilpotent group <span class="SimpleMath">\(G\)</span> the additive homology <span class="SimpleMath">\(H_n(L(G))\)</span> of the Lie algebra can be computed more quickly in <strong class="button">HAP</strong> than the integral group homology <span class="SimpleMath">\(H_n(G,\mathbb Z)\)</span>. Clearly there are isomorphisms<span class="SimpleMath">\(H_1(G) \cong H_1(L(G)) \cong G_{ab}\)</span> of abelian groups in homological degree <span class="SimpleMath">\(n=1\)</span>. Hopf's formula can be used to establish an isomorphism <span class="SimpleMath">\(H_2(G) \cong H_2(L(G))\)</span> also in degree <span class="SimpleMath">\(n=2\)</span>. The following two theorems provide further isomorphisms that allow for the homology of a free nilpotent group to be calculated more efficiently as the homology of the associated Lie algebra.</p>
+
+<p><strong class="button">Theorem 1.</strong> <a href="chapBib_mj.html#biBkuzmin">[KS98]</a> <em>Let <span class="SimpleMath">\(G\)</span> be a finitely generated free nilpotent group of class 2. Then the integral group homology <span class="SimpleMath">\(H_n(G,\mathbb Z)\)</span> is isomorphic to the integral Lie algebra homology <span class="SimpleMath">\(H_n(L(G),\mathbb Z)\)</span> in each degree <span class="SimpleMath">\(n\ge0\)</span>.</em></p>
+
+<p><strong class="button">Theorem 2.</strong> <a href="chapBib_mj.html#biBigusa">[IO01]</a> <em>Let <span class="SimpleMath">\(G\)</span> be a finitely generated free nilpotent group (of any class). Then the integral group homology <span class="SimpleMath">\(H_n(G,\mathbb Z)\)</span> is isomorphic to the integral Lie algebra homology <span class="SimpleMath">\(H_n(L(G),\mathbb Z)\)</span> in degrees <span class="SimpleMath">\(n=0, 1, 2, 3\)</span>.</em></p>
+
+<p>We should remark that experimentation on free nilpotent groups of class <span class="SimpleMath">\(\ge 4\)</span> has not yielded a group for which the isomorphism <span class="SimpleMath">\(H_n(G,\mathbb Z) \cong H_n(L(G),\mathbb G)\)</span> fails. For instance, the isomorphism holds in degree <span class="SimpleMath">\(n=4\)</span> for the free nilpotent group of class 5 on two generators, and for the free nilpotent group of class 2 on four generators:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(2),5));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=LowerCentralSeriesLieAlgebra(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected( LieAlgebraHomology(L,4) );</span>
+[ [ 0, 85 ], [ 7, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected( GroupHomology(G,4) );</span>
+[ [ 0, 85 ], [ 7, 1 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(4),2));;  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=LowerCentralSeriesLieAlgebra(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected( LieAlgebraHomology(L,4) );</span>
+[ [ 0, 84 ], [ 3, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected( GroupHomology(G,4) );</span>
+[ [ 0, 84 ], [ 3, 4 ] ]
+
+</pre></div>
+
 <p><a id="X7C3DEDD57BB4D537" name="X7C3DEDD57BB4D537"></a></p>
 
-<h4>7.7 <span class="Heading">Cohomology with coefficients in a module</span></h4>
+<h4>7.8 <span class="Heading">Cohomology with coefficients in a module</span></h4>
 
 <p>There are various ways to represent a <span class="SimpleMath">\(\mathbb ZG\)</span>-module <span class="SimpleMath">\(A\)</span> with action <span class="SimpleMath">\(G\times A \rightarrow A, (g,a)\mapsto \alpha(g,a)\)</span>.</p>
 
@@ -545,7 +594,7 @@ CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt;
 
 <p><a id="X7E573EA582CCEF2E" name="X7E573EA582CCEF2E"></a></p>
 
-<h4>7.8 <span class="Heading">Cohomology as a functor of the first variable</span></h4>
+<h4>7.9 <span class="Heading">Cohomology as a functor of the first variable</span></h4>
 
 <p>Suppose given a group homomorphism <span class="SimpleMath">\(f\colon G_1\rightarrow G_2\)</span> and a <span class="SimpleMath">\(G_2\)</span>-module <span class="SimpleMath">\(A\)</span>. Then <span class="SimpleMath">\(A\)</span> is naturally a <span class="SimpleMath">\(G_1\)</span>-module with action via <span class="SimpleMath">\(f\)</span>, and there is an induced cohomology homomorphism <span class="SimpleMath">\(H^n(f,A)\colon H^n(G_2,A) \rightarrow H^n(G_1,A)\)</span>.</p>
 
@@ -573,7 +622,7 @@ CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt;
 
 <p><a id="X796731727A7EBE59" name="X796731727A7EBE59"></a></p>
 
-<h4>7.9 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></h4>
+<h4>7.10 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></h4>
 
 <p>A short exact sequence of <span class="SimpleMath">\(\mathbb ZG\)</span>-modules <span class="SimpleMath">\(A \rightarrowtail B \twoheadrightarrow C\)</span> induces a long exact sequence of cohomology groups</p>
 
@@ -651,7 +700,7 @@ CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt;
 
 <p><a id="X80F6FD3E7C7E4E8D" name="X80F6FD3E7C7E4E8D"></a></p>
 
-<h4>7.10 <span class="Heading">Transfer Homomorphism</span></h4>
+<h4>7.11 <span class="Heading">Transfer Homomorphism</span></h4>
 
 <p>Consider the action of the symmetric group <span class="SimpleMath">\(G=S_5\)</span> on <span class="SimpleMath">\(A=\mathbb Z^5\)</span> which permutes the canonical basis. The action restricts to the sylow <span class="SimpleMath">\(2\)</span>-subgroup <span class="SimpleMath">\(P=Syl_2(G)\)</span>. The following commands compute the cohomology transfer homomorphism <span class="SimpleMath">\(t^4\colon H^4(P,A) \rightarrow H^4(S_5,A)\)</span> and determine its kernel and image. The integral homology transfer <span class="SimpleMath">\(t_4\colon H_4(S_5,\mathbb Z) \rightarrow H_5(P,\mathbb Z)\)</span> is also computed.</p>
 
@@ -681,7 +730,7 @@ Chain Map between complexes of length 5 .
 
 <p><a id="X79B1406C803FF178" name="X79B1406C803FF178"></a></p>
 
-<h4>7.11 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
+<h4>7.12 <span class="Heading">Cohomology rings of finite fundamental groups of 3-manifolds
 </span></h4>
 
 <p>A <em>spherical 3-manifold</em> is a 3-manifold arising as the quotient <span class="SimpleMath">\(S^3/\Gamma\)</span> of the 3-sphere <span class="SimpleMath">\(S^3\)</span> by a finite subgroup <span class="SimpleMath">\(\Gamma\)</span> of <span class="SimpleMath">\(SO(4)\)</span> acting freely as rotations. The geometrization conjecture, proved by Grigori Perelman, implies that every closed connected 3-manifold with a finite fundamental group is homeomorphic to a spherical 3-manifold.</p>
@@ -785,7 +834,7 @@ Chain Map between complexes of length 5 .
 
 <p><a id="X833A19F0791C3B06" name="X833A19F0791C3B06"></a></p>
 
-<h4>7.12 <span class="Heading">Explicit cocycles </span></h4>
+<h4>7.13 <span class="Heading">Explicit cocycles </span></h4>
 
 <p>Given a <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution <span class="SimpleMath">\(R_\ast\)</span> and a <span class="SimpleMath">\(\mathbb ZG\)</span>-module <span class="SimpleMath">\(A\)</span>, one defines an <em><span class="SimpleMath">\(n\)</span>-cocycle</em> to be a <span class="SimpleMath">\(\mathbb ZG\)</span>-homomorphism <span class="SimpleMath">\(f\colon R_n \rightarrow A\)</span> for which the composite homomorphism <span class="SimpleMath">\(fd_{n+1}\colon R_{n+1}\rightarrow A\)</span> is zero. If <span class="SimpleMath">\(R_\ast\)</span> happens to be the standard bar resolution (i.e. the cellular chain complex of the nerve of the group <span class="SimpleMath">\(G\)</span> considered as a one object category) then the free <span class="SimpleMath">\(\mathbb ZG\)</span>-generators of <span class="SimpleMath">\(R_n\)</span> are indexed by <span class="SimpleMath">\(n\)</span>-tuples <span class="SimpleMath">\((g_1 | g_2 | \ldots | g_n)\)</span> of elements <span class="SimpleMath">\(g_i\)</span> in <span class="SimpleMath">\(G\)</span>. In this case we say that the <span class="SimpleMath">\(n\)</span>-cocycle is a <em>standard n-cocycle</em> and we think of it as a set-theoretic function</p>
 
@@ -936,7 +985,7 @@ function( g, h, k, l ) ... end
 
 <p><a id="X7C5233E27D2D603E" name="X7C5233E27D2D603E"></a></p>
 
-<h4>7.13 <span class="Heading">Quillen's complex and the <span class="SimpleMath">\(p\)</span>-part of homology </span></h4>
+<h4>7.14 <span class="Heading">Quillen's complex and the <span class="SimpleMath">\(p\)</span>-part of homology </span></h4>
 
 <p>Let <span class="SimpleMath">\(G\)</span> be a finite group with order divisible by prime <span class="SimpleMath">\(p\)</span>. Let <span class="SimpleMath">\({\mathcal A}={\mathcal A}_p(G)\)</span> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <span class="SimpleMath">\(p\)</span>-subgroups of <span class="SimpleMath">\(G\)</span>. The group <span class="SimpleMath">\(G\)</span> acts on <span class="SimpleMath">\(\mathcal A\)</span>. Denote the orbit of a <span class="SimpleMath">\(k\)</span>-simplex <span class="SimpleMath">\(e^k\)</span> by <span class="SimpleMath">\([e^k]\)</span>, and the stabilizer of <span class="SimpleMath">\(e^k\)</span> by <span class="SimpleMath">\(Stab(e^k) \le G\)</span>. For a finite abelian group <span class="SimpleMath">\(H\)</span> let <span class="SimpleMath">\(H_p\)</span> denote the Sylow <span class="SimpleMath">\(p\)</span>-subgroup or the "<span class="SimpleMath">\(p\)</span>-part". Peter Webb proved the following.</p>
 

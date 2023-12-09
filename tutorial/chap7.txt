@@ -323,7 +323,79 @@
   [4X[32X[104X
   
   
-  [1X7.7 [33X[0;0YCohomology with coefficients in a module[133X[101X
+  [1X7.7 [33X[0;0YLie algebra homology and free nilpotent groups[133X[101X
+  
+  [33X[0;0YOne  method  of  producting a Lie algebra [22XL[122X from a group [22XG[122X is by forming the
+  direct sum [22XL(G) = G/γ_2G ⊕ γ_2G/γ_3G ⊕ γ_3G/γ_4G ⊕ ⋯[122X of the quotients of the
+  lower central series [22Xγ_1G=G[122X, [22Xγ_n+1G=[γ_nG,G][122X. Commutation in [22XG[122X induces a Lie
+  bracket [22XL(G)× L(G) → L(G)[122X.[133X
+  
+  [33X[0;0YThe  homology  [22XH_n(L)[122X  of  a  Lie algebra (with trivial coefficients) can be
+  calculated  as the homology of the Chevalley-Eilenberg chain complex [22XC_∗(L)[122X.
+  This  chain  complex is implemented in [12XHAP[112X in the cases where the underlying
+  additive  group  of  [22XL[122X is either finitely generated torsion free or finitely
+  generated  of  prime  exponent [22Xp[122X. In these two cases the ground ring for the
+  Lie   algebra/  Chevalley-Eilenberg  complex  is  taken  to  be  [22XZ[122X  and  [22XZ_p[122X
+  respectively.[133X
+  
+  [33X[0;0YFor  example,  consider  the quotient [22XG=F/γ_8F[122X of the free group [22XF=F(x,y)[122X on
+  two  generators by eighth term of its lower central series. So [22XG[122X is the [13Xfree
+  nilpotent group of class 7 on two generators[113X. The following commands compute
+  [22XH_4(L(G))  =  Z_2^77 ⊕ Z_6^8 ⊕ Z_12^51 ⊕ Z_132^11 ⊕ Z^2024[122X and show that the
+  fourth  homology  in this case contains 2-, 3- and 11-torsion. (The commands
+  take an hour or so to complete.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(2),7));;[127X[104X
+    [4X[25Xgap>[125X [27XL:=LowerCentralSeriesLieAlgebra(G);;[127X[104X
+    [4X[25Xgap>[125X [27Xh:=LieAlgebraHomology(L,4);;[127X[104X
+    [4X[25Xgap>[125X [27XCollected(h);[127X[104X
+    [4X[28X[ [ 0, 2024 ], [ 2, 77 ], [ 6, 8 ], [ 12, 51 ], [ 132, 11 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  a  free  nilpotent  group  [22XG[122X the additive homology [22XH_n(L(G))[122X of the Lie
+  algebra can be computed more quickly in [12XHAP[112X than the integral group homology
+  [22XH_n(G,  Z)[122X.  Clearly  there  are  isomorphisms[22XH_1(G)  ≅  H_1(L(G)) ≅ G_ab[122X of
+  abelian  groups  in  homological  degree  [22Xn=1[122X. Hopf's formula can be used to
+  establish  an  isomorphism  [22XH_2(G)  ≅  H_2(L(G))[122X  also  in  degree  [22Xn=2[122X. The
+  following  two  theorems  provide  further  isomorphisms  that allow for the
+  homology  of a free nilpotent group to be calculated more efficiently as the
+  homology of the associated Lie algebra.[133X
+  
+  [33X[0;0Y[12XTheorem  1.[112X  [KS98]  [13XLet  [22XG[122X  be a finitely generated free nilpotent group of
+  class  2.  Then  the  integral group homology [22XH_n(G, Z)[122X is isomorphic to the
+  integral Lie algebra homology [22XH_n(L(G), Z)[122X in each degree [22Xn≥0[122X.[113X[133X
+  
+  [33X[0;0Y[12XTheorem 2.[112X [IO01] [13XLet [22XG[122X be a finitely generated free nilpotent group (of any
+  class).  Then  the  integral  group  homology [22XH_n(G, Z)[122X is isomorphic to the
+  integral Lie algebra homology [22XH_n(L(G), Z)[122X in degrees [22Xn=0, 1, 2, 3[122X.[113X[133X
+  
+  [33X[0;0YWe  should remark that experimentation on free nilpotent groups of class [22X≥ 4[122X
+  has  not  yielded a group for which the isomorphism [22XH_n(G, Z) ≅ H_n(L(G), G)[122X
+  fails.  For  instance,  the  isomorphism  holds  in  degree [22Xn=4[122X for the free
+  nilpotent  group  of  class  5 on two generators, and for the free nilpotent
+  group of class 2 on four generators:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(2),5));;[127X[104X
+    [4X[25Xgap>[125X [27XL:=LowerCentralSeriesLieAlgebra(G);;[127X[104X
+    [4X[25Xgap>[125X [27XCollected( LieAlgebraHomology(L,4) );[127X[104X
+    [4X[28X[ [ 0, 85 ], [ 7, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCollected( GroupHomology(G,4) );[127X[104X
+    [4X[28X[ [ 0, 85 ], [ 7, 1 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(4),2));;  [127X[104X
+    [4X[25Xgap>[125X [27XL:=LowerCentralSeriesLieAlgebra(G);;[127X[104X
+    [4X[25Xgap>[125X [27XCollected( LieAlgebraHomology(L,4) );[127X[104X
+    [4X[28X[ [ 0, 84 ], [ 3, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCollected( GroupHomology(G,4) );[127X[104X
+    [4X[28X[ [ 0, 84 ], [ 3, 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.8 [33X[0;0YCohomology with coefficients in a module[133X[101X
   
   [33X[0;0YThere  are  various  ways  to  represent a [22XZG[122X-module [22XA[122X with action [22XG× A → A,
   (g,a)↦ α(g,a)[122X.[133X
@@ -469,7 +541,7 @@
   [4X[32X[104X
   
   
-  [1X7.8 [33X[0;0YCohomology as a functor of the first variable[133X[101X
+  [1X7.9 [33X[0;0YCohomology as a functor of the first variable[133X[101X
   
   [33X[0;0YSuppose given a group homomorphism [22Xf: G_1→ G_2[122X and a [22XG_2[122X-module [22XA[122X. Then [22XA[122X is
   naturally a [22XG_1[122X-module with action via [22Xf[122X, and there is an induced cohomology
@@ -501,7 +573,7 @@
   [4X[32X[104X
   
   
-  [1X7.9  [33X[0;0YCohomology  as  a  functor  of  the  second variable and the long exact[101X
+  [1X7.10  [33X[0;0YCohomology  as  a  functor  of  the second variable and the long exact[101X
   [1Xcoefficient sequence[133X[101X
   
   [33X[0;0YA short exact sequence of [22XZG[122X-modules [22XA ↣ B ↠ C[122X induces a long exact sequence
@@ -581,7 +653,7 @@
   [33X[0;0Y[22XH^2(S_4, Z_2) → H^3(S_4, Z_4) → H^3(S_4, Z_8) → H^3(S_4, Z_2)[122X .[133X
   
   
-  [1X7.10 [33X[0;0YTransfer Homomorphism[133X[101X
+  [1X7.11 [33X[0;0YTransfer Homomorphism[133X[101X
   
   [33X[0;0YConsider  the  action  of the symmetric group [22XG=S_5[122X on [22XA= Z^5[122X which permutes
   the   canonical   basis.  The  action  restricts  to  the  sylow  [22X2[122X-subgroup
@@ -614,7 +686,7 @@
   [4X[32X[104X
   
   
-  [1X7.11 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
+  [1X7.12 [33X[0;0YCohomology rings of finite fundamental groups of 3-manifolds[133X[101X
   
   [33X[0;0YA  [13Xspherical 3-manifold[113X is a 3-manifold arising as the quotient [22XS^3/Γ[122X of the
   3-sphere [22XS^3[122X by a finite subgroup [22XΓ[122X of [22XSO(4)[122X acting freely as rotations. The
@@ -730,7 +802,7 @@
   of these fundamental groups of spherical 3-manifolds is given in [TZ08].[133X
   
   
-  [1X7.12 [33X[0;0YExplicit cocycles[133X[101X
+  [1X7.13 [33X[0;0YExplicit cocycles[133X[101X
   
   [33X[0;0YGiven  a [22XZG[122X-resolution [22XR_∗[122X and a [22XZG[122X-module [22XA[122X, one defines an [13X[22Xn[122X-cocycle[113X to be
   a  [22XZG[122X-homomorphism  [22Xf:  R_n → A[122X for which the composite homomorphism [22Xfd_n+1:
@@ -916,7 +988,7 @@
   [4X[32X[104X
   
   
-  [1X7.13 [33X[0;0YQuillen's complex and the [22Xp[122X[101X[1X-part of homology[133X[101X
+  [1X7.14 [33X[0;0YQuillen's complex and the [22Xp[122X[101X[1X-part of homology[133X[101X
   
   [33X[0;0YLet  [22XG[122X  be  a  finite  group  with  order  divisible by prime [22Xp[122X. Let [22Xmathcal
   A=mathcal  A_p(G)[122X  denote  Quillen's simplicial complex arising as the order
