@@ -60,14 +60,20 @@ gens:=[];
 
 
 #####################################################################
-Mult:=function(g,h);
-return Position(Elts,Elts[g]*Elts[h]);
+Mult:=function(g,h)
+local pos;
+pos:=Position(Elts,Elts[g]*Elts[h]);
+if pos=fail then Add(Elts,Elts[g]*Elts[h]); pos:=Length(Elts); fi;
+return pos;
 end;
 #####################################################################
 
 #####################################################################
-Inv:=function(g);
-return Position(Elts,Elts[g]^-1);
+Inv:=function(g)
+local pos;
+pos:= Position(Elts,Elts[g]^-1);
+if pos=fail then Add(Elts[g]^-1); pos:=Length(Elts); fi;
+return pos;
 end;
 #####################################################################
 

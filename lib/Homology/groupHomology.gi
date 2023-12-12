@@ -11,7 +11,7 @@ local
 GroupCohomologyOriginal:=function()
 	local
 		G, gensG, N, p, D, 
-		Functor,
+		Functor,Functor2,
 		HomologyGraphOfGroups,
 		HomologyPrimePowerGroup,
 		HomologyGenericGroup,
@@ -62,7 +62,13 @@ if N=0 and p>0 and not IsGroupHomomorphism(arg[1]) then return [p]; fi;
 if IsPrime(p) then
 Functor:=function(R); return TensorWithIntegersModP(R,p); end;
 else
-Functor:=TensorWithIntegers;
+Functor:=function(R); return ContractedComplex(TensorWithIntegers(R)); end;
+fi;
+
+if IsPrime(p) then
+Functor2:=function(R); return TensorWithIntegersModP(R,p); end;
+else
+Functor2:=TensorWithIntegers;
 fi;
 
 #####################################################################
@@ -92,7 +98,7 @@ PH:=SylowSubgroup(H,k);
 PG:=SylowSubgroup(G,k);
 RG:=ResolutionGenericGroup(PG,N+1);
 RH:=ResolutionGenericGroup(PH,N+1);
-Add(ans, PrimePartDerivedFunctorHomomorphism(f,RG,RH,Functor,N) );
+Add(ans, PrimePartDerivedFunctorHomomorphism(f,RG,RH,Functor2,N) );
 od;
 if Length(ans)>0 then ans:=DirectProduct(ans); fi;
 return ans;
@@ -204,7 +210,7 @@ local
 if IsPrime(p) then
 S:=SylowSubgroup(G,p);
 R:=ResolutionPrimePowerGroup(S,N+1);
-return PrimePartDerivedFunctor(G,R,Functor,N);
+return PrimePartDerivedFunctor(G,R,Functor2,N);
 fi;
 
 
@@ -238,7 +244,7 @@ Length(H)=0
 then Append(TorsionCoeffs,H); 
 else
 Append(TorsionCoeffs,
-PrimePartDerivedFunctorViaSubgroupChain(G,R,Functor,N));
+PrimePartDerivedFunctorViaSubgroupChain(G,R,Functor2,N));
 #PrimePartDerivedFunctor(G,R,Functor,N));
 fi;
 od;

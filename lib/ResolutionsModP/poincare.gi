@@ -15,7 +15,7 @@ local
 	Dcoeffs,
 	Ncoeffs,
 	PolRing, x,
-	k,bool;
+	k,bool,A,AA,i;
 
 PolRing:=HapConstantPolRing;
 x:=GeneratorsOfAlgebra(PolRing)[2];
@@ -29,6 +29,14 @@ Print("The group is not a p-group.\n");
 return fail;
 fi;
 fi;
+if IsAlgebra(arg[1]) then A:=arg[1]; fi;
+if not IsBound(A!.degree) then Print("The algebra does not seem to be graded.\n"); return fail; fi;
+A:=List(Basis(A),a->A!.degree(a));
+AA:=[];
+for i in [0..Maximum(A)] do
+AA[i+1]:=Size(Filtered(A,a->a=i));
+od;
+return PoincareSeries(AA,Length(AA));
 fi;
 
 bool:=true;

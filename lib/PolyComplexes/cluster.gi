@@ -496,7 +496,7 @@ InstallValue(ViewGraph,GraphDisplay);
 InstallGlobalFunction(SimplicialNerveOfGraph,
 function(arg)
 local  G, dim, BOOL, A, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
-       bool, s, VL,x, y, d, i,j,k,l,m,n,RedundantFaces;
+       bool, s, VL,x, y,yy, d, i,j,k,l,m,n,p,q,r,t,u,v,w,z,a,b,c,e, RedundantFaces;
 
 G:=arg[1];
 dim:=arg[2];
@@ -514,6 +514,7 @@ if dim>=0 then
 SimplicesLst[1]:=List(Vertices,x->[x]); 
 fi;
 
+#THE FOLLOWING STRANGE FOR LOOPS ARE AN ATTEMPT AT SPEEDUP IN DEGREES <14
 if dim>=1 then
 SimplicesLst[2]:=[];
 for i in Vertices do
@@ -526,87 +527,228 @@ fi;
 
 if dim>=2 then
 SimplicesLst[3]:=[];
-#for i in Vertices do
-#for j in [i+1..VL] do
 for s in SimplicesLst[2] do
 i:=s[1];j:=s[2];
 for k in [j+1..VL] do
-if A[i][j]>0 and A[i][k]>0 and A[j][k]>0
+if A[i][k]>0 and A[j][k]>0
 then Add(SimplicesLst[3],[i,j,k]); fi;
-od;od;#od;
+od;od;
 SimplicesLst[3]:=SSortedList(SimplicesLst[3]);
 if Length(SimplicesLst[3])=0 then dim:=1; fi;
 fi;
 
 if dim>=3 then
 SimplicesLst[4]:=[];
-#for i in Vertices do
-#for j in [i+1..VL] do
-#for k in [j+1..VL] do
 for s in SimplicesLst[3] do
 i:=s[1];j:=s[2];k:=s[3];
 for l in [k+1..VL] do
-if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and
-A[j][k]>0 and A[j][l]>0 and A[k][l]>0
+if A[i][l]>0 and A[j][l]>0 and A[k][l]>0
 then Add(SimplicesLst[4],[i,j,k,l]); fi;
-od;od;#od;od;
+od;od;
 SimplicesLst[4]:=SSortedList(SimplicesLst[4]);
 if Length(SimplicesLst[4])=0 then dim:=2; fi;
 fi;
 
 if dim>=4 then
 SimplicesLst[5]:=[];
-#for i in Vertices do
-#for j in [i+1..VL] do
-#for k in [j+1..VL] do
-#for l in [k+1..VL] do
 for s in SimplicesLst[4] do
 i:=s[1];j:=s[2];k:=s[3];l:=s[4];
 for m in [l+1..VL] do
-if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and A[i][m]>0
-and A[j][k]>0 and A[j][l]>0 and A[j][m]>0 
-and A[k][l]>0 and A[k][m]>0
-and A[l][m]>0
+if  A[i][m]>0 and  A[j][m]>0 and  A[k][m]>0 and A[l][m]>0
 then Add(SimplicesLst[5],[i,j,k,l,m]); fi;
-od;od;#od;od;od;
+od;od;
 SimplicesLst[5]:=SSortedList(SimplicesLst[5]);
 if Length(SimplicesLst[5])=0 then dim:=3; fi;
 fi;
 
 if dim>=5 then
 SimplicesLst[6]:=[];
-#for i in Vertices do
-#for j in [i+1..VL] do
-#for k in [j+1..VL] do
-#for l in [k+1..VL] do
-#for m in [l+1..VL] do
 for s in SimplicesLst[5] do
 i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];
 for n in [m+1..VL] do
-if A[i][j]>0 and A[i][k]>0 and A[i][l]>0 and A[i][m]>0 and A[i][n]>0
-and A[j][k]>0 and A[j][l]>0 and A[j][m]>0  and A[j][n]>0
-and A[k][l]>0 and A[k][m]>0 and   A[k][n]>0
-and A[l][m]>0 and   A[l][n]>0
-and   A[m][n]>0
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0
 then Add(SimplicesLst[6],[i,j,k,l,m,n]); fi;
-od;od;#od;od;od;od;
+od;od;
 SimplicesLst[6]:=SSortedList(SimplicesLst[6]);
 if Length(SimplicesLst[6])=0 then dim:=4; fi;
 fi;
 
+if dim>=6 then
+SimplicesLst[7]:=[];
+for s in SimplicesLst[6] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];
+for n in [p+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0
+then Add(SimplicesLst[7],[i,j,k,l,m,p,n]); fi;
+od;od;
+SimplicesLst[7]:=SSortedList(SimplicesLst[7]);
+if Length(SimplicesLst[7])=0 then dim:=5; fi;
+fi;
 
-for d in [6..dim] do
-SimplicesLst[d+1]:=[];
-for y in Combinations(Vertices,d+1) do
-bool:=true;
-for x in Combinations(y,2) do
-if A[x[1]][x[2]]=0 then bool:=false; break; fi;
+if dim>=7 then
+SimplicesLst[8]:=[];
+for s in SimplicesLst[7] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];
+for n in [q+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0
+then Add(SimplicesLst[8],[i,j,k,l,m,p,q,n]); fi;
+od;od;
+SimplicesLst[8]:=SSortedList(SimplicesLst[8]);
+if Length(SimplicesLst[8])=0 then dim:=6; fi;
+fi;
+
+if dim>=8 then
+SimplicesLst[9]:=[];
+for s in SimplicesLst[8] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];
+for n in [r+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0
+then Add(SimplicesLst[9],[i,j,k,l,m,p,q,r,n]); fi;
+od;od;
+SimplicesLst[9]:=SSortedList(SimplicesLst[9]);
+if Length(SimplicesLst[9])=0 then dim:=7; fi;
+fi;
+
+if dim>=9 then
+SimplicesLst[10]:=[];
+for s in SimplicesLst[9] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];
+for n in [t+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0
+then Add(SimplicesLst[10],[i,j,k,l,m,p,q,r,t,n]); fi;
+od;od;
+SimplicesLst[10]:=SSortedList(SimplicesLst[10]);
+if Length(SimplicesLst[10])=0 then dim:=8; fi;
+fi;
+
+if dim>=10 then
+SimplicesLst[11]:=[];
+for s in SimplicesLst[10] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10];
+for n in [u+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0
+then Add(SimplicesLst[11],[i,j,k,l,m,p,q,r,t,u,n]); fi;
+od;od;
+SimplicesLst[11]:=SSortedList(SimplicesLst[11]);
+if Length(SimplicesLst[11])=0 then dim:=9; fi;
+fi;
+
+if dim>=11 then
+SimplicesLst[12]:=[];
+for s in SimplicesLst[11] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11];
+for n in [v+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0
+then Add(SimplicesLst[12],[i,j,k,l,m,p,q,r,t,u,v,n]); fi;
+od;od;
+SimplicesLst[12]:=SSortedList(SimplicesLst[12]);
+if Length(SimplicesLst[12])=0 then dim:=10; fi;
+fi;
+
+if dim>=12 then
+SimplicesLst[13]:=[];
+for s in SimplicesLst[12] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12];
+for n in [w+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 
+then Add(SimplicesLst[13],[i,j,k,l,m,p,q,r,t,u,v,w,n]); fi;
+od;od;
+SimplicesLst[13]:=SSortedList(SimplicesLst[13]);
+if Length(SimplicesLst[13])=0 then dim:=11; fi;
+fi;
+
+if dim>=13 then
+SimplicesLst[14]:=[];
+for s in SimplicesLst[13] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13];
+for n in [z+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 
+then Add(SimplicesLst[14],[i,j,k,l,m,p,q,r,t,u,v,w,z,n]); fi;
+od;od;
+SimplicesLst[14]:=SSortedList(SimplicesLst[14]);
+if Length(SimplicesLst[14])=0 then dim:=12; fi;
+fi;
+
+if dim>=14 then
+SimplicesLst[15]:=[];
+for s in SimplicesLst[14] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13]; a:=s[14];
+for n in [a+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 and A[a][n]>0
+then Add(SimplicesLst[15],[i,j,k,l,m,p,q,r,t,u,v,w,z,a,n]); fi;
+od;od;
+SimplicesLst[15]:=SSortedList(SimplicesLst[15]);
+if Length(SimplicesLst[15])=0 then dim:=13; fi;
+fi;
+
+if dim>=15 then
+SimplicesLst[16]:=[];
+for s in SimplicesLst[15] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13]; a:=s[14]; b:=s[15];;
+for n in [b+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 and A[a][n]>0 and A[b][n]>0
+then Add(SimplicesLst[16],[i,j,k,l,m,p,q,r,t,u,v,w,z,a,b,n]); fi;
+od;od;
+SimplicesLst[16]:=SSortedList(SimplicesLst[16]);
+if Length(SimplicesLst[16])=0 then dim:=14; fi;
+fi;
+
+if dim>=16 then
+SimplicesLst[17]:=[];
+for s in SimplicesLst[16] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13]; a:=s[14]; b:=s[15];; c:=s[16];
+for n in [c+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 and A[a][n]>0 and A[b][n]>0 and A[c][n]>0
+then Add(SimplicesLst[17],[i,j,k,l,m,p,q,r,t,u,v,w,z,a,b,c,n]); fi;
+od;od;
+SimplicesLst[17]:=SSortedList(SimplicesLst[17]);
+if Length(SimplicesLst[17])=0 then dim:=15; fi;
+fi;
+
+if dim>=17 then
+SimplicesLst[18]:=[];
+for s in SimplicesLst[17] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13]; a:=s[14]; b:=s[15];; c:=s[16]; d:=s[17];
+for n in [d+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 and A[a][n]>0 and A[b][n]>0 and A[c][n]>0 and A[d][n]>0
+then Add(SimplicesLst[18],[i,j,k,l,m,p,q,r,t,u,v,w,z,a,b,c,d,n]); fi;
+od;od;
+SimplicesLst[18]:=SSortedList(SimplicesLst[18]);
+if Length(SimplicesLst[18])=0 then dim:=16; fi;
+fi;
+
+if dim>=18 then
+SimplicesLst[19]:=[];
+for s in SimplicesLst[18] do
+i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];p:=s[6];q:=s[7];r:=s[8];t:=s[9];u:=s[10]; v:=s[11]; w:=s[12]; z:=s[13]; a:=s[14]; b:=s[15];; c:=s[16]; d:=s[17]; e:=s[18];
+for n in [e+1..VL] do
+if A[i][n]>0 and A[j][n]>0 and A[k][n]>0 and A[l][n]>0 and A[m][n]>0 and A[p][n]>0 and A[q][n]>0 and A[r][n]>0 and A[t][n]>0 and A[u][n]>0 and A[v][n]>0 and A[w][n]>0 and A[z][n]>0 and A[a][n]>0 and A[b][n]>0 and A[c][n]>0 and A[d][n]>0 and A[e][n]>0
+then Add(SimplicesLst[19],[i,j,k,l,m,p,q,r,t,u,v,w,z,a,b,c,d,e,n]); fi;
+od;od;
+SimplicesLst[19]:=SSortedList(SimplicesLst[19]);
+if Length(SimplicesLst[19])=0 then dim:=17; fi;
+fi;
+
+
+
+for d in [19..dim] do
+   SimplicesLst[d+1]:=[];
+   for y in SimplicesLst[d] do
+      for n in [y[Length(y)]+1..VL] do
+         bool:=true;
+         for x in y do
+            if A[x][n]=0 then bool:=false; break; fi;
+         od;
+         if bool then yy:=Concatenation(y,[n]);;
+            Add(SimplicesLst[d+1],yy);
+         fi;
+      od;
+      SimplicesLst[d+1]:=SSortedList(SimplicesLst[d+1]);
+   od;
+   if Length(SimplicesLst[d+1])=0 then  dim:=d-1;  fi;
 od;
-if bool then Add(SimplicesLst[d+1],y); fi;    ##CHANGED d to d+1 , March 2023
-od;
-SimplicesLst[d+1]:=SSortedList(SimplicesLst[d+1]);
-if Length(SimplicesLst[d+1])=0 then dim:=d-1; fi;
-od;
+
+
 ##########################
 
 if BOOL then ############
@@ -659,6 +801,8 @@ fi;
 ###########################
 fi;
 
+SimplicesLst:=Filtered(SimplicesLst,x->Length(x)>0);
+dim:=Length(SimplicesLst)-1;
 
 ##########################
 Simplices:=function(d,k);
@@ -817,6 +961,7 @@ SimplicesLst:=List([1..dim+1],i->List([1..T],j->[]));
 FilteredDims:=[];
 
 ##########################
+##THE FOLOWING CODE NEEDS TO BE TITIED UP!
 if dim>=0 then
 for i in Vertices do
 Add(SimplicesLst[1][A[i][i]],[i]);

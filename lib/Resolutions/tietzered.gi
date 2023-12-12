@@ -20,8 +20,9 @@ local
 	triple, phi, nwrdd, wrdd,
 	tmp, trp3,pos, 
         homotopyrec, homotopyrecpos,
-        newb,bool,i,j,b,e,g,x,w,D,D2,gg;
+        newb,bool,char,i,j,b,e,g,x,w,D,D2,gg;
 
+char:=EvaluateProperty(R,"characteristic");
 Elts:=R!.elts;
 modN:=[];
 modNplus1:=[];
@@ -156,10 +157,9 @@ for i in [1..Length(b)] do
    Append(newb,w);
    fi;
 od;
-PseudoBoundary[j]:=AlgebraicReduction(newb);
+PseudoBoundary[j]:=AlgebraicReduction(newb,char);
 od;
 ######################
-
 
 modN:=Difference([1..R!.dimension(N)],modN);
 modNplus1:=Difference([1..R!.dimension(N+1)],modNplus1);
@@ -229,7 +229,7 @@ h:=R!.homotopy(N+1, [-SignInt(w[1])*trp3, Position(R!.elts,R!.elts[x[2]]*R!.elts
 Append(ans,h);
 fi;
 od;
-return AlgebraicReduction(1*ans);
+return AlgebraicReduction(1*ans, char);
 end;
 ####################################################
 
@@ -270,7 +270,7 @@ HomotopyNminus1:=function(x)
 local h;
 h:= phi(1*R!.homotopy(N-1,x));
 h:=List(h,a -> [ SignInt(a[1])*Position(modN,AbsInt(a[1])), a[2]]);
-return AlgebraicReduction(h);
+return AlgebraicReduction(h,char);
 end;
 ####################################################
 

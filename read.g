@@ -257,6 +257,7 @@ ReadPackageHap( "lib/Homology/groupCohomology.gi");
 ReadPackageHap( "lib/Homology/integralHomologyObj.gi");
 ReadPackageHap( "lib/Homology/integralCohomologyObj.gi");
 ReadPackageHap( "lib/Homology/persistent.gi");
+ReadPackageHap( "lib/Homology/new_persistent.gi");
 
 ##################### PERTURBATIONS #################################
 ReadPackageHap( "lib/Perturbations/resExtension.gi");
@@ -504,6 +505,7 @@ ReadPackageHap("lib/TorsionSubcomplexes/torsioninit.gi");
 ReadPackageHap("lib/RahmSanchez/DavisComplex.gi");
 
 ################## Cohomology Operations #####################
+ReadPackageHap("lib/CohomologyOperations/cohrec.gi");
 ReadPackageHap("lib/CohomologyOperations/cohomology_homomorphism.gi");
 ReadPackageHap("lib/CohomologyOperations/connecting_homomorphism.gi");
 ReadPackageHap("lib/CohomologyOperations/steenrod.gi");

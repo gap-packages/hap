@@ -231,7 +231,7 @@ function(A,n);
 
 if not IsLeftModule(A) then return fail; fi;
 return
-Homology(ChevalleyEilenbergComplex(A,n+1),n);
+Homology(ContractedComplex(ChevalleyEilenbergComplex(A,n+1)),n);
 
 end);
 #####################################################################

@@ -565,6 +565,7 @@ DeclareGlobalFunction("MaximalSimplicesToSimplicialComplex");#<SimplicialComplex
 DeclareGlobalFunction("SimplicesToSimplicialComplex");#<SimplicialComplex
 DeclareGlobalFunction("MaximalSimplicesOfSimplicialComplex");
 DeclareGlobalFunction("ContractSimplicialComplex");#<ContractedSimplicialComplex
+DeclareGlobalFunction("ContractSimplicialComplex_alt");
 DeclareGlobalFunction("PathComponentOfPureCubicalComplex");
 DeclareGlobalFunction("PathComponentOfPureComplex");
 DeclareOperation("PathComponent",[IsHapPureCubicalComplex,IsInt]);
@@ -746,6 +747,7 @@ DeclareOperation("SimplifiedComplex",[IsHapRegularCWComplex]);#doc
 DeclareGlobalFunction("ContractedRegularCWComplex");#<ContractedComplex
 DeclareGlobalFunction("DeformationRetract");
 DeclareGlobalFunction("SimplicialComplexToRegularCWComplex");#<RegularCWComplex
+DeclareGlobalFunction("SimplicialComplexToRegularCWComplex_alt");
 DeclareGlobalFunction("GraphOfRegularCWComplex");#Not yet implemented
 DeclareGlobalFunction("HomotopyGraph");
 DeclareGlobalFunction("CubicalComplexToRegularCWComplex");#<RegularCWComplex

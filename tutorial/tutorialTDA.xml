@@ -4,7 +4,7 @@
 <P/>Pairwise distances between <M>74</M> points from some 
  metric space have been recorded and stored in a <M>74\times 74</M> 
 matrix <M>D</M>. The following commands load the matrix, construct a 
-filtration of length <M>100</M> on the first two dimensions of the assotiated clique complex (also known as the <E>Rips Complex</E>), and display the resulting degree <M>0</M> persistent homology as a barcode. A single bar with label <M>n</M> denotes <M>n</M> bars with common starting point and common end point.
+filtration of length <M>100</M> on the first two dimensions of the assotiated clique complex (also known as the <E>Vietoris-Rips Complex</E>), and display the resulting degree <M>0</M> persistent homology as a barcode. A single bar with label <M>n</M> denotes <M>n</M> bars with common starting point and common end point.
 
 <Example>
 <#Include SYSTEM "tutex/4.1.txt">
@@ -65,7 +65,7 @@ complex are "buckets" containing data points. A data point may reside in several
 </Alt>
 
 
-<Subsection><Heading>Background to the data</Heading>
+<Subsection Label="pointcloud"><Heading>Background to the data</Heading>
 
 <P/> The datacloud <M>S</M> consists of the <M>400</M> points in the plane shown in the following picture.
 
@@ -229,6 +229,54 @@ can be computed and the persistent homology can be derived from these homology h
 
 </Subsection>
 </Section>
+
+
+<Section><Heading>Knotted proteins</Heading>
+
+        The <URL><Link>https://www.rcsb.org/</Link><LinkText>Protein Data Bank</LinkText>    </URL>  contains a wealth of data which can be investigated with respect to knottedness. Information on a particular protein can be downloaded as a .pdb file. Each protein consists of one or more chains of amino acids and the file gives 3-dimensional Euclidean coordinates of the atoms in amino acids. Each amino acid has a unique "alpha carbon" atom (labelled as "CA" in the pdb file). A simple 3-dimensional curve, the <E>protein backbone</E>,
+                can be constructed through the sequence of alpha carbon atoms. Typically the ends of the protein backbone lie near the "surface" of the protein and can be joined by a path outside of the protein to
+                obtain a simple closed curve in Euclidean 3-space.
+
+        <P/>The following command reads in the pdb file for the  T.thermophilus 1V2X protein, which consists of a single chain of amino acids, and uses Asymptote software to produce an interactive visualization of its backbone. A path joining the end vertices of the backbone is displayed in blue.
+
+                     <Example>
+<#Include SYSTEM "tutex/4.10.txt">
+</Example>
+
+        <P/>
+<Alt Only="HTML">&lt;img src="images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></Alt>
+
+	<P/>The next command reads in the pdb file for the  T.thermophilus 1V2X protein and represents it as a <M>3</M>-dimensional pure cubical complex <M>K</M>. A resolution of <M>r=5</M> is chosen and this results in a representation as a subcomplex <M>K</M> of an ambient rectangular box of volume equal to <M>184\times 186\times 294</M> unit cubes. The complex <M>K</M> should have the homotopy type of a circle and the protein backbone is a 1-dimenional curve that should lie  in <M>K</M>. The final command displays <M>K</M>.
+
+		 <Example>
+<#Include SYSTEM "tutex/4.11.txt">
+</Example>
+
+	<P/>
+<Alt Only="HTML">&lt;img src="images/1v2xcubical.gif" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></Alt>
+
+	<P/>Next we create a filtered pure cubical complex by repeatedly
+		thickening <M>K</M>. We perform <M>15</M> thickenings, each thickening being a term in the filtration. The <M>\beta_1</M> barcode for the filtration is displayed. This barcode is a descriptor for the geometry of the protein. For current purposes it suffices to note that the first few terms of the filtration have first
+		homology equal to that of a circle. This indicates that the Euclidean coordinates in the pdb file robustly determine some knot.
+
+			                      <Example>
+<#Include SYSTEM "tutex/4.12.txt">
+</Example>
+			<P/>
+<Alt Only="HTML">&lt;img src="images/1v2xbarcode.gif" align="center" height="500" alt="barcode"/></Alt>
+
+
+
+
+<P/> The next commands compute a presentation for the fundamental group <M>\pi_1(\mathbb R^3\setminus K)</M> and the Alexander polynomial for the knot. This is the same Alexander polynomial as for the trefoil knot. Also, Tietze transformations can be used to see that the fundamental group is the same as for the trefoil knot.
+
+	   <Example>
+<#Include SYSTEM "tutex/4.13.txt">
+</Example>
+
+
+</Section>
+
 <Section><Heading>Random simplicial complexes</Heading>
 <P/>For a positive integer <M>n</M> and probability <M>p</M>
  we denote by <M>Y(n,p)</M> the <E>Linial-Meshulam random simplicial 2-complex</E>. Its <M>1</M>-skeleton is the complete graph on <M>n</M> vertices; each possible <M>2</M>-simplex is included independently with probability <M>p</M>.
@@ -258,4 +306,31 @@ The largest prime factor is <M>80555235907994145009690263</M> occuring in the su
 </Example>
 
 </Section>
+
+	<Section><Heading>Computing homology of a clique complex (Vietoris-Rips complex) </Heading>
+		Topological data analysis provides one motivation for wanting to compute the homology of a clique complex. Consider for instance the cloud of 
+		data points shown in Example 
+		<Ref Subsect="pointcloud"/>. This data is a set <M>S</M>
+			of 400 points in the plane. Let <M>\Gamma</M> be the graph with vertex set <M>S</M> and with two vertices joined by an edge if they 
+				lie within a Euclidean distance of 40 of each other. The clique complex <M>K=K(\Gamma)</M> could be studied to see what it reveals about the data. The following commands construct <M>K</M> and show that it is 
+					a 23-dimensional simplicial complex consisting of a total of 36191976 simplices.
+<Example>
+<#Include SYSTEM "tutex/4.14.txt">
+</Example>
+
+<P/> The computation of the homology of this clique complex <M>K</M> is a challenge because of its size. If we are only interested in <M>K</M> up to homotopy then we could try to modify the graph <M>\Gamma</M> in such a way that the homotopy type of the clique complex is unchanged but the size of the clique complex is reduced. This is done in the following commands, producing a smaller <M>19</M>-dimensional simplicial complex <M>K</M> with 4180652 simplices.
+	<Example>
+<#Include SYSTEM "tutex/4.15.txt">
+</Example>
+
+<P/>To compute the homology of <M>K</M> in degrees <M>0</M> to <M>5</M> say, we could represent  <M>K</M> as a regular CW-complex <M>Y</M> and then compute the homology of <M>Y</M> as follows. The homology <M>H_n(K)=\mathbb Z</M> for <M>n=0,1</M> and <M>H_n(K)=
+0</M> for <M>n=2,3,4,5</M> is consistent with the data having been sampled from a space with the homotopy type of a circle.
+	     <Example>
+<#Include SYSTEM "tutex/4.16.txt">
+</Example>
+
+
+</Section>
+
+
 </Chapter>

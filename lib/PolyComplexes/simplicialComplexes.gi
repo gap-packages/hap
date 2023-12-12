@@ -555,7 +555,7 @@ local
 	MaxSimps, Simps, genSimps,dim,s,x,i;
 
 dim:=EvaluateProperty(K,"dimension");
-Simps:=List([1..K!.nrSimplices(dim)],i->K!.simplices(dim,i));
+Simps:=1*K!.simplicesLst[dim+1];
 MaxSimps:=Simps;
 
 while dim>0 do
@@ -566,6 +566,7 @@ dim:=dim-1;
    Add(genSimps,SSortedList(Filtered(s,i->not i=x)));
    od;
    od;
+genSimps:=SSortedList(genSimps);
 Simps:=genSimps;
    for i in [1..K!.nrSimplices(dim)] do
    if not K!.simplices(dim,i) in genSimps then 
@@ -580,13 +581,51 @@ end);
 #################################################################
 #################################################################
 
-
 #################################################################
 #################################################################
 InstallGlobalFunction(ContractSimplicialComplex,
 function(K)
-local RemoveApex,RemoveEdge,Vertices,G,A,LA,Faces,bool,dim,PC,iter,row,x,i,j,k;
+local M, i, j, k, mx, KK, MM, C, inv,A;
 
+if IsList(K) then M:=1*K;
+else M:=MaximalSimplicesOfSimplicialComplex(K);;
+fi;
+
+A:=NullMat(Length(M),Length(M));
+for i in [1..Length(M)] do
+   for j in [i+1..Length(M)] do
+      A[i][j]:=Size(Intersection(M[i],M[j]));
+      A[j][i]:=A[i][j];
+   od;
+od;
+inv:=function(x); return x{[1..Length(x)-1]}; end;
+MM:=[];
+for i in [1..Length(M)] do
+   mx:=0;
+   for j in [1..Length(M)] do
+      if not i=j then
+         mx:= Maximum(A[i][j],mx);
+      fi;
+   od;
+   mx:=Minimum(2+mx,Length(M[i]));
+   C:=Combinations(M[i],mx);
+   C:=Classify(C,inv);
+   Apply(C,x->x[1]);
+   Append(MM,C);
+od;
+MM:=SSortedList(MM);
+KK:=MaximalSimplicesToSimplicialComplex(MM);
+return KK;
+end);
+#################################################################
+#################################################################
+
+#################################################################
+#################################################################
+InstallGlobalFunction(ContractSimplicialComplex_alt,
+function(K)
+local RemoveApex,RemoveEdge,Vertices,G,A,LA,Faces,bool,dim,PC,iter,row,x,i,j,k;
+#THIS FUNCTION COULD BE DELETED
 G:=GraphOfSimplicialComplex(K);
 Faces:=K!.simplicesLst;
 dim:=PositionProperty(Faces,x->Size(x)=0);

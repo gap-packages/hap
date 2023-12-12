@@ -221,6 +221,49 @@ end);
 ###################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapEquivariantNonFreeChainComplex",IsObject);
+
+
+DeclareRepresentation(  "IsHapEquivariantNonFreeChainComplexRep",
+                        IsComponentObjectRep,
+                        ["dimension",
+                         "boundary",
+                         "group",
+                         "elts",
+                         "stabilizer",
+                         "action",
+                         "properties"
+                         ]);
+
+HapEquivariantNonFreeChainComplexFamily:=NewFamily( "HapEquivariantNonFreeChainComplexFamily",
+                                          IsHapEquivariantNonFreeChainComplex,
+                                          IsHapEquivariantNonFreeChainComplex);
+
+HapEquivariantNonFreeChainComplex:=NewType(HapEquivariantNonFreeChainComplexFamily,
+                                IsHapEquivariantNonFreeChainComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapEquivariantNonFreeChainComplexes",
+ [IsHapEquivariantNonFreeChainComplex],
+ function(R)
+ Print("Equivariant non-free chain complex of dimension ",EvaluateProperty(R,"dimension"));
+ Print("\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapEquivariantNonFreeChainComplexes",
+ [IsHapEquivariantChainComplex],
+ function(R)
+ Print("Equivariant non-free chain complex of dimension ",EvaluateProperty(R,"dimension"));
+ Print("\n");
+end);
+###################################################################
+#####################################################################
+
+
 
 #####################################################################
 #####################################################################

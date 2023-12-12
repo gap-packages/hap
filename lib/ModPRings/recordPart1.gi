@@ -558,6 +558,7 @@ if "mingens" in NamesOfComponents(A) then return A!.mingens;fi;
 
 
 S:=GeneratorsOfAlgebra(A);
+S:=Filtered(S,a->not IsZero(a));  #Added October 2023
 deg:=A!.degree(S[Length(S)]);
 gradedgens:=List([1..1+deg],i->[]);
 

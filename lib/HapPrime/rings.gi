@@ -292,6 +292,7 @@ InstallMethod(Mod2CohomologyRingPresentation,
     Print("This function is currently implemented only for 2-groups.\n");
     return fail;
     fi;
+Print("Alpha version of completion test code will be used. This needs further work.\n");  
 ####
 ####
 
@@ -541,7 +542,6 @@ InstallOtherMethod(LHSSpectralSequenceLastSheet,
  N := PCentre(G);
     N:=Filtered(GeneratorsOfGroup(N),x->Order(x)>1);
     N:=Group(N[1]);
-
     # If the centre is larger than sqrt(order(G)) then we might be able
     # to find a better split
 #    if Order(N)*Order(N) > Order(G) then 
@@ -1465,7 +1465,7 @@ InstallGlobalFunction(HAPPRIME_CohomologyRingWithoutResolution,
         return GradedAlgebraPresentation(R, [z^2], [1, 2]);
       fi;
     fi;
-    
+#return fail;   ################    
     DF := DirectFactorsOfGroup(G);
     if Length(DF) > 1 then
       Info(InfoHAPprime, 2, "Calculating mod-p cohomology ring presentation for");

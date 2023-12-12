@@ -67,6 +67,15 @@ else
 file:=arg[3];
 fi;
 
+if IsBound(hap_cr[IdGroup(G)[1]]) then
+if IsBound(hap_cr[IdGroup(G)[1]][IdGroup(G)[2]]) then
+if N >= Maximum(  hap_cr[IdGroup(G)[1]][IdGroup(G)[2]]  ) then 
+Print("Integer argument is large enough to ensure completeness of cohomology ring presentation.\n\n");
+else
+Print("Integer argument should be at least ",Maximum(  hap_cr[IdGroup(G)[1]][IdGroup(G)[2]]  )," ","to ensure completeness of cohomology ring presentation.\n\n");
+fi;
+fi;
+fi;
 AppendTo(file,"Group order: ", IdGroup(G)[1],"\n");
 AppendTo(file,"Group number: ",IdGroup(G)[2],"\n");
 AppendTo(file,"Group description: ",StructureDescription(G),"\n\n");
@@ -209,6 +218,9 @@ i:=InputTextFile(file);
 s:=ReadAll(i);
 Print(s);
 if Length(arg)=2 then RemoveFile(file); fi;
+
+Print("\n");
+return A;
 end);
 #########################################################
 #########################################################

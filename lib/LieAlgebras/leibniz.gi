@@ -288,7 +288,7 @@ if not IsLeftModule(A)=true then
 if not IsLeftModuleHomomorphism(A)=true then
 	return fail;
 fi;fi;
-return Homology(LeibnizComplex(A,n+1),n);
+return Homology(ContractedComplex(LeibnizComplex(A,n+1)),n);
 
 end);
 #####################################################################

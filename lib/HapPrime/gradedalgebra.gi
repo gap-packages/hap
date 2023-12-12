@@ -93,7 +93,8 @@ InstallMethod(GradedAlgebraPresentation,
       fi;
     od;
     # Check that each entry in <degs> is a positive integer
-    if not ForAll(degs, IsPosInt) then
+    #if not ForAll(degs, IsPosInt) then
+    if not ForAll(degs, IsInt) then   #Graham changed this October 2023
       Error("the entries in <degs> must all be positive integers");
     fi;
     return GradedAlgebraPresentationNC(ring, relations, degs);
@@ -1290,6 +1291,11 @@ if IsPackageMarkedForLoading("singular","0") then
       # We shall make sure that the leading coefficients are in their
       # smallest form, and that the leading coefficient in the numerator
       # is positive.
+      for d in [1..Length(coeffs)] do                 # Graham added this 
+      if IsList(coeffs[d]) then                       # Oct 2023
+      if Length(coeffs[d])=0 then coeffs[d]:=[0]; fi; #
+      fi;                                             #
+      od;
       gcd := Gcd(coeffs[1][1], coeffs[2][1]) * SignInt(coeffs[1][1]);  
       coeffs[1] := coeffs[1] / gcd;
       coeffs[2] := coeffs[2] / gcd;

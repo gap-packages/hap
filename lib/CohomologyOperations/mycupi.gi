@@ -25,6 +25,9 @@ RG:=ResolutionPrimePowerGroup(G,N);
 RC2:=ResolutionPrimePowerGroup(C2,N);
 RGG:=ResolutionFiniteDirectProduct(RG,RG);
 RC2G:=ResolutionFiniteDirectProduct(RC2,RG);
+#RGG:=ResolutionDirectProductLazy(RG,RG);
+#RC2G:=ResolutionDirectProductLazy(RC2,RG);
+
 C2G:=RC2G!.group;
 FirstProjection:=Projection(C2G,1);
 SecondProjection:=Projection(C2G,2);

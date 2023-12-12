@@ -28,12 +28,12 @@ end);
 
 ##################################################################
 ##################################################################
-InstallGlobalFunction(SimplicialComplexToRegularCWComplex,
+InstallGlobalFunction(SimplicialComplexToRegularCWComplex_alt,
 function(arg)
 local
 	K,DM,NrCells,Boundaries,tmp,TMP,Coboundaries,Properties,
         Orientation, 
-        cnt,b,bb,k,n,s,x,i,j,dim ;
+        cnt,ln,b,bb,k,n,s,x,i,j,dim,bbb ;
 
 K:=IntegerSimplicialComplex(arg[1]);
 if Length(arg)>1 then dim:=arg[2]; else dim:=Dimension(K); fi; 
@@ -70,7 +70,6 @@ Boundaries[1]:=List([1..K!.nrSimplices(0)],x->[1,0]);
                  ##We denote by 0 the unique vertex in dimension -1.
 
 for n in [1..dim] do
-
   Boundaries[n+1]:=[];
   tmp:=List(Boundaries[1],x->[]);
   TMP:=List(Boundaries[1],x->[]);
@@ -84,10 +83,20 @@ for n in [1..dim] do
  bb:=K!.simplices(n,k);
  bb:=SSortedList(bb);
 
- b:=List(bb,x->  Difference(bb,[x]) );
- Apply(b,x->   TMP[x[1]][Position(tmp[x[1]],x)] );
+ #b:=List(bb,x->  Difference(bb,[x]) )#;
+ b:=[]; ln:=n+1; #ln:=Length(bb);
+ 
+ for i in [1..ln] do
+ bbb:=1*bb;
+ Remove(bbb,i);
+ b[i]:=bbb;
+ od;
+ Apply(b,x->   TMP[x[1]][Position(tmp[x[1]],x)] );  
 
- Boundaries[n+1][k]:=Concatenation([Length(b)],b);
+ #Boundaries[n+1][k]:=Concatenation([Length(b)],b);
+ Add(b,ln,1);
+ Boundaries[n+1][k]:=b;
+
  od;
 od;
 Boundaries[dim+2]:=[];
@@ -2610,3 +2619,189 @@ return Objectify(HapRegularCWMap,
 end);
 #######################################################
 #######################################################
+
+###############################################################
+###############################################################
+InstallGlobalFunction(SimplicialComplexToRegularCWComplex,
+function(KK)
+local K, posn, popP, P, S, B, n, b, s, i, bb, N;
+
+K:=IntegerSimplicialComplex(KK);
+S:=K!.simplicesLst;
+P:=[];
+###################################
+popP:=function()
+local cnt,s;
+if n=1 then P[n]:=SSortedList(S[n]); P[n]:=List(P[n],x->x[1]);fi;
+
+if n=2 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do
+cnt:=cnt+1;
+if IsInt(P[n][s[1]]) then P[n][s[1]]:=[]; fi;
+P[n][s[1]][s[2]]:= cnt;
+od;
+fi;
+
+if n=3 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do
+cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]]) then P[n][s[1]][s[2]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]]:= cnt;
+od;
+fi;
+
+if n=4 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do
+cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]]) then P[n][s[1]][s[2]][s[3]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]]:= cnt;
+od;
+fi;
+
+if n=5 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do
+cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]]) then P[n][s[1]][s[2]][s[3]][s[4]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]]:= cnt;
+od;
+fi;
+
+if n=6 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]]:= cnt;
+od;
+fi;
+
+if n=7 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]]:= cnt;
+od;
+fi;
+
+if n=8 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]]:= cnt;
+od;
+fi;
+
+if n=9 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]]:= cnt;
+od;
+fi;
+
+if n=10 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]]:= cnt;
+od;
+fi;
+
+if n=11 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]]:= cnt;
+od;
+fi;
+
+if n=12 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]]:= cnt;
+od;
+fi;
+
+if n=13 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]]:= cnt;
+od;
+fi;
+
+if n=14 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]]:= cnt;
+od;
+fi;
+
+if n=15 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]]:= cnt;
+od;
+fi;
+
+if n=16 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]][s[16]]:= cnt;
+od;
+fi;
+
+if n=17 then P[n]:=P[n-1];cnt:=0;
+for s in S[n] do cnt:=cnt+1;
+if IsInt(P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]][s[16]]) then P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]][s[16]]:=[]; fi;
+P[n][s[1]][s[2]][s[3]][s[4]][s[5]][s[6]][s[7]][s[8]][s[9]][s[10]][s[11]][s[12]][s[13]][s[14]][s[15]][s[16]][s[17]]:= cnt;
+od;
+fi;
+
+
+
+if n>17 then P[n]:=SSortedList(S[n]); fi;
+end;
+###################################
+
+
+###################################
+posn:=function(bb)
+local p;
+if n=1 then return P[n][bb[1]]; fi;
+if n=2 then return P[n][bb[1]][bb[2]]; fi;
+if n=3 then return P[n][bb[1]][bb[2]][bb[3]]; fi;
+if n=4 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]]; fi;
+if n=5 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]]; fi;
+if n=6 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]]; fi;
+if n=7 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]]; fi;
+if n=8 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]]; fi;
+if n=9 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]]; fi;
+if n=10 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]]; fi;
+if n=11 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]]; fi;
+if n=12 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]]; fi;
+if n=13 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]][bb[13]]; fi;
+if n=14 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]][bb[13]][bb[14]]; fi;
+if n=15 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]][bb[13]][bb[14]][bb[15]]; fi;
+if n=16 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]][bb[13]][bb[14]][bb[15]][bb[16]]; fi;
+if n=17 then return P[n][bb[1]][bb[2]][bb[3]][bb[4]][bb[5]][bb[6]][bb[7]][bb[8]][bb[9]][bb[10]][bb[11]][bb[12]][bb[13]][bb[14]][bb[15]][bb[16]][bb[17]]; fi;
+
+p:=Position(P[n],bb);
+return p;
+end;
+###################################
+
+B:=[List(S[1],x->[1,0])];
+for n in [1..Length(S)-1] do
+   popP();
+   B[n+1]:=[];
+   for s in S[n+1] do
+      b:=[];
+      for i in [1..n+1] do
+         bb:=Concatenation(s{[1..i-1]},s{[i+1..n+1]});
+
+         Add(b, posn(bb));
+
+      od;
+   b:=Concatenation( [Length(b)], b);
+   Add(B[n+1],b);
+   od;
+od;
+
+return RegularCWComplex(B);
+end);
+###############################################################
+###############################################################
+
