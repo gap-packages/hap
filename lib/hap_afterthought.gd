@@ -16,7 +16,6 @@ fi;
 #MakeReadOnlyGlobal("HAP_PERMMOVES_DIM_2");
 #MakeReadOnlyGlobal("HAP_PERMMOVES_DIM_3");
 #MakeReadOnlyGlobal("HAP_XYXYXYXY");
-#MakeReadOnlyGlobal("HAP_type");
 #MakeReadOnlyGlobal("HAPchildFunctionToggle");
 #MakeReadOnlyGlobal("HAPchildToggle");
 #MakeReadOnlyGlobal("HAPchildren");

@@ -10,13 +10,11 @@
 ## The category of groups. As the implementation improves the properties
 ## of this category will increase! 
 ##
-Category_Of_Groups:="Category_Of_Groups";
-HAP_type:= NewType(NewFamily("Category_Of_Groups"),
+BindGlobal("Category_Of_Groups", Objectify(
+           NewType(NewFamily("Category_Of_Groups"),
                        IsString  and 
                        HasInitialObject
-		       and HasTerminalObject);
-ObjectifyWithAttributes(Category_Of_Groups,HAP_type);
-MakeReadOnlyGlobal("Category_Of_Groups");
+		       and HasTerminalObject), []));
 
 
 #############################################################################
