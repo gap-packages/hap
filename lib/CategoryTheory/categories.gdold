@@ -174,9 +174,6 @@ DeclareAttribute( "Mapping" ,        IsCategoryArrow );
 ##
 DeclareProperty("IsAbelianCategory", IsString);
 DeclareProperty("IsAdditiveCategory", IsString);
-DeclareAttribute("TerminalObject", IsString); 
-#DeclareProperty("HasTerminalObject", IsString);
-DeclareAttribute("InitialObject", IsString); #changed from Propertry
 DeclareAttribute("Pullbacks", IsString); #changed from Propertry
 DeclareAttribute("Pushouts", IsString); #changed from Propertry
 

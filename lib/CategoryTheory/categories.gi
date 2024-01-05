@@ -12,9 +12,7 @@
 ##
 BindGlobal("Category_Of_Groups", Objectify(
            NewType(NewFamily("Category_Of_Groups"),
-                       IsString  and 
-                       HasInitialObject
-		       and HasTerminalObject), []));
+                       IsString), []));
 
 
 #############################################################################
@@ -75,8 +73,8 @@ InstallMethod( InitialArrow,
         if not CategoryName(A)=Category_Of_Groups then
         TryNextMethod(); fi;
 
-	initial:=Group( () );
-	INITIAL:=CategoricalEnrichment(initial,CategoryName(A));
+        initial:=Group( () );
+        INITIAL:=CategoricalEnrichment(initial,CategoryName(A));
         phi:=GroupHomomorphismByFunction(initial,Object(A),
                                              x->Identity(Object(A)));
         return CategoryArrow(INITIAL,A,phi,CategoryName(A));
@@ -99,7 +97,8 @@ InstallMethod( TerminalArrow,
 
         terminal:=Group( () );
         TERMINAL:=CategoricalEnrichment(terminal,CategoryName(A));
-        phi:=GroupHomomorphismByFunction(Object(A), terminal,                                             x->Identity(terminal));
+        phi:=GroupHomomorphismByFunction(Object(A), terminal,
+                                             x->Identity(terminal));
         return CategoryArrow(A,TERMINAL,phi,CategoryName(A));
 
         end);
