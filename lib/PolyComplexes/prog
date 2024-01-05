@@ -1,18 +1,56 @@
 #!/usr/bin/perl
 #
-# Program to convert image text files to GAP matrices. 
+# Convert imagemagick text files to GAP matrices.
+# (Thanks to Michael Orlitzky for improving this code.)
 
 ($file) = @ARGV;
-#$file = '/tmp/im.txt';		# Name the file
 
-open(INFO, $file);		# Open the file
-my $line = <INFO>;
-@parts = split /(:|,)/, $line;
-print("HAPAAA:=[\n ",$parts[2],",",$parts[4],",");
-while(<INFO>)		# Read it into an array
-{
-@parts = split m!(,|:|\(|\))!, $_;
-print("[",1+$parts[0],",",1+$parts[2],",",$parts[6]+$parts[8]+$parts[10],"],");
-};			# Print the array
+# Read the last line of the file to obtain the dimensions of the
+# matrix. We use "tail" for this because it would be inefficient to
+# read all the way to the end of a large file just to obtain the first
+# line of our output. It is assumed that "tail" can read backwards
+# from the end of file efficiently.
+#
+# With ImageMagick, the dimensions are also contained in a comment on
+# the first line of the file. With GraphicsMagick, however, there is
+# no better way to obtain them than to look at the coordinates of the
+# last pixel.
+my $lastline = do {
+  open my $pipe, '-|', "tail", "-n 1", $file
+    or die "Can't spawn tail: $!\n";
+  <$pipe>;
+};
+
+@parts = split /(:|,)/, $lastline;
+print("HAPAAA:=[\n  ",$parts[0]+1,",",$parts[2]+1,",");
+
+# Open the file and loop through it, reading each line into an array
+# by splitting it on a few different separator characters.
+open(INFO, $file);
+while(<INFO>) {
+  # If this is an ImageMagick (not GraphicsMagick) file,
+  # skip the first line with the comment on it.
+  next if ( substr($_, 0, 1) eq "#" );
+
+  @parts = split m!(,|:|\(|\))!, $_;
+
+  # Format and print the array. We add one to the indices to convert
+  # them from zero-based (imagemagick) to one-based (gap). The
+  # separator characters also wind up in the array which is why the
+  # indices go up by two each time.
+  print(
+    "[",
+    1+$parts[0],
+    ",",
+    1+$parts[2],
+    ",",
+    $parts[6]+$parts[8]+$parts[10],
+    "],"
+  );
+};
+
+# Finally, print the end of the matrix, and close the input file.
 print($my,"0];\n");
 close(INFO);
+
+
