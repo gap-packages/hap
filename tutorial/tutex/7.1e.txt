@@ -1,0 +1,20 @@
+gap> K:=SmallGroup(24,11);;
+gap> aut:=AutomorphismGroup(K);;
+gap> f:=Elements(aut)[5];;
+gap> g:=Elements(aut)[8];;
+gap> fg:=g*f;;
+gap> F:=ModPCohomologyRing(f,2,5);
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.2+v.3, v.3, v.4+v.5, v.5, 
+  v.6, v.7 ]
+gap> G:=ModPCohomologyRing(g,2,5);
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.2+v.3, v.2, v.5, v.4+v.5, 
+  v.6, v.7 ]
+gap> FG:=ModPCohomologyRing(fg,2,5);
+[ v.1, v.2, v.3, v.4, v.5, v.6, v.7 ] -> [ v.1, v.3, v.2, v.4, v.4+v.5, v.6, 
+  v.7 ]
+
+gap> sF:=Source(F);;tF:=Target(F);;
+gap> sG:=Source(G);; 
+gap> tGsF:=AlgebraHomomorphismByImages(tF,sG,Basis(tF),Basis(sG));;
+gap> List(GeneratorsOfAlgebra(sF),x->Image(G,Image(tGsF,Image(F,x))));
+[ v.1, v.3, v.2, v.4, v.4+v.5, v.6, v.7 ]

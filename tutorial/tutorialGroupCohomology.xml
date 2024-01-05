@@ -195,6 +195,58 @@ the amalgamated product <M>G=S_5*_{S_3}S_4</M>
 </Example>
 </Section>
 
+<Section><Heading>Lie algebra homology and free nilpotent groups</Heading>
+One method of producting a Lie algebra <M>L</M> from a group 
+		<M>G</M>
+is by forming
+			the direct sum <M>L(G) = G/\gamma_2G \oplus \gamma_2G/\gamma_3G \oplus \gamma_3G/\gamma_4G \oplus \cdots</M> of the quotients of the lower central series <M>\gamma_1G=G</M>, <M>\gamma_{n+1}G=[\gamma_nG,G]</M>. 
+				Commutation in <M>G</M> induces a Lie bracket <M>L(G)\times L(G) \rightarrow L(G)</M>.
+
+			<P/>
+				The homology <M>H_n(L)</M>
+					of a Lie algebra (with trivial coefficients) 
+					can be calculated as the homology of the  Chevalley-Eilenberg chain complex <M>C_\ast(L)</M>. 
+						This chain complex is implemented in <B>HAP</B> in the cases where the underlying additive group of <M>L</M> is either 
+							finitely generated torsion free or  finitely generated of prime exponent <M>p</M>. In these two cases the ground ring for the Lie algebra/ Chevalley-Eilenberg complex
+								is taken to be <M>\mathbb Z</M> and <M>\mathbb Z_p</M> respectively.
+
+						<P/> For example, consider the quotient <M>G=F/\gamma_8F</M> of the free group
+						<M>F=F(x,y)</M> on two generators by eighth term of its lower central series. So <M>G</M> is the <E>free nilpotent group of class 7 on two generators</E>.
+							The following commands compute <M>H_4(L(G)) =  \mathbb Z_2^{77} \oplus \mathbb Z_6^8 \oplus \mathbb Z_{12}^{51} \oplus \mathbb Z_{132}^{11} \oplus \mathbb Z^{2024}</M> and show that the fourth homology in this case contains 2-, 3- and 11-torsion. (The commands take an hour or so to complete.)
+
+
+<Example>
+<#Include SYSTEM "tutex/6.29.txt">
+</Example>
+
+	<P/>
+        For a free nilpotent group <M>G</M> the additive homology <M>H_n(L(G))</M>
+		of the Lie algebra can be computed more quickly in <B>HAP</B>
+			than the integral group homology <M>H_n(G,\mathbb Z)</M>. 
+				Clearly there are isomorphisms<M>H_1(G) \cong H_1(L(G)) \cong G_{ab}</M> of abelian groups in homological degree <M>n=1</M>. Hopf's formula can be used to establish an isomorphism
+				<M>H_2(G) \cong H_2(L(G))</M> also in degree <M>n=2</M>. The following two theorems provide further isomorphisms that allow for the homology of a free nilpotent group to be calculated more efficiently as the homology of the associated Lie algebra.
+
+				<P/><B>Theorem 1.</B> <Cite Key="kuzmin"/> <E>Let <M>G</M>
+						be a finitely generated free nilpotent group of class 2. Then the integral 
+						group homology <M>H_n(G,\mathbb Z)</M> is isomorphic to the integral 
+Lie algebra homology <M>H_n(L(G),\mathbb Z)</M> in each degree <M>n\ge0</M>.</E>
+
+	<P/>
+	<B>Theorem 2.</B> <Cite Key="igusa"/> 
+<E>Let <M>G</M>
+be a finitely generated free nilpotent group (of any class). Then the integral
+                                                group homology <M>H_n(G,\mathbb Z)</M> is isomorphic to the integral
+Lie algebra homology <M>H_n(L(G),\mathbb Z)</M> in  degrees <M>n=0, 1, 2, 3</M>.</E>
+
+	<P/>We should remark that experimentation on free nilpotent groups of class <M>\ge 4</M> has not yielded a group for which the isomorphism <M>H_n(G,\mathbb Z) \cong H_n(L(G),\mathbb G)</M> fails. For instance, the isomorphism holds in degree <M>n=4</M> for the free nilpotent group of class 5 on two generators, and for the free nilpotent group of class 2 on four generators:
+
+<Example>
+<#Include SYSTEM "tutex/6.30.txt">
+</Example>
+
+
+</Section>
+
 <Section><Heading>Cohomology with coefficients in a module</Heading>
 There are various ways to represent a <M>\mathbb ZG</M>-module <M>A</M>
 with action <M>G\times A \rightarrow A, (g,a)\mapsto \alpha(g,a)</M>. 

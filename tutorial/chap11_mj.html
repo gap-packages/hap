@@ -317,7 +317,20 @@ Resolution of length 5 in characteristic 0 for Pcp-group with orders
 
 </pre></div>
 
-<p>The following uses homological perturbation on the lower central series to construct a resolution for the Sylow <span class="SimpleMath">\(2\)</span>-subgroup <span class="SimpleMath">\(P=Syl_2(M_{12})\)</span> of the Mathieu simple group <span class="SimpleMath">\(M_{12}\)</span>.</p>
+<p>The following example uses a simplification procedure for resolutions to construct a resolution <span class="SimpleMath">\(S_\ast\)</span> for the free nilpotent group <span class="SimpleMath">\(G\)</span> of class <span class="SimpleMath">\(2\)</span> on <span class="SimpleMath">\(3\)</span> generators that has the minimal possible number of free generators in each degree.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(3),2));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionNilpotentGroup(G,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ContractedComplex(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(S);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..10],i-&gt;IsZero(BoundaryMatrix(C,i)));</span>
+[ true, true, true, true, true, true, true, true, true, true ]
+
+</pre></div>
+
+<p>The following example uses homological perturbation on the lower central series to construct a resolution for the Sylow <span class="SimpleMath">\(2\)</span>-subgroup <span class="SimpleMath">\(P=Syl_2(M_{12})\)</span> of the Mathieu simple group <span class="SimpleMath">\(M_{12}\)</span>.</p>
 
 
 <div class="example"><pre>

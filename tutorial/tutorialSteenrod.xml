@@ -1,33 +1,5 @@
-<Chapter><Heading>Cohomology rings and Steenrod operation for finite groups</Heading>
-	<Section><Heading>Cohomology rings of finite <M>2</M>-groups</Heading>
+<Chapter><Heading>Cohomology rings and Steenrod operations for finite groups</Heading>
 
-The following example determines a presentation for the cohomology ring
-<M>H^\ast(Syl_2(M_{12}),\mathbb Z_2)</M>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <B>Singular</B>, are used to determine how much of a resolution to compute for the presentation.
-
-<Example>
-<#Include SYSTEM "tutex/7.0.txt">
-</Example>
-</Section>
-
-<Section><Heading>Steenrod operations for finite <M>2</M>-groups</Heading>
-
-The command <C>CohomologicalData(G,n)</C>
- prints complete information for the
-	cohomology ring <M>H^\ast(G, Z_2 )</M> and steenrod operations for
-	 a <M>2</M>-group <M>G</M> 
-provided that the integer <M>n</M> is
-at least the maximal degree of a relator in a minimal set of relators for the
-ring. 
-
-<P/>The following example produces complete information on the Steenrod algebra of group number <M>8</M> in <B>GAP</B>'s library of groups of order <M>32</M>. 
-	Groebner basis routines from <B>Singular</B> are called involved in the example. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)
-
-
-<Example>
-<#Include SYSTEM "tutex/7.1.txt">
-</Example>
-
-</Section>
 
 <Section><Heading>Mod-<M>p</M> cohomology rings of finite groups</Heading>
 
@@ -41,12 +13,39 @@ ring.
 <#Include SYSTEM "tutex/7.1a.txt">
 </Example>
 
+<P/>The following additional command produces a rational function <M>f(x)</M>
+	whose series expansion <M>f(x) = \sum_{i=0}^\infty f_ix^i</M> 
+		has coefficients <M>f_i</M> which are guaranteed to
+			satisfy <M>f_i = \dim H^i(G,\mathbb Z_p)</M> 
+			in the range <M>0\le i\le deg</M>.
+	<Example>
+<#Include SYSTEM "tutex/7.1a1.txt">
+</Example>
+
+<Subsection><Heading>Ring presentations (for the commutative <M>p=2</M> case)</Heading>
+		The cohomology ring <M>H^\ast(G,\mathbb Z_p)</M> is
+			graded commutative which, in the case <M>p=2</M>,
+				implies strictly commutative. 
+				The following additional commands can be applied in the <M>p=2</M> setting to determine a presentation for a graded commutative ring <M>F</M> that is guaranteed to be isomorphic to the cohomology ring <M>H^\ast(G,\mathbb Z_p)</M>  in degrees <M>i\le deg</M>. If <M>deg</M> is chosen "sufficiently large" then <M>F</M> will be isomorphic to the cohomology ring.
+	<Example>
+<#Include SYSTEM "tutex/7.1a2.txt">
+</Example>
+
+<P/> The additional command
+	<Example>
+<#Include SYSTEM "tutex/7.1a3.txt">
+</Example>
+invokes a call to 
+	 <B>Singular</B> in order to calculate the Poincare series of the graded algebra <M>F</M>.
+
+</Subsection>
+
 </Section>
 
 
 <Section><Heading>Functorial ring homomorphisms in Mod-<M>p</M> cohomology</Heading>
 		The following example constructs the ring homomorphism 
-	<P/><M>F\colon H^{\le deg}(H,\mathbb Z_p) \rightarrow H^{\le deg}(G,\mathbb Z_p)</M> 
+	<P/><M>F\colon H^{\le deg}(G,\mathbb Z_p) \rightarrow H^{\le deg}(H,\mathbb Z_p)</M> 
 	<P/> induced by the group homomorphism <M>f\colon H\rightarrow G</M> with  <M>H=A_5</M>, <M>G=S_5</M>, <M>f</M> the canonical inclusion of
 		the alternating group into the symmetric group, <M>p=2</M> and <M>deg=7</M>.
 
@@ -54,14 +53,27 @@ ring.
 <#Include SYSTEM "tutex/7.1b.txt">
 </Example>
 
+<Subsection><Heading>Testing homomorphism properties</Heading>
 <P/>The following commands are consistent with <M>F</M> being
 	a ring homomorphism. 
 <Example>
 <#Include SYSTEM "tutex/7.1c.txt">
 </Example>
+</Subsection>
 
+<Subsection><Heading>Testing functorial properties</Heading>
+	The following example takes two "random" automorphisms <M>f,g\colon K\rightarrow K</M> of the group <M>K</M> of order <M>24</M> arising as the direct product <M>K=C_3\times Q_8</M> and constructs the 
+		three ring isomorphisms <M>F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)</M> induced by <M>f, g</M> and the composite <M>f\circ g</M>. It tests that <M>FG</M> is indeed the composite  <M>G\circ F</M>. Note that when we create the ring
+		<M>H^{\le 5}(K,\mathbb Z_2)</M> twice in <B>GAP</B>
+			we obtain two canonically isomorphic but distinct implimentations of the ring. Thus the canocial isomorphism between these distinct implementations needs to be incorporated into the test. Note also that  <B>GAP</B> defines <M>g\ast f = f\circ g</M>.
+	<Example>
+<#Include SYSTEM "tutex/7.1e.txt">
+</Example>
+</Subsection>
+
+<Subsection><Heading>Computing with larger groups</Heading>
 <P/>Mod-<M>p</M> cohomology rings of finite groups are constructed as the rings of stable elements in the cohomology of a (non-functorially) chosen Sylow <M>p</M>-subgroup and thus require the construction of a free resolution only for the Sylow subgroup. However, to ensure
-	the functoriality of induced cohomology homomorphisms the above computation constructs free resolutions for the entire groups <M>G,H</M>. This is a more expensive computation than finding resolutions just for Sylow subgroups. 
+	the functoriality of induced cohomology homomorphisms the above computations construct free resolutions for the entire groups <M>G,H</M>. This is a more expensive computation than finding resolutions just for Sylow subgroups. 
 
 	<P/>The default algorithm used by the function <Code>ModPCohomologyRing()</Code>  for constructing resolutions of a finite group <M>G</M>
 		is <Code>ResolutionFiniteGroup()</Code> or <Code>ResolutionPrimePowerGroup()</Code> in the case when <M>G</M> happens to be a group of prime-power order.
@@ -77,8 +89,39 @@ ring.
 		<Example>
 <#Include SYSTEM "tutex/7.1d.txt">
 </Example>
+</Subsection>
+</Section>
+
+	 <Section><Heading>Cohomology rings of finite <M>2</M>-groups</Heading>
+
+The following example determines a presentation for the cohomology ring
+<M>H^\ast(Syl_2(M_{12}),\mathbb Z_2)</M>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <B>Singular</B> (for commutative rings), are used to determine how much of a resolution to compute for the presentation.
+
+<Example>
+<#Include SYSTEM "tutex/7.0.txt">
+</Example>
+</Section>
+
+	<Section><Heading>Steenrod operations for finite <M>2</M>-groups</Heading>
+
+The command <C>CohomologicalData(G,n)</C>
+ prints complete information for the
+        cohomology ring <M>H^\ast(G, Z_2 )</M> and steenrod operations for
+         a <M>2</M>-group <M>G</M>
+provided that the integer <M>n</M> is
+at least the maximal degree of a generator or relator in a minimal set of generatoirs and relators for the
+ring.
+
+<P/>The following example produces complete information on the Steenrod algebra of group number <M>8</M> in <B>GAP</B>'s library of groups of order <M>32</M>.
+        Groebner basis routines (for commutative rings) from <B>Singular</B> are called  in the example. (This example take over 2 hours to run. Most other groups of order 32 run significantly quicker.)
+
+
+<Example>
+<#Include SYSTEM "tutex/7.1.txt">
+</Example>
 
 </Section>
+
 
 <Section><Heading>Steenrod operations on the classifying space of a finite <M>p</M>-group</Heading>
 
