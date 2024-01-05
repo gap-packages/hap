@@ -926,16 +926,20 @@ InstallGlobalFunction(
     ViewArc2Presentation,
     function(l)
     local
-        arc, cross, cols, AppendTo, PrintTo, file, filetxt,
-        bin_arr, coord, res, colours, i, j, x, k, y, z, clr;
+        arc, cross, cols, AppendTo, PrintTo, file, filetxt, filepng,
+        bin_arr, coord, res, colours, i, j, x, k, y, z, clr, tmpdir;
 
     arc:=List(l[1],x->[SignInt(x[1])*x[1],SignInt(x[2])*x[2]]);
     cross:=l[2]*1;
     cols:=l[3]*1;
     AppendTo:=HAP_AppendTo;
     PrintTo:=HAP_PrintTo;
-    file:="/tmp/HAPtmpImage";
-    filetxt:="/tmp/HAPtmpImage.txt";
+    #file:="/tmp/HAPtmpImage";
+    #filetxt:="/tmp/HAPtmpImage.txt";
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "HAPtmpImage" );
+filetxt:=Filename( tmpdir , "HAPtmpImage.txt" );
+filepng:=Filename( tmpdir , "HAPtmpImage.png" );
 
     # create a binary array from the arc presentation
     bin_arr:=Sum(PureCubicalKnot(arc)!.binaryArray);
@@ -1042,12 +1046,18 @@ InstallGlobalFunction(
         Concatenation("rm ",filetxt)
     );
     # display the image
+    #Exec(
+    #    Concatenation(DISPLAY_PATH," ","/tmp/HAPtmpImage.png")
+    #);
     Exec(
-        Concatenation(DISPLAY_PATH," ","/tmp/HAPtmpImage.png")
+        Concatenation(DISPLAY_PATH," ",filepng)
     );
     # delete the image on window close
+    #Exec(
+    #    Concatenation("rm  ","/tmp/HAPtmpImage.png")
+    #);
     Exec(
-        Concatenation("rm  ","/tmp/HAPtmpImage.png")
+        Concatenation("rm  ",filepng)
     );
 end);
 

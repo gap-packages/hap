@@ -7,20 +7,19 @@ gap> Y:=EquivariantTwoComplex(G);
 Equivariant CW-complex of dimension 2
 
 gap> F:=FundamentalGroupOfQuotient(Y);
-<fp group on the generators [ f1, f2, f3 ]>
+<fp group on the generators [ x, y, z ]>
 gap> RelatorsOfFpGroup(F);
-[ f1^2, f2^2, f3^2, f3^-1*f1*f3*f1^-1, f3^-1*f2^-1*f3*f2*f3*f2^-1, 
-  (f2^-1*f1^-1)^2*(f2*f1)^2*f2*f1^-1 ]
+[ x^2, y^2, z^2, z^-1*x*z*x^-1, z^-1*y^-1*z*y*z*y^-1, 
+  (y^-1*x^-1)^2*(y*x)^2*y*x^-1 ]
 gap> H:=Group(x*y,x*z,y*z);;
 gap> W:=RestrictedEquivariantCWComplex(Y,H);
 Equivariant CW-complex of dimension 2
 
 gap> FH:=FundamentalGroupOfQuotient(W);
-<fp group on the generators [ f1, f2, f3, f4, f5 ]>
+<fp group on the generators [ x, y, z, w, v ]>
 gap> RelatorsOfFpGroup(FH);
-[ f1, f1, f2*f3, f3*f2, f4*f5, f5*f4, f5^-1*f1*f4, f4^-1*f5*f1^-1, 
-  f5^-1*f2^-1*f4*f3*f4*f2^-1, f4^-1*f3^-1*f5*f2*f5*f3^-1, f3^-2*(f2*f1)^2*f2, 
-  (f2^-1*f1^-1)^2*f3^3*f1^-1 ]
+[ x, x, y*z, z*y, w*v, v*w, v^-1*x*w, w^-1*v*x^-1, v^-1*y^-1*w*z*w*y^-1, 
+  w^-1*z^-1*v*y*v*z^-1, z^-2*(y*x)^2*y, (y^-1*x^-1)^2*z^3*x^-1 ]
 gap> xz:=(1,2)(3,4)(5,8)(6,7)(9,10)(11,12);;
 gap> yz:=(2,4,7,5,3)(6,8,10,11,9);;
 gap> H:=Group(xz, yz);;
@@ -28,9 +27,9 @@ gap> W:=EquivariantTwoComplex(H);
 Equivariant CW-complex of dimension 2
 
 gap> FH:=FundamentalGroupOfQuotient(W);
-<fp group on the generators [ f1, f2 ]>
+<fp group on the generators [ x, y ]>
 gap> RelatorsOfFpGroup(FH);
-[ f2^2, f1^5, f2^-1*(f1*f2)^2*f1 ]
+[ y^2, x^5, y^-1*(x*y)^2*x ]
 gap> STOP_TEST( "tst.tst", 1000 );
 
 

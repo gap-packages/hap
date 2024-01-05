@@ -20,7 +20,7 @@ gap> FaceStabilizerOrders:=Order(Y!.stabilizer(2,1));
 gap> Size(Y!.boundary(2,1));
 6
 gap> F:=FundamentalGroupOfQuotient(Y);
-<fp group of size infinity on the generators [ f1, f2 ]>
+<fp group of size infinity on the generators [ x, y ]>
 gap> RelatorsOfFpGroup(F);
-[ f1^-1*f2*f1^-1*f2^-1 ]
+[ x^-1*y*x^-1*y^-1 ]
 gap> STOP_TEST( "tst.tst", 1000 );

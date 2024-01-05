@@ -240,6 +240,7 @@ local
                 Tree,Verts, NTree, NNTree, VertElts,
                 index, cnt, gens, Gens, F,
                 src,trg,
+                alpha, len,
                 B,i,a, b,bb,x,y,g,lst,bool;
 
 if not (IsHapResolution(R) or IsHapEquivariantCWComplex(R)) then
@@ -428,7 +429,13 @@ a:=List(a,i->SignInt(i[3])*index[AbsInt(i[3])]);
 Add(HRels1,a);
 od;
 
+alpha:=["x","y","z","w","v","u","t","s","r","q","p"];
+len:=Length(HGens)-Length(Tree);
+if len<12 then
+F:=FreeGroup(alpha{[1..len]});
+else
 F:=FreeGroup(Length(HGens)-Length(Tree));
+fi;
 gens:=GeneratorsOfGroup(F);
 HRels:=[];
 

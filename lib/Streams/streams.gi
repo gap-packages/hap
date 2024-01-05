@@ -5,10 +5,11 @@ HAP_XYXYXYXY:=0;
 ####################################################
 InstallGlobalFunction(ChildProcess,
 function(arg)
-local d,f,s,Name,Remote,Computer,ST,AppendTo,PrintTo;
+local d,f,s,Name,Remote,Computer,ST,AppendTo,PrintTo,tmpdir;
 
 AppendTo:=HAP_AppendTo;
 PrintTo:=HAP_PrintTo;
+tmpdir := DirectoryTemporary();;
 
 d:= DirectoryCurrent();
 
@@ -43,12 +44,15 @@ if not Remote then
 Name:=Filename(DirectoryTemporary(),"name");
 else
 ST:=String(Random([1..100000]));
-Name:=Concatenation("/tmp/",ST);
+#Name:=Concatenation("/tmp/",ST);
+Name:=Concatenation(tmpdir,ST);
 while IsExistingFile(Name) do
 ST:=String(Random([1..100000]));
-Name:=Concatenation("/tmp/",ST);
+#Name:=Concatenation("/tmp/",ST);
+Name:=Concatenation(tmpdir,ST);
 od;
-Name:=Filename(Directory("/tmp"),ST);
+#Name:=Filename(Directory("/tmp"),ST);
+Name:=Filename(Directory(tmpdir),ST);
 fi;
 
 Add(HAPchildren,Name);
@@ -74,12 +78,14 @@ function(s)
 local i;
 CloseStream(s.stream);
 if not s!.remote then
-i:=Concatenation("rm -r ",s!.name{[1..Length(s!.name)-4]});
+#i:=Concatenation("rm -r ",s!.name{[1..Length(s!.name)-4]});
+RemoveFile(s!.name{[1..Length(s!.name)-4]});
 else
-i:=Concatenation(["rm ",s!.name]);
+#i:=Concatenation(["rm ",s!.name]);
+RemoveFile(s!.name);
 fi;
 
-Exec(i);
+#Exec(i);
 
 end);
 ####################################################
@@ -210,10 +216,12 @@ end);
 #####################################################
 InstallGlobalFunction(ChildPut,
 function(X,Name,s)
-local i,fle,flebatch,fleRemote,AppendTo,PrintTo;
+local i,fle,flebatch,fleRemote,AppendTo,PrintTo, tmpdir;
 
 AppendTo:=HAP_AppendTo;
 PrintTo:=HAP_PrintTo;
+tmpdir := DirectoryTemporary();;
+
 
 NextAvailableChild([s]); #Don't start if s is busy.
 
@@ -223,9 +231,11 @@ if not s!.remote then
 fle:=Filename(DirectoryTemporary(),"fle");
 else
 
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
+#fle:=Concatenation("/tmp/",String(Random([1..100000])));
+fle:=Concatenation(tmpdir,String(Random([1..100000])));
 while IsExistingFile(fle) do
-fle:=Concatenation("/tmp/",String(Random([1..100000])));
+#fle:=Concatenation("/tmp/",String(Random([1..100000])));
+fle:=Concatenation(tmpdir,String(Random([1..100000])));
 od;
 fleRemote:=Concatenation(fle,"Remote");
 flebatch:=Concatenation(fle,"Batch");
@@ -248,13 +258,16 @@ if s!.remote then
 i:=Concatenation("Read(\"",fle,"\");");
 ChildCommand(i,s,true);
 if not s!.remote then
-i:=Concatenation("Exec(\"rm -r ",fle{[1..Length(fle)-4]},"\");");
+#i:=Concatenation("Exec(\"rm -r ",fle{[1..Length(fle)-4]},"\");");
+i:=Concatenation("RemoveFile(\"",fle{[1..Length(fle)-4]},"\");");
 else 
-i:=Concatenation("Exec(\"rm ",fle,"\");");
+#i:=Concatenation("Exec(\"rm ",fle,"\");");
+i:=Concatenation("RemoveFile(\"",fle{[1..Length(fle)]},"\");");
 fi;
 ChildCommand(i,s,true);
 if s!.remote then 
-i:=Concatenation("Exec(\"rm ",flebatch,"\");");
+#i:=Concatenation("Exec(\"rm ",flebatch,"\");");
+i:=Concatenation("RemoveFile(\"",flebatch,"\");");
 ChildCommand(i,s,true);
 fi;
 
@@ -268,11 +281,11 @@ HAP_XYXYXYXY:=0;
 #####################################################
 InstallGlobalFunction(ChildGet,
 function(X,s)
-local i,ST, fle, fleLocal, batchfile, AppendTo, PrintTo;
+local i,ST, fle, fleLocal, batchfile, AppendTo, PrintTo, tmpdir;
 
 AppendTo:=HAP_AppendTo;
 PrintTo:=HAP_PrintTo;
-
+tmpdir:=DirectoryTemporary();
 NextAvailableChild([s]); #Don't start if s is busy.
 
 PrintTo(s.name,"HAPchildToggle\:=false;");
@@ -283,10 +296,12 @@ fle:=Filename(DirectoryTemporary(),"fle");
 else
 
 ST:=String(Random([1..100000]));
-fle:=Concatenation("/tmp/",ST);
+#fle:=Concatenation("/tmp/",ST);
+fle:=Concatenation(tmpdir,ST);
 while IsExistingFile(fle) do
 ST:=String(Random([1..100000]));
-fle:=Concatenation("/tmp/",ST);
+#fle:=Concatenation("/tmp/",ST);
+fle:=Concatenation(tmpdir,ST);
 od;
 #fle:=Filename(Directory("/tmp"),ST);
 fleLocal:=Concatenation(fle,"Local");
@@ -321,9 +336,11 @@ Read(fle);
 i:=Concatenation(["PrintTo(\"",String(s.name),"\",\"HAPchildToggle\:=true;\");"]);
 WriteLine(s.stream,i);;
 if s!.remote then
-Exec(Concatenation(["rm ",fle]));
+#Exec(Concatenation(["rm ",fle]));
+RemoveFile(fle);
 else
-Exec(Concatenation("rm -r ",fle{[1..Length(fle)-4]}));
+#Exec(Concatenation("rm -r ",fle{[1..Length(fle)-4]}));
+RemoveFile(fle{[1..Length(fle)-4]});
 fi;
 
 

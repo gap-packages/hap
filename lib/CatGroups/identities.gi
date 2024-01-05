@@ -9,7 +9,7 @@ local
 		Boundary,
 		Elts, Mult, Inv,
 		Frels, rels,
-		Fgens,gens,
+		Fgens,gens,gens2,
 		FirstBoundaryHomomorphism,
 		Boundary2Relator, 
 		start,
@@ -20,7 +20,7 @@ local
 		COLOURS,
   		tmpDir,tmpInlog,tmpIn2log,tmpIngif,
                 AppendTo, PrintTo,
-		b, r, x,i,X;
+		b, r, x,i,X,pos;
 
 AppendTo:=HAP_AppendTo;
 PrintTo:=HAP_PrintTo;
@@ -54,8 +54,8 @@ Dimension:=R!.dimension;
 Boundary:=R!.boundary;
 Elts:=R!.elts;
 Frels:=[];
-start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
-start:=SortedList(Intersection(start))[1];
+#start:=List([1..Dimension(2)],x->List(Boundary(2,x),y->y[2]));
+#start:=SortedList(Intersection(start))[1];
 gens:=[];
 
 
@@ -72,7 +72,7 @@ end;
 Inv:=function(g)
 local pos;
 pos:= Position(Elts,Elts[g]^-1);
-if pos=fail then Add(Elts[g]^-1); pos:=Length(Elts); fi;
+if pos=fail then Add(Elts,Elts[g]^-1); pos:=Length(Elts); fi;
 return pos;
 end;
 #####################################################################
@@ -91,8 +91,12 @@ end;
 Boundary2Relator:=function(b)
 local c, rel, w;
 
-b:=SortedList(AlgebraicReduction(b));
-rel:=[start];
+rel:=[b[1][2]];
+#b:=SortedList(AlgebraicReduction(b));
+b:=SortedList(b);
+#rel:=[start];
+
+
 
 while Length(b)>0 do
 	for x in b do
@@ -116,11 +120,21 @@ Append(Frels,[Boundary2Relator(Boundary(2,r))]);
 od;
 
 for r in Frels do
-if (not Inv(r[2]) in gens) then AddSet(gens,r[2]);fi;
-if (not Inv(r[Length(r)-1]) in gens) then AddSet(gens,r[Length(r)-1]);fi;
+for i in [1..Length(r)-1] do
+Add(gens, Mult( Inv(r[i]), r[i+1]));
+od;
+Add(gens, Mult( Inv(r[Length(r)]), r[1]));
 od;
 
-COLOURS:=["blue","red","green","yellow","brown","black"];
+gens2:=SSortedList(gens);
+
+gens:=[];
+for i in gens2 do
+if not (i in gens or Inv(i) in gens) then Add(gens,i); fi;
+pos:=Position(gens,i);if not pos=fail and Inv(i)<i then gens[pos]:=Inv(i); fi;
+od;
+
+COLOURS:=["blue","red","green","black","brown","yellow","antiquewhite4","aquamarine4","bisque","blueviolet"];
 
 #####################################################################
 Color:=function(r)
@@ -130,7 +144,7 @@ local g,h;
         if Mult(r[1],g)=r[2] then h:=Position(gens,g); break; fi;
         if Mult(r[1],Inv(g))=r[2] then h:=Position(gens,g); break; fi;
         od;
-
+if not IsBound(h) then return COLOURS[10]; fi;
 h:=(h-1) mod 6;
 h:=h+1;
 return COLOURS[h];
@@ -151,25 +165,30 @@ Add(idnt,x);
 od;
 
 Edges:=[];
-for b in idnt do
+for b in idnt  do
 for x in [1..Length(b)-1] do
 if b[x]<b[x+1] then r:=[b[x],b[x+1]];
 else r:=[b[x+1],b[x]]; fi;
-#AddSet(Edges,r);
-Add(Edges,r);
+AddSet(Edges,r);
+#Add(Edges,r);
 od;
 od;
 
-Edges:=SortedList(Edges);
-Edges:=List([1..Length(Edges)/2],i->Edges[2*i]);
+Edges:=SSortedList(Edges);
+#Print(Collected(Edges));
+#Edges:=List([1..Length(Edges)/2],i->Edges[2*i]);
 
 
 ################ WRITE TO TMPIN.LOG #################################
 
-AppendTo(tmpInlog," graph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
+AppendTo(tmpInlog," digraph G { \n size=\"4,4\" \n subgraph cluster0 {\n node [shape=ellipse, width=.2,height=.2,fixedsize=true,style=filled, color=gray35,label=\"\"] \n edge [style=\"setlinewidth(2)\"] \n");
 
 for x in Edges do
-AppendTo(tmpInlog,x[1]," -- ", x[2], "[color=",Color(x), "] \n");
+if Mult(Inv(x[1]),x[2]) in gens then
+AppendTo(tmpInlog,x[1]," -> ", x[2], "[color=",Color(x), "] \n");
+else
+AppendTo(tmpInlog,x[2]," -> ", x[1], "[color=",Color(x), "] \n");
+fi;
 od;
 
 ####
@@ -179,7 +198,7 @@ AppendTo(tmpInlog," }\n subgraph cluster1 {\n  node [shape=box, width=2,height=1
 
 if Maximum(List(X,x->Length(String(x))))<20 then
 for i in [1..Length(X)] do
-AppendTo(tmpInlog,-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
+#AppendTo(tmpInlog,-i,"  [fontcolor= ",COLOURS[i],",label=\"", X[i],"\" ] \n");
 od;
 fi;
 

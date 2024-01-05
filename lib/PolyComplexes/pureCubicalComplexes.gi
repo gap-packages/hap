@@ -306,19 +306,15 @@ if IsString(file) then
 tmpdir := DirectoryTemporary();;
 file1:=Filename( tmpdir , "im.txt" );
 file2:=Filename( tmpdir , "im.g" );
-file1:="/tmp/im.txt";  #I HAVE NO IDEA WHY I NEED TO DO THIS, BUT IF
-                       #I DON'T THEN THE FUNCTION CRASHES
 
-#i:=Concatenation("convert -colorspace RGB -depth 8  ",file," /tmp/im.txt");
 i:=Concatenation("convert -colorspace RGB -depth 8  ",file," ",file1);
 Exec(i);
-#i:=Concatenation("perl ",prog," /tmp/im.txt >/tmp/im.g");
 i:=Concatenation("perl ",prog," ",file1," > ",file2);
 Exec(i);
 
 Exec(Concatenation("rm ",file1));
-#Read("/tmp/im.g");
 Read(file2);
+
 B:=StructuralCopy(HAPAAA);
 HAPAAA:=0;
 
