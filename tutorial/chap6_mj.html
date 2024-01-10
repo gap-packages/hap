@@ -37,16 +37,19 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X8664E986873195E6">6.4 <span class="Heading">Aspherical <span class="SimpleMath">\(2\)</span>-complexes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7F719758856A443D">6.5 <span class="Heading">Bogomolov multiplier</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X84C0CB8B7C21E179">6.5 <span class="Heading">Group presentations and homotopical syzygies</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X8333413B838D787D">6.6 <span class="Heading">Second group cohomology and group extensions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7F719758856A443D">6.6 <span class="Heading">Bogomolov multiplier</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7C60E2B578074532">6.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X8333413B838D787D">6.7 <span class="Heading">Second group cohomology and group extensions</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X78040D8580D35D53">6.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">\(2\)</span>-types</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7C60E2B578074532">6.8 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X78040D8580D35D53">6.9 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">\(2\)</span>-types</span></a>
 </span>
 </div>
 </div>
@@ -146,9 +149,37 @@ true
 
 </pre></div>
 
+<p><a id="X84C0CB8B7C21E179" name="X84C0CB8B7C21E179"></a></p>
+
+<h4>6.5 <span class="Heading">Group presentations and homotopical syzygies</span></h4>
+
+<p>Free resolutons for a group <span class="SimpleMath">\(G\)</span> are constructed in <strong class="button">HAP</strong> as the cellular chain complex <span class="SimpleMath">\(R_\ast=C_\ast(\tilde X)\)</span> of the universal cover of some CW-complex <span class="SimpleMath">\(X=K(G,1)\)</span>. The <span class="SimpleMath">\(2\)</span>-skeleton of <span class="SimpleMath">\(X\)</span> gives rise to a free presentation for the group <span class="SimpleMath">\(G\)</span>. This presentation depends on a choice of maximal tree in the <span class="SimpleMath">\(1\)</span>-skeleton of <span class="SimpleMath">\(X\)</span> in cases where <span class="SimpleMath">\(X\)</span> has more than one <span class="SimpleMath">\(0\)</span>-cell. The attaching maps of <span class="SimpleMath">\(3\)</span>-cells in <span class="SimpleMath">\(X\)</span> can be regarded as <em>homotopical syzygies</em> or van Kampen diagrams over the group presentation whose boundaries spell the trivial word.</p>
+
+<p>The following example constructs four terms of a resolution for the free abelian group <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(n=3\)</span> generators, and then extracts the group presentation from the resolution as well as the unique homotopical syzygy. The syzygy is visualized in terms of its graph of edges, directed edges being coloured according to the corresponding group generator. (In this example the CW-complex <span class="SimpleMath">\(\tilde X\)</span> is regular, but in cases where it is not the visualization may be a quotient of the <span class="SimpleMath">\(1\)</span>-skeleton of the syzygy.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;c:=1;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(n),c));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionNilpotentGroup(G,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.freeGroup;</span>
+&lt;free group on the generators [ x, y, z ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.relators;</span>
+[ y^-1*x^-1*y*x, z^-1*x^-1*z*x, z^-1*y^-1*z*y ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityAmongRelatorsDisplay(R,1);</span>
+
+</pre></div>
+
+<p><img src="images/syzfab.gif" align="center" height="160" alt="Homotopical syzygy for the free abelian group on three generators"/></p>
+
+<p>This homotopical syzygy represents a relationship between the three relators <span class="SimpleMath">\([x,y]\)</span>, <span class="SimpleMath">\([x,z]\)</span> and <span class="SimpleMath">\([y,z]\)</span> where <span class="SimpleMath">\([x,y]=xyx^{-1}y^{-1}\)</span>. The syzygy can be thought of as a geometric relationship between commutators corresponding to the well-known Hall-Witt identity:</p>
+
+<p><span class="SimpleMath">\( [\ [x,y],\ {^yz}\ ]\ \ [\ [y,z],\ {^zx}\ ]\ \ [\ [z,x],\ {^xy}\ ]\ \ =\ \ 1\ \ .\)</span></p>
+
 <p><a id="X7F719758856A443D" name="X7F719758856A443D"></a></p>
 
-<h4>6.5 <span class="Heading">Bogomolov multiplier</span></h4>
+<h4>6.6 <span class="Heading">Bogomolov multiplier</span></h4>
 
 <p>The Bogomolov multiplier of a group is an isoclinism invariant. Using this property, the following example shows that there are precisely three groups of order <span class="SimpleMath">\(243\)</span> with non-trivial Bogomolov multiplier. The groups in question are numbered 28, 29 and 30 in <strong class="button">GAP</strong>'s library of small groups of order <span class="SimpleMath">\(243\)</span>.</p>
 
@@ -166,7 +197,7 @@ true
 
 <p><a id="X8333413B838D787D" name="X8333413B838D787D"></a></p>
 
-<h4>6.6 <span class="Heading">Second group cohomology and group extensions</span></h4>
+<h4>6.7 <span class="Heading">Second group cohomology and group extensions</span></h4>
 
 <p>Any group extension <span class="SimpleMath">\(N\rightarrowtail E \twoheadrightarrow G\)</span> gives rise to:</p>
 
@@ -307,7 +338,7 @@ false
 
 <p><a id="X7C60E2B578074532" name="X7C60E2B578074532"></a></p>
 
-<h4>6.7 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
+<h4>6.8 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
 
 <p>An <em>Hadamard matrix</em> is a square <span class="SimpleMath">\(n\times n\)</span> matrix <span class="SimpleMath">\(H\)</span> whose entries are either <span class="SimpleMath">\(+1\)</span> or <span class="SimpleMath">\(-1\)</span> and whose rows are mutually orthogonal, that is <span class="SimpleMath">\(H H^t = nI_n\)</span> where <span class="SimpleMath">\(H^t\)</span> denotes the transpose and <span class="SimpleMath">\(I_n\)</span> denotes the <span class="SimpleMath">\(n\times n\)</span> identity matrix.</p>
 
@@ -326,7 +357,7 @@ false
 
 <p><a id="X78040D8580D35D53" name="X78040D8580D35D53"></a></p>
 
-<h4>6.8 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">\(2\)</span>-types</span></h4>
+<h4>6.9 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">\(2\)</span>-types</span></h4>
 
 <p><strong class="button">Homotopy 2-types</strong></p>
 
