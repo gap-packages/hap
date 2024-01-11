@@ -1101,9 +1101,6 @@ end);
 ############################################
 ############################################
 
-InstallValue(PathComponentOfSimplicialComplex,PathComponentsOfSimplicialComplex);
-
-
 #################################################################
 #################################################################
 InstallGlobalFunction(PathComponentsOfSimplicialComplex_alt,

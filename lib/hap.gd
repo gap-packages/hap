@@ -111,8 +111,8 @@ DeclareGlobalFunction("ResolutionArithmeticGroup");
 DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareOperation("Resolution",[IsGroup,IsInt]);
 DeclareGlobalFunction("ResolutionFiniteGroup");
-DeclareGlobalVariable("ResolutionSmallFpGroup");
 DeclareGlobalFunction("ResolutionSmallGroup");
+DeclareSynonym("ResolutionSmallFpGroup",ResolutionSmallGroup);
 DeclareGlobalFunction("PresentationOfResolution");
 DeclareGlobalFunction("PresentationOfResolution_alt");
 DeclareGlobalFunction("ResolutionToResolutionOfFpGroup");
@@ -135,7 +135,7 @@ DeclareGlobalFunction("HAPTietzeReduction_Inf");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
 DeclareGlobalFunction("ResolutionPSL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionSL2QuadraticIntegers");
-DeclareGlobalVariable("ResolutionSL2ZInvertedInteger");
+DeclareSynonym("ResolutionSL2ZInvertedInteger", SL2ZResolution);
 DeclareGlobalFunction("ResolutionGL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionPGL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionGL3QuadraticIntegers");
@@ -270,7 +270,6 @@ DeclareGlobalFunction("ResolutionInfiniteCyclicGroup");
 DeclareGlobalFunction("ResolutionFiniteCyclicGroup");
 DeclareGlobalFunction("ResolutionAbelianGroup_alt");
 DeclareGlobalFunction("HAP_ElementsSL2Zfn");
-DeclareGlobalVariable("ElementsSL2Z");
 DeclareGlobalFunction("ElementsLazy");
 DeclareGlobalFunction("NonFreeResolutionFiniteSubgroup");
 
@@ -609,7 +608,7 @@ DeclareGlobalFunction("GraphOfSimplicialComplex");#<Graph
 DeclareOperation("Graph",[IsHapSimplicialComplex]);#doc
 DeclareGlobalFunction("PathComponentsOfGraph");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex");
-DeclareGlobalVariable("PathComponentOfSimplicialComplex");
+DeclareSynonym("PathComponentOfSimplicialComplex",PathComponentsOfSimplicialComplex);
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex_alt");
 DeclareGlobalFunction("ContractGraph");#<ContractedComplex
 DeclareGlobalFunction("SimplicialNerveOfGraph");#<CliqueComplex
@@ -617,7 +616,7 @@ DeclareGlobalFunction("SimplicialNerveOfTwoComplex");#<CliqueComplex
 DeclareOperation("CliqueComplex",[IsHapSimplicialComplex, IsInt]);#doc
 DeclareGlobalFunction("SimplicialNerveOfFilteredGraph");#<CliqueComplex
 DeclareGlobalFunction("GraphDisplay");#<Display
-DeclareGlobalVariable("ViewGraph");#<Display
+DeclareSynonym("ViewGraph", GraphDisplay);#<Display
 DeclareGlobalFunction("SymmetricMatDisplay");
 DeclareGlobalFunction("SkeletonOfCubicalComplex");
 DeclareGlobalFunction("MorseFiltration");
@@ -853,7 +852,6 @@ DeclareGlobalFunction("PureCubicalLink");
 DeclareGlobalFunction("HopfSatohSurface");
 DeclareGlobalFunction("HAP_KnotGroupInv");
 DeclareGlobalFunction("IdentifyKnot");
-DeclareGlobalVariable("HAP_knot_census");
 
 ## METRICS #########################################################
 DeclareOperation("CayleyMetric",[IsPerm,IsPerm,IsInt]);

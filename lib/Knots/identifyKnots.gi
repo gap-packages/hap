@@ -29,7 +29,7 @@ InstallGlobalFunction(IdentifyKnot,
 function(gc)
 local  N, L, x, y, str, W, Inv;
 
-if not IsList(HAP_knot_census) then
+if not IsBoundGlobal("HAP_knot_census") then
 ReadPackage("HAP", "lib/Knots/census.txt");
 fi;
 
@@ -52,7 +52,7 @@ for N in [3..7] do
    return HAP_KnotGroupInv(W,N);
    end;
 
-   L:=Filtered(HAP_knot_census,x->
+   L:=Filtered(ValueGlobal("HAP_knot_census"),x->
       x[2]{[1..Minimum(Length(x[2]),N)]} = Inv(W){[1..Minimum(Length(x[2]),N)]});
 
    if Length(L)=0 then Print("Identification has failed.\n");

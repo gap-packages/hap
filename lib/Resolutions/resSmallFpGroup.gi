@@ -713,9 +713,3 @@ return Objectify(HapResolution,
 	     ["reduced",true] ]));
 end);
 #####################################################################
-
-
-InstallValue(ResolutionSmallFpGroup,ResolutionSmallGroup);
-
-
-

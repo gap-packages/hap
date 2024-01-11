@@ -45,5 +45,3 @@ local l,p,k,
 end);
 
 ################### end of SL2ZResolution ############################
-
-InstallValue(ResolutionSL2ZInvertedInteger,SL2ZResolution);
