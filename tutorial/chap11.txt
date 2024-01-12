@@ -41,8 +41,8 @@
   [4X[32X[104X
   
   [33X[0;0YThe  suspicion  that  this  resolution  [22XR_∗[122X  is  periodic of period [22X4[122X can be
-  verified by constructing the chain complex [22XC_∗=R_∗⊗_ Z ZG[122X and verifying that
-  boundary matrices repeat with period [22X4[122X.[133X
+  confirmed  by  constructing  the  chain complex [22XC_∗=R_∗⊗_ Z ZG[122X and verifying
+  that boundary matrices repeat with period [22X4[122X.[133X
   
   [33X[0;0YA  second  example of a periodic resolution, for the Dihedral group [22XD_2k+1=⟨
   x,  y  |  x^2= xy^kx^-1y^-k-1⟩[122X of order [22X2k+2[122X in the case [22Xk=1[122X, is constructed
@@ -85,6 +85,34 @@
     [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(D,7);;[127X[104X
     [4X[25Xgap>[125X [27XList([0..7],R!.dimension);[127X[104X
     [4X[28X[ 1, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe performance of the function [10XResolutionSmallGroup(G,n)[110X is very sensistive
+  to  the  choice  of  presentation for the input group [22XG[122X. If [22XG[122X is an fp-group
+  then  the defining presentation for [22XG[122X is used. If [22XG[122X is a permutaion group or
+  finite  matrix  group  then [12XGAP[112X functions are invoked to find a presentation
+  for  [22XG[122X.  The following commands use a geometrically derived presentation for
+  [22XSL(2,5)[122X  as  input  in  order  to  obtain  the first few terms of a periodic
+  resolution for this group of period [22X4[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=PoincareDodecahedronCWComplex( [127X[104X
+    [4X[25X>[125X [27X[[1,2,3,4,5],[6,7,8,9,10]],[127X[104X
+    [4X[25X>[125X [27X[[1,11,16,12,2],[19,9,8,18,14]],[127X[104X
+    [4X[25X>[125X [27X[[2,12,17,13,3],[20,10,9,19,15]],[127X[104X
+    [4X[25X>[125X [27X[[3,13,18,14,4],[16,6,10,20,11]],[127X[104X
+    [4X[25X>[125X [27X[[4,14,19,15,5],[17,7,6,16,12]],[127X[104X
+    [4X[25X>[125X [27X[[5,15,20,11,1],[18,8,7,17,13]]);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=FundamentalGroup(Y);[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ f2^-1*f1^-1*f2*f1^-1*f2^-1*f1, f2^-1*f1*f2^2*f1*f2^-1*f1^-1 ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
+    [4X[28X"SL(2,5)"[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],R!.dimension);    [127X[104X
+    [4X[28X[ 1, 2, 2, 1 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

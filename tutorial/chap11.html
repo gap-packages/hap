@@ -138,7 +138,7 @@ No contracting homotopy available.
 
 </pre></div>
 
-<p>The suspicion that this resolution <span class="SimpleMath">R_∗</span> is periodic of period <span class="SimpleMath">4</span> can be verified by constructing the chain complex <span class="SimpleMath">C_∗=R_∗⊗_ Z ZG</span> and verifying that boundary matrices repeat with period <span class="SimpleMath">4</span>.</p>
+<p>The suspicion that this resolution <span class="SimpleMath">R_∗</span> is periodic of period <span class="SimpleMath">4</span> can be confirmed by constructing the chain complex <span class="SimpleMath">C_∗=R_∗⊗_ Z ZG</span> and verifying that boundary matrices repeat with period <span class="SimpleMath">4</span>.</p>
 
 <p>A second example of a periodic resolution, for the Dihedral group <span class="SimpleMath">D_2k+1=⟨ x, y | x^2= xy^kx^-1y^-k-1⟩</span> of order <span class="SimpleMath">2k+2</span> in the case <span class="SimpleMath">k=1</span>, is constructed and verified for periodicity in the next example.</p>
 
@@ -173,6 +173,29 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSmallGroup(D,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..7],R!.dimension);</span>
 [ 1, 2, 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
+<p>The performance of the function <code class="code">ResolutionSmallGroup(G,n)</code> is very sensistive to the choice of presentation for the input group <span class="SimpleMath">G</span>. If <span class="SimpleMath">G</span> is an fp-group then the defining presentation for <span class="SimpleMath">G</span> is used. If <span class="SimpleMath">G</span> is a permutaion group or finite matrix group then <strong class="button">GAP</strong> functions are invoked to find a presentation for <span class="SimpleMath">G</span>. The following commands use a geometrically derived presentation for <span class="SimpleMath">SL(2,5)</span> as input in order to obtain the first few terms of a periodic resolution for this group of period <span class="SimpleMath">4</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=PoincareDodecahedronCWComplex( </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,2,3,4,5],[6,7,8,9,10]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[1,11,16,12,2],[19,9,8,18,14]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[2,12,17,13,3],[20,10,9,19,15]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[3,13,18,14,4],[16,6,10,20,11]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[4,14,19,15,5],[17,7,6,16,12]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[5,15,20,11,1],[18,8,7,17,13]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=FundamentalGroup(Y);</span>
+&lt;fp group on the generators [ f1, f2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(G);</span>
+[ f2^-1*f1^-1*f2*f1^-1*f2^-1*f1, f2^-1*f1*f2^2*f1*f2^-1*f1^-1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"SL(2,5)"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSmallGroup(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],R!.dimension);    </span>
+[ 1, 2, 2, 1 ]
 
 </pre></div>
 
