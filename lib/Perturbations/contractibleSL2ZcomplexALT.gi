@@ -67,7 +67,6 @@ od;
 ####
 
 G:=SL(2,Integers);
-#Elts:=ElementsSL2Z;;
 Elts:=ElementsLazy(G);
 
 #######
