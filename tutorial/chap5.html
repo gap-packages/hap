@@ -50,6 +50,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X86FD0A867EC9E64F">5.5-1 <span class="Heading">Non-trivial cup product</span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X802C7755851A2530">5.5-2 <span class="Heading">Explicit first homology generators</span></a>
+</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X80D0D8EB7BCD05E9">5.6 <span class="Heading">Knotted proteins</span></a>
 </span>
@@ -279,7 +281,11 @@ Pure cubical complex of dimension 2.
 
 <p>In this approach the vector fields on the various spaces <span class="SimpleMath">X_k</span> are completely independent and so the method lends itself to a degree of easy parallelism. This is not incorporated into the current implementation.</p>
 
-<p>As an illustration we consider a synthetic data set <span class="SimpleMath">S</span> consisting of <span class="SimpleMath">3527</span> points sampled, with errors, from an `unknown' manifold <span class="SimpleMath">M</span> in <span class="SimpleMath">R^3</span>. From such a data set one can associate a <span class="SimpleMath">3</span>-dimensional cubical complex <span class="SimpleMath">X_0</span> consisting of one unit cube centred on each (suitably scaled) data point. Given a pure cubical complex <span class="SimpleMath">X_s</span> we construct <span class="SimpleMath">X_s+1 =X_s ∪ {overline e^3_λ}_λ∈ Λ</span> by adding to <span class="SimpleMath">X_s</span> each closed unit cube <span class="SimpleMath">overline e^3_λ</span> in <span class="SimpleMath">R^3</span> that intersects non-trivially with <span class="SimpleMath">X_s</span>. We construct the filtered cubical complex <span class="SimpleMath">X_∗ ={X_i}_0≤ i≤ 19</span> and compute the persistence matrices <span class="SimpleMath">β_d^∗∗</span> for <span class="SimpleMath">d=0,1,2</span> and for <span class="SimpleMath">Z_2</span> coefficients. The filtered complex <span class="SimpleMath">X_∗</span> is quite large. In particular, the final space <span class="SimpleMath">X_19</span> in the filtration involves <span class="SimpleMath">1092727</span> vertices, <span class="SimpleMath">3246354</span> edges, <span class="SimpleMath">3214836</span> faces of dimension <span class="SimpleMath">2</span> and <span class="SimpleMath">1061208</span> faces of dimension <span class="SimpleMath">3</span>. The usual matrix reduction approach to computing persistent Betti numbers would involve an appropriate row reduction of sparse matrices one of which has over 3 million rows and 3 million columns.</p>
+<p>As an illustration we consider a synthetic data set <span class="SimpleMath">S</span> consisting of <span class="SimpleMath">3527</span> points sampled, with errors, from an `unknown' manifold <span class="SimpleMath">M</span> in <span class="SimpleMath">R^3</span>. From such a data set one can associate a <span class="SimpleMath">3</span>-dimensional cubical complex <span class="SimpleMath">X_0</span> consisting of one unit cube centred on each (suitably scaled) data point. A visualization of <span class="SimpleMath">X_0</span> is shown below.</p>
+
+<p><img src="images/data.png" align="center" height="300" alt="data cloud"/></p>
+
+<p>Given a pure cubical complex <span class="SimpleMath">X_s</span> we construct <span class="SimpleMath">X_s+1 =X_s ∪ {overline e^3_λ}_λ∈ Λ</span> by adding to <span class="SimpleMath">X_s</span> each closed unit cube <span class="SimpleMath">overline e^3_λ</span> in <span class="SimpleMath">R^3</span> that intersects non-trivially with <span class="SimpleMath">X_s</span>. We construct the filtered cubical complex <span class="SimpleMath">X_∗ ={X_i}_0≤ i≤ 19</span> and compute the persistence matrices <span class="SimpleMath">β_d^∗∗</span> for <span class="SimpleMath">d=0,1,2</span> and for <span class="SimpleMath">Z_2</span> coefficients. The filtered complex <span class="SimpleMath">X_∗</span> is quite large. In particular, the final space <span class="SimpleMath">X_19</span> in the filtration involves <span class="SimpleMath">1092727</span> vertices, <span class="SimpleMath">3246354</span> edges, <span class="SimpleMath">3214836</span> faces of dimension <span class="SimpleMath">2</span> and <span class="SimpleMath">1061208</span> faces of dimension <span class="SimpleMath">3</span>. The usual matrix reduction approach to computing persistent Betti numbers would involve an appropriate row reduction of sparse matrices one of which has over 3 million rows and 3 million columns.</p>
 
 
 <div class="example"><pre>
@@ -314,6 +320,28 @@ Pure cubical complex of dimension 2.
 
 </pre></div>
 
+<p><a id="X802C7755851A2530" name="X802C7755851A2530"></a></p>
+
+<h5>5.5-2 <span class="Heading">Explicit first homology generators</span></h5>
+
+<p>It could be desirable to obtain explicit representatives of the two homology generators in degree <span class="SimpleMath">1</span> that "persist". The following commands visualize the two explicit homology generators by visualizing a subspace <span class="SimpleMath">D⊂ X_10</span> where <span class="SimpleMath">D</span> is homotopy equivalent to a wedge of two circles and where the inclusion induces an isomorphism on first honology groups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=FiltrationTerm(F,10);;                   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in Reversed([1..9]) do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Y:=ContractedComplex(Y,FiltrationTerm(F,n));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=ContractedComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=PureComplexRandomCell(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=PureComplexDifference(Y,R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(D);</span>
+
+</pre></div>
+
+<p><img src="images/cubicaltorusgens.png" align="center" height="200" alt="first homology generators"/></p>
+
 <p><a id="X80D0D8EB7BCD05E9" name="X80D0D8EB7BCD05E9"></a></p>
 
 <h4>5.6 <span class="Heading">Knotted proteins</span></h4>
@@ -329,7 +357,7 @@ Pure cubical complex of dimension 2.
 
 </pre></div>
 
-<p><img src="https://gap-packages.github.io/hap/tutorial/images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></p>
+<p><img src="images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></p>
 
 <p>The next command reads in the pdb file for the T.thermophilus 1V2X protein and represents it as a <span class="SimpleMath">3</span>-dimensional pure cubical complex <span class="SimpleMath">K</span>. A resolution of <span class="SimpleMath">r=5</span> is chosen and this results in a representation as a subcomplex <span class="SimpleMath">K</span> of an ambient rectangular box of volume equal to <span class="SimpleMath">184× 186× 294</span> unit cubes. The complex <span class="SimpleMath">K</span> should have the homotopy type of a circle and the protein backbone is a 1-dimenional curve that should lie in <span class="SimpleMath">K</span>. The final command displays <span class="SimpleMath">K</span>.</p>
 
@@ -345,7 +373,7 @@ Pure cubical complex of dimension 2.
 
 </pre></div>
 
-<p><img src="https://gap-packages.github.io/hap/tutorial/images/1v2xcubical.gif" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></p>
+<p><img src="images/1v2xcubical.gif" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></p>
 
 <p>Next we create a filtered pure cubical complex by repeatedly thickening <span class="SimpleMath">K</span>. We perform <span class="SimpleMath">15</span> thickenings, each thickening being a term in the filtration. The <span class="SimpleMath">β_1</span> barcode for the filtration is displayed. This barcode is a descriptor for the geometry of the protein. For current purposes it suffices to note that the first few terms of the filtration have first homology equal to that of a circle. This indicates that the Euclidean coordinates in the pdb file robustly determine some knot.</p>
 

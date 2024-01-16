@@ -257,13 +257,15 @@
   [33X[0;0YAs  an  illustration  we  consider a synthetic data set [22XS[122X consisting of [22X3527[122X
   points  sampled, with errors, from an `unknown' manifold [22XM[122X in [22XR^3[122X. From such
   a  data set one can associate a [22X3[122X-dimensional cubical complex [22XX_0[122X consisting
-  of  one unit cube centred on each (suitably scaled) data point. Given a pure
-  cubical  complex  [22XX_s[122X  we  construct  [22XX_s+1  =X_s ∪ {overline e^3_λ}_λ∈ Λ[122X by
-  adding  to  [22XX_s[122X  each closed unit cube [22Xoverline e^3_λ[122X in [22XR^3[122X that intersects
-  non-trivially  with  [22XX_s[122X.  We  construct  the  filtered  cubical complex [22XX_∗
-  ={X_i}_0≤  i≤ 19[122X and compute the persistence matrices [22Xβ_d^∗∗[122X for [22Xd=0,1,2[122X and
-  for   [22XZ_2[122X  coefficients.  The  filtered  complex  [22XX_∗[122X  is  quite  large.  In
-  particular,  the  final  space  [22XX_19[122X  in  the  filtration  involves  [22X1092727[122X
+  of   one  unit  cube  centred  on  each  (suitably  scaled)  data  point.  A
+  visualization of [22XX_0[122X is shown below.[133X
+  
+  [33X[0;0YGiven  a  pure  cubical  complex  [22XX_s[122X  we  construct  [22XX_s+1 =X_s ∪ {overline
+  e^3_λ}_λ∈  Λ[122X  by  adding  to [22XX_s[122X each closed unit cube [22Xoverline e^3_λ[122X in [22XR^3[122X
+  that  intersects  non-trivially  with [22XX_s[122X. We construct the filtered cubical
+  complex  [22XX_∗ ={X_i}_0≤ i≤ 19[122X and compute the persistence matrices [22Xβ_d^∗∗[122X for
+  [22Xd=0,1,2[122X  and  for [22XZ_2[122X coefficients. The filtered complex [22XX_∗[122X is quite large.
+  In  particular,  the  final  space  [22XX_19[122X  in the filtration involves [22X1092727[122X
   vertices,  [22X3246354[122X  edges, [22X3214836[122X faces of dimension [22X2[122X and [22X1061208[122X faces of
   dimension  [22X3[122X.  The  usual  matrix reduction approach to computing persistent
   Betti  numbers would involve an appropriate row reduction of sparse matrices
@@ -299,6 +301,28 @@
     [4X[25Xgap>[125X [27Xcup:=LowDimensionalCupProduct(X10);;[127X[104X
     [4X[25Xgap>[125X [27Xcup([1,0],[0,1]);[127X[104X
     [4X[28X[ 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5-2 [33X[0;0YExplicit first homology generators[133X[101X
+  
+  [33X[0;0YIt could be desirable to obtain explicit representatives of the two homology
+  generators  in degree [22X1[122X that "persist". The following commands visualize the
+  two  explicit  homology generators by visualizing a subspace [22XD⊂ X_10[122X where [22XD[122X
+  is  homotopy  equivalent  to  a wedge of two circles and where the inclusion
+  induces an isomorphism on first honology groups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=FiltrationTerm(F,10);;                   [127X[104X
+    [4X[25Xgap>[125X [27Xfor n in Reversed([1..9]) do[127X[104X
+    [4X[25X>[125X [27XY:=ContractedComplex(Y,FiltrationTerm(F,n));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XY:=ContractedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=PureComplexRandomCell(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=PureComplexDifference(Y,R);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=ContractedComplex(D);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(D);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
