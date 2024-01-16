@@ -53,7 +53,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X86FD0A867EC9E64F">5.5-1 <span class="Heading">Non-trivial cup product</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X802C7755851A2530">5.5-2 <span class="Heading">Explicit first homology generators</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X783EF0F17B629C46">5.5-2 <span class="Heading">Explicit homology generators</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X80D0D8EB7BCD05E9">5.6 <span class="Heading">Knotted proteins</span></a>
@@ -323,23 +323,30 @@ Pure cubical complex of dimension 2.
 
 </pre></div>
 
-<p><a id="X802C7755851A2530" name="X802C7755851A2530"></a></p>
+<p><a id="X783EF0F17B629C46" name="X783EF0F17B629C46"></a></p>
 
-<h5>5.5-2 <span class="Heading">Explicit first homology generators</span></h5>
+<h5>5.5-2 <span class="Heading">Explicit homology generators</span></h5>
 
-<p>It could be desirable to obtain explicit representatives of the two homology generators in degree <span class="SimpleMath">\(1\)</span> that "persist". The following commands visualize the two explicit homology generators by visualizing a subspace <span class="SimpleMath">\(D\subset X_{10}\)</span> where <span class="SimpleMath">\(D\)</span> is homotopy equivalent to a wedge of two circles and where the inclusion induces an isomorphism on first homology groups.</p>
+<p>It could be desirable to obtain explicit representatives of the persistent homology generators that "persist" through a significant sequence of filtration terms. There are two such generators in degree <span class="SimpleMath">\(1\)</span> and one such generator in degree <span class="SimpleMath">\(2\)</span>. The explicit representatives in degree <span class="SimpleMath">\(n\)</span> could consist of an inclusion of pure cubical complexes <span class="SimpleMath">\(Y_n \subset X_{10}\)</span> for which the incuced homology homomorphism <span class="SimpleMath">\(H_n(Y_n,\mathbb Z) \rightarrow H_n(X_{10},\mathbb Z)\)</span> is an isomorphism, and for which <span class="SimpleMath">\(Y_n\)</span> is minimal in the sense that its homotopy type changes if any one or more of its top dimensional cells are removed. Ideally the space <span class="SimpleMath">\(Y_n\)</span> should be as "close to the original dataset" <span class="SimpleMath">\(X_0\)</span>. The following commands first construct an explicit degree <span class="SimpleMath">\(2\)</span> homology generator representative <span class="SimpleMath">\(Y_2\subset X_{10}\)</span> where <span class="SimpleMath">\(Y_2\)</span> is homotopy equivalent to <span class="SimpleMath">\(X_{10}\)</span>. They then construct an explicit degree <span class="SimpleMath">\(1\)</span> homology generators representative <span class="SimpleMath">\(Y_1\subset X_{10}\)</span> where <span class="SimpleMath">\(Y_1\)</span> is homotopy equivalent to a wedge of two circles. The final command displays the homology generators representative <span class="SimpleMath">\(Y_1\)</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=FiltrationTerm(F,10);;                   </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in Reversed([1..9]) do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Y:=ContractedComplex(Y,FiltrationTerm(F,n));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y2:=FiltrationTerm(F,10);;                   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for t in Reversed([1..9]) do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Y2:=ContractedComplex(Y2,FiltrationTerm(F,t));</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=ContractedComplex(Y);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=PureComplexRandomCell(Y);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=PureComplexDifference(Y,R);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(D);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(D);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y2:=ContractedComplex(Y2);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(FiltrationTerm(F,10));</span>
+918881
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y2);                  </span>
+61618
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y1:=PureComplexDifference(Y2,PureComplexRandomCell(Y2));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y1:=ContractedComplex(Y1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y1);</span>
+474
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(Y1);</span>
 
 </pre></div>
 

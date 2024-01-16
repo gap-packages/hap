@@ -305,24 +305,40 @@
   [4X[32X[104X
   
   
-  [1X5.5-2 [33X[0;0YExplicit first homology generators[133X[101X
+  [1X5.5-2 [33X[0;0YExplicit homology generators[133X[101X
   
-  [33X[0;0YIt could be desirable to obtain explicit representatives of the two homology
-  generators  in degree [22X1[122X that "persist". The following commands visualize the
-  two  explicit  homology generators by visualizing a subspace [22XD⊂ X_10[122X where [22XD[122X
-  is  homotopy  equivalent  to  a wedge of two circles and where the inclusion
-  induces an isomorphism on first homology groups.[133X
+  [33X[0;0YIt  could  be desirable to obtain explicit representatives of the persistent
+  homology  generators  that  "persist"  through  a  significant  sequence  of
+  filtration  terms.  There  are  two such generators in degree [22X1[122X and one such
+  generator  in  degree  [22X2[122X.  The  explicit  representatives  in degree [22Xn[122X could
+  consist  of  an inclusion of pure cubical complexes [22XY_n ⊂ X_10[122X for which the
+  incuced  homology homomorphism [22XH_n(Y_n, Z) → H_n(X_10, Z)[122X is an isomorphism,
+  and  for which [22XY_n[122X is minimal in the sense that its homotopy type changes if
+  any  one or more of its top dimensional cells are removed. Ideally the space
+  [22XY_n[122X should be as "close to the original dataset" [22XX_0[122X. The following commands
+  first  construct an explicit degree [22X2[122X homology generator representative [22XY_2⊂
+  X_10[122X  where  [22XY_2[122X  is  homotopy  equivalent  to  [22XX_10[122X. They then construct an
+  explicit  degree [22X1[122X homology generators representative [22XY_1⊂ X_10[122X where [22XY_1[122X is
+  homotopy  equivalent  to  a wedge of two circles. The final command displays
+  the homology generators representative [22XY_1[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XY:=FiltrationTerm(F,10);;                   [127X[104X
-    [4X[25Xgap>[125X [27Xfor n in Reversed([1..9]) do[127X[104X
-    [4X[25X>[125X [27XY:=ContractedComplex(Y,FiltrationTerm(F,n));[127X[104X
+    [4X[25Xgap>[125X [27XY2:=FiltrationTerm(F,10);;                   [127X[104X
+    [4X[25Xgap>[125X [27Xfor t in Reversed([1..9]) do[127X[104X
+    [4X[25X>[125X [27XY2:=ContractedComplex(Y2,FiltrationTerm(F,t));[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
-    [4X[25Xgap>[125X [27XY:=ContractedComplex(Y);;[127X[104X
-    [4X[25Xgap>[125X [27XR:=PureComplexRandomCell(Y);;[127X[104X
-    [4X[25Xgap>[125X [27XD:=PureComplexDifference(Y,R);;[127X[104X
-    [4X[25Xgap>[125X [27XD:=ContractedComplex(D);;[127X[104X
-    [4X[25Xgap>[125X [27XDisplay(D);[127X[104X
+    [4X[25Xgap>[125X [27XY2:=ContractedComplex(Y2);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(FiltrationTerm(F,10));[127X[104X
+    [4X[28X918881[128X[104X
+    [4X[25Xgap>[125X [27XSize(Y2);                  [127X[104X
+    [4X[28X61618[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY1:=PureComplexDifference(Y2,PureComplexRandomCell(Y2));;[127X[104X
+    [4X[25Xgap>[125X [27XY1:=ContractedComplex(Y1);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(Y1);[127X[104X
+    [4X[28X474[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(Y1);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
