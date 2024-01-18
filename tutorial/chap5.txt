@@ -218,7 +218,43 @@
   [4X[32X[104X
   
   
-  [1X5.5 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X
+  [1X5.5 [33X[0;0YNaive example of digital image contour extraction[133X[101X
+  
+  [33X[0;0YThe  following  greyscale  image  is  available  from  the  online  appendix
+  ([7Xhttp://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz[107X)  to the
+  paper [CKL14].[133X
+  
+  [33X[0;0YThe  following  commands produce a picture of contours from this image based
+  on greyscale values. They also produce a picture of just the closed contours
+  (the non-closed contours having been homotopy collapsed to points).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;[127X[104X
+    [4X[25Xgap>[125X [27XL:=[];;                                                          [127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [1..15] do[127X[104X
+    [4X[25X>[125X [27XM:=ReadImageAsPureCubicalComplex(file,n*30000);[127X[104X
+    [4X[25X>[125X [27XM:=PureComplexBoundary(M);;[127X[104X
+    [4X[25X>[125X [27XAdd(L,M);[127X[104X
+    [4X[25X>[125X [27Xod;;[127X[104X
+    [4X[25Xgap>[125X [27XC:=L[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [2..Length(L)] do C:=PureComplexUnion(C,L[n]); od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(C);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(ContractedComplex(C));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YContours from the above greyscale image:[133X
+  
+  [33X[0;0YClosed contours from the above greyscale image:[133X
+  
+  [33X[0;0YVery   similar   results   are   obtained   when   applied   to   the   file
+  [10XcircularGradientNoise.png[110X,  containing  noise,  available  from  the  online
+  appendix
+  ([7Xhttp://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz[107X)  to the
+  paper [CKL14].[133X
+  
+  
+  [1X5.6 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X
   
   [33X[0;0YFrom any sequence [22XX_0 ⊂ X_1 ⊂ X_2 ⊂ ⋯ ⊂ X_T[122X of cellular spaces (such as pure
   cubical complexes, or cubical complexes, or simplicial complexes, or regular
@@ -288,7 +324,7 @@
   manifold with the homotopy type of a torus.[133X
   
   
-  [1X5.5-1 [33X[0;0YNon-trivial cup product[133X[101X
+  [1X5.6-1 [33X[0;0YNon-trivial cup product[133X[101X
   
   [33X[0;0YOf  course,  a  wedge  [22XS^2∨ S^1∨ S^1[122X has the same homology as the torus [22XS^1×
   S^1[122X.  By establishing that a 'noise free' model for our data points, say the
@@ -305,7 +341,7 @@
   [4X[32X[104X
   
   
-  [1X5.5-2 [33X[0;0YExplicit homology generators[133X[101X
+  [1X5.6-2 [33X[0;0YExplicit homology generators[133X[101X
   
   [33X[0;0YIt  could  be desirable to obtain explicit representatives of the persistent
   homology  generators  that  "persist"  through  a  significant  sequence  of
@@ -343,7 +379,7 @@
   [4X[32X[104X
   
   
-  [1X5.6 [33X[0;0YKnotted proteins[133X[101X
+  [1X5.7 [33X[0;0YKnotted proteins[133X[101X
   
   [33X[0;0YThe  Protein  Data  Bank  ([7Xhttps://www.rcsb.org/[107X)  contains a wealth of data
   which  can  be  investigated  with  respect to knottedness. Information on a
@@ -422,7 +458,7 @@
   [4X[32X[104X
   
   
-  [1X5.7 [33X[0;0YRandom simplicial complexes[133X[101X
+  [1X5.8 [33X[0;0YRandom simplicial complexes[133X[101X
   
   [33X[0;0YFor  a  positive  integer  [22Xn[122X  and  probability  [22Xp[122X  we  denote  by [22XY(n,p)[122X the
   [13XLinial-Meshulam  random simplicial 2-complex[113X. Its [22X1[122X-skeleton is the complete
@@ -525,7 +561,7 @@
   [4X[32X[104X
   
   
-  [1X5.8 [33X[0;0YComputing homology of a clique complex (Vietoris-Rips complex)[133X[101X
+  [1X5.9 [33X[0;0YComputing homology of a clique complex (Vietoris-Rips complex)[133X[101X
   
   [33X[0;0YTopological data analysis provides one motivation for wanting to compute the
   homology of a clique complex. Consider for instance the cloud of data points

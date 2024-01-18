@@ -45,21 +45,24 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7A8224DA7B00E0D9">5.4 <span class="Heading">A second example of digital image segmentation</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D2CC9CB85DF1BAF">5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7957F329835373E9">5.5 <span class="Heading">Naive example of digital image contour extraction</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D2CC9CB85DF1BAF">5.6 <span class="Heading">Alternative approaches to computing persistent homology</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X86FD0A867EC9E64F">5.5-1 <span class="Heading">Non-trivial cup product</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X86FD0A867EC9E64F">5.6-1 <span class="Heading">Non-trivial cup product</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X783EF0F17B629C46">5.5-2 <span class="Heading">Explicit homology generators</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X783EF0F17B629C46">5.6-2 <span class="Heading">Explicit homology generators</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X80D0D8EB7BCD05E9">5.6 <span class="Heading">Knotted proteins</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X80D0D8EB7BCD05E9">5.7 <span class="Heading">Knotted proteins</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X87AF06677F05C624">5.7 <span class="Heading">Random simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X87AF06677F05C624">5.8 <span class="Heading">Random simplicial complexes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X875EE92F7DBA1E27">5.8 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X875EE92F7DBA1E27">5.9 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></a>
 </span>
 </div>
 </div>
@@ -271,9 +274,45 @@ Pure cubical complex of dimension 2.
 
 <p><img src="images/segmented_coins.png" align="center" height="400" alt="segmented coins"/></p>
 
+<p><a id="X7957F329835373E9" name="X7957F329835373E9"></a></p>
+
+<h4>5.5 <span class="Heading">Naive example of digital image contour extraction</span></h4>
+
+<p>The following greyscale image is available from the <span class="URL"><a href="http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz">online appendix</a></span> to the paper <a href="chapBib.html#biBcoeurjolly">[CKL14]</a>.</p>
+
+<p><img src="images/circularGradient.png" align="center" height="250" alt="circular gradient image"/></p>
+
+<p>The following commands produce a picture of contours from this image based on greyscale values. They also produce a picture of just the closed contours (the non-closed contours having been homotopy collapsed to points).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;                                                          </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [1..15] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">M:=ReadImageAsPureCubicalComplex(file,n*30000);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">M:=PureComplexBoundary(M);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L,M);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=L[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [2..Length(L)] do C:=PureComplexUnion(C,L[n]); od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(C);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(ContractedComplex(C));</span>
+
+</pre></div>
+
+<p>Contours from the above greyscale image:</p>
+
+<p><img src="images/contours.png" align="center" height="250" alt="contours image"/></p>
+
+<p>Closed contours from the above greyscale image:</p>
+
+<p><img src="images/closedcontours.png" align="center" height="250" alt="closedcontours image"/></p>
+
+<p>Very similar results are obtained when applied to the file <code class="code">circularGradientNoise.png</code>, containing noise, available from the <span class="URL"><a href="http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz">online appendix</a></span> to the paper <a href="chapBib.html#biBcoeurjolly">[CKL14]</a>.</p>
+
 <p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
 
-<h4>5.5 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
+<h4>5.6 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
 
 <p>From any sequence <span class="SimpleMath">X_0 ⊂ X_1 ⊂ X_2 ⊂ ⋯ ⊂ X_T</span> of cellular spaces (such as pure cubical complexes, or cubical complexes, or simplicial complexes, or regular CW complexes) we can construct a filtered chain complex <span class="SimpleMath">C_∗ X_0 ⊂ C_∗ X_1 ⊂ C_∗ X_2 ⊂ ⋯ C_∗ X_T</span>. The induced homology homomorphisms <span class="SimpleMath">H_n(C_∗ X_0, F) → H_n(C_∗ X_1, F) → H_n(C_∗ X_2, F) → ⋯ → H_n(C_∗ X_T, F)</span> with coefficients in a field <span class="SimpleMath">F</span> can be computed by applying an appropriate sequence of elementary row operations to the boundary matrices in the chain complex <span class="SimpleMath">C_∗ X_T⊗ F</span>; the boundary matrices are sparse and are best represented as such; the row operations need to be applied in a fashion that respects the filtration. This method is used in the above examples of persistent homology. The method is not practical when the number of cells in <span class="SimpleMath">X_T</span> is large.</p>
 
@@ -307,7 +346,7 @@ Pure cubical complex of dimension 2.
 
 <p><a id="X86FD0A867EC9E64F" name="X86FD0A867EC9E64F"></a></p>
 
-<h5>5.5-1 <span class="Heading">Non-trivial cup product</span></h5>
+<h5>5.6-1 <span class="Heading">Non-trivial cup product</span></h5>
 
 <p>Of course, a wedge <span class="SimpleMath">S^2∨ S^1∨ S^1</span> has the same homology as the torus <span class="SimpleMath">S^1× S^1</span>. By establishing that a 'noise free' model for our data points, say the 10-th term <span class="SimpleMath">X_10</span> in the filtration, has a non-trivial cup product <span class="SimpleMath">∪: H^1(X_10, Z) × H^1(X_10, Z) → H^2(X_10, Z)</span> we can eliminate <span class="SimpleMath">S^2∨ S^1∨ S^1</span> as a candidate from which the data was sampled.</p>
 
@@ -322,7 +361,7 @@ Pure cubical complex of dimension 2.
 
 <p><a id="X783EF0F17B629C46" name="X783EF0F17B629C46"></a></p>
 
-<h5>5.5-2 <span class="Heading">Explicit homology generators</span></h5>
+<h5>5.6-2 <span class="Heading">Explicit homology generators</span></h5>
 
 <p>It could be desirable to obtain explicit representatives of the persistent homology generators that "persist" through a significant sequence of filtration terms. There are two such generators in degree <span class="SimpleMath">1</span> and one such generator in degree <span class="SimpleMath">2</span>. The explicit representatives in degree <span class="SimpleMath">n</span> could consist of an inclusion of pure cubical complexes <span class="SimpleMath">Y_n ⊂ X_10</span> for which the incuced homology homomorphism <span class="SimpleMath">H_n(Y_n, Z) → H_n(X_10, Z)</span> is an isomorphism, and for which <span class="SimpleMath">Y_n</span> is minimal in the sense that its homotopy type changes if any one or more of its top dimensional cells are removed. Ideally the space <span class="SimpleMath">Y_n</span> should be "close to the original dataset" <span class="SimpleMath">X_0</span>. The following commands first construct an explicit degree <span class="SimpleMath">2</span> homology generator representative <span class="SimpleMath">Y_2⊂ X_10</span> where <span class="SimpleMath">Y_2</span> is homotopy equivalent to <span class="SimpleMath">X_10</span>. They then construct an explicit degree <span class="SimpleMath">1</span> homology generators representative <span class="SimpleMath">Y_1⊂ X_10</span> where <span class="SimpleMath">Y_1</span> is homotopy equivalent to a wedge of two circles. The final command displays the homology generators representative <span class="SimpleMath">Y_1</span>.</p>
 
@@ -351,7 +390,7 @@ Pure cubical complex of dimension 2.
 
 <p><a id="X80D0D8EB7BCD05E9" name="X80D0D8EB7BCD05E9"></a></p>
 
-<h4>5.6 <span class="Heading">Knotted proteins</span></h4>
+<h4>5.7 <span class="Heading">Knotted proteins</span></h4>
 
 <p>The <span class="URL"><a href="https://www.rcsb.org/">Protein Data Bank</a></span> contains a wealth of data which can be investigated with respect to knottedness. Information on a particular protein can be downloaded as a .pdb file. Each protein consists of one or more chains of amino acids and the file gives 3-dimensional Euclidean coordinates of the atoms in amino acids. Each amino acid has a unique "alpha carbon" atom (labelled as "CA" in the pdb file). A simple 3-dimensional curve, the <em>protein backbone</em>, can be constructed through the sequence of alpha carbon atoms. Typically the ends of the protein backbone lie near the "surface" of the protein and can be joined by a path outside of the protein to obtain a simple closed curve in Euclidean 3-space.</p>
 
@@ -415,7 +454,7 @@ x_1^2-x_1+1
 
 <p><a id="X87AF06677F05C624" name="X87AF06677F05C624"></a></p>
 
-<h4>5.7 <span class="Heading">Random simplicial complexes</span></h4>
+<h4>5.8 <span class="Heading">Random simplicial complexes</span></h4>
 
 <p>For a positive integer <span class="SimpleMath">n</span> and probability <span class="SimpleMath">p</span> we denote by <span class="SimpleMath">Y(n,p)</span> the <em>Linial-Meshulam random simplicial 2-complex</em>. Its <span class="SimpleMath">1</span>-skeleton is the complete graph on <span class="SimpleMath">n</span> vertices; each possible <span class="SimpleMath">2</span>-simplex is included independently with probability <span class="SimpleMath">p</span>.</p>
 
@@ -505,7 +544,7 @@ function( n, p ) ... end
 
 <p><a id="X875EE92F7DBA1E27" name="X875EE92F7DBA1E27"></a></p>
 
-<h4>5.8 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></h4>
+<h4>5.9 <span class="Heading">Computing homology of a clique complex (Vietoris-Rips complex) </span></h4>
 
 <p>Topological data analysis provides one motivation for wanting to compute the homology of a clique complex. Consider for instance the cloud of data points shown in Example <a href="chap5.html#X7D512DA37F789B4C"><span class="RefLink">5.2-1</span></a>. This data is a set <span class="SimpleMath">S</span> of 400 points in the plane. Let <span class="SimpleMath">Γ</span> be the graph with vertex set <span class="SimpleMath">S</span> and with two vertices joined by an edge if they lie within a Euclidean distance of 40 of each other. The clique complex <span class="SimpleMath">K=K(Γ)</span> could be studied to see what it reveals about the data. The following commands construct <span class="SimpleMath">K</span> and show that it is a 23-dimensional simplicial complex consisting of a total of 36191976 simplices.</p>
 
