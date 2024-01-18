@@ -313,6 +313,21 @@ Pure cubical complex of dimension 2.
 
 <p>Very similar results are obtained when applied to the file <code class="code">circularGradientNoise.png</code>, containing noise, available from the <span class="URL"><a href="http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz">online appendix</a></span> to the paper <a href="chapBib_mj.html#biBcoeurjolly">[CKL14]</a>.</p>
 
+<p>The number of distinct "light sources" in the image can be read from the countours. Alternatively, this number can be read directly from the barcode produced by the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DisplayDendrogram(F);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ReadImageAsFilteredPureCubicalComplex(file,20);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PersistentBettiNumbersAlt(F,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BarCodeCompactDisplay(P);</span>
+
+</pre></div>
+
+<p><img src="images/bccircularGradient.png" align="center" height="250" alt="closedcontours image"/></p>
+
+<p>The seventeen bars in the barcode correspond to seventeen light sources, the length of a bar being a measure of the prominence of the corresponding light source. Here the command <code class="code">PersistentBettiNumbersAlt</code> has been used. This command is explained in the following section.</p>
+
 <p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
 
 <h4>5.6 <span class="Heading">Alternative approaches to computing persistent homology</span></h4>
