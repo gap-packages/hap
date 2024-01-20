@@ -135,8 +135,8 @@
   [4X[32X[104X
   
   [33X[0;0YThe [22X20[122X persistent bars in the degree [22X0[122X barcode suggest that the image has [22X20[122X
-  objects.  The  degree  [22X1[122X  barcode suggests that [22X14[122X (or possibly [22X17[122X) of these
-  objects have holes in them.[133X
+  objects.  The  degree  [22X1[122X barcode suggests that there are [22X14[122X (or possibly [22X17[122X)
+  holes in these [22X20[122X objects.[133X
   
   
   [1X5.3-1 [33X[0;0YNaive example of image segmentation by automatic thresholding[133X[101X
@@ -266,12 +266,41 @@
   
   [33X[0;0YThe seventeen bars in the barcode correspond to seventeen light sources. The
   length of a bar is a measure of the "persistence" of the corresponding light
-  source. A long bar may initially represent a cluster of several lights which
-  may  eventually  be distinguished from each other as new bars (or persistent
-  homology classes) are created.[133X
+  source. A long bar may initially represent a cluster of several lights whose
+  members  may  eventually  be  distinguished  from each other as new bars (or
+  persistent homology classes) are created.[133X
   
   [33X[0;0YHere  the  command  [10XPersistentBettiNumbersAlt[110X has been used. This command is
   explained in the following section.[133X
+  
+  [33X[0;0YThe  follwowing  commands  use  a  watershed method to partition the digital
+  image  into  regions,  one  region  per  light  source. A makeshift function
+  [10XBasins(L)[110X,  available  here  ([7Xtutex/basins.g[107X), is called. (The efficiency of
+  the  example  could  be  easily  improved.  For  simplicity  it uses generic
+  commands  which,  in  principle, can be applied to cubical or permutarhedral
+  complexes of higher dimensions.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;[127X[104X
+    [4X[25Xgap>[125X [27XF:=ReadImageAsFilteredPureCubicalComplex(file,20);;[127X[104X
+    [4X[25Xgap>[125X [27XFF:=ComplementOfFilteredPureCubicalComplex(F);[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XW:=(FiltrationTerm(FF,3));[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [4..23] do[127X[104X
+    [4X[25X>[125X [27XL:=[];;[127X[104X
+    [4X[25X>[125X [27Xfor i in [1..PathComponentOfPureComplex(W,0)] do[127X[104X
+    [4X[25X>[125X [27X P:=PathComponentOfPureComplex(W,i);;[127X[104X
+    [4X[25X>[125X [27X Q:=ThickeningFiltration(P,150,FiltrationTerm(FF,n));;[127X[104X
+    [4X[25X>[125X [27X Add(L,Q);;[127X[104X
+    [4X[25X>[125X [27Xod;;[127X[104X
+    [4X[25X>[125X [27XW:=Basins(L);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=PureComplexComplement(W);;[127X[104X
+    [4X[25Xgap>[125X [27XT:=PureComplexThickened(C);; C:=ContractedComplex(T,C);;  [127X[104X
+    [4X[25Xgap>[125X [27XDisplay(C);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   
   
   [1X5.6 [33X[0;0YAlternative approaches to computing persistent homology[133X[101X

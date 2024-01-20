@@ -202,7 +202,7 @@ Filtered pure cubical complex of dimension 2.
 
 <p><img src="images/imbar1.gif" align="center" height="400" alt="barcode"/></p>
 
-<p>The <span class="SimpleMath">\(20\)</span> persistent bars in the degree <span class="SimpleMath">\(0\)</span> barcode suggest that the image has <span class="SimpleMath">\(20\)</span> objects. The degree <span class="SimpleMath">\(1\)</span> barcode suggests that <span class="SimpleMath">\(14\)</span> (or possibly <span class="SimpleMath">\(17\)</span>) of these objects have holes in them.</p>
+<p>The <span class="SimpleMath">\(20\)</span> persistent bars in the degree <span class="SimpleMath">\(0\)</span> barcode suggest that the image has <span class="SimpleMath">\(20\)</span> objects. The degree <span class="SimpleMath">\(1\)</span> barcode suggests that there are <span class="SimpleMath">\(14\)</span> (or possibly <span class="SimpleMath">\(17\)</span>) holes in these <span class="SimpleMath">\(20\)</span> objects.</p>
 
 <p><a id="X8066F9B17B78418E" name="X8066F9B17B78418E"></a></p>
 
@@ -325,9 +325,36 @@ Pure cubical complex of dimension 2.
 
 <p><img src="images/bccircularGradient.png" align="center" height="250" alt="closedcontours image"/></p>
 
-<p>The seventeen bars in the barcode correspond to seventeen light sources. The length of a bar is a measure of the "persistence" of the corresponding light source. A long bar may initially represent a cluster of several lights which may eventually be distinguished from each other as new bars (or persistent homology classes) are created.</p>
+<p>The seventeen bars in the barcode correspond to seventeen light sources. The length of a bar is a measure of the "persistence" of the corresponding light source. A long bar may initially represent a cluster of several lights whose members may eventually be distinguished from each other as new bars (or persistent homology classes) are created.</p>
 
 <p>Here the command <code class="code">PersistentBettiNumbersAlt</code> has been used. This command is explained in the following section.</p>
+
+<p>The follwowing commands use a watershed method to partition the digital image into regions, one region per light source. A makeshift function <code class="code">Basins(L)</code>, available <span class="URL"><a href="tutex/basins.g">here</a></span>, is called. (The efficiency of the example could be easily improved. For simplicity it uses generic commands which, in principle, can be applied to cubical or permutarhedral complexes of higher dimensions.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ReadImageAsFilteredPureCubicalComplex(file,20);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FF:=ComplementOfFilteredPureCubicalComplex(F);</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=(FiltrationTerm(FF,3));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [4..23] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for i in [1..PathComponentOfPureComplex(W,0)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> P:=PathComponentOfPureComplex(W,i);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Q:=ThickeningFiltration(P,150,FiltrationTerm(FF,n));;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Add(L,Q);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">W:=Basins(L);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=PureComplexComplement(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=PureComplexThickened(C);; C:=ContractedComplex(T,C);;  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(C);</span>
+
+</pre></div>
+
+<p><img src="images/circularGradientSeg.png" align="center" height="250" alt="segmented image"/></p>
 
 <p><a id="X7D2CC9CB85DF1BAF" name="X7D2CC9CB85DF1BAF"></a></p>
 
