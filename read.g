@@ -334,6 +334,7 @@ ReadPackageHap("lib/Resolutions/cayley.gi");
 
 ################### Lie Algebras ###################################
 ReadPackageHap("lib/LieAlgebras/chevalleyEilenberg.gi");
+ReadPackageHap("lib/LieAlgebras/chev.gi");
 ReadPackageHap("lib/LieAlgebras/isLieHom.gi");
 ReadPackageHap("lib/LieAlgebras/groupToLie.gi");
 ReadPackageHap("lib/LieAlgebras/leibniz.gi");

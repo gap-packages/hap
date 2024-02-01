@@ -1,0 +1,18 @@
+gap> file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;
+gap> F:=ReadImageAsFilteredPureCubicalComplex(file,20);;
+gap> FF:=ComplementOfFilteredPureCubicalComplex(F);
+
+gap> W:=(FiltrationTerm(FF,3));
+gap> for n in [4..23] do
+> L:=[];;
+> for i in [1..PathComponentOfPureComplex(W,0)] do
+>  P:=PathComponentOfPureComplex(W,i);;
+>  Q:=ThickeningFiltration(P,150,FiltrationTerm(FF,n));;
+>  Add(L,Q);;
+> od;;
+> W:=Basins(L);
+> od;
+
+gap> C:=PureComplexComplement(W);;
+gap> T:=PureComplexThickened(C);; C:=ContractedComplex(T,C);;  
+gap> Display(C);

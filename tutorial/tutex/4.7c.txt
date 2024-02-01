@@ -1,0 +1,16 @@
+gap> Y2:=FiltrationTerm(F,10);;                   
+gap> for t in Reversed([1..9]) do
+> Y2:=ContractedComplex(Y2,FiltrationTerm(F,t));
+> od;
+gap> Y2:=ContractedComplex(Y2);;
+
+gap> Size(FiltrationTerm(F,10));
+918881
+gap> Size(Y2);                  
+61618
+
+gap> Y1:=PureComplexDifference(Y2,PureComplexRandomCell(Y2));;
+gap> Y1:=ContractedComplex(Y1);;
+gap> Size(Y1);
+474
+gap> Display(Y1);

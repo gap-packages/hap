@@ -1,0 +1,11 @@
+gap> file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;
+gap> L:=[];;                                                          
+gap> for n in [1..15] do
+> M:=ReadImageAsPureCubicalComplex(file,n*30000);
+> M:=PureComplexBoundary(M);;
+> Add(L,M);
+> od;;
+gap> C:=L[1];;
+gap> for n in [2..Length(L)] do C:=PureComplexUnion(C,L[n]); od;
+gap> Display(C);
+gap> Display(ContractedComplex(C));

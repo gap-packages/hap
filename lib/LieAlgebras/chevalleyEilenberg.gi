@@ -211,6 +211,9 @@ end;
 
 #if IsLieAlgebra(L)=true then
 if IsLeftModule(L)=true then
+        if IsBound(L!.LeftActingAlgebra) then
+        return ChevalleyEilenbergComplexOfModule(L,x);
+        fi;
 	return ChevalleyComplex(L,x);
 else if IsLeftModuleHomomorphism(L) then
 	return ChevalleyMap(L,x);

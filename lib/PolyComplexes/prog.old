@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+#
+# Program to convert image text files to GAP matrices. 
+
+($file) = @ARGV;
+#$file = '/tmp/im.txt';		# Name the file
+
+open(INFO, $file);		# Open the file
+my $line = <INFO>;
+@parts = split /(:|,)/, $line;
+print("HAPAAA:=[\n ",$parts[2],",",$parts[4],",");
+while(<INFO>)		# Read it into an array
+{
+@parts = split m!(,|:|\(|\))!, $_;
+print("[",1+$parts[0],",",1+$parts[2],",",$parts[6]+$parts[8]+$parts[10],"],");
+};			# Print the array
+print($my,"0];\n");
+close(INFO);

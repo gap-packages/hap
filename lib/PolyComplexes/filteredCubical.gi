@@ -226,7 +226,8 @@ function(file,N)
 local A, B, C, F, i, j, D;
 #D:=Int(3*255/N);
 A:=ReadImageAsPureCubicalComplex(file,"matrix");
-D:=Int((7/10)*Maximum(Flat(A))/N);
+#D:=Int((7/10)*Maximum(Flat(A))/N);
+D:=1+Int(Maximum(Flat(A))/N);
 for i in [1..Length(A)] do
 for j in [1..Length(A[1])] do
 A[i][j]:=1+Int(A[i][j]/D);
@@ -670,4 +671,44 @@ end);
 ########################################################
 
 
+
+################################################
+################################################
+InstallGlobalFunction(FiltrationTerms,
+function(F,L)
+local C, A, B, D, fn, ln, i, j, l;
+
+C:=1*F!.binaryArray;
+A:=F!.filtration;
+l:=Length(L);
+
+D:=[[1..L[1]]];
+for i in [2..l] do
+Add(D,[1+L[i-1]..L[i]]);
+od;
+ln:=[1..Length(D)];
+l:=l+1;
+
+fn:=function(n)
+local pos;
+pos:=PositionProperty(ln,i-> n in D[i]);
+if IsInt(pos) then return pos; fi;
+return l;
+end;
+
+B:=0*A;;
+for i in [1..Length(B)] do
+for j in [1..Length(B[1])] do
+B[i][j]:=fn(A[i][j]);
+od;
+od;
+
+return Objectify(HapFilteredPureCubicalComplex,
+                 rec(binaryArray:=C,
+                     filtration:=B,
+                     properties:=F!.properties));
+
+end);
+################################################
+################################################
 

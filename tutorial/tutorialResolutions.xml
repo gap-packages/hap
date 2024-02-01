@@ -23,11 +23,11 @@ resolution.
 <#Include SYSTEM "tutex/14.2.txt">
 </Example>
 The suspicion that this resolution <M>R_\ast</M>
-is periodic of period <M>4</M> can be verified by 
+is periodic of period <M>4</M> can be confirmed by 
  constructing the chain complex <M>C_\ast=R_\ast\otimes_{\mathbb Z}\mathbb ZG</M> and verifying that boundary matrices repeat with period <M>4</M>.
 
 <P/> A second example of a periodic resolution, for the Dihedral group 
-<M>D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1}\rangle</M> of order <M>2k+2</M> in the case <M>k=1</M>, is constructed and verified for periodicity in the next example.
+<M>D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1} = 1\rangle</M> of order <M>2k+2</M> in the case <M>k=1</M>, is constructed and verified for periodicity in the next example.
 <Example>
 <#Include SYSTEM "tutex/14.2a.txt">
 </Example>
@@ -46,6 +46,13 @@ A slightly different periodic resolution for <M>D_{2k+1}</M> has been obtain mor
 <#Include SYSTEM "tutex/14.2b.txt">
 </Example>
 
+<P/>The performance of the
+	function <Code>ResolutionSmallGroup(G,n)</Code> is very sensistive to the choice of presentation for the input group <M>G</M>. If <M>G</M> 
+		is an fp-group then the defining presentation for <M>G</M> is used. If <M>G</M>
+			is a permutaion group or finite matrix group then <B>GAP</B> functions are invoked to find a presentation for <M>G</M>. The following commands use a geometrically derived presentation for <M>SL(2,5)</M> as input in order to obtain the first few terms of a periodic resolution for this group of period <M>4</M>.
+				<Example>
+<#Include SYSTEM "tutex/14.2c.txt">
+</Example>
 
 </Section>
 

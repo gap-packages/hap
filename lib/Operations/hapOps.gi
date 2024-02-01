@@ -818,6 +818,71 @@ end);
 
 ##########################################################
 ##########################################################
+InstallOtherMethod(ExpandedComplex,
+"Homotopy expanded  pure cubical complex",
+[IsHapPureCubicalComplex,IsHapPureCubicalComplex],
+function(M,S)
+local A;
+
+A:=HomotopyEquivalentLargerSubArray(S!.binaryArray,M!.binaryArray);
+return PureCubicalComplex(A);;
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ExpandedComplex,
+"Homotopy expanded  pure peermutahedral complex",
+[IsHapPurePermutahedralComplex,IsHapPurePermutahedralComplex],
+function(M,S)
+local A;
+
+A:=HomotopyEquivalentLargerSubPermArray(S!.binaryArray,M!.binaryArray);
+return PurePermutahedralComplex(A);;
+end);
+##########################################################
+##########################################################
+
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(ExpandedComplex,
+"Homotopy expanded  pure cubical complex",
+[IsHapPureCubicalComplex],
+function(M)
+local A,S;
+
+S:=0*M!.binaryArray;
+S:=S+1;
+A:=HomotopyEquivalentLargerSubArray(S,M!.binaryArray);
+return PureCubicalComplex(A);;
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ExpandedComplex,
+"Homotopy expanded  pure permutahedral complex",
+[IsHapPurePermutahedralComplex],
+function(M)
+local A,S;
+
+S:=0*M!.binaryArray;
+S:=S+1;
+A:=HomotopyEquivalentLargerSubPermArray(S,M!.binaryArray);
+return PurePermutahedralComplex(A);;
+end);
+##########################################################
+##########################################################
+
+
+
+
+##########################################################
+##########################################################
 InstallOtherMethod(ContractedComplex,
 "contracted  pure permutahedral complex",
 [IsHapPurePermutahedralComplex,IsHapPurePermutahedralComplex],

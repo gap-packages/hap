@@ -417,6 +417,7 @@ DeclareGlobalFunction("ConjugatedResolution");
 
 ## LIE ALGEBRAS #####################################################
 DeclareGlobalFunction("ChevalleyEilenbergComplex");
+DeclareGlobalFunction("ChevalleyEilenbergComplexOfModule");
 DeclareGlobalFunction("IsLieAlgebraHomomorphism");
 DeclareGlobalFunction("LieAlgebraHomology");
 DeclareGlobalFunction("LowerCentralSeriesLieAlgebra");
@@ -501,6 +502,7 @@ DeclareAttribute("EulerCharacteristic",IsHapPureCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
 DeclareOperation("ContractedComplex",[IsObject]);#doc
+DeclareOperation("ExpandedComplex",[IsObject]);
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");#doc
 DeclareGlobalFunction("ReadImageAsFilteredPureCubicalComplex");#doc
 DeclareGlobalFunction("ReadLinkImageAsPureCubicalComplex");
@@ -631,6 +633,7 @@ DeclareGlobalFunction("ThickeningFiltration");#doc
 DeclareOperation("ConcentricFiltration",[IsHapPureCubicalComplex,IsInt]);#doc
 DeclareGlobalFunction("Dendrogram");
 DeclareOperation("FiltrationTerm",[IsHapPureCubicalComplex,IsInt]);
+DeclareGlobalFunction("FiltrationTerms");
 DeclareGlobalFunction("FiltrationTermOfPureCubicalComplex");
 DeclareGlobalFunction("FiltrationTermOfRegularCWComplex");
 DeclareGlobalFunction("FiltrationTermOfGraph");

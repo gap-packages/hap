@@ -322,6 +322,7 @@ A:=[];
 for i in [1..B[1]] do
 A[i]:=List([1..B[2]],a->0);
 od;
+
 for x in B{[3..Length(B)-1]} do
 A[x[1]][x[2]]:=x[3];
 od;

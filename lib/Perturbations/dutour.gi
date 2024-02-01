@@ -41,8 +41,8 @@ TransMat:=function(x); return x; end;
 fi;
 
 
-#if bool = false then 
-if false then
+if bool = false then 
+#if false then
 Print("G-complexes are implemented for the following groups only:  \n\n");
 
 lstMathieu:=" SL(2,Z) , SL(3,Z) , PGL(3,Z[i]) , PGL(3,Eisenstein_Integers) ,  PSL(4,Z) , Sp(4,Z) , \n\n PSL(4,Z)_b , PSL(4,Z)_c , PSL(4,Z)_d \n"; 
