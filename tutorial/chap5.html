@@ -223,7 +223,7 @@ Simplicial complex of dimension 1.
 <li><p><code class="code">ContractedComplex(M, optional subcomplex of M)</code></p>
 
 </li>
-<li><p><code class="code">ExpandedComplex(M, optional subcomplex of M)</code></p>
+<li><p><code class="code">ExpandedComplex(M, optional supercomplex of M)</code></p>
 
 </li>
 <li><p><code class="code">PureComplexUnion(M,N)</code></p>
@@ -412,14 +412,15 @@ Pure cubical complex of dimension 2.
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BettiNumber(FiltrationTerm(T,12),1);</span>
 0
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Confirmation that 11-th filtration term has one hole.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Confirmation that 11-th filtration term has one hole and the 12-th term is contractible.</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=FiltrationTerm(T,11);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in Reversed([1..10]) do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplex(C,FiltrationTerm(T,n));</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=PureComplexBoundary(PureComplexThickened(C));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=HomotopyEquivalentMinimalPureCubicalSubcomplex(FiltrationTerm(T,12),C);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(PureComplexBoundary(H));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=ContractedComplex(PureComplexBoundary(H));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(B);</span>
 
 </pre></div>
 

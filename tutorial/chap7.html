@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP commands) - Chapter 7: Cohomology of groups</title>
+<title>GAP (HAP commands) - Chapter 7: Cohomology of groups (and Lie Algebras)</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -20,8 +20,8 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
-<p><a id="X7E34E2C6868F2726" name="X7E34E2C6868F2726"></a></p>
-<div class="ChapSects"><a href="chap7.html#X7E34E2C6868F2726">7 <span class="Heading">Cohomology of groups</span></a>
+<p><a id="X787E37187B7308C9" name="X787E37187B7308C9"></a></p>
+<div class="ChapSects"><a href="chap7.html#X787E37187B7308C9">7 <span class="Heading">Cohomology of groups (and Lie Algebras)</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X807B265978F90E01">7.1 <span class="Heading">Finite groups </span></a>
 </span>
 <div class="ContSSBlock">
@@ -74,9 +74,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C5233E27D2D603E">7.14 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X83F9A1A184FB3475">7.15 <span class="Heading">Homology of a Lie algebra with coefficients in a module</span></a>
+</span>
+</div>
 </div>
 
-<h3>7 <span class="Heading">Cohomology of groups</span></h3>
+<h3>7 <span class="Heading">Cohomology of groups (and Lie Algebras)</span></h3>
 
 <p><a id="X807B265978F90E01" name="X807B265978F90E01"></a></p>
 
@@ -854,10 +857,10 @@ Chain Map between complexes of length 5 .
 <li><p>Let <span class="SimpleMath">G</span> be a finite group and <span class="SimpleMath">k</span> a field of characteristic <span class="SimpleMath">0</span>. The group algebra <span class="SimpleMath">k(G)</span>, and the algebra <span class="SimpleMath">F(G)</span> of functions <span class="SimpleMath">d_g: G→ k, h→ d_g,h</span>, are both Hopf algebras. The tensor product <span class="SimpleMath">F(G) ⊗ k(G)</span> also admits a Hopf algebra structure known as the quantum double <span class="SimpleMath">D(G)</span>. A twisted quantum double <span class="SimpleMath">D_f(G)</span> was introduced by R. Dijkraaf, V. Pasquier &amp; P. Roche <a href="chapBib.html#biBdpr">[DPR91]</a>. The twisted double is a quasi-Hopf algebra depending on a <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f: G× G× G→ k</span>. The multiplication is given by <span class="SimpleMath">(d_g ⊗ x)(d_h ⊗ y) = d_gx,xhβ_g(x,y)(d_g ⊗ xy)</span> where <span class="SimpleMath">β_a</span> is defined by <span class="SimpleMath">β_a(h,g) = f(a,h,g) f(h,h^-1ah,g)^-1 f(h,g,(hg)^-1ahg)</span> . Although the algebraic structure of <span class="SimpleMath">D_f(G)</span> depends very much on the particular <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f</span>, representation-theoretic properties of <span class="SimpleMath">D_f(G)</span> depend only on the cohomology class of <span class="SimpleMath">f</span>.</p>
 
 </li>
-<li><p>An explicit <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> is needed to construct the multiplication <span class="SimpleMath">(a,g)(a',g') = (a + g⋅ a' + f(g,g'), gg')</span> in the extension a group <span class="SimpleMath">G</span> by a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> determined by the cohomology class of <span class="SimpleMath">f</span> in <span class="SimpleMath">H^2(G,A)</span>. See <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.6</span></a>.</p>
+<li><p>An explicit <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> is needed to construct the multiplication <span class="SimpleMath">(a,g)(a',g') = (a + g⋅ a' + f(g,g'), gg')</span> in the extension a group <span class="SimpleMath">G</span> by a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> determined by the cohomology class of <span class="SimpleMath">f</span> in <span class="SimpleMath">H^2(G,A)</span>. See <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.7</span></a>.</p>
 
 </li>
-<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.7</span></a>.</p>
+<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.8</span></a>.</p>
 
 </li>
 </ul>
@@ -1100,6 +1103,28 @@ true
 (x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)
 
 </pre></div>
+
+<p><a id="X83F9A1A184FB3475" name="X83F9A1A184FB3475"></a></p>
+
+<h4>7.15 <span class="Heading">Homology of a Lie algebra with coefficients in a module</span></h4>
+
+<p>Let <span class="SimpleMath">A</span> be the Lie algebra constructed from the associative algebra <span class="SimpleMath">M^4× 4( Q)</span> of all <span class="SimpleMath">4× 4</span> rational matrices. Let <span class="SimpleMath">V</span> be its adjoint module (with underlying vector space of dimension <span class="SimpleMath">16</span> and equal to that of <span class="SimpleMath">A</span>). The following commands compute <span class="SimpleMath">H_4(A,V) = Q</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=FullMatrixAlgebra(Rationals,4);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=LieAlgebra(M);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=AdjointModule(A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChevalleyEilenbergComplex(V,17);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..17],C!.dimension);</span>
+[ 16, 256, 1920, 8960, 29120, 69888, 128128, 183040, 205920, 183040, 128128, 
+  69888, 29120, 8960, 1920, 256, 16, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,4);</span>
+1
+
+</pre></div>
+
+<p>Note that the eighth term <span class="SimpleMath">C_8(V)</span> in the Chevalley-Eilenberg complex <span class="SimpleMath">C_∗(V)</span> is a vector space of dimension <span class="SimpleMath">205920</span> and so it will take longer to compute the homology in degree <span class="SimpleMath">8</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>

@@ -90,12 +90,12 @@
 \begin{titlepage}
 \mbox{}\vfill
 
-\begin{center}{\maintitlesize \textbf{A short HAP tutorial\mbox{}}}\\
+\begin{center}{\maintitlesize \textbf{A newer HAP tutorial\mbox{}}}\\
 \vfill
 
-\hypersetup{pdftitle=A short HAP tutorial}
-\markright{\scriptsize \mbox{}\hfill A short HAP tutorial \hfill\mbox{}}
-{\Huge \textbf{(\href{../www/SideLinks/About/aboutContents.html} {A more comprehensive tutorial is available here}\\
+\hypersetup{pdftitle=A newer HAP tutorial}
+\markright{\scriptsize \mbox{}\hfill A newer HAP tutorial \hfill\mbox{}}
+{\Huge \textbf{(\href{../www/SideLinks/About/aboutContents.html} {An older tutorial is available here}\\
  and\\
  \href{https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980} {A related book is available here}\\
  and\\
@@ -3245,6 +3245,13 @@ the \emph{Vietoris-Rips Complex}), and display the resulting degree $0$ persiste
 \end{Verbatim}
   
 
+The first 54 terms in the filtration each have 74 path components -- one for
+each point in the sample. During the next 9 filtration terms the number of
+path components reduces, meaning that sample points begin to coalesce due to
+the formation of edges in the simplicial complexes. Then, two path components
+persist over an interval of 18 filtration terms, before they eventually
+coalesce. 
+
  The next commands display the resulting degree $1$ persistent homology as a barcode. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@P:=PersistentBettiNumbers(K,1);;|
@@ -3253,7 +3260,9 @@ the \emph{Vietoris-Rips Complex}), and display the resulting degree $0$ persiste
 \end{Verbatim}
   
 
- The following command displays the $1$ skeleton of the simplicial complex arizing as the $65$-th term in the filtration on the clique complex. 
+ Interpreting short bars as noise, we see for instance that the $65$th term in the filtration could be regarded as noiseless and belonging to a
+"stable interval" in the filtration with regards to first and second homology
+functors. The following command displays (up to homotopy) the $1$ skeleton of the simplicial complex arizing as the $65$-th term in the filtration on the clique complex. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Y:=FiltrationTerm(K,65);|
   Regular CW-complex of dimension 1
@@ -3263,7 +3272,7 @@ the \emph{Vietoris-Rips Complex}), and display the resulting degree $0$ persiste
 \end{Verbatim}
   
 
-These computations suuggest that the dataset contains two persistent path
+These computations suggest that the dataset contains two persistent path
 components (or clusters), and that each path component is in some sense
 periodic. The final command displays one possible representation of the data
 as points on two circles. 
@@ -3272,7 +3281,7 @@ as points on two circles.
 {
  
 
-Each point in the dataset was an image consisting of $732\times 761$ pixels. This point was regarded as a vector in $\mathbb R^{732\times 761}$ and the matrix $D$ was constructed using the Euclidean metric. The images were the following: 
+Each point in the dataset was an image consisting of $732\times 761$ pixels. This point was regarded as a vector in $\mathbb R^{557052}=\mathbb R^{732\times 761}$ and the matrix $D$ was constructed using the Euclidean metric. The images were the following: 
 
   }
 
@@ -3284,16 +3293,14 @@ Each point in the dataset was an image consisting of $732\times 761$ pixels. Thi
 {
  
 
-The following example reads in a set $S$ of vectors of rational numbers. It uses the Euclidean distance $d(u,v)$ between vectors. It fixes some vector
-\$u{\textunderscore}0\texttt{\symbol{92}}in S\$ and uses the associated
-function $f\colon D\rightarrow [0,b] \subset \mathbb R, v\mapsto d(u_0,v)$. In addition, it uses an open cover of the interval $[0,b]$ consisting of $100$ uniformly distributed overlapping open subintervals of radius $r=29$. It also uses a simple clustering algorithm implemented in the function \texttt{cluster}. 
+The following example reads in a set $S$ of vectors of rational numbers. It uses the Euclidean distance $d(u,v)$ between vectors. It fixes some vector $u_0\in S $ and uses the associated function $f\colon D\rightarrow [0,b] \subset \mathbb R, v\mapsto d(u_0,v)$. In addition, it uses an open cover of the interval $[0,b]$ consisting of $100$ uniformly distributed overlapping open subintervals of radius $r=29$. It also uses a simple clustering algorithm implemented in the function \texttt{cluster}. 
 
  These ingredients are input into the Mapper clustering procedure to produce a
 simplicial complex $M$ which is intended to be a representation of the data. The complex $M$ is $1$-dimensional and the final command uses GraphViz software to visualize the
 graph. The nodes of this simplicial complex are "buckets" containing data
 points. A data point may reside in several buckets. The number of points in
 the bucket determines the size of the node. Two nodes are connected by an edge
-when their end-point nodes contain common data points. 
+when they contain common data points. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@file:=HapFile("data134.txt");;|
   !gapprompt@gap>| !gapinput@Read(file);|
@@ -3333,7 +3340,56 @@ when their end-point nodes contain common data points.
  }
 
  
-\section{\textcolor{Chapter }{Digital image analysis and persistent homology}}\logpage{[ 5, 3, 0 ]}
+\section{\textcolor{Chapter }{Some tools for handling pure complexes}}\logpage{[ 5, 3, 0 ]}
+\hyperdef{L}{X7BBDE0567DB8C5DA}{}
+{
+ A CW-complex $X$ is said to be \emph{pure} if all of its top-dimensional cells have a common dimension. There are
+instances where such a space $X$ provides a convenient ambient space whose subspaces can be used to model
+experimental data. For instance, the plane $X=\mathbb R^2$ admits a pure regular CW-structure whose $2$-cells are open unit squares with integer coordinate vertices. An alternative,
+and sometimes preferrable, pure regular CW-structure on $\mathbb R^2$ is one where the $2$-cells are all reguar hexagons with sides of unit length. Any digital image
+can be thresholded to produce a black-white image and this black-white image
+can naturally be regared as a finite pure cellular subcomplex of either of the
+two proposed CW-structures on $\mathbb R^2$. Analogously, thresholding can be used to represent $3$-dimensional greyscale images as finite pure cellular subspaces of cubical or
+permutahedral CW-structures on $\mathbb R^3$, and to represent RGB colour photographs as analogous subcomplexes of $\mathbb R^5$. 
+
+ In this section we list a few functions for performing basic operations on $n$-dimensional pure cubical and pure permutahedral finite subcomplexes $M$ of $X=R^n$. We refer to $M$ simply as a \emph{pure complex}. In subsequent sections we demonstrate how these few functions on pure
+complexes allow for in-depth analysis of experimental data. 
+
+(\textsc{Aside.} The basic operations could equally well be implemented for other
+CW-decompositions of $X=\mathbb R^n$ such as the regular CW-decompositions arising as the tessellations by a
+fundamental domain of a Bieberbach group (=torsion free crytallographic
+group). Moreover, the basic operations could also be implemented for other
+manifolds such as an $n$-torus $X=S^1\times S^1 \times \cdots \times S^1$ or $n$-sphere $X=S^n$ or for $X$ the universal cover of some interesting hyperbolic $3$-manifold. An example use of the ambient manifold $X=S^1\times S^1\times S^1$ could be for the construction of a cellular subspace recording the time of
+day, day of week and week of the year of crimes committed in a population.) 
+
+\textsc{Basic operations returning pure complexes.} ( Function descriptions available \href{../doc/chap1_mj.html#X7FD50DF6782F00A0} {here}.) 
+\begin{itemize}
+\item \texttt{PureCubicalComplex(binary array)}
+\item \texttt{PurePermutahedralComplex(binary array)}
+\item  \texttt{ReadImageAsPureCubicalComplex(file,threshold)}
+\item  \texttt{ReadImageSquenceAsPureCubicalComplex(file,threshold)}
+\item \texttt{PureComplexBoundary(M)}
+\item  \texttt{PureComplexComplement(M)} 
+\item  \texttt{PureComplexRandomCell(M)}
+\item  \texttt{PureComplexThickened(M)}
+\item \texttt{ContractedComplex(M, optional subcomplex of M)}
+\item \texttt{ExpandedComplex(M, optional supercomplex of M)}
+\item  \texttt{PureComplexUnion(M,N)}
+\item  \texttt{PureComplexIntersection(M,N)}
+\item  \texttt{PureComplexDifference(M,N)}
+\item  \texttt{FiltrationTerm(F,n)}
+\end{itemize}
+ 
+
+\textsc{Basic operations returning filtered pure complexes.} 
+\begin{itemize}
+\item  \texttt{PureComplexThickeningFiltration(M,length)}
+\item  \texttt{ReadImageAsFilteredPureCubicalComplex(file,length)}
+\end{itemize}
+ }
+
+ 
+\section{\textcolor{Chapter }{Digital image analysis and persistent homology}}\logpage{[ 5, 4, 0 ]}
 \hyperdef{L}{X79616D12822FDB9A}{}
 {
  
@@ -3344,7 +3400,7 @@ uniformly spaced values on the greyscale range. The persistent homology of
 this filtered complex is calculated in degrees $0$ and $1$ and displayed as two barcodes. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@file:=HapFile("image1.3.2.png");;|
-  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,20);|
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,40);|
   Filtered pure cubical complex of dimension 2.
   !gapprompt@gap>| !gapinput@P:=PersistentBettiNumbers(F,0);;|
   !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P);|
@@ -3358,18 +3414,21 @@ this filtered complex is calculated in degrees $0$ and $1$ and displayed as two 
 \end{Verbatim}
   
 
-The $20$ persistent bars in the degree $0$ barcode suggest that the image has $20$ objects. The degree $1$ barcode suggests that $14$ (or possibly $17$) of these objects have holes in them. 
-\subsection{\textcolor{Chapter }{Naive example of image segmentation by automatic thresholding}}\logpage{[ 5, 3, 1 ]}
+The $20$ persistent bars in the degree $0$ barcode suggest that the image has $20$ objects. The degree $1$ barcode suggests that there are $14$ (or possibly $17$) holes in these $20$ objects. 
+\subsection{\textcolor{Chapter }{Naive example of image segmentation by automatic thresholding}}\logpage{[ 5, 4, 1 ]}
 \hyperdef{L}{X8066F9B17B78418E}{}
 {
  Assuming that short bars and isolated points in the barcodes represent noise
 while long bars represent essential features, a "noiseless" representation of
 the image should correspond to a term in the filtration corresponding to a
-column in the barcode incident with all long bars but incident with no short
-bars or isolated points. The following commands confirm that the 4th term in
-the filtration is such a term and display this term as a binary image. 
+column in the barcode incident with all the long bars but incident with no
+short bars or isolated points. There is no noiseless term in the above
+filtration of length 40. However (in conjunction with the next subsection) the
+following commands confirm that the 64th term in the filtration of length 500
+is such a term and display this term as a binary image. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@Y:=FiltrationTerm(F,4);            |
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,500);;|
+  !gapprompt@gap>| !gapinput@Y:=FiltrationTerm(F,64);            |
   Pure cubical complex of dimension 2.
   !gapprompt@gap>| !gapinput@BettiNumber(Y,0);|
   20
@@ -3377,12 +3436,40 @@ the filtration is such a term and display this term as a binary image.
   14
   !gapprompt@gap>| !gapinput@Display(Y);|
   
-  
 \end{Verbatim}
   }
 
  
-\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 3, 2 ]}
+\subsection{\textcolor{Chapter }{Refining the filtration}}\logpage{[ 5, 4, 2 ]}
+\hyperdef{L}{X7E6436E0856761F2}{}
+{
+ The first filtration for the image has 40 terms. One may wish to investigate a
+filtration with more terms, say 500 terms, with a view to analysing, say,
+those 1-cycles that are born by term 25 of the filtration and that die between
+terms 50 and 60. The following commands produce the relevant barcode showing
+that there is precisely one such 1-cycle. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,500);;|
+  !gapprompt@gap>| !gapinput@L:=[20,60,61,62,63,64,65,66,67,68,69,70];;          |
+  !gapprompt@gap>| !gapinput@T:=FiltrationTerms(F,L);;|
+  !gapprompt@gap>| !gapinput@P0:=PersistentBettiNumbers(T,0);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P0);|
+  !gapprompt@gap>| !gapinput@P1:=PersistentBettiNumbers(T,1);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P1);|
+  
+\end{Verbatim}
+ 
+
+$\beta_0$:
+
+  
+
+ $\beta_1$:
+
+  }
+
+ 
+\subsection{\textcolor{Chapter }{Background to the data}}\logpage{[ 5, 4, 3 ]}
 \hyperdef{L}{X7D512DA37F789B4C}{}
 {
  
@@ -3394,19 +3481,19 @@ The following image was used in the example.
  }
 
  
-\section{\textcolor{Chapter }{A second example of digital image segmentation}}\logpage{[ 5, 4, 0 ]}
+\section{\textcolor{Chapter }{A second example of digital image segmentation}}\logpage{[ 5, 5, 0 ]}
 \hyperdef{L}{X7A8224DA7B00E0D9}{}
 {
  In order to automatically count the number of coins in this picture 
 
   
 
- we can load the image as a filtered pure cubical complex $F$ of filtration length 30 say, and observe the degree zero persistent Betti
-numbers to establish that the 21-st term or so of $F$ seems to be 'noise free' in degree zero. We can then set $M$ equal to the 21-st term of $F$ and thicken $M$ a couple of times say to remove any tiny holes it may have. We can then
+ we can load the image as a filtered pure cubical complex $F$ of filtration length 40 say, and observe the degree zero persistent Betti
+numbers to establish that the 28-th term or so of $F$ seems to be 'noise free' in degree zero. We can then set $M$ equal to the 28-th term of $F$ and thicken $M$ a couple of times say to remove any tiny holes it may have. We can then
 construct the complement $C$ of $M$. Then we can construct a 'neighbourhood thickening' filtration $T$ of $C$ with say $50$ consecutive thickenings. The degree one persistent barcode for $T$ has $24$ long bars, suggesting that the original picture consists of $24$ coins. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",30);;|
-  !gapprompt@gap>| !gapinput@M:=FiltrationTerm(F,21);;  #Chosen after viewing degree 0 barcode for F|
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex("my_coins.png",40);;|
+  !gapprompt@gap>| !gapinput@M:=FiltrationTerm(F,24);;  #Chosen after viewing degree 0 barcode for F|
   !gapprompt@gap>| !gapinput@M:=PureComplexThickened(M);;|
   !gapprompt@gap>| !gapinput@M:=PureComplexThickened(M);;|
   !gapprompt@gap>| !gapinput@C:=PureComplexComplement(M);;|
@@ -3419,11 +3506,11 @@ construct the complement $C$ of $M$. Then we can construct a 'neighbourhood thic
 
   
 
- The pure cubical complex $M$ has the correct number of path components, namely $25$, but its path components are very much subsets of the regions in the image
-corresponding to coins. The complex $M$ can be thickened repeatedly, subject to no two path components being allowed
+ The pure cubical complex \texttt{W:=PureComplexComplement(FiltrationTerm(T,25))} has the correct number of path components, namely $25$, but its path components are very much subsets of the regions in the image
+corresponding to coins. The complex $W$ can be thickened repeatedly, subject to no two path components being allowed
 to merge, in order to obtain a more realistic image segmentation with path
 components corresponding more closely to coins. This is done in the follow
-commands which use a makeshift function \texttt{Basins(L)} available \href{tutex/basins.g} {here}. The commands essentially implement the standard watershed segmentation
+commands which use a makeshift function \texttt{Basins(L)} available \href{tutex/basins.g} {here}. The commands essentially implement a standard watershed segmentation
 algorithm but do so by using the language of filtered pure cubical complexes. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@W:=PureComplexComplement(FiltrationTerm(T,25));;|
@@ -3443,7 +3530,140 @@ algorithm but do so by using the language of filtered pure cubical complexes.
   }
 
  
-\section{\textcolor{Chapter }{Alternative approaches to computing persistent homology}}\logpage{[ 5, 5, 0 ]}
+\section{\textcolor{Chapter }{A third example of digital image segmentation}}\logpage{[ 5, 6, 0 ]}
+\hyperdef{L}{X8290E7D287F69B98}{}
+{
+ The following image is number 3096 in the \href{https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/} {BSDS500 database of images} \cite{MartinFTM01}. 
+
+  
+
+A common first step in segmenting such an image is to appropriately threshold
+the corresponding gradient image. 
+
+   
+
+ The following commands use the thresholded gradient image to produce an
+outline of the aeroplane. The outline is a pure cubical complex with one path
+component and with first Betti number equal to 1. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/3096b.jpg");;|
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,30);;|
+  !gapprompt@gap>| !gapinput@F:=ComplementOfFilteredPureCubicalComplex(F);;|
+  !gapprompt@gap>| !gapinput@M:=FiltrationTerm(F,27);;  #Thickening chosen based on degree 0 barcode|
+  !gapprompt@gap>| !gapinput@Display(M);;|
+  !gapprompt@gap>| !gapinput@P:=List([1..BettiNumber(M,0)],n->PathComponentOfPureComplex(M,n));;|
+  !gapprompt@gap>| !gapinput@P:=Filtered(P,m->Size(m)>10);;|
+  !gapprompt@gap>| !gapinput@M:=P[1];;|
+  !gapprompt@gap>| !gapinput@for m in P do|
+  !gapprompt@>| !gapinput@M:=PureComplexUnion(M,m);;|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@T:=ThickeningFiltration(M,50);;|
+  !gapprompt@gap>| !gapinput@BettiNumber(FiltrationTerm(T,11),0);|
+  1
+  !gapprompt@gap>| !gapinput@BettiNumber(FiltrationTerm(T,11),1);|
+  1
+  !gapprompt@gap>| !gapinput@BettiNumber(FiltrationTerm(T,12),1);|
+  0
+  !gapprompt@gap>| !gapinput@#Confirmation that 11-th filtration term has one hole and the 12-th term is contractible.|
+  !gapprompt@gap>| !gapinput@C:=FiltrationTerm(T,11);;|
+  !gapprompt@gap>| !gapinput@for n in Reversed([1..10]) do|
+  !gapprompt@>| !gapinput@C:=ContractedComplex(C,FiltrationTerm(T,n));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@C:=PureComplexBoundary(PureComplexThickened(C));;|
+  !gapprompt@gap>| !gapinput@H:=HomotopyEquivalentMinimalPureCubicalSubcomplex(FiltrationTerm(T,12),C);;|
+  !gapprompt@gap>| !gapinput@B:=ContractedComplex(PureComplexBoundary(H));;|
+  !gapprompt@gap>| !gapinput@Display(B);|
+  
+\end{Verbatim}
+  }
+
+ 
+\section{\textcolor{Chapter }{Naive example of digital image contour extraction}}\logpage{[ 5, 7, 0 ]}
+\hyperdef{L}{X7957F329835373E9}{}
+{
+ The following greyscale image is available from the \href{http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz} {online appendix} to the paper \cite{coeurjolly}. 
+
+  
+
+The following commands produce a picture of contours from this image based on
+greyscale values. They also produce a picture of just the closed contours (the
+non-closed contours having been homotopy collapsed to points). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;|
+  !gapprompt@gap>| !gapinput@L:=[];;                                                          |
+  !gapprompt@gap>| !gapinput@for n in [1..15] do|
+  !gapprompt@>| !gapinput@M:=ReadImageAsPureCubicalComplex(file,n*30000);|
+  !gapprompt@>| !gapinput@M:=PureComplexBoundary(M);;|
+  !gapprompt@>| !gapinput@Add(L,M);|
+  !gapprompt@>| !gapinput@od;;|
+  !gapprompt@gap>| !gapinput@C:=L[1];;|
+  !gapprompt@gap>| !gapinput@for n in [2..Length(L)] do C:=PureComplexUnion(C,L[n]); od;|
+  !gapprompt@gap>| !gapinput@Display(C);|
+  !gapprompt@gap>| !gapinput@Display(ContractedComplex(C));|
+  
+\end{Verbatim}
+ Contours from the above greyscale image: 
+
+  
+
+ Closed contours from the above greyscale image: 
+
+  
+
+ Very similar results are obtained when applied to the file \texttt{circularGradientNoise.png}, containing noise, available from the \href{http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz} {online appendix} to the paper \cite{coeurjolly}. 
+
+The number of distinct "light sources" in the image can be read from the
+countours. Alternatively, this number can be read directly from the barcode
+produced by the following commands. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,20);;|
+  !gapprompt@gap>| !gapinput@P:=PersistentBettiNumbersAlt(F,1);;|
+  !gapprompt@gap>| !gapinput@BarCodeCompactDisplay(P);|
+  
+\end{Verbatim}
+ 
+
+  
+
+ The seventeen bars in the barcode correspond to seventeen light sources. The
+length of a bar is a measure of the "persistence" of the corresponding light
+source. A long bar may initially represent a cluster of several lights whose
+members may eventually be distinguished from each other as new bars (or
+persistent homology classes) are created. 
+
+Here the command \texttt{PersistentBettiNumbersAlt} has been used. This command is explained in the following section. 
+
+The follwowing commands use a watershed method to partition the digital image
+into regions, one region per light source. A makeshift function \texttt{Basins(L)}, available \href{tutex/basins.g} {here}, is called. (The efficiency of the example could be easily improved. For
+simplicity it uses generic commands which, in principle, can be applied to
+cubical or permutarhedral complexes of higher dimensions.) 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/circularGradient.png");;|
+  !gapprompt@gap>| !gapinput@F:=ReadImageAsFilteredPureCubicalComplex(file,20);;|
+  !gapprompt@gap>| !gapinput@FF:=ComplementOfFilteredPureCubicalComplex(F);|
+  
+  !gapprompt@gap>| !gapinput@W:=(FiltrationTerm(FF,3));|
+  !gapprompt@gap>| !gapinput@for n in [4..23] do|
+  !gapprompt@>| !gapinput@L:=[];;|
+  !gapprompt@>| !gapinput@for i in [1..PathComponentOfPureComplex(W,0)] do|
+  !gapprompt@>| !gapinput@ P:=PathComponentOfPureComplex(W,i);;|
+  !gapprompt@>| !gapinput@ Q:=ThickeningFiltration(P,150,FiltrationTerm(FF,n));;|
+  !gapprompt@>| !gapinput@ Add(L,Q);;|
+  !gapprompt@>| !gapinput@od;;|
+  !gapprompt@>| !gapinput@W:=Basins(L);|
+  !gapprompt@>| !gapinput@od;|
+  
+  !gapprompt@gap>| !gapinput@C:=PureComplexComplement(W);;|
+  !gapprompt@gap>| !gapinput@T:=PureComplexThickened(C);; C:=ContractedComplex(T,C);;  |
+  !gapprompt@gap>| !gapinput@Display(C);|
+  
+\end{Verbatim}
+ 
+
+  }
+
+ 
+\section{\textcolor{Chapter }{Alternative approaches to computing persistent homology}}\logpage{[ 5, 8, 0 ]}
 \hyperdef{L}{X7D2CC9CB85DF1BAF}{}
 {
  From any sequence $X_0 \subset X_1 \subset X_2 \subset \cdots \subset X_T$ of cellular spaces (such as pure cubical complexes, or cubical complexes, or
@@ -3470,8 +3690,12 @@ term in the input filtration.
 In this approach the vector fields on the various spaces $X_k$ are completely independent and so the method lends itself to a degree of easy
 parallelism. This is not incorporated into the current implementation. 
 
- As an illustration we consider a synthetic data set $S$ consisting of $3527$ points sampled, with errors, from an `unknown' manifold $M$ in $\mathbb R^3$. From such a data set one can associate a $3$-dimensional cubical complex $X_0$ consisting of one unit cube centred on each (suitably scaled) data point.
-Given a pure cubical complex $X_s$ we construct $X_{s+1} =X_s \cup \{\overline e^3_\lambda\}_{\lambda\in \Lambda}$ by adding to $X_s$ each closed unit cube $\overline e^3_\lambda$ in $\mathbb R^3$ that intersects non-trivially with $X_s$. We construct the filtered cubical complex $X_\ast =\{X_i\}_{0\le i\le 19}$ and compute the persistence matrices $\beta_d^{\ast\ast}$ for $d=0,1,2$ and for $\mathbb Z_2$ coefficients. The filtered complex $X_\ast$ is quite large. In particular, the final space $X_{19}$ in the filtration involves $1\,092727$ vertices, $3\,246354$ edges, $3\,214836$ faces of dimension $2$ and $1\,061208$ faces of dimension $3$. The usual matrix reduction approach to computing persistent Betti numbers
+ As an illustration we consider a synthetic data set $S$ consisting of $3527$ points sampled, with errors, from an `unknown' manifold $M$ in $\mathbb R^3$. From such a data set one can associate a $3$-dimensional cubical complex $X_0$ consisting of one unit cube centred on each (suitably scaled) data point. A
+visualization of $X_0$ is shown below. 
+
+  
+
+ Given a pure cubical complex $X_s$ we construct $X_{s+1} =X_s \cup \{\overline e^3_\lambda\}_{\lambda\in \Lambda}$ by adding to $X_s$ each closed unit cube $\overline e^3_\lambda$ in $\mathbb R^3$ that intersects non-trivially with $X_s$. We construct the filtered cubical complex $X_\ast =\{X_i\}_{0\le i\le 19}$ and compute the persistence matrices $\beta_d^{\ast\ast}$ for $d=0,1,2$ and for $\mathbb Z_2$ coefficients. The filtered complex $X_\ast$ is quite large. In particular, the final space $X_{19}$ in the filtration involves $1\,092727$ vertices, $3\,246354$ edges, $3\,214836$ faces of dimension $2$ and $1\,061208$ faces of dimension $3$. The usual matrix reduction approach to computing persistent Betti numbers
 would involve an appropriate row reduction of sparse matrices one of which has
 over 3 million rows and 3 million columns. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -3490,7 +3714,7 @@ over 3 million rows and 3 million columns.
 
 The barcodes suggest that the data points might have been sampled from a
 manifold with the homotopy type of a torus. 
-\subsection{\textcolor{Chapter }{Non-trivial cup product}}\logpage{[ 5, 5, 1 ]}
+\subsection{\textcolor{Chapter }{Non-trivial cup product}}\logpage{[ 5, 8, 1 ]}
 \hyperdef{L}{X86FD0A867EC9E64F}{}
 {
  Of course, a wedge $S^2\vee S^1\vee S^1$ has the same homology as the torus $S^1\times S^1$. By establishing that a 'noise free' model for our data points, say the 10-th
@@ -3505,10 +3729,44 @@ H^2(X_{10},\mathbb Z)$ we can eliminate $S^2\vee S^1\vee S^1$ as a candidate fro
 \end{Verbatim}
  }
 
+ 
+\subsection{\textcolor{Chapter }{Explicit homology generators}}\logpage{[ 5, 8, 2 ]}
+\hyperdef{L}{X783EF0F17B629C46}{}
+{
+ It could be desirable to obtain explicit representatives of the persistent
+homology generators that "persist" through a significant sequence of
+filtration terms. There are two such generators in degree $1$ and one such generator in degree $2$. The explicit representatives in degree $n$ could consist of an inclusion of pure cubical complexes $Y_n \subset X_{10}$ for which the incuced homology homomorphism $H_n(Y_n,\mathbb Z) \rightarrow H_n(X_{10},\mathbb Z)$ is an isomorphism, and for which $Y_n$ is minimal in the sense that its homotopy type changes if any one or more of
+its top dimensional cells are removed. Ideally the space $Y_n$ should be "close to the original dataset" $X_0$. The following commands first construct an explicit degree $2$ homology generator representative $Y_2\subset X_{10}$ where $Y_2$ is homotopy equivalent to $X_{10}$. They then construct an explicit degree $1$ homology generators representative $Y_1\subset X_{10}$ where $Y_1$ is homotopy equivalent to a wedge of two circles. The final command displays
+the homology generators representative $Y_1$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Y2:=FiltrationTerm(F,10);;                   |
+  !gapprompt@gap>| !gapinput@for t in Reversed([1..9]) do|
+  !gapprompt@>| !gapinput@Y2:=ContractedComplex(Y2,FiltrationTerm(F,t));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@Y2:=ContractedComplex(Y2);;|
+  
+  !gapprompt@gap>| !gapinput@Size(FiltrationTerm(F,10));|
+  918881
+  !gapprompt@gap>| !gapinput@Size(Y2);                  |
+  61618
+  
+  !gapprompt@gap>| !gapinput@Y1:=PureComplexDifference(Y2,PureComplexRandomCell(Y2));;|
+  !gapprompt@gap>| !gapinput@Y1:=ContractedComplex(Y1);;|
+  !gapprompt@gap>| !gapinput@Size(Y1);|
+  474
+  !gapprompt@gap>| !gapinput@Display(Y1);|
+  
+\end{Verbatim}
+ 
+
+  
+
+ }
+
  }
 
  
-\section{\textcolor{Chapter }{Knotted proteins}}\logpage{[ 5, 6, 0 ]}
+\section{\textcolor{Chapter }{Knotted proteins}}\logpage{[ 5, 9, 0 ]}
 \hyperdef{L}{X80D0D8EB7BCD05E9}{}
 {
  The \href{https://www.rcsb.org/} {Protein Data Bank} contains a wealth of data which can be investigated with respect to
@@ -3532,7 +3790,7 @@ joining the end vertices of the backbone is displayed in blue.
 \end{Verbatim}
  
 
-  
+   
 
 The next command reads in the pdb file for the T.thermophilus 1V2X protein and
 represents it as a $3$-dimensional pure cubical complex $K$. A resolution of $r=5$ is chosen and this results in a representation as a subcomplex $K$ of an ambient rectangular box of volume equal to $184\times 186\times 294$ unit cubes. The complex $K$ should have the homotopy type of a circle and the protein backbone is a
@@ -3549,7 +3807,7 @@ represents it as a $3$-dimensional pure cubical complex $K$. A resolution of $r=
 \end{Verbatim}
  
 
-  
+   
 
 Next we create a filtered pure cubical complex by repeatedly thickening $K$. We perform $15$ thickenings, each thickening being a term in the filtration. The $\beta_1$ barcode for the filtration is displayed. This barcode is a descriptor for the
 geometry of the protein. For current purposes it suffices to note that the
@@ -3587,7 +3845,7 @@ to see that the fundamental group is the same as for the trefoil knot.
  }
 
  
-\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 5, 7, 0 ]}
+\section{\textcolor{Chapter }{Random simplicial complexes}}\logpage{[ 5, 10, 0 ]}
 \hyperdef{L}{X87AF06677F05C624}{}
 {
  
@@ -3680,7 +3938,7 @@ length $1$. For example, there is one $2$-dimensional simplicial complex on $75$
  }
 
  
-\section{\textcolor{Chapter }{Computing homology of a clique complex (Vietoris-Rips complex) }}\logpage{[ 5, 8, 0 ]}
+\section{\textcolor{Chapter }{Computing homology of a clique complex (Vietoris-Rips complex) }}\logpage{[ 5, 11, 0 ]}
 \hyperdef{L}{X875EE92F7DBA1E27}{}
 {
  Topological data analysis provides one motivation for wanting to compute the
@@ -3856,7 +4114,85 @@ associated $2$-complexes are thus homotopy equivalent.
  }
 
  
-\section{\textcolor{Chapter }{Bogomolov multiplier}}\logpage{[ 6, 5, 0 ]}
+\section{\textcolor{Chapter }{Group presentations and homotopical syzygies}}\logpage{[ 6, 5, 0 ]}
+\hyperdef{L}{X84C0CB8B7C21E179}{}
+{
+ Free resolutons for a group $G$ are constructed in \textsc{HAP} as the cellular chain complex $R_\ast=C_\ast(\tilde X)$ of the universal cover of some CW-complex $X=K(G,1)$. The $2$-skeleton of $X$ gives rise to a free presentation for the group $G$. This presentation depends on a choice of maximal tree in the $1$-skeleton of $X$ in cases where $X$ has more than one $0$-cell. The attaching maps of $3$-cells in $X$ can be regarded as \emph{homotopical syzygies} or van Kampen diagrams over the group presentation whose boundaries spell the
+trivial word. 
+
+The following example constructs four terms of a resolution for the free
+abelian group $G$ on $n=3$ generators, and then extracts the group presentation from the resolution as
+well as the unique homotopical syzygy. The syzygy is visualized in terms of
+its graph of edges, directed edges being coloured according to the
+corresponding group generator. (In this example the CW-complex $\tilde X$ is regular, but in cases where it is not the visualization may be a quotient
+of the $1$-skeleton of the syzygy.) 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@n:=3;;c:=1;;|
+  !gapprompt@gap>| !gapinput@G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(n),c));;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionNilpotentGroup(G,4);;|
+  !gapprompt@gap>| !gapinput@P:=PresentationOfResolution(R);;|
+  !gapprompt@gap>| !gapinput@P.freeGroup;|
+  <free group on the generators [ x, y, z ]>
+  !gapprompt@gap>| !gapinput@P.relators;|
+  [ y^-1*x^-1*y*x, z^-1*x^-1*z*x, z^-1*y^-1*z*y ]
+  !gapprompt@gap>| !gapinput@IdentityAmongRelatorsDisplay(R,1);|
+  
+\end{Verbatim}
+ 
+
+  
+
+ This homotopical syzygy represents a relationship between the three relators $[x,y]$, $[x,z]$ and $[y,z]$ where $[x,y]=xyx^{-1}y^{-1}$. The syzygy can be thought of as a geometric relationship between commutators
+corresponding to the well-known Hall-Witt identity: 
+
+$ [\ [x,y],\ {^yz}\ ]\ \ [\ [y,z],\ {^zx}\ ]\ \ [\ [z,x],\ {^xy}\ ]\ \ =\ \ 1\ \
+.$ 
+
+The homotopical syzygy is special since in this example the edge directions
+and labels can be understood as specifying three homeomorphisms between pairs
+of faces. Viewing the syzygy as the boundary of the $3$-ball, by using the homeomorphisms to identify the faces in each face pair we
+obtain a quotient CW-complex $M$ involving one vertex, three edges, three $2$-cells and one $3$-cell. The cell structure on the quotient exists because, under the
+restrictions of homomorphisms to the edges, any cycle of edges retricts to the
+identity map on any given edge. The following result tells us that $M$ is in fact a closed oriented compact $3$-manifold. 
+
+\textsc{Theorem.} [Seifert u. Threlfall, Topologie, p.208] \emph{Let $S^2$ denote the boundary of the $3$-ball $B^3$ and suppose that the sphere $S^2$ is given a regular CW-structure in which the faces are partitioned into a
+collection of face pairs. Suppose that for each face pair there is an
+orientation reversing homeomorphism between the two faces that sends edges to
+edges and vertices to vertices. Suppose that by using these homeomorphisms to
+identity face pairs we obtain a (not necessarily regular) CW-structure on the
+quotient $M$. Then $M$ is a closed compact orientable manifold if and only if its Euler
+characteristic is $\chi(M)=0$.} 
+
+The next commands construct a presentation and associated unique homotopical
+syzygy for the free nilpotent group of class $c=2$ on $n=2$ generators. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@n:=2;;c:=2;;|
+  !gapprompt@gap>| !gapinput@G:=Image(NqEpimorphismNilpotentQuotient(FreeGroup(n),c));;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionNilpotentGroup(G,4);;|
+  !gapprompt@gap>| !gapinput@P:=PresentationOfResolution(R);;|
+  !gapprompt@gap>| !gapinput@P.freeGroup;|
+  <free group on the generators [ x, y, z ]>
+  !gapprompt@gap>| !gapinput@P.relators;|
+  [ z*x*y*x^-1*y^-1, z*x*z^-1*x^-1, z*y*z^-1*y^-1 ]
+  !gapprompt@gap>| !gapinput@IdentityAmongRelatorsDisplay(R,1);|
+  
+\end{Verbatim}
+ 
+
+  
+
+The syzygy represents the following relationship between commutators (in a
+free group). 
+
+$ [\ [x^{-1},y][x,y]\ ,\ [y,x][y^{-1},x]y^{-1}\ ]\ [\ [y,x][y^{-1},x]\ , \
+x^{-1} \ ] \ \ =\ \ 1$ 
+
+ Again, using the theorem of Seifert and Threlfall we see that the free
+nilpotent group of class two on two generators arises as the fundamental group
+of a closed compact orientable $3$-manifold $M$. }
+
+ 
+\section{\textcolor{Chapter }{Bogomolov multiplier}}\logpage{[ 6, 6, 0 ]}
 \hyperdef{L}{X7F719758856A443D}{}
 {
  
@@ -3879,7 +4215,7 @@ order $243$ with non-trivial Bogomolov multiplier. The groups in question are nu
 
  
 \section{\textcolor{Chapter }{Second group cohomology and group extensions}}\label{secExtensions}
-\logpage{[ 6, 6, 0 ]}
+\logpage{[ 6, 7, 0 ]}
 \hyperdef{L}{X8333413B838D787D}{}
 {
  Any group extension $N\rightarrowtail E \twoheadrightarrow G$ gives rise to: 
@@ -4012,7 +4348,7 @@ The following example illustrates how to construct a cohomology class $k$ in $H^
 
  
 \section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\label{secHadamard}
-\logpage{[ 6, 7, 0 ]}
+\logpage{[ 6, 8, 0 ]}
 \hyperdef{L}{X7C60E2B578074532}{}
 {
  An \emph{Hadamard matrix} is a square $n\times n$ matrix $H$ whose entries are either $+1$ or $-1$ and whose rows are mutually orthogonal, that is $H H^t = nI_n$ where $H^t$ denotes the transpose and $I_n$ denotes the $n\times n$ identity matrix. 
@@ -4031,7 +4367,7 @@ The following commands compute all $192$ of the cocyclic Hadamard matrices for t
 
  
 \section{\textcolor{Chapter }{Third group cohomology and homotopy $2$-types}}\label{secCat1}
-\logpage{[ 6, 8, 0 ]}
+\logpage{[ 6, 9, 0 ]}
 \hyperdef{L}{X78040D8580D35D53}{}
 {
   \textsc{Homotopy 2-types} 
@@ -4105,8 +4441,8 @@ The following commands begin by constructing the cat$^1$-group $H$ of Constructi
 set-theoretic 'section' of the crossed module corresponding to $H$. }
 
  
-\chapter{\textcolor{Chapter }{Cohomology of groups}}\logpage{[ 7, 0, 0 ]}
-\hyperdef{L}{X7E34E2C6868F2726}{}
+\chapter{\textcolor{Chapter }{Cohomology of groups (and Lie Algebras)}}\logpage{[ 7, 0, 0 ]}
+\hyperdef{L}{X787E37187B7308C9}{}
 {
  
 \section{\textcolor{Chapter }{Finite groups }}\logpage{[ 7, 1, 0 ]}
@@ -5118,6 +5454,27 @@ verify "completion criteria".
 \end{Verbatim}
  }
 
+ 
+\section{\textcolor{Chapter }{Homology of a Lie algebra with coefficients in a module}}\logpage{[ 7, 15, 0 ]}
+\hyperdef{L}{X83F9A1A184FB3475}{}
+{
+ Let $A$ be the Lie algebra constructed from the associative algebra $M^{4\times 4}(\mathbb Q)$ of all $4\times 4$ rational matrices. Let $V$ be its adjoint module (with underlying vector space of dimension $16$ and equal to that of $A$). The following commands compute $H_{4}(A,V) = \mathbb Q$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|M:=FullMatrixAlgebra(Rationals,4);; B
+  @gapprompt|gap>B @gapinput|A:=LieAlgebra(M);;B
+  @gapprompt|gap>B @gapinput|V:=AdjointModule(A);;B
+  @gapprompt|gap>B @gapinput|C:=ChevalleyEilenbergComplex(V,17);;B
+  @gapprompt|gap>B @gapinput|List([0..17],C!.dimension);B
+  [ 16, 256, 1920, 8960, 29120, 69888, 128128, 183040, 205920, 183040, 128128, 
+    69888, 29120, 8960, 1920, 256, 16, 0 ]
+  @gapprompt|gap>B @gapinput|Homology(C,4);B
+  1
+  
+\end{Verbatim}
+ 
+
+Note that the eighth term $C_{8}(V)$ in the Chevalley-Eilenberg complex $C_\ast(V)$ is a vector space of dimension $205920$ and so it will take longer to compute the homology in degree $8$. }
+
  }
 
  
@@ -5905,10 +6262,11 @@ degree $k$.
   [ 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128, 4, 42, 8, 128 ]
   
 \end{Verbatim}
- The suspicion that this resolution $R_\ast$ is periodic of period $4$ can be verified by constructing the chain complex $C_\ast=R_\ast\otimes_{\mathbb Z}\mathbb ZG$ and verifying that boundary matrices repeat with period $4$. 
+ The suspicion that this resolution $R_\ast$ is periodic of period $4$ can be confirmed by constructing the chain complex $C_\ast=R_\ast\otimes_{\mathbb Z}\mathbb ZG$ and verifying that boundary matrices repeat with period $4$. 
 
- A second example of a periodic resolution, for the Dihedral group $D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1}\rangle$ of order $2k+2$ in the case $k=1$, is constructed and verified for periodicity in the next example. 
+ A second example of a periodic resolution, for the Dihedral group $D_{2k+1}=\langle x, y\ |\ x^2= xy^kx^{-1}y^{-k-1} = 1\rangle$ of order $2k+2$ in the case $k=1$, is constructed and verified for periodicity in the next example. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@F:=FreeGroup(2);;D:=F/[F.1^2,F.1*F.2*F.1^-1*F.2^-2];;|
   !gapprompt@gap>| !gapinput@R:=ResolutionSmallGroup(D,15);;|
   !gapprompt@gap>| !gapinput@Size(R);|
   [ 4, 7, 8, 6, 4, 8, 8, 6, 4, 8, 8, 6, 4, 8, 8 ]
@@ -5938,6 +6296,29 @@ for most values of $k$.
   @gapprompt|gap>A @gapinput|R:=ResolutionSmallGroup(D,7);;A
   @gapprompt|gap>A @gapinput|List([0..7],R!.dimension);A
   [ 1, 2, 2, 2, 2, 2, 2, 2 ]
+  
+\end{Verbatim}
+ 
+
+The performance of the function \texttt{ResolutionSmallGroup(G,n)} is very sensistive to the choice of presentation for the input group $G$. If $G$ is an fp-group then the defining presentation for $G$ is used. If $G$ is a permutaion group or finite matrix group then \textsc{GAP} functions are invoked to find a presentation for $G$. The following commands use a geometrically derived presentation for $SL(2,5)$ as input in order to obtain the first few terms of a periodic resolution for
+this group of period $4$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|Y:=PoincareDodecahedronCWComplex( A
+  @gapprompt|>A @gapinput|[[1,2,3,4,5],[6,7,8,9,10]],A
+  @gapprompt|>A @gapinput|[[1,11,16,12,2],[19,9,8,18,14]],A
+  @gapprompt|>A @gapinput|[[2,12,17,13,3],[20,10,9,19,15]],A
+  @gapprompt|>A @gapinput|[[3,13,18,14,4],[16,6,10,20,11]],A
+  @gapprompt|>A @gapinput|[[4,14,19,15,5],[17,7,6,16,12]],A
+  @gapprompt|>A @gapinput|[[5,15,20,11,1],[18,8,7,17,13]]);;A
+  @gapprompt|gap>A @gapinput|G:=FundamentalGroup(Y);A
+  <fp group on the generators [ f1, f2 ]>
+  @gapprompt|gap>A @gapinput|RelatorsOfFpGroup(G);A
+  [ f2^-1*f1^-1*f2*f1^-1*f2^-1*f1, f2^-1*f1*f2^2*f1*f2^-1*f1^-1 ]
+  @gapprompt|gap>A @gapinput|StructureDescription(G);A
+  "SL(2,5)"
+  @gapprompt|gap>A @gapinput|R:=ResolutionSmallGroup(G,3);;A
+  @gapprompt|gap>A @gapinput|List([0..3],R!.dimension);    A
+  [ 1, 2, 2, 1 ]
   
 \end{Verbatim}
  }

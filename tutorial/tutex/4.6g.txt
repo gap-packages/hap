@@ -1,0 +1,27 @@
+gap> file:=Filename(DirectoriesPackageLibrary("HAP"),"../tutorial/images/3096b.jpg");;
+gap> F:=ReadImageAsFilteredPureCubicalComplex(file,30);;
+gap> F:=ComplementOfFilteredPureCubicalComplex(F);;
+gap> M:=FiltrationTerm(F,27);;  #Thickening chosen based on degree 0 barcode
+gap> Display(M);;
+gap> P:=List([1..BettiNumber(M,0)],n->PathComponentOfPureComplex(M,n));;
+gap> P:=Filtered(P,m->Size(m)>10);;
+gap> M:=P[1];;
+gap> for m in P do
+> M:=PureComplexUnion(M,m);;
+> od;
+gap> T:=ThickeningFiltration(M,50);;
+gap> BettiNumber(FiltrationTerm(T,11),0);
+1
+gap> BettiNumber(FiltrationTerm(T,11),1);
+1
+gap> BettiNumber(FiltrationTerm(T,12),1);
+0
+gap> #Confirmation that 11-th filtration term has one hole and the 12-th term is contractible.
+gap> C:=FiltrationTerm(T,11);;
+gap> for n in Reversed([1..10]) do
+> C:=ContractedComplex(C,FiltrationTerm(T,n));
+> od;
+gap> C:=PureComplexBoundary(PureComplexThickened(C));;
+gap> H:=HomotopyEquivalentMinimalPureCubicalSubcomplex(FiltrationTerm(T,12),C);;
+gap> B:=ContractedComplex(PureComplexBoundary(H));;
+gap> Display(B);

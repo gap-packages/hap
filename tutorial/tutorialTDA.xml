@@ -12,6 +12,8 @@ filtration of length <M>100</M> on the first two dimensions of the assotiated cl
 <Alt Only="HTML">&lt;img src="images/bar0.png" align="center" height="60" alt="degree 0 barcode"/>
 </Alt>
 
+<P/>The first 54 terms in the filtration each have 74 path components -- one for each point in the sample. During the next 9 filtration terms the number of path components reduces, meaning that sample points begin to coalesce due to the 
+	formation of edges in the simplicial complexes. Then, two path components persist over an interval of 18 filtration terms, before they eventually coalesce.  
 <P/>
 The next commands display the resulting degree <M>1</M> persistent homology as a barcode.
 
@@ -22,7 +24,8 @@ The next commands display the resulting degree <M>1</M> persistent homology as a
 <Alt Only="HTML">&lt;img src="images/bar1.png" align="center" height="120" alt="degree 1 bar code"/>
 </Alt>
 
-<P/> The following command displays the <M>1</M> skeleton of the simplicial complex arizing as the <M>65</M>-th term in the filtration on the clique complex.
+<P/> Interpreting short bars as noise, we see for instance that
+	the <M>65</M>th term in the filtration could be regarded as noiseless and belonging to a "stable interval" in the filtration with regards to first and second homology functors.  The following command displays (up to homotopy) the <M>1</M> skeleton of the simplicial complex arizing as the <M>65</M>-th term in the filtration on the clique complex.
 
 <Example>
 <#Include SYSTEM "tutex/4.3.txt">
@@ -30,13 +33,13 @@ The next commands display the resulting degree <M>1</M> persistent homology as a
 <Alt Only="HTML">&lt;img src="images/twocircles.png" align="center" height="300" alt="1-skeleton"/>
 </Alt>
 
-<P/>These computations suuggest that the dataset contains two persistent 
+<P/>These computations suggest that the dataset contains two persistent 
 path components (or clusters), and that each path component is in some sense periodic. The final command displays one
  possible representation of the data as points on two circles.
 
 <Subsection><Heading>Background to the data</Heading>
 
-<P/>Each point in the dataset was an image consisting of <M>732\times 761</M> pixels. This point was regarded as a vector in <M>\mathbb R^{732\times 761}</M> and the matrix <M>D</M> was constructed using the Euclidean metric. The images were the following:
+	<P/>Each point in the dataset was an image consisting of <M>732\times 761</M> pixels. This point was regarded as a vector in <M>\mathbb R^{557052}=\mathbb R^{732\times 761}</M> and the matrix <M>D</M> was constructed using the Euclidean metric. The images were the following:
 <P/>
 <Alt Only="HTML">&lt;img src="images/letters.png" align="center" height="220" alt="letters"/>
 </Alt>
@@ -47,7 +50,7 @@ path components (or clusters), and that each path component is in some sense per
 <Section><Heading>Mapper clustering</Heading>
 
 <P/>The following example reads in a set <M>S</M> of vectors of rational numbers. It uses the Euclidean distance <M>d(u,v)</M> between vectors. It  fixes     
-some  vector $u_0\in S$ and uses the associated
+	some  vector <M>u_0\in S </M> and uses the associated
 function <M>f\colon D\rightarrow [0,b] \subset \mathbb R, v\mapsto d(u_0,v)</M>.  In addition, it uses an open cover of the interval <M>[0,b]</M> consisting of
 <M>100</M> uniformly distributed overlapping open subintervals of radius <M>r=29</M>. It also uses a simple clustering algorithm implemented in the function
 <C>cluster</C>.
@@ -57,7 +60,7 @@ produce
  a simplicial complex <M>M</M> which is intended to be a representation of the 
 data. The complex <M>M</M> is <M>1</M>-dimensional and the final command uses 
 GraphViz software to visualize the graph. The nodes of this simplicial 
-complex are "buckets" containing data points. A data point may reside in several buckets. The number of points in the bucket determines the size of the node. Two nodes are connected by an edge when their end-point nodes contain common data points.
+complex are "buckets" containing data points. A data point may reside in several buckets. The number of points in the bucket determines the size of the node. Two nodes are connected by an edge when they  contain common data points.
 <Example>
 <#Include SYSTEM "tutex/4.4.txt">
 </Example>
@@ -76,6 +79,57 @@ complex are "buckets" containing data points. A data point may reside in several
 </Subsection>
 </Section>
 
+<Section><Heading>Some tools for handling pure complexes</Heading>
+	A CW-complex <M>X</M> is said to be <E>pure</E> if all of its top-dimensional cells have a common dimension. There are instances where such
+		a space <M>X</M> provides a convenient ambient space whose subspaces can be used to model experimental data.  For instance, the plane <M>X=\mathbb R^2</M> admits a pure regular CW-structure whose <M>2</M>-cells  are  
+			open unit squares with integer coordinate vertices. An alternative, and sometimes preferrable, pure regular CW-structure on <M>\mathbb R^2</M> is one where the <M>2</M>-cells are all reguar hexagons with sides of unit length. Any digital image can be thresholded to produce a black-white
+				image and this black-white image can naturally be regared as a finite pure cellular subcomplex of either of the two proposed CW-structures on <M>\mathbb R^2</M>. 
+					 Analogously, thresholding can be used to represent <M>3</M>-dimensional greyscale images as finite pure cellular subspaces
+						 of cubical or permutahedral CW-structures on <M>\mathbb R^3</M>, and to represent RGB colour photographs as 
+							 analogous subcomplexes of <M>\mathbb R^5</M>. 
+
+							 <P/> In this section we list a few functions for performing basic operations on <M>n</M>-dimensional
+								 pure cubical and pure permutahedral finite subcomplexes <M>M</M> of <M>X=R^n</M>. We refer to <M>M</M> simply as a <E>pure complex</E>. In subsequent sections we demonstrate how these few functions on pure complexes allow for in-depth analysis of experimental data.
+
+								 <P/>(<B>Aside.</B> The basic operations could equally well be implemented for other CW-decompositions of <M>X=\mathbb R^n</M> such as the regular CW-decompositions arising as the tessellations by a fundamental domain of a Bieberbach group (=torsion free crytallographic group). Moreover, the basic operations could also be implemented for 
+									 other manifolds such as an <M>n</M>-torus <M>X=S^1\times S^1 \times \cdots \times S^1</M> or <M>n</M>-sphere <M>X=S^n</M> or for <M>X</M> the universal cover of some interesting hyperbolic <M>3</M>-manifold. An example use of the ambient manifold <M>X=S^1\times S^1\times S^1</M> could be for the construction of a cellular subspace recording the time of day, day of week and week of the year of crimes committed in a population.)
+
+									 <P/><B>Basic operations returning pure complexes.</B> ( Function descriptions   available <URL><Link>../doc/chap1_mj.html#X7FD50DF6782F00A0</Link><LinkText>here</LinkText></URL>.) 
+
+									 <List>	
+										 <Item><Code>PureCubicalComplex(binary array)</Code></Item>
+											 <Item><Code>PurePermutahedralComplex(binary array)</Code></Item>
+											 <Item> <Code>ReadImageAsPureCubicalComplex(file,threshold)</Code></Item>
+
+          <Item> <Code>ReadImageSquenceAsPureCubicalComplex(file,threshold)</Code></Item>
+
+		  <Item><Code>PureComplexBoundary(M)</Code></Item>
+
+											 <Item>  <Code>PureComplexComplement(M)</Code> </Item>
+											 <Item> <Code>PureComplexRandomCell(M)</Code></Item>
+
+											 <Item> <Code>PureComplexThickened(M)</Code></Item>
+											 <Item><Code>ContractedComplex(M, optional subcomplex of M)</Code></Item>
+												 <Item><Code>ExpandedComplex(M, optional supercomplex of M)</Code></Item>
+
+
+											 <Item> <Code>PureComplexUnion(M,N)</Code></Item>
+
+											 <Item> <Code>PureComplexIntersection(M,N)</Code></Item>
+
+											 <Item> <Code>PureComplexDifference(M,N)</Code></Item>
+
+												          <Item> <Code>FiltrationTerm(F,n)</Code></Item>
+										 </List>
+
+			 <P/><B>Basic operations returning filtered pure complexes.</B>
+			 <List>
+				 <Item> <Code>PureComplexThickeningFiltration(M,length)</Code></Item>
+
+				 <Item> <Code>ReadImageAsFilteredPureCubicalComplex(file,length)</Code></Item>
+			 </List>
+
+</Section>
 <Section><Heading>Digital image analysis and persistent homology</Heading>
 
 <P/>The following example reads in a digital image as a filtered
@@ -98,18 +152,37 @@ The filtration is obtained by thresholding at a sequence of uniformly spaced val
 </Alt>
 
 <P/>The <M>20</M> persistent bars in the
-degree <M>0</M> barcode suggest that the image has <M>20</M> objects. The degree <M>1</M> barcode suggests that <M>14</M> (or possibly <M>17</M>) of these objects have holes in them.
+degree <M>0</M> barcode suggest that the image has <M>20</M> objects. The degree <M>1</M> barcode suggests that there are <M>14</M> (or possibly <M>17</M>)  holes in these <M>20</M> objects.
 
 <Subsection><Heading>Naive example of image segmentation by automatic thresholding</Heading>
 	Assuming that short bars and isolated points in the barcodes represent noise while long bars represent essential features, a "noiseless" representation of the image should correspond to a term in the filtration corresponding to
- a column in the barcode incident with all long bars but incident with no short bars or isolated points. The following commands confirm that the 4th term in the filtration is such a term and display this term as a binary image.
+ a column in the barcode incident with all the long bars but incident with no short bars or isolated points. There is no noiseless term in the above filtration of length 40. However (in conjunction with  the next subsection) the  following commands confirm that the 64th term in the filtration of length 500  is such a term and display this term as a binary image.
 
 	<Example>
 <#Include SYSTEM "tutex/4.6a.txt">
 </Example>
 
+
 	<Alt Only="HTML">&lt;img src="images/binaryimage.png" align="center" height="400" alt="binary image"/>
 </Alt>
+</Subsection>
+
+<Subsection><Heading>Refining the filtration</Heading>
+	The first filtration for the image has 40 terms. One may wish  to investigate a filtration with more terms, say 500 terms, with a view to analysing, say, 
+	those 1-cycles that are born by term 25 of the filtration and
+	that die between terms 50 and 60. The following commands produce the relevant barcode showing that there is precisely one such  1-cycle.  
+
+	  <Example>
+<#Include SYSTEM "tutex/4.6d.txt">
+</Example>
+
+<P/><M>\beta_0</M>:<P/>
+<Alt Only="HTML">&lt;img src="images/refinedbc0.gif" align="center" height="100" alt="bar code"/></Alt>
+	<P/>
+		<M>\beta_1</M>:<P/>
+	 <Alt Only="HTML">&lt;img src="images/refinedbc.gif" align="center" height="200" alt="bar code"/>
+ </Alt>
+
 </Subsection>
 
 <Subsection><Heading>Background to the data</Heading>
@@ -129,10 +202,10 @@ degree <M>0</M> barcode suggest that the image has <M>20</M> objects. The degree
 </Alt>
 <P/>
 we can load the image as a filtered pure cubical complex <M>F</M>
-of filtration length 30 say, and observe the degree zero persistent 
-	Betti numbers to establish that the 21-st term or so of <M>F</M>  
+of filtration length 40 say, and observe the degree zero persistent 
+	Betti numbers to establish that the 28-th term or so of <M>F</M>  
 	 seems to be 'noise free' in degree zero. We can then set <M>M</M> equal to 
-		the 21-st term of <M>F</M> and thicken <M>M</M> a couple of 
+		the 28-th term of <M>F</M> and thicken <M>M</M> a couple of 
 			times say to remove any tiny holes it may have. 
 			We can then construct the complement <M>C</M> of <M>M</M>. Then we can construct a 
 				'neighbourhood thickening'  filtration
@@ -148,10 +221,10 @@ of filtration length 30 say, and observe the degree zero persistent
 </Alt>
 
 <P/>
-	The  pure cubical complex <M>M</M> has the correct number of path 
-		components, namely <M>25</M>, but its path components are very much subsets of the regions in the image corresponding to coins. The complex <M>M</M> can be thickened repeatedly, subject to no two path components being allowed to merge, in order to obtain a
+	The  pure cubical complex <Code>W:=PureComplexComplement(FiltrationTerm(T,25))</Code> has the correct number of path 
+		components, namely <M>25</M>, but its path components are very much subsets of the regions in the image corresponding to coins. The complex <M>W</M> can be thickened repeatedly, subject to no two path components being allowed to merge, in order to obtain a
 			more realistic image segmentation with path components corresponding more closely to coins. This is done in the follow commands which use a makeshift
-		function <Code>Basins(L)</Code> available <URL><Link>tutex/basins.g</Link><LinkText>here</LinkText>    </URL>. The commands essentially implement the standard watershed segmentation algorithm but do so by using the language of filtered pure cubical complexes.  
+		function <Code>Basins(L)</Code> available <URL><Link>tutex/basins.g</Link><LinkText>here</LinkText>    </URL>. The commands essentially implement a standard watershed segmentation algorithm but do so by using the language of filtered pure cubical complexes.  
 
 			<Example>
 <#Include SYSTEM "tutex/4.6c.txt">
@@ -162,6 +235,100 @@ of filtration length 30 say, and observe the degree zero persistent
 </Alt>
 
 </Section>
+
+<Section><Heading>A third example of digital image segmentation</Heading>
+
+			The following  image is number 3096 in the 
+	<URL><Link>https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/</Link>
+		<LinkText>BSDS500 database of images</LinkText></URL> 
+
+				<Cite Key="MartinFTM01"/>.
+
+					<P/>
+                                        <Alt Only="HTML">&lt;img src="images/3096.jpg" align="center" height="200" alt="image 3096 from BSDS500"/>
+</Alt>
+
+<P/>A common first step in segmenting such an image is to appropriately threshold the corresponding  gradient image.
+
+	<P/>
+                                        <Alt Only="HTML">&lt;img src="images/3096b.jpg" align="center" height="200" alt="gradient image"/>
+				</Alt>
+					<Alt Only="HTML">&lt;img src="images/3096points.png" align="center" height="200" alt="thresholded gradient image"/>
+                                </Alt>
+				<P/>
+The following commands use the thresholded gradient image to produce an outline of the aeroplane. The outline is a pure cubical complex with one path component and with first Betti number equal to 1.
+
+					<Example>
+<#Include SYSTEM "tutex/4.6g.txt">
+</Example>
+
+	 <Alt Only="HTML">&lt;img src="images/3096final.png" align="center" height="200" alt="outline of aeroplane"/>
+                                </Alt>
+
+
+</Section>
+
+	<Section><Heading>Naive example of digital image contour extraction</Heading>
+
+			The following greyscale image is available from the <URL><Link>http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz</Link><LinkText>online appendix</LinkText></URL> to the paper <Cite Key="coeurjolly"/>.
+
+			<P/>
+		<Alt Only="HTML">&lt;img src="images/circularGradient.png" align="center" height="250" alt="circular gradient image"/>
+</Alt>
+
+<P/>The following commands produce a picture of contours from this image based on greyscale values. They also produce a picture of just the closed contours (the non-closed contours having been homotopy collapsed to points).
+
+	                      <Example>
+<#Include SYSTEM "tutex/4.17.txt">
+</Example>
+
+	Contours from the above greyscale image:
+	 <P/>
+                <Alt Only="HTML">&lt;img src="images/contours.png" align="center" height="250" alt="contours image"/>
+	</Alt>
+	<P/>
+
+		Closed contours from the above greyscale image:
+	<P/>
+
+		  <Alt Only="HTML">&lt;img src="images/closedcontours.png" align="center" height="250" alt="closedcontours image"/>
+	  </Alt>
+
+	  <P/> Very similar results are obtained when applied to the file <Code>circularGradientNoise.png</Code>, containing noise,  available
+		  from
+		  the <URL><Link>http://www.ipol.im/pub/art/2014/74/FrechetAndConnectedCompDemo.tgz</Link><LinkText>online appendix</LinkText></URL> to the paper <Cite Key="coeurjolly"/>.
+
+		  <P/>The number of  distinct "light sources" in the image can be read from the countours. Alternatively, this number can be read directly from the barcode produced by the following commands.
+
+			                    <Example>
+<#Include SYSTEM "tutex/4.18.txt">
+</Example>
+
+<P/>
+	   <Alt Only="HTML">&lt;img src="images/bccircularGradient.png" align="center" height="250" alt="closedcontours image"/>
+          </Alt>
+	  <P/> The seventeen bars in the barcode correspond to  seventeen light sources. The length of a bar is a measure of the "persistence" of the corresponding light source. A long bar may initially represent a cluster of several
+		  lights whose members may eventually be distinguished from each other
+		  as new bars (or persistent homology classes) are created. 
+
+	  <P/>Here the command <Code>PersistentBettiNumbersAlt</Code> has been used. This command  is explained in the following section.
+
+	  <P/>The follwowing commands use a watershed method to partition the digital image into regions, one region per light source. 
+		  A makeshift
+		  function <Code>Basins(L)</Code>, available <URL><Link>tutex/basins.g</Link><LinkText>here</LinkText>    </URL>, is called.
+			  (The efficiency of 
+			  the example could be easily improved. For simplicity 
+			  it uses generic commands which, in principle, can be applied to cubical or permutarhedral complexes of higher dimensions.)
+
+
+		                                              <Example>
+<#Include SYSTEM "tutex/4.19.txt">
+</Example>
+
+<P/>
+           <Alt Only="HTML">&lt;img src="images/circularGradientSeg.png" align="center" height="250" alt="segmented image"/>
+          </Alt>
+		</Section>
 <Section><Heading>Alternative approaches to computing persistent homology</Heading>
 
 		From any  sequence <M>X_0 \subset X_1 \subset X_2 \subset \cdots \subset X_T</M> of cellular spaces 
@@ -192,9 +359,15 @@ can be computed and the persistent homology can be derived from these homology h
 							 <P/> 
 								 As an illustration we consider a synthetic data set <M>S</M> consisting of
 	<M>3527</M>
-		points sampled, with errors, from an `unknown' manifold <M>M</M> in <M>\mathbb R^3</M>. From such a data set one can associate
+		points sampled, with errors, from an `unknown' manifold <M>M</M> in <M>\mathbb R^3</M>. 
+			From such a data set one can associate
 			a <M>3</M>-dimensional
-			cubical complex <M>X_0</M> consisting of one unit cube centred on each (suitably scaled) data point. 
+				cubical complex <M>X_0</M> consisting of one unit cube centred on each (suitably scaled) data point. A visualization of <M>X_0</M> is shown below.
+
+
+				              <P/>
+<Alt Only="HTML">&lt;img src="images/data.png" align="center" height="300" alt="data cloud"/></Alt>
+<P/>
 				Given a pure cubical complex <M>X_s</M> we construct
 				<M>X_{s+1} =X_s \cup \{\overline e^3_\lambda\}_{\lambda\in \Lambda}</M>  by adding to
 				<M>X_s</M> each closed unit cube <M>\overline e^3_\lambda</M> in
@@ -228,6 +401,26 @@ can be computed and the persistent homology can be derived from these homology h
 </Example>
 
 </Subsection>
+
+<Subsection><Heading>Explicit homology generators</Heading>
+
+	It could be desirable to obtain explicit representatives of the  persistent homology generators  that "persist" through a 
+	significant sequence of filtration terms. There are two such generators in degree <M>1</M> and one such generator in degree <M>2</M>. The explicit representatives in degree <M>n</M> could consist of an inclusion of
+		pure cubical complexes <M>Y_n \subset X_{10}</M> for which the incuced homology
+			homomorphism <M>H_n(Y_n,\mathbb Z) \rightarrow H_n(X_{10},\mathbb Z)</M> is an isomorphism, and for which <M>Y_n</M> is minimal in the sense that its homotopy type changes if any one or more of its top dimensional cells are removed.
+				Ideally the space <M>Y_n</M> should be  "close to the original dataset" <M>X_0</M>. 
+					The following commands first construct an explicit degree <M>2</M> homology generator representative
+					<M>Y_2\subset X_{10}</M> where <M>Y_2</M> is homotopy equivalent to <M>X_{10}</M>.
+						 They then construct an explicit degree <M>1</M> homology generators representative
+                                        <M>Y_1\subset X_{10}</M> where <M>Y_1</M> is homotopy equivalent to a wedge of two circles.
+ The final command displays the homology generators representative <M>Y_1</M>.
+	<Example>
+<#Include SYSTEM "tutex/4.7c.txt">
+</Example>
+	                                              <P/>
+<Alt Only="HTML">&lt;img src="images/cubicaltorusgens.png" align="center" height="200" alt="first homology generators"/></Alt>
+<P/>
+</Subsection>
 </Section>
 
 
@@ -244,7 +437,11 @@ can be computed and the persistent homology can be derived from these homology h
 </Example>
 
         <P/>
-<Alt Only="HTML">&lt;img src="images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></Alt>
+	<Alt Only="HTML">&lt;img src="images/1v2x.gif" align="center" height="500" alt="a protein backbone"/></Alt>
+
+
+		<!--		<Alt Only="HTML">&lt;img src="../gh-files/1v2x.png" align="center" height="500" alt="a protein backbone"/></Alt>
+-->
 
 	<P/>The next command reads in the pdb file for the  T.thermophilus 1V2X protein and represents it as a <M>3</M>-dimensional pure cubical complex <M>K</M>. A resolution of <M>r=5</M> is chosen and this results in a representation as a subcomplex <M>K</M> of an ambient rectangular box of volume equal to <M>184\times 186\times 294</M> unit cubes. The complex <M>K</M> should have the homotopy type of a circle and the protein backbone is a 1-dimenional curve that should lie  in <M>K</M>. The final command displays <M>K</M>.
 
@@ -252,8 +449,13 @@ can be computed and the persistent homology can be derived from these homology h
 <#Include SYSTEM "tutex/4.11.txt">
 </Example>
 
-	<P/>
+<P/>
 <Alt Only="HTML">&lt;img src="images/1v2xcubical.gif" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></Alt>
+
+<!--
+	<Alt Only="HTML">&lt;img src="../gh-files/1v2xcubical.png" align="center" height="500" alt="pure cubical complex representing a protein backbone"/></Alt>
+-->
+
 
 	<P/>Next we create a filtered pure cubical complex by repeatedly
 		thickening <M>K</M>. We perform <M>15</M> thickenings, each thickening being a term in the filtration. The <M>\beta_1</M> barcode for the filtration is displayed. This barcode is a descriptor for the geometry of the protein. For current purposes it suffices to note that the first few terms of the filtration have first

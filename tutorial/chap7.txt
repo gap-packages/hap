@@ -1,5 +1,5 @@
   
-  [1X7 [33X[0;0YCohomology of groups[133X[101X
+  [1X7 [33X[0;0YCohomology of groups (and Lie Algebras)[133X[101X
   
   
   [1X7.1 [33X[0;0YFinite groups[133X[101X
@@ -848,12 +848,12 @@
   [30X    [33X[0;6YAn  explicit  [22X2[122X-cocycle  [22Xf:  G×  G→  A[122X  is  needed  to  construct  the
         multiplication  [22X(a,g)(a',g')  =  (a  +  g⋅  a'  + f(g,g'), gg')[122X in the
         extension  a  group  [22XG[122X  by  a [22XZG[122X-module [22XA[122X determined by the cohomology
-        class of [22Xf[122X in [22XH^2(G,A)[122X. See [14X6.6[114X.[133X
+        class of [22Xf[122X in [22XH^2(G,A)[122X. See [14X6.7[114X.[133X
   
   [30X    [33X[0;6YIn work on coding theory and Hadamard matrices a number of papers have
         investigated  square matrices [22X(a_ij)[122X whose entries [22Xa_ij=f(g_i,g_j)[122X are
         the  values  of  a  [22X2[122X-cocycle  [22Xf: G× G → Z_2[122X where [22XG[122X is a finite group
-        acting trivially on [22XZ_2[122X. See for instance [Hor00] and [14X6.7[114X.[133X
+        acting trivially on [22XZ_2[122X. See for instance [Hor00] and [14X6.8[114X.[133X
   
   [33X[0;0YGiven  a [22XZG[122X-resolution [22XR_∗[122X (with contracting homotopy) and a [22XZG[122X-module [22XA[122X one
   can  use  HAP  commands  to compute explicit standard [22Xn[122X-cocycles [22Xf: G^n → A[122X.
@@ -1122,4 +1122,29 @@
     [4X[28X(x_1^4-2*x_1^3+3*x_1^2-2*x_1+1)/(x_1^6-2*x_1^5+3*x_1^4-4*x_1^3+3*x_1^2-2*x_1+1)[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X7.15 [33X[0;0YHomology of a Lie algebra with coefficients in a module[133X[101X
+  
+  [33X[0;0YLet [22XA[122X be the Lie algebra constructed from the associative algebra [22XM^4× 4( Q)[122X
+  of  all [22X4× 4[122X rational matrices. Let [22XV[122X be its adjoint module (with underlying
+  vector space of dimension [22X16[122X and equal to that of [22XA[122X). The following commands
+  compute [22XH_4(A,V) = Q[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=FullMatrixAlgebra(Rationals,4);; [127X[104X
+    [4X[25Xgap>[125X [27XA:=LieAlgebra(M);;[127X[104X
+    [4X[25Xgap>[125X [27XV:=AdjointModule(A);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ChevalleyEilenbergComplex(V,17);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..17],C!.dimension);[127X[104X
+    [4X[28X[ 16, 256, 1920, 8960, 29120, 69888, 128128, 183040, 205920, 183040, 128128, [128X[104X
+    [4X[28X  69888, 29120, 8960, 1920, 256, 16, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,4);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  the eighth term [22XC_8(V)[122X in the Chevalley-Eilenberg complex [22XC_∗(V)[122X
+  is  a vector space of dimension [22X205920[122X and so it will take longer to compute
+  the homology in degree [22X8[122X.[133X
   
