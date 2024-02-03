@@ -52,7 +52,7 @@ end;
 
 ###############################################################
 TTI:=function(c);
-return Position(Comb[Length(c)],SSortedList(c));
+return PositionSorted(Comb[Length(c)],SSortedList(c));
 end;
 ###############################################################
 
@@ -119,7 +119,7 @@ if n=1 then return [1]; fi;
 bound:=List([1..Binomial(d,n-1)], i->0);
 Q:=ITT(n,j);
 Remove(Q,i);
-pos:=Position(Comb[n-1],Q);
+pos:=PositionSorted(Comb[n-1],Q);
 if IsOddInt(i) then
 bound[pos]:=-1;
 else
@@ -135,7 +135,7 @@ BD:=function(n,j)
 #D:C_n(A)-->C_{n-1}(A) in the Chevalley-Eilenberg complex with trivial
 #coefficients
 
-local bound,a,b,x,p,q,R,m,Q;
+local bound,a,b,x,p,q,R,m,Q,t;
 
 if n>s then
         return [0]*ONE;
@@ -152,12 +152,13 @@ for b in [a+1..n] do
         p:=Length(Sctab[Q[a]][Q[b]][1]);
         for m in [1..p] do
                 R:=StructuralCopy(Q);
-                Add(R,Sctab[Q[a]][Q[b]][1][m],1);
-                Remove(R,a+1);
-                Remove(R,b);
-                if IsSSortedList(SortedList(R))=true then
-                        q:=Position(SortedList(R),R[1]);
-                        bound[TTI(R)]:=bound[TTI(R)]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
+                Remove(R,a);
+                Remove(R,b-1);
+                if not Sctab[Q[a]][Q[b]][1][m] in R then
+                AddSet(R,Sctab[Q[a]][Q[b]][1][m]);
+                        q:=Position(SortedList(R),Sctab[Q[a]][Q[b]][1][m]);
+                        t:=TTI(R);
+                        bound[t]:=bound[t]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
                 fi;
         od;
 od;

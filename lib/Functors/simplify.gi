@@ -14,7 +14,7 @@ local S, T, a, pos;
 S:=SSortedList(List(b,x->x[1]));
 T:=1*List(S,x->[x,0]);
 for a in b do
-pos:=Position(S,a[1]);
+pos:=PositionSorted(S,a[1]);
 T[pos][2]:=T[pos][2]+a[2];
 od;
 return Filtered(T,x->not x[2]=0);

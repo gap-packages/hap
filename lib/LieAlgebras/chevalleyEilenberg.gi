@@ -4,19 +4,26 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ChevalleyEilenbergComplex,
-function(L,x)
+function(arg)
 
-local ChevalleyComplex,ChevalleyMap;
+local L,x,sparse,ChevalleyComplex,ChevalleyMap;
 
 # L: Lie algebra or Lie algebras morphism
 # x: Length of the chain complex/map to be calculated
 
+L:=arg[1];
+x:=arg[2];
+sparse:=false;
+if Length(arg)>2 then
+sparse:= arg[3]="sparse";
+fi;
 
 ###################################################################
 ###################################################################
-ChevalleyComplex:=function(A,s)
+ChevalleyComplex:=function(A,s, sparse)
 
-local Sctab,B,Dim,n,i,d,j,Boundary,bound,r,Comb,ITT,TTI,ONE,Charact;
+local Sctab,B,Dim,n,i,d,j,Boundary,bound,r,Comb,ITT,TTI,ONE,Charact,
+      DimRec,obj;
 
 B:=Basis(A);
 Sctab:=StructureConstantsTable(B);
@@ -48,7 +55,7 @@ end;
 
 ###############################################################
 TTI:=function(n);
-return Position(Comb[Length(n)],SSortedList(n));
+return PositionSorted(Comb[Length(n)],n);
 end;
 ###############################################################
 
@@ -58,21 +65,29 @@ if n>s then return fail; else
 return Binomial( d, n ); fi;
 end;
 ###############################################################
+DimRec:=List([0..s],Dim);
+################################################################
+Dim:=function(n);
+if n>s then return fail; else
+return DimRec[n+1]; fi;
+end;
+###############################################################
 
+if not sparse then
 ###############################################################
 Boundary:=function(n,j)
 #Boundary returns the image of the j-th generator of C(n)
 
-local a,b,x,p,q,R,m,Q;
+local a,b,x,p,q,R,m,Q,t;
 
 if n>s then
 	return fail;
 fi;
-if j>Binomial(d,n) then
+if j>Dim(n) then
 	return fail;
 fi;
 
-bound:=List([1..Binomial(d,n-1)], i->0);
+bound:=List([1..Dim(n-1)], i->0);
 Q:=ITT(j,n);
 
 for a in [1..n-1] do
@@ -80,12 +95,13 @@ for b in [a+1..n] do
 	p:=Length(Sctab[Q[a]][Q[b]][1]);
 	for m in [1..p] do
 		R:=StructuralCopy(Q);
-		Add(R,Sctab[Q[a]][Q[b]][1][m],1);
-		Remove(R,a+1);
-		Remove(R,b);
-		if IsSSortedList(SortedList(R))=true then
-			q:=Position(SortedList(R),R[1]);
-			bound[TTI(R)]:=bound[TTI(R)]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
+		Remove(R,a);
+		Remove(R,b-1);
+                if not Sctab[Q[a]][Q[b]][1][m] in R then
+                AddSet(R,Sctab[Q[a]][Q[b]][1][m]);
+                q:=PositionSorted(R,Sctab[Q[a]][Q[b]][1][m]);
+                        t:=TTI(R);
+			bound[t]:=bound[t]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
 		fi;		
 	od;
 od;
@@ -98,8 +114,53 @@ return bound; fi;
 
 end;
 #############################################################
+else
+###############################################################
+Boundary:=function(n,j)
+#Boundary returns the image of the j-th generator of C(n)
 
-return Objectify(HapChainComplex,rec(dimension:=Dim,
+local a,b,x,p,q,R,m,Q,t;
+
+if n>s then
+        return fail;
+fi;
+if j>Dim(n) then
+        return fail;
+fi;
+
+bound:=[];
+Q:=ITT(j,n);
+
+for a in [1..n-1] do
+for b in [a+1..n] do
+        p:=Length(Sctab[Q[a]][Q[b]][1]);
+        for m in [1..p] do
+                R:=StructuralCopy(Q);
+                Remove(R,a);
+                Remove(R,b-1);
+                if not Sctab[Q[a]][Q[b]][1][m] in R then
+                AddSet(R,Sctab[Q[a]][Q[b]][1][m]);
+                q:=PositionSorted(R,Sctab[Q[a]][Q[b]][1][m]);
+                        t:=TTI(R);
+                        #bound[t]:=bound[t]+(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m];
+                        Add(bound,[t,(-1)^(a+b+q-1)*Sctab[Q[a]][Q[b]][2][m] ]);
+                fi;
+        od;
+od;
+od;
+
+return bound; 
+
+end;
+#############################################################
+
+fi;
+
+if sparse then obj:=HapSparseChainComplex;
+else obj:=HapChainComplex;
+fi;
+
+return Objectify(obj,rec(dimension:=Dim,
            boundary:=Boundary,
            properties:=
                 [["length",s],
@@ -214,7 +275,7 @@ if IsLeftModule(L)=true then
         if IsBound(L!.LeftActingAlgebra) then
         return ChevalleyEilenbergComplexOfModule(L,x);
         fi;
-	return ChevalleyComplex(L,x);
+	return ChevalleyComplex(L,x,sparse);
 else if IsLeftModuleHomomorphism(L) then
 	return ChevalleyMap(L,x);
 else
@@ -230,11 +291,14 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(LieAlgebraHomology,
-function(A,n);
+function(A,n)
+local C;
 
 if not IsLeftModule(A) then return fail; fi;
+C:=ContractedComplex(ChevalleyEilenbergComplex(A,n+2,"sparse"));;
+C:=SparseChainComplexToChainComplex(C);
 return
-Homology(ContractedComplex(ChevalleyEilenbergComplex(A,n+1)),n);
+Homology(C,n);
 
 end);
 #####################################################################
