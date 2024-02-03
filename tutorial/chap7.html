@@ -74,7 +74,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C5233E27D2D603E">7.14 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X83F9A1A184FB3475">7.15 <span class="Heading">Homology of a Lie algebra with coefficients in a module</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X865CC8E0794C0E61">7.15 <span class="Heading">Homology of a Lie algebra</span></a>
 </span>
 </div>
 </div>
@@ -1104,9 +1104,9 @@ true
 
 </pre></div>
 
-<p><a id="X83F9A1A184FB3475" name="X83F9A1A184FB3475"></a></p>
+<p><a id="X865CC8E0794C0E61" name="X865CC8E0794C0E61"></a></p>
 
-<h4>7.15 <span class="Heading">Homology of a Lie algebra with coefficients in a module</span></h4>
+<h4>7.15 <span class="Heading">Homology of a Lie algebra</span></h4>
 
 <p>Let <span class="SimpleMath">A</span> be the Lie algebra constructed from the associative algebra <span class="SimpleMath">M^4× 4( Q)</span> of all <span class="SimpleMath">4× 4</span> rational matrices. Let <span class="SimpleMath">V</span> be its adjoint module (with underlying vector space of dimension <span class="SimpleMath">16</span> and equal to that of <span class="SimpleMath">A</span>). The following commands compute <span class="SimpleMath">H_4(A,V) = Q</span>.</p>
 
@@ -1125,6 +1125,23 @@ true
 </pre></div>
 
 <p>Note that the eighth term <span class="SimpleMath">C_8(V)</span> in the Chevalley-Eilenberg complex <span class="SimpleMath">C_∗(V)</span> is a vector space of dimension <span class="SimpleMath">205920</span> and so it will take longer to compute the homology in degree <span class="SimpleMath">8</span>.</p>
+
+<p>As a second example, let <span class="SimpleMath">B</span> be the classical Lie ring of type <span class="SimpleMath">B_3</span> over the ring of integers. The following commands compute <span class="SimpleMath">H_3(B, Z)= Z ⊕ Z_2^105</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=SimpleLieAlgebra("B",7,Integers);       </span>
+&lt;Lie algebra of dimension 105 over Integers&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChevalleyEilenbergComplex(A,4,"sparse");</span>
+Sparse chain complex of length 4 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);</span>
+Sparse chain complex of length 4 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(Homology(D,3));</span>
+[ [ 0, 1 ], [ 2, 105 ] ]
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
