@@ -77,6 +77,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X865CC8E0794C0E61">7.15 <span class="Heading">Homology of a Lie algebra</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86B4EE4783A244F7">7.16 <span class="Heading">Covers of Lie algebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7DFF32A67FF39C82">7.16-1 <span class="Heading">Computing a cover</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>7 <span class="Heading">Cohomology of groups (and Lie Algebras)</span></h3>
@@ -1140,6 +1146,71 @@ Sparse chain complex of length 4 in characteristic 0 .
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(Homology(D,3));</span>
 [ [ 0, 1 ], [ 2, 105 ] ]
+
+</pre></div>
+
+<p><a id="X86B4EE4783A244F7" name="X86B4EE4783A244F7"></a></p>
+
+<h4>7.16 <span class="Heading">Covers of Lie algebras</span></h4>
+
+<p>A short exact sequence of Lie algebras</p>
+
+<p><span class="SimpleMath">M ↣ C ↠ L</span></p>
+
+<p>(over a field <span class="SimpleMath">k</span>) is said to be a <em>stem extension</em> of <span class="SimpleMath">L</span> if <span class="SimpleMath">M</span> lies both in the centre <span class="SimpleMath">Z(C)</span> and in the derived subalgeba <span class="SimpleMath">C^2</span>. If, in addition, the rank of the vector space <span class="SimpleMath">M</span> is equal to the rank of the second Chevalley-Eilenberg homology <span class="SimpleMath">H_2(L,k)</span> then the Lie algebra <span class="SimpleMath">C</span> is said to be a <em>cover</em> of <span class="SimpleMath">L</span>.</p>
+
+<p>Each finite dimensional Lie algebra <span class="SimpleMath">L</span> admits a cover <span class="SimpleMath">C</span>, and this cover can be shown to be unique up to Lie isomorphism.</p>
+
+<p>The cover can be used to determine whether there exists a Lie algebra <span class="SimpleMath">E</span> whose central quotient <span class="SimpleMath">E/Z(E)</span> is isomorphic to <span class="SimpleMath">L</span>. The image in <span class="SimpleMath">L</span> of the centre of <span class="SimpleMath">C</span> is called the <em>Lie Epicentre</em> of <span class="SimpleMath">L</span>, and this image is trivial if and only if such an <span class="SimpleMath">E</span> exists.</p>
+
+<p>The cover can also be used to determine the stem extensions of <span class="SimpleMath">L</span>. It can be shown that each stem extension is a quotient of the cover by an ideal in the Lie multiplier <span class="SimpleMath">H_2(L,k)</span>.</p>
+
+<p><a id="X7DFF32A67FF39C82" name="X7DFF32A67FF39C82"></a></p>
+
+<h5>7.16-1 <span class="Heading">Computing a cover</span></h5>
+
+<p>The following commands compute the cover <span class="SimpleMath">C</span> of the solvable but non-nilpotent 13-dimensional Lie algebra <span class="SimpleMath">L</span> (over <span class="SimpleMath">k= Q</span>) that was introduced by M. Wuestner <a href="chapBib.html#biBWustner">[Wue92]</a>. They also show that: the second homology of <span class="SimpleMath">C</span> is trivial and compute the ranks of the homology groups in other dimensions; the Lie algebra <span class="SimpleMath">L</span> is not isomorphic to any central quotient <span class="SimpleMath">E/Z(E)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SCTL:=EmptySCTable(13,0,"antisymmetric");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 6, [ 1, 7 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 8, [ 1, 9 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 10, [ 1, 11 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 12, [ 1, 13 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 7, [ -1, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 9, [ -1, 8 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 11, [ -1, 10 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 1, 13, [ -1, 12 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 6, 7, [ 1, 2 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 8, 9, [ 1, 3 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 6, 9, [ -1, 5 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 7, 8, [ 1, 5 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 2, 8, [ 1, 12 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 2, 9, [ 1, 13 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 3, 6, [ 1, 10 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 3, 7, [ 1, 11 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 2, 3, [ 1, 4 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 5, 6, [ -1, 12 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 5, 7, [ -1, 13 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 5, 8, [ -1, 10 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 5, 9, [ -1, 11 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 6, 11, [ -1/2, 4 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 7, 10, [ 1/2, 4 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 8, 13, [ 1/2, 4 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetEntrySCTable( SCTL, 9, 12, [ -1/2, 4 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=LieAlgebraByStructureConstants(Rationals,SCTL);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(LieCoveringHomomorphism(L));</span>
+&lt;Lie algebra of dimension 15 over Rationals&gt;
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(LieEpiCentre(L));</span>
+1
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ch:=ChevalleyEilenbergComplex(C,17);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..16],n-&gt;Homology(ch,n));     </span>
+[ 1, 1, 0, 9, 23, 27, 47, 88, 88, 47, 27, 23, 9, 0, 1, 1, 0 ]
+
 
 </pre></div>
 
