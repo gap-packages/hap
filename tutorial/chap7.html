@@ -364,25 +364,25 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>The following example computes</p>
 
-<p><span class="SimpleMath">H_5(G, Z) = Z_3</span></p>
+<p><span class="SimpleMath">H_n(G, Z) ={ beginarrayll Z &amp;n=0,1,7,8 Z_2, &amp;n=2,3 Z_2⊕ Z_6, &amp;n=4,6 Z_3 ⊕ Z_6,&amp; n=5 0, &amp;n&gt;8 endarray.</span></p>
 
-<p>for <span class="SimpleMath">G</span> the classical braid group on eight strings.</p>
+<p>for <span class="SimpleMath">G</span> the Artin group of type <span class="SimpleMath">E_8</span>. (Similar commands can be used to compute a resolution and homology of arbitrary Artin monoids and, in thoses cases such as the spherical cases where the <span class="SimpleMath">K(π,1)</span>-conjecture is known to hold, the homology is equal to that of the corresponding Artin group.)</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,3]],[5,[6,3]],[6,[7,3]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[5,3]],[5,[6,3]],[6,[7,3]],[7,[8,3]]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoxeterDiagramDisplay(D);;</span>
 
 </pre></div>
 
-<p><img src="images/a7diagram.gif" align="center" height="200" alt="Coxeter diagram for A7"/></p>
+<p><img src="images/e8diagram.gif" align="center" height="200" alt="Coxeter diagram for E8"/></p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionArtinGroup(D,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionArtinGroup(D,9);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(R);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,5);</span>
-[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..8],n-&gt;Homology(C,n));</span>
+[ [ 0 ], [ 0 ], [ 2 ], [ 2 ], [ 2, 6 ], [ 3, 6 ], [ 2, 6 ], [ 0 ], [ 0 ] ]
 
 </pre></div>
 
@@ -1210,7 +1210,6 @@ Sparse chain complex of length 4 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ch:=ChevalleyEilenbergComplex(C,17);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..16],n-&gt;Homology(ch,n));     </span>
 [ 1, 1, 0, 9, 23, 27, 47, 88, 88, 47, 27, 23, 9, 0, 1, 1, 0 ]
-
 
 </pre></div>
 

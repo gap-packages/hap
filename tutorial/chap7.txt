@@ -275,21 +275,25 @@
   
   [33X[0;0YThe following example computes[133X
   
-  [33X[0;0Y[22XH_5(G, Z) = Z_3[122X[133X
+  [33X[0;0Y[22XH_n(G,  Z)  ={  beginarrayll Z &n=0,1,7,8 Z_2, &n=2,3 Z_2⊕ Z_6, &n=4,6 Z_3 ⊕
+  Z_6,& n=5 0, &n>8 endarray.[122X[133X
   
-  [33X[0;0Yfor [22XG[122X the classical braid group on eight strings.[133X
+  [33X[0;0Yfor  [22XG[122X the Artin group of type [22XE_8[122X. (Similar commands can be used to compute
+  a  resolution  and  homology of arbitrary Artin monoids and, in thoses cases
+  such  as  the  spherical cases where the [22XK(π,1)[122X-conjecture is known to hold,
+  the homology is equal to that of the corresponding Artin group.)[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3]],[4,[5,3]],[5,[6,3]],[6,[7,3]]];;[127X[104X
+    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]],[3,[4,3],[5,3]],[5,[6,3]],[6,[7,3]],[7,[8,3]]];;[127X[104X
     [4X[25Xgap>[125X [27XCoxeterDiagramDisplay(D);;[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionArtinGroup(D,6);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionArtinGroup(D,9);;[127X[104X
     [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);;[127X[104X
-    [4X[25Xgap>[125X [27XHomology(C,5);[127X[104X
-    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..8],n->Homology(C,n));[127X[104X
+    [4X[28X[ [ 0 ], [ 0 ], [ 2 ], [ 2 ], [ 2, 6 ], [ 3, 6 ], [ 2, 6 ], [ 0 ], [ 0 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1236,7 +1240,6 @@
     [4X[25Xgap>[125X [27Xch:=ChevalleyEilenbergComplex(C,17);;[127X[104X
     [4X[25Xgap>[125X [27XList([0..16],n->Homology(ch,n));     [127X[104X
     [4X[28X[ 1, 1, 0, 9, 23, 27, 47, 88, 88, 47, 27, 23, 9, 0, 1, 1, 0 ][128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
