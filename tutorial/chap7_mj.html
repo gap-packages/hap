@@ -389,6 +389,21 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>The Artin group <span class="SimpleMath">\(G\)</span> projects onto the Coxeter group <span class="SimpleMath">\(W\)</span> of type <span class="SimpleMath">\(E_8\)</span>. The group <span class="SimpleMath">\(W\)</span> has a natural representation as a group of <span class="SimpleMath">\(8\times 8\)</span> integer matrices. This projection gives rise to a representation <span class="SimpleMath">\(\rho\colon G\rightarrow GL_8(\mathbb Z)\)</span>. The following command compute the cohomology group <span class="SimpleMath">\(H^6(G,\rho) = (\mathbb Z_2)^6\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gensG:=GeneratorsOfGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:=CoxeterDiagramMatCoxeterGroup(D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gensW:=GeneratorsOfGroup(W);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByImages(G,W,gensG,gensW);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,rho);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,6);</span>
+[ 2, 2, 2, 2, 2, 2 ]
+
+</pre></div>
+
 <p><a id="X7BAFCA3680E478AE" name="X7BAFCA3680E478AE"></a></p>
 
 <h4>7.6 <span class="Heading">Graphs of groups</span></h4>
