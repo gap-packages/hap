@@ -754,17 +754,18 @@ v.29
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=ClosedSurface(-1);;           </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=SimplifiedComplex(RegularCWComplex(ClosedSurface(-1)));</span>
+Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PP:=DirectProduct(P,P);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SPP:=Suspension(PP);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=CohomologyRing(SPP,2);     </span>
 &lt;algebra of dimension 9 over GF(2)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(A),x-&gt;Bockstein(A,x));</span>
-[ 0*v.1, v.4, v.4+v.6, 0*v.1, v.8, 0*v.1, v.9, 0*v.1, 0*v.1 ]
+[ 0*v.1, v.4, v.6, 0*v.1, v.7+v.8, 0*v.1, v.9, v.9, 0*v.1 ]
 
 </pre></div>
 
-<p>If only the Bockstein homomorphism is required, and not the cohomology rings structure, then it is better to compute the Bockstein directly from a chain complex. The following computes the Bockstein <span class="SimpleMath">β_2: H^2(Y, Z_2) → H^3(Y, Z_2)</span> for the direct product <span class="SimpleMath">Y=K × K × K × K</span> of four copies of the Klein bottle represented as a regular CW-complex with <span class="SimpleMath">331776</span> cells. The order of the kernel and image of <span class="SimpleMath">β_2</span> are computed.</p>
+<p>If only the Bockstein homomorphism is required, and not the cohomology ring structure, then the Bockstein could also be computedirectly from a chain complex. The following computes the Bockstein <span class="SimpleMath">β_2: H^2(Y, Z_2) → H^3(Y, Z_2)</span> for the direct product <span class="SimpleMath">Y=K × K × K × K</span> of four copies of the Klein bottle represented as a regular CW-complex with <span class="SimpleMath">331776</span> cells. The order of the kernel and image of <span class="SimpleMath">β_2</span> are computed.</p>
 
 
 <div class="example"><pre>
