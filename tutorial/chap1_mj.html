@@ -753,18 +753,20 @@ v.29
 
 <h4>1.13 <span class="Heading">Bockstein homomorphism</span></h4>
 
-<p>The following example evaluates the Bockstein homomorphism <span class="SimpleMath">\(\beta_2\colon H^\ast(X,\mathbb Z_2) \rightarrow H^{\ast +1}(X,\mathbb Z_2)\)</span> on an additive basis for <span class="SimpleMath">\(X=\Sigma(\mathbb RP^2 \times \mathbb RP^2)\)</span> the suspension of the direct product of two projective planes.</p>
+<p>The following example evaluates the Bockstein homomorphism <span class="SimpleMath">\(\beta_2\colon H^\ast(X,\mathbb Z_2) \rightarrow H^{\ast +1}(X,\mathbb Z_2)\)</span> on an additive basis for <span class="SimpleMath">\(X=\Sigma^{100}(\mathbb RP^2 \times \mathbb RP^2)\)</span> the <span class="SimpleMath">\(100\)</span>-fold suspension of the direct product of two projective planes.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=SimplifiedComplex(RegularCWComplex(ClosedSurface(-1)));</span>
 Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PP:=DirectProduct(P,P);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SPP:=Suspension(PP);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=CohomologyRing(SPP,2);     </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SPP:=Suspension(PP,100); </span>
+Regular CW-complex of dimension 104
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=CohomologyRing(SPP,2); </span>
 &lt;algebra of dimension 9 over GF(2)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Basis(A),x-&gt;Bockstein(A,x));</span>
 [ 0*v.1, v.4, v.6, 0*v.1, v.7+v.8, 0*v.1, v.9, v.9, 0*v.1 ]
+
 
 </pre></div>
 
