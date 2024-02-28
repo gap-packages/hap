@@ -67,10 +67,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X853D6B247D0E18DB">1.15 <span class="Heading">Constructing a simplicial complex from a regular CW-complex</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85A579217DCB6CC8">1.16 <span class="Heading">Equivariant CW complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7900FD197F175551">1.16 <span class="Heading">Some limitations to representing spaces as regular CW complexes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86881717878ADCD6">1.17 <span class="Heading">Orbifolds and classifying spaces</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X85A579217DCB6CC8">1.17 <span class="Heading">Equivariant CW complexes</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86881717878ADCD6">1.18 <span class="Heading">Orbifolds and classifying spaces</span></a>
 </span>
 </div>
 </div>
@@ -855,11 +858,60 @@ Simplicial complex of dimension 3.
 
 </pre></div>
 
+<p><a id="X7900FD197F175551" name="X7900FD197F175551"></a></p>
+
+<h4>1.16 <span class="Heading">Some limitations to representing spaces as regular CW complexes</span></h4>
+
+<p>By a <em>classifying space</em> for a group <span class="SimpleMath">G</span> we mean a path-connected space <span class="SimpleMath">BG</span> with fundamental group <span class="SimpleMath">π_1(BG)≅ G</span> isomorphic to <span class="SimpleMath">G</span> and with higher homotopy groups <span class="SimpleMath">π_n(BG)=0</span> trivial for all <span class="SimpleMath">n≥ 2</span>. The homology of the group <span class="SimpleMath">G</span> can be defined to be the homology of <span class="SimpleMath">BG</span>: <span class="SimpleMath">H_n(G, Z) = H_n(BG, Z)</span>.</p>
+
+<p>In principle <span class="SimpleMath">BG</span> can always be constructed as a regular CW-complex. For instance, the following extremely slow commands construct the <span class="SimpleMath">5</span>-skeleton <span class="SimpleMath">Y^5</span> of a regular CW-classifying space <span class="SimpleMath">Y=BG</span> for the dihedral group of order <span class="SimpleMath">16</span> and use it to calculate <span class="SimpleMath">H_1(G, Z)= Z_2⊕ Z_2</span>, <span class="SimpleMath">H_2(G, Z)= Z_2</span>, <span class="SimpleMath">H_3(G, Z)= Z_2⊕ Z_2 ⊕ Z_8</span>, <span class="SimpleMath">H_4(G, Z)= Z_2 ⊕ Z_2</span>. The final command shows that the constructed space <span class="SimpleMath">Y^5</span> in this example is a <span class="SimpleMath">5</span>-dimensional regular CW-complex with a total of <span class="SimpleMath">15289</span> cells.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=ClassifyingSpaceFiniteGroup(DihedralGroup(16),5);</span>
+Regular CW-complex of dimension 5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,3);</span>
+[ 2, 2, 8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,4);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y);</span>
+15289
+
+
+</pre></div>
+
+<p>The <span class="SimpleMath">n</span>-skeleton of a regular CW-classifying space of a finite group necessarily involves a large number of cells. For the group $G=C_2$ of order two a classifying space can be take to be real projective space <span class="SimpleMath">BG= RP^∞</span> with $n$-skeleton <span class="SimpleMath">BG= RP^n</span>. To realize <span class="SimpleMath">BG= RP^n</span> as a simplicial complex it is known that one needs at least 6 vertices for <span class="SimpleMath">n=2</span>, at least 11 vertices for <span class="SimpleMath">n=3</span> and at least 16 vertices for <span class="SimpleMath">n=4</span>. One can do a bit better by allowing <span class="SimpleMath">BG</span> to be a regular CW-complex. For instance, the following creates <span class="SimpleMath">RP^4</span> as a regular CW-complex with 5 vertices. This construction of <span class="SimpleMath">RP^4</span> involves a total of 121 cells. A minimal triangulation of <span class="SimpleMath">RP^4</span> would require 991 simplices.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=ClassifyingSpaceFiniteGroup(CyclicGroup(2),4);</span>
+Regular CW-complex of dimension 4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(0);                                   </span>
+5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(1);</span>
+20
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(2);</span>
+40
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(3);                                   </span>
+40
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(4);</span>
+16
+
+</pre></div>
+
+<p>The space <span class="SimpleMath">RP^n</span> can be given the structure of a regular CW-complex with <span class="SimpleMath">n+1</span> vertices. Kuehnel has described a triangulation of <span class="SimpleMath">RP^n</span> with <span class="SimpleMath">2^n+1-1</span> vertices.</p>
+
+<p>In general it is inefficient/impractical to attempt to compute the <span class="SimpleMath">n</span>-th homology of a group <span class="SimpleMath">G</span> by first constructing a regular CW-complex corresponding for the <span class="SimpleMath">n+1</span> of a classifying space <span class="SimpleMath">BG</span>, even for quite small groups <span class="SimpleMath">G</span>.</p>
+
 <p><a id="X85A579217DCB6CC8" name="X85A579217DCB6CC8"></a></p>
 
-<h4>1.16 <span class="Heading">Equivariant CW complexes</span></h4>
+<h4>1.17 <span class="Heading">Equivariant CW complexes</span></h4>
 
-<p>The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. One limitation is that the number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <span class="SimpleMath">7</span> vertices, <span class="SimpleMath">21</span> edges and <span class="SimpleMath">14</span> triangles. A minimal regular CW-complex structure for the torus has <span class="SimpleMath">4</span> vertices, <span class="SimpleMath">8</span> edges and <span class="SimpleMath">4</span> cells of dimension <span class="SimpleMath">2</span>. By using simplicial sets (which are like simplicial complexes except that they allow the freedom to attach simplicial cells by gluing their boundary non-homeomorphically) one obtains a minimal triangulation of the torus involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">3</span> edges and <span class="SimpleMath">2</span> cells of dimension <span class="SimpleMath">2</span>. By using non-regular CW-complexes one obtains a minimal cell structure involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">2</span> edges and <span class="SimpleMath">1</span> cell of dimension <span class="SimpleMath">2</span>. Minimal cell structures (in the four different categories) for the torus are illustrated as follows.</p>
+<p>As just explained, the representations of spaces as simplicial complexes and regular CW complexes have their limitations. One limitation is that the number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <span class="SimpleMath">7</span> vertices, <span class="SimpleMath">21</span> edges and <span class="SimpleMath">14</span> triangles. A minimal regular CW-complex structure for the torus has <span class="SimpleMath">4</span> vertices, <span class="SimpleMath">8</span> edges and <span class="SimpleMath">4</span> cells of dimension <span class="SimpleMath">2</span>. By using simplicial sets (which are like simplicial complexes except that they allow the freedom to attach simplicial cells by gluing their boundary non-homeomorphically) one obtains a minimal triangulation of the torus involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">3</span> edges and <span class="SimpleMath">2</span> cells of dimension <span class="SimpleMath">2</span>. By using non-regular CW-complexes one obtains a minimal cell structure involving <span class="SimpleMath">1</span> vertex, <span class="SimpleMath">2</span> edges and <span class="SimpleMath">1</span> cell of dimension <span class="SimpleMath">2</span>. Minimal cell structures (in the four different categories) for the torus are illustrated as follows.</p>
 
 <p><img src="images/mstorus.png" align="center" width="300" alt="minimal simplicial torus"/> <img src="images/mrtorus.png" align="center" width="300" alt="minimal regular CW torus"/></p>
 
@@ -928,7 +980,7 @@ Chain complex of length 3 in characteristic 0 .
 
 <p><a id="X86881717878ADCD6" name="X86881717878ADCD6"></a></p>
 
-<h4>1.17 <span class="Heading">Orbifolds and classifying spaces</span></h4>
+<h4>1.18 <span class="Heading">Orbifolds and classifying spaces</span></h4>
 
 <p>If a discrete group <span class="SimpleMath">G</span> acts on Euclidean space or hyperbolic space with finite stabilizer groups then we say that the quotient space obtained by killing the action of <span class="SimpleMath">G</span> an an <em>orbifold</em>. If the stabilizer groups are all trivial then the quotient is of course a manifold.</p>
 

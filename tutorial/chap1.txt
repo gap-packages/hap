@@ -907,21 +907,90 @@
   [4X[32X[104X
   
   
-  [1X1.16 [33X[0;0YEquivariant CW complexes[133X[101X
+  [1X1.16 [33X[0;0YSome limitations to representing spaces as regular CW complexes[133X[101X
   
-  [33X[0;0YThe  above  representations of spaces as simplicial complexes and regular CW
-  complexes have their limitations. One limitation is that the number of cells
-  needed  to describe a space can be unnecessarily large. A minimal simplicial
-  complex structure for the torus has [22X7[122X vertices, [22X21[122X edges and [22X14[122X triangles. A
-  minimal  regular  CW-complex structure for the torus has [22X4[122X vertices, [22X8[122X edges
-  and  [22X4[122X  cells  of  dimension  [22X2[122X.  By  using  simplicial sets (which are like
-  simplicial complexes except that they allow the freedom to attach simplicial
-  cells  by  gluing their boundary non-homeomorphically) one obtains a minimal
-  triangulation  of  the  torus  involving  [22X1[122X  vertex,  [22X3[122X edges and [22X2[122X cells of
-  dimension  [22X2[122X.  By  using non-regular CW-complexes one obtains a minimal cell
-  structure  involving  [22X1[122X  vertex,  [22X2[122X edges and [22X1[122X cell of dimension [22X2[122X. Minimal
-  cell  structures  (in  the  four  different  categories)  for  the torus are
-  illustrated as follows.[133X
+  [33X[0;0YBy  a [13Xclassifying space[113X for a group [22XG[122X we mean a path-connected space [22XBG[122X with
+  fundamental group [22Xπ_1(BG)≅ G[122X isomorphic to [22XG[122X and with higher homotopy groups
+  [22Xπ_n(BG)=0[122X  trivial  for all [22Xn≥ 2[122X. The homology of the group [22XG[122X can be defined
+  to be the homology of [22XBG[122X: [22XH_n(G, Z) = H_n(BG, Z)[122X.[133X
+  
+  [33X[0;0YIn  principle  [22XBG[122X  can  always  be  constructed as a regular CW-complex. For
+  instance, the following extremely slow commands construct the [22X5[122X-skeleton [22XY^5[122X
+  of  a  regular  CW-classifying space [22XY=BG[122X for the dihedral group of order [22X16[122X
+  and use it to calculate [22XH_1(G, Z)= Z_2⊕ Z_2[122X, [22XH_2(G, Z)= Z_2[122X, [22XH_3(G, Z)= Z_2⊕
+  Z_2  ⊕  Z_8[122X,  [22XH_4(G,  Z)=  Z_2  ⊕  Z_2[122X.  The  final  command  shows that the
+  constructed  space [22XY^5[122X in this example is a [22X5[122X-dimensional regular CW-complex
+  with a total of [22X15289[122X cells.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=ClassifyingSpaceFiniteGroup(DihedralGroup(16),5);[127X[104X
+    [4X[28XRegular CW-complex of dimension 5[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[ 2, 2, 8 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,4);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XSize(Y);[127X[104X
+    [4X[28X15289[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  [22Xn[122X-skeleton  of  a  regular  CW-classifying  space  of  a  finite  group
+  necessarily involves a large number of cells. For the group $G=C_2$ of order
+  two  a  classifying  space  can be take to be real projective space [22XBG= RP^∞[122X
+  with  $n$-skeleton  [22XBG= RP^n[122X. To realize [22XBG= RP^n[122X as a simplicial complex it
+  is  known  that  one needs at least 6 vertices for [22Xn=2[122X, at least 11 vertices
+  for  [22Xn=3[122X  and  at  least  16  vertices  for  [22Xn=4[122X. One can do a bit better by
+  allowing  [22XBG[122X to be a regular CW-complex. For instance, the following creates
+  [22XRP^4[122X  as  a  regular  CW-complex  with 5 vertices. This construction of [22XRP^4[122X
+  involves a total of 121 cells. A minimal triangulation of [22XRP^4[122X would require
+  991 simplices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XY:=ClassifyingSpaceFiniteGroup(CyclicGroup(2),4);[127X[104X
+    [4X[28XRegular CW-complex of dimension 4[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(0);                                   [127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(1);[127X[104X
+    [4X[28X20[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(2);[127X[104X
+    [4X[28X40[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(3);                                   [127X[104X
+    [4X[28X40[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(4);[127X[104X
+    [4X[28X16[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  space  [22XRP^n[122X can be given the structure of a regular CW-complex with [22Xn+1[122X
+  vertices.  Kuehnel  has  described  a  triangulation  of  [22XRP^n[122X  with [22X2^n+1-1[122X
+  vertices.[133X
+  
+  [33X[0;0YIn  general  it  is  inefficient/impractical  to attempt to compute the [22Xn[122X-th
+  homology   of   a  group  [22XG[122X  by  first  constructing  a  regular  CW-complex
+  corresponding  for  the  [22Xn+1[122X of a classifying space [22XBG[122X, even for quite small
+  groups [22XG[122X.[133X
+  
+  
+  [1X1.17 [33X[0;0YEquivariant CW complexes[133X[101X
+  
+  [33X[0;0YAs just explained, the representations of spaces as simplicial complexes and
+  regular  CW  complexes  have  their  limitations. One limitation is that the
+  number  of  cells  needed  to describe a space can be unnecessarily large. A
+  minimal  simplicial complex structure for the torus has [22X7[122X vertices, [22X21[122X edges
+  and [22X14[122X triangles. A minimal regular CW-complex structure for the torus has [22X4[122X
+  vertices,  [22X8[122X  edges  and  [22X4[122X  cells  of dimension [22X2[122X. By using simplicial sets
+  (which  are  like simplicial complexes except that they allow the freedom to
+  attach  simplicial  cells by gluing their boundary non-homeomorphically) one
+  obtains a minimal triangulation of the torus involving [22X1[122X vertex, [22X3[122X edges and
+  [22X2[122X  cells  of  dimension  [22X2[122X.  By using non-regular CW-complexes one obtains a
+  minimal  cell  structure involving [22X1[122X vertex, [22X2[122X edges and [22X1[122X cell of dimension
+  [22X2[122X.  Minimal cell structures (in the four different categories) for the torus
+  are illustrated as follows.[133X
   
   [33X[0;0YA  second  limitation  to  our  representations  of  simplicial  and regular
   CW-complexes is that they apply only to structures with finitely many cells.
@@ -1011,7 +1080,7 @@
   [4X[32X[104X
   
   
-  [1X1.17 [33X[0;0YOrbifolds and classifying spaces[133X[101X
+  [1X1.18 [33X[0;0YOrbifolds and classifying spaces[133X[101X
   
   [33X[0;0YIf  a  discrete  group  [22XG[122X  acts  on Euclidean space or hyperbolic space with
   finite  stabilizer  groups  then  we say that the quotient space obtained by
