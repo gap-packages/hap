@@ -825,7 +825,58 @@
   [4X[32X[104X
   
   
-  [1X1.14 [33X[0;0YCW maps and induced homomorphisms[133X[101X
+  [1X1.14 [33X[0;0YDiagonal maps on associahedra and other polytopes[133X[101X
+  
+  [33X[0;0YBy  a  [13Xdiagonal approximation[113X on a regular CW-complex [22XX[122X we mean any cellular
+  map  [22X∆:  X→ X× X[122X that is homotopic to the diagonal map [22XX→ X× X, x↦ (x,x)[122X and
+  equal  to  the  diagonal  map when restricted to the [22X0[122X-skeleton. Theoretical
+  formulae   for   diagonal   maps  on  a  polytope  [22XX[122X  can  have  interesting
+  combinatorial  aspects.  To  illustrate  this  let us consider, for [22Xn=3[122X, the
+  [22Xn[122X-dimensional  polytope  [22Xcal K^n+2[122X known as the associahedron. The following
+  commands displaye the [22X1[122X-skeleton of [22Xcal K^5[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;Y:=RegularCWAssociahedron(n+2);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(GraphOfRegularCWComplex(Y));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X				[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  induced  chain map [22XC_∗(cal K^n+2) → C_∗(cal K^n+2× cal K^n+2)[122X sends the
+  unique  free generator [22Xe^n_1[122X of [22XC_n(cal K^n+2)[122X to a sum [22X∆(e^n_1)[122X of a number
+  of  distinct  free  generators  of [22XC_n(cal K^n+2× cal K^n+2)[122X. Let [22X|∆(e^n_1)|[122X
+  denote  the  number  of free generators. For [22Xn=3[122X the following commands show
+  that  [22X|∆(e^3_1)|=22[122X with each free generator each occurring with coefficient
+  [22X± 1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;Y:=RegularCWAssociahedron(n+2);;    [127X[104X
+    [4X[25Xgap>[125X [27XD:=DiagonalChainMap(Y);;Filtered(D!.mapping([1],n),x->x<>0);[127X[104X
+    [4X[28X[ 1, 1, -1, -1, 1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, 1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X                                [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRepeating  this example for [22X0≤ n≤ 6[122X yields the sequence [22X|∆(e^n_1)|: 1, 2, 6,
+  22,  91,  408,  1938,  ⋯[122X.  The  On-line  Encyclopedia  of  Integer Sequences
+  ([7Xhttps://oeis.org/A000139[107X)  explains  that  this  is  the  beginning  of the
+  sequence given by the number of canopy intervals in the Tamari lattices.[133X
+  
+  [33X[0;0YRepeating  the  same  experiment  for  the  permutahedron, using the command
+  [10XRegularCWPermutahedron(n)[110X, yields the sequence [22X|∆(e^n_1)|: 1, 2, 8, 50, 432,
+  4802,⋯[122X.     The     On-line     Encyclopedia     of     Integer    Sequences
+  ([7Xhttps://oeis.org/A007334[107X)  explains  that  this  is  the  beginning  of the
+  sequence  given  by  the  number of spanning trees in the graph [22XK_n/e[122X, which
+  results from contracting an edge [22Xe[122X in the complete graph [22XK_n[122X on [22Xn[122X vertices.[133X
+  
+  [33X[0;0YRepeating  the  experiment for the cube, using the command [10XRegularCWCube(n)[110X,
+  yields the sequence [22X|∆(e^n_1)|: 1, 2, 4, 8, 16, 32,⋯[122X.[133X
+  
+  [33X[0;0YRepeating    the   experiment   for   the   simplex,   using   the   command
+  [10XRegularCWSimplex(n)[110X, yields the sequence [22X|∆(e^n_1)|: 1, 2, 3, 4, 5, 6,⋯[122X.[133X
+  
+  
+  [1X1.15 [33X[0;0YCW maps and induced homomorphisms[133X[101X
   
   [33X[0;0YA  [13Xstrictly  cellular[113X  map [22Xf: X→ Y[122X of regular CW-complexes is a cellular map
   for  which  the  image  of any cell is a cell (of possibly lower dimension).
@@ -879,7 +930,7 @@
   [4X[32X[104X
   
   
-  [1X1.15 [33X[0;0YConstructing a simplicial complex from a regular CW-complex[133X[101X
+  [1X1.16 [33X[0;0YConstructing a simplicial complex from a regular CW-complex[133X[101X
   
   [33X[0;0YThe  following  example constructs a [22X3[122X-dimensional pure regular CW-complex [22XK[122X
   whose  [22X3[122X-cells are permutahedra. It then constructs the simplicial complex [22XB[122X
@@ -907,7 +958,7 @@
   [4X[32X[104X
   
   
-  [1X1.16 [33X[0;0YSome limitations to representing spaces as regular CW complexes[133X[101X
+  [1X1.17 [33X[0;0YSome limitations to representing spaces as regular CW complexes[133X[101X
   
   [33X[0;0YBy  a [13Xclassifying space[113X for a group [22XG[122X we mean a path-connected space [22XBG[122X with
   fundamental group [22Xπ_1(BG)≅ G[122X isomorphic to [22XG[122X and with higher homotopy groups
@@ -995,7 +1046,7 @@
   to represent this on a computer?[133X
   
   
-  [1X1.17 [33X[0;0YEquivariant CW complexes[133X[101X
+  [1X1.18 [33X[0;0YEquivariant CW complexes[133X[101X
   
   [33X[0;0YAs just explained, the representations of spaces as simplicial complexes and
   regular  CW  complexes  have  their  limitations. One limitation is that the
@@ -1099,7 +1150,7 @@
   [4X[32X[104X
   
   
-  [1X1.18 [33X[0;0YOrbifolds and classifying spaces[133X[101X
+  [1X1.19 [33X[0;0YOrbifolds and classifying spaces[133X[101X
   
   [33X[0;0YIf  a  discrete  group  [22XG[122X  acts  on Euclidean space or hyperbolic space with
   finite  stabilizer  groups  then  we say that the quotient space obtained by
