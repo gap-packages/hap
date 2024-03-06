@@ -435,6 +435,41 @@ end);
 ############################################
 ############################################
 
+#########################################
+#########################################
+InstallOtherMethod(Suspension,
+"n-fold suspension of regular CW complex",
+[IsHapRegularCWComplex,IsInt],
+function(Y,n) local S, i;
+
+if n=0 then return Y; fi;
+S:=Y;
+for i in [1..n] do
+S:=Suspension(S);
+od;
+return S;
+end);
+##########################################
+##########################################
+
+##########################################
+#########################################
+InstallOtherMethod(Suspension,
+"n-fold suspension of regular CW complex",
+[IsHapSimplicialComplex,IsInt],
+function(Y,n) local S, i;
+
+if n=0 then return Y; fi;
+S:=Y;
+for i in [1..n] do
+S:=Suspension(S);
+od;
+return S;
+end);
+##########################################
+##########################################
+
+
 ##########################################
 #########################################
 InstallOtherMethod(Suspension,

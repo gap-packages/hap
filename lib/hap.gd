@@ -287,6 +287,7 @@ DeclareGlobalFunction("CoxeterDiagramComponents");
 DeclareGlobalFunction("CoxeterDiagramDegree");
 DeclareGlobalFunction("CoxeterDiagramIsSpherical");
 DeclareGlobalFunction("ResolutionArtinGroup");
+DeclareGlobalFunction("ResolutionArtinGroup_spherical");
 DeclareGlobalFunction("CoxeterDiagramDisplay");
 DeclareGlobalFunction("NoncrossingPartitionsLatticeDisplay");
 DeclareGlobalFunction("CoxeterWythoffComplex");
@@ -823,9 +824,11 @@ DeclareGlobalFunction("RegularCWCube");
 DeclareGlobalFunction("RegularCWSimplex");
 DeclareGlobalFunction("DirectProductOfRegularCWComplexesLazy");
 DeclareGlobalFunction("QuotientChainMap");
+DeclareGlobalFunction("RegularCWComplexReordered");
 DeclareOperation("Suspension",[IsHapRegularCWComplex]);
 DeclareGlobalFunction("Suspension_alt");
 DeclareGlobalFunction("PersistentBettiNumbersViaContractions");
+DeclareGlobalFunction("ClassifyingSpaceFiniteGroup");
 
 
 ## KNOTS ############################################################

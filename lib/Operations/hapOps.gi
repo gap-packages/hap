@@ -87,7 +87,7 @@ InstallOtherMethod(CupProduct,
 "Mod p cohomology cup product for regular CW-spaces",
 [IsHapRegularCWComplex,IsInt],
 function(Y,p)
-return CupProductOfRegularCWComplex(Y,p);
+return CupProductOfRegularCWComplexModP(Y,p);
 end);
 ##########################################################
 ##########################################################

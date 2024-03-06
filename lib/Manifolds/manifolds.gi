@@ -460,9 +460,9 @@ InstallOtherMethod(CohomologyRing,
 [IsHapRegularCWComplex,IsInt],
 function(W,prime)
 local K;
-K:=BarycentricSubdivision(W);     #WE SHOULD USE THE DIAGONAL FOR W HERE!!!
+#K:=BarycentricSubdivision(W);     #WE SHOULD USE THE DIAGONAL FOR W HERE!!!
                                   #THIS IS A TEMPORARY METHOD
-return CohomologyRingOfSimplicialComplex(K,prime);
+return CohomologyRingOfSimplicialComplex(W,prime);
 end);
 #####################################################
 #####################################################

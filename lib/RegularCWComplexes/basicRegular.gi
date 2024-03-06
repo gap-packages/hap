@@ -2805,3 +2805,70 @@ end);
 ###############################################################
 ###############################################################
 
+###################################################
+###################################################
+InstallGlobalFunction("ClassifyingSpaceFiniteGroup",
+function(G,n)
+local R,Y,T,W,i;
+
+R:=ResolutionFiniteGroup(G,n);
+T:=Group(One(G));
+R!.stabilizer:=function(n,i); return T; end;
+R:=HAP_BaryCentricSubdivisionGComplex(R);
+R:=ResolutionToEquivariantCWComplex(R);
+Y:=EquivariantCWComplexToRegularCWComplex(R,G);
+
+#In general we can't be sure that R corresponds to a *regular* CW-complex.
+#The paper "computing group resolutions" explains that R corresponds to a
+##CW-complex X. This X can certainly be represented, up to homotopy,
+#by the data type for a HAPRegularCWComplex but (despite the false claim in 
+#the book "An invitation to computational Homotopy") we need to check if it is
+#a regular CW-complex. In the case of cyclic groups with standard minimal 
+#resolution it clearly is.
+
+if IsCyclic(G) then
+return SimplifiedComplex(Y);
+fi;
+
+#Let's check to see if X is regular
+#If X fails the test then  we could add more cells to X. But this is not yet implemented.
+W:=EquivariantCWComplexToRegularCWComplex(R,Group(One(G)));
+CriticalCells(W);
+for i in [1..n-1] do
+if not Homology(W,i)=[] then
+Print("This function is currently unable to construct a regular CW classyfying space for that group. You could try entering an isomorphic copy of the group whose elements are listed in a different order.\n");
+return fail; fi;
+od;
+return SimplifiedComplex(Y);
+end);
+###################################################
+###################################################
+
+##############################################################
+##############################################################
+InstallGlobalFunction(RegularCWComplexReordered,
+function(Y)
+local n, k, b, m, sigma, sigmai, bnds, newbnds;
+
+bnds:=1*Y!.boundaries;
+for n in [0..Dimension(Y)] do
+sigma:=Random(SymmetricGroup(Y!.nrCells(n)));
+sigmai:=sigma^-1;
+newbnds:=List([1..Y!.nrCells(n)],i->bnds[n+1][i^sigma]);;
+bnds[n+1]:=newbnds;
+newbnds:=[];
+for k in [1..Y!.nrCells(n+1)] do
+b:=bnds[n+2][k];
+m:=b[1];
+b:=b{[2..b[1]+1]};
+Apply(b,i->i^sigmai);
+b:=Concatenation([m],b);
+Add(newbnds,b);
+od;
+bnds[n+2]:=newbnds;
+od;
+
+return RegularCWComplex(bnds);;
+end);
+##############################################################
+##############################################################

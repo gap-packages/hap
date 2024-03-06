@@ -281,6 +281,7 @@ ReadPackageHap( "lib/Perturbations/nonFreeResSubgroup.gi");
 #################### ARTIN COXETER ##################################
 ReadPackageHap( "lib/ArtinCoxeter/diagrams.gi");
 ReadPackageHap( "lib/ArtinCoxeter/resArtin.gi");
+ReadPackageHap( "lib/ArtinCoxeter/resArtin_spherical.gi");
 ReadPackageHap( "lib/ArtinCoxeter/coxeterWythoff.gi");
 ReadPackageHap( "lib/ArtinCoxeter/noncrossing.gi");
 
@@ -440,6 +441,7 @@ ReadPackageHap("lib/RegularCWComplexes/filteredCW.gi");
 ReadPackageHap("lib/RegularCWComplexes/directproduct.gi");
 ReadPackageHap("lib/RegularCWComplexes/directLazy.gi");
 ReadPackageHap("lib/RegularCWComplexes/cocycle.gi");
+ReadPackageHap("lib/RegularCWComplexes/modpcocycle.gi");
 ReadPackageHap("lib/RegularCWComplexes/universalCover.gi");
 ReadPackageHap("lib/RegularCWComplexes/spin.gi");
 ReadPackageHap("lib/RegularCWComplexes/spunknotcomp.gi");

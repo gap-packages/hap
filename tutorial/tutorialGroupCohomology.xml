@@ -159,18 +159,31 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
 <Section><Heading>Artin groups</Heading>
 
 <P/>The following example computes
-<P/><M>H_5(G,\mathbb Z) = \mathbb Z_3</M>
-<P/>for  <M>G</M> the  classical braid group  on eight strings. 
+<P/><M>H_n(G,\mathbb Z) =\left\{ \begin{array}{ll}
+	\mathbb Z &amp;n=0,1,7,8\\
+	\mathbb Z_2, &amp;n=2,3\\
+	\mathbb Z_2\oplus \mathbb Z_6, &amp;n=4,6\\
+	\mathbb Z_3 \oplus \mathbb Z_6,&amp; n=5\\
+	0, &amp;n>8 \end{array}\right.
+	</M>
+	<P/>for  <M>G</M> the  Artin group of type <M>E_8</M>. (Similar commands can be used to compute a resolution and homology of arbitrary Artin monoids and, in thoses cases such as the spherical cases where the <M>K(\pi,1)</M>-conjecture is known to hold, the homology is equal to that of the corresponding Artin group.)
 
 
 <Example>
 <#Include SYSTEM "tutex/6.11.txt">
 </Example>
-<Alt Only="HTML">&lt;img src="images/a7diagram.gif" align="center" height="200" alt="Coxeter diagram for A7"/>
+<Alt Only="HTML">&lt;img src="images/e8diagram.gif" align="center" height="200" alt="Coxeter diagram for E8"/>
 </Alt>
 
 <Example>
 <#Include SYSTEM "tutex/6.12.txt">
+</Example>
+
+	The Artin group <M>G</M> projects onto the Coxeter group <M>W</M> of type <M>E_8</M>. The group <M>W</M> has a natural representation as a group of <M>8\times 8</M> integer matrices. This projection gives rise to a representation 
+	<M>\rho\colon G\rightarrow GL_8(\mathbb Z)</M>. The following command computes the cohomology group <M>H^6(G,\rho) = (\mathbb Z_2)^6</M>.
+
+		<Example>
+<#Include SYSTEM "tutex/6.12a.txt">
 </Example>
 
 </Section>
@@ -614,7 +627,7 @@ that the Poincare series
 
 </Section>
 
-<Section><Heading>Homology of a Lie algebra with coefficients in a module</Heading>
+<Section><Heading>Homology of a Lie algebra</Heading>
 
 		Let <M>A</M> be the Lie algebra constructed from the associative algebra <M>M^{4\times 4}(\mathbb Q)</M> of all <M>4\times 4</M> rational matrices. Let <M>V</M> be its adjoint module (with underlying vector space of dimension <M>16</M> and
 			equal to that of <M>A</M>). The following commands compute <M>H_{4}(A,V) = \mathbb Q</M>.
@@ -624,5 +637,43 @@ that the Poincare series
 </Example>
 
 <P/>Note that the eighth term  <M>C_{8}(V)</M> in the Chevalley-Eilenberg complex <M>C_\ast(V)</M> is a vector space of dimension <M>205920</M> and so it will take longer to compute the homology in degree <M>8</M>.
+
+<P/>As a second example, let <M>B</M> be the classical Lie ring of type <M>B_3</M> over the ring of integers. The following commands compute
+<M>H_3(B,\mathbb Z)= \mathbb Z \oplus \mathbb Z_2^{105}</M>.
+	 <Example>
+<#Include SYSTEM "tutex/6.32.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Covers of Lie algebras</Heading>
+
+A short exact sequence of Lie algebras
+
+	<P/><M> M \rightarrowtail C \twoheadrightarrow L </M>
+
+
+	<P/>		(over a field <M>k</M>) is said to be a <E>stem extension</E>
+			of <M>L</M> if <M>M</M> lies both in the centre <M>Z(C)</M> and in the derived subalgeba <M>C^2</M>. If, in addition, the rank of the vector space <M>M</M> is equal to the rank of the second Chevalley-Eilenberg homology <M>H_2(L,k)</M> then the Lie algebra <M>C</M> is said to be a <E>cover</E> of <M>L</M>.
+
+			<P/>Each finite dimensional Lie algebra <M>L</M> admits a cover <M>C</M>, and this cover can be shown to be unique up to Lie isomorphism.
+
+			<P/>The cover can be used to determine whether there exists a Lie algebra <M>E</M> whose central quotient <M>E/Z(E)</M> is isomorphic to <M>L</M>. The image in <M>L</M> of the centre of <M>C</M> is called the <E>Lie Epicentre</E> of <M>L</M>, and this image is trivial if and only if such an <M>E</M> exists.
+
+			<P/>The cover can also be used to determine the stem extensions of <M>L</M>. It can be shown that each stem extension is a quotient of the cover by an ideal in the Lie multiplier <M>H_2(L,k)</M>. 
+
+			<Subsection><Heading>Computing a cover</Heading>
+				The following commands compute the cover <M>C</M> of the solvable but non-nilpotent 13-dimensional Lie algebra <M>L</M> (over <M>k=\mathbb Q</M>)
+					that was introduced by M. Wuestner <Cite Key="Wustner"/>.
+						They also show that:
+
+						
+							the second  homology of <M>C</M> is trivial and compute the ranks of the homology groups in other dimensions;
+								the Lie algebra <M>L</M> is not isomorphic to any central quotient <M>E/Z(E)</M>.
+
+									<Example>
+<#Include SYSTEM "tutex/6.33.txt">
+</Example>
+			</Subsection>
 </Section>
 </Chapter>

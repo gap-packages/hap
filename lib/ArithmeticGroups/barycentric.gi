@@ -84,6 +84,7 @@ local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,
     end;
     ##################################################################
     Dims:=[];
+    N:=Length(C);       #Added by Graham 02/2024
     for i in [0..Length(C)] do
         if C!.dimension(i)=0 then N:=i-1; break; fi;
         Dims[i+1]:=C!.dimension(i);

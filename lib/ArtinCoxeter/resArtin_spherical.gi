@@ -1,43 +1,44 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
-InstallGlobalFunction(ResolutionArtinGroup,
+InstallGlobalFunction(ResolutionArtinGroup_spherical,
 function(D,K)
 local
+ #We asume that D defines a sperical Artin group G and then, from the 
+ #point of view of computations, treat G as a Coxeter group.
 	Dimension,
 	Boundary,       
 	Contraction,	#not yet used
-	EltsG, EltsG1,SSEltsG, SSPairs,	
+	EltsG, EltsG1,	
 	Vertices,
-	G, gensG, Glist, G1,	#G is the Artin group of D. We treat G as a
- 	GhomG1,	gensG1,		#free group. However, we output a copy G1 of
+	G, gensG, Glist, G1, M,	#G is the Artin group of D. We treat G as a
+ 	GhomG1,	gensG1, gensM,	#free group. However, we output a copy G1 of
 				#G with relators. 
 	W, Wgens, GhomW,	#W is the Coxeter group of D
 	ResGens,
 	BoundaryCoeff,
 	PseudoBoundary,
 	BoundaryRecord,
-	m, n, i, S, SD,R,pos;
+	m, n, i, S, SD,R, iso, epi, x, y, F, gensF;
 
-###############In the spherical case we'll use a permutation representation
-###############of Coxeter group elements. 
-if CoxeterDiagramIsSpherical(D) then
-return ResolutionArtinGroup_spherical(D,K);
-fi;
-###############
-###############
+if not CoxeterDiagramIsSpherical(D) then return fail; fi; 
 
 Vertices:=CoxeterDiagramVertices(D);
 Glist:=CoxeterDiagramFpArtinGroup(D);
 G1:=Glist[1]/Glist[2];        	#Take care for this not to cause Knuth-Bendix 
 gensG1:=GeneratorsOfGroup(G1);	#to start up later on!
-G:=Glist[1];
-gensG:=GeneratorsOfGroup(G);
+M:=CoxeterDiagramMatCoxeterGroup(D);
+gensM:=GeneratorsOfGroup(M);
+iso:=IsomorphismPermGroup(M);
+gensG:=List(gensM,x->Image(iso,x));
+G:=Group(gensG);
+#G:=Image(iso);
+F:=Glist[1];
+gensF:=GeneratorsOfGroup(F);
+epi:=GroupHomomorphismByImages(F,G,gensF,gensG);
+
 GhomG1:=GroupHomomorphismByImagesNC(G,G1,gensG,gensG1);
-EltsG:=[];
-EltsG1:=[];
-SSEltsG:=[];
-SSPairs:=[];
+EltsG:=Enumerator(G);;
 
 ResGens:=[];
 ResGens[1]:=[[]];
@@ -45,7 +46,7 @@ for n in [1..K] do
 ResGens[n+1]:=[];
 for S in Combinations(Vertices,n) do
 SD:=CoxeterSubDiagram(D,S);
-if CoxeterDiagramIsSpherical(SD) then AddSet(ResGens[n+1],S); fi;
+ AddSet(ResGens[n+1],S); 
 od;
 od;
 
@@ -66,53 +67,6 @@ BoundaryRecord[n][m]:=true;
 od;
 od;
 
-#####################################################################
-BoundaryCoeff:=function(S,T)	#S is a set of vertices generating a
-				#finite Coxeter group WS. T is a
-				#subset of S, and WT is the corresponding
-				#subgroup of WS.
-local 	SD, WS, gensWS, 
-	WT, gensWT,
-	Trans, 
-	WShomG, Ggens,
-	x,y,tmp;
-
-SD:=CoxeterSubDiagram(D,S);
-WS:=CoxeterDiagramFpCoxeterGroup(SD);
-WS:=WS[1]/WS[2];
-Ggens:=List(S,x->gensG[Position(Vertices,x)]);
-gensWS:=GeneratorsOfGroup(WS);
-WShomG:=GroupHomomorphismByImagesNC(WS,G,gensWS,Ggens);
-gensWT:=List(T,x->gensWS[Position(S,x)]);
-if Length(T)>0 then WT:=Group(gensWT);
-else WT:=Group(Identity(WS)); fi;
-
-Trans:=List(Elements(RightTransversal(WS,WT)),x->x^-1);
-#Here we use the fact that every coset rep begings with fi
-#where fi is the generator of S omitted from T. If I don't 
-#want to trust this then I could include a check and return fail
-#if the check fails. But I don't think it is difficult to deduce
-#from how the coset enumeration algorithm works.
-
-tmp:=[];
-for x in Trans do
-y:=Image(WShomG,x);
-if not y in SSEltsG then 
-if not y in tmp then
-Add(EltsG,y); 
-Add(SSPairs,[y,Length(EltsG)]);
-Add(tmp,y);
-y:=Image(GhomG1,y); 
-Add(EltsG1,y);
-fi;
-fi;
-od;
-SSPairs:=SSortedList(SSPairs);
-SSEltsG:=List(SSPairs,x->x[1]);
-
-return List(Trans,x->Image(WShomG,x));
-end;
-#####################################################################
 
 #####################################################################
 PseudoBoundary:=function(S)	#S is a subset of vertices with finite
@@ -129,6 +83,36 @@ return bndry;
 end;
 #####################################################################
 
+####################################################################
+BoundaryCoeff:=function(S,T)    #S is a set of vertices generating a
+                                #finite Coxeter group WS. T is a
+                                #subset of S, and WT is the corresponding
+                                #subgroup of WS.
+local   SD, WS, gensWS,
+        WT, gensWT,
+        Trans,
+        WShomG1, WShomG, Ggens, G1gens,
+        x,y;
+
+SD:=CoxeterSubDiagram(D,S);
+WS:=CoxeterDiagramFpCoxeterGroup(SD);
+WS:=WS[1]/WS[2];
+G1gens:=List(S,x->gensG1[Position(Vertices,x)]);
+gensWS:=GeneratorsOfGroup(WS);
+WShomG1:=GroupHomomorphismByImagesNC(WS,G1,gensWS,G1gens);
+Ggens:=List(S,x->gensG[Position(Vertices,x)]);
+WShomG:=GroupHomomorphismByImagesNC(WS,G,gensWS,Ggens);
+gensWT:=List(T,x->gensWS[Position(S,x)]);
+if Length(T)>0 then WT:=Group(gensWT);
+else WT:=Group(Identity(WS)); fi;
+
+#Trans:=List(Elements(RightTransversal(WS,WT)),x->x^-1);
+Trans:=RightTransversal(WS,WT);
+
+return List(Trans,x->Image(WShomG,x^-1));
+end;
+#####################################################################
+
 #####################################################################
 Boundary:=function(n,kk)
 local B, B1, FreeGWord, x, y, k;
@@ -138,15 +122,14 @@ if n<1 then return 0; fi;
 
 k:=AbsoluteValue(kk);
 
-if not BoundaryRecord[n][k]=true then 
-if kk>0 then return BoundaryRecord[n][k]; 
+if not BoundaryRecord[n][k]=true then
+if kk>0 then return BoundaryRecord[n][k];
 else return NegateWord(BoundaryRecord[n][k]);fi;
 fi;
 
 B:=PseudoBoundary(ResGens[n+1][k]);
 B1:=List(B,x->[Position(ResGens[n],x[1]),
-	#List(x[2],y->(-1)^(Length(y)+x[3])*Position(EltsG,y))  ]);
-	List(x[2],y->(-1)^(Length(y)+x[3])*SSPairs[PositionSorted(SSEltsG,y)][2])  ]);
+        List(x[2],y->(-1)^(Length(Image(GhomG1,y))+x[3])*Position(EltsG,y))  ]);
 FreeGWord:=[];
 for x in B1 do
 for y in x[2] do
@@ -154,13 +137,13 @@ Append(FreeGWord,[ [SignInt(y)*x[1],AbsoluteValue(y)] ]);
 od;
 od;
 
-BoundaryRecord[n][k]:=FreeGWord; 
+BoundaryRecord[n][k]:=FreeGWord;
 if kk>0 then return FreeGWord;
-else return NegateWord(FreeGWord); fi; 
+else return NegateWord(FreeGWord); fi;
 end;
 #####################################################################
 
-
+EltsG1:=[];
 R:=         Objectify(HapResolution,
 	    rec(
 	    dimension:=Dimension,
@@ -176,8 +159,12 @@ R:=         Objectify(HapResolution,
 	     ["reduced",true]]  ));
 for n in [1..Length(R)] do
 for i in [1..R!.dimension(n)] do
-R!.boundary(n,i);
+x:=R!.boundary(n,i);
+for y in x do
+EltsG1[y[2]]:= Image(GhomG1,EltsG[y[2]]) ;
+od;
 od;od;
+R!.elts:=EltsG1;
 
 return R;
 

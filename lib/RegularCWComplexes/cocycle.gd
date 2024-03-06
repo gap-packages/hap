@@ -8,3 +8,6 @@ DeclareGlobalFunction("HAP_IntegralClassToCocycle");
 DeclareGlobalFunction("HAP_IntegralCocycleToClass");
 DeclareGlobalFunction("CupProductOfRegularCWComplex");
 DeclareGlobalFunction("CupProductOfRegularCWComplex_alt");
+DeclareGlobalFunction("CupProductOfRegularCWComplexModP");
+DeclareGlobalFunction("HAP_CocyclesAndCoboundariesModP");
+

@@ -1,6 +1,4 @@
 
-
-
 ###################################################################
 ###################################################################
 InstallGlobalFunction(ChevalleyEilenbergComplexOfModule,
@@ -83,8 +81,8 @@ end;
 #######################################
 
 #######################################
-action:=function(a,v)
-local m, w, i, j, x, z;
+action:=function(a,v)   #NEEDS IMPROVING AS IT TAKES MOST OF THE TIME
+local m, w, i, j, x, z, y;
 m:=Length(v)/dimV;
 w:=[];
 for i in [0..m-1] do
@@ -92,14 +90,17 @@ x:=Zero(V);
 for j in [1..dimV] do
 z:=v[i*dimV+j];
 if z<>0 then
-x:=x + z*BasV[j];
+x:=x + z*BasV[j];  
 fi;
 od;
-x:=a*x;
-x:=Coefficients(BasV,x);
+y:=a*x;
+if x=y then
+Append(w,v{i*dimV+[1..dimV]});
+else
+x:=Coefficients(BasV,y);
 Append(w,x);
+fi;
 od;
-
 return w;
 end;
 #######################################

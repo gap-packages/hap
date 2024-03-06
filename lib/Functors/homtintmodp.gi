@@ -173,6 +173,7 @@ InitA:=function(n);
 A[n+1]:=IdentityMat(S!.dimension(n));
 B:=List(A[n+1], r->F!.mapping(r,n));
 A[n+1]:=TransposedMat(B);
+if Length(A[n+1])=0 then A[n+1]:=[[0*one]]; fi;
 end;
 #od;
 #################
