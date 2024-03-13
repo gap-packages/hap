@@ -288,10 +288,12 @@ end);
 
 #######################################
 InstallGlobalFunction(RegularCWSimplex,
-function(n)
-local Y,k;
+function(arg)
+local n,Y,k;
+n:=arg[1];
 Y:=MaximalSimplicesToSimplicialComplex([[1..n+1]]);
 Y:=RegularCWComplex(Y);
+if Length(arg)=2 then return Y; fi;
 Y!.directed:=[];
 for k in [1..Y!.nrCells(1)] do
 Add(Y!.directed,SSortedList(Y!.boundaries[2][k]{[2,3]}));

@@ -39,11 +39,11 @@ str:=Concatenation(str{[1..ln-1]},["/Compiled"],[str[ln]]);
 str:=Concatenation(str);
 str:=Concatenation(HAP_ROOT{[1..Length(HAP_ROOT)-4]},str);
 str:=str{[1..Length(str)-2]};
-str:=Concatenation(str,"la.so");
+str:=Concatenation(str,"so");
 if IsExistingFile(str) then 
 LoadDynamicModule(str); 
 else
-ReadPackage("HAP", file);
+ReadPackage("HAP", file); 
 fi;
 fi;
 end;

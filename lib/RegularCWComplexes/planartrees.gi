@@ -160,10 +160,12 @@ end);
 #############################################
 #############################################
 InstallGlobalFunction(RegularCWAssociahedron,
-function(n)
-local bounds,Y,k,B;
+function(arg)
+local n,bounds,Y,k,B;
+n:=arg[1];
 bounds:=HAP_AssociahedronBoundaries(n);
 Y:=RegularCWComplex(bounds[1]);
+if Length(arg)=2 then return Y; fi;
 Y!.trees:=bounds[2];
 Y!.directed:=[];
 for k in [1..Y!.nrCells(1)] do

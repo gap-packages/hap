@@ -409,7 +409,7 @@ local
 	LM,deg,prime,
         M,triv,ChnCmps,vsmaps,A,S,TS,TM,L,
         bool,x,y,i,F,PC;
-
+Print("This function is unreliable, slow and should not be used.\n");
 ##Input###################
 LM:=arg[1];
 deg:=arg[2];
@@ -488,7 +488,7 @@ function(arg)
 local
         M,Bettis,triv,Persist,deg,prime,TM,L,SL,bool,CollapseMat,
         Collapses_dim2,Fun,x,y;
-
+Print("This function is unreliable, slow and should not be used.\n");
 ##Input###################
 deg:=arg[2];
 prime:=arg[3];
@@ -746,6 +746,10 @@ Disp:=DISPLAY_PATH;
 fi;
 ###############
 
+if IsMatrix(P[1]) then
+HAP_BarCodeCompactDisplayList(P);
+else
+
 B:=BarCode(P);
 B:=Collected(B);
 
@@ -773,6 +777,95 @@ od;
 
 for i in [1..Length(B)] do
 for j in [1..Length(B[1][1])-1] do
+if B[i][1][j]>0 and B[i][1][j+1]>0 then
+  if j=Position(B[i][1],1) or (Position(B[i][1],1)=lb and j=lb-1) then
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [label =\"",B[i][2]," \",color=black,arrowhead=none];\n");
+  else
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=black,arrowhead=none];\n");
+  fi;
+else
+  if j=Position(B[i][1],1) or (Position(B[i][1],1)=lb and j=lb-1) then
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [label =\"",B[i][2]," \",color=white,arrowhead=none];\n");
+  else
+  AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [color=white,arrowhead=none];\n");
+  fi;
+fi;
+od;
+od;
+
+AppendTo(barcodedot,"}");
+
+Exec(Concatenation("dot -Tgif ",barcodedot ,">", barcodegif));
+Exec(Concatenation(Disp," ",barcodegif));
+Sleep(2);
+Exec(Concatenation("rm -r ",barcodegif{[1..Length(barcodegif)-9]}));
+fi;
+end);
+#################################################################
+#################################################################
+
+###########################################################
+###########################################################
+InstallGlobalFunction(HAP_BarCodeCompactDisplayList,
+function(arg)
+local cnt,Q,BB,P,B,i,j,Disp,tmpDir,barcodedot,barcodegif, lb, AppendTo, PrintTo;
+#SHOULD MERGE THIS INTO PRECEDING FUNCTION
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
+###############
+P:=arg[1];
+if Length(arg)=2 then
+Disp:=arg[2];
+else
+Disp:=DISPLAY_PATH;
+fi;
+###############
+
+B:=[];
+
+cnt:=-1;;
+for Q in P do
+cnt:=cnt+1;
+BB:=BarCode(Q);
+BB:=Collected(BB);
+Append(B,BB);
+i:=[1..Length(B[1][1])]*0;;
+j:=[1..Length(B[1][1])]*0;;
+Add(B,[i,Concatenation("Betti  ", String(cnt))]);
+Add(B,[j,0]);
+od;
+
+tmpDir:=DirectoryTemporary();
+barcodedot:=Filename(tmpDir,"tmpIn.log");
+barcodegif:=Filename(tmpDir,"basic.gif");
+
+
+PrintTo(barcodedot,"digraph finite_state_machine {\n\n");
+AppendTo(barcodedot, "rankdir=LR;\n\n");
+AppendTo(barcodedot,
+"node [style=filled,shape=point]\n\n");
+
+lb:=Length(B[1][1]);
+for i in [1..Length(B)] do
+for j in [1..Length(B[1][1])] do
+if B[i][1][j]>0 then
+AppendTo(barcodedot,"node [color=black,fontcolor=black];\n",i,".",j,"\n");
+else
+AppendTo(barcodedot,"node [color=white,fontcolor=white];\n",i,".",j,"\n");
+fi;
+od;
+od;
+
+
+for i in [1..Length(B)] do
+
+if IsString(B[i][2]) then
+AppendTo(barcodedot,i,".",1,"->",i,".",1+1," [label =\"",B[i][2]," \",color=white,arrowhead=none];\n");
+fi;
+
+for j in [1..Length(B[1][1])-1] do
+
 if B[i][1][j]>0 and B[i][1][j+1]>0 then
   if j=Position(B[i][1],1) or (Position(B[i][1],1)=lb and j=lb-1) then
   AppendTo(barcodedot,i,".",j,"->",i,".",j+1," [label =\"",B[i][2]," \",color=black,arrowhead=none];\n");
@@ -1008,6 +1101,7 @@ local
         ChnCmps,vsmaps,L,
         U,CU,V,CV,W,CW,
         x,y,i,F,PC,correction;
+Print("This function is unreliable, slow and should not be used.\n");
 
 ##Input###################
 LM:=arg[1];
@@ -1096,6 +1190,7 @@ end);
 InstallGlobalFunction(PersistentHomologyOfFilteredPureCubicalComplex,
 function(F,n)
 local FF, C, D;
+Print("This function is unreliable, slow and should not be used.\n"); 
 
 ############################
 if n=0 and IsHapFilteredPureCubicalComplex(F) then
@@ -1131,6 +1226,7 @@ InstallGlobalFunction(PersistentHomologyOfFilteredPureCubicalComplex_alt,
 function(FF,deg)
 local flen, HEMin, HEMax, FT, PH, D, PHfirst, Pmat, PB, F, r, s,n;
 
+Print("This function is unreliable, slow and should not be used.\n");
 #############################
 if IsBound(FF!.persistentHomology) then
 if IsBound(FF!.persistentHomology[deg+1]) then

@@ -1011,6 +1011,10 @@ InstallOtherMethod(PersistentBettiNumbers,
 function(Y,n)
 local W;
 
+if n=0 and EvaluateProperty(Y,"monotonic")=true then
+return HAP_BettiZeroMonotonic(Y);
+fi;
+
 W:=ContractedFilteredPureCubicalComplex(Y);
 W:= FilteredPureCubicalComplexToCubicalComplex(W);
 W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
@@ -1030,6 +1034,10 @@ InstallOtherMethod(PersistentBettiNumbers,
 [IsHapFilteredPureCubicalComplex,IsInt,IsInt],
 function(Y,n,prime)
 local W;
+if n=0 and EvaluateProperty(Y,"monotonic")=true then
+return HAP_BettiZeroMonotonic(Y);
+fi;
+
 W:=ContractedFilteredPureCubicalComplex(Y);
 W:= FilteredPureCubicalComplexToCubicalComplex(W);
 W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
@@ -1045,6 +1053,10 @@ InstallOtherMethod(PersistentBettiNumbersAlt,
 [IsHapFilteredPureCubicalComplex,IsInt,IsInt],
 function(Y,n,prime)
 local W;
+if n=0 and EvaluateProperty(Y,"monotonic")=true then
+return HAP_BettiZeroMonotonic(Y);
+fi;
+
 W:=ContractedFilteredPureCubicalComplex(Y);
 W:= FilteredPureCubicalComplexToCubicalComplex(W);
 W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
@@ -1052,6 +1064,8 @@ return PersistentBettiNumbersAlt(W,n,prime);
 end);
 ##########################################################
 ##########################################################
+
+
 
 ##########################################################
 ##########################################################
@@ -1061,6 +1075,10 @@ InstallOtherMethod(PersistentBettiNumbersAlt,
 function(Y,n)
 local W;
 
+if n=0 and EvaluateProperty(Y,"monotonic")=true then
+return HAP_BettiZeroMonotonic(Y);
+fi;
+
 W:=ContractedFilteredPureCubicalComplex(Y);
 W:= FilteredPureCubicalComplexToCubicalComplex(W);
 W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
@@ -1068,6 +1086,31 @@ return PersistentBettiNumbersAlt(W,n);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered pure cubical complex",
+[IsHapFilteredPureCubicalComplex,IsList],
+function(Y,N)
+local W,P, NN;
+
+W:=ContractedFilteredPureCubicalComplex(Y);
+
+if 0 in N and EvaluateProperty(Y,"monotonic")=true then
+P:=[ HAP_BettiZeroMonotonic(Y) ];
+NN:=Filtered(N,i->not i=0);
+Append(P,PersistentBettiNumbersAlt(W,NN));
+return P;
+fi;
+
+W:= FilteredPureCubicalComplexToCubicalComplex(W);
+W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
+return PersistentBettiNumbersAlt(W,N);
+end);
+##########################################################
+##########################################################
+
 
 
 
@@ -1181,6 +1224,19 @@ return PersistentBettiNumbersViaContractions(Y,n,2);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsList],
+function(Y,N);
+Print("Using homology over GF(2).\n");
+return PersistentBettiNumbersViaContractions(Y,N,2);
+end);
+##########################################################
+##########################################################
+
 
 
 

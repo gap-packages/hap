@@ -85,6 +85,29 @@ end);
 #####################################################
 #####################################################
 
+#####################################################
+#####################################################
+InstallOtherMethod(ClosedSurface,
+"simplicial surface or genus +/- g (where - means nonorientable)",
+[IsInt,IsString],
+function(n,str)
+local Y;
+if str="CW" then
+Y:=ClosedSurface(n);
+Y:=RegularCWComplex(Y);;
+Y:=BarycentricallySimplifiedComplex(Y);
+return Y;
+fi;
+if str="Simplicial" then
+Y:=ClosedSurface(n);
+return Y;
+fi;
+Print("The second argument should be \"CW\" or \"Simplicial\".\n");
+return fail;
+end);
+#####################################################
+#####################################################
+
 
 #####################################################
 #####################################################
@@ -194,7 +217,7 @@ Print("The simplicial manifolds must have the same dimension.\n");
 return fail;
 fi;
 
-e:=arg[3]; 
+e:=-arg[3]; 
 maxK:=1*K!.simplicesLst[Dimension(K)+1];
 maxL:=1*L!.simplicesLst[Dimension(L)+1];
 

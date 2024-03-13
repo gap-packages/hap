@@ -301,6 +301,8 @@ DeclareOperation("PersistentHomology",[IsList,IsInt, IsInt]);
 DeclareGlobalFunction("BarCode");#doc
 DeclareGlobalFunction("BarCodeDisplay");#doc
 DeclareGlobalFunction("BarCodeCompactDisplay");#doc
+DeclareGlobalFunction("HAP_BarCodeCompactDisplayList");
+DeclareGlobalFunction("HAP_BettiZeroMonotonic");
 DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex");
 DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex_Alt");
 DeclareGlobalFunction("ZZPersistentHomologyOfPureCubicalComplex");

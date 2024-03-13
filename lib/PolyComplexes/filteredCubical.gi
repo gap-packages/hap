@@ -36,6 +36,8 @@ F:=PureCubicalComplex(T!.binaryArray);
 F!.filtration:=A;
 od;
 
+Add(F!.properties,["monotonic",true]);
+
 return Objectify(HapFilteredPureCubicalComplex, 
                  rec(binaryArray:=F!.binaryArray,
                      filtration:=F!.filtration,
@@ -395,7 +397,7 @@ function(M)
 local
         LM, F, i, flen, A,
         dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
-        Opp, x,t, dimSet, ArrayIt;
+        Opp, x,t, dimSet, ArrayIt, mx;
 
 LM:=[];
 flen:=Maximum(Flat(M!.filtration));
@@ -441,11 +443,24 @@ dimSet:=List([1..dim],x->[1..dims[x]]);
 ArrayIt:=ArrayIterate(dim);
 
 for t in [2..Length(LM)] do
-#for x in CART do
-#Opp(x);
-#od;
 ArrayIt(dimSet,Opp);
 od;
+
+mx:=Maximum(Flat(B));
+if flen>mx then
+#######################
+Opp:=function(y)
+local z;
+z:=ArrayValueDim1(B,y{[2..Length(y)]});
+if ArrayValueDim(B,y)=mx
+ then
+z[y[1]]:=flen;
+fi;
+end;
+########################
+ArrayIt(dimSet,Opp);
+fi;
+
 
 return Objectify(HapFilteredPureCubicalComplex,
                  rec(binaryArray:=LM[flen]!.binaryArray,
@@ -711,4 +726,37 @@ return Objectify(HapFilteredPureCubicalComplex,
 end);
 ################################################
 ################################################
+
+#########################################################
+#########################################################
+InstallGlobalFunction(HAP_BettiZeroMonotonic,
+function(F)
+local P,B,betti,ln,a,j,i;
+
+if not EvaluateProperty(F,"monotonic")=true then
+Print("The filtration may not have monotonically decreasing Betti 0.\n");
+return fail;
+fi;
+
+ln:=Maximum(Flat(F!.filtration));
+B:=[];
+betti:=2;;
+
+for i in [1..ln] do
+if betti>1 then
+betti:=PathComponentOfPureCubicalComplex(FiltrationTerm(F,i),0);
+fi;
+Add(B,1*betti);
+od;
+
+P:=NullMat(ln,ln);;
+for i in [1..ln] do
+for j in [i..ln] do
+P[i][j]:=1*B[j];
+od;od;
+return P;
+
+end);
+#########################################################
+#########################################################
 
