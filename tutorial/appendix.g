@@ -135,6 +135,15 @@ od;
 
 ###########################################################
 ###########################################################
+#Enumerating the planar rooted trees with 5 leaves in Exa,ple 3.9
+#The first tree is displayed.
+K:=RegularCWAssociahedron(5);        
+trees:=K!.trees;
+t:=trees[1][1];  #first tree       
+HAP_DisplayPlanarTree(t);
+
+###########################################################
+###########################################################
 #Computing "size" of the diagonal map using "classical formulae" (Table 2)
 for n in [1..5] do
 K:=RegularCWAssociahedron(n+2);;D:=DiagonalChainMap(K);;
@@ -209,6 +218,80 @@ BarCodeCompactDisplay(P);
 X12:=RegularCWComplex(FiltrationTerm(F,12));;
 cup:=LowDimensionalCupProduct(X12);;
 cup([1,0],[0,1]);
+
+##########################################################
+###########################################################
+#Construction of Poincare's third manifold (page 31)
+P1:=[[1,4,3,2],[8,7,6,5]];;
+P2:=[[1,4,8,5],[6,2,3,7]];;
+P3:=[[1,2,6,5],[3,7,8,4]];;
+M:=PoincareCubeCWComplex(P1,P2,P3);
+IsClosedManifold(M);
+StructureDescription(FundamentalGroup(M));
+
+##########################################################
+##########################################################
+#Construction of a manifold using Dehn surgery (page33)
+ap:=ArcPresentation(PureCubicalKnot(3,1));;
+W:=ThreeManifoldViaDehnSurgery(ap,17,16);
+Size(W);
+
+##########################################################
+##########################################################
+#Computation of the Dijkgraaf-Witten invariant on page 34.
+ap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot
+L51:=ThreeManifoldViaDehnSurgery(ap,5,1);;
+D:=DijkgraafWittenInvariant(L51,CyclicGroup(5));
+L52:=ThreeManifoldViaDehnSurgery(ap,5,2);;
+D:=DijkgraafWittenInvariant(L52,CyclicGroup(5));
+
+##########################################################
+##########################################################
+#Computation of the linking form invariants on page 35.
+LensSpaces:=[];;
+for q in [1..12] do
+Add(LensSpaces,ThreeManifoldViaDehnSurgery([[1,2],[1,2]],13,q));
+od;
+c:=Classify([1..12],q->LinkingFormHomotopyInvariant(LensSpaces[q]));
+
+##########################################################
+##########################################################
+#Computation of the cohomology ring of a lens space (page 35).
+ap:=[[2,1],[2,1]];; #Arc presentation for the trivial knot
+L51:=ThreeManifoldViaDehnSurgery(ap,5,1);;
+v:=CohomologyRing(L51,5);
+v.2*v.3;
+
+##########################################################
+##########################################################
+#Computation of the cohomology ring of a covering space (page 35)
+ap:=ArcPresentation(PureCubicalKnot(3,1));;
+W:=ThreeManifoldViaDehnSurgery(ap,5,2);;
+U:=UniversalCover(W);;F:=U!.group;;
+H:=LowIndexSubgroupsFpGroup(F,6)[7];;
+Index(F,H);
+V:=EquivariantCWComplexToRegularCWComplex(U,H);;
+V:=BarycentricallySimplifiedComplex(V);;
+R:=CohomologyRing(V,7);
+
+##########################################################
+##########################################################
+#Computation of the cohomology ring of a 6-fold cover of 
+#Seifert-Weber space (page 36) 
+W:=PoincareDodecahedronCWComplex(
+ [[1,2,3,4,5],[7,8,9,10,6]],
+ [[1,11,16,12,2],[9,8,18,14,19]],
+ [[2,12,17,13,3],[10,9,19,15,20]],
+ [[3,13,18,14,4],[6,10,20,11,16]],
+ [[4,14,19,15,5],[7,6,16,12,17]],
+ [[5,15,20,11,1],[8,7,17,13,18]]);
+U:=UniversalCover(W);
+G:=U!.group;;
+L:=LowIndexSubgroupsFpGroup(G,6);;
+H:=L[86];;
+WH:=EquivariantCWComplexToRegularCWComplex(U,H);
+v:=CohomologyRing(WH,2);
+v.4^3;
 
 ###########################################################
 ###########################################################
