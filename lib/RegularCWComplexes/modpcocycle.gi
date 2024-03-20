@@ -1,4 +1,4 @@
-
+RT:=0;
 #####################################################################
 #####################################################################
 InstallGlobalFunction(HAP_CocyclesAndCoboundariesModP,
@@ -9,7 +9,7 @@ local
 	dim, dim2, BasisKerd2, BasisImaged1, 
         cohomology,
 	CycleToClass, ClassToCycle,
-	i, j, x, sum, ONE, char, V, v;
+	i, j, x, sum, ONE, char, V, v, lncoho;
 
 C:=arg[1];
 n:=arg[2];
@@ -27,14 +27,16 @@ else
 M2:=[[ONE*0]]; 
 fi;
 
-BasisKerd2:=SemiEchelonMatTransformation(TransposedMat(M2)).relations;
+#BasisKerd2:=SemiEchelonMatTransformation(TransposedMat(M2)).relations;
+BasisKerd2:=NullspaceMat(TransposedMat(M2));
 Unbind(M2);
 M1:=CoboundaryMatrix(C,n-1);
 if M1=[] then
 M1:=[ONE*0*[1..Dimension(n)]];
 if Dimension(n)=0 then M1:=[[ONE*0]]; fi;
 fi;
-BasisImaged1:=SemiEchelonMatTransformation(TransposedMat(M1)).vectors;
+#BasisImaged1:=SemiEchelonMatTransformation(TransposedMat(M1)).vectors;
+BasisImaged1:=SemiEchelonMat(TransposedMat(M1)).vectors;
 Unbind(M1);
 dim:=Length(BasisImaged1);
 
@@ -47,17 +49,22 @@ dim2:=Length(V);
 if dim2>dim then Add(cohomology,v); dim:=dim2; fi;
 od;
 
+lncoho:=Length(cohomology);
 if Length(cohomology)>0 then
 cohomology:=ONE*SemiEchelonMatTransformation(cohomology).vectors;
-else
-cohomology:=[0*ONE];
+#else
+#cohomology:=[0*ONE];
 fi;
 
+cohomology:=Concatenation(cohomology,BasisImaged1);
+Unbind(V); Unbind(BasisImaged1);
+
 #####################################################################
-CycleToClass:=function(v);
+CycleToClass:=function(v)
+local cls;
 
-return SolutionMat(cohomology,v*ONE);
-
+cls:= SolutionMat(cohomology,v*ONE);
+return cls{[1..lncoho]};
 end;
 #####################################################################
 
@@ -141,7 +148,7 @@ od;od;
 
 ###############################
 if p<q then cheat:=1;         #NEED TO THINK ABOUT THIS!
-else cheat:=-1;
+else cheat:=-1; 
 fi;
 Apply(u,x->[x[1],cheat*x[2]]);
 ###############################

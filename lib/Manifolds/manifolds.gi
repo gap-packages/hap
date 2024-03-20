@@ -459,7 +459,7 @@ end;
 R!.degree:=Degree;
 R!.int2pair:=int2pair;
 R!.pair2int:=pair2int;
-R!.bockstein:=HAP_bockstein(R); 
+#R!.bockstein:=HAP_bockstein(R); 
 return R;
 end);
 #####################################################

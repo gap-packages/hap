@@ -82,7 +82,8 @@ cth[i]:=[];
 for k in [1..Length(GeneratorsOfGroup(c!.fpgroup))] do
 y:=c!.h2c(k);
 y:=List(y,kk->IntFFE(kk));
-y:=Filtered( [1..Length(y)], j->y[j]=1 );
+#y:=Filtered( [1..Length(y)], j->y[j]=1 );
+#y:=Filtered( [1..Length(y)], j-> not y[j]=0 );
 Add(cth[i], y);
 od;
 od;
@@ -114,10 +115,12 @@ gens:=[];;
 for i in [1..dim-1] do
 gens[i]:=[];
 f:=homs[i];
-P:=Parent(Source(f!.Mapping));
+#P:=(Source(f!.Mapping));
+P:=(Source(((Target(f))!.cocomplex)!.boundary(i)))!.ActedGroup;
 gensP:=GeneratorsOfGroup(P);
 for y in cth[i] do
-Add(gens[i], Image(f!.Mapping, Product(gensP{y})));
+#Add(gens[i], Image(f!.Mapping, Product(gensP{y})));
+Add(gens[i], Image(f!.Mapping, Product(List([1..Length(gensP)],j->gensP[j]^y[j]))));
 
 od;
 od;

@@ -158,6 +158,7 @@ iso:=IsomorphismFpGroup(Q);
 Qiso:=Image(iso);
 
 
+
 #####################################################################
 #HhomC:=function(w);
 #return BasisKerd2[w];

@@ -229,6 +229,19 @@ local W, WW, M, v, x, i, MAX, sqq, a,b,V;
 ## does not make any use of the Adems relations.
 ####################################################
 
+if not Characteristic(A)=2 then return fail; fi;
+
+#### Is the Bockstein defined?##############
+if not IsBound(A!.squares) and IsBound(A!.chainComplex) then
+A!.maxdeg:=Length(A!.chainComplex);
+A!.complete:=true;
+A!.squares:=[];
+A!.squares[1]:=function(x); return x; end;
+A!.bockstein:=HAP_bockstein(A);
+A!.squares[2]:= A!.bockstein;
+fi;
+####################################################
+
 #### Are Steenrod squares defined at all?###########
 if not IsBound(A!.squares) then
 return fail;
@@ -253,6 +266,9 @@ if n>MAX then return Zero(A); fi;
 #### Sq^n(w) not defined if maxdeg<MAX+n #############
 if A!.maxdeg<MAX+n then
 #Print("Steenrod square image has too high a degree.\n");
+if IsBound(A!.complete) then
+  if A!.complete=true then return Zero(A); fi;
+fi;
 return fail;
 fi;
 ###################################################### 
@@ -306,6 +322,13 @@ InstallMethod(Bockstein,
 [IsAlgebra,IsObject],
 function(A,w)
 local W, WW, V, M, i, v, x, MAX, a, b,c, gens, gensbas;;
+
+#### Is the Bockstein defined?##############
+if not IsBound(A!.bockstein) and IsBound(A!.chainComplex) then
+A!.bockstein:=HAP_bockstein(A);
+fi;
+####################################################
+
 
 #### Is the Bockstein defined at all?##############
 if not IsBound(A!.bockstein) then

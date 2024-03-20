@@ -154,6 +154,11 @@ InstallGlobalFunction(HAPContractRegularCWComplex,
 function(arg)
 local
       Y,d,Contract, nn, dim, bool, BOOL, FREE;
+
+#NB: to obtain the algorithm described in the Alzobydi-Ellis paper
+#under Option 1 you need to comment out lines A and C and uncomment line B.
+#The default setting is for Option 2 of the paper.
+
 Y:=arg[1];
 if Length(arg)>1 then d:=arg[2];  #Added 12/03/2018
 else d:=0; fi;
@@ -196,7 +201,8 @@ if not IsBound(FREE) then FREE:=[1..C]; fi;
 
 Free:=[];
 for i in FREE do
-if MCoboundaries[i][1]=1 then Add(Free,i);fi;
+if MCoboundaries[i][1]=1 then Add(Free,i);fi;           #Line A
+#if MCoboundaries[i][1]=1 then Add(Free,i); break; fi;  #Line B
 od;
 
 
@@ -225,7 +231,7 @@ Y!.inverseVectorField[n+1][i]:=MCoboundaries[i][2];
     for j in StructuralCopy(b{[2..1+b[1]]}) do
      t:=MCoboundaries[j][1];
      MCoboundaries[j][1]:=MCoboundaries[j][1]-1;
-if t=2 then Add(Free,j);fi;############################ADDED
+if t=2 then Add(Free,j);fi;############################ADDED  #Line C
      cob:=MCoboundaries[j];
      pos:=Position(cob{[2..t+1]},U);
      MCoboundaries[j]:=Concatenation(cob{[1..pos]},cob{[2+pos..Length(cob)]});
@@ -2862,6 +2868,7 @@ b:=bnds[n+2][k];
 m:=b[1];
 b:=b{[2..b[1]+1]};
 Apply(b,i->i^sigmai);
+b:=SortedList(b);
 b:=Concatenation([m],b);
 Add(newbnds,b);
 od;
