@@ -4,28 +4,33 @@
   
   [1X14.1 [33X[0;0YAn embarassingly parallel computation[133X[101X
   
-  [33X[0;0YThe   following   example   creates  five  child  processes  and  uses  them
-  simultaneously  to  compute  the second integral homology of each of the [22X267[122X
-  groups of order [22X64[122X. The final command shows that[133X
+  [33X[0;0YThe  following  example  creates  fifteen  child  processes  and  uses  them
+  simultaneously  to  compute the second integral homology of each of the [22X2328[122X
+  groups of order [22X128[122X. The final command shows that[133X
   
-  [33X[0;0Y[22XH_2(G, Z)= Z_2^15[122X[133X
+  [33X[0;0Y[22XH_2(G, Z)= Z_2^21[122X[133X
   
-  [33X[0;0Yfor the [22X267[122X-th group [22XG[122X in [12XGAP[112X's library of small groups.[133X
+  [33X[0;0Yfor  the  [22X2328[122X-th  group  [22XG[122X in [12XGAP[112X's library of small groups. The penulimate
+  command shows that the parallel computation achieves a speedup of 10.4 .[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XProcesses:=List([1..5],i->ChildProcess());;[127X[104X
-    [4X[25Xgap>[125X [27Xfn:=function(i);return GroupHomology(SmallGroup(64,i),2);end;;[127X[104X
-    [4X[25Xgap>[125X [27Xfor p in Processes do[127X[104X
+    [4X[25Xgap>[125X [27XProcesses:=List([1..15],i->ChildProcess());;[127X[104X
+    [4X[25Xgap>[125X [27Xfn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;[127X[104X
+    [4X[25Xgap>[125X [27X  for p in Processes do[127X[104X
     [4X[25X>[125X [27XChildPut(fn,"fn",p);[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");[127X[104X
+    [4X[28X1716105545[128X[104X
+    [4X[28X1716105554[128X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");[127X[104X
+    [4X[28X1716105586[128X[104X
+    [4X[28X1716105680[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XNrSmallGroups(64);[127X[104X
-    [4X[28X267[128X[104X
+    [4X[25Xgap>[125X [27Xspeedup:=1.0*(680-586)/(554-545);[127X[104X
+    [4X[28X10.4444[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XL:=ParallelList([1..267],"fn",Processes);;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XL[267];[127X[104X
-    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XL[2328];[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -33,28 +38,36 @@
   parallel computation.[133X
   
   
-  [1X14.2 [33X[0;0YAn non-embarassingly parallel computation[133X[101X
+  [1X14.2 [33X[0;0YA non-embarassingly parallel computation[133X[101X
   
   [33X[0;0YThe  following  commands use core functions to compute the product [22XA=M× N[122X of
   two random matrices by distributing the work over two processors.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XM:=RandomMat(2000,2000);; [127X[104X
-    [4X[25Xgap>[125X [27XN:=RandomMat(2000,2000);;[127X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM:=RandomMat(6000,6000);;    [127X[104X
+    [4X[25Xgap>[125X [27XN:=RandomMat(6000,6000);;[127X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
     [4X[25Xgap>[125X [27Xs:=ChildProcess();;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XMtop:=M{[1..1000]};; [127X[104X
-    [4X[25Xgap>[125X [27XMbottom:=M{[1001..2000]};;[127X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
+    [4X[28X1716108288[128X[104X
+    [4X[25Xgap>[125X [27XMtop:=M{[1..3000]};; [127X[104X
+    [4X[25Xgap>[125X [27XMbottom:=M{[3001..6000]};;[127X[104X
     [4X[25Xgap>[125X [27XChildPut(Mtop,"Mtop",s); [127X[104X
     [4X[25Xgap>[125X [27XChildPut(N,"N",s);[127X[104X
     [4X[25Xgap>[125X [27XNextAvailableChild([s]);;[127X[104X
-    [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XChildCommand("Atop:=Mtop*N;;",s);; [127X[104X
     [4X[25Xgap>[125X [27XAbottom:=Mbottom*N;; [127X[104X
     [4X[25Xgap>[125X [27XA:=ChildGet("Atop",s);;[127X[104X
-    [4X[25Xgap>[125X [27XAppend(A,Abottom);;                [127X[104X
+    [4X[25Xgap>[125X [27XAppend(A,Abottom);;        [127X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
+    [4X[28X1716108458[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAA:=M*N;;Exec("date +%s");[127X[104X
+    [4X[28X1716108733[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xspeedup:=1.0*(733-458)/(458-288);[127X[104X
+    [4X[28X1.61765[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

@@ -25,7 +25,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7EAE286B837D27BA">14.1 <span class="Heading">An embarassingly parallel computation</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7AA9C5B27A8322D0">14.2 <span class="Heading">An non-embarassingly parallel computation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X80F359DD7C54D405">14.2 <span class="Heading">A non-embarassingly parallel computation</span></a>
 </span>
 </div>
 </div>
@@ -36,56 +36,68 @@
 
 <h4>14.1 <span class="Heading">An embarassingly parallel computation</span></h4>
 
-<p>The following example creates five child processes and uses them simultaneously to compute the second integral homology of each of the <span class="SimpleMath">267</span> groups of order <span class="SimpleMath">64</span>. The final command shows that</p>
+<p>The following example creates fifteen child processes and uses them simultaneously to compute the second integral homology of each of the <span class="SimpleMath">2328</span> groups of order <span class="SimpleMath">128</span>. The final command shows that</p>
 
-<p><span class="SimpleMath">H_2(G, Z)= Z_2^15</span></p>
+<p><span class="SimpleMath">H_2(G, Z)= Z_2^21</span></p>
 
-<p>for the <span class="SimpleMath">267</span>-th group <span class="SimpleMath">G</span> in <strong class="button">GAP</strong>'s library of small groups.</p>
+<p>for the <span class="SimpleMath">2328</span>-th group <span class="SimpleMath">G</span> in <strong class="button">GAP</strong>'s library of small groups. The penulimate command shows that the parallel computation achieves a speedup of 10.4 .</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Processes:=List([1..5],i-&gt;ChildProcess());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(i);return GroupHomology(SmallGroup(64,i),2);end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in Processes do</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Processes:=List([1..15],i-&gt;ChildProcess());;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">  for p in Processes do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildPut(fn,"fn",p);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");</span>
+1716105545
+1716105554
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");</span>
+1716105586
+1716105680
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrSmallGroups(64);</span>
-267
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(680-586)/(554-545);</span>
+10.4444
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=ParallelList([1..267],"fn",Processes);;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L[267];</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L[2328];</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
 
 </pre></div>
 
 <p>The function <code class="code">ParallelList()</code> is built from <strong class="button">HAP</strong>'s six core functions for parallel computation.</p>
 
-<p><a id="X7AA9C5B27A8322D0" name="X7AA9C5B27A8322D0"></a></p>
+<p><a id="X80F359DD7C54D405" name="X80F359DD7C54D405"></a></p>
 
-<h4>14.2 <span class="Heading">An non-embarassingly parallel computation</span></h4>
+<h4>14.2 <span class="Heading">A non-embarassingly parallel computation</span></h4>
 
 <p>The following commands use core functions to compute the product <span class="SimpleMath">A=M× N</span> of two random matrices by distributing the work over two processors.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(2000,2000);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(2000,2000);;</span>
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(6000,6000);;    </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(6000,6000);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..1000]};; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[1001..2000]};;</span>
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
+1716108288
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..3000]};; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[3001..6000]};;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
-
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;                </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;        </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
+1716108458
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
+1716108733
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(733-458)/(458-288);</span>
+1.61765
 
 </pre></div>
 
@@ -96,6 +108,6 @@
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
-<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
 </body>
 </html>
