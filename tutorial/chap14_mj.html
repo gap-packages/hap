@@ -77,30 +77,30 @@
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(6000,6000);;    </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(6000,6000);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(10000,10000);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(10000,10000);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716108288
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..3000]};; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[3001..6000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s); </span>
+1716109418
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..5000]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[5001..10000]};;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;        </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716108458
+1716110143
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716108733
+1716111389
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(733-458)/(458-288);</span>
-1.61765
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(111389-110143)/(110143-109418);</span>
+1.71862
 
 </pre></div>
 
