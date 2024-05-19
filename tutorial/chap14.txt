@@ -71,3 +71,39 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe  next  commands  compute  the  product  [22XA=M× N[122X of two random matrices by
+  distributing  the  work over fifteen processors. However, due to the naivety
+  of  the  parallel  multiplication  algorithm  (which communicates the entire
+  matrices  [22XM[122X  and  [22XN[122X  to all processes) the computation actually takes longer
+  than on a single processor.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM:=RandomMat(6000,6000);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=RandomMat(6000,6000);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=List([1..15],i->ChildCreate());;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
+    [4X[28X1716148073[128X[104X
+    [4X[25Xgap>[125X [27XChildPutObj(M,"M",S);[127X[104X
+    [4X[25Xgap>[125X [27XChildPutObj(N,"N",S);[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..15] do[127X[104X
+    [4X[25X>[125X [27Xcmd:=Concatenation("A:=M{[1..400]+(",String(i),"-1)*400}*N;");[127X[104X
+    [4X[25X>[125X [27XChildCommand(cmd,S[i]);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XA:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..15] do[127X[104X
+    [4X[25X>[125X [27X C:=ChildGet("A",S[i]);[127X[104X
+    [4X[25X>[125X [27X Append(A,C);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
+    [4X[28X1716148149[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAA:=M*N;;Exec("date +%s");[127X[104X
+    [4X[28X1716148424[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xspeedup:=1.0*(8424-8149)/(8419-8073);[127X[104X
+    [4X[28X0.794798[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
