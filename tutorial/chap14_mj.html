@@ -104,20 +104,20 @@
 
 </pre></div>
 
-<p>The next commands compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <span class="SimpleMath">\(M\)</span> and <span class="SimpleMath">\(N\)</span> are communicated to all processes) and the computation only achieves a speedup of 4.2.</p>
+<p>The next commands compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <span class="SimpleMath">\(M\)</span> and <span class="SimpleMath">\(N\)</span> are communicated to all processes) and the computation achieves a speedup of 7.6.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(12000,12000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(12000,12000);;</span>
+M:=RandomMat(15000,15000);;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(15000,15000);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716151184
+1716156583
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(M,"M",S);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(N,"N",S);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">cmd:=Concatenation("A:=M{[1..800]+(",String(i),"-1)*800}*N;");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">cmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildCommand(cmd,S[i]);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[];;</span>
@@ -126,13 +126,13 @@
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> Append(A,C);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716151697
+1716157489
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716153865
+1716164405
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(3865-1697)/(1697-1184);</span>
-4.22612
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(64405-57489)/(57489-56583);</span>
+7.63355
 
 </pre></div>
 

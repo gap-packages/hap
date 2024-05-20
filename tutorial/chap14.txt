@@ -74,19 +74,19 @@
   [33X[0;0YThe  next  commands  compute  the  product  [22XA=M× N[122X of two random matrices by
   distributing  the  work over fifteen processors. The parallelization is very
   naive  (the  entire  matrices [22XM[122X and [22XN[122X are communicated to all processes) and
-  the computation only achieves a speedup of 4.2.[133X
+  the computation achieves a speedup of 7.6.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XM:=RandomMat(12000,12000);;[127X[104X
-    [4X[25Xgap>[125X [27XN:=RandomMat(12000,12000);;[127X[104X
+    [4X[28XM:=RandomMat(15000,15000);;[128X[104X
+    [4X[25Xgap>[125X [27XN:=RandomMat(15000,15000);;[127X[104X
     [4X[25Xgap>[125X [27XS:=List([1..15],i->ChildCreate());;[127X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716151184[128X[104X
+    [4X[28X1716156583[128X[104X
     [4X[25Xgap>[125X [27XChildPutObj(M,"M",S);[127X[104X
     [4X[25Xgap>[125X [27XChildPutObj(N,"N",S);[127X[104X
     [4X[25Xgap>[125X [27Xfor i in [1..15] do[127X[104X
-    [4X[25X>[125X [27Xcmd:=Concatenation("A:=M{[1..800]+(",String(i),"-1)*800}*N;");[127X[104X
+    [4X[25X>[125X [27Xcmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");[127X[104X
     [4X[25X>[125X [27XChildCommand(cmd,S[i]);[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
     [4X[25Xgap>[125X [27XA:=[];;[127X[104X
@@ -95,13 +95,13 @@
     [4X[25X>[125X [27X Append(A,C);[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
     [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716151697[128X[104X
+    [4X[28X1716157489[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XAA:=M*N;;Exec("date +%s");[127X[104X
-    [4X[28X1716153865[128X[104X
+    [4X[28X1716164405[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xspeedup:=1.0*(3865-1697)/(1697-1184);[127X[104X
-    [4X[28X4.22612[128X[104X
+    [4X[25Xgap>[125X [27Xspeedup:=1.0*(64405-57489)/(57489-56583);[127X[104X
+    [4X[28X7.63355[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
