@@ -105,3 +105,31 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X14.3 [33X[0;0YParallel persistent homology[133X[101X
+  
+  [33X[0;0YSection  [14X5.8[114X  illustrates  an  alternative method of computing the persitent
+  Betti numbers of a filtered pure cubical complex. The method lends itself to
+  parallelisation.  However,  the following parallel computation of persistent
+  Betti  numbers  achieves  only  a  speedup  of  [22X1.34[122X. On the other hand, the
+  persistent  Betti  function  can  be  used  to  distribute computations over
+  several computers. This might be useful for larger computations that require
+  significant memory resources.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=HapFile("data247.txt");;[127X[104X
+    [4X[25Xgap>[125X [27XRead(file);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=ThickeningFiltration(T,15);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=List([1..15],i->ChildCreate());;[127X[104X
+    [4X[25Xgap>[125X [27XN:=[0,1,2];;[127X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");[127X[104X
+    [4X[28X1717020233[128X[104X
+    [4X[28X1717020393[128X[104X
+    [4X[25Xgap>[125X [27XExec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");[127X[104X
+    [4X[28X1717020393[128X[104X
+    [4X[28X1717020608[128X[104X
+    [4X[25Xgap>[125X [27Xspeedup:=1.0*(1717020608-1717020393)/(1717020393-1717020233);[127X[104X
+    [4X[28X1.34375[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
