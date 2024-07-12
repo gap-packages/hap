@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (HAP commands) - Chapter 14: Fundamental domains for Bianchi groups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap14"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
+<p><a id="X805848868005D528" name="X805848868005D528"></a></p>
+<div class="ChapSects"><a href="chap14.html#X805848868005D528">14 <span class="Heading">Fundamental domains for Bianchi groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X858B1B5D8506FE81">14.1 <span class="Heading">Bianchi groups</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X872D22507F797001">14.2 <span class="Heading">Swan's description of a fundamental domain</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7B9DE54F7ECB7E44">14.3 <span class="Heading">Computing a fundamental domain</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7A489A5D79DA9E5C">14.4 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+
+<h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
+
+<p><a id="X858B1B5D8506FE81" name="X858B1B5D8506FE81"></a></p>
+
+<h4>14.1 <span class="Heading">Bianchi groups</span></h4>
+
+<p>The <em>Bianchi groups</em> are the groups <span class="SimpleMath">G_-d=PSL_2(cal O_-d)</span> where <span class="SimpleMath">d</span> is a square free positive integer and <span class="SimpleMath">cal O_-d</span> is the ring of integers of the imaginary quadratic field <span class="SimpleMath">Q(sqrt-d)</span>. These groups act on <em>upper-half space</em></p>
+
+<p class="pcenter">{\frak h}^3 =\{(z,t) \in \mathbb C\times \mathbb R\ |\ t &gt; 0\} \ . </p>
+
+<p>by the formula</p>
+
+<p class="pcenter">\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \ \left(a(z+tj)+b\right)\left(c(z+tj)+d\right)^{-1}\ </p>
+
+<p>where we use the symbol <span class="SimpleMath">j</span> satisfying <span class="SimpleMath">j^2=-1</span>, <span class="SimpleMath">ij=-ji</span> and write <span class="SimpleMath">z+tj</span> instead of <span class="SimpleMath">(z,t)</span>. Alternatively, the action is given by</p>
+
+<p class="pcenter">\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \
+\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\
+\frac{y}{|cz+d|^2+|c|^2y^2}\, j
+      \ .</p>
+
+<p>We take the boundary <span class="SimpleMath">∂ frak h^3</span> to be the Riemann sphere <span class="SimpleMath">C ∪ ∞</span> and let <span class="SimpleMath">overlinefrak h^3</span> denote the union of <span class="SimpleMath">frak h^3</span> and its boundary. It follows from work of Bianchi and Humbert that the space <span class="SimpleMath">overlinefrak h^3</span> admits the structure of a regular CW-complex (depending on <span class="SimpleMath">d</span>) for which the action of <span class="SimpleMath">G_-d</span> on <span class="SimpleMath">frak h^3</span> extends to a cellular action permuting cells. Moreover, <span class="SimpleMath">G_-d</span> acts transitively on the <span class="SimpleMath">3</span>-cells of <span class="SimpleMath">overlinefrak h^3</span> and each <span class="SimpleMath">3</span>-cell has trivial stabilizer in <span class="SimpleMath">G_-d</span>. Details are provided in Richard Swan's paper <a href="chapBib.html#biBswanB">[Swa71b]</a>.</p>
+
+<p>We refer to the closure of any one of these <span class="SimpleMath">3</span>-cells as a <em>fundamental domain</em> for the action <span class="SimpleMath">G_-d</span>. Cohomology of <span class="SimpleMath">G_-d</span> can be computed from a knowledge of the combinatorial structure of this fundamental domain together with a knowledge of the stabilizer groups of the cells of dimension <span class="SimpleMath">≤ 2</span>.</p>
+
+<p><a id="X872D22507F797001" name="X872D22507F797001"></a></p>
+
+<h4>14.2 <span class="Heading">Swan's description of a fundamental domain</span></h4>
+
+<p>A pair <span class="SimpleMath">(a,b)</span> of elements in <span class="SimpleMath">cal O_-d</span> is said to be <em>unimodular</em> if the ideal generated by <span class="SimpleMath">a,b</span> is the whole ring <span class="SimpleMath">cal O_-d</span> and <span class="SimpleMath">ane 0</span>. A unimodular pair can be represented by a hemisphere in <span class="SimpleMath">overlinefrak h^3</span> with base centred at the point <span class="SimpleMath">b/a ∈ C</span> and of radius <span class="SimpleMath">|a|</span>. The radius is <span class="SimpleMath">≤ 1</span>. Let <span class="SimpleMath">B</span> denote the space obtained by removing all such hemispheres from <span class="SimpleMath">overlinefrak h^3</span>.</p>
+
+<p>When <span class="SimpleMath">d ≡ 3 mod 4</span> let <span class="SimpleMath">F</span> be the subspace of <span class="SimpleMath">overlinefrak h^3</span> consisting of the points <span class="SimpleMath">x+iy+jt</span> with <span class="SimpleMath">-1/2 ≤ x ≤ 1/2</span>, <span class="SimpleMath">0 ≤ y ≤ 1/2</span>, <span class="SimpleMath">t ≥ 0</span>. Otherwise, let <span class="SimpleMath">F</span> be the subspace of <span class="SimpleMath">overlinefrak h^3</span> consisting of the points <span class="SimpleMath">x+iy+jt</span> with <span class="SimpleMath">0 ≤ x ≤ 1</span>, <span class="SimpleMath">0 ≤ y ≤ 1</span>, <span class="SimpleMath">t ≥ 0</span>.</p>
+
+<p>It is explained in <a href="chapBib.html#biBswanB">[Swa71b]</a> that <span class="SimpleMath">F∩ B</span> is a <span class="SimpleMath">3</span>-cell in the above mentioned regular CW-complex structure on <span class="SimpleMath">overlinefrak h^3</span>.</p>
+
+<p><a id="X7B9DE54F7ECB7E44" name="X7B9DE54F7ECB7E44"></a></p>
+
+<h4>14.3 <span class="Heading">Computing a fundamental domain</span></h4>
+
+<p>Explicit fundamental domains for certain values of <span class="SimpleMath">d</span> were calculated by Bianchi in the 1890s and further calculations were made by Swan in 1971 <a href="chapBib.html#biBswanB">[Swa71b]</a>. In the 1970s, building on Swan's work, <span class="URL"><a href="https://www.sciencedirect.com/science/article/pii/S0723086913000042">Robert Riley</a></span> developed a computer program for computing fundamental domains of certain Kleinian groups (including Bianchi groups). In their 2010 PhD theses <span class="URL"><a href="https://theses.hal.science/tel-00526976/en/">Alexander Rahm</a></span> and <span class="URL"><a href="https://wrap.warwick.ac.uk/id/eprint/35128/">M.T. Aranes</a></span> independently developed Pari/GP and Sage software based on Swan's ideas. In 2011 <span class="URL"><a href="https://mathstats.uncg.edu/sites/yasaki/publications/bianchipolytope.pdf">Dan Yasaki</a></span> used a different approach based on Voronoi's theory of perfect forms in his Magma software for fundamental domains of Bianchi groups. <span class="URL"><a href="http://www.normalesup.org/~page/Recherche/Logiciels/logiciels-en.html">Aurel Page</a></span> developed software for fundamental domains of Kleinian groups in his 2010 masters thesis. In 2018 <span class="URL"><a href="https://github.com/schoennenbeck/VMH-DivisionAlgebras">Sebastian Schoennenbeck</a></span> used a more general approach based on perfect forms in his Magma software for computing fundamental domains of Bianchi and other groups. Output from the code of Alexander Rahm and Sebastian Schoennenbeck for certain Bianchi groups has been stored iin <strong class="button">HAP</strong> for use in constructing free resolutions.</p>
+
+<p>More recently a <strong class="button">GAP</strong> implementation of Swan's algorithm has been included in <strong class="button">HAP</strong>. The implementation uses exact computations in <span class="SimpleMath">Q(sqrt-d)</span> and in <span class="SimpleMath">Q(sqrtd)</span>. A bespoke implementation of these two fields is part of the implementation so as to avoid making apparently slower computations with cyclotomic numbers. The account of Swan's algorithm in the thesis of Alexander Rahm was the main reference during the implementation.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>14.4 <span class="Heading">Examples</span></h4>
+
+<p>The fundamental domain <span class="SimpleMath">D=F ∩ B</span> has boundary <span class="SimpleMath">∂ D</span> involving the four vertical quadrilateral <span class="SimpleMath">2</span>-cells contained in the four vertical quadrilateral <span class="SimpleMath">2</span>-cells of <span class="SimpleMath">∂ F</span>. We refer to these as the <em>vertical <span class="SimpleMath">2</span>-cells</em> of <span class="SimpleMath">D</span>. When visualizing <span class="SimpleMath">D</span> we ignore the <span class="SimpleMath">3</span>-cell and the four vertical <span class="SimpleMath">2</span>-cells entirely and visualize only the remaining <span class="SimpleMath">2</span>-cells. These <span class="SimpleMath">2</span>-cells can be viewed as a <span class="SimpleMath">2</span>-dimensional image by projecting them onto the complex plane, or they can be viewed as an interactive <span class="SimpleMath">3</span>-dimensional image.</p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-39</span> can be visualized using the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-39);;OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(OQ);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3DBianchiPolyhedron(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2DBianchiPolyhedron(OQ,D);;</span>
+
+</pre></div>
+
+<p><img src="images/bianchi3D39.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D39.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-22</span> can be visualized using the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-22);;OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(OQ);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3DBianchiPolyhedron(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2DBianchiPolyhedron(OQ,D);;</span>
+
+</pre></div>
+
+<p><img src="images/bianchi3D22.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D22.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-163</span> can be visualized using the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-163);;OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(OQ);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3DBianchiPolyhedron(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2DBianchiPolyhedron(OQ,D);;</span>
+
+</pre></div>
+
+<p><img src="images/bianchi3D163.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
