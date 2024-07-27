@@ -1,3 +1,4 @@
+
 DeclareCategory( "IsHAPRingModIdealObj", IsScalar );
 cat:= CategoryCollections( IsHAPRingModIdealObj );;
 cat:= CategoryCollections( cat );;

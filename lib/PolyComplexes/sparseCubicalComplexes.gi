@@ -584,11 +584,15 @@ fdimsN1:=List([1..flen],i->C!.filteredDimension(i,N+1));
 if N>0 then
 BN:=SparseBoundaryMatrix(C,N);
 
+#Print("Before: ",Sum(List(Filtered(BN!.mat,r->IsBound(r)),Length)),"\n");
+
 for r in  fdimsN do
 if IsBound(BN!.heads) then Unbind(BN!.heads); fi;
 BN!.rows:=r;
 SparseSemiEchelon(BN);
 od;
+
+#Print("After: ",Sum(List(Filtered(BN!.mat,r->IsBound(r)),Length)),"\n");
 
 BNlist:=[];
 for n in [1..BN!.rows] do
@@ -605,6 +609,8 @@ Unbind(BN);
 fi;
 
 BN1:=SparseBoundaryMatrix(C,N+1);
+#Print("Before: ",Sum(List(Filtered(BN1!.mat,r->IsBound(r)),Length)),"\n");
+
 ReverseSparseMat(BN1);
 for r in  fdimsN1 do
 if IsBound(BN1!.heads) then Unbind(BN1!.heads); fi;
@@ -612,6 +618,8 @@ BN1!.rows:=r;
 SparseSemiEchelon(BN1);
 od;
 ReverseSparseMat(BN1);
+
+#Print("After: ",Sum(List(Filtered(BN1!.mat,r->IsBound(r)),Length)),"\n");
 
 BN1list:=[];
 for n in [1..BN1!.rows] do

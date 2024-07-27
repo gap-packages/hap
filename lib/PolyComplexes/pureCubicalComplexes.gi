@@ -62,6 +62,30 @@ end);
 #####################################################################
 #####################################################################
 
+#####################################################################
+#####################################################################
+InstallGlobalFunction(FilteredPureCubicalComplex,
+function(AA,BB)
+# Inputs a binary array AA and a filtration array BB and returns a pure cubical complex.
+local
+        A, B;
+
+A:=StructuralCopy(AA);
+B:=StructuralCopy(BB);
+
+return Objectify(HapFilteredPureCubicalComplex,
+           rec(
+           binaryArray:=A,
+           filtration:=B,
+           properties:=[
+           ["dimension",ArrayDimension(A)],
+           ["arraySize",ArrayDimensions(A)]]
+           ));
+end);
+#####################################################################
+#####################################################################
+
+
 
 #####################################################################
 #####################################################################

@@ -231,6 +231,8 @@ ReadPackageHap( "lib/Congruence/cuspidal.gi");
 ReadPackageHap( "lib/Congruence/quadraticIntegers.gi");
 ReadPackageHap( "lib/Congruence/sl2o.gi");
 ReadPackageHap( "lib/Congruence/volume.gi");
+ReadPackageHap( "lib/Congruence/quadArithmetic.gi");
+ReadPackageHap( "lib/Congruence/bianchi.gi");
 
 
 

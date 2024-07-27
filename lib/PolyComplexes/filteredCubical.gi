@@ -691,7 +691,8 @@ end);
 ################################################
 InstallGlobalFunction(FiltrationTerms,
 function(F,L)
-local C, A, B, D, fn, ln, i, j, l;
+local C, A, B, D, fn, ln, i, j, l, Opp, ArrayValueDim, ArrayValueDim1, ArrayIt, dim, dims,
+dimSet;
 
 C:=1*F!.binaryArray;
 A:=F!.filtration;
@@ -711,12 +712,29 @@ if IsInt(pos) then return pos; fi;
 return l;
 end;
 
+dim:=Dimension(F);
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayValueDim1:=ArrayValueFunctions(dim-1);
+ArrayIt:=ArrayIterate(dim);
+dims:=EvaluateProperty(F,"arraySize");
+dimSet:=List([1..dim],x->[1..dims[x]]);
+
+#######################
+Opp:=function(y)
+local z;
+z:=ArrayValueDim1(B,y{[2..Length(y)]});
+z[y[1]]:= fn(ArrayValueDim(A,y));;
+end;
+########################
+
 B:=0*A;;
-for i in [1..Length(B)] do
-for j in [1..Length(B[1])] do
-B[i][j]:=fn(A[i][j]);
-od;
-od;
+ArrayIt(dimSet,Opp);
+
+#for i in [1..Length(B)] do
+#for j in [1..Length(B[1])] do
+#B[i][j]:=fn(A[i][j]);
+#od;
+#od;
 
 return Objectify(HapFilteredPureCubicalComplex,
                  rec(binaryArray:=C,

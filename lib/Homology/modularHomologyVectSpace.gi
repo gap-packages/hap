@@ -12,7 +12,8 @@ local
 	HomologyAsFpGroup,
         prime,Fld,C;
 
-if IsHapChainMap(X) then C:=X; else C:=Source(X); fi;
+#if IsHapChainMap(X) then C:=X; else C:=Source(X); fi;
+if IsHapChainComplex(X) then C:=X; else C:=Source(X); fi;
 prime:=EvaluateProperty(C,"characteristic");
 
 if prime=-1/2 then Fld:=Field(1); fi;
@@ -98,7 +99,7 @@ Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
 if n <0 then return false; fi;
-
+if Dimension(n)=0 then return Fld^0; fi;
 ########################
 if n=0 then
 BasisKerd1:=IdentityMat(Dimension(n))*One(Fld);

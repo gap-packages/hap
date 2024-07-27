@@ -209,18 +209,22 @@ first:=M!.mat[i][1][1];
    while IsBound(M!.heads[first]) do
    r:=M!.heads[first]; 
    k:=-M!.mat[i][1][2];
-###SparseRowAdd(M,i,r,k);
+###SparseRowAdd(M,i,r,k);  #THIS TAKES ALL THE TIME
 #############################################
 zz:=List(M!.mat[i],a->a[1]);
 for xx in M!.mat[r] do
-pos:=PositionSet(zz,xx[1]);
+pos:=Position(zz,xx[1]);       #THIS IS BETTER ON SMALLER EXAMPLES
+#pos:=PositionSet(zz,xx[1]);   #THIS IS BETTER ON LARGER EXAMPLES
 if  pos=fail then
 Add(M!.mat[i],[xx[1],k*xx[2]]);
 else
 M!.mat[i][pos][2]:=M!.mat[i][pos][2]+k*xx[2];
+if IsZero(M!.mat[i][pos][2]) then M!.mat[i][pos][2]:=0; fi;  #Apr 2024
 fi;
 od;
-M!.mat[i]:=Filtered(M!.mat[i],a->not IsZero(a[2]));
+#M!.mat[i]:=Filtered(M!.mat[i],a->not IsZero(a[2]));
+
+M!.mat[i]:=Filtered(M!.mat[i],a->not a[2]=0);   #Apr 24
 Sort(M!.mat[i]);
 #############################################
    if Length(M!.mat[i])=0 then return true;  fi;

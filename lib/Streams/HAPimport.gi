@@ -19,10 +19,19 @@ function(file)
 ##################### READ FILE TO R ################################
 MakeReadWriteGlobal("HAPTEMPORARYFUNCTION");
 Read(file);
+if IsFunction(HAPTEMPORARYFUNCTION) then
 R:=HAPTEMPORARYFUNCTION();
+else
+Print("YES\n");
+R:=HAPTEMPORARYFUNCTION;
+fi;
 HAPTEMPORARYFUNCTION:=0;
 MakeReadOnlyGlobal("HAPTEMPORARYFUNCTION");
 ##################### FILE READ TO R ################################
+
+if not IsList(R) then return R; fi;
+
+
 
 if not R.type=HapResolution then TryNextMethod(); fi;
 

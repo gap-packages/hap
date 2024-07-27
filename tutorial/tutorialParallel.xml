@@ -1,11 +1,12 @@
 <Chapter><Heading>Parallel computation</Heading>
 <Section><Heading>An embarassingly parallel computation</Heading>
 
-<P/>The following example creates five child processes and uses them simultaneously to compute
-the second integral homology of each of the <M>267</M>
-groups of order <M>64</M>. The final command shows that
-<P/><M>H_2(G,\mathbb Z)=\mathbb Z_2^{15}</M>
-<P/>for the <M>267</M>-th group <M>G</M> in <B>GAP</B>'s library of small groups.
+<P/>The following example creates fifteen child processes and uses them simultaneously to compute
+the second integral homology of each of the <M>2328</M>
+groups of order <M>128</M>. The final command shows that
+<P/><M>H_2(G,\mathbb Z)=\mathbb Z_2^{21}</M>
+<P/>for the <M>2328</M>-th group <M>G</M> in <B>GAP</B>'s library of small groups.
+	 The penulimate command shows that the parallel computation achieves a speedup of 10.4 .
 
 <Example>
 <#Include SYSTEM "tutex/10.1.txt">
@@ -15,7 +16,7 @@ groups of order <M>64</M>. The final command shows that
 six core functions for parallel computation. 
 </Section>
 
-<Section><Heading>An non-embarassingly parallel computation</Heading>
+<Section><Heading>A non-embarassingly parallel computation</Heading>
 
 <P/>The following commands use  core functions to compute the product <M>A=M\times N</M>  of two random matrices by distributing the work over two processors.
 
@@ -23,5 +24,25 @@ six core functions for parallel computation.
 <#Include SYSTEM "tutex/10.2.txt">
 </Example>
 
+<P/>The next commands  compute the product <M>A=M\times N</M>  of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <M>M</M> and <M>N</M> are communicated to all processes) and the computation achieves a speedup of 7.6.
+
+<Example>
+<#Include SYSTEM "tutex/10.3.txt">
+</Example>
+
+
 </Section>
+
+	<Section><Heading>Parallel persistent homology</Heading>
+
+		Section <Ref Sect="secAltPersist"/> illustrates an alternative method of computing the persitent Betti numbers 
+of a filtered pure cubical complex. 
+The method lends itself to parallelisation. 
+			However, the following parallel computation of  persistent Betti numbers achieves only a speedup of <M>1.5</M> due to a significant time spent transferring data structures between processes. On the other hand, the persistent Betti 
+				function could
+				be used to distribute computations over several computers. This might be useful for larger computations that  require significant memory resources. 
+		<Example>
+<#Include SYSTEM "tutex/10.4.txt">
+</Example>
+		</Section>
 </Chapter>

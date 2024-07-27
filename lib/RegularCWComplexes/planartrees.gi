@@ -199,7 +199,7 @@ cnt:=0;
 for n in [1..Length(Arg)] do
 
 T:=Arg[n];
-AppendTo(treedot,    "node [fontname=\"Arial\"];\n");
+AppendTo(treedot,    "node [fontname=\"Arial\",fontsize=34];\n");
 for i in [1..Length(T)] do
 AppendTo(treedot, i+cnt," -> ", T[i]+cnt, " ;\n"   );
 od;

@@ -6,7 +6,7 @@ roottut:=Concatenation(root,"tutorial/");
 L:=[
 "chap1.html", "chap2.html", "chap3.html", "chap4.html", "chap5.html",
 "chap6.html", "chap7.html", "chap8.html", "chap9.html", "chap10.html",
-"chap11.html", 
+"chap11.html","chap12.html","chap13.html","chap14.html", 
 "aboutAbelianCategories.html",    "aboutLinks.html",
 "aboutArithmetic.html",           "aboutMetrics.html",
 "aboutArtinGroups.html",          "aboutModPRings.html",

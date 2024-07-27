@@ -3,13 +3,16 @@
 ###################################################
 ###################################################
 InstallGlobalFunction(PersistentBettiNumbersViaContractions,
-function(FF,N,p)
-local n,F, W, L, E, chnmap, cwmap, map, ln, k, f, homs;
+function(arg)
+local F,N,p,n, W, L, E, chnmap, cwmap, map, ln, k, f, homs,bool;
 
+N:=arg[2];
+p:=arg[3];
+if Length(arg)=4 then bool:=true; else bool:=false; fi;
 if not (IsInt(N) or IsList(N)) then return fail; fi;
 if IsInt(N) then n:=N; fi;
-#F:=ContractedFilteredRegularCWComplex(FF);
-F:=FF;
+
+F:=arg[1];
 ln:=EvaluateProperty(F,"filtration_length");
 W:=[];
 for k in [1..ln] do
@@ -38,6 +41,8 @@ for k in [1..ln-1] do
 f:=Compose( E[k+1][1], Compose(L[k],E[k][2]) );
 Add(homs,HomologyVectorSpace(TensorWithIntegersModP(f,p),n));
 od;
+
+if bool then return homs; fi;
 return LinearHomomorphismsPersistenceMat(homs);
 fi;
 
@@ -57,6 +62,7 @@ Add(homs[n+1],HomologyVectorSpace(TensorWithIntegersModP(f,p),n));
 od;
 od;
 
+if bool then return homs; fi;
 homs:=List(N,n-> LinearHomomorphismsPersistenceMat(homs[n+1]) );
 return homs;
 end);

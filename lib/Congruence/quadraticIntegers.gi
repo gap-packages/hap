@@ -66,6 +66,7 @@ function(x,R)
 local p; 
 
 p:=PartsOfQuadraticInteger(R,x);
+if p=fail then return false; fi;
 
 if IsInt(p[1]) and IsInt(p[2]) then return true;
 else return false;
@@ -116,6 +117,7 @@ p:=PartsOfQuadraticInteger(R,g);
 q:=PartsOfQuadraticInteger(R,g*D);
 Add(A,p); Add(A,q);
 od;
+
 N:=HermiteNormalFormIntegerMat(A); #rows are new basis of I
 Setter(NormOfIdeal)(I,N[1][1]*N[2][2]);
 #if R!.bianchiInteger mod 4 = 1 then D:=2*(D-(1/2)); fi;
@@ -349,8 +351,28 @@ end);
 InstallGlobalFunction(PartsOfQuadraticInteger,
 function(R,x)
 local q,a,b,d,r;
+#This will aslo work for a non-integer.
 
 d:=R!.bianchiInteger;
+
+#a:=RealPart(x);
+#b:=ImaginaryPart(x)/Sqrt(AbsInt(d));
+#if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+#return [a,b];
+
+#################IGNORE EVERYTHING ABOVE 
+
+if IsCycInt(x) then
+q:=Quadratic(x);
+
+a:=q.a/q.d;
+b:=q.b/q.d;
+
+
+if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+return [a,b];
+fi;
+
 r:=Sqrt(d);
 a:=Trace(R,x)/2;
 b:=(x-a)/r;
@@ -360,7 +382,8 @@ if not d mod 4 = 1 then
 else
   return [a-b,2*b];
 fi;
-    
+
+
 end);
 ##########################################################
 ##########################################################

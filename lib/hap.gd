@@ -442,6 +442,7 @@ DeclareGlobalFunction("DesuspensionMtxModule");
 DeclareGlobalFunction("FpG_to_MtxModule");
 
 ## STREAMS ##########################################################
+DeclareGlobalFunction("ChildTransfer");
 DeclareGlobalFunction("ChildProcess");
 DeclareGlobalFunction("ChildClose");
 DeclareGlobalFunction("ChildRestart");
@@ -452,6 +453,8 @@ DeclareGlobalFunction("ChildReadEval");
 DeclareGlobalFunction("NextAvailableChild");
 DeclareGlobalFunction("ParallelList");
 DeclareGlobalFunction("ChildPut");
+DeclareOperation("ChildPutObj",[IsHapResolution,IsString,IsRecord]);
+DeclareOperation("ChildGetObj",[IsString,IsRecord]);
 DeclareGlobalFunction("ChildGet");
 DeclareGlobalFunction("IsAvailableChild");
 DeclareOperation("HAPPrintTo",[IsString,IsObject]);
@@ -517,6 +520,7 @@ DeclareGlobalFunction("ViewPureCubicalComplex");#<Display
 DeclareGlobalFunction("ViewPureComplex");#<Display
 DeclareGlobalFunction("View3dPureComplex");#<Display
 DeclareGlobalFunction("PureCubicalComplex");#doc
+DeclareGlobalFunction("FilteredPureCubicalComplex");
 DeclareGlobalFunction("CubicalComplex");#doc
 DeclareGlobalFunction("PermutahedralComplexToRegularCWComplex");#<RegularCWComplex
 DeclareGlobalFunction("PurePermutahedralComplex");#doc
@@ -830,6 +834,7 @@ DeclareGlobalFunction("RegularCWComplexReordered");
 DeclareOperation("Suspension",[IsHapRegularCWComplex]);
 DeclareGlobalFunction("Suspension_alt");
 DeclareGlobalFunction("PersistentBettiNumbersViaContractions");
+DeclareGlobalFunction("ParallelPersistentBettiNumbers");
 DeclareGlobalFunction("ClassifyingSpaceFiniteGroup");
 
 

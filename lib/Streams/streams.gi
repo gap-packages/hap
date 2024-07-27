@@ -218,6 +218,11 @@ InstallGlobalFunction(ChildPut,
 function(X,Name,s)
 local i,fle,flebatch,fleRemote,AppendTo,PrintTo, tmpdir;
 
+if IsHapResolution(X) then
+ChildPutObj(X,Name,s);
+return true;
+fi;
+
 AppendTo:=HAP_AppendTo;
 PrintTo:=HAP_PrintTo;
 tmpdir := DirectoryTemporary();;
@@ -453,3 +458,287 @@ return final;
 end);
 #####################################################
 #####################################################
+
+########################################################
+########################################################
+InstallGlobalFunction(ChildTransfer,
+function(arg)
+local X,Y,S,T,fle,i;
+
+X:=arg[1]; if IsString(X) then X:=[X]; fi;
+Y:=arg[2]; if IsString(Y) then Y:=[Y]; fi;
+S:=arg[3]; if IsRecord(S) then S:=[S]; fi;
+T:=arg[4]; if IsRecord(T) then T:=[T]; fi;
+
+if Length(X)<>Length(Y) or Length(X)<>Length(S) or Length(X)<>Length(T)
+then Print("Error: input arguments must be lists of equal length.\n");
+return fail;
+fi;
+#Transfer object X[i] on child S[i] to child T[i] and call it Y[i]. 
+#Here X and Y are lists of strings.
+##THIS ONLY WORKS IF THE TWO CHILDREN ARE ON THE SAME MACHINE
+fle:=[];
+#################################
+for i in [1..Length(X)] do
+fle[i]:=Filename(DirectoryTemporary(),"fle");
+ChildCommand(Concatenation("HAPPrintTo(\"",fle[i],"\",",String(X[i]),"\);")  ,S[i]);
+od;
+List(S,s->NextAvailableChild([s]));
+for i in [1..Length(X)] do
+ChildCommand(Concatenation(String(Y[i]),":=HAPRead(\"",fle[i],"\");"), T[i]);
+od;
+#NextAvailableChild([t]);
+#RemoveFile(fle);
+#od;
+#################################
+
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallMethod(ChildPutObj,
+"Put a resolution onto a child process",
+[IsHapResolution,IsString,IsRecord],
+function(X,Y,s)
+local fle;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+
+HAPPrintTo(fle,X);
+ChildCommand(Concatenation(String(Y),":=HAPRead(\"",fle,"\");"), s);
+NextAvailableChild([s]);
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+
+########################################################
+########################################################
+InstallOtherMethod(ChildPutObj,
+"Put a resolution onto a child process",
+[IsHapResolution,IsString,IsList],
+function(X,Y,S)
+local fle,s;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+
+HAPPrintTo(fle,X);
+for s in S do
+ChildCommand(Concatenation(String(Y),":=HAPRead(\"",fle,"\");"), s);
+od;
+for s in S do
+NextAvailableChild([s]);
+od;
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallOtherMethod(ChildPutObj,
+"Put a matrix onto a child process",
+[IsTable,IsString,IsRecord],
+#[IsMatrix,IsString,IsRecord],
+function(X,Y,s)
+local fle;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+
+PrintTo(fle,Concatenation(Y,":="));
+AppendTo(fle,X);
+AppendTo(fle,";");
+ChildCommand(Concatenation("Read(\"",fle,"\");"), s);
+NextAvailableChild([s]);
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallOtherMethod(ChildPutObj,
+"Put a matrix onto a child process",
+[IsTable,IsString,IsList],
+#[IsMatrix,IsString,IsList],
+function(X,Y,S)
+local fle,s;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+
+PrintTo(fle,Concatenation(Y,":="));
+AppendTo(fle,X);
+AppendTo(fle,";");
+for s in S do
+ChildCommand(Concatenation("Read(\"",fle,"\");"), s);
+od;
+for s in S do
+NextAvailableChild([s]);
+od;
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallOtherMethod(ChildPutObj,
+"Put a filtered pure cubical complex onto a child process",
+[IsHapFilteredPureCubicalComplex,IsString,IsRecord],
+function(X,Y,s)
+local fle, cmd, HAP_AA, HAP_BB;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+HAP_AA:=Random([1..1000000]);
+HAP_AA:=Concatenation("HAP_AA",String(HAP_AA));
+HAP_BB:=Concatenation("HAP_BB",String(HAP_AA));
+ChildPutObj(X!.binaryArray,HAP_AA,s);
+ChildPutObj(X!.filtration,HAP_BB,s);
+cmd:=Concatenation(Y,":=FilteredPureCubicalComplex(",HAP_AA,",",HAP_BB,");");
+ChildCommand(cmd,s);
+NextAvailableChild([s]);
+
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+########################################################
+########################################################
+InstallOtherMethod(ChildPutObj,
+"Put a filtered pure cubical complex onto a child process",
+[IsHapFilteredPureCubicalComplex,IsString,IsList],
+function(X,Y,S)
+local fle, cmd, HAP_AA, HAP_BB, s;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+HAP_AA:=Random([1..1000000]);
+HAP_AA:=Concatenation("HAP_AA",String(HAP_AA));
+HAP_BB:=Concatenation("HAP_BB",String(HAP_AA));
+for s in S do
+ChildPutObj(X!.binaryArray,HAP_AA,s);
+ChildPutObj(X!.filtration,HAP_BB,s);
+cmd:=Concatenation(Y,":=FilteredPureCubicalComplex(",HAP_AA,",",HAP_BB,");");
+ChildCommand(cmd,s);
+od;
+
+RemoveFile(fle);
+end);
+########################################################
+########################################################
+
+
+#########################################################
+########################################################
+InstallMethod(ChildGetObj,
+"Get a resolution from a child process",
+[IsString,IsRecord],
+function(X,s)
+local fle,Y;
+
+fle:=Filename(DirectoryTemporary(),"fle");
+
+ChildCommand(Concatenation("HAPPrintTo(\"",fle,"\",",X,");"),s);
+NextAvailableChild([s]);
+Y:=HAPRead(fle);
+RemoveFile(fle);
+return Y;
+end);
+########################################################
+########################################################
+
+##########################################################################
+##########################################################################
+InstallGlobalFunction(ParallelPersistentBettiNumbers,
+function(arg)
+local FF,NN,p,S, F,N,B,terms,children,i,j,s,cmd1,cmd2,cmd3,cmd4,cmd5,
+      cmd6,cmd7,cmd8,cmd, maps,m,T,TT,lst,P;
+FF:=arg[1];
+NN:=arg[2];
+if Length(arg)=3 then p:=2; S:=arg[3]; else p:=arg[3]; S:=arg[4];fi;
+F:=ContractedComplex(FF);
+N:=NN;
+N:=Filtered(N,x->x>0);
+ChildPutObj(F,"F",S);;
+terms:=SSortedList(Flat(F!.filtration));;
+RemoveSet(terms,0);;
+children:=[];;
+
+for i in terms do
+  s:=NextAvailableChild(S);;
+  children[i]:=s;;
+  cmd1:="F:=FilteredPureCubicalComplexToCubicalComplex(F);";
+  cmd2:="F:=FilteredCubicalComplexToFilteredRegularCWComplex(F);";
+  cmd3:=Concatenation("Y",String(i),":=FiltrationTerm(F,",String(i),");");
+  cmd4:=Concatenation("CriticalCells(Y",String(i),");");
+  cmd:=Concatenation(cmd1,cmd2,cmd3,cmd4);
+  ChildCommand(cmd,s);
+od;
+
+for i in [1..Length(terms)-1] do
+  ChildTransfer(Concatenation("Y",String(terms[i+1])),Concatenation("YY",String(terms[i])),children[terms[i+1]],children[terms[i]]);
+od;
+
+for i in [1..Length(terms)-1] do
+  cmd1:="map:=function(n,j); return j; end;\n";
+  cmd2:=Concatenation("cwmap:=Objectify( HapRegularCWMap, rec( source:=Y",String(terms[i]),", target:=YY",String(terms[i]),", mapping:=map));\n");
+  cmd3:="L:=ChainMapOfRegularCWMap(cwmap);\n";
+  cmd4:=Concatenation("Eq:=ChainComplexEquivalenceOfRegularCWComplex(Y",String(terms[i]),");\n");
+  cmd5:=Concatenation("EEq:=ChainComplexEquivalenceOfRegularCWComplex(YY",String(terms[i]),");\n");
+  cmd6:="f:=Compose( EEq[1], Compose(L,Eq[2]) );";
+  cmd7:=Concatenation("ff",String(terms[i]),":=[];");
+  cmd8:=Concatenation("for n in ",String(N),"do\n ff",String(terms[i]),"[n+1]:=HomologyVectorSpace(TensorWithIntegersModP(f,",String(p),"),n);\n od;\n");
+  cmd:=Concatenation(cmd1,cmd2,cmd3,cmd4,cmd5,cmd6,cmd7,cmd8);
+  ChildCommand(cmd,children[terms[i]]);
+if 0 in NN then
+cmd:=Concatenation("B",String(terms[i]),":=Length(Homology(Y",String(terms[i]),",0));");
+ChildCommand(cmd,children[terms[i]]);
+fi;
+od;
+
+maps:=[];
+B:=[];
+for i in terms{[1..Length(terms)-1]} do
+  maps[i]:=ChildGet(Concatenation("ff",String(i)),children[i]);
+  if 0 in NN then
+  B[i]:=ChildGet(Concatenation("B",String(i)),children[i]);
+  fi;
+od;
+
+T:=[];
+for i in terms do
+  T[i]:=i;
+od;
+
+for i in [1..Length(T)] do
+  if not IsBound(T[i]) then T[i]:=T[i-1]; B[i]:=B[i-1];fi;
+od;
+
+TT:=[];
+lst:=1;
+for i in [1..Length(T)-1] do
+  if not T[i]=T[i+1] then TT[i]:=maps[lst]; lst:=i+1;
+else
+  TT[i]:=List(maps[lst],x->IdentityMapping(Source(x)));
+  fi;
+od;
+
+P:=[];;
+for i in N do
+  P[i+1]:=LinearHomomorphismsPersistenceMat(List(TT,t->t[i+1]));
+od;
+if 0 in NN then
+P[1]:=NullMat(Length(B),Length(B));
+for i in [1..Length(B)] do
+for j in [i..Length(B)] do
+  P[1][i][j]:=B[j];
+od;od;
+fi;
+return P;
+end);
+######################################################################
+######################################################################
+

@@ -79,3 +79,56 @@ AppendTo(file, "return rec( type:=TYPE, highest_degree:=HIGHEST_DEGREE, ranks:=R
 
 AppendTo(file,"end;\n");
 end);
+#####################################################################
+
+
+#####################################################################
+InstallOtherMethod(HAPPrintTo,
+      "Method for writing a HAP regular CW-complex to a file",
+        [IsString, IsHapRegularCWComplex],
+function(file,X)
+local Dims;
+
+
+#Create a gap function
+PrintTo(file,"HAPTEMPORARYFUNCTION:=Objectify(HapRegularCWComplex,rec()); \n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.boundaries:=\n");
+AppendTo(file,X!.boundaries);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.coboundaries:=\n");
+AppendTo(file,X!.coboundaries);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.vectorField:=\n");
+AppendTo(file,X!.vectorField);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.inverseVectorField:=\n");
+AppendTo(file,X!.inverseVectorField);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.criticalCells:=\n");
+AppendTo(file,X!.criticalCells);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.orientation:=\n");
+AppendTo(file,X!.orientation);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.properties:=\n");
+AppendTo(file,X!.properties);
+AppendTo(file,";\n\n");
+
+Dims:=List([0..Dimension(X)],n->X!.nrCells(n));
+AppendTo(file,"DIMS:=\n");
+AppendTo(file,Dims);
+AppendTo(file,";\n\n");
+
+AppendTo(file,"HAPTEMPORARYFUNCTION!.nrCells:=");
+AppendTo(file,"function(n); if IsBound(DIMS[n+1]) then return DIMS[n+1]; fi; return 0; end;");
+AppendTo(file,";\n\n");
+
+end);
+#####################################################################

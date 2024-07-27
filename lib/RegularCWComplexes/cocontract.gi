@@ -139,6 +139,10 @@ function(arg)
 local Y,SK,ContractSpace,cells,dim,c,cpos,pos,ppos;
 
 Y:=arg[1];
+
+if Dimension(Y)=0 then                        #
+return List([1..Y!.nrCells(0)],i->[0,i]); fi; #ADDED APRIL 2024
+
 SK:=1+Minimum(arg[2],EvaluateProperty(Y,"dimension")); 
 if (not Y!.criticalCells=fail) and
 EvaluateProperty(Y,"codim")>=SK-1 then

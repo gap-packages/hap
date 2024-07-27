@@ -1091,6 +1091,26 @@ end);
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered pure cubical complex",
+[IsHapFilteredPureCubicalComplex,IsInt,IsBool],
+function(Y,n,bool)
+local W;
+
+if n=0 and (not bool) and EvaluateProperty(Y,"monotonic")=true then
+return HAP_BettiZeroMonotonic(Y);
+fi;
+
+W:=ContractedFilteredPureCubicalComplex(Y);
+W:= FilteredPureCubicalComplexToCubicalComplex(W);
+W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
+return PersistentBettiNumbersAlt(W,n,bool);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered pure cubical complex",
 [IsHapFilteredPureCubicalComplex,IsList],
 function(Y,N)
 local W,P, NN;
@@ -1110,6 +1130,31 @@ return PersistentBettiNumbersAlt(W,N);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered pure cubical complex",
+[IsHapFilteredPureCubicalComplex,IsList,IsBool],
+function(Y,N,bool)
+local W,P, NN;
+
+W:=ContractedFilteredPureCubicalComplex(Y);
+
+if 0 in N and EvaluateProperty(Y,"monotonic")=true and (not bool) then
+P:=[ HAP_BettiZeroMonotonic(Y) ];
+NN:=Filtered(N,i->not i=0);
+Append(P,PersistentBettiNumbersAlt(W,NN));
+return P;
+fi;
+
+W:= FilteredPureCubicalComplexToCubicalComplex(W);
+W:=FilteredCubicalComplexToFilteredRegularCWComplex(W);
+return PersistentBettiNumbersAlt(W,N,bool);
+end);
+##########################################################
+##########################################################
+
 
 
 
@@ -1217,6 +1262,18 @@ end);
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsInt,IsInt,IsBool],
+function(Y,n,prime,bool);
+return PersistentBettiNumbersViaContractions(Y,n,prime,bool);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsInt],
 function(Y,n);
 Print("Using homology over GF(2).\n");
@@ -1229,6 +1286,19 @@ end);
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsInt,IsBool],
+function(Y,n,bool);
+Print("Using homology over GF(2).\n");
+return PersistentBettiNumbersViaContractions(Y,n,2,bool);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsList],
 function(Y,N);
 Print("Using homology over GF(2).\n");
@@ -1236,6 +1306,19 @@ return PersistentBettiNumbersViaContractions(Y,N,2);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(PersistentBettiNumbersAlt,
+"Betti number of a filtered regular CW-complex",
+[IsHapFilteredRegularCWComplex,IsList,IsBool],
+function(Y,N,bool);
+Print("Using homology over GF(2).\n");
+return PersistentBettiNumbersViaContractions(Y,N,2,bool);
+end);
+##########################################################
+##########################################################
+
 
 
 

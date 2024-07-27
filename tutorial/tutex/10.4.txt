@@ -1,0 +1,14 @@
+gap> file:=HapFile("data247.txt");;
+gap> Read(file);;
+gap> F:=ThickeningFiltration(T,25);;
+gap> S:=List([1..15],i->ChildCreate());;
+gap> N:=[0,1,2];;
+gap> Exec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");
+1717160785
+1717161285
+
+gap> Exec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");
+1717161528
+1717162276
+gap> speedup:=1.0*(1717162276-1717161528)/(1717161285-1717160785);
+1.496
