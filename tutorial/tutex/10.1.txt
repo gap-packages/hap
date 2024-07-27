@@ -1,13 +1,17 @@
-gap> Processes:=List([1..5],i->ChildProcess());;
-gap> fn:=function(i);return GroupHomology(SmallGroup(64,i),2);end;;
+gap> Processes:=List([1..15],i->ChildProcess());;
+gap> fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;
 gap> for p in Processes do
 > ChildPut(fn,"fn",p);
 > od;
+gap> Exec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");
+1716105545
+1716105554
+gap> Exec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");
+1716105586
+1716105680
 
-gap> NrSmallGroups(64);
-267
+gap> speedup:=1.0*(680-586)/(554-545);
+10.4444
 
-gap> L:=ParallelList([1..267],"fn",Processes);;
-
-gap> L[267];
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+gap> L[2328];
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]

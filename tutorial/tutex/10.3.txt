@@ -1,0 +1,25 @@
+gap> M:=RandomMat(15000,15000);;
+gap> N:=RandomMat(15000,15000);;
+gap> S:=List([1..15],i->ChildCreate());;
+
+gap> Exec("date +%s");
+1716156583
+gap> ChildPutObj(M,"M",S);
+gap> ChildPutObj(N,"N",S);
+gap> for i in [1..15] do
+> cmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");
+> ChildCommand(cmd,S[i]);
+> od;
+gap> A:=[];;
+gap> for i in [1..15] do
+>  C:=ChildGet("A",S[i]);
+>  Append(A,C);
+> od;
+gap> Exec("date +%s");
+1716157489
+
+gap> AA:=M*N;;Exec("date +%s");
+1716164405
+
+gap> speedup:=1.0*(64405-57489)/(57489-56583);
+7.63355

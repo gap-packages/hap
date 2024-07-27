@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP commands) - Chapter 14: Parallel computation</title>
+<title>GAP (HAP commands) - Chapter 14: Fundamental domains for Bianchi groups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,156 +15,137 @@
 <body class="chap14"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
-<p><a id="X7F571E8F7BBC7514" name="X7F571E8F7BBC7514"></a></p>
-<div class="ChapSects"><a href="chap14.html#X7F571E8F7BBC7514">14 <span class="Heading">Parallel computation</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7EAE286B837D27BA">14.1 <span class="Heading">An embarassingly parallel computation</span></a>
+<p><a id="X805848868005D528" name="X805848868005D528"></a></p>
+<div class="ChapSects"><a href="chap14.html#X805848868005D528">14 <span class="Heading">Fundamental domains for Bianchi groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X858B1B5D8506FE81">14.1 <span class="Heading">Bianchi groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X80F359DD7C54D405">14.2 <span class="Heading">A non-embarassingly parallel computation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X872D22507F797001">14.2 <span class="Heading">Swan's description of a fundamental domain</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X8496786F7FCEC24A">14.3 <span class="Heading">Parallel persistent homology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7B9DE54F7ECB7E44">14.3 <span class="Heading">Computing a fundamental domain</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7A489A5D79DA9E5C">14.4 <span class="Heading">Examples</span></a>
 </span>
 </div>
 </div>
 
-<h3>14 <span class="Heading">Parallel computation</span></h3>
+<h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
 
-<p><a id="X7EAE286B837D27BA" name="X7EAE286B837D27BA"></a></p>
+<p><a id="X858B1B5D8506FE81" name="X858B1B5D8506FE81"></a></p>
 
-<h4>14.1 <span class="Heading">An embarassingly parallel computation</span></h4>
+<h4>14.1 <span class="Heading">Bianchi groups</span></h4>
 
-<p>The following example creates fifteen child processes and uses them simultaneously to compute the second integral homology of each of the <span class="SimpleMath">2328</span> groups of order <span class="SimpleMath">128</span>. The final command shows that</p>
+<p>The <em>Bianchi groups</em> are the groups <span class="SimpleMath">G_-d=PSL_2(cal O_-d)</span> where <span class="SimpleMath">d</span> is a square free positive integer and <span class="SimpleMath">cal O_-d</span> is the ring of integers of the imaginary quadratic field <span class="SimpleMath">Q(sqrt-d)</span>. These groups act on <em>upper-half space</em></p>
 
-<p><span class="SimpleMath">H_2(G, Z)= Z_2^21</span></p>
+<p class="pcenter">{\frak h}^3 =\{(z,t) \in \mathbb C\times \mathbb R\ |\ t &gt; 0\}  </p>
 
-<p>for the <span class="SimpleMath">2328</span>-th group <span class="SimpleMath">G</span> in <strong class="button">GAP</strong>'s library of small groups. The penulimate command shows that the parallel computation achieves a speedup of 10.4 .</p>
+<p>by the formula</p>
 
+<p class="pcenter">\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \ \left(a(z+tj)+b\right)\left(c(z+tj)+d\right)^{-1}\ </p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Processes:=List([1..15],i-&gt;ChildProcess());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in Processes do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildPut(fn,"fn",p);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");</span>
-1716105545
-1716105554
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");</span>
-1716105586
-1716105680
+<p>where we use the symbol <span class="SimpleMath">j</span> satisfying <span class="SimpleMath">j^2=-1</span>, <span class="SimpleMath">ij=-ji</span> and write <span class="SimpleMath">z+tj</span> instead of <span class="SimpleMath">(z,t)</span>. Alternatively, the action is given by</p>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(680-586)/(554-545);</span>
-10.4444
+<p class="pcenter">\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \
+\frac{(az+b)\overline{(cz+d) } + a\overline c t^2}{|cz +d|^2 + |c|^2t^2} \ +\
+\frac{t}{|cz+d|^2+|c|^2t^2}\, j
+      \ .</p>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L[2328];</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+<p>We take the boundary <span class="SimpleMath">∂ frak h^3</span> to be the Riemann sphere <span class="SimpleMath">C ∪ ∞</span> and let <span class="SimpleMath">overlinefrak h^3</span> denote the union of <span class="SimpleMath">frak h^3</span> and its boundary. The action of <span class="SimpleMath">G_-d</span> extends to the boundary. The element <span class="SimpleMath">∞</span> and each element of the number field <span class="SimpleMath">Q(sqrt-d)</span> are thought of as lying in the boundary <span class="SimpleMath">∂ frak h^3</span> and are referred to as <em>cusps</em>. Let <span class="SimpleMath">X</span> denote the union of <span class="SimpleMath">frak h^3</span> with the set of cusps, <span class="SimpleMath">X=frak h^3 ∪ {∞} ∪ Q(sqrt-d)</span>. It follows from work of Bianchi and Humbert that the space <span class="SimpleMath">X</span> admits the structure of a regular CW-complex (depending on <span class="SimpleMath">d</span>) for which the action of <span class="SimpleMath">G_-d</span> on <span class="SimpleMath">frak h^3</span> extends to a cellular action on <span class="SimpleMath">X</span> which permutes cells. Moreover, <span class="SimpleMath">G_-d</span> acts transitively on the <span class="SimpleMath">3</span>-cells of <span class="SimpleMath">X</span> and each <span class="SimpleMath">3</span>-cell has trivial stabilizer in <span class="SimpleMath">G_-d</span>. Details are provided in Richard Swan's paper <a href="chapBib.html#biBswanB">[Swa71b]</a>.</p>
 
-</pre></div>
+<p>We refer to the closure in <span class="SimpleMath">X</span> of any one of these <span class="SimpleMath">3</span>-cells as a <em>fundamental domain</em> for the action <span class="SimpleMath">G_-d</span>. Cohomology of <span class="SimpleMath">G_-d</span> can be computed from a knowledge of the combinatorial structure of this fundamental domain together with a knowledge of the stabilizer groups of the cells of dimension <span class="SimpleMath">≤ 2</span>.</p>
 
-<p>The function <code class="code">ParallelList()</code> is built from <strong class="button">HAP</strong>'s six core functions for parallel computation.</p>
+<p><a id="X872D22507F797001" name="X872D22507F797001"></a></p>
 
-<p><a id="X80F359DD7C54D405" name="X80F359DD7C54D405"></a></p>
+<h4>14.2 <span class="Heading">Swan's description of a fundamental domain</span></h4>
 
-<h4>14.2 <span class="Heading">A non-embarassingly parallel computation</span></h4>
+<p>A pair <span class="SimpleMath">(a,b)</span> of elements in <span class="SimpleMath">cal O_-d</span> is said to be <em>unimodular</em> if the ideal generated by <span class="SimpleMath">a,b</span> is the whole ring <span class="SimpleMath">cal O_-d</span> and <span class="SimpleMath">ane 0</span>. A unimodular pair can be represented by a hemisphere in <span class="SimpleMath">overlinefrak h^3</span> with base centred at the point <span class="SimpleMath">b/a ∈ C</span> and of radius <span class="SimpleMath">|a|</span>. The radius is <span class="SimpleMath">≤ 1</span>. Think of the points in <span class="SimpleMath">frak h^3</span> as lying strictly above <span class="SimpleMath">C</span>. Let <span class="SimpleMath">B</span> denote the space obtained by removing all such hemispheres from <span class="SimpleMath">frak h^3</span>.</p>
 
-<p>The following commands use core functions to compute the product <span class="SimpleMath">A=M× N</span> of two random matrices by distributing the work over two processors.</p>
+<p>When <span class="SimpleMath">d ≡ 3 mod 4</span> let <span class="SimpleMath">F</span> be the subspace of <span class="SimpleMath">overlinefrak h^3</span> consisting of the points <span class="SimpleMath">x+iy+jt</span> with <span class="SimpleMath">-1/2 ≤ x ≤ 1/2</span>, <span class="SimpleMath">-1/4 ≤ y ≤ 1/4</span>, <span class="SimpleMath">t ≥ 0</span>. Otherwise, let <span class="SimpleMath">F</span> be the subspace of <span class="SimpleMath">overlinefrak h^3</span> consisting of the points <span class="SimpleMath">x+iy+jt</span> with <span class="SimpleMath">-1/2 ≤ x ≤ 1/2</span>, <span class="SimpleMath">-1/2 ≤ y ≤ 1/2</span>, <span class="SimpleMath">t ≥ 0</span>.</p>
 
+<p>It is explained in <a href="chapBib.html#biBswanB">[Swa71b]</a> that <span class="SimpleMath">F∩ B</span> is a <span class="SimpleMath">3</span>-cell in the above mentioned regular CW-complex structure on <span class="SimpleMath">X</span>.</p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716109418
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..5000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[5001..10000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716110143
+<p><a id="X7B9DE54F7ECB7E44" name="X7B9DE54F7ECB7E44"></a></p>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716111389
+<h4>14.3 <span class="Heading">Computing a fundamental domain</span></h4>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(111389-110143)/(110143-109418);</span>
-1.71862
+<p>Explicit fundamental domains for certain values of <span class="SimpleMath">d</span> were calculated by Bianchi in the 1890s and further calculations were made by Swan in 1971 <a href="chapBib.html#biBswanB">[Swa71b]</a>. In the 1970s, building on Swan's work, <span class="URL"><a href="https://www.sciencedirect.com/science/article/pii/S0723086913000042">Robert Riley</a></span> developed a computer program for computing fundamental domains of certain Kleinian groups (including Bianchi groups). In their 2010 PhD theses <span class="URL"><a href="https://theses.hal.science/tel-00526976/en/">Alexander Rahm</a></span> and <span class="URL"><a href="https://wrap.warwick.ac.uk/id/eprint/35128/">M.T. Aranes</a></span> independently developed Pari/GP and Sage software based on Swan's ideas. In 2011 <span class="URL"><a href="https://mathstats.uncg.edu/sites/yasaki/publications/bianchipolytope.pdf">Dan Yasaki</a></span> used a different approach based on Voronoi's theory of perfect forms in his Magma software for fundamental domains of Bianchi groups. <span class="URL"><a href="http://www.normalesup.org/~page/Recherche/Logiciels/logiciels-en.html">Aurel Page</a></span> developed software for fundamental domains of Kleinian groups in his 2010 masters thesis. In 2018 <span class="URL"><a href="https://github.com/schoennenbeck/VMH-DivisionAlgebras">Sebastian Schoennenbeck</a></span> used a more general approach based on perfect forms in his Magma software for computing fundamental domains of Bianchi and other groups. Output from the code of Alexander Rahm and Sebastian Schoennenbeck for certain Bianchi groups has been stored iin <strong class="button">HAP</strong> for use in constructing free resolutions.</p>
 
-</pre></div>
+<p>More recently a <strong class="button">GAP</strong> implementation of Swan's algorithm has been included in <strong class="button">HAP</strong>. The implementation uses exact computations in <span class="SimpleMath">Q(sqrt-d)</span> and in <span class="SimpleMath">Q(sqrtd)</span>. A bespoke implementation of these two fields is part of the implementation so as to avoid making apparently slower computations with cyclotomic numbers. The account of Swan's algorithm in the thesis of Alexander Rahm was the main reference during the implementation.</p>
 
-<p>The next commands compute the product <span class="SimpleMath">A=M× N</span> of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> are communicated to all processes) and the computation achieves a speedup of 7.6.</p>
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>14.4 <span class="Heading">Examples</span></h4>
+
+<p>The fundamental domain <span class="SimpleMath">D=overlineF ∩ B</span> (where the overline denotes closure) has boundary <span class="SimpleMath">∂ D</span> involving the four vertical quadrilateral <span class="SimpleMath">2</span>-cells contained in the four vertical quadrilateral <span class="SimpleMath">2</span>-cells of <span class="SimpleMath">∂ F</span>. We refer to these as the <em>vertical <span class="SimpleMath">2</span>-cells</em> of <span class="SimpleMath">D</span>. When visualizing <span class="SimpleMath">D</span> we ignore the <span class="SimpleMath">3</span>-cell and the four vertical <span class="SimpleMath">2</span>-cells entirely and visualize only the remaining <span class="SimpleMath">2</span>-cells. These <span class="SimpleMath">2</span>-cells can be viewed as a <span class="SimpleMath">2</span>-dimensional image by projecting them onto the complex plane, or they can be viewed as an interactive <span class="SimpleMath">3</span>-dimensional image.</p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-39</span> can be visualized using the following commands.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(-39);</span>
+3-dimensional Bianchi polyhedron over OQ( Sqrt(-39) )
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716156583
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(M,"M",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(N,"N",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">cmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildCommand(cmd,S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> C:=ChildGet("A",S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Append(A,C);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716157489
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716164405
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(64405-57489)/(57489-56583);</span>
-7.63355
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2D(D);;</span>
 
 </pre></div>
 
-<p><a id="X8496786F7FCEC24A" name="X8496786F7FCEC24A"></a></p>
+<p><img src="images/bianchi3D39.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D39.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
 
-<h4>14.3 <span class="Heading">Parallel persistent homology</span></h4>
+<p>A <em>cusp vertex</em> of <span class="SimpleMath">D</span> is any vertex of <span class="SimpleMath">D</span> lying in <span class="SimpleMath">C ∪ ∞</span>. In the above visualizations for <span class="SimpleMath">G_-39</span> several cusp vertices in <span class="SimpleMath">C</span> are : in the 2-dimensional visualization they are represented by red dots. Computer calculations show that these cusps lie in precisely three orbits under the action of <span class="SimpleMath">G_-d</span>. Thus, together with the orbit of <span class="SimpleMath">∞</span> there are four distinct orbits of cusps. By the well-known correspondence between cusp orbits and elements of the class group it follows that the class group of <span class="SimpleMath">Q(sqrt-39)</span> is of order <span class="SimpleMath">4</span>.</p>
 
-<p>Section <a href="chap5.html#X7D2CC9CB85DF1BAF"><span class="RefLink">5.8</span></a> illustrates an alternative method of computing the persitent Betti numbers of a filtered pure cubical complex. The method lends itself to parallelisation. However, the following parallel computation of persistent Betti numbers achieves only a speedup of <span class="SimpleMath">1.34</span>. On the other hand, the persistent Betti function can be used to distribute computations over several computers. This might be useful for larger computations that require significant memory resources.</p>
+<p>A fundamental domain for <span class="SimpleMath">G_-22</span> can be visualized using the following commands.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data247.txt");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ThickeningFiltration(T,15);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[0,1,2];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");</span>
-1717020233
-1717020393
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");</span>
-1717020393
-1717020608
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(1717020608-1717020393)/(1717020393-1717020233);</span>
-1.34375
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(-22);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2D(OQ,D);;</span>
 
 </pre></div>
+
+<p><img src="images/bianchi3D22.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D22.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
+
+<p>Two cusps are visible in the visualizations for <span class="SimpleMath">G_-22</span>. They lie in a single orbit. Thus, together with the orbit of <span class="SimpleMath">∞</span>, there are two orbits of cusps for this group.</p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-163</span> can be visualized using the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(-163);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2D(OQ,D);;</span>
+
+</pre></div>
+
+<p><img src="images/bianchi3D163.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
+
+<p>There is just a single orbit of cusps in this example, the orbit containing <span class="SimpleMath">∞</span>, since <span class="SimpleMath">Q(sqrt-163)</span> is a principle ideal domain and hence has trivial class group.</p>
+
+<p>A fundamental domain for <span class="SimpleMath">G_-33</span> is visualized using the following commands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(-33);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(OQ,D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2D(OQ,D);;</span>
+
+</pre></div>
+
+<p><img src="images/bianchi3D33.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D33.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

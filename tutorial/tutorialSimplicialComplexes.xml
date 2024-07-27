@@ -333,12 +333,12 @@ By changing the basis <M>B</M> for <M>H^1(M,\mathbb Z)</M> we obtain the followi
 <Section><Heading>Bockstein homomorphism</Heading>
 	The following example evaluates the Bockstein homomorphism
 	<M>\beta_2\colon H^\ast(X,\mathbb Z_2) \rightarrow H^{\ast +1}(X,\mathbb Z_2)</M>
-		on an additive basis for <M>X=\Sigma(\mathbb RP^2 \times \mathbb RP^2)</M>  the suspension of the direct product of two projective planes.
+		on an additive basis for <M>X=\Sigma^{100}(\mathbb RP^2 \times \mathbb RP^2)</M>  the <M>100</M>-fold suspension of the direct product of two projective planes.
 <Example>
 <#Include SYSTEM "tutex/1.17.txt">
 </Example>
 
-	If only the Bockstein homomorphism is required, and not the cohomology rings structure, then it is better to compute the Bockstein directly from a chain complex. The following computes
+	If only the Bockstein homomorphism is required, and not the cohomology ring structure, then the Bockstein could also be computedirectly from a chain complex. The following computes
 	the Bockstein <M>\beta_2\colon H^2(Y,\mathbb Z_2) \rightarrow H^{3}(Y,\mathbb Z_2)</M> for the direct product <M>Y=K \times 
 		K  \times K \times K</M>  of four copies of the Klein bottle
 			represented as a regular CW-complex with <M>331776</M> cells. The order of the kernel and image of <M>\beta_2</M> are computed.
@@ -350,6 +350,46 @@ By changing the basis <M>B</M> for <M>H^1(M,\mathbb Z)</M> we obtain the followi
 
 </Section>
 
+	<Section><Heading>Diagonal maps on associahedra and other polytopes</Heading>
+		By a <E>diagonal approximation</E> on a regular CW-complex <M>X</M> we mean any cellular map <M>\Delta\colon X\rightarrow X\times X</M> that is homotopic to the diagonal map <M>X\rightarrow X\times X, x\mapsto (x,x)</M> and equal to the diagonal map when restricted to the <M>0</M>-skeleton. Theoretical formulae for diagonal maps on a polytope <M>X</M> can have interesting combinatorial aspects. To illustrate this let us consider, for <M>n=3</M>,
+			the <M>n</M>-dimensional polytope 
+			<M>{\cal K}^{n+2}</M> known as the associahedron. The following commands display the <M>1</M>-skeleton of <M>{\cal K}^{5}</M>.
+
+				<Example>
+<#Include SYSTEM "tutex/1.105.txt">
+				</Example>
+
+					          <P/>
+						  <Alt Only="HTML">&lt;img src="images/assoc.png" align="center" width="250" alt="Associahedron"/></Alt>
+
+					  <P/>
+					The induced chain map
+					<M>C_\ast({\cal K}^{n+2}) \rightarrow
+						C_\ast({\cal K}^{n+2}\times {\cal K}^{n+2})</M> sends the unique free generator <M>e^n_1</M>
+						of <M>C_n({\cal K}^{n+2})</M>
+							to a sum <M>\Delta(e^n_1)</M> of a number of distinct free generators of <M>C_n({\cal K}^{n+2}\times {\cal K}^{n+2})</M>. Let <M>|\Delta(e^n_1)|</M> denote the number of free generators. For <M>n=3</M> the following commands show that <M>|\Delta(e^3_1)|=22</M> 
+								with each free
+								generator
+								 occurring 
+							with coefficient <M>\pm 1</M>.
+
+								 <Example>
+<#Include SYSTEM "tutex/1.106.txt">
+                                </Example>
+					Repeating this example for <M>0\le n\le 6</M> yields the sequence <M>|\Delta(e^n_1)|: 1, 2, 6, 22, 91, 408, 1938, \cdots\ </M>. The <URL><Link>https://oeis.org/A000139</Link><LinkText>On-line Encyclopedia of Integer Sequences</LinkText></URL> explains that this is the beginning of the sequence given by the number of canopy intervals in the Tamari lattices.
+
+					<P/>Repeating the same experiment for the permutahedron, using the command <Code>RegularCWPermutahedron(n)</Code>,
+						yields the sequence <M>|\Delta(e^n_1)|: 1, 2, 8, 50, 432, 4802,\cdots</M>. The <URL><Link>https://oeis.org/A007334</Link><LinkText>On-line Encyclopedia of Integer Sequences</LinkText></URL> explains that this is the beginning of the sequence given by the number of
+							spanning trees in the graph <M>K_{n}/e</M>, which results from contracting an edge <M>e</M> in the complete graph <M>K_{n}</M> on <M>n</M> vertices.
+
+								<P/>Repeating the  experiment for the cube, using the command <Code>RegularCWCube(n)</Code>,
+                                                yields the sequence <M>|\Delta(e^n_1)|: 1, 2, 4, 8, 16, 32,\cdots</M>. 
+                                                
+							<P/>Repeating the  experiment for the simplex, using the command <Code>RegularCWSimplex(n)</Code>,
+                                                yields the sequence <M>|\Delta(e^n_1)|: 1, 2, 3, 4, 5, 6,\cdots</M>.
+
+
+</Section>
 
 <Section><Heading>CW maps and induced homomorphisms</Heading>
 
@@ -393,8 +433,56 @@ The following example constructs a <M>3</M>-dimensional pure regular CW-complex 
 
 </Section>
 
+<Section><Heading>Some limitations to representing spaces as regular CW complexes</Heading>
+		By a <E>classifying space</E> for a group <M>G</M> we mean a path-connected space <M>BG</M> with fundamental group <M>\pi_1(BG)\cong G</M> 
+			isomorphic to <M>G</M> and with higher homotopy groups <M>\pi_n(BG)=0</M> trivial for all <M>n\ge 2</M>. The homology of the group <M>G</M> can be defined to be the homology of <M>BG</M>: 
+			<M>H_n(G,\mathbb Z) = H_n(BG,\mathbb Z)</M>.
+
+			<P/>In principle <M>BG</M>
+				can always be constructed as  a regular CW-complex. For instance, the following extremely slow commands construct the <M>5</M>-skeleton <M>Y^5</M> of a regular CW-classifying space <M>Y=BG</M> for the dihedral group of order <M>16</M> 
+			and use it to calculate 
+		<M>H_1(G,\mathbb Z)=\mathbb Z_2\oplus \mathbb Z_2</M>, 
+		<M>H_2(G,\mathbb Z)=\mathbb Z_2</M>, 
+		<M>H_3(G,\mathbb Z)=\mathbb Z_{2}\oplus \mathbb Z_2 \oplus \mathbb Z_8</M>, 
+		<M>H_4(G,\mathbb Z)=\mathbb Z_{2} \oplus \mathbb Z_2</M>. 
+			  
+			The final command shows that the constructed space  <M>Y^5</M> in this example is a <M>5</M>-dimensional regular CW-complex with a total of <M>15289</M> cells.
+
+<Example>
+<#Include SYSTEM "tutex/1.102.txt">
+</Example>
+
+	The <M>n</M>-skeleton of a regular CW-classifying space of a finite group  necessarily involves a large number of cells. 
+		For the group <M>G=C_2</M> of order two a classifying space can be take to be real projective space 
+		<M>BG=\mathbb RP^\infty</M> with <M>n</M>-skeleton <M>BG^n=\mathbb RP^n</M>.
+		To realize <M>BG^n=\mathbb RP^n</M> as a simplicial complex
+			it is known that one needs at least 6 vertices for <M>n=2</M>, at least 11 vertices for <M>n=3</M> and at least 16 vertices for <M>n=4</M>. One can do a bit better by allowing <M>BG</M> to be a regular CW-complex. For instance, the following creates <M>\mathbb RP^4</M> as a regular CW-complex with 5 vertices. This construction of <M>\mathbb RP^4</M> involves a total of 121 cells. A minimal triangulation of <M>\mathbb RP^4</M> would require 991 simplices.
+
+				<Example>
+<#Include SYSTEM "tutex/1.103.txt">
+</Example>
+
+	The space <M>\mathbb RP^n</M> can be given the structure of a regular CW-complex with <M>n+1</M> vertices. Kuehnel has described a triangulation of 
+	<M>\mathbb RP^n</M> with <M>2^{n+1}-1</M> vertices. 
+
+	<P/>The above examples suggest that it is 
+		inefficient/impractical to attempt to 
+		compute 
+		the <M>n</M>-th homology of a group <M>G</M> by first constructing a regular CW-complex corresponding for the <M>n+1</M> of a classifying space <M>BG</M>, even for quite small groups <M>G</M>, since such spaces seem to require a large number of cells in each dimension.  On the other hand, by dropping the  requirement that <M>BG</M> must be regular we can obtain much smaller CW-complexes. The following example constructs  <M>\mathbb RP^9</M> as a regular CW-complex and then shows that it  can be given a non-regular CW-structure with just one cell in each dimension. 
+
+			                                <Example>
+<#Include SYSTEM "tutex/1.104.txt">
+</Example>
+
+	It is of course well-known that
+                <M>\mathbb RP^\infty</M> admits a theoretically described
+                        CW-structure with just one cell in each dimension. The
+                        question is: how best to represent this on a computer?
+</Section>
+
+
 <Section><Heading>Equivariant CW complexes</Heading>
-The above representations of spaces as simplicial complexes and regular CW complexes have their limitations. 
+As just explained, the  representations of spaces as simplicial complexes and regular CW complexes have their limitations. 
 One limitation is that the
  number of cells needed to describe a space can be unnecessarily large. A minimal simplicial complex structure for the torus has <M>7</M> vertices, <M>21</M> edges and <M>14</M> triangles. A minimal regular CW-complex structure for the torus has <M>4</M> vertices, <M>8</M> edges and <M>4</M> cells of dimension <M>2</M>. By using simplicial sets (which are like simplicial complexes except that 
 they allow the  freedom to attach simplicial cells by gluing their
@@ -440,6 +528,29 @@ corresponding to the tessellation of <M>\mathbb R^3</M> by a fundamental domain 
 <Example>
 <#Include SYSTEM "tutex/1.13.txt">
 </Example>
+
+	The fundamental domain for the action of <M>G</M> in the above example
+		is constructed to be the Dirichlet-Voronoi region in <M>\mathbb R^3</M> whose points are closer to the origin <M>v=(0,0,0)</M> than to any other point <M>v^g</M> in the orbit of the origin under the action of <M>G</M>. This fundamental domain
+			can be visualized as follows.
+
+	<Example>
+<#Include SYSTEM "tutex/1.13a.txt">
+</Example>
+
+<P/><Alt Only="HTML">&lt;img src="images/fdspace9.png" align="center" width="300" alt="fundamental domain"/></Alt>
+
+<P/>	Other fundamental domains for the same group action can be obtained by choosing some other starting vector  <M>v</M>. For example:
+
+	<Example>
+<#Include SYSTEM "tutex/1.13b.txt">
+</Example>
+
+
+
+		        <P/><Alt Only="HTML">&lt;img src="images/fdspace9-2.png" align="center" width="300" alt="fundamental domain"/></Alt>
+                <Alt Only="HTML">&lt;img src="images/fdspace9-3.png" align="center" width="300" alt="fundamental domain"/></Alt>
+
+
 
 </Section>
 

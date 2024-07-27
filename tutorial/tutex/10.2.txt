@@ -1,16 +1,24 @@
-gap> M:=RandomMat(2000,2000);; 
-gap> N:=RandomMat(2000,2000);;
-
+gap> M:=RandomMat(10000,10000);;
+gap> N:=RandomMat(10000,10000);;
+gap> 
 gap> s:=ChildProcess();;
-
-gap> Mtop:=M{[1..1000]};; 
-gap> Mbottom:=M{[1001..2000]};;
-
-gap> ChildPut(Mtop,"Mtop",s); 
+gap> 
+gap> Exec("date +%s");
+1716109418
+gap> Mtop:=M{[1..5000]};;
+gap> Mbottom:=M{[5001..10000]};;
+gap> ChildPut(Mtop,"Mtop",s);
 gap> ChildPut(N,"N",s);
 gap> NextAvailableChild([s]);;
-
-gap> ChildCommand("Atop:=Mtop*N;;",s);; 
-gap> Abottom:=Mbottom*N;; 
+gap> ChildCommand("Atop:=Mtop*N;;",s);;
+gap> Abottom:=Mbottom*N;;
 gap> A:=ChildGet("Atop",s);;
-gap> Append(A,Abottom);;                
+gap> Append(A,Abottom);;
+gap> Exec("date +%s");
+1716110143
+
+gap> AA:=M*N;;Exec("date +%s");
+1716111389
+
+gap> speedup:=1.0*(111389-110143)/(110143-109418);
+1.71862
