@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2006
-RT:=0;
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionPrimePowerGroup,
@@ -392,7 +392,7 @@ end;
 #####################################################################
 SolutionMatBoundaryMatrices:=function(m,vec)
 local i,ncols,sem, vno, z,x, row, sol;
-RT:=RT-Runtime();
+
 ncols := Length(vec);
 z := zero;
 sol := ListWithIdenticalEntries(EchelonMatrices[m][2],z);
@@ -409,7 +409,7 @@ AddRowVector(vec, sem.vectors[vno], -x);
        fi;
     od;
        if IsZero(vec) then
-RT:=RT+Runtime();
+
       return sol;
         fi;
 
