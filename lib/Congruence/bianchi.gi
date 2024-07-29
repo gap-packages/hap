@@ -1133,10 +1133,16 @@ N:=5;
 BI:=OQ!.bianchiInteger;
 ABI:=AbsInt(BI);
 ###############################
-HAPRECORD:=[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 5, 20 ], [ 6, 24 ], [ 7, 1 ], [  10, 40 ], [ 11, 1 ], [ 13, 52 ], [ 14, 56 ], [ 15, 16 ], [ 17, 68 ], [ 19, 4  ], [ 21, 84 ], [ 22, 88 ], [ 23, 12 ], [ 26, 104 ], [ 29, 169 ], [ 30, 121 ], [ 31, 16 ], [33,132], [ 34, 0 ], [ 35, 35 ], [ 37, 0 ], [ 38, 0 ], [ 39, 39 ], [ 41, 0 ], [ 42, 0 ], [ 43, 9 ], [ 46, 0 ], [ 47, 24 ], [ 51, 51 ], [ 53, 0 ], [ 55, 56 ], [ 57, 0 ], [ 59, 27 ], [ 67, 16 ], [ 71, 48 ], [ 79, 40 ],  [ 83, 33 ], [ 87, 87 ], [ 91, 91 ], [ 95, 95 ], [ 103, 56 ], [ 107, 36 ], [ 111, 111 ], [ 115, 115 ], [ 119, 0 ], [ 123, 123 ], [ 127, 64 ], [ 131, 45 ],  [ 139, 55 ], [ 143, 0 ], [ 151, 80 ], [163, 53 ] ];
 
-#HAPRECORD:=[];  #Uncomment this line to calculate 
-                 #HAPRECORD entries from scratch.
+HAPRECORD:=[
+[ 1, 1 ],[ 2, 1 ],[ 3, 1 ],[ 5, 20 ],[ 6, 24 ],[ 7, 1 ],[ 10, 40 ],[ 11, 1 ],[ 13, 52 ],[ 14, 56 ],[ 15, 15 ],[ 17, 68 ],[ 19, 4 ],[ 21, 84 ],[ 22, 88 ],[ 23, 12 ],[ 26, 104 ],[ 29, 169 ],[ 30, 121 ],[ 31, 16 ],[ 33, 132 ],[ 34, 9 ],[ 35, 35 ],[ 37, 25 ],[ 38, 4 ],[ 39, 39 ],[ 41, 25 ],[ 42, 25 ],[ 43, 9 ],[ 46, 25 ],[ 47, 24 ],[ 51, 51 ],[ 53, 25 ],[ 55, 56 ],[ 57, 49 ],[ 59, 27 ],[ 67, 16 ],[ 71, 48 ],[ 79, 40 ],[ 83, 33 ],[ 87, 87 ],[ 91, 91 ],[ 95, 95 ],[ 103, 56 ],[ 107, 36 ],[ 111, 111 ],[ 115, 115 ],[ 119, 25 ],[ 123, 123 ],[ 127, 64 ],[ 131, 45 ],[ 139, 55 ],[ 143, 9 ],[ 151, 80 ],[ 155, 155 ],[ 163, 53 ],
+[ 179, 155]
+];;
+                 #HAPRECORD contains some precomuted [d,r] for which Swan's
+                 #criterion is satisfied for the given norm r.
+#HAPRECORD:=[];  #Uncomment this line to calculate HAPRECORD entries from 
+                 #scratch. The value [179,155] was only partialy checked (up 
+                 #to norm r=5000).
 
 if Length(arg)=2 then pos:=arg[2];
 else
@@ -1158,9 +1164,9 @@ while bool do
 N:=N+1;
 #if NRMS[N]>ABI+30 then NRMS[N]:=0; break; fi; #REMEBER TO DELETE THIS
 #
-#if Length(arg)>1 then
+if Length(arg)>1 then
 Print("Adding hemispheres of squared radius ",1/NRMS[N],"\n");
-#fi;
+fi;
 
 L:=UnimodularPairs(OQ,NRMS[N],true,L);
 #L:=QQNeighbourhoodOfUnimodularPairs(OQ,L);
@@ -1183,15 +1189,9 @@ L:=K[1]; K:=K[2];
 if pos=infinity then 
 A:=BianchiPolyhedron(OQ!.bianchiInteger,L);
 A:=SwanBianchiCriterion(A);
-if Length(A)=0 then bool:=false; return [L,K]; fi;
-#    if A[1]=false then Print("YES\n"); return CoverOfUnimodularPairs(OQ,N+1,true); 
-#else
-#    A:=List(A,x->HAPNorm(OQ,x[1]));
-#    A:=Minimum(A);
-#    return CoverOfUnimodularPairs(OQ,A);
-#fi;
-N:=N+1;
-return CoverOfUnimodularPairs(OQ,N,true);
+if not Length(A)=0 then 
+return CoverOfUnimodularPairs(OQ,N+1,true);
+fi;
 fi;
 ##################################################
 
