@@ -17,20 +17,15 @@ local i,x,k,combin,n,j,r,m,vect,c,
     RotSubGroupList,
     Dimension,SearchOrbit,pos,StabilizerOfPoint,PseudoBoundary,
     RotSubGroup,
-    Elts,Boundary,Stabilizer,DVF,DVFRec,Homotopy,rmult,FinalHomotopy,
-    BB,Bool,vol,cent,orb,VOL,trns,tmp,u,v,indx;
+    Elts,Boundary,Stabilizer,DVF,DVFRec,Homotopy,rmult,FinalHomotopy;
     
     B:=basis[1];
     c:=basis[2];
-    BB:=basis[3];
     vect:=c-Sum(B)/2;
 
     vect:=0*vect;
 
     G:=AffineCrystGroup(gens);
-    if not IsStandardAffineCrystGroup(G) then 
-    Print("Warning: G is not a standard affine space group.\n");
-    fi;
     T:=TranslationSubGroup(G);
     Bt:=T!.TranslationBasis;
     S:=RightTransversal(G,T);
@@ -38,36 +33,6 @@ local i,x,k,combin,n,j,r,m,vect,c,
     Elts:=[One(G)];
     Append(Elts,gens);
     lnth:=1000;
-
-#########################################ADDED OCTOBER 2024 
-vol:=List(B,b->b*b);
-vol:=Product(vol);
-vol:=Sqrt(vol);
-VOL:=AbsoluteValue(Determinant(BB));
-cent:=Sum(B)*(1/2);
-orb:=OrbitStabilizerInUnitCubeOnRight(G,VectorModOne(cent)).orbit;
-Bool:=Length(orb)*vol=VOL;
-if Bool then 
-
-trns:=[0*vect];
-else
-indx:=List([1..Length(B)],j->Sqrt( (BB[j]*BB[j])/(B[j]*B[j]) )  );
-indx:=indx-1;
-indx:=List(indx,a->[0..a]);
-indx:=Cartesian(indx);
-trns:=[];
-for x in indx do
-   v:=0*vect;
-   for i in [1..Length(x)] do
-      v:=v + x[i]*B[i];
-   od;
-   Add(trns,v);
-od;
-trns:=SSortedList(trns);
-
-fi;
-#########################################ADDITION DONE
-
 
     if check=1 then    # B is the G-full basis
 
@@ -90,17 +55,6 @@ fi;
                 cells:=Cartesian(w);
                 Append(kcells,cells*B+vect);
             od;
-
-######################################Added October 2024
-tmp:=[];
-for u in kcells do
-for v in trns do
-Add(tmp, u+v);
-od;
-od;
-kcells:=tmp;
-######################################Addition done
-
             
             ###  search for k-orbits 
             Add(L[k+1],kcells[1]);
@@ -116,7 +70,6 @@ kcells:=tmp;
                 if r=Length(L[k+1]) then Add(L[k+1],kcells[i]);fi;
             od;
         od;
-
 
 # Cubical subdividing the fundamental region:
 # slice the fundamental cell into 2^n parts to get a 
@@ -142,7 +95,6 @@ kcells:=tmp;
             cells:=Cartesian(w);
             Append(kcells,cells*B+vect);
             od;
-
 
             ###  search for k-orbits 
             Add(L[k+1],kcells[1]);
@@ -445,7 +397,6 @@ kcells:=tmp;
     ## 
     StabilizerOfPoint:=function(g)
     local H,stbgens,i,h,p;
-    #return OrbitStabilizerInUnitCubeOnRight(G,VectorModOne(g)).stabilizer;
         g:=Flat(g);
         Add(g,1);
         stbgens:=[];
@@ -668,7 +619,6 @@ kcells:=tmp;
             stabilizer:=Stabilizer,
             action:=Action,
         RotSubGroup:=RotSubGroup,
-        Bool:=Bool,      #####ADDED OCTOBER 2024
             properties:=
             [["length",100],
              ["characteristic",0],
@@ -690,12 +640,8 @@ end);
 ##             
 ##
 InstallGlobalFunction(ResolutionCubicalCrystGroup,
-function(GG,n)
-local G,gens,B,C,R,Gram, pos, Homotopy,Cnew;
- 
-    G:=StandardAffineCrystGroup(GG); #Added October 2024. Ideally we 
-                                     #should modify code so that this 
-                                     #conversion is avoided.
+function(G,n)
+local gens,B,C,R,Gram, pos, Homotopy,Cnew;
     Gram:=GramianOfAverageScalarProductFromFiniteMatrixGroup(
                                                     PointGroup(G));
     if Gram=IdentityMat(DimensionOfMatrixGroup(PointGroup(G))) then
@@ -728,7 +674,6 @@ local G,gens,B,C,R,Gram, pos, Homotopy,Cnew;
 
             Cnew!.homotopy:=Homotopy;
             R:=FreeZGResolution(Cnew,n);
-            R!.Bool:=C!.Bool; #Added October 2024
             return R;
         else 
             return fail;

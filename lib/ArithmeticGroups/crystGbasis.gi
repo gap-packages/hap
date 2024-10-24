@@ -103,6 +103,7 @@ local
         for i in [1..Length(L)] do
             B_delta:=CrystGFullBasis(G,[L[i],Sum(L[i])/2]);
             if IsList(B_delta) then 
+                Add(B_delta,L[i]);   #Added October 2024
                 return B_delta;
             fi;
         od;
@@ -133,7 +134,7 @@ local
                         j:=j+1;
                     od;
                     if j=d[i]+1 then 
-                        return [B_delta,ctr];
+                        return [B_delta,ctr]; 
                     fi;
 
 #test if center of fundamental domain is origin
@@ -147,7 +148,7 @@ local
                         j:=j+1;
                     od;
                     if j=d[i]+1 then 
-                        return [B_delta,ctr];
+                        return [B_delta,ctr];  
                     fi;
                 fi;
             od;

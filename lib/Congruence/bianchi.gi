@@ -90,6 +90,7 @@ local Q, nrma,BI, rat, irrat, N, L, U, b, x,s1, t1, s2, t2;
 #being represented by a circular disk :w!
 #in the complex plane.
 
+
 BI:=OQ!.bianchiInteger;
 
 Q:=HAPQuadratic(a);
@@ -315,6 +316,8 @@ cb[2]:=cb[2]*S;
 u:=cb-ca;
 u:=u{[1,2]};
 w:=[u[2],-u[1]];
+
+if u=[0,0] then return [ca{[1,2]},w]; fi;
 
 ra2:=ca[3];
 rb2:=cb[3];
@@ -1129,7 +1132,7 @@ local OQ,N, NRMS, L, LL, K, Y, bool, BI, A,
 ABI, LST, UU, u, w, a, b, I, i, pos, HAPRECORD;
 
 OQ:=arg[1];
-N:=5;
+N:=1;
 BI:=OQ!.bianchiInteger;
 ABI:=AbsInt(BI);
 ###############################
@@ -1162,14 +1165,11 @@ L:=[];
 
 while bool do
 N:=N+1;
-#if NRMS[N]>ABI+30 then NRMS[N]:=0; break; fi; #REMEBER TO DELETE THIS
-#
 if Length(arg)>1 then
 Print("Adding hemispheres of squared radius ",1/NRMS[N],"\n");
 fi;
 
 L:=UnimodularPairs(OQ,NRMS[N],true,L);
-#L:=QQNeighbourhoodOfUnimodularPairs(OQ,L);
 if pos=infinity then
 K:=SimplicialComplexOfUnimodularPairs(OQ,
                  QNeighbourhoodOfUnimodularPairs(OQ,L));
@@ -1180,7 +1180,6 @@ fi;
 if NRMS[N]>=pos then break; fi;
 od;
 
-#Add(HAPRECORD,[ABI,NRMS[N]]);   #REMEBER TO REMOVE THIS
 
 K:=UnimodularPairsReduced(OQ,L); 
 L:=K[1]; K:=K[2];

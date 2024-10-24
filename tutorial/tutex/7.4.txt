@@ -1,0 +1,18 @@
+gap> G:=SpaceGroupIT(3,103);
+SpaceGroupOnRightIT(3,103,'1')
+gap> R:=ResolutionCubicalCrystGroup(G,100);
+Resolution of length 100 in characteristic 0 for &lt;matrix group with 6 generators> . 
+
+gap> D:=List([0..99],n->Cohomology(HomToIntegersModP(R,2),n));;
+gap> PoincareSeries(D,99);
+(x_1^3+2*x_1^2+2*x_1+1)/(-x_1+1)
+
+
+#Torsion subgroups are cyclic
+gap> B:=CrystGFullBasis(G);;
+gap> C:=CrystGcomplex(GeneratorsOfGroup(G),B,1);;
+gap> for n in [0..3] do
+> for k in [1..C!.dimension(n)] do
+> Print(StructureDescription(C!.stabilizer(n,k)),"  ");
+> od;od;
+C4  C2  C4  1  1  C4  C2  C4  1  1  1  1  

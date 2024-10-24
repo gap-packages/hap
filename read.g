@@ -106,6 +106,12 @@ ReadPackageHap( "lib/Polymake/cryst.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
+################# XMOD COMMANDS ############################################
+if IsPackageMarkedForLoading("xmod","0.0") then
+ReadPackageHap( "lib/SimplicialGroups/identity.gi");
+fi;
+################# XMOD COMMANDS DONE #######################################
+
 ReadPackageHap( "lib/TitlePage/makeHapMan.gi");
 
 ################# OBJECTIFICATIONS ###############################
@@ -151,7 +157,7 @@ ReadPackageHap( "lib/FpGmodules/homs.gi");
 ReadPackageHap( "lib/NonabelianTensor/tensorSquare.gi");
 ReadPackageHap( "lib/NonabelianTensor/tensorPair.gi");
 ReadPackageHap( "lib/NonabelianTensor/tensorPairInf.gi");
-#ReadPackageHap( "lib/NonabelianTensor/tensorPair.alt");
+ReadPackageHap( "lib/NonabelianTensor/tensorPair.alt");
 ReadPackageHap( "lib/NonabelianTensor/exteriorProduct.gi");
 ReadPackageHap( "lib/NonabelianTensor/SBG.gi");
 ReadPackageHap( "lib/NonabelianTensor/symmetricSquare.gi");
@@ -456,7 +462,7 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackageHap("lib/ArithmeticGroups/cplGTree.gi");
  ReadPackageHap("lib/ArithmeticGroups/resGTree.gi");
  ReadPackageHap("lib/ArithmeticGroups/sl2zres.gi");
-#ReadPackageHap("lib/ArithmeticGroups/sl2zresalt.gi");
+ReadPackageHap("lib/ArithmeticGroups/sl2zresalt.gi");
 # ReadPackageHap("lib/ArithmeticGroups/resDirectProd.gi");
 ReadPackageHap("lib/ArithmeticGroups/barycentric.gi");
 ######################################################

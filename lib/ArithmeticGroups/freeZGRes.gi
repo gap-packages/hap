@@ -88,7 +88,7 @@ local
             return res;
         fi;
 
-        res:=ResolutionFiniteGroup(Q,n);
+        res:=ResolutionFiniteGroup(Q,n); 
         res!.group:=G;
         res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
         return res;
