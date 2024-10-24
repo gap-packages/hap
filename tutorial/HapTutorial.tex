@@ -1177,7 +1177,8 @@ choosing some other starting vector $v$. For example:
   }
 
  
-\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\logpage{[ 1, 19, 0 ]}
+\section{\textcolor{Chapter }{Orbifolds and classifying spaces}}\label{secOrbifolds}
+\logpage{[ 1, 19, 0 ]}
 \hyperdef{L}{X86881717878ADCD6}{}
 {
  If a discrete group $G$ acts on Euclidean space or hyperbolic space with finite stabilizer groups then
@@ -5764,8 +5765,8 @@ the Lie algebra $L$ is not isomorphic to any central quotient $E/Z(E)$.
  }
 
  
-\chapter{\textcolor{Chapter }{Cohomology rings and Steenrod operations for finite groups}}\logpage{[ 8, 0, 0 ]}
-\hyperdef{L}{X7EA6128E8703A13E}{}
+\chapter{\textcolor{Chapter }{Cohomology rings and Steenrod operations for groups}}\logpage{[ 8, 0, 0 ]}
+\hyperdef{L}{X7ED29A58858AAAF2}{}
 {
  
 \section{\textcolor{Chapter }{Mod\texttt{\symbol{45}}$p$ cohomology rings of finite groups}}\logpage{[ 8, 1, 0 ]}
@@ -6071,6 +6072,139 @@ for $p\ge 3$ are not implemented as no efficient method of implementation is kno
   [ 0*v.1, 0*v.1, v.5, 0*v.1, (Z(3))*v.7+v.8+(Z(3))*v.9 ]
   
 \end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Mod\texttt{\symbol{45}}$p$ cohomology rings of crystallographic groups}}\logpage{[ 8, 6, 0 ]}
+\hyperdef{L}{X7D2D26C0784A0E14}{}
+{
+ Mod $p$ cohomology ring computations can be attempted for any group $G$ for which we can compute sufficiently many terms of a free $ZG$\texttt{\symbol{45}}resolution with contracting homotopy. The contracting
+homotopy is not needed if only the dimensions of the cohomology in each degree
+are sought. Crystallographic groups are one class of infinite groups where
+such computations can be attempted. 
+\subsection{\textcolor{Chapter }{Poincare series for crystallographic groups}}\logpage{[ 8, 6, 1 ]}
+\hyperdef{L}{X81C107C07CF02F0E}{}
+{
+ Consider the space group $G=SpaceGroupOnRightIT(3,226,'1')$. The following computation computes the infinite series 
+
+ $(-2x^4+2x^2+1)/(-x^5+2x^4-x^3+x^2-2x+1)$ 
+
+in which the coefficient of the monomial $x^n$ is guaranteed to equal the dimension of the vector space $H^n(G,\mathbb Z_2)$ in degrees $n\le 14$. One would need to involve a theoretical argument to establish that this
+equality in fact holds in every degree $n\ge 0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SpaceGroupIT(3,226);|
+  SpaceGroupOnRightIT(3,226,'1')
+  !gapprompt@gap>| !gapinput@R:=ResolutionSpaceGroup(G,15);|
+  Resolution of length 15 in characteristic 0 for <matrix group with 
+  8 generators> . 
+  No contracting homotopy available. 
+  
+  !gapprompt@gap>| !gapinput@D:=List([0..14],n->Cohomology(HomToIntegersModP(R,2),n));|
+  [ 1, 2, 5, 9, 11, 15, 20, 23, 28, 34, 38, 44, 51, 56, 63 ]
+  
+  !gapprompt@gap>| !gapinput@PoincareSeries(D,14);|
+  (-2*x_1^4+2*x_1^2+1)/(-x_1^5+2*x_1^4-x_1^3+x_1^2-2*x_1+1)
+  
+  
+\end{Verbatim}
+ Consider the space group $SpaceGroupOnRightIT(3,103,'1')$. The following computation uses a different construction of a free resolution
+to compute the infinite series 
+
+ $ (x^3+2x^2+2x+1)/(-x+1) $ 
+
+in which the coefficient of the monomial $x^n$ is guaranteed to equal the dimension of the vector space $H^n(G,\mathbb Z_2)$ in degrees $n\le 99$. The final commands show that $G$ acts on a (cubical) cellular decomposition of $\mathbb R^3$ with cell ctabilizers being either trivial or cyclic of order $2$ or $4$. From this extra calculation it follows that the cohomology is periodic in
+degrees greater than $3$ and that the Poincare series is correct in every degree $n \ge 0$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|G:=SpaceGroupIT(3,103);A
+  SpaceGroupOnRightIT(3,103,'1')
+  @gapprompt|gap>A @gapinput|R:=ResolutionCubicalCrystGroup(G,100);A
+  Resolution of length 100 in characteristic 0 for <matrix group with 6 generators> . 
+  
+  @gapprompt|gap>A @gapinput|D:=List([0..99],n->Cohomology(HomToIntegersModP(R,2),n));;A
+  @gapprompt|gap>A @gapinput|PoincareSeries(D,99);A
+  (x_1^3+2*x_1^2+2*x_1+1)/(-x_1+1)
+  
+  
+  #Torsion subgroups are cyclic
+  @gapprompt|gap>A @gapinput|B:=CrystGFullBasis(G);;A
+  @gapprompt|gap>A @gapinput|C:=CrystGcomplex(GeneratorsOfGroup(G),B,1);;A
+  @gapprompt|gap>A @gapinput|for n in [0..3] doA
+  @gapprompt|>A @gapinput|for k in [1..C!.dimension(n)] doA
+  @gapprompt|>A @gapinput|Print(StructureDescription(C!.stabilizer(n,k)),"  ");A
+  @gapprompt|>A @gapinput|od;od;A
+  C4  C2  C4  1  1  C4  C2  C4  1  1  1  1  
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Mod $2$ cohomology rings of $3$\texttt{\symbol{45}}dimensional crystallographic groups}}\logpage{[ 8, 6, 2 ]}
+\hyperdef{L}{X7F5C242F7BC938A5}{}
+{
+ Computations in the \emph{integral} cohomology of a crystallographic group are illustrated in Section \ref{secOrbifolds}. The commands underlying that illustration could be further developed and
+adapted to mod $p$ cohomology. Indeed, the authors of the paper \cite{liuye} have developed commands for accessing the mod $2$ cohomology of $3$\texttt{\symbol{45}}dimensional crystallographic groups with the aim of
+establishing a connection between these rings and the lattice structure of
+crystals with space group symmetry. Their code is available at the github
+repository \cite{liuyegithub}. In particular, their code contains the command 
+\begin{itemize}
+\item  \texttt{SpaceGroupCohomologyRingGapInterface(ITC)}
+\end{itemize}
+ that inputs an integer in the range $1\le ITC\le 230$ corresponding to the numbering of a $3$\texttt{\symbol{45}}dimensional space group $G$ in the International Table for Crystallography. This command returns 
+\begin{itemize}
+\item  a presentation for the mod $2$ cohomology ring $H^\ast(G,\mathbb Z_2)$. The presentation is guaranteed to be correct for low degree cohomology. In
+cases where the cohomology is periodic in degrees $ \gt 4$ (which can be tested using \texttt{IsPeriodicSpaceGroup(G)}) the presentation is guaranteed correct in all degrees. In
+non\texttt{\symbol{45}}periodic cases some additional mathematical argument
+needs to be provided to be mathematically sure that the presentation is
+correct in all degrees. 
+\item  the Lieb\texttt{\symbol{45}}Schultz\texttt{\symbol{45}}Mattis anomaly
+(degree\texttt{\symbol{45}}3 cocycles) associated with the Irreducible Wyckoff
+Position (see the paper \cite{liuye} for a definition). 
+\end{itemize}
+ The command \texttt{SpaceGroupCohomologyRingGapInterface(ITC)} is fast for most groups (a few seconds to a few minutes) but can be very slow
+for certain space groups (e.g. ITC $= 228$ and ITC $= 142$). The following illustration assumes that two relevant files have been
+downloaded from \cite{liuyegithub} and illustrates the command for ITC $ =30$ and ITC $=216$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Read("SpaceGroupCohomologyData.gi");        #These two files must be |
+  !gapprompt@gap>| !gapinput@Read("SpaceGroupCohomologyFunctions.gi");   #downloaded from|
+  !gapprompt@gap>| !gapinput@      #https://github.com/liuchx1993/Space-Group-Cohomology-and-LSM/|
+   
+  !gapprompt@gap>| !gapinput@IsPeriodicSpaceGroup(SpaceGroupIT(3,30));|
+  true
+  
+  !gapprompt@gap>| !gapinput@SpaceGroupCohomologyRingGapInterface(30);|
+  ===========================================
+  Mod-2 Cohomology Ring of Group No. 30:
+  Z2[Ac,Am,Ax,Bb]/<R2,R3,R4>
+  R2:  Ac.Am  Am^2  Ax^2+Ac.Ax  
+  R3:  Am.Bb  
+  R4:  Bb^2  
+  ===========================================
+  LSM:
+  2a Ac.Bb+Ax.Bb
+  2b Ax.Bb
+  true
+  
+  
+  !gapprompt@gap>| !gapinput@IsPeriodicSpaceGroup(SpaceGroupIT(3,216));|
+  false
+  
+  !gapprompt@gap>| !gapinput@SpaceGroupCohomologyRingGapInterface(216);|
+  ===========================================
+  Mod-2 Cohomology Ring of Group No. 216:
+  Z2[Am,Ba,Bb,Bxyxzyz,Ca,Cb,Cc,Cxyz]/<R4,R5,R6>
+  R4:  Am.Ca  Am.Cb  Ba.Bxyxzyz+Am.Cc  Bb^2+Am.Cc+Ba.Bb  Bb.Bxyxzyz+Am^2.Bb+Am.Cxyz  Bxyxzyz^2  
+  R5:  Bxyxzyz.Ca  Ba.Cb+Bb.Ca  Bb.Cb+Bb.Ca  Bxyxzyz.Cb  Bxyxzyz.Cc  Ba.Cxyz+Am.Ba.Bb+Bb.Cc  Bb.Cxyz+Am^2.Cc+Am.Ba.Bb+Bb.Cc  Bxyxzyz.Cxyz+Am^3.Bb+Am^2.Cxyz 
+  ===========================================
+  LSM:
+  4a Ca+Cc+Cxyz
+  4b Cb+Cc+Cxyz
+  4c Cb+Cxyz
+  4d Cxyz
+  true
+  
+\end{Verbatim}
+ In the example the naming convention for ring generators follows the paper \cite{liuye}. }
+
  }
 
  }

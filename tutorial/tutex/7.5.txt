@@ -1,0 +1,37 @@
+gap> Read("SpaceGroupCohomologyData.gi");        #These two files must be 
+gap> Read("SpaceGroupCohomologyFunctions.gi");   #downloaded from
+gap>       #https://github.com/liuchx1993/Space-Group-Cohomology-and-LSM/
+ 
+gap> IsPeriodicSpaceGroup(SpaceGroupIT(3,30));
+true
+
+gap> SpaceGroupCohomologyRingGapInterface(30);
+===========================================
+Mod-2 Cohomology Ring of Group No. 30:
+Z2[Ac,Am,Ax,Bb]/&lt;R2,R3,R4>
+R2:  Ac.Am  Am^2  Ax^2+Ac.Ax  
+R3:  Am.Bb  
+R4:  Bb^2  
+===========================================
+LSM:
+2a Ac.Bb+Ax.Bb
+2b Ax.Bb
+true
+
+
+gap> IsPeriodicSpaceGroup(SpaceGroupIT(3,216));
+false
+
+gap> SpaceGroupCohomologyRingGapInterface(216);
+===========================================
+Mod-2 Cohomology Ring of Group No. 216:
+Z2[Am,Ba,Bb,Bxyxzyz,Ca,Cb,Cc,Cxyz]/&lt;R4,R5,R6>
+R4:  Am.Ca  Am.Cb  Ba.Bxyxzyz+Am.Cc  Bb^2+Am.Cc+Ba.Bb  Bb.Bxyxzyz+Am^2.Bb+Am.Cxyz  Bxyxzyz^2  
+R5:  Bxyxzyz.Ca  Ba.Cb+Bb.Ca  Bb.Cb+Bb.Ca  Bxyxzyz.Cb  Bxyxzyz.Cc  Ba.Cxyz+Am.Ba.Bb+Bb.Cc  Bb.Cxyz+Am^2.Cc+Am.Ba.Bb+Bb.Cc  Bxyxzyz.Cxyz+Am^3.Bb+Am^2.Cxyz 
+===========================================
+LSM:
+4a Ca+Cc+Cxyz
+4b Cb+Cc+Cxyz
+4c Cb+Cxyz
+4d Cxyz
+true

@@ -1,5 +1,5 @@
   
-  [1X8 [33X[0;0YCohomology rings and Steenrod operations for finite groups[133X[101X
+  [1X8 [33X[0;0YCohomology rings and Steenrod operations for groups[133X[101X
   
   
   [1X8.1 [33X[0;0YMod-[22Xp[122X[101X[1X cohomology rings of finite groups[133X[101X
@@ -325,4 +325,160 @@
     [4X[28X[ 0*v.1, 0*v.1, v.5, 0*v.1, (Z(3))*v.7+v.8+(Z(3))*v.9 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X8.6 [33X[0;0YMod-[22Xp[122X[101X[1X cohomology rings of crystallographic groups[133X[101X
+  
+  [33X[0;0YMod  [22Xp[122X  cohomology  ring  computations  can be attempted for any group [22XG[122X for
+  which  we  can  compute sufficiently many terms of a free [22XZG[122X-resolution with
+  contracting  homotopy.  The  contracting  homotopy is not needed if only the
+  dimensions  of  the  cohomology  in each degree are sought. Crystallographic
+  groups  are  one  class  of  infinite  groups where such computations can be
+  attempted.[133X
+  
+  
+  [1X8.6-1 [33X[0;0YPoincare series for crystallographic groups[133X[101X
+  
+  [33X[0;0YConsider  the  space  group  [22XG=SpaceGroupOnRightIT(3,226,'1')[122X. The following
+  computation computes the infinite series[133X
+  
+  [33X[0;0Y[22X(-2x^4+2x^2+1)/(-x^5+2x^4-x^3+x^2-2x+1)[122X[133X
+  
+  [33X[0;0Yin  which  the  coefficient  of  the monomial [22Xx^n[122X is guaranteed to equal the
+  dimension  of  the vector space [22XH^n(G, Z_2)[122X in degrees [22Xn≤ 14[122X. One would need
+  to  involve  a  theoretical argument to establish that this equality in fact
+  holds in every degree [22Xn≥ 0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroupIT(3,226);[127X[104X
+    [4X[28XSpaceGroupOnRightIT(3,226,'1')[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSpaceGroup(G,15);[127X[104X
+    [4X[28XResolution of length 15 in characteristic 0 for <matrix group with [128X[104X
+    [4X[28X8 generators> . [128X[104X
+    [4X[28XNo contracting homotopy available. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=List([0..14],n->Cohomology(HomToIntegersModP(R,2),n));[127X[104X
+    [4X[28X[ 1, 2, 5, 9, 11, 15, 20, 23, 28, 34, 38, 44, 51, 56, 63 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPoincareSeries(D,14);[127X[104X
+    [4X[28X(-2*x_1^4+2*x_1^2+1)/(-x_1^5+2*x_1^4-x_1^3+x_1^2-2*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YConsider  the  space  group  [22XSpaceGroupOnRightIT(3,103,'1')[122X.  The  following
+  computation  uses  a  different construction of a free resolution to compute
+  the infinite series[133X
+  
+  [33X[0;0Y[22X(x^3+2x^2+2x+1)/(-x+1)[122X[133X
+  
+  [33X[0;0Yin  which  the  coefficient  of  the monomial [22Xx^n[122X is guaranteed to equal the
+  dimension  of  the  vector  space  [22XH^n(G,  Z_2)[122X  in degrees [22Xn≤ 99[122X. The final
+  commands  show that [22XG[122X acts on a (cubical) cellular decomposition of [22XR^3[122X with
+  cell  ctabilizers  being either trivial or cyclic of order [22X2[122X or [22X4[122X. From this
+  extra  calculation  it  follows  that  the cohomology is periodic in degrees
+  greater  than  [22X3[122X and that the Poincare series is correct in every degree [22Xn ≥
+  0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroupIT(3,103);[127X[104X
+    [4X[28XSpaceGroupOnRightIT(3,103,'1')[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionCubicalCrystGroup(G,100);[127X[104X
+    [4X[28XResolution of length 100 in characteristic 0 for <matrix group with 6 generators> . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=List([0..99],n->Cohomology(HomToIntegersModP(R,2),n));;[127X[104X
+    [4X[25Xgap>[125X [27XPoincareSeries(D,99);[127X[104X
+    [4X[28X(x_1^3+2*x_1^2+2*x_1+1)/(-x_1+1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X#Torsion subgroups are cyclic[128X[104X
+    [4X[25Xgap>[125X [27XB:=CrystGFullBasis(G);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=CrystGcomplex(GeneratorsOfGroup(G),B,1);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..3] do[127X[104X
+    [4X[25X>[125X [27Xfor k in [1..C!.dimension(n)] do[127X[104X
+    [4X[25X>[125X [27XPrint(StructureDescription(C!.stabilizer(n,k)),"  ");[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[28XC4  C2  C4  1  1  C4  C2  C4  1  1  1  1  [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.6-2 [33X[0;0YMod [22X2[122X[101X[1X cohomology rings of [22X3[122X[101X[1X-dimensional crystallographic groups[133X[101X
+  
+  [33X[0;0YComputations  in  the  [13Xintegral[113X  cohomology  of a crystallographic group are
+  illustrated in Section [14X1.19[114X. The commands underlying that illustration could
+  be further developed and adapted to mod [22Xp[122X cohomology. Indeed, the authors of
+  the paper [LY24a] have developed commands for accessing the mod [22X2[122X cohomology
+  of  [22X3[122X-dimensional  crystallographic  groups  with  the aim of establishing a
+  connection  between  these  rings and the lattice structure of crystals with
+  space  group  symmetry.  Their  code  is  available at the github repository
+  [LY24b]. In particular, their code contains the command[133X
+  
+  [30X    [33X[0;6Y[10XSpaceGroupCohomologyRingGapInterface(ITC)[110X[133X
+  
+  [33X[0;0Ythat  inputs  an  integer  in  the  range  [22X1≤  ITC≤ 230[122X corresponding to the
+  numbering  of  a  [22X3[122X-dimensional space group [22XG[122X in the International Table for
+  Crystallography. This command returns[133X
+  
+  [30X    [33X[0;6Ya  presentation  for  the  mod  [22X2[122X  cohomology  ring  [22XH^∗(G,  Z_2)[122X. The
+        presentation is guaranteed to be correct for low degree cohomology. In
+        cases  where  the cohomology is periodic in degrees [22Xgt 4[122X (which can be
+        tested  using  [10XIsPeriodicSpaceGroup(G)[110X) the presentation is guaranteed
+        correct   in  all  degrees.  In  non-periodic  cases  some  additional
+        mathematical  argument  needs to be provided to be mathematically sure
+        that the presentation is correct in all degrees.[133X
+  
+  [30X    [33X[0;6Ythe  Lieb-Schultz-Mattis  anomaly  (degree-3 cocycles) associated with
+        the  Irreducible  Wyckoff  Position  (see  the  paper  [LY24a]  for  a
+        definition).[133X
+  
+  [33X[0;0YThe  command  [10XSpaceGroupCohomologyRingGapInterface(ITC)[110X  is  fast  for  most
+  groups  (a  few  seconds  to a few minutes) but can be very slow for certain
+  space  groups  (e.g.  ITC  [22X=  228[122X and ITC [22X= 142[122X). The following illustration
+  assumes  that  two  relevant  files  have  been  downloaded from [LY24b] and
+  illustrates the command for ITC [22X=30[122X and ITC [22X=216[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRead("SpaceGroupCohomologyData.gi");        #These two files must be [127X[104X
+    [4X[25Xgap>[125X [27XRead("SpaceGroupCohomologyFunctions.gi");   #downloaded from[127X[104X
+    [4X[25Xgap>[125X [27X      #https://github.com/liuchx1993/Space-Group-Cohomology-and-LSM/[127X[104X
+    [4X[28X [128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodicSpaceGroup(SpaceGroupIT(3,30));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSpaceGroupCohomologyRingGapInterface(30);[127X[104X
+    [4X[28X===========================================[128X[104X
+    [4X[28XMod-2 Cohomology Ring of Group No. 30:[128X[104X
+    [4X[28XZ2[Ac,Am,Ax,Bb]/<R2,R3,R4>[128X[104X
+    [4X[28XR2:  Ac.Am  Am^2  Ax^2+Ac.Ax  [128X[104X
+    [4X[28XR3:  Am.Bb  [128X[104X
+    [4X[28XR4:  Bb^2  [128X[104X
+    [4X[28X===========================================[128X[104X
+    [4X[28XLSM:[128X[104X
+    [4X[28X2a Ac.Bb+Ax.Bb[128X[104X
+    [4X[28X2b Ax.Bb[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsPeriodicSpaceGroup(SpaceGroupIT(3,216));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSpaceGroupCohomologyRingGapInterface(216);[127X[104X
+    [4X[28X===========================================[128X[104X
+    [4X[28XMod-2 Cohomology Ring of Group No. 216:[128X[104X
+    [4X[28XZ2[Am,Ba,Bb,Bxyxzyz,Ca,Cb,Cc,Cxyz]/<R4,R5,R6>[128X[104X
+    [4X[28XR4:  Am.Ca  Am.Cb  Ba.Bxyxzyz+Am.Cc  Bb^2+Am.Cc+Ba.Bb  Bb.Bxyxzyz+Am^2.Bb+Am.Cxyz  Bxyxzyz^2  [128X[104X
+    [4X[28XR5:  Bxyxzyz.Ca  Ba.Cb+Bb.Ca  Bb.Cb+Bb.Ca  Bxyxzyz.Cb  Bxyxzyz.Cc  Ba.Cxyz+Am.Ba.Bb+Bb.Cc  Bb.Cxyz+Am^2.Cc+Am.Ba.Bb+Bb.Cc  Bxyxzyz.Cxyz+Am^3.Bb+Am^2.Cxyz [128X[104X
+    [4X[28X===========================================[128X[104X
+    [4X[28XLSM:[128X[104X
+    [4X[28X4a Ca+Cc+Cxyz[128X[104X
+    [4X[28X4b Cb+Cc+Cxyz[128X[104X
+    [4X[28X4c Cb+Cxyz[128X[104X
+    [4X[28X4d Cxyz[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  example the naming convention for ring generators follows the paper
+  [LY24a].[133X
   

@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (HAP commands) - Chapter 8: Cohomology rings and Steenrod operations for finite groups</title>
+<title>GAP (HAP commands) - Chapter 8: Cohomology rings and Steenrod operations for groups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -20,8 +20,8 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
-<p><a id="X7EA6128E8703A13E" name="X7EA6128E8703A13E"></a></p>
-<div class="ChapSects"><a href="chap8.html#X7EA6128E8703A13E">8 <span class="Heading">Cohomology rings and Steenrod operations for finite groups</span></a>
+<p><a id="X7ED29A58858AAAF2" name="X7ED29A58858AAAF2"></a></p>
+<div class="ChapSects"><a href="chap8.html#X7ED29A58858AAAF2">8 <span class="Heading">Cohomology rings and Steenrod operations for groups</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X877CAF8B7E64DE04">8.1 <span class="Heading">Mod-<span class="SimpleMath">p</span> cohomology rings of finite groups</span></a>
 </span>
 <div class="ContSSBlock">
@@ -47,9 +47,17 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">p</span>-group</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D2D26C0784A0E14">8.6 <span class="Heading">Mod-<span class="SimpleMath">p</span> cohomology rings of crystallographic groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X81C107C07CF02F0E">8.6-1 <span class="Heading">Poincare series for crystallographic groups</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F5C242F7BC938A5">8.6-2 <span class="Heading">Mod <span class="SimpleMath">2</span> cohomology rings of <span class="SimpleMath">3</span>-dimensional crystallographic groups</span></a>
+</span>
+</div></div>
 </div>
 
-<h3>8 <span class="Heading">Cohomology rings and Steenrod operations for finite groups</span></h3>
+<h3>8 <span class="Heading">Cohomology rings and Steenrod operations for groups</span></h3>
 
 <p><a id="X877CAF8B7E64DE04" name="X877CAF8B7E64DE04"></a></p>
 
@@ -347,6 +355,138 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 [ 0*v.1, 0*v.1, v.5, 0*v.1, (Z(3))*v.7+v.8+(Z(3))*v.9 ]
 
 </pre></div>
+
+<p><a id="X7D2D26C0784A0E14" name="X7D2D26C0784A0E14"></a></p>
+
+<h4>8.6 <span class="Heading">Mod-<span class="SimpleMath">p</span> cohomology rings of crystallographic groups</span></h4>
+
+<p>Mod <span class="SimpleMath">p</span> cohomology ring computations can be attempted for any group <span class="SimpleMath">G</span> for which we can compute sufficiently many terms of a free <span class="SimpleMath">ZG</span>-resolution with contracting homotopy. The contracting homotopy is not needed if only the dimensions of the cohomology in each degree are sought. Crystallographic groups are one class of infinite groups where such computations can be attempted.</p>
+
+<p><a id="X81C107C07CF02F0E" name="X81C107C07CF02F0E"></a></p>
+
+<h5>8.6-1 <span class="Heading">Poincare series for crystallographic groups</span></h5>
+
+<p>Consider the space group <span class="SimpleMath">G=SpaceGroupOnRightIT(3,226,'1')</span>. The following computation computes the infinite series</p>
+
+<p><span class="SimpleMath">(-2x^4+2x^2+1)/(-x^5+2x^4-x^3+x^2-2x+1)</span></p>
+
+<p>in which the coefficient of the monomial <span class="SimpleMath">x^n</span> is guaranteed to equal the dimension of the vector space <span class="SimpleMath">H^n(G, Z_2)</span> in degrees <span class="SimpleMath">n≤ 14</span>. One would need to involve a theoretical argument to establish that this equality in fact holds in every degree <span class="SimpleMath">n≥ 0</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroupIT(3,226);</span>
+SpaceGroupOnRightIT(3,226,'1')
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSpaceGroup(G,15);</span>
+Resolution of length 15 in characteristic 0 for &lt;matrix group with 
+8 generators&gt; . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=List([0..14],n-&gt;Cohomology(HomToIntegersModP(R,2),n));</span>
+[ 1, 2, 5, 9, 11, 15, 20, 23, 28, 34, 38, 44, 51, 56, 63 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PoincareSeries(D,14);</span>
+(-2*x_1^4+2*x_1^2+1)/(-x_1^5+2*x_1^4-x_1^3+x_1^2-2*x_1+1)
+
+
+</pre></div>
+
+<p>Consider the space group <span class="SimpleMath">SpaceGroupOnRightIT(3,103,'1')</span>. The following computation uses a different construction of a free resolution to compute the infinite series</p>
+
+<p><span class="SimpleMath">(x^3+2x^2+2x+1)/(-x+1)</span></p>
+
+<p>in which the coefficient of the monomial <span class="SimpleMath">x^n</span> is guaranteed to equal the dimension of the vector space <span class="SimpleMath">H^n(G, Z_2)</span> in degrees <span class="SimpleMath">n≤ 99</span>. The final commands show that <span class="SimpleMath">G</span> acts on a (cubical) cellular decomposition of <span class="SimpleMath">R^3</span> with cell ctabilizers being either trivial or cyclic of order <span class="SimpleMath">2</span> or <span class="SimpleMath">4</span>. From this extra calculation it follows that the cohomology is periodic in degrees greater than <span class="SimpleMath">3</span> and that the Poincare series is correct in every degree <span class="SimpleMath">n ≥ 0</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroupIT(3,103);</span>
+SpaceGroupOnRightIT(3,103,'1')
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionCubicalCrystGroup(G,100);</span>
+Resolution of length 100 in characteristic 0 for &lt;matrix group with 6 generators&gt; . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=List([0..99],n-&gt;Cohomology(HomToIntegersModP(R,2),n));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PoincareSeries(D,99);</span>
+(x_1^3+2*x_1^2+2*x_1+1)/(-x_1+1)
+
+
+#Torsion subgroups are cyclic
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=CrystGFullBasis(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=CrystGcomplex(GeneratorsOfGroup(G),B,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [0..3] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for k in [1..C!.dimension(n)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(StructureDescription(C!.stabilizer(n,k)),"  ");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+C4  C2  C4  1  1  C4  C2  C4  1  1  1  1  
+
+</pre></div>
+
+<p><a id="X7F5C242F7BC938A5" name="X7F5C242F7BC938A5"></a></p>
+
+<h5>8.6-2 <span class="Heading">Mod <span class="SimpleMath">2</span> cohomology rings of <span class="SimpleMath">3</span>-dimensional crystallographic groups</span></h5>
+
+<p>Computations in the <em>integral</em> cohomology of a crystallographic group are illustrated in Section <a href="chap1.html#X86881717878ADCD6"><span class="RefLink">1.19</span></a>. The commands underlying that illustration could be further developed and adapted to mod <span class="SimpleMath">p</span> cohomology. Indeed, the authors of the paper <a href="chapBib.html#biBliuye">[LY24a]</a> have developed commands for accessing the mod <span class="SimpleMath">2</span> cohomology of <span class="SimpleMath">3</span>-dimensional crystallographic groups with the aim of establishing a connection between these rings and the lattice structure of crystals with space group symmetry. Their code is available at the github repository <a href="chapBib.html#biBliuyegithub">[LY24b]</a>. In particular, their code contains the command</p>
+
+
+<ul>
+<li><p><code class="code">SpaceGroupCohomologyRingGapInterface(ITC)</code></p>
+
+</li>
+</ul>
+<p>that inputs an integer in the range <span class="SimpleMath">1≤ ITC≤ 230</span> corresponding to the numbering of a <span class="SimpleMath">3</span>-dimensional space group <span class="SimpleMath">G</span> in the International Table for Crystallography. This command returns</p>
+
+
+<ul>
+<li><p>a presentation for the mod <span class="SimpleMath">2</span> cohomology ring <span class="SimpleMath">H^∗(G, Z_2)</span>. The presentation is guaranteed to be correct for low degree cohomology. In cases where the cohomology is periodic in degrees <span class="SimpleMath">gt 4</span> (which can be tested using <code class="code">IsPeriodicSpaceGroup(G)</code>) the presentation is guaranteed correct in all degrees. In non-periodic cases some additional mathematical argument needs to be provided to be mathematically sure that the presentation is correct in all degrees.</p>
+
+</li>
+<li><p>the Lieb-Schultz-Mattis anomaly (degree-3 cocycles) associated with the Irreducible Wyckoff Position (see the paper <a href="chapBib.html#biBliuye">[LY24a]</a> for a definition).</p>
+
+</li>
+</ul>
+<p>The command <code class="code">SpaceGroupCohomologyRingGapInterface(ITC)</code> is fast for most groups (a few seconds to a few minutes) but can be very slow for certain space groups (e.g. ITC <span class="SimpleMath">= 228</span> and ITC <span class="SimpleMath">= 142</span>). The following illustration assumes that two relevant files have been downloaded from <a href="chapBib.html#biBliuyegithub">[LY24b]</a> and illustrates the command for ITC <span class="SimpleMath">=30</span> and ITC <span class="SimpleMath">=216</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read("SpaceGroupCohomologyData.gi");        #These two files must be </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read("SpaceGroupCohomologyFunctions.gi");   #downloaded from</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">      #https://github.com/liuchx1993/Space-Group-Cohomology-and-LSM/</span>
+ 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodicSpaceGroup(SpaceGroupIT(3,30));</span>
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SpaceGroupCohomologyRingGapInterface(30);</span>
+===========================================
+Mod-2 Cohomology Ring of Group No. 30:
+Z2[Ac,Am,Ax,Bb]/&lt;R2,R3,R4&gt;
+R2:  Ac.Am  Am^2  Ax^2+Ac.Ax  
+R3:  Am.Bb  
+R4:  Bb^2  
+===========================================
+LSM:
+2a Ac.Bb+Ax.Bb
+2b Ax.Bb
+true
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPeriodicSpaceGroup(SpaceGroupIT(3,216));</span>
+false
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SpaceGroupCohomologyRingGapInterface(216);</span>
+===========================================
+Mod-2 Cohomology Ring of Group No. 216:
+Z2[Am,Ba,Bb,Bxyxzyz,Ca,Cb,Cc,Cxyz]/&lt;R4,R5,R6&gt;
+R4:  Am.Ca  Am.Cb  Ba.Bxyxzyz+Am.Cc  Bb^2+Am.Cc+Ba.Bb  Bb.Bxyxzyz+Am^2.Bb+Am.Cxyz  Bxyxzyz^2  
+R5:  Bxyxzyz.Ca  Ba.Cb+Bb.Ca  Bb.Cb+Bb.Ca  Bxyxzyz.Cb  Bxyxzyz.Cc  Ba.Cxyz+Am.Ba.Bb+Bb.Cc  Bb.Cxyz+Am^2.Cc+Am.Ba.Bb+Bb.Cc  Bxyxzyz.Cxyz+Am^3.Bb+Am^2.Cxyz 
+===========================================
+LSM:
+4a Ca+Cc+Cxyz
+4b Cb+Cc+Cxyz
+4c Cb+Cxyz
+4d Cxyz
+true
+
+</pre></div>
+
+<p>In the example the naming convention for ring generators follows the paper <a href="chapBib.html#biBliuye">[LY24a]</a>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
