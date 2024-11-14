@@ -1016,19 +1016,20 @@
   complex of the poset of non-trivial elementary abelian [22Xp[122X-subgroups of [22XG[122X. The
   group [22XG[122X acts on [22Xmathcal A[122X. Denote the orbit of a [22Xk[122X-simplex [22Xe^k[122X by [22X[e^k][122X, and
   the stabilizer of [22Xe^k[122X by [22XStab(e^k) ≤ G[122X. For a finite abelian group [22XH[122X let [22XH_p[122X
-  denote  the  Sylow  [22Xp[122X-subgroup  or  the  "[22Xp[122X-part".  Peter  Webb  proved  the
-  following.[133X
+  denote  the Sylow [22Xp[122X-subgroup or the "[22Xp[122X-part". In Theorem 3.3 of [Web87] P.J.
+  Webb proved the following.[133X
   
-  [33X[0;0Y[12XTheorem.[112X[Peter   Webb]   For  any  [22XG[122X-module  [22XM[122X  there  is  a  (non  natural)
-  homomorphism[133X
+  [33X[0;0Y[12XTheorem.[112X[Web87] For any [22XG[122X-module [22XM[122X there is a (non natural) isomomorphism[133X
   
   [33X[0;0Y[22XH_n(G,M)_p   ⊕   ⨁_[e^k]   :   k~  odd~H_n(Stab(e^k),M)_p  ≅  ⨁_[e^k]  :  k~
   even~H_n(Stab(e^k),M)_p[122X[133X
   
-  [33X[0;0Yfor [22Xn≥ 0[122X. The isomorphism can also be expressed as[133X
+  [33X[0;0Yfor [22Xn≥ 1[122X. The isomorphism can also be expressed as[133X
   
   [33X[0;0Y[22XH_n(G,M)_p   ≅   ⨁_[e^k]   :  k~  even~H_n(Stab(e^k),M)_p  -  ⨁_[e^k]  :  k~
-  odd~H_n(Stab(e^k),M)_p[122X and terms can often be cancelled.[133X
+  odd~H_n(Stab(e^k),M)_p[122X[133X
+  
+  [33X[0;0Ywhere terms can often be cancelled.[133X
   
   [33X[0;0YThus the additive structure of the [22Xp[122X-part of the homology of [22XG[122X is determined
   by  that  of  the  stabilizer  groups.  The  result also holds with homology
@@ -1038,17 +1039,84 @@
   
   [33X[0;0YAs an illustration of the theorem, the following commands calculate[133X
   
-  [33X[0;0Y[22XH_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(S_i,M)_3 - ⨁_4≤ i≤ 5H_n(S_4,M)_3[122X[133X
+  [33X[0;0Y[22XH_n(SL_3(  Z_2),  Z)  ≅  H_n(S_4,  Z)_2  ⊕  H_n(S_4,  Z)_2 ⊖ H_n(D_8, Z)_2 ⊕
+  H_n(S_3, Z)_3 ⊕ H_n(C_7 : C_3, Z)_7[122X[133X
+  
+  [33X[0;0Ywhere  [22Xn≥  1[122X, [22XS_k[122X denotes the symmetric group on [22Xn[122X letters, [22XD_8[122X the dihedral
+  group  of  order  [22X8[122X and [22XC_7 : C_3[122X a nonabelian semi-direct product of cyclic
+  groups. Furthermore, for [22Xn≥ 1[122X[133X
+  
+  [33X[0;0Y[22XH_n(C_7 : C_3, Z)_7 ={beginarrayll Z_7, n ≡ 0 mod 4 0, otherwise endarray.[122X[133X
+  
+  [33X[0;0Yand[133X
+  
+  [33X[0;0Y[22XH_n(S_3, Z)_3 ={beginarrayll Z_3, n ~odd 0, n ~even . endarray.[122X[133X
+  
+  [33X[0;0YFormulas  for  [22XH_n(S_4,  Z)[122X  and [22XH_n(D_8, Z)[122X can be found in the literature.
+  Alternatively,  they  can  be computed using [12XGAP[112X for a given value of [22Xn[122X. For
+  [22Xn=27[122X we find[133X
+  
+  [33X[0;0Y[22XH_27(S_4,  Z)_2  ⊕ H_27(S_4, Z)_2 ⊖ H_27(D_8, Z)_2 ≅ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕
+  Z_4[122X[133X
+  
+  [33X[0;0Yand[133X
+  
+  [33X[0;0Y[22XH_27(SL_3( Z_2), Z) ≅ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_4 ⊕ Z_3[122X .[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SL(3,2);;Factors(Order(G));[127X[104X
+    [4X[28X[ 2, 2, 2, 3, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XD2:=HomologicalGroupDecomposition(G,2);;[127X[104X
+    [4X[25Xgap>[125X [27XD3:=HomologicalGroupDecomposition(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XD7:=HomologicalGroupDecomposition(G,7);;[127X[104X
+    [4X[25Xgap>[125X [27XList(D2[1],StructureDescription);[127X[104X
+    [4X[28X[ "S4", "S4" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D2[2],StructureDescription);[127X[104X
+    [4X[28X[ "D8" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D3[1],StructureDescription);[127X[104X
+    [4X[28X[ "S3" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D3[2],StructureDescription);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XList(D7[1],StructureDescription);[127X[104X
+    [4X[28X[ "C7 : C3" ][128X[104X
+    [4X[25Xgap>[125X [27XList(D7[2],StructureDescription);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D7[1][1]);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XList([1..6],n->GroupHomology(D7[1][1],n));[127X[104X
+    [4X[28X[ [ 3 ], [  ], [ 3 ], [  ], [ 3, 7 ], [  ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomologicalPeriod(D3[1][1]);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XList([1..4],n->GroupHomology(D7[1][1],n));[127X[104X
+    [4X[28X[ [ 3 ], [  ], [ 3 ], [  ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR_S4:=ResolutionFiniteGroup(Group([(1,2),(2,3),(3,4)]),28);;[127X[104X
+    [4X[25Xgap>[125X [27XR_D8:=ResolutionFiniteGroup(Group([(1,2),(1,3)(2,4)]),28);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R_S4),27);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 12 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R_D8),27);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[12XIllustration 2[112X[133X
+  
+  [33X[0;0YAs a further illustration of the theorem, the following commands calculate[133X
+  
+  [33X[0;0Y[22XH_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(Stab_i,M)_3 - ⨁_4≤ i≤ 5H_n(Stab_i,M)_3[122X[133X
   
   [33X[0;0Yfor the Mathieu simple group [22XM_12[122X of order [22X95040[122X, where[133X
   
-  [33X[0;0Y[22XS_1≅ S_3=(((C_3 × C_3) : Q_8) : C_3) : C_2[122X[133X
+  [33X[0;0Y[22XStab_1≅ Stab_3=(((C_3 × C_3) : Q_8) : C_3) : C_2[122X[133X
   
-  [33X[0;0Y[22XS_2=A_4 × S_3[122X[133X
+  [33X[0;0Y[22XStab_2=A_4 × S_3[122X[133X
   
-  [33X[0;0Y[22XS_4=C_3 × S_3[122X[133X
+  [33X[0;0Y[22XStab_4=C_3 × S_3[122X[133X
   
-  [33X[0;0Y[22XS_5=((C_3 × C_3) : C_3) : (C_2 × C_2)[122X .[133X
+  [33X[0;0Y[22XStab_5=((C_3 × C_3) : C_3) : (C_2 × C_2)[122X .[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=MathieuGroup(12);;[127X[104X
@@ -1060,9 +1128,9 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[12XIllustration 2[112X[133X
+  [33X[0;0Y[12XIllustration 3[112X[133X
   
-  [33X[0;0YAs  a second illustration, the following commands show that [22XH_n(M_23,M)_p[122X is
+  [33X[0;0YAs  a  third illustration, the following commands show that [22XH_n(M_23,M)_p[122X is
   periodic  for  primes  [22Xp=5,  7,  11,  23[122X  of  periods  dividing [22X8, 6, 10, 22[122X
   respectively.[133X
   

@@ -1008,15 +1008,17 @@ function( g, h, k, l ) ... end
 
 <h4>7.14 <span class="Heading">Quillen's complex and the <span class="SimpleMath">p</span>-part of homology </span></h4>
 
-<p>Let <span class="SimpleMath">G</span> be a finite group with order divisible by prime <span class="SimpleMath">p</span>. Let <span class="SimpleMath">mathcal A=mathcal A_p(G)</span> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>. The group <span class="SimpleMath">G</span> acts on <span class="SimpleMath">mathcal A</span>. Denote the orbit of a <span class="SimpleMath">k</span>-simplex <span class="SimpleMath">e^k</span> by <span class="SimpleMath">[e^k]</span>, and the stabilizer of <span class="SimpleMath">e^k</span> by <span class="SimpleMath">Stab(e^k) ≤ G</span>. For a finite abelian group <span class="SimpleMath">H</span> let <span class="SimpleMath">H_p</span> denote the Sylow <span class="SimpleMath">p</span>-subgroup or the "<span class="SimpleMath">p</span>-part". Peter Webb proved the following.</p>
+<p>Let <span class="SimpleMath">G</span> be a finite group with order divisible by prime <span class="SimpleMath">p</span>. Let <span class="SimpleMath">mathcal A=mathcal A_p(G)</span> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <span class="SimpleMath">p</span>-subgroups of <span class="SimpleMath">G</span>. The group <span class="SimpleMath">G</span> acts on <span class="SimpleMath">mathcal A</span>. Denote the orbit of a <span class="SimpleMath">k</span>-simplex <span class="SimpleMath">e^k</span> by <span class="SimpleMath">[e^k]</span>, and the stabilizer of <span class="SimpleMath">e^k</span> by <span class="SimpleMath">Stab(e^k) ≤ G</span>. For a finite abelian group <span class="SimpleMath">H</span> let <span class="SimpleMath">H_p</span> denote the Sylow <span class="SimpleMath">p</span>-subgroup or the "<span class="SimpleMath">p</span>-part". In Theorem 3.3 of <a href="chapBib.html#biBWebb">[Web87]</a> P.J. Webb proved the following.</p>
 
-<p><strong class="button">Theorem.</strong>[Peter Webb] For any <span class="SimpleMath">G</span>-module <span class="SimpleMath">M</span> there is a (non natural) homomorphism</p>
+<p><strong class="button">Theorem.</strong><a href="chapBib.html#biBWebb">[Web87]</a> For any <span class="SimpleMath">G</span>-module <span class="SimpleMath">M</span> there is a (non natural) isomomorphism</p>
 
 <p><span class="SimpleMath">H_n(G,M)_p ⊕ ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p</span></p>
 
-<p>for <span class="SimpleMath">n≥ 0</span>. The isomorphism can also be expressed as</p>
+<p>for <span class="SimpleMath">n≥ 1</span>. The isomorphism can also be expressed as</p>
 
-<p><span class="SimpleMath">H_n(G,M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p - ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p</span> and terms can often be cancelled.</p>
+<p><span class="SimpleMath">H_n(G,M)_p ≅ ⨁_[e^k] : k~ even~H_n(Stab(e^k),M)_p - ⨁_[e^k] : k~ odd~H_n(Stab(e^k),M)_p</span></p>
+
+<p>where terms can often be cancelled.</p>
 
 <p>Thus the additive structure of the <span class="SimpleMath">p</span>-part of the homology of <span class="SimpleMath">G</span> is determined by that of the stabilizer groups. The result also holds with homology replaced by cohomology.</p>
 
@@ -1024,17 +1026,79 @@ function( g, h, k, l ) ... end
 
 <p>As an illustration of the theorem, the following commands calculate</p>
 
-<p><span class="SimpleMath">H_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(S_i,M)_3 - ⨁_4≤ i≤ 5H_n(S_4,M)_3</span></p>
+<p><span class="SimpleMath">H_n(SL_3( Z_2), Z) ≅ H_n(S_4, Z)_2 ⊕ H_n(S_4, Z)_2 ⊖ H_n(D_8, Z)_2 ⊕ H_n(S_3, Z)_3 ⊕ H_n(C_7 : C_3, Z)_7</span></p>
+
+<p>where <span class="SimpleMath">n≥ 1</span>, <span class="SimpleMath">S_k</span> denotes the symmetric group on <span class="SimpleMath">n</span> letters, <span class="SimpleMath">D_8</span> the dihedral group of order <span class="SimpleMath">8</span> and <span class="SimpleMath">C_7 : C_3</span> a nonabelian semi-direct product of cyclic groups. Furthermore, for <span class="SimpleMath">n≥ 1</span></p>
+
+<p><span class="SimpleMath">H_n(C_7 : C_3, Z)_7 ={beginarrayll Z_7, n ≡ 0 mod 4 0, otherwise endarray.</span></p>
+
+<p>and</p>
+
+<p><span class="SimpleMath">H_n(S_3, Z)_3 ={beginarrayll Z_3, n ~odd 0, n ~even . endarray.</span></p>
+
+<p>Formulas for <span class="SimpleMath">H_n(S_4, Z)</span> and <span class="SimpleMath">H_n(D_8, Z)</span> can be found in the literature. Alternatively, they can be computed using <strong class="button">GAP</strong> for a given value of <span class="SimpleMath">n</span>. For <span class="SimpleMath">n=27</span> we find</p>
+
+<p><span class="SimpleMath">H_27(S_4, Z)_2 ⊕ H_27(S_4, Z)_2 ⊖ H_27(D_8, Z)_2 ≅ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_4</span></p>
+
+<p>and</p>
+
+<p><span class="SimpleMath">H_27(SL_3( Z_2), Z) ≅ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_4 ⊕ Z_3</span> .</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SL(3,2);;Factors(Order(G));</span>
+[ 2, 2, 2, 3, 7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D2:=HomologicalGroupDecomposition(G,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D3:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D7:=HomologicalGroupDecomposition(G,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D2[1],StructureDescription);</span>
+[ "S4", "S4" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D2[2],StructureDescription);</span>
+[ "D8" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D3[1],StructureDescription);</span>
+[ "S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D3[2],StructureDescription);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D7[1],StructureDescription);</span>
+[ "C7 : C3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D7[2],StructureDescription);</span>
+[  ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D7[1][1]);</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..6],n-&gt;GroupHomology(D7[1][1],n));</span>
+[ [ 3 ], [  ], [ 3 ], [  ], [ 3, 7 ], [  ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D3[1][1]);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..4],n-&gt;GroupHomology(D7[1][1],n));</span>
+[ [ 3 ], [  ], [ 3 ], [  ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R_S4:=ResolutionFiniteGroup(Group([(1,2),(2,3),(3,4)]),28);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R_D8:=ResolutionFiniteGroup(Group([(1,2),(1,3)(2,4)]),28);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R_S4),27);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 12 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R_D8),27);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]
+
+</pre></div>
+
+<p><strong class="button">Illustration 2</strong></p>
+
+<p>As a further illustration of the theorem, the following commands calculate</p>
+
+<p><span class="SimpleMath">H_n(M_12,M)_3 ≅ ⨁_1≤ i≤ 3H_n(Stab_i,M)_3 - ⨁_4≤ i≤ 5H_n(Stab_i,M)_3</span></p>
 
 <p>for the Mathieu simple group <span class="SimpleMath">M_12</span> of order <span class="SimpleMath">95040</span>, where</p>
 
-<p><span class="SimpleMath">S_1≅ S_3=(((C_3 × C_3) : Q_8) : C_3) : C_2</span></p>
+<p><span class="SimpleMath">Stab_1≅ Stab_3=(((C_3 × C_3) : Q_8) : C_3) : C_2</span></p>
 
-<p><span class="SimpleMath">S_2=A_4 × S_3</span></p>
+<p><span class="SimpleMath">Stab_2=A_4 × S_3</span></p>
 
-<p><span class="SimpleMath">S_4=C_3 × S_3</span></p>
+<p><span class="SimpleMath">Stab_4=C_3 × S_3</span></p>
 
-<p><span class="SimpleMath">S_5=((C_3 × C_3) : C_3) : (C_2 × C_2)</span> .</p>
+<p><span class="SimpleMath">Stab_5=((C_3 × C_3) : C_3) : (C_2 × C_2)</span> .</p>
 
 
 <div class="example"><pre>
@@ -1047,9 +1111,9 @@ function( g, h, k, l ) ... end
 
 </pre></div>
 
-<p><strong class="button">Illustration 2</strong></p>
+<p><strong class="button">Illustration 3</strong></p>
 
-<p>As a second illustration, the following commands show that <span class="SimpleMath">H_n(M_23,M)_p</span> is periodic for primes <span class="SimpleMath">p=5, 7, 11, 23</span> of periods dividing <span class="SimpleMath">8, 6, 10, 22</span> respectively.</p>
+<p>As a third illustration, the following commands show that <span class="SimpleMath">H_n(M_23,M)_p</span> is periodic for primes <span class="SimpleMath">p=5, 7, 11, 23</span> of periods dividing <span class="SimpleMath">8, 6, 10, 22</span> respectively.</p>
 
 
 <div class="example"><pre>
