@@ -73,8 +73,9 @@ res:=ResolutionAbelianGroup(G,n);
 return res;
 fi;
 if IsAbelian(G) and not bool then   #NOT SURE WHY I NEED TO DO THIS
-
+#if false then
 res:=ResolutionAbelianGroup_alt(G,n);
+
 return res;
 fi;
 ###

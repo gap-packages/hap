@@ -4,7 +4,7 @@
 InstallGlobalFunction(ResolutionSubnormalSeries,
 function(arg)
 local  
-	L,Ltrunc,K,RN,RQ,N,E,Q,EhomQ,gensE,gensQ;
+	L,Ltrunc,K,RN,RQ,N,E,Q,EhomQ,gensE,gensQ,R;
 
 L:=arg[1];
 K:=arg[2];
@@ -26,9 +26,12 @@ gensE:=GeneratorsOfGroup(E);
 gensQ:=List(gensE,x->Image(EhomQ,x));
 
 RQ:=ResolutionFiniteGroup(gensQ,K);
+RQ!.group:=Q;   #November 2024
 
 
-return ResolutionFiniteExtension(gensE,gensQ,RQ,K,false,RN);
+R:= ResolutionFiniteExtension(gensE,gensQ,RQ,K,false,RN);
+R!.group:=E;   #November 2024
+return R;
 end);
 #####################################################################
 

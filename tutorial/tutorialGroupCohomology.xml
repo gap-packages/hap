@@ -562,34 +562,62 @@ A function <M>f\colon G\times G\times G \rightarrow A</M>
 <Section><Heading>Quillen's complex and the <M>p</M>-part of homology </Heading>
 Let <M>G</M> be a finite group with order divisible by  prime <M>p</M>. Let
 <M>{\mathcal A}={\mathcal A}_p(G)</M> denote Quillen's simplicial complex arising as the order complex of the poset of non-trivial elementary abelian <M>p</M>-subgroups of <M>G</M>. The group <M>G</M> acts on <M>\mathcal A</M>. Denote the orbit of a <M>k</M>-simplex <M>e^k</M> by <M>[e^k]</M>, and the stabilizer of <M>e^k</M> by <M>Stab(e^k) \le G</M>. For a finite abelian group <M>H</M> let
-<M>H_p</M> denote the Sylow <M>p</M>-subgroup or the "<M>p</M>-part". Peter Webb proved the following.
+<M>H_p</M> denote the Sylow <M>p</M>-subgroup or the "<M>p</M>-part". In Theorem 3.3 of <Cite Key="Webb"/> P.J. Webb proved the following.
 <P/>
-<B>Theorem.</B>[Peter Webb] For any <M>G</M>-module <M>M</M> there is a (non natural) homomorphism<P/>
+<B>Theorem.</B><Cite Key="Webb"/> For any <M>G</M>-module <M>M</M> there is a (non natural) isomomorphism<P/>
 <M>H_n(G,M)_p \oplus \bigoplus_{[e^k]\, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p</M>
-<P/> for <M>n\ge 0</M>. The isomorphism can also be expressed as
+<P/> for <M>n\ge 1</M>. The isomorphism can also be expressed as
 <P/>
-<M>H_n(G,M)_p  \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p\ -\ \bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p</M> and terms can often be cancelled.
+<M>H_n(G,M)_p  \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p\ -\ \bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p</M> 
+<P/>where terms can often be cancelled.
 <P/>Thus the additive structure of the <M>p</M>-part of the
 homology of <M>G</M> is determined by that of the stabilizer groups. The result also holds with homology replaced by cohomology.
 
 <P/><B>Illustration 1</B>
 <P/>
 As an illustration of the theorem, the following commands calculate
-
 <P/>
-<M>H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(S_i,M)_3 - \bigoplus_{4\le i\le 5}H_n(S_4,M)_3</M>
-<P/> for the Mathieu simple group <M>M_{12}</M> of order <M>95040</M>, where
-<P/><M>S_1\cong S_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2</M>
-<P/><M>S_2=A_4 \times S_3</M>
-<P/><M>S_4=C_3 \times S_3</M>
-<P/><M>S_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)</M>  .
-<Example>
-<#Include SYSTEM "tutex/6.26.txt">
+<M>H_n(SL_3(\mathbb Z_2),\mathbb Z) \cong H_n(S_4,\mathbb Z)_2 \oplus H_n(S_4,\mathbb Z)_2 \ominus H_n(D_8,\mathbb Z)_2 \oplus H_n(S_3,\mathbb Z)_3 \oplus
+	H_n(C_7 : C_3,\mathbb Z)_7 </M>
+<P/>
+	where <M>n\ge 1</M>,
+	<M>S_k</M> denotes the symmetric group on <M>n</M> letters, <M>D_8</M> the dihedral group of order <M>8</M> and <M>C_7 : C_3</M> a nonabelian semi-direct product of cyclic groups.
+		Furthermore, for <M>n\ge 1</M>
+<P/><M> H_n(C_7 : C_3,\mathbb Z)_7 =\left\{\begin{array}{ll}\mathbb Z_7,\ n \equiv 5 \mod 6\\
+	                                         0,\ {\rm otherwise} \end{array}\right.</M>
+					 <P/>and
+					 <P/><M> H_n(S_3,\mathbb Z)_3 =\left\{\begin{array}{ll}\mathbb Z_3,\ n \equiv 3 \mod 4\\
+                                                 0,\ n{\rm ~otherwise .} \end{array}\right.</M>
+					 <P/> Formulas for <M>H_n(S_4,\mathbb Z)</M> and <M> H_n(D_8,\mathbb Z)</M> can be found in the literature. Alternatively, they can be computed using <B>GAP</B> for a given value of <M>n</M>. For <M>n=27</M> we find
+					 <P/><M> H_{27}(S_4,\mathbb Z)_2 \oplus H_{27}(S_4,\mathbb Z)_2 \ominus H_{27}(D_8,\mathbb Z)_2 \cong
+						 \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_4</M>
+					 <P/> and
+					 <P/><M>H_{27}(SL_3(\mathbb Z_2),\mathbb Z) \cong \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 
+						 \oplus \mathbb Z_4 \oplus \mathbb Z_3 </M>  .
+
+							 <Example>
+<#Include SYSTEM "tutex/6.34.txt">
 </Example>
 
 <P/><B>Illustration 2</B>
 <P/>
-As a second illustration, the following commands show that <M>H_n(M_{23},M)_{p}</M> is periodic for primes <M>p=5, 7, 11, 23</M> of periods dividing <M>8, 6, 10, 22</M> respectively.
+As a further illustration of the theorem, the following commands calculate
+
+
+<P/>
+<M>H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(Stab_i,M)_3 - \bigoplus_{4\le i\le 5}H_n(Stab_i,M)_3</M>
+<P/> for the Mathieu simple group <M>M_{12}</M> of order <M>95040</M>, where
+<P/><M>Stab_1\cong Stab_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2</M>
+<P/><M>Stab_2=A_4 \times S_3</M>
+<P/><M>Stab_4=C_3 \times S_3</M>
+<P/><M>Stab_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)</M>  .
+<Example>
+<#Include SYSTEM "tutex/6.26.txt">
+</Example>
+
+<P/><B>Illustration 3</B>
+<P/>
+As a third illustration, the following commands show that <M>H_n(M_{23},M)_{p}</M> is periodic for primes <M>p=5, 7, 11, 23</M> of periods dividing <M>8, 6, 10, 22</M> respectively.
 
 
 <Example>

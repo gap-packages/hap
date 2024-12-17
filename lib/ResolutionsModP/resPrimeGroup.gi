@@ -5,7 +5,7 @@
 InstallGlobalFunction(ResolutionPrimePowerGroup,
 function(arg)
 local
-	G,n,
+	R,G,n,
 	eltsG,
 	gensG,
 	Dimension,
@@ -278,7 +278,9 @@ tB:=TransposedMat(NS.vectors);
 Bcomp:=ComplementaryBasis(NS.vectors);
 
 
-for g in pcgens do     	 
+for g in pcgens do     	#This works but I forget why!
+                        #Just in case,  I've added a quick
+                        #sanity check at the end.
 Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
 
@@ -508,7 +510,7 @@ end;
 
 
 
-return Objectify(HapResolution,
+R:= Objectify(HapResolution,
 	        rec(
 		dimension:=Dimension,
 		boundary:=Boundary ,
@@ -526,6 +528,16 @@ return Objectify(HapResolution,
 		  SMBM,
 		actMat:=GactMat
 		  ));
+
+#############################Quick sanity check (not really needed) 
+if not
+List([0..n-1],i->R!.dimension(i)) = 
+List([0..n-1],i->Homology(TensorWithIntegersModP(R,prime),i))
+then return fail;
+fi;
+#############################################################
+
+return R;
 end);
 #####################################################################
 #####################################################################

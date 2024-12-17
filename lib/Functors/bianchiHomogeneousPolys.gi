@@ -103,11 +103,7 @@ m:=arg[3];
 ispsl:=Name(G){[1,2,3]} = "PSL";
 d:=G!.bianchiInteger;
 
-if d<0 then
-if d mod 4 =1 then R:=Field((1+Sqrt(d))/2); fi;
-if d mod 4 =2 or d mod 4 = 3 then R:=Field(Sqrt(d)); fi;
-fi;
-if d>0 then R:=Field(Sqrt(d)); fi;
+R:=Field(Sqrt(d)); 
 
 x:=Indeterminate(R,1);;
 y:=Indeterminate(R,2);;

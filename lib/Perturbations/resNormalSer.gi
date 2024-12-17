@@ -16,7 +16,8 @@ local
 	
 	############################ INPUT DATA #####################
 if IsGroup(arg[1][1]) then
-GensSeries:=List(arg[1],x->ReduceGenerators(GeneratorsOfGroup(x),x));
+#GensSeries:=List(arg[1],x->ReduceGenerators(GeneratorsOfGroup(x),x));
+GensSeries:=List(arg[1],x->SmallGeneratingSet(x));   #Modified November 2024
 	if Length(GensSeries[Length(GensSeries)])=0 then
 	GensSeries[Length(GensSeries)]:=[Identity(arg[1][1])]; fi;
 else GensSeries:=StructuralCopy(arg[1]);
@@ -57,6 +58,7 @@ if nohomotopy then Res[2]!.homotopy:=fail; fi;
 
 for i in [3..L] do
 Res[i]:=ResolutionFiniteExtension(GensQ[i],GensQ[i-1],Res[i-1],n,tietze);
+Res[i]!.group:=Group(GensQ[i]);  #Added November 2024
 od;
 
 return Res[Length(Res)];

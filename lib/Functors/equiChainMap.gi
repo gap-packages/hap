@@ -22,6 +22,7 @@ QisFinite:=false;
 if IsFinite(S!.group) then
 	if Order(S!.group)=Length(S!.elts) then QisFinite:=true; fi;
 fi;
+#QisFinite:=false;  #November 2024
 if QisFinite then
 	for g in S!.group do
 	if not g in EltsQ then Add(EltsQ,g);fi;
@@ -39,6 +40,7 @@ mapgensRec[m+1][i]:=[];
 od;
 od;
 
+#if false then      
 if QisFinite then
 #####################################################################
 GhomQ:=function(i);

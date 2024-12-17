@@ -148,9 +148,15 @@ mx:=ModPRingGenerators(A);;
 mx:=List(mx,A!.degree);;
 mx:=Maximum(mx)+1;
 mx:=Minimum(mx,N);
-if Length(arg)>3 then S:=arg[4]; 
+if Length(arg)>3 then S:=arg[4];                #Should delete this option
 else
-S:=ResolutionGenericGroup(G,mx+2); fi;
+   if IsOddInt(p) then
+         S:=ResolutionGenericGroup(G,mx+2);          #November 2024
+   else
+         if mx<N then S:=R; else
+         S:=ResolutionPrimePowerGroup(G,mx+2); fi;       #Wasteful!
+   fi;
+fi;
 
 x:=(1,2,3,4);;
 x:=[1..p^2];

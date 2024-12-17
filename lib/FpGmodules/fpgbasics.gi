@@ -131,6 +131,7 @@ end);
 InstallGlobalFunction(RadicalOfFpGModule,
 function(M)
 local  G, B, prime, g,radB, gens;
+#WARNING: This will only work forG a p-group
 
 if M!.matrix=[] then return M; fi;
 
@@ -142,9 +143,10 @@ ConvertToMatrixRepNC(B,prime);
 
 radB:=[];
 gens:=GeneratorsOfGroup(SylowSubgroup(G,prime));
-#gens:=ReduceGenerators(gens,G);
+gens:=ReduceGenerators(gens,G);
 
 for g in gens do
+#for g in G do
 Append(radB,SemiEchelonMat(B-M!.action(g,B)).vectors);
 od;
 

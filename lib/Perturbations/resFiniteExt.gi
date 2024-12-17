@@ -25,6 +25,7 @@ G:=R!.group;
 EltsG:=R!.elts;
 E:=Group(GensE);
 EltsE:=Elements(E);
+#EltsE:=Enumerator(E);     #Added November 2024
 
 #####################################################################
 Mult:=function(i,j);

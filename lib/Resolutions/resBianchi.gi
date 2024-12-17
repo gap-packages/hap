@@ -11,11 +11,8 @@ Print("PSL(O-d) is implemented for d= \"-26+I\", \"-22+I\", \"-21+I2\", \"-21+I3
 return fail;
 fi;
 
-if IsInt(d) then
+if IsString(d) then d:=EvalString(d); fi;
 name:=Concatenation("SL(2,O", String(d), ")");
-else
-name:=Concatenation("SLO",d,")");
-fi;
 if name="SL(2,O-2)" then 
 K:=ContractibleGcomplex("SL2O-2_a");
 Kgroup:=K!.group; Kgroup!.bianchiInteger:=-2;
@@ -25,13 +22,13 @@ Kgroup:=K!.group;
 fi;
 D:=Group( -Identity(K!.group) );;
 PK:=QuotientOfContractibleGcomplex(K,D);;
+Rgroup:=PK!.group;
+Rgroup!.bianchiInteger:=d;
+PK!.group:=Rgroup;
+
 R:=FreeGResolution(PK,n);
 Rgroup:=R!.group;
-if IsInt(d) then
 Rgroup!.bianchiInteger:=d;
-else
-Rgroup!.bianchiInteger:=fail;
-fi;
 R!.group:=Rgroup;
 
 if not '(' in name then
@@ -50,7 +47,7 @@ end);
 ################################################
 InstallGlobalFunction(ResolutionSL2QuadraticIntegers,
 function(arg)
-local d,n,K, PK, R, S, D, name, ints,x, gens, Q,OQ,I,G,i,k;
+local d,n,K, PK, R, S, D, name, ints,x, gens, Rgroup,Q,OQ,I,G,i,k;
 
 d:=arg[1];
 n:=arg[2];
@@ -75,6 +72,12 @@ fi;
 #D:=Group( -Identity(K!.group) );;
 #K:=QuotientOfContractibleGcomplex(K,D);;
 R:=FreeGResolution(K,n);
+
+Rgroup:=R!.group;
+if IsString(d) then d:=EvalString(d); fi;
+Rgroup!.bianchiInteger:=d;
+R!.group:=Rgroup;
+
 
 if not '(' in name then
 name:=SplitString(name,['O']);
