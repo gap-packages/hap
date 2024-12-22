@@ -201,6 +201,7 @@ DeclareGlobalFunction("TorsionGeneratorsAbelianGroup");
 DeclareGlobalFunction("TensorWithRationals");
 DeclareGlobalFunction("TensorNonFreeResolutionWithRationals");
 DeclareGlobalFunction("BigStepLCS");
+DeclareGlobalFunction("BigStepUCS");
 DeclareGlobalFunction("HomToIntegersModP");
 DeclareGlobalFunction("CoClass");
 DeclareGlobalFunction("BoundaryMatrix");

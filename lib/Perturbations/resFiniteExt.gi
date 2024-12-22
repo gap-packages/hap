@@ -12,7 +12,7 @@ local
 		GmapE, GmapEfirst, GmapEsecond,
 		NhomE, NhomEfirst, NhomEsecond,
 		NEhomN, NEhomNfirst,
-		S,
+		S, 
 		k,p;
 
 GensE:=StructuralCopy(arg[1]);
@@ -80,6 +80,7 @@ else
 GensN:=ReduceGenerators(GeneratorsOfGroup(N),N);
 fi;
 
+
 if Order(N)=1 then GensN:=[Identity(N)];
 else
 if Length(GensN) > 1 then
@@ -121,8 +122,8 @@ return NEhomNfirst[i];
 end;
 #####################################################################
 
-return
-TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE);
+
+return TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE);
 
 end);
 #####################################################################

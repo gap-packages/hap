@@ -676,6 +676,8 @@ fi;
 
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
 grp:=Group(EltsE);
+#grp:=SmallGeneratingSet(grp);
+#grp:=Group(grp);
 
 
 

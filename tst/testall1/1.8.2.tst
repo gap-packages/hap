@@ -21,7 +21,7 @@ gap> for k in [0..2] do
 gap> F:=FundamentalGroupOfQuotient(Y);
 <fp group on the generators [ x, y, z ]>
 gap> RelatorsOfFpGroup(F);
-[ x*y^-1*z^-1, x*z^-1*y, x*z*y^-1, x*y*z ]
+[ x*z^-1*y^-1, x*y*z^-1, x*y^-1*z, x*z*y ]
 gap> STOP_TEST( "tst.tst", 1000 );
 
 

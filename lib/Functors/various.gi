@@ -170,6 +170,27 @@ end);
 #####################################################################
 
 #####################################################################
+InstallGlobalFunction(BigStepUCS,
+function(G,n)
+local UCS,BSUCS,i;
+
+UCS:=UpperCentralSeries(G);;
+BSUCS:=[UCS[1]];
+
+for i in [2..Length(UCS)] do
+if Order(UCS[i])=1 or
+Order(BSUCS[Length(BSUCS)])/Order(UCS[i])>n then
+Append(BSUCS,[UCS[i]]);
+fi;
+od;
+
+return BSUCS;
+end);
+#####################################################################
+
+
+
+#####################################################################
 InstallGlobalFunction(CoClass,
 function(G)
 local

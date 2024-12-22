@@ -243,6 +243,10 @@ local
                 alpha, len,
                 B,i,a, b,bb,x,y,g,lst,bool;
 
+#if R!.dimension(0)=1 then return PresentationOfResolution_alt(R); fi;
+#The following works on resolutions whose boundaries can have a
+#more general form than in the _alt code.
+
 if not (IsHapResolution(R) or IsHapEquivariantCWComplex(R)) then
 Print("This function must be applied to a resolution. \n");
 return fail;
@@ -287,6 +291,7 @@ end;
 
 ###############################
 HGens:=List([1..Dimension(1)],i->Boundary(1,i));
+HGens:=List(HGens,x->SSortedList(x));
 ###############################
 
 ###############################
@@ -383,7 +388,8 @@ b:=[];
 
 for x in StructuralCopy(Boundary(2,i)) do
 y:=StructuralCopy(HGens[AbsInt(x[1])]);
-if SignInt(x[1])<0 then y[1][1]:=-y[1][1]; y[2][1]:=-y[2][1]; fi;
+if SignInt(x[1])<0 then y[1][1]:=-y[1][1]; y[2][1]:=-y[2][1]; 
+y:=SSortedList(y); fi;
 y[1][2]:=Mult(x[2],y[1][2]);
 y[2][2]:=Mult(x[2],y[2][2]);
 Add(b,[y[1],y[2],x[1]]);
@@ -428,6 +434,7 @@ a:=Filtered(x,a->not AbsInt(a[3]) in Tree);
 a:=List(a,i->SignInt(i[3])*index[AbsInt(i[3])]);
 Add(HRels1,a);
 od;
+
 
 alpha:=["x","y","z","w","v","u","t","s","r","q","p"];
 len:=Length(HGens)-Length(Tree);

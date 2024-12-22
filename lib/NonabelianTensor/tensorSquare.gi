@@ -137,7 +137,7 @@ AFhomSSF:=IsomorphismSimplifiedFpGroup(AF);
 SSF:=Image(AFhomSSF);
 
 	if SizeOrList=-1 then 		#if nilpotent
-	    SSFhomSF:=EpimorphismNilpotentQuotient(SSF);
+	    SSFhomSF:=EpimorphismNilpotentQuotient(SSF); 
 	#SSFhomSF:=IsomorphismPcGroup(SSF);
 	else				#if solvable and big
 	SSFhomSF:=EpimorphismSolvableQuotient(SSF,SizeOrList); 

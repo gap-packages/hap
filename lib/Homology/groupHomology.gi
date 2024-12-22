@@ -171,8 +171,8 @@ else
 if N<=1 then
 R:=ResolutionNilpotentGroup(G,N+1);
 else
-L:=LowerCentralSeries(G);
-L:=BigStepLCS(G,6);    #changed from 9, 22/12/2022
+L:=UpperCentralSeries(G);
+#L:=BigStepUCS(G,6);    #changed from 9, 22/12/2022
 
 R:=ResolutionNormalSeries(L,N+1,false,p);
 fi;
@@ -207,6 +207,20 @@ HomologyGenericGroup:=function()
 local
 	primes, q, S, gens, functor, R, H, TorsionCoeffs;
 
+##################################
+if N=1 and p=0 then 
+return AbelianInvariants(G); 
+fi;
+##################################
+
+##################################
+if N=1 and IsPrimeInt(p) then
+S:=AbelianInvariants(G);
+S:=Filtered(S,k->not Gcd(p,k)=1);
+return List([1..Length(S)],k->2);
+fi;
+##################################
+
 if IsPrime(p) then
 S:=SylowSubgroup(G,p);
 R:=ResolutionPrimePowerGroup(S,N+1);
@@ -225,7 +239,8 @@ for q in primes do
 S:=SylowSubgroup(G,q);
 
 if Order(S)>=128 or N>2 then
-R:=ResolutionNormalSeries(LowerCentralSeries(S),N+1);
+#R:=ResolutionNormalSeries(LowerCentralSeries(S),N+1);
+R:=ResolutionNormalSeries(UpperCentralSeries(S),N+1);
 else
 gens:=GeneratorsOfGroup(S);
 gens:=ReduceGenerators(gens,S);
