@@ -630,9 +630,9 @@ rec( freeGroup := &lt;free group on the generators [ f1, f2, f3, f4 ]&gt;,
 
 <p>The <em>Bianchi groups</em> are the groups <span class="SimpleMath">G=PSL_2(cal O_-d)</span> where <span class="SimpleMath">d</span> is a square free positive integer and <span class="SimpleMath">cal O_-d</span> is the ring of integers of the imaginary quadratic field <span class="SimpleMath">Q(sqrt-d)</span>. More explicitly,</p>
 
-<p class="pcenter">{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1 {\rm ~mod~} 4\, ,</p>
+<p class="pcenter">{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1,2 {\rm ~mod~} 4\, ,</p>
 
-<p class="pcenter">{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d \equiv 2,3 {\rm ~mod~} 4\, .</p>
+<p class="pcenter">{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d \equiv 3 {\rm ~mod~} 4\, .</p>
 
 <p>These groups act on upper-half space <span class="SimpleMath">frak h^3</span> in the same way as the Picard group. Upper-half space can be tessellated by a 'fundamental domain' for this action. Moreover, as with the Picard group, this tessellation contains a <span class="SimpleMath">2</span>-dimensional cellular subspace <span class="SimpleMath">cal T⊂ frak h^3</span> where <span class="SimpleMath">cal T</span> is a contractible CW-complex on which <span class="SimpleMath">G</span> acts cellularly. It should be mentioned that the fundamental domain and the contractible <span class="SimpleMath">2</span>-complex <span class="SimpleMath">cal T</span> are not uniquely determined by <span class="SimpleMath">G</span>. Various algorithms exist for computing <span class="SimpleMath">cal T</span> and its cell stabilizers. One algorithm due to Swan <a href="chapBib.html#biBswan">[Swa71a]</a> has been implemented by Alexander Rahm <a href="chapBib.html#biBrahmthesis">[Rah10]</a> and the output for various values of <span class="SimpleMath">d</span> are stored in HAP. Another approach is to use Voronoi's theory of perfect forms. This approach has been implemented by Sebastian Schoennenbeck <a href="chapBib.html#biBschoennenbeck">[BCNS15]</a> and, again, its output for various values of <span class="SimpleMath">d</span> are stored in HAP. The following commands combine data from Schoennenbeck's algorithm with free resolutions for cell stabiliers to compute</p>
 
@@ -1034,13 +1034,31 @@ ideal of norm 4817 in O(GaussianRationals)
 [ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, 
   4078793513671 ]
 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">II:=QuadraticIdeal(OQ,47+61*Sqrt(-1));</span>
+ideal of norm 5930 in O(GaussianRationals)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GG:=HAP_CongruenceSubgroupGamma0(II);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(GG);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 11, 16, 16, 16, 16, 17, 17, 17, 32, 37, 
+  61, 61, 64, 64, 128, 263, 263, 263, 263, 512, 1024, 5099, 5099, 72043, 
+  72043 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">III:=QuadraticIdeal(OQ,49+69*Sqrt(-1));</span>
+ideal of norm 7162 in O(GaussianRationals)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GGG:=HAP_CongruenceSubgroupGamma0(III);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(GGG);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 8, 8, 8, 8, 13, 13, 25, 59, 
+  59, 179, 283, 283, 379, 857, 967, 967, 3769, 13537, 25601, 222659, 
+  8180323, 8180323, 11450932001, 11450932001 ]
+
 </pre></div>
 
 <p>We write <span class="SimpleMath">G^ab_tors</span> to denote the maximal finite summand of the first homology group of <span class="SimpleMath">G</span> and refer to this as the <em>torsion subgroup</em>. Nicholas Bergeron and Akshay Venkatesh <a href="chapBib.html#biBbergeron">[Ber16]</a> have conjectured relationships between the torsion in congruence subgroups <span class="SimpleMath">Γ</span> and the volume of their quotient manifold <span class="SimpleMath">frak h^3/Γ</span>. For instance, for the Gaussian integers they conjecture</p>
 
 <p class="pcenter"> \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49}  + \cdots</p>
 
-<p>as the norm of the prime ideal <span class="SimpleMath">I</span> tends to <span class="SimpleMath">∞</span>. The following approximates <span class="SimpleMath">λ/18π = 0.0161957</span> and <span class="SimpleMath">fraclog |Γ_0(I)_tors^ab|{ Norm(I) = 0.00913432</span> for the above example.</p>
+<p>as the norm of the prime ideal <span class="SimpleMath">I</span> tends to <span class="SimpleMath">∞</span>. The following approximates <span class="SimpleMath">λ/18π = 0.0161957</span> and <span class="SimpleMath">fraclog |Γ_0(I)_tors^ab|{ Norm(I) = 0.00913432</span> and <span class="SimpleMath">fraclog |Γ_0(II)_tors^ab|{ Norm(II) = 0.0136594</span> and <span class="SimpleMath">fraclog |Γ_0(III)_tors^ab|{ Norm(III) = 0.0120078</span> for the above example.</p>
 
 
 <div class="example"><pre>
@@ -1048,8 +1066,14 @@ ideal of norm 4817 in O(GaussianRationals)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lfunction(Q,2)/(18*3.142);</span>
 0.0161957
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(AbelianInvariants(F)),10)/Norm(I);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(AbelianInvariants(G)),10)/Norm(I);</span>
 0.00913432
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(Filtered(AbelianInvariants(GG),i-&gt;not i=0)),10)/Norm(II);</span>
+0.0136594
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(Filtered(AbelianInvariants(GGG),i-&gt;not i=0)),10)/Norm(III);</span>
+0.0120078
 
 </pre></div>
 
