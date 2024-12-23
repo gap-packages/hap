@@ -20,7 +20,7 @@ C:=F(R);
 if IsGroup(GG) then G:=GG; 
 P1:=Normalizer(G,P);
 
-AscChn:=AscendingChain(G,P1);
+AscChn:=AscendingChain(G,P1 : refineIndex:=100);  #Added refineIndex, December 2024
 fi;
 if IsList(GG) then G:=GG[Length(GG)]; 
 AscChn:=GG;
