@@ -32,8 +32,9 @@ Tz:=function(R) return R; end;
    fi;
 
    if IsPGroup(G) then
-   #return ResolutionNormalSeries(LowerCentralSeries(G),N);
+   #return ResolutionNormalSeries(UpperCentralSeries(G),N);
    return ResolutionNormalSeries(BigStepLCS(G,8),N);  #OPTIMIZE!!!
+   #return ResolutionNormalSeries(BigStepUCS(G,8),N);
    fi;
 
 L:=LowerCentralSeries(G);

@@ -145,11 +145,11 @@ od;
 FH:=F/Frels;
 FHgens:=GeneratorsOfGroup(FH);
 
-if 0 in AbelianInvariants(FH) then
+#if 0 in AbelianInvariants(FH) then
 FHhomH:=NqEpimorphismNilpotentQuotient(FH,1);
-else
-FHhomH:=EpimorphismNilpotentQuotient(FH); #Commented out 20 June 2018
-fi;
+#else
+#FHhomH:=EpimorphismNilpotentQuotient(FH); #Commented out 20 June 2018
+#fi;
 
 
 H:=Range(FHhomH);

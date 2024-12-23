@@ -227,7 +227,7 @@ fi;
 #Print("\n",[NisFinite, GisFinite, EisFinite],"\n");
 
 
-T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE);
+T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE,E);
 
         ########################################################
         AppendToElts:=function(x);

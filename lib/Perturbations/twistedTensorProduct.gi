@@ -2,7 +2,7 @@
 
 #####################################################################
 InstallGlobalFunction(TwistedTensorProduct,
-function(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE)
+function(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE,E)
 local   
 		DimensionR,BoundaryR,HomotopyR,
 		DimensionS,BoundaryS,HomotopyS,
@@ -675,9 +675,8 @@ fi;
 
 
 #########FINISHED WORKING ON THE CONTRACTING HOMOTOPY##############
-grp:=Group(EltsE);
-#grp:=SmallGeneratingSet(grp);
-#grp:=Group(grp);
+#grp:=Group(EltsE);
+grp:=E;
 
 
 

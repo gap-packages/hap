@@ -19,15 +19,9 @@ N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
 HomotopyS:=S!.homotopy;
 EltsQ:=S!.elts;
 QisFinite:=false;
-if IsFinite(S!.group) then
+if IsFinite(S!.group) and Order(S!.group)<10^6 then
 	if Order(S!.group)=Length(S!.elts) then QisFinite:=true; fi;
-fi;
-#QisFinite:=false;  #November 2024
-if QisFinite then
-	for g in S!.group do
-	if not g in EltsQ then Add(EltsQ,g);fi;
-	od;
-fi;
+fi;     #Changed and deleted things here   December 2024
 DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 EltsG:=R!.elts;

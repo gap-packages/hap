@@ -11,7 +11,7 @@ local
 		EhomG, EhomGfirst, EhomGsecond,
 		GmapE, GmapEfirst, GmapEsecond,
 		NhomE, NhomEfirst, NhomEsecond,
-		NEhomN, NEhomNfirst,
+		NEhomN, NEhomNfirst, GmapELst,
 		S, 
 		k,p;
 
@@ -24,8 +24,11 @@ if Length(arg)>4 then tietze:=arg[5]; else tietze:=false; fi;
 G:=R!.group;
 EltsG:=R!.elts;
 E:=Group(GensE);
+if Size(E) <10^6 then 
 EltsE:=Elements(E);
-#EltsE:=Enumerator(E);     #Added November 2024
+else
+EltsE:=Enumerator(E);     #Added November 2024
+fi;
 
 #####################################################################
 Mult:=function(i,j);
@@ -65,6 +68,7 @@ fi;
 #GmapEfirst:=GroupHomomorphismByImagesNC(G,E,GensG,GensE);
 #GmapEsecond:=List([1..Size(G)],i->Position(EltsE,Image(GmapEfirst,EltsG[i])));
 
+if Order(G)<10^4 then
 GmapEsecond:=List([1..Size(G)],i->Position(EltsE,
 PreImagesRepresentative(EhomGfirst,EltsG[i])));
 
@@ -73,6 +77,21 @@ GmapE:=function(i);
 return GmapEsecond[i];
 end;
 #####################################################################
+
+else
+GmapELst:=List([1..Size(G)],i->0);
+
+#####################################################################
+GmapE:=function(i);
+if GmapELst[i]=0 then
+GmapELst[i]:= Position(EltsE,PreImagesRepresentative(EhomGfirst,EltsG[i]));
+fi;
+return GmapELst[i];
+end;
+#####################################################################
+
+
+fi;
 
 N:=Kernel(EhomGfirst);
 if IsAbelian(N) then GensN:=TorsionGeneratorsAbelianGroup(N);
@@ -123,7 +142,7 @@ end;
 #####################################################################
 
 
-return TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE);
+return TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE,E);
 
 end);
 #####################################################################

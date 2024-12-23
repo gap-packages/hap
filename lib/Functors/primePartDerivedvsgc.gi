@@ -8,7 +8,7 @@ local
         DCRS, L, S, f,fx, imfx, bool, dcrs,
 	HK, HPK, HKhomHPK, HPKhomHP, HKhomHP, HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
-	x, y, i, Cent, hh, HPpres, ord;
+	x, y, i, Cent, hh, HPpres, ord, Pone, RPone;
 
 
 ####################################
@@ -28,13 +28,14 @@ P1:=Normalizer(G,P);
 
 fi;
 
-
-HP:=GroupHomomorphismByFunction(P,P,x->x);
-HP:=EquivariantChainMap(R,R,HP);
-HP:=F(HP);
-HP:=Homology(HP,n);   #This takes too much time!!
-
-HP:=Source(HP);
+#HP:=GroupHomomorphismByFunction(P,P,x->x);
+#HP:=EquivariantChainMap(R,R,HP);
+#HP:=F(HP);
+#HP:=Homology(HP,n);   #This takes too much time!!
+x:=IntegralHomology("HomologyAsFpGroup",n);       #Modified December 2024
+HP:=x(F(R),n);
+HP:=HP.fpgroup;
+#HP:=Source(HP);
 if Length(AbelianInvariants(HP))=0 then return []; fi;
 HPrels:=[Identity(HP)];
 ####################################
@@ -148,6 +149,7 @@ DCRS:=Filtered(DCRS,a->not a in Cent);
 #od;
 #for L in dcrs do  #This causes problems.  Need to think more!!!
 ############################################
+
    for L in DCRS do
    cnt:=cnt+1;
    AddRels(AscChn[i-1],L);
