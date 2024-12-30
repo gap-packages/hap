@@ -207,7 +207,7 @@
   
   [33X[0;0YAny group extension [22XN↣ E ↠ G[122X gives rise to:[133X
   
-  [30X    [33X[0;6Yan outer action [22Xα: G→ Out(G)[122X of [22XG[122X on [22XN[122X.[133X
+  [30X    [33X[0;6Yan outer action [22Xα: G→ Out(N)[122X of [22XG[122X on [22XN[122X.[133X
   
   [30X    [33X[0;6Yan  action  [22XG→  Aut(Z(N))[122X of [22XG[122X on the centre of [22XN[122X, uniquely induced by
         the outer action [22Xα[122X and the canonical action of [22XOut(N)[122X on [22XZ(N)[122X.[133X
@@ -348,7 +348,98 @@
   [4X[32X[104X
   
   
-  [1X6.8 [33X[0;0YSecond group cohomology and cocyclic Hadamard matrices[133X[101X
+  [1X6.8 [33X[0;0YCocyclic groups: a convenient way of representing certain groups[133X[101X
+  
+  [33X[0;0Y[12XGAP[112X  offers  a number of data types for representing groups, including those
+  of   fp-groups   ([13Xfinitely  presented  groups[113X),  pc-groups  ([13Xpower-conjugate
+  presentated groups[113X for finite polycyclic groups), pcp-groups ([13Xpolycyclically
+  presented  groups[113X  for  finite  and infinite polycyclic groups), permutation
+  groups  (for  finite  groups),  and matrix groups over a field or ring. Each
+  data type has its advantages and limitations.[133X
+  
+  [33X[0;0YBased  on  the  definitions  and examples in Section [14X6.7[114X the additional data
+  type of a cc-group ([13Xcocyclic group[113X) is provided in [12XHAP[112X. This can be used for
+  a  group  [22XE[122X  arising as a group extension [22XN↣ E ↠ G[122X and is a component object
+  involving:[133X
+  
+  [30X    [33X[0;6Y[10XE!.Base[110X consisting of some representation of a group [22XG[122X.[133X
+  
+  [30X    [33X[0;6Y[10XE!.Fibre[110X consisting of some representation of a group [22XN[122X.[133X
+  
+  [30X    [33X[0;6Y[10XE!.OuterGroup[110X consisting of an outer action [22Xα: G→ Out(N)[122X of [22XG[122X on [22XN[122X.[133X
+  
+  [30X    [33X[0;6Y[10XE!.Cocycle[110X  consisting of a [22X2[122X-cocycle [22Xf: G× G→ Z(N)[122X with values in the
+        [22XG[122X-module [22XA=Z(N)[122X.[133X
+  
+  [33X[0;0YThe  first  example in Section [14X6.7[114X illustrates the construction of cc-groups
+  for  which  both  the  base [22XG[122X and fibre [22XN[122X are finite pc-groups. That example
+  extends to any scenario in which the base [22XG[122X is a group for which:[133X
+  
+  [31X1[131X   [33X[0;6Ywe can construct the first 3 degrees of a free [22XZG[122X-resolution [22XC_∗ X[122X.[133X
+  
+  [31X2[131X   [33X[0;6Ywe  can  construct  the  first  2 terms of a contracting homotopy [22Xh_i:
+        C_nX→ C_n+1X[122X for [22Xi=0,1[122X.[133X
+  
+  [31X3[131X   [33X[0;6Y[22XN[122X  is  a  group  in which we can multiply elements effectively and for
+        which  we  can  determine the centre [22XZ(N)[122X and outer automorphism group
+        [22XOut(N)[122X.[133X
+  
+  [33X[0;0YAs  an  illustration where the base group is a non-solvable finite group and
+  the  fibre is the infinite cyclic group, with base group acting trivially on
+  the  fibre, the following commands list up to Yoneda equivalence all central
+  extensions  [22XZ  ↣  E  ↠  G[122X  for  [22XG=A_5:C_16[122X. The base group is a non-solvable
+  semi-direct  product  of  order  [22X960[122X  and thus none of the [22X16[122X extensions are
+  polycyclic. The commands classify the extensions according to their integral
+  homology in degrees [22X≤ 2[122X, showing that there are precisely 5 such equivalence
+  classes of extensions. Thus, there are at least 5 distinct isomorphism types
+  among  the  [22X16[122X  extensions.  A  presentation  is  constructed  for the group
+  corresponding to the sixteenth extension.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SmallGroup(960,637);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
+    [4X[28X"A5 : C16"[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN:=AbelianPcpGroup([0]);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=TrivialGModuleAsGOuterGroup(G,N);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(G,3);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToGModule(R,N);;[127X[104X
+    [4X[25Xgap>[125X [27XCH:=CohomologyModule(C,2);;[127X[104X
+    [4X[25Xgap>[125X [27XElts:=Elements(ActedGroup(CH));;[127X[104X
+    [4X[25Xgap>[125X [27Xlst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;[127X[104X
+    [4X[25Xgap>[125X [27Xccgrps := List(lst, x->CcGroup(N, x));;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xinv:=function(gg)[127X[104X
+    [4X[25X>[125X [27Xlocal T;[127X[104X
+    [4X[25X>[125X [27XT:=ResolutionInfiniteCcGroup(gg,3);[127X[104X
+    [4X[25X>[125X [27Xreturn List([1..2],i->Homology(TensorWithIntegers(T),i));[127X[104X
+    [4X[25X>[125X [27Xend;;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XEquivClasses:=Classify(ccgrps,inv);[127X[104X
+    [4X[28X [ <Cc-group of Size infinity>, <Cc-group of Size infinity>, [128X[104X
+    [4X[28X      <Cc-group of Size infinity>, <Cc-group of Size infinity>, [128X[104X
+    [4X[28X      <Cc-group of Size infinity>, <Cc-group of Size infinity>, [128X[104X
+    [4X[28X      <Cc-group of Size infinity>, <Cc-group of Size infinity> ], [128X[104X
+    [4X[28X  [ <Cc-group of Size infinity>, <Cc-group of Size infinity>, [128X[104X
+    [4X[28X      <Cc-group of Size infinity>, <Cc-group of Size infinity> ], [128X[104X
+    [4X[28X  [ <Cc-group of Size infinity>, <Cc-group of Size infinity> ], [128X[104X
+    [4X[28X  [ <Cc-group of Size infinity> ], [ <Cc-group of Size infinity> ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(EquivClasses,Size);[127X[104X
+    [4X[28X[ 8, 4, 2, 1, 1 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF16:=Image(IsomorphismFpGroup(ccgrps[16]));[127X[104X
+    [4X[28X<fp group on the generators [ x, y, z, w, v ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(F16);[127X[104X
+    [4X[28X[ (x^2*y*z*w*z*y)^3*x^2*(y*x*w*y^2*z*x*y*z*y)^3*y*x*w*y^2*z*x*y^2*z*w*y^2*z*y,[128X[104X
+    [4X[28X  x*y^-2*w^-1*z^-1*y^-1*x^-1*y, x*z^-1*y^-1*z^-1*w^-1*z^-1*y^-1*x^-1*z, [128X[104X
+    [4X[28X  x*y^-2*z^-1*w^-1*z^-1*y^-1*x^-1*w, z^-2, w^-2, y^-3, w*y^-1*w^-1*y^-1, [128X[104X
+    [4X[28X  w*z*w^-1*z^-1*w^-1*z, z*y^2*(z^-1*y^-1)^2, v^-1*x^-1*v*x, v*y*v^-1*y^-1, [128X[104X
+    [4X[28X  v*z*v^-1*z^-1, v*w*v^-1*w^-1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.9 [33X[0;0YSecond group cohomology and cocyclic Hadamard matrices[133X[101X
   
   [33X[0;0YAn  [13XHadamard matrix[113X is a square [22Xn× n[122X matrix [22XH[122X whose entries are either [22X+1[122X or
   [22X-1[122X  and  whose  rows are mutually orthogonal, that is [22XH H^t = nI_n[122X where [22XH^t[122X
@@ -371,7 +462,7 @@
   [4X[32X[104X
   
   
-  [1X6.9 [33X[0;0YThird group cohomology and homotopy [22X2[122X[101X[1X-types[133X[101X
+  [1X6.10 [33X[0;0YThird group cohomology and homotopy [22X2[122X[101X[1X-types[133X[101X
   
   [33X[0;0Y[12XHomotopy 2-types[112X[133X
   
@@ -440,7 +531,7 @@
   These homotopy groups have orders [22X8[122X and [22X2[122X respectively.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG:=SmallGroup(64,134);;[127X[104X
+    [4X[28X	gap> G:=SmallGroup(64,134);;[128X[104X
     [4X[25Xgap>[125X [27XH:=AutomorphismGroupAsCatOneGroup(G);;[127X[104X
     [4X[25Xgap>[125X [27Xpi_1:=HomotopyGroup(H,1);;[127X[104X
     [4X[25Xgap>[125X [27Xpi_2:=HomotopyModule(H,2);;[127X[104X
@@ -449,6 +540,7 @@
     [4X[25Xgap>[125X [27XOrder(ActedGroup(pi_2));[127X[104X
     [4X[28X2[128X[104X
     [4X[28X[128X[104X
+    [4X[28X	[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe   following   additional  commands  show  that  there  are  [22X1024[122X  Yoneda
@@ -456,22 +548,24 @@
   module equal to [22Xπ_2[122X in our example.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(pi_1,4);;[127X[104X
+    [4X[28X	gap> R:=ResolutionFiniteGroup(pi_1,4);;[128X[104X
     [4X[25Xgap>[125X [27XC:=HomToGModule(R,pi_2);;[127X[104X
     [4X[25Xgap>[125X [27XCH:=CohomologyModule(C,3);;[127X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(ActedGroup(CH));[127X[104X
     [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
     [4X[28X[128X[104X
+    [4X[28X	[128X[104X
   [4X[32X[104X
   
   [33X[0;0YA  [22X3[122X-cocycle  [22Xf : π_1 × π_1 × π_1 → π_2[122X corresponding to a random cohomology
   class [22Xk∈ H^3(π_1,π_2)[122X can be produced using the following command.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx:=Random(Elements(ActedGroup(CH)));;[127X[104X
+    [4X[28X	gap> x:=Random(Elements(ActedGroup(CH)));;[128X[104X
     [4X[25Xgap>[125X [27Xf:=CH!.representativeCocycle(x);[127X[104X
     [4X[28XStandard 3-cocycle [128X[104X
     [4X[28X[128X[104X
+    [4X[28X	[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  [22X3[122X-cocycle  corresponding  to the Postnikov invariant of [22XH[122X itself can be

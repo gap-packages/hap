@@ -43,10 +43,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8333413B838D787D">6.7 <span class="Heading">Second group cohomology and group extensions</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C60E2B578074532">6.8 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F04FA5E81FFA848">6.8 <span class="Heading">Cocyclic groups: a convenient way of representing  certain groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X78040D8580D35D53">6.9 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C60E2B578074532">6.9 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X78040D8580D35D53">6.10 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
 </span>
 </div>
 </div>
@@ -228,7 +231,7 @@ true
 
 
 <ul>
-<li><p>an outer action <span class="SimpleMath">α: G→ Out(G)</span> of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>.</p>
+<li><p>an outer action <span class="SimpleMath">α: G→ Out(N)</span> of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>.</p>
 
 </li>
 <li><p>an action <span class="SimpleMath">G→ Aut(Z(N))</span> of <span class="SimpleMath">G</span> on the centre of <span class="SimpleMath">N</span>, uniquely induced by the outer action <span class="SimpleMath">α</span> and the canonical action of <span class="SimpleMath">Out(N)</span> on <span class="SimpleMath">Z(N)</span>.</p>
@@ -361,9 +364,91 @@ false
 
 </pre></div>
 
+<p><a id="X7F04FA5E81FFA848" name="X7F04FA5E81FFA848"></a></p>
+
+<h4>6.8 <span class="Heading">Cocyclic groups: a convenient way of representing  certain groups</span></h4>
+
+<p><strong class="button">GAP</strong> offers a number of data types for representing groups, including those of fp-groups (<em>finitely presented groups</em>), pc-groups (<em>power-conjugate presentated groups</em> for finite polycyclic groups), pcp-groups (<em>polycyclically presented groups</em> for finite and infinite polycyclic groups), permutation groups (for finite groups), and matrix groups over a field or ring. Each data type has its advantages and limitations.</p>
+
+<p>Based on the definitions and examples in Section <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.7</span></a> the additional data type of a cc-group (<em>cocyclic group</em>) is provided in <strong class="button">HAP</strong>. This can be used for a group <span class="SimpleMath">E</span> arising as a group extension <span class="SimpleMath">N↣ E ↠ G</span> and is a component object involving:</p>
+
+
+<ul>
+<li><p><code class="code">E!.Base</code> consisting of some representation of a group <span class="SimpleMath">G</span>.</p>
+
+</li>
+<li><p><code class="code">E!.Fibre</code> consisting of some representation of a group <span class="SimpleMath">N</span>.</p>
+
+</li>
+<li><p><code class="code">E!.OuterGroup</code> consisting of an outer action <span class="SimpleMath">α: G→ Out(N)</span> of <span class="SimpleMath">G</span> on <span class="SimpleMath">N</span>.</p>
+
+</li>
+<li><p><code class="code">E!.Cocycle</code> consisting of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ Z(N)</span> with values in the <span class="SimpleMath">G</span>-module <span class="SimpleMath">A=Z(N)</span>.</p>
+
+</li>
+</ul>
+<p>The first example in Section <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.7</span></a> illustrates the construction of cc-groups for which both the base <span class="SimpleMath">G</span> and fibre <span class="SimpleMath">N</span> are finite pc-groups. That example extends to any scenario in which the base <span class="SimpleMath">G</span> is a group for which:</p>
+
+<ol>
+<li><p>we can construct the first 3 degrees of a free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">C_∗ X</span>.</p>
+
+</li>
+<li><p>we can construct the first 2 terms of a contracting homotopy <span class="SimpleMath">h_i: C_nX→ C_n+1X</span> for <span class="SimpleMath">i=0,1</span>.</p>
+
+</li>
+<li><p><span class="SimpleMath">N</span> is a group in which we can multiply elements effectively and for which we can determine the centre <span class="SimpleMath">Z(N)</span> and outer automorphism group <span class="SimpleMath">Out(N)</span>.</p>
+
+</li>
+</ol>
+<p>As an illustration where the base group is a non-solvable finite group and the fibre is the infinite cyclic group, with base group acting trivially on the fibre, the following commands list up to Yoneda equivalence all central extensions <span class="SimpleMath">Z ↣ E ↠ G</span> for <span class="SimpleMath">G=A_5:C_16</span>. The base group is a non-solvable semi-direct product of order <span class="SimpleMath">960</span> and thus none of the <span class="SimpleMath">16</span> extensions are polycyclic. The commands classify the extensions according to their integral homology in degrees <span class="SimpleMath">≤ 2</span>, showing that there are precisely 5 such equivalence classes of extensions. Thus, there are at least 5 distinct isomorphism types among the <span class="SimpleMath">16</span> extensions. A presentation is constructed for the group corresponding to the sixteenth extension.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SmallGroup(960,637);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"A5 : C16"
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=AbelianPcpGroup([0]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=TrivialGModuleAsGOuterGroup(G,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CH:=CohomologyModule(C,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elts:=Elements(ActedGroup(CH));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lst := List(Elts{[1..Length(Elts)]},x-&gt;CH!.representativeCocycle(x));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ccgrps := List(lst, x-&gt;CcGroup(N, x));;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv:=function(gg)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local T;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=ResolutionInfiniteCcGroup(gg,3);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return List([1..2],i-&gt;Homology(TensorWithIntegers(T),i));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivClasses:=Classify(ccgrps,inv);</span>
+ [ &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt;, 
+      &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt;, 
+      &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt;, 
+      &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt; ], 
+  [ &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt;, 
+      &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt; ], 
+  [ &lt;Cc-group of Size infinity&gt;, &lt;Cc-group of Size infinity&gt; ], 
+  [ &lt;Cc-group of Size infinity&gt; ], [ &lt;Cc-group of Size infinity&gt; ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(EquivClasses,Size);</span>
+[ 8, 4, 2, 1, 1 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F16:=Image(IsomorphismFpGroup(ccgrps[16]));</span>
+&lt;fp group on the generators [ x, y, z, w, v ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(F16);</span>
+[ (x^2*y*z*w*z*y)^3*x^2*(y*x*w*y^2*z*x*y*z*y)^3*y*x*w*y^2*z*x*y^2*z*w*y^2*z*y,
+  x*y^-2*w^-1*z^-1*y^-1*x^-1*y, x*z^-1*y^-1*z^-1*w^-1*z^-1*y^-1*x^-1*z, 
+  x*y^-2*z^-1*w^-1*z^-1*y^-1*x^-1*w, z^-2, w^-2, y^-3, w*y^-1*w^-1*y^-1, 
+  w*z*w^-1*z^-1*w^-1*z, z*y^2*(z^-1*y^-1)^2, v^-1*x^-1*v*x, v*y*v^-1*y^-1, 
+  v*z*v^-1*z^-1, v*w*v^-1*w^-1 ]
+
+</pre></div>
+
 <p><a id="X7C60E2B578074532" name="X7C60E2B578074532"></a></p>
 
-<h4>6.8 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
+<h4>6.9 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
 
 <p>An <em>Hadamard matrix</em> is a square <span class="SimpleMath">n× n</span> matrix <span class="SimpleMath">H</span> whose entries are either <span class="SimpleMath">+1</span> or <span class="SimpleMath">-1</span> and whose rows are mutually orthogonal, that is <span class="SimpleMath">H H^t = nI_n</span> where <span class="SimpleMath">H^t</span> denotes the transpose and <span class="SimpleMath">I_n</span> denotes the <span class="SimpleMath">n× n</span> identity matrix.</p>
 
@@ -382,7 +467,7 @@ false
 
 <p><a id="X78040D8580D35D53" name="X78040D8580D35D53"></a></p>
 
-<h4>6.9 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
+<h4>6.10 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
 
 <p><strong class="button">Homotopy 2-types</strong></p>
 
@@ -439,7 +524,7 @@ false
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SmallGroup(64,134);;</span>
+	gap&gt; G:=SmallGroup(64,134);;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=AutomorphismGroupAsCatOneGroup(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_1:=HomotopyGroup(H,1);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_2:=HomotopyModule(H,2);;</span>
@@ -448,29 +533,29 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(ActedGroup(pi_2));</span>
 2
 
-</pre></div>
+	</pre></div>
 
 <p>The following additional commands show that there are <span class="SimpleMath">1024</span> Yoneda equivalence classes of cat<span class="SimpleMath">^1</span>-groups with fundamental group <span class="SimpleMath">π_1</span> and <span class="SimpleMath">π_1</span>- module equal to <span class="SimpleMath">π_2</span> in our example.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(pi_1,4);;</span>
+	gap&gt; R:=ResolutionFiniteGroup(pi_1,4);;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToGModule(R,pi_2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CH:=CohomologyModule(C,3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(ActedGroup(CH));</span>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
 
-</pre></div>
+	</pre></div>
 
 <p>A <span class="SimpleMath">3</span>-cocycle <span class="SimpleMath">f : π_1 × π_1 × π_1 → π_2</span> corresponding to a random cohomology class <span class="SimpleMath">k∈ H^3(π_1,π_2)</span> can be produced using the following command.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Random(Elements(ActedGroup(CH)));;</span>
+	gap&gt; x:=Random(Elements(ActedGroup(CH)));;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=CH!.representativeCocycle(x);</span>
 Standard 3-cocycle 
 
-</pre></div>
+	</pre></div>
 
 <p>The <span class="SimpleMath">3</span>-cocycle corresponding to the Postnikov invariant of <span class="SimpleMath">H</span> itself can be easily constructed directly from its definition in terms of a set-theoretic 'section' of the crossed module corresponding to <span class="SimpleMath">H</span>.</p>
 
