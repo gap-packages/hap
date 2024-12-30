@@ -444,7 +444,94 @@
   [4X[32X[104X
   
   
-  [1X6.9 [33X[0;0YSecond group cohomology and cocyclic Hadamard matrices[133X[101X
+  [1X6.9 [33X[0;0YEffective group presentations[133X[101X
+  
+  [33X[0;0YFor  any  free [22XZG[122X-resolution [22XR_∗=C_∗ X[122X arising as the cellular chain complex
+  of  a contractible CW-complex, the terms in degrees [22X≤ 2[122X correspond to a free
+  presentation   for   the  group  [22XG[122X.  The  following  example  accesses  this
+  presentation for the group [22XPGL_3( Z[sqrt-1])[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("PGL(3,Z[i])");;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,2);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PresentationOfResolution(R);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=P.freeGroup/P.relators;[127X[104X
+    [4X[28X<fp group on the generators [ v, w, x, y, z ]>[128X[104X
+    [4X[25Xgap>[125X [27XP.relators;[127X[104X
+    [4X[28X[ v^2, w^-1*v*w*v^-1, w^-1*v^-1*w^-1, (x^-1*w)^3, (y^-1*w)^3, (z^-1*w)^4, [128X[104X
+    [4X[28X  y^-1*v^-1*z*y^-1*x, y^-1*v*x*v^-1*x*v, v^-1*z*v^-1*x*y, v^-1*x*v*y*v*x*v*y, [128X[104X
+    [4X[28X  x^3, x*z*y, y^-1*v^-1*y^2*v*y^-1, (v*y)^4, z^-1*y*v*z^-1, (v*y*z)^2, [128X[104X
+    [4X[28X  v^-1*(z*v)^2*z ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  homomorphism [22Xh_0: R_0 → R_1[122X of a contracting homotopy provides a unique
+  expression  for  each  element  of  [22XG[122X  as  a word in the free generators. To
+  illustrate  this,  we  consider  the  Sylow  [22X2[122X-subgroup [22XH=Syl_2(M_24)[122X of the
+  Mathieu group [22XM_24[122X. We obtain a resolution [22XR_∗[122X for [22XH[122X by recursively applying
+  perturbation  techniques  to  a  composition series for [22XH[122X. Such a resolution
+  will yield a "kind of" power-conjugate presentation for [22XH[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XH:=SylowSubgroup(MathieuGroup(24),2);[127X[104X
+    [4X[28X<permutation group of size 1024 with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(H);[127X[104X
+    [4X[28X1024[128X[104X
+    [4X[25Xgap>[125X [27XC:=CompositionSeries(H);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSubnormalSeries(C,2);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PresentationOfResolution(R);;[127X[104X
+    [4X[25Xgap>[125X [27XP.freeGroup/P.relators;[127X[104X
+    [4X[28X<fp group on the generators [ q, r, s, t, u, v, w, x, y, z ]>[128X[104X
+    [4X[25Xgap>[125X [27XP.relators;[127X[104X
+    [4X[28X[ q^-2*z*y*x*w*v, q*r^-1*q^-1*y*u*r, s*q*s^-1*q^-1, t*q*t^-1*q^-1, [128X[104X
+    [4X[28X  q*u^-1*q^-1*y*v*u, y*q*v^-1*q^-1, q*w^-1*q^-1*z*x, w*q*x^-1*q^-1, [128X[104X
+    [4X[28X  q*y^-1*q^-1*z*v, z*q*z^-1*q^-1, r^-2, t*r*s^-1*r^-1, s*r*t^-1*r^-1, [128X[104X
+    [4X[28X  u*r*u^-1*r^-1, v*r*v^-1*r^-1, r*w^-1*r^-1*y*w*u, r*x^-1*r^-1*y*x*u, [128X[104X
+    [4X[28X  y*r*y^-1*r^-1, z*r*z^-1*r^-1, s^-2, t*s*t^-1*s^-1, x*s*u^-1*s^-1, [128X[104X
+    [4X[28X  s*v^-1*s^-1*z*y*w*u, s*w^-1*s^-1*y*v*u, u*s*x^-1*s^-1, s*y^-1*s^-1*y*x*u, [128X[104X
+    [4X[28X  z*s*z^-1*s^-1, t^-2, t*u^-1*t^-1*y*x*u, t*v^-1*t^-1*z*w, t*w^-1*t^-1*z*v, [128X[104X
+    [4X[28X  y*t*x^-1*t^-1, x*t*y^-1*t^-1, z*t*z^-1*t^-1, u^-2, v*u*v^-1*u^-1, [128X[104X
+    [4X[28X  u*w^-1*u^-1*z*w, x*u*x^-1*u^-1, y*u*y^-1*u^-1, z*u*z^-1*u^-1, v^-2, [128X[104X
+    [4X[28X  w*v*w^-1*v^-1, v*x^-1*v^-1*z*x, y*v*y^-1*v^-1, z*v*z^-1*v^-1, w^-2, [128X[104X
+    [4X[28X  x*w*x^-1*w^-1, w*y^-1*w^-1*z*y, z*w*z^-1*w^-1, x^-2, y*x*y^-1*x^-1, [128X[104X
+    [4X[28X  z*x*z^-1*x^-1, y^-2, z*y*z^-1*y^-1, z^-2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following additional commands use the contracting homotopy homomorphism
+  [22Xh_0:  R_0→  R_1[122X  to  express  some random elements of [22XH[122X as words in the free
+  generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(H);[127X[104X
+    [4X[28X(1,6)(2,3)(4,9)(5,16)(7,10)(8,21)(11,18)(12,17)(13,19)(14,20)(15,22)(23,24)[128X[104X
+    [4X[25Xgap>[125X [27XP.wordInFreeGenerators(g);[127X[104X
+    [4X[28Xq^-1*t^-1*x^-1*y^-1[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(H);[127X[104X
+    [4X[28X(1,6)(2,23,10,18)(3,22,19,24)(4,11,15,9)(7,8,21,13)(12,14)[128X[104X
+    [4X[25Xgap>[125X [27XP.wordInFreeGenerators(g);[127X[104X
+    [4X[28Xq^-1*u^-1*w^-1*x^-1*z^-1[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(H);[127X[104X
+    [4X[28X(1,14,5,17)(2,7,9,19)(3,11,4,22)(6,12,16,20)(8,18,24,15)(10,23,13,21)[128X[104X
+    [4X[25Xgap>[125X [27XP.wordInFreeGenerators(g);[127X[104X
+    [4X[28Xq^-1*r^-1*t^-1*v^-1*x^-1*z^-1[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(H);[127X[104X
+    [4X[28X(1,14,5,17)(2,21)(3,9)(4,24)(6,12,16,20)(7,11,15,13)(8,23)(10,18,22,19)[128X[104X
+    [4X[25Xgap>[125X [27XP.wordInFreeGenerators(g);[127X[104X
+    [4X[28Xq^-1*r^-1*t^-1*v^-1*w^-1*z^-1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YBecause  the  resolution  [22XR_∗[122X  was  obtained  from a composition series, the
+  unique  word  associated  to an element [22Xg∈ H[122X always has the form [22Xq^ϵ_1 r^ϵ_2
+  s^ϵ_3 t^ϵ_4 u^ϵ_5 v^ϵ_6 w^ϵ_7 x^ϵ_8 y^ϵ_9 z^ϵ_10}[122X determined by the exponent
+  vector [22X(ϵ_1,⋯,ϵ_10) ∈ ( Z_2)^10[122X.[133X
+  
+  
+  [1X6.10 [33X[0;0YSecond group cohomology and cocyclic Hadamard matrices[133X[101X
   
   [33X[0;0YAn  [13XHadamard matrix[113X is a square [22Xn× n[122X matrix [22XH[122X whose entries are either [22X+1[122X or
   [22X-1[122X  and  whose  rows are mutually orthogonal, that is [22XH H^t = nI_n[122X where [22XH^t[122X
@@ -467,7 +554,7 @@
   [4X[32X[104X
   
   
-  [1X6.10 [33X[0;0YThird group cohomology and homotopy [22X2[122X[101X[1X-types[133X[101X
+  [1X6.11 [33X[0;0YThird group cohomology and homotopy [22X2[122X[101X[1X-types[133X[101X
   
   [33X[0;0Y[12XHomotopy 2-types[112X[133X
   

@@ -46,10 +46,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F04FA5E81FFA848">6.8 <span class="Heading">Cocyclic groups: a convenient way of representing  certain groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C60E2B578074532">6.9 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X863080FE8270468D">6.9 <span class="Heading">Effective group presentations</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X78040D8580D35D53">6.10 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C60E2B578074532">6.10 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X78040D8580D35D53">6.11 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></a>
 </span>
 </div>
 </div>
@@ -449,9 +452,87 @@ false
 
 </pre></div>
 
+<p><a id="X863080FE8270468D" name="X863080FE8270468D"></a></p>
+
+<h4>6.9 <span class="Heading">Effective group presentations</span></h4>
+
+<p>For any free <span class="SimpleMath">ZG</span>-resolution <span class="SimpleMath">R_∗=C_∗ X</span> arising as the cellular chain complex of a contractible CW-complex, the terms in degrees <span class="SimpleMath">≤ 2</span> correspond to a free presentation for the group <span class="SimpleMath">G</span>. The following example accesses this presentation for the group <span class="SimpleMath">PGL_3( Z[sqrt-1])</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("PGL(3,Z[i])");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=P.freeGroup/P.relators;</span>
+&lt;fp group on the generators [ v, w, x, y, z ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.relators;</span>
+[ v^2, w^-1*v*w*v^-1, w^-1*v^-1*w^-1, (x^-1*w)^3, (y^-1*w)^3, (z^-1*w)^4, 
+  y^-1*v^-1*z*y^-1*x, y^-1*v*x*v^-1*x*v, v^-1*z*v^-1*x*y, v^-1*x*v*y*v*x*v*y, 
+  x^3, x*z*y, y^-1*v^-1*y^2*v*y^-1, (v*y)^4, z^-1*y*v*z^-1, (v*y*z)^2, 
+  v^-1*(z*v)^2*z ]
+
+</pre></div>
+
+<p>The homomorphism <span class="SimpleMath">h_0: R_0 → R_1</span> of a contracting homotopy provides a unique expression for each element of <span class="SimpleMath">G</span> as a word in the free generators. To illustrate this, we consider the Sylow <span class="SimpleMath">2</span>-subgroup <span class="SimpleMath">H=Syl_2(M_24)</span> of the Mathieu group <span class="SimpleMath">M_24</span>. We obtain a resolution <span class="SimpleMath">R_∗</span> for <span class="SimpleMath">H</span> by recursively applying perturbation techniques to a composition series for <span class="SimpleMath">H</span>. Such a resolution will yield a "kind of" power-conjugate presentation for <span class="SimpleMath">H</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=SylowSubgroup(MathieuGroup(24),2);</span>
+&lt;permutation group of size 1024 with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(H);</span>
+1024
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=CompositionSeries(H);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSubnormalSeries(C,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.freeGroup/P.relators;</span>
+&lt;fp group on the generators [ q, r, s, t, u, v, w, x, y, z ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.relators;</span>
+[ q^-2*z*y*x*w*v, q*r^-1*q^-1*y*u*r, s*q*s^-1*q^-1, t*q*t^-1*q^-1, 
+  q*u^-1*q^-1*y*v*u, y*q*v^-1*q^-1, q*w^-1*q^-1*z*x, w*q*x^-1*q^-1, 
+  q*y^-1*q^-1*z*v, z*q*z^-1*q^-1, r^-2, t*r*s^-1*r^-1, s*r*t^-1*r^-1, 
+  u*r*u^-1*r^-1, v*r*v^-1*r^-1, r*w^-1*r^-1*y*w*u, r*x^-1*r^-1*y*x*u, 
+  y*r*y^-1*r^-1, z*r*z^-1*r^-1, s^-2, t*s*t^-1*s^-1, x*s*u^-1*s^-1, 
+  s*v^-1*s^-1*z*y*w*u, s*w^-1*s^-1*y*v*u, u*s*x^-1*s^-1, s*y^-1*s^-1*y*x*u, 
+  z*s*z^-1*s^-1, t^-2, t*u^-1*t^-1*y*x*u, t*v^-1*t^-1*z*w, t*w^-1*t^-1*z*v, 
+  y*t*x^-1*t^-1, x*t*y^-1*t^-1, z*t*z^-1*t^-1, u^-2, v*u*v^-1*u^-1, 
+  u*w^-1*u^-1*z*w, x*u*x^-1*u^-1, y*u*y^-1*u^-1, z*u*z^-1*u^-1, v^-2, 
+  w*v*w^-1*v^-1, v*x^-1*v^-1*z*x, y*v*y^-1*v^-1, z*v*z^-1*v^-1, w^-2, 
+  x*w*x^-1*w^-1, w*y^-1*w^-1*z*y, z*w*z^-1*w^-1, x^-2, y*x*y^-1*x^-1, 
+  z*x*z^-1*x^-1, y^-2, z*y*z^-1*y^-1, z^-2 ]
+
+</pre></div>
+
+<p>The following additional commands use the contracting homotopy homomorphism <span class="SimpleMath">h_0: R_0→ R_1</span> to express some random elements of <span class="SimpleMath">H</span> as words in the free generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(H);</span>
+(1,6)(2,3)(4,9)(5,16)(7,10)(8,21)(11,18)(12,17)(13,19)(14,20)(15,22)(23,24)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.wordInFreeGenerators(g);</span>
+q^-1*t^-1*x^-1*y^-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(H);</span>
+(1,6)(2,23,10,18)(3,22,19,24)(4,11,15,9)(7,8,21,13)(12,14)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.wordInFreeGenerators(g);</span>
+q^-1*u^-1*w^-1*x^-1*z^-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(H);</span>
+(1,14,5,17)(2,7,9,19)(3,11,4,22)(6,12,16,20)(8,18,24,15)(10,23,13,21)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.wordInFreeGenerators(g);</span>
+q^-1*r^-1*t^-1*v^-1*x^-1*z^-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Random(H);</span>
+(1,14,5,17)(2,21)(3,9)(4,24)(6,12,16,20)(7,11,15,13)(8,23)(10,18,22,19)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.wordInFreeGenerators(g);</span>
+q^-1*r^-1*t^-1*v^-1*w^-1*z^-1
+
+</pre></div>
+
+<p>Because the resolution <span class="SimpleMath">R_∗</span> was obtained from a composition series, the unique word associated to an element <span class="SimpleMath">g∈ H</span> always has the form <span class="SimpleMath">q^ϵ_1 r^ϵ_2 s^ϵ_3 t^ϵ_4 u^ϵ_5 v^ϵ_6 w^ϵ_7 x^ϵ_8 y^ϵ_9 z^ϵ_10}</span> determined by the exponent vector <span class="SimpleMath">(ϵ_1,⋯,ϵ_10) ∈ ( Z_2)^10</span>.</p>
+
 <p><a id="X7C60E2B578074532" name="X7C60E2B578074532"></a></p>
 
-<h4>6.9 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
+<h4>6.10 <span class="Heading">Second group cohomology and cocyclic Hadamard matrices</span></h4>
 
 <p>An <em>Hadamard matrix</em> is a square <span class="SimpleMath">n× n</span> matrix <span class="SimpleMath">H</span> whose entries are either <span class="SimpleMath">+1</span> or <span class="SimpleMath">-1</span> and whose rows are mutually orthogonal, that is <span class="SimpleMath">H H^t = nI_n</span> where <span class="SimpleMath">H^t</span> denotes the transpose and <span class="SimpleMath">I_n</span> denotes the <span class="SimpleMath">n× n</span> identity matrix.</p>
 
@@ -470,7 +551,7 @@ false
 
 <p><a id="X78040D8580D35D53" name="X78040D8580D35D53"></a></p>
 
-<h4>6.10 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
+<h4>6.11 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">2</span>-types</span></h4>
 
 <p><strong class="button">Homotopy 2-types</strong></p>
 
