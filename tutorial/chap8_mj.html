@@ -44,21 +44,18 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X855764877FA44225">8.3-3 <span class="Heading">Computing with larger groups</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80A9B7117D8EC0AB">8.4 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.5 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.6 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D2D26C0784A0E14">8.7 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of crystallographic groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D2D26C0784A0E14">8.6 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of crystallographic groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X81C107C07CF02F0E">8.7-1 <span class="Heading">Poincare series for crystallographic groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X81C107C07CF02F0E">8.6-1 <span class="Heading">Poincare series for crystallographic groups</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7F5C242F7BC938A5">8.7-2 <span class="Heading">Mod <span class="SimpleMath">\(2\)</span> cohomology rings of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7F5C242F7BC938A5">8.6-2 <span class="Heading">Mod <span class="SimpleMath">\(2\)</span> cohomology rings of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups</span></a>
 </span>
 </div></div>
 </div>
@@ -180,6 +177,29 @@ The series is guaranteed correct for group cohomology in degrees &lt; 33
 
 </pre></div>
 
+<p>An alternative approach to obtaining a guaranteed presentation is to implement Len even's spectral sequence proof of the finite generation of cohomology rings of finite groups. The following example determines a guaranteed presentation in this way for the cohomology ring <span class="SimpleMath">\(H^\ast(Syl_2(M_{12}),\mathbb Z_2)\)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong> (for commutative rings), are used to determine how much of a resolution is needed to compute the guaranteed correct presentation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mod2CohomologyRingPresentation(G);</span>
+Alpha version of completion test code will be used. This needs further work.
+Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
+[ x_2*x_3, x_1*x_2, x_2*x_4, x_3^3+x_3*x_5, 
+  x_1^2*x_4+x_1*x_3*x_4+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_4^2+x_4*x_5, 
+  x_1^2*x_3^2+x_1*x_3*x_5+x_3^2*x_5+x_3*x_6, 
+  x_1^3*x_3+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_3*x_6+x_4*x_5, 
+  x_1*x_3^2*x_4+x_1*x_3*x_6+x_1*x_4*x_5+x_3*x_4^2+x_3*x_4*x_5+x_3*x_5^\
+2+x_4*x_6, x_1^2*x_3*x_5+x_1*x_3^2*x_5+x_3^2*x_6+x_3*x_5^2, 
+  x_3^2*x_4^2+x_3^2*x_5^2+x_1*x_5*x_6+x_3*x_4*x_6+x_4*x_5^2, 
+  x_1*x_3*x_4^2+x_1*x_3*x_4*x_5+x_1*x_3*x_5^2+x_3^2*x_5^2+x_1*x_4*x_6+\
+x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
+2, x_1*x_3^2*x_6+x_3^2*x_4*x_5+x_1*x_5*x_6+x_4*x_5^2, 
+  x_1^2*x_3*x_6+x_1*x_5*x_6+x_2^2*x_7+x_2*x_5*x_6+x_3*x_5*x_6+x_6^2 
+ ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
+
+</pre></div>
+
 <p><a id="X780DF87680C3F52B" name="X780DF87680C3F52B"></a></p>
 
 <h4>8.3 <span class="Heading">Functorial ring homomorphisms in Mod-<span class="SimpleMath">\(p\)</span> cohomology</span></h4>
@@ -297,36 +317,9 @@ true
 
 </pre></div>
 
-<p><a id="X80A9B7117D8EC0AB" name="X80A9B7117D8EC0AB"></a></p>
-
-<h4>8.4 <span class="Heading">Cohomology rings of finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
-
-<p>The following example determines a presentation for the cohomology ring <span class="SimpleMath">\(H^\ast(Syl_2(M_{12}),\mathbb Z_2)\)</span>. The Lyndon-Hochschild-Serre spectral sequence, and Groebner basis routines from <strong class="button">Singular</strong> (for commutative rings), are used to determine how much of a resolution to compute for the presentation.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(MathieuGroup(12),2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mod2CohomologyRingPresentation(G);</span>
-Alpha version of completion test code will be used. This needs further work.
-Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
-[ x_2*x_3, x_1*x_2, x_2*x_4, x_3^3+x_3*x_5, 
-  x_1^2*x_4+x_1*x_3*x_4+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_4^2+x_4*x_5, 
-  x_1^2*x_3^2+x_1*x_3*x_5+x_3^2*x_5+x_3*x_6, 
-  x_1^3*x_3+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_3*x_6+x_4*x_5, 
-  x_1*x_3^2*x_4+x_1*x_3*x_6+x_1*x_4*x_5+x_3*x_4^2+x_3*x_4*x_5+x_3*x_5^\
-2+x_4*x_6, x_1^2*x_3*x_5+x_1*x_3^2*x_5+x_3^2*x_6+x_3*x_5^2, 
-  x_3^2*x_4^2+x_3^2*x_5^2+x_1*x_5*x_6+x_3*x_4*x_6+x_4*x_5^2, 
-  x_1*x_3*x_4^2+x_1*x_3*x_4*x_5+x_1*x_3*x_5^2+x_3^2*x_5^2+x_1*x_4*x_6+\
-x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
-2, x_1*x_3^2*x_6+x_3^2*x_4*x_5+x_1*x_5*x_6+x_4*x_5^2, 
-  x_1^2*x_3*x_6+x_1*x_5*x_6+x_2^2*x_7+x_2*x_5*x_6+x_3*x_5*x_6+x_6^2 
- ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
-
-</pre></div>
-
 <p><a id="X80114B0483EF9A67" name="X80114B0483EF9A67"></a></p>
 
-<h4>8.5 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
+<h4>8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></h4>
 
 <p>The command <code class="code">CohomologicalData(G,n)</code> prints complete information for the cohomology ring <span class="SimpleMath">\(H^\ast(G, Z_2 )\)</span> and steenrod operations for a <span class="SimpleMath">\(2\)</span>-group <span class="SimpleMath">\(G\)</span> provided that the integer <span class="SimpleMath">\(n\)</span> is at least the maximal degree of a generator or relator in a minimal set of generatoirs and relators for the ring.</p>
 
@@ -403,7 +396,7 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 
 <p><a id="X7D5ACA56870A40E9" name="X7D5ACA56870A40E9"></a></p>
 
-<h4>8.6 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></h4>
+<h4>8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></h4>
 
 <p>The following example constructs the first eight degrees of the mod-<span class="SimpleMath">\(3\)</span> cohomology ring <span class="SimpleMath">\(H^\ast(G,\mathbb Z_3)\)</span> for the group <span class="SimpleMath">\(G\)</span> number 4 in <strong class="button">GAP</strong>'s library of groups of order <span class="SimpleMath">\(81\)</span>. It determines a minimal set of ring generators lying in degree <span class="SimpleMath">\(\le 8\)</span> and it evaluates the Bockstein operator on these generators. Steenrod powers for <span class="SimpleMath">\(p\ge 3\)</span> are not implemented as no efficient method of implementation is known.</p>
 
@@ -418,13 +411,13 @@ Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
 
 <p><a id="X7D2D26C0784A0E14" name="X7D2D26C0784A0E14"></a></p>
 
-<h4>8.7 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of crystallographic groups</span></h4>
+<h4>8.6 <span class="Heading">Mod-<span class="SimpleMath">\(p\)</span> cohomology rings of crystallographic groups</span></h4>
 
 <p>Mod <span class="SimpleMath">\(p\)</span> cohomology ring computations can be attempted for any group <span class="SimpleMath">\(G\)</span> for which we can compute sufficiently many terms of a free <span class="SimpleMath">\(ZG\)</span>-resolution with contracting homotopy. The contracting homotopy is not needed if only the dimensions of the cohomology in each degree are sought. Crystallographic groups are one class of infinite groups where such computations can be attempted.</p>
 
 <p><a id="X81C107C07CF02F0E" name="X81C107C07CF02F0E"></a></p>
 
-<h5>8.7-1 <span class="Heading">Poincare series for crystallographic groups</span></h5>
+<h5>8.6-1 <span class="Heading">Poincare series for crystallographic groups</span></h5>
 
 <p>Consider the space group <span class="SimpleMath">\(G=SpaceGroupOnRightIT(3,226,'1')\)</span>. The following computation computes the infinite series</p>
 
@@ -481,7 +474,7 @@ C4  C2  C4  1  1  C4  C2  C4  1  1  1  1
 
 <p><a id="X7F5C242F7BC938A5" name="X7F5C242F7BC938A5"></a></p>
 
-<h5>8.7-2 <span class="Heading">Mod <span class="SimpleMath">\(2\)</span> cohomology rings of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups</span></h5>
+<h5>8.6-2 <span class="Heading">Mod <span class="SimpleMath">\(2\)</span> cohomology rings of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups</span></h5>
 
 <p>Computations in the <em>integral</em> cohomology of a crystallographic group are illustrated in Section <a href="chap1_mj.html#X86881717878ADCD6"><span class="RefLink">1.19</span></a>. The commands underlying that illustration could be further developed and adapted to mod <span class="SimpleMath">\(p\)</span> cohomology. Indeed, the authors of the paper <a href="chapBib_mj.html#biBliuye">[LY24a]</a> have developed commands for accessing the mod <span class="SimpleMath">\(2\)</span> cohomology of <span class="SimpleMath">\(3\)</span>-dimensional crystallographic groups with the aim of establishing a connection between these rings and the lattice structure of crystals with space group symmetry. Their code is available at the github repository <a href="chapBib_mj.html#biBliuyegithub">[LY24b]</a>. In particular, their code contains the command</p>
 
