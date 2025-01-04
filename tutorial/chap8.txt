@@ -70,7 +70,74 @@
   graded algebra [22XF[122X.[133X
   
   
-  [1X8.2 [33X[0;0YFunctorial ring homomorphisms in Mod-[22Xp[122X[101X[1X cohomology[133X[101X
+  [1X8.2 [33X[0;0YPoincare Series for Mod-[22Xp[122X[101X[1X cohomology[133X[101X
+  
+  [33X[0;0YFor  a finite [22Xp[122X-group [22XG[122X the command [10XPoincarePolynomial(G)[110X returns a rational
+  function  [22Xf(x)=p(x)/q(x)[122X  whose  series  expansion [22Xf(x) = ∑_i=0^∞ f_ix^i[122X has
+  coefficients [22Xf_i[122X that are guaranteed to satisfy [22Xf_i = dim H^i(G, Z_p)[122X in the
+  range  [22X0≤  i  <  1+  deg[122X  for  some displayed value of [22Xdeg[122X. Furthermore, the
+  coefficients  [22Xf_i[122X  are  guaranteed to be integers for all [22X0≤ i≤ 1000[122X and the
+  order of the pole of [22Xf(x)[122X at [22Xx=1[122X is guaranteed to equal the [22Xp[122X-rank of [22XG[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SmallGroup(3^4,10);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
+    [4X[28X"C3 . ((C3 x C3) : C3) = (C3 x C3) . (C3 x C3)"[128X[104X
+    [4X[25Xgap>[125X [27Xf:=PoincareSeries(G);[127X[104X
+    [4X[28XThe series is guaranteed correct for group cohomology in degrees < 14[128X[104X
+    [4X[28X(-x_1^3+x_1^2+1)/(x_1^6-2*x_1^5+2*x_1^4-2*x_1^3+2*x_1^2-2*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf a higher value of [22Xdeg[122X is required then this can be entered as an optional
+  second argument. For instance, the following increases the value to [22Xdeg=100[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=PoincareSeries(G,100);[127X[104X
+    [4X[28XThe series is guaranteed correct for group cohomology in degrees < 101[128X[104X
+    [4X[28X(-x_1^3+x_1^2+1)/(x_1^6-2*x_1^5+2*x_1^4-2*x_1^3+2*x_1^2-2*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf  one  needs to verify that a Poincare series is valid in all degrees then
+  more   work  is  required.  One  readily  implemented  (but  computationally
+  non-optimal)  approach  is  to  use Peter Symmonds result [Sym10] that: if a
+  non-cyclic  finite  group [22XG[122X has a faithful complex representation equal to a
+  sum  of  irreducibles of dimensions [22Xn_i[122X then the cohomology ring [22XH^∗(G, Z_p)[122X
+  is  generated  by elements of degree at most [22X∑ n_i^2[122X; a degree bound for the
+  relations  is  [22X2  ∑  n_i^2[122X.  Thus,  if  we use at least [22X∑ n_i^2[122X degrees of a
+  resolution  to  construct  a  presentation  for the cohomology ring then the
+  presented   ring   maps   surjectively  onto  the  actual  cohomology  ring.
+  Furthermore,  if  this  surjection  is  a  bijection  in the first [22X2 ∑ n_i^2[122X
+  degrees then it is necessarily an isomorphism in all degrees.[133X
+  
+  [33X[0;0YThe following commands use this approach to obtain a guaranteed presentation
+  and Poincare series for the Sylow [22X2[122X-subgroup of the Mathieu group [22XM_12[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SylowSubgroup(MathieuGroup(12),2);;[127X[104X
+    [4X[25Xgap>[125X [27XModPCohomologyGeneratorsDegreeBound(G);[127X[104X
+    [4X[28X16[128X[104X
+    [4X[25Xgap>[125X [27XA:=ModPCohomologyRing(G,7);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=PresentationOfGradedStructureConstantAlgebra(A);[127X[104X
+    [4X[28XGraded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / [128X[104X
+    [4X[28X[ x_1*x_3, x_1*x_2, x_1*x_4, x_2*x_3^2+x_3^3+x_3*x_4+x_3*x_5, [128X[104X
+    [4X[28X  x_2*x_6+x_3*x_6+x_4*x_5, x_2*x_3*x_4+x_3^2*x_4+x_3*x_6, [128X[104X
+    [4X[28X  x_2^2*x_4+x_3^2*x_4+x_3*x_6+x_4^2, x_3^2*x_6+x_3*x_4^2+x_3*x_4*x_5, [128X[104X
+    [4X[28X  x_2*x_4*x_5+x_4*x_6, x_3^2*x_4*x_5+x_3*x_4*x_6+x_3*x_5*x_6, [128X[104X
+    [4X[28X  x_1^3*x_6+x_1^2*x_7+x_1*x_5*x_6+x_3*x_5*x_6+x_4*x_5^2+x_6^2, [128X[104X
+    [4X[28X  x_3*x_4^2*x_5+x_3*x_6^2 ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ][128X[104X
+    [4X[25Xgap>[125X [27Xf:=HilbertPoincareSeries(F);[127X[104X
+    [4X[28X(1)/(-x_1^3+3*x_1^2-3*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xff:=PoincareSeries(G,32);[127X[104X
+    [4X[28XThe series is guaranteed correct for group cohomology in degrees < 33[128X[104X
+    [4X[28X(1)/(-x_1^3+3*x_1^2-3*x_1+1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.3 [33X[0;0YFunctorial ring homomorphisms in Mod-[22Xp[122X[101X[1X cohomology[133X[101X
   
   [33X[0;0YThe following example constructs the ring homomorphism[133X
   
@@ -93,7 +160,7 @@
   [4X[32X[104X
   
   
-  [1X8.2-1 [33X[0;0YTesting homomorphism properties[133X[101X
+  [1X8.3-1 [33X[0;0YTesting homomorphism properties[133X[101X
   
   [33X[0;0YThe following commands are consistent with [22XF[122X being a ring homomorphism.[133X
   
@@ -110,7 +177,7 @@
   [4X[32X[104X
   
   
-  [1X8.2-2 [33X[0;0YTesting functorial properties[133X[101X
+  [1X8.3-2 [33X[0;0YTesting functorial properties[133X[101X
   
   [33X[0;0YThe  following  example  takes  two  "random" automorphisms [22Xf,g: K→ K[122X of the
   group  [22XK[122X of order [22X24[122X arising as the direct product [22XK=C_3× Q_8[122X and constructs
@@ -146,7 +213,7 @@
   [4X[32X[104X
   
   
-  [1X8.2-3 [33X[0;0YComputing with larger groups[133X[101X
+  [1X8.3-3 [33X[0;0YComputing with larger groups[133X[101X
   
   [33X[0;0YMod-[22Xp[122X  cohomology  rings  of  finite  groups are constructed as the rings of
   stable  elements  in  the  cohomology  of  a (non-functorially) chosen Sylow
@@ -199,7 +266,7 @@
   [4X[32X[104X
   
   
-  [1X8.3 [33X[0;0YCohomology rings of finite [22X2[122X[101X[1X-groups[133X[101X
+  [1X8.4 [33X[0;0YCohomology rings of finite [22X2[122X[101X[1X-groups[133X[101X
   
   [33X[0;0YThe  following  example  determines  a  presentation for the cohomology ring
   [22XH^∗(Syl_2(M_12),  Z_2)[122X.  The  Lyndon-Hochschild-Serre spectral sequence, and
@@ -227,7 +294,7 @@
   [4X[32X[104X
   
   
-  [1X8.4 [33X[0;0YSteenrod operations for finite [22X2[122X[101X[1X-groups[133X[101X
+  [1X8.5 [33X[0;0YSteenrod operations for finite [22X2[122X[101X[1X-groups[133X[101X
   
   [33X[0;0YThe  command  [10XCohomologicalData(G,n)[110X  prints  complete  information  for the
   cohomology  ring  [22XH^∗(G,  Z_2  )[122X  and  steenrod  operations  for a [22X2[122X-group [22XG[122X
@@ -309,7 +376,7 @@
   [4X[32X[104X
   
   
-  [1X8.5 [33X[0;0YSteenrod operations on the classifying space of a finite [22Xp[122X[101X[1X-group[133X[101X
+  [1X8.6 [33X[0;0YSteenrod operations on the classifying space of a finite [22Xp[122X[101X[1X-group[133X[101X
   
   [33X[0;0YThe  following  example  constructs  the  first  eight  degrees of the mod-[22X3[122X
   cohomology  ring  [22XH^∗(G,  Z_3)[122X  for the group [22XG[122X number 4 in [12XGAP[112X's library of
@@ -327,7 +394,7 @@
   [4X[32X[104X
   
   
-  [1X8.6 [33X[0;0YMod-[22Xp[122X[101X[1X cohomology rings of crystallographic groups[133X[101X
+  [1X8.7 [33X[0;0YMod-[22Xp[122X[101X[1X cohomology rings of crystallographic groups[133X[101X
   
   [33X[0;0YMod  [22Xp[122X  cohomology  ring  computations  can be attempted for any group [22XG[122X for
   which  we  can  compute sufficiently many terms of a free [22XZG[122X-resolution with
@@ -337,7 +404,7 @@
   attempted.[133X
   
   
-  [1X8.6-1 [33X[0;0YPoincare series for crystallographic groups[133X[101X
+  [1X8.7-1 [33X[0;0YPoincare series for crystallographic groups[133X[101X
   
   [33X[0;0YConsider  the  space  group  [22XG=SpaceGroupOnRightIT(3,226,'1')[122X. The following
   computation computes the infinite series[133X
@@ -403,7 +470,7 @@
   [4X[32X[104X
   
   
-  [1X8.6-2 [33X[0;0YMod [22X2[122X[101X[1X cohomology rings of [22X3[122X[101X[1X-dimensional crystallographic groups[133X[101X
+  [1X8.7-2 [33X[0;0YMod [22X2[122X[101X[1X cohomology rings of [22X3[122X[101X[1X-dimensional crystallographic groups[133X[101X
   
   [33X[0;0YComputations  in  the  [13Xintegral[113X  cohomology  of a crystallographic group are
   illustrated in Section [14X1.19[114X. The commands underlying that illustration could
