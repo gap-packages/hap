@@ -26,6 +26,7 @@ local
 	ComplementaryBasis,
 	zero,
 	pcgens,
+        start,
 	g,h,i,x,xx,xxx,tmp;
 
 
@@ -33,6 +34,10 @@ G:=arg[1];
 if arg[2]=-1 then n:=1000;
 else
 n:=arg[2];
+fi;
+if Length(arg)=3 then 
+   start:=arg[3]-1;
+else start:=2;
 fi;
 
 tmp:=SSortedList(Factors(Order(G)));
@@ -262,11 +267,14 @@ od;
 DimList[i]:=Length(PseudoBoundary[i]);
 
 
-if i>15 and arg[2]=-1 then
+if i>start and arg[2]=-1 then
 x:=PoincareSeries(List([0..i],j->Dimension(j)),i+1);
 xx:=PoincareSeries(List([0..i-1],j->Dimension(j)),i);
 xxx:=PoincareSeries(List([0..i-2],j->Dimension(j)),i-1);
-if x=xx and xx=xxx and (not x=fail) then return x; fi;
+if x=xx and xx=xxx and (not x=fail) then 
+#   Print("The series is guaranteed correct for group cohomology in degrees < ",i+1,"\n");
+   return [x,i+1]; 
+fi;
 fi;
 
 od;

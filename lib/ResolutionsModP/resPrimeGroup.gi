@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2006
-
+#RT:=0;RT1:=0;RT2:=0;
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ResolutionPrimePowerGroup,
@@ -99,7 +99,8 @@ ImageFBasis:=[1..n];
 Dimension:=function(i);
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
-return Length(PseudoBoundaryAsVec[i]);
+if i<=n then return Length(PseudoBoundaryAsVec[i]); fi;
+return 0;
 end;
 #####################################################################
 
@@ -268,25 +269,26 @@ ZGbasisOfKernel:=function(k)		#The workhorse!
 local  	tB,i, v, g, h, b,bb, ln, B, B1, B2,NS, 
 	Bcomp, BndMat, ReducedB1,rrb, rrb1;
 
-BndMat:=BoundaryMatrix(k); 
-
-
-ConvertToMatrixRepNC(BndMat,prime); 
-NS:=SemiEchelonMat(NullspaceMat(BndMat));
+BndMat:=BoundaryMatrix(k);                 
+ConvertToMatrixRepNC(BndMat,prime);        
+#RT:=RT-Runtime();
+NS:=SemiEchelonMat(NullspaceMat(BndMat)); #This line takes 48% of the time 
+#RT:=RT+Runtime();                        #of which 32% is NullspaceMat
 
 tB:=TransposedMat(NS.vectors);
-Bcomp:=ComplementaryBasis(NS.vectors);
+Bcomp:=ComplementaryBasis(NS.vectors);    
 
-
+#RT2:=RT2-Runtime();
 for g in pcgens do     	#This works but I forget why!
                         #Just in case,  I've added a quick
                         #sanity check at the end.
 Append(Bcomp,SemiEchelonMat(TransposedMat(tB-GactMat(g,tB))).vectors);
 od;							
+#RT2:=RT2+Runtime();                      #This loop takes 11% of the time
 
-
-
-B1:=ComplementaryBasis(Bcomp,NS);
+#RT1:=RT1-Runtime();
+B1:=ComplementaryBasis(Bcomp,NS);         #This line takes 29% of the time
+#RT1:=RT1+Runtime();
 NS:=Length(NS.vectors);
 
 if not IsPrimePowerInt(Order(G)) then
@@ -317,6 +319,8 @@ B1:=ReducedB1;
 fi;
 
 Apply(B1,v->List(v,x->IntFFE(x)));
+
+
 return B1;
 end;
 #####################################################################

@@ -241,6 +241,7 @@ local
                 index, cnt, gens, Gens, F,
                 src,trg,
                 alpha, len,
+                WordInGenerators,
                 B,i,a, b,bb,x,y,g,lst,bool;
 
 #if R!.dimension(0)=1 then return PresentationOfResolution_alt(R); fi;
@@ -435,12 +436,17 @@ a:=List(a,i->SignInt(i[3])*index[AbsInt(i[3])]);
 Add(HRels1,a);
 od;
 
-
 alpha:=["x","y","z","w","v","u","t","s","r","q","p"];
 len:=Length(HGens)-Length(Tree);
-if len<12 then
+if len<=3 then 
+alpha:=["x","y","z"];
 F:=FreeGroup(alpha{[1..len]});
-else
+fi;
+if len>=4 and len <14 then
+alpha:=["z","y","x","w","v","u","t","s","r","q","p","n","m"];
+F:=FreeGroup(Reversed(alpha{[1..len]}));
+fi;
+if len>=14 then
 F:=FreeGroup(Length(HGens)-Length(Tree));
 fi;
 gens:=GeneratorsOfGroup(F);
@@ -454,10 +460,46 @@ od;
 Add(HRels,a);
 od;
 
+
+#############################################
+WordInGenerators:=function(gg)
+local W,WW,pos,S,w,p,x,g;
+if gg=One(R!.group) then return One(F); fi;
+if R!.dimension(0)>1 then
+Print("This function is currently implemented only for resolutions arising from CW complexes with just a single orbit of vertices.\n");
+return fail;
+fi;
+g:=Position(R!.elts,gg);;
+W:=R!.homotopy(0,[1,g]);;
+WW:=List(W,w->ResolutionBoundaryOfWord(R,1,[w]));;
+pos:=PositionProperty(WW,x->[-1,1] in x);
+S:=[pos];;
+
+while true do
+w:=WW[pos];;
+p:=PositionProperty(w,x->x[1]=1);
+if w[p][2]=g then break; fi;
+pos:=PositionProperty(WW,x->[-1,w[p][2]] in x);
+Add(S,pos);
+od;
+
+W:=W{S};;
+gens:=GeneratorsOfGroup(F);
+x:=One(F);
+for i in W do
+x:=x*gens[AbsInt(i[1])]^SignInt(i[1]);
+od;
+
+return x;
+end;
+######################################
+
+
 return rec(
                 freeGroup:=F,
                 relators:=HRels,
-                gens:=Gens
+                gens:=Gens,
+                wordInFreeGenerators:=WordInGenerators
           );
 end);
 #####################################################################

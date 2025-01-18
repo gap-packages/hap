@@ -1,0 +1,18 @@
+gap> G:=SylowSubgroup(MathieuGroup(12),2);;
+gap> ModPCohomologyGeneratorsDegreeBound(G);
+16
+gap> A:=ModPCohomologyRing(G,16);;
+gap> F:=PresentationOfGradedStructureConstantAlgebra(A);
+Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
+[ x_1*x_3, x_1*x_2, x_1*x_4, x_2*x_3^2+x_3^3+x_3*x_4+x_3*x_5, 
+  x_2*x_6+x_3*x_6+x_4*x_5, x_2*x_3*x_4+x_3^2*x_4+x_3*x_6, 
+  x_2^2*x_4+x_3^2*x_4+x_3*x_6+x_4^2, x_3^2*x_6+x_3*x_4^2+x_3*x_4*x_5, 
+  x_2*x_4*x_5+x_4*x_6, x_3^2*x_4*x_5+x_3*x_4*x_6+x_3*x_5*x_6, 
+  x_1^3*x_6+x_1^2*x_7+x_1*x_5*x_6+x_3*x_5*x_6+x_4*x_5^2+x_6^2, 
+  x_3*x_4^2*x_5+x_3*x_6^2 ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
+gap> f:=HilbertPoincareSeries(F);
+(1)/(-x_1^3+3*x_1^2-3*x_1+1)
+
+gap> ff:=PoincareSeries(G,32);
+The series is guaranteed correct for group cohomology in degrees &lt; 33
+(1)/(-x_1^3+3*x_1^2-3*x_1+1)

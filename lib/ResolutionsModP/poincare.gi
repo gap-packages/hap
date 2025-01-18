@@ -10,98 +10,146 @@ function(arg)
 local
 	G,dim,
 	R,Rdim,
-	L, 
+	L, Ex, 
 	TrialPoly,
 	Dcoeffs,
 	Ncoeffs,
-	PolRing, x,
-	k,bool,A,AA,i;
+	PolRing, krull,
+        D,x,f,k,bool,A,AA,i;
+####################
+#Inputs one of
+#      : group G of prime-power order
+#      : graded algebra A
+#      : minimal resolution R of prime-power group and integer n>0
+#      : group G of prime-power order and integer n>0
+#      : list L of integers equal to the homology ranks in low degrees and an integer n>0 
+#returns a rational function f(x)=N(x)/D(x) whose series is guaranteed to 
+#agree with the cohomology ring Poincares series in degrees < dim. 
+####################
 
 PolRing:=HapConstantPolRing;
 x:=GeneratorsOfAlgebra(PolRing)[2];
 
+#####One Input Variable###########################################
 if Length(arg)=1 then
-if IsGroup(arg[1]) then
-if IsPrimePowerInt(Order(arg[1])) then
-return PoincareSeriesApproximation(arg[1],x);
-else
-Print("The group is not a p-group.\n");
-return fail;
+   if IsGroup(arg[1]) then
+      if IsPrimePowerInt(Order(arg[1])) then
+         return PoincareSeriesApproximation(arg[1],2);
+      else
+         Print("The group is not a p-group.\n");
+         return fail;
+      fi;
+   fi;
+   if IsAlgebra(arg[1]) then A:=arg[1]; 
+   fi;
+   if not IsBound(A!.degree) then 
+      Print("The algebra does not seem to be graded.\n"); return fail; 
+   fi;
+   A:=List(Basis(A),a->A!.degree(a));
+   AA:=[];
+   for i in [0..Maximum(A)] do
+      AA[i+1]:=Size(Filtered(A,a->a=i));
+   od;
+   return PoincareSeries(AA,Length(AA)-1);
 fi;
-fi;
-if IsAlgebra(arg[1]) then A:=arg[1]; fi;
-if not IsBound(A!.degree) then Print("The algebra does not seem to be graded.\n"); return fail; fi;
-A:=List(Basis(A),a->A!.degree(a));
-AA:=[];
-for i in [0..Maximum(A)] do
-AA[i+1]:=Size(Filtered(A,a->a=i));
-od;
-return PoincareSeries(AA,Length(AA));
-fi;
+##################################################################
 
+#####Two Input Variables###########################################
 bool:=true;
 dim:=arg[2];
 
 if IsGroup(arg[1]) then
-if IsPrimePowerInt(Order(arg[1])) then
-G:=arg[1];
-#R:=ResolutionPrimePowerGroup(G,dim);
-Rdim:=RankPrimeHomology(G,dim);
-bool:=false;
-fi;
+   if IsPrimePowerInt(Order(arg[1])) then
+         return PoincareSeriesApproximation(arg[1],arg[2]);
+   else
+         Print("The group is not a p-group.\n");
+         return fail;
+   fi;
+
+#      G:=arg[1];
+#      Rdim:=RankPrimeHomology(G,dim);
+#      krull:=Prank(G);
+#      bool:=false;
 fi;
 
 if IsHapResolution(arg[1]) then
-R:=arg[1];
-Rdim:=R!.dimension;
-G:=R!.group;
-if IsPrimeInt(EvaluateProperty(R,"characteristic")) then
-bool:=false;fi;
+   R:=arg[1];
+   Rdim:=R!.dimension;
+   G:=R!.group;
+   krull:=Prank(G);
+   if IsPrimeInt(EvaluateProperty(R,"characteristic")) then
+      bool:=false;
+   fi;
 fi;
 
 L:=[];
 if IsList(arg[1]) then
-L:=arg[1];
-bool:=false;
+   L:=arg[1];
+   bool:=false;
 fi;
 
-if bool then return fail; fi;
+if bool then return fail; 
+fi;
 
 if Length(L)=0 then
-L:=List([0..dim],i->Rdim(i));
+   L:=List([0..dim],i->Rdim(i));
 fi;
 
 ####################################################################
 TrialPoly:=function(L,k)
 local M,i;
-
 M:=[];
 for i in [1..dim-k] do
-Add(M,L{[i..i+k]});
+   Add(M,L{[i..i+k]});
 od;
 M:=TransposedMat(M);
-
 return NullspaceMat(M);
 end;
 ####################################################################
 
 Dcoeffs:=[];
 for k in [1..dim] do
-Dcoeffs:=TrialPoly(L,dim-k);
-if Length(Dcoeffs)=1 then break; fi;
+   Dcoeffs:=TrialPoly(L,dim-k);
+   if Length(Dcoeffs)=1 then break; 
+   fi;
 od;
 
 if not Length(Dcoeffs)=1 then 
-#Print("Poincare series was not computed. \n");
-return fail; fi;
+#   Print("Try inputting more degrees of a resolution/algebra/sequence. \n");
+   return fail; 
+fi;
 
 Dcoeffs:=Reversed(Dcoeffs[1]);
 Ncoeffs:=[];
 for k in [1..Length(Dcoeffs)-1] do
-Ncoeffs[k]:=Reversed(Dcoeffs{[1..k]})*L{[1..k]};
+   Ncoeffs[k]:=Reversed(Dcoeffs{[1..k]})*L{[1..k]};
 od;
 
-return ValuePol(Ncoeffs,x)/ValuePol(Dcoeffs,x);
+f:=ValuePol(Ncoeffs,x)/ValuePol(Dcoeffs,x);
+
+Ex:=ExpansionOfRationalFunction(f,1000); #Check at least that the first 500 
+                                         #terms are integers and the initial 
+                                         #terms agree with the input data and
+                                         #krull is the number of poles (x-1) 
+                                         #in the denominator of f (in cases 
+                                         #where krull is available.
+if (not fail=PositionProperty(Ex,x->not IsInt(x)) ) 
+   or
+   ( not L{[1..dim]}=Ex{[1..dim]}) 
+   then 
+#      Print("Try inputting more degrees of a resolution/algebra/sequence. \n");
+      return fail; 
+fi;  
+if IsBound(krull) then
+   D:=Factors(DenominatorOfRationalFunction(f));
+   D:=Filtered(D,x->x^2 = (IndeterminateOfUnivariateRationalFunction(f)-1)^2 );
+   if not krull = Length(D) then
+#      Print("Try inputting more degrees of a resolution/algebra/sequence. \n");
+      return fail;
+   fi;
+fi;
+#    Print("The series is guaranteed correct for group cohomology in degrees < ",dim,"\n");
+return f;
 end);
 #####################################################################
 #####################################################################
@@ -113,42 +161,33 @@ end);
 InstallGlobalFunction(PoincareSeriesApproximation,
 function(arg)
 local
-	G,kk,H,Hilbert,factos,x;
+	G,kk,H,Hilbert,factos,guarantee;
 
-G:=arg[1];x:=arg[2];
+G:=arg[1];
 factos:=DirectFactorsOfGroup(G);
-if Length(factos)>1 then ; 
-factos:=List(factos,g-> PoincareSeries(g));
+if Length(factos)>1 then  
+   if Length(arg)=1 then
+      factos:=List(factos,g-> RankPrimeHomology(g,-1,5));
+      guarantee:=Minimum(List(factos,x->x[2]));
+      factos:=List(factos,x->x[1]);
+   else
+      factos:=List(factos,g-> RankPrimeHomology(g,-1,arg[2]));
+      guarantee:=Minimum(List(factos,x->x[2]));
+      factos:=List(factos,x->x[1]);
+   fi;
+Print("The series is guaranteed correct for group cohomology in degrees < ",guarantee,"\n");
 return Product(factos);
 else
 
-return RankPrimeHomology(G,-1);
+if Length(arg)=1 then
+factos:= RankPrimeHomology(G,-1);
+else
+factos:= RankPrimeHomology(G,-1,arg[2]);
+fi;
 
-###########################################################
-#Hilbert:=function(G,n,k)
-#local P,R,i,B,PolRing,H;
+Print("The series is guaranteed correct for group cohomology in degrees < ",factos[2],"\n");
+return factos[1];
 
-#R:=ResolutionPrimePowerGroup(G,n);
-#P:=[];
-#for i in [1..k] do
-#P[i]:=PoincareSeries(R,n+1-i);
-#od;
-
-#B:=List([1..k-1],i-> P[i] = P[i+1]);
-
-#if not false in B then return P[1]; 
-#else return fail; fi;
-#end;
-##########################################################
-
-	
-#kk:=10;
-#H:=Hilbert(G,kk,2);
-#while H=fail do
-#kk:=kk+3;H:=Hilbert(G,kk,3);
-#od;
-
-#return H;
 fi;
 end);
 #####################################################################
@@ -214,14 +253,65 @@ return TensorWithIntegersModP(R,p);
 end;
 ####################################################################
 
-L:=List([1..n],i->Length(PrimePartDerivedFunctor(G,R,F,i)));
+#L:=List([1..n],i->Length(PrimePartDerivedFunctor(G,R,F,i)));
+L:=List([1..n],i->Length(PrimePartDerivedFunctorViaSubgroupChain(G,R,F,i)));
 L:=Reversed(L);
 Add(L,1);
 L:=Reversed(L);
 
+Print("The series is guaranteed correct for group cohomology in degrees < ",n+1,"\n");
 return(PoincareSeries(L,n));
 
 end);
 fi;
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(ModPCohomologyGeneratorsDegreeBound,
+function(G)
+local D,irr,S,SS,SSS,i,g;
+
+if IsCyclic(G) then 
+if Order(G)=2 then return 1; fi;
+return 2;
+fi;
+
+D:=DirectFactorsOfGroup(G);
+
+if Length(D)=1 then
+################################################
+irr:=IrreducibleRepresentations(G);
+S:=[];
+
+for i in [1..Length(irr)] do
+Add(S,i);
+if Order(Intersection(List(S,i->Kernel(irr[i]))))=1 then break; fi;
+od;
+
+SS:=1*Reversed(S);
+
+for i in SS do
+RemoveSet(S,i);
+if Order(Intersection(List(S,i->Kernel(irr[i]))))>1 then
+AddSet(S,i);
+fi;
+od;
+
+S:=List(S,i->(Length(One(Range(irr[i]))))^2  );
+
+return Sum(S);
+########################################
+fi;
+
+SSS:=[];
+for g in D do
+Add(SSS,ModPCohomologyGeneratorsDegreeBound(g));
+od;
+
+return Maximum(SSS);
+end);
 #####################################################################
 #####################################################################

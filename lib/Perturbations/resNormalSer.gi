@@ -23,7 +23,7 @@ GensSeries:=List(arg[1],x->SmallGeneratingSet(x));   #Modified November 2024
 else GensSeries:=StructuralCopy(arg[1]);
 fi;
 
-if not Order(Group(GensSeries[Length(GensSeries)]))=1 then
+if not Order(GroupWithGenerators(GensSeries[Length(GensSeries)]))=1 then
 Add(GensSeries,[Identity(arg[1][1])]); fi;
 
 n:=arg[2];
@@ -38,7 +38,7 @@ L:=Length(GensSeries);
 
 
 for i in [1..L] do
-  G[i]:=Group(GensSeries[i]);
+  G[i]:=GroupWithGenerators(GensSeries[i]);
   GhomsQ[i]:=NaturalHomomorphismByNormalSubgroup(G[1],G[i]);
   Q[i]:=Image(GhomsQ[i]);
   GensQ[i]:=[];
@@ -58,7 +58,7 @@ if nohomotopy then Res[2]!.homotopy:=fail; fi;
 
 for i in [3..L] do
 Res[i]:=ResolutionFiniteExtension(GensQ[i],GensQ[i-1],Res[i-1],n,tietze);
-Res[i]!.group:=Group(GensQ[i]);  #Added November 2024
+Res[i]!.group:=GroupWithGenerators(GensQ[i]);  #Added November 2024
 od;
 
 return Res[Length(Res)];

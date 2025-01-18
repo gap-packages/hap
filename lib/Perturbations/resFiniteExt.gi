@@ -23,7 +23,7 @@ n:=arg[4];
 if Length(arg)>4 then tietze:=arg[5]; else tietze:=false; fi;
 G:=R!.group;
 EltsG:=R!.elts;
-E:=Group(GensE);
+E:=GroupWithGenerators(GensE);
 if Size(E) <10^6 then 
 EltsE:=Elements(E);
 else
@@ -54,11 +54,12 @@ end;
 #####################################################################
 
 else
-EhomGsecond:=List([1..Size(E)],i->0);
+#EhomGsecond:=List([1..Size(E)],i->0);
+EhomGsecond:=[];
 
 #####################################################################
 EhomG:=function(i);
-if EhomGsecond[i]=0 then
+if not IsBound(EhomGsecond[i]) then
 EhomGsecond[i]:= Position(EltsG,Image(EhomGfirst,EltsE[i]));
 fi;
 return EhomGsecond[i];
@@ -107,7 +108,7 @@ if Length(GensN) > 1 then
 	for k in GensNfirst do
 	GensNsecond:=SSortedList(GensN);
 	RemoveSet(GensNsecond,k);
-	if Order(Group(GensNsecond))=Order(N) then GensN:=GensNsecond; fi;
+	if Order(GroupWithGenerators(GensNsecond))=Order(N) then GensN:=GensNsecond; fi;
 	od;
    fi;
 fi;
@@ -117,7 +118,7 @@ S:=arg[6];
 else
 #if IsAbelian(N) then			#This should always work but it doesn't! 
 #S:=ResolutionFiniteGroup(GensN,n,tietze);  #June 2022
-S:=ResolutionGenericGroup(Group(GensN),n);
+S:=ResolutionGenericGroup(GroupWithGenerators(GensN),n);
 fi;
 
 EltsN:=S!.elts;
@@ -132,14 +133,32 @@ return NhomEsecond[i];
 end;
 #####################################################################
 
-NEhomNfirst:=List([1..Size(E)], k->Position(NhomEsecond,k));
+#NEhomNfirst:=List([1..Size(E)], k->Position(NhomEsecond,k));
+
+NEhomNfirst:=[];
 
 #This next function can produce a fail when incorrectly used!!
 #####################################################################
+#NEhomN:=function(i);
+#return NEhomNfirst[i];
+#end;
+#####################################################################
+
+#####################################################################
 NEhomN:=function(i);
+if not IsBound(NEhomNfirst[i]) then 
+NEhomNfirst[i]:= Position(NhomEsecond,i);
+fi;
 return NEhomNfirst[i];
 end;
 #####################################################################
+
+#####################################################################
+#NEhomN:=function(i);
+#return Position(NhomEsecond,i);
+#end;
+#####################################################################
+
 
 
 return TwistedTensorProduct(R,S,EhomG,GmapE,NhomE,NEhomN,EltsE,Mult,InvE,E);

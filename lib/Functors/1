@@ -9,7 +9,7 @@ local
         DCRS, L, S, f,fx, imfx, bool, dcrs,
 	HK, HPK, HKhomHPK, HPKhomHP, HKhomHP, HKx,HPKx, 
 	HKxhomHPKx, HPKxhomHP, HKxhomHP, HKhomHKx,  HKhomHP2,
-	charac, x, y, i, Cent, hh, HPpres, ord, Pone, RPone;
+	x, y, i, Cent, hh, HPpres, ord, Pone, RPone;
 
 
 ####################################
@@ -28,14 +28,14 @@ AscChn:=GG;
 P1:=Normalizer(G,P);
 fi;
 
-charac:=EvaluateProperty(F(R),"characteristic");
-if charac=0 then
+#HP:=GroupHomomorphismByFunction(P,P,x->x);
+#HP:=EquivariantChainMap(R,R,HP);
+#HP:=F(HP);
+#HP:=Homology(HP,n);   #This takes too much time!!
 x:=IntegralHomology("HomologyAsFpGroup",n);       #Modified December 2024
-else
-x:=ModularHomology("HomologyAsFpGroup",n);       #Modified December 2024
-fi;
 HP:=x(F(R),n);
 HP:=HP.fpgroup;
+#HP:=Source(HP);
 if Length(AbelianInvariants(HP))=0 then return []; fi;
 HPrels:=[Identity(HP)];
 ####################################

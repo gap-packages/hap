@@ -64,7 +64,7 @@ if Length(arg)>4 then
 else saveSpace:=false; Extendible:=false;
 fi;
 
-G:=Group(Gens);
+G:=GroupWithGenerators(Gens);
 N:=Order(G);
 #if IsCyclic(G) then return ResolutionFiniteCyclicGroup(G,K); fi; #Added 15 August 2019
 

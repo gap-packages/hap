@@ -225,6 +225,7 @@ fi;
 if IsPrime(p) then
 S:=SylowSubgroup(G,p);
 R:=ResolutionPrimePowerGroup(S,N+1);
+#return PrimePartDerivedFunctorViaSubgroupChain(G,R,Functor2,N);
 return PrimePartDerivedFunctor(G,R,Functor2,N);
 fi;
 
@@ -241,7 +242,7 @@ S:=SylowSubgroup(G,q);
 
 if Order(S)>=128 or N>2 then
 #R:=ResolutionNormalSeries(LowerCentralSeries(S),N+1);
-R:=ResolutionNormalSeries(UpperCentralSeries(S),N+1);
+R:=ResolutionNormalSeries(BigStepUCS(S,6),N+1);
 else
 gens:=GeneratorsOfGroup(S);
 gens:=ReduceGenerators(gens,S);

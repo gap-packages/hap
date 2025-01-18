@@ -156,6 +156,7 @@ DeclareGlobalFunction("PoincareSeriesPrimePart");
 DeclareGlobalFunction("ExpansionOfRationalFunction");
 DeclareGlobalFunction("EfficientNormalSubgroups");
 DeclareGlobalFunction("RadicalSeriesOfResolution");
+DeclareGlobalFunction("ModPCohomologyGeneratorsDegreeBound");
 
 
 ## FUNCTORS #########################################################

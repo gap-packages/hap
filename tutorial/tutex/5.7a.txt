@@ -1,0 +1,42 @@
+gap> G:=SmallGroup(960,637);;
+gap> StructureDescription(G);
+"A5 : C16"
+
+gap> N:=AbelianPcpGroup([0]);;
+gap> N:=TrivialGModuleAsGOuterGroup(G,N);;
+gap> R:=ResolutionFiniteGroup(G,3);;
+gap> C:=HomToGModule(R,N);;
+gap> CH:=CohomologyModule(C,2);;
+gap> Elts:=Elements(ActedGroup(CH));;
+gap> lst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;
+gap> ccgrps := List(lst, x->CcGroup(N, x));;
+
+gap> inv:=function(gg)
+> local T;
+> T:=ResolutionInfiniteCcGroup(gg,3);
+> return List([1..2],i->Homology(TensorWithIntegers(T),i));
+> end;;
+
+gap> EquivClasses:=Classify(ccgrps,inv);
+ [ &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity>, 
+      &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity>, 
+      &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity>, 
+      &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity> ], 
+  [ &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity>, 
+      &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity> ], 
+  [ &lt;Cc-group of Size infinity>, &lt;Cc-group of Size infinity> ], 
+  [ &lt;Cc-group of Size infinity> ], [ &lt;Cc-group of Size infinity> ] ]
+gap> List(EquivClasses,Size);
+[ 8, 4, 2, 1, 1 ]
+
+gap> F16:=Image(IsomorphismFpGroup(ccgrps[16]));
+&lt;fp group on the generators [ x, y, z, w, v ]>
+gap> RelatorsOfFpGroup(F16);
+[ (x^2*y*z*w*z*y)^3*x^2*(y*x*w*y^2*z*x*y*z*y)^3*y*x*w*y^2*z*x*y^2*z*w*y^2*z*y,
+  x*y^-2*w^-1*z^-1*y^-1*x^-1*y, x*z^-1*y^-1*z^-1*w^-1*z^-1*y^-1*x^-1*z, 
+  x*y^-2*z^-1*w^-1*z^-1*y^-1*x^-1*w, z^-2, w^-2, y^-3, w*y^-1*w^-1*y^-1, 
+  w*z*w^-1*z^-1*w^-1*z, z*y^2*(z^-1*y^-1)^2, v^-1*x^-1*v*x, v*y*v^-1*y^-1, 
+  v*z*v^-1*z^-1, v*w*v^-1*w^-1 ]
+
+gap> List(Elts,Order);
+[ 16, 16, 16, 16, 16, 16, 16, 16, 8, 8, 8, 8, 4, 4, 2, 1 ]

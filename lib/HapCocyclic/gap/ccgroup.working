@@ -56,7 +56,7 @@ fi;
        ObjectifyWithAttributes
        (  G,              type, 
           Base,           ActingGroup(OA),
-          HapFibre,       ActedGroup(OA),
+          Fibre,          ActedGroup(OA),
           OuterGroup,     OA,
           Cocycle,        modSCo,
           ElementsFamily, elmsfam
@@ -75,8 +75,8 @@ fi;
        ##  Set generators of the group  
        ##
        gens := [];
-       for f in Filtered( GeneratorsOfGroup(HapFibre(G)), 
-                          x->not x = One(HapFibre(G)) ) 
+       for f in Filtered( GeneratorsOfGroup(Fibre(G)), 
+                          x->not x = One(Fibre(G)) ) 
        do
            Add( gens, 
                 CcElement
@@ -93,7 +93,7 @@ fi;
            Add( gens, 
                 CcElement
                 ( elmsfam,
-                  One(HapFibre(G)),
+                  One(Fibre(G)),
                   b,
                   G
                 ) );
@@ -173,10 +173,10 @@ InstallMethod
 
    function( Cc )
        local lst,        ##  List of elements
-             f,b;        ##  HapFibre and base index elements
+             f,b;        ##  Fibre and base index elements
 
        lst :=[];
-       for f in HapFibre(Cc) do
+       for f in Fibre(Cc) do
            for b in Base(Cc) do
                 
                Add( lst, 
@@ -225,11 +225,11 @@ InstallMethod
        if not IsFinite(Base(G)) then
            return Size(Base(G));
        fi;
-       if not IsFinite(HapFibre(G)) then
-           return Size(HapFibre(G));
+       if not IsFinite(Fibre(G)) then
+           return Size(Fibre(G));
        fi;
 
-       return Size(Base(G))*Size(HapFibre(G));
+       return Size(Base(G))*Size(Fibre(G));
          
     end 
 ); 

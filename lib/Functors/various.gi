@@ -71,7 +71,7 @@ local x,newgens;
 for x in gens do
 newgens:=DifferenceLists(gens, [x]);
 #if Order(Group(Concatenation(newgens,[Identity(G)])))=Order(G) then
-if Group(Concatenation(newgens,[Identity(G)]))=G then
+if GroupWithGenerators(Concatenation(newgens,[Identity(G)]))=G then
 return ReduceGenerators(newgens,G); fi;
 od;
 return SSortedList(gens);

@@ -27,6 +27,7 @@ gap> H7:=Cohomology(HomToIntegersModP(R,2),3);
 gap> IsSuperperfect(PerfectGroup(120,1));
 true
 gap> CoefficientsOfUnivariateRationalFunction(PoincareSeries(SmallGroup(16,13)));
+The series is guaranteed correct for group cohomology in degrees < 10
 [ [ 1, 1, 1 ], [ 1, -2, 2, -2, 1 ], 0 ]
 gap> STOP_TEST( "tst.tst", 1000 );
 

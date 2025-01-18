@@ -41,7 +41,8 @@ fi;
 
 N:=RN!.group;
 E:=Source(EEhomGG);
-G:=Image(EEhomGG);
+#G:=Image(EEhomGG);
+G:=Range(EEhomGG);
 
 NisFinite:=false;
 GisFinite:=false;

@@ -343,8 +343,7 @@ end;
 #####################################################################
 
 
-				    
-		
+if X="HomologyAsFpGroup" then return HomologyAsFpGroup; fi;
 
 if EvaluateProperty(X,"type")="chainComplex" then
 return FasterHomology_Obj(X,n).rank; fi;
