@@ -49,9 +49,12 @@ od;
 
 GensQ[L]:=GensSeries[1];
 
-
 Res:=[];
+if tietze=false and Charact=0 then
+Res[2]:=ResolutionGenericGroup(Group(GensQ[2]),n);
+else
 Res[2]:=ResolutionFiniteGroup(GensQ[2],n,tietze,Charact);
+fi;
 #Res[2]:=ResolutionFiniteGroup(Group(GensQ[2]),n,tietze,Charact); 
 #Changed 14/08/2019
 if nohomotopy then Res[2]!.homotopy:=fail; fi;

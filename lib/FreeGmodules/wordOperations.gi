@@ -256,6 +256,8 @@ end);
 InstallGlobalFunction(MultiplyWord,
 function(n,w)
 local v, u, i,x;
+if n=1 then return w; fi;
+
 v:=[];
 
 u:=1*w; 

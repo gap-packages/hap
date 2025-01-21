@@ -117,13 +117,18 @@ local z,u,a,y;
 if not IsBound(mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]) then
 
 if not x[2]=IDEL then
+############################
 y:=ShallowCopy(mapgens([x[1],IDEL],m));
+
 Apply(y,b->[b[1],Mult(GhomQ(x[2]),b[2])]);
 
+if x[2]<10000 then     
 	if x[1]>0 then mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]:=y;
 	else
 	mapgensRec[m+1][AbsoluteValue(x[1])][x[2]]:=NegateWord(y);
 	fi;
+fi;
+#############################
 return y;
 fi;
    if m=0 then 
@@ -141,11 +146,13 @@ fi;
    u:=[];
 ##########################
 if Charact=0 then 
+
  for a in Collected(z) do
       Append(u,MultiplyWord(a[2],
 List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
 ));
       od;
+
 else
       for a in Collected(z) do
       Append(u,MultiplyWord(a[2] mod Charact,
@@ -176,7 +183,9 @@ local a, u,v,x,y,z;
 
 v:=Collected(w);
 if Charact=0 then
+
 Apply(v,x->MultiplyWord(x[2],  mapgens(x[1],m)));
+
 else
 Apply(v,x->MultiplyWord(x[2] mod Charact,  mapgens(x[1],m)));
 fi;

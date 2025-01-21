@@ -44,22 +44,38 @@ HPrels:=[Identity(HP)];
 
 #########################################
 #########################################
-AddRels:=function(Q,L)  #Here P < Q < G where P=Syl_p(G)
-local i, hh, Lhh, gg, g, gg1, h, sylQQ, QQ, xx, RC, gens, bool;
-
+AddRels:=function(chn,L)  #chn=[P = Q1 < <Q2 < ... < Qk=Q] is a chain of 
+                          #k subgroups in G with P=Syl_p(G)
+local Q, NS, i, hh, Lhh, ggg, gg, g, gg1, h, sylQQ, QQ, xx, RC, gens, bool, Q0, Q1, S, SS;
+Q:=chn[Length(chn)];
 QQ:=Intersection(Q,Q^L); 
 sylQQ:=SylowSubgroup(QQ,prime);
 if not Order(sylQQ)>1 then return; fi;
-gens:=SmallGeneratingSet(sylQQ);
+gg:=One(G);
 
-RC:=RightTransversal(Q,Normalizer(Q,sylQQ));
-for g in RC do                #December 2024 changed 
+for i in [1..Length(chn)-1] do
+################
+################  Changed January 2025
+S:=sylQQ^gg;
+gens:=SmallGeneratingSet(S);
+Q0:=chn[Length(chn)-i+1];
+Q1:=chn[Length(chn)-i];
+NS:=Normalizer(Q0,Q1);
+RC:=RightTransversal(Q0,NS); 
+RC:=List(RC,x->x^-1);
+
+Unbind(ggg);
+for g in RC do             
 bool:=true;
    for xx in gens do
-      if not xx^g in P then bool:=false; break; fi;
+      if not xx^g in Q1 then bool:=false; break; fi;
    od;
-if bool then gg:=g; break; fi; 
-#if IsSubgroup(P,sylQQ^g) then gg:=g; break; fi;
+if bool then ggg:=g; break; fi; 
+od;
+################
+################
+gg:=gg*ggg;
+
 od;
 
 
@@ -98,18 +114,47 @@ Image(HPKhomHP, Image(HKhomHPK,x) ) );
 
 fx:=GroupHomomorphismByFunction(sylQQ,Q,g->g^(L^-1));
 imfx:=Image(fx);
-#hh:=false;
-#RC:=ConjugateSubgroups(Q,imfx);
-#i:=PositionProperty(RC,x->IsSubgroup(P,x));
-#hh:=RepresentativeAction(Q,imfx,RC[i]);
 
-RC:=RightCosets(Q,Normalizer(Q,imfx));
-RC:=List(RC,Representative);
-for h in RC do                   #December 2024 changed from Q to RC
-if IsSubgroup(P,imfx^h) then hh:=h; break; fi;
+hh:=One(G);
+
+for i in [1..Length(chn)-1] do
+################
+################  Changed January 2025
+SS:=imfx^hh;
+gens:=SmallGeneratingSet(SS);
+Q0:=chn[Length(chn)-i+1];
+Q1:=chn[Length(chn)-i];
+NS:=Normalizer(Q0,Q1);
+RC:=RightTransversal(Q0,NS);
+RC:=List(RC,x->x^-1);
+
+Unbind(ggg);
+for h in RC do
+bool:=true;
+   for xx in gens do
+      if not xx^h in Q1 then bool:=false; break; fi;
+   od;
+if bool then ggg:=h; break; fi;
 od;
+################
+################
+hh:=hh*ggg;
+
+od;
+
+
+#######################
+#######################
+#RC:=RightCosets(Q,Normalizer(Q,imfx));
+#RC:=List(RC,Representative);
+#for h in RC do                   #December 2024 changed from Q to RC
+#if IsSubgroup(P,imfx^h) then hh:=h; break; fi;
+#od;
+#######################
+#######################
+
+
 Lhh:=L^-1*hh;
-#fx:=GroupHomomorphismByFunction(sylQQ,P,g->(g^(L^-1))^hh);
 fx:=GroupHomomorphismByFunction(sylQQ,P,g->g^Lhh);
 
 xx:=F(EquivariantChainMap(S,R,fx));
@@ -139,7 +184,7 @@ ord:=function(x,y); return Order(x)<Order(y); end;
 if Order(P1)>Order(P) then 
 DCRS:=SmallGeneratingSet(P1);
    for L in DCRS do
-   AddRels(P,L);
+   AddRels([P],L);
    od;
 fi;
 for i in [2..Length(AscChn)] do
@@ -156,7 +201,7 @@ DCRS:=Filtered(DCRS,a->not a in Cent);  #This does not achieve much
 
    for L in DCRS do
    cnt:=cnt+1;
-   AddRels(AscChn[i-1],L);
+   AddRels(AscChn{[1..i-1]},L);
    od;
 od;
 #########################################
