@@ -558,7 +558,29 @@ Chain complex of length 7 in characteristic 0 .
 
 </pre></div>
 
-<p>It can be computationally difficult to compute high degree terms in resolutions for large finite groups. But the <span class="SimpleMath">p</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">p</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
+<p>It can be computationally difficult to compute resolutions for large finite groups. But the <span class="SimpleMath">p</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">p</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
+
+<p><span class="SimpleMath">H_2(G, Z)_(2) = Z_2 ⊕ Z_2⊕ Z_2</span></p>
+
+<p>of the degree 2 integral homology of the Rubik's cube group <span class="SimpleMath">G</span>. This group has order <span class="SimpleMath">43252003274489856000</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   ( 1, 3, 8, 6)( 2, 5, 7, 4)( 9,33,25,17)(10,34,26,18)(11,35,27,19),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   ( 9,11,16,14)(10,13,15,12)( 1,17,41,40)( 4,20,44,37)( 6,22,46,35),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   (17,19,24,22)(18,21,23,20)( 6,25,43,16)( 7,28,42,13)( 8,30,41,11),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   (25,27,32,30)(26,29,31,28)( 3,38,43,19)( 5,36,45,21)( 8,33,48,24),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   (33,35,40,38)(34,37,39,36)( 3, 9,46,32)( 2,12,47,29)( 1,14,48,27),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   (41,43,48,46)(42,45,47,44)(14,22,30,38)(15,23,31,39)(16,24,32,40)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> ];; G:=Group(gens);;P:=SylowSubgroup(G,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionNormalSeries(BigStepUCS(P,6),3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,R,TensorWithIntegers,2);</span>
+[ 2, 2, 2 ]
+
+</pre></div>
+
+<p>The same approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
 
 <p><span class="SimpleMath">H_11(A_7,A)_(2) = Z_2 ⊕ Z_2⊕ Z_4</span></p>
 
@@ -570,7 +592,7 @@ Chain complex of length 7 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,11);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);</span>
 [ 2, 2, 4 ]
 
 </pre></div>
@@ -587,7 +609,7 @@ Chain complex of length 7 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,R,F,3);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);</span>
 [ 4 ]
 
 </pre></div>
@@ -607,7 +629,7 @@ CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt;
  &lt;action isomorphism&gt; )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithModPModule(X,rho); end;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctor(G,S,F,100);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);</span>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
   2, 2, 2, 2, 2, 2, 2, 2, 2 ]
 
@@ -881,7 +903,7 @@ Chain Map between complexes of length 5 .
 <li><p>An explicit <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G→ A</span> is needed to construct the multiplication <span class="SimpleMath">(a,g)(a',g') = (a + g⋅ a' + f(g,g'), gg')</span> in the extension a group <span class="SimpleMath">G</span> by a <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">A</span> determined by the cohomology class of <span class="SimpleMath">f</span> in <span class="SimpleMath">H^2(G,A)</span>. See <a href="chap6.html#X8333413B838D787D"><span class="RefLink">6.7</span></a>.</p>
 
 </li>
-<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.8</span></a>.</p>
+<li><p>In work on coding theory and Hadamard matrices a number of papers have investigated square matrices <span class="SimpleMath">(a_ij)</span> whose entries <span class="SimpleMath">a_ij=f(g_i,g_j)</span> are the values of a <span class="SimpleMath">2</span>-cocycle <span class="SimpleMath">f: G× G → Z_2</span> where <span class="SimpleMath">G</span> is a finite group acting trivially on <span class="SimpleMath">Z_2</span>. See for instance <a href="chapBib.html#biBhoradam">[Hor00]</a> and <a href="chap6.html#X7C60E2B578074532"><span class="RefLink">6.10</span></a>.</p>
 
 </li>
 </ul>

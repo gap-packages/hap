@@ -502,10 +502,33 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YIt  can  be  computationally  difficult  to  compute  high  degree  terms in
-  resolutions  for large finite groups. But the [22Xp[122X-primary part of the homology
-  can  be  computed  using  resolutions of Sylow [22Xp[122X-subgroups. This approach is
-  used in the following example that computes the [22X2[122X-primary part[133X
+  [33X[0;0YIt  can be computationally difficult to compute resolutions for large finite
+  groups.  But  the  [22Xp[122X-primary  part  of  the  homology  can be computed using
+  resolutions  of  Sylow  [22Xp[122X-subgroups.  This approach is used in the following
+  example that computes the [22X2[122X-primary part[133X
+  
+  [33X[0;0Y[22XH_2(G, Z)_(2) = Z_2 ⊕ Z_2⊕ Z_2[122X[133X
+  
+  [33X[0;0Yof  the  degree  2 integral homology of the Rubik's cube group [22XG[122X. This group
+  has order [22X43252003274489856000[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens:= [[127X[104X
+    [4X[25X>[125X [27X   ( 1, 3, 8, 6)( 2, 5, 7, 4)( 9,33,25,17)(10,34,26,18)(11,35,27,19),[127X[104X
+    [4X[25X>[125X [27X   ( 9,11,16,14)(10,13,15,12)( 1,17,41,40)( 4,20,44,37)( 6,22,46,35),[127X[104X
+    [4X[25X>[125X [27X   (17,19,24,22)(18,21,23,20)( 6,25,43,16)( 7,28,42,13)( 8,30,41,11),[127X[104X
+    [4X[25X>[125X [27X   (25,27,32,30)(26,29,31,28)( 3,38,43,19)( 5,36,45,21)( 8,33,48,24),[127X[104X
+    [4X[25X>[125X [27X   (33,35,40,38)(34,37,39,36)( 3, 9,46,32)( 2,12,47,29)( 1,14,48,27),[127X[104X
+    [4X[25X>[125X [27X   (41,43,48,46)(42,45,47,44)(14,22,30,38)(15,23,31,39)(16,24,32,40)[127X[104X
+    [4X[25X>[125X [27X ];; G:=Group(gens);;P:=SylowSubgroup(G,2);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionNormalSeries(BigStepUCS(P,6),3);;[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctorViaSubgroupChain(G,R,TensorWithIntegers,2);[127X[104X
+    [4X[28X[ 2, 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  same  approach  is  used  in  the  following  example that computes the
+  [22X2[122X-primary part[133X
   
   [33X[0;0Y[22XH_11(A_7,A)_(2) = Z_2 ⊕ Z_2⊕ Z_4[122X[133X
   
@@ -518,7 +541,7 @@
     [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;[127X[104X
     [4X[25Xgap>[125X [27XF:=function(X); return TensorWithIntegralModule(X,rho); end;;[127X[104X
-    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,11);[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);[127X[104X
     [4X[28X[ 2, 2, 4 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -535,7 +558,7 @@
     [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;[127X[104X
     [4X[25Xgap>[125X [27XF:=function(X); return TensorWithIntegralModule(X,rho); end;;[127X[104X
-    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,R,F,3);[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);[127X[104X
     [4X[28X[ 4 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -555,7 +578,7 @@
     [4X[28X <action isomorphism> )[128X[104X
     [4X[25Xgap>[125X [27XF:=function(X); return TensorWithModPModule(X,rho); end;;[127X[104X
     [4X[25Xgap>[125X [27XS:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;[127X[104X
-    [4X[25Xgap>[125X [27XPrimePartDerivedFunctor(G,S,F,100);[127X[104X
+    [4X[25Xgap>[125X [27XPrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);[127X[104X
     [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
     [4X[28X  2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
     [4X[28X[128X[104X
@@ -874,7 +897,7 @@
   [30X    [33X[0;6YIn work on coding theory and Hadamard matrices a number of papers have
         investigated  square matrices [22X(a_ij)[122X whose entries [22Xa_ij=f(g_i,g_j)[122X are
         the  values  of  a  [22X2[122X-cocycle  [22Xf: G× G → Z_2[122X where [22XG[122X is a finite group
-        acting trivially on [22XZ_2[122X. See for instance [Hor00] and [14X6.8[114X.[133X
+        acting trivially on [22XZ_2[122X. See for instance [Hor00] and [14X6.10[114X.[133X
   
   [33X[0;0YGiven  a [22XZG[122X-resolution [22XR_∗[122X (with contracting homotopy) and a [22XZG[122X-module [22XA[122X one
   can  use  HAP  commands  to compute explicit standard [22Xn[122X-cocycles [22Xf: G^n → A[122X.
