@@ -97,6 +97,7 @@ DeclareGlobalFunction("UnimodularPairsReduced");
 DeclareGlobalFunction("BianchiPolyhedron");
 DeclareGlobalFunction("CoverOfUnimodularPairs");
 DeclareGlobalFunction("IsUnimodularCollection");
+DeclareGlobalFunction("HAP_BianchiRegularCWComplex");
 
 ####################################################################
 #####################################################################

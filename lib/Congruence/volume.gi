@@ -50,7 +50,7 @@ end);
 
 #################################
 InstallOtherMethod(IsPrime,
-"for HAP SL2Z subgroups",
+"for deals in s ting of quadratic integers",
 [IsIdealOfQuadraticIntegers],
 1000000,#Again, there must be a better way
 function(I)

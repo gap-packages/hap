@@ -267,3 +267,116 @@ InstallMethod
        fi;
    end 
 );
+
+
+####Added below January 2025
+
+#####################################################
+#####################################################
+InstallGlobalFunction(HAP_IsomorphismCcFpGroup,
+function(G)
+local Q, N, IsoQ, IsoN, F, FQ, FN, FFQ, FFN, relsQ, relsN, relsG,
+FFQhomF, FQhomF,FFNhomF, FFQmappingG,gensF, gensFQ, gensFFQ, gensFFN, imN,
+gensFN, FNhomF, gensG, FG, r,x,y,i,xx,yy,zz;
+
+Q:=G!.Base;
+N:=G!.HapFibre;
+IsoQ:=IsomorphismFpGroup(Q);
+IsoN:=IsomorphismFpGroup(N);
+FQ:=Range(IsoQ);
+FFQ:=FreeGroupOfFpGroup(FQ);
+FN:=Range(IsoN);
+FFN:=FreeGroupOfFpGroup(FN);
+gensFFQ:=GeneratorsOfGroup(FFQ);
+gensFQ:=GeneratorsOfGroup(FQ);
+gensFFN:=GeneratorsOfGroup(FFN);
+gensFN:=GeneratorsOfGroup(FN);
+F:=FreeGroup(Length(gensFFN)+Length(gensFFQ));
+gensF:=GeneratorsOfGroup(F);
+FFQhomF:=GroupHomomorphismByImagesNC(FFQ,F,gensFFQ,gensF{[Length(gensFFN)+1..Length(gensFFN)+Length(gensFFQ)]});
+FFNhomF:=GroupHomomorphismByImagesNC(FFN,F,gensFFN,gensF{[1..Length(gensFFN)]});
+FNhomF:=GroupHomomorphismByImagesNC(FN,F,gensFN,gensF{[1..Length(gensFN)]});
+FQhomF:=GroupHomomorphismByImagesNC(FQ,F,gensFQ,gensF{[1+Length(gensFN)..Length(gensFQ)+Length(gensFN)]});
+relsQ:=RelatorsOfFpGroup(FQ);
+relsN:=RelatorsOfFpGroup(FN);
+relsG:=List(relsN,r->Image(FFNhomF,r));
+
+imN:=[];
+for i in [1..Length(gensFQ)] do
+x:=PreImagesRepresentative(IsoQ,gensFQ[i]);
+x:=CcElement( FamilyObj(One(G)),One(N),x,InCcGroup(One(G)));
+Add(imN, x);
+od;
+
+FFQmappingG:=GroupHomomorphismByImagesNC(FFQ,G,gensFFQ,imN   );
+for r in relsQ do
+x:=Image(FFQhomF,r);
+y:=Image(FFQmappingG,r);
+y:=y!.FibreElement;
+y:=Image(IsoN,y);
+y:=Image(FNhomF,y);
+
+Add(relsG,Image(FFQhomF,r)*y^-1);
+od;
+
+for x in gensFQ do
+for y in gensFN do
+
+xx:=PreImagesRepresentative(IsoQ,x);;
+xx:=CcElement( FamilyObj(One(G)),One(N),xx,InCcGroup(One(G)));
+yy:=PreImagesRepresentative(IsoN,y);;
+yy:=CcElement( FamilyObj(One(G)),yy,One(Q),InCcGroup(One(G)));
+zz:=xx*yy*xx^-1;
+zz:=zz!.FibreElement;
+zz:=Image(IsoN,zz);
+Add(relsG, Image(FQhomF,x)*Image(FNhomF,y)*Image(FQhomF,x)^-1*Image(FNhomF,zz)^-1);
+od;od;
+
+FG:= F/relsG;
+
+gensG:=[];
+for x in gensFN do
+xx:=PreImagesRepresentative(IsoN,x);
+Add(gensG, CcElement( FamilyObj(One(G)),xx,One(Q),InCcGroup(One(G))) );
+od;
+for x in gensFQ do
+xx:=PreImagesRepresentative(IsoQ,x);
+Add(gensG, CcElement( FamilyObj(One(G)),One(N),xx,InCcGroup(One(G))) );
+od;
+
+return GroupHomomorphismByImagesNC(G,FG,gensG,GeneratorsOfGroup(FG));
+end);
+#####################################################
+#####################################################
+
+
+#####################################################
+#####################################################
+InstallMethod(IsomorphismFpGroup,
+"Isomorphism from cocyclic to fp group",
+[IsCcGroup],
+1000000,
+function(G)
+return HAP_IsomorphismCcFpGroup(G);
+end);
+#####################################################
+#####################################################
+
+
+#####################################################
+#####################################################
+InstallOtherMethod(IsomorphismPermGroup,
+"Isomorphism from cocyclic to perm group",
+[IsCcGroup],
+function(G)
+local isoFp, isoperm, iso, gens, ims;
+isoFp:= HAP_IsomorphismCcFpGroup(G);
+isoperm:=IsomorphismPermGroup(Range(isoFp));
+gens:=GeneratorsOfGroup(G);
+ims:=List(gens,x->Image(isoperm,Image(isoFp,x)));
+
+return GroupHomomorphismByImages(G,Target(isoperm),gens,ims);
+end);
+#####################################################
+#####################################################
+

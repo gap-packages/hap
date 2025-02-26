@@ -1,3 +1,4 @@
+
 ####################################################
 ####################################################
 InstallGlobalFunction(PSubgroupSimplicialComplex,
@@ -210,7 +211,7 @@ end);
 ######################################################
 InstallGlobalFunction(PSubgroupGChainComplex,
 function(arg)
-local G,p, filt,P, OS,  K, act, dm, stab, STAB, orbs, Dim, R, n,k, tmp,tmpp;
+local G,p, filt,P, OS,  K, act, dm, stab, STAB, orbs, Dim, R, S,s,n,i,k,g, tmp,tmpp;
 
 G:=arg[1];
 p:=arg[2];
@@ -233,14 +234,42 @@ return List(x,y->y^g);
 end;
 #################################
 
+########################################################
+if true then
+
+for n in [0..dm] do
+   orbs[n+1]:=[];
+   while Length(K[n+1])>0 do
+      s:=K[n+1][1];
+      Add(orbs[n+1],s);
+      for i in [1..Length(K[n+1])] do
+         g:=RepresentativeAction(G,s[1],K[n+1][i][1]);
+         if not g=fail then
+            S:=Stabilizer(G,K[n+1][i][1]);
+            g:=RepresentativeAction(S,act(s,g),K[n+1][i],act);
+            if not g=fail then K[n+1][i]:=0; fi;
+         fi;
+      od;
+      K[n+1]:=Filtered(K[n+1],x->not x=0);
+   od;
+od;
+
+#######################Alternative code################
+else
+
 for n in [0..dm] do
 orbs[n+1]:=[];
 while Length(K[n+1])>0 do
 Add(orbs[n+1],K[n+1][1]);
-tmp:=Orbit(G,K[n+1][1],act);
+stab:=Stabilizer(G,K[n+1][1],act);
+R:=RightTransversal(G,stab);
+tmp:=List(R,g->act(K[n+1][1],g));
 K[n+1]:=Filtered(K[n+1],x-> not x in tmp);
 od;
 od;
+
+fi;
+#######################################################
 
 #########################
 Dim:=function(n);

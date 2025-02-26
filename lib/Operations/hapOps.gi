@@ -1687,6 +1687,17 @@ end);
 
 ##########################################################
 ##########################################################
+InstallOtherMethod(RegularCWComplex,
+"Bianchi polyhedron to regular CW-complex",
+[IsHapBianchiPolyhedron],
+function(P)
+return HAP_BianchiRegularCWComplex(P!.ring,P!.unimodularPairs);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
 InstallMethod(RegularCWPolytope,
 "convex hull of set of points",
 [IsList],

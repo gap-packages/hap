@@ -270,13 +270,15 @@ fi;
 
 #####################################################################
 #####################################################################
-InstallGlobalFunction(ModPCohomologyGeneratorsDegreeBound,
+InstallGlobalFunction(ModPCohomologyPresentationBounds,
 function(G)
-local D,irr,S,SS,SSS,i,g;
+local D,irr,S,SS,i,g;
 
 if IsCyclic(G) then 
-if Order(G)=2 then return 1; fi;
-return 2;
+if Order(G)=2 then return rec( generators_degree_bound:=1,
+      relators_degree_bound:=0      );; fi;
+return rec( generators_degree_bound:=1,
+      relators_degree_bound:=2      );;;
 fi;
 
 D:=DirectFactorsOfGroup(G);
@@ -284,34 +286,26 @@ D:=DirectFactorsOfGroup(G);
 if Length(D)=1 then
 ################################################
 irr:=IrreducibleRepresentations(G);
-S:=[];
 
 for i in [1..Length(irr)] do
-Add(S,i);
-if Order(Intersection(List(S,i->Kernel(irr[i]))))=1 then break; fi;
+   for S in Combinations(irr,i) do
+   if Order(Intersection(List(S,r->Kernel(r)))) = 1 then
+      SS:=List(S,r->( Length( One( Range(r) ) ) )^2  );
+      return rec( generators_degree_bound:=Sum(SS),
+      relators_degree_bound:=2*Sum(SS)      );
+   fi;
+   od;
 od;
-
-SS:=1*Reversed(S);
-
-for i in SS do
-RemoveSet(S,i);
-if Order(Intersection(List(S,i->Kernel(irr[i]))))>1 then
-AddSet(S,i);
-fi;
-od;
-
-S:=List(S,i->(Length(One(Range(irr[i]))))^2  );
-
-return Sum(S);
 ########################################
 fi;
 
-SSS:=[];
+SS:=[];
 for g in D do
-Add(SSS,ModPCohomologyGeneratorsDegreeBound(g));
+Add(SS,(ModPCohomologyPresentationBounds(g)).generators_degree_bound);
 od;
 
-return Maximum(SSS);
+return rec( generators_degree_bound:=Maximum(SS),
+      relators_degree_bound:=2*Maximum(SS)      );;
 end);
 #####################################################################
 #####################################################################

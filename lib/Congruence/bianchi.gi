@@ -44,6 +44,8 @@ local BI, NW, L, x,y,z;
 #Returns all quadratic integers a with 
 #-N <= Norm(OQ,a) <= N where OQ is a ring of integers
 
+if N<0 then return []; fi;
+
 BI:=OQ!.bianchiInteger;
 
 if IsBound(OQ!.normomega) then NW:=OQ!.normomega; 
@@ -87,7 +89,7 @@ local Q, nrma,BI, rat, irrat, N, L, U, b, x,s1, t1, s2, t2;
 #Returns the list of unimodular pairs (a,b) in OQxOQ that 
 #intersect with the fundamental rectangle Q. The pair (a,b) 
 #is returned as [a,b,Norm(a)]. Here we think of (a,b) as 
-#being represented by a circular disk :w!
+#being represented by a circular disk with centre b/a and radius |a| 
 #in the complex plane.
 
 

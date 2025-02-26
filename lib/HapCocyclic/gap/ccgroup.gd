@@ -35,3 +35,5 @@ DeclareOperation("CcGroup",      [ ]                                 );
 ##
 DeclareGlobalFunction("ResolutionFiniteCcGroup");
 DeclareGlobalFunction("ResolutionInfiniteCcGroup");
+
+DeclareGlobalFunction("HAP_IsomorphismCcFpGroup");

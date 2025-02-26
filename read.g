@@ -233,6 +233,7 @@ ReadPackageHap( "lib/Congruence/sl2o.gi");
 ReadPackageHap( "lib/Congruence/volume.gi");
 ReadPackageHap( "lib/Congruence/quadArithmetic.gi");
 ReadPackageHap( "lib/Congruence/bianchi.gi");
+ReadPackageHap( "lib/Congruence/bianchiPart2.gi");
 
 
 

@@ -131,7 +131,7 @@ end);
 #############################################################################
 ##
 ##
-InstallMethod( IsomorphismFpGroup,
+InstallOtherMethod( IsomorphismFpGroup,
     [IsCcGroup],
     function( G )
         local R, P, F, iso1, iso2, iso, gens, imgens;
