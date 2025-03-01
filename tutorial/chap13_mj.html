@@ -1037,31 +1037,13 @@ ideal of norm 4817 in O(GaussianRationals)
 [ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, 
   4078793513671 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">II:=QuadraticIdeal(OQ,47+61*Sqrt(-1));</span>
-ideal of norm 5930 in O(GaussianRationals)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GG:=HAP_CongruenceSubgroupGamma0(II);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(GG);</span>
-[ 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-  4, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 11, 16, 16, 16, 16, 17, 17, 17, 32, 37, 
-  61, 61, 64, 64, 128, 263, 263, 263, 263, 512, 1024, 5099, 5099, 72043, 
-  72043 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">III:=QuadraticIdeal(OQ,49+69*Sqrt(-1));</span>
-ideal of norm 7162 in O(GaussianRationals)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GGG:=HAP_CongruenceSubgroupGamma0(III);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(GGG);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 8, 8, 8, 8, 13, 13, 25, 59, 
-  59, 179, 283, 283, 379, 857, 967, 967, 3769, 13537, 25601, 222659, 
-  8180323, 8180323, 11450932001, 11450932001 ]
-
 </pre></div>
 
 <p>We write <span class="SimpleMath">\(G^{ab}_{tors}\)</span> to denote the maximal finite summand of the first homology group of <span class="SimpleMath">\(G\)</span> and refer to this as the <em>torsion subgroup</em>. Nicholas Bergeron and Akshay Venkatesh <a href="chapBib_mj.html#biBbergeron">[Ber16]</a> have conjectured relationships between the torsion in congruence subgroups <span class="SimpleMath">\(\Gamma\)</span> and the volume of their quotient manifold <span class="SimpleMath">\({\frak h}^3/\Gamma\)</span>. For instance, for the Gaussian integers they conjecture</p>
 
 <p class="center">\[ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49}  + \cdots\]</p>
 
-<p>as the norm of the prime ideal <span class="SimpleMath">\(I\)</span> tends to <span class="SimpleMath">\(\infty\)</span>. The following approximates <span class="SimpleMath">\(\lambda/18\pi = 0.0161957\)</span> and <span class="SimpleMath">\(\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.00913432\)</span> and <span class="SimpleMath">\(\frac{\log |\Gamma_0(II)_{tors}^{ab}|}{{\rm Norm}(II)} = 0.0136594\)</span> and <span class="SimpleMath">\(\frac{\log |\Gamma_0(III)_{tors}^{ab}|}{{\rm Norm}(III)} = 0.0120078\)</span> for the above example.</p>
+<p>as the norm of the prime ideal <span class="SimpleMath">\(I\)</span> tends to <span class="SimpleMath">\(\infty\)</span>. The following approximates <span class="SimpleMath">\(\lambda/18\pi = 0.0161957\)</span> and <span class="SimpleMath">\(\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0210325\)</span> for the above example.</p>
 
 
 <div class="example"><pre>
@@ -1069,14 +1051,9 @@ ideal of norm 7162 in O(GaussianRationals)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lfunction(Q,2)/(18*3.142);</span>
 0.0161957
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(AbelianInvariants(G)),10)/Norm(I);</span>
-0.00913432
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(Filtered(AbelianInvariants(GG),i-&gt;not i=0)),10)/Norm(II);</span>
-0.0136594
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(Filtered(AbelianInvariants(GGG),i-&gt;not i=0)),10)/Norm(III);</span>
-0.0120078
+Loge10:=0.434294481903;; #Log_10(e)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1.0*Log(Product(AbelianInvariants(G)),10)/(Loge*Norm(I));</span>
+0.0210325
 
 </pre></div>
 
@@ -1086,7 +1063,47 @@ ideal of norm 7162 in O(GaussianRationals)
 {\rm Vol} ( {\frak h}^3 / PSL_2( {\cal O}_{d} ) )
  = \frac{|D|^{3/2}}{24} \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2)                           \]</p>
 
-<p>valid for square-free <span class="SimpleMath">\(d&lt;0\)</span>, where <span class="SimpleMath">\(D\)</span> is the discriminant of <span class="SimpleMath">\(\mathbb Q(\sqrt{d})\)</span>. The volume of a finite index subgroup <span class="SimpleMath">\(\Gamma\)</span>is obtained by multiplying the right-hand side by the index <span class="SimpleMath">\(|PSL_2({\cal O}_d)\,:\, \Gamma|\)</span>.</p>
+<p>valid for square-free <span class="SimpleMath">\(d&lt;0\)</span>, where <span class="SimpleMath">\(D\)</span> is the discriminant of <span class="SimpleMath">\(\mathbb Q(\sqrt{d})\)</span>. The volume of a finite index subgroup <span class="SimpleMath">\(\Gamma\)</span> is obtained by multiplying the right-hand side by the index <span class="SimpleMath">\(|PSL_2({\cal O}_d)\,:\, \Gamma|\)</span>.</p>
+
+<p>The following commands produce a graph of <span class="SimpleMath">\( \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}\)</span> against <span class="SimpleMath">\({\rm Norm}(I)\)</span> for prime ideals <span class="SimpleMath">\(I\)</span> of norm <span class="SimpleMath">\(49 \le {\rm Norm}(I) \le 4357\)</span> (where one ideal for each norm is taken).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=QuadraticIntegersByNorm(OQ,20000);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(x);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">if IsRat(x) then return x; fi;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return x!.rational+x!.irrational*Sqrt(-1);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">end;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NN:=List(N,fn);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=Filtered(NN,x-&gt;IsPrime(QuadraticIdeal(OQ,x)));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PP:=Classify(P,x-&gt;Norm(Q,x));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PP:=List(PP,x-&gt;x[1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PP:=Filtered(PP,x-&gt;not x=0);</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Loge:=0.434294481903;; ###Log_10(e)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ffn:=function(x)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">local I, G, A, S, F;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,x);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianInvariants(G);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Filtered(A,x-&gt;not x=0);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i-&gt;not i=0)),10)/(Loge*Norm(I))];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">end;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List(PP{[9..267]},ffn);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(S);</span>
+
+</pre></div>
+
+<p><img src="images/primesTorsion.png" align="center" width="1200" alt="graph of torsion versus norm"/></p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14_mj.html">[Next Chapter]</a>&nbsp;  </div>
