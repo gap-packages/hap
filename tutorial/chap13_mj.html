@@ -911,6 +911,28 @@ H_34 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 
 </pre></div>
 
+<p>The Lyndon-Hochschild-Serre spectral sequence <span class="SimpleMath">\(H_p(G/N,H_q(N,A)) \implies H_{p+q}(G,A)\)</span> for the groups <span class="SimpleMath">\(G=SL_2({\mathcal O}_{-d})\)</span> and <span class="SimpleMath">\(N\cong C_2\)</span> the central subgroup with <span class="SimpleMath">\(G/N\cong PSL_2({\mathcal O}_{-d})\)</span>, and the trivial module <span class="SimpleMath">\(A = \mathbb Z_{\ell^r}\)</span>, implies that for primes <span class="SimpleMath">\(\ell&gt;2\)</span> and any <span class="SimpleMath">\(r\ge 1\)</span> we have a natural isomorphism <span class="SimpleMath">\(H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z_{\ell^r}) \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z_{\ell^r})\)</span>. It follows that we have an isomorphism of <span class="SimpleMath">\(\ell\)</span>-primary parts <span class="SimpleMath">\(H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)} \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}\)</span>. Since <span class="SimpleMath">\( H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}\)</span> is periodic in degrees <span class="SimpleMath">\( \ge 3\)</span> we can recover the <span class="SimpleMath">\(3\)</span>-primary part of <span class="SimpleMath">\(H_n(PSL_2({\mathcal O}_{-13}),\mathbb Z)\)</span> in all degrees <span class="SimpleMath">\(q\ge1\)</span> from the following computation by ignoring all <span class="SimpleMath">\(2\)</span>-power factors in the output.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2QuadraticIntegers(-13,13);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [3..12] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("H_",n," at prime p=3 is: ", Filtered(Homology(TensorWithIntegers(R),n), m-&gt;IsInt(m/3)),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+H_3 at prime p=3 is: [ 6, 24 ]
+H_4 at prime p=3 is: [  ]
+H_5 at prime p=3 is: [  ]
+H_6 at prime p=3 is: [ 6, 12 ]
+H_7 at prime p=3 is: [ 6, 24 ]
+H_8 at prime p=3 is: [  ]
+H_9 at prime p=3 is: [  ]
+H_10 at prime p=3 is: [ 6, 12 ]
+H_11 at prime p=3 is: [ 6, 24 ]
+H_12 at prime p=3 is: [  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Ignore the 2-power factors in the output</span>
+
+</pre></div>
+
 <p><a id="X86A6858884B9C05B" name="X86A6858884B9C05B"></a></p>
 
 <h4>13.12 <span class="Heading">Some other infinite matrix groups</span></h4>
