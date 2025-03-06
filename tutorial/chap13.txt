@@ -717,12 +717,7 @@
   [33X[0;0YThe upper-half space [22Xfrak h^3[122X can be retracted onto a [22X2[122X-dimensional subspace
   [22Xcal  T  ⊂  frak h^3[122X. The space [22Xcal T[122X is a contractible [22X2[122X-dimensional regular
   CW-complex,  and  the  action  of the Picard group [22XG[122X restricts to a cellular
-  action  of  [22XG[122X  on  [22Xcal  T[122X.  Under this action there is one orbit of [22X2[122X-cells,
-  represented  by  the  curvilinear  square with vertices [22Xa[122X, [22Xb[122X, [22Xc[122X and [22Xd[122X in the
-  picture. This [22X2[122X-cell has stabilizer group isomorphic to the quaternion group
-  [22XQ_4[122X  of order [22X8[122X. There are two orbits of [22X1[122X-cells, both with stabilizer group
-  isomorphic  to a semi-direct product [22XC_3:C_4[122X. There is one orbit of [22X0[122X-cells,
-  with stabilizer group isomorphic to [22XSL(2,3)[122X.[133X
+  action of [22XG[122X on [22Xcal T[122X.[133X
   
   [33X[0;0YUsing perturbation techniques, the [22X2[122X-complex [22Xcal T[122X can be combined with free
   resolutions  for the cell stabilizer groups to contruct a regular CW-complex
@@ -954,7 +949,188 @@
   [4X[32X[104X
   
   
-  [1X13.11 [33X[0;0YSome other infinite matrix groups[133X[101X
+  [1X13.11 [33X[0;0Y(Co)homology of Bianchi groups and [22XSL_2(cal O_-d)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YThe (co)homology of Bianchi groups has been studied in papers such as [SV83]
+  [Vog85]  [Ber00]  [Ber06]  [RF13] [Rah13b] [Rah13a] [BLR20]. Calculations in
+  these   papers  can  often  be  verified  by  computer.  For  instance,  the
+  calculation[133X
+  
+  
+  [24X[33X[0;6YH_q(PSL_2({\cal  O}_{-15}),\mathbb Z) = \left\{\begin{array}{ll} \mathbb Z^2
+  \oplus  \mathbb  Z_6  & q=1,\\ \mathbb Z \oplus \mathbb Z_6 & q=2,\\ \mathbb
+  Z_6 & q\ge 3\\ \end{array}\right.[133X
+  
+  [124X
+  
+  [33X[0;0Yobtained  in  [RF13]  can  be verified as follows, once we note that Bianchi
+  groups  have virtual cohomological dimension 2 and, if all stabilizer groups
+  are periodic with period dividing m, then the homology has period dividing m
+  in degree [22X≥ 3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,O-15)");;[127X[104X
+    [4X[25Xgap>[125X [27XPK:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..2] do[127X[104X
+    [4X[25X>[125X [27Xfor k in [1..K!.dimension(n)] do[127X[104X
+    [4X[25X>[125X [27XPrint( CohomologicalPeriod(K!.stabilizer(n,k)),"  ");[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[28X2  2  2  2  2  2  2  2  2  2  2  2  2  2  [128X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(PK,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..4] do[127X[104X
+    [4X[25X>[125X [27XPrint("H_",n," = ", Homology(TensorWithIntegers(R),n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XH_0 = [ 0 ][128X[104X
+    [4X[28XH_1 = [ 6, 0, 0 ][128X[104X
+    [4X[28XH_2 = [ 6, 0 ][128X[104X
+    [4X[28XH_3 = [ 6 ][128X[104X
+    [4X[28XH_4 = [ 6 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAll  finite subgroups of [22XSL_2(cal O_-d)[122X are periodic. Thus the above example
+  can  be  adapted  from  PSL to SL for any square=free [22Xd≥ 1[122X. For example, the
+  calculation[133X
+  
+  
+  [24X[33X[0;6YH^q(SL_2({\cal  O}_{-2}),\mathbb  Z)  = \left\{\begin{array}{ll} \mathbb Z &
+  q=1,\\  \mathbb Z_6 & q=2 \mod 4,\\ \mathbb Z_2 \oplus \mathbb Z_{12} & q= 3
+  \mod  4\\  \mathbb  Z_2  \oplus \mathbb Z_{24} & q= 0 \mod 4 (q>0)\\ \mathbb
+  Z_{12} & q= 1 \mod 4 (q > 1)\\ \end{array}\right.[133X
+  
+  [124X
+  
+  [33X[0;0Yobtained in [SV83] can be verified as follows.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,O-2)");;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..2] do[127X[104X
+    [4X[25X>[125X [27Xfor k in [1..K!.dimension(n)] do[127X[104X
+    [4X[25X>[125X [27XPrint(CohomologicalPeriod(K!.stabilizer(n,k)),"  ");[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[28X2  4  2  4  2  2  2  2  2  2  2  2  [128X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,11);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..10] do[127X[104X
+    [4X[25X>[125X [27XPrint("H^",n," = ", Cohomology(HomToIntegers(R),n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XH^0 = [ 0 ][128X[104X
+    [4X[28XH^1 = [ 0 ][128X[104X
+    [4X[28XH^2 = [ 6 ][128X[104X
+    [4X[28XH^3 = [ 2, 12 ][128X[104X
+    [4X[28XH^4 = [ 2, 24 ][128X[104X
+    [4X[28XH^5 = [ 12 ][128X[104X
+    [4X[28XH^6 = [ 6 ][128X[104X
+    [4X[28XH^7 = [ 2, 12 ][128X[104X
+    [4X[28XH^8 = [ 2, 24 ][128X[104X
+    [4X[28XH^9 = [ 12 ][128X[104X
+    [4X[28XH^10 = [ 6 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  quotient of a periodic group by a central subgroup of order 2 need not be
+  periodic.  For  this reason the (co)homology of PSL can be a bit more tricky
+  than SL. For example, the calculation[133X
+  
+  
+  [24X[33X[0;6YH^q(PSL_2({\cal  O}_{-13}),\mathbb Z) = \left\{\begin{array}{ll} \mathbb Z^3
+  \oplus  (\mathbb  Z_2)^2  &  q=1,\\  \mathbb  Z^2  \oplus \mathbb Z_4 \oplus
+  (\mathbb  Z_3)^2 \oplus \mathbb Z_2 & q=2,\\ (\mathbb Z_2)^q \oplus (\mathbb
+  Z_{3})^2  &  q=  3  \mod  4\\ (\mathbb Z_2)^q & q= 0 \mod 4 (q>0)\\ (\mathbb
+  Z_2)^q & q= 1 \mod 4 (q>1)\\ (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 & q= 2
+  \mod 4 (q > 2)\\ \end{array}\right.[133X
+  
+  [124X
+  
+  [33X[0;0Ywas obtained in [RF13]. The following commands verify the calculation in the
+  first 34 degrees, but for a proof valid for all degrees one needs to analyse
+  the computation to spot that there is a certain "periodicity of period 2" in
+  the computations for [22Xq≥ 3[122X. This analysis is done in [RF13].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,O-13)");;[127X[104X
+    [4X[25Xgap>[125X [27XPK:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..2] do[127X[104X
+    [4X[25X>[125X [27Xfor k in [1..PK!.dimension(n)] do[127X[104X
+    [4X[25X>[125X [27XS:=SmallGroup(IdGroup(PK!.stabilizer( n, k )));[127X[104X
+    [4X[25X>[125X [27XPrint( [n,k]," is periodic ",IsPeriodic(S),"\n  ");[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[28X[ 0, 1 ] is periodic true[128X[104X
+    [4X[28X[ 0, 2 ] is periodic true[128X[104X
+    [4X[28X[ 0, 3 ] is periodic true[128X[104X
+    [4X[28X[ 0, 4 ] is periodic true[128X[104X
+    [4X[28X[ 0, 5 ] is periodic true[128X[104X
+    [4X[28X[ 0, 6 ] is periodic true[128X[104X
+    [4X[28X[ 0, 7 ] is periodic false[128X[104X
+    [4X[28X[ 0, 8 ] is periodic false[128X[104X
+    [4X[28X[ 1, 1 ] is periodic true[128X[104X
+    [4X[28X[ 1, 2 ] is periodic true[128X[104X
+    [4X[28X[ 1, 3 ] is periodic true[128X[104X
+    [4X[28X[ 1, 4 ] is periodic true[128X[104X
+    [4X[28X[ 1, 5 ] is periodic true[128X[104X
+    [4X[28X[ 1, 6 ] is periodic true[128X[104X
+    [4X[28X[ 1, 7 ] is periodic true[128X[104X
+    [4X[28X[ 1, 8 ] is periodic true[128X[104X
+    [4X[28X[ 1, 9 ] is periodic true[128X[104X
+    [4X[28X[ 1, 10 ] is periodic true[128X[104X
+    [4X[28X[ 1, 11 ] is periodic true[128X[104X
+    [4X[28X[ 1, 12 ] is periodic true[128X[104X
+    [4X[28X[ 1, 13 ] is periodic true[128X[104X
+    [4X[28X[ 2, 1 ] is periodic true[128X[104X
+    [4X[28X[ 2, 2 ] is periodic true[128X[104X
+    [4X[28X[ 2, 3 ] is periodic true[128X[104X
+    [4X[28X[ 2, 4 ] is periodic true[128X[104X
+    [4X[28X[ 2, 5 ] is periodic true[128X[104X
+    [4X[28X[ 2, 6 ] is periodic true[128X[104X
+    [4X[28X[ 2, 7 ] is periodic true[128X[104X
+    [4X[28X[ 2, 8 ] is periodic true[128X[104X
+    [4X[28X[ 2, 9 ] is periodic true[128X[104X
+    [4X[28X[ 2, 10 ] is periodic true[128X[104X
+    [4X[28X[ 2, 11 ] is periodic true[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionPSL2QuadraticIntegers(-13,35);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..34] do[127X[104X
+    [4X[25X>[125X [27XPrint("H_",n," = ", Homology(TensorWithIntegers(R),n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XH_0 = [ 0 ][128X[104X
+    [4X[28XH_1 = [ 2, 2, 0, 0, 0 ][128X[104X
+    [4X[28XH_2 = [ 6, 12, 0, 0 ][128X[104X
+    [4X[28XH_3 = [ 2, 6, 6 ][128X[104X
+    [4X[28XH_4 = [ 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_5 = [ 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_6 = [ 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_7 = [ 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_8 = [ 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_9 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_10 = [ 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_11 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_12 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_13 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_14 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_15 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_16 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_17 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_18 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_19 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_20 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_21 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_22 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_23 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_24 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_25 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_26 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_27 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_28 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_29 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_30 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_31 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28XH_32 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_33 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[28XH_34 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.12 [33X[0;0YSome other infinite matrix groups[133X[101X
   
   [33X[0;0YAnalogous to the functions for Bianchi groups, HAP has functions[133X
   
@@ -1066,7 +1242,7 @@
   [4X[32X[104X
   
   
-  [1X13.12 [33X[0;0YIdeals and finite quotient groups[133X[101X
+  [1X13.13 [33X[0;0YIdeals and finite quotient groups[133X[101X
   
   [33X[0;0YThe  following commands first construct the number field [22XQ(sqrt-7)[122X, its ring
   of  integers  [22Xcal  O_-7=cal  O(  Q(sqrt-7))[122X, and the principal ideal [22XI=⟨ 5 +
@@ -1178,7 +1354,7 @@
   [4X[32X[104X
   
   
-  [1X13.13 [33X[0;0YCongruence subgroups for ideals[133X[101X
+  [1X13.14 [33X[0;0YCongruence subgroups for ideals[133X[101X
   
   [33X[0;0YGiven  a  ring  of  integers  [22Xcal O[122X and ideal [22XI ◃ cal O[122X there is a canonical
   homomorphism [22Xπ_I: SL_2(cal O) → SL_2(cal O/I)[122X. A subgroup [22XΓ ≤ SL_2(cal O)[122X is
@@ -1250,7 +1426,7 @@
   [4X[32X[104X
   
   
-  [1X13.14 [33X[0;0YFirst homology[133X[101X
+  [1X13.15 [33X[0;0YFirst homology[133X[101X
   
   [33X[0;0YThe  isomorphism  [22XH_1(G,  Z)  ≅  G_ab[122X  allows  for  the computation of first
   integral homology using computational methods for finitely presented groups.
