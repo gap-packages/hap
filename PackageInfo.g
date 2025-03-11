@@ -60,7 +60,6 @@ SetPackageInfo( rec(
     PDFFile   := "doc/manual.pdf",
     SixFile   := "doc/manual.six",
     LongTitle := "Homological Algebra Programming Package",
-    Autoload := true 
   ),
 
 

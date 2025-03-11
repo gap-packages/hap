@@ -76,11 +76,7 @@ for example by Init__Dynamic(). This contains details of the library name,
 and the further initialisation functions to call.
 **/
 static StructInitInfo module = {
-#ifdef STATICMODULE
- /* type        = */ MODULE_STATIC,
-#else
  /* type        = */ MODULE_DYNAMIC,
-#endif
  /* name        = */ "absolute value of an integer",
  /* revision_c  = */ 0,
  /* revision_h  = */ 0,
@@ -95,7 +91,6 @@ static StructInitInfo module = {
 };
 
 
-#ifndef STATICGAP
 /** 
 Function called by GAP as soon as the library is dynamically loaded. 
 This returns the StructInitInfo data for this library
@@ -104,9 +99,3 @@ StructInitInfo * Init__Dynamic (void)
 {
  return &module;
 }
-#endif
-StructInitInfo * Init__linbox(void)
-{
-  return &module;
-}
-
