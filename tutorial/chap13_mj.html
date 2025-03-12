@@ -554,8 +554,8 @@ eigenvalues= [ 116490258898220, 10661420 ] and eigenvectors = [ [ 1, -2520/691, 
 <p>Alternatively, and more explicitly, the action is given by</p>
 
 <p class="center">\[\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \  
-\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\ 
-\frac{y}{|cz+d|^2+|c|^2y^2}\, j
+\frac{(az+b)\overline{(cz+d) } + a\overline c t^2}{|cz +d|^2 + |c|^2t^2} \ +\ 
+\frac{t}{|cz+d|^2+|c|^2t^2}\, j
       \ .\]</p>
 
 <p>A standard 'fundamental domain' <span class="SimpleMath">\(D\)</span> for this action is the following region (with some of the boundary points removed).</p>
@@ -930,6 +930,48 @@ H_10 at prime p=3 is: [ 6, 12 ]
 H_11 at prime p=3 is: [ 6, 24 ]
 H_12 at prime p=3 is: [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Ignore the 2-power factors in the output</span>
+
+</pre></div>
+
+<p>The ring <span class="SimpleMath">\({\mathcal O}_{-163}\)</span> is an example of a principal ideal domain that is not a Euclidean domain. It seems that no complete calculation of <span class="SimpleMath">\(H_n(PSL_2({\mathcal O}_{-163}),\mathbb Z)\)</span> is yet available in the literature. The following comands compute this homology in the first <span class="SimpleMath">\(31\)</span> degrees. The computation suggests a general formula in higher degrees. All but two of the stabilizer groups for the action of <span class="SimpleMath">\(PSL_2({\mathcal O}_{-163})\)</span> are periodic. The non-periodic group <span class="SimpleMath">\(A_4\)</span> occurs twice in degree <span class="SimpleMath">\(0\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionPSL2QuadraticIntegers(-163,32);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [1..31] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("H_",n,"= ",Homology(TensorWithIntegers(R),n),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+H_1= [ 0, 0, 0, 0, 0, 0, 0 ]
+H_2= [ 2, 12, 0, 0, 0, 0, 0, 0 ]
+H_3= [ 6 ]
+H_4= [  ]
+H_5= [ 2, 2, 2 ]
+H_6= [ 2, 6 ]
+H_7= [ 6 ]
+H_8= [ 2, 2, 2, 2 ]
+H_9= [ 2, 2, 2 ]
+H_10= [ 2, 6 ]
+H_11= [ 2, 2, 2, 2, 6 ]
+H_12= [ 2, 2, 2, 2 ]
+H_13= [ 2, 2, 2 ]
+H_14= [ 2, 2, 2, 2, 2, 6 ]
+H_15= [ 2, 2, 2, 2, 6 ]
+H_16= [ 2, 2, 2, 2 ]
+H_17= [ 2, 2, 2, 2, 2, 2, 2 ]
+H_18= [ 2, 2, 2, 2, 2, 6 ]
+H_19= [ 2, 2, 2, 2, 6 ]
+H_20= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+H_21= [ 2, 2, 2, 2, 2, 2, 2 ]
+H_22= [ 2, 2, 2, 2, 2, 6 ]
+H_23= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+H_24= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+H_25= [ 2, 2, 2, 2, 2, 2, 2 ]
+H_26= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+H_27= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+H_28= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+H_29= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+H_30= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+H_31= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
 
 </pre></div>
 
