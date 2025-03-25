@@ -1235,6 +1235,7 @@ return [false]; fi;
 H:=P!.heights;
 H:=Filtered(H,x->x>0);
 H:=1/Minimum(H);
+if IsHapQuadraticNumber(H) then H:=H!.rational; fi;
 
 L:=P!.unimodularPairs;
 L:=List(L,x->HAPNorm(P!.ring,x[1]));;
