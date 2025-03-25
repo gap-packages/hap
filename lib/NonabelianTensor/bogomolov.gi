@@ -20,7 +20,13 @@ toggle:= arg[2]; fi;
 
 ################### Very easy cases  ###############
 ###################                  ###############
+if IsBound(G!.BogomolovMultiplier) then return G!.BogomolovMultiplier; fi;
 if IsAbelian(G) then G!.BogomolovMultiplier:=[]; return []; fi;
+if not IsFinite(G) then
+   Print("At present this function is only implemented for finite groups.\n");
+   return fail;
+fi;
+if IsSimple(G) then G!.BogomolovMultiplier:=[]; return []; fi;
 if CommutingProbability(G)>1/4 then G!.BogomolovMultiplier:=[]; return []; fi;
 ################### Very easy cases  ###############
 ################### finished         ###############
@@ -30,14 +36,6 @@ if not toggle in ["standard", "homology", "tensor"] then
 Print("The available algorithms are \"standard\", \"homology\" and \"tensor\".\n");
 return fail; fi;
 
-if IsBound(G!.BogomolovMultiplier) then
-return G!.BogomolovMultiplier; fi;
-
-
-if not IsFinite(G) then
-Print("At present this function is only implemented for finite groups.\n");
-return fail;
-fi; 
 
 ################### Non p-groups ##################
 ###################              ##################
@@ -61,7 +59,7 @@ fi;
 
 if toggle="homology" then return Bogomology(G,2); fi;
 
-if toggle="homology" then return BogomolovMultiplier_viaTensorSquare(G); fi;
+if toggle="tensor" then return BogomolovMultiplier_viaTensorSquare(G); fi;
 
 RA:=ResolutionAbelianGroup_alt([0,0],3);
 A:=RA!.group;

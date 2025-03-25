@@ -33,6 +33,7 @@ DeclareGlobalFunction("MultiplyWord");
 DeclareGlobalFunction("WordModP");
 DeclareGlobalFunction("OppositeGroup");
 DeclareGlobalFunction("QuotientGroup");
+DeclareGlobalFunction("2x2matrix");
 DeclareGlobalFunction("ResolutionBoundaryOfWord");
 
 ## FpG MODULES#######################################################
@@ -355,6 +356,7 @@ DeclareGlobalFunction("IntegralCohomologyOfCochainComplex");#<Cohomology
 DeclareGlobalFunction("LefschetzNumberOfChainMap");
 DeclareOperation("LefschetzNumber",[IsObject]);
 DeclareGlobalFunction("HomologyOfPureCubicalComplex");#<Homology
+DeclareGlobalFunction("HAP_SylowConjugatedHomomorphism");
 
 ## RINGS ############################################################
 DeclareGlobalFunction("CR_IntegralCohomology");
@@ -903,6 +905,7 @@ DeclareGlobalFunction("HAP_SL2SubgroupTree");
 DeclareGlobalFunction("HAP_SL2ZSubgroupTree_slow");
 DeclareGlobalFunction("HAP_SL2OSubgroupTree_slow");
 DeclareGlobalFunction("HAP_SL2ZSubgroupTree_fast");
+DeclareGlobalFunction("HAP_SL2OSubgroupTree_fast");
 DeclareGlobalFunction("CuspidalCohomologyHomomorphism");
 DeclareGlobalFunction("HomomorphismAsMatrix");
 DeclareGlobalFunction("HAP_GenericSL2ZSubgroup");

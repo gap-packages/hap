@@ -102,6 +102,7 @@ od;
 
 Elts:=SSortedList(Elts);
 
+
 #######
 for n in [1..lnth+1] do
 boundaryList[n]:=[];
@@ -127,7 +128,7 @@ ActionRecord[n][k]:=[];
 od;
 od;
 
-G:=Group(Elts);
+G:=Group(One(Elts[1])*Elts);     #March 2025
 G!.bianchiInteger:=dd;
 
 ####################

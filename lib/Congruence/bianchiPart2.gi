@@ -194,8 +194,10 @@ od;
 
 BND[4]:=[];
 
-
+Heights:=Heights{List(GV,p->Position(Points,p))};
+Points:=List([1..Length(GV)],i->[GV[i][1],GV[i][2],Sqrt(Heights[i])]);
 Y:=RegularCWComplex(BND);
+Y!.points:=Points;
 return Y;
 
 

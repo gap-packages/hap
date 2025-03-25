@@ -149,6 +149,14 @@ end);
 ##########################################################
 ##########################################################
 
+##############################
+InstallGlobalFunction(Hap_int,
+function(y);
+if y>0 or IsInt(y) then return Int(y);
+else return Int(y)-1; fi;
+end);
+##############################
+
 
 ##########################################################
 ##########################################################
@@ -156,7 +164,7 @@ InstallOtherMethod(MOD,
 "for a cyclotomic  and an ideal in a ring of quadratic integers",
 [IsCyclotomic,IsIdealOfQuadraticIntegers and IsRing],
 function(x,I)   
-local g, N, D, p, int;
+local g, N, D, p;
 
 ############This code is never used################
 #for g in RightTransversal(I) do
@@ -165,18 +173,18 @@ local g, N, D, p, int;
 ###################################################
 
 ##############################
-int:=function(y);
-if y>0 or IsInt(y) then return Int(y); 
-else return Int(y)-1; fi;
-end;
+#int:=function(y);
+#if y>0 or IsInt(y) then return Int(y); 
+#else return Int(y)-1; fi;
+#end;
 ##############################
 
 N:=I!.hermiteBasis[1];
 D:=I!.hermiteBasis[2];
 
 p:=PartsOfQuadraticInteger(AssociatedRing(I),x);
-p:=p-int(p[1]/N[1][1])*N[1];
-p:=p-int(p[2]/N[2][2])*N[2];
+p:=p-Hap_int(p[1]/N[1][1])*N[1];
+p:=p-Hap_int(p[2]/N[2][2])*N[2];
 
 return p[1]+p[2]*D;
 
@@ -355,12 +363,14 @@ local q,a,b,d,r;
 
 d:=R!.bianchiInteger;
 
-#a:=RealPart(x);
-#b:=ImaginaryPart(x)/Sqrt(AbsInt(d));
-#if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
-#return [a,b];
+##THIS SEEMS QUICKER
+a:=RealPart(x);
+b:=ImaginaryPart(x)/Sqrt(AbsInt(d));
+if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+return [a,b];
+##  March 2025
 
-#################IGNORE EVERYTHING ABOVE 
+
 
 if IsCycInt(x) then
 q:=Quadratic(x);
@@ -421,6 +431,56 @@ end);
 ##########################################################
 ##########################################################
 
+######################################################################
+InstallOtherMethod( Int,
+    "Int for HAPSqrt",
+    [ IsHapQuadraticNumber],
+100000000,
+function(x);
+if not IsZero(x!.irrational) then return fail; fi;
+return Int(x!.rational);
+
+end);
+#####################################################################
 
 
+
+######################################################################
+InstallOtherMethod( One,
+    "one in 2x2 matrix group",
+    [ IsHap2x2matrix],
+100000000,
+function(M)
+local one,zero;
+one:=One(M[1][1]);
+zero:=Zero(M[1][1]);
+
+return  [[one,zero],[zero,one]];
+
+
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( InverseMutable,
+    "inverse in 2x2 matrix group",
+    [ IsHap2x2matrix],
+10000000,
+function(M) local D;
+D:=Determinant(M)^-1;
+
+return  [[D*M[2][2], -D*M[1][2]],[-D*M[2][1],D*M[2][2]]];
+end);
+#####################################################################
+
+#####################################################################
+InstallOtherMethod( Zero,
+    "zero 2x2 matrix ",
+    [ IsHap2x2matrix],
+100000000,
+function(M) local D;
+
+return [[Zero(M[1][1]),Zero(M[1][2])],[Zero(M[2][1]),Zero(M[2][2])]];
+end);
+#####################################################################
 

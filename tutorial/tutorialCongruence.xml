@@ -431,8 +431,8 @@ To describe the action we introduce the symbol <M>j</M> satisfying <M>j^2=-1</M>
 
 Alternatively,  and more explicitly, the action is given by 
 <Display>\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \  
-\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\ 
-\frac{y}{|cz+d|^2+|c|^2y^2}\, j
+\frac{(az+b)\overline{(cz+d) } + a\overline c t^2}{|cz +d|^2 + |c|^2t^2} \ +\ 
+\frac{t}{|cz+d|^2+|c|^2t^2}\, j
       \ .</Display>
 
 <P/>A standard 'fundamental domain' <M>D</M> for this action is the following region (with some of the boundary points removed).
@@ -450,11 +450,7 @@ Alternatively,  and more explicitly, the action is given by
 
 <P/>The upper-half space <M>{\frak h}^3</M> can be retracted onto a <M>2</M>-dimensional subspace <M>{\cal T} \subset {\frak h}^3</M>. The space <M>{\cal T}</M>
 is a contractible
-<M>2</M>-dimensional regular CW-complex, and the action of the Picard group <M>G</M> restricts to a cellular action of <M>G</M> on <M>{\cal T}</M>. Under this action there is one orbit of <M>2</M>-cells, represented by the curvilinear square with vertices <M>a</M>, <M>b</M>, <M>c</M> and <M>d</M> in the picture. This <M>2</M>-cell has stabilizer group isomorphic to the quaternion group
-<M>Q_4</M> of order <M>8</M>.
- There are two orbits of <M>1</M>-cells, both with stabilizer group isomorphic to a semi-direct product <M>C_3:C_4</M>. There is
-  one orbit of <M>0</M>-cells, with stabilizer group isomorphic to <M>SL(2,3)</M>. 
-
+<M>2</M>-dimensional regular CW-complex, and the action of the Picard group <M>G</M> restricts to a cellular action of <M>G</M> on <M>{\cal T}</M>. 
 
 <P/>Using perturbation techniques, the <M>2</M>-complex <M>{\cal T}</M> can be combined with free resolutions for the cell stabilizer groups to contruct a regular CW-complex <M>X</M> on which the Picard group <M>G</M> acts freely. 
 The following commands compute the first few terms of the free <M>\mathbb ZG</M>-resolution 
@@ -560,6 +556,92 @@ the following commands compute
 <#Include SYSTEM "tutex/11.11.txt">
 </Example>
 </Section>
+
+<Section><Heading>(Co)homology of Bianchi groups and <M>SL_2({\cal O}_{-d})</M></Heading>
+The (co)homology of Bianchi groups has been studied in papers such as 
+		<Cite Key="Schwermer"/>
+<Cite Key="Vogtmann"/>	
+	<Cite Key="Berkove00"/>
+		 <Cite Key="Berkove06"/>
+			 <Cite Key="Rahm11"/>
+				 <Cite Key="Rahm13"/>
+					 <Cite Key="Rahm13a"/>
+					 <Cite Key="Rahm20"/>.
+						 Calculations in these papers can often be verified by computer. For instance, the calculation
+<Display>H_q(PSL_2({\cal O}_{-15}),\mathbb Z) =
+	\left\{\begin{array}{ll}
+	\mathbb Z^2 \oplus \mathbb Z_6  &amp; q=1,\\
+	\mathbb Z \oplus \mathbb Z_6 &amp; q=2,\\
+	\mathbb Z_6 &amp; q\ge 3\\
+\end{array}\right. 
+</Display>
+	obtained in <Cite Key="Rahm11"/> can be verified as follows, once we note that Bianchi groups have virtual cohomological dimension 2 and, if all stabilizer groups are periodic with period dividing m, then the homology has period dividing m in degree <M>\ge 3</M>.
+
+		<Example>
+<#Include SYSTEM "tutex/11.22.txt">
+</Example>
+
+	All finite subgroups of <M>SL_2({\cal O}_{-d})</M> are periodic. Thus the above example can be adapted from PSL to SL for any square=free <M>d\ge 1</M>. For example, the calculation
+<Display>H^q(SL_2({\cal O}_{-2}),\mathbb Z) =
+        \left\{\begin{array}{ll}
+        \mathbb Z  &amp; q=1,\\
+        \mathbb Z_6 &amp; q=2 \mod 4,\\
+	\mathbb Z_2 \oplus \mathbb Z_{12} &amp; q= 3 \mod 4\\
+	\mathbb Z_2 \oplus \mathbb Z_{24} &amp; q= 0 \mod 4  (q>0)\\
+	\mathbb Z_{12}  &amp; q= 1 \mod 4  (q > 1)\\
+\end{array}\right.
+</Display>
+	obtained in <Cite Key="Schwermer"/> can be verified as follows.
+
+
+
+	<Example>
+<#Include SYSTEM "tutex/11.23.txt">
+</Example>
+
+	 A quotient of a periodic group by a central subgroup of order 2 need not be periodic. For this reason the (co)homology of PSL can be a bit more tricky than SL.
+                For example, the calculation
+                <Display>H^q(PSL_2({\cal O}_{-13}),\mathbb Z) =
+        \left\{\begin{array}{ll}
+        \mathbb Z^3 \oplus (\mathbb Z_2)^2  &amp; q=1,\\
+        \mathbb Z^2 \oplus \mathbb Z_4 \oplus (\mathbb Z_3)^2 \oplus \mathbb Z_2 &amp; q=2,\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 &amp; q= 3 \mod 4\\
+        (\mathbb Z_2)^q  &amp; q= 0 \mod 4  (q>0)\\
+                        (\mathbb Z_2)^q  &amp; q= 1 \mod 4  (q>1)\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2  &amp; q= 2 \mod 4  (q > 2)\\
+\end{array}\right.
+</Display>
+	was obtained in <Cite Key="Rahm11"/>. The following commands verify the calculation in the first 34 degrees, but for a proof valid for all degrees one needs to analyse the computation to spot that there is a certain "periodicity of period 2" in the computations for <M>q\ge 3</M>. This analysis is done in <Cite Key="Rahm11"/>.
+
+		<Example>
+<#Include SYSTEM "tutex/11.24.txt">
+</Example>
+
+	The Lyndon-Hochschild-Serre spectral sequence  <M>H_p(G/N,H_q(N,A)) \implies H_{p+q}(G,A)</M> for the groups <M>G=SL_2({\mathcal O}_{-d})</M> and <M>N\cong C_2</M> the central subgroup with <M>G/N\cong PSL_2({\mathcal O}_{-d})</M>, and the trivial module 
+	<M>A = \mathbb Z_{\ell}</M>, implies that for primes <M>\ell>2</M> 
+		 we have a natural isomorphism <M>H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z_{\ell}) \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z_{\ell})</M>. It follows that we have an isomorphism of <M>\ell</M>-primary 
+		parts <M>H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)} \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}</M>.
+			Since <M>  H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}</M> is periodic in degrees <M>  \ge 3</M> we can recover
+				the <M>3</M>-primary part of <M>H_n(PSL_2({\mathcal O}_{-13}),\mathbb Z)</M> in all degrees <M>q\ge1</M>
+					from the following computation by ignoring all  <M>2</M>-power factors in the output. 
+
+						 <Example>
+<#Include SYSTEM "tutex/11.25.txt">
+</Example>
+
+	The ring <M>{\mathcal O}_{-163}</M> is an example of a
+		principal ideal domain that is not a Euclidean domain. It seems that no complete calculation of <M>H_n(PSL_2({\mathcal O}_{-163}),\mathbb Z)</M>
+			is yet available in the literature. The following comands compute this homology in the first <M>31</M> degrees. The computation suggests a general formula in higher degrees. All but two of the stabilizer groups for
+				the action of
+			<M>PSL_2({\mathcal O}_{-163})</M> are periodic. The non-periodic group <M>A_4</M> occurs twice in degree <M>0</M>.
+
+
+
+				<Example>
+<#Include SYSTEM "tutex/11.26.txt">
+</Example>
+
+			 	</Section>
 
 <Section><Heading>Some other infinite matrix groups</Heading>
 
@@ -728,9 +810,8 @@ they conjecture
 <Display> \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49}  + \cdots</Display>
 as the norm of the prime ideal <M>I</M> tends to <M>\infty</M>.
 The following approximates <M>\lambda/18\pi = 0.0161957</M> and
-<M>\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.00913432</M>
-	and <M>\frac{\log |\Gamma_0(II)_{tors}^{ab}|}{{\rm Norm}(II)} = 0.0136594</M>
-		and <M>\frac{\log |\Gamma_0(III)_{tors}^{ab}|}{{\rm Norm}(III)} = 0.0120078</M> for the above example.
+<M>\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0210325</M>
+ for the above example.
 
 <Example>
 <#Include SYSTEM "tutex/11.19.txt">
@@ -742,6 +823,21 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 <Display>   
 {\rm Vol} ( {\frak h}^3 / PSL_2( {\cal O}_{d} ) )
  = \frac{|D|^{3/2}}{24} \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2)                           </Display>
- valid for square-free <M>d&lt;0</M>, where <M>D</M> is the discriminant of <M>\mathbb Q(\sqrt{d})</M>. The volume of a finite index subgroup <M>\Gamma</M>is obtained by multiplying the right-hand side by the  index <M>|PSL_2({\cal O}_d)\,:\, \Gamma|</M>.
+ valid for square-free <M>d&lt;0</M>, where <M>D</M> is the discriminant of <M>\mathbb Q(\sqrt{d})</M>. The volume of a finite index subgroup <M>\Gamma</M>
+	 is obtained by multiplying the right-hand side by the  index <M>|PSL_2({\cal O}_d)\,:\, \Gamma|</M>.
+
+<P/>
+	 The following commands produce a graph of 
+ <M> \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}</M>  against 
+ <M>{\rm Norm}(I)</M> for prime ideals <M>I</M> of norm <M>49 \le {\rm Norm}(I) \le 4357</M> (where one ideal for each norm is taken).
+
+<Example>
+<#Include SYSTEM "tutex/11.21.txt">
+</Example>
+
+<Alt Only="HTML">&lt;img src="images/primesTorsion.png" align="center" width="1200" alt="graph of torsion versus norm"/>
+</Alt>
+
+
 </Section>
 </Chapter>

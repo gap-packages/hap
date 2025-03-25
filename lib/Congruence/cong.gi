@@ -19,7 +19,6 @@ function(H,HH)
 local F, rels, S, T, G, FhomG, Q, gensQ, epi, ElementToWord,
 gensH, gensHH, QH, QHH, R, R1, R2, s, t, poscan, iso;
 
-#Print("start\n");
 G:=SL(2,Integers);
 F:=FreeGroup(2);s:=F.1;t:=F.2;
 rels:=[s^4,(s*t)^3*s^-2];

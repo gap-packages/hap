@@ -60,8 +60,10 @@ x:=TransK[i]*EltsG[j];
 r:=Position(EltsG,x);
 
 if r=fail then Add(EltsG,x); r:=Length(EltsG); fi;
-return r;
+
 MultRec[i][j]:= r;
+
+return r;
 fi;
 
 return MultRec[i][j];
@@ -91,7 +93,9 @@ G2K:=function(g)
 local t,k,x;
 if not IsBound(G2KRec[g]) then 
 
+
 t:=PositionCanonical(TransK,EltsG[g]);
+
 x:=EltsG[g]*TransK[t]^-1;
 
 k:=Position(EltsK,x);

@@ -1,5 +1,28 @@
 #(C) Graham Ellis, 2005-2006
 
+######################################################
+######################################################
+InstallGlobalFunction(HAP_SylowConjugatedHomomorphism,
+function(f,p)
+local G, H, PG, PH,cl,pos,g,ff,s;
+G:=Source(f);
+PG:=SylowSubgroup(G,p);
+PG:=Image(f,PG);
+H:=Target(f);
+PH:=SylowSubgroup(H,p);
+#if IsSubgroup(PH,PG) then return f; fi;
+
+cl:=PH^H;
+cl:=List(cl,s->s);
+pos:=PositionProperty(cl,s->IsSubgroup(s,PG));
+g:=RepresentativeAction(H,PH,cl[pos]);
+ff:=GroupHomomorphismByFunction(G,H,x->x^g);
+
+return ff;
+end);
+######################################################
+######################################################
+
 #####################################################################
 #####################################################################
 InstallGlobalFunction(GroupHomology,
@@ -74,7 +97,7 @@ fi;
 #####################################################################
 #####################################################################
 HomologyOfGroupHomomorphism:=function()
-local f,H,G,RH,RG,PH,PG,ans,hlgy,k,A;
+local ff,f,H,G,RH,RG,PH,PG,ans,hlgy,k,A;
 f:=arg[1];
 H:=Source(f);
 G:=Target(f);
@@ -98,7 +121,9 @@ PH:=SylowSubgroup(H,k);
 PG:=SylowSubgroup(G,k);
 RG:=ResolutionGenericGroup(PG,N+1);
 RH:=ResolutionGenericGroup(PH,N+1);
-Add(ans, PrimePartDerivedFunctorHomomorphism(f,RG,RH,Functor2,N) );
+ff:=HAP_SylowConjugatedHomomorphism(f,k);
+Add(ans, PrimePartDerivedFunctorHomomorphism(ff,RG,RH,Functor2,N) );
+#THIS WILL ONLY WORK IF ff SENDS PG to PH.
 od;
 if Length(ans)>0 then ans:=DirectProduct(ans); fi;
 return ans;

@@ -6,17 +6,21 @@ DeclareAttribute("AssociatedNumberField",IsNumberField);
 DeclareAttribute("AssociatedRing",IsRing);
 DeclareAttribute("NormOfIdeal",IsInt);
 DeclareGlobalFunction("QuadraticNumberField");
+DeclareGlobalFunction("HAPQuadraticRing");
 DeclareOperation("RingOfIntegers",[IsNumberField]);
 DeclareOperation("QuadraticIdeal",[IsRing and IsRingOfQuadraticIntegers, IsCyclotomic]);
 DeclareFilter("IdealOfQuadraticIntegers");
 DeclareProperty("IsIdealOfQuadraticIntegers",IdealOfQuadraticIntegers);
 DeclareGlobalFunction("PartsOfQuadraticInteger");
 DeclareGlobalFunction("SL2QuadraticIntegers");
-
+DeclareGlobalFunction( "QuadraticNumber" );
 
 #####################################################################
 #####################################################################
-DeclareCategory("IsHapQuadraticNumber",IsObject);
+DeclareCategory("IsHapQuadraticNumber",IsScalar);
+cat:=CategoryCollections(IsHapQuadraticNumber);
+cat:=CategoryCollections(cat);
+cat:=CategoryCollections(cat);
 
 DeclareRepresentation( "IsHapQuadraticNumberRep",
                         IsComponentObjectRep,
@@ -25,7 +29,7 @@ DeclareRepresentation( "IsHapQuadraticNumberRep",
                          "bianchiInteger"]);
 
 HapQuadraticNumberFamily:=NewFamily( "HapQuadraticNumberFamily",
-                                   IsHapQuadraticNumber,
+                                   #IsHapQuadraticNumber,
                                    IsHapQuadraticNumber);
 
 HapQuadraticNumber:=NewType(HapQuadraticNumberFamily,IsHapQuadraticNumberRep);
@@ -59,9 +63,42 @@ fi;
 #####################################################################
 #####################################################################
 
+Hap2x2:=CategoryCollections(CategoryCollections(IsHapQuadraticNumber));
+BindGlobal("IsHap2x2matrix",Hap2x2);
+Unbind(Hap2x2);
+Hap2x2:=CategoryCollections(CategoryCollections(CategoryCollections(IsHapQuadraticNumber)));
+BindGlobal("IsHap2x2matrixGroup",Hap2x2);
+Unbind(Hap2x2);
+
+
+InstallGlobalFunction( HAPQuadraticRing, function( d )
+    local F, R;
+
+    if not IsInt( d ) then
+      Error( "<d> must be an  ideal" );
+    fi;
+
+    # Construct the family of element objects of our ring.
+    F:= NewFamily( "HAPQuadraticRing" ,
+                   IsHapQuadraticNumber );
+
+    # Install the data.
+    F!.bianchiNumber:= d;
+
+    # Make the domain.
+R:= RingWithOneByGenerators(  [ QuadraticNumber( 0,1,d) ]  );
+    SetIsWholeFamily( R, true );
+    SetName( R,  Concatenation("Q(Sqrt( ", String(d), ")"  ));
+    R!.bianchiInteger:=d;
+    SetCharacteristic(R,0);
+    SetSize(R,infinity);
+    # Return the ring.
+    return R;
+ end );
+
+
 #####################################################################
 #####################################################################
-DeclareGlobalFunction( "QuadraticNumber" );
 DeclareGlobalFunction( "QuadraticNumberConjugate" );
 
 
@@ -98,6 +135,8 @@ DeclareGlobalFunction("BianchiPolyhedron");
 DeclareGlobalFunction("CoverOfUnimodularPairs");
 DeclareGlobalFunction("IsUnimodularCollection");
 DeclareGlobalFunction("HAP_BianchiRegularCWComplex");
+DeclareGlobalFunction("HAP_BianchiTransformations");
+DeclareGlobalFunction("Hap_int");
 
 ####################################################################
 #####################################################################

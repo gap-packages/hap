@@ -562,6 +562,41 @@ Print(R!.element, "_quotient ");
 #####################################################################
 #####################################################################
 
+if false then
+#####################################################################
+#####################################################################
+DeclareCategory("IsHap2x2matrix",IsMultiplicativeElementWithInverse);
+
+DeclareRepresentation(  "IsHap2x2matrixRep",
+                        IsComponentObjectRep and IsMultiplicativeElementWithInverse
+                         );
+
+Hap2x2matrixFamily:=NewFamily( "Hap2x2matrixFamily",
+                                          IsHap2x2matrix,
+                                          IsHap2x2matrix);
+
+Hap2x2matrix:=NewType(Hap2x2matrixFamily,
+                                IsHap2x2matrixRep);
+
+
+InstallMethod( ViewObj,
+"for Hap2x2matrix",
+ [IsHap2x2matrix],
+function(M)
+Print([M!.list{[1,2]},M!.list{[3,4]}], " ");
+end);
+
+InstallMethod( PrintObj,
+"for Hap2x2matrix",
+ [IsHap2x2matrix],
+function(M)
+Print([M!.list{[1,2]},M!.list{[3,4]}], " ");
+end);
+#####################################################################
+#####################################################################
+fi;
+
+
 #####################################################################
 #####################################################################
 IsHapGChainComplex:=NewFilter("IsHapGChainComplex");;

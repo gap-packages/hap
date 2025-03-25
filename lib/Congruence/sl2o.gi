@@ -38,7 +38,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0Ideal,
 function(I)
-local G, membership, g,x,y,a;
+local G, membership, CosetRep, CosetPos,CosetReps,R,g,x,y,a;
 
 G:=HAP_GenericSL2OSubgroup();
 
@@ -57,6 +57,31 @@ if Norm(I)=1 then
 fi;
 G!.name:="CongruenceSubgroupGamma0";
 G!.ugrp:=Group(IdentityMat(2));
+
+#if false then 
+if IsPrime(I) then   #I need to extend this to no primes
+R:=RightTransversal(I);
+###########################################
+CosetPos:=function(g);
+if g[1][1] mod I =0 then return 1+Norm(I); fi;  
+return Position(R, ((g[2][1]*InverseOp(I,g[1][1])) mod I));
+end;
+###########################################
+
+###########################################
+CosetRep:=function(g);
+if g[1][1] mod I=0 then return [[0,-1],[1,0]]; fi;
+return [[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,1]];
+end;
+###########################################
+
+CosetReps:=List([1..Norm(I)],i->[[1,0],[R[i],1]]);
+Add(CosetReps,[[0,-1],[1,0]]);
+G!.cosetRep:=CosetRep;
+G!.cosetReps:=CosetReps;
+G!.cosetPos:=CosetPos;
+fi;
+
 return G;
 
 end);
@@ -98,12 +123,17 @@ end);
 InstallGlobalFunction(HAP_SL2OSubgroupTree_slow,
 function(G)
 local d, gens, one, tree,InGmodU,Ugrp,v,p,g,s,n,q,vv,P,R, sublst,
-      leaves,nodes,generators,Perturb, InNodesModG, csts, elements,
+      leaves,nodes,generators,Perturb, InNodesModG,  elements,
       generators2,pos,i,j,PermRep,elementsNumbers;;
 if G!.tree=fail then
+
+if G!.name="CongruenceSubgroupGamma0" then
+  if IsPrime(G!.level) then
+     #HAP_SL2OSubgroupTree_fast(G); return true;      #This is SLOWER!
+  fi;
+fi;
+
 d:=AssociatedRing(G!.level)!.bianchiInteger;
-gens:=Generators(ResolutionSL2QuadraticIntegers(d,2),true);
-gens:=SSortedList(gens);
 
 
 R:=ResolutionSL2QuadraticIntegers(d,2,true);;
@@ -137,12 +167,15 @@ fi;
 ###########################################
 InNodesModG:=function(g)
 local x,y,gg,B1,B2;
+
 gg:=g^-1;
 
 for x in nodes do
 y:=x*gg;
 if InGmodU(y) 
-then return LookupDictionary(elementsNumbers,x); fi;
+then
+
+ return LookupDictionary(elementsNumbers,x); fi;
 od;
 
 return false;
@@ -150,7 +183,7 @@ end;
 ###########################################
 
 
-if Size(Ugrp)>0 then
+if Size(Ugrp)>1 then
 ###########################################
 Perturb:=function(g)
 local u;
@@ -200,7 +233,7 @@ v:=vv[1];
             PermRep[s][p]:=Size(tree);
             Add(elements,g);
         else 
-            Add(generators,[g,elements[q],v,s]);
+            Add(generators,[elements[q],g,v,s]);
             PermRep[s][p]:=q;
         fi;
     od;
@@ -233,6 +266,107 @@ fi;
 end);
 ###################################################################
 ###################################################################
+
+
+###################################################################
+###################################################################
+InstallGlobalFunction(HAP_SL2OSubgroupTree_fast,
+function(G)
+local d, gens, one, tree,v,p,g,s,n,q,P,R, sublst,
+      leaves,nodes,generators, InNodesModG,  
+      generators2,pos,i,j,PermRep,elementsNumbers,Bnodes;;
+if G!.tree=fail then
+
+d:=AssociatedRing(G!.level)!.bianchiInteger;
+R:=ResolutionSL2QuadraticIntegers(d,2,true);;
+P:=PresentationOfResolution(R);
+gens:= R!.elts{P.gens};
+one:=IdentityMat(2);
+
+tree:=[];
+#leaves:=NewDictionary(one,true,SL2QuadraticIntegers(d));
+leaves:=[];
+
+###########################################
+InNodesModG:=function(g)
+local pos,x,y,gg,B1,B2;
+
+pos:=G!.cosetPos(g);
+if Bnodes[pos]=false then return false;
+else
+return pos;
+fi;
+
+end;
+###########################################
+
+Bnodes:=List([1..Norm(G!.level)+1],i->false);
+Bnodes[G!.cosetPos(one)]:=true;
+PermRep:=List(gens,i->[]);
+
+for s in Reversed([1..Length(gens)]) do
+ if not gens[s] in G then
+  Add(leaves,gens[s]);
+
+ tree[G!.cosetPos(gens[s])]:=[G!.cosetPos(one),s];
+Bnodes[G!.cosetPos(gens[s])]:=true;
+PermRep[s][G!.cosetPos(one)]:=G!.cosetPos(gens[s]);
+ break;
+ fi;
+od;
+
+generators:=[];
+
+
+############Tree Construction########################
+while Size(leaves)>0 do
+v:=leaves[1];
+    for s in [1..Length(gens)] do
+        g:=gens[s]*v;
+        q:=InNodesModG(g);
+        p:=G!.cosetPos(v);
+        if q=false then
+Add(leaves,g);
+            Bnodes[G!.cosetPos(g)]:=true;
+            tree[G!.cosetPos(g)]:=[p, s];
+PermRep[s][p]:=G!.cosetPos(g);
+        else
+Add(generators,[G!.cosetReps[q],g,v,s]);
+            PermRep[s][p]:=q;
+        fi;
+    od;
+Remove(leaves,1);
+od;
+#####################################################
+
+G!.tree:=tree;
+G!.generators:=generators;
+generators:=List(generators,x->x[1]^-1*x[2]);
+generators:=List(generators,x->Minimum(x,x^-1));
+generators2:=SSortedList(generators);
+generators2:=Filtered(generators2,x->not x=one);
+
+G!.GeneratorsOfMagmaWithInverses:=generators2;
+sublst:=Filtered([1..Length(generators)],i->generators[i] in generators2);
+G!.generators:=G!.generators{sublst};
+G!.elements:=G!.cosetReps;
+G!.IndexInSL2O:=Length(tree);
+G!.gens:=gens;
+G!.presentation:=P;
+
+for s in [1..Length(gens)] do
+if not IsBound(PermRep[s][1]) then 
+PermRep[s][1]:=Filtered([1..Length(PermRep[s])],i->not i in PermRep[s])[1];
+fi;
+od;
+G!.PermRep:=List(PermRep, x->ListPerm(PermList(x)^-1)   );
+fi;
+end);
+###################################################################
+###################################################################
+
+
+
 
 ###################################################################
 ###################################################################
@@ -406,16 +540,21 @@ InstallOtherMethod(AbelianInvariants,
 [IsHapSL2OSubgroup],
 1000000, #Hmm!
 function(H)
-local P,G, CosetTable,r;
+local P,G, CosetTable,r,n;
 
 HAP_SL2OSubgroupTree_slow(H);
 P:=H!.presentation;
 G:=P.freeGroup/P.relators;
 
+#return AbelianInvariants(G);
+
+#Something crashes sometimes in the following code.
+
+n:=Length(H!.PermRep[1]);
 CosetTable:=[];
 for r in H!.PermRep do
 Add(CosetTable,r);
-Add(CosetTable, ListPerm(PermList(r)^-1)  );
+Add(CosetTable, ListPerm(PermList(r)^-1,n)  );
 od;
 
 return AbelianInvariantsSubgroupFpGroupRrs(G,CosetTable);

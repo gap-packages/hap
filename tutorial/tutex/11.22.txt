@@ -1,0 +1,16 @@
+gap> K:=ContractibleGcomplex("SL(2,O-15)");;
+gap> PK:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;
+gap> for n in [0..2] do
+> for k in [1..K!.dimension(n)] do
+> Print( CohomologicalPeriod(K!.stabilizer(n,k)),"  ");
+> od;od;
+2  2  2  2  2  2  2  2  2  2  2  2  2  2  
+gap> R:=FreeGResolution(PK,5);;
+gap> for n in [0..4] do
+> Print("H_",n," = ", Homology(TensorWithIntegers(R),n),"\n");
+> od;
+H_0 = [ 0 ]
+H_1 = [ 6, 0, 0 ]
+H_2 = [ 6, 0 ]
+H_3 = [ 6 ]
+H_4 = [ 6 ]
