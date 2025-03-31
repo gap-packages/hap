@@ -515,15 +515,31 @@ od;
 
 ###########################
 map:=function(v,d)
-local i,z,s;
+local i,z,s,ss,m,p;
 
 z:=StructuralCopy(zeros[d+1]);
 
 for i in [1..Length(v)] do
 if not v[i]=0 then 
-s:=SSortedList( F!.mapping( K!.simplices(d,i) ));
-s:=Position(Lsimps[d+1],s);
-z[s]:=z[s]+v[i];
+
+m:=F!.mapping( SSortedList(K!.simplices(d,i)) );
+if IsSSortedList(m) then
+  s:=Position(Lsimps[d+1],m);
+  if not s=fail then
+      z[s]:=z[s]+v[i];
+  fi;
+else
+  ss:=SSortedList( m);
+  s:=Position(Lsimps[d+1],ss);
+  if not s=fail then
+  p:=List(m,x->Position(ss,x));
+  p:=PermList(p);
+  p:=SignPerm(p);
+    z[s]:=z[s]+p*v[i];
+  fi;
+fi;
+
+
 fi;
 od;
 
