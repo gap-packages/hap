@@ -23,27 +23,30 @@ expb:=[];
 
 for x in ca do
 ea:=List([1..x[1]-1],i->a[1]);
-for i in [1..la-2] do
-for j in [x[i]..x[i+1]-1] do
+for i in [1..la-2] do    
+for j in [x[i]..x[i+1]-1] do  
 ea[j]:=a[i+1];
 od;
 for j in [x[la-1]..dim] do
 ea[j]:=a[la];
 od;
 od;
+while Length(ea)<dim do Add(ea,a[la]); od;  ## April 2025 (for 1-simplices)
 Add(expa,ea);
 od;
 
+
 for x in cb do
 eb:=List([1..x[1]-1],i->b[1]);
-for i in [1..lb-2] do
-for j in [x[i]..x[i+1]-1] do
+for i in [1..lb-2] do  
+for j in [x[i]..x[i+1]-1] do  
 eb[j]:=b[i+1];
 od;
 for j in [x[lb-1]..dim] do
 eb[j]:=b[lb];
 od;
 od;
+while Length(eb)<dim do Add(eb,b[lb]); od;  ## April 2025 (for 1-simplices)
 Add(expb,eb);
 od;
 
@@ -60,6 +63,7 @@ Add(ans,pair2simp(x,y));
 od;od;
 
 ans:=Filtered(ans,x->Length(x)=Length(SSortedList(x)));
+
 return ans;
 end;
 ########################################

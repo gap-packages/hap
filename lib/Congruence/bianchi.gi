@@ -528,7 +528,6 @@ C:=[];
 fi;
 
 
-
 BI:=OQ!.bianchiInteger;
 ABI:=AbsInt(BI);
 S:=Sqrt(1.0*ABI);
@@ -538,6 +537,9 @@ SS:=HAP_PrintFloat(S);
 SS:=SS{[1..Minimum(Length(SS),5)]};
 
 C:=List(C,x->[x[1], x[2]*(1/QuadraticNumber(0,1,ABI))]);
+
+C:=List(C,x->[x[1]!.rational,x[2]!.rational]);
+
 C:=List(C,x->[1.0*x[1],S1*x[2]]);
 
 file:="tmpp.asy";
@@ -606,7 +608,11 @@ local  file, x, w, BI,ABI, S,SS, L,R,T,B,sz,V;
 
 V:=HAP_VertexHeights(OQ,LL)[2];
 V:=V!.Heights;
+
 V:=Filtered(V,x->x>0);
+
+V:=List(V,x->x!.rational);
+
 V:=1.0*Minimum(V);
 V:=Sqrt(V);
 V:=Minimum(0.05,V/2);
@@ -1053,17 +1059,20 @@ end);                                           #####
 
 ###################################################
 ###################################################
-InstallGlobalFunction(UnimodularPairsReduced, #####
+InstallGlobalFunction(UnimodularPairsReduced_NN, #####
 function(OQ,LL)                               #####
 local L, Lines, Points, K, K3, E,EE, V, VV,
 fn, fn2, v, w, h, dist, bool, C,D,DD,i,F,S,M;
 
-L:=QQNeighbourhoodOfUnimodularPairs(OQ,LL);
+#L:=QQNeighbourhoodOfUnimodularPairs(OQ,LL);
+L:=LL;
+
 K:=SimplicialComplexOfUnimodularPairs(OQ,L);
 Lines:=K!.Lines;
 Points:=K!.Points;
 
 K3:=K!.simplicesLst[3];
+
 DD:=Filtered([1..K!.nrSimplices(2)], v-> IsQQUnimodularPair(OQ,L[K3[v][1]])
 or IsQQUnimodularPair(OQ,L[K3[v][2]])
 or IsQQUnimodularPair(OQ,L[K3[v][3]]) );
@@ -1121,10 +1130,26 @@ K!.Points[i]:=fail;
 K!.Heights:=-infinity;
 od;
 
+
 return [L,K];                                    #####
 end);                                        #####
 ##################################################
 ##################################################
+
+####################################################
+####################################################
+InstallGlobalFunction(UnimodularPairsReduced,
+function(OQ,LL)
+local K,L;
+
+L:=Filtered(LL,x->IsQQUnimodularPair(OQ,x));
+K:=UnimodularPairsReduced_NN(OQ,L);
+K:=QQNeighbourhoodOfUnimodularPairs(OQ,K[1]);
+K:=UnimodularPairsReduced_NN(OQ,K);
+return K;
+end);
+####################################################
+####################################################
 
 ####################################################
 ####################################################
@@ -1182,8 +1207,8 @@ fi;
 if NRMS[N]>=pos then break; fi;
 od;
 
+K:=UnimodularPairsReduced(OQ,L);
 
-K:=UnimodularPairsReduced(OQ,L); 
 L:=K[1]; K:=K[2];
 
 ###########CHECK SWAN'S CONDITION REALLY IS MET

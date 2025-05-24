@@ -198,23 +198,8 @@ Heights:=Heights{List(GV,p->Position(Points,p))};
 Points:=List([1..Length(GV)],i->[GV[i][1],GV[i][2],Sqrt(Heights[i])]);
 Y:=RegularCWComplex(BND);
 Y!.points:=Points;
+Y!.ring:=OQ;
 return Y;
-
-
-return Objectify(HapNonFreeResolution,
-            rec(
-            dimension:=fail,
-            boundary:=fail,
-            homotopy:=fail,
-            elts:=fail,
-            group:=fail,
-            stabilizer:=fail,
-            action:=fail,
-            properties:=
-            [["length",2],
-             ["characteristic",0],
-             ["type","resolution"],
-             ["reduced",false]]  ));
 
 end);
 ############################################

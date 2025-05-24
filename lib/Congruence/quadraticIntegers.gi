@@ -363,11 +363,11 @@ local q,a,b,d,r;
 
 d:=R!.bianchiInteger;
 
-##THIS SEEMS QUICKER
-a:=RealPart(x);
-b:=ImaginaryPart(x)/Sqrt(AbsInt(d));
-if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
-return [a,b];
+##THIS SEEMS QUICKER (BUT ISN'T!!)
+#a:=RealPart(x);
+#b:=ImaginaryPart(x)/Sqrt(AbsInt(d));
+#if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+#return [a,b];
 ##  March 2025
 
 

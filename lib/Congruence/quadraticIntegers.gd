@@ -14,6 +14,7 @@ DeclareProperty("IsIdealOfQuadraticIntegers",IdealOfQuadraticIntegers);
 DeclareGlobalFunction("PartsOfQuadraticInteger");
 DeclareGlobalFunction("SL2QuadraticIntegers");
 DeclareGlobalFunction( "QuadraticNumber" );
+DeclareGlobalFunction( "IsHapQuadraticInteger" );
 
 #####################################################################
 #####################################################################
@@ -131,6 +132,7 @@ DeclareGlobalFunction("IsStrictlyFundamentalUnimodularPair");
 DeclareGlobalFunction("AreStrictlyFundamentalCoordinates");
 DeclareGlobalFunction("SimplicialComplexOfUnimodularPairs");
 DeclareGlobalFunction("UnimodularPairsReduced");
+DeclareGlobalFunction("UnimodularPairsReduced_NN");
 DeclareGlobalFunction("BianchiPolyhedron");
 DeclareGlobalFunction("CoverOfUnimodularPairs");
 DeclareGlobalFunction("IsUnimodularCollection");
