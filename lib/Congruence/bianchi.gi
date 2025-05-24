@@ -1193,7 +1193,7 @@ L:=[];
 while bool do
 N:=N+1;
 if Length(arg)>1 then
-Print("Adding hemispheres of squared radius ",1/NRMS[N],"\n");
+#Print("Adding hemispheres of squared radius ",1/NRMS[N],"\n");
 fi;
 
 L:=UnimodularPairs(OQ,NRMS[N],true,L);
