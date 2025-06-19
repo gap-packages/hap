@@ -164,7 +164,7 @@ Regular CW-complex of dimension 2
 
 <h4>14.5 <span class="Heading">Computing a free resolution for <span class="SimpleMath">SL_2(mathcal O_-d)</span></span></h4>
 
-<p>The above fundamental domains can be used to construct free resolutions for <span class="SimpleMath">SL_2(mathcal O_-d)</span> and <span class="SimpleMath">PSL_2(mathcal O_-d)</span>. The following commands illustrate the computation of free resolutions for <span class="SimpleMath">SL_2(mathcal O_-43)</span> and <span class="SimpleMath">SL_2(mathcal O_-5)</span> and their integral homology (which in both cases is periodic of period <span class="SimpleMath">4</span> in degrees <span class="SimpleMath">≥ 3</span>). The computation of fundamental domains uses exact arithmetic in field extensions.</p>
+<p>The above fundamental domains can be used to construct free resolutions for <span class="SimpleMath">SL_2(mathcal O_-d)</span> and <span class="SimpleMath">PSL_2(mathcal O_-d)</span>. The following commands illustrate the computation of free resolutions for <span class="SimpleMath">SL_2(mathcal O_-43)</span> and <span class="SimpleMath">SL_2(mathcal O_-10)</span> and <span class="SimpleMath">SL_2(mathcal O_-14)</span> and their integral homology (which in each case is periodic of period dividing <span class="SimpleMath">4</span> in degrees <span class="SimpleMath">≥ 3</span>). The computation of fundamental domains uses exact arithmetic in field extensions.</p>
 
 
 <div class="example"><pre>
@@ -182,9 +182,17 @@ Regular CW-complex of dimension 2
   [ 2, 4, 12 ], [ 2, 2, 2, 6 ], [ 2, 2, 2, 12 ], [ 2, 2, 2, 24 ], 
   [ 2, 4, 12 ], [ 2, 2, 2, 6 ], [ 2, 2, 2, 12 ] ]
 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-14);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..10],k-&gt;Homology(TensorWithIntegers(R),k));</span>
+[ [ 0 ], [ 6, 0, 0, 0, 0, 0 ], [ 2, 2, 2, 4, 12, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ], [ 2, 2, 2, 2, 24 ], 
+  [ 2, 2, 2, 4, 12 ], [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ], 
+  [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ] ]
+
 </pre></div>
 
-<p>The following commands count the number of orbits of cusps (in addition to the orbit of <span class="SimpleMath">∞</span>). They determine that there is precisely one element in the ideal class group of <span class="SimpleMath">mathcal O_-43</span> (i.e it is a principal ideal domain) and that there are precisely two elements in the ideal class group of <span class="SimpleMath">mathcal O_-10</span>.</p>
+<p>The following commands count the number of orbits of cusps (in addition to the orbit of <span class="SimpleMath">∞</span>). They determine that there is precisely one element in the ideal class group of <span class="SimpleMath">mathcal O_-43</span> (i.e it is a principal ideal domain) and that there are precisely two elements in the ideal class group of <span class="SimpleMath">mathcal O_-10</span> and precisely four elements in the ideal class group of <span class="SimpleMath">mathcal O_-14</span>.</p>
 
 
 <div class="example"><pre>
@@ -196,6 +204,9 @@ Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..K!.dimension(0)],k-&gt;Order(K!.stabilizer(0,k)));</span>
 [ 6, 6, 4, 4, 6, infinity ]
 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-14);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..K!.dimension(0)],k-&gt;Order(K!.stabilizer(0,k)));</span>
+[ 6, 6, 2, 2, 2, infinity, infinity, 2, infinity, 6, 4 ]
 
 </pre></div>
 
