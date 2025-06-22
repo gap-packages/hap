@@ -37,6 +37,16 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X78476F127B73BBD1">14.5 <span class="Heading">Computing a free resolution for <span class="SimpleMath">SL_2(mathcal O_-d)</span></span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X784B2156823AEB15">14.6 <span class="Heading">Some sanity checks</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7E5A36D47F9D4A47">14.6-1 <span class="Heading">Equivariant Euler characteristic</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X852CDAFF84C5DF01">14.6-2 <span class="Heading">Boundary squares to zero</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85396DD880422BD4">14.6-3 <span class="Heading">Compare different algorithms/ implementations</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -207,6 +217,88 @@ Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-14);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..K!.dimension(0)],k-&gt;Order(K!.stabilizer(0,k)));</span>
 [ 6, 6, 2, 2, 2, infinity, infinity, 2, infinity, 6, 4 ]
+
+</pre></div>
+
+<p><a id="X784B2156823AEB15" name="X784B2156823AEB15"></a></p>
+
+<h4>14.6 <span class="Heading">Some sanity checks</span></h4>
+
+<p>There is ample scope for bugs in the implementation of the above method for computing resolutions of Bianchi groups. The following sanity checks lend confidence to the implementation.</p>
+
+<p><a id="X7E5A36D47F9D4A47" name="X7E5A36D47F9D4A47"></a></p>
+
+<h5>14.6-1 <span class="Heading">Equivariant Euler characteristic</span></h5>
+
+<p>Let <span class="SimpleMath">X</span> be any cell complex with an action of a group <span class="SimpleMath">G</span> such that (i) <span class="SimpleMath">X</span> has finitely many <span class="SimpleMath">G</span>-orbits of cells, and (ii) the stabilizer subgroup in <span class="SimpleMath">G</span> for each cell is either finite or free abelian. One defines the <em>equivariant Euler characteristic</em> $$\chi_G(X) = \sum_e (-1)^{dim~ e} / |Stab_G(e)|$$ where <span class="SimpleMath">e</span> ranges over a set of representatives of the orbits of those cells with finite stabilizers. If <span class="SimpleMath">G</span> has a finite index torsion free subgroup and if the complex <span class="SimpleMath">X</span> is contractible then one can define the Euler characteristic of the group to be <span class="SimpleMath">χ(G) = χ_G(X)</span>. It is known that <span class="SimpleMath">χ (SL_n(mathcal O)) = χ(GL_n(mathcal O)) =0</span> for <span class="SimpleMath">mathcal O</span> the ring of integers of a number field <a href="chapBib.html#biBGangl">[DSGG+16]</a>.</p>
+
+<p>One easy test to make in our computations is to check that the equivariant Euler characteristic of the <span class="SimpleMath">2</span>-complex is indeed zero. The following commands perform this test for the group <span class="SimpleMath">SL_2(mathcal O_-23)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-23);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi:=0;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [0..2] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for k in [1..K!.dimension(n)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">g:=Order(K!.stabilizer(n,k));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if g &lt; infinity then chi:=chi + (-1)^n/g; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi;</span>
+0
+
+</pre></div>
+
+<p><a id="X852CDAFF84C5DF01" name="X852CDAFF84C5DF01"></a></p>
+
+<h5>14.6-2 <span class="Heading">Boundary squares to zero</span></h5>
+
+<p>The signs in the boundary maps of the free resolution are delicate. Another easy test is to check that the boundary in the resolution squares to zero. The following commands perform this check for the group <span class="SimpleMath">SL_2(mathcal O_-23)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;List([1..R!.dimension(n)],k-&gt;ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));</span>
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;List([1..R!.dimension(n)],k-&gt;ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));</span>
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;List([1..R!.dimension(n)],k-&gt;ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));</span>
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=5;;List([1..R!.dimension(n)],k-&gt;ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));</span>
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ] ]
+
+</pre></div>
+
+<p><a id="X85396DD880422BD4" name="X85396DD880422BD4"></a></p>
+
+<h5>14.6-3 <span class="Heading">Compare different algorithms/ implementations</span></h5>
+
+<p>Sebastian Schoennenbeck in his thesis work computed some contractible <span class="SimpleMath">2</span>-complexes on which Bianchi groups act with finite stabilizers (even when the ideal class is greater than <span class="SimpleMath">1</span>) using a different approach to that of Swan. These computed complexes are stored in <strong class="button">HAP</strong> and provide an alternative way of computing cohomology for the stored groups. Alexander Rahm in his thesis work implemented Swan's approach and has provided some <span class="SimpleMath">2</span>-complexes that are also stored in <strong class="button">HAP</strong> in cases where the ideal class is equal to <span class="SimpleMath">1</span>.</p>
+
+<p>The following commands test that Sebastian Schoennenbeck's <span class="SimpleMath">2</span>-complex for <span class="SimpleMath">SL_2(mathcal O_-23)</span> yields the same integral homology as the above <strong class="button">HAP</strong> implementation. Both computations use <strong class="button">HAP</strong>'s implementation of Wall's perturbation technique for computing the resolution from the <span class="SimpleMath">2</span>-complex.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(2,O-23)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..9],n-&gt;Homology(TensorWithIntegers(R),n));</span>
+[ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], 
+  [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..9],n-&gt;Homology(TensorWithIntegers(R),n));</span>
+[ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], 
+  [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ]
 
 </pre></div>
 

@@ -237,3 +237,102 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X14.6 [33X[0;0YSome sanity checks[133X[101X
+  
+  [33X[0;0YThere  is ample scope for bugs in the implementation of the above method for
+  computing  resolutions  of  Bianchi groups. The following sanity checks lend
+  confidence to the implementation.[133X
+  
+  
+  [1X14.6-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
+  
+  [33X[0;0YLet  [22XX[122X  be  any cell complex with an action of a group [22XG[122X such that (i) [22XX[122X has
+  finitely  many  [22XG[122X-orbits of cells, and (ii) the stabilizer subgroup in [22XG[122X for
+  each  cell  is  either  finite  or free abelian. One defines the [13Xequivariant
+  Euler  characteristic[113X  $$\chi_G(X)  =  \sum_e  (-1)^{dim~ e} / |Stab_G(e)|$$
+  where  [22Xe[122X  ranges  over a set of representatives of the orbits of those cells
+  with  finite  stabilizers. If [22XG[122X has a finite index torsion free subgroup and
+  if   the   complex   [22XX[122X  is  contractible  then  one  can  define  the  Euler
+  characteristic  of  the  group  to  be  [22Xχ(G)  =  χ_G(X)[122X.  It is known that [22Xχ
+  (SL_n(mathcal O)) = χ(GL_n(mathcal O)) =0[122X for [22Xmathcal O[122X the ring of integers
+  of a number field [DSGG+16].[133X
+  
+  [33X[0;0YOne  easy  test to make in our computations is to check that the equivariant
+  Euler characteristic of the [22X2[122X-complex is indeed zero. The following commands
+  perform this test for the group [22XSL_2(mathcal O_-23)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xchi:=0;;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..2] do[127X[104X
+    [4X[25X>[125X [27Xfor k in [1..K!.dimension(n)] do[127X[104X
+    [4X[25X>[125X [27Xg:=Order(K!.stabilizer(n,k));[127X[104X
+    [4X[25X>[125X [27Xif g < infinity then chi:=chi + (-1)^n/g; fi;[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27Xchi;[127X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.6-2 [33X[0;0YBoundary squares to zero[133X[101X
+  
+  [33X[0;0YThe  signs in the boundary maps of the free resolution are delicate. Another
+  easy  test  is to check that the boundary in the resolution squares to zero.
+  The following commands perform this check for the group [22XSL_2(mathcal O_-23)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,10);;[127X[104X
+    [4X[25Xgap>[125X [27Xn:=2;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ] ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=3;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ] ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=4;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ] ][128X[104X
+    [4X[25Xgap>[125X [27Xn:=5;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [  ], [  ], [  ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.6-3 [33X[0;0YCompare different algorithms/ implementations[133X[101X
+  
+  [33X[0;0YSebastian  Schoennenbeck  in  his  thesis  work  computed  some contractible
+  [22X2[122X-complexes  on  which Bianchi groups act with finite stabilizers (even when
+  the  ideal  class  is  greater than [22X1[122X) using a different approach to that of
+  Swan.  These computed complexes are stored in [12XHAP[112X and provide an alternative
+  way  of  computing  cohomology  for the stored groups. Alexander Rahm in his
+  thesis  work  implemented  Swan's approach and has provided some [22X2[122X-complexes
+  that are also stored in [12XHAP[112X in cases where the ideal class is equal to [22X1[122X.[133X
+  
+  [33X[0;0YThe  following  commands  test  that Sebastian Schoennenbeck's [22X2[122X-complex for
+  [22XSL_2(mathcal  O_-23)[122X  yields  the  same  integral  homology as the above [12XHAP[112X
+  implementation.   Both  computations  use  [12XHAP[112X's  implementation  of  Wall's
+  perturbation technique for computing the resolution from the [22X2[122X-complex.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,O-23)");;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,10);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..9],n->Homology(TensorWithIntegers(R),n));[127X[104X
+    [4X[28X[ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [128X[104X
+    [4X[28X  [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,10);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..9],n->Homology(TensorWithIntegers(R),n));[127X[104X
+    [4X[28X[ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [128X[104X
+    [4X[28X  [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
