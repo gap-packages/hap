@@ -168,7 +168,7 @@
   [4X[32X[104X
   
   [33X[0;0YThere  is just a single orbit of cusps in this example, the orbit containing
-  [22X∞[122X, since [22XQ(sqrt-163)[122X is a principle ideal domain and hence has trivial class
+  [22X∞[122X, since [22XQ(sqrt-163)[122X is a principal ideal domain and hence has trivial class
   group.[133X
   
   [33X[0;0YA fundamental domain for [22XG_-33[122X is visualized using the following commands.[133X
@@ -306,7 +306,7 @@
   [4X[32X[104X
   
   
-  [1X14.6-3 [33X[0;0YCompare different algorithms/ implementations[133X[101X
+  [1X14.6-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
   
   [33X[0;0YSebastian  Schoennenbeck  in  his  thesis  work  computed  some contractible
   [22X2[122X-complexes  on  which Bianchi groups act with finite stabilizers (even when
@@ -333,6 +333,88 @@
     [4X[25Xgap>[125X [27XList([0..9],n->Homology(TensorWithIntegers(R),n));[127X[104X
     [4X[28X[ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [128X[104X
     [4X[28X  [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.6-4 [33X[0;0YCompare geometry to algebra[133X[101X
+  
+  [33X[0;0YThe  number  of  cusps  (i.e. the number of orbits of vertices with infinite
+  stabilizer  subgroup) must be precisely one less than the number of elements
+  in  the ideal class group of [22Xmathcal O_-d[122X. The following commands check this
+  for [22XSL_2(mathcal O_-23)[122X where [22Xmathcal O_-23[122X is known to have class number 3.
+  (This class number is easily computed from a formula in Swan's paper.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[25Xgap>[125X [27XList([1..K!.dimension(0)],k->Order(K!.stabilizer(0,k)));[127X[104X
+    [4X[28X[ 6, 2, 2, 4, infinity, infinity ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  visualization  of  the fundamental domain tells us a certain amount about
+  the algebra. In the case of [22XSL_2(mathcal O_-23)[122X[133X
+  
+  [33X[0;0Ythe     translation     subgroup    generated    by    the    matrices    $$
+  \left(\begin{array}{ll}       1       &1\\      0      &1\end{array}\right),
+  \left(\begin{array}{ll}   1   &\omega\\   0   &1\end{array}\right)  $$  [22Xω  =
+  (1+sqrt-23)/2[122X  is  indicated  by  the  white recangle. From this we see that
+  there  are  at  most  [22X11[122X  orbits  of  [22X2[122X-cells,  the  central decagon and ten
+  quadrilaterals.  However,  the  matrix  $$ \left(\begin{array}{rr} 0 &-1\\ 1
+  &0\end{array}\right)  $$ maps [22X(z,0)[122X to [22X(-z,0)[122X and fixes [22X(0,1)[122X. This isometry
+  thus  has  to identify the quadrilaterals pairwise. Thus there are at most [22X6[122X
+  orbits  of [22X2[122X-cells, one decagon and five quadrilaterals. The symmetries also
+  imply that there are at most six orbits of vertices, two orbits being cusps.
+  This  is  consistent with the above listing of the six orbit stabilizers and
+  the  following algebraic information on the boundaries of the [22X2[122X-cells in the
+  Bianchi [22X2[122X-complex.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[25Xgap>[125X [27XList([1..K!.dimension(2)],k->Length(K!.boundary(2,k)));[127X[104X
+    [4X[28X[ 10, 4, 4, 4, 4, 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.7 [33X[0;0YGroup presentations[133X[101X
+  
+  [33X[0;0YSwan's  reason for studying fundamental domains was to obtain explicit group
+  presentations  for [22XSL_2(mathcal O_-d)[122X for various values of [22Xd[122X. The following
+  commands obtain a presentation for [22XSL_2(mathcal O_-23)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-23);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,2);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PresentationOfResolution(R);[127X[104X
+    [4X[25Xgap>[125X [27XG:=SimplifiedFpGroup(P!.freeGroup/P!.relators);[127X[104X
+    [4X[28X<fp group on the generators [ k, r, s, w, x ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(G);[127X[104X
+    [4X[28X[ w^-1*k*w*k^-1, s^-1*r*s*r^-1, k^6, x^-1*k^-3*x*k^-3, s^-1*k^-3*s*k^-3, [128X[104X
+    [4X[28X  r^-1*w*x^-1*s*r*w^-1*x*s^-1, r^-1*k^-3*r*k^-3, [128X[104X
+    [4X[28X  x*k^-2*r^-1*x*r^-1*s^-1*k^-1*s^-1, x^-1*k^3*s*r*x^-1*s*r ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Next we identify the generators as matrices[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(P!.freeGroup);[127X[104X
+    [4X[28X[ k, m, n, p, q, r, s, t, u, v, w, x, y, z ][128X[104X
+    [4X[25Xgap>[125X [27XP!.gens;[127X[104X
+    [4X[28X[ 19, 6, 6, 20, 6, 21, 22, 6, 52, 53, 2, 50, 1, 4 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xk:=R!.elts[19];[127X[104X
+    [4X[28X[ [ 1, 1 ], [128X[104X
+    [4X[28X  [ -1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xr:=R!.elts[21];[127X[104X
+    [4X[28X[ [ 3, 3 + -1 Sqrt(-23) ], [128X[104X
+    [4X[28X  [ -3/2 + -1/2 Sqrt(-23), -5 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xs:=R!.elts[22];[127X[104X
+    [4X[28X[ [ 2 + 1 Sqrt(-23), 13/2 + 1/2 Sqrt(-23) ], [128X[104X
+    [4X[28X  [ 5/2 + -1/2 Sqrt(-23), -1 Sqrt(-23) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xw:=R!.elts[2];[127X[104X
+    [4X[28X[ [ 3/2 + 1/2 Sqrt(-23), -3/2 + 1/2 Sqrt(-23) ], [128X[104X
+    [4X[28X  [ 3/2 + -1/2 Sqrt(-23), 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xx:=R!.elts[50];[127X[104X
+    [4X[28X[ [ 11/2 + 1/2 Sqrt(-23), 15/2 + -1/2 Sqrt(-23) ], [128X[104X
+    [4X[28X  [ -1 Sqrt(-23), -4 + -1 Sqrt(-23) ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
