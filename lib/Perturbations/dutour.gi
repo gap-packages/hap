@@ -211,9 +211,6 @@ local
         S,N,pos,StandardWord,
         cnt,n,i,b,e,V,v,L,LL,x,xx;
 
-if IsHapNonFreeResolution(R) then
-RecalculateIncidenceNumbers_NonFreeRes(R); 
-return true; fi;
 
 if IsBound(R!.standardWord) then StandardWord:=R!.standardWord;
 else StandardWord:=function(n,bnd); return bnd; end; fi;
