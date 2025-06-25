@@ -211,6 +211,10 @@ local
         S,N,pos,StandardWord,
         cnt,n,i,b,e,V,v,L,LL,x,xx;
 
+if IsHapNonFreeResolution(R) then
+RecalculateIncidenceNumbers_NonFreeRes(R); 
+return true; fi;
+
 if IsBound(R!.standardWord) then StandardWord:=R!.standardWord;
 else StandardWord:=function(n,bnd); return bnd; end; fi;
 
@@ -387,4 +391,52 @@ TryNextMethod();
 end);
 ################################################
 ################################################
+
+###########################################################
+###########################################################
+InstallGlobalFunction(RecalculateIncidenceNumbers_NonFreeRes,
+function(K)
+local R, fn, PseudoBounds, boundary;
+
+if K!.dimension(3)>0 then return fail; fi;
+R:=FreeGResolution(K,2);
+RecalculateIncidenceNumbers(R);
+
+#####################
+fn:=function(n,bnd)
+local B, b, c;
+B:=[];
+c:=R!.dimension(n)-K!.dimension(n);
+
+for b in bnd do
+if AbsInt(b[1])>c then
+Add(B,  [ SignInt(b[1])*(AbsInt(b[1])-c) , b[2]]);
+fi;
+od;
+
+return B;
+end;
+#####################
+
+PseudoBounds:=[];
+PseudoBounds[1]:=List([1+R!.dimension(1)-K!.dimension(1)..R!.dimension(1)],k->R!.boundary(1,k));
+PseudoBounds[2]:=List([1+R!.dimension(2)-K!.dimension(2)..R!.dimension(2)],k->R!.boundary(2,k));
+
+Apply(PseudoBounds[1],bnd->fn(0,bnd));
+Apply(PseudoBounds[2],bnd->fn(1,bnd));
+
+#####################
+boundary:=function(n,k);
+if n<1 or n>2 then return []; fi;
+
+if k>0 then return PseudoBounds[n][k];
+else return PseudoBounds[n][-k]; fi;
+end;
+#####################
+
+K!.boundary:=boundary;
+
+end);
+###########################################################
+###########################################################
 

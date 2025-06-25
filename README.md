@@ -1,4 +1,4 @@
-[![CI](https://github.com/gap-packages/hap/actions/workflows/CI.yml/badge.svg)](https://github.com/gap-packages/hap/actions/workflows/CI.yml)
+[![Build Status](https://github.com/gap-packages/hap/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/hap/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/hap/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/hap)
 
 # The HAP package for group cohomology and related functors

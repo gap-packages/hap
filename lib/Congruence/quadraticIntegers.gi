@@ -443,6 +443,39 @@ return Int(x!.rational);
 end);
 #####################################################################
 
+##########################################################
+##########################################################
+InstallOtherMethod(IN,
+"for an infinite Bianchi stabilizer group",
+[IsHap2x2matrix,IsBianchiAbelianGroup ],
+1000000000,
+function(g,G)
+local x, y, c, gens, s, L, D;
+
+if IsFinite(G) then return g in Elements(G); fi;
+
+D:=DenominatorRat;
+gens:=GeneratorsOfGroup(G);
+if (g[1][1])!.bianchiInteger<>gens[1][1][1]!.bianchiInteger then
+return false;
+fi;
+
+x:=[(gens[1][2][1])!.rational,(gens[1][2][1])!.irrational];
+y:=[(gens[2][2][1])!.rational,(gens[2][2][1])!.irrational];
+c:=[(g[2][1])!.rational,(g[2][1])!.irrational];
+L:=Lcm(D(x[1]),D(x[2]),D(y[1]),D(y[2]));
+s:=SolutionIntMat(L*[x,y],L*c);
+
+if s=fail then return false;
+else return g=gens[1]^s[1]*gens[2]^s[2] or -g=gens[1]^(s[1])*gens[2]^(s[2])
+or g=gens[1]^-s[1]*gens[2]^-s[2] or -g=gens[1]^(-s[1])*gens[2]^(-s[2])
+or g=gens[1]^s[1]*gens[2]^-s[2] or -g=gens[1]^(s[1])*gens[2]^(-s[2]) 
+or g=gens[1]^-s[1]*gens[2]^s[2] or -g=gens[1]^(-s[1])*gens[2]^(s[2]);
+fi;
+end);
+##########################################################
+##########################################################
+
 
 
 ######################################################################
@@ -469,7 +502,7 @@ InstallOtherMethod( InverseMutable,
 function(M) local D;
 D:=Determinant(M)^-1;
 
-return  [[D*M[2][2], -D*M[1][2]],[-D*M[2][1],D*M[2][2]]];
+return  [[D*M[2][2], -D*M[1][2]],[-D*M[2][1],D*M[1][1]]];
 end);
 #####################################################################
 

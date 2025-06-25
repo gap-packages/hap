@@ -26,6 +26,115 @@ end);
 
 #####################################################################
 #####################################################################
+InstallOtherMethod( MultiplicationTable,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup],
+100000000,
+    function( G )
+     return HAP_MultiplicationTableOfGroup(G);
+end);
+#####################################################################
+#####################################################################
+
+
+####################################################################
+#####################################################################
+InstallOtherMethod( MultiplicationTable,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup],
+100000000,
+    function( G )
+     return HAP_MultiplicationTableOfGroup(G);
+end);
+#####################################################################
+#####################################################################
+
+####################################################################
+#####################################################################
+InstallOtherMethod( AsSSortedList,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup],
+100000000,
+    function( G )
+     if not IsBound(G!.AsSSortedList) then
+     HAP_MultiplicationTableOfGroup(G);
+     fi;
+     return G!.AsSSortedList;
+end);
+#####################################################################
+#####################################################################
+
+
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( IsomorphismPermGroup,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup],
+100000000,
+    function( G )
+     return NiceMonomorphism(G);
+#WARNING: THis is sloppy since the domain of NiceMonomorphism could
+#in principle be a group containing G
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( Order,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup],
+#WARNING: This function is only valid for abelian subgroups of Bianchi groups
+100000000,
+    function( G )
+    local gens, x, L;
+    if HasOrder(G) then return G!.Order; fi;
+if HasSize(G) then return G!.Size; fi;
+    if not IsAbelian(G) then TryNextMethod(); fi;
+ 
+    gens:=GeneratorsOfGroup(G);
+    for x in gens do
+    L:=List([1..11],i->x^i);
+    if Length(L)=Length(SSortedList(L)) then
+    Print("This function is only valid for subgroups of Bianchi groups.\n");
+    SetSize(G,infinity);
+    SetOrder(G,infinity);
+ return infinity; fi;
+    od;
+    L:=Size(Elements(G));;
+    SetSize(G,L);
+    SetOrder(G,L);
+    return L;
+
+
+end);
+#####################################################################
+#####################################################################
+
+
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( CanonicalRightCosetElement,
+    "for small group of 2x2 matrices of quadratic numbers",
+    [IsHap2x2matrixGroup, IsMatrix],
+100000000,
+    function( H ,g)
+    if not Order(H)=infinity then
+    return SSortedList(Elements(H)*g)[1];
+    fi;
+if IsAbelian(H) then
+Print("This is only valid for  cusp stabilizer subgroups of Bianchi groups.\n");
+    return CanonicalRightCountableCosetElement(H,g); 
+fi;
+end);
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 InstallOtherMethod( NiceMonomorphism,
     "for small group of 2x2 matrices of quadratic numbers",
     [IsHap2x2matrixGroup],
@@ -33,7 +142,7 @@ InstallOtherMethod( NiceMonomorphism,
     function( G )
     local T, mono;
     if HasNiceMonomorphism(G) then return G!.NiceMonomorphism; fi;
-    T:=List(MultiplicationTable(G),PermList);;
+    T:=List(MultiplicationTable(G),r->PermList(r)^-1);;
     mono:= GroupHomomorphismByImagesNC(G,Group(T),Elements(G),T);;
     SetIsInjective(mono,true);
     SetIsSurjective(mono,true);
@@ -41,6 +150,49 @@ InstallOtherMethod( NiceMonomorphism,
     end );
 #####################################################################
 #####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(HAP_MultiplicationTableOfGroup,
+function(GG)
+local M, gens, G, g, x, gx, bool, i, j;
+
+if IsBound(GG!.MultiplicationTable) then return GG!.MultiplicationTable; fi;
+
+gens:=GeneratorsOfGroup(GG);
+G:=[gens[1]^0];
+bool:=true;
+
+while bool=true do
+bool:=false;
+   for g in G do
+   for x in gens do
+      gx:=g*x;
+      if not gx in G then
+         Add(G,gx); bool:=true;
+      fi;
+   od;od;
+od;
+
+GG!.Enumerator:=G;
+G:=SSortedList(G);
+GG!.EnumeratorSorted:=G;
+GG!.AsSSortedList:=G;
+M:=List(G,g->[]);
+
+for i in [1..Length(G)] do
+for j in [1..Length(G)] do
+M[i][j]:=Position(G,G[i]*G[j]);
+od;od;
+
+GG!.MultiplicationTable:=M;
+
+return M;
+end);
+#####################################################################
+#####################################################################
+
 
 
 #####################################################################

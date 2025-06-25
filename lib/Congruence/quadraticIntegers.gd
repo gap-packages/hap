@@ -21,7 +21,8 @@ DeclareGlobalFunction( "IsHapQuadraticInteger" );
 DeclareCategory("IsHapQuadraticNumber",IsScalar);
 cat:=CategoryCollections(IsHapQuadraticNumber);
 cat:=CategoryCollections(cat);
-cat:=CategoryCollections(cat);
+#cat:=CategoryCollections(cat);
+#cat:=CategoryCollections(cat);
 
 DeclareRepresentation( "IsHapQuadraticNumberRep",
                         IsComponentObjectRep,
@@ -68,7 +69,10 @@ Hap2x2:=CategoryCollections(CategoryCollections(IsHapQuadraticNumber));
 BindGlobal("IsHap2x2matrix",Hap2x2);
 Unbind(Hap2x2);
 Hap2x2:=CategoryCollections(CategoryCollections(CategoryCollections(IsHapQuadraticNumber)));
+Hap2x2:=Hap2x2 and IsGroup;
 BindGlobal("IsHap2x2matrixGroup",Hap2x2);
+Hap2x2:=Hap2x2 and IsAbelian;
+BindGlobal("IsBianchiAbelianGroup",Hap2x2);
 Unbind(Hap2x2);
 
 

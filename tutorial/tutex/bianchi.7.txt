@@ -1,0 +1,10 @@
+gap> K:=BianchiGcomplex(-23);;
+
+gap> chi:=0;;
+gap> for n in [0..2] do
+> for k in [1..K!.dimension(n)] do
+> g:=Order(K!.stabilizer(n,k));
+> if g &lt; infinity then chi:=chi + (-1)^n/g; fi;
+> od;od;
+gap> chi;
+0

@@ -735,13 +735,13 @@ if T[2]>=0 and
 then return true; fi;
 
 
-if T[1]<0 and 
+if T[1]<=0 and #=
 (not  HAP_SqrtStrictInequality(s1^2,T[3],T[1]^2)  ) and
  T[2]>=s2 and T[2]<=t2
 then return true; fi;
 
 
-if T[2]<0 and
+if T[2]<=0 and   #=
 (not  HAP_SqrtStrictInequality(ABI*t2^2,T[3],ABI*T[2]^2)  ) and
  T[1]>=s1 and T[1]<=t1
 then return true; fi;
@@ -783,27 +783,28 @@ ABI:=AbsInt(BI);
 x:=arg[2];
 L:=HAP_BianchiFundamentalRectangle(OQ);
 s1:=0;t1:=L[2];; s2:=0; t2:=L[4];
+#s1:=L[1];t1:=L[2];; s2:=L[3]; t2:=L[4];
 
 T:=UnimodularPairCoordinates(OQ,x);
 
-if T[1]>0 and
+if T[1]>=0 and   #=
 (not  HAP_SqrtStrictInequality(t1^2,T[3],T[1]^2) )
 and T[2]>=0 and T[2]<=t2
 then return true; fi;
 
-if T[2]>0 then
+if T[2]>=0 then    #=
 if (not HAP_SqrtStrictInequality(ABI*t2^2,T[3],ABI*T[2]^2) )
 and T[1]>=0 and T[1]<=t1
 then return true; fi;
 fi;
 
-if T[1]<0 then
+if T[1]<=0 then #=
 if T[1]^2<=T[3]
 and T[2]>=0 and T[2]<=t2
 then return true; fi;
 fi;
 
-if T[2]<0 then
+if T[2]<=0 then  #=
 if ABI*T[2]^2<=T[3]
 and T[1]>=0 and T[1]<=t1
 then return true; fi;
@@ -964,7 +965,7 @@ local OQ,L,U,F,FF, Q, BI, x, p, u, S,St;      #####
 OQ:=arg[1];
 L:=arg[2];
 F:=[];
-Q:= Filtered(L,x->IsQQUnimodularPair(OQ,x));
+Q:= Filtered(L,x->IsQQUnimodularPair(OQ,x));   
 Q:=List(Q,x->UnimodularPairStandardForm(x));
 BI:=OQ!.bianchiInteger;
 if -BI mod 4 = 3 then
@@ -1000,7 +1001,7 @@ od;
 F:=Classify(F,x->UnimodularPairStandardForm(x){[1,2]});;
 F:=List(F,x->x[1]);
 F:=List(F,x->x{[1,2,3]});
-#return F;
+#return F;    
 
 U:=Filtered(F,x->IsQUnimodularPair(OQ,x));
 
@@ -1065,6 +1066,7 @@ local L, Lines, Points, K, K3, E,EE, V, VV,
 fn, fn2, v, w, h, dist, bool, C,D,DD,i,F,S,M;
 
 #L:=QQNeighbourhoodOfUnimodularPairs(OQ,LL);
+if LL=[] then return [LL,[]]; fi;
 L:=LL;
 
 K:=SimplicialComplexOfUnimodularPairs(OQ,L);
@@ -1142,7 +1144,8 @@ InstallGlobalFunction(UnimodularPairsReduced,
 function(OQ,LL)
 local K,L;
 
-L:=Filtered(LL,x->IsQQUnimodularPair(OQ,x));
+L:=QNeighbourhoodOfUnimodularPairs(OQ,LL);
+L:=Filtered(L,x->IsQUnimodularPair(OQ,x));
 K:=UnimodularPairsReduced_NN(OQ,L);
 K:=QQNeighbourhoodOfUnimodularPairs(OQ,K[1]);
 K:=UnimodularPairsReduced_NN(OQ,K);
@@ -1165,7 +1168,7 @@ ABI:=AbsInt(BI);
 ###############################
 
 HAPRECORD:=[
-[ 1, 1 ],[ 2, 1 ],[ 3, 1 ],[ 5, 20 ],[ 6, 24 ],[ 7, 1 ],[ 10, 40 ],[ 11, 1 ],[ 13, 52 ],[ 14, 56 ],[ 15, 15 ],[ 17, 68 ],[ 19, 4 ],[ 21, 84 ],[ 22, 88 ],[ 23, 12 ],[ 26, 104 ],[ 29, 169 ],[ 30, 121 ],[ 31, 16 ],[ 33, 132 ],[ 34, 9 ],[ 35, 35 ],[ 37, 25 ],[ 38, 4 ],[ 39, 39 ],[ 41, 25 ],[ 42, 25 ],[ 43, 9 ],[ 46, 25 ],[ 47, 24 ],[ 51, 51 ],[ 53, 25 ],[ 55, 56 ],[ 57, 49 ],[ 59, 27 ],[ 67, 16 ],[ 71, 48 ],[ 79, 40 ],[ 83, 33 ],[ 87, 87 ],[ 91, 91 ],[ 95, 95 ],[ 103, 56 ],[ 107, 36 ],[ 111, 111 ],[ 115, 115 ],[ 119, 25 ],[ 123, 123 ],[ 127, 64 ],[ 131, 45 ],[ 139, 55 ],[ 143, 9 ],[ 151, 80 ],[ 155, 155 ],[ 163, 53 ],
+[ 1, 1 ],[ 2, 1 ],[ 3, 1 ],[ 5, 20 ],[ 6, 24 ],[ 7, 1 ],[ 10, 40 ],[ 11, 1 ],[ 13, 52 ],[ 14, 56 ],[ 15, 15 ],[ 17, 68 ],[ 19, 4 ],[ 21, 84 ],[ 22, 88 ],[ 23, 18 ],[ 26, 104 ],[ 29, 169 ],[ 30, 121 ],[ 31, 16 ],[ 33, 132 ],[ 34, 9 ],[ 35, 35 ],[ 37, 25 ],[ 38, 4 ],[ 39, 39 ],[ 41, 25 ],[ 42, 25 ],[ 43, 9 ],[ 46, 25 ],[ 47, 24 ],[ 51, 51 ],[ 53, 25 ],[ 55, 56 ],[ 57, 49 ],[ 59, 27 ],[ 67, 16 ],[ 71, 48 ],[ 79, 40 ],[ 83, 33 ],[ 87, 87 ],[ 91, 91 ],[ 95, 95 ],[ 103, 56 ],[ 107, 36 ],[ 111, 111 ],[ 115, 115 ],[ 119, 25 ],[ 123, 123 ],[ 127, 64 ],[ 131, 45 ],[ 139, 55 ],[ 143, 9 ],[ 151, 80 ],[ 155, 155 ],[ 163, 53 ],
 [ 179, 155]
 ];;
                  #HAPRECORD contains some precomuted [d,r] for which Swan's
@@ -1285,6 +1288,7 @@ S1:=1/S;
 
 L:=HAP_BianchiFundamentalRectangle(P!.ring);
 s1:=0; t1:=L[2]; s2:=0; t2:=L[4];
+#s1:=L[1];t1:=L[2];; s2:=L[3]; t2:=L[4];
 
 
 D:=[];

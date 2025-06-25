@@ -235,6 +235,8 @@ ReadPackageHap( "lib/Congruence/quadArithmetic.gi");
 ReadPackageHap( "lib/Congruence/bianchi.gi");
 ReadPackageHap( "lib/Congruence/bianchiPart2.gi");
 ReadPackageHap( "lib/Congruence/bianchiStab.gi");
+ReadPackageHap( "lib/Congruence/bianchiComplex.gi");
+ReadPackageHap( "lib/Congruence/resAbelianBianchiSubgroup.gi");
 
 
 

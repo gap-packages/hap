@@ -139,7 +139,7 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 <Alt Only="HTML">&lt;img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/>
 </Alt>
 
-<P/>There is just a single orbit of cusps in this example, the orbit containing <M>\infty</M>, since <M>\mathbb Q(\sqrt{-163})</M> is a principle ideal domain and hence has trivial class group. 
+<P/>There is just a single orbit of cusps in this example, the orbit containing <M>\infty</M>, since <M>\mathbb Q(\sqrt{-163})</M> is a principal ideal domain and hence has trivial class group. 
 
 	<P/>A fundamental domain for <M>G_{-33}</M> is 
                                  visualized using the following commands.
@@ -152,6 +152,122 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 <Alt Only="HTML">&lt;img src="images/bianchi2D33.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/>
 </Alt>
 
+
+</Section>
+
+<Section><Heading>Computing a free resolution for <M>SL_2({\mathcal O}_{-d})</M></Heading>
+
+	The above fundamental domains can be used to construct  free resolutions for <M>SL_2({\mathcal O}_{-d})</M> and <M>PSL_2({\mathcal O}_{-d})</M>. The following commands illustrate the computation of free resolutions for <M>SL_2({\mathcal O}_{-43})</M> and <M>SL_2({\mathcal O}_{-10})</M> and
+		<M>SL_2({\mathcal O}_{-14})</M>
+		and their integral homology (which in each case is periodic of period dividing <M>4</M> in degrees <M>\ge 3</M>).
+
+			The computation of  fundamental domains uses exact arithmetic in field extensions.
+
+			                <Example>
+<#Include SYSTEM "tutex/bianchi.5.txt">
+</Example>
+
+	The following commands count the number of orbits of cusps  (in addition to the orbit of <M>\infty</M>). They determine that there is 
+		precisely one element in the ideal class group of <M>{\mathcal O}_{-43}</M> (i.e it is a principal ideal domain) and that there are precisely two elements in the ideal class group of <M>{\mathcal O}_{-10}</M>
+			and precisely four elements in the ideal class group of <M>{\mathcal O}_{-14}</M>.
+	<Example>
+<#Include SYSTEM "tutex/bianchi.6.txt">
+</Example>
+
+
+
+</Section>
+
+	<Section><Heading>Some sanity checks</Heading>
+		There is ample scope for bugs in the implementation of the above method for computing resolutions of Bianchi groups. The following
+		sanity checks lend confidence to the implementation.
+<Subsection><Heading>Equivariant Euler characteristic</Heading>
+	Let <M>X</M> be any cell complex with an action of a group <M>G</M>  
+		such that (i) <M>X</M> has finitely many
+		<M>G</M>-orbits of cells, and (ii)  the stabilizer subgroup in <M>G</M> for each cell is either finite or free abelian. One defines
+			the <E>equivariant Euler characteristic</E>
+		$$\chi_G(X) = \sum_e 
+			(-1)^{dim~ e} / |Stab_G(e)|$$ 
+			where <M>e</M> ranges over a set of representatives of the orbits of those cells with finite stabilizers. If <M>G</M> has a finite index torsion free subgroup and if the complex <M>X</M> is contractible then one 
+				can define the Euler characteristic of the group to be <M>\chi(G) = \chi_G(X)</M>. It is known that <M>\chi (SL_n({\mathcal O}))
+					= \chi(GL_n({\mathcal O})) =0</M>
+					for <M>\mathcal O</M> the ring of integers of a number field <Cite Key="Gangl"/>.
+
+					<P/>One easy test to make in our computations is to check that the equivariant Euler characteristic of the <M>2</M>-complex is indeed zero. The following commands perform this test for the group <M>SL_2({\mathcal O}_{-23})</M>.
+
+						 <Example>
+<#Include SYSTEM "tutex/bianchi.7.txt">
+</Example>
+
+</Subsection>
+
+<Subsection><Heading>Boundary squares to zero</Heading>
+The signs in the boundary maps of the free resolution are delicate. Another easy test is to check that the boundary in the resolution squares to zero. The following commands perform this check for the group <M>SL_2({\mathcal O}_{-23})</M>.
+
+	<Example>
+<#Include SYSTEM "tutex/bianchi.8.txt">
+</Example>
+
+
+		</Subsection>
+		<Subsection><Heading>Compare different algorithms or implementations</Heading>
+			Sebastian Schoennenbeck in his thesis work
+			computed some contractible
+			<M>2</M>-complexes  on which Bianchi groups act with finite stabilizers (even when the ideal class is greater than <M>1</M>) using a different approach to that of Swan.  These computed complexes are stored in <B>HAP</B> and provide an alternative way of computing cohomology for the stored groups. Alexander Rahm in his thesis work implemented Swan's approach and has provided some <M>2</M>-complexes that are also stored in <B>HAP</B> in  cases where the 
+				ideal class is equal to <M>1</M>.
+				<P/>The following commands test that Sebastian Schoennenbeck's <M>2</M>-complex for <M>SL_2({\mathcal O}_{-23})</M> yields the same integral homology as the above <B>HAP</B> implementation. Both computations use <B>HAP</B>'s implementation of Wall's perturbation technique for computing the resolution from the <M>2</M>-complex.
+
+					  <Example>
+<#Include SYSTEM "tutex/bianchi.9.txt">
+</Example>
+
+		</Subsection>
+<Subsection><Heading>Compare geometry to algebra</Heading>
+		The number of cusps (i.e. the number of orbits of vertices with infinite stabilizer subgroup) must be precisely one less than the number of elements in the ideal class group of <M>{\mathcal O}_{-d}</M>. The following commands check this for <M>SL_2({\mathcal O}_{-23})</M> where <M>{\mathcal O}_{-23}</M> is known to have class number 3. (This class number is easily computed from a formula in Swan's paper.)
+
+			<Example>
+<#Include SYSTEM "tutex/bianchi.11.txt">
+</Example>
+
+	A visualization of the fundamental domain tells us a certain amount about the algebra. In the case of <M>SL_2({\mathcal O}_{-23})</M>
+
+	<P/>		<Alt Only="HTML">&lt;img src="images/sl2O-23.png" align="center" height="300" alt="Fundamental domain for a Bianchi group"/>
+</Alt>
+
+<P/>
+	a fundamental domain for the action on <M>\mathbb C</M> by the translation subgroup generated by the matrices
+	$$ \left(\begin{array}{ll}
+	    1 &amp;1\\
+	    0 &amp;1\end{array}\right),
+	\left(\begin{array}{ll}
+            1 &amp;\omega\\
+            0 &amp;1\end{array}\right) $$
+
+	<M>\omega = (1+\sqrt{-23})/2</M> is indicated by the white rectangle. From this we see that under the action of <M>SL_2({\mathcal O}_{-23})</M>
+		there are at most <M>11</M> orbits of <M>2</M>-cells, the central decagon and ten quadrilaterals. However, the matrix
+	$$ \left(\begin{array}{rr}
+            0 &amp;-1\\
+            1 &amp;0\end{array}\right)
+             $$
+			maps <M>(z,0)</M> to <M>(-1/z,0)</M> and fixes <M>(0,1)</M>. This isometry identifies points on the boundary of the decagon pairwise.
+ These observations are  consistent with the above listing of the six orbit stabilizers and the
+		following algebraic information on the boundaries of the <M>2</M>-cells  in the Bianchi <M>2</M>-complex.
+
+		<Example>
+<#Include SYSTEM "tutex/bianchi.12.txt">
+</Example>
+
+
+</Subsection>
+
+	</Section>
+
+<Section><Heading>Group presentations</Heading>
+		Swan's reason for studying fundamental domains was to obtain explicit group presentations for <M>SL_2({\mathcal O}_{-d})</M> for various values of <M>d</M>. The following commands obtain a presentation for <M>SL_2({\mathcal O}_{-23})</M>.
+
+			<Example>
+<#Include SYSTEM "tutex/bianchi.10.txt">
+</Example>
 
 </Section>
 </Chapter>

@@ -5,7 +5,7 @@ InstallGlobalFunction(HAP_BianchiRegularCWComplex,
 function(OQ, UMP)
 local Y,BND,D,U,US,GV,GE,GF, H, R, F, F2, K, Triples, Triples2, 
 Pairs, Pairs2, Singletons, Points, BoundariesSingletons, 
-BoundariesPairs, S, Heights, TripleToPoint, OnLine,
+BoundariesPairs, S, Heights, H1, H2, H3, TripleToPoint, OnLine,
 fun,fun2, PairToLine,pos,J,i,p,q,xx,yy,d,x,y,bnd, ind;
 #Inputs a ring OQ of imaginary quadratic integers and a list UMP of 
 #unimodular pairs that "minimally covers" the fundamental region.  
@@ -195,10 +195,17 @@ od;
 BND[4]:=[];
 
 Heights:=Heights{List(GV,p->Position(Points,p))};
-Points:=List([1..Length(GV)],i->[GV[i][1],GV[i][2],Sqrt(Heights[i])]);
+#Heights:=List(GV,p->  Maximum(Heights{Positions(Points,p)}) );
+for i in [1..Length(Heights)] do
+Heights[i]:=(Heights[i])!.rational;
+od;
+#Points:=List([1..Length(GV)],i->[GV[i][1],GV[i][2],Sqrt(Heights[i])]);
+Points:=List([1..Length(GV)],i->[GV[i][1],GV[i][2],Heights[i]]);
 Y:=RegularCWComplex(BND);
 Y!.points:=Points;
 Y!.ring:=OQ;
+Y!.sphereCentres:=List(U{Singletons},u->UnimodularPairCoordinates(OQ,u));
+
 return Y;
 
 end);

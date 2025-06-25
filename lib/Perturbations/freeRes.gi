@@ -56,20 +56,11 @@ if not x=fail then return P!.resolutions[1][x]; fi;
 fi;
 ##
 
-###
-if Order(G)=infinity and IsAbelian(G) and bool then
-#This will only be correct if G is abelian of "rank" equal
-#to the number of generators GAP has for G
-
-#res:=ResolutionGenericGroup(G,n);
-
-#return res;
-fi;
-###
 
 ###
-if IsAbelian(G) and Order(G)=infinity then
-res:=ResolutionAbelianGroup(G,n);
+if IsBianchiAbelianGroup(G) and Order(G)=infinity then 
+#if IsAbelian(G) and Order(G)=infinity then
+res:=ResolutionAbelianBianchiSubgroup(G,n);
 return res;
 fi;
 if IsAbelian(G) and not bool then   #NOT SURE WHY I NEED TO DO THIS
@@ -563,6 +554,8 @@ return Objectify(HapResolution,
                 elts:=P!.elts,
                 group:=P!.group,
                 pseudoBoundary:=PseudoBoundary,
+                pair2Quad:=Pair2Quad,
+                quad2Pair:=Quad2Pair,
                 properties:=
                    [["length",N],
                     ["filtration_length",FilteredLength],

@@ -436,17 +436,17 @@ a:=List(a,i->SignInt(i[3])*index[AbsInt(i[3])]);
 Add(HRels1,a);
 od;
 
-alpha:=["x","y","z","w","v","u","t","s","r","q","p"];
+alpha:=["x","y","z","w","v","u","t","s","r","q","p","n","m","k","h","g","f"];
 len:=Length(HGens)-Length(Tree);
 if len<=3 then 
 alpha:=["x","y","z"];
 F:=FreeGroup(alpha{[1..len]});
 fi;
-if len>=4 and len <14 then
-alpha:=["z","y","x","w","v","u","t","s","r","q","p","n","m"];
+if len>=4 and len <18 then
+alpha:=["z","y","x","w","v","u","t","s","r","q","p","n","m","k","h","g","f"];
 F:=FreeGroup(Reversed(alpha{[1..len]}));
 fi;
-if len>=14 then
+if len>=18 then
 F:=FreeGroup(Length(HGens)-Length(Tree));
 fi;
 gens:=GeneratorsOfGroup(F);

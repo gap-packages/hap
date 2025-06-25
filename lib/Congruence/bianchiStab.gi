@@ -43,7 +43,6 @@ z:=[V[1],V[2]]; t:=V[3];
 zz:=[W[1],W[2]]; tt:=W[3];
 if t*tt=0 and not t=tt then return []; fi;
 
-
 #Let z:=[x,y]. Then [z,t] is viewed as a point in upper half-space, t>0. 
 #So too is [zz,tt]. We sometimes write v:=[z,t] and w:=[zz,tt].
 #We want to find all matrices M:=[[a,b],[c,d]] in SL(2,OQ) such 
@@ -86,14 +85,18 @@ end;
 Potential_c:=function(v,w)
 local ttt;
 
-ttt:=(t*tt)^2;
-ttt:=Rat(Sqrt(0.9999999*ttt));
+#ttt:=(t*tt)^2;
+ttt:=t*tt;
+if ttt=0 then ttt:=1/1000;
+else
+ttt:=Rat(Sqrt(Float(ttt)));
+fi;
 
-if ttt=0 then ttt:=1/1000; fi; #Print("Handling a cusp.\n"); fi;
 return QuadraticIntegersByNorm(OQ,1+1/(ttt));
 
 end;
 ##################################################
+
 
 ##################################################
 IntegerCircle:=function(OQ,c,r)
@@ -101,8 +104,7 @@ local C,cc,L,o,x,xx,a,b,BI,k;
 #return all integers on the circle of radius=Sqrt(r) and centre c where c
 #is a quadratic integer. 
 if not IsRat(r) then return []; fi;
-if r<=0 then return []; fi;
-
+if r<0 then return []; fi;
 
 BI:=-OQ!.bianchiInteger;
 L:=Sqrt(1.0*r);
@@ -111,15 +113,14 @@ o:=Int(c!.rational);
 C:=[];
 
 
-if not -BI mod 4 = 1 then 
+if not BI mod 4 = 3 then     
 ######################################
 for x in [-L..L] do
 xx:=x+o;
 b:=r-(xx-c!.rational)^2;
 
 k:=b/BI;
-if not (IsSquareInt(DenominatorRat(k)) and IsSquareInt(NumeratorRat(k))) then
- continue; fi;
+if not  (IsSquareInt(DenominatorRat(k)) and IsSquareInt(NumeratorRat(k)))   then continue; fi;
 b:=c!.irrational+Sqrt(k);
 
 if IsInt(b) then
@@ -133,10 +134,14 @@ else
 for x in [-2*L..2*L] do
 xx:=(x/2)+o;
 b:=r-(xx-c!.rational)^2;
+     if IsSquareInt(NumeratorRat(b/BI)) and IsSquareInt(DenominatorRat(b/BI)) 
+     then   ##############  I guess this is mathematically redundant!
 b:=c!.irrational+Sqrt(b/BI);
 if IsInt(xx-b) and IsInt(2*b) then
-Add(C,QuadraticNumber(xx,b,-BI));
+Add(C,QuadraticNumber(xx,b,-BI)); 
 fi;
+     fi;    ######################
+
 od;
 return C;
 ######################################
@@ -162,8 +167,17 @@ end;
 ##################################################
 
 
-if tt=0 then rtt:=infinity; else rtt:=t*Sqrt(1/tt^2); fi;
-rt:=t^2;
+#if tt=0 then rtt:=infinity; else rtt:=t*Sqrt(1/tt^2); fi;
+#rt:=t^2;
+
+if tt=0 then rtt:=infinity; fi;
+
+if tt>0 then rtt:=t/tt;
+  if IsSquareInt(NumeratorRat(rtt)) and IsSquareInt(DenominatorRat(rtt))
+  then rtt:=Sqrt(rtt); else return []; fi;   #Is this return option valid?
+fi;
+
+rt:=t;
 
 
 pqv1:=PairToQuadInt(z);
@@ -177,7 +191,7 @@ local r, czd,z, L;
 
 if w[2]=0 and not v[2]=w[2] then return []; fi;
 
-if v[2]=w[2] then
+if w[2]=0 then #v[2]=w[2] then
    #r:=1-HAPNorm(OQ,c)*v[2]^2;
    r:=1-HAPNorm(OQ,c)*rt;
 else
@@ -207,7 +221,7 @@ end;
 ##################################################
 Potential_b:=function(v,w,c,d)
 local D,z,cczd,cct2,a, b, zz; #t,tt;    
-if d=0 then return[]; fi;
+if d=0 then return []; fi;
 
 #z:=PairToQuadInt(v[1]);
 z:=pqv1;
@@ -232,7 +246,9 @@ cct2:=HAPComplexConjugate(c)*rt;
 #  b:= (D*zz*d - z*cczd - cct2) * ( (c*z + d )* cczd + c*cct2 )^-1
 
 b:= (D*zz*d -z*cczd - cct2)*  ( (c*z + d )* cczd + c*cct2 )^-1  ;
+if not IsHapQuadraticInteger(OQ,b) then return []; fi;
 a:=(1+b*c)*(d^-1);
+if not IsHapQuadraticInteger(OQ,a) then return []; fi;
 
 
 return [a,b];
@@ -270,7 +286,6 @@ od;
 
 
 
-
 ####################Case d=0#################
 d:=0;c:=1;b:=-1; 
 d:=zero; c:=one;b:=-one;
@@ -284,10 +299,13 @@ x:=pqv1;
 cx:=HAPComplexConjugate(x);
 #y:=PairToQuadInt(zz);
 y:=pqw1;
-D:=HAPNorm(OQ,x)+t^2;
+#D:=HAPNorm(OQ,x)+t^2;
+D:=HAPNorm(OQ,x)+t;
 #a:= (D*y +cx)*(HAPNorm(OQ,x) + t^2)^-1;
 a:= (D*y +cx)*(HAPNorm(OQ,x) + rt)^-1;
+if IsHapQuadraticInteger(OQ,a) then
 Add(pot_abcd,[a,b,c,d]);
+fi;
 
 if OQ!.bianchiInteger=-1 then
 #(a*z + b)*cc*cz + a*cc*t^2 = zz *D
@@ -296,8 +314,12 @@ if OQ!.bianchiInteger=-1 then
 
 d:=0;c:=HAPSqrt(-1);b:=c; cc:=-c;
 d:=zero;
-a:=(D*y -b*cc*cx)*(HAPNorm(OQ,x)*cc + cc*t^2)^-1;
+#a:=(D*y -b*cc*cx)*(HAPNorm(OQ,x)*cc + cc*t^2)^-1;
+a:=(D*y -b*cc*cx)*(HAPNorm(OQ,x)*cc + cc*t)^-1;
+
+if IsHapQuadraticInteger(OQ,a) then
 Add(pot_abcd,[a,b,c,d]);
+fi;
 
 fi;;
 
@@ -315,14 +337,15 @@ pot_abcd:=List(pot_abcd,Standardize);
 
 pot_abcd:=DuplicateFreeList(pot_abcd);  
 
+#Print("pot_abcd",pot_abcd,"\n");
 
 pot_abcd:=Filtered(pot_abcd,IsIntMat); 
 
 
 Apply(pot_abcd, x->[[x[1],x[2]],[x[3],x[4]]]);
 
-
-
+#Print("pot_c",pot_c,"\n");
+#Print("pot_dc",pot_dc,"\n");
 
 return pot_abcd;
 end);

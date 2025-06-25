@@ -254,10 +254,10 @@ if D!.dimension(n)=0 then
 HD:=FreeGroup(0);
 fi;
 if IsBound(HC) and not IsBound(HD) then
-HD:=HomologyAsFpGroup(D);
+HD:=HomologyAsFpGroup(D);    #NEED TO FIX THIS
 fi;
 if IsBound(HD) and not IsBound(HC) then
-HC:=HomologyAsFpGroup(D);
+HC:=HomologyAsFpGroup(D);    #AND THIS
 fi;
 if IsBound(HC) and IsBound(HD) then return
 GroupHomomorphismByFunction(HC,HD,x->x);

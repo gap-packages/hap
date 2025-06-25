@@ -134,6 +134,7 @@ DeclareGlobalFunction("HAPTietzeReduction_OneStep");
 DeclareGlobalFunction("HAPTietzeReduction_Inf");
 #DeclareGlobalFunction("TietzeReducedResolution_alt");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
+DeclareGlobalFunction("RecalculateIncidenceNumbers_NonFreeRes");
 DeclareGlobalFunction("ResolutionPSL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionSL2QuadraticIntegers");
 DeclareSynonym("ResolutionSL2ZInvertedInteger", SL2ZResolution);
@@ -933,6 +934,10 @@ DeclareGlobalFunction("HAP_GenericSL2ZConjugatedSubgroup");
 DeclareGlobalFunction("HAP_ConjugatedCongruenceSubgroupGamma0");
 DeclareGlobalFunction("HAP_ConjugatedCongruenceSubgroup");
 DeclareGlobalFunction("ResolutionSL2ZConjugated");
+
+DeclareGlobalFunction("HAP_MultiplicationTableOfGroup");
+
+DeclareGlobalFunction("ResolutionAbelianBianchiSubgroup");
 
 ## OTHER ############################################################
 ReadPackage("HAP","lib/CategoryTheory/categories.gd");
