@@ -485,23 +485,23 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));</span>
 [ 0, 0 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T1:=HomomorphismAsMatrix(HeckeOperator(gamma,1,1));; Display(T1);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T1:=HeckeOperator(gamma,1,2);; Display(T1);</span>
 [ [  1,  0,  0 ],
   [  0,  1,  0 ],
   [  0,  0,  1 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2:=HomomorphismAsMatrix(HeckeOperator(gamma,2,1));; Display(T2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2:=HeckeOperator(gamma,2,2);; Display(T2);</span>
 [ [   3,  -4,   4 ],
   [   0,  -2,   0 ],
   [   0,   0,  -2 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T3:=HomomorphismAsMatrix(HeckeOperator(gamma,3,1));; Display(T3);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T3:=HeckeOperator(gamma,3,2);; Display(T3);</span>
 [ [   4,  -4,   4 ],
   [   0,  -1,   0 ],
   [   0,   0,  -1 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T5:=HeckeOperator(gamma,5,2);; Display(T5);</span>
 [ [   6,  -4,   4 ],
   [   0,   1,   0 ],
   [   0,   0,   1 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T7:=HeckeOperator(gamma,7,2);; Display(T7);</span>
 [ [   8,  -8,   8 ],
   [   0,  -2,   0 ],
   [   0,   0,  -2 ] ]
@@ -522,7 +522,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=HAP_CongruenceSubgroupGamma0(1);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in [2,3,5,7,11,13,17,19] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=HeckeOperator(H,p,1,12);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=HeckeOperator(H,p,12);;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 eigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2
@@ -774,10 +774,10 @@ H_4 = [ 6 ]
 <p class="pcenter">H^q(SL_2({\cal O}_{-2}),\mathbb Z) =
         \left\{\begin{array}{ll}
         \mathbb Z  &amp; q=1,\\
-        \mathbb Z_6 &amp; q=2 \mod 4,\\
-	\mathbb Z_2 \oplus \mathbb Z_{12} &amp; q= 3 \mod 4\\
-	\mathbb Z_2 \oplus \mathbb Z_{24} &amp; q= 0 \mod 4  (q&gt;0)\\
-	\mathbb Z_{12}  &amp; q= 1 \mod 4  (q &gt; 1)\\
+        \mathbb Z_6 &amp; q=2 {\rm \ mod\ } 4,\\
+	\mathbb Z_2 \oplus \mathbb Z_{12} &amp; q= 3 {\rm \ mod\ } 4\\
+	\mathbb Z_2 \oplus \mathbb Z_{24} &amp; q= 0 {\rm \ mod\ } 4  (q&gt;0)\\
+	\mathbb Z_{12}  &amp; q= 1 {\rm \ mod\ } 4  (q &gt; 1)\\
 \end{array}\right.
 </p>
 
@@ -815,10 +815,10 @@ H^10 = [ 6 ]
         \left\{\begin{array}{ll}
         \mathbb Z^3 \oplus (\mathbb Z_2)^2  &amp; q=1,\\
         \mathbb Z^2 \oplus \mathbb Z_4 \oplus (\mathbb Z_3)^2 \oplus \mathbb Z_2 &amp; q=2,\\
-        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 &amp; q= 3 \mod 4\\
-        (\mathbb Z_2)^q  &amp; q= 0 \mod 4  (q&gt;0)\\
-                        (\mathbb Z_2)^q  &amp; q= 1 \mod 4  (q&gt;1)\\
-        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2  &amp; q= 2 \mod 4  (q &gt; 2)\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 &amp; q= 3 {\rm \ mod\ } 4\\
+        (\mathbb Z_2)^q  &amp; q= 0 {\rm \ mod\ } 4  (q&gt;0)\\
+                        (\mathbb Z_2)^q  &amp; q= 1 {\rm \ mod\ } 4  (q&gt;1)\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2  &amp; q= 2 {\rm \ mod\ } 4  (q &gt; 2)\\
 \end{array}\right.
 </p>
 
@@ -908,7 +908,7 @@ H_34 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 
 </pre></div>
 
-<p>The Lyndon-Hochschild-Serre spectral sequence <span class="SimpleMath">H_p(G/N,H_q(N,A)) implies H_p+q(G,A)</span> for the groups <span class="SimpleMath">G=SL_2(mathcal O_-d)</span> and <span class="SimpleMath">N≅ C_2</span> the central subgroup with <span class="SimpleMath">G/N≅ PSL_2(mathcal O_-d)</span>, and the trivial module <span class="SimpleMath">A = Z_ℓ</span>, implies that for primes <span class="SimpleMath">ℓ&gt;2</span> we have a natural isomorphism <span class="SimpleMath">H_n(PSL_2(mathcal O_-d), Z_ℓ) ≅ H_n(SL_2(mathcal O_-d), Z_ℓ)</span>. It follows that we have an isomorphism of <span class="SimpleMath">ℓ</span>-primary parts <span class="SimpleMath">H_n(PSL_2(mathcal O_-d), Z)_(ℓ) ≅ H_n(SL_2(mathcal O_-d), Z)_(ℓ)</span>. Since <span class="SimpleMath">H_n(SL_2(mathcal O_-d), Z)_(ℓ)</span> is periodic in degrees <span class="SimpleMath">≥ 3</span> we can recover the <span class="SimpleMath">3</span>-primary part of <span class="SimpleMath">H_n(PSL_2(mathcal O_-13), Z)</span> in all degrees <span class="SimpleMath">q≥1</span> from the following computation by ignoring all <span class="SimpleMath">2</span>-power factors in the output.</p>
+<p>The Lyndon-Hochschild-Serre spectral sequence <span class="SimpleMath">H_p(G/N,H_q(N,A)) ⇒ H_p+q(G,A)</span> for the groups <span class="SimpleMath">G=SL_2(mathcal O_-d)</span> and <span class="SimpleMath">N≅ C_2</span> the central subgroup with <span class="SimpleMath">G/N≅ PSL_2(mathcal O_-d)</span>, and the trivial module <span class="SimpleMath">A = Z_ℓ</span>, implies that for primes <span class="SimpleMath">ℓ&gt;2</span> we have a natural isomorphism <span class="SimpleMath">H_n(PSL_2(mathcal O_-d), Z_ℓ) ≅ H_n(SL_2(mathcal O_-d), Z_ℓ)</span>. It follows that we have an isomorphism of <span class="SimpleMath">ℓ</span>-primary parts <span class="SimpleMath">H_n(PSL_2(mathcal O_-d), Z)_(ℓ) ≅ H_n(SL_2(mathcal O_-d), Z)_(ℓ)</span>. Since <span class="SimpleMath">H_n(SL_2(mathcal O_-d), Z)_(ℓ)</span> is periodic in degrees <span class="SimpleMath">≥ 3</span> we can recover the <span class="SimpleMath">3</span>-primary part of <span class="SimpleMath">H_n(PSL_2(mathcal O_-13), Z)</span> in all degrees <span class="SimpleMath">q≥1</span> from the following computation by ignoring all <span class="SimpleMath">2</span>-power factors in the output.</p>
 
 
 <div class="example"><pre>
