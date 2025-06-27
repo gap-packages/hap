@@ -52,6 +52,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X78BC9D077956089A">14.7 <span class="Heading">Group presentations</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X786CFAA17C0A6E7A">14.8 <span class="Heading">Finite index subgroups</span></a>
+</span>
+</div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -374,6 +377,43 @@ Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=R!.elts[50];</span>
 [ [ 11/2 + 1/2 Sqrt(-23), 15/2 + -1/2 Sqrt(-23) ], 
   [ -1 Sqrt(-23), -4 + -1 Sqrt(-23) ] ]
+
+</pre></div>
+
+<p><a id="X786CFAA17C0A6E7A" name="X786CFAA17C0A6E7A"></a></p>
+
+<h4>14.8 <span class="Heading">Finite index subgroups</span></h4>
+
+<p>The following commands compute the integral homology of a congruence subgroup <span class="SimpleMath">G</span> of index 24 in <span class="SimpleMath">SL_2(mathcal O_-23)</span>. They also compute a presentation for <span class="SimpleMath">G</span> with 13 generators and 24 relators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(QuadraticNumberField(-23));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,[Sqrt(-23)]);</span>
+ideal of norm 23 in O(Q(Sqrt(-23)))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);</span>
+&lt;group of 2x2 matrices in characteristic 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInSL2O(G);</span>
+24
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=QuadraticToCyclotomicCoefficients(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..10],n-&gt;Homology(TensorWithIntegers(S),n));</span>
+[ [ 0 ], [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ],
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=SimplifiedFpGroup(P!.freeGroup/P!.relators);</span>
+&lt;fp group on the generators [ f8, f10, f15, f70, f86, f125, f132, f138, f182, 
+  f187, f191, f273, f279 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(RelatorsOfFpGroup(H));</span>
+24
 
 </pre></div>
 
