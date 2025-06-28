@@ -523,9 +523,19 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=HAP_CongruenceSubgroupGamma0(1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2Z_alt(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=HomogeneousPolynomials(G,14);</span>
+MappingByFunction( SL(2,Integers), &lt;matrix group with 
+2 generators&gt;, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(HomToIntegralModule(R,P),1);</span>
+[ 2, 2, 156, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Thus the space S_12 of cusp forms is of dimension 1</span>
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(1);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in [2,3,5,7,11,13,17,19] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=HeckeOperator(H,p,12);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=HeckeOperator(G,p,12);;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 eigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2
