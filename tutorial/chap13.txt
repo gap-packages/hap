@@ -483,24 +483,22 @@
   [124X
   
   [33X[0;0Ywith  [22Xα[122X, [22Xβ[122X functorial maps, and [22Xtr[122X the transfer map. We define the composite
-  [22XT_g=tr  ∘ α ∘ β: H^n(Γ, Z) → H^n(Γ, Z)[122X to be the [13X Hecke operator [113X determined
-  by [22Xg[122X. Further details on this description of Hecke operators can be found in
+  [22XT_g=tr ∘ α ∘ β: H^n(Γ, Z) → H^n(Γ, Z)[122X to be the [13X Hecke component [113X determined
+  by [22Xg[122X.[133X
+  
+  [33X[0;0YFor  [22XΓ=Γ_0(N)[122X,  prime  integer  [22Xp[122X coprime to [22XN[122X, and cohomology degree [22Xn=1[122X we
+  define  the  [13XHecke  operator[113X  [22XT_p =T_g[122X where [22Xg=(beginarraycc1&00&pendarray)[122X.
+  Further  details  on  this  description  of  Hecke operators can be found in
   [Ste07, Appendix by P. Gunnells].[133X
   
-  [33X[0;0YFor    each    prime    integer    [22Xp≥    1[122X    we    set    [22XT_p    =T_g[122X   for
-  [22Xg=(beginarraycc1&00&pendarray)[122X.[133X
-  
-  [33X[0;0YThe  following  commands  compute  [22XT_2[122X  and  [22XT_5[122X  for [22Xn=1[122X and [22XΓ=Γ_0(39)[122X. The
-  commands  also  compute  the  eigenvalues  of these two Hecke operators. The
-  final  command  confirms  that  [22XT_2[122X  and  [22XT_5[122X  commute.  (It  is a fact that
-  [22XT_pT_q=T_qT_p[122X for all primes [22Xp,q[122X.)[133X
+  [33X[0;0YThe  following commands compute [22XT_2[122X and [22XT_5[122X and [22XΓ=Γ_0(39)[122X. The commands also
+  compute  the  eigenvalues  of  these  two Hecke operators. The final command
+  confirms  that [22XT_2[122X and [22XT_5[122X commute. (It is a fact that [22XT_pT_q=T_qT_p[122X for all
+  [22Xp,q[122X.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(39);;[127X[104X
-    [4X[25Xgap>[125X [27Xp:=2;;N:=1;;h:=HeckeOperatorWeight2(gamma,p,N);;[127X[104X
-    [4X[25Xgap>[125X [27XAbelianInvariants(Source(h));[127X[104X
-    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
-    [4X[25Xgap>[125X [27XT2:=HomomorphismAsMatrix(h);;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=2;;k:=2;;T2:=HeckeOperator(gamma,p,k);;[127X[104X
     [4X[25Xgap>[125X [27XDisplay(T2);[127X[104X
     [4X[28X[ [  -2,  -2,   2,   2,   1,   2,   0,   0,   0 ],[128X[104X
     [4X[28X  [  -2,   0,   1,   2,  -2,   2,   2,   2,  -2 ],[128X[104X
@@ -514,8 +512,7 @@
     [4X[25Xgap>[125X [27XEigenvalues(Rationals,T2);[127X[104X
     [4X[28X[ 3, 1 ][128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xp:=5;;N:=1;;h:=HeckeOperator(gamma,p,N);;[127X[104X
-    [4X[25Xgap>[125X [27XT5:=HomomorphismAsMatrix(h);;[127X[104X
+    [4X[25Xgap>[125X [27Xp:=5;;k:=2;;h:=HeckeOperator(gamma,p,k);;[127X[104X
     [4X[25Xgap>[125X [27XDisplay(T5);[127X[104X
     [4X[28X[ [  -1,  -1,   3,   4,   0,   0,   1,   1,  -1 ],[128X[104X
     [4X[28X  [  -5,  -1,   5,   4,   0,   0,   3,   3,  -3 ],[128X[104X
@@ -537,10 +534,10 @@
   
   [1X13.7 [33X[0;0YHecke operators on forms of weight [22X≥ 2[122X[101X[1X[133X[101X
   
-  [33X[0;0YThe  above  definition  of  Hecke  operator [22XT_g[122X for [22Xg∈ SL_2( Q)[122X extends to a
-  Hecke  operator [22XT_g: H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_ Q(k-2) )[122X for [22Xk≥ 2[122X. We work
-  over  the  rationals  rather  than  the integers in order to ensure that the
-  action  of  [22XΓ[122X  on  homogeneous  polynomials  extends  to an action of [22Xg[122X. The
+  [33X[0;0YThe  above  definition of Hecke operator [22XT_p[122X for [22XΓ=Γ_0(N)[122X extends to a Hecke
+  operator  [22XT_p:  H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_ Q(k-2) )[122X for [22Xk≥ 2[122X. We work over
+  the rationals rather than the integers in order to ensure that the action of
+  [22XΓ[122X  on  homogeneous  polynomials  extends  to  an action of [22Xg ∈ GL_2( Q)[122X. The
   following  commands  compute the matrix of [22XT_2: H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_
   Q(k-2) )[122X for [22XΓ=SL_2( Z)[122X and [22Xk=4[122X;[133X
   
@@ -572,12 +569,13 @@
   isomorphism.  Hecke  operators  can  be  used  to recover modular forms from
   cohomology classes.[133X
   
-  [33X[0;0YHecke  operators  restrict  to  operators  on  cuspidal  cohomology.  On the
-  left-hand  side  of the Eichler-Shimura isomorphism Hecke operators restrict
-  to operators [22XT_s: S_2(Γ) → S_2(Γ)[122X for [22Xs≥ 1[122X.[133X
+  [33X[0;0YLet  [22XΓ=Γ_0(N)[122X.  The  above  defined Hecke operators restrict to operators on
+  cuspidal   cohomology.   On   the  left-hand  side  of  the  Eichler-Shimura
+  isomorphism  Hecke  operators restrict to operators [22XT_s: S_2(Γ) → S_2(Γ)[122X for
+  [22Xs≥ 1[122X.[133X
   
-  [33X[0;0YLet us now introduce the function [22Xq=q(z)=e^2π i z[122X which is holomorphic on [22XC[122X.
-  For any modular form [22Xf(z)[122X there are numbers [22Xa_s[122X such that[133X
+  [33X[0;0YConsider  the  function  [22Xq=q(z)=e^2π  i z[122X which is holomorphic on [22XC[122X. For any
+  modular form [22Xf(z) ∈ M_k(Γ)[122X there are numbers [22Xa_s[122X such that[133X
   
   
   [24X[33X[0;6Yf(z) = \sum_{s=0}^\infty a_sq^s[133X
@@ -599,8 +597,9 @@
   
   [33X[0;0YSuppose  that we would like a basis for [22XS_2(Γ_0(11))[122X. The following commands
   first  show  that  [22XH^1_cusp(Γ_0(11),  Z)=  Z⊕  Z[122X  from  which we deduce that
-  [22XS_2(Γ_0(11))  =  C[122X is [22X1[122X-dimensional. Then eigenvalues of Hecke operators are
-  calculated to establish that the modular form[133X
+  [22XS_2(Γ_0(11))  =  C[122X  is  [22X1[122X-dimensional and thus admits a basis of eigenforms.
+  Then  eigenvalues  of  Hecke  operators are calculated to establish that the
+  modular form[133X
   
   
   [24X[33X[0;6Yf = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots[133X

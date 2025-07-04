@@ -392,19 +392,16 @@ H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).\
 
 <p class="center">\[H^n(\Gamma,\mathbb Z)\ \ \stackrel{tr}{\leftarrow} \ \ H^n(\Gamma',\mathbb Z) \ \ \stackrel{\alpha}{\leftarrow} \ \ H^n(g^{-1}\Gamma' g,\mathbb Z) \ \  \stackrel{\beta}{\leftarrow} H^n(\Gamma, \mathbb Z) \]</p>
 
-<p>with <span class="SimpleMath">\(\alpha\)</span>, <span class="SimpleMath">\(\beta\)</span> functorial maps, and <span class="SimpleMath">\(tr\)</span> the transfer map. We define the composite <span class="SimpleMath">\(T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow H^n(\Gamma, \mathbb Z)\)</span> to be the <em> Hecke operator </em> determined by <span class="SimpleMath">\(g\)</span>. Further details on this description of Hecke operators can be found in <a href="chapBib_mj.html#biBstein">[Ste07, Appendix by P. Gunnells]</a>.</p>
+<p>with <span class="SimpleMath">\(\alpha\)</span>, <span class="SimpleMath">\(\beta\)</span> functorial maps, and <span class="SimpleMath">\(tr\)</span> the transfer map. We define the composite <span class="SimpleMath">\(T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow H^n(\Gamma, \mathbb Z)\)</span> to be the <em> Hecke component </em> determined by <span class="SimpleMath">\(g\)</span>.</p>
 
-<p>For each prime integer <span class="SimpleMath">\(p\ge 1\)</span> we set <span class="SimpleMath">\(T_p =T_g\)</span> for <span class="SimpleMath">\(g=\left(\begin{array}{cc}1&amp;0\\0&amp;p\end{array}\right)\)</span>.</p>
+<p>For <span class="SimpleMath">\(\Gamma=\Gamma_0(N)\)</span>, prime integer <span class="SimpleMath">\(p\)</span> coprime to <span class="SimpleMath">\(N\)</span>, and cohomology degree <span class="SimpleMath">\(n=1\)</span> we define the <em>Hecke operator</em> <span class="SimpleMath">\(T_p =T_g\)</span> where <span class="SimpleMath">\(g=\left(\begin{array}{cc}1&amp;0\\0&amp;p\end{array}\right)\)</span>. Further details on this description of Hecke operators can be found in <a href="chapBib_mj.html#biBstein">[Ste07, Appendix by P. Gunnells]</a>.</p>
 
-<p>The following commands compute <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> for <span class="SimpleMath">\(n=1\)</span> and <span class="SimpleMath">\(\Gamma=\Gamma_0(39)\)</span>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> commute. (It is a fact that <span class="SimpleMath">\(T_pT_q=T_qT_p\)</span> for all primes <span class="SimpleMath">\(p,q\)</span>.)</p>
+<p>The following commands compute <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> and <span class="SimpleMath">\(\Gamma=\Gamma_0(39)\)</span>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <span class="SimpleMath">\(T_2\)</span> and <span class="SimpleMath">\(T_5\)</span> commute. (It is a fact that <span class="SimpleMath">\(T_pT_q=T_qT_p\)</span> for all <span class="SimpleMath">\(p,q\)</span>.)</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;N:=1;;h:=HeckeOperatorWeight2(gamma,p,N);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Source(h));</span>
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2:=HomomorphismAsMatrix(h);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=2;;k:=2;;T2:=HeckeOperator(gamma,p,k);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(T2);</span>
 [ [  -2,  -2,   2,   2,   1,   2,   0,   0,   0 ],
   [  -2,   0,   1,   2,  -2,   2,   2,   2,  -2 ],
@@ -418,8 +415,7 @@ H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).\
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eigenvalues(Rationals,T2);</span>
 [ 3, 1 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=5;;N:=1;;h:=HeckeOperator(gamma,p,N);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T5:=HomomorphismAsMatrix(h);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=5;;k:=2;;h:=HeckeOperator(gamma,p,k);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(T5);</span>
 [ [  -1,  -1,   3,   4,   0,   0,   1,   1,  -1 ],
   [  -5,  -1,   5,   4,   0,   0,   3,   3,  -3 ],
@@ -442,7 +438,7 @@ true
 
 <h4>13.7 <span class="Heading">Hecke operators on forms of weight <span class="SimpleMath">\( \ge 2\)</span></span></h4>
 
-<p>The above definition of Hecke operator <span class="SimpleMath">\(T_g\)</span> for <span class="SimpleMath">\(g\in SL_2(\mathbb Q)\)</span> extends to a Hecke operator <span class="SimpleMath">\(T_g\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )\)</span> for <span class="SimpleMath">\(k\ge 2\)</span>. We work over the rationals rather than the integers in order to ensure that the action of <span class="SimpleMath">\(\Gamma\)</span> on homogeneous polynomials extends to an action of <span class="SimpleMath">\(g\)</span>. The following commands compute the matrix of <span class="SimpleMath">\(T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )\)</span> for <span class="SimpleMath">\(\Gamma=SL_2(\mathbb Z)\)</span> and <span class="SimpleMath">\(k=4\)</span>;</p>
+<p>The above definition of Hecke operator <span class="SimpleMath">\(T_p\)</span> for <span class="SimpleMath">\(\Gamma=\Gamma_0(N)\)</span> extends to a Hecke operator <span class="SimpleMath">\(T_p\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )\)</span> for <span class="SimpleMath">\(k\ge 2\)</span>. We work over the rationals rather than the integers in order to ensure that the action of <span class="SimpleMath">\(\Gamma\)</span> on homogeneous polynomials extends to an action of <span class="SimpleMath">\(g \in GL_2(\mathbb Q) \)</span>. The following commands compute the matrix of <span class="SimpleMath">\(T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )\)</span> for <span class="SimpleMath">\(\Gamma=SL_2(\mathbb Z)\)</span> and <span class="SimpleMath">\(k=4\)</span>;</p>
 
 
 <div class="example"><pre>
@@ -464,9 +460,9 @@ true
 
 <p>In this way we obtain a cochain <span class="SimpleMath">\(f_1\colon C_1({\cal T}) \rightarrow \mathbb C\)</span> in <span class="SimpleMath">\(Hom_{\mathbb Z\Gamma}(C_1({\cal T}), \mathbb C)\)</span> representing a cohomology class <span class="SimpleMath">\(c(f) \in H^1(\, Hom_{\mathbb Z\Gamma}(C_\ast({\cal T}), \mathbb C) \,) = H^1(\Gamma,\mathbb C)\)</span>. The correspondence <span class="SimpleMath">\(f\mapsto c(f)\)</span> underlies the Eichler-Shimura isomorphism. Hecke operators can be used to recover modular forms from cohomology classes.</p>
 
-<p>Hecke operators restrict to operators on cuspidal cohomology. On the left-hand side of the Eichler-Shimura isomorphism Hecke operators restrict to operators <span class="SimpleMath">\(T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)\)</span> for <span class="SimpleMath">\(s\ge 1\)</span>.</p>
+<p>Let <span class="SimpleMath">\(\Gamma=\Gamma_0(N)\)</span>. The above defined Hecke operators restrict to operators on cuspidal cohomology. On the left-hand side of the Eichler-Shimura isomorphism Hecke operators restrict to operators <span class="SimpleMath">\(T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)\)</span> for <span class="SimpleMath">\(s\ge 1\)</span>.</p>
 
-<p>Let us now introduce the function <span class="SimpleMath">\(q=q(z)=e^{2\pi i z}\)</span> which is holomorphic on <span class="SimpleMath">\(\mathbb C\)</span>. For any modular form <span class="SimpleMath">\(f(z)\)</span> there are numbers <span class="SimpleMath">\(a_s\)</span> such that</p>
+<p>Consider the function <span class="SimpleMath">\(q=q(z)=e^{2\pi i z}\)</span> which is holomorphic on <span class="SimpleMath">\(\mathbb C\)</span>. For any modular form <span class="SimpleMath">\(f(z) \in M_k(\Gamma)\)</span> there are numbers <span class="SimpleMath">\(a_s\)</span> such that</p>
 
 <p class="center">\[f(z) = \sum_{s=0}^\infty a_sq^s \]</p>
 
@@ -476,7 +472,7 @@ true
 
 <p>This all implies that, in principle, we can construct an approximation to an explicit basis for the space <span class="SimpleMath">\(S_2(\Gamma_0(N))\)</span> of cusp forms by computing eigenvalues for Hecke operators.</p>
 
-<p>Suppose that we would like a basis for <span class="SimpleMath">\(S_2(\Gamma_0(11))\)</span>. The following commands first show that <span class="SimpleMath">\(H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z\)</span> from which we deduce that <span class="SimpleMath">\(S_2(\Gamma_0(11)) =\mathbb C\)</span> is <span class="SimpleMath">\(1\)</span>-dimensional. Then eigenvalues of Hecke operators are calculated to establish that the modular form</p>
+<p>Suppose that we would like a basis for <span class="SimpleMath">\(S_2(\Gamma_0(11))\)</span>. The following commands first show that <span class="SimpleMath">\(H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z\)</span> from which we deduce that <span class="SimpleMath">\(S_2(\Gamma_0(11)) =\mathbb C\)</span> is <span class="SimpleMath">\(1\)</span>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of Hecke operators are calculated to establish that the modular form</p>
 
 <p class="center">\[f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots \]</p>
 
