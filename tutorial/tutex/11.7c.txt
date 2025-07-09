@@ -1,6 +1,16 @@
-gap> H:=HAP_CongruenceSubgroupGamma0(1);;
+gap> R:=ResolutionSL2Z_alt(2);;
+gap> G:=R!.group;;
+gap> P:=HomogeneousPolynomials(G,14);
+MappingByFunction( SL(2,Integers), &lt;matrix group with 
+2 generators>, function( x ) ... end )
+gap> Cohomology(HomToIntegralModule(R,P),1);
+[ 2, 2, 156, 0, 0, 0 ]
+gap> #Thus the space S_12 of cusp forms is of dimension 1
+
+
+gap> G:=HAP_CongruenceSubgroupGamma0(1);;
 gap> for p in [2,3,5,7,11,13,17,19] do
-> T:=HeckeOperator(H,p,1,12);;
+> T:=HeckeOperator(G,p,12);;
 > Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");
 > od;
 eigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2

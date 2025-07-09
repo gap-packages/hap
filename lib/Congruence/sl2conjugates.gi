@@ -1,4 +1,4 @@
-
+#SOME OF THESE FUNCTIONS ARE NEVER USED!
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_GenericSL2ZConjugatedSubgroup,
@@ -42,13 +42,13 @@ InstallMethod(\in,
 1000000,  #There must be a better way to ensure this method is used!
 function(x,G)
 local g,H;
-H:=G!.sl2Zsubgroup;
 g:=G!.conjugatorInverse;
-return  H!.membership(x^g);
+return  G!.membership(x);
 end);
 ###################################################################
 ###################################################################
 
+if false then
 ###################################################################
 ###################################################################
 InstallMethod(GeneratorsOfGroup,
@@ -65,13 +65,14 @@ end);
 ###################################################################
 
 
+
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_ConjugatedCongruenceSubgroupGamma0,
 function(n,g)
 local H, G, gg, membership;
 
-G:=HAP_GenericSL2ZConjugatedSubgroup();
+G:=HAP_GenericSL2ZSubgroup();
 gg:=g^-1;
 H:=HAP_CongruenceSubgroupGamma0(n);
 
@@ -120,7 +121,37 @@ return G;
 end);
 ###################################################################
 ###################################################################
+fi;
 
+###################################################################
+###################################################################
+InstallGlobalFunction(HAP_IntersectionConjugatedCongruenceSubgroup,
+function(H,g)
+local  G, gg, membership, HH;
+
+G:=HAP_GenericSL2ZConjugatedSubgroup();
+gg:=g^-1;
+#H:=HAP_CongruenceSubgroupGamma0(n);
+
+###################################################
+membership:=function(x);
+if not x in H then return false; fi;
+return x^gg in H;
+end;
+###################################################
+
+HH:=Intersection(H,H^g);
+G!.membership:=membership;
+#G!.sl2Zsubgroup:=HH;
+
+SetGeneratorsOfMagmaWithInverses(G,GeneratorsOfGroup(HH));
+return G;
+
+end);
+###################################################################
+###################################################################
+
+if false then
 ###################################################################
 ###################################################################
 InstallGlobalFunction(ResolutionSL2ZConjugated,
@@ -176,7 +207,6 @@ H:=G!.sl2Zsubgroup;
 g:=G!.conjugator;
 gg:=G!.conjugatorInverse;
 R:=RightTransversal(H,GG^gg);
-
 R2:=List(R,x->x^g);
 
 ##########################################
@@ -194,6 +224,6 @@ return Objectify( NewType( FamilyObj( G ),
 end);
 ############################################################
 ############################################################
-
+fi;
 
 

@@ -916,7 +916,6 @@ local
     Homotopy:=function(k,w)
     local 
         f,g,q,s,r,t,v,e,h;
-
     ### h([])=[] 
         if w=[] then 
             return [];

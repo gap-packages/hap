@@ -529,7 +529,7 @@ end;
 HAPNorm:=function(OQ,x);
 if IsRat(x) then return x^2; fi;
 if not OQ!.bianchiInteger=x!.bianchiInteger then return fail; fi;
-return x!.rational^2+AbsInt(x!.bianchiInteger)*x!.irrational^2;
+return x!.rational^2+(-x!.bianchiInteger)*x!.irrational^2;
 end;
 #####################################################################
 #####################################################################

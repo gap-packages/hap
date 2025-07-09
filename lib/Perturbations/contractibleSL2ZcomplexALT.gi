@@ -16,7 +16,7 @@ local
         RotSubGroups,Action, ActionRecord,
         TransMat,
         St0,St1, x, n,k,s,BI,SGN,tmp, LstEl , 
-        bool, name,
+        bool, 
 	GeneratorsRepresentation,SimplifyGeneratorsRepresentation,EdgeFinder,
 	pos,AddList,Chomotopy,Path2Gindex,FinalHomotopy,Homotopy,Sign,
         EdgeFinder1,RefineEdge,Edge;
@@ -296,10 +296,13 @@ return AddList(Chomotopy(edge*S*edge^-1*g),h);
 end;
 #################
 pos:=function(g)
-if Position(Elts,g)=fail then
+local ps;
+ps:=Position(Elts,g);
+if ps=fail then
         Add(Elts,g);
+   ps:=Length(Elts);
 fi;
-return Position(Elts,g);
+return ps;
 end;
 ##################
 Path2Gindex:=function(path)
@@ -356,10 +359,9 @@ fi;
 end;
 ####################END: SL2Z-homotopy###################################
 Homotopy:=function(n,g)
-if name="SL2Z" then return FinalHomotopy(n,g);
-else
-        return fail;
-fi;
+local ans;
+ans:= FinalHomotopy(n,g);
+return ans;
 end;
 #########################################################################
 

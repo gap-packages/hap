@@ -309,7 +309,10 @@ DhomHD:=IHD.c2h;
 imageGensHC:=[];
 
 for x in [1..Length(gensHC)] do 
+
 Append(imageGensHC,[  DhomHD(ChomD(HChomC(x),n))  ]  );
+
+
 #ChomD(a,n)  take most of the time
 od;
 

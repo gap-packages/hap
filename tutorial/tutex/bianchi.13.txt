@@ -1,0 +1,26 @@
+gap> OQ:=RingOfIntegers(QuadraticNumberField(-23));;
+gap> I:=QuadraticIdeal(OQ,[Sqrt(-23)]);
+ideal of norm 23 in O(Q(Sqrt(-23)))
+gap> G:=HAP_CongruenceSubgroupGamma0(I);
+&lt;group of 2x2 matrices in characteristic 0>
+gap> IndexInSL2O(G);
+24
+
+gap> K:=BianchiGcomplex(-23);;
+gap> R:=FreeGResolution(K,11);;
+gap> R:=QuadraticToCyclotomicCoefficients(R);;
+gap> S:=ResolutionFiniteSubgroup(R,G);;
+gap> List([0..10],n->Homology(TensorWithIntegers(S),n));
+[ [ 0 ], [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ],
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
+
+gap> P:=PresentationOfResolution(S);;
+gap> H:=SimplifiedFpGroup(P!.freeGroup/P!.relators);
+&lt;fp group on the generators [ f8, f10, f15, f70, f86, f125, f132, f138, f182, 
+  f187, f191, f273, f279 ]>
+gap> Length(RelatorsOfFpGroup(H));
+24

@@ -6,7 +6,74 @@ end;
 #######################################################
 #######################################################
 
-#RT:=0;
+#######################################################
+#######################################################
+HAP_QuadToCyclotomicMat:=function(A)
+local B,R,r,x;
+B:=[];
+
+for r in A do
+R:=[];
+for x in r do
+Add(R,HAP_QuadToCyclotomic(x));
+od;
+Add(B,R);
+od;
+
+return B;
+end;
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+HAP_QuadToCyclotomicGroup:=function(G)
+local gens;
+
+gens:=GeneratorsOfGroup(G);
+gens:=List(gens,HAP_QuadToCyclotomicMat);
+
+return Group(gens);
+end;
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+QuadraticToCyclotomicCoefficients:=function(RR)
+local R,BI,n,k,d,Q,OQ,I,G,L,pos;
+
+for n in [1..Length(RR)] do
+for k in [1..RR!.dimension(n)] do
+RR!.boundary(n,k);
+od;
+od;
+
+R:=Objectify(HapResolution,
+                rec(
+                dimension:=RR!.dimension,
+                boundary:=RR!.boundary,
+                homotopy:=RR!.homotopy,
+                elts:=List(RR!.elts,HAP_QuadToCyclotomicMat),
+                group:=fail,
+                properties:= RR!.properties));
+
+d:=One(RR!.elts[1][1][1]);;
+d:=d!.bianchiInteger;
+Q:=QuadraticNumberField(d);;
+OQ:=RingOfIntegers(Q);;
+I:=QuadraticIdeal(OQ,1);;
+G:=HAP_CongruenceSubgroupGamma0(I);;
+G!.tree:=true;
+R!.group:=G;
+
+return R;
+
+end;
+#######################################################
+#######################################################
+
+
 #######################################################
 #######################################################
 HAP_BianchiAction:=function(A,PP)
@@ -28,7 +95,6 @@ b:=A[1][2]; b:=HAP_QuadToCyclotomic(b);
 c:=A[2][1]; c:=HAP_QuadToCyclotomic(c); 
 d:=A[2][2]; d:=HAP_QuadToCyclotomic(d);
 
-#RT:=RT-Runtime();  #MOST OF THE TIME
 cc:=ComplexConjugate(c*z+d);
 
 #zz:=(a*z+b)*ComplexConjugate(c*z+d) +a*ComplexConjugate(c)*t^2;
@@ -44,7 +110,6 @@ zz:=zz/D;
 #tt:=t/((c*z+d)*ComplexConjugate(c*z+d) +(c*t)*ComplexConjugate(c*t));
 tt:=t/D;
 
-#RT:=RT+Runtime();
 
 
 ans:=[];

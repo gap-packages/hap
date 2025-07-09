@@ -143,11 +143,14 @@ fi;
 
    if m>0 then y:=StructuralCopy(BoundaryR(m,x[1]));
    z:=map(y,m-1);
+
    u:=[];
+
 ##########################
 if Charact=0 then 
 
  for a in Collected(z) do
+
       Append(u,MultiplyWord(a[2],
 List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
 ));
@@ -161,6 +164,7 @@ List(HomotopyS(m-1,a[1]), t->[t[1],Mult(GhomQ(x[2]),t[2])])
       od;
 fi;
 #########################
+
 u:=AlgRed(u);
       if x[1]>0 then
             mapgensRec[m+1][x[1]][x[2]]:=u;
@@ -183,7 +187,6 @@ local a, u,v,x,y,z;
 
 v:=Collected(w);
 if Charact=0 then
-
 Apply(v,x->MultiplyWord(x[2],  mapgens(x[1],m)));
 
 else

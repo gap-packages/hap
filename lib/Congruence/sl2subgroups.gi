@@ -420,7 +420,11 @@ T:=[[1,1],[0,1]];
 
 G!.ugrp:=Group((S*T)^0);
 G!.name:="CongruenceSubgroupGamma0";
+if n=1 then
+G!.index:=1;
+else
 G!.index:=n*Product(List(SSortedList(Factors(n)), p->1+1/p));
+fi;
 
 if IsPrimeInt(n) then   #I need to extend this to no primes
 ###########################################
@@ -602,9 +606,9 @@ InstallOtherMethod(RightTransversal,
 function(H,HH)
 local N;
 
-if H!.tree=true then
+if H!.tree=true then   
 return HAP_TransversalCongruenceSubgroupsIdeal(H,HH);
-else
+else 
 return HAP_TransversalCongruenceSubgroupsIdeal_alt(H,HH);
 fi;
 

@@ -199,7 +199,6 @@ local t1,t2,
     ##
     Homotopy:=function(n,w)
     local d,path,i,h,k,g,pk,r,t;
-
     if not n=0 then 
         return [];
     fi;

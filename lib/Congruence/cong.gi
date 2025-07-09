@@ -5,9 +5,43 @@ InstallMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
 [IsMatrixGroup,IsMatrixGroup],
 function(H,HH);
-if not (IsHapSL2ZSubgroup(HH) or IsHapSL2ZSubgroup(H)) then TryNextMethod(); fi;
+if not ( IsHapSL2ZSubgroup(H)) then TryNextMethod(); fi;
 #Print("HAP_RightTransversalSL2ZSubgroups\n");
+if IndexInSL2Z(H)=1 then
 return HAP_RightTransversalSL2ZSubgroups(H,HH);
+else
+return HAP_RightTransversalSL2ZSubgroups_alt(H,HH);
+fi;
+end);
+############################################################
+############################################################
+
+
+############################################################
+############################################################
+InstallGlobalFunction(HAP_RightTransversalSL2ZSubgroups_alt,
+function(H,HH)
+local F, RHH, poscan, G; 
+
+G:=SL(2,Integers);
+RHH:=HAP_RightTransversalSL2ZSubgroups(HAP_CongruenceSubgroupGamma0(1),HH);
+F:=Filtered(RHH,x->x in H);
+
+poscan:=function(g)
+local i, gg;
+gg:=g^-1;
+for i in [1..Length(F)] do
+if F[i]*gg in HH then return i; fi;
+od;
+end;
+
+return Objectify( NewType( FamilyObj( G ),
+                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsDuplicateFreeList and IsAttributeStoringRep ),
+          rec( group := H,
+               subgroup := HH,
+               cosets:=F,
+               poscan:=poscan ));
 end);
 ############################################################
 ############################################################
