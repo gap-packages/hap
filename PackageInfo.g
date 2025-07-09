@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.66",
-  Date    := "24/10/2024",
+  Version := "1.67",
+  Date    := "22/12/2024",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -60,7 +60,6 @@ SetPackageInfo( rec(
     PDFFile   := "doc/manual.pdf",
     SixFile   := "doc/manual.six",
     LongTitle := "Homological Algebra Programming Package",
-    Autoload := true 
   ),
 
 

@@ -32,12 +32,12 @@ Please send your bug reports to graham.ellis(at)nuigalway.ie .
 On a Linux machine with GAP (and optionally Polymake) installed, the HAP
 library can be loaded as follows:
 
-* First download the file hap1.66.tar.gz to the subdirectory "pkg/" of GAP. (If
+* First download the file hap1.67.tar.gz to the subdirectory "pkg/" of GAP. (If
 you don't have access to this, then create a directory "pkg" in your home
 directory and download the file there.)
 
-* Change to directory "pkg/" and type "gunzip hap1.66.tar.gz" followed by
-"tar -xvf hap1.66.tar" .
+* Change to directory "pkg/" and type "gunzip hap1.67.tar.gz" followed by
+"tar -xvf hap1.67.tar" .
 
 * Start GAP. (If you have created "pkg" in your home directory then start GAP
 with the command "gap -l 'path/homedir;' "   where path/homedir is the path to
@@ -46,12 +46,12 @@ your home directory.)
 * In GAP type " LoadPackage("HAP"); " .
 
 * Help on HAP can be found on the HAP home page (a version of which is
-included in directory "pkg/Hap1.66/www" of this distribution).
+included in directory "pkg/Hap1.67/www" of this distribution).
 
 * Performance can be significantly improved by using a compiled version of the
 HAP library. A compiled version can be created by the following steps.
 
-1. Change to the directory "pkg/Hap1.66/" .
+1. Change to the directory "pkg/Hap1.67/" .
 2. Edit the file "compile" so that: PKGDIR is equal to the path to the
 directory "pkg" where your GAP packages are stored; GACDIR is equal to the
 path to the directory where the GAP compiler "gac" is stored.
@@ -60,4 +60,4 @@ path to the directory where the GAP compiler "gac" is stored.
 The next time HAP is loaded a compiled version will be loaded.
 
 * Should you want to return to an uncompiled version, change to the directory
-"pkg/Hap1.66/" and type "./uncompile".
+"pkg/Hap1.67/" and type "./uncompile".

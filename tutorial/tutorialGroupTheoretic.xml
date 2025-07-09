@@ -129,14 +129,14 @@ order <M>243</M> with non-trivial Bogomolov multiplier. The groups in question a
 
 Any group extension <M>N\rightarrowtail E \twoheadrightarrow G</M> gives rise to:
 <List>
-<Item> an outer action <M>\alpha\colon G\rightarrow Out(G)</M> of <M>G</M> on <M>N</M>.</Item>
+<Item> an outer action <M>\alpha\colon G\rightarrow Out(N)</M> of <M>G</M> on <M>N</M>.</Item>
 
 <Item>an action <M>G\rightarrow Aut(Z(N))</M> of <M>G</M> on the centre of <M>N</M>, uniquely induced by the outer action <M>\alpha</M> and the canonical action of <M>Out(N)</M> on <M>Z(N)</M>.</Item>
-<Item>a <M>2</M>-cocycle <M>f\colon G\times G\rightarrow Z(N)</M> with values in the <M>G</M>-module <M>A=Z(N)</M>.</Item>
+<Item>a "<M>2</M>-cocycle" <M>f\colon G\times G\rightarrow N</M>.  </Item>
 </List>
 
 <P/>Any outer homomorphism <M>\alpha\colon G\rightarrow Out(N)</M> gives rise to a cohomology class <M>k</M> in <M>H^3(G,Z(N))</M>. It was shown by Eilenberg and Mac<M>\,</M>Lane that the class <M>k</M> is trivial if and only if the outer action
-<M>\alpha</M> arises from some group extension <M>N\rightarrowtail E\twoheadrightarrow G</M>. If <M>k</M> is trivial then there is a bijection between the second cohomology group <M>H^2(G,Z(N))</M> and Yoneda equivalence classes of extensions of <M>G</M> by <M>N</M> that are compatible with <M>\alpha</M>. 
+<M>\alpha</M> arises from some group extension <M>N\rightarrowtail E\twoheadrightarrow G</M>. If <M>k</M> is trivial then there is a (non-canonical) bijection between the second cohomology group <M>H^2(G,Z(N))</M> and Yoneda equivalence classes of extensions of <M>G</M> by <M>N</M> that are compatible with <M>\alpha</M>. 
 
 <P/><B>First Example.</B>
 
@@ -174,99 +174,178 @@ Consider the normal subgroup <M>N=NormalSubgroups(G)[15]</M> and quotient group
 
 </Section>
 
-<Section Label="secHadamard"><Heading>Second group cohomology and cocyclic Hadamard matrices</Heading>
+<Section Label="secCocyclic"><Heading>Cocyclic groups: a convenient way of representing  certain groups</Heading>
 
-An <E>Hadamard matrix</E> is a square <M>n\times n</M> 
-matrix <M>H</M> whose entries are either <M>+1</M> or <M>-1</M> and whose rows are mutually orthogonal, that is <M>H H^t = nI_n</M> where <M>H^t</M> denotes the transpose and <M>I_n</M> denotes the <M>n\times n</M> identity matrix. 
+	<B>GAP</B> offers a number of  data types for representing groups, including those of fp-groups (<E>finitely presented groups</E>), 
+		pc-groups (<E>power-conjugate presentated groups</E> for finite polycyclic groups),
+		pcp-groups (<E>polycyclically presented groups</E>  for finite and infinite polycyclic groups), permutation groups (for finite groups), and matrix groups over a field or ring. Each data type has its advantages and limitations. 
 
-<P/>Given a group <M>G=\{g_1,g_2,\ldots,g_n\}</M> of order <M>n</M> and the abelian group 
-<M>A=\{1,-1\}</M> of square roots of unity, any <M>2</M>-cocycle 
-<M>f\colon G\times G\rightarrow A</M> corresponds to an <M>n\times n</M> matrix <M>F=(f(g_i,g_j))_{1\le i,j\le n}</M> whose entries are <M>\pm 1</M>. If <M>F</M> is Hadamard it is called a <E>cocyclic Hadamard matrix</E> corresponding to <M>G</M>. 
+		<P/>
+			Based on the definitions and examples in Section <Ref Sect="secExtensions"/> the additional data type of a cc-group 
+				(<E>cocyclic group</E>)  is provided in <B>HAP</B>. This can be used for  a 
+group <M>E</M> arising as a group extension 
+<M>N\rightarrowtail E \twoheadrightarrow G</M> and is a component object involving:  
+<List>
+	<Item><Code>E!.Base</Code> consisting of some representation of a group <M>G</M>.</Item> 
+	<Item><Code>E!.Fibre</Code> consisting of some representation of a group <M>N</M>.</Item>
 
-<P/>The following commands compute all <M>192</M> of the cocyclic Hadamard matrices for the abelian group <M>G=\mathbb Z_4\oplus \mathbb Z_4</M> of order <M>n=16</M>.
+<Item><Code>E!.OuterGroup</Code> consisting of an outer action <M>\alpha\colon G\rightarrow Out(N)</M> of <M>G</M> on <M>N</M>.</Item>
+
+
+<Item><Code>E!.Cocycle</Code> consisting of a "<M>2</M>-cocycle" <M>f\colon G\times G\rightarrow N</M>.</Item>
+</List>
+
+<P/>The first example in Section <Ref Sect="secExtensions"/> illustrates the construction of cc-groups for which both the base <M>G</M> and fibre <M>N</M> are finite pc-groups. That example extends to any scenario in which the base <M>G</M> is a group for which:
+<Enum>
+<Item>we can construct the first 3 degrees of a free <M>\mathbb ZG</M>-resolution <M>C_\ast X</M>.</Item>
+<Item>we can construct the first 2 terms of a contracting homotopy <M>h_i\colon C_nX\rightarrow C_{n+1}X </M> for <M>i=0,1</M>.
+</Item>
+<Item><M>N</M> is a group in which we can multiply elements effectively and for which we can determine the centre <M>Z(N)</M> and outer automorphism group <M>Out(N)</M>.
+</Item>
+</Enum>
+
+<P/> As an illustration where the base group is a non-solvable finite group and the fibre is the infinite cyclic group, with  base group acting trivially on the fibre, the following commands list up to Yoneda equivalence
+	all central extensions 
+<M>\mathbb Z \rightarrowtail E \twoheadrightarrow G</M> for <M>G=A_5:C_{16}</M>.
+	The base group is a non-solvable semi-direct product of  order <M>960</M> and thus none of the <M>16</M> extensions are polycyclic. The commands 
+		classify the extensions according to their integral homology in degrees <M> \le 2</M>, showing that there are precisely 5 such equivalence classes of extensions. Thus, there are at least 5 distinct isomorphism types among the <M>16</M> extensions. 
+			A presentation is constructed for the group corresponding to the sixteenth extension. The final command lists the orders of the 16 cohomology group elements corresponding to the 16 extensions. The 16th element has order 1, meaning that the sixteenth extension is the direct product <M>C_\infty\ \times\ A_5:C_{16}</M>.
+
+			<Example>
+<#Include SYSTEM "tutex/5.7a.txt">
+</Example>
+
+		
+</Section>
+
+<Section><Heading>Effective group presentations</Heading>
+	For any  free <M>\mathbb ZG</M>-resolution <M>R_\ast=C_\ast X</M> 
+		arising as the cellular chain 
+		complex of a contractible CW-complex, the terms in degrees <M>\le 2</M> correspond 
+			to a free presentation for the group <M>G</M>. The following example accesses this presentation for the group <M>PGL_3(\mathbb Z[\sqrt{-1}])</M>. 	
+
+				                        <Example>
+<#Include SYSTEM "tutex/5.7b.txt">
+</Example>
+
+<P/>
+	The homomorphism <M>h_0\colon R_0 \rightarrow R_1</M> 
+		 of a contracting homotopy provides a unique expression for each element of <M>G</M> as a word in the free generators. To illustrate this, we consider the Sylow <M>2</M>-subgroup  
+		 <M>H=Syl_2(M_{24})</M> of the Mathieu group <M>M_{24}</M>. We obtain a resolution <M>R_\ast</M> for <M>H</M> by recursively applying perturbation techniques to a composition series for <M>H</M>. Such a resolution will 
+			 yield a "kind of" power-conjugate presentation for <M>H</M>.  
+
+			<Example>
+<#Include SYSTEM "tutex/5.7c.txt">
+</Example>
+
+
+<P/> The following additional commands use the contracting homotopy homomorphism
+<M>h_0\colon R_0\rightarrow R_1</M> to express some random elements of <M>H</M> as words in the free generators.
+
+	<Example>
+<#Include SYSTEM "tutex/5.7d.txt">
+</Example>
+
+	<P/> Because the resolution <M>R_\ast</M> was obtained from a composition series, the unique word associated to an element <M>g\in H</M> always has the form
+<M>q^{\epsilon_1} r^{\epsilon_2} s^{\epsilon_3} t^{\epsilon_4} u^{\epsilon_5} v^{\epsilon_6} w^{\epsilon_7} x^{\epsilon_8} y^{\epsilon_9} z^{\epsilon_{10}}</M> determined by the exponent vector <M>(\epsilon_1,\cdots,\epsilon_{10}) \in (\mathbb Z_2)^{10}</M>.
+
+
+	</Section>
+
+	<Section Label="secHadamard"><Heading>Second group cohomology and cocyclic Hadamard matrices</Heading>
+
+	An <E>Hadamard matrix</E> is a square <M>n\times n</M> 
+	matrix <M>H</M> whose entries are either <M>+1</M> or <M>-1</M> and whose rows are mutually orthogonal, that is <M>H H^t = nI_n</M> where <M>H^t</M> denotes the transpose and <M>I_n</M> denotes the <M>n\times n</M> identity matrix. 
+
+	<P/>Given a group <M>G=\{g_1,g_2,\ldots,g_n\}</M> of order <M>n</M> and the abelian group 
+	<M>A=\{1,-1\}</M> of square roots of unity, any <M>2</M>-cocycle 
+	<M>f\colon G\times G\rightarrow A</M> corresponds to an <M>n\times n</M> matrix <M>F=(f(g_i,g_j))_{1\le i,j\le n}</M> whose entries are <M>\pm 1</M>. If <M>F</M> is Hadamard it is called a <E>cocyclic Hadamard matrix</E> corresponding to <M>G</M>. 
+
+	<P/>The following commands compute all <M>192</M> of the cocyclic Hadamard matrices for the abelian group <M>G=\mathbb Z_4\oplus \mathbb Z_4</M> of order <M>n=16</M>.
 
 <Example>
 <#Include SYSTEM "tutex/5.12.txt">
 </Example>
 
-</Section>
+	</Section>
 
-<Section Label="secCat1">
-<Heading>Third group cohomology and homotopy <M>2</M>-types</Heading>
+	<Section Label="secCat1">
+	<Heading>Third group cohomology and homotopy <M>2</M>-types</Heading>
 
-<B>Homotopy 2-types</B>
+	<B>Homotopy 2-types</B>
 
-<P/>
-The third cohomology <M>H^3(G,A)</M> of a group <M>G</M> with coefficients in a <M>G</M>-module <M>A</M>, together with the corresponding <M>3</M>-cocycles, can be used to classify homotopy <M>2</M>-types.
-A <E>homotopy 2-type</E> is a CW-complex whose homotopy groups are trivial in dimensions <M>n=0</M> and <M>n>2</M>. There is an equivalence between the  two  categories
+	<P/>
+	The third cohomology <M>H^3(G,A)</M> of a group <M>G</M> with coefficients in a <M>G</M>-module <M>A</M>, together with the corresponding <M>3</M>-cocycles, can be used to classify homotopy <M>2</M>-types.
+	A <E>homotopy 2-type</E> is a CW-complex whose homotopy groups are trivial in dimensions <M>n=0</M> and <M>n>2</M>. There is an equivalence between the  two  categories
 
-<Enum>
-<Item>
-(Homotopy category of connected CW-complexes <M>X</M> with trivial homotopy groups <M>\pi_n(X)</M> for <M>n&gt;2</M>)
-</Item>
-<Item>
-(Localization of the category of simplicial groups with Moore complex of length <M>1</M>, where localization is with respect to homomorphisms inducing isomorphisms on homotopy groups)
-</Item>
-</Enum>
-which reduces the homotopy theory of <M>2</M>-types to a 'computable' algebraic theory. Furthermore, a simplicial group with Moore complex of length <M>1</M> can be represented by a group <M>H</M> endowed with two endomorphisms <M>s\colon H\rightarrow H</M> and <M>t\colon H\rightarrow H</M> satisfying the axioms
-<List>
-<Item><M>ss=s</M>, <M>ts=s</M>,</Item>
-<Item><M>tt=t</M>, <M>st=t</M>,</Item>
-<Item> <M>[\ker s, \ker t] = 1</M>.</Item>
-</List>
-Ths triple <M>(H,s,t)</M> was termed a <E>cat<M>^1</M>-group</E>
-by J.-L. Loday since it can be regarded as a group <M>H</M> endowed with one compatible category structure.
+	<Enum>
+	<Item>
+	(Homotopy category of connected CW-complexes <M>X</M> with trivial homotopy groups <M>\pi_n(X)</M> for <M>n&gt;2</M>)
+	</Item>
+	<Item>
+	(Localization of the category of simplicial groups with Moore complex of length <M>1</M>, where localization is with respect to homomorphisms inducing isomorphisms on homotopy groups)
+	</Item>
+	</Enum>
+	which reduces the homotopy theory of <M>2</M>-types to a 'computable' algebraic theory. Furthermore, a simplicial group with Moore complex of length <M>1</M> can be represented by a group <M>H</M> endowed with two endomorphisms <M>s\colon H\rightarrow H</M> and <M>t\colon H\rightarrow H</M> satisfying the axioms
+	<List>
+	<Item><M>ss=s</M>, <M>ts=s</M>,</Item>
+	<Item><M>tt=t</M>, <M>st=t</M>,</Item>
+	<Item> <M>[\ker s, \ker t] = 1</M>.</Item>
+	</List>
+	Ths triple <M>(H,s,t)</M> was termed a <E>cat<M>^1</M>-group</E>
+	by J.-L. Loday since it can be regarded as a group <M>H</M> endowed with one compatible category structure.
 
-<P/>The <E>homotopy groups</E> of a cat<M>^1</M>-group <M>H</M> are defined as: <M>\pi_1(H) = {\rm image}(s)/t(\ker(s))</M>; <M>\pi_2(H)=\ker(s) \cap \ker(t)</M>; <M>\pi_n(H)=0</M> for <M>n&gt; 2</M> or <M>n=0</M>.
-Note that <M>\pi_2(H)</M> is a <M>\pi_1(H)</M>-module where the action is induced by conjugation in <M>H</M>. 
+	<P/>The <E>homotopy groups</E> of a cat<M>^1</M>-group <M>H</M> are defined as: <M>\pi_1(H) = {\rm image}(s)/t(\ker(s))</M>; <M>\pi_2(H)=\ker(s) \cap \ker(t)</M>; <M>\pi_n(H)=0</M> for <M>n&gt; 2</M> or <M>n=0</M>.
+	Note that <M>\pi_2(H)</M> is a <M>\pi_1(H)</M>-module where the action is induced by conjugation in <M>H</M>. 
 
-<P/>A homotopy <M>2</M>-type <M>X</M> can be represented by a  cat<M>^1</M>-group <M>H</M> or by the homotopy groups <M>\pi_1X=\pi_1H</M>, <M>\pi_2X=\pi_2H</M> and a cohomology class <M>k\in H^3(\pi_1X,\pi_2X)</M>. This class <M>k</M> is the <E>Postnikov invariant</E>.
+	<P/>A homotopy <M>2</M>-type <M>X</M> can be represented by a  cat<M>^1</M>-group <M>H</M> or by the homotopy groups <M>\pi_1X=\pi_1H</M>, <M>\pi_2X=\pi_2H</M> and a cohomology class <M>k\in H^3(\pi_1X,\pi_2X)</M>. This class <M>k</M> is the <E>Postnikov invariant</E>.
 
-<P/><B>Relation to Group Theory</B>
+	<P/><B>Relation to Group Theory</B>
 
-<P/>A number of standard group-theoretic constructions can be viewed naturally as a cat<M>^1</M>-group.
-<Enum>
-<Item>
-A <M>\mathbb ZG</M>-module <M>A</M> can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>A\rtimes G</M>
- and <M>s(a,g)=(1,g)</M>, <M>t(a,g)=(1,g)</M>. Here <M>\pi_1(H)=G</M>
- and <M>\pi_2(H)=A</M>.</Item>
-<Item>
-    A group <M>G</M> with normal subgroup <M>N</M> can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>N\rtimes G</M>
- and <M>s(n,g)=(1,g)</M>, <M>t(n,g)=(1,ng)</M>. Here <M>\pi_1(H)=G/N</M>
- and <M>\pi_2(H)=0</M>.</Item>
-   <Item> The homomorphism <M>\iota \colon G\rightarrow Aut(G)</M>
- which sends elements of a group <M>G</M> to the corresponding inner automorphism can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>G\rtimes Aut(G)</M> and <M>s(g,a)=(1,a)</M>, <M>t(g,a)=(1,\iota (g)a)</M>. Here <M>\pi_1(H)=Out(G)</M> is the outer automorphism group of <M>G</M>
- and <M>\pi_2(H)=Z(G)</M> is the centre of <M>G</M>.</Item>
-</Enum>
+	<P/>A number of standard group-theoretic constructions can be viewed naturally as a cat<M>^1</M>-group.
+	<Enum>
+	<Item>
+	A <M>\mathbb ZG</M>-module <M>A</M> can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>A\rtimes G</M>
+	 and <M>s(a,g)=(1,g)</M>, <M>t(a,g)=(1,g)</M>. Here <M>\pi_1(H)=G</M>
+	 and <M>\pi_2(H)=A</M>.</Item>
+	<Item>
+	    A group <M>G</M> with normal subgroup <M>N</M> can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>N\rtimes G</M>
+	 and <M>s(n,g)=(1,g)</M>, <M>t(n,g)=(1,ng)</M>. Here <M>\pi_1(H)=G/N</M>
+	 and <M>\pi_2(H)=0</M>.</Item>
+	   <Item> The homomorphism <M>\iota \colon G\rightarrow Aut(G)</M>
+	 which sends elements of a group <M>G</M> to the corresponding inner automorphism can be viewed as a cat<M>^1</M>-group <M>(H,s,t)</M> where <M>H</M> is the semi-direct product <M>G\rtimes Aut(G)</M> and <M>s(g,a)=(1,a)</M>, <M>t(g,a)=(1,\iota (g)a)</M>. Here <M>\pi_1(H)=Out(G)</M> is the outer automorphism group of <M>G</M>
+	 and <M>\pi_2(H)=Z(G)</M> is the centre of <M>G</M>.</Item>
+	</Enum>
 
-These three constructions are implemented in <B>HAP</B>. 
+	These three constructions are implemented in <B>HAP</B>. 
 
-<P/><B>Example</B>
+	<P/><B>Example</B>
 
-<P/>The following commands begin by constructing the cat<M>^1</M>-group 
-<M>H</M>
-of Construction 3  for the group <M>G=SmallGroup(64,134)</M>. They then 
-construct the fundamental group of <M>H</M> and  the second homotopy group of as a 
-<M>\pi_1</M>-module. These homotopy groups have orders <M>8</M> and <M>2</M> respectively.
+	<P/>The following commands begin by constructing the cat<M>^1</M>-group 
+	<M>H</M>
+	of Construction 3  for the group <M>G=SmallGroup(64,134)</M>. They then 
+	construct the fundamental group of <M>H</M> and  the second homotopy group of as a 
+	<M>\pi_1</M>-module. These homotopy groups have orders <M>8</M> and <M>2</M> respectively.
 
 <Example>
 <#Include SYSTEM "tutex/5.9.txt">
 </Example>
 
-<P/>
-The following additional commands show that there are <M>1024</M> Yoneda equivalence classes of cat<M>^1</M>-groups with fundamental group <M>\pi_1</M> and
-<M>\pi_1</M>- module  equal to <M>\pi_2</M> in our example.
+	<P/>
+	The following additional commands show that there are <M>1024</M> Yoneda equivalence classes of cat<M>^1</M>-groups with fundamental group <M>\pi_1</M> and
+	<M>\pi_1</M>- module  equal to <M>\pi_2</M> in our example.
 
 <Example>
 <#Include SYSTEM "tutex/5.10.txt">
 </Example>
 
-A <M>3</M>-cocycle  <M>f \colon \pi_1 \times \pi_1 \times \pi_1 \rightarrow
-\pi_2</M> corresponding to  a random cohomology class  <M>k\in H^3(\pi_1,\pi_2)</M> can be produced using the following command. 
-</Section>
+	A <M>3</M>-cocycle  <M>f \colon \pi_1 \times \pi_1 \times \pi_1 \rightarrow
+	\pi_2</M> corresponding to  a random cohomology class  <M>k\in H^3(\pi_1,\pi_2)</M> can be produced using the following command. 
+	</Section>
+
 <Example>
 <#Include SYSTEM "tutex/5.11.txt">
 </Example>
-The <M>3</M>-cocycle corresponding to the Postnikov invariant of
- <M>H</M> itself can be easily constructed directly from its definition in terms of a set-theoretic 'section' of the crossed module corresponding to <M>H</M>.
-</Chapter>
+	The <M>3</M>-cocycle corresponding to the Postnikov invariant of
+	 <M>H</M> itself can be easily constructed directly from its definition in terms of a set-theoretic 'section' of the crossed module corresponding to <M>H</M>.
+	</Chapter>

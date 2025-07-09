@@ -1,0 +1,21 @@
+gap> K:=ContractibleGcomplex("SL(2,O-2)");;
+gap> for n in [0..2] do
+> for k in [1..K!.dimension(n)] do
+> Print(CohomologicalPeriod(K!.stabilizer(n,k)),"  ");
+> od;od;
+2  4  2  4  2  2  2  2  2  2  2  2  
+gap> R:=FreeGResolution(K,11);;
+gap> for n in [0..10] do
+> Print("H^",n," = ", Cohomology(HomToIntegers(R),n),"\n");
+> od;
+H^0 = [ 0 ]
+H^1 = [ 0 ]
+H^2 = [ 6 ]
+H^3 = [ 2, 12 ]
+H^4 = [ 2, 24 ]
+H^5 = [ 12 ]
+H^6 = [ 6 ]
+H^7 = [ 2, 12 ]
+H^8 = [ 2, 24 ]
+H^9 = [ 12 ]
+H^10 = [ 6 ]

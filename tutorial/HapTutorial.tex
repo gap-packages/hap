@@ -90,16 +90,12 @@
 \begin{titlepage}
 \mbox{}\vfill
 
-\begin{center}{\maintitlesize \textbf{A newer HAP tutorial\mbox{}}}\\
+\begin{center}{\maintitlesize \textbf{A HAP tutorial\mbox{}}}\\
 \vfill
 
-\hypersetup{pdftitle=A newer HAP tutorial}
-\markright{\scriptsize \mbox{}\hfill A newer HAP tutorial \hfill\mbox{}}
-{\Huge \textbf{(\href{../www/SideLinks/About/aboutContents.html} {An older tutorial is available here}\\
- and\\
- \href{https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980} {A related book is available here}\\
- and\\
- \href{../www/index.html} {The \textsc{HAP} home page is here})\mbox{}}}\\
+\hypersetup{pdftitle=A HAP tutorial}
+\markright{\scriptsize \mbox{}\hfill A HAP tutorial \hfill\mbox{}}
+{\Huge \textbf{(See also an \href{../www/SideLinks/About/aboutContents.html} {older tutorial} or \href{comp.pdf} {mini\texttt{\symbol{45}}course notes} or related \href{https://global.oup.com/academic/product/an-invitation-to-computational-homotopy-9780198832980} {book}) \href{../www/index.html} {The \textsc{HAP} home page is here}\mbox{}}}\\
 \vfill
 
 \mbox{}\\[2cm]
@@ -4397,13 +4393,14 @@ question are numbered 28, 29 and 30 in \textsc{GAP}'s library of small groups of
 {
  Any group extension $N\rightarrowtail E \twoheadrightarrow G$ gives rise to: 
 \begin{itemize}
-\item  an outer action $\alpha\colon G\rightarrow Out(G)$ of $G$ on $N$.
+\item  an outer action $\alpha\colon G\rightarrow Out(N)$ of $G$ on $N$.
 \item an action $G\rightarrow Aut(Z(N))$ of $G$ on the centre of $N$, uniquely induced by the outer action $\alpha$ and the canonical action of $Out(N)$ on $Z(N)$.
-\item a $2$\texttt{\symbol{45}}cocycle $f\colon G\times G\rightarrow Z(N)$ with values in the $G$\texttt{\symbol{45}}module $A=Z(N)$.
+\item a "$2$\texttt{\symbol{45}}cocycle" $f\colon G\times G\rightarrow N$. 
 \end{itemize}
  
 
-Any outer homomorphism $\alpha\colon G\rightarrow Out(N)$ gives rise to a cohomology class $k$ in $H^3(G,Z(N))$. It was shown by Eilenberg and Mac$\,$Lane that the class $k$ is trivial if and only if the outer action $\alpha$ arises from some group extension $N\rightarrowtail E\twoheadrightarrow G$. If $k$ is trivial then there is a bijection between the second cohomology group $H^2(G,Z(N))$ and Yoneda equivalence classes of extensions of $G$ by $N$ that are compatible with $\alpha$. 
+Any outer homomorphism $\alpha\colon G\rightarrow Out(N)$ gives rise to a cohomology class $k$ in $H^3(G,Z(N))$. It was shown by Eilenberg and Mac$\,$Lane that the class $k$ is trivial if and only if the outer action $\alpha$ arises from some group extension $N\rightarrowtail E\twoheadrightarrow G$. If $k$ is trivial then there is a (non\texttt{\symbol{45}}canonical) bijection
+between the second cohomology group $H^2(G,Z(N))$ and Yoneda equivalence classes of extensions of $G$ by $N$ that are compatible with $\alpha$. 
 
 \textsc{First Example.} 
 
@@ -4524,8 +4521,174 @@ The following example illustrates how to construct a cohomology class $k$ in $H^
  }
 
  
-\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\label{secHadamard}
+\section{\textcolor{Chapter }{Cocyclic groups: a convenient way of representing certain groups}}\label{secCocyclic}
 \logpage{[ 6, 8, 0 ]}
+\hyperdef{L}{X7F04FA5E81FFA848}{}
+{
+ \textsc{GAP} offers a number of data types for representing groups, including those of
+fp\texttt{\symbol{45}}groups (\emph{finitely presented groups}), pc\texttt{\symbol{45}}groups (\emph{power\texttt{\symbol{45}}conjugate presentated groups} for finite polycyclic groups), pcp\texttt{\symbol{45}}groups (\emph{polycyclically presented groups} for finite and infinite polycyclic groups), permutation groups (for finite
+groups), and matrix groups over a field or ring. Each data type has its
+advantages and limitations. 
+
+ Based on the definitions and examples in Section \ref{secExtensions} the additional data type of a cc\texttt{\symbol{45}}group (\emph{cocyclic group}) is provided in \textsc{HAP}. This can be used for a group $E$ arising as a group extension $N\rightarrowtail E \twoheadrightarrow G$ and is a component object involving: 
+\begin{itemize}
+\item \texttt{E!.Base} consisting of some representation of a group $G$.
+\item \texttt{E!.Fibre} consisting of some representation of a group $N$.
+\item \texttt{E!.OuterGroup} consisting of an outer action $\alpha\colon G\rightarrow Out(N)$ of $G$ on $N$.
+\item \texttt{E!.Cocycle} consisting of a "$2$\texttt{\symbol{45}}cocycle" $f\colon G\times G\rightarrow N$.
+\end{itemize}
+ 
+
+The first example in Section \ref{secExtensions} illustrates the construction of cc\texttt{\symbol{45}}groups for which both
+the base $G$ and fibre $N$ are finite pc\texttt{\symbol{45}}groups. That example extends to any scenario
+in which the base $G$ is a group for which: 
+\begin{enumerate}
+\item we can construct the first 3 degrees of a free $\mathbb ZG$\texttt{\symbol{45}}resolution $C_\ast X$.
+\item we can construct the first 2 terms of a contracting homotopy $h_i\colon C_nX\rightarrow C_{n+1}X $ for $i=0,1$. 
+\item $N$ is a group in which we can multiply elements effectively and for which we can
+determine the centre $Z(N)$ and outer automorphism group $Out(N)$. 
+\end{enumerate}
+ 
+
+ As an illustration where the base group is a non\texttt{\symbol{45}}solvable
+finite group and the fibre is the infinite cyclic group, with base group
+acting trivially on the fibre, the following commands list up to Yoneda
+equivalence all central extensions $\mathbb Z \rightarrowtail E \twoheadrightarrow G$ for $G=A_5:C_{16}$. The base group is a non\texttt{\symbol{45}}solvable
+semi\texttt{\symbol{45}}direct product of order $960$ and thus none of the $16$ extensions are polycyclic. The commands classify the extensions according to
+their integral homology in degrees $ \le 2$, showing that there are precisely 5 such equivalence classes of extensions.
+Thus, there are at least 5 distinct isomorphism types among the $16$ extensions. A presentation is constructed for the group corresponding to the
+sixteenth extension. The final command lists the orders of the 16 cohomology
+group elements corresponding to the 16 extensions. The 16th element has order
+1, meaning that the sixteenth extension is the direct product $C_\infty\ \times\ A_5:C_{16}$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|G:=SmallGroup(960,637);;B
+  @gapprompt|gap>B @gapinput|StructureDescription(G);B
+  "A5 : C16"
+  
+  @gapprompt|gap>B @gapinput|N:=AbelianPcpGroup([0]);;B
+  @gapprompt|gap>B @gapinput|N:=TrivialGModuleAsGOuterGroup(G,N);;B
+  @gapprompt|gap>B @gapinput|R:=ResolutionFiniteGroup(G,3);;B
+  @gapprompt|gap>B @gapinput|C:=HomToGModule(R,N);;B
+  @gapprompt|gap>B @gapinput|CH:=CohomologyModule(C,2);;B
+  @gapprompt|gap>B @gapinput|Elts:=Elements(ActedGroup(CH));;B
+  @gapprompt|gap>B @gapinput|lst := List(Elts{[1..Length(Elts)]},x->CH!.representativeCocycle(x));;B
+  @gapprompt|gap>B @gapinput|ccgrps := List(lst, x->CcGroup(N, x));;B
+  
+  @gapprompt|gap>B @gapinput|inv:=function(gg)B
+  @gapprompt|>B @gapinput|local T;B
+  @gapprompt|>B @gapinput|T:=ResolutionInfiniteCcGroup(gg,3);B
+  @gapprompt|>B @gapinput|return List([1..2],i->Homology(TensorWithIntegers(T),i));B
+  @gapprompt|>B @gapinput|end;;B
+  
+  @gapprompt|gap>B @gapinput|EquivClasses:=Classify(ccgrps,inv);B
+   [ <Cc-group of Size infinity>, <Cc-group of Size infinity>, 
+        <Cc-group of Size infinity>, <Cc-group of Size infinity>, 
+        <Cc-group of Size infinity>, <Cc-group of Size infinity>, 
+        <Cc-group of Size infinity>, <Cc-group of Size infinity> ], 
+    [ <Cc-group of Size infinity>, <Cc-group of Size infinity>, 
+        <Cc-group of Size infinity>, <Cc-group of Size infinity> ], 
+    [ <Cc-group of Size infinity>, <Cc-group of Size infinity> ], 
+    [ <Cc-group of Size infinity> ], [ <Cc-group of Size infinity> ] ]
+  @gapprompt|gap>B @gapinput|List(EquivClasses,Size);B
+  [ 8, 4, 2, 1, 1 ]
+  
+  @gapprompt|gap>B @gapinput|F16:=Image(IsomorphismFpGroup(ccgrps[16]));B
+  <fp group on the generators [ x, y, z, w, v ]>
+  @gapprompt|gap>B @gapinput|RelatorsOfFpGroup(F16);B
+  [ (x^2*y*z*w*z*y)^3*x^2*(y*x*w*y^2*z*x*y*z*y)^3*y*x*w*y^2*z*x*y^2*z*w*y^2*z*y,
+    x*y^-2*w^-1*z^-1*y^-1*x^-1*y, x*z^-1*y^-1*z^-1*w^-1*z^-1*y^-1*x^-1*z, 
+    x*y^-2*z^-1*w^-1*z^-1*y^-1*x^-1*w, z^-2, w^-2, y^-3, w*y^-1*w^-1*y^-1, 
+    w*z*w^-1*z^-1*w^-1*z, z*y^2*(z^-1*y^-1)^2, v^-1*x^-1*v*x, v*y*v^-1*y^-1, 
+    v*z*v^-1*z^-1, v*w*v^-1*w^-1 ]
+  
+  @gapprompt|gap>B @gapinput|List(Elts,Order);B
+  [ 16, 16, 16, 16, 16, 16, 16, 16, 8, 8, 8, 8, 4, 4, 2, 1 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Effective group presentations}}\logpage{[ 6, 9, 0 ]}
+\hyperdef{L}{X863080FE8270468D}{}
+{
+ For any free $\mathbb ZG$\texttt{\symbol{45}}resolution $R_\ast=C_\ast X$ arising as the cellular chain complex of a contractible
+CW\texttt{\symbol{45}}complex, the terms in degrees $\le 2$ correspond to a free presentation for the group $G$. The following example accesses this presentation for the group $PGL_3(\mathbb Z[\sqrt{-1}])$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("PGL(3,Z[i])");;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,2);;|
+  !gapprompt@gap>| !gapinput@P:=PresentationOfResolution(R);;|
+  !gapprompt@gap>| !gapinput@G:=P.freeGroup/P.relators;|
+  <fp group on the generators [ v, w, x, y, z ]>
+  !gapprompt@gap>| !gapinput@P.relators;|
+  [ v^2, w^-1*v*w*v^-1, w^-1*v^-1*w^-1, (x^-1*w)^3, (y^-1*w)^3, (z^-1*w)^4, 
+    y^-1*v^-1*z*y^-1*x, y^-1*v*x*v^-1*x*v, v^-1*z*v^-1*x*y, v^-1*x*v*y*v*x*v*y, 
+    x^3, x*z*y, y^-1*v^-1*y^2*v*y^-1, (v*y)^4, z^-1*y*v*z^-1, (v*y*z)^2, 
+    v^-1*(z*v)^2*z ]
+  
+\end{Verbatim}
+ 
+
+ The homomorphism $h_0\colon R_0 \rightarrow R_1$ of a contracting homotopy provides a unique expression for each element of $G$ as a word in the free generators. To illustrate this, we consider the Sylow $2$\texttt{\symbol{45}}subgroup $H=Syl_2(M_{24})$ of the Mathieu group $M_{24}$. We obtain a resolution $R_\ast$ for $H$ by recursively applying perturbation techniques to a composition series for $H$. Such a resolution will yield a "kind of" power\texttt{\symbol{45}}conjugate
+presentation for $H$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@H:=SylowSubgroup(MathieuGroup(24),2);|
+  <permutation group of size 1024 with 10 generators>
+  !gapprompt@gap>| !gapinput@Order(H);|
+  1024
+  !gapprompt@gap>| !gapinput@C:=CompositionSeries(H);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionSubnormalSeries(C,2);;|
+  !gapprompt@gap>| !gapinput@P:=PresentationOfResolution(R);;|
+  !gapprompt@gap>| !gapinput@P.freeGroup/P.relators;|
+  <fp group on the generators [ q, r, s, t, u, v, w, x, y, z ]>
+  !gapprompt@gap>| !gapinput@P.relators;|
+  [ q^-2*z*y*x*w*v, q*r^-1*q^-1*y*u*r, s*q*s^-1*q^-1, t*q*t^-1*q^-1, 
+    q*u^-1*q^-1*y*v*u, y*q*v^-1*q^-1, q*w^-1*q^-1*z*x, w*q*x^-1*q^-1, 
+    q*y^-1*q^-1*z*v, z*q*z^-1*q^-1, r^-2, t*r*s^-1*r^-1, s*r*t^-1*r^-1, 
+    u*r*u^-1*r^-1, v*r*v^-1*r^-1, r*w^-1*r^-1*y*w*u, r*x^-1*r^-1*y*x*u, 
+    y*r*y^-1*r^-1, z*r*z^-1*r^-1, s^-2, t*s*t^-1*s^-1, x*s*u^-1*s^-1, 
+    s*v^-1*s^-1*z*y*w*u, s*w^-1*s^-1*y*v*u, u*s*x^-1*s^-1, s*y^-1*s^-1*y*x*u, 
+    z*s*z^-1*s^-1, t^-2, t*u^-1*t^-1*y*x*u, t*v^-1*t^-1*z*w, t*w^-1*t^-1*z*v, 
+    y*t*x^-1*t^-1, x*t*y^-1*t^-1, z*t*z^-1*t^-1, u^-2, v*u*v^-1*u^-1, 
+    u*w^-1*u^-1*z*w, x*u*x^-1*u^-1, y*u*y^-1*u^-1, z*u*z^-1*u^-1, v^-2, 
+    w*v*w^-1*v^-1, v*x^-1*v^-1*z*x, y*v*y^-1*v^-1, z*v*z^-1*v^-1, w^-2, 
+    x*w*x^-1*w^-1, w*y^-1*w^-1*z*y, z*w*z^-1*w^-1, x^-2, y*x*y^-1*x^-1, 
+    z*x*z^-1*x^-1, y^-2, z*y*z^-1*y^-1, z^-2 ]
+  
+\end{Verbatim}
+ 
+
+ The following additional commands use the contracting homotopy homomorphism $h_0\colon R_0\rightarrow R_1$ to express some random elements of $H$ as words in the free generators. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@g:=Random(H);|
+  (1,6)(2,3)(4,9)(5,16)(7,10)(8,21)(11,18)(12,17)(13,19)(14,20)(15,22)(23,24)
+  !gapprompt@gap>| !gapinput@P.wordInFreeGenerators(g);|
+  q^-1*t^-1*x^-1*y^-1
+  !gapprompt@gap>| !gapinput@|
+  !gapprompt@gap>| !gapinput@g:=Random(H);|
+  (1,6)(2,23,10,18)(3,22,19,24)(4,11,15,9)(7,8,21,13)(12,14)
+  !gapprompt@gap>| !gapinput@P.wordInFreeGenerators(g);|
+  q^-1*u^-1*w^-1*x^-1*z^-1
+  !gapprompt@gap>| !gapinput@|
+  !gapprompt@gap>| !gapinput@g:=Random(H);|
+  (1,14,5,17)(2,7,9,19)(3,11,4,22)(6,12,16,20)(8,18,24,15)(10,23,13,21)
+  !gapprompt@gap>| !gapinput@P.wordInFreeGenerators(g);|
+  q^-1*r^-1*t^-1*v^-1*x^-1*z^-1
+  !gapprompt@gap>| !gapinput@|
+  !gapprompt@gap>| !gapinput@g:=Random(H);|
+  (1,14,5,17)(2,21)(3,9)(4,24)(6,12,16,20)(7,11,15,13)(8,23)(10,18,22,19)
+  !gapprompt@gap>| !gapinput@P.wordInFreeGenerators(g);|
+  q^-1*r^-1*t^-1*v^-1*w^-1*z^-1
+  
+\end{Verbatim}
+ 
+
+ Because the resolution $R_\ast$ was obtained from a composition series, the unique word associated to an
+element $g\in H$ always has the form $q^{\epsilon_1} r^{\epsilon_2} s^{\epsilon_3} t^{\epsilon_4} u^{\epsilon_5}
+v^{\epsilon_6} w^{\epsilon_7} x^{\epsilon_8} y^{\epsilon_9} z^{\epsilon_{10}}$ determined by the exponent vector $(\epsilon_1,\cdots,\epsilon_{10}) \in (\mathbb Z_2)^{10}$. }
+
+ 
+\section{\textcolor{Chapter }{Second group cohomology and cocyclic Hadamard matrices}}\label{secHadamard}
+\logpage{[ 6, 10, 0 ]}
 \hyperdef{L}{X7C60E2B578074532}{}
 {
  An \emph{Hadamard matrix} is a square $n\times n$ matrix $H$ whose entries are either $+1$ or $-1$ and whose rows are mutually orthogonal, that is $H H^t = nI_n$ where $H^t$ denotes the transpose and $I_n$ denotes the $n\times n$ identity matrix. 
@@ -4544,7 +4707,7 @@ The following commands compute all $192$ of the cocyclic Hadamard matrices for t
 
  
 \section{\textcolor{Chapter }{Third group cohomology and homotopy $2$\texttt{\symbol{45}}types}}\label{secCat1}
-\logpage{[ 6, 9, 0 ]}
+\logpage{[ 6, 11, 0 ]}
 \hyperdef{L}{X78040D8580D35D53}{}
 {
   \textsc{Homotopy 2\texttt{\symbol{45}}types} 
@@ -4658,7 +4821,35 @@ of the quaternion group $G=Q_4$ of order $8$.
 
 However, this approach is of limited applicability since the bar resolution
 involves $|G|^k$ free generators in degree $k$. A range of techniques, tailored to specific classes of groups, can be used
-to compute the (co)homology of larger finite groups. }
+to compute the (co)homology of larger finite groups. 
+
+ This naive approach does have the merit of being applicable to arbitrary small
+monoids. The following calculates the homology in degrees $\le 7$ of a monoid of order 8, the monoid being specified by its multiplication
+table. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|T:=[ [  1,  1,  1,  4,  4,  4,  4,  1 ],A
+  @gapprompt|>A @gapinput|        [  1,  1,  1,  4,  4,  4,  4,  2 ],A
+  @gapprompt|>A @gapinput|        [  1,  1,  1,  4,  4,  4,  4,  3 ],A
+  @gapprompt|>A @gapinput|        [  4,  4,  4,  1,  1,  1,  1,  4 ],A
+  @gapprompt|>A @gapinput|        [  4,  4,  4,  1,  1,  1,  1,  5 ],A
+  @gapprompt|>A @gapinput|        [  4,  4,  4,  1,  1,  1,  1,  6 ],A
+  @gapprompt|>A @gapinput|        [  4,  4,  4,  1,  1,  1,  1,  7 ],A
+  @gapprompt|>A @gapinput|        [  1,  2,  3,  4,  5,  6,  7,  8 ] ];;A
+  @gapprompt|gap>A @gapinput|M:=MonoidByMultiplicationTable(T);A
+  <monoid of size 8, with 8 generators>
+  @gapprompt|gap>A @gapinput|B:=BarComplexOfMonoid(M,8);;A
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(B);;A
+  @gapprompt|gap>A @gapinput|List([0..7],i->Homology(C,i));A
+  [ [ 0 ], [ 2 ], [  ], [ 2 ], [  ], [ 2 ], [  ], [ 2 ] ]
+  
+  
+  @gapprompt|gap>A @gapinput|List([0..8],B!.dimension);A
+  [ 1, 7, 49, 343, 2401, 16807, 117649, 823543, 5764801 ]
+  @gapprompt|gap>A @gapinput|List([0..8],C!.dimension);A
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 5044201 ]
+  
+\end{Verbatim}
+ }
 
  
 \subsection{\textcolor{Chapter }{A more efficient homology computation}}\logpage{[ 7, 1, 2 ]}
@@ -5105,10 +5296,29 @@ where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $V=K^3$.
 \end{Verbatim}
  
 
- It can be computationally difficult to compute high degree terms in
-resolutions for large finite groups. But the $p$\texttt{\symbol{45}}primary part of the homology can be computed using
+ It can be computationally difficult to compute resolutions for large finite
+groups. But the $p$\texttt{\symbol{45}}primary part of the homology can be computed using
 resolutions of Sylow $p$\texttt{\symbol{45}}subgroups. This approach is used in the following example
 that computes the $2$\texttt{\symbol{45}}primary part 
+
+$H_{2}(G,\mathbb Z)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_2$ 
+
+of the degree 2 integral homology of the Rubik's cube group $G$. This group has order $43252003274489856000$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@gens:= [|
+  !gapprompt@>| !gapinput@   ( 1, 3, 8, 6)( 2, 5, 7, 4)( 9,33,25,17)(10,34,26,18)(11,35,27,19),|
+  !gapprompt@>| !gapinput@   ( 9,11,16,14)(10,13,15,12)( 1,17,41,40)( 4,20,44,37)( 6,22,46,35),|
+  !gapprompt@>| !gapinput@   (17,19,24,22)(18,21,23,20)( 6,25,43,16)( 7,28,42,13)( 8,30,41,11),|
+  !gapprompt@>| !gapinput@   (25,27,32,30)(26,29,31,28)( 3,38,43,19)( 5,36,45,21)( 8,33,48,24),|
+  !gapprompt@>| !gapinput@   (33,35,40,38)(34,37,39,36)( 3, 9,46,32)( 2,12,47,29)( 1,14,48,27),|
+  !gapprompt@>| !gapinput@   (41,43,48,46)(42,45,47,44)(14,22,30,38)(15,23,31,39)(16,24,32,40)|
+  !gapprompt@>| !gapinput@ ];; G:=Group(gens);;P:=SylowSubgroup(G,2);;|
+  !gapprompt@gap>| !gapinput@R:=ResolutionNormalSeries(BigStepUCS(P,6),3);;|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,TensorWithIntegers,2);|
+  [ 2, 2, 2 ]
+  
+\end{Verbatim}
+ The same approach is used in the following example that computes the $2$\texttt{\symbol{45}}primary part 
 
 $H_{11}(A_7,A)_{(2)} = \mathbb Z_2 \oplus \mathbb Z_2\oplus \mathbb Z_4$ 
 
@@ -5118,7 +5328,7 @@ of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coef
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;|
   !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
-  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,11);|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);|
   [ 2, 2, 4 ]
   
 \end{Verbatim}
@@ -5132,7 +5342,7 @@ with coefficient module $A=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting b
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;|
   !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
-  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,R,F,3);|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);|
   [ 4 ]
   
 \end{Verbatim}
@@ -5151,7 +5361,7 @@ where $V$ is the vector space of dimension $3$ over $K=GF(2)$ acting via some ir
    <action isomorphism> )
   !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithModPModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;|
-  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctor(G,S,F,100);|
+  !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);|
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
     2, 2, 2, 2, 2, 2, 2, 2, 2 ]
   
@@ -5535,21 +5745,24 @@ for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially o
  }
 
  
-\section{\textcolor{Chapter }{Quillen's complex and the $p$\texttt{\symbol{45}}part of homology }}\logpage{[ 7, 14, 0 ]}
+\section{\textcolor{Chapter }{Quillen's complex and the $p$\texttt{\symbol{45}}part of homology }}\label{secWebb}
+\logpage{[ 7, 14, 0 ]}
 \hyperdef{L}{X7C5233E27D2D603E}{}
 {
  Let $G$ be a finite group with order divisible by prime $p$. Let ${\mathcal A}={\mathcal A}_p(G)$ denote Quillen's simplicial complex arising as the order complex of the poset
-of non\texttt{\symbol{45}}trivial elementary abelian $p$\texttt{\symbol{45}}subgroups of $G$. The group $G$ acts on $\mathcal A$. Denote the orbit of a $k$\texttt{\symbol{45}}simplex $e^k$ by $[e^k]$, and the stabilizer of $e^k$ by $Stab(e^k) \le G$. For a finite abelian group $H$ let $H_p$ denote the Sylow $p$\texttt{\symbol{45}}subgroup or the "$p$\texttt{\symbol{45}}part". Peter Webb proved the following. 
+of non\texttt{\symbol{45}}trivial elementary abelian $p$\texttt{\symbol{45}}subgroups of $G$. The group $G$ acts on $\mathcal A$. Denote the orbit of a $k$\texttt{\symbol{45}}simplex $e^k$ by $[e^k]$, and the stabilizer of $e^k$ by $Stab(e^k) \le G$. For a finite abelian group $H$ let $H_p$ denote the Sylow $p$\texttt{\symbol{45}}subgroup or the "$p$\texttt{\symbol{45}}part". In Theorem 3.3 of \cite{Webb} P.J. Webb proved the following. 
 
- \textsc{Theorem.}[Peter Webb] For any $G$\texttt{\symbol{45}}module $M$ there is a (non natural) homomorphism
+ \textsc{Theorem.}\cite{Webb} For any $G$\texttt{\symbol{45}}module $M$ there is a (non natural) isomomorphism
 
  $H_n(G,M)_p \oplus \bigoplus_{[e^k]\, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p \cong
 \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p$ 
 
- for $n\ge 0$. The isomorphism can also be expressed as 
+ for $n\ge 1$. The isomorphism can also be expressed as 
 
  $H_n(G,M)_p \cong \bigoplus_{[e^k]\, : \, k~{\rm even}~}H_n(Stab(e^k),M)_p\ -\
-\bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p$ and terms can often be cancelled. 
+\bigoplus_{[e^k] \, :\, k~{\rm odd}~}H_n(Stab(e^k),M)_p$ 
+
+where terms can often be cancelled. 
 
 Thus the additive structure of the $p$\texttt{\symbol{45}}part of the homology of $G$ is determined by that of the stabilizer groups. The result also holds with
 homology replaced by cohomology. 
@@ -5558,18 +5771,87 @@ homology replaced by cohomology.
 
  As an illustration of the theorem, the following commands calculate 
 
- $H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(S_i,M)_3 - \bigoplus_{4\le
-i\le 5}H_n(S_4,M)_3$ 
+ $H_n(SL_3(\mathbb Z_2),\mathbb Z) \cong H_n(S_4,\mathbb Z)_2 \oplus
+H_n(S_4,\mathbb Z)_2 \ominus H_n(D_8,\mathbb Z)_2 \oplus H_n(S_3,\mathbb Z)_3
+\oplus H_n(C_7 : C_3,\mathbb Z)_7 $ 
+
+ where $n\ge 1$, $S_k$ denotes the symmetric group on $n$ letters, $D_8$ the dihedral group of order $8$ and $C_7 : C_3$ a nonabelian semi\texttt{\symbol{45}}direct product of cyclic groups.
+Furthermore, for $n\ge 1$ 
+
+$ H_n(C_7 : C_3,\mathbb Z)_7 =\left\{\begin{array}{ll}\mathbb Z_7,\ n \equiv 5
+{\rm \ mod\ } 6\\ 0,\ {\rm otherwise} \end{array}\right.$ 
+
+and 
+
+$ H_n(S_3,\mathbb Z)_3 =\left\{\begin{array}{ll}\mathbb Z_3,\ n \equiv 3 {\rm \
+mod\ } 4\\ 0,\ n{\rm ~otherwise .} \end{array}\right.$ 
+
+ Formulas for $H_n(S_4,\mathbb Z)$ and $ H_n(D_8,\mathbb Z)$ can be found in the literature. Alternatively, they can be computed using \textsc{GAP} for a given value of $n$. For $n=27$ we find 
+
+$ H_{27}(S_4,\mathbb Z)_2 \oplus H_{27}(S_4,\mathbb Z)_2 \ominus
+H_{27}(D_8,\mathbb Z)_2 \cong \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb
+Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_4$ 
+
+ and 
+
+$H_{27}(SL_3(\mathbb Z_2),\mathbb Z) \cong \mathbb Z_2 \oplus \mathbb Z_2
+\oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_4 \oplus \mathbb Z_3 $ . 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SL(3,2);;Factors(Order(G));|
+  [ 2, 2, 2, 3, 7 ]
+  !gapprompt@gap>| !gapinput@D2:=HomologicalGroupDecomposition(G,2);;|
+  !gapprompt@gap>| !gapinput@D3:=HomologicalGroupDecomposition(G,3);;|
+  !gapprompt@gap>| !gapinput@D7:=HomologicalGroupDecomposition(G,7);;|
+  !gapprompt@gap>| !gapinput@List(D2[1],StructureDescription);|
+  [ "S4", "S4" ]
+  !gapprompt@gap>| !gapinput@List(D2[2],StructureDescription);|
+  [ "D8" ]
+  !gapprompt@gap>| !gapinput@List(D3[1],StructureDescription);|
+  [ "S3" ]
+  !gapprompt@gap>| !gapinput@List(D3[2],StructureDescription);|
+  [  ]
+  !gapprompt@gap>| !gapinput@List(D7[1],StructureDescription);|
+  [ "C7 : C3" ]
+  !gapprompt@gap>| !gapinput@List(D7[2],StructureDescription);|
+  [  ]
+  
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D7[1][1]);|
+  6
+  !gapprompt@gap>| !gapinput@List([1..6],n->GroupHomology(D7[1][1],n));|
+  [ [ 3 ], [  ], [ 3 ], [  ], [ 3, 7 ], [  ] ]
+  
+  !gapprompt@gap>| !gapinput@CohomologicalPeriod(D3[1][1]);|
+  4
+  !gapprompt@gap>| !gapinput@List([1..4],n->GroupHomology(D3[1][1],n));|
+  [ [ 2 ], [  ], [ 6 ], [  ] ]
+  
+  !gapprompt@gap>| !gapinput@R_S4:=ResolutionFiniteGroup(Group([(1,2),(2,3),(3,4)]),28);;|
+  !gapprompt@gap>| !gapinput@R_D8:=ResolutionFiniteGroup(Group([(1,2),(1,3)(2,4)]),28);;|
+  
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R_S4),27);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 12 ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R_D8),27);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ]
+  
+\end{Verbatim}
+ 
+
+\textsc{Illustration 2} 
+
+ As a further illustration of the theorem, the following commands calculate 
+
+ $H_n(M_{12},M)_3 \cong \bigoplus_{1\le i\le 3}\,H_n(Stab_i,M)_3 -
+\bigoplus_{4\le i\le 5}H_n(Stab_i,M)_3$ 
 
  for the Mathieu simple group $M_{12}$ of order $95040$, where 
 
-$S_1\cong S_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2$ 
+$Stab_1\cong Stab_3=(((C_3 \times C_3) : Q_8) : C_3) : C_2$ 
 
-$S_2=A_4 \times S_3$ 
+$Stab_2=A_4 \times S_3$ 
 
-$S_4=C_3 \times S_3$ 
+$Stab_4=C_3 \times S_3$ 
 
-$S_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ . 
+$Stab_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ . 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=MathieuGroup(12);;|
   !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,3);;|
@@ -5581,9 +5863,9 @@ $S_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ .
 \end{Verbatim}
  
 
-\textsc{Illustration 2} 
+\textsc{Illustration 3} 
 
- As a second illustration, the following commands show that $H_n(M_{23},M)_{p}$ is periodic for primes $p=5, 7, 11, 23$ of periods dividing $8, 6, 10, 22$ respectively. 
+ As a third illustration, the following commands show that $H_n(M_{23},M)_{p}$ is periodic for primes $p=5, 7, 11, 23$ of periods dividing $8, 6, 10, 22$ respectively. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=MathieuGroup(23);;|
   !gapprompt@gap>| !gapinput@Factors(Order(G));|
@@ -5790,7 +6072,7 @@ The following example computes the first $14$ degrees of the cohomology ring $H^
 \end{Verbatim}
  
 
-The following additional command produces a rational function $f(x)$ whose series expansion $f(x) = \sum_{i=0}^\infty f_ix^i$ has coefficients $f_i$ which are guaranteed to satisfy $f_i = \dim H^i(G,\mathbb Z_p)$ in the range $0\le i\le deg$. 
+The following additional command produces a rational function $f(x)$ whose series expansion $f(x) = \sum_{i=0}^\infty f_ix^i$ has coefficients $f_i$ which are guaranteed to satisfy $f_i = \dim H^i(G,\mathbb Z_p)$ in the range $0\le i\le deg$. We refer to $f(x)$ as the \emph{Poincare series} for the group at the prime $p=2$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@f:=PoincareSeries(A);|
   (x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
@@ -5799,6 +6081,42 @@ The following additional command produces a rational function $f(x)$ whose serie
   !gapprompt@gap>| !gapinput@Let's use f to list the first few cohomology dimensions|
   !gapprompt@gap>| !gapinput@ExpansionOfRationalFunction(f,deg); |
   [ 1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 1, 2, 3, 2, 2 ]
+  
+\end{Verbatim}
+ An alternative command for computing the Poincare series is the following. In
+this alternative we choose to ensure correctness in degrees $\le 100$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@PoincareSeriesPrimePart(MathieuGroup(11),2,100);|
+  The series is guaranteed correct for group cohomology in degrees < 101
+  (x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
+  
+\end{Verbatim}
+ If one needs to verify that the Poincare series is valid in all degrees then
+more work is required. One readily implemented (but computationally
+non\texttt{\symbol{45}}optimal) approach is to use Peter Symmonds result \cite{Symmonds} that: if a non\texttt{\symbol{45}}cyclic finite group $G$ has a faithful complex representation equal to a sum of irreducibles of
+dimensions $n_i$ then the cohomology ring $H^\ast(G,\mathbb Z_p)$ is generated by elements of degree at most $\sum n_i^2$; a degree bound for the relations is $2 \sum n_i^2$. The following commands use this bound, in conjunction with Webb's result \ref{secWebb} on the Quillen complex, to obtained a Poincare series that is guaranteed
+correct in all degree. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=MathieuGroup(11);;|
+  !gapprompt@gap>| !gapinput@h:=HomologicalGroupDecomposition(G,2);;|
+  
+  !gapprompt@gap>| !gapinput@ModPCohomologyPresentationBounds(h[1][1]);|
+  rec( generators_degree_bound := 4, relators_degree_bound := 8 )
+  !gapprompt@gap>| !gapinput@A:=ModPCohomologyRing(h[1][1],2,9);;F:=PresentationOfGradedStructureConstantAlgebra(A);;f11:=HilbertPoincareSeries(F);|
+  (x_1^2-x_1+1)/(x_1^4-2*x_1^3+2*x_1^2-2*x_1+1)
+  
+  !gapprompt@gap>| !gapinput@ModPCohomologyPresentationBounds(h[1][2]);|
+  rec( generators_degree_bound := 9, relators_degree_bound := 18 )
+  !gapprompt@gap>| !gapinput@A:=ModPCohomologyRing(h[1][2],2,19);;F:=PresentationOfGradedStructureConstantAlgebra(A);;f12:=HilbertPoincareSeries(F);|
+  (x_1^2+1)/(x_1^4-x_1^3-x_1+1)
+  
+  !gapprompt@gap>| !gapinput@ModPCohomologyPresentationBounds(h[2][1]);|
+  rec( generators_degree_bound := 4, relators_degree_bound := 8 )
+  !gapprompt@gap>| !gapinput@A:=ModPCohomologyRing(h[2][1],2,9);;F:=PresentationOfGradedStructureConstantAlgebra(A);;f21:=HilbertPoincareSeries(F);|
+  (1)/(x_1^2-2*x_1+1)
+  
+  !gapprompt@gap>| !gapinput@f11+f12-f21;|
+  (x_1^4-x_1^3+x_1^2-x_1+1)/(x_1^6-x_1^5+x_1^4-2*x_1^3+x_1^2-x_1+1)
   
 \end{Verbatim}
  
@@ -5826,7 +6144,93 @@ applied in the $p=2$ setting to determine a presentation for a graded commutativ
  }
 
  
-\section{\textcolor{Chapter }{Functorial ring homomorphisms in Mod\texttt{\symbol{45}}$p$ cohomology}}\logpage{[ 8, 2, 0 ]}
+\section{\textcolor{Chapter }{Poincare Series for Mod\texttt{\symbol{45}}$p$ cohomology}}\logpage{[ 8, 2, 0 ]}
+\hyperdef{L}{X862538218748627F}{}
+{
+ For a finite $p$\texttt{\symbol{45}}group $G$ the command \texttt{PoincarePolynomial(G)} returns a rational function $f(x)=p(x)/q(x)$ whose series expansion $f(x) = \sum_{i=0}^\infty f_ix^i$ has coefficients $f_i$ that are guaranteed to satisfy $f_i = \dim H^i(G,\mathbb Z_p)$ in the range $0\le i < 1+ deg$ for some displayed value of $deg$. Furthermore, the coefficients $f_i$ are guaranteed to be integers for all $0\le i\le 1000$ and the order of the pole of $f(x)$ at $x=1$ is guaranteed to equal the $p$\texttt{\symbol{45}}rank of $G$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SmallGroup(3^4,10);;|
+  !gapprompt@gap>| !gapinput@StructureDescription(G);|
+  "C3 . ((C3 x C3) : C3) = (C3 x C3) . (C3 x C3)"
+  !gapprompt@gap>| !gapinput@f:=PoincareSeries(G);|
+  The series is guaranteed correct for group cohomology in degrees < 14
+  (-x_1^3+x_1^2+1)/(x_1^6-2*x_1^5+2*x_1^4-2*x_1^3+2*x_1^2-2*x_1+1)
+  
+\end{Verbatim}
+ 
+
+If a higher value of $deg$ is required then this can be entered as an optional second argument. For
+instance, the following increases the value to $deg=100$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@f:=PoincareSeries(G,100);|
+  The series is guaranteed correct for group cohomology in degrees < 101
+  (-x_1^3+x_1^2+1)/(x_1^6-2*x_1^5+2*x_1^4-2*x_1^3+2*x_1^2-2*x_1+1)
+  
+\end{Verbatim}
+ 
+
+ As mentioned above, one approach to verifying that the Poincare series is
+valid in all degrees is to use Peter Symmonds result \cite{Symmonds} that: if a non\texttt{\symbol{45}}cyclic finite group $G$ has a faithful complex representation equal to a sum of irreducibles of
+dimensions $n_i$ then the cohomology ring $H^\ast(G,\mathbb Z_p)$ is generated by elements of degree at most $\sum n_i^2$; a degree bound for the relations is $2 \sum n_i^2$. Thus, if we use at least $\sum n_i^2$ degrees of a resolution to construct a presentation for the cohomology ring
+then the presented ring maps surjectively onto the actual cohomology ring.
+Furthermore, if this surjection is a bijection in the first $2 \sum n_i^2$ degrees then it is necessarily an isomorphism in all degrees. 
+
+ The following commands use this approach to obtain a guaranteed presentation
+and Poincare series for the Sylow $2$\texttt{\symbol{45}}subgroup of the Mathieu group $M_{12}$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SylowSubgroup(MathieuGroup(12),2);;|
+  !gapprompt@gap>| !gapinput@ModPCohomologyPresentationBounds(G);|
+  rec( generators_degree_bound := 16, relators_degree_bound := 32 )
+  !gapprompt@gap>| !gapinput@A:=ModPCohomologyRing(G,16);;|
+  !gapprompt@gap>| !gapinput@F:=PresentationOfGradedStructureConstantAlgebra(A);|
+  Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
+  [ x_1*x_3, x_1*x_2, x_1*x_4, x_2*x_3^2+x_3^3+x_3*x_4+x_3*x_5, 
+    x_2*x_6+x_3*x_6+x_4*x_5, x_2*x_3*x_4+x_3^2*x_4+x_3*x_6, 
+    x_2^2*x_4+x_3^2*x_4+x_3*x_6+x_4^2, x_3^2*x_6+x_3*x_4^2+x_3*x_4*x_5, 
+    x_2*x_4*x_5+x_4*x_6, x_3^2*x_4*x_5+x_3*x_4*x_6+x_3*x_5*x_6, 
+    x_1^3*x_6+x_1^2*x_7+x_1*x_5*x_6+x_3*x_5*x_6+x_4*x_5^2+x_6^2, 
+    x_3*x_4^2*x_5+x_3*x_6^2 ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
+  !gapprompt@gap>| !gapinput@f:=HilbertPoincareSeries(F);|
+  (1)/(-x_1^3+3*x_1^2-3*x_1+1)
+  
+  !gapprompt@gap>| !gapinput@ff:=PoincareSeries(G,32);|
+  The series is guaranteed correct for group cohomology in degrees < 33
+  (1)/(-x_1^3+3*x_1^2-3*x_1+1)
+  
+\end{Verbatim}
+ 
+
+ An alternative approach to obtaining a guaranteed presentation is to implement
+Len even's spectral sequence proof of the finite generation of cohomology
+rings of finite groups. The following example determines a guaranteed
+presentation in this way for the cohomology ring $H^\ast(Syl_2(M_{12}),\mathbb Z_2)$. The Lyndon\texttt{\symbol{45}}Hochschild\texttt{\symbol{45}}Serre spectral
+sequence, and Groebner basis routines from \textsc{Singular} (for commutative rings), are used to determine how much of a resolution is
+needed to compute the guaranteed correct presentation. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SylowSubgroup(MathieuGroup(12),2);;|
+  !gapprompt@gap>| !gapinput@F:=Mod2CohomologyRingPresentation(G);|
+  Alpha version of completion test code will be used. This needs further work.
+  Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
+  [ x_2*x_3, x_1*x_2, x_2*x_4, x_1^3+x_1^2*x_3+x_1*x_5, 
+    x_1*x_3*x_4+x_1*x_3*x_5+x_3^2*x_4+x_1*x_6+x_3*x_6+x_4*x_5, 
+    x_1^2*x_4+x_1^2*x_5+x_1*x_3*x_5+x_3^2*x_4+x_1*x_6+x_4^2, 
+    x_1^2*x_3^2+x_1^2*x_5+x_1*x_3*x_5+x_1*x_6+x_3*x_6+x_4^2+x_4*x_5, 
+    x_1^2*x_6+x_1*x_3*x_6+x_1*x_4*x_5+x_3^2*x_6+x_3*x_4^2+x_3*x_4*x_5, 
+    x_1*x_3^2*x_5+x_3^3*x_4+x_1*x_3*x_6+x_1*x_4^2+x_3^2*x_6+x_3*x_4^2+x_4*x_6,
+    x_1^2*x_3*x_5+x_1*x_3*x_6+x_1*x_4^2+x_1*x_5^2, 
+    x_3^3*x_6+x_3^2*x_4^2+x_3^2*x_4*x_5+x_3*x_4*x_6+x_3*x_5*x_6+x_4^3+x_4*x_5^2, 
+    x_1*x_3^2*x_6+x_1*x_4*x_6+x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_6^2, 
+    x_1^2*x_5^2+x_1*x_3*x_5^2+x_3^2*x_4^2+x_3^2*x_4*x_5+x_2^2*x_7+x_2*x_5*x_6+x_3*x_5*x_6+x_6^2 ] 
+  with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
+  
+  !gapprompt@gap>| !gapinput@f:=HilbertPoincareSeries(F);|
+  (1)/(-x_1^3+3*x_1^2-3*x_1+1)
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Functorial ring homomorphisms in Mod\texttt{\symbol{45}}$p$ cohomology}}\logpage{[ 8, 3, 0 ]}
 \hyperdef{L}{X780DF87680C3F52B}{}
 {
  The following example constructs the ring homomorphism 
@@ -5847,7 +6251,7 @@ $F\colon H^{\le deg}(G,\mathbb Z_p) \rightarrow H^{\le deg}(H,\mathbb Z_p)$
   
 \end{Verbatim}
  
-\subsection{\textcolor{Chapter }{Testing homomorphism properties}}\logpage{[ 8, 2, 1 ]}
+\subsection{\textcolor{Chapter }{Testing homomorphism properties}}\logpage{[ 8, 3, 1 ]}
 \hyperdef{L}{X834CED9D7A104695}{}
 {
  
@@ -5867,7 +6271,7 @@ The following commands are consistent with $F$ being a ring homomorphism.
  }
 
  
-\subsection{\textcolor{Chapter }{Testing functorial properties}}\logpage{[ 8, 2, 2 ]}
+\subsection{\textcolor{Chapter }{Testing functorial properties}}\logpage{[ 8, 3, 2 ]}
 \hyperdef{L}{X7A0D505D844F0CD4}{}
 {
  The following example takes two "random" automorphisms $f,g\colon K\rightarrow K$ of the group $K$ of order $24$ arising as the direct product $K=C_3\times Q_8$ and constructs the three ring isomorphisms $F,G,FG\colon H^{\le 5}(K,\mathbb Z_2) \rightarrow H^{\le 5}(K,\mathbb Z_2)$ induced by $f, g$ and the composite $f\circ g$. It tests that $FG$ is indeed the composite $G\circ F$. Note that when we create the ring $H^{\le 5}(K,\mathbb Z_2)$ twice in \textsc{GAP} we obtain two canonically isomorphic but distinct implimentations of the ring.
@@ -5899,7 +6303,7 @@ be incorporated into the test. Note also that \textsc{GAP} defines $g\ast f = f\
  }
 
  
-\subsection{\textcolor{Chapter }{Computing with larger groups}}\logpage{[ 8, 2, 3 ]}
+\subsection{\textcolor{Chapter }{Computing with larger groups}}\logpage{[ 8, 3, 3 ]}
 \hyperdef{L}{X855764877FA44225}{}
 {
  
@@ -5949,34 +6353,6 @@ $F\colon H^{\le 7}(A_6,\mathbb Z_2) \rightarrow H^{\le 7}(S_6,\mathbb Z_2)$
 \end{Verbatim}
  }
 
- }
-
- 
-\section{\textcolor{Chapter }{Cohomology rings of finite $2$\texttt{\symbol{45}}groups}}\logpage{[ 8, 3, 0 ]}
-\hyperdef{L}{X80A9B7117D8EC0AB}{}
-{
- The following example determines a presentation for the cohomology ring $H^\ast(Syl_2(M_{12}),\mathbb Z_2)$. The Lyndon\texttt{\symbol{45}}Hochschild\texttt{\symbol{45}}Serre spectral
-sequence, and Groebner basis routines from \textsc{Singular} (for commutative rings), are used to determine how much of a resolution to
-compute for the presentation. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@G:=SylowSubgroup(MathieuGroup(12),2);;|
-  !gapprompt@gap>| !gapinput@Mod2CohomologyRingPresentation(G);|
-  Alpha version of completion test code will be used. This needs further work.
-  Graded algebra GF(2)[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ] / 
-  [ x_2*x_3, x_1*x_2, x_2*x_4, x_3^3+x_3*x_5, 
-    x_1^2*x_4+x_1*x_3*x_4+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_4^2+x_4*x_5, 
-    x_1^2*x_3^2+x_1*x_3*x_5+x_3^2*x_5+x_3*x_6, 
-    x_1^3*x_3+x_3^2*x_4+x_3^2*x_5+x_1*x_6+x_3*x_6+x_4*x_5, 
-    x_1*x_3^2*x_4+x_1*x_3*x_6+x_1*x_4*x_5+x_3*x_4^2+x_3*x_4*x_5+x_3*x_5^\
-  2+x_4*x_6, x_1^2*x_3*x_5+x_1*x_3^2*x_5+x_3^2*x_6+x_3*x_5^2, 
-    x_3^2*x_4^2+x_3^2*x_5^2+x_1*x_5*x_6+x_3*x_4*x_6+x_4*x_5^2, 
-    x_1*x_3*x_4^2+x_1*x_3*x_4*x_5+x_1*x_3*x_5^2+x_3^2*x_5^2+x_1*x_4*x_6+\
-  x_2^2*x_7+x_2*x_5*x_6+x_3*x_4*x_6+x_3*x_5*x_6+x_4^2*x_5+x_4*x_5^2+x_6^\
-  2, x_1*x_3^2*x_6+x_3^2*x_4*x_5+x_1*x_5*x_6+x_4*x_5^2, 
-    x_1^2*x_3*x_6+x_1*x_5*x_6+x_2^2*x_7+x_2*x_5*x_6+x_3*x_5*x_6+x_6^2 
-   ] with indeterminate degrees [ 1, 1, 1, 2, 2, 3, 4 ]
-  
-\end{Verbatim}
  }
 
  
@@ -6152,7 +6528,7 @@ repository \cite{liuyegithub}. In particular, their code contains the command
  that inputs an integer in the range $1\le ITC\le 230$ corresponding to the numbering of a $3$\texttt{\symbol{45}}dimensional space group $G$ in the International Table for Crystallography. This command returns 
 \begin{itemize}
 \item  a presentation for the mod $2$ cohomology ring $H^\ast(G,\mathbb Z_2)$. The presentation is guaranteed to be correct for low degree cohomology. In
-cases where the cohomology is periodic in degrees $ \gt 4$ (which can be tested using \texttt{IsPeriodicSpaceGroup(G)}) the presentation is guaranteed correct in all degrees. In
+cases where the cohomology is periodic in degrees $ \ge 5$ (which can be tested using \texttt{IsPeriodicSpaceGroup(G)}) the presentation is guaranteed correct in all degrees. In
 non\texttt{\symbol{45}}periodic cases some additional mathematical argument
 needs to be provided to be mathematically sure that the presentation is
 correct in all degrees. 
@@ -8568,18 +8944,15 @@ g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . \]
 \ \ \stackrel{\alpha}{\leftarrow} \ \ H^n(g^{-1}\Gamma' g,\mathbb Z) \ \
 \stackrel{\beta}{\leftarrow} H^n(\Gamma, \mathbb Z) \]
  with $\alpha$, $\beta$ functorial maps, and $tr$ the transfer map. We define the composite $T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow
-H^n(\Gamma, \mathbb Z)$ to be the \emph{ Hecke operator } determined by $g$. Further details on this description of Hecke operators can be found in \cite[Appendix by P. Gunnells]{stein}. 
+H^n(\Gamma, \mathbb Z)$ to be the \emph{ Hecke component } determined by $g$. 
 
-For each prime integer $p\ge 1$ we set $T_p =T_g$ with for $g=\left(\begin{array}{cc}1&0\\0&p\end{array}\right)$. 
+For $\Gamma=\Gamma_0(N)$, prime integer $p$ coprime to $N$, and cohomology degree $n=1$ we define the \emph{Hecke operator} $T_p =T_g$ where $g=\left(\begin{array}{cc}1&0\\0&p\end{array}\right)$. Further details on this description of Hecke operators can be found in \cite[Appendix by P. Gunnells]{stein}. 
 
-The following commands compute $T_2$ and $T_5$ for $n=1$ and $\Gamma=\Gamma_0(39)$. The commands also compute the eigenvalues of these two Hecke operators. The
-final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=T_qT_p$ for all primes $p,q$.) 
+The following commands compute $T_2$ and $T_5$ and $\Gamma=\Gamma_0(39)$. The commands also compute the eigenvalues of these two Hecke operators. The
+final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=T_qT_p$ for all $p,q$.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(39);;|
-  !gapprompt@gap>| !gapinput@p:=2;;N:=1;;h:=HeckeOperatorWeight2(gamma,p,N);;|
-  !gapprompt@gap>| !gapinput@AbelianInvariants(Source(h));|
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-  !gapprompt@gap>| !gapinput@T2:=HomomorphismAsMatrix(h);;|
+  !gapprompt@gap>| !gapinput@p:=2;;k:=2;;T2:=HeckeOperator(gamma,p,k);;|
   !gapprompt@gap>| !gapinput@Display(T2);|
   [ [  -2,  -2,   2,   2,   1,   2,   0,   0,   0 ],
     [  -2,   0,   1,   2,  -2,   2,   2,   2,  -2 ],
@@ -8593,8 +8966,7 @@ final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=
   !gapprompt@gap>| !gapinput@Eigenvalues(Rationals,T2);|
   [ 3, 1 ]
   
-  !gapprompt@gap>| !gapinput@p:=5;;N:=1;;h:=HeckeOperator(gamma,p,N);;|
-  !gapprompt@gap>| !gapinput@T5:=HomomorphismAsMatrix(h);;|
+  !gapprompt@gap>| !gapinput@p:=5;;k:=2;;h:=HeckeOperator(gamma,p,k);;|
   !gapprompt@gap>| !gapinput@Display(T5);|
   [ [  -1,  -1,   3,   4,   0,   0,   1,   1,  -1 ],
     [  -5,  -1,   5,   4,   0,   0,   3,   3,  -3 ],
@@ -8618,9 +8990,9 @@ final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=
 \section{\textcolor{Chapter }{Hecke operators on forms of weight $ \ge 2$}}\logpage{[ 13, 7, 0 ]}
 \hyperdef{L}{X831BB0897B988DA3}{}
 {
- The above definition of Hecke operator $T_g$ for $g\in SL_2(\mathbb Q)$ extends to a Hecke operator $T_g\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
-Q}(k-2) )$ for $k\ge 2$. We work over the rationals rather than the integers in order to ensure that
-the action of $\Gamma$ on homogeneous polynomials extends to an action of $g$. The following commands compute the matrix of $T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
+ The above definition of Hecke operator $T_p$ for $\Gamma=\Gamma_0(N)$ extends to a Hecke operator $T_p\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
+Q}(k-2) )$ for $k\ge 2$. We work over the rationals since that is a setting of much interest. The
+following commands compute the matrix of $T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
 Q}(k-2) )$ for $\Gamma=SL_2(\mathbb Z)$ and $k=4$; 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@H:=HAP_CongruenceSubgroupGamma0(1);;|
@@ -8644,21 +9016,23 @@ Given a modular form $f\colon {\frak h} \rightarrow \mathbb C$ associated to a c
 H^1(\Gamma,\mathbb C)$. The correspondence $f\mapsto c(f)$ underlies the Eichler\texttt{\symbol{45}}Shimura isomorphism. Hecke operators
 can be used to recover modular forms from cohomology classes. 
 
-Hecke operators restrict to operators on cuspidal cohomology. On the
-left\texttt{\symbol{45}}hand side of the Eichler\texttt{\symbol{45}}Shimura
-isomorphism Hecke operators restrict to operators $T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)$ for $s\ge 1$. 
+ Let $\Gamma=\Gamma_0(N)$. The above defined Hecke operators restrict to operators on cuspidal
+cohomology. On the left\texttt{\symbol{45}}hand side of the
+Eichler\texttt{\symbol{45}}Shimura isomorphism Hecke operators restrict to
+operators $T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)$ for $s\ge 1$. 
 
-Let us now introduce the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z)$ there are numbers $a_s$ such that 
+Consider the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z) \in M_k(\Gamma)$ there are numbers $a_s$ such that 
 \[f(z) = \sum_{s=0}^\infty a_sq^s \]
  for all $z\in {\frak h}$. The form $f$ is a cusp form if $a_0=0$. 
 
- A non\texttt{\symbol{45}}zero cusp form $f\in S_2(\Gamma)$ is an \emph{eigenform} if it is simultaneously an eigenvector for the Hecke operators $T_s$ for all $s =1,2,3,\cdots$. An eigenform is said to be \emph{normalized} if its coefficient $a_1=1$. It turns out that if $f$ is a normalized eigenform then the coefficient $a_s$ is an eigenvalue for $T_s$ (see for instance \cite{stein} for details). It can be shown \cite{atkinlehner} that $f\in S_2(\Gamma_0(N))$ admits a basis of eigenforms. 
+ A non\texttt{\symbol{45}}zero cusp form $f\in S_2(\Gamma)$ is a cusp \emph{eigenform} if it is simultaneously an eigenvector for the Hecke operators $T_s$ for all $s =1,2,3,\cdots$ coprime to the level $N$. A cusp eigenform is said to be \emph{normalized} if its coefficient $a_1=1$. It turns out that if $f$ is normalized then the coefficient $a_s$ is an eigenvalue for $T_s$ (see for instance \cite{stein} for details). It can be shown \cite{atkinlehner} that $S_2(\Gamma_0(N))$ admits a "basis constructed from eigenforms". 
 
  This all implies that, in principle, we can construct an approximation to an
-explicit basis for the space $S_2(\Gamma)$ of cusp forms by computing eigenvalues for Hecke operators. 
+explicit basis for the space $S_2(\Gamma_0(N))$ of cusp forms by computing eigenvalues for Hecke operators. 
 
- Suppose that we would like a basis for $S_2(\Gamma_0(11))$. The following commands first show that $H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z$ from which we deduce that $S_2(\Gamma_0(11)) =\mathbb C$ is $1$\texttt{\symbol{45}}dimensional. Then eigenvalues of Hecke operators are
-calculated to establish that the modular form 
+ Suppose that we would like a basis for $S_2(\Gamma_0(11))$. The following commands first show that $H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z$ from which we deduce that $S_2(\Gamma_0(11)) =\mathbb C$ is $1$\texttt{\symbol{45}}dimensional and thus admits a basis of eigenforms. Then
+eigenvalues of Hecke operators are calculated to establish that the modular
+form 
 \[f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots \]
  constitutes a basis for $S_2(\Gamma_0(11))$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -8666,23 +9040,23 @@ calculated to establish that the modular form
   !gapprompt@gap>| !gapinput@AbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));|
   [ 0, 0 ]
   
-  !gapprompt@gap>| !gapinput@T1:=HomomorphismAsMatrix(HeckeOperator(gamma,1,1));; Display(T1);|
+  !gapprompt@gap>| !gapinput@T1:=HeckeOperator(gamma,1,2);; Display(T1);|
   [ [  1,  0,  0 ],
     [  0,  1,  0 ],
     [  0,  0,  1 ] ]
-  !gapprompt@gap>| !gapinput@T2:=HomomorphismAsMatrix(HeckeOperator(gamma,2,1));; Display(T2);|
+  !gapprompt@gap>| !gapinput@T2:=HeckeOperator(gamma,2,2);; Display(T2);|
   [ [   3,  -4,   4 ],
     [   0,  -2,   0 ],
     [   0,   0,  -2 ] ]
-  !gapprompt@gap>| !gapinput@T3:=HomomorphismAsMatrix(HeckeOperator(gamma,3,1));; Display(T3);|
+  !gapprompt@gap>| !gapinput@T3:=HeckeOperator(gamma,3,2);; Display(T3);|
   [ [   4,  -4,   4 ],
     [   0,  -1,   0 ],
     [   0,   0,  -1 ] ]
-  !gapprompt@gap>| !gapinput@T5:=HomomorphismAsMatrix(HeckeOperator(gamma,5,1));; Display(T5);|
+  !gapprompt@gap>| !gapinput@T5:=HeckeOperator(gamma,5,2);; Display(T5);|
   [ [   6,  -4,   4 ],
     [   0,   1,   0 ],
     [   0,   0,   1 ] ]
-  !gapprompt@gap>| !gapinput@T7:=HomomorphismAsMatrix(HeckeOperator(gamma,7,1));; Display(T7);|
+  !gapprompt@gap>| !gapinput@T7:=HeckeOperator(gamma,7,2);; Display(T7);|
   [ [   8,  -8,   8 ],
     [   0,  -2,   0 ],
     [   0,   0,  -2 ] ]
@@ -8701,12 +9075,22 @@ $- 115920q^{10} + 534612q^{11} - 370944q^{12} - 577738q^{13} + 401856q^{14} +
 1217160q^{15} + 987136q^{16}$ 
 
 $ - 6905934q^{17} + 2727432q^{18} + 10661420q^{19} + ...$ 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@H:=HAP_CongruenceSubgroupGamma0(1);;|
-  !gapprompt@gap>| !gapinput@for p in [2,3,5,7,11,13,17,19] do|
-  !gapprompt@>| !gapinput@T:=HeckeOperator(H,p,1,12);;|
-  !gapprompt@>| !gapinput@Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");|
-  !gapprompt@>| !gapinput@od;|
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|R:=ResolutionSL2Z_alt(2);;D
+  @gapprompt|gap>D @gapinput|G:=R!.group;;D
+  @gapprompt|gap>D @gapinput|P:=HomogeneousPolynomials(G,14);D
+  MappingByFunction( SL(2,Integers), <matrix group with 
+  2 generators>, function( x ) ... end )
+  @gapprompt|gap>D @gapinput|Cohomology(HomToIntegralModule(R,P),1);D
+  [ 2, 2, 156, 0, 0, 0 ]
+  @gapprompt|gap>D @gapinput|#Thus the space S_12 of cusp forms is of dimension 1D
+  
+  
+  @gapprompt|gap>D @gapinput|G:=HAP_CongruenceSubgroupGamma0(1);;D
+  @gapprompt|gap>D @gapinput|for p in [2,3,5,7,11,13,17,19] doD
+  @gapprompt|>D @gapinput|T:=HeckeOperator(G,p,12);;D
+  @gapprompt|>D @gapinput|Print("eigenvalues= ",Eigenvalues(Rationals,T), " and eigenvectors = ", Eigenvectors(Rationals,T)," for p= ",p,"\n");D
+  @gapprompt|>D @gapinput|od;D
   eigenvalues= [ 2049, -24 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 2
   eigenvalues= [ 177148, 252 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 3
   eigenvalues= [ 48828126, 4830 ] and eigenvectors = [ [ 1, -2520/691, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] for p= 5
@@ -8730,8 +9114,8 @@ $ - 6905934q^{17} + 2727432q^{18} + 10661420q^{19} + ...$
 \left(a(z+tj)+b\right)\left(c(z+tj)+d\right)^{-1}\ .\]
  Alternatively, and more explicitly, the action is given by 
 \[\left(\begin{array}{ll}a&b\\ c &d \end{array}\right)\cdot (z+tj) \ = \
-\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\
-\frac{y}{|cz+d|^2+|c|^2y^2}\, j \ .\]
+\frac{(az+b)\overline{(cz+d) } + a\overline c t^2}{|cz +d|^2 + |c|^2t^2} \ +\
+\frac{t}{|cz+d|^2+|c|^2t^2}\, j \ .\]
  
 
 A standard 'fundamental domain' $D$ for this action is the following region (with some of the boundary points
@@ -8743,9 +9127,7 @@ Im}(z) \le \frac{1}{2}, z\overline z +t^2 \ge 1\} \]
 The four bottom vertices of $D$ are $a = -\frac{1}{2} +\frac{1}{2}i +\frac{\sqrt{2}}{2}j$, $b = -\frac{1}{2} +\frac{\sqrt{3}}{2}j$, $c = \frac{1}{2} +\frac{\sqrt{3}}{2}j$, $d = \frac{1}{2} +\frac{1}{2}i +\frac{\sqrt{2}}{2}j$. 
 
 The upper\texttt{\symbol{45}}half space ${\frak h}^3$ can be retracted onto a $2$\texttt{\symbol{45}}dimensional subspace ${\cal T} \subset {\frak h}^3$. The space ${\cal T}$ is a contractible $2$\texttt{\symbol{45}}dimensional regular CW\texttt{\symbol{45}}complex, and the
-action of the Picard group $G$ restricts to a cellular action of $G$ on ${\cal T}$. Under this action there is one orbit of $2$\texttt{\symbol{45}}cells, represented by the curvilinear square with vertices $a$, $b$, $c$ and $d$ in the picture. This $2$\texttt{\symbol{45}}cell has stabilizer group isomorphic to the quaternion
-group $Q_4$ of order $8$. There are two orbits of $1$\texttt{\symbol{45}}cells, both with stabilizer group isomorphic to a
-semi\texttt{\symbol{45}}direct product $C_3:C_4$. There is one orbit of $0$\texttt{\symbol{45}}cells, with stabilizer group isomorphic to $SL(2,3)$. 
+action of the Picard group $G$ restricts to a cellular action of $G$ on ${\cal T}$. 
 
 Using perturbation techniques, the $2$\texttt{\symbol{45}}complex ${\cal T}$ can be combined with free resolutions for the cell stabilizer groups to
 contruct a regular CW\texttt{\symbol{45}}complex $X$ on which the Picard group $G$ acts freely. The following commands compute the first few terms of the free $\mathbb ZG$\texttt{\symbol{45}}resolution $R_\ast =C_\ast X$. Then $R_\ast$ is used to compute 
@@ -8810,11 +9192,11 @@ Z_{520030}\oplus \mathbb Z_{1040060} \oplus \mathbb Z^2\, ,\]
 \hyperdef{L}{X858B1B5D8506FE81}{}
 {
  The \emph{Bianchi groups} are the groups $G=PSL_2({\cal O}_{-d})$ where $d$ is a square free positive integer and ${\cal O}_{-d}$ is the ring of integers of the imaginary quadratic field $\mathbb Q(\sqrt{-d})$. More explicitly, 
-\[{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1
+\[{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1,2
 {\rm ~mod~} 4\, ,\]
  
 \[{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d
-\equiv 2,3 {\rm ~mod~} 4\, .\]
+\equiv 3 {\rm ~mod~} 4\, .\]
  These groups act on upper\texttt{\symbol{45}}half space ${\frak h}^3$ in the same way as the Picard group. Upper\texttt{\symbol{45}}half space can
 be tessellated by a 'fundamental domain' for this action. Moreover, as with
 the Picard group, this tessellation contains a $2$\texttt{\symbol{45}}dimensional cellular subspace ${\cal T}\subset {\frak h}^3$ where ${\cal T}$ is a contractible CW\texttt{\symbol{45}}complex on which $G$ acts cellularly. It should be mentioned that the fundamental domain and the
@@ -8903,7 +9285,229 @@ commands compute
  }
 
  
-\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 11, 0 ]}
+\section{\textcolor{Chapter }{(Co)homology of Bianchi groups and $SL_2({\cal O}_{-d})$}}\logpage{[ 13, 11, 0 ]}
+\hyperdef{L}{X851390E07C3B3BB1}{}
+{
+ The (co)homology of Bianchi groups has been studied in papers such as \cite{Schwermer} \cite{Vogtmann} \cite{Berkove00} \cite{Berkove06} \cite{Rahm11} \cite{Rahm13} \cite{Rahm13a} \cite{Rahm20}. Calculations in these papers can often be verified by computer. For
+instance, the calculation 
+\[H_q(PSL_2({\cal O}_{-15}),\mathbb Z) = \left\{\begin{array}{ll} \mathbb Z^2
+\oplus \mathbb Z_6 & q=1,\\ \mathbb Z \oplus \mathbb Z_6 & q=2,\\ \mathbb Z_6
+& q\ge 3\\ \end{array}\right. \]
+ obtained in \cite{Rahm11} can be verified as follows, once we note that Bianchi groups have virtual
+cohomological dimension 2 and, if all stabilizer groups are periodic with
+period dividing m, then the homology has period dividing m in degree $\ge 3$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(2,O-15)");;A
+  @gapprompt|gap>A @gapinput|PK:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;A
+  @gapprompt|gap>A @gapinput|for n in [0..2] doA
+  @gapprompt|>A @gapinput|for k in [1..K!.dimension(n)] doA
+  @gapprompt|>A @gapinput|Print( CohomologicalPeriod(K!.stabilizer(n,k)),"  ");A
+  @gapprompt|>A @gapinput|od;od;A
+  2  2  2  2  2  2  2  2  2  2  2  2  2  2  
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(PK,5);;A
+  @gapprompt|gap>A @gapinput|for n in [0..4] doA
+  @gapprompt|>A @gapinput|Print("H_",n," = ", Homology(TensorWithIntegers(R),n),"\n");A
+  @gapprompt|>A @gapinput|od;A
+  H_0 = [ 0 ]
+  H_1 = [ 6, 0, 0 ]
+  H_2 = [ 6, 0 ]
+  H_3 = [ 6 ]
+  H_4 = [ 6 ]
+  
+\end{Verbatim}
+ All finite subgroups of $SL_2({\cal O}_{-d})$ are periodic. Thus the above example can be adapted from PSL to SL for any
+square=free $d\ge 1$. For example, the calculation 
+\[H^q(SL_2({\cal O}_{-2}),\mathbb Z) = \left\{\begin{array}{ll} \mathbb Z &
+q=1,\\ \mathbb Z_6 & q=2 {\rm \ mod\ } 4,\\ \mathbb Z_2 \oplus \mathbb Z_{12}
+& q= 3 {\rm \ mod\ } 4\\ \mathbb Z_2 \oplus \mathbb Z_{24} & q= 0 {\rm \ mod\
+} 4 (q>0)\\ \mathbb Z_{12} & q= 1 {\rm \ mod\ } 4 (q > 1)\\ \end{array}\right. \]
+ obtained in \cite{Schwermer} can be verified as follows. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(2,O-2)");;A
+  @gapprompt|gap>A @gapinput|for n in [0..2] doA
+  @gapprompt|>A @gapinput|for k in [1..K!.dimension(n)] doA
+  @gapprompt|>A @gapinput|Print(CohomologicalPeriod(K!.stabilizer(n,k)),"  ");A
+  @gapprompt|>A @gapinput|od;od;A
+  2  4  2  4  2  2  2  2  2  2  2  2  
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,11);;A
+  @gapprompt|gap>A @gapinput|for n in [0..10] doA
+  @gapprompt|>A @gapinput|Print("H^",n," = ", Cohomology(HomToIntegers(R),n),"\n");A
+  @gapprompt|>A @gapinput|od;A
+  H^0 = [ 0 ]
+  H^1 = [ 0 ]
+  H^2 = [ 6 ]
+  H^3 = [ 2, 12 ]
+  H^4 = [ 2, 24 ]
+  H^5 = [ 12 ]
+  H^6 = [ 6 ]
+  H^7 = [ 2, 12 ]
+  H^8 = [ 2, 24 ]
+  H^9 = [ 12 ]
+  H^10 = [ 6 ]
+  
+\end{Verbatim}
+ A quotient of a periodic group by a central subgroup of order 2 need not be
+periodic. For this reason the (co)homology of PSL can be a bit more tricky
+than SL. For example, the calculation 
+\[H^q(PSL_2({\cal O}_{-13}),\mathbb Z) = \left\{\begin{array}{ll} \mathbb Z^3
+\oplus (\mathbb Z_2)^2 & q=1,\\ \mathbb Z^2 \oplus \mathbb Z_4 \oplus (\mathbb
+Z_3)^2 \oplus \mathbb Z_2 & q=2,\\ (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 &
+q= 3 {\rm \ mod\ } 4\\ (\mathbb Z_2)^q & q= 0 {\rm \ mod\ } 4 (q>0)\\ (\mathbb
+Z_2)^q & q= 1 {\rm \ mod\ } 4 (q>1)\\ (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2
+& q= 2 {\rm \ mod\ } 4 (q > 2)\\ \end{array}\right. \]
+ was obtained in \cite{Rahm11}. The following commands verify the calculation in the first 34 degrees, but
+for a proof valid for all degrees one needs to analyse the computation to spot
+that there is a certain "periodicity of period 2" in the computations for $q\ge 3$. This analysis is done in \cite{Rahm11}. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(2,O-13)");;A
+  @gapprompt|gap>A @gapinput|PK:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;A
+  @gapprompt|gap>A @gapinput|for n in [0..2] doA
+  @gapprompt|>A @gapinput|for k in [1..PK!.dimension(n)] doA
+  @gapprompt|>A @gapinput|S:=SmallGroup(IdGroup(PK!.stabilizer( n, k )));A
+  @gapprompt|>A @gapinput|Print( [n,k]," is periodic ",IsPeriodic(S),"\n  ");A
+  @gapprompt|>A @gapinput|od;od;A
+  [ 0, 1 ] is periodic true
+  [ 0, 2 ] is periodic true
+  [ 0, 3 ] is periodic true
+  [ 0, 4 ] is periodic true
+  [ 0, 5 ] is periodic true
+  [ 0, 6 ] is periodic true
+  [ 0, 7 ] is periodic false
+  [ 0, 8 ] is periodic false
+  [ 1, 1 ] is periodic true
+  [ 1, 2 ] is periodic true
+  [ 1, 3 ] is periodic true
+  [ 1, 4 ] is periodic true
+  [ 1, 5 ] is periodic true
+  [ 1, 6 ] is periodic true
+  [ 1, 7 ] is periodic true
+  [ 1, 8 ] is periodic true
+  [ 1, 9 ] is periodic true
+  [ 1, 10 ] is periodic true
+  [ 1, 11 ] is periodic true
+  [ 1, 12 ] is periodic true
+  [ 1, 13 ] is periodic true
+  [ 2, 1 ] is periodic true
+  [ 2, 2 ] is periodic true
+  [ 2, 3 ] is periodic true
+  [ 2, 4 ] is periodic true
+  [ 2, 5 ] is periodic true
+  [ 2, 6 ] is periodic true
+  [ 2, 7 ] is periodic true
+  [ 2, 8 ] is periodic true
+  [ 2, 9 ] is periodic true
+  [ 2, 10 ] is periodic true
+  [ 2, 11 ] is periodic true
+  
+  @gapprompt|gap>A @gapinput|R:=ResolutionPSL2QuadraticIntegers(-13,35);;A
+  @gapprompt|gap>A @gapinput|for n in [0..34] doA
+  @gapprompt|>A @gapinput|Print("H_",n," = ", Homology(TensorWithIntegers(R),n),"\n");A
+  @gapprompt|>A @gapinput|od;A
+  H_0 = [ 0 ]
+  H_1 = [ 2, 2, 0, 0, 0 ]
+  H_2 = [ 6, 12, 0, 0 ]
+  H_3 = [ 2, 6, 6 ]
+  H_4 = [ 2, 2, 2, 2 ]
+  H_5 = [ 2, 2, 2, 2, 2 ]
+  H_6 = [ 2, 2, 2, 2, 6, 6 ]
+  H_7 = [ 2, 2, 2, 2, 2, 6, 6 ]
+  H_8 = [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_9 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_10 = [ 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_11 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_12 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_13 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_14 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_15 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_16 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_17 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_18 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_19 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_20 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_21 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_22 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_23 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_24 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_25 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_26 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_27 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_28 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_29 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_30 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_31 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  H_32 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_33 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_34 = [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6 ]
+  
+\end{Verbatim}
+ The Lyndon\texttt{\symbol{45}}Hochschild\texttt{\symbol{45}}Serre spectral
+sequence $H_p(G/N,H_q(N,A)) \Rightarrow H_{p+q}(G,A)$ for the groups $G=SL_2({\mathcal O}_{-d})$ and $N\cong C_2$ the central subgroup with $G/N\cong PSL_2({\mathcal O}_{-d})$, and the trivial module $A = \mathbb Z_{\ell}$, implies that for primes $\ell>2$ we have a natural isomorphism $H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z_{\ell}) \cong H_n(SL_2({\mathcal
+O}_{-d}),\mathbb Z_{\ell})$. It follows that we have an isomorphism of $\ell$\texttt{\symbol{45}}primary parts $H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)} \cong H_n(SL_2({\mathcal
+O}_{-d}),\mathbb Z)_{(\ell)}$. Since $ H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}$ is periodic in degrees $ \ge 3$ we can recover the $3$\texttt{\symbol{45}}primary part of $H_n(PSL_2({\mathcal O}_{-13}),\mathbb Z)$ in all degrees $q\ge1$ from the following computation by ignoring all $2$\texttt{\symbol{45}}power factors in the output. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionSL2QuadraticIntegers(-13,13);;|
+  !gapprompt@gap>| !gapinput@for n in [3..12] do|
+  !gapprompt@>| !gapinput@Print("H_",n," at prime p=3 is: ", Filtered(Homology(TensorWithIntegers(R),n), m->IsInt(m/3)),"\n");|
+  !gapprompt@>| !gapinput@od;|
+  H_3 at prime p=3 is: [ 6, 24 ]
+  H_4 at prime p=3 is: [  ]
+  H_5 at prime p=3 is: [  ]
+  H_6 at prime p=3 is: [ 6, 12 ]
+  H_7 at prime p=3 is: [ 6, 24 ]
+  H_8 at prime p=3 is: [  ]
+  H_9 at prime p=3 is: [  ]
+  H_10 at prime p=3 is: [ 6, 12 ]
+  H_11 at prime p=3 is: [ 6, 24 ]
+  H_12 at prime p=3 is: [  ]
+  !gapprompt@gap>| !gapinput@#Ignore the 2-power factors in the output|
+  
+\end{Verbatim}
+ The ring ${\mathcal O}_{-163}$ is an example of a principal ideal domain that is not a Euclidean domain. It
+seems that no complete calculation of $H_n(PSL_2({\mathcal O}_{-163}),\mathbb Z)$ is yet available in the literature. The following comands compute this
+homology in the first $31$ degrees. The computation suggests a general formula in higher degrees. All but
+two of the stabilizer groups for the action of $PSL_2({\mathcal O}_{-163})$ are periodic. The non\texttt{\symbol{45}}periodic group $A_4$ occurs twice in degree $0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionPSL2QuadraticIntegers(-163,32);;|
+  !gapprompt@gap>| !gapinput@for n in [1..31] do|
+  !gapprompt@>| !gapinput@Print("H_",n,"= ",Homology(TensorWithIntegers(R),n),"\n");|
+  !gapprompt@>| !gapinput@od;|
+  H_1= [ 0, 0, 0, 0, 0, 0, 0 ]
+  H_2= [ 2, 12, 0, 0, 0, 0, 0, 0 ]
+  H_3= [ 6 ]
+  H_4= [  ]
+  H_5= [ 2, 2, 2 ]
+  H_6= [ 2, 6 ]
+  H_7= [ 6 ]
+  H_8= [ 2, 2, 2, 2 ]
+  H_9= [ 2, 2, 2 ]
+  H_10= [ 2, 6 ]
+  H_11= [ 2, 2, 2, 2, 6 ]
+  H_12= [ 2, 2, 2, 2 ]
+  H_13= [ 2, 2, 2 ]
+  H_14= [ 2, 2, 2, 2, 2, 6 ]
+  H_15= [ 2, 2, 2, 2, 6 ]
+  H_16= [ 2, 2, 2, 2 ]
+  H_17= [ 2, 2, 2, 2, 2, 2, 2 ]
+  H_18= [ 2, 2, 2, 2, 2, 6 ]
+  H_19= [ 2, 2, 2, 2, 6 ]
+  H_20= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_21= [ 2, 2, 2, 2, 2, 2, 2 ]
+  H_22= [ 2, 2, 2, 2, 2, 6 ]
+  H_23= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+  H_24= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_25= [ 2, 2, 2, 2, 2, 2, 2 ]
+  H_26= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+  H_27= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+  H_28= [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_29= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+  H_30= [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+  H_31= [ 2, 2, 2, 2, 2, 2, 2, 2, 6 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 12, 0 ]}
 \hyperdef{L}{X86A6858884B9C05B}{}
 {
  Analogous to the functions for Bianchi groups, HAP has functions 
@@ -8999,7 +9603,7 @@ groups $SL_2(\mathbb Z[\frac{1}{2}])$, $GL_2({\cal O}_{-2})$, $GL_2({\cal O}_{2}
  }
 
  
-\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 12, 0 ]}
+\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 13, 0 ]}
 \hyperdef{L}{X7EF5D97281EB66DA}{}
 {
  The following commands first construct the number field $\mathbb Q(\sqrt{-7})$, its ring of integers ${\cal O}_{-7}={\cal O}(\mathbb Q(\sqrt{-7}))$, and the principal ideal $I=\langle 5 + 2\sqrt{-7}\rangle \triangleleft {\cal O}(\mathbb Q(\sqrt{-7}))$ of norm ${\cal N}(I)=53$. The ring $I$ is prime since its norm is a prime number. The primality of $I$ is also demonstrated by observing that the quotient ring $R={\cal O}_{-7}/I$ is an integral domain and hence isomorphic to the unique finite field of order $53 $, $R\cong \mathbb Z/53\mathbb Z$ . (In a ring of quadratic integers \emph{prime ideal} is the same as \emph{maximal ideal}). 
@@ -9089,7 +9693,7 @@ The following commands construct the classic example of a prime ideal $I$ that i
  }
 
  
-\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 13, 0 ]}
+\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 14, 0 ]}
 \hyperdef{L}{X7D1F72287F14C5E1}{}
 {
  
@@ -9145,7 +9749,7 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 14, 0 ]}
+\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 15, 0 ]}
 \hyperdef{L}{X85E912617AFE03F4}{}
 {
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational
@@ -9171,14 +9775,15 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
 \[ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow
 \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1
 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49} + \cdots\]
- as the norm of the prime ideal $I$ tends to $\infty$. The following approximates $\lambda/18\pi = 0.0161957$ and $\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.00913432$ for the above example. 
+ as the norm of the prime ideal $I$ tends to $\infty$. The following approximates $\lambda/18\pi = 0.0161957$ and $\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0210325$ for the above example. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Q:=QuadraticNumberField(-1);;|
   !gapprompt@gap>| !gapinput@Lfunction(Q,2)/(18*3.142);|
   0.0161957
   
-  !gapprompt@gap>| !gapinput@1.0*Log(Product(AbelianInvariants(F)),10)/Norm(I);|
-  0.00913432
+  Loge10:=0.434294481903;; #Log_10(e)
+  !gapprompt@gap>| !gapinput@1.0*Log(Product(AbelianInvariants(G)),10)/(Loge*Norm(I));|
+  0.0210325
   
 \end{Verbatim}
  
@@ -9186,7 +9791,44 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
  The link with volume is given by the Humbert volume formula 
 \[ {\rm Vol} ( {\frak h}^3 / PSL_2( {\cal O}_{d} ) ) = \frac{|D|^{3/2}}{24}
 \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2) \]
- valid for square\texttt{\symbol{45}}free $d<0$, where $D$ is the discriminant of $\mathbb Q(\sqrt{d})$. The volume of a finite index subgroup $\Gamma$is obtained by multiplying the right\texttt{\symbol{45}}hand side by the index $|PSL_2({\cal O}_d)\,:\, \Gamma|$. }
+ valid for square\texttt{\symbol{45}}free $d<0$, where $D$ is the discriminant of $\mathbb Q(\sqrt{d})$. The volume of a finite index subgroup $\Gamma$ is obtained by multiplying the right\texttt{\symbol{45}}hand side by the index $|PSL_2({\cal O}_d)\,:\, \Gamma|$. 
+
+ The following commands produce a graph of $ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}$ against ${\rm Norm}(I)$ for prime ideals $I$ of norm $49 \le {\rm Norm}(I) \le 4357$ (where one ideal for each norm is taken). 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|Q:=QuadraticNumberField(-1);;D
+  @gapprompt|gap>D @gapinput|OQ:=RingOfIntegers(Q);;D
+  @gapprompt|gap>D @gapinput|N:=QuadraticIntegersByNorm(OQ,20000);;D
+  
+  @gapprompt|gap>D @gapinput|#########################################D
+  @gapprompt|gap>D @gapinput|fn:=function(x);D
+  @gapprompt|gap>D @gapinput|if IsRat(x) then return x; fi;D
+  @gapprompt|gap>D @gapinput|return x!.rational+x!.irrational*Sqrt(-1);D
+  @gapprompt|gap>D @gapinput|end;D
+  @gapprompt|gap>D @gapinput|#########################################D
+  
+  @gapprompt|gap>D @gapinput|NN:=List(N,fn);D
+  @gapprompt|gap>D @gapinput|P:=Filtered(NN,x->IsPrime(QuadraticIdeal(OQ,x)));D
+  @gapprompt|gap>D @gapinput|PP:=Classify(P,x->Norm(Q,x));D
+  @gapprompt|gap>D @gapinput|PP:=List(PP,x->x[1]);;D
+  @gapprompt|gap>D @gapinput|PP:=Filtered(PP,x->not x=0);D
+  
+  @gapprompt|gap>D @gapinput|Loge:=0.434294481903;; ###Log_10(e)D
+  @gapprompt|gap>D @gapinput|#########################################D
+  @gapprompt|gap>D @gapinput|ffn:=function(x)D
+  @gapprompt|gap>D @gapinput|local I, G, A, S, F;D
+  @gapprompt|gap>D @gapinput|I:=QuadraticIdeal(OQ,x);D
+  @gapprompt|gap>D @gapinput|G:=HAP_CongruenceSubgroupGamma0(I);;D
+  @gapprompt|gap>D @gapinput|A:=AbelianInvariants(G);D
+  @gapprompt|gap>D @gapinput|A:=Filtered(A,x->not x=0);D
+  @gapprompt|gap>D @gapinput|return [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i->not i=0)),10)/(Loge*Norm(I))];D
+  @gapprompt|gap>D @gapinput|end;D
+  @gapprompt|gap>D @gapinput|#########################################D
+  
+  @gapprompt|gap>D @gapinput|S:=List(PP{[9..267]},ffn);D
+  @gapprompt|gap>D @gapinput|ScatterPlot(S);D
+  
+\end{Verbatim}
+  }
 
  }
 
@@ -9219,9 +9861,9 @@ cells of dimension $\le 2$. }
 \section{\textcolor{Chapter }{Swan's description of a fundamental domain}}\logpage{[ 14, 2, 0 ]}
 \hyperdef{L}{X872D22507F797001}{}
 {
- A pair $(a,b)$ of elements in ${\cal O}_{-d}$ is said to be \emph{unimodular} if the ideal generated by $a,b$ is the whole ring ${\cal O}_{-d}$ and $a\ne 0$. A unimodular pair can be represented by a hemisphere in $\overline{\frak h}^3$ with base centred at the point $b/a \in \mathbb C$ and of radius $|a|$. The radius is $\le 1$. Think of the points in ${\frak h}^3$ as lying strictly above $\mathbb C$. Let $B$ denote the space obtained by removing all such hemispheres from ${\frak h}^3$. 
+ A pair $(a,b)$ of elements in ${\cal O}_{-d}$ is said to be \emph{unimodular} if the ideal generated by $a,b$ is the whole ring ${\cal O}_{-d}$ and $a\ne 0$. A unimodular pair can be represented by a hemisphere in $\overline{\frak h}^3$ with base centred at the point $b/a \in \mathbb C$ and of radius $|1/a|$. The radius is $\le 1$. Think of the points in ${\frak h}^3$ as lying strictly above $\mathbb C$. Let $B$ denote the space obtained by removing all such hemispheres from ${\frak h}^3$. 
 
- When $d \equiv 3 \mod 4$ let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/4 \le y \le 1/4$, $t \ge 0$. Otherwise, let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/2 \le y \le 1/2$, $t \ge 0$. 
+ When $d \equiv 3 {\rm \ mod\ } 4$ let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/4 \le y \le 1/4$, $t \ge 0$. Otherwise, let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/2 \le y \le 1/2$, $t \ge 0$. 
 
  It is explained in \cite{swanB} that $F\cap B$ is a $3$\texttt{\symbol{45}}cell in the above mentioned regular
 CW\texttt{\symbol{45}}complex structure on $X$. }
@@ -9271,6 +9913,17 @@ precisely three orbits under the action of $G_{-d}$. Thus, together with the orb
 correspondence between cusp orbits and elements of the class group it follows
 that the class group of $\mathbb Q(\sqrt{-39})$ is of order $4$. 
 
+The following additional commands comvert the Bianchi polyhedron $D$ to a regular CW\texttt{\symbol{45}}complex and then display its $1$\texttt{\symbol{45}}skeleton. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@D:=BianchiPolyhedron(-39);;|
+  !gapprompt@gap>| !gapinput@Y:=RegularCWComplex(D);|
+  Regular CW-complex of dimension 2
+  
+  !gapprompt@gap>| !gapinput@Display(GraphOfRegularCWComplex(Y));|
+  
+\end{Verbatim}
+  
+
 A fundamental domain for $G_{-22}$ can be visualized using the following commands. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@D:=BianchiPolyhedron(-22);;|
@@ -9291,7 +9944,7 @@ A fundamental domain for $G_{-163}$ can be visualized using the following comman
 \end{Verbatim}
    
 
-There is just a single orbit of cusps in this example, the orbit containing $\infty$, since $\mathbb Q(\sqrt{-163})$ is a principle ideal domain and hence has trivial class group. 
+There is just a single orbit of cusps in this example, the orbit containing $\infty$, since $\mathbb Q(\sqrt{-163})$ is a principal ideal domain and hence has trivial class group. 
 
 A fundamental domain for $G_{-33}$ is visualized using the following commands. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -9301,6 +9954,271 @@ A fundamental domain for $G_{-33}$ is visualized using the following commands.
   
 \end{Verbatim}
    }
+
+ 
+\section{\textcolor{Chapter }{Computing a free resolution for $SL_2({\mathcal O}_{-d})$}}\logpage{[ 14, 5, 0 ]}
+\hyperdef{L}{X78476F127B73BBD1}{}
+{
+ The above fundamental domains can be used to construct free resolutions for $SL_2({\mathcal O}_{-d})$ and $PSL_2({\mathcal O}_{-d})$. The following commands illustrate the computation of free resolutions for $SL_2({\mathcal O}_{-43})$ and $SL_2({\mathcal O}_{-10})$ and $SL_2({\mathcal O}_{-14})$ and their integral homology (which in each case is periodic of period dividing $4$ in degrees $\ge 3$). The computation of fundamental domains uses exact arithmetic in the two
+field extensions $\mathbb Q(\sqrt{d})$ and $ \mathbb Q(\sqrt{-d})$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-43);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,11);;|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegers(R);;|
+  !gapprompt@gap>| !gapinput@List([0..10],n->Homology(C,n));|
+  [ [ 0 ], [ 0, 0 ], [ 2, 2, 12, 0 ], [ 2, 2, 24 ], [ 2, 2 ], [ 2 ], 
+    [ 2, 2, 12 ], [ 2, 2, 24 ], [ 2, 2 ], [ 2 ], [ 2, 2, 12 ] ]
+  
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-10);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,11);;|
+  !gapprompt@gap>| !gapinput@List([0..10],k->Homology(TensorWithIntegers(R),k));|
+  [ [ 0 ], [ 2, 2, 0, 0, 0 ], [ 2, 2, 2, 12, 0, 0 ], [ 2, 2, 2, 24 ], 
+    [ 2, 4, 12 ], [ 2, 2, 2, 6 ], [ 2, 2, 2, 12 ], [ 2, 2, 2, 24 ], 
+    [ 2, 4, 12 ], [ 2, 2, 2, 6 ], [ 2, 2, 2, 12 ] ]
+  
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-14);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,11);;|
+  !gapprompt@gap>| !gapinput@List([0..10],k->Homology(TensorWithIntegers(R),k));|
+  [ [ 0 ], [ 6, 0, 0, 0, 0, 0 ], [ 2, 2, 2, 4, 12, 0, 0, 0, 0 ], 
+    [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ], [ 2, 2, 2, 2, 24 ], 
+    [ 2, 2, 2, 4, 12 ], [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ], 
+    [ 2, 2, 2, 2, 24 ], [ 2, 2, 2, 4, 12 ] ]
+  
+\end{Verbatim}
+ The following commands count the number of orbits of cusps (in addition to the
+orbit of $\infty$). They determine that there is precisely one element in the ideal class group
+of ${\mathcal O}_{-43}$ (i.e it is a principal ideal domain) and that there are precisely two elements
+in the ideal class group of ${\mathcal O}_{-10}$ and precisely four elements in the ideal class group of ${\mathcal O}_{-14}$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-43);;A
+  @gapprompt|gap>A @gapinput|List([1..K!.dimension(0)],k->Order(K!.stabilizer(0,k)));A
+  [ 24, 24, 6, 6, 4, 4, 12, 12 ]
+  
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-10);;A
+  @gapprompt|gap>A @gapinput|List([1..K!.dimension(0)],k->Order(K!.stabilizer(0,k)));A
+  [ 6, 6, 4, 4, 6, infinity ]
+  
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-14);;A
+  @gapprompt|gap>A @gapinput|List([1..K!.dimension(0)],k->Order(K!.stabilizer(0,k)));A
+  [ 6, 6, 2, 2, 2, infinity, infinity, 2, infinity, 6, 4 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Some sanity checks}}\logpage{[ 14, 6, 0 ]}
+\hyperdef{L}{X784B2156823AEB15}{}
+{
+ There is ample scope for bugs in the implementation of the above method for
+computing resolutions of Bianchi groups. The following sanity checks lend
+confidence to the implementation. 
+\subsection{\textcolor{Chapter }{Equivariant Euler characteristic}}\logpage{[ 14, 6, 1 ]}
+\hyperdef{L}{X7E5A36D47F9D4A47}{}
+{
+ Let $X$ be any cell complex with an action of a group $G$ such that (i) $X$ has finitely many $G$\texttt{\symbol{45}}orbits of cells, and (ii) the stabilizer subgroup in $G$ for each cell is either finite or free abelian. One defines the \emph{equivariant Euler characteristic} \$\$\texttt{\symbol{92}}chi{\textunderscore}G(X) =
+\texttt{\symbol{92}}sum{\textunderscore}e
+(\texttt{\symbol{45}}1)\texttt{\symbol{94}}\texttt{\symbol{123}}dim\texttt{\symbol{126}}
+e\texttt{\symbol{125}} / |Stab{\textunderscore}G(e)|\$\$ where $e$ ranges over a set of representatives of the orbits of those cells with finite
+stabilizers. If $G$ has a finite index torsion free subgroup and if the complex $X$ is contractible then one can define the Euler characteristic of the group to
+be $\chi(G) = \chi_G(X)$. It is known that $\chi (SL_n({\mathcal O})) = \chi(GL_n({\mathcal O})) =0$ for $\mathcal O$ the ring of integers of a number field \cite{Gangl}. 
+
+One easy test to make in our computations is to check that the equivariant
+Euler characteristic of the $2$\texttt{\symbol{45}}complex is indeed zero. The following commands perform
+this test for the group $SL_2({\mathcal O}_{-23})$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  
+  @gapprompt|gap>A @gapinput|chi:=0;;A
+  @gapprompt|gap>A @gapinput|for n in [0..2] doA
+  @gapprompt|>A @gapinput|for k in [1..K!.dimension(n)] doA
+  @gapprompt|>A @gapinput|g:=Order(K!.stabilizer(n,k));A
+  @gapprompt|>A @gapinput|if g < infinity then chi:=chi + (-1)^n/g; fi;A
+  @gapprompt|>A @gapinput|od;od;A
+  @gapprompt|gap>A @gapinput|chi;A
+  0
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Boundary squares to zero}}\logpage{[ 14, 6, 2 ]}
+\hyperdef{L}{X852CDAFF84C5DF01}{}
+{
+ The signs in the boundary maps of the free resolution are delicate. Another
+easy test is to check that the boundary in the resolution squares to zero. The
+following commands perform this check for the group $SL_2({\mathcal O}_{-23})$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,10);;A
+  @gapprompt|gap>A @gapinput|n:=2;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));A
+  [ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ] ]
+  @gapprompt|gap>A @gapinput|n:=3;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));A
+  [ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ] ]
+  @gapprompt|gap>A @gapinput|n:=4;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));A
+  [ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ] ]
+  @gapprompt|gap>A @gapinput|n:=5;;List([1..R!.dimension(n)],k->ResolutionBoundaryOfWord(R,n-1,R!.boundary(n,k)));A
+  [ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+    [  ], [  ], [  ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Compare different algorithms or implementations}}\logpage{[ 14, 6, 3 ]}
+\hyperdef{L}{X7E64819A7C058EDD}{}
+{
+ Sebastian Schoennenbeck in his thesis work computed some contractible $2$\texttt{\symbol{45}}complexes on which Bianchi groups act with finite
+stabilizers (even when the ideal class is greater than $1$) using a different approach to that of Swan. These computed complexes are
+stored in \textsc{HAP} and provide an alternative way of computing cohomology for the stored groups.
+Alexander Rahm in his thesis work implemented Swan's approach and has provided
+some $2$\texttt{\symbol{45}}complexes that are also stored in \textsc{HAP} in cases where the ideal class is equal to $1$. 
+
+The following commands test that Sebastian Schoennenbeck's $2$\texttt{\symbol{45}}complex for $SL_2({\mathcal O}_{-23})$ yields the same integral homology as the above \textsc{HAP} implementation. Both computations use \textsc{HAP}'s implementation of Wall's perturbation technique for computing the
+resolution from the $2$\texttt{\symbol{45}}complex. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(2,O-23)");;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,10);;|
+  !gapprompt@gap>| !gapinput@List([0..9],n->Homology(TensorWithIntegers(R),n));|
+  [ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], 
+    [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ]
+  
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-23);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,10);;|
+  !gapprompt@gap>| !gapinput@List([0..9],n->Homology(TensorWithIntegers(R),n));|
+  [ [ 0 ], [ 12, 0, 0, 0 ], [ 2, 2, 12, 0, 0 ], [ 2, 2, 12 ], [ 2, 2, 12 ], 
+    [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ], [ 2, 2, 12 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Compare geometry to algebra}}\logpage{[ 14, 6, 4 ]}
+\hyperdef{L}{X8223864085412705}{}
+{
+ The number of cusps (i.e. the number of orbits of vertices with infinite
+stabilizer subgroup) must be precisely one less than the number of elements in
+the ideal class group of ${\mathcal O}_{-d}$. The following commands check this for $SL_2({\mathcal O}_{-23})$ where ${\mathcal O}_{-23}$ is known to have class number 3. (This class number is easily computed from a
+formula in Swan's paper.) 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  @gapprompt|gap>A @gapinput|List([1..K!.dimension(0)],k->Order(K!.stabilizer(0,k)));A
+  [ 6, 2, 2, 4, infinity, infinity ]
+  
+\end{Verbatim}
+ A visualization of the fundamental domain tells us a certain amount about the
+algebra. In the case of $SL_2({\mathcal O}_{-23})$ 
+
+  
+
+ a fundamental domain for the action on $\mathbb C$ by the translation subgroup generated by the matrices \$\$
+\texttt{\symbol{92}}left(\texttt{\symbol{92}}begin\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{123}}ll\texttt{\symbol{125}}
+1 \&1\texttt{\symbol{92}}\texttt{\symbol{92}} 0
+\&1\texttt{\symbol{92}}end\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{92}}right),
+\texttt{\symbol{92}}left(\texttt{\symbol{92}}begin\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{123}}ll\texttt{\symbol{125}}
+1 \&\texttt{\symbol{92}}omega\texttt{\symbol{92}}\texttt{\symbol{92}} 0
+\&1\texttt{\symbol{92}}end\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{92}}right)
+\$\$ $\omega = (1+\sqrt{-23})/2$ is indicated by the white rectangle. From this we see that under the action of $SL_2({\mathcal O}_{-23})$ there are at most $11$ orbits of $2$\texttt{\symbol{45}}cells, the central decagon and ten quadrilaterals.
+However, the matrix \$\$
+\texttt{\symbol{92}}left(\texttt{\symbol{92}}begin\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{123}}rr\texttt{\symbol{125}}
+0 \&\texttt{\symbol{45}}1\texttt{\symbol{92}}\texttt{\symbol{92}} 1
+\&0\texttt{\symbol{92}}end\texttt{\symbol{123}}array\texttt{\symbol{125}}\texttt{\symbol{92}}right)
+\$\$ maps $(z,0)$ to $(-1/z,0)$ and fixes $(0,1)$. This isometry identifies points on the boundary of the decagon pairwise.
+These observations are consistent with the above listing of the six orbit
+stabilizers and the following algebraic information on the boundaries of the $2$\texttt{\symbol{45}}cells in the Bianchi $2$\texttt{\symbol{45}}complex. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  @gapprompt|gap>A @gapinput|List([1..K!.dimension(2)],k->Length(K!.boundary(2,k)));A
+  [ 10, 4, 4, 4, 4, 4 ]
+  
+\end{Verbatim}
+ }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Group presentations}}\logpage{[ 14, 7, 0 ]}
+\hyperdef{L}{X78BC9D077956089A}{}
+{
+ Swan's reason for studying fundamental domains was to obtain explicit group
+presentations for $SL_2({\mathcal O}_{-d})$ for various values of $d$. The following commands obtain a presentation for $SL_2({\mathcal O}_{-23})$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,2);;A
+  @gapprompt|gap>A @gapinput|P:=PresentationOfResolution(R);A
+  @gapprompt|gap>A @gapinput|G:=SimplifiedFpGroup(P!.freeGroup/P!.relators);A
+  <fp group on the generators [ k, r, s, w, x ]>
+  @gapprompt|gap>A @gapinput|RelatorsOfFpGroup(G);A
+  [ w^-1*k*w*k^-1, s^-1*r*s*r^-1, k^6, x^-1*k^-3*x*k^-3, s^-1*k^-3*s*k^-3, 
+    r^-1*w*x^-1*s*r*w^-1*x*s^-1, r^-1*k^-3*r*k^-3, 
+    x*k^-2*r^-1*x*r^-1*s^-1*k^-1*s^-1, x^-1*k^3*s*r*x^-1*s*r ]
+  
+  @gapprompt|gap>A @gapinput|#Next we identify the generators as matricesA
+  @gapprompt|gap>A @gapinput|GeneratorsOfGroup(P!.freeGroup);A
+  [ k, m, n, p, q, r, s, t, u, v, w, x, y, z ]
+  @gapprompt|gap>A @gapinput|P!.gens;A
+  [ 19, 6, 6, 20, 6, 21, 22, 6, 52, 53, 2, 50, 1, 4 ]
+  
+  @gapprompt|gap>A @gapinput|k:=R!.elts[19];A
+  [ [ 1, 1 ], 
+    [ -1, 0 ] ]
+  @gapprompt|gap>A @gapinput|r:=R!.elts[21];A
+  [ [ 3, 3 + -1 Sqrt(-23) ], 
+    [ -3/2 + -1/2 Sqrt(-23), -5 ] ]
+  @gapprompt|gap>A @gapinput|s:=R!.elts[22];A
+  [ [ 2 + 1 Sqrt(-23), 13/2 + 1/2 Sqrt(-23) ], 
+    [ 5/2 + -1/2 Sqrt(-23), -1 Sqrt(-23) ] ]
+  @gapprompt|gap>A @gapinput|w:=R!.elts[2];A
+  [ [ 3/2 + 1/2 Sqrt(-23), -3/2 + 1/2 Sqrt(-23) ], 
+    [ 3/2 + -1/2 Sqrt(-23), 3 ] ]
+  @gapprompt|gap>A @gapinput|x:=R!.elts[50];A
+  [ [ 11/2 + 1/2 Sqrt(-23), 15/2 + -1/2 Sqrt(-23) ], 
+    [ -1 Sqrt(-23), -4 + -1 Sqrt(-23) ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Finite index subgroups}}\logpage{[ 14, 8, 0 ]}
+\hyperdef{L}{X786CFAA17C0A6E7A}{}
+{
+ The following commands compute the integral homology of a congruence subgroup $G$ of index 24 in $SL_2({\mathcal O}_{-23})$. They also compute a presentation for $G$ with 13 generators and 24 relators. 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|OQ:=RingOfIntegers(QuadraticNumberField(-23));;D
+  @gapprompt|gap>D @gapinput|I:=QuadraticIdeal(OQ,[Sqrt(-23)]);D
+  ideal of norm 23 in O(Q(Sqrt(-23)))
+  @gapprompt|gap>D @gapinput|G:=HAP_CongruenceSubgroupGamma0(I);D
+  <group of 2x2 matrices in characteristic 0>
+  @gapprompt|gap>D @gapinput|IndexInSL2O(G);D
+  24
+  
+  @gapprompt|gap>D @gapinput|K:=BianchiGcomplex(-23);;D
+  @gapprompt|gap>D @gapinput|R:=FreeGResolution(K,11);;D
+  @gapprompt|gap>D @gapinput|R:=QuadraticToCyclotomicCoefficients(R);;D
+  @gapprompt|gap>D @gapinput|S:=ResolutionFiniteSubgroup(R,G);;D
+  @gapprompt|gap>D @gapinput|List([0..10],n->Homology(TensorWithIntegers(S),n));D
+  [ [ 0 ], [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ],
+    [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2, 2, 2, 2 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
+  
+  @gapprompt|gap>D @gapinput|P:=PresentationOfResolution(S);;D
+  @gapprompt|gap>D @gapinput|H:=SimplifiedFpGroup(P!.freeGroup/P!.relators);D
+  <fp group on the generators [ f8, f10, f15, f70, f86, f125, f132, f138, f182, 
+    f187, f191, f273, f279 ]>
+  @gapprompt|gap>D @gapinput|Length(RelatorsOfFpGroup(H));D
+  24
+  
+\end{Verbatim}
+ }
 
  }
 

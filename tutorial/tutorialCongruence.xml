@@ -337,17 +337,18 @@ A congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> and element <M>g\in SL_2
 These homomorphisms give rise to homomorphisms of cohomology groups
 <Display>H^n(\Gamma,\mathbb Z)\ \ \stackrel{tr}{\leftarrow} \ \ H^n(\Gamma',\mathbb Z) \ \ \stackrel{\alpha}{\leftarrow} \ \ H^n(g^{-1}\Gamma' g,\mathbb Z) \ \  \stackrel{\beta}{\leftarrow} H^n(\Gamma, \mathbb Z) </Display>
 with <M>\alpha</M>, <M>\beta</M> functorial maps, and <M>tr</M> the transfer map.
-We define the composite <M>T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow H^n(\Gamma, \mathbb Z)</M> to be the <E> Hecke operator </E>  determined by <M>g</M>.
-Further details on this description of Hecke operators can be found in 
+We define the composite <M>T_g=tr \circ \alpha \circ \beta\colon H^n(\Gamma, \mathbb Z) \rightarrow H^n(\Gamma, \mathbb Z)</M> to be the <E> Hecke component </E>  determined by <M>g</M>.
+
+<P/>For <M>\Gamma=\Gamma_0(N)</M>,  prime integer <M>p</M> coprime to <M>N</M>, and cohomology degree <M>n=1</M> we define the <E>Hecke operator</E> <M>T_p =T_g</M> 
+where <M>g=\left(\begin{array}{cc}1&amp;0\\0&amp;p\end{array}\right)</M>.
+
+	Further details on this description of Hecke operators can be found in
 <Cite Key="stein" Where="Appendix by P. Gunnells"/>.
 
-<P/>For each prime integer <M>p\ge 1</M> we set <M>T_p =T_g</M> with
-for <M>g=\left(\begin{array}{cc}1&amp;0\\0&amp;p\end{array}\right)</M>.
-
 <P/>The following commands compute <M>T_2</M> and <M>T_5</M>
- for <M>n=1</M>
+
 and
- <M>\Gamma=\Gamma_0(39)</M>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <M>T_2</M> and <M>T_5</M> commute. (It is a fact that <M>T_pT_q=T_qT_p</M> for all primes <M>p,q</M>.)   
+ <M>\Gamma=\Gamma_0(39)</M>. The commands also compute the eigenvalues of these two Hecke operators. The final command confirms that <M>T_2</M> and <M>T_5</M> commute. (It is a fact that <M>T_pT_q=T_qT_p</M> for all  <M>p,q</M>.)   
 
 <Example>
 <#Include SYSTEM "tutex/11.7.txt">
@@ -357,9 +358,10 @@ and
 
 
 <Section><Heading>Hecke operators on forms of weight <M> \ge 2</M></Heading>
-The above definition of Hecke operator <M>T_g</M> for <M>g\in SL_2(\mathbb Q)</M> extends to a Hecke operator
-<M>T_g\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )</M> for <M>k\ge 2</M>. We  work over the rationals rather than the integers in 
-order to ensure that the action of <M>\Gamma</M> on homogeneous polynomials extends to an action of <M>g</M>. 
+	The above definition of Hecke operator <M>T_p</M> for <M>\Gamma=\Gamma_0(N)</M> extends to a Hecke operator
+	<M>T_p\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )</M> for <M>k\ge 2</M>. 
+		We  work over the rationals since that is a setting of much interest.
+
 The following commands compute the matrix of <M>T_2\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb Q}(k-2) )</M> for <M>\Gamma=SL_2(\mathbb Z)</M> and <M>k=4</M>;
 <Example>
 <#Include SYSTEM "tutex/11.7b.txt">
@@ -374,26 +376,29 @@ for
 <M>SL_2(\mathbb Z)</M>,  we can evaluate
 <Display>\int_e f(z)\,dz \ .</Display> 
 In this way we obtain a cochain <M>f_1\colon C_1({\cal T}) \rightarrow \mathbb C</M> in <M>Hom_{\mathbb Z\Gamma}(C_1({\cal T}), \mathbb C)</M>
- representing a cohomology class <M>c(f) \in H^1(\, Hom_{\mathbb Z\Gamma}(C_\ast({\cal T}), \mathbb C)  \,) = H^1(\Gamma,\mathbb C)</M>. The correspondence <M>f\mapsto c(f)</M> underlies the Eichler-Shimura isomorphism.  Hecke operators can be used to recover modular forms from cohomology classes.  
-<P/>Hecke operators restrict to operators on cuspidal cohomology. On the left-hand side of the Eichler-Shimura isomorphism 
+	representing a cohomology class <M>c(f) \in H^1(\, Hom_{\mathbb Z\Gamma}(C_\ast({\cal T}), \mathbb C)  \,) = H^1(\Gamma,\mathbb C)</M>. The correspondence <M>f\mapsto c(f)</M> underlies the Eichler-Shimura isomorphism.  
+
+	Hecke operators can be used to recover modular forms from cohomology classes.  
+	<P/>
+		Let <M>\Gamma=\Gamma_0(N)</M>.  The above defined Hecke operators restrict to operators on cuspidal cohomology. On the left-hand side of the Eichler-Shimura isomorphism 
 Hecke operators restrict to  operators <M>T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)</M> for <M>s\ge 1</M>.
 
 
-<P/>Let us now introduce the function <M>q=q(z)=e^{2\pi i z}</M> which is holomorphic on <M>\mathbb C</M>.
-For any modular form <M>f(z)</M> there are numbers <M>a_s</M> such that
+<P/>Consider the function <M>q=q(z)=e^{2\pi i z}</M> which is holomorphic on <M>\mathbb C</M>.
+For any modular form <M>f(z) \in M_k(\Gamma)</M> there are numbers <M>a_s</M> such that
 <Display>f(z) = \sum_{s=0}^\infty a_sq^s </Display>
 for all <M>z\in {\frak h}</M>. The form <M>f</M> is a cusp form if <M>a_0=0</M>.
 
 <P/>  A non-zero
-cusp form <M>f\in S_2(\Gamma)</M> is an <E>eigenform</E> if it is simultaneously an eigenvector for the Hecke operators <M>T_s</M> for all <M>s =1,2,3,\cdots</M>. An eigenform is said to be <E>normalized</E> if its coefficient <M>a_1=1</M>. It turns out that if <M>f</M> is a normalized eigenform then the coefficient <M>a_s</M> is an eigenvalue for <M>T_s</M> (see for instance <Cite Key="stein"/> for details).
- It can be shown <Cite Key="atkinlehner"/> that <M>f\in S_2(\Gamma_0(N))</M> admits a basis of eigenforms.
+	cusp form <M>f\in S_2(\Gamma)</M> is a cusp <E>eigenform</E> if it is simultaneously an eigenvector for the Hecke operators <M>T_s</M> for all <M>s =1,2,3,\cdots</M> coprime to the level <M>N</M>. A cusp eigenform is said to be <E>normalized</E> if its coefficient <M>a_1=1</M>. It turns out that if <M>f</M> is  normalized  then the coefficient <M>a_s</M> is an eigenvalue for <M>T_s</M> (see for instance <Cite Key="stein"/> for details).
+ It can be shown <Cite Key="atkinlehner"/> that <M>S_2(\Gamma_0(N))</M> admits a "basis constructed from eigenforms".
 
 <P/> This all implies that, in principle,
  we can construct an  approximation to an explicit
- basis for the space <M>S_2(\Gamma)</M> of cusp
+ basis for the space <M>S_2(\Gamma_0(N))</M> of cusp
  forms by computing eigenvalues for Hecke operators. 
 
-<P/> Suppose that we would like a basis for <M>S_2(\Gamma_0(11))</M>. The following commands first show that <M>H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z</M> from which we deduce that <M>S_2(\Gamma_0(11)) =\mathbb C</M> is <M>1</M>-dimensional. Then eigenvalues of 
+<P/> Suppose that we would like a basis for <M>S_2(\Gamma_0(11))</M>. The following commands first show that <M>H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z</M> from which we deduce that <M>S_2(\Gamma_0(11)) =\mathbb C</M> is <M>1</M>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of 
 Hecke operators are calculated to establish that the modular form
 <Display>f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots </Display>
 constitutes a basis for <M>S_2(\Gamma_0(11))</M>. 
@@ -431,8 +436,8 @@ To describe the action we introduce the symbol <M>j</M> satisfying <M>j^2=-1</M>
 
 Alternatively,  and more explicitly, the action is given by 
 <Display>\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right)\cdot (z+tj) \ = \  
-\frac{(az+b)\overline{(cz+d) } + a\overline c y^2}{|cz +d|^2 + |c|^2y^2} \ +\ 
-\frac{y}{|cz+d|^2+|c|^2y^2}\, j
+\frac{(az+b)\overline{(cz+d) } + a\overline c t^2}{|cz +d|^2 + |c|^2t^2} \ +\ 
+\frac{t}{|cz+d|^2+|c|^2t^2}\, j
       \ .</Display>
 
 <P/>A standard 'fundamental domain' <M>D</M> for this action is the following region (with some of the boundary points removed).
@@ -450,11 +455,7 @@ Alternatively,  and more explicitly, the action is given by
 
 <P/>The upper-half space <M>{\frak h}^3</M> can be retracted onto a <M>2</M>-dimensional subspace <M>{\cal T} \subset {\frak h}^3</M>. The space <M>{\cal T}</M>
 is a contractible
-<M>2</M>-dimensional regular CW-complex, and the action of the Picard group <M>G</M> restricts to a cellular action of <M>G</M> on <M>{\cal T}</M>. Under this action there is one orbit of <M>2</M>-cells, represented by the curvilinear square with vertices <M>a</M>, <M>b</M>, <M>c</M> and <M>d</M> in the picture. This <M>2</M>-cell has stabilizer group isomorphic to the quaternion group
-<M>Q_4</M> of order <M>8</M>.
- There are two orbits of <M>1</M>-cells, both with stabilizer group isomorphic to a semi-direct product <M>C_3:C_4</M>. There is
-  one orbit of <M>0</M>-cells, with stabilizer group isomorphic to <M>SL(2,3)</M>. 
-
+<M>2</M>-dimensional regular CW-complex, and the action of the Picard group <M>G</M> restricts to a cellular action of <M>G</M> on <M>{\cal T}</M>. 
 
 <P/>Using perturbation techniques, the <M>2</M>-complex <M>{\cal T}</M> can be combined with free resolutions for the cell stabilizer groups to contruct a regular CW-complex <M>X</M> on which the Picard group <M>G</M> acts freely. 
 The following commands compute the first few terms of the free <M>\mathbb ZG</M>-resolution 
@@ -490,8 +491,8 @@ the following commands compute
 <Section><Heading>Bianchi groups</Heading>
 The <E>Bianchi groups</E> are the groups <M>G=PSL_2({\cal O}_{-d})</M> where <M>d</M> is a square free positive integer and <M>{\cal O}_{-d}</M> is the ring of integers
 of the imaginary quadratic field <M>\mathbb Q(\sqrt{-d})</M>. More explicitly, 
-<Display>{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1 {\rm ~mod~} 4\, ,</Display>
-<Display>{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d \equiv 2,3 {\rm ~mod~} 4\, .</Display>
+<Display>{\cal O}_{-d} = \mathbb Z\left[\sqrt{-d}\right]~~~~~~~~ {\rm if~} d \equiv 1,2 {\rm ~mod~} 4\, ,</Display>
+<Display>{\cal O}_{-d} = \mathbb Z\left[\frac{1+\sqrt{-d}}{2}\right]~~~~~ {\rm if~} d \equiv 3 {\rm ~mod~} 4\, .</Display>
 These groups act on upper-half space <M>{\frak h}^3</M> in the same way as the Picard group.   Upper-half space can be tessellated by a  'fundamental domain'
  for this action. Moreover, as with the Picard group, this tessellation contains a <M>2</M>-dimensional cellular subspace <M>{\cal T}\subset {\frak h}^3</M>
 where <M>{\cal T}</M> is a contractible CW-complex on which <M>G</M> acts cellularly. It should be mentioned that the fundamental domain and the contractible <M>2</M>-complex  <M>{\cal T}</M> are not uniquely determined by <M>G</M>.
@@ -560,6 +561,92 @@ the following commands compute
 <#Include SYSTEM "tutex/11.11.txt">
 </Example>
 </Section>
+
+<Section><Heading>(Co)homology of Bianchi groups and <M>SL_2({\cal O}_{-d})</M></Heading>
+The (co)homology of Bianchi groups has been studied in papers such as 
+		<Cite Key="Schwermer"/>
+<Cite Key="Vogtmann"/>	
+	<Cite Key="Berkove00"/>
+		 <Cite Key="Berkove06"/>
+			 <Cite Key="Rahm11"/>
+				 <Cite Key="Rahm13"/>
+					 <Cite Key="Rahm13a"/>
+					 <Cite Key="Rahm20"/>.
+						 Calculations in these papers can often be verified by computer. For instance, the calculation
+<Display>H_q(PSL_2({\cal O}_{-15}),\mathbb Z) =
+	\left\{\begin{array}{ll}
+	\mathbb Z^2 \oplus \mathbb Z_6  &amp; q=1,\\
+	\mathbb Z \oplus \mathbb Z_6 &amp; q=2,\\
+	\mathbb Z_6 &amp; q\ge 3\\
+\end{array}\right. 
+</Display>
+	obtained in <Cite Key="Rahm11"/> can be verified as follows, once we note that Bianchi groups have virtual cohomological dimension 2 and, if all stabilizer groups are periodic with period dividing m, then the homology has period dividing m in degree <M>\ge 3</M>.
+
+		<Example>
+<#Include SYSTEM "tutex/11.22.txt">
+</Example>
+
+	All finite subgroups of <M>SL_2({\cal O}_{-d})</M> are periodic. Thus the above example can be adapted from PSL to SL for any square=free <M>d\ge 1</M>. For example, the calculation
+<Display>H^q(SL_2({\cal O}_{-2}),\mathbb Z) =
+        \left\{\begin{array}{ll}
+        \mathbb Z  &amp; q=1,\\
+        \mathbb Z_6 &amp; q=2 {\rm \ mod\ } 4,\\
+	\mathbb Z_2 \oplus \mathbb Z_{12} &amp; q= 3 {\rm \ mod\ } 4\\
+	\mathbb Z_2 \oplus \mathbb Z_{24} &amp; q= 0 {\rm \ mod\ } 4  (q>0)\\
+	\mathbb Z_{12}  &amp; q= 1 {\rm \ mod\ } 4  (q > 1)\\
+\end{array}\right.
+</Display>
+	obtained in <Cite Key="Schwermer"/> can be verified as follows.
+
+
+
+	<Example>
+<#Include SYSTEM "tutex/11.23.txt">
+</Example>
+
+	 A quotient of a periodic group by a central subgroup of order 2 need not be periodic. For this reason the (co)homology of PSL can be a bit more tricky than SL.
+                For example, the calculation
+                <Display>H^q(PSL_2({\cal O}_{-13}),\mathbb Z) =
+        \left\{\begin{array}{ll}
+        \mathbb Z^3 \oplus (\mathbb Z_2)^2  &amp; q=1,\\
+        \mathbb Z^2 \oplus \mathbb Z_4 \oplus (\mathbb Z_3)^2 \oplus \mathbb Z_2 &amp; q=2,\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2 &amp; q= 3 {\rm \ mod\ } 4\\
+        (\mathbb Z_2)^q  &amp; q= 0 {\rm \ mod\ } 4  (q>0)\\
+                        (\mathbb Z_2)^q  &amp; q= 1 {\rm \ mod\ } 4  (q>1)\\
+        (\mathbb Z_2)^q \oplus (\mathbb Z_{3})^2  &amp; q= 2 {\rm \ mod\ } 4  (q > 2)\\
+\end{array}\right.
+</Display>
+	was obtained in <Cite Key="Rahm11"/>. The following commands verify the calculation in the first 34 degrees, but for a proof valid for all degrees one needs to analyse the computation to spot that there is a certain "periodicity of period 2" in the computations for <M>q\ge 3</M>. This analysis is done in <Cite Key="Rahm11"/>.
+
+		<Example>
+<#Include SYSTEM "tutex/11.24.txt">
+</Example>
+
+	The Lyndon-Hochschild-Serre spectral sequence  <M>H_p(G/N,H_q(N,A)) \Rightarrow H_{p+q}(G,A)</M> for the groups <M>G=SL_2({\mathcal O}_{-d})</M> and <M>N\cong C_2</M> the central subgroup with <M>G/N\cong PSL_2({\mathcal O}_{-d})</M>, and the trivial module 
+	<M>A = \mathbb Z_{\ell}</M>, implies that for primes <M>\ell>2</M> 
+		 we have a natural isomorphism <M>H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z_{\ell}) \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z_{\ell})</M>. It follows that we have an isomorphism of <M>\ell</M>-primary 
+		parts <M>H_n(PSL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)} \cong H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}</M>.
+			Since <M>  H_n(SL_2({\mathcal O}_{-d}),\mathbb Z)_{(\ell)}</M> is periodic in degrees <M>  \ge 3</M> we can recover
+				the <M>3</M>-primary part of <M>H_n(PSL_2({\mathcal O}_{-13}),\mathbb Z)</M> in all degrees <M>q\ge1</M>
+					from the following computation by ignoring all  <M>2</M>-power factors in the output. 
+
+						 <Example>
+<#Include SYSTEM "tutex/11.25.txt">
+</Example>
+
+	The ring <M>{\mathcal O}_{-163}</M> is an example of a
+		principal ideal domain that is not a Euclidean domain. It seems that no complete calculation of <M>H_n(PSL_2({\mathcal O}_{-163}),\mathbb Z)</M>
+			is yet available in the literature. The following comands compute this homology in the first <M>31</M> degrees. The computation suggests a general formula in higher degrees. All but two of the stabilizer groups for
+				the action of
+			<M>PSL_2({\mathcal O}_{-163})</M> are periodic. The non-periodic group <M>A_4</M> occurs twice in degree <M>0</M>.
+
+
+
+				<Example>
+<#Include SYSTEM "tutex/11.26.txt">
+</Example>
+
+			 	</Section>
 
 <Section><Heading>Some other infinite matrix groups</Heading>
 
@@ -728,8 +815,8 @@ they conjecture
 <Display> \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49}  + \cdots</Display>
 as the norm of the prime ideal <M>I</M> tends to <M>\infty</M>.
 The following approximates <M>\lambda/18\pi = 0.0161957</M> and
-<M>\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.00913432</M>
-for the above example.
+<M>\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0210325</M>
+ for the above example.
 
 <Example>
 <#Include SYSTEM "tutex/11.19.txt">
@@ -741,6 +828,21 @@ for the above example.
 <Display>   
 {\rm Vol} ( {\frak h}^3 / PSL_2( {\cal O}_{d} ) )
  = \frac{|D|^{3/2}}{24} \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2)                           </Display>
- valid for square-free <M>d&lt;0</M>, where <M>D</M> is the discriminant of <M>\mathbb Q(\sqrt{d})</M>. The volume of a finite index subgroup <M>\Gamma</M>is obtained by multiplying the right-hand side by the  index <M>|PSL_2({\cal O}_d)\,:\, \Gamma|</M>.
+ valid for square-free <M>d&lt;0</M>, where <M>D</M> is the discriminant of <M>\mathbb Q(\sqrt{d})</M>. The volume of a finite index subgroup <M>\Gamma</M>
+	 is obtained by multiplying the right-hand side by the  index <M>|PSL_2({\cal O}_d)\,:\, \Gamma|</M>.
+
+<P/>
+	 The following commands produce a graph of 
+ <M> \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}</M>  against 
+ <M>{\rm Norm}(I)</M> for prime ideals <M>I</M> of norm <M>49 \le {\rm Norm}(I) \le 4357</M> (where one ideal for each norm is taken).
+
+<Example>
+<#Include SYSTEM "tutex/11.21.txt">
+</Example>
+
+<Alt Only="HTML">&lt;img src="images/primesTorsion.png" align="center" width="1200" alt="graph of torsion versus norm"/>
+</Alt>
+
+
 </Section>
 </Chapter>

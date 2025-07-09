@@ -35,6 +35,34 @@
   to  specific  classes  of groups, can be used to compute the (co)homology of
   larger finite groups.[133X
   
+  [33X[0;0YThis  naive  approach  does  have the merit of being applicable to arbitrary
+  small  monoids.  The  following  calculates the homology in degrees [22X≤ 7[122X of a
+  monoid of order 8, the monoid being specified by its multiplication table.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XT:=[ [  1,  1,  1,  4,  4,  4,  4,  1 ],[127X[104X
+    [4X[25X>[125X [27X        [  1,  1,  1,  4,  4,  4,  4,  2 ],[127X[104X
+    [4X[25X>[125X [27X        [  1,  1,  1,  4,  4,  4,  4,  3 ],[127X[104X
+    [4X[25X>[125X [27X        [  4,  4,  4,  1,  1,  1,  1,  4 ],[127X[104X
+    [4X[25X>[125X [27X        [  4,  4,  4,  1,  1,  1,  1,  5 ],[127X[104X
+    [4X[25X>[125X [27X        [  4,  4,  4,  1,  1,  1,  1,  6 ],[127X[104X
+    [4X[25X>[125X [27X        [  4,  4,  4,  1,  1,  1,  1,  7 ],[127X[104X
+    [4X[25X>[125X [27X        [  1,  2,  3,  4,  5,  6,  7,  8 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27XM:=MonoidByMultiplicationTable(T);[127X[104X
+    [4X[28X<monoid of size 8, with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27XB:=BarComplexOfMonoid(M,8);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(B);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..7],i->Homology(C,i));[127X[104X
+    [4X[28X[ [ 0 ], [ 2 ], [  ], [ 2 ], [  ], [ 2 ], [  ], [ 2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..8],B!.dimension);[127X[104X
+    [4X[28X[ 1, 7, 49, 343, 2401, 16807, 117649, 823543, 5764801 ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..8],C!.dimension);[127X[104X
+    [4X[28X[ 1, 1, 1, 1, 1, 1, 1, 1, 5044201 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   
   [1X7.1-2 [33X[0;0YA more efficient homology computation[133X[101X
   
