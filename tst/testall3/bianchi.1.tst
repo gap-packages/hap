@@ -5,6 +5,6 @@ gap> P:=BianchiPolyhedron(-5);
 20 and non-cuspidal vertices of minimum squared height 1/25 . 
 
 gap> SwanBianchiCriterion(P);
-[  ]
+true
 gap> STOP_TEST( "tst.tst", 1000 );
 
