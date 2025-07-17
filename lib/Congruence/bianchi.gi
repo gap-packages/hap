@@ -112,7 +112,7 @@ fi;
 
 #fi;
 od;
-
+Add(U,[1,0,1]);      #Added July 2025
 return SSortedList(U);                       #####
 end);                                        #####
 ##################################################
@@ -1061,9 +1061,9 @@ end);                                           #####
 ###################################################
 ###################################################
 InstallGlobalFunction(UnimodularPairsReduced_NN, #####
-function(OQ,LL)                               #####
+function(OQ,LL)                                  #####
 local L, Lines, Points, K, K3, E,EE, V, VV,
-fn, fn2, v, w, h, dist, bool, C,D,DD,i,F,S,M;
+fn, fn2, v, w, h, dist, bool, BOOL, C,D,DD,i,F,S,M;
 
 #L:=QQNeighbourhoodOfUnimodularPairs(OQ,LL);
 if LL=[] then return [LL,[]]; fi;
@@ -1079,6 +1079,7 @@ DD:=Filtered([1..K!.nrSimplices(2)], v-> IsQQUnimodularPair(OQ,L[K3[v][1]])
 or IsQQUnimodularPair(OQ,L[K3[v][2]])
 or IsQQUnimodularPair(OQ,L[K3[v][3]]) );
 #Need to check that this is OK here
+
 S:=K3{DD};
 Points:=Points{DD};
 
@@ -1123,18 +1124,20 @@ od;
 
 L:=L{DD};
 L:=QQNeighbourhoodOfUnimodularPairs(OQ,L); 
+L:=SSortedList(L);
+
 
 VV:=Filtered(VV,v->v[1] in DD and v[2] in DD and v[3] in DD);
 M:=List(VV,v->Position(K!.simplicesLst[3],[v[1],v[2],v[3]]));
 M:=Difference([1..Length(K!.Points)], M);
 for i in M do
 K!.Points[i]:=fail;
-K!.Heights:=-infinity;
+#K!.Heights:=-infinity;
 od;
 
 
 return [L,K];                                    #####
-end);                                        #####
+end);                                            #####
 ##################################################
 ##################################################
 
@@ -1172,20 +1175,27 @@ ABI:=AbsInt(BI);
 ###############################
 
 HAPRECORD:=[
-[ 1, 1 ],[ 2, 1 ],[ 3, 1 ],[ 5, 20 ],[ 6, 24 ],[ 7, 1 ],[ 10, 40 ],[ 11, 1 ],[ 13, 52 ],[ 14, 56 ],[ 15, 15 ],[ 17, 68 ],[ 19, 4 ],[ 21, 84 ],[ 22, 88 ],[ 23, 18 ],[ 26, 104 ],[ 29, 169 ],[ 30, 121 ],[ 31, 16 ],[ 33, 132 ],[ 34, 9 ],[ 35, 35 ],[ 37, 25 ],[ 38, 4 ],[ 39, 39 ],[ 41, 25 ],[ 42, 25 ],[ 43, 9 ],[ 46, 25 ],[ 47, 24 ],[ 51, 51 ],[ 53, 25 ],[ 55, 56 ],[ 57, 49 ],[ 59, 27 ],[ 67, 16 ],[ 71, 48 ],[ 79, 40 ],[ 83, 33 ],[ 87, 87 ],[ 91, 91 ],[ 95, 95 ],[ 103, 56 ],[ 107, 36 ],[ 111, 111 ],[ 115, 115 ],[ 119, 25 ],[ 123, 123 ],[ 127, 64 ],[ 131, 45 ],[ 139, 55 ],[ 143, 9 ],[ 151, 80 ],[ 155, 155 ],[ 163, 53 ],[167,384],
-[ 179, 155]
+[ 1, 1 ],[ 2, 1 ],[ 3, 1 ],[ 5, 20 ],[ 6, 24 ],[ 7, 1 ],[ 10, 40 ],[ 11, 1 ],[ 13, 52 ],[ 14, 56 ],[ 15, 15 ],[ 17, 68 ],[ 19, 5 ],[ 21, 84 ],[ 22, 88 ],[ 23, 18 ],[ 26, 121 ],[ 29, 169 ],[ 30, 169 ],[ 31, 20 ],[ 33, 528 ],[ 34, 225 ],[ 35, 35 ],[ 37, 289 ],[ 38, 4 ],[ 39, 39 ],[ 41, 361 ],[ 42, 672 ],[ 43, 9 ],
+#[ 46, 25 ],
+[ 47, 36 ],[ 51, 51 ],
+#[ 53, 25 ],
+[ 55, 56 ],
+#[ 57, 49 ],
+[ 59, 36 ],[ 67, 23 ],[ 71, 64 ],[ 79, 64 ],[ 83, 36 ],[ 87, 87 ],[ 91, 91 ],[ 95, 95 ],[ 103, 64 ],[ 107, 64 ],[ 111, 111 ],[ 115, 115 ],
+#[ 119, 25 ],
+[ 123, 123 ],[ 127, 121 ],[ 131, 100 ],[ 139, 100 ],[ 143, 576 ],[ 151, 110 ],[ 155, 155 ],[159,240],[ 163, 53 ],[167,384],[ 179, 144], [199,196]
 ];;
                  #HAPRECORD contains some precomuted [d,r] for which Swan's
                  #criterion is satisfied for the given norm r.
 #HAPRECORD:=[];  #Uncomment this line to calculate HAPRECORD entries from 
-                 #scratch. The value [179,155] was only partialy checked (up 
-                 #to norm r=5000).
+                 #scratch.  
 
 if Length(arg)=2 then pos:=arg[2];
 else
 
 pos:=Position(List(HAPRECORD,x->x[1]),ABI);
 if pos =fail or pos=0 then pos:=infinity;
+Print("Try \n  P:=BianchiPolyhedron(OQ,N);\nfor some guessed positive integer value of N and then try\n  SwanBianchiCriterion(P);\nto test if the value of N was large enough. If the test returns false then you'll need to try a larger value of N.\n\nA successful value of N can be stored as a pair [d,N] in the list HAPRECORD which can be edited manually in the file hap/lib/Congruence/bianchi.gi .\n\n");
 else pos:=HAPRECORD[pos][2]; fi;
 
 fi;
@@ -1198,7 +1208,7 @@ bool:=true;
 L:=[];
 
 while bool do
-N:=N+1;
+N:=N+1; 
 if Length(arg)>1 then
 #Print("Adding hemispheres of squared radius ",1/NRMS[N],"\n");
 fi;
@@ -1221,7 +1231,7 @@ L:=K[1]; K:=K[2];
 ###########CHECK SWAN'S CONDITION REALLY IS MET
 if pos=infinity then 
 A:=BianchiPolyhedron(OQ!.bianchiInteger,L);
-A:=SwanBianchiCriterion(A);
+A:=SwanBianchiCriterion_alt(A);
 if not Length(A)=0 then 
 return CoverOfUnimodularPairs(OQ,N+1,true);
 fi;
@@ -1249,13 +1259,44 @@ if not Homology(Y,1)=[] then return false; fi;
 return true; 
 end);
 ##################################################
-##################################################
-
-
+###############################################
 
 ##################################################
 ##################################################
 InstallGlobalFunction(SwanBianchiCriterion,
+function(P)
+local mr, mv, R, L,LL, i, u, Points;
+
+mr:=P!.minRadius;
+mv:=P!.minVertexHeight;
+if IsInt(1/mv) then R:=1/mv;
+else R:= 1+Int(1/mv);
+fi;
+
+L:=UnimodularPairs(P!.ring,R);;
+LL:=UnimodularPairs(P!.ring,mr);;
+L:=Difference(L,LL);;
+L:=Filtered(L,x->IsQQUnimodularPair(P!.ring,x));;
+L:=Filtered(L,x->not HAP_IsRedundantUnimodularPair(P!.ring,P!.unimodularPairs,x));
+
+Points:=Filtered([1..Length(P!.points)],i->P!.visibleHeights[i]>0);
+
+for u in L do
+for i in Points do
+if P!.visibleHeights[i] < HAP_HeightOfPointOnSphere(P!.ring,P!.points[i],u) then return false; fi;
+od;
+od;
+
+return true;
+
+end);
+##################################################
+##################################################
+
+
+##################################################
+##################################################
+InstallGlobalFunction(SwanBianchiCriterion_alt,
 function(arg)
 local  PP,P,F,A,K,C,CC,D,H, nrmL, L, S, S1, v,b,x,i,h,s1,s2,t1,t2;
 
@@ -1340,7 +1381,7 @@ end);
 #####################################################
 InstallGlobalFunction(BianchiPolyhedron,
 function(arg)
-local d,K, P,C, OQ, F, H, L,M,i,x,N;
+local d,K, P,C, OQ, F, H, L,M,i,x,N,s;
 
 d:=arg[1];
 if d>=0 then
@@ -1402,8 +1443,20 @@ P!.cusps:=C;
 
 
 
-
+L:=K[2]!.unimodularPairs;
 H:=P!.heights;
+############
+for i in [1..Length(H)] do
+if H[i]>0 then
+for s in L do 
+if HAP_HeightOfPointOnSphere(OQ,K[2]!.Points[i],s)!.rational>H[i] then
+H[i]:=-infinity;
+fi;
+od;
+fi;
+od;
+############
+P!.visibleHeights:=1*H;
 H:=Filtered(H,x->x>0);
 if Length(H)>0 then
 H:=Minimum(H);

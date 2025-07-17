@@ -113,6 +113,7 @@ DeclareGlobalFunction("UnimodularIntersectingLine");
 DeclareGlobalFunction("NeighbourhoodOfUnimodularPairs");
 DeclareGlobalFunction("HAP_VertexHeights");
 DeclareGlobalFunction("SwanBianchiCriterion");
+DeclareGlobalFunction("SwanBianchiCriterion_alt");
 DeclareGlobalFunction("QQNeighbourhoodOfUnimodularPairs");
 DeclareGlobalFunction("QNeighbourhoodOfUnimodularPairs");
 DeclareGlobalFunction("IsQUnimodularPair");
