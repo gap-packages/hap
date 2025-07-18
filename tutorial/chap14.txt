@@ -181,7 +181,50 @@
   [4X[32X[104X
   
   
-  [1X14.5 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
+  [1X14.5 [33X[0;0YEstablishing correctness of a fundamental domain[133X[101X
+  
+  [33X[0;0YThe  cusps  of  a  fundamental domain can be calculated independently of the
+  domain  computation. The remaining vertices of the domain will have positive
+  heights.  To prove that the computation is correct we need to establish that
+  no  non-cuspidal  vertex  lies  below any hemishpere centered on the complex
+  plane.  As  the hemispheres have increasingly smaller radius we only need to
+  check those finitely many hemispheres with radius smaller than the height of
+  the lowest non-cuspidal vertex.[133X
+  
+  [33X[0;0YFor  a few values of [22Xd[122X the smallest radius [22Xr[122X of a hemisphere contributing to
+  the  fundamental  domain  boundary  has  been  stored.  For cases where this
+  smallest  radius  is  not  stored  a  very  slow  method  for  finding  [22Xr[122X is
+  implemented  and  the  user  is  advised  to speed things up by guessiing an
+  integer  value  [22XN=1/r^2[122X  and  then test that this value of [22XN[122X is indeed large
+  enough.  The  following  commands  illustrate this for [22Xd=-46[122X with a guess of
+  [22XN=600[122X.  Once  the  test  is  done we can see that in fact a smaller guess of
+  [22XN=441[122X would have sufficed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP:=BianchiPolyhedron(-46);[127X[104X
+    [4X[28XTry [128X[104X
+    [4X[28X  P:=BianchiPolyhedron(OQ,N);[128X[104X
+    [4X[28Xfor some guessed positive integer value of N and then try[128X[104X
+    [4X[28X  SwanBianchiCriterion(P);[128X[104X
+    [4X[28Xto test if the value of N was large enough. If the test returns false then you\[128X[104X
+    [4X[28X'll need to try a larger value of N.[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XA successful value of N can be stored as a pair [d,N] in the list HAPRECORD wh\[128X[104X
+    [4X[28Xich can be edited manually in the file hap/lib/Congruence/bianchi.gi .[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP:=BianchiPolyhedron(-46,600);[127X[104X
+    [4X[28X3-dimensional Bianchi polyhedron over OQ( Sqrt([128X[104X
+    [4X[28X-46) ) involving hemispheres of minimum squared radius 1/[128X[104X
+    [4X[28X441 and non-cuspidal vertices of minimum squared height 1/8280 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSwanBianchiCriterion(P);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.6 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  above fundamental domains can be used to construct free resolutions for
   [22XSL_2(mathcal   O_-d)[122X   and   [22XPSL_2(mathcal  O_-d)[122X.  The  following  commands
@@ -238,14 +281,14 @@
   [4X[32X[104X
   
   
-  [1X14.6 [33X[0;0YSome sanity checks[133X[101X
+  [1X14.7 [33X[0;0YSome sanity checks[133X[101X
   
   [33X[0;0YThere  is ample scope for bugs in the implementation of the above method for
   computing  resolutions  of  Bianchi groups. The following sanity checks lend
   confidence to the implementation.[133X
   
   
-  [1X14.6-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
+  [1X14.7-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
   
   [33X[0;0YLet  [22XX[122X  be  any cell complex with an action of a group [22XG[122X such that (i) [22XX[122X has
   finitely  many  [22XG[122X-orbits of cells, and (ii) the stabilizer subgroup in [22XG[122X for
@@ -277,7 +320,7 @@
   [4X[32X[104X
   
   
-  [1X14.6-2 [33X[0;0YBoundary squares to zero[133X[101X
+  [1X14.7-2 [33X[0;0YBoundary squares to zero[133X[101X
   
   [33X[0;0YThe  signs in the boundary maps of the free resolution are delicate. Another
   easy  test  is to check that the boundary in the resolution squares to zero.
@@ -306,7 +349,7 @@
   [4X[32X[104X
   
   
-  [1X14.6-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
+  [1X14.7-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
   
   [33X[0;0YSebastian  Schoennenbeck  in  his  thesis  work  computed  some contractible
   [22X2[122X-complexes  on  which Bianchi groups act with finite stabilizers (even when
@@ -337,7 +380,7 @@
   [4X[32X[104X
   
   
-  [1X14.6-4 [33X[0;0YCompare geometry to algebra[133X[101X
+  [1X14.7-4 [33X[0;0YCompare geometry to algebra[133X[101X
   
   [33X[0;0YThe  number  of  cusps  (i.e. the number of orbits of vertices with infinite
   stabilizer  subgroup) must be precisely one less than the number of elements
@@ -376,7 +419,7 @@
   [4X[32X[104X
   
   
-  [1X14.7 [33X[0;0YGroup presentations[133X[101X
+  [1X14.8 [33X[0;0YGroup presentations[133X[101X
   
   [33X[0;0YSwan's  reason for studying fundamental domains was to obtain explicit group
   presentations  for [22XSL_2(mathcal O_-d)[122X for various values of [22Xd[122X. The following
@@ -418,7 +461,7 @@
   [4X[32X[104X
   
   
-  [1X14.8 [33X[0;0YFinite index subgroups[133X[101X
+  [1X14.9 [33X[0;0YFinite index subgroups[133X[101X
   
   [33X[0;0YThe  following  commands  compute  the  integral  homology  of  a congruence
   subgroup  [22XG[122X  of  index  24  in  [22XSL_2(mathcal  O_-23)[122X.  They  also  compute a

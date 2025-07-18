@@ -37,25 +37,28 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X7A489A5D79DA9E5C">14.4 <span class="Heading">Examples</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78476F127B73BBD1">14.5 <span class="Heading">Computing a free resolution for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X86CD59CB7A04EE5A">14.5 <span class="Heading">Establishing correctness of a fundamental domain</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X784B2156823AEB15">14.6 <span class="Heading">Some sanity checks</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78476F127B73BBD1">14.6 <span class="Heading">Computing a free resolution for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span></span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X784B2156823AEB15">14.7 <span class="Heading">Some sanity checks</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7E5A36D47F9D4A47">14.6-1 <span class="Heading">Equivariant Euler characteristic</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7E5A36D47F9D4A47">14.7-1 <span class="Heading">Equivariant Euler characteristic</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X852CDAFF84C5DF01">14.6-2 <span class="Heading">Boundary squares to zero</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X852CDAFF84C5DF01">14.7-2 <span class="Heading">Boundary squares to zero</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7E64819A7C058EDD">14.6-3 <span class="Heading">Compare different algorithms or implementations</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7E64819A7C058EDD">14.7-3 <span class="Heading">Compare different algorithms or implementations</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X8223864085412705">14.6-4 <span class="Heading">Compare geometry to algebra</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X8223864085412705">14.7-4 <span class="Heading">Compare geometry to algebra</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78BC9D077956089A">14.7 <span class="Heading">Group presentations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78BC9D077956089A">14.8 <span class="Heading">Group presentations</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X786CFAA17C0A6E7A">14.8 <span class="Heading">Finite index subgroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X786CFAA17C0A6E7A">14.9 <span class="Heading">Finite index subgroups</span></a>
 </span>
 </div>
 </div>
@@ -181,9 +184,41 @@ Regular CW-complex of dimension 2
 
 <p><img src="images/bianchi3D33.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D33.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
 
+<p><a id="X86CD59CB7A04EE5A" name="X86CD59CB7A04EE5A"></a></p>
+
+<h4>14.5 <span class="Heading">Establishing correctness of a fundamental domain</span></h4>
+
+<p>The cusps of a fundamental domain can be calculated independently of the domain computation. The remaining vertices of the domain will have positive heights. To prove that the computation is correct we need to establish that no non-cuspidal vertex lies below any hemishpere centered on the complex plane. As the hemispheres have increasingly smaller radius we only need to check those finitely many hemispheres with radius smaller than the height of the lowest non-cuspidal vertex.</p>
+
+<p>For a few values of <span class="SimpleMath">\(d\)</span> the smallest radius <span class="SimpleMath">\(r\)</span> of a hemisphere contributing to the fundamental domain boundary has been stored. For cases where this smallest radius is not stored a very slow method for finding <span class="SimpleMath">\(r\)</span> is implemented and the user is advised to speed things up by guessiing an integer value <span class="SimpleMath">\(N=1/r^2\)</span> and then test that this value of <span class="SimpleMath">\(N\)</span> is indeed large enough. The following commands illustrate this for <span class="SimpleMath">\(d=-46\)</span> with a guess of <span class="SimpleMath">\(N=600\)</span>. Once the test is done we can see that in fact a smaller guess of <span class="SimpleMath">\(N=441\)</span> would have sufficed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=BianchiPolyhedron(-46);</span>
+Try 
+  P:=BianchiPolyhedron(OQ,N);
+for some guessed positive integer value of N and then try
+  SwanBianchiCriterion(P);
+to test if the value of N was large enough. If the test returns false then you\
+'ll need to try a larger value of N.
+
+A successful value of N can be stored as a pair [d,N] in the list HAPRECORD wh\
+ich can be edited manually in the file hap/lib/Congruence/bianchi.gi .
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=BianchiPolyhedron(-46,600);</span>
+3-dimensional Bianchi polyhedron over OQ( Sqrt(
+-46) ) involving hemispheres of minimum squared radius 1/
+441 and non-cuspidal vertices of minimum squared height 1/8280 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SwanBianchiCriterion(P);</span>
+true
+
+</pre></div>
+
 <p><a id="X78476F127B73BBD1" name="X78476F127B73BBD1"></a></p>
 
-<h4>14.5 <span class="Heading">Computing a free resolution for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span></span></h4>
+<h4>14.6 <span class="Heading">Computing a free resolution for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span></span></h4>
 
 <p>The above fundamental domains can be used to construct free resolutions for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span> and <span class="SimpleMath">\(PSL_2({\mathcal O}_{-d})\)</span>. The following commands illustrate the computation of free resolutions for <span class="SimpleMath">\(SL_2({\mathcal O}_{-43})\)</span> and <span class="SimpleMath">\(SL_2({\mathcal O}_{-10})\)</span> and <span class="SimpleMath">\(SL_2({\mathcal O}_{-14})\)</span> and their integral homology (which in each case is periodic of period dividing <span class="SimpleMath">\(4\)</span> in degrees <span class="SimpleMath">\(\ge 3\)</span>). The computation of fundamental domains uses exact arithmetic in the two field extensions <span class="SimpleMath">\(\mathbb Q(\sqrt{d})\)</span> and <span class="SimpleMath">\( \mathbb Q(\sqrt{-d})\)</span>.</p>
 
@@ -233,13 +268,13 @@ Regular CW-complex of dimension 2
 
 <p><a id="X784B2156823AEB15" name="X784B2156823AEB15"></a></p>
 
-<h4>14.6 <span class="Heading">Some sanity checks</span></h4>
+<h4>14.7 <span class="Heading">Some sanity checks</span></h4>
 
 <p>There is ample scope for bugs in the implementation of the above method for computing resolutions of Bianchi groups. The following sanity checks lend confidence to the implementation.</p>
 
 <p><a id="X7E5A36D47F9D4A47" name="X7E5A36D47F9D4A47"></a></p>
 
-<h5>14.6-1 <span class="Heading">Equivariant Euler characteristic</span></h5>
+<h5>14.7-1 <span class="Heading">Equivariant Euler characteristic</span></h5>
 
 <p>Let <span class="SimpleMath">\(X\)</span> be any cell complex with an action of a group <span class="SimpleMath">\(G\)</span> such that (i) <span class="SimpleMath">\(X\)</span> has finitely many <span class="SimpleMath">\(G\)</span>-orbits of cells, and (ii) the stabilizer subgroup in <span class="SimpleMath">\(G\)</span> for each cell is either finite or free abelian. One defines the <em>equivariant Euler characteristic</em> $$\chi_G(X) = \sum_e (-1)^{dim~ e} / |Stab_G(e)|$$ where <span class="SimpleMath">\(e\)</span> ranges over a set of representatives of the orbits of those cells with finite stabilizers. If <span class="SimpleMath">\(G\)</span> has a finite index torsion free subgroup and if the complex <span class="SimpleMath">\(X\)</span> is contractible then one can define the Euler characteristic of the group to be <span class="SimpleMath">\(\chi(G) = \chi_G(X)\)</span>. It is known that <span class="SimpleMath">\(\chi (SL_n({\mathcal O})) = \chi(GL_n({\mathcal O})) =0\)</span> for <span class="SimpleMath">\(\mathcal O\)</span> the ring of integers of a number field <a href="chapBib_mj.html#biBGangl">[DSGG+16]</a>.</p>
 
@@ -262,7 +297,7 @@ Regular CW-complex of dimension 2
 
 <p><a id="X852CDAFF84C5DF01" name="X852CDAFF84C5DF01"></a></p>
 
-<h5>14.6-2 <span class="Heading">Boundary squares to zero</span></h5>
+<h5>14.7-2 <span class="Heading">Boundary squares to zero</span></h5>
 
 <p>The signs in the boundary maps of the free resolution are delicate. Another easy test is to check that the boundary in the resolution squares to zero. The following commands perform this check for the group <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span>.</p>
 
@@ -291,7 +326,7 @@ Regular CW-complex of dimension 2
 
 <p><a id="X7E64819A7C058EDD" name="X7E64819A7C058EDD"></a></p>
 
-<h5>14.6-3 <span class="Heading">Compare different algorithms or implementations</span></h5>
+<h5>14.7-3 <span class="Heading">Compare different algorithms or implementations</span></h5>
 
 <p>Sebastian Schoennenbeck in his thesis work computed some contractible <span class="SimpleMath">\(2\)</span>-complexes on which Bianchi groups act with finite stabilizers (even when the ideal class is greater than <span class="SimpleMath">\(1\)</span>) using a different approach to that of Swan. These computed complexes are stored in <strong class="button">HAP</strong> and provide an alternative way of computing cohomology for the stored groups. Alexander Rahm in his thesis work implemented Swan's approach and has provided some <span class="SimpleMath">\(2\)</span>-complexes that are also stored in <strong class="button">HAP</strong> in cases where the ideal class is equal to <span class="SimpleMath">\(1\)</span>.</p>
 
@@ -315,7 +350,7 @@ Regular CW-complex of dimension 2
 
 <p><a id="X8223864085412705" name="X8223864085412705"></a></p>
 
-<h5>14.6-4 <span class="Heading">Compare geometry to algebra</span></h5>
+<h5>14.7-4 <span class="Heading">Compare geometry to algebra</span></h5>
 
 <p>The number of cusps (i.e. the number of orbits of vertices with infinite stabilizer subgroup) must be precisely one less than the number of elements in the ideal class group of <span class="SimpleMath">\({\mathcal O}_{-d}\)</span>. The following commands check this for <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span> where <span class="SimpleMath">\({\mathcal O}_{-23}\)</span> is known to have class number 3. (This class number is easily computed from a formula in Swan's paper.)</p>
 
@@ -343,7 +378,7 @@ Regular CW-complex of dimension 2
 
 <p><a id="X78BC9D077956089A" name="X78BC9D077956089A"></a></p>
 
-<h4>14.7 <span class="Heading">Group presentations</span></h4>
+<h4>14.8 <span class="Heading">Group presentations</span></h4>
 
 <p>Swan's reason for studying fundamental domains was to obtain explicit group presentations for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span> for various values of <span class="SimpleMath">\(d\)</span>. The following commands obtain a presentation for <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span>.</p>
 
@@ -385,7 +420,7 @@ Regular CW-complex of dimension 2
 
 <p><a id="X786CFAA17C0A6E7A" name="X786CFAA17C0A6E7A"></a></p>
 
-<h4>14.8 <span class="Heading">Finite index subgroups</span></h4>
+<h4>14.9 <span class="Heading">Finite index subgroups</span></h4>
 
 <p>The following commands compute the integral homology of a congruence subgroup <span class="SimpleMath">\(G\)</span> of index 24 in <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span>. They also compute a presentation for <span class="SimpleMath">\(G\)</span> with 13 generators and 24 relators.</p>
 
