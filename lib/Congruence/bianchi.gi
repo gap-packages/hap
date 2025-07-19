@@ -112,7 +112,7 @@ fi;
 
 #fi;
 od;
-Add(U,[1,0,1]);      #Added July 2025
+#Add(U,[1,0,1]);      #Added July 2025
 return SSortedList(U);                       #####
 end);                                        #####
 ##################################################
@@ -241,6 +241,7 @@ if Length(arg)>4 then BOOL:=arg[5]; else BOOL:=false; fi;
 
 
 L:=QuadraticIntegersByNorm(OQ,N);
+L:=Filtered(L,x->not x=0);
 if Length(LL)>0 then
 NRM:=Maximum(List(LL,x->x[3]));
 L:=Filtered(L,x->HAPNorm(OQ,x)>NRM);
@@ -290,7 +291,7 @@ LL:=Classify(LL,x->x);;
 LL:=List(LL,x->x[1]);
 
 SortBy(LL,x->x[3]);
-List(LL,x->UnimodularPairCoordinates(OQ,x));
+#List(LL,x->UnimodularPairCoordinates(OQ,x));
 return LL;                                   #####
 end);                                        #####
 ##################################################
@@ -1195,7 +1196,9 @@ else
 
 pos:=Position(List(HAPRECORD,x->x[1]),ABI);
 if pos =fail or pos=0 then pos:=infinity;
+if Length(arg)=1 then
 Print("Try \n  P:=BianchiPolyhedron(OQ,N);\nfor some guessed positive integer value of N and then try\n  SwanBianchiCriterion(P);\nto test if the value of N was large enough. If the test returns false then you'll need to try a larger value of N.\n\nA successful value of N can be stored as a pair [d,N] in the list HAPRECORD which can be edited manually in the file hap/lib/Congruence/bianchi.gi .\n\n");
+fi;
 else pos:=HAPRECORD[pos][2]; fi;
 
 fi;
