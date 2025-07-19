@@ -155,6 +155,20 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 
 </Section>
 
+<Section><Heading>Establishing correctness of a fundamental domain</Heading>
+	The cusps of a fundamental domain can be calculated independently of the domain computation. The remaining vertices of the domain will have positive heights. To prove that the computation is correct we need to establish that no 
+	non-cuspidal vertex lies below any  hemishpere centered on the complex plane at <M>b/a\in \mathbb C</M> with <M>(a,b)</M> a unimodular pair. As these  hemispheres have increasingly smaller radius we only need to check those finitely many hemispheres with radius smaller than the height of the lowest non-cuspidal vertex.  
+
+	<P/>For a few values of <M>d</M> the smallest radius <M>r</M> 
+		of a hemisphere contributing to the fundamental domain boundary has been stored. For  cases where this smallest radius is not stored a very slow method for finding <M>r</M> is implemented and the user is advised to speed things up by guessiing a 
+		value <M>N=1/r^2</M> and then test that this value of <M>N</M> is indeed large enough. The following commands illustrate this for <M>d=-46</M> with a guess of <M>N=600</M>. Once the test is done we can see that in fact a smaller guess of <M>N=441</M> would have sufficed.
+
+			<Example>
+<#Include SYSTEM "tutex/bianchi.14.txt">
+</Example>
+
+</Section>
+
 <Section><Heading>Computing a free resolution for <M>SL_2({\mathcal O}_{-d})</M></Heading>
 
 	The above fundamental domains can be used to construct  free resolutions for <M>SL_2({\mathcal O}_{-d})</M> and <M>PSL_2({\mathcal O}_{-d})</M>. The following commands illustrate the computation of free resolutions for <M>SL_2({\mathcal O}_{-43})</M> and <M>SL_2({\mathcal O}_{-10})</M> and

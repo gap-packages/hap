@@ -9899,7 +9899,7 @@ A fundamental domain for $G_{-39}$ can be visualized using the following command
   !gapprompt@gap>| !gapinput@D:=BianchiPolyhedron(-39);|
   3-dimensional Bianchi polyhedron over OQ( Sqrt(-39) ) 
   involving hemispheres of minimum squared radius 1/39 
-  and non-cuspidal vertices of minimum squared height 10/12493 . 
+  and non-cuspidal vertices of minimum squared height 1/49 . 
   
   !gapprompt@gap>| !gapinput@Display3D(D);;|
   !gapprompt@gap>| !gapinput@Display2D(D);;|
@@ -9956,7 +9956,46 @@ A fundamental domain for $G_{-33}$ is visualized using the following commands.
    }
 
  
-\section{\textcolor{Chapter }{Computing a free resolution for $SL_2({\mathcal O}_{-d})$}}\logpage{[ 14, 5, 0 ]}
+\section{\textcolor{Chapter }{Establishing correctness of a fundamental domain}}\logpage{[ 14, 5, 0 ]}
+\hyperdef{L}{X86CD59CB7A04EE5A}{}
+{
+ The cusps of a fundamental domain can be calculated independently of the
+domain computation. The remaining vertices of the domain will have positive
+heights. To prove that the computation is correct we need to establish that no
+non\texttt{\symbol{45}}cuspidal vertex lies below any hemishpere centered on
+the complex plane at $b/a\in \mathbb C$ with $(a,b)$ a unimodular pair. As these hemispheres have increasingly smaller radius we
+only need to check those finitely many hemispheres with radius smaller than
+the height of the lowest non\texttt{\symbol{45}}cuspidal vertex. 
+
+For a few values of $d$ the smallest radius $r$ of a hemisphere contributing to the fundamental domain boundary has been
+stored. For cases where this smallest radius is not stored a very slow method
+for finding $r$ is implemented and the user is advised to speed things up by guessiing a value $N=1/r^2$ and then test that this value of $N$ is indeed large enough. The following commands illustrate this for $d=-46$ with a guess of $N=600$. Once the test is done we can see that in fact a smaller guess of $N=441$ would have sufficed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@P:=BianchiPolyhedron(-46);|
+  Try 
+    P:=BianchiPolyhedron(OQ,N);
+  for some guessed positive integer value of N and then try
+    SwanBianchiCriterion(P);
+  to test if the value of N was large enough. If the test returns false then you\
+  'll need to try a larger value of N.
+  
+  A successful value of N can be stored as a pair [d,N] in the list HAPRECORD wh\
+  ich can be edited manually in the file hap/lib/Congruence/bianchi.gi .
+  
+  
+  !gapprompt@gap>| !gapinput@P:=BianchiPolyhedron(-46,600);|
+  3-dimensional Bianchi polyhedron over OQ( Sqrt(
+  -46) ) involving hemispheres of minimum squared radius 1/
+  441 and non-cuspidal vertices of minimum squared height 1/8280 . 
+  
+  !gapprompt@gap>| !gapinput@SwanBianchiCriterion(P);|
+  true
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Computing a free resolution for $SL_2({\mathcal O}_{-d})$}}\logpage{[ 14, 6, 0 ]}
 \hyperdef{L}{X78476F127B73BBD1}{}
 {
  The above fundamental domains can be used to construct free resolutions for $SL_2({\mathcal O}_{-d})$ and $PSL_2({\mathcal O}_{-d})$. The following commands illustrate the computation of free resolutions for $SL_2({\mathcal O}_{-43})$ and $SL_2({\mathcal O}_{-10})$ and $SL_2({\mathcal O}_{-14})$ and their integral homology (which in each case is periodic of period dividing $4$ in degrees $\ge 3$). The computation of fundamental domains uses exact arithmetic in the two
@@ -10006,13 +10045,13 @@ in the ideal class group of ${\mathcal O}_{-10}$ and precisely four elements in 
  }
 
  
-\section{\textcolor{Chapter }{Some sanity checks}}\logpage{[ 14, 6, 0 ]}
+\section{\textcolor{Chapter }{Some sanity checks}}\logpage{[ 14, 7, 0 ]}
 \hyperdef{L}{X784B2156823AEB15}{}
 {
  There is ample scope for bugs in the implementation of the above method for
 computing resolutions of Bianchi groups. The following sanity checks lend
 confidence to the implementation. 
-\subsection{\textcolor{Chapter }{Equivariant Euler characteristic}}\logpage{[ 14, 6, 1 ]}
+\subsection{\textcolor{Chapter }{Equivariant Euler characteristic}}\logpage{[ 14, 7, 1 ]}
 \hyperdef{L}{X7E5A36D47F9D4A47}{}
 {
  Let $X$ be any cell complex with an action of a group $G$ such that (i) $X$ has finitely many $G$\texttt{\symbol{45}}orbits of cells, and (ii) the stabilizer subgroup in $G$ for each cell is either finite or free abelian. One defines the \emph{equivariant Euler characteristic} \$\$\texttt{\symbol{92}}chi{\textunderscore}G(X) =
@@ -10041,7 +10080,7 @@ this test for the group $SL_2({\mathcal O}_{-23})$.
  }
 
  
-\subsection{\textcolor{Chapter }{Boundary squares to zero}}\logpage{[ 14, 6, 2 ]}
+\subsection{\textcolor{Chapter }{Boundary squares to zero}}\logpage{[ 14, 7, 2 ]}
 \hyperdef{L}{X852CDAFF84C5DF01}{}
 {
  The signs in the boundary maps of the free resolution are delicate. Another
@@ -10071,7 +10110,7 @@ following commands perform this check for the group $SL_2({\mathcal O}_{-23})$.
  }
 
  
-\subsection{\textcolor{Chapter }{Compare different algorithms or implementations}}\logpage{[ 14, 6, 3 ]}
+\subsection{\textcolor{Chapter }{Compare different algorithms or implementations}}\logpage{[ 14, 7, 3 ]}
 \hyperdef{L}{X7E64819A7C058EDD}{}
 {
  Sebastian Schoennenbeck in his thesis work computed some contractible $2$\texttt{\symbol{45}}complexes on which Bianchi groups act with finite
@@ -10099,7 +10138,7 @@ resolution from the $2$\texttt{\symbol{45}}complex.
  }
 
  
-\subsection{\textcolor{Chapter }{Compare geometry to algebra}}\logpage{[ 14, 6, 4 ]}
+\subsection{\textcolor{Chapter }{Compare geometry to algebra}}\logpage{[ 14, 7, 4 ]}
 \hyperdef{L}{X8223864085412705}{}
 {
  The number of cusps (i.e. the number of orbits of vertices with infinite
@@ -10143,7 +10182,7 @@ stabilizers and the following algebraic information on the boundaries of the $2$
  }
 
  
-\section{\textcolor{Chapter }{Group presentations}}\logpage{[ 14, 7, 0 ]}
+\section{\textcolor{Chapter }{Group presentations}}\logpage{[ 14, 8, 0 ]}
 \hyperdef{L}{X78BC9D077956089A}{}
 {
  Swan's reason for studying fundamental domains was to obtain explicit group
@@ -10185,7 +10224,7 @@ presentations for $SL_2({\mathcal O}_{-d})$ for various values of $d$. The follo
  }
 
  
-\section{\textcolor{Chapter }{Finite index subgroups}}\logpage{[ 14, 8, 0 ]}
+\section{\textcolor{Chapter }{Finite index subgroups}}\logpage{[ 14, 9, 0 ]}
 \hyperdef{L}{X786CFAA17C0A6E7A}{}
 {
  The following commands compute the integral homology of a congruence subgroup $G$ of index 24 in $SL_2({\mathcal O}_{-23})$. They also compute a presentation for $G$ with 13 generators and 24 relators. 
