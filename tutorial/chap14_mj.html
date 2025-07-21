@@ -61,6 +61,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X786CFAA17C0A6E7A">14.9 <span class="Heading">Finite index subgroups</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X82F46C8B782420AB">14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></a>
+</span>
+</div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -452,6 +455,30 @@ ideal of norm 23 in O(Q(Sqrt(-23)))
   f187, f191, f273, f279 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(RelatorsOfFpGroup(H));</span>
 24
+
+</pre></div>
+
+<p><a id="X82F46C8B782420AB" name="X82F46C8B782420AB"></a></p>
+
+<h4>14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></h4>
+
+<p>For square free <span class="SimpleMath">\(d&gt;0\)</span> the group <span class="SimpleMath">\(G_d=PSL_2({\mathcal O}_d)\)</span> is a subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\times PSL_2(\mathbb R)\)</span> but a fundamental domain for its action on <span class="SimpleMath">\({\mathcal h}^2 \times {\mathcal h}^2\)</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">\(G_d\)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">\(GL_2({\mathcal O}(\mathbb Q(\sqrt{14}))\)</span>. In this example the contractible complex is <span class="SimpleMath">\(4\)</span>-dimensional and has <span class="SimpleMath">\(33\)</span> orbits of <span class="SimpleMath">\(4\)</span>-dimensional cells.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("GL(2,O14)");</span>
+Non-free resolution in characteristic 0 for matrix group . 
+No contracting homotopy available. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],K!.dimension);</span>
+[ 144, 463, 532, 234, 33, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],n-&gt;Homology(TensorWithIntegers(R),n));</span>
+[ [ 0 ], [ 2, 2, 2, 0 ], [ 2, 2, 2, 2, 2, 2, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]
 
 </pre></div>
 
