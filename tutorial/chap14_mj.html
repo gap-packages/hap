@@ -57,7 +57,10 @@
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78BC9D077956089A">14.8 <span class="Heading">Group presentations</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X795000AA87CCB76E">14.8-1 <span class="Heading">Swan's generators</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X786CFAA17C0A6E7A">14.9 <span class="Heading">Finite index subgroups</span></a>
 </span>
 </div>
@@ -421,6 +424,41 @@ true
 
 </pre></div>
 
+<p><a id="X795000AA87CCB76E" name="X795000AA87CCB76E"></a></p>
+
+<h5>14.8-1 <span class="Heading">Swan's generators</span></h5>
+
+<p>The five generators in the above presentation for <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span> are obtained by constructing the low dimensions of a CW-classifying space, forming a maximal tree in its <span class="SimpleMath">\(1\)</span>-skeleton, constructing a presentation whose generators correspond to edges not in the tree, and then applying Tietze operations to simplify this presentation. Swan's approach instead uses generators corresponding to the "face pairings" of the <span class="SimpleMath">\(3\)</span>-dimensional fundamental domain. The number of these face-pairing generators is equal to <span class="SimpleMath">\(3\)</span> plus the number of orbits of <span class="SimpleMath">\(2\)</span>-cells in the equivariant <span class="SimpleMath">\(2\)</span>-complex <span class="SimpleMath">\(K\)</span>. (The three extra generators are the two translations corresponding to the vertical faces of the <span class="SimpleMath">\(3\)</span>-dimensional fundamental domain which get homotopied to edges in <span class="SimpleMath">\(K\)</span>, plus the element <span class="SimpleMath">\(\left(\begin{array}{rr} -1 &amp; 0\\0 &amp; -1\end{array}\right)\)</span> which acts trivially on <span class="SimpleMath">\({\frak H}^3\)</span>.) The following commands show that for <span class="SimpleMath">\(SL_2({\mathcal O}_{-23})\)</span> there are 6 orbits of <span class="SimpleMath">\(2\)</span>-cells in <span class="SimpleMath">\(K\)</span> and then lists Swan's 9 generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K!.dimension(2);</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for g in GeneratorsOfGroup(K!.group) do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(g,"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+[ [ -1, 0 ], 
+  [ 0, -1 ] ]
+[ [ 1, 1 ], 
+  [ 0, 1 ] ]
+[ [ 1, 1/2 + 1/2 Sqrt(-23) ], 
+  [ 0, 1 ] ]
+[ [ -1, 0 ], 
+  [ 1, -1 ] ]
+[ [ -1, -1 ], 
+  [ 1, 0 ] ]
+[ [ 5 + 2 Sqrt(-23), -6 + 2 Sqrt(-23) ], 
+  [ 3/2 + -1/2 Sqrt(-23), 3 ] ]
+[ [ -20 + -99 Sqrt(-23), -713 ], 
+  [ 3/2 + -1/2 Sqrt(-23), -7/2 + -1/2 Sqrt(-23) ] ]
+[ [ 15 + -74 Sqrt(-23), -533 ], 
+  [ 3/2 + 1/2 Sqrt(-23), 7/2 + -1/2 Sqrt(-23) ] ]
+[ [ 1 + -6 Sqrt(-23), -29 ], 
+  [ 5/2 + -1/2 Sqrt(-23), -5/2 + -1/2 Sqrt(-23) ] ]
+
+</pre></div>
+
 <p><a id="X786CFAA17C0A6E7A" name="X786CFAA17C0A6E7A"></a></p>
 
 <h4>14.9 <span class="Heading">Finite index subgroups</span></h4>
@@ -462,7 +500,7 @@ ideal of norm 23 in O(Q(Sqrt(-23)))
 
 <h4>14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></h4>
 
-<p>For square free <span class="SimpleMath">\(d&gt;0\)</span> the group <span class="SimpleMath">\(G_d=PSL_2({\mathcal O}_d)\)</span> is a subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\times PSL_2(\mathbb R)\)</span> but a fundamental domain for its action on <span class="SimpleMath">\({\frak h}^2 \times {\frak h}^2\)</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">\(G_d\)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">\(GL_2({\mathcal O}(\mathbb Q(\sqrt{14}))\)</span>. In this example the contractible complex is <span class="SimpleMath">\(4\)</span>-dimensional and has <span class="SimpleMath">\(33\)</span> orbits of <span class="SimpleMath">\(4\)</span>-dimensional cells.</p>
+<p>For square free <span class="SimpleMath">\(d&gt;0\)</span> the group <span class="SimpleMath">\(G_d=PSL_2({\mathcal O}_d)\)</span> is a subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">\(PSL_2(\mathbb R)\times PSL_2(\mathbb R)\)</span> but a fundamental domain for its action on <span class="SimpleMath">\({\frak h}^2 \times {\frak h}^2\)</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">\(G_d\)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">\(GL_2({\mathcal O}(\mathbb Q(\sqrt{14})))\)</span>. In this example the contractible complex is <span class="SimpleMath">\(4\)</span>-dimensional and has <span class="SimpleMath">\(33\)</span> orbits of <span class="SimpleMath">\(4\)</span>-dimensional cells.</p>
 
 
 <div class="example"><pre>
