@@ -3,7 +3,7 @@
 ##########################################################
 InstallGlobalFunction(BarComplexOfMonoid,
 function(M,N)
-local Dimension,Boundary,Properties,ord,pos, invpos, MT;
+local Dimension,Boundary,Properties,ord,pos, invpos, MT, elts, i, j;
 #This function returns the first N terms of the *normalized* bar chain 
 #complex of a finite monoid M with multiplication table MT. It is returned
 #as a sparse chain complex.
@@ -12,7 +12,19 @@ if not (IsMonoid(M) and IsFinite(M)) then
 Print("The first argument must be a finite monoid.\n");
 return fail;
 fi;
+elts:=Elements(M);
+if One(M)=elts[1] then
 MT:=MultiplicationTable(M);
+else
+elts:=List(elts,x->x);
+elts[Position(elts,One(M))]:=elts[1];
+elts[1]:=One(M);
+MT:=NullMat(Length(elts),Length(elts));
+for i in [1..Length(elts)] do
+for j in [1..Length(elts)] do
+MT[i][j]:=Position(elts,elts[i]*elts[j]);
+od;od;
+fi;
 
 ord:=Length(MT)-1;
 #ord=|M|-1.
