@@ -33,7 +33,7 @@ jobs:
           - stable-4.9
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: 'Install additional dependencies'
         run: |
           sudo apt-get update
@@ -44,7 +44,7 @@ jobs:
           GAP_PKGS_TO_BUILD: "io profiling nq"
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/build-pkg@v1
-      - uses: gap-actions/run-pkg-tests@v2
+      - uses: gap-actions/run-pkg-tests@v3
       - uses: gap-actions/process-coverage@v2
       - uses: codecov/codecov-action@v5
         with:
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: gap-actions/setup-gap@v2
         with:
           GAP_PKGS_TO_CLONE: "polymaking hapcryst" # We need >= 0.8.3 and 0.1.13 to support polymake 4.0
