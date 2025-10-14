@@ -15,6 +15,8 @@ DeclareGlobalFunction("PartsOfQuadraticInteger");
 DeclareGlobalFunction("SL2QuadraticIntegers");
 DeclareGlobalFunction( "QuadraticNumber" );
 DeclareGlobalFunction( "IsHapQuadraticInteger" );
+DeclareGlobalFunction("BianchiGcomplex");
+DeclareGlobalFunction("HAP_InverseOpFunction");
 
 #####################################################################
 #####################################################################

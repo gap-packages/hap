@@ -504,6 +504,7 @@ local tree,InH,S,T,U,v,p,g,s,n,q,vv,gens,
       nodes, nodesinv, leaves, ambientGenerators, InLowDegreeNodesModH,
       one, poscan, nind ;
 
+
 ####################
 S:=[[0,-1],[1,0]];;
 T:=[[1,1],[0,1]];

@@ -20,7 +20,7 @@ local
 	UpperBound,
 	Todd,i,v,w,x,y,z,t;
 
-if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
+#if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
 
 Todd:=16;	#Use Todd-Coxeter if Order(G)<Todd and G is not nilpotent.
 #####################################################################
@@ -64,7 +64,8 @@ fi;
 # isomorphisms. The relationship between the groups is summarized in the 
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
 
-gensAG:=ReduceGenerators(GeneratorsOfGroup(AG),AG);
+#gensAG:=ReduceGenerators(GeneratorsOfGroup(AG),AG);
+gensAG:=GeneratorsOfGroup(AG);
 AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
 G:=Range(AGhomG);
 
@@ -89,7 +90,9 @@ AG1homF:=GroupHomomorphismByFunction(AG,F,g->Image(G1homF,Image(AGhomG,g)));
 AG2homF:=GroupHomomorphismByFunction(AG,F,g->Image(G2homF,Image(AGhomG,g)));
 
 	if IsSolvable(AG) then 
+	#if IsPolycyclicGroup(AG) then
 	    NiceGensAG:=Pcgs(AG);
+      
 	else
 	NiceGensAG:=List(UpperCentralSeries(AG),x->GeneratorsOfGroup(x));
 	NiceGensAG[1]:=[Identity(AG)];
@@ -103,21 +106,27 @@ for x in relsG do
 Append(relsT,[Image(BG1homF,x), Image(BG2homF,x)]);
 od;
 
+#NiceGensAG:=Elements(AG);
+
 for z in NiceGensAG do
 for x in gensAG do
 for y in gensAG do
 for t in NiceGensAG do
+
 v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG1homF,z) ;
-w:=Comm(Image(AG1homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 Append(relsT,[v*w]);
+
 v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG1homF,z) ;
-w:=Comm(Image(AG2homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 Append(relsT,[v*w]);
+
 v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG2homF,z) ;
-w:=Comm(Image(AG1homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 Append(relsT,[v*w]);
+
 v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG2homF,z) ;
-w:=Comm(Image(AG2homF,t^z),Comm(Image(AG2homF,x^z),Image(AG1homF,y^z)));
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 Append(relsT,[v*w]);
 od;
 od;
@@ -140,11 +149,13 @@ GroupHomomorphismByFunction(F,SF,x->Image(AFhomSF,Image(FhomAF,x)) );
 else
 
 AF:=F/relsT;
+
 FhomAF:=
 GroupHomomorphismByImagesNC(F,AF,GeneratorsOfGroup(F),GeneratorsOfGroup(AF));
 
 AFhomSSF:=IsomorphismSimplifiedFpGroup(AF);
-SSF:=Image(AFhomSSF);
+
+SSF:=Range(AFhomSSF);
 
 	if SizeOrList=-1 then 		#if nilpotent
 	    SSFhomSF:=EpimorphismNilpotentQuotient(SSF);
@@ -172,6 +183,7 @@ AG2homSF:=GroupHomomorphismByFunction(AG,SF,x->Image(FhomSF,Image(AG2homF,x)));
 #NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x)))),
 #NormalClosure(SF,Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))))
 #);
+
 
 TensorSquare:=CommutatorSubgroup( Group(List(GeneratorsOfGroup(AG),x->Image(AG1homSF,x))),   Group(List(GeneratorsOfGroup(AG),x->Image(AG2homSF,x))) );
 

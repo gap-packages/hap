@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2006
-
+#RT:=0;
 #####################################################################
 InstallGlobalFunction(ResolutionFiniteSubgroup,
 function(arg)
@@ -9,7 +9,7 @@ local
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
 		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
-		Mult, MultRec, FIN, i,HomotopyRec;
+		Mult, MultRec, FIN, i,HomotopyRec, EltsGsorted, EltsGsorted2;
 		
 if Length(arg)=3 then
 R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
@@ -24,6 +24,10 @@ DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 HomotopyR:=R!.homotopy;
 EltsG:=R!.elts;
+EltsGsorted2:=List([1..Length(EltsG)],i->[EltsG[i],i]);
+EltsGsorted2:=SSortedList(EltsGsorted2);
+EltsGsorted:=List(EltsGsorted2,x->x[1]);
+if not IsSSortedList(EltsGsorted) then Print("PROBLEM\n\n"); fi;
 
 
 if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
@@ -56,10 +60,16 @@ Mult:=function(i,j) local x,r;
 if not IsBound(MultRec[i][j]) then
 
 x:=TransK[i]*EltsG[j];
-#r:=Position(EltsG,x);
-#if r=fail then 
-Add(EltsG,x); r:=Length(EltsG); 
-#fi;
+#RT:=RT-Runtime();
+r:=Position(EltsGsorted,x);
+#RT:=RT+Runtime();
+if r=fail then Add(EltsG,x); r:=Length(EltsG); 
+AddSet(EltsGsorted,x);
+AddSet(EltsGsorted2,[x,r]);
+else
+r:=EltsGsorted2[r][2];
+fi;
+
 
 MultRec[i][j]:= r;
 
@@ -186,7 +196,8 @@ g:=EltsK[e[2]]*TransK[x[2]]; #Need to check the maths again here!
 pos:=Position(EltsG,g);
 
 
-if pos =fail then Add(EltsG,g); pos:=Length(EltsG);fi;
+if pos =fail then Add(EltsG,g); pos:=Length(EltsG);
+AddSet(EltsGsorted,g); AddSet(EltsGsorted2,[g,pos]); fi;
 HomotopyRec[n+1][ae][e[2]]:= Gword2Kword( R!.homotopy(n,[x[1],pos]));
 fi;
 

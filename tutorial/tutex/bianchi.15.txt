@@ -1,0 +1,13 @@
+gap> K:=ContractibleGcomplex("GL(2,O14)");
+Non-free resolution in characteristic 0 for matrix group . 
+No contracting homotopy available. 
+
+gap> List([0..5],K!.dimension);
+[ 144, 463, 532, 234, 33, 0 ]
+
+gap> R:=FreeGResolution(K,6);;
+gap> List([0..5],n->Homology(TensorWithIntegers(R),n));
+[ [ 0 ], [ 2, 2, 2, 0 ], [ 2, 2, 2, 2, 2, 2, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]

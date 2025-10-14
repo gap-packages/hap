@@ -194,17 +194,39 @@ end);
 
 ##########################################################
 ##########################################################
-InstallOtherMethod(InverseOp,
-"Inverse of an element mod an ideal",
-[IsIdealOfQuadraticIntegers,IsCyclotomic],  #NEED TO IMPROVE THIS!!!
-function(I,x)
-local T,y;
-
-T:=RightTransversal(I);
+InstallGlobalFunction(HAP_InverseOpFunction,
+function(I,T,x)
+local y;
 for y in T do
 if x*y-1 in I then return y; fi;
 od;
 return fail;
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(InverseOp,
+"Inverse of an element mod an ideal",
+[IsIdealOfQuadraticIntegers,IsCyclotomic],  #NEED TO IMPROVE THIS!!!
+function(I,x)
+local T, fn, pos;
+
+T:=RightTransversal(I);
+
+if not IsBound(I!.inverses) then
+I!.inverses:=[];;
+fi;
+
+pos:=Position(T, x mod I);
+
+if not IsBound(I!.inverses[pos]) then
+I!.inverses[pos]:=HAP_InverseOpFunction(I,T,x);
+fi;
+
+return I!.inverses[pos];
 end);
 ##########################################################
 ##########################################################
@@ -517,3 +539,12 @@ return [[Zero(M[1][1]),Zero(M[1][2])],[Zero(M[2][1]),Zero(M[2][2])]];
 end);
 #####################################################################
 
+#####################################################################
+InstallOtherMethod( Determinant,
+    "determinant 2x2 matrix ",
+    [ IsHap2x2matrix],
+100000000,
+function(M)  
+return M[1][1]*M[2][2] - M[2][1]*M[1][2];
+end);
+#####################################################################

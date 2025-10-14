@@ -194,8 +194,8 @@ od;
 
 BND[4]:=[];
 
-Heights:=Heights{List(GV,p->Position(Points,p))};
-#Heights:=List(GV,p->  Maximum(Heights{Positions(Points,p)}) );
+#Heights:=Heights{List(GV,p->Position(Points,p))};   #Why ??
+Heights:=List(GV,p->  Maximum(Heights{Positions(Points,p)}) );
 for i in [1..Length(Heights)] do
 Heights[i]:=(Heights[i])!.rational;
 od;
@@ -205,6 +205,8 @@ Y:=RegularCWComplex(BND);
 Y!.points:=Points;
 Y!.ring:=OQ;
 Y!.sphereCentres:=List(U{Singletons},u->UnimodularPairCoordinates(OQ,u));
+Y!.unimodularPairsSingletons:=U{Singletons};
+
 
 return Y;
 

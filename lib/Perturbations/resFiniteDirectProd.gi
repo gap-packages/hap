@@ -384,6 +384,7 @@ return 1*HGrec[p+1][q+1][r+1][s+1][b][g]; fi;
 
 
 
+
 #This function seems to work! But I should really check the maths again!!
 
 g2:=1*ehomh[g];
@@ -405,9 +406,10 @@ if (p=0 and q>0) or bool then return hty; fi;
 if p>0 then 
 if Length(hty)>0 then
 hty1:=HomotopyOfWord(p+q,1*HorizontalBoundaryWord(p+q+1,hty),false);
-Append(hty, NegateWord(hty1));
+Append(hty, NegateWord(hty1));    #I don't think this is needed
 fi;
 fi;
+
 
 if q>0 then  return hty; fi;
 
@@ -510,7 +512,7 @@ and  EvaluateProperty(S,"reduced")=true
 then Boole:=true;
 fi;
 
-
+#Print("done\n");
 return Objectify(HapResolution,
 	    rec(
             dimension:=Dimension,

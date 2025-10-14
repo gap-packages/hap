@@ -599,7 +599,6 @@ if (p=0 and q>0) or bool then return hty; fi;
 if p>0 then
 hty1:=HomotopyOfWord(p+q,ShallowCopy(HorizontalBoundaryWord(p+q+1,hty)),false);
 Append(hty, NegateWord(hty1));
-
 fi;
 
 if q>0 then return hty; fi;
@@ -614,15 +613,17 @@ Apply(hty1,x->[ Vector2Int(p+1,q,x[1],s), GmapE(x[2])]);
 hty1:=NegateWord(hty1); ####added
 Append(hty,hty1);
 
+
 hty1:=HomotopyOfWord(p+q,ShallowCopy(HorizontalBoundaryWord(p+q+1,hty1)),true);
 
-Append(hty,NegateWord(hty1));
+Append(hty,NegateWord(hty1)); #I think this term is always zero and not 
+                              #necessary.
+
 
 hty1:=HomotopyOfWord(p+q,ShallowCopy(HorizontalBoundaryWord(p+q+1,hty1)),false);
 
 Append(hty,hty1);       #I think this perturbation term is always zero and
                         #thus not necessary.
-
 return hty;
 end;
 #####################################################################

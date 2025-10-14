@@ -83,7 +83,8 @@ local P,ii, a,b,c,d,z,t,zz,tt,BI,B1,B2,ans,D,cc;
 P:=[];B1:=false;B2:=false;
 if IsRat(PP[1]) then P[1]:=PP[1]; else B1:=true; P[1]:=PP[1]!.rational; fi;
 if IsRat(PP[2]) then P[2]:=PP[2]; else B2:=true; P[2]:=PP[2]!.irrational; fi;
-P[3]:=Sqrt(PP[3]);
+P[3]:=Rat(Sqrt(Float(PP[3] :PrecisionFloat:=1000000)) : maxpartial:=10^10000);  #Need to get this sufficiently precise
+#P[3]:=Sqrt(PP[3]);
 BI:=A[1][1]!.bianchiInteger;
 
 ii:=Sqrt(BI);
@@ -117,7 +118,7 @@ if B1 then ans[1]:=QuadraticNumber(RealPart(zz),0,-BI);
 else ans[1]:=RealPart(zz); fi;
 if B2 then ans[2]:=QuadraticNumber(0,ImaginaryPart(zz)/Sqrt(-BI),-BI);
 else ans[2]:=ImaginaryPart(zz)/Sqrt(-BI); fi;
-ans[3]:=tt;
+ans[3]:=tt^2;
 
 return ans;;
 
@@ -335,9 +336,11 @@ end;
 
 #######################################################
 #######################################################
-BianchiGcomplex:=function(d)
-local R,P,OQ,Y,Dimension,Stabilizer,Action,STABS,stb,rot,rotREC,Boundary,rep,ELTS,
-G,K,S,T,i,V,n,B,BB,k,BoundaryRec,TMP, EquivSpheres;
+InstallGlobalFunction(BianchiGcomplex,
+function(d)
+local R,P,OQ,Y,Dimension,Stabilizer,Action,STABS,stb,rot,rotREC,Boundary,
+rep,ELTS,adjust,xx,I,
+G,K,S,T,i,V,n,B,BB,k,BoundaryRec,TMP, EquivSpheres, gens,omega,x,y,M,a;
 
 if not IsInt(d) then
 Print("input must be a negative square free integer.\n");
@@ -351,6 +354,7 @@ return fail; fi;
 
 P:=BianchiPolyhedron(d);
 Y:=HAP_BianchiRegularCWComplex(P!.ring,P!.unimodularPairs);
+Y!.unimodularPairs:=P!.unimodularPairs;
 OQ:=Y!.ring;
 STABS:=[[],[],[]];
 ELTS:=[];
@@ -630,17 +634,93 @@ else return NegateWord(BoundaryRec[n][-k]); fi;
 end;
 #######################################
 
+if (d mod 4) <>1 then omega:= QuadraticNumber(0,1,OQ!.bianchiInteger);
+else omega:=QuadraticNumber(1/2,1/2,OQ!.bianchiInteger); fi;
 
+gens:=[ [[-1,0],[0,-1]], [[1,1],[0,1]], [[1,omega],[0,1]] ];
 
+#########################################
+adjust:=function(x)
+local F;
+return x;                       #NEED TO FIX THIS
+F:=HAP_BianchiFundamentalRectangle(Y!.ring);
+
+while UnimodularPairCoordinates(Y!.ring,x)[1] <F[1] do
+x:=[x[1],x[2]+x[1],x[3]];
+od;
+while UnimodularPairCoordinates(Y!.ring,x)[1] >F[2] do
+x:=[x[1],x[2]-x[1],x[3]];
+od;
+while UnimodularPairCoordinates(Y!.ring,x)[2] <F[3] do
+x:=[x[1],x[2]+x[1]*omega,x[3]];
+od;
+while UnimodularPairCoordinates(Y!.ring,x)[2] >F[3] do
+x:=[x[1],x[2]-x[1]*omega,x[3]];
+od;
+
+return x;
+end;
+#########################################
+
+for x in Y!.ORBS[3] do
+xx:=Y!.unimodularPairsSingletons[x[1]];
+xx:=adjust(xx);
+M:=2*xx{[1,2]};
+y:=SolutionIntMat( 
+  2*[ [M[2]!.rational, M[2]!.irrational],
+      [d*M[2]!.irrational, M[2]!.rational],
+      [-M[1]!.rational,-M[1]!.irrational],
+      [-d*M[1]!.irrational, -M[1]!.rational] ],
+  [8,0]);
+y:=[QuadraticNumber(y[1],y[2],d),QuadraticNumber(y[3],y[4],d)     ];
+M:=(1/2)*[y,M];
+if (not IsInt(M[1][1]!.rational-M[1][1]!.irrational)) or
+(not IsInt(M[1][2]!.rational-M[1][2]!.irrational)) then
+
+#We'll try something silly and hope that is works. 
+#If it doesn't then we'll flag an error
+M:=Y!.unimodularPairsSingletons[x[1]]{[1,2]};
+
+a:=QuadraticNumber(M[2]!.rational,-M[2]!.irrational,d);
+M:=[ [a,(a*M[2]-1)*M[1]^-1], M];
+
+if (not IsInt(M[1][1]!.rational-M[1][1]!.irrational)) or
+(not IsInt(M[1][2]!.rational-M[1][2]!.irrational)) then
+Print("error in a group generator. \n");
+fi;
+fi;
+Add(gens,M);
+od;;
+
+if d=-1 then Add(gens, [[-omega,0],[0,omega]]); fi;
+
+if d=-3 then Add(gens,[[omega^2,0],[0,-omega]]); fi;
+
+for M in gens do
+if IsRat(M[1][1]) then M[1][1]:=QuadraticNumber(M[1][1],0,d); fi;
+if IsRat(M[1][2]) then M[1][2]:=QuadraticNumber(M[1][2],0,d); fi;
+if IsRat(M[2][1]) then M[2][1]:=QuadraticNumber(M[2][1],0,d); fi;
+if IsRat(M[2][2]) then M[2][2]:=QuadraticNumber(M[2][2],0,d); fi;
+od;
+
+G:=Group(gens);
+#I:=QuadraticIdeal(OQ,One(OQ));;
+##G:=HAP_CongruenceSubgroupGamma0(I);;
+G!.tree:=true;
+SetGeneratorsOfGroup(G,gens);
+SetSize(G,infinity);
+SetOrder(G,infinity);
 R:= Objectify(HapNonFreeResolution,
             rec(
             dimension:=Dimension,
             boundary:=Boundary,
             homotopy:=fail,
             elts:=ELTS,
-            group:=Group(ELTS),
+            group:=G,
             stabilizer:=Stabilizer,
             action:=Action,
+            ring:=Y!.ring,
+            generators:=gens,
             cwSpace:=Y,
             properties:=
             [["length",100000],
@@ -650,7 +730,7 @@ R:= Objectify(HapNonFreeResolution,
 
 RecalculateIncidenceNumbers_NonFreeRes(R);
 return R;
-end;
+end);
 #######################################################
 #######################################################
 

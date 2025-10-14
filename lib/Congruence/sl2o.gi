@@ -38,9 +38,11 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0Ideal,
 function(I)
-local G, membership, CosetRep, CosetPos,CosetReps,R,g,x,y,a;
+local G, membership, CosetRep, CosetPos,CosetReps,R,g,x,y,a, one, zero;
 
 G:=HAP_GenericSL2OSubgroup();
+one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
+zero:=Zero(one);
 
 ###################################################
 membership:=function(g);
@@ -53,7 +55,7 @@ end;
 G!.membership:=membership;
 G!.level:=I;
 if Norm(I)=1 then
-  G!.GeneratorsOfMagmaWithInverses:=GeneratorsOfGroup(SL2QuadraticIntegers(AssociatedRing(I)!.bianchiInteger,true));
+  G!.GeneratorsOfMagmaWithInverses:=one*GeneratorsOfGroup(SL2QuadraticIntegers(AssociatedRing(I)!.bianchiInteger,true));
 fi;
 G!.name:="CongruenceSubgroupGamma0";
 G!.ugrp:=Group(IdentityMat(2));
@@ -63,20 +65,20 @@ if IsPrime(I) then   #I need to extend this to no primes
 R:=RightTransversal(I);
 ###########################################
 CosetPos:=function(g);
-if g[1][1] mod I =0 then return 1+Norm(I); fi;  
+if g[1][1] mod I =zero then return 1+Norm(I); fi;  
 return Position(R, ((g[2][1]*InverseOp(I,g[1][1])) mod I));
 end;
 ###########################################
 
 ###########################################
 CosetRep:=function(g);
-if g[1][1] mod I=0 then return [[0,-1],[1,0]]; fi;
-return [[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,1]];
+if g[1][1] mod I=zero then return one*[[0,-1],[1,0]]; fi;
+return [one*[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,one]];
 end;
 ###########################################
 
-CosetReps:=List([1..Norm(I)],i->[[1,0],[R[i],1]]);
-Add(CosetReps,[[0,-1],[1,0]]);
+CosetReps:=List([1..Norm(I)],i->[one*[1,0],[R[i],one]]);
+Add(CosetReps,one*[[0,-1],[1,0]]);
 G!.cosetRep:=CosetRep;
 G!.cosetReps:=CosetReps;
 G!.cosetPos:=CosetPos;
@@ -92,17 +94,18 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_PrincipalCongruenceSubgroupIdeal,
 function(I)
-local G, membership, g,x,y,a;
+local G, membership, g,x,y,a,one;
 
 G:=HAP_GenericSL2OSubgroup();
+one:=One(I!.AssociatedRing);
 
 ###################################################
 membership:=function(g);
 #if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 if not g[1][2] in I   then return false; fi;
-if not (g[1][1] -1) in I   then return false; fi;
-if not (g[2][2] -1) in I   then return false; fi;
+if not (g[1][1] -one) in I   then return false; fi;
+if not (g[2][2] -one) in I   then return false; fi;
 return true;
 end;
 ###################################################
@@ -110,7 +113,7 @@ end;
 G!.membership:=membership;
 G!.level:=I;
 G!.name:="PrincipalCongruenceSubgroup";
-G!.ugrp:=Group(IdentityMat(2));
+G!.ugrp:=Group(one*IdentityMat(2));
 return G;
 
 end);
@@ -129,7 +132,7 @@ if G!.tree=fail then
 
 if G!.name="CongruenceSubgroupGamma0" then
   if IsPrime(G!.level) then
-     #HAP_SL2OSubgroupTree_fast(G); return true;      #This is SLOWER!
+     HAP_SL2OSubgroupTree_fast(G); return true;      #This is SLOWER!
   fi;
 fi;
 
@@ -137,10 +140,13 @@ d:=AssociatedRing(G!.level)!.bianchiInteger;
 
 
 R:=ResolutionSL2QuadraticIntegers(d,2,true);;
+#R:=BianchiGcomplex(d);
+#R:=FreeGResolution(R,2);
 P:=PresentationOfResolution(R);
 gens:= R!.elts{P.gens};
 
-one:=IdentityMat(2);
+#one:=IdentityMat(2);
+one:=One(R!.elts[2]);
 
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);
@@ -278,10 +284,16 @@ local d, gens, one, tree,v,p,g,s,n,q,P,R, sublst,
 if G!.tree=fail then
 
 d:=AssociatedRing(G!.level)!.bianchiInteger;
+if IsCyclotomic((G!.level)!.GeneratorsOfTwoSidedIdeal[1]) then
 R:=ResolutionSL2QuadraticIntegers(d,2,true);;
+else
+R:=BianchiGcomplex(d);;
+R:=FreeGResolution(R,2);
+fi;
 P:=PresentationOfResolution(R);
 gens:= R!.elts{P.gens};
-one:=IdentityMat(2);
+#one:=IdentityMat(2);
+one:=One(R!.elts[2]);
 
 tree:=[];
 #leaves:=NewDictionary(one,true,SL2QuadraticIntegers(d));

@@ -103,6 +103,8 @@ DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup");
 DeclareGlobalFunction("StrongGeneratorsOfDerivedSubgroup_alt");
 DeclareGlobalFunction("WeakCommutativityGroup");
 DeclareGlobalFunction("SymmetricCommutativityGroup");
+DeclareGlobalFunction("WeakCommutativityCommutatorGroup");
+DeclareGlobalFunction("SymmetricCommutativityCommutatorGroup");
 
 
 

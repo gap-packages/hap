@@ -48,9 +48,10 @@ eqmap2:=EquivariantChainMap(S,T,f);
 
 A:=HomogeneousPolynomials(R!.group,k);
 cmap1:=HomToIntegralModule(eqmap,A);
+#return Cohomology(cmap1,N);
 cmap2:=HomToIntegralModule(eqmap2,A);
 cmap:=Compose(cmap1,cmap2);
-
+#return cmap;
 c:=Cohomology(cmap,N);
 return c;
 end);

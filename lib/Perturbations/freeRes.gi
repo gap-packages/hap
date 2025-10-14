@@ -47,7 +47,8 @@ ResolutionFG:=function(G,n)
 local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
 
 ##Added April 2017
-if prime>0 and Order(G)>1 and IsPGroup(G) then return ResolutionPrimePowerGroup(G,n); fi;
+#if prime>0 and Order(G)>1 and IsPGroup(G) then Print(IdGroup(G)); return ResolutionPrimePowerGroup(G,n); fi; #Something is wrong here!
+if prime>0 and Order(G)>1 and SSortedList(Factors(Order(G)))=[prime] then return ResolutionPrimePowerGroup(G,n); fi;
 ##
 ##Added Jan 2012
 if IsBound(P!.resolutions) and HasName(G) then
