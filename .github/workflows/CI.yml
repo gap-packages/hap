@@ -50,24 +50,3 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  # The documentation job
-  manual:
-    name: Build manuals
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-      - uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_CLONE: "polymaking hapcryst" # We need >= 0.8.3 and 0.1.13 to support polymake 4.0
-          GAP_PKGS_TO_BUILD: "io profiling nq"
-      - uses: gap-actions/build-pkg-docs@v1
-        with:
-          use-latex: 'true'
-      - name: 'Upload documentation'
-        uses: actions/upload-artifact@v4
-        with:
-          name: manual
-          path: ./doc/manual.pdf
-          if-no-files-found: error
