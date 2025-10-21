@@ -319,6 +319,21 @@ Chain complex of length 3 in characteristic 2 .
 
 </pre></div>
 
+<p>Let us view a barcode as a graph with vertices arranged in columns. We then refer to a connected component of this graph as a <em>bar</em>. Let us say that any bar with a vertex in the final (right-hand) column is of <em>length</em> <span class="SimpleMath">\(\infty\)</span>. Let us define the <em>length</em> of any other bar to be <span class="SimpleMath">\(r-1\)</span> where <span class="SimpleMath">\(r\)</span> is the number of vertices in the bar. Theorem 3.1 in <a href="chapBib_mj.html#biBRomero">[RHM+13]</a> implies that the differential <span class="SimpleMath">\(d^2_{p,q}=0\)</span> for <span class="SimpleMath">\(p+q=k\)</span> if and only if there is no bar of length <span class="SimpleMath">\(r\)</span> in the barcode arising in this way for any degree <span class="SimpleMath">\(k\)</span> homology barcode. So the following commands demonstrate that <span class="SimpleMath">\(d^r=0\)</span> for <span class="SimpleMath">\(r\ge 2\)</span> at least for <span class="SimpleMath">\(k\le 7\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for k in [1..7] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">R:=ResolutionNormalSeries([G,N],k+1);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=FilteredTensorWithIntegersModP(R,2);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">P:=PersistentHomologyOfFilteredChainComplex(C,k,2);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">BarCodeDisplay(P);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+</pre></div>
+
+<p><img src="images/LHS1.png" align="center" height="50" alt="a bar code for the LHS spectral sequence"/> <img src="images/lhsbc.png" align="center" height="70" alt="a bar code for the LHS spectral sequence"/> <img src="images/LHS3.png" align="center" height="100" alt="a bar code for the LHS spectral sequence"/> <img src="images/LHS4.png" align="center" height="130" alt="a bar code for the LHS spectral sequence"/> <img src="images/LHS5.png" align="center" height="150" alt="a bar code for the LHS spectral sequence"/> <img src="images/LHS6.png" align="center" height="190" alt="a bar code for the LHS spectral sequence"/> <img src="images/LHS7.png" align="center" height="210" alt="a bar code for the LHS spectral sequence"/></p>
+
 <p><a id="X856F202D823280F8" name="X856F202D823280F8"></a></p>
 
 <h4>10.7 <span class="Heading">Sparse chain complexes</span></h4>
