@@ -463,6 +463,31 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>The next example computes the integral homology of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> in degrees <span class="SimpleMath">\(\le 5\)</span> using the isomorphism <span class="SimpleMath">\(SL_2(\mathbb Z) \cong C_4\ast_{C_2}C_6\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=(1,2,3,4,5,6,7,8,9,10,11,12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C6:=Group(x^2);;SetName(C6,"C6");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C4:=Group(x^3);;SetName(C4,"C4");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2:=Group(x^6);;SetName(C2,"C2");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2C6:=GroupHomomorphismByFunction(C2,C6,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2C4:=GroupHomomorphismByFunction(C2,C4,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[C6,C4,[C2C6,C2C4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsDisplay(D);</span>
+
+</pre></div>
+
+<p><img src="images/graphgroupsSL2.png" align="center" height="100" alt="graph of groups"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionGraphOfGroups(D,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],n-&gt;Homology(TensorWithIntegers(R),n));</span>
+[ [ 0 ], [ 12 ], [  ], [ 12 ], [  ], [ 12 ] ]
+
+</pre></div>
+
 <p><a id="X7CE849E58706796C" name="X7CE849E58706796C"></a></p>
 
 <h4>7.7 <span class="Heading">Lie algebra homology and free nilpotent groups</span></h4>
