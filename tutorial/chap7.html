@@ -485,6 +485,29 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>The next commands compute the integral homology in degree <span class="SimpleMath">7</span> of a graph of groups corresponding to the HNN extension <span class="SimpleMath">G=H*_A</span> where <span class="SimpleMath">H</span> is the symmetric group <span class="SimpleMath">H=S_5</span> and <span class="SimpleMath">A</span> is the subgroup <span class="SimpleMath">A=S_3</span> and <span class="SimpleMath">f:A→ H</span> is the homomorphism <span class="SimpleMath">(1,2) → (3,4)</span>, <span class="SimpleMath">(1,2,3) → (3,4,5)</span>. The HNN extension <span class="SimpleMath">G</span> is obtained from <span class="SimpleMath">H</span> by adding a generator <span class="SimpleMath">t</span> subject to the relations <span class="SimpleMath">t^-1 a t = f(a)</span> for <span class="SimpleMath">a ∈ A</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S5:=SymmetricGroup(5);SetName(S5,"S5");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=SymmetricGroup(3);SetName(A,"S3");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByImages(A,S5,[(1,2),(1,2,3)],[(3,4),(3,4,5)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=GroupHomomorphismByFunction(A,S5,x-&gt;x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[S5,[f,g]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsDisplay(D);;</span>
+
+</pre></div>
+
+<p><img src="images/graphgroupsHNN.png" align="center" height="100" alt="graph of groups"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionGraphOfGroups(D,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),7);</span>
+[ 2, 2, 60 ]
+
+</pre></div>
+
 <p><a id="X7CE849E58706796C" name="X7CE849E58706796C"></a></p>
 
 <h4>7.7 <span class="Heading">Lie algebra homology and free nilpotent groups</span></h4>
