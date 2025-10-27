@@ -64,6 +64,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X82F46C8B782420AB">14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X81F9F6C97CDF51D8">14.11 <span class="Heading">Calling Magms's Voronoi algorithm directly</span></a>
+</span>
+</div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -507,6 +510,21 @@ No contracting homotopy available.
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]
+
+</pre></div>
+
+<p><a id="X81F9F6C97CDF51D8" name="X81F9F6C97CDF51D8"></a></p>
+
+<h4>14.11 <span class="Heading">Calling Magms's Voronoi algorithm directly</span></h4>
+
+<p>If the <strong class="button">Magma</strong> computational algebra system is installed and invoked using the line command <code class="code">magma</code> then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call Sebatian Schoennenbeck's <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology <span class="SimpleMath">H_4(SL_2(mathcal O_-5), Z) = ( Z_2)^7</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=VoronoiComplexGL(2,-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
+[ 2, 2, 2, 2, 2, 2, 2 ]
 
 </pre></div>
 
