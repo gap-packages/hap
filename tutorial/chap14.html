@@ -531,7 +531,7 @@ No contracting homotopy available.
 
 </li>
 </ul>
-<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology <span class="SimpleMath">H_4(GL_2(mathcal O_-5), Z) = ( Z_2)^7</span>.</p>
+<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">H_4(GL_2(mathcal O( Q(sqrt-5)), Z) = ( Z_2)^7</span> and <span class="SimpleMath">H_4(GL_2(mathcal O( Q(sqrt5)), Z) = ( Z_2)^7 ⊕ Z_60</span>.</p>
 
 
 <div class="example"><pre>
@@ -539,6 +539,11 @@ No contracting homotopy available.
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
 [ 2, 2, 2, 2, 2, 2, 2 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=VoronoiComplexGL(2,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 60 ]
 
 </pre></div>
 
