@@ -20,20 +20,14 @@ tmp2In:=Filename( tmpdir , "tmp2In.log" );
 
 ############################CREATE POINTS###############
 if IsPermGroup(G) then
-
-for x in G do
-w:=[];
-    for i in [1..Dim] do
-    Append(w,[v[i^x]]);
+    for x in G do
+        w:=List([1..Dim], i -> v[i^x]);
+        Append(Points, [w]);
     od;
-Append(Points, [w]);
-od;
-						
 else
-
-for x in G do
-    w:=v*x;
-    Append(Points, [w]);
+    for x in G do
+        w:=v*x;
+        Append(Points, [w]);
     od;
 fi;
 ######################POINTS CREATED###################
