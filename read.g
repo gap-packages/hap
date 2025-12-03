@@ -11,12 +11,6 @@ HAP_ROOT:=DirectoriesPackageLibrary("HAP");
 HAP_ROOT:=Filename(HAP_ROOT,".");
 HAP_ROOT:=HAP_ROOT{[1..Length(HAP_ROOT)-1]};
 MakeReadOnlyGlobal("HAP_ROOT");
-#POLYMAKE_PATH:=Concatenation(HAP_ROOT,"Polymake/polymakeLegacy ");
-#POLYMAKE_PATH:=Filename( DirectoriesSystemPrograms( ), "polymake" );
-#MakeReadOnlyGlobal("POLYMAKE_PATH");
-#MakeReadWriteGlobal("POLYMAKE_COMMAND");
-#POLYMAKE_COMMAND:=POLYMAKE_PATH;
-#MakeReadOnlyGlobal(POLYMAKE_COMMAND);
 
 
 #################################
