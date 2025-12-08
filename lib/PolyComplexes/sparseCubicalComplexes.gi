@@ -578,7 +578,7 @@ local BN,BN1, BNlist, BN1list, flen, fdimsN, fdimsN1,
       PHmat, L, n,i,j, r,s;
 
 flen:=EvaluateProperty(C,"filtration_length");
-fdimsN:=List([1..flen],i->C!.filteredDimension(i,N));
+fdimsN:=List([1..flen],i->C!.filteredDimension(i,N));   #Changed 1 to 0 Oct 2025
 fdimsN1:=List([1..flen],i->C!.filteredDimension(i,N+1));
 
 if N>0 then
