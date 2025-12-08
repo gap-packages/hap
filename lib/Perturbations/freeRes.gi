@@ -1,5 +1,5 @@
 #(C) 2008 Graham Ellis
-#RT:=0;
+
 ################################################################
 InstallGlobalFunction(FreeGResolution,
 function(arg)
@@ -37,7 +37,7 @@ bool:=IsHapSL2Subgroup(G) or IsHapSL2OSubgroup(G) or IsBound(G!.bianchiInteger);
 EltsG:=P!.elts;
 BoundaryP:=P!.boundary;
 
-BinGp:=ContractibleGcomplex("SL(2,O-2)");
+BinGp:=ContractibleGcomplex("SL(2,O-2)_a");
 BinGp:=BinGp!.stabilizer(0,4);;
 BinGp:=Image(RegularActionHomomorphism(BinGp));
 #BinGp:=Group(ReduceGenerators(GeneratorsOfGroup(BinGp),BinGp));
@@ -354,9 +354,13 @@ local h,z,x,y;
 #[q,s]. The output is an r-word in "dimension" [q,s+1].
 
 h:=[];
+
 for y in w do
 x:=[Action(q,y[1],y[3])*y[1],y[2],y[3]];
+
 z:=HtpyGen(q,s,x[1],x[2],x[3]);
+
+
 z:=List(z,a->[Action(q,a[1],a[3])*a[1],a[2],a[3]]);
 Append(h,z);
 od;

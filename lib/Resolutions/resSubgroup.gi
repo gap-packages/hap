@@ -99,9 +99,11 @@ t:=PositionCanonical(TransK,EltsG[g]);
 
 x:=EltsG[g]*TransK[t]^-1;
 
-k:=Position(EltsK,x);
+#k:=Position(EltsK,x);
 
-if k=fail then Add(EltsK,x); k:=Length(EltsK); fi;
+#if k=fail then 
+Add(EltsK,x); k:=Length(EltsK); 
+#fi;
 
 G2KRec[g]:= [k,t];
 
