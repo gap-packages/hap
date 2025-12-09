@@ -167,6 +167,7 @@ DeclareGlobalFunction("ModPCohomologyPresentationBounds");
 DeclareGlobalFunction("HAP_PrintTo");
 DeclareGlobalFunction("HAP_AppendTo");
 DeclareGlobalFunction("HapExample");
+DeclareGlobalFunction("Pause");
 DeclareGlobalFunction("HapFile");
 DeclareGlobalFunction("TestHap");
 DeclareGlobalFunction("TestHapBook");

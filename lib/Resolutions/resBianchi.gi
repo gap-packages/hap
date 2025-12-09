@@ -13,13 +13,13 @@ fi;
 
 if IsString(d) then d:=EvalString(d); fi;
 name:=Concatenation("SL(2,O", String(d), ")");
-if name="SL(2,O-2)" then 
-K:=ContractibleGcomplex("SL2O-2_a");
-Kgroup:=K!.group; Kgroup!.bianchiInteger:=-2;
-else
+#if name="SL(2,O-2)" then 
+#K:=ContractibleGcomplex("SL2O-2_a");
+#Kgroup:=K!.group; Kgroup!.bianchiInteger:=-2;
+#else
 K:=ContractibleGcomplex(name);
 Kgroup:=K!.group;
-fi;
+#fi;
 D:=Group( -Identity(K!.group) );;
 PK:=QuotientOfContractibleGcomplex(K,D);;
 Rgroup:=PK!.group;
@@ -64,11 +64,11 @@ name:=Concatenation("SL(2,O", String(d), ")");
 else
 name:=Concatenation("SLO",d,")");
 fi;
-if name="SL(2,O-2)" then 
-K:=ContractibleGcomplex("SL(2,O-2)_a"); ;
-else
+#if name="SL(2,O-2)" then 
+#K:=ContractibleGcomplex("SL(2,O-2)_a"); ;
+#else
 K:=ContractibleGcomplex(name);
-fi;
+#fi;
 #D:=Group( -Identity(K!.group) );;
 #K:=QuotientOfContractibleGcomplex(K,D);;
 R:=FreeGResolution(K,n);

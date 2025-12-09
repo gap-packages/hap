@@ -1326,7 +1326,6 @@ end);
 
 
 
-
 ##########################################################
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbers,
@@ -1350,12 +1349,14 @@ end);
 ##########################################################
 ##########################################################
 
+#if false then #Oct 2025
 ##########################################################
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt],
 function(C,n);
+if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 2025
 return PersistentBettiNumbers(
 FilteredChainComplexToFilteredSparseChainComplex(C),n);
 end);
@@ -1368,12 +1369,13 @@ InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt,IsInt],
 function(C,n,prime);
+if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 202
 return PersistentBettiNumbers(
 FilteredChainComplexToFilteredSparseChainComplex(C),n,prime);
 end);
 ##########################################################
 ##########################################################
-
+#fi;
 
 
 

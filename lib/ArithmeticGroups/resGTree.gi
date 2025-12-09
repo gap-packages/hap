@@ -540,7 +540,7 @@ local
 				    Append(h,NegateWord(e));
                 fi;
 	        fi;
-            HtpyRec[n+1][pt][g]:=AlgRed(h);
+            HtpyRec[n+1][pt][g]:=AlgRed(h); 
         fi;
     fi;
     if SignInt(t)=1 then 

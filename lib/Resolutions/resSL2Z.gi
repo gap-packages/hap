@@ -17,13 +17,16 @@ fi;
 ##################################
 C:=ContractibleGcomplex("SL(2,Z)");
 Rsl:=ResolutionGTree(C,n);
+
+if p=1 then return Rsl; fi;
+
 Rsl!.group:=SL(2,Integers);
 sl:=Rsl!.group;
 ##################################
 
-if p=1 then return
-ResolutionGTree(C,n);
-fi;
+#if p=1 then return
+#ResolutionGTree(C,n);
+#fi;
 
 ##################################
 H:=CongruenceSubgroupGamma0(p);

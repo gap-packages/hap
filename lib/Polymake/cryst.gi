@@ -265,6 +265,7 @@ K:=    Objectify(HapNonFreeResolution,
             stabilizer:=STAB,
             action:=ACTION,
             standardWord:=StandardWord,
+            fundamentalDomain:=F,
             properties:=
              [["type","non-free resolution"],
               ["length",1000],

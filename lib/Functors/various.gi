@@ -909,3 +909,16 @@ return rec( zero_eigenvalues:=zer, positive_eigenvalues:=pos, negative_eigenvalu
 end);
 ###############################################
 ###############################################
+
+###############################################
+###############################################
+InstallGlobalFunction(Pause,
+function()
+local pause;
+pause:=DirectoriesPackageLibrary("HAP","lib/Functors/");;
+pause:=Filename(pause, "pause.p");;
+Exec(Concatenation("perl ",pause));
+
+end);
+###############################################
+###############################################

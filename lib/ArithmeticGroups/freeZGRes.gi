@@ -1,5 +1,4 @@
 
-
 #Note:    The first part of this function written by Graham Ellis
 #         The "homotpy" part is written by Bui Anh Tuan 
 

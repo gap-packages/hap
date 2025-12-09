@@ -64,7 +64,6 @@ local t1,t2,
     ##
     pos:=function(Elts,g)
     local posit;
-
         posit:=Position(Elts,g);
         if posit=fail then 
             Add(Elts,g);  
