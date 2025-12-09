@@ -1220,7 +1220,7 @@ function( g, h, k, l ) ... end
 
 <p><strong class="button">Illustration 3</strong></p>
 
-<p>As a third illustration, the following commands show that <span class="SimpleMath">\(H_n(M_{23},M)_{p}\)</span> is periodic for primes <span class="SimpleMath">\(p=5, 7, 11, 23\)</span> of periods dividing <span class="SimpleMath">\(8, 6, 10, 22\)</span> respectively.</p>
+<p>As a third illustration, the following commands show that <span class="SimpleMath">\(H_n(M_{23},M)_{p}\)</span> is periodic for primes <span class="SimpleMath">\(p=5, 7, 11, 23\)</span> of periods dividing <span class="SimpleMath">\(8, 6, 10, 22\)</span> respectively. They also show that <span class="SimpleMath">\(H_n(M_{23},\mathbb Z)_{(3)}=0\)</span> for <span class="SimpleMath">\(n=8,9,12,13\)</span> and <span class="SimpleMath">\(H_n(M_{23},\mathbb Z)_{(3)}=\mathbb Z_3\)</span> for <span class="SimpleMath">\(n=10,11\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -1265,6 +1265,31 @@ true
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
 22
+
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);List(D[2],StructureDescription);</span>
+[ "(C3 x C3) : QD16", "A5 : S3" ]
+[ "S3 x S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [8..13] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(List(D[1],g-&gt;GroupHomology(g,n))," , ",List(D[2],g-&gt;GroupHomology(g,n)),"\n\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+[ [ 2, 2 ], [ 2, 2, 2 ] ] , [ [ 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 3 ], [ 2, 2, 2, 3, 3 ] ] , [ [ 2, 2, 2, 2, 2, 3, 3 ] ]
+
+[ [ 2, 2, 2, 8, 3 ], [ 2, 2, 2, 2, 4, 3, 3, 3, 3 ] ] , 
+[ [ 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3 ] ]
+
+[ [ 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
 
 </pre></div>
 
