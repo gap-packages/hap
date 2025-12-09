@@ -42,7 +42,7 @@ local
     EltsG:=P!.elts;
     BoundaryP:=P!.boundary;
 
-    BinGp:=ContractibleGcomplex("SL(2,O-2)");
+    BinGp:=ContractibleGcomplex("SL(2,O-2)_a");
     BinGp:=BinGp!.stabilizer(0,4);;
     BinGp:=Image(RegularActionHomomorphism(BinGp));
 
