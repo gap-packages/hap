@@ -1,24 +1,4 @@
 #############################################################
-if not IsBound(POLYMAKE_PATH)
-   then
-ReadPackage("HAP","boolean");
-HAP_ROOT:=DirectoriesPackageLibrary("HAP");
-HAP_ROOT:=Filename(HAP_ROOT,".");
-HAP_ROOT:=HAP_ROOT{[1..Length(HAP_ROOT)-1]};
-
-#    POLYMAKE_PATH:=Filename( DirectoriesSystemPrograms( ), "polymake" );
-POLYMAKE_PATH:=Concatenation(HAP_ROOT,"Polymake/polymakeLegacy");
-
-if POLYMAKE_PATH=fail
-   or not IsExecutableFile(POLYMAKE_PATH)
-   then
-    Info(InfoWarning,1,"HAP warning: Set POLYMAKE_PATH manually if needed. ");
-else
-POLYMAKE_PATH:=Concatenation(POLYMAKE_PATH," ");
-    MakeReadOnlyGlobal("POLYMAKE_PATH");
-fi;
-fi;
-#############################################################
 
 #############################################################
 if not IsBound(NEATO_PATH)
