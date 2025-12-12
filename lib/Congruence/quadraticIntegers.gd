@@ -111,6 +111,7 @@ DeclareGlobalFunction( "QuadraticNumberConjugate" );
 
 DeclareGlobalFunction("DisplayUnimodularPairs");
 DeclareGlobalFunction("Display3DUnimodularPairs");
+DeclareGlobalFunction("Display3DUnimodularPairs_extra");
 DeclareGlobalFunction("UnimodularIntersectingLine");
 DeclareGlobalFunction("NeighbourhoodOfUnimodularPairs");
 DeclareGlobalFunction("HAP_VertexHeights");
@@ -199,6 +200,20 @@ InstallMethod( Display3D,
 [IsHapBianchiPolyhedron],
  function(P)
 Display3DUnimodularPairs(P!.ring,P!.unimodularPairs);
+ end);
+
+InstallOtherMethod( Display3D,
+"for HapBianchiGComplex",
+[IsHapNonFreeResolution],
+ function(K)
+local  lst,Y;
+if not IsBound(K!.ring) then TryNextMethod(); fi;
+Y:=K!.ring;
+if not IsBound(Y!.bianchiInteger) then TryNextMethod(); fi;
+
+Y:=K!.cwSpace;
+lst:=Display3DUnimodularPairs_extra(K);
+Display3DUnimodularPairs(Y!.ring,Y!.unimodularPairsSingletons,lst);
  end);
 #####################################################################
 #####################################################################

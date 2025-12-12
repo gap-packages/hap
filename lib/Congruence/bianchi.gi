@@ -604,10 +604,19 @@ end);                                              #####
 #####################################################
 #####################################################
 InstallGlobalFunction(Display3DUnimodularPairs, #####
-function(OQ,LL)                                 #####
-local  file, x, w, BI,ABI, S,SS, L,R,T,B,sz,V;
+function(arg)                                   #####
+local  OQ,LL,Lst,file, cols,x,xx, w, BI,ABI, S,SS, L,R,T,B,sz,V,clr;
 
-V:=HAP_VertexHeights(OQ,LL)[2];
+OQ:=arg[1];
+Lst:=arg[2];
+if Length(arg)=2 then
+LL:=List(Lst,a->[a,"blue"]);
+else
+cols:=arg[3];
+LL:=List([1..Length(Lst)],i->[Lst[i],cols[i]]);
+fi;
+
+V:=HAP_VertexHeights(OQ,Lst)[2];
 V:=V!.Heights;
 
 V:=Filtered(V,x->x>0);
@@ -636,7 +645,8 @@ AppendTo(file,"revolution b=sphere(O,1);\n");
 
 L:=[];R:=[];T:=[];B:=[];
 S:=Sqrt(1.0*ABI);
-for x in LL do
+for xx in LL do
+x:=xx[1]; clr:=xx[2];
 w:=UnimodularPairCoordinates(OQ,x);
 w:=1.0*w;
 w[2]:=w[2]*S;
@@ -648,7 +658,7 @@ AppendTo(file,"real r=");
 AppendTo(file,"sqrt(");
 AppendTo(file,HAP_PrintFloat(w[3]));
 AppendTo(file,");\n");
-AppendTo(file,"draw(shift(",HAP_PrintFloat(w[1]),",",HAP_PrintFloat(w[2]),",0)*scale3(r)*surface(b),blue+opacity(1));\n");
+AppendTo(file,"draw(shift(",HAP_PrintFloat(w[1]),",",HAP_PrintFloat(w[2]),",0)*scale3(r)*surface(b),",clr,"+opacity(1));\n");
 od;
 
 
@@ -1481,4 +1491,58 @@ return P;
 end);
 ####################################################
 ####################################################
+
+#################################################################
+#################################################################
+InstallGlobalFunction(Display3DUnimodularPairs_extra,
+function(K)
+local Y,ORBS,OQ,colours,coloursLst,spheres,isint,s,t,i,j,tmp;
+
+#######################
+isint:=function(v)
+local x;
+for x in v do
+if not IsInt(x) then return false; fi;
+od;
+return true;
+end;
+#######################
+Y:=K!.cwSpace;
+ORBS:=Y!.ORBS;
+spheres:=Y!.sphereCentres;
+
+colours:=List(ORBS[3],x->[]);
+
+OQ:=K!.ring;
+OQ:=OQ!.bianchiInteger;
+if 1 = OQ mod 4 then
+for s in [1..Length(ORBS[3])] do
+for i in ORBS[3][s] do
+    for j in [1..Length(spheres)] do
+    t:=spheres[i]-spheres[j];
+    if isint(2*t) then Add(colours[s],j);  fi;
+    od;
+od;
+od;
+else
+for s in [1..Length(ORBS[3])] do
+for i in ORBS[3][s] do
+    for j in [1..Length(spheres)] do
+    if isint(spheres[i]-spheres[j]) then Add(colours[s],j);  fi;
+    od;
+od;
+od;
+fi;
+colours:=List(colours,x->Set(x));
+coloursLst:=List([1..Length(Y!.unimodularPairsSingletons)],i->PositionProperty(colours,x->i in x));
+colours:=["red","cyan","green","yellow","blue","magenta","palered", "palecyan","palegreen","paleyellow","paleblue","pink","orange","fuchsia","purple","royalblue"] ;
+for i in [1..100] do
+tmp:=Concatenation("rgb(",String(Random([0..255])),",",String(Random([0..255])),",",String(Random([0..255])),")");
+Add(colours,tmp);
+od;
+coloursLst:=List([1..Length(spheres)],i->colours[coloursLst[i]]);
+return coloursLst;
+end);
+#################################################################
+#################################################################
 
