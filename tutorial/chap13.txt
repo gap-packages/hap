@@ -1271,7 +1271,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-6,4);[127X[104X
-    [4X[28XResolution of length 4 in characteristic 0 for PSL(2,O-6) . [128X[104X
+    [4X[28XResolution of length 4 in characteristic 0 for SL(2,O-6) . [128X[104X
     [4X[28XNo contracting homotopy available. [128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XG:=R!.group;;[127X[104X
@@ -1535,6 +1535,37 @@
     [4X[28Xideal of norm 4817 in O(GaussianRationals)[128X[104X
     [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);;[127X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
+    [4X[28X[ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, [128X[104X
+    [4X[28X  4078793513671 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe command [10XAbelianInvariants(G)[110X can be quite time consuming. An alternative
+  approach  is to compute the first homology of [22XG[122X from a chain complex [22XC[122X using
+  the  command [10XContractedComplex(C,b)[110X. This command inputs a chain complex and
+  optionally  a  positive  integer [22Xb[122X and attempts to return a quasi-isomorphic
+  chain  complex  with fewer generators in each degree. The optional integer [22Xb[122X
+  is  used to limit the extent to which simplification of [22XC[122X takes place. If no
+  integer  [22Xb[122X  is  entered  then  no  limit  is  placed  on  the simplification
+  procedure.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-1,3,true);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(S);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 4818, 19272, 33726, 33726 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,50);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 236, 3763, 17982 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,100);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 192, 3217, 17480 ][128X[104X
+    [4X[25Xgap>[125X [27Xh:=Homology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 4, 7491874170748813695414244823673078027733520 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XA:=AbelianGroup(h);;[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(A);[127X[104X
     [4X[28X[ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, [128X[104X
     [4X[28X  4078793513671 ][128X[104X
     [4X[28X[128X[104X
