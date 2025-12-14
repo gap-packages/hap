@@ -35,6 +35,13 @@ if IsPermGroup(G) then
 G:=Image(PermToMatrixGroup(G));
 fi;
 
+for x in GeneratorsOfGroup(G) do
+if not IsOne(x*TransposedMat(x)) then
+Print("The representation is not orthogonal.\n");
+return fail;
+fi;
+od;
+
 StartVector:=arg[2];
 PG:=PolytopalGenerators(G,StartVector);
 
@@ -99,6 +106,7 @@ for x in [1..lngth] do
 Append(Hasse,[List(PG.hasseDiagram[x],y->FaceToVertices(y))     ]);
 od;
 
+#Print(Hasse,"\n");
 
 #####################################################################
 OrbitReps:=function(L)  #L=Hasse[i]
@@ -108,16 +116,16 @@ Reps:=[];
 for S in L do
 bool:=true;
 count:=0;
-for g in G do
-count:=count+1;
-T:=List(S,x->Action(g,x));
-for R in Reps do
-if Length(T)=Length(Intersection(T,R)) then
-bool:=false; break; fi;
-od;
-if bool =false then break;fi;
-if count=Order(G) then Add(Reps,SSortedList(S)); fi;
-od;
+   for g in G do
+   count:=count+1;
+   T:=List(S,x->Action(g,x));
+      for R in Reps do
+      if Length(T)=Length(Intersection(T,R)) then
+      bool:=false; break; fi;
+      od;
+   if bool =false then break;fi;
+   if count=Order(G) then Add(Reps,SSortedList(S)); fi;
+   od;
 od;
 
 return Reps;
@@ -227,7 +235,7 @@ CompCpy:=[];
 
 for g in G do
 gFn:=SSortedList(List(Fn,x->Action(g,x)));
-if Size(gFn) = Size(Intersection(gFn,Fm)) then
+if Size(gFn) = Size(Set(Intersection(gFn,Fm))) then
 if not gFn in CompCpy then
 Add(Component,g); 
 Add(CompCpy,gFn);

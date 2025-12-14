@@ -947,6 +947,19 @@ end);
 ##########################################################
 ##########################################################
 InstallOtherMethod(ContractedComplex,
+"contracted sparse chain complex",
+[IsHapSparseChainComplex,IsInt],
+function(C,b);
+return
+SimplifiedSparseChainComplex(C,b);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
 "contracted  chain complex",
 [IsHapChainComplex],
 function(C)
@@ -958,6 +971,22 @@ SparseChainComplexToChainComplex(D);
 end);
 ##########################################################
 ##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  chain complex",
+[IsHapChainComplex,IsInt],
+function(C,b)
+local D;
+D:=ChainComplexToSparseChainComplex(C);
+D:=ContractedComplex(D,b);
+return
+SparseChainComplexToChainComplex(D);
+end);
+##########################################################
+##########################################################
+
 
 ##########################################################
 ##########################################################

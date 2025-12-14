@@ -218,8 +218,6 @@ Add(Index,Index[i]+tmp[i]);   #property.
 od;                           #
 RemoveFile(tmp4Inlog);
 
-
-
 input:=InputTextFile(tmp2Inlog);
 tmp:=ReadLine(input);
 tmp:=ReadLine(input);
@@ -228,7 +226,7 @@ while Length(tmp)>2 do
 Append(Faces, FacesFn(tmp));
 tmp:=ReadLine(input);
 od;
-RemoveFile(tmp2Inlog);
+#RemoveFile(tmp2Inlog);
 
 if Length(Faces[1])=1 then
 
@@ -249,8 +247,21 @@ else
 	
 fi;
 
+#FUDGE: Sometimes Polymake lists vertices first, and sometimes last.
+#Above we assume that they are listed last. So we'll test and adjust
+#if necessary.
+if Length(FacesFinal[2][Length(FacesFinal[2])])=1 then
+for i in [2..Length(FacesFinal)-1] do
+   p:=Length(FacesFinal[i]);
+   FacesFinal[i-1]:=Reversed(FacesFinal[i-1]);
+   Add(FacesFinal[i-1],FacesFinal[i][p]);
+   Remove(FacesFinal[i],p);
+   FacesFinal[i-1]:=Reversed(FacesFinal[i-1]);
+od;
+fi;
+
 RemoveFile(tmpInlog);
-RemoveFile(tmp2Inlog);
+#RemoveFile(tmp2Inlog);
 RemoveFile(tmp4Inlog);
 RemoveFile(tmp3Inlog);
 RemoveFile(Filename(tmpDir," "));

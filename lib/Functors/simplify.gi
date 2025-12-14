@@ -2,16 +2,19 @@
 ################################################################
 ################################################################
 InstallGlobalFunction(SimplifiedSparseChainComplex,
-function(C)
-local bounds, cobounds, n, k, i, j, b,c,B,x,
+function(arg)
+local C,bounds, cobounds, n, k, i, j, b,c,B,x,
       Dimension,Boundary,first,bnd,Replace,NormForm,
       NewGens,ZeroCells;
+
+C:=arg[1];
 
 ####################
 ####################
 NormForm:=function(b)
 local S, T, a, pos;
 S:=SSortedList(List(b,x->x[1]));
+if Length(S)=Length(b) then return SSortedList(b); fi;  #Added Dec 2025
 T:=1*List(S,x->[x,0]);
 for a in b do
 pos:=PositionSorted(S,a[1]);
@@ -53,6 +56,7 @@ od;od;
 ####################
 ####################
 
+if Length(arg)=1 then
 ####################
 ####################
 first:=function(x) #find first cell with coefficient equal to +/-1
@@ -64,6 +68,22 @@ return fail;
 end;
 ####################
 ####################
+fi;
+if Length(arg)=2 then
+####################
+####################
+first:=function(x) #find first cell with coefficient equal to +/-1
+local i;
+if Length(x)>arg[2] then return fail; fi;
+for i in [1..Length(x)] do
+if AbsInt(x[i][2])=1 then return i; fi;
+od;
+return fail;
+end;
+####################
+####################
+fi;
+
 
 ####################
 ####################
