@@ -118,7 +118,7 @@ S:=arg[6];
 else
 #if IsAbelian(N) then			#This should always work but it doesn't! 
 #S:=ResolutionFiniteGroup(GensN,n,tietze);  #June 2022
-S:=ResolutionGenericGroup(GroupWithGenerators(GensN),n);
+S:=ResolutionGenericGroup(GroupWithGenerators(GensN),n); #possible recursion trap
 fi;
 
 EltsN:=S!.elts;

@@ -45,7 +45,8 @@ BinGp:=Image(RegularActionHomomorphism(BinGp));
 #############################
 ResolutionFG:=function(G,n)
 local x, tmp, iso,iso1,iso2,iso3,res,Q, fn;
-
+x:=SmallGeneratingSet(G);
+if Length(x)>0 then G:=Group(x); fi;
 ##Added April 2017
 #if prime>0 and Order(G)>1 and IsPGroup(G) then Print(IdGroup(G)); return ResolutionPrimePowerGroup(G,n); fi; #Something is wrong here!
 if prime>0 and Order(G)>1 and SSortedList(Factors(Order(G)))=[prime] then return ResolutionPrimePowerGroup(G,n); fi;

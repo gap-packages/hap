@@ -27,7 +27,7 @@ Tz:=function(R) return R; end;
    else return ResolutionAbelianGroup(G,N); fi;
    fi;
 
-   if Order(G)<64 then
+   if Order(G)<64 then  
    return Tz(ResolutionFiniteGroup(G,N));
    fi;
 
@@ -39,7 +39,11 @@ Tz:=function(R) return R; end;
 
 L:=LowerCentralSeries(G);
 if Maximum(List(L,Order)) <1000 then
+if Length(L)>1 then
 return  ResolutionNormalSeries(LowerCentralSeries(G),N);
+else 
+return ResolutionFiniteGroup(G,N);
+fi;
 fi;
 
    if IsNilpotent(G) then

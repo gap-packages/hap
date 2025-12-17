@@ -31,16 +31,14 @@ local
 	VSGS;
 
 G:=arg[1];
-if IsPermGroup(G) then
-G:=Image(PermToMatrixGroup(G));
-fi;
-
+if IsMatrixGroup(G) then
 for x in GeneratorsOfGroup(G) do
 if not IsOne(x*TransposedMat(x)) then
 Print("The representation is not orthogonal.\n");
 return fail;
 fi;
 od;
+fi;
 
 StartVector:=arg[2];
 PG:=PolytopalGenerators(G,StartVector);
@@ -59,11 +57,19 @@ return Length(Hasse[k]);
 end;
 #####################################################################
 
+if IsPermGroup(G) then
+#####################################################################
+Action:=function(g,V);
+return Permuted(V,g^-1);
+end;
+#####################################################################
+else
 #####################################################################
 Action:=function(g,V) ;
 return g*V;    
 end;
 #####################################################################
+fi;
 
 
 #########################CREATE POINTS###############################

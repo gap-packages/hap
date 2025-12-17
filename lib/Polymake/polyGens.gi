@@ -34,14 +34,20 @@ return fail;
 fi;
 
 if IsPermGroup(GG) then
-GG:=Image(PermToMatrixGroup(GG));
-fi;
-
+#GG:=Image(PermToMatrixGroup(GG));
+#fi;
+#####################################################################
+Action:=function(g,V);
+return Permuted(V,g^-1);
+end;
+#####################################################################
+else
 #####################################################################
 Action:=function(g,V) ;
 return g*V;;   #This actually works!
 end;
 #####################################################################
+fi;
 
 G:=[];
 tmplst:=[];
