@@ -366,7 +366,6 @@ G!.IndexInSL2O:=Length(tree);
 G!.gens:=gens;
 G!.presentation:=P;
 
-Print(PermRep,"\n");
 for s in [1..Length(gens)] do
 if not IsBound(PermRep[s][1]) then 
 PermRep[s][1]:=Filtered([1..Length(PermRep[s])],i->not i in PermRep[s])[1];
