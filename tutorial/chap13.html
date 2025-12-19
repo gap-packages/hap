@@ -1349,7 +1349,7 @@ ideal of norm 13381 in O(GaussianRationals)
 
 <p>valid for square-free <span class="SimpleMath">d&lt;0</span>, where <span class="SimpleMath">D</span> is the discriminant of <span class="SimpleMath">Q(sqrtd)</span>. The volume of a finite index subgroup <span class="SimpleMath">Γ</span> is obtained by multiplying the right-hand side by the index <span class="SimpleMath">|PSL_2(cal O_d): Γ|</span>.</p>
 
-<p>The following commands produce a graph of <span class="SimpleMath">fraclog |Γ_0(I)_tors^ab|{ Norm(I)</span> against <span class="SimpleMath">Norm(I)</span> for prime ideals <span class="SimpleMath">I</span> of norm <span class="SimpleMath">49 ≤ Norm(I) ≤ 4357</span> (where one ideal for each norm is taken).</p>
+<p>The following commands produce a graph of <span class="SimpleMath">fraclog |Γ_0(I)_tors^ab|{ Norm(I)</span> against <span class="SimpleMath">Norm(I)</span> for prime ideals <span class="SimpleMath">I</span> of norm <span class="SimpleMath">49 ≤ Norm(I) ≤ 6089</span> (where one ideal for each norm is taken).</p>
 
 
 <div class="example"><pre>
@@ -1373,16 +1373,16 @@ ideal of norm 13381 in O(GaussianRationals)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Loge:=0.434294481903;; ###Log_10(e)</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ffn:=function(x)</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">local I, G, A, S, F;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">local I, G, A, T, S, F;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,x);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianInvariants(G);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Filtered(A,x-&gt;not x=0);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i-&gt;not i=0)),10)/(Loge*Norm(I))];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Filtered(A,x-&gt;not x=0);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">end;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List(PP{[9..267]},ffn);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List(PP{[9..400]},ffn);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(S);</span>
 
 </pre></div>
