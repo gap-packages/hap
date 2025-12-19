@@ -187,7 +187,7 @@ od;
 AppendTo(tmpin,"\n");
 od;
 
-Exec(Concatenation("polymake ", "'my $c=load(\"",tmpin,"\"); print $c-> FEASIBLE;' > ",tmpout));
+Exec(Concatenation(POLYMAKE_COMMAND, " ", "'my $c=load(\"",tmpin,"\"); print $c-> FEASIBLE;' > ",tmpout));
 Exec(Concatenation("rm ",tmpin));
 input := InputTextFile(tmpout);
 x:=ReadLine(input);
