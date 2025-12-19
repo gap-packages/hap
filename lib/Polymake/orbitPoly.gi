@@ -44,7 +44,7 @@ fi;
 
 if "VISUAL" in Props or "visual" in Props then
     if IsPermGroup(G) and Length(v)=4 then
-        tmp := ShallowCopy(Points);
+        tmp := [];
         for x in G do
             a:=v[1^x]-v[1];
             b:=v[2^x]-v[2];
@@ -53,7 +53,7 @@ if "VISUAL" in Props or "visual" in Props then
             U:=2*a-2*b;
             V:=2*c-2*d;
             W:=a+b-c-d;
-            Add(tmp, [1,U,V,W]);
+            Add(tmp, [U,V,W]);
         od;
         poly:=CreatePolymakeObject();
         AppendPointlistToPolymakeObject(poly,tmp);
