@@ -18,7 +18,7 @@ function(m,p)
 local t1,t2,
     Elts,H,K,G,Gamma,
     Id,ID,Idcoset,BoundaryList,
-    Boundary,Dimension,Action,Stabilizer,Homotopy,StabGrps,
+    Boundary,Dimension,action,Stabilizer,Homotopy,StabGrps,
     pos,RemoveLoops,HtpyRec;
     
     Elts:=[[[1,0],[0,1]]];
@@ -121,13 +121,13 @@ local t1,t2,
 
     ###################################################################     
     #1
-    #F  Action
+    #F  action
     ##
     ##  Input:  a triple (n,k,l) of integers
     ##          
     ##  Output: 1 or -1  
     ##
-    Action:=function(n,k,l);
+    action:=function(n,k,l);
         return 1;
     end;
     ###################################################################
@@ -281,7 +281,7 @@ return Objectify(HapNonFreeResolution,
     elts:=Elts,
     group:=G,
     stabilizer:=Stabilizer,
-    action:=Action,
+    action:=action,
     properties:=
     [["length",100],
     ["characteristic",0],

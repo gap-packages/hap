@@ -95,7 +95,7 @@ end);
 InstallGlobalFunction(TreeOfGroupsToContractibleGcomplex,
 function(D,G)
 local Vertices, VerticesNames, Edges, Dimension, 
-PseudoBoundary, Boundary, Elts, Action, Stabilizer, ID;
+PseudoBoundary, Boundary, Elts, action, Stabilizer, ID;
 
 Vertices:=Filtered(D,x->IsGroup(x));
 VerticesNames:=List(Vertices,x->Name(x));
@@ -129,7 +129,7 @@ end;
 #######################
 
 #######################
-Action:=function(n,k,l);
+action:=function(n,k,l);
 return 1;
 end;
 #######################
@@ -153,7 +153,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",10000],
              ["characteristic",0],

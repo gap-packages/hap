@@ -24,7 +24,7 @@ local
 	EssentialSet,
 	Vcomplement,
 	Triv,
-	AhomW,WhomWP,WP,WPev,AhomWP,EltsWP,A,StabilizerSubgroup,Action,
+	AhomW,WhomWP,WP,WPev,AhomWP,EltsWP,A,StabilizerSubgroup,action,
 	EvenStabGroup,
 	m, n,k,i,c,x,U, S, SD;
 
@@ -320,7 +320,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-Action:=function(n,k,g);
+action:=function(n,k,g);
 if n=0 then return 1; fi;
 if
 EltsWP[g] in WPev  then return 1;
@@ -338,7 +338,7 @@ return Objectify(HapNonFreeResolution,
 	    elts:=EltsWP,
 	    group:=WP,
 	    stabilizer:=StabilizerSubgroup,
-	    action:=Action,
+	    action:=action,
 	    properties:=
 	    [["length",n],
 	     ["characteristic",0],

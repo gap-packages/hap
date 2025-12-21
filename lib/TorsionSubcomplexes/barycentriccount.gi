@@ -11,7 +11,7 @@ InstallGlobalFunction(CountingCellsOfBaryCentricSubdivision,
 function(C)
 local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,d,
     Elts,Rep,mult,ListUnion, Chains, IsSameOrbit, AddReturn,
-    Orbit, Dimension, StabRec, Action, Stabilizer, Boundary,
+    Orbit, Dimension, StabRec, action, Stabilizer, Boundary,
     NChains, BoundaryRec, FinalBoundary, Partition;
 
     

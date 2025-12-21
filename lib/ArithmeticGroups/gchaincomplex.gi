@@ -32,7 +32,7 @@ end);
 ######################################################
 GChainComplex:=function(K,G)
 local Ksimps,R, orbits, stabilizers, stabfn, Dim, lessthan, boundfn,
-elts, i, k, x, m,Action ,ontuples;
+elts, i, k, x, m,action ,ontuples;
 
 elts:=Elements(G);
 Ksimps:=[];
@@ -41,7 +41,7 @@ Ksimps[k]:=List(K!.simplicesLst[k],x->StructuralCopy(x));
 od;
 
 #############################
-Action:=function(a,b,c) return 1; end;
+action:=function(a,b,c) return 1; end;
 #############################
 
 #############################
@@ -126,7 +126,7 @@ R:=Objectify(HapGChainComplex,
             elts:=Elements(G),
             group:=G,
             stabilizer:=stabfn,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",Dimension(K)],
              ["characteristic",0]]));

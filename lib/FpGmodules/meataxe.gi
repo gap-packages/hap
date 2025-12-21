@@ -96,7 +96,7 @@ end);
 #####################################################################
 InstallGlobalFunction(DesuspensionMtxModule,
 function(M)
-local 	gensM, Mat, G, GG,hom,  pp, elts, elts1,elts2,x, v, MT,Action, GactMat;
+local 	gensM, Mat, G, GG,hom,  pp, elts, elts1,elts2,x, v, MT,action, GactMat;
 
 gensM:=GeneratorsOfMtxModule(M);
 
@@ -151,7 +151,7 @@ end;
 #####################################################################
 
 #####################################################################
-Action:=function(g,B);
+action:=function(g,B);
 return TransposedMat(GactMat(
 Position(elts1,g),
 TransposedMat(B)));
@@ -163,7 +163,7 @@ return Objectify(HapFPGModule,
 	rec 
 	(matrix:=Mat,
 	group:=GG,
-	action:=Action,
+	action:=action,
 	dimension:=Length(Mat),
 	ambientDimension:=Length(gensM)*pp,
 	characteristic:=Characteristic(M.field)

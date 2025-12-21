@@ -19,7 +19,7 @@ local
 	StabRes,StabGrps,Triple2Pair,Quad2One,GrpsRes,Pair2Quad,Quad2Pair,
 	Dimension,Hmap,Gmult,Gmultrec,Mult,AlgRed,CorrectList,Boundary,
 	Homotopy,FinalHomotopy,
-	StRes,hmap,Action,PseudoBoundary,PseudoHomotopy, ZeroDimensionHmap, 
+	StRes,hmap,action,PseudoBoundary,PseudoHomotopy, ZeroDimensionHmap, 
         ZeroDimensionHtpy,
 	HmapRec,p,q,r,s,HtpyRec,k,g, ZeroDimensionHmapRec, Pair2QuadRec,
         QuadToPairRec,DimensionRec;
@@ -30,13 +30,13 @@ local
 
     ###################################################################     
     #1
-    #F  Action
+    #F  action
     ##
     ##  Input:  a triple of integers (p,r,q)
     ##  Output: 1 or -1 
     ##
 
-    Action:=function(p,r,g)
+    action:=function(p,r,g)
     if not IsBound(R!.action) then 
         return 1;
     else 
@@ -262,7 +262,7 @@ local
             else
                 l:=[];m:=[];
                 d0:=StructuralCopy(List(StabRes[p+1][r]!.boundary(q,ps),
-                                      x->[Action(p,r,x[2])*x[1],x[2]]));
+                                      x->[action(p,r,x[2])*x[1],x[2]]));
                 for w in d0 do
                     Append(m,Mult(w[2],Hmap(p,q-1,r,w[1])));
                 od;
@@ -400,7 +400,7 @@ local
         d:=[];
         if q<>0 then 
 	    l:=StructuralCopy(List(StabRes[p+1][r]!.boundary(q,s),
-              x->[Quad2Pair(p,q-1,r,Action(p,r,x[2])*x[1])[2],x[2]]));
+              x->[Quad2Pair(p,q-1,r,action(p,r,x[2])*x[1])[2],x[2]]));
             Append(d,StructuralCopy(l));
         fi;
         if IsEvenInt(q) then 
@@ -520,9 +520,9 @@ local
 	        Apply(h0,w->[Quad2Pair(p,q+1,r,w[1])[2],w[2]]);
 	        Append(h,h0);
 	        else
-	            ps:=Action(1,1,g)*s;
+	            ps:=action(1,1,g)*s;
 	            m:=StructuralCopy(StabRes[p+1][r]!.homotopy(q,[ps,g]));
-	            Apply(m,x->[Action(1,1,x[2])*x[1],x[2]]);
+	            Apply(m,x->[action(1,1,x[2])*x[1],x[2]]);
 	            h0:=List(m,x->[Quad2Pair(p,q+1,r,x[1])[2],x[2]]);
 	            Append(h,h0);
 	            dh:=AlgRed(CorrectList(List(m,x->

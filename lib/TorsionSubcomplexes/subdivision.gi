@@ -43,7 +43,7 @@ local W, StabRec, i, j, N, M, x, bdry, s1, s2, p, k, w, t,
       DimRec, BoundaryRec, id, dims, NotRigid, NewCell,
       Cell, Elts, Boundary, Dimension, CLeftCosetElt, LCoset,
       pos, Stab, Mult,DimTemp, BoundaryTemp, Partition, ConnectedCheck,
-      Stabilizer, Action, IsRigidCell, ReplaceCell, SubdividingCell,
+      Stabilizer, action, IsRigidCell, ReplaceCell, SubdividingCell,
       Orbit, C, NaiveEulerChar, CellHomology, exportFile, IsContractible,
       CosetRec, IsSimplyConnected, BoundaryMult, BoundaryMultRec, jj, jjj;
 
@@ -1066,7 +1066,7 @@ if (k<=N) then
         return DimRec[k+1];
     end;
 
-    Action:=function(k,i,j)
+    action:=function(k,i,j)
         return 1;
     end;
     ##################################################################
@@ -1079,7 +1079,7 @@ return Objectify(HapNonFreeResolution,
     elts:=Elts,
     group:=C!.group,
     stabilizer:=Stabilizer,
-    action:=Action,
+    action:=action,
     subdividing:=SubdividingCell,
     replacecell:=ReplaceCell,
     isrigid:=IsRigidCell,
@@ -1105,7 +1105,7 @@ local W, StabRec, i, j, N, M, x, bdry, s1, s2, p, k, w, t,
       DimRec, BoundaryRec, id, dims, NotRigid, NewCell,
       Cell, Elts, Boundary, Dimension, CLeftCosetElt, LCoset,
       pos, Stab, Mult,DimTemp, BoundaryTemp, Partition, ConnectedCheck,
-      Stabilizer, Action, IsRigidCell, ReplaceCell, SubdividingCell,
+      Stabilizer, action, IsRigidCell, ReplaceCell, SubdividingCell,
       Orbit, C, NaiveEulerChar, CellHomology, exportFile, IsContractible,
       CosetRec, IsSimplyConnected, BoundaryMult, BoundaryMultRec, jj, jjj;
 
@@ -2133,7 +2133,7 @@ if (k<=N-1) then
         return DimRec[k+1];
     end;
 
-    Action:=function(k,i,j)
+    action:=function(k,i,j)
         return 1;
     end;
     ##################################################################
@@ -2146,7 +2146,7 @@ return Objectify(HapNonFreeResolution,
     elts:=Elts,
     group:=C!.group,
     stabilizer:=Stabilizer,
-    action:=Action,
+    action:=action,
     subdividing:=SubdividingCell,
     replacecell:=ReplaceCell,
     isrigid:=IsRigidCell,
@@ -2168,7 +2168,7 @@ local W, StabRec, i, j, N, M, x, bdry, s1, s2, p, k, w, t,
       DimRec, BoundaryRec, id, dims, NotRigid, NewCell,
       Cell, Elts, Boundary, Dimension, CLeftCosetElt, LCoset,
       pos, Stab, Mult,DimTemp, BoundaryTemp, Partition, ConnectedCheck,
-      Stabilizer, Action, IsRigidCell, ReplaceCell, SubdividingCell,
+      Stabilizer, action, IsRigidCell, ReplaceCell, SubdividingCell,
       Orbit, C, NaiveEulerChar, CellHomology, exportFile, IsContractible,
       CosetRec;
 
@@ -3016,7 +3016,7 @@ end;
         return DimRec[k+1];
     end;
 
-    Action:=function(k,i,j)
+    action:=function(k,i,j)
         return 1;
     end;
     ##################################################################
@@ -3029,7 +3029,7 @@ return Objectify(HapNonFreeResolution,
     elts:=Elts,
     group:=C!.group,
     stabilizer:=Stabilizer,
-    action:=Action,
+    action:=action,
     subdividing:=SubdividingCell,
     replacecell:=ReplaceCell,
     isrigid:=IsRigidCell,

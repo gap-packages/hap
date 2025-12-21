@@ -78,7 +78,7 @@ InstallMethod( TrivialGModuleAsGOuterGroup,
     function( G, A )
         local
               N, 
-              alpha;     ## Action of G on A
+              alpha;     ## action of G on A
               
 
         if not (IsGroup(G) and IsGroup(A) and IsAbelian(A)) then
@@ -146,7 +146,7 @@ InstallMethod( GOuterGroup,
     function( E, A )
         local 
 	      N, type, G,
-              alpha,     ## Action of G on A
+              alpha,     ## action of G on A
               nat,       ## Natural homomorphism from E to G
 	      alphaRec,p,q,bool, coc;
 
@@ -217,7 +217,7 @@ InstallMethod( GOuterGroup,
     function( E )
         local
               A, N, type, G, ##E=A, G=1
-              alpha,     ## Action of G on G
+              alpha,     ## action of G on G
               nat;       ## Natural homomorphism from G to G
 
         nat := NaturalHomomorphismByNormalSubgroup(E,E);

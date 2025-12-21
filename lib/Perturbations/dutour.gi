@@ -14,7 +14,7 @@ local
         boundaryList,
         Elts,
 	Rot,Stab,
-        RotSubGroups,Action, ActionRecord,
+        RotSubGroups,action, ActionRecord,
         TransMat,
         #InfGrps,
         x, lstMathieu, lstAlexanderSebastianSL, lstSebastianGL, lstAlexanderSebastianAlt,
@@ -149,7 +149,7 @@ end;
 
 
 ####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local id,r,u,H,abk,ans;
 
 abk:=AbsInt(k);
@@ -189,7 +189,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",Maximum(1000,lnth)],
              ["characteristic",0],
@@ -313,16 +313,16 @@ end);
 InstallGlobalFunction(QuotientOfContractibleGcomplex,
 function(C,S)
 local
-        Elts,G,Stabilizer,Action,D;
+        Elts,G,Stabilizer,action,D;
 
 SetInfoLevel(InfoWarning,0);
 D:=List(Elements(S),x->x);
 Elts:=List(C!.elts, x->QuotientGroup(x,D));
 G:=Group(Elts);
-#Action:=function(a,b,c) return 1; end;
+#action:=function(a,b,c) return 1; end;
 
 #####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local gg;
 gg:=Position(C!.elts,Elts[g]!.element[1]);
 if gg=fail then Add(C!.elts,Elts[g]!.element[1]);
@@ -349,7 +349,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",EvaluateProperty(C,"length")],
              ["characteristic",0],

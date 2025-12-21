@@ -338,7 +338,7 @@ end;
 #######################################################
 InstallGlobalFunction(BianchiGcomplex,
 function(d)
-local R,P,OQ,Y,Dimension,Stabilizer,Action,STABS,stb,rot,rotREC,Boundary,
+local R,P,OQ,Y,Dimension,Stabilizer,action,STABS,stb,rot,rotREC,Boundary,
 rep,ELTS,adjust,xx,I,
 G,K,S,T,i,V,n,B,BB,k,BoundaryRec,TMP, EquivSpheres, gens,omega,x,y,M,a;
 
@@ -565,7 +565,7 @@ end;
 
 
 #######################################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local id, r, u, ans, abk, H;
 
 if n=0 then  return 1; fi;
@@ -718,7 +718,7 @@ R:= Objectify(HapNonFreeResolution,
             elts:=ELTS,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             ring:=Y!.ring,
             generators:=gens,
             cwSpace:=Y,

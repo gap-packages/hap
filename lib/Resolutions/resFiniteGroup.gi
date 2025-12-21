@@ -14,7 +14,7 @@ local
 	Elts, ExtendedElts, 
 	N,
 	MT,
-	Action,
+	action,
 	ChangeSign,
 	Abs,
 	MaxComplex,
@@ -128,7 +128,7 @@ if Order(G)<5096  then
 MT:=MultiplicationTable(Elts);
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l);
 return [l[1],MT[g][l[2]]];
 end;
 #####################################################################
@@ -136,7 +136,7 @@ end;
 else
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l);
 return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
 end;
 #####################################################################
@@ -192,7 +192,7 @@ CellValue:=function(i,MC,p)		#MC=MaxComplex[i]
 local x,l,v,e,q;
 
 l:=ShallowCopy(Boundary(i,p[1]));
-Apply(l,x->Action(p[2],x));
+Apply(l,x->action(p[2],x));
 v:=Length(l);				#l is the boundary of cell p
 					#where p has dimension i.
 for e in l do
@@ -269,7 +269,7 @@ if i<1 then return [[-1,1]]; else	#in the function were arrived at by trial and
       else
       m:=ContractionMatrix[i][z[1]][z[2]];
       b:=ShallowCopy(Boundary(i,m[1]));
-      Apply(b,y-> Action(m[2],y));
+      Apply(b,y-> action(m[2],y));
       b:=ChangeSign(-x[1],b);
 
       c:=ChangeSign(-x[1],[m]);
@@ -309,7 +309,7 @@ k:=p[2];
 Diff:=[p];
 if i=1 then l:=[1]; else
 l:=ShallowCopy(PseudoBoundary[i-1][AbsInt(j)]); 
-Apply(l,x->Action(k,x));	#l is the boundary of p.
+Apply(l,x->action(k,x));	#l is the boundary of p.
 l:=ChangeSign(j,l);
 fi;
 

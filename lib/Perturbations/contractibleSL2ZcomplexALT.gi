@@ -13,7 +13,7 @@ local
         boundaryList,
         Elts,
 	Rot,Stab,
-        RotSubGroups,Action, ActionRecord,
+        RotSubGroups,action, ActionRecord,
         TransMat,
         St0,St1, x, n,k,s,BI,SGN,tmp, LstEl , 
         bool, 
@@ -126,7 +126,7 @@ end;
 
 
 ####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local id,r,u,H,abk,ans;
 
 abk:=AbsInt(k);
@@ -374,7 +374,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
 	    edge:=Edge,
 	    gens:=GeneratorsRepresentation,
             properties:=

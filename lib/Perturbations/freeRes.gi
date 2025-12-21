@@ -15,7 +15,7 @@ local
 	StabGrps, 
 	StabResls, 
         ResolutionFG,
-	Action,
+	action,
         AlgRed,  
 	EltsG, G, Mult, MultRecord,
 	DelGen, DelWord, DelGenRec,
@@ -180,9 +180,9 @@ fi;
 
 ##############################################
 if IsBound(P!.action) and not prime=2 then 
-Action:=P!.action;
+action:=P!.action;
 else 
-Action:=function(k,j,g) return 1; end;
+action:=function(k,j,g) return 1; end;
 fi;
 ##############################################
 
@@ -357,12 +357,12 @@ local h,z,x,y;
 h:=[];
 
 for y in w do
-x:=[Action(q,y[1],y[3])*y[1],y[2],y[3]];
+x:=[action(q,y[1],y[3])*y[1],y[2],y[3]];
 
 z:=HtpyGen(q,s,x[1],x[2],x[3]);
 
 
-z:=List(z,a->[Action(q,a[1],a[3])*a[1],a[2],a[3]]);
+z:=List(z,a->[action(q,a[1],a[3])*a[1],a[2],a[3]]);
 Append(h,z);
 od;
 
@@ -410,7 +410,7 @@ fi;
 if k=0 then
 if s=0 then return [];
 else
-y:=List(StabResls[q+1][pr]!.boundary(s,pt),x->[Action(q,r,x[2])*x[1],x[2]]);
+y:=List(StabResls[q+1][pr]!.boundary(s,pt),x->[action(q,r,x[2])*x[1],x[2]]);
 if pt>0 then
 DelGenRec[k+1][q+1][s+1][pr][pt]:= AlgRed(List(y,x->[pr,x[1],x[2]]));
 return DelGenRec[k+1][q+1][s+1][pr][pt];
@@ -827,7 +827,7 @@ local
 	ResGens, 
         Dimension,
 	StabilizerSubgroup,
-	Action,
+	action,
         StandardWord, 
 	i, n, k,x;
 
@@ -883,7 +883,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-Action:=function(k,j,g);
+action:=function(k,j,g);
 if 
 EltsWP[g] in WPev then return 1;
 else return -1; fi;
@@ -922,7 +922,7 @@ return Objectify(HapNonFreeResolution,
             elts:=EltsWP,
             group:=WP,
             stabilizer:=StabilizerSubgroup,
-	    action:=Action,
+	    action:=action,
             standardWord:=StandardWord,
             properties:=
              [["type","resolution"],
@@ -949,7 +949,7 @@ local
         BoundaryCoeff,
         PseudoBoundary,
         BoundaryRecord,
-        Action, StabilizerSubgroup,
+        action, StabilizerSubgroup,
         m, n, S, SD, LN;
 
 Vertices:=CoxeterDiagramVertices(D);
@@ -1080,7 +1080,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-Action:=function(n,k,g);
+action:=function(n,k,g);
 if n=0 then return 1; fi;
 return Determinant( EltsG[g]);
 end;
@@ -1096,7 +1096,7 @@ return Objectify(HapNonFreeResolution,
             elts:=EltsG,
             group:=G,
             stabilizer:=StabilizerSubgroup,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",n],
              ["characteristic",0],
@@ -1132,7 +1132,7 @@ end);
 ################################################################
 ################################################################
 InstallGlobalFunction(TwistedResolution,
-function(R,Action)
+function(R,action)
 local N, n,k,g,Boundary, BoundaryRec,Homotopy,HomotopyRec;
 
 N:=Length(R);
@@ -1142,7 +1142,7 @@ Boundary:=function(n,k)
 local bnd;
 
 bnd:=StructuralCopy(R!.boundary(n,k));
-Apply(bnd,x->[Action(x[2])*x[1],x[2]]);
+Apply(bnd,x->[action(x[2])*x[1],x[2]]);
 
 return bnd;
 end;
@@ -1169,9 +1169,9 @@ end;
 Homotopy:=function(n,x)
 local htpy;
 
-htpy:=[Action(x[2])*x[1],x[2]];
+htpy:=[action(x[2])*x[1],x[2]];
 htpy:=StructuralCopy(R!.homotopy(n,htpy));
-Apply(htpy,y->[Action(y[2])*y[1],y[2]]);
+Apply(htpy,y->[action(y[2])*y[1],y[2]]);
 return htpy;
 
 end;

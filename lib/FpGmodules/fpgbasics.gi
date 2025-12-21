@@ -6,7 +6,7 @@
 InstallGlobalFunction(DesuspensionFpGModule,
 function(arg)
 local
-	R,G,kk,KK,Mdule, Action,
+	R,G,kk,KK,Mdule, action,
 	PseudoBoundaryAsVec,
 	WordToVectorList,
 	prime, pp,
@@ -69,7 +69,7 @@ end;
 #####################################################################
 
 #####################################################################
-Action:=function(g,B);
+action:=function(g,B);
 return TransposedMat(GactMat(
 Position(R!.elts,g),
 TransposedMat(B)));
@@ -116,7 +116,7 @@ return Objectify(HapFPGModule,
 	        rec(
 		group:=G,
 		matrix:=Mdule,
-		action:=Action,
+		action:=action,
 		dimension:=Length(Mdule),
 		ambientDimension:=R!.dimension(kk)*pp,
 		characteristic:=prime
@@ -307,7 +307,7 @@ end);
 InstallGlobalFunction(FpGModule,
 function(arg)
 local
-	A,G,M,one,ambdim,pp,prime,MT,GactMat,Action,Elts,g;
+	A,G,M,one,ambdim,pp,prime,MT,GactMat,action,Elts,g;
 
 A:=arg[1];
 G:=arg[2];
@@ -347,7 +347,7 @@ end;
 #####################################################################
 
 #####################################################################
-Action:=function(g,B);
+action:=function(g,B);
 return TransposedMat(GactMat(
 Position(Elts,g),
 TransposedMat(B)));
@@ -357,7 +357,7 @@ end;
 if Length(A)>0 then
 for g in G do
 A:=MutableCopyMat(A);
-Append(A,Action(g,A));
+Append(A,action(g,A));
 A:=SemiEchelonMat(A).vectors;
 od;
 fi;
@@ -370,7 +370,7 @@ M:=rec(
 	matrix:=A,
 	dimension:=Length(A),
 	ambientDimension:=ambdim,
-	action:=Action,
+	action:=action,
 	characteristic:=prime
 	);
 

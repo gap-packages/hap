@@ -13,7 +13,7 @@ local
         PseudoBoundaryN,
         PseudoBoundaryNplus2,
 	FindFreeFace,
-	Action, ActionInv, Elts,
+	action, ActionInv, Elts,
  	modN, modNplus1,
 	triple,
 	HmtpyNminus1, HmtpyN, NewHmtpyN, HmtpyNplus1,
@@ -103,7 +103,7 @@ fi;
 
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l);
 return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
 end;
 #####################################################################
@@ -170,7 +170,7 @@ for i in [1..Length(b)] do
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
-   w:=List(w,x->Action(b[i][2],x));
+   w:=List(w,x->action(b[i][2],x));
    Append(newb,w);
    fi;
 od;
@@ -192,7 +192,7 @@ for i in [1..Length(b)] do
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
-   w:=List(w,x->Action(b[i][2],x));
+   w:=List(w,x->action(b[i][2],x));
    Append(newb,w);
    fi;
 od;

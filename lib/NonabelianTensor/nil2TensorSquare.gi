@@ -16,7 +16,7 @@ local
 	AFhomSSF,SSF,gensSF2,SSFhomSF,
 	TensorSquare, delta,
 	Trans,
-	CrossedPairing, Action,
+	CrossedPairing, action,
 	UpperBound,
 	Todd,i,v,w,x,y,z,t;
 
@@ -212,7 +212,7 @@ end;
 #####################################################################
 
 #####################################################################
-Action:=function(x,t)
+action:=function(x,t)
 
 return Image(AG1homSF,x) * t * Image(AG1homSF,x)^-1;
 
@@ -220,7 +220,7 @@ end;
 #####################################################################
 
 
-return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=Action,nu:=SF);
+return rec(homomorphism:=delta, pairing:=CrossedPairing, action:=action,nu:=SF);
 end);
 #####################################################################
 

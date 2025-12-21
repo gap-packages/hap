@@ -52,7 +52,7 @@ local
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
 		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
-		Mult, MultRec, FIN, i, Stabilizer, Action,
+		Mult, MultRec, FIN, i, Stabilizer, action,
                 StabRec, Conj, ConjRec, n, k, len;
 		
 if Length(arg)=3 then
@@ -270,7 +270,7 @@ end;
 ######################
 
 ######################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local x, c, p, gg; 
 x:=Int2Pair(n,k);
 gg:=Position(EltsG,EltsK[g]);
@@ -288,7 +288,7 @@ return Objectify(HapNonFreeResolution,
 	     boundary:=Boundary,
 	     homotopy:=Homotopy,
              stabilizer:=Stabilizer,
-             action:=Action,
+             action:=action,
 	     elts:=EltsK,
 	     group:=K,
              Int2Pair:=Int2Pair,

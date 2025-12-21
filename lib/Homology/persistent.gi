@@ -1035,7 +1035,7 @@ end);
 ##########################################
 InstallGlobalFunction(TruncatedGComplex,
 function(arg)
-local R,a,b,Dimension, Boundary, Stabilizer, Action;
+local R,a,b,Dimension, Boundary, Stabilizer, action;
 
 R:=arg[1];
 a:=arg[2];
@@ -1061,7 +1061,7 @@ end;
 ##################
 
 ##################
-Action:=function(n,k,g);
+action:=function(n,k,g);
 return R!.action(n+a,k,g);
 end;
 ##################
@@ -1079,7 +1079,7 @@ return          Objectify( HapNonFreeResolution,
                 elts:=R!.elts,
                 group:=R!.group,
                 stabilizer:=Stabilizer,
-                action:=Action,
+                action:=action,
                 properties:=
                    [["length",EvaluateProperty(R,"length")],
                     ["reduced",true],

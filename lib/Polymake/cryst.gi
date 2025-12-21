@@ -6,12 +6,12 @@ function(arg)
 local G,K,pt,AG,SAG,F,V,FL,Boundaries,ind,inv,
 Cells,VCells,GCells,PGCells,setV,
 Dimn,BNDS, Bndy, REPS, NREPS,OREPS, Elts,Canonical,
-STAB, STABREC, ACTION, Action, StandardWord, StabilizerBasis,
+STAB, STABREC, ACTION, action, StandardWord, StabilizerBasis,
 n,Y,k,x,y,i;
 
 #In constructing K we'll use right actions, and at the end of the 
 #construction we'll convert to left actions.
-#The Stabilizer and Action and StandardWord functions need care -- 
+#The Stabilizer and action and StandardWord functions need care -- 
 #they will only ever be used with left actions.
 
 G:=arg[1];
@@ -197,7 +197,7 @@ end;
 #####################################################################
 
 ####################################################
-Action:=function(uu,V)
+action:=function(uu,V)
 local L, M, T, d, u;
 
 u:=TransposedMat(uu);
@@ -236,7 +236,7 @@ A:=VCells[n+1][kk];
 cg:=Sum(A)/(Length(A));
 A:=List(A,v->v-cg);
 bas:=SemiEchelonMat(A).vectors;
-Gbas:=List(bas,V->Action(u,V+cg)-cg);
+Gbas:=List(bas,V->action(u,V+cg)-cg);
 mat:=List(Gbas,b->SolutionMat(bas,b));
 d:=Determinant(mat);
 if not AbsInt(d)=1 then Print("ERROR\n"); fi;
