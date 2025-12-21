@@ -232,6 +232,7 @@ ReadPackageHap( "lib/Congruence/bianchiStab.gi");
 ReadPackageHap( "lib/Congruence/bianchiComplex.gi");
 ReadPackageHap( "lib/Congruence/resAbelianBianchiSubgroup.gi");
 ReadPackageHap( "lib/Congruence/qnf_nc.gi");
+ReadPackageHap( "lib/Congruence/notused.gi");
 
 
 
