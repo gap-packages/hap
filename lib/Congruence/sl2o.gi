@@ -45,7 +45,7 @@ one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
 zero:=Zero(one);
 
 ###################################################
-membership:=function(g)
+membership:=function(g);
 #if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 return true; 
@@ -64,14 +64,14 @@ G!.ugrp:=Group(IdentityMat(2));
 if IsPrime(I) then   #I need to extend this to no primes
 R:=RightTransversal(I);
 ###########################################
-CosetPos:=function(g)
+CosetPos:=function(g);
 if g[1][1] mod I =zero then return 1+Norm(I); fi;  
 return Position(R, ((g[2][1]*InverseOp(I,g[1][1])) mod I));
 end;
 ###########################################
 
 ###########################################
-CosetRep:=function(g)
+CosetRep:=function(g);
 if g[1][1] mod I=zero then return one*[[0,-1],[1,0]]; fi;
 return [one*[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,one]];
 end;
@@ -100,7 +100,7 @@ G:=HAP_GenericSL2OSubgroup();
 one:=One(I!.AssociatedRing);
 
 ###################################################
-membership:=function(g)
+membership:=function(g);
 #if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 if not g[1][2] in I   then return false; fi;
@@ -200,7 +200,7 @@ return fail;
 end;
 ###########################################
 else
-    Perturb:=function(g) return g; end;
+    Perturb:=function(g); return g; end;
 fi;
 
 nodes:=[one]; 
@@ -292,11 +292,9 @@ R:=FreeGResolution(R,2);
 fi;
 P:=PresentationOfResolution(R);
 gens:= R!.elts{P.gens};
-#one:=IdentityMat(2);
 one:=One(R!.elts[2]);
 
 tree:=[];
-#leaves:=NewDictionary(one,true,SL2QuadraticIntegers(d));
 leaves:=[];
 
 ###########################################
@@ -377,8 +375,6 @@ fi;
 end);
 ###################################################################
 ###################################################################
-
-
 
 
 ###################################################################
@@ -467,19 +463,9 @@ R2:=List(R,x->PreImagesRepresentative(epi,x));
 L:=Length(R2);
 
 ##########################################
-poscan:=function(x)
+poscan:=function(x);
 return PositionCanonical(R,ImagesRepresentative(epi2,x));
 end;
-##########################################
-
-##########################################
-#poscan:=function(x)
-#local i,xx;
-#xx:=x^-1;
-#for i in [1..L]  do
-#if R2[i]*xx in H then return i; fi;
-#od;
-#end;
 ##########################################
 
 return Objectify( NewType( FamilyObj( G ),
@@ -494,57 +480,6 @@ end);
 ###################################################################
 ###################################################################
 
-
-
-###################################################################
-###################################################################
-InstallGlobalFunction(HAP_TransversalGamma0SubgroupsIdeal,
-function(G,H)
-local  N, L, R, T, F, poscan, t, one, c;
-
-N:=H!.level;
-T:=RightTransversal(N);
-R:=[];
-for t in T do
-Add(R, [[1 mod N,0 mod N],[t mod N,1 mod N]]);
-od;
-
-Add(R, [[0 mod N,1 mod N],[-1 mod N,0 mod N]]);
-
-R:=SSortedList(R);
-
-L:=Length(R);
-F:=AssociatedRing(N) mod N;;
-one:=One(F);
-
-##########################################
-poscan:=function(x)
-local i,xx, a, b, c, d, A, B, C, D, pos;
-xx:=x^-1;
-#for i in [1..L]  do
-#if R[i]*xx in H then return i; fi;
-#od;
-if not IsZero(x[2][2]*one) then 
-   c:=(x[2][1]*one)*(x[2][2]*one)^-1; c:=c![1];
-   #return Position(R,[[1 mod N,0],[c,1 mod N]]);  
-   return Position(T,c);
-fi; 
-   #return Position(R,[[0 mod N,1 mod N],[-1 mod N,0 mod N]]); 
-   return L;
-end;
-##########################################
-
-return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
-                    IsDuplicateFreeList and IsAttributeStoringRep ),
-          rec( group := G,
-               subgroup := H,
-               cosets:=R,
-               poscan:=poscan ));
-
-end);
-###################################################################
-###################################################################
 
 #####################################################
 #####################################################
@@ -621,4 +556,39 @@ return HG;
 end);
 #####################################################
 #####################################################
+
+############################################################
+############################################################
+InstallOtherMethod(RightTransversal,
+"right transversal for finite index subgroups of SL2QuadraticIntegers(d))",
+[IsHapSL2OSubgroup,IsHapSL2OSubgroup],
+1000000, #Must be a better way than this to ensure this method
+function(H,HH)
+local N;
+
+if H!.tree=true then    #This means that H=SL(2,O)
+return HAP_TransversalCongruenceSubgroupsIdeal(H,HH);
+else
+return HAP_TransversalCongruenceSubgroupsIdeal_alt(H,HH);
+fi;
+
+end);
+############################################################
+############################################################
+
+############################################################
+############################################################
+InstallMethod(IndexInSL2O,
+"Index of HAP_congruence subgroup in SL(2,Integers)",
+[IsHapSL2OSubgroup],
+function(H)
+
+HAP_SL2OSubgroupTree_slow(H);
+H!.index:=Length(H!.tree);
+
+return H!.index;
+
+end);
+############################################################
+############################################################
 

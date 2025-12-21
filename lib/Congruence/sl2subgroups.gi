@@ -14,6 +14,7 @@ local type, G;
 
 G:=rec(
     membership:= fail,
+    membershipLight:=fail,
     tree:= fail,
     generators:= fail,
     level:= fail,
@@ -62,7 +63,7 @@ end);
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_SL2SubgroupTree,
-function(G)
+function(G);
     
 if G!.tree=fail then
  if IsRing(G!.level) then
@@ -110,13 +111,13 @@ if Size(Ugrp)>1 then
 InGmodU:=function(g)
 local u;
 for u in Ugrp do
-if G!.membership(u*g) then return true; fi;;
+if G!.membershipLight(u*g) then return true; fi;;
 od;
 return false;
 end;
 ###########################################
 else
-     InGmodU:=G!.membership;
+     InGmodU:=G!.membershipLight;
 fi;
 
 ###########################################
@@ -291,7 +292,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_PrincipalCongruenceSubgroup,
 function(n)
-local G,sl, sln, S, T, U, Ugrp, R,RR, membership, CosetRep, CosetPos, 
+local G,sl, sln, S, T, U, Ugrp, R,RR, membership, membershipLight, CosetRep, CosetPos, 
       Uelts, one,g;
 
 if IsRing(n) then return
@@ -302,7 +303,7 @@ sl:=SL(2,Integers);
 G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
-membership:=function(g)
+membership:=function(g);
 if not g in sl then return false; fi;
 if not g[1][1] mod n = 1  then return false; fi;
 if not g[2][2] mod n = 1  then return false; fi;
@@ -311,8 +312,19 @@ if not g[2][1] mod n = 0  then return false; fi;
 return true;
 end;
 ###################################################
+###################################################
+membershipLight:=function(g);
+if not g[1][1] mod n = 1  then return false; fi;
+if not g[2][2] mod n = 1  then return false; fi;
+if not g[1][2] mod n = 0  then return false; fi;
+if not g[2][1] mod n = 0  then return false; fi;
+return true;
+end;
+###################################################
+
 
 G!.membership:=membership;
+G!.membershipLight:=membershipLight;;
 G!.level:=n;
 G!.name:="PrincipalCongruenceSubgroup";
 G!.index:=n^3*Product(List(SSortedList(Factors(n)), p->1-1/p^2));
@@ -395,7 +407,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
 function(n)
-local G,sl,S,T,membership,CosetRep, CosetPos,g,x,y,a;
+local G,sl,S,T,membership,membershipLight,CosetRep, CosetPos,g,x,y,a;
 
 if IsRing(n) then
     return HAP_CongruenceSubgroupGamma0Ideal(n);
@@ -405,14 +417,21 @@ sl:=SL(2,Integers);
 G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
-membership:=function(g)
-if not g in sl then return false; fi;
+membership:=function(g);
+if not g in sl then return false; fi;    
 if not g[2][1] mod n = 0  then return false; 
+else return true; fi;
+end;
+###################################################
+###################################################
+membershipLight:=function(g);
+if not g[2][1] mod n = 0  then return false;
 else return true; fi;
 end;
 ###################################################
 
 G!.membership:=membership;
+G!.membershipLight:=membershipLight;
 G!.level:=n;
 
 S:=[[0,-1],[1,0]];;
@@ -428,14 +447,14 @@ fi;
 
 if IsPrimeInt(n) then   #I need to extend this to no primes
 ###########################################
-CosetPos:=function(g)
+CosetPos:=function(g);
 if g[1][1] mod n =0 then return n+1; fi;
 return 1 +((g[2][1]*g[1][1]^-1) mod n);
 end;
 ###########################################
 
 ###########################################
-CosetRep:=function(g)
+CosetRep:=function(g);
 if g[1][1] mod n=0 then return [[0,-1],[1,0]]; fi;
 return [[1,0],[(g[2][1]*g[1][1]^-1) mod n,1]];
 end;
@@ -450,174 +469,6 @@ end);
 ###################################################################
 ###################################################################
 
-if false then
-###################################################################
-###################################################################
-InstallGlobalFunction(HAP_TransversalCongruenceSubgroups,
-function(G,H)
-local gensG, gensH, N, GN, iso, HN, R, R2, x, sln, one, epi, epi2, poscan;
-
-#AT PRESENT THIS APPROACH IS SLOW AND SO RANKED VERY LOW AS A METHOD
-Print("HAP should not be using this method.\n");
-gensH:=GeneratorsOfGroup(H);
-for x in gensH do
-if not x in G then
-Print("The second argument is not a subgroup of the first.\n");
-return fail;fi;
-od;
-gensG:=GeneratorsOfGroup(G);
-N:=H!.level;
-
-sln:=SL(2,Integers mod N);
-one:=One(sln);
-GN:=Group(gensG*one);
-iso:=IsomorphismPermGroup(GN);
-epi:=GroupHomomorphismByImagesNC(G,Image(iso),gensG,List(gensG*one,x->Image(iso,x)));
-epi2:=GroupHomomorphismByFunction(G,GN,x->Image(iso,x*one));
-HN:=Group(List(gensH*one,x->Image(iso,x)));
-
-R:=RightTransversal(Image(iso),HN);
-R2:=List(R,x->PreImagesRepresentative(epi,x));
-
-##########################################
-poscan:=function(x)
-return PositionCanonical(R,ImagesRepresentative(epi2,x));
-end;
-##########################################
-return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
-                    IsDuplicateFreeList and IsAttributeStoringRep ),
-          rec( group := G,
-               subgroup := H,
-               cosets:=R2,
-               poscan:=poscan ));
-end);
-###################################################################
-###################################################################
-fi;
-
-###################################################################
-###################################################################
-InstallGlobalFunction(HAP_TransversalCongruenceSubgroups, 
-function(G,H)
-local tree,InH,S,T,U,v,p,g,s,n,q,vv,gens,
-      nodes, nodesinv, leaves, ambientGenerators, InLowDegreeNodesModH,
-      one, poscan, nind ;
-
-
-####################
-S:=[[0,-1],[1,0]];;
-T:=[[1,1],[0,1]];
-U:=S*T;
-one:=IdentityMat(2);
-####################
-
-ambientGenerators:=[S,S*U];
-tree:=[1 ];
-cnt:=1;
-leaves:=NewDictionary(S,true,SL(2,Integers));
-nodes:=[one];
-AddDictionary(leaves,one,1);
-
-InH:=H!.membership;
-
-###########################################
-InLowDegreeNodesModH:=function(g)
-local x,gg,B1,B2;
-gg:=g^-1;
-
-for x in nodes do
-if InH(x*gg) then return x; fi;
-od;
-
-return false;
-end;
-###########################################
-
-
-
-
-############Tree Construction########################
-while Size(leaves)>0 do
-vv:=leaves!.entries[1];
-v:=vv[1];
-    for s in [1..Length(ambientGenerators)] do
-        g:=v*ambientGenerators[s];
-        q:=InLowDegreeNodesModH(g);
-        if q=false then
-         Add(nodes,g);
-         AddDictionary(leaves,g,Length(nodes));
-            p:=LookupDictionary(leaves,v);
-            Add(tree,[p, s]);
-        fi;
-    od;
-RemoveDictionary(leaves,v);
-od;
-#####################################################
-
-nodes:=Filtered(nodes,g-> g in G);
-nodesinv:=List(nodes,g->g^-1);
-nind:=[1..Length(nodes)];
-
-####################################################
-poscan:=function(x)
-local i;
-
-for i in nind do
-if InH(  x*nodesinv[i]  ) then return i; fi;
-od;
-return fail;
-end;
-####################################################
-
-return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
-                    IsDuplicateFreeList and IsAttributeStoringRep ),
-          rec( group := G,
-               subgroup := H,
-               cosets:=nodes,
-               poscan:=poscan ));
-end);
-###################################################################
-###################################################################
-
-
-############################################################
-############################################################
-InstallOtherMethod(RightTransversal,
-"right transversal for finite index subgroups of SL(2,Integers)",
-[IsHapSL2ZSubgroup,IsHapSL2ZSubgroup],
-0,  #There must be a better way to ensure this method is not used!
-function(H,HH)
-Print("Using   HAP_TransversalCongruenceSubgroups\n");
-return HAP_TransversalCongruenceSubgroups(H,HH);
-
-end);
-############################################################
-############################################################
-
-
-
-############################################################
-############################################################
-InstallOtherMethod(RightTransversal,
-"right transversal for finite index subgroups of SL2QuadraticIntegers(d))",
-[IsHapSL2OSubgroup,IsHapSL2OSubgroup],
-1000000, #Must be a better way than this to ensure this method
-function(H,HH)
-local N;
-
-if H!.tree=true then   
-return HAP_TransversalCongruenceSubgroupsIdeal(H,HH);
-else 
-return HAP_TransversalCongruenceSubgroupsIdeal_alt(H,HH);
-fi;
-
-end);
-############################################################
-############################################################
-
-
 ############################################################
 ############################################################
 InstallMethod(IndexInSL2Z,
@@ -631,20 +482,5 @@ end);
 ############################################################
 ############################################################
 
-############################################################
-############################################################
-InstallMethod(IndexInSL2O,
-"Index of HAP_congruence subgroup in SL(2,Integers)",
-[IsHapSL2OSubgroup],
-function(H)
-
-HAP_SL2OSubgroupTree_slow(H);
-H!.index:=Length(H!.tree);
-
-return H!.index;
-
-end);
-############################################################
-############################################################
 
 
