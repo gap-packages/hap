@@ -1,0 +1,20 @@
+gap> G:=MathieuGroup(23);;
+gap> D:=HomologicalGroupDecomposition(G,3);;
+gap> List(D[1],StructureDescription);List(D[2],StructureDescription);
+[ "(C3 x C3) : QD16", "A5 : S3" ]
+[ "S3 x S3" ]
+gap> for n in [8..13] do
+> Print(List(D[1],g->GroupHomology(g,n))," , ",List(D[2],g->GroupHomology(g,n)),"\n\n");
+> od;
+[ [ 2, 2 ], [ 2, 2, 2 ] ] , [ [ 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 3 ], [ 2, 2, 2, 3, 3 ] ] , [ [ 2, 2, 2, 2, 2, 3, 3 ] ]
+
+[ [ 2, 2, 2, 8, 3 ], [ 2, 2, 2, 2, 4, 3, 3, 3, 3 ] ] , 
+[ [ 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3 ] ]
+
+[ [ 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+
+[ [ 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
