@@ -35,7 +35,7 @@ return fail;
 fi;
 
 #####################################################################
-PositionName:=function(L,x);
+PositionName:=function(L,x)
 return PositionProperty(L,n->Name(n)=Name(x));
 end;
 #####################################################################
@@ -335,7 +335,7 @@ end;
 FillPseudoBoundary();
 
 #####################################################################
-Boundary:=function(k,i);
+Boundary:=function(k,i)
 if k<1 then return 0; fi;
 if i>0 then return PseudoBoundary[k][i];fi;
 return NegateWord(PseudoBoundary[k][-i]);

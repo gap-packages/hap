@@ -34,7 +34,7 @@ od;
 od;
 
 ##########################
-ff:=function(n,i);
+ff:=function(n,i)
 return WBcells[n+1][i];
 end;
 ##########################

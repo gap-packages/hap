@@ -14,7 +14,7 @@ local
         boundaryList,
         Elts,
 	Rot,Stab,
-        RotSubGroups,Action, ActionRecord,
+        RotSubGroups,action, ActionRecord,
         TransMat,
         #InfGrps,
         x, lstMathieu, lstAlexanderSebastianSL, lstSebastianGL, lstAlexanderSebastianAlt,
@@ -35,9 +35,9 @@ bool:=ReadPackage("HAP",groupname);
 #InfGrps:=["SL2O-5"];
 
 if HAP_GCOMPLEX_SETUP[1] then 
-TransMat:=function(x); return x^-1; end;
+TransMat:=function(x) return x^-1; end;
 else
-TransMat:=function(x); return x; end;
+TransMat:=function(x) return x; end;
 fi;
 
 
@@ -70,7 +70,7 @@ lnth:=Length(C)-1;
 dims:=List([1..lnth+1],n->Length(C[n]));
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>lnth then return 0; fi;
 return dims[n+1];
 end;
@@ -132,7 +132,7 @@ G:=Group(One(Elts[1])*Elts);     #March 2025
 G!.bianchiInteger:=dd;
 
 ####################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k>0 then
 return boundaryList[n+1][k];
 else
@@ -142,14 +142,14 @@ end;
 ####################
 
 ####################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return StabilizerGroups[n+1][k];
 end;
 ####################
 
 
 ####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local id,r,u,H,abk,ans;
 
 abk:=AbsInt(k);
@@ -189,7 +189,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",Maximum(1000,lnth)],
              ["characteristic",0],
@@ -213,7 +213,7 @@ local
 
 
 if IsBound(R!.standardWord) then StandardWord:=R!.standardWord;
-else StandardWord:=function(n,bnd); return bnd; end; fi;
+else StandardWord:=function(n,bnd) return bnd; end; fi;
 
 NewBoundaryList:=[];
 for n in [1..Length(R)] do
@@ -227,7 +227,7 @@ od;
 
 
 ##############################
-NewBoundary:=function(n,i);
+NewBoundary:=function(n,i)
 if i>0 then
 return NewBoundaryList[n][i];
 else
@@ -313,16 +313,16 @@ end);
 InstallGlobalFunction(QuotientOfContractibleGcomplex,
 function(C,S)
 local
-        Elts,G,Stabilizer,Action,D;
+        Elts,G,Stabilizer,action,D;
 
 SetInfoLevel(InfoWarning,0);
 D:=List(Elements(S),x->x);
 Elts:=List(C!.elts, x->QuotientGroup(x,D));
 G:=Group(Elts);
-#Action:=function(a,b,c) return 1; end;
+#action:=function(a,b,c) return 1; end;
 
 #####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local gg;
 gg:=Position(C!.elts,Elts[g]!.element[1]);
 if gg=fail then Add(C!.elts,Elts[g]!.element[1]);
@@ -333,7 +333,7 @@ end;
 #####################
 
 #####################
-Stabilizer:=function(n,i);
+Stabilizer:=function(n,i)
 return 
 Group(List(Elements(C!.stabilizer(n,i)),x->QuotientGroup(x,D)));
 end;
@@ -349,7 +349,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",EvaluateProperty(C,"length")],
              ["characteristic",0],
@@ -423,7 +423,7 @@ Apply(PseudoBounds[1],bnd->fn(0,bnd));
 Apply(PseudoBounds[2],bnd->fn(1,bnd));
 
 #####################
-boundary:=function(n,k);
+boundary:=function(n,k)
 if n<1 or n>2 then return []; fi;
 
 if k>0 then return PseudoBounds[n][k];

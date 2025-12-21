@@ -1,6 +1,6 @@
 #############################################
 #############################################
-CommutingProbability:=function(G);
+CommutingProbability:=function(G)
 return Length(ConjugacyClasses(G))/Order(G);
 end;
 #############################################
@@ -395,7 +395,7 @@ InstallGlobalFunction(PartialIsoclinismClasses,
 function(L)
 local test;
 
-test:=function(G,H); return AreIsoclinic(G,H,false); end;
+test:=function(G,H) return AreIsoclinic(G,H,false); end;
 
 return HAP_EquivalenceClasses(L,test);
 

@@ -212,7 +212,7 @@ end);
 
 #####################################################################
 InstallGlobalFunction(RelativeSchurMultiplier,
-function(G,N);
+function(G,N)
 
 if G=N  then return GroupHomology(G,2); fi;
 

@@ -40,7 +40,7 @@ tauhom:=GroupHomomorphismByFunction(GG,GG,x->
 ImageElm(SecondEmbedding,ImageElm(Fproj,x))*ImageElm(FirstEmbedding,ImageElm(Sproj,x))  );
 
 ################################
-tau:=function(k);
+tau:=function(k)
 return Position(RGG!.elts,ImageElm(tauhom,RGG!.elts[k]));
 end;
 ################################
@@ -50,13 +50,13 @@ phiRec:=List([1..N+1],i->[]);
 phiRecT:=List([1..N+1],i->[]);
 
 ################################
-Diag:=function(x);
+Diag:=function(x)
 # G-->GxG, x--> (x,x)
 return Position(RGG!.elts,ImageElm(FirstEmbedding,x)*ImageElm(SecondEmbedding,x));
 end;
 ################################
 Diagrec:=List([1..Order(G)],i->Diag(Elements(G)[i]));
-Diag:=function(x); return Diagrec[Position(Elements(G),x)];end;
+Diag:=function(x) return Diagrec[Position(Elements(G),x)];end;
 
 ################################
 Tau:=function(n,kk)
@@ -70,7 +70,7 @@ end;
 
 MT:=MultiplicationTable(GG);
 ################################
-MultGG:=function(i,j); return MT[i][j]; end;
+MultGG:=function(i,j) return MT[i][j]; end;
 ################################
 
 ################################

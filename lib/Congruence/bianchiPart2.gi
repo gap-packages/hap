@@ -47,7 +47,7 @@ for i in [1..Length(S)]  do
 od;
 
 ########
-fun:=function(v);
+fun:=function(v)
 if v[1]<R[1] then return false; fi;
 if v[1]>R[2] then return false; fi;
 if v[2]!.irrational<R[3] then return false; fi;
@@ -87,7 +87,7 @@ end;
 ##########################################
 
 ##########################################
-TripleToPoint:=function(y);
+TripleToPoint:=function(y)
 return Points[Position(S,y)];
 end;
 ##########################################

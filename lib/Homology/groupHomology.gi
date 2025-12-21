@@ -83,13 +83,13 @@ if N=0 and p>0 and not IsGroupHomomorphism(arg[1]) then return [p]; fi;
 ############################## DATA INPUT ###########################
 
 if IsPrime(p) then
-Functor:=function(R); return TensorWithIntegersModP(R,p); end;
+Functor:=function(R) return TensorWithIntegersModP(R,p); end;
 else
-Functor:=function(R); return ContractedComplex(TensorWithIntegers(R)); end;
+Functor:=function(R) return ContractedComplex(TensorWithIntegers(R)); end;
 fi;
 
 if IsPrime(p) then
-Functor2:=function(R); return TensorWithIntegersModP(R,p); end;
+Functor2:=function(R) return TensorWithIntegersModP(R,p); end;
 else
 Functor2:=TensorWithIntegers;
 fi;
@@ -431,13 +431,13 @@ C:=TensorWithIntegers(T);
 D:=TensorWithIntegers(RQ);
 
 ######
-newdimension:=function(n);
+newdimension:=function(n)
 return C!.dimension(n)-D!.dimension(n);
 end;
 ######
 
 ######
-newboundary:=function(n,k);
+newboundary:=function(n,k)
 return C!.boundary(n,k+D!.dimension(n));
 end;
 ######

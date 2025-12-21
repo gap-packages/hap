@@ -46,7 +46,7 @@ d:=GroupHomomorphismByImagesNC(M,N,gensM,
 List(gensM,x->Image(C!.targetMap,x)));
 
 #########
-fn:=function(i);
+fn:=function(i)
 if i=1 then return GOuterGroup(d); fi;
 if i=2 then return
 GOuterGroup(

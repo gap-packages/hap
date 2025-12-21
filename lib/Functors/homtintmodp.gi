@@ -29,7 +29,7 @@ BoundaryDrec:=[];
 
 ################################
 ################################
-DimensionD:=function(n);
+DimensionD:=function(n)
 if n<0 or n>len then return 0; fi;
 
 return C!.dimension(n);
@@ -44,7 +44,7 @@ end;
 #od;
 
 #######################
-BoundaryD:=function(n,k);
+BoundaryD:=function(n,k)
 if n<0 or n>=len then return [0]; fi;
 
 if not IsBound(BoundaryDrec[n+1]) then
@@ -102,7 +102,7 @@ BoundaryDrec:=[];
 
 ################################
 ################################
-DimensionD:=function(n);
+DimensionD:=function(n)
 if n<0 or n>len then return 0; fi;
 
 return C!.dimension(n);
@@ -117,7 +117,7 @@ end;
 #od;
 
 #######################
-BoundaryD:=function(n,k);
+BoundaryD:=function(n,k)
 if n<0 or n>len then return [0]; fi;
 
 if not IsBound(BoundaryDrec[n]) then
@@ -169,7 +169,7 @@ od;
 #A:=List([0..Length(S)],i->IdentityMat(S!.dimension(i)));
 A:=[];
 #for n in [0..Length(A)-1] do
-InitA:=function(n);
+InitA:=function(n)
 A[n+1]:=IdentityMat(S!.dimension(n));
 B:=List(A[n+1], r->F!.mapping(r,n));
 A[n+1]:=TransposedMat(B);
@@ -257,7 +257,7 @@ end;
 ####################
 #od;
 #################
-HThomHS:=function(v,n);
+HThomHS:=function(v,n)
 if not IsBound(A[n+1]) then InitA(n); fi;
  return v*A[n+1];
 end;

@@ -32,7 +32,7 @@ modSCo:=SCo;
 else
 fn:=SCo!.Mapping;
 nafn:=OA!.nonabeliancocycle;
-newfn:=function(x,y); return nafn(x,y)*fn(x,y);end;
+newfn:=function(x,y) return nafn(x,y)*fn(x,y);end;
 modSCo:=SCo;
 modSCo!.Mapping:=newfn;
 fi;

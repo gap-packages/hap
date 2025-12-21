@@ -345,7 +345,7 @@ end);
 InstallOtherMethod(FundamentalGroup,
 "for  pure Regular CW-Maps",
 [IsHapRegularCWMap],
-function(map);
+function(map)
 return FundamentalGroupOfRegularCWMap(map);
 end);
 ##########################################################
@@ -358,7 +358,7 @@ end);
 InstallOtherMethod(FundamentalGroup,
 "for  pure Regular CW-Maps with specified base-point",
 [IsHapRegularCWMap,IsInt],
-function(map,base);
+function(map,base)
 return FundamentalGroupOfRegularCWMap(map,base);
 end);
 ##########################################################
@@ -404,7 +404,7 @@ od;
 od;
 
 #########################
-map:=function(n,i);
+map:=function(n,i)
 return 1*invperm[n+1][i];
 end;
 #########################

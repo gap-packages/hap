@@ -1,7 +1,7 @@
 InstallGlobalFunction(CrystGcomplex,
 function(gens,basis,check)
 local i,x,k,combin,n,j,r,m,vect,c,
-      B,G,T,S,Bt,Action,Sign,FinalBoundary,BoundaryList,
+      B,G,T,S,Bt,action,Sign,FinalBoundary,BoundaryList,
       L,kcells,cells,w,StabGrp,ActionRecord,lnth,PseudoRotSubGroup,RotSubGroupList,
       Dimension,SearchOrbit,pos,StabilizerOfPoint,PseudoBoundary,RotSubGroup,
       Elts,Boundary,Stabilizer,DVF,DVFRec,Homotopy,rmult,FinalHomotopy;
@@ -163,7 +163,7 @@ return vv;
 end;
 #############
 #######################
-Action:=function(m,k,g)
+action:=function(m,k,g)
 local id,r,u,H,abk,ans,x,h,l,i;
 
 abk:=AbsInt(k);
@@ -472,7 +472,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
 	    RotSubGroup:=RotSubGroup,
             properties:=
             [["length",100],
@@ -640,7 +640,7 @@ return Objectify(HapNonFreeResolution,
             #elts:=Elts,
             group:=Integers,
             #stabilizer:=Stabilizer,
-            #action:=Action,
+            #action:=action,
 	    #RotSubGroup:=RotSubGroup,
             properties:=
             [["length",1000],

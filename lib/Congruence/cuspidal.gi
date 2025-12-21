@@ -24,7 +24,7 @@ eqmap:=EquivariantChainMap(SB,S,f);;
 
 #t:=Length(H!.tree);  #Not true!!!!!
 t:=SB!.dimension(0);
-   fn:=function(x);
+   fn:=function(x)
    if AbsInt(x[1])<=t then
       return [SignInt(x[1])*(AbsInt(x[1])+t),x[2]];
    else 
@@ -33,7 +33,7 @@ t:=SB!.dimension(0);
    end;
 
 ##############################
-mapping:=function(w,n);
+mapping:=function(w,n)
 return List(w,x->fn(x));
 end;
 ##############################

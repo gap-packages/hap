@@ -40,7 +40,7 @@ if Length(arg)>2 then b:=1*arg[3]; fi;
 ######
 
 ###########################
-NrCells:=function(n);
+NrCells:=function(n)
 return Length(Y!.boundaries[n+1]);
 end;
 ###########################
@@ -213,7 +213,7 @@ Add(bndX,[]);
 od;
 
 ######################
-perm0:=function(i);
+perm0:=function(i)
 if i=v then return u; fi;
 if i<v then return i+X!.nrCells(0); fi;
 return i+X!.nrCells(0)-1;
@@ -221,7 +221,7 @@ end;
 ######################
 
 ######################
-perm:=function(k,i);
+perm:=function(k,i)
 return i+X!.nrCells(k);
 end;
 ######################
@@ -263,7 +263,7 @@ Add(bndX,[]);
 od;
 
 ######################
-perm:=function(k,i);
+perm:=function(k,i)
 return i+X!.nrCells(k);
 end;
 ######################

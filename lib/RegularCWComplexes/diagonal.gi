@@ -163,7 +163,7 @@ end;
 ###########################
 ###########################
 
-2CellDiagonal:=function(i); return CellDiagonal(2,i); end;
+2CellDiagonal:=function(i) return CellDiagonal(2,i); end;
 
 ###########################
 ###########################

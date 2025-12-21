@@ -11,7 +11,7 @@ G:=arg[1];
 p:=arg[2];
 if Length(arg)=3 then filt:=arg[3];
 else
-filt:=function(G); return true; end;
+filt:=function(G) return true; end;
 fi;
 ######################################
 if not IsPrimeInt(p) then
@@ -38,7 +38,7 @@ od;
 Unbind(SubsCl);
 
 ###################
-fn:=function(A,B);
+fn:=function(A,B)
 return Order(A)>=Order(B);
 end;
 ###################
@@ -94,7 +94,7 @@ end);
 ####################################################
 ####################################################
 InstallGlobalFunction(QuillenComplex,
-function(G,p);
+function(G,p)
 return PSubgroupSimplicialComplex(G,p,IsElementaryAbelian);
 end);
 ####################################################
@@ -105,7 +105,7 @@ end);
 InstallGlobalFunction(GChainComplex,
 function(K,G)
 local Ksimps,R, orbits, stabilizers, stabfn, Dim,  boundfn,
-elts, inv, gg, i,j, k, x, y, m,Action ,ontuples, A, B;
+elts, inv, gg, i,j, k, x, y, m,action ,ontuples, A, B;
 
 elts:=Elements(G);
 inv:=List(elts,x->Position(elts,x^-1));
@@ -116,7 +116,7 @@ Ksimps[k]:=List(K!.simplicesLst[k],x->SSortedList(x));
 od;
 
 #############################
-Action:=function(a,b,c) return 1; end;
+action:=function(a,b,c) return 1; end;
 #############################
 
 #############################
@@ -141,14 +141,14 @@ stabilizers[k][i]:=Stabilizer(G,orbits[k][i][1],ontuples);
 od;od;
 
 ######################
-Dim:=function(k);
+Dim:=function(k)
 if k<0 or k>Dimension(K) then return 0; fi;
 return Length(orbits[k+1]);
 end;
 ######################
 
 ######################
-stabfn:=function(k,i);
+stabfn:=function(k,i)
 return stabilizers[k+1][i];
 end;
 ######################
@@ -196,7 +196,7 @@ R:=Objectify(HapGChainComplex,
             elts:=elts,
             group:=G,
             stabilizer:=stabfn,
-            action:=Action,
+            action:=action,
             properties:=
             [["length",1000],
              ["characteristic",0],
@@ -218,7 +218,7 @@ p:=arg[2];
 if Length(arg)=3 then
 filt:=arg[3];
 else
-filt:=function(G); return true; end;
+filt:=function(G) return true; end;
 fi;
 
 P:=SylowSubgroup(G,p);
@@ -229,7 +229,7 @@ K:=K!.simplicesLst;
 orbs:=[];
 
 #################################
-act:=function(x,g);
+act:=function(x,g)
 return List(x,y->y^g);
 end;
 #################################
@@ -272,7 +272,7 @@ fi;
 #######################################################
 
 #########################
-Dim:=function(n);
+Dim:=function(n)
 if n<0 or n>dm then return 0; fi;
 return Length(orbs[n+1]);
 end;
@@ -289,7 +289,7 @@ od;
 od;
 
 #########################
-stab:=function(n,k);
+stab:=function(n,k)
 return STAB[n+1][k];
 end;
 #########################

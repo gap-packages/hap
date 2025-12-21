@@ -207,7 +207,7 @@ end;
 ########################
 
 ########################
-Sq0:=function(w);
+Sq0:=function(w)
 return w;
 end;
 ########################
@@ -242,7 +242,7 @@ if not IsBound(A!.squares) and IsBound(A!.chainComplex) then
 A!.maxdeg:=Length(A!.chainComplex);
 A!.complete:=true;
 A!.squares:=[];
-A!.squares[1]:=function(x); return x; end;
+A!.squares[1]:=function(x) return x; end;
 A!.bockstein:=HAP_bockstein(A);
 A!.squares[2]:= A!.bockstein;
 fi;

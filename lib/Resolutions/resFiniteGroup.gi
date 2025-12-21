@@ -14,7 +14,7 @@ local
 	Elts, ExtendedElts, 
 	N,
 	MT,
-	Action,
+	action,
 	ChangeSign,
 	Abs,
 	MaxComplex,
@@ -119,7 +119,7 @@ Append(ExtendedElts,[1..N]);
 
 if Charact=0 then AlgebraicRed:=AlgebraicReduction;
 else
-	AlgebraicRed:=function(w);
+	AlgebraicRed:=function(w)
 	return AlgebraicReduction(w,Charact);
 	end;
 fi;
@@ -128,7 +128,7 @@ if Order(G)<5096  then
 MT:=MultiplicationTable(Elts);
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l)
 return [l[1],MT[g][l[2]]];
 end;
 #####################################################################
@@ -136,7 +136,7 @@ end;
 else
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l)
 return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
 end;
 #####################################################################
@@ -145,7 +145,7 @@ fi;
 
 
 #####################################################################
-ChangeSign:=function(j,b);
+ChangeSign:=function(j,b)
 if j>0 then return b; else 
 return List(b,x->[-x[1],x[2]]); fi;
 end;
@@ -173,7 +173,7 @@ ComputedContractions:=[];
 #####################################################################
 
 #####################################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
 return Length(PseudoBoundary[i]); 
@@ -181,7 +181,7 @@ end;
 #####################################################################
 
 #####################################################################
-Boundary:=function(i,j);
+Boundary:=function(i,j)
 if i<=0 then return []; else 
 return ChangeSign(j,PseudoBoundary[i][AbsInt(j)]); fi;
 end;
@@ -192,7 +192,7 @@ CellValue:=function(i,MC,p)		#MC=MaxComplex[i]
 local x,l,v,e,q;
 
 l:=ShallowCopy(Boundary(i,p[1]));
-Apply(l,x->Action(p[2],x));
+Apply(l,x->action(p[2],x));
 v:=Length(l);				#l is the boundary of cell p
 					#where p has dimension i.
 for e in l do
@@ -230,7 +230,7 @@ od;
 
 #return Random(temp);
 
-LengthOfDiff:=function(p);
+LengthOfDiff:=function(p)
 if DiffLengths[p[1]][p[2]]=0 then 
   DiffLengths[p[1]][p[2]]:=Length(Differential(i,p)); fi;###################
 ##################################################Modified 5 Nov 2015#######
@@ -247,7 +247,7 @@ end;
 #####################################################################
 
 #####################################################################
-IsFinished:=function(MC);
+IsFinished:=function(MC)
 if Product(Flat(MC)) = 1 then return true; 
 else return false; fi;
 end;
@@ -269,7 +269,7 @@ if i<1 then return [[-1,1]]; else	#in the function were arrived at by trial and
       else
       m:=ContractionMatrix[i][z[1]][z[2]];
       b:=ShallowCopy(Boundary(i,m[1]));
-      Apply(b,y-> Action(m[2],y));
+      Apply(b,y-> action(m[2],y));
       b:=ChangeSign(-x[1],b);
 
       c:=ChangeSign(-x[1],[m]);
@@ -294,7 +294,7 @@ end;
 #####################################################################
 
 #####################################################################
-Homotopy:=function(i,p); 	#It is useful to have a second name
+Homotopy:=function(i,p) 	#It is useful to have a second name
 if i <0 then return fail; fi;	#for Contraction with the correct indexing!
 return ChangeSign(-1,Contraction(i+1,p));	
 end;
@@ -309,7 +309,7 @@ k:=p[2];
 Diff:=[p];
 if i=1 then l:=[1]; else
 l:=ShallowCopy(PseudoBoundary[i-1][AbsInt(j)]); 
-Apply(l,x->Action(k,x));	#l is the boundary of p.
+Apply(l,x->action(k,x));	#l is the boundary of p.
 l:=ChangeSign(j,l);
 fi;
 

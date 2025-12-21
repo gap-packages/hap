@@ -98,7 +98,7 @@ od;
 #############################
 
 #######################
-IsMSimplex:=function(x);
+IsMSimplex:=function(x)
 if true in List(x, i->MVertices[i])
 then return true;
 else return false;

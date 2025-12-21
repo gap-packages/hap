@@ -164,7 +164,7 @@ end);
 InstallOtherMethod(EulerCharacteristic,
 "Euler characteristic  of a chain complex",
 [IsHapChainComplex],
-function(C);
+function(C)
 
 return
 Sum(List([0..Length(C)],i->((-1)^i)*C!.dimension(i)));
@@ -177,7 +177,7 @@ end);
 InstallOtherMethod(Length,
 "Length of a chain complex",
 [IsHapChainComplex],
-function(C);
+function(C)
 
 return
 EvaluateProperty(C,"length");
@@ -190,7 +190,7 @@ end);
 InstallOtherMethod(Length,
 "Length of a cochain complex",
 [IsHapCochainComplex],
-function(C);
+function(C)
 
 return
 EvaluateProperty(C,"length");
@@ -204,7 +204,7 @@ end);
 InstallOtherMethod(Length,
 "Length of a sparse chain complex",
 [IsHapSparseChainComplex],
-function(C);
+function(C)
 
 return
 EvaluateProperty(C,"length");
@@ -218,7 +218,7 @@ end);
 InstallOtherMethod(EulerCharacteristic,
 "Euler characteristic  of a sparse chain complex",
 [IsHapSparseChainComplex],
-function(C);
+function(C)
 
 return
 Sum(List([0..Length(C)],i->((-1)^i)*C!.dimension(i)));
@@ -449,7 +449,7 @@ ball:=Cartesian(List([1..dim],i->[-1,0,1]));
 dimsSet:=List([1..dim],x->[1..dimsM[x]]);
 
 #########################
-Fun:=function(i);
+Fun:=function(i)
 if ArrayValueDim(M!.binaryArray,i)=1 then
 for b in ball do
 x:=2*i+b;
@@ -512,7 +512,7 @@ LstBin:=List([0..Dimension(M)],i->[]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -546,7 +546,7 @@ ArrayIt(dimsSet,Fun);
 fi;
 
 #######################################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return faces[n+1];
 end;
 #######################################
@@ -761,7 +761,7 @@ LstBin:=List([0..Dimension(M)],i->[]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -780,7 +780,7 @@ fi;
 od;
 
 #######################################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return faces[n+1];
 end;
 #######################################
@@ -836,13 +836,13 @@ end;
 #######################################
 
 #######################################
-Generator2Coordinates:=function(n,j);
+Generator2Coordinates:=function(n,j)
 return LstBin[n+1][j];
 end;
 #######################################
 
 #######################################
-Coordinates2Generator:=function(x);
+Coordinates2Generator:=function(x)
 return ArrayValueDim(BinLst,x);
 end;
 #######################################
@@ -1115,13 +1115,13 @@ SimplicesLst:=List([1..1000],i->[]);  #VERY SLOPPY!!!
 SimplicesLst[1]:=List(Vertices,i->[i]);
 
 #################################################################
-NrSimplices:=function(n);
+NrSimplices:=function(n)
 return Length(SimplicesLst[n+1]);
 end;
 #################################################################
 
 #################################################################
-Simplices:=function(n,i);
+Simplices:=function(n,i)
 return SimplicesLst[n+1][i];
 end;
 #################################################################
@@ -1164,7 +1164,7 @@ SimplicesLst[i]:=SSortedList(SimplicesLst[i]);
 od;
 
 #############################################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return
 Position(SimplicesLst[Length(v)],v);
 end;
@@ -1782,7 +1782,7 @@ dimsSet:=List([1..dim],x->[1..dimsM[x]]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -2260,7 +2260,7 @@ end);
 #################################################################
 #################################################################
 InstallGlobalFunction(FramedPureCubicalComplex,
-function(M);
+function(M)
 
 return PureCubicalComplex(FrameArray(M!.binaryArray));
 

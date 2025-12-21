@@ -90,7 +90,7 @@ if n>0 then
   Y!.coboundaries[n]:=LCoboundaries;
 fi;
 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;

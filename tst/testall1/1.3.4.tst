@@ -1,7 +1,7 @@
 #D
 gap> START_TEST("HAP library");
 gap> ReadPackage("HAP","tst/testall1/data134.txt");;
-gap> f:=function(j); return D[50][j]; end;
+gap> f:=function(j) return D[50][j]; end;
 function( j ) ... end
 gap> M:=Mapper(D,f,8,20,5);
 Simplicial complex of dimension 1.

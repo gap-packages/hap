@@ -73,9 +73,9 @@ end;
 if Length(arg)=2 then
 
 #######################################
-#Action of an element g of the dihedral group of order 8
+#action of an element g of the dihedral group of order 8
 #on a list x=[x1,x2,x3,x4] of length 4
-act:=function(g,x);
+act:=function(g,x)
 return List([1..3],i->x[i^g]);
 end;
 #######################################

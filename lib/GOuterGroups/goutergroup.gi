@@ -78,7 +78,7 @@ InstallMethod( TrivialGModuleAsGOuterGroup,
     function( G, A )
         local
               N, 
-              alpha;     ## Action of G on A
+              alpha;     ## action of G on A
               
 
         if not (IsGroup(G) and IsGroup(A) and IsAbelian(A)) then
@@ -86,7 +86,7 @@ InstallMethod( TrivialGModuleAsGOuterGroup,
         fi;
 
        ######################################################
-        alpha := function(g,a);
+        alpha := function(g,a)
             return a;
         end;
        ######################################################
@@ -146,7 +146,7 @@ InstallMethod( GOuterGroup,
     function( E, A )
         local 
 	      N, type, G,
-              alpha,     ## Action of G on A
+              alpha,     ## action of G on A
               nat,       ## Natural homomorphism from E to G
 	      alphaRec,p,q,bool, coc;
 
@@ -163,7 +163,7 @@ InstallMethod( GOuterGroup,
         fi;
 	if bool then
 	######################################################
-        alpha := function(g,a); 
+        alpha := function(g,a) 
             return 
             Representative(PreImages(nat,g))
                            *a*
@@ -173,7 +173,7 @@ InstallMethod( GOuterGroup,
         else
         alphaRec:=List([1..Order(G)],i->List([1..Size(A)],j->0));
         ######################################################
-        alpha := function(g,a);
+        alpha := function(g,a)
             p:=Position(Elements(G),g);
             q:=Position(Elements(A),a);
             if alphaRec[p][q]=0 then
@@ -194,7 +194,7 @@ InstallMethod( GOuterGroup,
 
 ###################
 if not IsAbelian(A) then
-coc:=function(x,y);
+coc:=function(x,y)
 return
 Representative(PreImages(nat,x))*
 Representative(PreImages(nat,y))*
@@ -217,7 +217,7 @@ InstallMethod( GOuterGroup,
     function( E )
         local
               A, N, type, G, ##E=A, G=1
-              alpha,     ## Action of G on G
+              alpha,     ## action of G on G
               nat;       ## Natural homomorphism from G to G
 
         nat := NaturalHomomorphismByNormalSubgroup(E,E);
@@ -225,7 +225,7 @@ InstallMethod( GOuterGroup,
         G:=Group(Identity(E));
 
         ######################################################
-        alpha := function(g,a);
+        alpha := function(g,a)
             return g*a*g^-1;
             end;
         ######################################################
@@ -509,7 +509,7 @@ InstallOtherMethod( Embedding,
 	A:=GOuterGroup();
 	SetActedGroup(A,Source(e));
 	SetActingGroup(A,ActingGroup(D));
-	beta:=function(g,a);
+	beta:=function(g,a)
 	      return Image(p,OuterAction(g,Image(e,a)));  
 	end;
 	SetOuterAction(A,beta);
@@ -532,7 +532,7 @@ InstallOtherMethod( Projection,
         A:=GOuterGroup();
         SetActedGroup(A,Source(e));
         SetActingGroup(A,ActingGroup(D));
-        beta:=function(g,a);
+        beta:=function(g,a)
               return Image(p,OuterAction(g,Image(e,a)));
         end;
         SetOuterAction(A,beta);

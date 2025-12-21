@@ -12,7 +12,7 @@
 InstallGlobalFunction(CrystGcomplex,
 function(gens,basis,check)
 local i,x,k,combin,n,j,r,m,vect,c,
-    B,G,T,S,Bt,Action,Sign,FinalBoundary,BoundaryList,
+    B,G,T,S,Bt,action,Sign,FinalBoundary,BoundaryList,
     L,kcells,cells,w,StabGrp,ActionRecord,lnth,PseudoRotSubGroup,
     RotSubGroupList,
     Dimension,SearchOrbit,pos,StabilizerOfPoint,PseudoBoundary,
@@ -218,7 +218,7 @@ kcells:=tmp;
     end;
     ###################################################################
 
-# Create a record for the Action 
+# Create a record for the action 
     ActionRecord:=[];
     for m in [1..lnth+1] do
         ActionRecord[m]:=[];
@@ -252,13 +252,13 @@ kcells:=tmp;
 
     ###################################################################     
     #1
-    #F  Action
+    #F  action
     ##
     ##  Input:  Degree m, position k of a generator and position g of 
     ##          an element.                
     ##  Output: 1 or -1.
     ##
-    Action:=function(m,k,g)
+    action:=function(m,k,g)
     local id,r,u,H,abk,ans,x,h,l,i;
 
         abk:=AbsInt(k);
@@ -293,7 +293,7 @@ kcells:=tmp;
     
     ###################################################################     
     #1
-    #F  Action
+    #F  action
     ##
     ##  Input:  Degree m, position k of a generator and position g of 
     ##          an element.                
@@ -666,7 +666,7 @@ kcells:=tmp;
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
         RotSubGroup:=RotSubGroup,
         Bool:=Bool,      #####ADDED OCTOBER 2024
             properties:=

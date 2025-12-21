@@ -8,7 +8,7 @@ InstallGlobalFunction(HAP_BaryCentricSubdivisionGComplex,
 function(C)
 local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,
     Elts,Rep,mult,ListUnion, Chains, IsSameOrbit, AddReturn,
-    Orbit, Dimension, StabRec, Action, Stabilizer, Boundary,
+    Orbit, Dimension, StabRec, action, Stabilizer, Boundary,
     NChains, BoundaryRec, FinalBoundary;
 
     
@@ -224,9 +224,9 @@ local Cells,coBoundaries,N,i,Dims,pos,j,x,y,w,id,t,k,ck,c,s,a,v,g,b,
     return StabRec[k+1][i];
     end;
 
-# The cell structure is rigid under the action of G then Action(k,i,j) always be 1.
+# The cell structure is rigid under the action of G then action(k,i,j) always be 1.
 
-    Action:=function(k,i,j)
+    action:=function(k,i,j)
     return 1;
     end;
 
@@ -254,7 +254,7 @@ return Objectify(HapNonFreeResolution,
     elts:=Elts,
     group:=C!.group,
     stabilizer:=Stabilizer,
-    action:=Action,
+    action:=action,
     properties:=
     [["length",Maximum(1000,N)],
     ["characteristic",0],
@@ -268,7 +268,7 @@ end);
 InstallMethod(BarycentricSubdivision,
 "for non-free resolutions",
 [IsHapNonFreeResolution],
-function(R);
+function(R)
 return HAP_BaryCentricSubdivisionGComplex(R);
 end);
 #########################################################

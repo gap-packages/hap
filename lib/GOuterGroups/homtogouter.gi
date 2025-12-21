@@ -144,7 +144,7 @@ end);
 InstallMethod(Cohomology,
     "Cohomology of a G-cocomplex returned as abelian invariants",
      [IsHapGCocomplex,IsInt],
-function(C,n);
+function(C,n)
 
 if n=0 then
 return 
@@ -238,7 +238,7 @@ R:=C!.resolution;
 	  #############################################
 
 	  #############################################
-	  stancocycle:=function(arg);
+	  stancocycle:=function(arg)
           return cocycle(Syzygy(R,List([1..Length(arg)],i->arg[i])));
 	  end;
 	  #############################################
@@ -338,7 +338,7 @@ Q:=GOuterGroup();
 alpha:=OuterAction(H);
 
 	#############################################
-	beta:=function(g,a);
+	beta:=function(g,a)
 	return
 	Image(nat,alpha(g,PreImagesRepresentative(nat,a)));
 	end;
@@ -358,7 +358,7 @@ end);
 InstallOtherMethod(\/,
         "Quotient of G-outer groups",
               [IsGOuterGroup,IsGOuterGroup],
-function(H,M);
+function(H,M)
 
 return Target(NaturalHomomorphism(H,M));
 

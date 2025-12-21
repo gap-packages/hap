@@ -59,7 +59,7 @@ end);
 InstallOtherMethod(EulerCharacteristic,
 "Euler characteristic  of a simplicial complex",
 [IsHapSimplicialComplex],
-function(M);
+function(M)
 return
 Sum(List([0..Dimension(M)],i->((-1)^i)*M!.nrSimplices(i)));
 end);
@@ -71,7 +71,7 @@ end);
 InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex],
-function(M);
+function(M)
 return
 List([0..Dimension(M)],n->Homology(M,n));
 end);
@@ -160,7 +160,7 @@ local
         Dimsn,Boundary,nullvecs,i;
 
 #############################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return M!.nrSimplices(n);
 end;
 #############################
@@ -216,7 +216,7 @@ local
         Dimsn,Boundary,i;
 
 #############################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return M!.nrSimplices(n);
 end;
 #############################
@@ -267,7 +267,7 @@ local
         Dimsn,Boundary,i;
 
 #############################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return M!.nrSimplices(n);
 end;
 #############################
@@ -340,21 +340,21 @@ Vertices:=SSortedList(Vertices);
 SimplicesLst:=L;
 
 #####################
-NrSimplices:=function(n);
+NrSimplices:=function(n)
 if n<0 or n>dim then return 0; fi;
 return Length(SimplicesLst[n+1]);
 end;
 #####################
 
 #####################
-Simplices:=function(n,i);
+Simplices:=function(n,i)
 return SimplicesLst[n+1][i];
 end;
 #####################
 
 
 #####################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return PositionSet(SimplicesLst[Length(v)],v);
 end;
 #####################
@@ -450,7 +450,7 @@ local
 #mapping on simplexes.
 
 ###################################
-SimpF:=function(s);
+SimpF:=function(s)
 return List(s,F);
 end;
 ###################################
@@ -614,7 +614,7 @@ for i in [1..Length(M)] do
       A[j][i]:=A[i][j];
    od;
 od;
-inv:=function(x); return x{[1..Length(x)-1]}; end;
+inv:=function(x) return x{[1..Length(x)-1]}; end;
 MM:=[];
 for i in [1..Length(M)] do
    mx:=0;
@@ -1162,7 +1162,7 @@ fi;
 od;
 
 #############################
-Dimen:=function(k);
+Dimen:=function(k)
 if k<0 or k>dim then return 0; fi;
 return Length(Faces[k+1]);
 end;

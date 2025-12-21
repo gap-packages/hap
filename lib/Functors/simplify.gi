@@ -164,14 +164,14 @@ od;
 
 
 ###################################
-Dimension:=function(n);
+Dimension:=function(n)
 if n<0 or n>=Length(NewGens) then return 0; fi;
 return Length(NewGens[n+1]);
 end;
 ###################################
 
 ###################################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if n>Length(bounds) then return []; fi;
 return 
 List(bounds[n][k], x->[Position(NewGens[n],x[1]),x[2]]);

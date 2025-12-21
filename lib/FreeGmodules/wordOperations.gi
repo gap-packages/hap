@@ -2,14 +2,14 @@
 
 #####################################################################
 InstallGlobalFunction(Negate,
-function(p);
+function(p)
 return [-p[1],p[2]];
 end);
 #####################################################################
 
 #####################################################################
 InstallGlobalFunction(NegateWord,
-function(b);
+function(b)
 return List(b, x->[-x[1],x[2]]);
 end);
 #####################################################################
@@ -229,7 +229,7 @@ Append(coeffs[AbsoluteValue(x[1])],[SignInt(x[1])*x[2]]);
 od;
 
 	#############################################################
-	PrintGroupElt:=function(i);
+	PrintGroupElt:=function(i)
 	if i>0 then Print("+ ", Elts[i], " ");
 	else
 	Print("- ", Elts[-i], " ");
@@ -455,7 +455,7 @@ InstallOtherMethod( \=,
     "equality in opposite group",
     [ IsHapOppositeElement, IsHapOppositeElement],
 
-function(x,y) ;
+function(x,y)
 return  x!.element = y!.element;
 end);
 #####################################################################
@@ -465,7 +465,7 @@ InstallOtherMethod( \=,
     "equality in quotient group",
     [ IsHapQuotientElement, IsHapQuotientElement],
 
-function(x,y) ;
+function(x,y)
 return  SSortedList(x!.element) = SSortedList(y!.element);
 end);
 #####################################################################
@@ -476,7 +476,7 @@ InstallOtherMethod( \<,
     "equality in opposite group",
     [ IsHapOppositeElement, IsHapOppositeElement],
 
-function(x,y) ;
+function(x,y)
 return  x!.element < y!.element;
 end);
 #####################################################################
@@ -486,7 +486,7 @@ InstallOtherMethod( \<,
     "equality in opposite group",
     [ IsHapQuotientElement, IsHapQuotientElement],
 
-function(x,y) ;
+function(x,y)
 return  SSortedList(x!.element) < SSortedList(y!.element);
 end);
 #####################################################################

@@ -3,7 +3,7 @@
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayValue,
-function(A,x);
+function(A,x)
 # A horrible piece of code!! It inputs an array A and list of integers x.
 # It returns the value A[x[1]][x[2]][x[3]]...[x[n]] where n is the length
 # of x. 
@@ -28,7 +28,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayAssign,
-function(A,x,N);
+function(A,x,N)
 # A horrible piece of code!! It inputs an array A and list of integers x and an object N.
 # It sets the value A[x[1]][x[2]][x[3]]...[x[n]] equal to N where n is the length
 # of x.
@@ -71,7 +71,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayIterateBreak,
-function(Dim);
+function(Dim)
 
 
 ######
@@ -203,7 +203,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayIterate,
-function(Dim);
+function(Dim)
 
 ######
 if Dim=1 then return
@@ -313,18 +313,18 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayAssignFunctions,
-function(x);
+function(x)
 
-if x=1 then return function(A,x,N); A[x[1]]:=N; end; fi;
-if x=2 then return function(A,x,N); A[x[2]][x[1]]:=N; end; fi;
-if x=3 then return function(A,x,N); A[x[3]][x[2]][x[1]]:=N; end; fi;
-if x=4 then return function(A,x,N); A[x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=5 then return function(A,x,N); A[x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=6 then return function(A,x,N); A[x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=7 then return function(A,x,N); A[x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=8 then return function(A,x,N); A[x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=9 then return function(A,x,N); A[x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
-if x=10 then return function(A,x,N); A[x[10]][x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=1 then return function(A,x,N) A[x[1]]:=N; end; fi;
+if x=2 then return function(A,x,N) A[x[2]][x[1]]:=N; end; fi;
+if x=3 then return function(A,x,N) A[x[3]][x[2]][x[1]]:=N; end; fi;
+if x=4 then return function(A,x,N) A[x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=5 then return function(A,x,N) A[x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=6 then return function(A,x,N) A[x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=7 then return function(A,x,N) A[x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=8 then return function(A,x,N) A[x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=9 then return function(A,x,N) A[x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
+if x=10 then return function(A,x,N) A[x[10]][x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]:=N; end; fi;
 
 if Length(x)>10 then Print("ArrayValueFunctions needs to be implemented for longer lists\n"); return fail;fi;
 
@@ -336,18 +336,18 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ArrayValueFunctions,
-function(x);
+function(x)
 
-if x=1 then return function(A,x); return A[x[1]]; end; fi;
-if x=2 then return function(A,x); return A[x[2]][x[1]]; end; fi;
-if x=3 then return function(A,x); return A[x[3]][x[2]][x[1]]; end; fi;
-if x=4 then return function(A,x); return A[x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=5 then return function(A,x); return A[x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=6 then return function(A,x); return A[x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=7 then return function(A,x); return A[x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=8 then return function(A,x); return A[x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=9 then return function(A,x); return A[x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
-if x=10 then return function(A,x); return A[x[10]][x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=1 then return function(A,x) return A[x[1]]; end; fi;
+if x=2 then return function(A,x) return A[x[2]][x[1]]; end; fi;
+if x=3 then return function(A,x) return A[x[3]][x[2]][x[1]]; end; fi;
+if x=4 then return function(A,x) return A[x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=5 then return function(A,x) return A[x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=6 then return function(A,x) return A[x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=7 then return function(A,x) return A[x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=8 then return function(A,x) return A[x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=9 then return function(A,x) return A[x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
+if x=10 then return function(A,x) return A[x[10]][x[9]][x[8]][x[7]][x[6]][x[5]][x[4]][x[3]][x[2]][x[1]]; end; fi;
 
 if Length(x)>10 then Print("ArrayValueFunctions needs to be implemented for longer lists\n"); return fail;fi;
 
@@ -358,7 +358,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(ContractArray,
-function(AA);
+function(AA)
 
 if ArrayDimension(AA)=2 then return
 HomotopyEquivalentSmallerSubMatrix(AA,AA*0);
@@ -377,7 +377,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(ContractPermArray,
-function(AA);
+function(AA)
 
 if ArrayDimension(AA)=2 then return
 HomotopyEquivalentSmallerSubPermMatrix(AA,AA*0);
@@ -438,14 +438,14 @@ od;
 Ball:=ArrayToPureCubicalComplex(Ball,1);
 correction:=List([1..dim],i->2);
 ##############################
-IsRemovableCube:=function(A,x);
+IsRemovableCube:=function(A,x)
 if ArrayValueDim(SS,x)=1 then return false; fi;
 return IsContractibleCube_higherdims(A,A,dims,x,dim,dim1,ArrayValueDim,ArrayAssignDim,Ball,correction,cart);
 end;
 ##############################
 
 ######################
-Fun:=function(x);
+Fun:=function(x)
 if IsRemovableCube(AA,x) then
 ArrayAssignDim(AA,x,0);
 bool:=true;
@@ -468,7 +468,7 @@ od;
 ##########################
 
 Elts:=[];
-Fun2:=function(x);
+Fun2:=function(x)
 if ArrayValueDim(AA,x)=1 then Add(Elts,x); fi;
 end;
 
@@ -502,7 +502,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(HomotopyEquivalentSmallerSubPermArray,
-function(AA,SS);
+function(AA,SS)
 
 if ArrayDimension(AA)=2 then  return
 HomotopyEquivalentSmallerSubPermMatrix(AA,SS); fi;
@@ -517,7 +517,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(ContractibleSubArray,
-function(AAA);
+function(AAA)
 return HomotopyEquivalentLargerSubArray(AAA,AAA*0);
 end);
 ##############################################################
@@ -569,21 +569,21 @@ od;
 Ball:=PureCubicalComplex(Ball);
 correction:=List([1..dim],i->2);
 ##############################
-IsAddableCube:=function(A,S,x);
+IsAddableCube:=function(A,S,x)
 if ArrayValueDim(S,x)=1 then return false; fi;
 return IsContractibleCube_higherdims(A,S,dims,x,dim,dim1,ArrayValueDim,ArrayAssignDim,Ball,correction,cart);
 end;
 ##############################
 
 #################
-Fun1:=function(x);
+Fun1:=function(x)
 if ArrayValueDim(AA,x)=1 then
 start:=x;  fi;
 end;
 #################
 
 #################
-Fun2:=function(x);
+Fun2:=function(x)
 if IsAddableCube(AA,S,x) then
 #w:=ArrayValueDim1(S,x{[2..dim]});
 #w[x[1]]:=1;
@@ -626,7 +626,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(HomotopyEquivalentLargerSubPermArray,
-function(AAA,SSS);
+function(AAA,SSS)
 
 if ArrayDimension(AAA)=2 then
 return HomotopyEquivalentLargerSubPermMatrix(AAA,SSS);fi;
@@ -642,7 +642,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(FrameArray,
-function(A);
+function(A)
 
 #if IsInt(A[1]) then
 if not IsList(A[1]) then 
@@ -662,7 +662,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(UnframeArray,
-function(A);
+function(A)
 
 #if IsInt(A[1]) then
 if not IsList(A[1]) then 
@@ -697,7 +697,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(ArrayDimension,
-function(A);
+function(A)
 
 #if IsInt(A) then return 0;
 if not IsList(A) then return 0;
@@ -712,7 +712,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(ArrayDimensions,
-function(A) ;
+function(A)
 
 #if IsInt(A) then return []; fi;
 if not IsList(A) then return []; fi;
@@ -779,7 +779,7 @@ end);
 ##############################################################
 ##############################################################
 InstallGlobalFunction(Array,
-function(A,f);
+function(A,f)
 
 if IsList(A) and IsInt(A[1]) then return List(A,f);fi;
 #if IsList(A) and not IsList(A[1]) then return List(A,f);fi;

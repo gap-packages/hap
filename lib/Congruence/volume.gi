@@ -1,6 +1,6 @@
 ##################################
 InstallGlobalFunction(QuadraticCharacter,
-function(Q,m);
+function(Q,m)
 return Jacobi(Discriminant(Q),m);
 end);
 ##################################
@@ -43,7 +43,7 @@ InstallOtherMethod(AbelianInvariants,
 "for HAP SL2Z subgroups",
 [IsHapSL2ZSubgroup],
 1000000,#Again, there must be a better way
-function(H);
+function(H)
 return AbelianInvariants(HAP_RightTransversalSL2ZSubgroups(H,false));
 end);
 ##################################

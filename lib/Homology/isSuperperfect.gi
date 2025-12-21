@@ -6,7 +6,7 @@ function(G)
 local
 	C,P,primes,R,prm,F;
 
-F:= function(X);
+F:= function(X)
 return TensorWithIntegersModP(X,prm);
 end;
 

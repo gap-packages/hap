@@ -15,7 +15,7 @@ basicgif:=Filename(tmpDir,"basic.gif");
 
 D:=arg[1];
 V:=CoxeterDiagramVertices(D);
-M:=function(i,j);
+M:=function(i,j)
 return CoxeterDiagramMatrix(D,i,j);
 end;
 

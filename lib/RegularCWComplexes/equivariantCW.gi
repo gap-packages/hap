@@ -47,7 +47,7 @@ od;
 
 T:=Group(Identity(R!.group));
 ##########
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return T;
 end;
 ##########

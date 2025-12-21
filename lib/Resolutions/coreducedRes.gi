@@ -13,7 +13,7 @@ local
         PseudoBoundaryN,
         PseudoBoundaryNplus2,
 	FindFreeFace,
-	Action, ActionInv, Elts,
+	action, ActionInv, Elts,
  	modN, modNplus1,
 	triple,
 	HmtpyNminus1, HmtpyN, NewHmtpyN, HmtpyNplus1,
@@ -103,13 +103,13 @@ fi;
 
 
 #####################################################################
-Action:=function(g,l);
+action:=function(g,l)
 return [l[1],Position(Elts,Elts[g]*Elts[l[2]])];
 end;
 #####################################################################
 
 #####################################################################
-ActionInv:=function(g,l);
+ActionInv:=function(g,l)
 return [l[1],Position(Elts,Elts[g]^-1*Elts[l[2]])];
 end;
 #####################################################################
@@ -170,7 +170,7 @@ for i in [1..Length(b)] do
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
-   w:=List(w,x->Action(b[i][2],x));
+   w:=List(w,x->action(b[i][2],x));
    Append(newb,w);
    fi;
 od;
@@ -192,7 +192,7 @@ for i in [1..Length(b)] do
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
-   w:=List(w,x->Action(b[i][2],x));
+   w:=List(w,x->action(b[i][2],x));
    Append(newb,w);
    fi;
 od;
@@ -289,7 +289,7 @@ fi;
 #####################################
 
 ####################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if not i in [N,N+1] then return R!.dimension(i); fi;
 if i=N then return  Length(PseudoBoundaryN); fi;
 return Length(PseudoBoundary); 
@@ -299,7 +299,7 @@ end;
 
 
 ####################################################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 if not n in [N,N+1,N+2]  then return R!.boundary(n,i); fi;
 if i>0 then
 if n=N then return PseudoBoundaryN[i]; fi;
@@ -318,7 +318,7 @@ end;
 
 
 ####################################################
-Homotopy:=function(n,x);
+Homotopy:=function(n,x)
 if not n in [N-1,N,N+1] then return R!.homotopy(n,x); fi;
 if x[1]>0 then 
 if n=N-1 then return HmtpyNminus1[x[1]][x[2]]; fi;

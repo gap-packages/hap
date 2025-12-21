@@ -25,7 +25,7 @@ end;
 
 M:=[];;
 for i in [1..m] do
-MFUN:=function(i);
+MFUN:=function(i)
 M[i]:=[];
 for j in [0..i] do
 M[i][j+1]:=K!.boundariesList(i,j);
@@ -40,7 +40,7 @@ od;
 
 D:=[];;
 for i in [1..m] do  #so we are in degree i-1
-DFUN:=function(i);
+DFUN:=function(i)
 D[i]:=[];
 if L[i]>0 then
 for j in [0..i-1] do 
@@ -57,14 +57,14 @@ od;
 
 
 #####################################
-dimension:=function(n);
+dimension:=function(n)
 if n<0 or n>Length(L)-1 then return 0; fi;
 return L[n+1];
 end;
 #####################################
 
 #####################################
-boundary:=function(n,j,k); #degree n, boundary map j, generator k
+boundary:=function(n,j,k) #degree n, boundary map j, generator k
 if n<1 or n>Length(L)-1 then return []; fi;
 if not IsBound(M[n]) then MFUN(n); fi;
 return 1*M[n][j+1][k];
@@ -72,7 +72,7 @@ end;
 #####################################
 
 #####################################
-degeneracy:=function(n,j,k); #degree n, degeneracy map j, generator k
+degeneracy:=function(n,j,k) #degree n, degeneracy map j, generator k
 if n<0 or n>Length(L)-2 then return []; fi;
 if not IsBound(D[n+1]) then DFUN(n+1); fi;
 return 1*D[n+1][j+1][k];

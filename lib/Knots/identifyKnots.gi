@@ -48,7 +48,7 @@ fi;
 fi;
 
 for N in [3..7] do
-   Inv:=function(W);
+   Inv:=function(W)
    return HAP_KnotGroupInv(W,N);
    end;
 

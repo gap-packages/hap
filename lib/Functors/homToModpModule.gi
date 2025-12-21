@@ -17,7 +17,7 @@ return fail; fi;
 
 if IsBound(f!.fun) then
 ####################################
-Image:=function(f,x);
+Image:=function(f,x)
 return f!.fun(x);
 end;
 ####################################
@@ -42,7 +42,7 @@ LengthC:=EvaluateProperty(R,"length");
 M:=[1..LengthC]; M0:=0;
 
 #####################################################################
-DimensionC:=function(n);
+DimensionC:=function(n)
 return LA*R!.dimension(n);
 end;
 #####################################################################

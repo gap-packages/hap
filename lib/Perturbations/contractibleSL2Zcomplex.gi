@@ -13,7 +13,7 @@ local
         boundaryList,
         Elts,
 	Rot,Stab,
-        RotSubGroups,Action, ActionRecord,
+        RotSubGroups,action, ActionRecord,
         TransMat,
         St0,St1, x, n,k,s,BI,SGN,tmp, LstEl , 
         bool, name,
@@ -29,9 +29,9 @@ return fail;
 fi;
 
 if HAP_GCOMPLEX_SETUP[1] then 
-TransMat:=function(x); return x^-1; end;
+TransMat:=function(x) return x^-1; end;
 else
-TransMat:=function(x); return x; end;
+TransMat:=function(x) return x; end;
 fi;
 
 
@@ -41,7 +41,7 @@ lnth:=Length(C)-1;
 dims:=List([1..lnth+1],n->Length(C[n]));
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>lnth then return 0; fi;
 return dims[n+1];
 end;
@@ -117,7 +117,7 @@ end;
 ####################
 
 ####################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return StabilizerGroups[n+1][k];
 end;
 ####################
@@ -125,7 +125,7 @@ end;
 
 
 ####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local id,r,u,H,abk,ans;
 
 abk:=AbsInt(k);
@@ -375,7 +375,7 @@ return Objectify(HapNonFreeResolution,
             elts:=Elts,
             group:=G,
             stabilizer:=Stabilizer,
-            action:=Action,
+            action:=action,
 	    edge:=Edge,
 	    gens:=GeneratorsRepresentation,
             properties:=

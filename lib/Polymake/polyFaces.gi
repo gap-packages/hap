@@ -6,7 +6,7 @@ function(arg)
 local
 	G,StartVector, Gev,
 	PG,
-	Action,
+	action,
 	VertexToVector, VVRecord,
 	FaceToVertices,
 	Hasse,
@@ -49,7 +49,7 @@ EltsG:=Elements(G);
 VSGS:=VectorStabilizer(G,StartVector);
 
 #####################################################################
-Dimension:=function(k);
+Dimension:=function(k)
 if k<0 then return 0; fi;
 if k=0 then return 1; fi;
 if k>lngth then return 0; fi;
@@ -59,13 +59,13 @@ end;
 
 if IsPermGroup(G) then
 #####################################################################
-Action:=function(g,V);
+action:=function(g,V)
 return Permuted(V,g^-1);
 end;
 #####################################################################
 else
 #####################################################################
-Action:=function(g,V) ;
+action:=function(g,V)
 return g*V;    
 end;
 #####################################################################
@@ -74,15 +74,15 @@ fi;
 
 #########################CREATE POINTS###############################
 for x in G do
-Add(Points, Action(x,StartVector));
+Add(Points, action(x,StartVector));
 od;
 Points:=SSortedList(Points);
 #####################################################################
 
 
 #####################################################################
-VertexToVector:=function(v);
-return Action(PG.generators[v+1],StartVector) - StartVector;
+VertexToVector:=function(v)
+return action(PG.generators[v+1],StartVector) - StartVector;
 end;
 #####################################################################
 
@@ -124,7 +124,7 @@ bool:=true;
 count:=0;
    for g in G do
    count:=count+1;
-   T:=List(S,x->Action(g,x));
+   T:=List(S,x->action(g,x));
       for R in Reps do
       if Length(T)=Length(Intersection(T,R)) then
       bool:=false; break; fi;
@@ -168,7 +168,7 @@ S:=Hasse[k][n];
 T:=StructuralCopy(S);
 for x in G do
 if not x in StabGroup then
-xT:=List(T,a->Action(x,a));
+xT:=List(T,a->action(x,a));
 if Length(Intersection(xT,T))=Length(T) then 
 StabGroup:=  GeneratorsOfGroup(StabGroup); ;
 StabGroup:=Concatenation(StabGroup,[x]);
@@ -240,7 +240,7 @@ Component:=[];
 CompCpy:=[];
 
 for g in G do
-gFn:=SSortedList(List(Fn,x->Action(g,x)));
+gFn:=SSortedList(List(Fn,x->action(g,x)));
 if Size(gFn) = Size(Set(Intersection(gFn,Fm))) then
 if not gFn in CompCpy then
 Add(Component,g); 
@@ -325,7 +325,7 @@ r:=id^-1*r;
 u:=r*EltsG[h];
 
 bas:=StabilizerBasis(n,k);
-Gbas:=List(bas,V->Action(u,V));
+Gbas:=List(bas,V->action(u,V));
 mat:=List(Gbas, b->SolutionMat(bas,b));
 
 return Determinant(mat);

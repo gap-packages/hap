@@ -77,7 +77,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(ContractPermMatrix,
-function(A);
+function(A)
 return HomotopyEquivalentSmallerSubPermMatrix(A,A*0);
 end);
 ######################################################################

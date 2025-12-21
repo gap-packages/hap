@@ -36,12 +36,12 @@ S:=arg[2];
 
 if "appendToElts" in NamesOfComponents(R) then RappendToElts:=R!.appendToElts;
 else
-RappendToElts:=function(x); Append(R!.elts,[x]);  end;
+RappendToElts:=function(x) Append(R!.elts,[x]);  end;
 fi;
 
 if "appendToElts" in NamesOfComponents(S) then SappendToElts:=S!.appendToElts;
 else
-SappendToElts:=function(x); Append(S!.elts,[x]);  end;
+SappendToElts:=function(x) Append(S!.elts,[x]);  end;
 fi;
 
 
@@ -127,21 +127,21 @@ EltsE:=[Identity(E)];
 #od;od;                                    # NOT A GOOD IDEA DOING THIS!!
 
 #####################################################################
-	AppendToElts:=function(x);
+	AppendToElts:=function(x)
 	EltsE[Length(EltsE)+1]:=x;
 	end;
 #####################################################################
 
 PseudoBoundary:=[];
 #########################
-DimensionR:=function(n);
+DimensionR:=function(n)
 if n<0 or n>Length(R) then return 0;
 else return R!.dimension(n);
 fi;
 end;; 
 #########################
 #########################
-DimensionS:=function(n);
+DimensionS:=function(n)
 if n<0 or n>Length(S) then return 0;
 else return S!.dimension(n);
 fi;
@@ -186,7 +186,7 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 fi;
 
 if Charact=0 then AddWrds:=AddFreeWords; else
-        AddWrds:=function(v,w);
+        AddWrds:=function(v,w)
         return AddFreeWordsModP(v,w,Charact);
         end;
 fi;
@@ -266,7 +266,7 @@ end;
 #####################################################################
 
 #####################################################################
-Vector2Int:=function(p,q,r,s);
+Vector2Int:=function(p,q,r,s)
 return Pair2Int([r,s],p,q);
 end;
 #####################################################################

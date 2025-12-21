@@ -97,20 +97,20 @@ od;
 ##########################
 
 ##########################
-Simplices:=function(d,k);
+Simplices:=function(d,k)
 return SimplicesLst[d+1][k];
 end;
 #########################
 
 
 ##########################
-NrSimplices:=function(d);
+NrSimplices:=function(d)
 return Length(SimplicesLst[d+1]);
 end;
 #########################
 
 #########################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return PositionSet(SimplicesLst[Length(v)],v);
 end;
 #########################

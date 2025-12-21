@@ -163,7 +163,7 @@ end;
 
 
 #####################################################################
-ChomD:=function(v,n);
+ChomD:=function(v,n)
 return
 SmapD(RhomS(CmapR(v,n),n),n);
 end;

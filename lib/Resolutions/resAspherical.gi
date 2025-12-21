@@ -42,7 +42,7 @@ od;
 fi;
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 
 if n=0 then return 1; fi;
 if n=1 then return Length(gensF); fi;
@@ -83,7 +83,7 @@ Append(PseudoBoundary[2],[B]);
 od;
 
 #####################################################################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 if n<1 or n>2 then return [ ]; fi;
 
 if i>0 then 
@@ -121,7 +121,7 @@ end;
 #####################################################################
 
 #####################################################################
-Homotopy:=function(i,x);
+Homotopy:=function(i,x)
 if SignInt(x[1])=1 then return HomotopyRecord(i,x);
 else
 return NegateWord(HomotopyRecord(i,x));

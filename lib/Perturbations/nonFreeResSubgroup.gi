@@ -52,7 +52,7 @@ local
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
 		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
-		Mult, MultRec, FIN, i, Stabilizer, Action,
+		Mult, MultRec, FIN, i, Stabilizer, action,
                 StabRec, Conj, ConjRec, n, k, len;
 		
 if Length(arg)=3 then
@@ -99,7 +99,7 @@ od;
 
 if FIN then
 #####################################################################
-Mult:=function(n,k,i,j);
+Mult:=function(n,k,i,j)
 return Position(EltsG,TransK[n+1][k][i]*EltsG[j]);
 end;
 #####################################################################
@@ -119,7 +119,7 @@ fi;
 
 if FIN then
 #####################################################################
-Conj:=function(n,k,i,j);
+Conj:=function(n,k,i,j)
 return Position(EltsG,TransK[n+1][AbsInt(k)][i]^-1*EltsG[j]*TransK[n+1][AbsInt(k)][i]);
 end;
 #####################################################################
@@ -140,7 +140,7 @@ fi;
 
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>len then return 0; fi;
 return sK[n+1];
 end;
@@ -270,7 +270,7 @@ end;
 ######################
 
 ######################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 local x, c, p, gg; 
 x:=Int2Pair(n,k);
 gg:=Position(EltsG,EltsK[g]);
@@ -288,7 +288,7 @@ return Objectify(HapNonFreeResolution,
 	     boundary:=Boundary,
 	     homotopy:=Homotopy,
              stabilizer:=Stabilizer,
-             action:=Action,
+             action:=action,
 	     elts:=EltsK,
 	     group:=K,
              Int2Pair:=Int2Pair,

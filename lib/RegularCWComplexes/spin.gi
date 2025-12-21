@@ -123,7 +123,7 @@ bnd[n]:=bnd[n]{INDX[n]};
 od;
 
 ###########################
-pos:=function(n,i);
+pos:=function(n,i)
 return Position(INDX[n],i);
 end;
 ###########################

@@ -21,7 +21,7 @@ od;
 
 L:=[];
 for k in [1..ln-1] do
-map:=function(n,i); return i; end;
+map:=function(n,i) return i; end;
 cwmap:=Objectify( HapRegularCWMap,
             rec(
             source:=W[k],

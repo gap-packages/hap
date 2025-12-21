@@ -248,7 +248,7 @@ P:=SylowSubgroup(G,p);
 R:=ResolutionPrimePowerGroup(P,n+1);
 
 ####################################################################
-F:=function(R);
+F:=function(R)
 return TensorWithIntegersModP(R,p);
 end;
 ####################################################################

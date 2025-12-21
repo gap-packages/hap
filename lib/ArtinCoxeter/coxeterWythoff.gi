@@ -24,7 +24,7 @@ local
 	EssentialSet,
 	Vcomplement,
 	Triv,
-	AhomW,WhomWP,WP,WPev,AhomWP,EltsWP,A,StabilizerSubgroup,Action,
+	AhomW,WhomWP,WP,WPev,AhomWP,EltsWP,A,StabilizerSubgroup,action,
 	EvenStabGroup,
 	m, n,k,i,c,x,U, S, SD;
 
@@ -108,7 +108,7 @@ od;
 #Print(NonEssentialSets,"\n");
 
 ##############################################################
-CoxeterDiagramIsEssential:=function(T);
+CoxeterDiagramIsEssential:=function(T)
 if Length(T)=Length(Vertices) then return true; fi;
 if Length(T)=0 then return true; fi;
 if T in NonEssentialSets[Length(T)] then return false; fi;
@@ -133,7 +133,7 @@ end;
 ##############################################################
 
 ##############################################################
-Vcomplement:=function(S);
+Vcomplement:=function(S)
 return Filtered(Vertices,x->not x in S);
 end;
 ##############################################################
@@ -163,7 +163,7 @@ od;
 od;
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 
 if n=0 then return 1;
 else return Length(ResGens[n+1]); fi;
@@ -320,7 +320,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-Action:=function(n,k,g);
+action:=function(n,k,g)
 if n=0 then return 1; fi;
 if
 EltsWP[g] in WPev  then return 1;
@@ -338,7 +338,7 @@ return Objectify(HapNonFreeResolution,
 	    elts:=EltsWP,
 	    group:=WP,
 	    stabilizer:=StabilizerSubgroup,
-	    action:=Action,
+	    action:=action,
 	    properties:=
 	    [["length",n],
 	     ["characteristic",0],

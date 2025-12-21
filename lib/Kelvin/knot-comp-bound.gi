@@ -62,7 +62,7 @@ InstallGlobalFunction(
         return false;
         end;
 
-        CornerConfiguration:=function(i,j);
+        CornerConfiguration:=function(i,j)
 
             if grid[i][j]=1
                 then
@@ -93,7 +93,7 @@ InstallGlobalFunction(
         bound:=[[],[],[],[],[]];
         bigGrid:=List([1..2*len],x->List([1..2*len],y->0));
 
-        GridFill:=function(c,i,j);
+        GridFill:=function(c,i,j)
 # places an * at each point where a 0-cell is to be added to bigGrid
             if c=1 or c=4
                 then
@@ -804,7 +804,7 @@ InstallGlobalFunction(
             return false;
             end;
 
-            CornerConfiguration:=function(i,j);
+            CornerConfiguration:=function(i,j)
 
                 if grid[i][j]=1
                     then
@@ -835,7 +835,7 @@ InstallGlobalFunction(
             bound:=[[],[],[],[],[]];
             bigGrid:=List([1..2*len],x->List([1..2*len],y->0));
 
-            GridFill:=function(c,i,j);
+            GridFill:=function(c,i,j)
                 if c=1 or c=4
                     then
                     bigGrid[(2*i)-1][(2*j)-1]:='*';
@@ -1694,7 +1694,7 @@ InstallGlobalFunction(
         copy1, hbars2, vbars2, copy2, 3cell, colour, lcap, reg,
         closure, ucap, l1__, l2__, path_comp, pipes, HorizontalOrVertical,
         l, AboveBelow0Cell, IntersectingCylinders, pos, colour_,Last;
-Last:=function(L); return L[Length(L)]; end;
+Last:=function(L) return L[Length(L)]; end;
     if IsList(arc[1][1]) then
         prs:=arc[1]*1;
         crs:=arc[2]*1;
@@ -1727,7 +1727,7 @@ Last:=function(L); return L[Length(L)]; end;
         fi;
         return false;
     end;
-    CornerConfiguration:=function(i,j);
+    CornerConfiguration:=function(i,j)
         if grd[i][j]=1 then
             if Size(Positions(grd[i]{[j..Length(prs)]},1))=2 then
                 if Size(Positions(List([i..Length(prs)],x->grd[x][j]),1))=2 then

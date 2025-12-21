@@ -19,7 +19,7 @@ local
     Boundary, BoundaryP, Pair2Quad, Pair2QuadRec,
     Quad2Pair,Quad2PairRec, HtpyGen, HtpyWord,
     StabGrps, StabResls, ResolutionFG,
-    Action, AlgRed,  EltsG, G, Mult, MultRecord,
+    action, AlgRed,  EltsG, G, Mult, MultRecord,
     DelGen, DelWord, DelGenRec,PseudoBoundary,FinalBoundary,
     FilteredLength, FilteredDimension, FilteredDimensionRecord,
     L,i,k,n,q,r,s,t,
@@ -185,9 +185,9 @@ local
 
     ###################################################################
     if IsBound(P!.action) and not prime=2 then 
-        Action:=P!.action;
+        action:=P!.action;
     else 
-        Action:=function(k,j,g) return 1; end;
+        action:=function(k,j,g) return 1; end;
     fi;
     ###################################################################
 
@@ -276,7 +276,7 @@ local
     
     DimensionRecord:=List([0..N],Dimension);
 
-    Dimension:=function(k);
+    Dimension:=function(k)
         return DimensionRecord[k+1];
     end;
     ###################################################################
@@ -437,9 +437,9 @@ local
 
         h:=[];
         for y in w do
-            x:=[Action(q,y[1],y[3])*y[1],y[2],y[3]];
+            x:=[action(q,y[1],y[3])*y[1],y[2],y[3]];
             z:=HtpyGen(q,s,x[1],x[2],x[3]);
-            z:=List(z,a->[Action(q,a[1],a[3])*a[1],a[2],a[3]]);
+            z:=List(z,a->[action(q,a[1],a[3])*a[1],a[2],a[3]]);
             Append(h,z);
         od;
 
@@ -502,7 +502,7 @@ local
                 return [];
             else
                 y:=List(StabResls[q+1][pr]!.boundary(s,pt),
-                        x->[Action(q,r,x[2])*x[1],x[2]]);
+                        x->[action(q,r,x[2])*x[1],x[2]]);
                 if pt>0 then
                     DelGenRec[k+1][q+1][s+1][pr][pt]:= 
                             AlgRed(List(y,x->[pr,x[1],x[2]]));
@@ -676,7 +676,7 @@ local
     FilteredLength:=Maximum(Flat(FiltDimRecs));
 
     ###################################################################
-    FilteredDimension:=function(r,k);
+    FilteredDimension:=function(r,k)
 
         return Length(Filtered(FiltDimRecs[k+1],x->x<=r));
 
@@ -823,9 +823,9 @@ local
         h,x,y,v;
         h:=[];;
         for x in w do
-            v:=[x[1],x[2],Action(x[1],x[3],x[5])*x[3],x[4],x[5]];
+            v:=[x[1],x[2],action(x[1],x[3],x[5])*x[3],x[4],x[5]];
             y:=StructuralCopy(HtpyGen(v[1],v[2],v[3],v[4],v[5]));
-            Apply(y,a->[x[1],x[2]+1,Action(x[1],a[1],a[3])*a[1],a[2],a[3]]);
+            Apply(y,a->[x[1],x[2]+1,action(x[1],a[1],a[3])*a[1],a[2],a[3]]);
             Append(h,y);
         od;    
     return h;

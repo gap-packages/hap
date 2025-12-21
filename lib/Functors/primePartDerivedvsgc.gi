@@ -180,7 +180,7 @@ end;
 ####################################
 ####################################
 
-ord:=function(x,y); return Order(x)<Order(y); end; 
+ord:=function(x,y) return Order(x)<Order(y); end; 
 if Order(P1)>Order(P) then 
 DCRS:=SmallGeneratingSet(P1);
    for L in DCRS do

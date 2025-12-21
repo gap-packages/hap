@@ -357,7 +357,7 @@ end;
 #################
 
 #################
-poly:=function(m);
+poly:=function(m)
 if not IsZero(m) then return
 SignInt(m)*LaurentPolynomialByCoefficients(FamilyObj(1),[SignInt(m)],m);
 else return 1; fi;

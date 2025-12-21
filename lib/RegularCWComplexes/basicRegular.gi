@@ -39,7 +39,7 @@ K:=IntegerSimplicialComplex(arg[1]);
 if Length(arg)>1 then dim:=arg[2]; else dim:=Dimension(K); fi; 
 
 ####################
-NrCells:=function(n);
+NrCells:=function(n)
 if n>dim then return 0; fi;
 return Length(Filtered(Boundaries[n+1],x->not x[1]=0));
 end;
@@ -252,7 +252,7 @@ if n>0 then
   Y!.cobnd[n]:=LCoboundaries;
 fi;
 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.bnd[k+1],x->not x[1]=0));
             end;
@@ -401,7 +401,7 @@ while true do
 Sum(List( [1..Length(Y!.bnd)],i->Y!.nrCells(i-1)))=0
 then  
 Y!.criticalCells:=cells; 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;
@@ -442,7 +442,7 @@ fi;
 od;
 
 Y!.criticalCells:=cells;
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;
@@ -482,7 +482,7 @@ if Length(arg)=1 then
 Dimension:=C!.dimension;
 else
 ###
-Dimension:=function(n);
+Dimension:=function(n)
   if n<dim then return C!.dimension(n);
   else return 0; fi;
 end;
@@ -637,7 +637,7 @@ local
 
 dim:=EvaluateProperty(Y,"dimension");
 ##########################
-Dimension:=function(n);
+Dimension:=function(n)
 if n<0 or n>dim then return 0; fi;
 return Length(Y!.boundaries[n+1]);
 end;
@@ -757,7 +757,7 @@ od;
 od;
 
 ###############################
-Dimension:=function(n);
+Dimension:=function(n)
 if IsBound(basis[n+1]) then
 return Length(basis[n+1]);
 else
@@ -1271,7 +1271,7 @@ local
 
 #Dimension:=Y!.nrCells;
 ##########################
-Dimension:=function(n);
+Dimension:=function(n)
 if n<0 then return 0; fi;
 return Length(Y!.boundaries[n+1]);
 end;
@@ -1354,7 +1354,7 @@ od;
 od;
 
 ###############################
-Dimension:=function(n);
+Dimension:=function(n)
 return Length(basis[n+1]);
 end;
 ###############################
@@ -1575,7 +1575,7 @@ if Length(arg)=2 then Y!.orientation:=arg[2];
 else OrientRegularCWComplex(Y); fi;
 
 ####################
-Y!.nrCells:=function(n);
+Y!.nrCells:=function(n)
 if n>dim then return 0; fi;
 return Length(Filtered(Y!.boundaries[n+1],x->not x[1]=0));
 end;
@@ -2211,7 +2211,7 @@ Y:=CubicalComplexToRegularCWComplex(M);
 Unbind(M);
 
 #####################
-weight:=function(k,i);
+weight:=function(k,i)
 return W[k+1][i];
 end;
 #####################
@@ -2255,7 +2255,7 @@ local TT,SS, VT, V, SimpT, SimpS, i, fn, F;
 
 VT:=T!.vertices;
 ###################
-fn:=function(i);
+fn:=function(i)
 #return i;
 return Position(VT,i);
 end;
@@ -2268,7 +2268,7 @@ od;
 
 VT:=S!.vertices;
 ###################
-fn:=function(i);
+fn:=function(i)
 #return i;
 return Position(VT,i);
 end;
@@ -2288,7 +2288,7 @@ SS:=RegularCWComplex(SS);
 
 ################
 ################
-F:=function(n,k);
+F:=function(n,k)
 return Position(T!.simplicesLst[n+1],S!.simplicesLst[n+1][k]);
 end;
 ################
@@ -2419,7 +2419,7 @@ od;
 
 
 ##################
-map:=function(n,k);
+map:=function(n,k)
 return invperm[n+1][k];
 end;
 ##################
@@ -2533,7 +2533,7 @@ end);
 InstallOtherMethod(BarycentricSubdivision,
 "for regular CW complexes",
 [IsHapRegularCWComplex],
-function(Y);
+function(Y)
 return HAP_BaryCentricSubdivisionRegularCWComplex(Y);
 end);
 #######################################################
@@ -2557,7 +2557,7 @@ chains:=List([1..Y!.nrCells(0)],i->[i]);
 newchains:=[];
 
 ###################################
-reduce:=function(x);
+reduce:=function(x)
 if Length(x)>1 then return [x[1],x[Length(x)]];
 else return x;
 fi;
@@ -2612,7 +2612,7 @@ local X,Y,map;       #THIS FUNTION IS NOT NEEDED
 X:=Source(G);
 Y:=Target(F);
 #######################
-map:=function(n,k);
+map:=function(n,k)
 return F!.mapping(n,G!.mapping(n,k));
 end;
 #######################
@@ -2819,7 +2819,7 @@ local R,Y,T,W,i;
 
 R:=ResolutionFiniteGroup(G,n);
 T:=Group(One(G));
-R!.stabilizer:=function(n,i); return T; end;
+R!.stabilizer:=function(n,i) return T; end;
 R:=HAP_BaryCentricSubdivisionGComplex(R);
 R:=ResolutionToEquivariantCWComplex(R);
 Y:=EquivariantCWComplexToRegularCWComplex(R,G);

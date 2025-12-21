@@ -15,7 +15,7 @@ local
         PseudoBoundaryN,
         PseudoBoundaryNplus2,
 	FindFreeFace,
-	Action, ActionInv, Elts,
+	action, ActionInv, Elts,
  	modN, modNplus1,
 	triple, phi, nwrdd, wrdd,
 	tmp, trp3,pos, 
@@ -42,7 +42,7 @@ fi;
 
 
 #####################################################################
-Action:=function(g,l)
+action:=function(g,l)
 local pos, h;
 h:=Elts[g]*Elts[l[2]];
 pos:=Position(Elts,h);
@@ -70,7 +70,7 @@ end;
 if IsPseudoList(Elts) then
 if IsBound(Elts!.mult) then
 #####################################################################
-Action:=function(g,l)
+action:=function(g,l)
 local pos, h;
 pos:=Elts!.mult(g,l[2]); 
 return [1*l[1],pos];
@@ -153,7 +153,7 @@ for i in [1..Length(b)] do
    if b[i][1]<0 then
    w:=NegateWord(w);
    fi;
-   w:=List(w,x->Action(b[i][2],x));
+   w:=List(w,x->action(b[i][2],x));
    Append(newb,w);
    fi;
 od;
@@ -192,7 +192,7 @@ fi;
 #####################################
 
 ####################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if not i in [N,N+1] then return R!.dimension(i); fi;
 if i=N then return  Length(PseudoBoundaryN); fi;
@@ -201,7 +201,7 @@ end;
 ####################################################
 
 ####################################################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 if not n in [N,N+1,N+2]  then return R!.boundary(n,i); fi;
 if i>0 then
 if n=N then return 1*PseudoBoundaryN[i]; fi;
@@ -251,9 +251,9 @@ ans:=[];
 for v in V do
    if AbsInt(v[1])=e then
       if v[1]>0 then
-         Append(ans, List(wrdd,a->Action(v[2],a))  );
+         Append(ans, List(wrdd,a->action(v[2],a))  );
       else
-         Append(ans, List(nwrdd,a->Action(v[2],a))  );
+         Append(ans, List(nwrdd,a->action(v[2],a))  );
       fi;
    else
       Add(ans,v);

@@ -82,7 +82,7 @@ end);
 InstallMethod(QuadraticIdeal,
 "ideal in a ring of quadratic integers",
 [IsRing and IsRingOfQuadraticIntegers, IsCyclotomic],
-function(R,x);
+function(R,x)
 return QuadraticIdeal(R,[x]);
 end);
 ##########################################################
@@ -151,7 +151,7 @@ end);
 
 ##############################
 InstallGlobalFunction(Hap_int,
-function(y);
+function(y)
 if y>0 or IsInt(y) then return Int(y);
 else return Int(y)-1; fi;
 end);
@@ -173,7 +173,7 @@ local g, N, D, p;
 ###################################################
 
 ##############################
-#int:=function(y);
+#int:=function(y)
 #if y>0 or IsInt(y) then return Int(y); 
 #else return Int(y)-1; fi;
 #end;
@@ -336,7 +336,7 @@ end);
 InstallOtherMethod(Discriminant,
 "Discriminant of a quadratic number field",
 [IsNumberField],
-function(Q);
+function(Q)
 if Q!.bianchiInteger mod 4 = 1 then return Q!.bianchiInteger;
 else return 4*Q!.bianchiInteger; fi;
 end);
@@ -348,7 +348,7 @@ end);
 InstallOtherMethod(Discriminant,
 "Discriminant of the quadratic number field associated to a ring of integers",
 [IsRingOfQuadraticIntegers],
-function(R);
+function(R)
 return Discriminant(AssociatedNumberField(R));
 end);
 ##########################################################
@@ -458,7 +458,7 @@ InstallOtherMethod( Int,
     "Int for HAPSqrt",
     [ IsHapQuadraticNumber],
 100000000,
-function(x);
+function(x)
 if not IsZero(x!.irrational) then return fail; fi;
 return Int(x!.rational);
 

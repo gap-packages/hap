@@ -41,7 +41,7 @@ LstBin:=List([0..Dimension(M)],i->[]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -75,7 +75,7 @@ ArrayIt(dimsSet,Fun);
 fi;
 
 #######################################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return faces[n+1];
 end;
 #######################################
@@ -177,7 +177,7 @@ LstBin:=List([0..Dimension(M)],i->[]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -196,7 +196,7 @@ fi;
 od;
 
 #######################################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return faces[n+1];
 end;
 #######################################
@@ -253,13 +253,13 @@ end;
 #######################################
 
 #######################################
-Generator2Coordinates:=function(n,j);
+Generator2Coordinates:=function(n,j)
 return LstBin[n+1][j];
 end;
 #######################################
 
 #######################################
-Coordinates2Generator:=function(x);
+Coordinates2Generator:=function(x)
 return ArrayValueDim(BinLst,x);
 end;
 #######################################
@@ -449,7 +449,7 @@ LstBin:=List([0..Dimension(M)],i->[]);
 
 
 ##############################
-numevens:=function(x);
+numevens:=function(x)
 return Length(Filtered(x,i->IsEvenInt(i)));
 end;
 ##############################
@@ -490,7 +490,7 @@ od;
 od;
 
 #######################################
-Dimsn:=function(n);
+Dimsn:=function(n)
 return faces[n+1];
 end;
 #######################################
@@ -541,7 +541,7 @@ end;
 #######################################
 
 #######################################
-FilteredDimension:=function(r,n);
+FilteredDimension:=function(r,n)
 
 return 
 Sum(List([1..r],i->Length(filtmat[n+1][i]) ));

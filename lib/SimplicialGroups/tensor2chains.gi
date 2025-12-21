@@ -12,14 +12,14 @@ local
 	Dimension,Boundary;
 	
         ########################## Modified by Graham
-	rdim := function(n);
+	rdim := function(n)
         if n<0 or n> Length(R) then return 0; fi;
         return R!.dimension(n);
         end;
         ##########################
 	rbound := R!.boundary;
         ########################## Modified by Graham
-        sdim := function(n);
+        sdim := function(n)
         if n<0 or n> Length(S) then return 0; fi;
         return S!.dimension(n);
         end;

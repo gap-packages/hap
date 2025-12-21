@@ -150,7 +150,7 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 fi;
 
 if Charact=0 then AddWrds:=AddFreeWords; else
-        AddWrds:=function(v,w);
+        AddWrds:=function(v,w)
         return AddFreeWordsModP(v,w,Charact);
         end;
 fi;
@@ -277,7 +277,7 @@ end;
 eltse:=Elements(E);
 elts2intrec:=List([1..Length(eltse)],i->Elts2Int(eltse[i]));
 #####################################################################
-Elts2Int:=function(x);
+Elts2Int:=function(x)
 return elts2intrec[PositionSorted(eltse,x)];
 end;
 #####################################################################

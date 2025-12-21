@@ -326,7 +326,7 @@ L:=ReadLine(it);;
 M:=[];
 
 #################
-fun:=function(x);
+fun:=function(x)
 if x='\t' then return ',';
 else return x; fi;
 end;
@@ -362,7 +362,7 @@ local M, Distance,S,i,j;
 #############################
 M:=arg[1];
 if Length(arg)=1 then
-	Distance:=function(u,v);
+	Distance:=function(u,v)
 	return Sum(List(u-v,x->AbsInt(x)));
 	end;
 else Distance:=arg[2];
@@ -801,20 +801,20 @@ SimplicesLst:=Filtered(SimplicesLst,x->Length(x)>0);
 dim:=Length(SimplicesLst)-1;
 
 ##########################
-Simplices:=function(d,k);
+Simplices:=function(d,k)
 return SimplicesLst[d+1][k];
 end;
 #########################
 
 
 ##########################
-NrSimplices:=function(d);
+NrSimplices:=function(d)
 return Length(SimplicesLst[d+1]);
 end;
 #########################
 
 #########################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return PositionSet(SimplicesLst[Length(v)],v);
 end;
 #########################
@@ -1079,14 +1079,14 @@ SimplicesLst[d+1]:=Concatenation(SimplicesLst[d+1]);
 od;
 ##########################
 ##########################
-Simplices:=function(d,k);
+Simplices:=function(d,k)
 return SimplicesLst[d+1][k];
 end;
 #########################
 
 
 ##########################
-NrSimplices:=function(d);
+NrSimplices:=function(d)
 return Length(SimplicesLst[d+1]);
 end;
 #########################
@@ -1107,14 +1107,14 @@ end;
 #########################
 
 #########################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return Position(SimplicesLst[Length(v)],v);
 end;
 #########################
 
 
 ##########################
-FilteredDimension:=function(t,d);
+FilteredDimension:=function(t,d)
 return FilteredDims[d+1][t];
 end;
 #########################
@@ -1168,7 +1168,7 @@ end);
 InstallOtherMethod(CliqueComplex,
 "Clique complex of  graph",
 [IsHapGraph, IsInt],
-function(K,n);
+function(K,n)
 
 return SimplicialNerveOfGraph(K,n);
 
@@ -1181,7 +1181,7 @@ end);
 InstallOtherMethod(CliqueComplex,
 "Clique complex of filtered graph",
 [IsHapFilteredGraph, IsInt],
-function(K,n);
+function(K,n)
 
 return SimplicialNerveOfFilteredGraph(K,n);
 

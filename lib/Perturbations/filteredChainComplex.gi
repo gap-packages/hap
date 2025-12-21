@@ -15,7 +15,7 @@ local
 
 FL:=EvaluateProperty(C,"filtration_length");
 ###############################
-FD:=function(r,k);
+FD:=function(r,k)
 if r<0 then return  0; fi;
 return 
 C!.filteredDimension(Minimum(r,FL),k);

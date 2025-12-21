@@ -37,7 +37,7 @@ od;
 #if false then      
 if QisFinite then
 #####################################################################
-GhomQ:=function(i);
+GhomQ:=function(i)
 #return Position(EltsQ,Image(f,EltsG[i]));
 return Position(EltsQ,ImageElm(f,EltsG[i]));   #Added Jan 2012
 end;
@@ -45,7 +45,7 @@ end;
 if IsFinite(R!.group) then
 GhomQlst:=List([1..Order(R!.group)],GhomQ);
 #####################################################################
-GhomQ:=function(i);
+GhomQ:=function(i)
 return GhomQlst[i];
 end;
 #####################################################################
@@ -66,7 +66,7 @@ fi;
 
 if QisFinite then
 #####################################################################
-Mult:=function(i,j);
+Mult:=function(i,j)
 return Position(EltsQ,EltsQ[i]*EltsQ[j]);
 end;
 #####################################################################
@@ -79,7 +79,7 @@ Multmat[i][j]:=Mult(i,j);
 od;
 od;
 #####################################################################
-Mult:=function(i,j);
+Mult:=function(i,j)
 return Multmat[i][j];
 end;
 #####################################################################
@@ -104,7 +104,7 @@ Charact:=Maximum(EvaluateProperty(R,"characteristic"),
 
 if not IsPrime(Charact) then AlgRed:=AlgebraicReduction;
 else
-AlgRed:=function(v); return AlgebraicReduction(v,Charact); end;
+AlgRed:=function(v) return AlgebraicReduction(v,Charact); end;
 fi;
 
 

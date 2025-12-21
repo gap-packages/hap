@@ -4,7 +4,7 @@ function(C,p)
 local pTorsionSubcomplex, celldata, quotient, torsionCells,
       i, j, k, t, l, currentCell, BoundaryImage, dim0, ReIndexCell,
       lnth, dims,n, Elts, Boundary, StabilizerGroups, RotSubGroups, s,
-      boundaryList, BI, SGN, LstEl, tmp, G, Stabilizer, Action, Dimension;
+      boundaryList, BI, SGN, LstEl, tmp, G, Stabilizer, action, Dimension;
 
     pTorsionSubcomplex:=GetTorsionSubcomplex(C,p);
     celldata:=StructuralCopy(pTorsionSubcomplex!.originalData);
@@ -113,7 +113,7 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     dims:=List([1..lnth+1],n->Length(quotient[n]));
 
     ###################
-    Dimension:=function(n);
+    Dimension:=function(n)
     if n>lnth then return 0; fi;
     return dims[n+1];
     end;
@@ -162,7 +162,7 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     G:=C!.group;
 
     ####################
-    Boundary:=function(n,k);
+    Boundary:=function(n,k)
     if k>0 then
     return boundaryList[n+1][k];
     else
@@ -172,14 +172,14 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     ####################
 
     ####################
-    Stabilizer:=function(n,k);
+    Stabilizer:=function(n,k)
     return StabilizerGroups[n+1][k];
     end;
     ####################
 
 
     ####################
-    Action:=function(n,k,g)
+    action:=function(n,k,g)
     return 1;
     end;
 
@@ -194,7 +194,7 @@ return Objectify(HapNonFreeResolution,
     length:=lnth,
     boundary:=Boundary,
     homotopy:=fail,
-    action:=Action,
+    action:=action,
     dimension:=Dimension,
     properties:=
     [["length",Maximum(1000,lnth)],
@@ -217,7 +217,7 @@ local vcd, stabilizerCardinalities, celldata, data, torsionPosition,
 torsionCells, numberOfTorsionCells, n, j, returnedData, warned,
 groupname, admissibilityCheck, x, i, b, tmpCell, cell, boundary, groupName,
 lnth, dims, Elts, Boundary, StabilizerGroups, RotSubGroups, s,k,
-boundaryList, BI, SGN, LstEl, tmp, G, Stabilizer, Action, Dimension;
+boundaryList, BI, SGN, LstEl, tmp, G, Stabilizer, action, Dimension;
 
     admissibilityCheck := function(celldata)
     #########################################################
@@ -354,7 +354,7 @@ od;
   dims:=List([1..lnth+1],n->Length(data[n]));
 
   ###################
-  Dimension:=function(n);
+  Dimension:=function(n)
   if n>lnth then return 0; fi;
   return dims[n+1];
   end;
@@ -403,7 +403,7 @@ od;
   G:=C!.group;
 
   ####################
-  Boundary:=function(n,k);
+  Boundary:=function(n,k)
   if k>0 then
   return boundaryList[n+1][k];
   else
@@ -413,14 +413,14 @@ od;
   ####################
 
   ####################
-  Stabilizer:=function(n,k);
+  Stabilizer:=function(n,k)
   return StabilizerGroups[n+1][k];
   end;
   ####################
 
 
   ####################
-  Action:=function(n,k,g)
+  action:=function(n,k,g)
   return 1;
   end;
 
@@ -435,7 +435,7 @@ od;
             length:=lnth,
             boundary:=Boundary,
             homotopy:=fail,
-            action:=Action,
+            action:=action,
             dimension:=Dimension,
             torsion:=p,
             groupname:=groupName,
@@ -540,7 +540,7 @@ InstallGlobalFunction("ConvertTorsionComplexToGcomplex",
 function(C)
 local data, Elts,n,lnth,dims,Dimension, StabilizerGroups,
       RotSubGroups,boundaryList,k, tmp, BI, SGN, LstEl,
-      s, G, Boundary, Stabilizer, Action;
+      s, G, Boundary, Stabilizer, action;
 
 data:=StructuralCopy(C!.celldata);
 
@@ -549,7 +549,7 @@ lnth:=Length(data)-1;
 dims:=List([1..lnth+1],n->Length(data[n]));
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>lnth then return 0; fi;
 return dims[n+1];
 end;
@@ -599,7 +599,7 @@ od;
 G:=Group(Elts);
 
 ####################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k>0 then
 return boundaryList[n+1][k];
 else
@@ -609,14 +609,14 @@ end;
 ####################
 
 ####################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return StabilizerGroups[n+1][k];
 end;
 ####################
 
 
 ####################
-Action:=function(n,k,g)
+action:=function(n,k,g)
 return 1;
 end;
 
@@ -631,7 +631,7 @@ return Objectify(HapNonFreeResolution,
           length:=lnth,
           boundary:=Boundary,
           homotopy:=fail,
-          action:=Action,
+          action:=action,
           dimension:=Dimension,
           torsion:=C!.torsion,
           groupname:=C!.groupname,
