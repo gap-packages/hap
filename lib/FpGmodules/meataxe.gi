@@ -151,7 +151,7 @@ end;
 #####################################################################
 
 #####################################################################
-action:=function(g,B);
+action:=function(g,B)
 return TransposedMat(GactMat(
 Position(elts1,g),
 TransposedMat(B)));

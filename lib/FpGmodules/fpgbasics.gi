@@ -69,7 +69,7 @@ end;
 #####################################################################
 
 #####################################################################
-action:=function(g,B);
+action:=function(g,B)
 return TransposedMat(GactMat(
 Position(R!.elts,g),
 TransposedMat(B)));
@@ -347,7 +347,7 @@ end;
 #####################################################################
 
 #####################################################################
-action:=function(g,B);
+action:=function(g,B)
 return TransposedMat(GactMat(
 Position(Elts,g),
 TransposedMat(B)));
@@ -382,7 +382,7 @@ end);
 										#####################################################################
 #####################################################################
 InstallGlobalFunction(FpGModuleHomomorphismNC,
-function(M,N,A);
+function(M,N,A)
 
 return Objectify(HapFPGModuleHomomorphism,
 
@@ -399,7 +399,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(FpGModuleHomomorphism,
-function(M,N,A);
+function(M,N,A)
 
 if not IsFpGModuleHomomorphismData(M,N,A) then
 return fail;

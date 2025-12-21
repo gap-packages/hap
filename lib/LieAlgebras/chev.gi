@@ -43,26 +43,26 @@ end;
 
 
 ###############################################################
-ITT:=function(n,j);
+ITT:=function(n,j)
 return StructuralCopy(Comb[n][j]);
 end;
 ###############################################################
 
 ###############################################################
-TTI:=function(c);
+TTI:=function(c)
 return PositionSorted(Comb[Length(c)],SSortedList(c));
 end;
 ###############################################################
 
 ################################################################
-Dim:=function(n);
+Dim:=function(n)
 if n>s or n<0 then return 0; else
 return Binomial( d, n )*dimV; fi;
 end;
 ###############################################################
 
 #######################################
-pair2int:=function(m,k);
+pair2int:=function(m,k)
 return dimV*(m-1)+k;
 end;
 #######################################

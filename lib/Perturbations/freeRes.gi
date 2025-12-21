@@ -245,7 +245,7 @@ end;
 
 DimensionRecord:=List([0..N],Dimension);
 
-Dimension:=function(k);
+Dimension:=function(k)
 return DimensionRecord[k+1];
 end;
 ###################################################################
@@ -542,7 +542,7 @@ od;
 FilteredLength:=Maximum(Flat(FiltDimRecs));
 
 ##################################################
-FilteredDimension:=function(r,k);
+FilteredDimension:=function(r,k)
 
 return Length(Filtered(FiltDimRecs[k+1],x->x<=r));
 
@@ -760,7 +760,7 @@ EltsQ:=S!.elts;
 BoundaryS:=S!.boundary;
 
 ###############################################################
-StabilizerSubgroup:=function(k,n);
+StabilizerSubgroup:=function(k,n)
 return N;
 end;
 ################################################################
@@ -777,7 +777,7 @@ end;
 
 
 #################################################################
-Boundary:=function(k,n);
+Boundary:=function(k,n)
 return List(BoundaryS(k,n),x->[x[1],QmapG(x[2])]);
 end;
 #################################################################
@@ -883,7 +883,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-action:=function(k,j,g);
+action:=function(k,j,g)
 if 
 EltsWP[g] in WPev then return 1;
 else return -1; fi;
@@ -892,7 +892,7 @@ end;
 
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 
 if n=0 then return 1; fi;
 if n>Length(R) then return 0;
@@ -969,7 +969,7 @@ od;
 od;
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 
 if n=0 then return 1; fi;
 if n>=Length(ResGens) then return 0;
@@ -1080,7 +1080,7 @@ end;
 
 ###############################################################
 # This describes how the group WP acts on the orientation.
-action:=function(n,k,g);
+action:=function(n,k,g)
 if n=0 then return 1; fi;
 return Determinant( EltsG[g]);
 end;
@@ -1155,7 +1155,7 @@ BoundaryRec[n][k]:=StructuralCopy(Boundary(n,k));
 od;
 od;
 ##################################################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k> 0 then
 return BoundaryRec[n][k];
 else return
@@ -1186,7 +1186,7 @@ for g in [1..Length(R!.elts)] do
 HomotopyRec[n+1][k][g]:=Homotopy(n,[k,g]);
 od;od;od;
 ##################################################
-Homotopy:=function(n,x);
+Homotopy:=function(n,x)
 
 if x[1]>0 then return
 HomotopyRec[n+1][x[1]][x[2]];

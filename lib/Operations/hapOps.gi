@@ -370,7 +370,7 @@ ArrayAssignDim:=ArrayAssignFunctions(dim);
 ArrayIt:=ArrayIterate(dim);
 
 #########################
-Fun:=function(i);
+Fun:=function(i)
 if ArrayValueDim(M!.binaryArray,i)=1 then
 ArrayAssignDim(A,i,1);
 fi;
@@ -432,7 +432,7 @@ end);
 InstallMethod(PureComplexRandomCell,
 "random cell of a pure cubical complex ",
 [IsHapPureCubicalComplex],
-function(K);
+function(K)
 return RandomCellOfPureComplex(K);
 end);
 ##########################################################
@@ -443,7 +443,7 @@ end);
 InstallOtherMethod(PureComplexRandomCell,
 "random cell of a pure cubical complex ",
 [IsHapPurePermutahedralComplex],
-function(K);
+function(K)
 return RandomCellOfPureComplex(K);
 end);
 ##########################################################
@@ -486,7 +486,7 @@ end);
 InstallOtherMethod(ContractibleSubcomplex,
 "contractible subcomplex of simplicial complex ",
 [IsHapSimplicialComplex],
-function(K);
+function(K)
 return ContractibleSubcomplexOfSimplicialComplex(K);
 end);
 ##########################################################
@@ -499,7 +499,7 @@ end);
 InstallMethod(BoundaryMap,
 "inclusion of the boundary of a regular CW complex ",
 [IsHapRegularCWComplex],
-function(K);
+function(K)
 return BoundaryPairOfPureRegularCWComplex(K);
 end);
 ##########################################################
@@ -511,7 +511,7 @@ end);
 InstallMethod(CriticalCells,
 "critical cells of regular CW complex",
 [IsHapRegularCWComplex],
-function(K);
+function(K)
 if IsBound(K!.directed) then
 return HAP_CriticalCellsDirected(K);
 fi;
@@ -526,7 +526,7 @@ end);
 InstallMethod(DisplayArcPresentation,
 "displays a pure cubical knot",
 [IsHapPureCubicalComplex],
-function(K);
+function(K)
 ViewPureCubicalKnot(K);
 end);
 ##########################################################
@@ -537,7 +537,7 @@ end);
 InstallMethod(KnotReflection,
 "reflects a pure cubical knot",
 [IsHapPureCubicalComplex],
-function(K);
+function(K)
 return ReflectedCubicalKnot(K);
 end);
 ##########################################################
@@ -660,7 +660,7 @@ end);
 InstallMethod(ZigZagContractedComplex,
 "zig zag contracted  pure cubical complex",
 [IsHapPureCubicalComplex],
-function(K);
+function(K)
 return ZigZagContractedPureComplex(K);
 end);
 ##########################################################
@@ -671,7 +671,7 @@ end);
 InstallOtherMethod(ZigZagContractedComplex,
 "zig zag contracted  pure cubical complex",
 [IsHapPureCubicalComplex,IsInt],
-function(K,n);
+function(K,n)
 return ZigZagContractedPureComplex(K,n);
 end);
 ##########################################################
@@ -683,7 +683,7 @@ end);
 InstallOtherMethod(ZigZagContractedComplex,
 "zig zag contracted  pure permutahedral complex",
 [IsHapPurePermutahedralComplex],
-function(K);
+function(K)
 return ZigZagContractedPureComplex(K);
 end);
 ##########################################################
@@ -694,7 +694,7 @@ end);
 InstallOtherMethod(ZigZagContractedComplex,
 "zig zag contracted  pure permutahedral complex",
 [IsHapPurePermutahedralComplex,IsInt],
-function(K,n);
+function(K,n)
 return ZigZagContractedPureComplex(K,n);
 end);
 ##########################################################
@@ -706,7 +706,7 @@ end);
 InstallOtherMethod(ZigZagContractedComplex,
 "zig zag contracted  filtered pure cubical complex",
 [IsHapFilteredPureCubicalComplex],
-function(K); 
+function(K) 
 return ZigZagContractedFilteredPureCubicalComplex(K);
 end);
 ##########################################################
@@ -751,21 +751,21 @@ SimplicesLst:=StructuralCopy(Y!.simplicesLst);
 dim:=Dimension(Y);                       
 
 #####################
-NrSimplices:=function(n);
+NrSimplices:=function(n)
 if n<0 or n>dim then return 0; fi;
 return Length(SimplicesLst[n+1]);
 end;
 #####################
 
 #####################
-Simplices:=function(n,i);
+Simplices:=function(n,i)
 return SimplicesLst[n+1][i];
 end;
 #####################
 
 
 #####################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return PositionSet(SimplicesLst[Length(v)],v);
 end;
 #####################
@@ -796,7 +796,7 @@ end);
 InstallOtherMethod(ContractedComplex,
 "contracted  filtered regular CW complex",
 [IsHapFilteredRegularCWComplex],
-function(Y);
+function(Y)
 return ContractedFilteredRegularCWComplex(Y);
 end);
 ##########################################################
@@ -886,7 +886,7 @@ end);
 InstallOtherMethod(ContractedComplex,
 "contracted  pure permutahedral complex",
 [IsHapPurePermutahedralComplex,IsHapPurePermutahedralComplex],
-function(M,S);
+function(M,S)
 return HomotopyEquivalentMinimalPureSubcomplex(M,S);;
 end);
 ##########################################################
@@ -901,7 +901,7 @@ end);
 InstallOtherMethod(ContractedComplex,
 "contracted filtered pure cubical complex",
 [IsHapFilteredPureCubicalComplex],
-function(Y);
+function(Y)
 return
 ContractedFilteredPureCubicalComplex(Y);
 end);
@@ -913,7 +913,7 @@ end);
 InstallMethod(SimplifiedComplex,
 "simplify a regular CW-complex while retaining the homeomorphism type",
 [IsHapRegularCWComplex],
-function(Y);
+function(Y)
 return
 SimplifiedRegularCWComplex(Y);
 end);
@@ -925,7 +925,7 @@ end);
 InstallOtherMethod(SimplifiedComplex,
 "simplify a pure permutahedral complex",
 [IsHapPurePermutahedralComplex],
-function(Y);
+function(Y)
 return
 ZigZagContractedComplex(Y);
 end);
@@ -937,7 +937,7 @@ end);
 InstallOtherMethod(ContractedComplex,
 "contracted sparse chain complex",
 [IsHapSparseChainComplex],
-function(C);
+function(C)
 return
 SimplifiedSparseChainComplex(C);
 end);
@@ -949,7 +949,7 @@ end);
 InstallOtherMethod(ContractedComplex,
 "contracted sparse chain complex",
 [IsHapSparseChainComplex,IsInt],
-function(C,b);
+function(C,b)
 return
 SimplifiedSparseChainComplex(C,b);
 end);
@@ -1024,7 +1024,7 @@ end);
 InstallMethod(ConcentricFiltration,
 "Concentric filtration on pure cubical complex",
 [IsHapPureCubicalComplex,IsInt],
-function(Y,n);
+function(Y,n)
 return 
 ConcentricallyFilteredPureCubicalComplex(Y,n);
 end);
@@ -1281,7 +1281,7 @@ end);
 InstallMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsInt,IsInt],
-function(Y,n,prime);
+function(Y,n,prime)
 return PersistentBettiNumbersViaContractions(Y,n,prime);
 end);
 ##########################################################
@@ -1292,7 +1292,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsInt,IsInt,IsBool],
-function(Y,n,prime,bool);
+function(Y,n,prime,bool)
 return PersistentBettiNumbersViaContractions(Y,n,prime,bool);
 end);
 ##########################################################
@@ -1304,7 +1304,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsInt],
-function(Y,n);
+function(Y,n)
 Print("Using homology over GF(2).\n");
 return PersistentBettiNumbersViaContractions(Y,n,2);
 end);
@@ -1316,7 +1316,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsInt,IsBool],
-function(Y,n,bool);
+function(Y,n,bool)
 Print("Using homology over GF(2).\n");
 return PersistentBettiNumbersViaContractions(Y,n,2,bool);
 end);
@@ -1329,7 +1329,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsList],
-function(Y,N);
+function(Y,N)
 Print("Using homology over GF(2).\n");
 return PersistentBettiNumbersViaContractions(Y,N,2);
 end);
@@ -1341,7 +1341,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbersAlt,
 "Betti number of a filtered regular CW-complex",
 [IsHapFilteredRegularCWComplex,IsList,IsBool],
-function(Y,N,bool);
+function(Y,N,bool)
 Print("Using homology over GF(2).\n");
 return PersistentBettiNumbersViaContractions(Y,N,2,bool);
 end);
@@ -1360,7 +1360,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a sparse filtered chain complex",
 [IsHapFilteredSparseChainComplex,IsInt],
-function(C,n);
+function(C,n)
 return PersistentHomologyOfFilteredSparseChainComplex(C,n);
 end);
 ##########################################################
@@ -1371,7 +1371,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a sparse filtered chain complex",
 [IsHapFilteredSparseChainComplex,IsInt,IsInt],
-function(C,n,prime);
+function(C,n,prime)
 return PersistentHomologyOfFilteredSparseChainComplex(
                    TensorWithIntegersModPSparse(C,prime),n);
 end);
@@ -1384,7 +1384,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt],
-function(C,n);
+function(C,n)
 if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 2025
 return PersistentBettiNumbers(
 FilteredChainComplexToFilteredSparseChainComplex(C),n);
@@ -1397,7 +1397,7 @@ end);
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt,IsInt],
-function(C,n,prime);
+function(C,n,prime)
 if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 202
 return PersistentBettiNumbers(
 FilteredChainComplexToFilteredSparseChainComplex(C),n,prime);
@@ -1414,7 +1414,7 @@ end);
 InstallOtherMethod(Size,
 "Size of an integer",
 [IsInt],
-function(n);
+function(n)
 return n;
 end);
 ##########################################################
@@ -1425,7 +1425,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a chain complex",
 [IsHapChainComplex,IsInt],
-function(C,n);
+function(C,n)
 if IsPrimeInt(EvaluateProperty(C,"characteristic")) then
 return Size(Homology(C,n));
 fi;
@@ -1443,7 +1443,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a sparse chain complex",
 [IsHapSparseChainComplex,IsInt],
-function(C,n);
+function(C,n)
 return Bettinumbers(C,n);
 end);
 ##########################################################
@@ -1455,7 +1455,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a pure cubical complex",
 [IsHapPureCubicalComplex, IsInt],
-function(S,n);
+function(S,n)
 if n=0 then
 return PathComponentOfPureComplex(S,0); 
 fi;
@@ -1473,7 +1473,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a pure cubical complex in characteristic p",
 [IsHapPureCubicalComplex, IsInt, IsInt],
-function(S,n,p);
+function(S,n,p)
 if n=0 then
 return PathComponentOfPureComplex(S,0);
 fi;
@@ -1489,7 +1489,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a pure permutahedral complex",
 [IsHapPurePermutahedralComplex,IsInt],
-function(S,n);
+function(S,n)
 if n=0 then
 return PathComponentOfPureComplex(S,0);       
 fi;
@@ -1507,7 +1507,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a pure permutahedral complex in characteristic p",
 [IsHapPurePermutahedralComplex,IsInt,IsInt],
-function(S,n,p);
+function(S,n,p)
 if n=0 then
 return PathComponentOfPureComplex(S,0);      
 fi;
@@ -1523,7 +1523,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a cubical complex",
 [IsHapCubicalComplex,IsInt],
-function(S,n);
+function(S,n)
 return BettiNumber(RegularCWComplex(S),n);
 end);
 ##########################################################
@@ -1534,7 +1534,7 @@ end);
 InstallOtherMethod(BettiNumber,
 "Betti number of a cubical complex in characteristic p",
 [IsHapCubicalComplex,IsInt,IsInt],
-function(S,n,p);
+function(S,n,p)
 return BettiNumber(RegularCWComplex(S),n,p);
 end);
 ##########################################################

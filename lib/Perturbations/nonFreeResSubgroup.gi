@@ -99,7 +99,7 @@ od;
 
 if FIN then
 #####################################################################
-Mult:=function(n,k,i,j);
+Mult:=function(n,k,i,j)
 return Position(EltsG,TransK[n+1][k][i]*EltsG[j]);
 end;
 #####################################################################
@@ -119,7 +119,7 @@ fi;
 
 if FIN then
 #####################################################################
-Conj:=function(n,k,i,j);
+Conj:=function(n,k,i,j)
 return Position(EltsG,TransK[n+1][AbsInt(k)][i]^-1*EltsG[j]*TransK[n+1][AbsInt(k)][i]);
 end;
 #####################################################################
@@ -140,7 +140,7 @@ fi;
 
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>len then return 0; fi;
 return sK[n+1];
 end;

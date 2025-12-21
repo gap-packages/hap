@@ -77,7 +77,7 @@ gg:=g^-1;
 H:=HAP_CongruenceSubgroupGamma0(n);
 
 ###################################################
-membership:=function(x);
+membership:=function(x)
 return x^gg in H;
 end;
 ###################################################
@@ -105,7 +105,7 @@ gg:=g^-1;
 #H:=HAP_CongruenceSubgroupGamma0(n);
 
 ###################################################
-membership:=function(x);
+membership:=function(x)
 return x^gg in H;
 end;
 ###################################################
@@ -134,7 +134,7 @@ gg:=g^-1;
 #H:=HAP_CongruenceSubgroupGamma0(n);
 
 ###################################################
-membership:=function(x);
+membership:=function(x)
 if not x in H then return false; fi;
 return x^gg in H;
 end;
@@ -180,7 +180,7 @@ end;
 ##############################
 
 ##############################
-posfun:=function(x);
+posfun:=function(x)
 return elts!.posfun( x^gg);
 end;
 ##############################
@@ -210,7 +210,7 @@ R:=RightTransversal(H,GG^gg);
 R2:=List(R,x->x^g);
 
 ##########################################
-poscan:=function(x);
+poscan:=function(x)
 return PositionCanonical(R,x^gg);
 end;
 ##########################################

@@ -49,7 +49,7 @@ EltsG:=Elements(G);
 VSGS:=VectorStabilizer(G,StartVector);
 
 #####################################################################
-Dimension:=function(k);
+Dimension:=function(k)
 if k<0 then return 0; fi;
 if k=0 then return 1; fi;
 if k>lngth then return 0; fi;
@@ -59,13 +59,13 @@ end;
 
 if IsPermGroup(G) then
 #####################################################################
-action:=function(g,V);
+action:=function(g,V)
 return Permuted(V,g^-1);
 end;
 #####################################################################
 else
 #####################################################################
-action:=function(g,V) ;
+action:=function(g,V)
 return g*V;    
 end;
 #####################################################################
@@ -81,7 +81,7 @@ Points:=SSortedList(Points);
 
 
 #####################################################################
-VertexToVector:=function(v);
+VertexToVector:=function(v)
 return action(PG.generators[v+1],StartVector) - StartVector;
 end;
 #####################################################################

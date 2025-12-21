@@ -31,7 +31,7 @@ T[n+1]:=[];
 od;
 
 ############################
-NewDimension:=function(n);
+NewDimension:=function(n)
 return Length(S[n+1]);
 end;
 ############################
@@ -118,7 +118,7 @@ T[n+1]:=[];
 od;
 
 ############################
-NewDimension:=function(n);
+NewDimension:=function(n)
 return Length(S[n+1]);
 end;
 ############################
@@ -136,7 +136,7 @@ end;
 ############################
 
 ############################
-FinalBoundary:=function(n,i);
+FinalBoundary:=function(n,i)
 
 return NewBoundary(n,S[n+1][i]);
 
@@ -214,14 +214,14 @@ D:=Objectify(HapChainComplex,
 rec( properties:=StructuralCopy(C!.properties) ));
 
 ######################
-D!.dimension:=function(n);
+D!.dimension:=function(n)
 if n=0 then return 0; fi;
 return C!.dimension(n-1);
 end;
 ######################
 
 ######################
-D!.boundary:=function(n,i);
+D!.boundary:=function(n,i)
 if n=0 then return C!.boundary(0,i); fi;
 return C!.boundary(n-1,i);
 end;
@@ -246,14 +246,14 @@ D:=Objectify(HapChainComplex,
 rec( properties:=StructuralCopy(C!.properties) ));
 
 ######################
-D!.dimension:=function(n);
+D!.dimension:=function(n)
 if n=0 then return 0; fi;
 return C!.dimension(n-1);
 end;
 ######################
 
 ######################
-D!.boundary:=function(n,i);
+D!.boundary:=function(n,i)
 if n=0 then return C!.boundary(0,i); fi;
 if n=1 then return [1]; fi;
 return C!.boundary(n-1,i);
@@ -279,7 +279,7 @@ inc, proj1, proj2;
 char:=EvaluateProperty(C,"characteristic");
 
 ###############################
-Dimension:=function(n);
+Dimension:=function(n)
 #NEED TO FIX n=0
 return 2*C!.dimension(n) + C!.dimension(n+1);
 
@@ -333,7 +333,7 @@ inclusion:=Objectify(HapChainMap,
 P!.inclusion:=inclusion;
 ###############################
 ###############################
-proj1:=function(v,n);
+proj1:=function(v,n)
 return v{[1..C!.dimension(n)]};
 end;
 firstProjection:=Objectify(HapChainMap,
@@ -347,7 +347,7 @@ firstProjection:=Objectify(HapChainMap,
 ;
 P!.firstProjection:=firstProjection;
 ###############################
-proj2:=function(v,n);
+proj2:=function(v,n)
 return v{[1+C!.dimension(n)..2*C!.dimension(n)]};
 end;
 secondProjection:=Objectify(HapChainMap,

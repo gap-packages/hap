@@ -127,7 +127,7 @@ AppendTo(file,Dims);
 AppendTo(file,";\n\n");
 
 AppendTo(file,"HAPTEMPORARYFUNCTION!.nrCells:=");
-AppendTo(file,"function(n); if IsBound(DIMS[n+1]) then return DIMS[n+1]; fi; return 0; end;");
+AppendTo(file,"function(n) if IsBound(DIMS[n+1]) then return DIMS[n+1]; fi; return 0; end;");
 AppendTo(file,";\n\n");
 
 end);

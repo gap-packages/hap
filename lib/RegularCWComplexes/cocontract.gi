@@ -102,7 +102,7 @@ if n>0 then
   Y!.cobnd[n]:=LCoboundaries;
 fi;
 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") or k<0 then return 0; fi;
             return Length(Filtered(Y!.bnd[k+1],x->not x[1]=0));
             end;
@@ -188,7 +188,7 @@ Add(Y!.properties,["codim",dim]);
 else
 Y!.properties[cpos][2]:=dim;
 fi;
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;
@@ -219,7 +219,7 @@ else
 Y!.properties[cpos][2]:=dim;
 fi;
 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;
@@ -247,7 +247,7 @@ else
 Y!.properties[cpos][2]:=dim;
 fi;
 
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;
@@ -264,13 +264,13 @@ end);
 ##########################################################
 ##########################################################
 InstallGlobalFunction(HAPRemoveVectorField,
-function(Y);
+function(Y)
 if Y!.vectorField=fail then return true; fi;
 
 Y!.vectorField:=fail;
 Y!.inverseVectorField:=fail;
 Y!.criticalCells:=fail;
-Y!.nrCells:=function(k);
+Y!.nrCells:=function(k)
             if k>EvaluateProperty(Y,"dimension") then return 0; fi;
             return Length(Filtered(Y!.boundaries[k+1],x->not x[1]=0));
             end;

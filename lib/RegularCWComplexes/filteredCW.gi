@@ -109,7 +109,7 @@ local nrcells, Boundaries, filtdim, filtdimrec, F, n, i;
 Boundaries:=1*Y!.boundaries;
 F:=EvaluateProperty(Y,"filtration_length");
 
-nrcells:=function(n);
+nrcells:=function(n)
 return Length(Boundaries[n+1]);
 end;
 
@@ -121,7 +121,7 @@ filtdimrec[n+1][i]:=Y!.filteredDimension(i,n);
 od;
 od;
 
-filtdim:=function(i,n);
+filtdim:=function(i,n)
 return filtdimrec[n+1][i];
 end;
 
@@ -238,7 +238,7 @@ for t in [1..fl+2] do   #removed during collapse of the t-term of filtration.
 allowables[t]:=List([0..dim],n->[]);
 od;
 #####################################
-FiltDim:=function(t,d);
+FiltDim:=function(t,d)
 if t<1 then return 0;
 else return Y!.filteredDimension(t,d);
 fi;

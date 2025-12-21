@@ -43,7 +43,7 @@ end);
 #############################
 #############################
 InstallGlobalFunction(IsPureComplex,
-function(M);
+function(M)
 
 if IsHapPureCubicalComplex(M) or IsHapPurePermutahedralComplex(M) then
 return true;
@@ -126,7 +126,7 @@ end);
 #############################
 #############################
 InstallGlobalFunction(UnitBall,
-function(M);
+function(M)
 if IsHapPureCubicalComplex(M) then return UnitCubicalBall(Dimension(M));fi;
 if IsHapPurePermutahedralComplex(M) then return 
 SSortedList(UnitPermutahedralBall(Dimension(M))); fi;
@@ -141,28 +141,28 @@ end);
 InstallMethod(Nerve,
 "Nerve of lattice complex",
 [IsHapPureCubicalComplex],
-function(M);
+function(M)
 return PureComplexToSimplicialComplex(M);
 end);
 
 InstallMethod(Nerve,
 "Nerve of lattice complex",
 [IsHapPureCubicalComplex,IsInt],
-function(M,n);
+function(M,n)
 return PureComplexToSimplicialComplex(M,n);
 end); 
 
 InstallMethod(Nerve,
 "Nerve of lattice complex",
 [IsHapPurePermutahedralComplex],
-function(M);
+function(M)
 return PureComplexToSimplicialComplex(M);
 end); 
 
 InstallMethod(Nerve,
 "Nerve of lattice complex",
 [IsHapPurePermutahedralComplex,IsInt],
-function(M,n);
+function(M,n)
 return PureComplexToSimplicialComplex(M,n);
 end);
 
@@ -276,19 +276,19 @@ od;
 fi;
 
 #################################################################
-NrSimplices:=function(n);
+NrSimplices:=function(n)
 return Length(SimplicesLst[n+1]);
 end;
 #################################################################
 
 #################################################################
-Simplices:=function(n,i);
+Simplices:=function(n,i)
 return SimplicesLst[n+1][i];
 end;
 #################################################################
 
 #############################################
-EnumeratedSimplex:=function(v);
+EnumeratedSimplex:=function(v)
 return Position(SimplicesLst[Length(v)],v);
 end;
 #############################################
@@ -491,7 +491,7 @@ dims:=EvaluateProperty(D,"arraySize");
 
 #for x in CART do
 ####################
-fn:=function(x);
+fn:=function(x)
 if ArrayValueDim(N!.binaryArray,x)=1 then
 w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
 w[x[1]]:=1;
@@ -562,7 +562,7 @@ dims:=EvaluateProperty(D,"arraySize");
 
 
 ####################
-fn:=function(x);
+fn:=function(x)
 if ArrayValueDim(N!.binaryArray,x)=1 and ArrayValueDim(M!.binaryArray,x)=1 then
 w:=ArrayValueDim1(D!.binaryArray,x{[2..dim]});
 w[x[1]]:=1;
@@ -723,7 +723,7 @@ end;
 
 
 ####################
-Fun:=function(x);
+Fun:=function(x)
 if InBoundary(x) then
 ArrayAssignDim(B,x,1);
 fi;
@@ -787,7 +787,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(HomotopyEquivalentMinimalPureCubicalSubcomplex,
-function(T,S);
+function(T,S)
 return HomotopyEquivalentMinimalPureSubcomplex(T,S);
 end);
 ######################################################################
@@ -797,7 +797,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(ContractPureComplex,
-function(T);
+function(T)
 
 
 #############################################
@@ -828,7 +828,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(ContractPureCubicalComplex,
-function(T);
+function(T)
 ContractPureComplex(T);
 end);
 ######################################################################
@@ -867,7 +867,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(HomotopyEquivalentMaximalPureCubicalSubcomplex,
-function(T,S);
+function(T,S)
 return HomotopyEquivalentMaximalPureSubcomplex(T,S);
 end);
 ######################################################################
@@ -902,7 +902,7 @@ firsts:=List([1..dim],i->infinity);
 lasts:=List([1..dim],i->0);
 
 ################
-Fun:=function(x);
+Fun:=function(x)
 if ArrayValueDim(A,x)=1 then
 firsts:=List([1..dim],i->Minimum(x[i],firsts[i]));
 lasts:=List([1..dim],i->Maximum(x[i],lasts[i]));
@@ -921,7 +921,7 @@ od;
 firsts:=firsts-List([1..Length(firsts)],i->1);
 
 ################
-Fun:=function(x);
+Fun:=function(x)
 ArrayAssignDim(B,x,ArrayValueDim(A,x+firsts));
 end;
 ################
@@ -942,7 +942,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(CropPureCubicalComplex,
-function(T);
+function(T)
 return CropPureComplex(T);
 end);
 ######################################################################
@@ -977,7 +977,7 @@ firsts:=List([1..dim],i->infinity);
 lasts:=List([1..dim],i->0);
 
 ################
-Fun:=function(x);
+Fun:=function(x)
 if ArrayValueDim(A,x)=1 then
 firsts:=List([1..dim],i->Minimum(x[i],firsts[i]));
 lasts:=List([1..dim],i->Maximum(x[i],lasts[i]));
@@ -988,7 +988,7 @@ ArrayIt(dimsSet,Fun);
 
 
 ################
-Fun:=function(x);
+Fun:=function(x)
 if not false in List([1..dim],d-> firsts[d] <= x[d])
 and
 not false in List([1..dim],d-> lasts[d] >= x[d])
@@ -1014,7 +1014,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(BoundingPureCubicalComplex,
-function(T);
+function(T)
 return BoundingPureComplex(T);
 end);
 ######################################################################
@@ -1202,7 +1202,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(ZigZagContractedPureCubicalComplex,
-function(T);
+function(T)
 return ZigZagContractedPureComplex(T);
 end);
 ######################################################################
@@ -1229,7 +1229,7 @@ if B[i][j][k]>0 then Add(A,[i,j,k]); fi;
 od;od;od;
 
 ##############
-VtoS:=function(V);
+VtoS:=function(V)
 return Concatenation("(" , String(V[1]) , "," , String(V[2]) , "," , String(V[3]) , ")");
 end;
 ##############
@@ -1318,7 +1318,7 @@ end);
 #############################################################
 #############################################################
 InstallGlobalFunction(ViewPureComplex,
-function(M);
+function(M)
 
 if IsHapPureCubicalComplex(M) then
 if Dimension(M)=3 then View3dPureComplex(M); fi;
@@ -1414,7 +1414,7 @@ local Fun,start,x;
 
 start:=fail;
 
-Fun:=function(x);
+Fun:=function(x)
 if ArrayValueDim(B,x)=1 then start:=x; return true; else return false;  fi;
 end;
 
@@ -1454,7 +1454,7 @@ fi;
 if N=0 then return M!.zeroBetti;fi;###
 ######################################
 
-Fun:=function(z); if z=n then return 1;else return 0;fi;end;
+Fun:=function(z) if z=n then return 1;else return 0;fi;end;
 P:=Array(M!.pathCompBinList,Fun);
 
 if IsHapPureCubicalComplex(M) then
@@ -1484,7 +1484,7 @@ end);
 #################################################################
 #################################################################
 InstallGlobalFunction(PathComponentOfPureCubicalComplex,
-function(M,N);
+function(M,N)
 
 return PathComponentOfPureComplex(M,N);
 

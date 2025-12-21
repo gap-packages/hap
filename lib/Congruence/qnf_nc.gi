@@ -122,7 +122,7 @@ end);
 InstallOtherMethod(QuadraticIdeal,
 "ideal in a ring of quadratic integers",
 [IsRing and IsRingOfQuadraticIntegers_NC, IsHapQuadraticNumber],
-function(R,x);
+function(R,x)
 return QuadraticIdeal(R,[x]);
 end);
 ##########################################################
@@ -263,7 +263,7 @@ end);
 InstallOtherMethod(Discriminant,
 "Discriminant of a quadratic number field",
 [IsQuadraticNumberField_NC],
-function(Q);
+function(Q)
 if Q!.bianchiInteger mod 4 = 1 then return Q!.bianchiInteger;
 else return 4*Q!.bianchiInteger; fi;
 end);
@@ -275,7 +275,7 @@ end);
 InstallOtherMethod(Discriminant,
 "Discriminant of the quadratic number field associated to a ring of integers",
 [IsRingOfQuadraticIntegers_NC],
-function(R);
+function(R)
 return Discriminant(AssociatedQuadraticNumberField(R));
 end);
 ##########################################################

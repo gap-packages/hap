@@ -265,7 +265,7 @@ end;
 InstallMethod(ConnectedSum,
 "Connected sum of simplicial manifolds",
 [IsHapSimplicialComplex,IsHapSimplicialComplex,IsInt],
-function(K,L,e);
+function(K,L,e)
 return SimplicialComplexConnectedSum(K,L,e);
 end);
 #####################################################
@@ -276,7 +276,7 @@ end);
 InstallOtherMethod(ConnectedSum,
 "Connected sum of simplicial manifolds",
 [IsHapSimplicialComplex,IsHapSimplicialComplex],
-function(K,L);
+function(K,L)
 return SimplicialComplexConnectedSum(K,L,1);
 end);
 #####################################################
@@ -315,7 +315,7 @@ end);
 InstallOtherMethod(Cohomology,
 "Integral cohomology of a simplicial complex",
 [IsHapSimplicialComplex,IsInt],
-function(K,n);
+function(K,n)
 return Cohomology(RegularCWComplex(K),n);
 end);
 #####################################################
@@ -470,7 +470,7 @@ end);
 InstallOtherMethod(CohomologyRing,
 "cohomology of a simplicial complex over a field of p elements",
 [IsHapSimplicialComplex,IsInt],
-function(K,prime);
+function(K,prime)
 return CohomologyRingOfSimplicialComplex(K,prime);
 end);
 #####################################################

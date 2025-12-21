@@ -192,7 +192,7 @@ fi;
 #####################################
 
 ####################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if not i in [N,N+1] then return R!.dimension(i); fi;
 if i=N then return  Length(PseudoBoundaryN); fi;
@@ -201,7 +201,7 @@ end;
 ####################################################
 
 ####################################################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 if not n in [N,N+1,N+2]  then return R!.boundary(n,i); fi;
 if i>0 then
 if n=N then return 1*PseudoBoundaryN[i]; fi;

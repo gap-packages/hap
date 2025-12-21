@@ -63,7 +63,7 @@ SSBabs:=List(Babs,x->SSortedList(x));
 dimsT:=List(SSBabs,x->Length(x));
 
 #############################
-DimensionT:=function(n);
+DimensionT:=function(n)
 if n<0 or n>Dimension(X) then return 0; fi;
 return dimsT[n+1]; 
 end;

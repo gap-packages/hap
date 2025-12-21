@@ -79,7 +79,7 @@ tmpIn2log:=Filename(tmpDir,"tmpIn2.log");
 basicgif:=Filename(tmpDir,"basic.gif");
 
 #####################################################################
-PositionName:=function(L,x);
+PositionName:=function(L,x)
 return PositionProperty(L,n->Name(n)=Name(x));
 end;
 #####################################################################

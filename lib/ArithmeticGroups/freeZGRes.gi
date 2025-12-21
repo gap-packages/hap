@@ -276,7 +276,7 @@ local
     
     DimensionRecord:=List([0..N],Dimension);
 
-    Dimension:=function(k);
+    Dimension:=function(k)
         return DimensionRecord[k+1];
     end;
     ###################################################################
@@ -676,7 +676,7 @@ local
     FilteredLength:=Maximum(Flat(FiltDimRecs));
 
     ###################################################################
-    FilteredDimension:=function(r,k);
+    FilteredDimension:=function(r,k)
 
         return Length(Filtered(FiltDimRecs[k+1],x->x<=r));
 

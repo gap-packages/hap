@@ -79,7 +79,7 @@ end);
 
 ##############################################
 InstallGlobalFunction(GraphOfResolutionsDisplay,
-function(D);
+function(D)
 
 if not GraphOfResolutionsTest(D) then 
 Print("Input is not a graph of resolutions.\n");
@@ -104,7 +104,7 @@ ID:=Group(One(G));
 Elts:=[One(G)];
 
 #######################
-Dimension:=function(n);
+Dimension:=function(n)
 if not n in [0,1] then return 0; fi;
 if n=0 then return Length(Vertices); fi;
 if n=1 then return Length(Edges); fi;
@@ -113,7 +113,7 @@ end;
 
 PseudoBoundary:=[];
 #######################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if not n=1 then return []; fi;
 if not IsBound(PseudoBoundary[k]) then
 PseudoBoundary[k]:=
@@ -129,13 +129,13 @@ end;
 #######################
 
 #######################
-action:=function(n,k,l);
+action:=function(n,k,l)
 return 1;
 end;
 #######################
 
 #######################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 if n=0 then return 
 Vertices[k]; fi;
 if n=1 then return
@@ -205,7 +205,7 @@ newelts!.eltfun:= function(i) local g, el;
               fi;
               return eltlst[i];
               end;
-newelts!.addfun:=function(g);
+newelts!.addfun:=function(g)
                  Add(R!.elts,pinv*g*p);
                  end;
 newelts!.lnthfun:=function(); return Length(R!.elts); end;

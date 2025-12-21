@@ -7,7 +7,7 @@ local fn, L, Elts, posfn,LT,mult,multrec,inv,invrec;
 L:=[];
 LT:=NewDictionary(GeneratorsOfGroup(G)[1],true,G);
 #############################################
-fn:=function(i);
+fn:=function(i)
 if i>0 and i<=Length(L) then return L[i]; fi;
 return fail;
 end;
@@ -31,7 +31,7 @@ Elts!.posfun:=posfn;
 
 multrec:=[];
 #############################################
-mult:=function(i,j);
+mult:=function(i,j)
 if not IsBound(multrec[i]) then multrec[i]:=[]; fi;
 if not IsBound(multrec[i][j]) then
 multrec[i][j]:=posfn(Elts[i]*Elts[j]);
@@ -42,7 +42,7 @@ end;
 
 invrec:=[];
 #############################################
-inv:=function(g);
+inv:=function(g)
 if not IsBound(invrec[g]) then
 invrec[g]:= posfn(Elts[g]^-1);
 fi;
@@ -114,7 +114,7 @@ end;
 
 ###########################################################
 ###########################################################
-InSL2Z:=function(g);
+InSL2Z:=function(g)
 if not IsList(g) then return false; fi;
 if not Length(g)=2 then return false; fi;
 if not IsList(g[1]) and IsList(g[2]) then return false; fi;

@@ -147,7 +147,7 @@ dimU:=EvaluateProperty(U,"dimension");
 
 
 ###############################
-pair2int:=function(e,gH);
+pair2int:=function(e,gH)
 return (e-1)*ind + gH;
 end;
 ###############################

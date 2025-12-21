@@ -67,7 +67,7 @@ PseudoBoundaryAsVec[i]:=[];
 od;
 
 #####################################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
 return DimList[i];
@@ -75,7 +75,7 @@ end;
 #####################################################################
 
 #####################################################################
-Boundary:=function(i,j);
+Boundary:=function(i,j)
 if i<=0 then return []; fi;
 if j>0 then
 return PseudoBoundary[i][j]; 

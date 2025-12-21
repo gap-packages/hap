@@ -127,7 +127,7 @@ local t1,t2,
     ##          
     ##  Output: 1 or -1  
     ##
-    action:=function(n,k,l);
+    action:=function(n,k,l)
         return 1;
     end;
     ###################################################################
@@ -144,7 +144,7 @@ local t1,t2,
     ##          
     ##  Output: the kith stabiliser subgroup in dimension n   
     ##
-    Stabilizer:=function(n,k);
+    Stabilizer:=function(n,k)
         return StabGrps[n+1][k];
     end;
     ###################################################################

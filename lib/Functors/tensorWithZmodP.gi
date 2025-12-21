@@ -182,7 +182,7 @@ end;
 
 
 #####################################################################
-ChomD:=function(v,n);
+ChomD:=function(v,n)
 return
 SmapD(RhomS(CmapR(v,n),n),n);
 end;
@@ -227,7 +227,7 @@ fi;
 one:=One(GF(prime));
 oldboundary:=StructuralCopy(C!.boundary);
 #############################
-newboundary:=function(n,i);
+newboundary:=function(n,i)
 return oldboundary(n,i)*one;
 end;
 #############################
@@ -261,7 +261,7 @@ N!.properties[pos][2]:=prime;
 one:=One(GF(prime));
 oldmapping:=StructuralCopy(M!.mapping);
 ####################################
-Mapping:=function(v,n);
+Mapping:=function(v,n)
 return oldmapping(v,n)*one;
 end;
 ####################################
@@ -300,7 +300,7 @@ fi;
 one:=One(GF(prime));
 oldboundary:=StructuralCopy(C!.boundary);
 #############################
-newboundary:=function(n,i);
+newboundary:=function(n,i)
 return oldboundary(n,i)*one;
 end;
 #############################

@@ -72,14 +72,14 @@ stabilizers[k][i]:=Stabilizer(G,orbits[k][i][1],ontuples);
 od;od;
 
 ######################
-Dim:=function(k);
+Dim:=function(k)
 if k<0 or k>Dimension(K) then return 0; fi;
 return Length(orbits[k+1]);
 end;
 ######################
 
 ######################
-stabfn:=function(k,i);
+stabfn:=function(k,i)
 return stabilizers[k+1][i];
 end;
 ######################

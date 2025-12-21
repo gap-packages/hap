@@ -523,7 +523,7 @@ return m;
 end;
 
 #***************************************************************
-Dimension:=function(n);
+Dimension:=function(n)
 if n=0 then return 1; fi;
 if n=1 then return Length(GeneratorsOfGroup(G)); fi;
 if n= 2 then return Length(RelatorsOfFpGroup(G)); fi;
@@ -610,7 +610,7 @@ end;
 IrinasRes:=Resolution(G,n);
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 if n=0 then return 1; fi;
 if n>2 or (not IsFpGroup(G)) then return Length(IrinasRes[n]); fi;
 if n=1 then return Length(GeneratorsOfGroup(G)); fi;

@@ -11,13 +11,13 @@ local
 n:=Length(g);
 
 #####################################################################
-Elts:=function(x);
+Elts:=function(x)
 return Position(R!.elts,x);
 end;
 #####################################################################
 
 #####################################################################
-Mult:=function(x,w);	#x is in the group G.
+Mult:=function(x,w)	#x is in the group G.
 return List(w,y->[y[1],Position(R!.elts,x*R!.elts[y[2]])]);
 end;
 #####################################################################

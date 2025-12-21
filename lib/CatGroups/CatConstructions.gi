@@ -14,7 +14,7 @@ List(GeneratorsOfGroup(C),x->
   ImageElm( Embedding(C,1), ImageElm( Projection(C),x)   )));
 
 ############################
-CmapG:=function(x);
+CmapG:=function(x)
 return
 PreImagesRepresentative(Embedding(C,2), Image(Embedding(C,1), Image(Projection(C),x)^-1) *x);
 end;
@@ -74,7 +74,7 @@ List(GeneratorsOfGroup(C),x->
   Image( Embedding(C,1), Image( Projection(C),x)   )));
 
 ############################
-CmapG:=function(x);
+CmapG:=function(x)
 return
 PreImagesRepresentative(Embedding(C,2), Image(Embedding(C,1), Image(Projection(C),x)^-1) *x);
 end;

@@ -121,7 +121,7 @@ end);
 ######################################################################
 ######################################################################
 InstallGlobalFunction(ContractMatrix,
-function(A);
+function(A)
 return HomotopyEquivalentSmallerSubMatrix(A,A*0);
 end);
 ######################################################################
@@ -207,7 +207,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(ContractibleSubMatrix,
-function(AA);
+function(AA)
 return HomotopyEquivalentLargerSubMatrix(AA,AA*0);
 end);
 #####################################################################

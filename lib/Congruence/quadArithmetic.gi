@@ -17,7 +17,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction (QuadraticNumberConjugate,
-function(x);
+function(x)
 if IsRat(x) then return x; fi;
 return QuadraticNumber(x!.rational, -x!.irrational, x!.bianchiInteger);
 end);
@@ -382,7 +382,7 @@ InstallOtherMethod( \/,
 InstallOtherMethod( Sqrt,
     "for quadratic number",
     [IsHapQuadraticNumber],
-    function( x );
+    function( x )
     if x!.irrational=0 then return Sqrt(x!.rational); fi;
     return fail;
     end );
@@ -526,7 +526,7 @@ end;
 
 #####################################################################
 #####################################################################
-HAPNorm:=function(OQ,x);
+HAPNorm:=function(OQ,x)
 if IsRat(x) then return x^2; fi;
 if not OQ!.bianchiInteger=x!.bianchiInteger then return fail; fi;
 return x!.rational^2+(-x!.bianchiInteger)*x!.irrational^2;
@@ -536,7 +536,7 @@ end;
 
 #####################################################################
 #####################################################################
-HAPSqrt:=function(n);
+HAPSqrt:=function(n)
 if IsRat(Sqrt(n)) then return Sqrt(n); fi;
 return QuadraticNumber(0,1,n);
 end;
@@ -545,7 +545,7 @@ end;
 
 #####################################################################
 #####################################################################
-QuadraticToCyclotomic:=function(a);
+QuadraticToCyclotomic:=function(a)
 if IsRat(a) then return a; fi;
 return a!.rational+a!.irrational*Sqrt(a!.bianchiInteger);
 end;

@@ -85,7 +85,7 @@ if IsMatrixGroup(G) then
    ###ABELIAN#####
    if IsAbelian(G) then
      ######
-     fn:=function(g);
+     fn:=function(g)
      if Order(g)=infinity then return 0;
      else return Order(g);
      fi;

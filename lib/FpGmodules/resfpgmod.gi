@@ -71,7 +71,7 @@ PseudoBoundaryAsVec[i]:=[];
 od;
 
 #####################################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 return Length(PseudoBoundaryAsVec[i]);
 end;
@@ -370,7 +370,7 @@ end;
 
 Toggle:=true;
 #####################################################################
-SMBM:=function(m,w);
+SMBM:=function(m,w)
 
 if Toggle then Echelonize(); Toggle:=false; fi;
 

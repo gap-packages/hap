@@ -24,7 +24,7 @@ IntCoh:=ModularCohomology("CohomologyAsFpGroup",true);;
 fi;
 
 ###################################
-MyLength:=function(L);
+MyLength:=function(L)
 if IsList(L) then return Length(L);
 else return L;
 fi;

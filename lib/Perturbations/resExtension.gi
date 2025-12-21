@@ -33,7 +33,7 @@ if Length(arg)>4 then
 PreImRep:=arg[5];
 else
 	#############################################################
-	PreImRep:=function(x);
+	PreImRep:=function(x)
 	return PreImagesRepresentative(EEhomGG,x);
 	end;
 	#############################################################
@@ -74,14 +74,14 @@ EltsE[1]:=Identity(E);
 
 
 	########################################################
-	AppendToElts:=function(x);
+	AppendToElts:=function(x)
 	Append(EltsE,[x]);
 	end;
 	########################################################
 
 if GisFinite then
 	#########################################
-	EhomG:=function(x);
+	EhomG:=function(x)
 	return Position(RG!.elts,ImageElm(EEhomGG,EltsE[x]));
 	end;
 	#########################################
@@ -104,7 +104,7 @@ fi;
 
 if EisFinite then
 	#########################################
-	NhomE:=function(x);
+	NhomE:=function(x)
 	return Position(EltsE,RN!.elts[x]);
 	end;
 	#########################################
@@ -128,7 +128,7 @@ PreimagesRecordE:=List([1..Order(G)],x->
 	Position(EltsE,PreImRep(RG!.elts[x])));
 	
 	#########################################
-	GmapE:=function(x);
+	GmapE:=function(x)
 	return PreimagesRecordE[x];
 	end;
 	#########################################
@@ -158,7 +158,7 @@ fi;
 
 if NisFinite then
 	#########################################
-	NEhomN:=function(x);
+	NEhomN:=function(x)
 	return Position(RN!.elts,EltsE[x]);
 	end;
 	#########################################
@@ -178,7 +178,7 @@ fi;
 
 if EisFinite then
 	#########################################
-	MultE:=function(x,y);
+	MultE:=function(x,y)
 	return Position(EltsE,EltsE[x]*EltsE[y]);
 	end;
 	#########################################
@@ -199,7 +199,7 @@ fi;
 
 if EisFinite then
 	#########################################
-	InvE:=function(x);
+	InvE:=function(x)
 	return Position(EltsE,EltsE[x]^-1);
 	end;
 	#########################################
@@ -231,7 +231,7 @@ fi;
 T:=TwistedTensorProduct(RG,RN,EhomG,GmapE,NhomE,NEhomN,EltsE,MultE,InvE,E);
 
         ########################################################
-        AppendToElts:=function(x);
+        AppendToElts:=function(x)
         Append(T!.elts,[x]); 
         end;
         ########################################################

@@ -113,7 +113,7 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     dims:=List([1..lnth+1],n->Length(quotient[n]));
 
     ###################
-    Dimension:=function(n);
+    Dimension:=function(n)
     if n>lnth then return 0; fi;
     return dims[n+1];
     end;
@@ -162,7 +162,7 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     G:=C!.group;
 
     ####################
-    Boundary:=function(n,k);
+    Boundary:=function(n,k)
     if k>0 then
     return boundaryList[n+1][k];
     else
@@ -172,7 +172,7 @@ local pTorsionSubcomplex, celldata, quotient, torsionCells,
     ####################
 
     ####################
-    Stabilizer:=function(n,k);
+    Stabilizer:=function(n,k)
     return StabilizerGroups[n+1][k];
     end;
     ####################
@@ -354,7 +354,7 @@ od;
   dims:=List([1..lnth+1],n->Length(data[n]));
 
   ###################
-  Dimension:=function(n);
+  Dimension:=function(n)
   if n>lnth then return 0; fi;
   return dims[n+1];
   end;
@@ -403,7 +403,7 @@ od;
   G:=C!.group;
 
   ####################
-  Boundary:=function(n,k);
+  Boundary:=function(n,k)
   if k>0 then
   return boundaryList[n+1][k];
   else
@@ -413,7 +413,7 @@ od;
   ####################
 
   ####################
-  Stabilizer:=function(n,k);
+  Stabilizer:=function(n,k)
   return StabilizerGroups[n+1][k];
   end;
   ####################
@@ -549,7 +549,7 @@ lnth:=Length(data)-1;
 dims:=List([1..lnth+1],n->Length(data[n]));
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>lnth then return 0; fi;
 return dims[n+1];
 end;
@@ -599,7 +599,7 @@ od;
 G:=Group(Elts);
 
 ####################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k>0 then
 return boundaryList[n+1][k];
 else
@@ -609,7 +609,7 @@ end;
 ####################
 
 ####################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return StabilizerGroups[n+1][k];
 end;
 ####################

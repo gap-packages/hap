@@ -194,7 +194,7 @@ Bases:=List([1..Length(R)],i->[]);
 for b in B{[2..Length(B)]} do
 Add(Bases[A!.degree(b)],b);
 od;
-F:=function(R); return TensorWithIntegersModP(R,p); end;
+F:=function(R) return TensorWithIntegersModP(R,p); end;
 f:=GroupHomomorphismByFunction(P,G,x->x);
 ef:=EquivariantChainMap(R,R,f);
 cf:=F(ef);

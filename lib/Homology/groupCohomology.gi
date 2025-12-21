@@ -48,7 +48,7 @@ fi;
 ############################## DATA INPUT ###########################
 
 if IsPrime(p) then
-Functor:=function(R); return HomToIntegersModP(R,p); end;
+Functor:=function(R) return HomToIntegersModP(R,p); end;
 else
 Functor:=HomToIntegers;
 fi;

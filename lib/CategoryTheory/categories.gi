@@ -179,7 +179,7 @@ InstallMethod( Target,
     "Method for making Target return Range",
     [ HasRange ],
 
-    function( X );
+    function( X )
     return Range(X);
     end);
 
@@ -195,7 +195,7 @@ InstallMethod( CategoricalEnrichment,
     "method for creating a category object",
     [ IsObject, IsString ],
 
-    function( X , Name  );
+    function( X , Name  )
         return
         CategoryObject(X,Name);
     end);
@@ -204,7 +204,7 @@ InstallMethod( CategoricalEnrichment,
     "method for creating a category arrow",
     [ HasSource , IsString ], #HasSource is not the best
 
-    function( X , Name  );
+    function( X , Name  )
         return
         CategoryArrow(
 		CategoryObject(Source(X),Name),
@@ -324,7 +324,7 @@ InstallOtherMethod( \=,
     "equality of objects in a category",
     [ IsCategoryObject, IsCategoryObject],
 
-    function( X, Y  );
+    function( X, Y  )
 	
 	if not CategoryName(X)=CategoryName(Y)
 	then return false; fi;

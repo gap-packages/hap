@@ -20,7 +20,7 @@ end);
 #############################################
 #############################################
 InstallGlobalFunction(HAP_PlanarTreeLeaves,
-function(T);
+function(T)
 return Difference([1..Length(T)],T);
 end);
 #############################################

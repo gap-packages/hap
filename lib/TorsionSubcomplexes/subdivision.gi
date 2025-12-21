@@ -19,7 +19,7 @@ local NrCells,Properties;
 
 Properties:=[["dimension",dim]];
 
-NrCells:=function(n);
+NrCells:=function(n)
 if n>dim then return 0; fi;
 return Length(Filtered(boundaries[n+1],x->not x[1]=0));
 end;

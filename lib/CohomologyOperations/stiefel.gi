@@ -55,7 +55,7 @@ PreImagesRepresentative(phi, PreImagesRepresentative(iso,P!.elts[x[2]])))  ]);
 Add(BoundaryRec[n],bnd);
 od;
 od;
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if n>ln or n<1 then return []; fi;
 if k>0 then return BoundaryRec[n][k];fi;
 if k<0 then return NegateWord(BoundaryRec[n][-k]);fi;
@@ -78,7 +78,7 @@ StabilizerSubgroupRec[n+1][k]:=Group(gens);
 fi;
 od;
 od;
-StabilizerSubgroup:=function(n,k);
+StabilizerSubgroup:=function(n,k)
 return StabilizerSubgroupRec[n+1][AbsInt(k)];
 end;
 ################################
@@ -179,7 +179,7 @@ od;
 # The cochain map CT--->CR sends vector v to v*CTmatCR 
 
 #######
-TRmapping:=function(v,n);
+TRmapping:=function(v,n)
 return v*CTmatCR[n+1];
 end;
 #######
@@ -283,7 +283,7 @@ Bas2:=List(Bas1,i->i*fund);
 L:=LeftModuleGeneralMappingByImages(Subspace(A,Bas1),Subspace(A,Bas2),Bas1,Bas2);
 
 #####
-PIRep:=function(L,x);
+PIRep:=function(L,x)
 if x=fail then return x; fi;
 if x=Zero(A) then return Elements(Kernel(L)); fi;
 return Elements(PreImages(L,x));

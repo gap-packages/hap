@@ -1,7 +1,7 @@
 ######################################################
 ######################################################
 InstallGlobalFunction(ContractCubicalComplex,
-function(K);
+function(K)
 
 if not IsHapCubicalComplex(K) then 
 Print("This function must be applied to a cubical complex.\n");

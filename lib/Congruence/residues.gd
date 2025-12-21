@@ -198,7 +198,7 @@ InstallMethod( InverseSameMutability,
     "for an ordinary matrix over a ring Z/nZ",
     [ IsMatrix and IsOrdinaryMatrix
       and CategoryCollections( CategoryCollections( IsHAPRingModIdealObj ) ) ],
-    function( mat );
+    function( mat )
     return InverseOp(mat);
     end );
 

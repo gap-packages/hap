@@ -268,7 +268,7 @@ end);
 InstallMethod(BarycentricSubdivision,
 "for non-free resolutions",
 [IsHapNonFreeResolution],
-function(R);
+function(R)
 return HAP_BaryCentricSubdivisionGComplex(R);
 end);
 #########################################################

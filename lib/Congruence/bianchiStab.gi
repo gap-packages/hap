@@ -53,7 +53,7 @@ if t*tt=0 and not t=tt then return []; fi;
 one:=QuadraticNumber(1,0,OQ!.bianchiInteger);
 zero:=QuadraticNumber(0,0,OQ!.bianchiInteger);
 ##################################################
-IsIntMat:=function(M);
+IsIntMat:=function(M)
 if not IsHapQuadraticInteger(OQ,M[1]) then return false; fi;
 if not IsHapQuadraticInteger(OQ,M[2]) then return false; fi;
 if not IsHapQuadraticInteger(OQ,M[3]) then return false; fi;
@@ -63,7 +63,7 @@ end;
 ##################################################
 
 ##################################################
-PairToQuadInt:=function(z);
+PairToQuadInt:=function(z)
 if IsRat(z[2]) then
 return z[1]+z[2]*HAPSqrt(OQ!.bianchiInteger);   #for case d=-1
 else
@@ -75,7 +75,7 @@ end;
 
 
 ##################################################
-HAPComplexConjugate:=function(z);
+HAPComplexConjugate:=function(z)
 if not IsHapQuadraticNumber(z) then return z; fi;   #case z is rational
 return QuadraticNumber(z!.rational, -z!.irrational, z!.bianchiInteger);
 end;
@@ -265,7 +265,7 @@ od;
 
 
 ##################################################
-Standardize:=function(x);
+Standardize:=function(x)
 
 return Maximum(x,-x);
 end;

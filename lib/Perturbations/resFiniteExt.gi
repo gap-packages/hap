@@ -31,13 +31,13 @@ EltsE:=Enumerator(E);     #Added November 2024
 fi;
 
 #####################################################################
-Mult:=function(i,j);
+Mult:=function(i,j)
 return Position(EltsE,EltsE[i]*EltsE[j]);
 end;
 #####################################################################
 
 #####################################################################
-InvE:=function(i);
+InvE:=function(i)
 return Position(EltsE,EltsE[i]^-1);
 end;
 #####################################################################
@@ -48,7 +48,7 @@ if Order(E)<10^4 or n> 5 then
 EhomGsecond:=List([1..Size(E)],i->Position(EltsG,Image(EhomGfirst,EltsE[i])));
 
 #####################################################################
-EhomG:=function(i);
+EhomG:=function(i)
 return EhomGsecond[i];
 end;
 #####################################################################
@@ -58,7 +58,7 @@ else
 EhomGsecond:=[];
 
 #####################################################################
-EhomG:=function(i);
+EhomG:=function(i)
 if not IsBound(EhomGsecond[i]) then
 EhomGsecond[i]:= Position(EltsG,Image(EhomGfirst,EltsE[i]));
 fi;
@@ -74,7 +74,7 @@ GmapEsecond:=List([1..Size(G)],i->Position(EltsE,
 PreImagesRepresentative(EhomGfirst,EltsG[i])));
 
 #####################################################################
-GmapE:=function(i);
+GmapE:=function(i)
 return GmapEsecond[i];
 end;
 #####################################################################
@@ -83,7 +83,7 @@ else
 GmapELst:=List([1..Size(G)],i->0);
 
 #####################################################################
-GmapE:=function(i);
+GmapE:=function(i)
 if GmapELst[i]=0 then
 GmapELst[i]:= Position(EltsE,PreImagesRepresentative(EhomGfirst,EltsG[i]));
 fi;
@@ -128,7 +128,7 @@ NhomEfirst:=GroupHomomorphismByImagesNC(N,E,GensN,GensN);
 NhomEsecond:=List([1..Size(N)],i->Position(EltsE,Image(NhomEfirst,EltsN[i])));
 
 #####################################################################
-NhomE:=function(i);
+NhomE:=function(i)
 return NhomEsecond[i];
 end;
 #####################################################################
@@ -139,13 +139,13 @@ NEhomNfirst:=[];
 
 #This next function can produce a fail when incorrectly used!!
 #####################################################################
-#NEhomN:=function(i);
+#NEhomN:=function(i)
 #return NEhomNfirst[i];
 #end;
 #####################################################################
 
 #####################################################################
-NEhomN:=function(i);
+NEhomN:=function(i)
 if not IsBound(NEhomNfirst[i]) then 
 NEhomNfirst[i]:= Position(NhomEsecond,i);
 fi;
@@ -154,7 +154,7 @@ end;
 #####################################################################
 
 #####################################################################
-#NEhomN:=function(i);
+#NEhomN:=function(i)
 #return Position(NhomEsecond,i);
 #end;
 #####################################################################

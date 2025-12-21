@@ -704,9 +704,9 @@ local	j, CoxeterGenerators,
 # name:=groupname;
 
 if HAP_GCOMPLEX_SETUP[1] then 
-TransMat:=function(x); return x^-1; end;
+TransMat:=function(x) return x^-1; end;
 else
-TransMat:=function(x); return x; end;
+TransMat:=function(x) return x; end;
 fi;
 
 lnth:=Size(DC)-1;
@@ -714,7 +714,7 @@ lnth:=Size(DC)-1;
 dims:=List([1..lnth+1],n->Size(DC[n]));
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>lnth then return 0; fi;
 return dims[n+1];
 end;
@@ -792,7 +792,7 @@ od;
 G:=Group(CoxeterGenerators);
 
 ####################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k>0 then
 return boundaryList[n+1][k];
 else
@@ -802,7 +802,7 @@ end;
 ####################
 
 ####################
-Stabilizer:=function(n,k);
+Stabilizer:=function(n,k)
 return StabilizerGroups[n+1][k];
 end;
 ####################

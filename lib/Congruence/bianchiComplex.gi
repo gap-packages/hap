@@ -1,6 +1,6 @@
 #######################################################
 #######################################################
-HAP_QuadToCyclotomic:=function(z);
+HAP_QuadToCyclotomic:=function(z)
 return z!.rational+z!.irrational*Sqrt(z!.bianchiInteger);
 end;
 #######################################################
@@ -135,7 +135,7 @@ local BianchiTrans, rep,Rec, Rec2, Rec3, Rec4, pos, OQ, T, TT, ans, e, f, A, ee,
 OQ:=Y!.ring;
 
 ######################################
-rep:=function(i);
+rep:=function(i)
 return PositionProperty(Y!.ORBS[1],x->i in x);
 end;
 ######################################
@@ -500,7 +500,7 @@ Y!.ORBS[n+1]:=V;
 od;
 
 #######################################
-Dimension:=function(n);
+Dimension:=function(n)
 if not n in [0,1,2] then return 0; fi;
 return Length(Y!.ORBS[n+1]);
 end;
@@ -513,7 +513,7 @@ stb(n,i[1]);od;od;
 
 
 #######################################
-Stabilizer:=function(n,i);
+Stabilizer:=function(n,i)
 return STABS[n+1][Y!.ORBS[n+1][i][1]];
 end;
 #######################################
@@ -628,7 +628,7 @@ od;
 od;
 
 #######################################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if k>0 then return BoundaryRec[n][k];
 else return NegateWord(BoundaryRec[n][-k]); fi;
 end;

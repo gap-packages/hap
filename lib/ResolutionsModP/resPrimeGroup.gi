@@ -96,7 +96,7 @@ PseudoBoundaryAsVec[i]:=[];
 od;
 ImageFBasis:=[1..n];
 #####################################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
 if i<=n then return Length(PseudoBoundaryAsVec[i]); fi;
@@ -105,7 +105,7 @@ end;
 #####################################################################
 
 #####################################################################
-Boundary:=function(i,j);
+Boundary:=function(i,j)
 
 if i<=0 then return []; fi;
 if j>0 then
@@ -426,7 +426,7 @@ end;
 Toggle:=true;
 Toggle2:=true;
 #####################################################################
-SMBM:=function(m,w);
+SMBM:=function(m,w)
 
 if Toggle then Echelonize(); Toggle:=false; fi;
 

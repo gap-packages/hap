@@ -588,7 +588,7 @@ end;
 if deg=Dimension(M)-1 then
 
 ###############
-Fun:=function(x,y);
+Fun:=function(x,y)
 #Ths function implements some partial recurrence in CollapseMat.
 if CollapseMat[x+1][y]=0 then return CollapseMat[x][y-1]; fi;
 if CollapseMat[x]=Bettis[x][2] then return CollapseMat[x][y-1]; fi;
@@ -909,7 +909,7 @@ local
 SubComplex:=function(C,r)
 local D,DIM,BND;
 
-DIM:=function(n); if n=0 then return C!.dimension(0);
+DIM:=function(n) if n=0 then return C!.dimension(0);
 else return C!.filteredDimension(r,n); fi; end;
 
 ###############
@@ -1042,26 +1042,26 @@ a:=arg[2];
 b:=arg[3];
 
 ##################
-Dimension:=function(n);
+Dimension:=function(n)
 if not n+a in [a..b] then return 0; fi;
 return R!.dimension(n+a);
 end;
 ##################
 
 ##################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 return R!.boundary(n+a,i);
 end;
 ##################
 
 ##################
-Stabilizer:=function(n,i);
+Stabilizer:=function(n,i)
 return R!.stabilizer(n+a,i);
 end;
 ##################
 
 ##################
-action:=function(n,k,g);
+action:=function(n,k,g)
 return R!.action(n+a,k,g);
 end;
 ##################

@@ -356,7 +356,7 @@ T:=Target(G);
 if not S=T then return fail; fi;
 char:=EvaluateProperty(F,"characteristic");
 
-map:=function(n,k);
+map:=function(n,k)
 return F!.mapping(n,G!.mapping(n,k));
 end;
 

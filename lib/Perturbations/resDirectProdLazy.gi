@@ -22,7 +22,7 @@ g:=g[1];
 
 ##########################
 ##########################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>=0  then return 1;
 else return 0;
 fi;
@@ -51,7 +51,7 @@ end;
 
 ##########################
 ##########################
-fn:=function(k);
+fn:=function(k)
 return g^(k-1);
 end;
 Elts:=LazyList(fn,[["length",M]]);
@@ -68,7 +68,7 @@ Elts!.posfun:=posfn;
 if IsGroup(MM) then 
 ##########################
 ##########################
-fn:=function(k);
+fn:=function(k)
 return Image(iso,g^(k-1));
 end;
 Elts:=LazyList(fn,[["length",M]]);
@@ -148,7 +148,7 @@ fi;
 
 ##########################
 ##########################
-Dimension:=function(n);
+Dimension:=function(n)
 if n=0 or n=1 then return 1;
 else return 0;
 fi;
@@ -158,7 +158,7 @@ end;
 
 ##########################
 ##########################
-Boundary:=function(n,k);
+Boundary:=function(n,k)
 if n=1 and k=1 then return [[1,2], [-1,1]];
 fi;
 return [];
@@ -368,14 +368,14 @@ fi;
 
 PseudoBoundary:=[];
 #########################
-DimensionR:=function(n);
+DimensionR:=function(n)
 if n<0 or n>Length(R) then return 0;
 else return R!.dimension(n);
 fi;
 end;; 
 #########################
 #########################
-DimensionS:=function(n);
+DimensionS:=function(n)
 if n<0 or n>Length(S) then return 0;
 else return S!.dimension(n);
 fi;
@@ -420,7 +420,7 @@ DivisorsInt(EvaluateProperty(S,"characteristic"))
 fi;
 
 if Charact=0 then AddWrds:=AddFreeWords; else
-        AddWrds:=function(v,w);
+        AddWrds:=function(v,w)
         return AddFreeWordsModP(v,w,Charact);
         end;
 fi;
@@ -500,7 +500,7 @@ end;
 #####################################################################
 
 #####################################################################
-Vector2Int:=function(p,q,r,s);
+Vector2Int:=function(p,q,r,s)
 return Pair2Int([r,s],p,q);
 end;
 #####################################################################

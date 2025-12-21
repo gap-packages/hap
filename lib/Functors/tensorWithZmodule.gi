@@ -23,7 +23,7 @@ LA:=Length(Identity(Image(f)));
 LengthC:=EvaluateProperty(R,"length");
 
 #####################################################################
-DimensionC:=function(n);
+DimensionC:=function(n)
 return LA*R!.dimension(n);
 end;
 #####################################################################

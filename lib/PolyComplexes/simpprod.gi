@@ -51,7 +51,7 @@ Add(expb,eb);
 od;
 
 #######################
-pair2simp:=function(v,w);
+pair2simp:=function(v,w)
 return List([1..Length(v)], k-> Position(vertices,[v[k],w[k]]));
 end;
 #######################

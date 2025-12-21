@@ -83,7 +83,7 @@ PhomH:=GroupHomomorphismByFunction(PH,H,x->x);;
 RPGhomRG:=EquivariantChainMap(RPG,RG,PhomG);;
 RPHhomRH:=EquivariantChainMap(RPH,RH,PhomH);;
 
-mat:=function(x); return TransposedMat(HomomorphismAsMatrix(x)); end;
+mat:=function(x) return TransposedMat(HomomorphismAsMatrix(x)); end;
 
 Ghom:=[];
 Hhom:=[];

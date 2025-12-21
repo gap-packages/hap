@@ -38,7 +38,7 @@ od;
 
 B:=[1..Length(H2)];
 B:=Difference(B,A);
-newcup:=function(x,y);
+newcup:=function(x,y)
 return cup(x,y){B};
 end;
 

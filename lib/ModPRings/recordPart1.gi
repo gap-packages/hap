@@ -120,13 +120,13 @@ end;
 ####################################################################
 
 #####################################################################
-IntToPair:=function(k);
+IntToPair:=function(k)
 return IntPairList[k]; 
 end;
 #####################################################################
 
 #####################################################################
-IntToPairModified:=function(k);
+IntToPairModified:=function(k)
 if k = 1 then return [0,1]; 
 else           
 return IntPairList[k-1]; 
@@ -135,13 +135,13 @@ end;
 #####################################################################
 
 #####################################################################
-PairToInt:=function(x);
+PairToInt:=function(x)
 return Position(IntPairList,x);
 end;
 #####################################################################
 
 #####################################################################
-PairToIntModified:=function(x);
+PairToIntModified:=function(x)
 if x = [0,1] then  return 1;       
 else                      
 return Position(IntPairList,x)+1;  

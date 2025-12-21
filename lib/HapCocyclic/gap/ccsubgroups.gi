@@ -119,7 +119,7 @@ Apply(S!.elts,x->CcElement( ElementsFamily(G), x, One(Base(G)),G ));
 hom:=NaturalHomomorphismOntoBase(G);
 
 ##############
-preimage:=function(x);
+preimage:=function(x)
 return CcElement(ElementsFamily(G), One(HapFibre(G)), x, G  );
 
 end;

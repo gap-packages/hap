@@ -24,7 +24,7 @@ BoundaryDrec:=[];
 
 ################################
 ################################
-DimensionD:=function(n);
+DimensionD:=function(n)
 if n<0 or n>len then return 0; fi;
 
 return C!.dimension(n);
@@ -39,7 +39,7 @@ end;
 #od;
 
 #######################
-BoundaryD:=function(n,k);
+BoundaryD:=function(n,k)
 if n<0 or n>=len then return [0]; fi;
 
 if not IsBound(BoundaryDrec[n+1]) then
@@ -92,7 +92,7 @@ BoundaryDrec:=[];
 
 ################################
 ################################
-DimensionD:=function(n);
+DimensionD:=function(n)
 if n<0 or n>len then return 0; fi;
 
 return C!.dimension(n);
@@ -107,7 +107,7 @@ end;
 #od;
 
 #######################
-BoundaryD:=function(n,k);
+BoundaryD:=function(n,k)
 if n<0 or n>len then return [0]; fi;
 
 if not IsBound(BoundaryDrec[n]) then
@@ -154,7 +154,7 @@ zero[n]:=0*[1..S!.dimension(n-1)];
 od;
 
 A:=[];
-InitA:=function(n);
+InitA:=function(n)
 A[n+1]:=IdentityMat(S!.dimension(n));
 B:=List(A[n+1], r->F!.mapping(r,n));
 A[n+1]:=TransposedMat(B);

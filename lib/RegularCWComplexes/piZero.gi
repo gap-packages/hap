@@ -23,7 +23,7 @@ local T, cells, C, fn;
 if Dimension(Y)=0 then 
 
 ###########################
-fn:=function(i);
+fn:=function(i)
 return i;
 end;
 ###########################
@@ -38,7 +38,7 @@ cells:=List(cells,x->x[2]);
 C:=ChainComplex(T);
 
 ###########################
-fn:=function(i);
+fn:=function(i)
 return C!.deform(0,i)[1];
 end;
 ###########################
@@ -93,7 +93,7 @@ end);
 ##################################################
 ##################################################
 InstallGlobalFunction(DisplayDendrogramMat,
-function(A,t,n);
+function(A,t,n)
 
 
 DisplayDendrogram(DendrogramMat(A,t,n));

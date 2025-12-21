@@ -36,7 +36,7 @@ if not IsList(R) then return R; fi;
 if not R.type=HapResolution then TryNextMethod(); fi;
 
 #####################################################################
-Dimension:=function(i);
+Dimension:=function(i)
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
 return R.ranks[i+1];
@@ -44,21 +44,21 @@ end;
 #####################################################################
 
 #####################################################################
-ChangeSign:=function(j,b);
+ChangeSign:=function(j,b)
 if j>0 then return b; else
 return NegateWord(b); fi;
 end;
 #####################################################################
 
 #####################################################################
-Boundary:=function(i,j);
+Boundary:=function(i,j)
 if i=0 then return []; else
 return ChangeSign(j,R.boundaries[i][AbsoluteValue(j)]); fi;
 end;
 #####################################################################
 
 #####################################################################
-Homotopy:=function(n,p);        
+Homotopy:=function(n,p)        
 #if i <0 then return fail; fi;   
 if p[1]>0 then 
 return R.contracting_homotopy[n+1][p[1]][p[2]];

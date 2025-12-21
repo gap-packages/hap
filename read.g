@@ -60,8 +60,8 @@ fi;
 
 ################# SIMPHOM COMMANDS ##################################
 if not IsPackageMarkedForLoading("homology","0.0") then 
-SMInvariantFactors:=function(M); return fail; end;
-InfoHomology:=function(M); return fail; end;
+SMInvariantFactors:=function(M) return fail; end;
+InfoHomology:=function(M) return fail; end;
 else SetInfoLevel(InfoHomology,0);
 ReadPackageHap( "lib/Homology/probHomology.gi");
 ReadPackageHap( "lib/Homology/sparseprobHomology.gi");
@@ -76,13 +76,13 @@ fi;
 
 ################# GAPDOC COMMANDS #######################################
 #if not IsPackageMarkedForLoading("gapdoc","0.0") then 
-#MakeGAPDocDoc:=function(G); return fail; end;
+#MakeGAPDocDoc:=function(G) return fail; end;
 #fi;
 ################# GAPDOC COMMANDS DONE ###############################
 
 ################# CONGRUENE COMMANDS #######################################
 #if not IsPackageMarkedForLoading("congruence","0.0") then
-#CongruenceSubgroupGamma0:=function(m); return fail; end;
+#CongruenceSubgroupGamma0:=function(m) return fail; end;
 #fi;
 ################# CONGRUENCE COMMANDS DONE ###############################
 
@@ -119,7 +119,7 @@ if IsPackageMarkedForLoading("aclib","1.1") then
 ReadPackageHap( "lib/Resolutions/resACgroup.gi");
 ReadPackageHap( "lib/Resolutions/resACquotient.gi");
 else
-IsAlmostCrystallographic:=function(G); return fail; end;
+IsAlmostCrystallographic:=function(G) return fail; end;
 fi;
 if IsPackageMarkedForLoading("nq","1.1") then
 ReadPackageHap( "lib/NonabelianTensor/epiNilGrp.gi");

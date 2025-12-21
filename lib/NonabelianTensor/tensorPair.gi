@@ -51,7 +51,7 @@ if not IsFinite(AG) then return NonabelianTensorProduct_Inf(AG,AH); fi;
 #############################################################
 if Order(AH)=1 then 
 delta:=GroupHomomorphismByFunction(AH,G,x->x);
-CrossedPairing:=function(x,y); return Identity(G); end;
+CrossedPairing:=function(x,y) return Identity(G); end;
 return rec(homomorphism:=delta, pairing:=CrossedPairing);
 fi;
 ############################################################

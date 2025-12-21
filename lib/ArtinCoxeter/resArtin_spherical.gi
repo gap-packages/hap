@@ -51,7 +51,7 @@ od;
 od;
 
 #####################################################################
-Dimension:=function(n);
+Dimension:=function(n)
 
 if n=0 then return 1;
 else return Length(ResGens[n+1]); fi;

@@ -138,7 +138,7 @@ InstallMethod(ManhattanMetric,
 "for two vectors u and v",
 [IsVector,IsVector],
 
-function(u,v);
+function(u,v)
 
 return Sum(List(u-v,x->AbsInt(x)));
 
@@ -150,7 +150,7 @@ InstallMethod(EuclideanSquaredMetric,
 "for two vectors u and v",
 [IsVector,IsVector],
 
-function(u,v);
+function(u,v)
 
 return Sum(List(u-v,x->x^2));
 
@@ -162,7 +162,7 @@ InstallMethod(EuclideanApproximatedMetric,
 "for two vectors u and v",
 [IsVector,IsVector],
 
-function(u,v);
+function(u,v)
 
 return Rat(Sqrt(Float(Sum(List(u-v,x->x^2)))));
 

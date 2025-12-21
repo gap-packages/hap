@@ -109,7 +109,7 @@ od;
 
 stems:=GroupIsomorphismRepresentatives(stems,"with possible redundancies");
 stems:=IsoclinismClasses(stems);
-fn:=function(x,y); return Order(x)<Order(y); end;
+fn:=function(x,y) return Order(x)<Order(y); end;
 for x in stems do Sort(x,fn);  od;
 stems:=List(stems,x->x[1]);
 return stems;

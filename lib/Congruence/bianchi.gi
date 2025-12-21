@@ -122,7 +122,7 @@ end);                                        #####
 #######################################################
 #######################################################
 InstallGlobalFunction(HAP_SqrtInequality,         #####
-function(a,b,c);                                  #####
+function(a,b,c)                                  #####
 #Inputs three positive rational numbers and       
 #returns Sqrt(a) + Sqrt(b) <= Sqrt(c).
 if a+b>c then return false; fi;
@@ -135,7 +135,7 @@ end);                                             #####
 #######################################################
 #######################################################
 InstallGlobalFunction(HAP_SqrtStrictInequality,   #####
-function(a,b,c);                                  #####
+function(a,b,c)                                  #####
 #Inputs three positive rational numbers and      
 #returns Sqrt(a) + Sqrt(b) <= Sqrt(c).
 if a+b>=c then return false; fi;

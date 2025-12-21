@@ -4,7 +4,7 @@
 InstallMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
 [IsMatrixGroup,IsMatrixGroup],
-function(H,HH);
+function(H,HH)
 if not ( IsHapSL2ZSubgroup(H) or IsHapSL2ZSubgroup(HH)) then TryNextMethod(); fi;
 if H=SL(2,Integers) then
 return HAP_RightTransversalSL2ZSubgroups(H,HH);
@@ -216,7 +216,7 @@ end);
 InstallOtherMethod(IndexNC,
 "index for HapSLOSubgroups",
 [IsMatrixGroup,IsHapSL2ZSubgroup],
-function(G,H);
+function(G,H)
 return Length(RightTransversal(G,H));
 end);
 ################################################
@@ -227,7 +227,7 @@ end);
 InstallOtherMethod(IndexNC,
 "index for HapSLOSubgroups",
 [IsMatrixGroup,IsHapSL2OSubgroup],
-function(G,H);
+function(G,H)
 return Length(RightTransversal(G,H));
 end);
 ################################################

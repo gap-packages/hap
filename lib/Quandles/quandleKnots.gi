@@ -107,7 +107,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(PlanarDiagramKnot,
-function(n,k);
+function(n,k)
 if not IsBound(Cedric_PlanarDiagram[n][k]) then return fail; fi;
 return Cedric_PlanarDiagram[n][k];
 end);
@@ -115,7 +115,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(GaussCodeKnot,
-function(n,k);
+function(n,k)
 if not IsBound(Cedric_PlanarDiagram[n][k]) then return fail; fi;
 return PD2GC(Cedric_PlanarDiagram[n][k]);
 end);
@@ -123,7 +123,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(PresentationKnotQuandleKnot,
-function(n,k);
+function(n,k)
 if not IsBound(Cedric_PlanarDiagram[n][k]) then return fail; fi;
 return PresentationKnotQuandle(PD2GC(Cedric_PlanarDiagram[n][k]));
 end);

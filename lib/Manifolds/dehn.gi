@@ -571,7 +571,7 @@ od;
 faces:=Concatenation(TL0,TL1,TR0,TR1,BL0,BL1,BR0,BR1);
 
 ##########################
-mymod:=function(x,m);
+mymod:=function(x,m)
 if x=infinity then return infinity; fi;
 if x=-infinity then return -infinity; fi;
 return x mod m;
@@ -579,15 +579,15 @@ end;
 ##########################
 
 ##########################
-fmod:=function(x);
+fmod:=function(x)
 return [mymod( x[1] , 10*(m+p) ), mymod(x[2] , 10*(m+q) )];
 end;
 ##########################
-ffmod:=function(e);
+ffmod:=function(e)
 return SortedList([ fmod(e[1]), fmod(e[2]) ]);
 end;
 ##########################
-fffmod:=function(P);
+fffmod:=function(P)
 return SortedList(List(P,ffmod));
 end;
 ##########################
@@ -1131,7 +1131,7 @@ Y!.nrCells(0)+Position(vertices,VC),
 Y!.nrCells(0)+Position(vertices,VD)];
 mins:=SSortedList(mins);
 #############################
-fn:=function(k);
+fn:=function(k)
 if k=Y!.nrCells(0)+Position(vertices,VA) then  return Va; fi;
 if k=Y!.nrCells(0)+Position(vertices,VB) then  return Vb; fi;
 if k=Y!.nrCells(0)+Position(vertices,VC) then  return Vc; fi;
@@ -1149,7 +1149,7 @@ MB[2]:=List(MB[2],x->Concatenation( [[x[1]],List(x{[2..x[1]+1]},k->fn(k))] ));
 #Reduce the number of 1-cells
 mins:=SSortedList([ab, ba, cd, dc, ac, ca, bd, db]);
 ############################
-fn:=function(k);
+fn:=function(k)
 if  k=ab then return AB; fi; 
 if  k=ba then return BA; fi; 
 if  k=cd then return CD; fi; 
@@ -1165,7 +1165,7 @@ MB[3]:=List(MB[3],x->Concatenation( [[x[1]],List(x{[2..x[1]+1]},k->fn(k))] ));
 MB[3]:=List(MB[3],x->Flat(x));
 MB[3]:=List(MB[3],x->Concatenation( [[Length(x)-1],x{[2..Length(x)]}] ));
 ############################
-fn:=function(k);
+fn:=function(k)
 if k<mins[1] then return k; fi;
 if k<mins[2] then return k-1; fi;
 if k<mins[3] then return k-2; fi;
@@ -1185,7 +1185,7 @@ MB[2]:=MB[2]{L};
 #Reduce the number of 2-cells;
 mins:=SSortedList([abdc, bacd, cdba, dcab]);
 ############################
-fn:=function(k);
+fn:=function(k)
 #return k;
 if k=abdc then return ABDC+Y!.nrCells(2); fi;
 if k=bacd then return BACD+Y!.nrCells(2); fi;
@@ -1199,7 +1199,7 @@ MB[4]:=List(MB[4],x->Flat(x));
 MB[4]:=List(MB[4],x->Concatenation([Length(x)-1],x{[2..Length(x)]}));
 
 ############################
-fn:=function(k);
+fn:=function(k)
 if k<mins[1] then return k; fi;
 if k<mins[2] then return k-1; fi;
 if k<mins[3] then return k-2; fi;

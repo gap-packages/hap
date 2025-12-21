@@ -117,7 +117,7 @@ end;
 ################################################
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n=0 then return Length(CRITICALVERTICES); fi;
 if n<=N and n>0 then
 return Length(PseudoBoundary[n]); fi;
@@ -126,7 +126,7 @@ end;
 ###################
 
 ###################
-Boundary:=function(n,i);
+Boundary:=function(n,i)
 if n=0 then return []; fi;
 return PseudoBoundary[n][i];
 end;

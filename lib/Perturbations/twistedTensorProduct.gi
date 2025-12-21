@@ -96,7 +96,7 @@ fi;
 
 
 if Charact=0 then AddWrds:=AddFreeWords; else
-	AddWrds:=function(v,w);
+	AddWrds:=function(v,w)
 	return AddFreeWordsModP(v,w,Charact);
 	end;
 fi;
@@ -365,7 +365,7 @@ if not BoolE then
 CompDel:=function(k,p,q,b)
 local r,v,w,x, map,SM,j,y;
 
-map:=function(x);
+map:=function(x)
 return Del(k,p,q,x);
 end;
 
@@ -405,7 +405,7 @@ else
 CompDel:=function(k,p,q,b)
 local r,v,w,x, map,SM,j,y;
 
-map:=function(x);
+map:=function(x)
 return Del(k,p,q,x);
 end;
 
@@ -482,7 +482,7 @@ od;
 
 
 #####################################################################
-Boundary:=function(k,j);
+Boundary:=function(k,j)
 if k=0 then return []; 
 else
 	if SignInt(j)=1 then return PseudoBoundary[k][j][1]; 
@@ -503,7 +503,7 @@ end;
 #######START WORKING ON THE CONTRACTING HOMOTOPY####################
 
 #####################################################################
-EmapN:=function(x);
+EmapN:=function(x)
 
 #return NEhomN(Mult(x,InvE(GmapE(EhomG(x))))); 
 return NEhomN(Mult(InvE(GmapE(EhomG(x))),x)); #Added 9th March 2011
@@ -529,7 +529,7 @@ end;
 #####################################################################
 
 #####################################################################
-Vector2Int:=function(p,q,r,s);
+Vector2Int:=function(p,q,r,s)
 return Pair2Int([r,s],p,q);
 end;
 #####################################################################
@@ -665,7 +665,7 @@ end;
 
 
 #####################################################################
-FinalHomotopy:=function(n,x);
+FinalHomotopy:=function(n,x)
 return Homtpy(n,x,false);
 end;
 #####################################################################
@@ -686,7 +686,7 @@ grp:=E;
 FilteredLength:=Length(R);
 
 ##################################################
-FilteredDimension:=function(r,i);
+FilteredDimension:=function(r,i)
 return Length(Filtered(List(PseudoBoundary[i],x->x[2]),y->y<=r));
 end;
 ##################################################

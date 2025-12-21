@@ -62,7 +62,7 @@ end);
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_SL2SubgroupTree,
-function(G);
+function(G)
     
 if G!.tree=fail then
  if IsRing(G!.level) then
@@ -302,7 +302,7 @@ sl:=SL(2,Integers);
 G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
-membership:=function(g);
+membership:=function(g)
 if not g in sl then return false; fi;
 if not g[1][1] mod n = 1  then return false; fi;
 if not g[2][2] mod n = 1  then return false; fi;
@@ -405,7 +405,7 @@ sl:=SL(2,Integers);
 G:=HAP_GenericSL2ZSubgroup();
 
 ###################################################
-membership:=function(g);
+membership:=function(g)
 if not g in sl then return false; fi;
 if not g[2][1] mod n = 0  then return false; 
 else return true; fi;
@@ -428,14 +428,14 @@ fi;
 
 if IsPrimeInt(n) then   #I need to extend this to no primes
 ###########################################
-CosetPos:=function(g);
+CosetPos:=function(g)
 if g[1][1] mod n =0 then return n+1; fi;
 return 1 +((g[2][1]*g[1][1]^-1) mod n);
 end;
 ###########################################
 
 ###########################################
-CosetRep:=function(g);
+CosetRep:=function(g)
 if g[1][1] mod n=0 then return [[0,-1],[1,0]]; fi;
 return [[1,0],[(g[2][1]*g[1][1]^-1) mod n,1]];
 end;
@@ -480,7 +480,7 @@ R:=RightTransversal(Image(iso),HN);
 R2:=List(R,x->PreImagesRepresentative(epi,x));
 
 ##########################################
-poscan:=function(x);
+poscan:=function(x)
 return PositionCanonical(R,ImagesRepresentative(epi2,x));
 end;
 ##########################################

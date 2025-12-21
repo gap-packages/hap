@@ -27,7 +27,7 @@ fi;
 one:=One(GF(prime));
 
 ###################
-Mult:=function(g,h);
+Mult:=function(g,h)
 return Position(R!.elts,R!.elts[g]*R!.elts[h]);
 end;
 ###################
@@ -49,14 +49,14 @@ invT:=T^-1;
 ###################
 
 ###################
-Dimension:=function(n);
+Dimension:=function(n)
 if n>Length(R) then return 0; fi;
 return ordG*R!.dimension(n);
 end;
 ###################
 
 ###################
-FDimension:=function(k,n);
+FDimension:=function(k,n)
 if n>Length(R) then return 0; fi;
 return FGdims[k]*R!.dimension(n);
 end;

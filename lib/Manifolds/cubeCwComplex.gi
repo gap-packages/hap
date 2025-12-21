@@ -86,7 +86,7 @@ local A, G, L, M, N, Y, B, F, data, NF, NFF, Vertices, Edges, Faces,
 #######################################
 #action of an element g of the dihedral group of order 8
 #on a list x=[x1,x2,x3,x4] of length 4
-act:=function(g,x);
+act:=function(g,x)
 return List([1..4],i->x[i^g]);
 end;
 #######################################

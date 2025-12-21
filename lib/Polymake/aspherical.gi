@@ -42,7 +42,7 @@ CollEdges:=[];
 Edges:=[];
 
 #####################################################################
-RelatorToVertices:=function(R);
+RelatorToVertices:=function(R)
 return SSortedList(LetterRepAssocWord(R));
 end;
 #####################################################################
@@ -234,7 +234,7 @@ CollEdges:=[];
 Edges:=[];
 
 #####################################################################
-RelatorToVertices:=function(R);
+RelatorToVertices:=function(R)
 return SSortedList(LetterRepAssocWord(R));
 end;
 #####################################################################

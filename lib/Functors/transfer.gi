@@ -5,7 +5,7 @@ function(arg)
 local R,H,A,B,rnk,S,CR,CS, T, TT, fn, SS,map, HhomH, trans, transTr,
 LT, TietzeReduced, hom, elts, mult;
 
-TietzeReduced:=function(R); return R; end;
+TietzeReduced:=function(R) return R; end;
 #TietzeReduced:=TietzeReducedResolution;
 
 R:=arg[1];
@@ -116,7 +116,7 @@ InstallGlobalFunction(TransferChainMap,
 function(R,H)
 local S,CR,CS, T, TT, fn, SS,map, HhomH, TietzeReduced;
 
-TietzeReduced:=function(R); return R; end;
+TietzeReduced:=function(R) return R; end;
 TietzeReduced:=TietzeReducedResolution;
 S:=ResolutionFiniteSubgroup(R,H);;
 CR:=TensorWithIntegers(R);;
@@ -167,7 +167,7 @@ C:=Source(G);
 D:=Target(F);
 
 ##################################
-FG:=function(v,n);
+FG:=function(v,n)
 return F!.mapping(G!.mapping(v,n),n);
 end;
 ##################################
@@ -196,7 +196,7 @@ local FG,C, D ;
 C:=Source(G);
 D:=Target(F);
 ##################################
-FG:=function(v,n);
+FG:=function(v,n)
 return F!.mapping(G!.mapping(v,n),n);
 #a:=G!.mapping(v,n);  This takes time
 end;

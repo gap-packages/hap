@@ -26,7 +26,7 @@ InstallMethod(IdentityMap,
 function(X)
 local map;
 
-map:=function(n,k);
+map:=function(n,k)
 return k;
 end;
 
@@ -187,7 +187,7 @@ S:=ChainComplexOfRegularCWComplex(X);
 T:=S;
 
 ####################
-mapT:=function(v,n);
+mapT:=function(v,n)
 return v;
 end;
 ####################
@@ -200,7 +200,7 @@ F:=Objectify(HapChainMap,
            properties:=[["characteristic", 0],["type","chainMap"]]));
 
 ####################
-mapS:=function(v,n);
+mapS:=function(v,n)
 return v;
 end;
 ####################
@@ -661,7 +661,7 @@ end;
 
 ###########################
 if Cohomology(C,2)=[] then
-cup:=function(a,b); return [0]; end;
+cup:=function(a,b) return [0]; end;
 fi;
 ###########################
 

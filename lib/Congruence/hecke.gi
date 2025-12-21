@@ -10,7 +10,7 @@ ag, A, facts, T,E, Sfacts,Hecke ,fn, ConjugateIntersection,HHhomH;
 H:=arg[1];
 pp:=arg[2];
 k:=arg[3];
-#TietzeReducedResolution:=function(R); return R; end;
+#TietzeReducedResolution:=function(R) return R; end;
 #There is a bug in the contracting homotopy of Tietze reducedResolution for
 #degree >1 but we only use degree 1 here.
 
@@ -43,7 +43,7 @@ fi;
 
 
 ########################
-fn:=function(A,n);
+fn:=function(A,n)
 if n=0 then return p^(k-2)*IdentityMat(Length(A)); fi;
 if n=1 then return A; fi;
 if n=2 then return A^2 - p^(k-1)*IdentityMat(Length(A)); fi;
@@ -164,7 +164,7 @@ ag, A, facts, T,E, Sfacts,Hecke ,fn, ConjugateIntersection,HHhomH;
 H:=arg[1];
 pp:=arg[2];
 k:=arg[3];
-#TietzeReducedResolution:=function(R); return R; end;
+#TietzeReducedResolution:=function(R) return R; end;
 #There is a bug in the contracting homotopy of Tietze reducedResolution for
 #degree >1 but we only use degree 1 here.
 

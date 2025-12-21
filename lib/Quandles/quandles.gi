@@ -63,7 +63,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(Cedric_ConjugateQuandleElement,
-function(w,n);
+function(w,n)
 
 return Objectify(HapConjQuandElt,
                     rec(
@@ -107,7 +107,7 @@ InstallOtherMethod( \<,
     "comparison in a conjugation group quandle",
     [ IsHapConjQuandElt, IsHapConjQuandElt],
 
-function(x,y) ;
+function(x,y)
 
 return x!.element<y!.element;
 
@@ -119,7 +119,7 @@ InstallOtherMethod( \=,
     "equality in a conjugation group quandle",
     [ IsHapConjQuandElt, IsHapConjQuandElt],
 
-function(x,y) ;
+function(x,y)
 
 return x!.element=y!.element;
 
@@ -378,7 +378,7 @@ end);
 #####################################################################
 #####################################################################
 InstallMethod(Quandle,"for two integers, the first one leq to 6",[IsInt,IsInt],
-function(n,k);
+function(n,k)
 
 if (n=1 and k>1) or (n=2 and k>1) or (n=3 and k>5) or (n=4 and k>7) or (n=5 and k>22) or (n=6 and k>73) or n>6 then return fail; fi;
 return Quandles(n)[k];
@@ -387,7 +387,7 @@ end);
 #####################################################################
 #####################################################################
 InstallGlobalFunction(IsQuandleEnvelope,
-function(Q,G,e,st);
+function(Q,G,e,st)
 
 return (IsTransitive(G,Q)) and (e in Elements(Q)) and (st in Center(Stabilizer(G,e))) and (NormalClosure(G,Group([st]))=G);
 end);

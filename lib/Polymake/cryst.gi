@@ -128,7 +128,7 @@ end;
 
 
 ########################################
-Dimn:=function(n);
+Dimn:=function(n)
 if n<0 or n>Dimension(Y) then return 0; fi;
 return Length(GCells[n+1]);
 end;
@@ -148,7 +148,7 @@ od;
 od;
 
 ########################################
-Bndy:=function(n,k);
+Bndy:=function(n,k)
 if n<1 or n>Dimension(Y) then return []; fi;
 return BNDS[n][k];
 end;
@@ -175,7 +175,7 @@ od;
 od;
 
 ########################################
-STAB:=function(n,k);
+STAB:=function(n,k)
 return STABREC[n+1][k];
 end;
 ########################################

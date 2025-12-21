@@ -205,7 +205,7 @@ end);
 #####################################################
 #####################################################
 InstallGlobalFunction(ChildReadEval,
-function(s);
+function(s)
 return EvalString(ChildRead(s));
 end);
 #####################################################
@@ -683,7 +683,7 @@ for i in [1..Length(terms)-1] do
 od;
 
 for i in [1..Length(terms)-1] do
-  cmd1:="map:=function(n,j); return j; end;\n";
+  cmd1:="map:=function(n,j) return j; end;\n";
   cmd2:=Concatenation("cwmap:=Objectify( HapRegularCWMap, rec( source:=Y",String(terms[i]),", target:=YY",String(terms[i]),", mapping:=map));\n");
   cmd3:="L:=ChainMapOfRegularCWMap(cwmap);\n";
   cmd4:=Concatenation("Eq:=ChainComplexEquivalenceOfRegularCWComplex(Y",String(terms[i]),");\n");

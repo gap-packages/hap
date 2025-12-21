@@ -14,7 +14,7 @@ end);
 
 #############################
 InstallGlobalFunction(HAP_MyIsFiniteFpGroup,
-function(G);
+function(G)
 if HAP_MyIsInfiniteFpGroup(G)=true then return false; fi;
 return IsFinite(G);
 end);

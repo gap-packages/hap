@@ -189,7 +189,7 @@ Add(RELS[Maximum(Flat(r))], r);
 od;
 
 ###########################
-wrd:=function(mapping,rr);
+wrd:=function(mapping,rr)
 if not IsList(rr) then return mapping[rr]; fi;
 return multTab[wrd(mapping,rr[1])][wrd(mapping,rr[2])];
 end;
@@ -328,7 +328,7 @@ C:=NumberOfHomomorphisms_connected(sP,Q,true);
 
 TRANS:=sP!.TRANS;
 #########################
-trans:=function(x,c);
+trans:=function(x,c)
 if IsInt(x) then return c[x];
 else
 return trans(x[1],c)*trans(x[2],c);
@@ -336,7 +336,7 @@ fi;
 end;
 #########################
 #########################
-elm2perm:=function(x);
+elm2perm:=function(x)
 return PermList(List(Elements(Q),e->Position(Elements(Q),e*x)));
 end;
 #########################

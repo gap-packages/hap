@@ -289,7 +289,7 @@ fp:=W!.secondProjection;
 fp:=fp!.mapping;
 
 #########################
-mapX:=function(n,i);
+mapX:=function(n,i)
 return fp(n,mapW(n,i));
 end;
 #########################
