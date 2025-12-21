@@ -1849,7 +1849,7 @@ $\begin{array}{lcl} H_0(Y,A) &= &\mathbb Z_2\, ,\\ H_1(Y,A) &= &\mathbb Z_3\,
   @gapprompt|gap>E @gapinput|RelatorsOfFpGroup(G);E
   [ f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ]
   @gapprompt|gap>E @gapinput|hom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;E
-  @gapprompt|gap>E @gapinput|A:=function(x); return Determinant(Image(hom,x)); end;;E
+  @gapprompt|gap>E @gapinput|A:=function(x) return Determinant(Image(hom,x)); end;;E
   @gapprompt|gap>E @gapinput|D:=TensorWithTwistedIntegers(C,A); #Here the function A represents E
   @gapprompt|gap>E @gapinput|#the integers with twisted action of G.E
   Chain complex of length 3 in characteristic 0 .
@@ -2680,7 +2680,7 @@ represent at least 25 distinct homotopy equivalence classes of manifolds. One
 homotopy class is represented by up to 40 of the manifolds, and at least four
 of the homotopy classes are each represented by a single manifold.. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@invariant1:=function(m);|
+  !gapprompt@gap>| !gapinput@invariant1:=function(m)|
   !gapprompt@>| !gapinput@return List([1..3],k->Homology(m,k));|
   !gapprompt@>| !gapinput@end;;|
   
@@ -3472,7 +3472,7 @@ connected by an edge when they contain common data points.
   !gapprompt@gap>| !gapinput@dz:=EuclideanApproximatedMetric;;|
   !gapprompt@gap>| !gapinput@L:=List(S,x->Maximum(List(S,y->dx(x,y))));;|
   !gapprompt@gap>| !gapinput@n:=Position(L,Minimum(L));;|
-  !gapprompt@gap>| !gapinput@f:=function(x); return [dx(S[n],x)]; end;;|
+  !gapprompt@gap>| !gapinput@f:=function(x) return [dx(S[n],x)]; end;;|
   !gapprompt@gap>| !gapinput@P:=30*[0..100];; P:=List(P, i->[i]);;|
   !gapprompt@gap>| !gapinput@r:=29;;|
   !gapprompt@gap>| !gapinput@epsilon:=75;;|
@@ -5230,7 +5230,7 @@ One possibility is to use the data type of a \emph{$G$\texttt{\symbol{45}}Outer 
   !gapprompt@gap>| !gapinput@G:=SymmetricGroup(6);;|
   
   !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);;|
-  !gapprompt@gap>| !gapinput@alpha:=function(g,a); return a^SignPerm(g); end;;|
+  !gapprompt@gap>| !gapinput@alpha:=function(g,a) return a^SignPerm(g); end;;|
   !gapprompt@gap>| !gapinput@A:=GModuleAsGOuterGroup(G,A,alpha);|
   ZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )
   
@@ -5327,7 +5327,7 @@ of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coef
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(7);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;|
-  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithIntegralModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);|
   [ 2, 2, 4 ]
   
@@ -5341,7 +5341,7 @@ with coefficient module $A=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting b
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(10);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;|
-  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithIntegralModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);|
   [ 4 ]
   
@@ -5359,7 +5359,7 @@ where $V$ is the vector space of dimension $3$ over $K=GF(2)$ acting via some ir
   CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -> 
   [ <an immutable 3x3 matrix over GF2>, <an immutable 3x3 matrix over GF2> ],
    <action isomorphism> )
-  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithModPModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithModPModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);|
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
@@ -5697,7 +5697,7 @@ for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially o
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@sf:=Standard_f;;|
   
-  !gapprompt@gap>| !gapinput@Test:=function(g,h,k,l);|
+  !gapprompt@gap>| !gapinput@Test:=function(g,h,k,l)|
   !gapprompt@>| !gapinput@return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);|
   !gapprompt@>| !gapinput@end;|
   function( g, h, k, l ) ... end
@@ -8627,9 +8627,9 @@ side.
 
  Let $N$ be a positive integer. A subgroup $\Gamma$ of $SL_2(\mathbb Z)$ is said to be a \emph{congruence subgroup} of level $N $ if it contains the kernel of the canonical homomorphism $\pi_N\colon SL_2(\mathbb Z) \rightarrow SL_2(\mathbb Z/N\mathbb Z)$. So any congruence subgroup is of finite index in $SL_2(\mathbb Z)$, but the converse is not true. 
 
-One congruence subgroup of particular interest is the group $\Gamma_1(N)=\ker(\pi_N)$, known as the \emph{principal congruence subgroup} of level $N$. Another congruence subgroup of particular interest is the group $\Gamma_0(N)$ of those matrices that project to upper triangular matrices in $SL_2(\mathbb Z/N\mathbb Z)$. 
+One congruence subgroup of particular interest is the group $\Gamma(N)=\ker(\pi_N)$, known as the \emph{principal congruence subgroup} of level $N$. Another congruence subgroup of particular interest is the group $\Gamma_0(N)$ of those matrices that project to upper triangular matrices in $SL_2(\mathbb Z/N\mathbb Z)$. 
 
-A \emph{modular form} of weight $k$ for a congruence subgroup $\Gamma$ is a complex valued function on the upper\texttt{\symbol{45}}half plane, $f\colon {\frak{h}}=\{z\in \mathbb C : Re(z)>0\} \rightarrow \mathbb C$, satisfying: 
+A \emph{modular form} of weight $k$ for a congruence subgroup $\Gamma$ is a complex valued function on the upper\texttt{\symbol{45}}half plane, $f\colon {\frak{h}}=\{z\in \mathbb C : Im(z)>0\} \rightarrow \mathbb C$, satisfying: 
 \begin{itemize}
 \item  $\displaystyle f(\frac{az+b}{cz+d}) = (cz+d)^k f(z)$ for $\left(\begin{array}{ll}a&b\\ c &d \end{array}\right) \in \Gamma$, 
 \item  $f$ is `holomorphic' on the \emph{extended upper\texttt{\symbol{45}}half plane} $\frak{h}^\ast = \frak{h} \cup \mathbb Q \cup \{\infty\}$ obtained from the upper\texttt{\symbol{45}}half plane by `adjoining a point at
@@ -8721,10 +8721,10 @@ CW\texttt{\symbol{45}}complex $W$ on which $G$ acts cellularly and freely, and i
 Let $W$ be as in the theorem. Then the quotient CW\texttt{\symbol{45}}complex $B_G=W/G$ is a classifying space for $G$. Let $T$ denote a maximal tree in the $1$\texttt{\symbol{45}}skeleton $B^1_G$. Basic geometric group theory tells us that the $1$\texttt{\symbol{45}}cells in $B^1_G\setminus T$ correspond to a generating set for $G$. 
 
  Suppose we wish to compute a set of generators for a principal congruence
-subgroup $\Gamma=\Gamma_1(N)$. In the above theorem take $X={\cal T}$ to be the cubic tree, and note that $\Gamma$ acts freely on $\cal T$ and thus that $W={\cal T}$. To determine the $1$\texttt{\symbol{45}}cells of $B_{\Gamma}\setminus T$ we need to determine a cellular subspace $D_\Gamma \subset \cal T$ whose images under the action of $\Gamma$ cover $\cal T$ and are pairwise either disjoint or identical. The subspace $D_\Gamma$ will not be a CW\texttt{\symbol{45}}complex as it won't be closed, but it can
-be chosen to be connected, and hence contractible. We call $D_\Gamma$ a \emph{fundamental region} for $\Gamma$. We denote by $\mathring D_\Gamma$ the largest CW\texttt{\symbol{45}}subcomplex of $D_\Gamma$. The vertices of $\mathring D_\Gamma$ are the same as the vertices of $D_\Gamma$. Thus $\mathring D_\Gamma$ is a subtree of the cubic tree with $|\Gamma|/6$ vertices. For each vertex $v$ in the tree $\mathring D_\Gamma$ define $\eta(v)=3 -{\rm degree}(v)$. Then the number of generators for $ \Gamma $ will be $(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)$. 
+subgroup $\Gamma=\Gamma(N)$,$N>2$. In the above theorem take $X={\cal T}$ to be the cubic tree, and note that $\Gamma$ acts freely on $\cal T$ and thus that $W={\cal T}$. To determine the $1$\texttt{\symbol{45}}cells of $B_{\Gamma}\setminus T$ we need to determine a cellular subspace $D_\Gamma \subset \cal T$ whose images under the action of $\Gamma$ cover $\cal T$ and are pairwise either disjoint or identical. The subspace $D_\Gamma$ will not be a CW\texttt{\symbol{45}}complex as it won't be closed, but it can
+be chosen to be connected, and hence contractible. We call $D_\Gamma$ a \emph{fundamental region} for $\Gamma$. We denote by $\mathring D_\Gamma$ the largest CW\texttt{\symbol{45}}subcomplex of $D_\Gamma$. The vertices of $\mathring D_\Gamma$ are the same as the vertices of $D_\Gamma$. Thus $\mathring D_\Gamma$ is a subtree of the cubic tree with $|SL_2(\mathbb Z):\Gamma|/6$ vertices. For each vertex $v$ in the tree $\mathring D_\Gamma$ define $\eta(v)=3 -{\rm degree}(v)$. Then the number of generators for $ \Gamma $ will be $(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)$. 
 
- The following commands determine projectively independent generators for $\Gamma_1(6)$ and display $\mathring D_{\Gamma_1(6)}$. The subgroup $\Gamma_1(6)$ is free on $13$ generators. 
+ The following commands determine projectively independent generators for $\Gamma(6)$ and display $\mathring D_{\Gamma(6)}$. The subgroup $\Gamma(6)$ is free on $13$ generators. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=HAP_PrincipalCongruenceSubgroup(6);;|
   !gapprompt@gap>| !gapinput@HAP_SL2TreeDisplay(G);|
@@ -8936,7 +8936,7 @@ The following commands show that the space $S_4(\Gamma_0(39))$ of cuspidal weigh
 \section{\textcolor{Chapter }{Hecke operators on forms of weight 2}}\logpage{[ 13, 6, 0 ]}
 \hyperdef{L}{X80861D3F87C29C43}{}
 {
- A congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ and element $g\in SL_2(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
+ A congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ and element $g\in GL_2(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
 \[ \Gamma\ \hookleftarrow\ \Gamma'\ \ \stackrel{\gamma \mapsto g^{-1}\gamma
 g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . \]
  These homomorphisms give rise to homomorphisms of cohomology groups 
@@ -9064,7 +9064,7 @@ form
 \end{Verbatim}
  
 
- For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.$ If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. 
+ For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p^{k-1} a_{p^{m-2}}$ where $k$ is the weight. If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. 
 
  The following commands establish that $S_{12}(SL_2(\mathbb Z))$ has a basis consisting of one cusp eigenform 
 
@@ -9512,14 +9512,14 @@ two of the stabilizer groups for the action of $PSL_2({\mathcal O}_{-163})$ are 
 {
  Analogous to the functions for Bianchi groups, HAP has functions 
 \begin{itemize}
-\item \texttt{ResolutionSL2QuadraticIntegers(\texttt{\symbol{45}}d,n)} 
+\item \texttt{ResolutionSL2QuadraticIntegers(d,n)} 
 \item \texttt{ResolutionSL2ZInvertedInteger(m,n)}
-\item \texttt{ResolutionGL2QuadraticIntegers(\texttt{\symbol{45}}d,n)}
-\item \texttt{ResolutionPGL2QuadraticIntegers(\texttt{\symbol{45}}d,n)}
-\item \texttt{ResolutionGL3QuadraticIntegers(\texttt{\symbol{45}}d,n)}
-\item \texttt{ResolutionPGL3QuadraticIntegers(\texttt{\symbol{45}}d,n)}
+\item \texttt{ResolutionGL2QuadraticIntegers(d,n)}
+\item \texttt{ResolutionPGL2QuadraticIntegers(d,n)}
+\item \texttt{ResolutionGL3QuadraticIntegers(d,n)}
+\item \texttt{ResolutionPGL3QuadraticIntegers(d,n)}
 \end{itemize}
- for computing free resolutions for certain values of $SL_2({\cal O}_{-d})$, $SL_2(\mathbb Z[\frac{1}{m}])$, $GL_2({\cal O}_{-d})$ and $PGL_2({\cal O}_{-d})$. Additionally, the function 
+ for computing free resolutions for certain values of $SL_2({\cal O}_{d})$, $SL_2(\mathbb Z[\frac{1}{m}])$, $GL_2({\cal O}_{d})$, $PGL_2({\cal O}_{d})$, $GL_3({\cal O}_{d})$ and $PGL_3({\cal O}_{d})$. Additionally, the function 
 \begin{itemize}
 \item \texttt{ResolutionArithmeticGroup("string",n)}
 \end{itemize}
@@ -9699,7 +9699,7 @@ The following commands construct the classic example of a prime ideal $I$ that i
  
 
  Given a ring of integers ${\cal O}$ and ideal $I \triangleleft {\cal O}$ there is a canonical homomorphism $\pi_I\colon SL_2({\cal O}) \rightarrow SL_2({\cal O}/I)$. A subgroup $\Gamma \le SL_2({\cal O})$ is said to be a \emph{congruence subgroup} if it contains $\ker \pi_I$. Thus congruence subgroups are of finite index. Generalizing the definition
-in \ref{sec:EichlerShimura} above, we define the \emph{principal congruence subgroup} $\Gamma_1(I)=\ker \pi_I$, and the congruence subgroup $\Gamma_0(I)$ consisting of preimages of the upper triangular matrices in $SL_2({\cal O}/I)$. 
+in \ref{sec:EichlerShimura} above, we define the \emph{principal congruence subgroup} $\Gamma(I)=\ker \pi_I$, and the congruence subgroup $\Gamma_0(I)$ consisting of preimages of the upper triangular matrices in $SL_2({\cal O}/I)$. 
 
  The following commands construct $\Gamma=\Gamma_0(I)$ for the ideal $I\triangleleft {\cal O}\mathbb Q(\sqrt{-5})$ generated by $12$ and $36\sqrt{-5}$. The group $\Gamma$ has index $385$ in $SL_2({\cal O}\mathbb Q(\sqrt{-5}))$. The final command displays a tree in a Cayley graph for $SL_2({\cal O}\mathbb Q(\sqrt{-5}))$ whose nodes represent a transversal for $\Gamma$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -9800,7 +9800,7 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
   @gapprompt|gap>D @gapinput|N:=QuadraticIntegersByNorm(OQ,20000);;D
   
   @gapprompt|gap>D @gapinput|#########################################D
-  @gapprompt|gap>D @gapinput|fn:=function(x);D
+  @gapprompt|gap>D @gapinput|fn:=function(x)D
   @gapprompt|gap>D @gapinput|if IsRat(x) then return x; fi;D
   @gapprompt|gap>D @gapinput|return x!.rational+x!.irrational*Sqrt(-1);D
   @gapprompt|gap>D @gapinput|end;D
@@ -9861,7 +9861,8 @@ cells of dimension $\le 2$. }
 \section{\textcolor{Chapter }{Swan's description of a fundamental domain}}\logpage{[ 14, 2, 0 ]}
 \hyperdef{L}{X872D22507F797001}{}
 {
- A pair $(a,b)$ of elements in ${\cal O}_{-d}$ is said to be \emph{unimodular} if the ideal generated by $a,b$ is the whole ring ${\cal O}_{-d}$ and $a\ne 0$. A unimodular pair can be represented by a hemisphere in $\overline{\frak h}^3$ with base centred at the point $b/a \in \mathbb C$ and of radius $|1/a|$. The radius is $\le 1$. Think of the points in ${\frak h}^3$ as lying strictly above $\mathbb C$. Let $B$ denote the space obtained by removing all such hemispheres from ${\frak h}^3$. 
+ A pair $(a,b)$ of elements in ${\cal O}_{-d}$ is said to be \emph{unimodular} if the ideal generated by $a,b$ is the whole ring ${\cal O}_{-d}$ and $a\ne 0$. A unimodular pair can be represented by a hemisphere in $\overline{\frak h}^3$ with base centred at the point $b/a \in \mathbb C$ and of radius $|1/a|$. The radius is $\le 1$. Think of the points in ${\frak h}^3$ as lying strictly above $\mathbb C$. Let $B$ denote the space obtained by removing the interiors of all such hemispheres
+from ${\frak h}^3$. 
 
  When $d \equiv 3 {\rm \ mod\ } 4$ let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/4 \le y \le 1/4$, $t \ge 0$. Otherwise, let $F$ be the subspace of $\overline{\frak h}^3$ consisting of the points $x+iy+jt$ with $-1/2 \le x \le 1/2$, $-1/2 \le y \le 1/2$, $t \ge 0$. 
 
@@ -10221,6 +10222,40 @@ presentations for $SL_2({\mathcal O}_{-d})$ for various values of $d$. The follo
     [ -1 Sqrt(-23), -4 + -1 Sqrt(-23) ] ]
   
 \end{Verbatim}
+ 
+\subsection{\textcolor{Chapter }{Swan's generators}}\logpage{[ 14, 8, 1 ]}
+\hyperdef{L}{X795000AA87CCB76E}{}
+{
+ The five generators in the above presentation for $SL_2({\mathcal O}_{-23})$ are obtained by constructing the low dimensions of a
+CW\texttt{\symbol{45}}classifying space, forming a maximal tree in its $1$\texttt{\symbol{45}}skeleton, constructing a presentation whose generators
+correspond to edges not in the tree, and then applying Tietze operations to
+simplify this presentation. Swan's approach instead uses generators
+corresponding to the "face pairings" of the $3$\texttt{\symbol{45}}dimensional fundamental domain. For $d\ne 1, 3$ the number of these face\texttt{\symbol{45}}pairing generators in $SL_2({\mathcal O}_{-d})$ is equal to $3$ plus the number of orbits of $2$\texttt{\symbol{45}}cells in the equivariant $2$\texttt{\symbol{45}}complex $K$. The three extra generators are the two translations corresponding to the
+vertical faces of the $3$\texttt{\symbol{45}}dimensional fundamental domain which get homotopied to
+edges in $K$, plus the element $\left(\begin{array}{rr} -1 & 0\\0 & -1\end{array}\right)$ which acts trivially on ${\frak H}^3$. For $d=1,3$ there is one further generator due to the existence of
+non\texttt{\symbol{45}}trivial units in ${\mathcal O}(\mathbb Q(\sqrt{-1}))$ and ${\mathcal O}(\mathbb Q(\sqrt{-3}))$. 
+
+ The following commands show that for $SL_2({\mathcal O}_{-23})$ there are 6 orbits of $2$\texttt{\symbol{45}}cells in $K$ and then lists Swan's 9 generators. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=BianchiGcomplex(-23);;A
+  @gapprompt|gap>A @gapinput|K!.dimension(2);A
+  6
+  @gapprompt|gap>A @gapinput|for g in GeneratorsOfGroup(K!.group) doA
+  @gapprompt|>A @gapinput|Print(g,"\n");A
+  @gapprompt|>A @gapinput|od;A
+  [ [ -1, 0 ], [ 0, -1 ] ]
+  [ [ 1, 1 ], [ 0, 1 ] ]
+  [ [ 1, 1/2 + 1/2 Sqrt(-23) ], [ 0, 1 ] ]
+  [ [ -1, 0 ], [ 1, -1 ] ]
+  [ [ 5 + 2 Sqrt(-23), -11 ], [ 3/2 + -1/2 Sqrt(-23), 3/2 + 1/2 Sqrt(-23) ] ]
+  [ [ 208 + 25 Sqrt(-23), -225 + 25 Sqrt(-23) ], [ 3/2 + 1/2 Sqrt(-23), -3 ] ]
+  [ [ 18 + 91 Sqrt(-23), -437 ], [ 5/2 + 1/2 Sqrt(-23), -5/2 + 1/2 Sqrt(-23) ] ]
+  [ [ 1 + -6 Sqrt(-23), -29 ], [ 5/2 + -1/2 Sqrt(-23), -5/2 + -1/2 Sqrt(-23) ] ]
+  [ [ 1 Sqrt(-23), -6 ], [ 4, 1 Sqrt(-23) ] ]
+  
+\end{Verbatim}
+ }
+
  }
 
  
@@ -10259,6 +10294,31 @@ presentations for $SL_2({\mathcal O}_{-d})$ for various values of $d$. The follo
 \end{Verbatim}
  }
 
+ 
+\section{\textcolor{Chapter }{Totally real quadratic fields / Hilbert modular group}}\logpage{[ 14, 10, 0 ]}
+\hyperdef{L}{X82F46C8B782420AB}{}
+{
+ For square free $d>0$ the group $G_d=PSL_2({\mathcal O}_d)$ is a subgroup of $PSL_2(\mathbb R)$ but not a discrete subgroup. It embeds as a discrete subgroup of $PSL_2(\mathbb R)\times PSL_2(\mathbb R)$ but a fundamental domain for its action on ${\frak h}^2 \times {\frak h}^2$ is not implemented in HAP. One can obtain a contractible $G_d$\texttt{\symbol{45}}equivariant complex using \href{https://github.com/schoennenbeck/VMH-TotallyRealNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm to produce text files that can be read into HAP. A few
+of these text files are stored in HAP. The following commands use one such
+text file to compute integral homology groups of $GL_2({\mathcal O}(\mathbb Q(\sqrt{14})))$. In this example the contractible complex is $4$\texttt{\symbol{45}}dimensional and has $33$ orbits of $4$\texttt{\symbol{45}}dimensional cells. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("GL(2,O14)");A
+  Non-free resolution in characteristic 0 for matrix group . 
+  No contracting homotopy available. 
+  
+  @gapprompt|gap>A @gapinput|List([0..5],K!.dimension);A
+  [ 144, 463, 532, 234, 33, 0 ]
+  
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,6);;A
+  @gapprompt|gap>A @gapinput|List([0..5],n->Homology(TensorWithIntegers(R),n));A
+  [ [ 0 ], [ 2, 2, 2, 0 ], [ 2, 2, 2, 2, 2, 2, 0, 0, 0, 0 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
+    [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]
+  
+\end{Verbatim}
+ }
+
  }
 
  
@@ -10280,7 +10340,7 @@ for the $2328$\texttt{\symbol{45}}th group $G$ in \textsc{GAP}'s library of smal
 computation achieves a speedup of 10.4 . 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Processes:=List([1..15],i->ChildProcess());;|
-  !gapprompt@gap>| !gapinput@fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;|
+  !gapprompt@gap>| !gapinput@fn:=function(i)return GroupHomology(SmallGroup(128,i),2);end;;|
   !gapprompt@gap>| !gapinput@for p in Processes do|
   !gapprompt@>| !gapinput@ChildPut(fn,"fn",p);|
   !gapprompt@>| !gapinput@od;|

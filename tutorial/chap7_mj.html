@@ -161,11 +161,7 @@
 
 <p><span class="SimpleMath">\(H^4(M_{24},\mathbb Z) = \mathbb Z_{12}\)</span></p>
 
-<p>and fifth integral homology</p>
-
-<p><span class="SimpleMath">\(H_5(M_{24},\mathbb Z) =\mathbb Z_{14}\)</span></p>
-
-<p>of the Mathieu groups <span class="SimpleMath">\(M_{23}\)</span> and <span class="SimpleMath">\(M_{24}\)</span>. (Warning: the computation of <span class="SimpleMath">\(H_7(M_{23},\mathbb Z)\)</span> takes a couple of hours to run and the computation for <span class="SimpleMath">\(H_5(M_{24},\mathbb Z)\)</span> takes an hour to run.)</p>
+<p>of the Mathieu groups <span class="SimpleMath">\(M_{23}\)</span> and <span class="SimpleMath">\(M_{24}\)</span>. (Warning: the computation of <span class="SimpleMath">\(H_7(M_{23},\mathbb Z)\)</span> takes a couple of hours to run.)</p>
 
 
 <div class="example"><pre>
@@ -174,9 +170,6 @@
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupCohomology(MathieuGroup(24),4);</span>
 [ 4, 3 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHomology(MathieuGroup(24),5);</span>
-[ 2, 7 ]
 
 </pre></div>
 
@@ -470,54 +463,6 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
-<p>The next example computes the integral homology of <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> in degrees <span class="SimpleMath">\(\le 5\)</span> using the isomorphism <span class="SimpleMath">\(SL_2(\mathbb Z) \cong C_4\ast_{C_2}C_6\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=(1,2,3,4,5,6,7,8,9,10,11,12);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C6:=Group(x^2);;SetName(C6,"C6");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C4:=Group(x^3);;SetName(C4,"C4");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2:=Group(x^6);;SetName(C2,"C2");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2C6:=GroupHomomorphismByFunction(C2,C6,x-&gt;x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2C4:=GroupHomomorphismByFunction(C2,C4,x-&gt;x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[C6,C4,[C2C6,C2C4]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsDisplay(D);</span>
-
-</pre></div>
-
-<p><img src="images/graphgroupsSL2.png" align="center" height="100" alt="graph of groups"/></p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionGraphOfGroups(D,6);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],n-&gt;Homology(TensorWithIntegers(R),n));</span>
-[ [ 0 ], [ 12 ], [  ], [ 12 ], [  ], [ 12 ] ]
-
-</pre></div>
-
-<p>The next commands compute the integral homology in degree <span class="SimpleMath">\(7\)</span> of a graph of groups corresponding to the HNN extension <span class="SimpleMath">\(G=H*_A\)</span> where <span class="SimpleMath">\(H\)</span> is the symmetric group <span class="SimpleMath">\(H=S_5\)</span> and <span class="SimpleMath">\(A\)</span> is the subgroup <span class="SimpleMath">\(A=S_3\)</span> and <span class="SimpleMath">\(f:A\rightarrow H\)</span> is the homomorphism <span class="SimpleMath">\((1,2) \rightarrow (3,4)\)</span>, <span class="SimpleMath">\((1,2,3) \rightarrow (3,4,5)\)</span>. The HNN extension <span class="SimpleMath">\(G\)</span> is obtained from <span class="SimpleMath">\(H\)</span> by adding a generator <span class="SimpleMath">\(t\)</span> subject to the relations <span class="SimpleMath">\(t^{-1} a t = f(a)\)</span> for <span class="SimpleMath">\(a \in A\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S5:=SymmetricGroup(5);SetName(S5,"S5");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=SymmetricGroup(3);SetName(A,"S3");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=GroupHomomorphismByImages(A,S5,[(1,2),(1,2,3)],[(3,4),(3,4,5)]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=GroupHomomorphismByFunction(A,S5,x-&gt;x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[S5,[f,g]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsDisplay(D);;</span>
-
-</pre></div>
-
-<p><img src="images/graphgroupsHNN.png" align="center" height="100" alt="graph of groups"/></p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionGraphOfGroups(D,8);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),7);</span>
-[ 2, 2, 60 ]
-
-</pre></div>
-
 <p><a id="X7CE849E58706796C" name="X7CE849E58706796C"></a></p>
 
 <h4>7.7 <span class="Heading">Lie algebra homology and free nilpotent groups</span></h4>
@@ -577,7 +522,7 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SymmetricGroup(6);;</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianPcpGroup([0]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha:=function(g,a); return a^SignPerm(g); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha:=function(g,a) return a^SignPerm(g); end;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=GModuleAsGOuterGroup(G,A,alpha);</span>
 ZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )
 
@@ -676,7 +621,7 @@ Chain complex of length 7 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X) return TensorWithIntegralModule(X,rho); end;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);</span>
 [ 2, 2, 4 ]
 
@@ -693,7 +638,7 @@ Chain complex of length 7 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithIntegralModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X) return TensorWithIntegralModule(X,rho); end;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);</span>
 [ 4 ]
 
@@ -712,7 +657,7 @@ Chain complex of length 7 in characteristic 0 .
 CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt; 
 [ &lt;an immutable 3x3 matrix over GF2&gt;, &lt;an immutable 3x3 matrix over GF2&gt; ],
  &lt;action isomorphism&gt; )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X); return TensorWithModPModule(X,rho); end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=function(X) return TensorWithModPModule(X,rho); end;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);</span>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
@@ -1065,7 +1010,7 @@ Chain Map between complexes of length 5 .
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sf:=Standard_f;;</span>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Test:=function(g,h,k,l);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Test:=function(g,h,k,l)</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
 function( g, h, k, l ) ... end
@@ -1220,7 +1165,7 @@ function( g, h, k, l ) ... end
 
 <p><strong class="button">Illustration 3</strong></p>
 
-<p>As a third illustration, the following commands show that <span class="SimpleMath">\(H_n(M_{23},M)_{p}\)</span> is periodic for primes <span class="SimpleMath">\(p=5, 7, 11, 23\)</span> of periods dividing <span class="SimpleMath">\(8, 6, 10, 22\)</span> respectively. They also show that <span class="SimpleMath">\(H_n(M_{23},\mathbb Z)_{(3)}=0\)</span> for <span class="SimpleMath">\(n=8,9,12,13\)</span> and <span class="SimpleMath">\(H_n(M_{23},\mathbb Z)_{(3)}=\mathbb Z_3\)</span> for <span class="SimpleMath">\(n=10,11\)</span>.</p>
+<p>As a third illustration, the following commands show that <span class="SimpleMath">\(H_n(M_{23},M)_{p}\)</span> is periodic for primes <span class="SimpleMath">\(p=5, 7, 11, 23\)</span> of periods dividing <span class="SimpleMath">\(8, 6, 10, 22\)</span> respectively.</p>
 
 
 <div class="example"><pre>
@@ -1265,31 +1210,6 @@ true
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologicalPeriod(D[1][1]);</span>
 22
-
-</pre></div>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=MathieuGroup(23);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=HomologicalGroupDecomposition(G,3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(D[1],StructureDescription);List(D[2],StructureDescription);</span>
-[ "(C3 x C3) : QD16", "A5 : S3" ]
-[ "S3 x S3" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [8..13] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(List(D[1],g-&gt;GroupHomology(g,n))," , ",List(D[2],g-&gt;GroupHomology(g,n)),"\n\n");</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-[ [ 2, 2 ], [ 2, 2, 2 ] ] , [ [ 2, 2, 2, 2 ] ]
-
-[ [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
-
-[ [ 2, 2, 3 ], [ 2, 2, 2, 3, 3 ] ] , [ [ 2, 2, 2, 2, 2, 3, 3 ] ]
-
-[ [ 2, 2, 2, 8, 3 ], [ 2, 2, 2, 2, 4, 3, 3, 3, 3 ] ] , 
-[ [ 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3 ] ]
-
-[ [ 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
-
-[ [ 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
 
 </pre></div>
 

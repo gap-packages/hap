@@ -1,0 +1,19 @@
+gap> V:=VoronoiComplexSL(2,-5);; #makes a call to Magma
+gap> R:=FreeGResolution(V,5);;
+gap> M:=HomogeneousPolynomials(R!.group,8);;
+gap> C:=HomToIntegralModule(R,M);;
+gap> Cohomology(C,4);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 8, 8 ]
+
+gap> V:=VoronoiComplexGL(2,5);; #makes a call to Magma
+gap> R:=FreeGResolution(V,5);;
+gap> Homology(TensorWithIntegers(R),4);
+[ 2, 2, 2, 2, 2, 2, 2, 60 ]
+
+gap> #V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)
+gap> V:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) 
+gap> R:=FreeGResolution(V,4);;
+gap> Homology(TensorWithIntegers(R),1);
+[ 2 ]
+gap> Homology(TensorWithIntegers(R),2);
+[ 2, 2, 2, 4 ]

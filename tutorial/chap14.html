@@ -64,9 +64,6 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X82F46C8B782420AB">14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X85F5853D819AE0E1">14.11 <span class="Heading">Calling Magma's Voronoi algorithm directly</span></a>
-</span>
-</div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -162,18 +159,7 @@ Regular CW-complex of dimension 2
 
 <p><img src="images/bianchi3D22.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D22.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
 
-<p>Two cusps are visible in these visualizations for <span class="SimpleMath">G_-22</span>. They lie in a single orbit. Thus, together with the orbit of <span class="SimpleMath">∞</span>, there are two orbits of cusps for this group.</p>
-
-<p>An alternative visualization for <span class="SimpleMath">G_-22</span> can be produced, in which the cells in a given orbit are coloured with a common colour. The following commands produce this visualization.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-22);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(K);</span>
-
-</pre></div>
-
-<p><img src="images/bianchi3D22extra.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/></p>
+<p>Two cusps are visible in the visualizations for <span class="SimpleMath">G_-22</span>. They lie in a single orbit. Thus, together with the orbit of <span class="SimpleMath">∞</span>, there are two orbits of cusps for this group.</p>
 
 <p>A fundamental domain for <span class="SimpleMath">G_-163</span> can be visualized using the following commands.</p>
 
@@ -182,12 +168,10 @@ Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=BianchiPolyhedron(-163);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(OQ,D);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display2D(OQ,D);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-163);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display3D(K);</span>
 
 </pre></div>
 
-<p><img src="images/bianchi3D163.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi3D163extra.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/></p>
+<p><img src="images/bianchi3D163.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/> <img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/></p>
 
 <p>There is just a single orbit of cusps in this example, the orbit containing <span class="SimpleMath">∞</span>, since <span class="SimpleMath">Q(sqrt-163)</span> is a principal ideal domain and hence has trivial class group.</p>
 
@@ -506,7 +490,7 @@ ideal of norm 23 in O(Q(Sqrt(-23)))
 
 <h4>14.10 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></h4>
 
-<p>For square free <span class="SimpleMath">d&gt;0</span> the group <span class="SimpleMath">PSL_2(mathcal O_d)</span> is a subgroup of <span class="SimpleMath">PSL_2( R)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">PSL_2( R)× PSL_2( R)</span> but a fundamental domain for its action on <span class="SimpleMath">frak h^2 × frak h^2</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">GL_2(mathcal O_d)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">GL_2(mathcal O( Q(sqrt14)))</span>. In this example the contractible complex is <span class="SimpleMath">4</span>-dimensional and has <span class="SimpleMath">33</span> orbits of <span class="SimpleMath">4</span>-dimensional cells.</p>
+<p>For square free <span class="SimpleMath">d&gt;0</span> the group <span class="SimpleMath">G_d=PSL_2(mathcal O_d)</span> is a subgroup of <span class="SimpleMath">PSL_2( R)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">PSL_2( R)× PSL_2( R)</span> but a fundamental domain for its action on <span class="SimpleMath">frak h^2 × frak h^2</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">G_d</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">GL_2(mathcal O( Q(sqrt14)))</span>. In this example the contractible complex is <span class="SimpleMath">4</span>-dimensional and has <span class="SimpleMath">33</span> orbits of <span class="SimpleMath">4</span>-dimensional cells.</p>
 
 
 <div class="example"><pre>
@@ -523,50 +507,6 @@ No contracting homotopy available.
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]
-
-</pre></div>
-
-<p><a id="X85F5853D819AE0E1" name="X85F5853D819AE0E1"></a></p>
-
-<h4>14.11 <span class="Heading">Calling Magma's Voronoi algorithm directly</span></h4>
-
-<p>If</p>
-
-
-<ul>
-<li><p>the <strong class="button">Magma</strong> computational algebra system can be started using the line command <code class="code">magma</code> and</p>
-
-</li>
-<li><p><span class="URL"><a href="https://github.com/schoennenbeck/VMH-ImaginaryQuadraticNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm for imaginary quadratic number fields is copied to ~pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields and</p>
-
-</li>
-<li><p><span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm for totally real quadratic number fields is copied to ~pkg/Voronoi/VMH-TotallyRealNumberFields</p>
-
-</li>
-</ul>
-<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">H^4(GL_2(mathcal O_-5 ),P_{mathcal O_-5}(8)) = ( Z_2)^17 ⊕ ( Z_4)^2 ⊕ ( Z_8)^2</span> and <span class="SimpleMath">H_4(GL_2(mathcal O( Q(sqrt5)), Z) = ( Z_2)^7 ⊕ Z_60</span> and <span class="SimpleMath">H_n(GL_3(mathcal O_-5), Z)</span> for <span class="SimpleMath">n=1,2</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=VoronoiComplexSL(2,-5);; #makes a call to Magma</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(R!.group,8);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToIntegralModule(R,M);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,4);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 8, 8 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=VoronoiComplexGL(2,5);; #makes a call to Magma</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 60 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),1);</span>
-[ 2 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),2);</span>
-[ 2, 2, 2, 4 ]
 
 </pre></div>
 

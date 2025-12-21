@@ -27,12 +27,12 @@ So any congruence subgroup is of finite index in <M>SL_2(\mathbb Z)</M>,
 but the converse is not true. 
 
 <P/>One congruence subgroup of particular interest is the group
-<M>\Gamma_1(N)=\ker(\pi_N)</M>, known as the <E>principal congruence subgroup</E> of level <M>N</M>. Another congruence subgroup of particular interest is the group  <M>\Gamma_0(N)</M> of those matrices that project to upper triangular matrices
+<M>\Gamma(N)=\ker(\pi_N)</M>, known as the <E>principal congruence subgroup</E> of level <M>N</M>. Another congruence subgroup of particular interest is the group  <M>\Gamma_0(N)</M> of those matrices that project to upper triangular matrices
 in <M>SL_2(\mathbb Z/N\mathbb Z)</M>.  
 
 <P/>A <E>modular form</E> of weight <M>k</M> for a congruence subgroup
 <M>\Gamma</M> is a complex valued  function on the upper-half plane,
- <M>f\colon {\frak{h}}=\{z\in \mathbb C : Re(z)>0\} \rightarrow \mathbb C</M>, satisfying:
+ <M>f\colon {\frak{h}}=\{z\in \mathbb C : Im(z)>0\} \rightarrow \mathbb C</M>, satisfying:
 <List>
 <Item> <M>\displaystyle f(\frac{az+b}{cz+d}) = (cz+d)^k f(z)</M> for <M>\left(\begin{array}{ll}a&amp;b\\ c &amp;d \end{array}\right) \in \Gamma</M>,
 </Item>
@@ -146,21 +146,21 @@ a generating set for <M>G</M>.
 
 <P/>
 Suppose  we wish to compute a set of generators for a principal congruence subgroup 
-<M>\Gamma=\Gamma_1(N)</M>. In the above theorem take <M>X={\cal T}</M> to be the cubic tree, and note that <M>\Gamma</M> acts freely on <M>\cal T</M> and thus that <M>W={\cal T}</M>. 
+<M>\Gamma=\Gamma(N)</M>,<M>N>2</M>. In the above theorem take <M>X={\cal T}</M> to be the cubic tree, and note that <M>\Gamma</M> acts freely on <M>\cal T</M> and thus that <M>W={\cal T}</M>. 
 To determine the  <M>1</M>-cells of <M>B_{\Gamma}\setminus T</M>
  we need to determine a cellular subspace 
 <M>D_\Gamma \subset \cal T</M>   whose images under the action of <M>\Gamma</M>  cover <M>\cal T</M> and are  pairwise either disjoint or identical. The subspace <M>D_\Gamma</M> will not be a CW-complex as it won't be closed, but it can be chosen to be connected, 
 and hence contractible. We call <M>D_\Gamma</M> a <E>fundamental region</E> for <M>\Gamma</M>. We denote by <M>\mathring D_\Gamma</M> the 
 largest CW-subcomplex of <M>D_\Gamma</M>. The vertices of <M>\mathring D_\Gamma</M> are the same as the vertices of <M>D_\Gamma</M>.
-Thus <M>\mathring D_\Gamma</M> is a subtree of the cubic tree with <M>|\Gamma|/6</M> vertices. 
+Thus <M>\mathring D_\Gamma</M> is a subtree of the cubic tree with <M>|SL_2(\mathbb Z):\Gamma|/6</M> vertices. 
  For each vertex <M>v</M> in  the tree
 <M>\mathring D_\Gamma</M> define <M>\eta(v)=3 -{\rm degree}(v)</M>. Then the number of  generators for <M> \Gamma </M>  will
  be <M>(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)</M>. 
 
  <P/> 
 The following commands determine projectively independent 
-generators for <M>\Gamma_1(6)</M> and display
-<M>\mathring D_{\Gamma_1(6)}</M>. The subgroup <M>\Gamma_1(6)</M> is free on <M>13</M> generators. 
+generators for <M>\Gamma(6)</M> and display
+<M>\mathring D_{\Gamma(6)}</M>. The subgroup <M>\Gamma(6)</M> is free on <M>13</M> generators. 
 
 <Example>
 <#Include SYSTEM "tutex/11.2.txt">
@@ -331,7 +331,7 @@ and the Eisenstein space <M>E_2(\Gamma_0(39))\cong \mathbb C^3</M> is of  dimens
 
 <Section><Heading>Hecke operators on forms of weight 2</Heading>
 
-A congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> and element <M>g\in SL_2(\mathbb Q)</M>  determine the subgroup
+A congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> and element <M>g\in GL_2(\mathbb Q)</M>  determine the subgroup
 <M>\Gamma' = \Gamma \cap g\Gamma g^{-1} </M> and  homomorphisms
 <Display> \Gamma\ \hookleftarrow\ \Gamma'\ \ \stackrel{\gamma \mapsto g^{-1}\gamma g}{\longrightarrow}\ \ g^{-1}\Gamma' g\ \hookrightarrow \Gamma\ . </Display> 
 These homomorphisms give rise to homomorphisms of cohomology groups
@@ -411,7 +411,7 @@ constitutes a basis for <M>S_2(\Gamma_0(11))</M>.
 the coefficients <M>a_s</M> with <M>s</M> a composite integer can be expressed in terms of the coefficients <M>a_p</M> for prime <M>p</M>.
 If <M>r,s</M> are coprime then <M>T_{rs} =T_rT_s</M>.
 If <M>p</M> is a prime that is not a divisor of the level <M>N</M> of <M>\Gamma</M> then
-<M>a_{p^m} =a_{p^{m-1}}a_p - p a_{p^{m-2}}.</M>
+<M>a_{p^m} =a_{p^{m-1}}a_p - p^{k-1} a_{p^{m-2}}</M> where <M>k</M> is the weight.
 If the prime <M> p</M> divides <M>N</M> then <M>a_{p^m} = (a_p)^m</M>. It thus suffices to compute the coefficients <M>a_p</M> for prime integers <M>p</M> only.
 
 <P/>
@@ -652,16 +652,16 @@ The (co)homology of Bianchi groups has been studied in papers such as
 
 Analogous to the functions for Bianchi groups, HAP has functions
 <List>
-<Item><Code>ResolutionSL2QuadraticIntegers(-d,n)</Code> </Item>
+<Item><Code>ResolutionSL2QuadraticIntegers(d,n)</Code> </Item>
 <Item><Code>ResolutionSL2ZInvertedInteger(m,n)</Code></Item>
-<Item><Code>ResolutionGL2QuadraticIntegers(-d,n)</Code></Item>
-<Item><Code>ResolutionPGL2QuadraticIntegers(-d,n)</Code></Item>
-<Item><Code>ResolutionGL3QuadraticIntegers(-d,n)</Code></Item>
-<Item><Code>ResolutionPGL3QuadraticIntegers(-d,n)</Code></Item>
+<Item><Code>ResolutionGL2QuadraticIntegers(d,n)</Code></Item>
+<Item><Code>ResolutionPGL2QuadraticIntegers(d,n)</Code></Item>
+<Item><Code>ResolutionGL3QuadraticIntegers(d,n)</Code></Item>
+<Item><Code>ResolutionPGL3QuadraticIntegers(d,n)</Code></Item>
 </List>
-for computing free resolutions for certain values of <M>SL_2({\cal O}_{-d})</M>,
+for computing free resolutions for certain values of <M>SL_2({\cal O}_{d})</M>,
 <M>SL_2(\mathbb Z[\frac{1}{m}])</M>,
-<M>GL_2({\cal O}_{-d})</M> and <M>PGL_2({\cal O}_{-d})</M>.
+<M>GL_2({\cal O}_{d})</M>,  <M>PGL_2({\cal O}_{d})</M>, <M>GL_3({\cal O}_{d})</M> and <M>PGL_3({\cal O}_{d})</M>.
 Additionally, the function 
 <List>
 <Item><Code>ResolutionArithmeticGroup("string",n)</Code></Item>
@@ -764,7 +764,7 @@ and then later proved by Harold Stark.
 <M>\pi_I\colon SL_2({\cal O}) \rightarrow SL_2({\cal O}/I)</M>. A
 subgroup <M>\Gamma \le SL_2({\cal O})</M> is said to be a
 <E>congruence subgroup</E> if it contains <M>\ker \pi_I</M>. Thus congruence subgroups are of finite index.  
- Generalizing the definition in <Ref Sect="sec:EichlerShimura"/> above, we define the <E>principal congruence subgroup</E> <M>\Gamma_1(I)=\ker \pi_I</M>, and the congruence subgroup
+ Generalizing the definition in <Ref Sect="sec:EichlerShimura"/> above, we define the <E>principal congruence subgroup</E> <M>\Gamma(I)=\ker \pi_I</M>, and the congruence subgroup
 <M>\Gamma_0(I)</M> consisting of preimages of the upper triangular matrices in
 <M>SL_2({\cal O}/I)</M>.
 
