@@ -92,7 +92,7 @@ R:=RightTransversal(Image(iso),HN);
 R2:=List(R,x->PreImagesRepresentative(epi,x));
 
 ##########################################
-poscan:=function(x);
+poscan:=function(x)
 return PositionCanonical(R,ImagesRepresentative(epi2,x));
 end;
 ##########################################

@@ -46,14 +46,14 @@ one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
 zero:=Zero(one);
 
 ###################################################
-membership:=function(g);
+membership:=function(g)
 if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 return true; 
 end;
 ###################################################
 ###################################################
-membershipLight:=function(g);
+membershipLight:=function(g)
 if not g[2][1] in I   then return false; fi;
 return true;
 end;
@@ -72,14 +72,14 @@ G!.ugrp:=Group(IdentityMat(2));
 if IsPrime(I) then   #I need to extend this to no primes
 R:=RightTransversal(I);
 ###########################################
-CosetPos:=function(g);
+CosetPos:=function(g)
 if g[1][1] mod I =zero then return 1+Norm(I); fi;  
 return Position(R, ((g[2][1]*InverseOp(I,g[1][1])) mod I));
 end;
 ###########################################
 
 ###########################################
-CosetRep:=function(g);
+CosetRep:=function(g)
 if g[1][1] mod I=zero then return one*[[0,-1],[1,0]]; fi;
 return [one*[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,one]];
 end;
@@ -108,7 +108,7 @@ G:=HAP_GenericSL2OSubgroup();
 one:=One(I!.AssociatedRing);
 
 ###################################################
-membership:=function(g);
+membership:=function(g)
 if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 if not g[1][2] in I   then return false; fi;
@@ -118,7 +118,7 @@ return true;
 end;
 ###################################################
 ###################################################
-membershipLight:=function(g);
+membershipLight:=function(g)
 if not g[2][1] in I   then return false; fi;
 if not g[1][2] in I   then return false; fi;
 if not (g[1][1] -one) in I   then return false; fi;
@@ -218,7 +218,7 @@ return fail;
 end;
 ###########################################
 else
-    Perturb:=function(g); return g; end;
+    Perturb:=function(g) return g; end;
 fi;
 
 nodes:=[one]; 
@@ -482,7 +482,7 @@ R2:=List(R,x->PreImagesRepresentative(epi,x));
 L:=Length(R2);
 
 ##########################################
-poscan:=function(x);
+poscan:=function(x)
 return PositionCanonical(R,ImagesRepresentative(epi2,x));
 end;
 ##########################################
