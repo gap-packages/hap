@@ -153,9 +153,19 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YTwo  cusps are visible in the visualizations for [22XG_-22[122X. They lie in a single
-  orbit. Thus, together with the orbit of [22X∞[122X, there are two orbits of cusps for
-  this group.[133X
+  [33X[0;0YTwo  cusps  are  visible  in  these  visualizations for [22XG_-22[122X. They lie in a
+  single  orbit.  Thus,  together with the orbit of [22X∞[122X, there are two orbits of
+  cusps for this group.[133X
+  
+  [33X[0;0YAn  alternative  visualization for [22XG_-22[122X can be produced, in which the cells
+  in  a  given orbit are coloured with a common colour. The following commands
+  produce this visualization.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-22);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay3D(K);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   
   [33X[0;0YA  fundamental  domain  for  [22XG_-163[122X  can  be  visualized using the following
   commands.[133X
@@ -164,6 +174,8 @@
     [4X[25Xgap>[125X [27XD:=BianchiPolyhedron(-163);;[127X[104X
     [4X[25Xgap>[125X [27XDisplay3D(OQ,D);;[127X[104X
     [4X[25Xgap>[125X [27XDisplay2D(OQ,D);;[127X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-163);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay3D(K);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -541,11 +553,12 @@
   
   [1X14.10 [33X[0;0YTotally real quadratic fields / Hilbert modular group[133X[101X
   
-  [33X[0;0YFor square free [22Xd>0[122X the group [22XG_d=PSL_2(mathcal O_d)[122X is a subgroup of [22XPSL_2(
-  R)[122X  but  not a discrete subgroup. It embeds as a discrete subgroup of [22XPSL_2(
-  R)× PSL_2( R)[122X but a fundamental domain for its action on [22Xfrak h^2 × frak h^2[122X
-  is  not  implemented  in  HAP. One can obtain a contractible [22XG_d[122X-equivariant
-  complex     using    Sebastian    Schoennenbeck's    Magma    implementation
+  [33X[0;0YFor  square free [22Xd>0[122X the group [22XPSL_2(mathcal O_d)[122X is a subgroup of [22XPSL_2( R)[122X
+  but  not a discrete subgroup. It embeds as a discrete subgroup of [22XPSL_2( R)×
+  PSL_2(  R)[122X but a fundamental domain for its action on [22Xfrak h^2 × frak h^2[122X is
+  not   implemented  in  HAP.  One  can  obtain  a  contractible  [22XGL_2(mathcal
+  O_d)[122X-equivariant    complex    using    Sebastian    Schoennenbeck's   Magma
+  implementation
   ([7Xhttps://github.com/schoennenbeck/VMH-TotallyRealNumberFields[107X)  of Voronoi's
   algorithm  to  produce  text files that can be read into HAP. A few of these
   text  files are stored in HAP. The following commands use one such text file
@@ -567,6 +580,54 @@
     [4X[28X  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], [128X[104X
     [4X[28X  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], [128X[104X
     [4X[28X  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.11 [33X[0;0YCalling Magma's Voronoi algorithm directly[133X[101X
+  
+  [33X[0;0YIf[133X
+  
+  [30X    [33X[0;6Ythe  [12XMagma[112X  computational algebra system can be started using the line
+        command [10Xmagma[110X and[133X
+  
+  [30X    [33X[0;6YSebastian         Schoennenbeck's         Magma         implementation
+        ([7Xhttps://github.com/schoennenbeck/VMH-ImaginaryQuadraticNumberFields[107X)
+        of Voronoi's algorithm for imaginary quadratic number fields is copied
+        to ~pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields and[133X
+  
+  [30X    [33X[0;6YSebastian         Schoennenbeck's         Magma         implementation
+        ([7Xhttps://github.com/schoennenbeck/VMH-TotallyRealNumberFields[107X)      of
+        Voronoi's algorithm for totally real quadratic number fields is copied
+        to ~pkg/Voronoi/VMH-TotallyRealNumberFields[133X
+  
+  [33X[0;0Ythen  one can use the [12XGAP[112X commands [10XVoronoiGL(n,d)[110X and [10XVoronoiSL(n,d)[110X to call
+  the [12XMagma[112X implementation of the Voronoi algorithm directly. For example, the
+  following commands do this to calculate the homology groups [22XH^4(GL_2(mathcal
+  O_-5  ),P_{mathcal  O_-5}(8))  =  (  Z_2)^17  ⊕  (  Z_4)^2  ⊕  (  Z_8)^2[122X and
+  [22XH_4(GL_2(mathcal  O(  Q(sqrt5)),  Z)  = ( Z_2)^7 ⊕ Z_60[122X and [22XH_n(GL_3(mathcal
+  O_-5), Z)[122X for [22Xn=1,2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XV:=VoronoiComplexSL(2,-5);; #makes a call to Magma[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(V,5);;[127X[104X
+    [4X[25Xgap>[125X [27XM:=HomogeneousPolynomials(R!.group,8);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToIntegralModule(R,M);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,4);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 8, 8 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XV:=VoronoiComplexGL(2,5);; #makes a call to Magma[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(V,5);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),4);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 60 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)[127X[104X
+    [4X[25Xgap>[125X [27XV:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) [127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(V,4);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),1);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),2);[127X[104X
+    [4X[28X[ 2, 2, 2, 4 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

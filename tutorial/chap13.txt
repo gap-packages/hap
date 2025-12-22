@@ -1271,7 +1271,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-6,4);[127X[104X
-    [4X[28XResolution of length 4 in characteristic 0 for PSL(2,O-6) . [128X[104X
+    [4X[28XResolution of length 4 in characteristic 0 for SL(2,O-6) . [128X[104X
     [4X[28XNo contracting homotopy available. [128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XG:=R!.group;;[127X[104X
@@ -1520,23 +1520,64 @@
   Such methods underly the following computation of[133X
   
   
-  [24X[33X[0;6YH_1(  \Gamma_0(I),\mathbb  Z) \cong \mathbb Z_2 \oplus \cdots \oplus \mathbb
-  Z_{4078793513671}[133X
+  [24X[33X[0;6YH_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z \oplus \mathbb Z_2 \oplus \cdots
+  \oplus \mathbb Z_{124336989193985597}[133X
   
   [124X
   
   [33X[0;0Ywhere   [22XI[122X  is  the  prime  ideal  in  the  Gaussian  integers  generated  by
-  [22X41+56sqrt-1[122X.[133X
+  [22X-95+66sqrt-1[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-1);;[127X[104X
     [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
-    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,41+56*Sqrt(-1));[127X[104X
-    [4X[28Xideal of norm 4817 in O(GaussianRationals)[128X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,-95+66*Sqrt(-1));[127X[104X
+    [4X[28Xideal of norm 13381 in O(GaussianRationals)[128X[104X
     [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);;[127X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
-    [4X[28X[ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, [128X[104X
-    [4X[28X  4078793513671 ][128X[104X
+    [4X[28X[ 0, 2, 2, 2, 2, 3, 4, 5, 16, 31, 223, 857, 13913, 106103, 1267133821, [128X[104X
+    [4X[28X  141880858099, 1290077458421, 92119226692240157, 124336989193985597 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe command [10XAbelianInvariants(G)[110X can be quite time consuming. An alternative
+  approach  is to compute the first homology of [22XG[122X from a chain complex [22XC[122X using
+  the  command [10XContractedComplex(C,b)[110X. This command inputs a chain complex and
+  optionally  a  positive  integer [22Xb[122X and attempts to return a quasi-isomorphic
+  chain  complex  with fewer generators in each degree. The optional integer [22Xb[122X
+  is  used to limit the extent to which simplification of [22XC[122X takes place. If no
+  integer  [22Xb[122X  is  entered  then  no  limit  is  placed  on  the simplification
+  procedure.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-1,3,true);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(S);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 13382, 53528, 93674, 93674 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,20);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 681, 11418, 50884 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,40);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 541, 10765, 50371 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,60);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 521, 10555, 50181 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,80);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 506, 10251, 49892 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,100);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 481, 9778, 49444 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,200);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 433, 7648, 47362 ][128X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C,300);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 1, 354, 6652, 46445 ][128X[104X
+    [4X[25Xgap>[125X [27Xh:=Homology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 4, 5575961616921963080290825077053419457519929798345389608972206812096744968225641101360, 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1554,7 +1595,7 @@
   [124X
   
   [33X[0;0Yas  the  norm  of  the  prime ideal [22XI[122X tends to [22X∞[122X. The following approximates
-  [22Xλ/18π  = 0.0161957[122X and [22Xfraclog |Γ_0(I)_tors^ab|{ Norm(I) = 0.0210325[122X for the
+  [22Xλ/18π  = 0.0161957[122X and [22Xfraclog |Γ_0(I)_tors^ab|{ Norm(I) = 0.0147988[122X for the
   above example.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1562,9 +1603,12 @@
     [4X[25Xgap>[125X [27XLfunction(Q,2)/(18*3.142);[127X[104X
     [4X[28X0.0161957[128X[104X
     [4X[28X[128X[104X
-    [4X[28XLoge10:=0.434294481903;; #Log_10(e)[128X[104X
-    [4X[25Xgap>[125X [27X1.0*Log(Product(AbelianInvariants(G)),10)/(Loge*Norm(I));[127X[104X
-    [4X[28X0.0210325[128X[104X
+    [4X[25Xgap>[125X [27XLoge10:=0.434294481903;; #Log_10(e)[127X[104X
+    [4X[25Xgap>[125X [27XT:=Product([ 2, 2, 2, 2, 3, 4, 5, 16, 31, 223, 857, 13913, 106103, [127X[104X
+    [4X[25X>[125X [27X                1267133821, 141880858099, 1290077458421, 92119226692240157, [127X[104X
+    [4X[25X>[125X [27X                124336989193985597 ]);;[127X[104X
+    [4X[25Xgap>[125X [27X1.0*Log(Product(T,10)/(Loge*Norm(I));[127X[104X
+    [4X[28X0.0147988[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1581,7 +1625,7 @@
   right-hand side by the index [22X|PSL_2(cal O_d): Γ|[122X.[133X
   
   [33X[0;0YThe  following commands produce a graph of [22Xfraclog |Γ_0(I)_tors^ab|{ Norm(I)[122X
-  against  [22XNorm(I)[122X  for  prime ideals [22XI[122X of norm [22X49 ≤ Norm(I) ≤ 4357[122X (where one
+  against  [22XNorm(I)[122X  for  prime ideals [22XI[122X of norm [22X49 ≤ Norm(I) ≤ 6833[122X (where one
   ideal for each norm is taken).[133X
   
   [4X[32X  Example  [32X[104X
@@ -1590,7 +1634,7 @@
     [4X[25Xgap>[125X [27XN:=QuadraticIntegersByNorm(OQ,20000);;[127X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27X#########################################[127X[104X
-    [4X[25Xgap>[125X [27Xfn:=function(x)[127X[104X
+    [4X[25Xgap>[125X [27Xfn:=function(x);[127X[104X
     [4X[25Xgap>[125X [27Xif IsRat(x) then return x; fi;[127X[104X
     [4X[25Xgap>[125X [27Xreturn x!.rational+x!.irrational*Sqrt(-1);[127X[104X
     [4X[25Xgap>[125X [27Xend;[127X[104X
@@ -1605,16 +1649,16 @@
     [4X[25Xgap>[125X [27XLoge:=0.434294481903;; ###Log_10(e)[127X[104X
     [4X[25Xgap>[125X [27X#########################################[127X[104X
     [4X[25Xgap>[125X [27Xffn:=function(x)[127X[104X
-    [4X[25Xgap>[125X [27Xlocal I, G, A, S, F;[127X[104X
+    [4X[25Xgap>[125X [27Xlocal I, G, A, T, S, F;[127X[104X
     [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,x);[127X[104X
     [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I);;[127X[104X
     [4X[25Xgap>[125X [27XA:=AbelianInvariants(G);[127X[104X
-    [4X[25Xgap>[125X [27XA:=Filtered(A,x->not x=0);[127X[104X
-    [4X[25Xgap>[125X [27Xreturn [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i->not i=0)),10)/(Loge*Norm(I))];[127X[104X
+    [4X[25Xgap>[125X [27XT:=Filtered(A,x->not x=0);[127X[104X
+    [4X[25Xgap>[125X [27Xreturn [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];[127X[104X
     [4X[25Xgap>[125X [27Xend;[127X[104X
     [4X[25Xgap>[125X [27X#########################################[127X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XS:=List(PP{[9..267]},ffn);[127X[104X
+    [4X[25Xgap>[125X [27XS:=List(PP{[9..447]},ffn);[127X[104X
     [4X[25Xgap>[125X [27XScatterPlot(S);[127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
