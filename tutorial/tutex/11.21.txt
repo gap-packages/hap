@@ -3,7 +3,7 @@ gap> OQ:=RingOfIntegers(Q);;
 gap> N:=QuadraticIntegersByNorm(OQ,20000);;
 
 gap> #########################################
-gap> fn:=function(x)
+gap> fn:=function(x);
 gap> if IsRat(x) then return x; fi;
 gap> return x!.rational+x!.irrational*Sqrt(-1);
 gap> end;
@@ -18,14 +18,14 @@ gap> PP:=Filtered(PP,x->not x=0);
 gap> Loge:=0.434294481903;; ###Log_10(e)
 gap> #########################################
 gap> ffn:=function(x)
-gap> local I, G, A, S, F;
+gap> local I, G, A, T, S, F;
 gap> I:=QuadraticIdeal(OQ,x);
 gap> G:=HAP_CongruenceSubgroupGamma0(I);;
 gap> A:=AbelianInvariants(G);
-gap> A:=Filtered(A,x->not x=0);
-gap> return [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i->not i=0)),10)/(Loge*Norm(I))];
+gap> T:=Filtered(A,x->not x=0);
+gap> return [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];
 gap> end;
 gap> #########################################
 
-gap> S:=List(PP{[9..267]},ffn);
+gap> S:=List(PP{[9..447]},ffn);
 gap> ScatterPlot(S);

@@ -14,6 +14,7 @@ local type, G;
 
 G:=rec(
     membership:= fail,
+    membershipLight:=fail,
     tree:= fail,
     generators:= fail,
     level:= fail,
@@ -38,7 +39,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0Ideal,
 function(I)
-local G, membership, CosetRep, CosetPos,CosetReps,R,g,x,y,a, one, zero;
+local G, membership, membershipLight, CosetRep, CosetPos,CosetReps,R,g,x,y,a, one, zero;
 
 G:=HAP_GenericSL2OSubgroup();
 one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
@@ -46,13 +47,20 @@ zero:=Zero(one);
 
 ###################################################
 membership:=function(g);
-#if not Determinant(g)=1 then return false; fi;
+if not Determinant(g)=1 then return false; fi;
 if not g[2][1] in I   then return false; fi;
 return true; 
 end;
 ###################################################
+###################################################
+membershipLight:=function(g);
+if not g[2][1] in I   then return false; fi;
+return true;
+end;
+###################################################
 
 G!.membership:=membership;
+G!.membershipLight:=membershipLight;
 G!.level:=I;
 if Norm(I)=1 then
   G!.GeneratorsOfMagmaWithInverses:=one*GeneratorsOfGroup(SL2QuadraticIntegers(AssociatedRing(I)!.bianchiInteger,true));
@@ -94,14 +102,23 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_PrincipalCongruenceSubgroupIdeal,
 function(I)
-local G, membership, g,x,y,a,one;
+local G, membership, membershipLight, g,x,y,a,one;
 
 G:=HAP_GenericSL2OSubgroup();
 one:=One(I!.AssociatedRing);
 
 ###################################################
 membership:=function(g);
-#if not Determinant(g)=1 then return false; fi;
+if not Determinant(g)=1 then return false; fi;
+if not g[2][1] in I   then return false; fi;
+if not g[1][2] in I   then return false; fi;
+if not (g[1][1] -one) in I   then return false; fi;
+if not (g[2][2] -one) in I   then return false; fi;
+return true;
+end;
+###################################################
+###################################################
+membershipLight:=function(g);
 if not g[2][1] in I   then return false; fi;
 if not g[1][2] in I   then return false; fi;
 if not (g[1][1] -one) in I   then return false; fi;
@@ -111,6 +128,7 @@ end;
 ###################################################
 
 G!.membership:=membership;
+G!.membershipLight:=membershipLight;
 G!.level:=I;
 G!.name:="PrincipalCongruenceSubgroup";
 G!.ugrp:=Group(one*IdentityMat(2));
@@ -160,14 +178,14 @@ if Size(Ugrp)>1 then
 InGmodU:=function(g)
 local x;
 for x in Ugrp do
-if G!.membership(x*g)  
+if G!.membershipLight(x*g)  
 then return true; fi;;
 od;
 return false;
 end;
 ###########################################
 else
-     InGmodU:=G!.membership;
+     InGmodU:=G!.membershipLight;
 fi;
 
 ###########################################
@@ -194,7 +212,7 @@ if Size(Ugrp)>1 then
 Perturb:=function(g)
 local u;
 for u in Ugrp do
-if G!.membership(u*g) then return u*g; fi;
+if G!.membershipLight(u*g) then return u*g; fi;
 od;
 return fail;
 end;
@@ -395,7 +413,8 @@ if not (H!.name="CongruenceSubgroupGamma0" and IsPrime(I)) then
    local i, xinv;
    xinv:=x^-1;
    for i in [1..lenR] do
-   if R[i]*xinv in H then return i; fi;
+   #if R[i]*xinv in H then return i; fi;
+   if H!.membershipLight(R[i]*xinv) then return i; fi;
    od;
    end;
    ##########################################

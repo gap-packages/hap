@@ -124,8 +124,18 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 <Alt Only="HTML">&lt;img src="images/bianchi2D22.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/>
 </Alt>
 
-<P/>Two cusps are  visible in the visualizations for <M>G_{-22}</M>. They 
+<P/>Two cusps are  visible in these visualizations for <M>G_{-22}</M>. They 
 	 lie in a single orbit. Thus, together with the orbit of <M>\infty</M>, there are two orbits of cusps for this group.
+
+<P/> An alternative visualization for <M>G_{-22}</M> can be produced, in which the cells in a given orbit are coloured with a common colour. The following commands produce this visualization.
+
+	<Example>
+<#Include SYSTEM "tutex/bianchi.2A.txt">
+</Example>
+
+	<Alt Only="HTML">&lt;img src="images/bianchi3D22extra.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/>
+</Alt>
+
 
 
 <P/>A fundamental domain for <M>G_{-163}</M> can
@@ -138,6 +148,9 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 </Alt>
 <Alt Only="HTML">&lt;img src="images/bianchi2D163.png" align="center" width="350" alt="Fundamental domain for a Bianchi group"/>
 </Alt>
+	<Alt Only="HTML">&lt;img src="images/bianchi3D163extra.png" align="center" height="550" alt="Fundamental domain for a Bianchi group"/>
+</Alt>
+
 
 <P/>There is just a single orbit of cusps in this example, the orbit containing <M>\infty</M>, since <M>\mathbb Q(\sqrt{-163})</M> is a principal ideal domain and hence has trivial class group. 
 
@@ -313,9 +326,9 @@ The signs in the boundary maps of the free resolution are delicate. Another easy
 </Section>
 
 <Section><Heading>Totally real quadratic fields / Hilbert modular group</Heading>
-	For square free <M>d>0</M> the group <M>G_d=PSL_2({\mathcal O}_d)</M> is a subgroup of <M>PSL_2(\mathbb R)</M> but  not a discrete subgroup. 
+	For square free <M>d>0</M> the group <M>PSL_2({\mathcal O}_d)</M> is a subgroup of <M>PSL_2(\mathbb R)</M> but  not a discrete subgroup. 
 		It embeds as a discrete subgroup of <M>PSL_2(\mathbb R)\times PSL_2(\mathbb R)</M> but a fundamental domain  for its action on <M>{\frak h}^2 \times {\frak h}^2</M> is not implemented in HAP. One can obtain a
-					contractible <M>G_d</M>-equivariant complex
+			contractible <M>GL_2({\mathcal O}_d)</M>-equivariant complex
 				using 
 		<URL><Link>https://github.com/schoennenbeck/VMH-TotallyRealNumberFields</Link><LinkText>Sebastian Schoennenbeck's Magma implementation</LinkText></URL> of Voronoi's algorithm to produce text files that can be read into HAP.
 			A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of
@@ -326,4 +339,24 @@ The signs in the boundary maps of the free resolution are delicate. Another easy
 </Example>
 </Section>
 
+<Section><Heading>Calling Magma's Voronoi algorithm directly</Heading>
+	If <List>
+		<Item>the <B>Magma</B> computational algebra system 
+			can be started  using
+			the line command <C>magma</C> and</Item>
+		<Item> 
+			<URL><Link>https://github.com/schoennenbeck/VMH-ImaginaryQuadraticNumberFields</Link><LinkText>Sebastian Schoennenbeck's Magma implementation</LinkText></URL> of Voronoi's algorithm for imaginary quadratic number fields is copied to ~pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields and</Item>
+		<Item><URL><Link>https://github.com/schoennenbeck/VMH-TotallyRealNumberFields</Link><LinkText>Sebastian Schoennenbeck's Magma implementation</LinkText></URL> of Voronoi's algorithm for totally real quadratic number  fields is copied to ~pkg/Voronoi/VMH-TotallyRealNumberFields </Item>
+		</List>
+				then one can use the <B>GAP</B> commands <C>VoronoiGL(n,d)</C>
+					and <C>VoronoiSL(n,d)</C> to call  the <B>Magma</B> implementation of the Voronoi algorithm  directly. For example, the following commands do this to calculate the homology  groups
+					<M>H^4(GL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17} \oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 </M>
+						and <M>H_4(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})),\mathbb Z) = (\mathbb Z_2)^7 \oplus \mathbb Z_{60}</M>
+							and <M>H_n(GL_3({\mathcal O}_{-5}),\mathbb Z)</M> for <M>n=1,2</M>.
+
+				<Example>
+<#Include SYSTEM "tutex/bianchi.17.txt">
+</Example>
+
+</Section>
 </Chapter>
