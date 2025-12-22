@@ -13,10 +13,12 @@ fi;
 
 P:=ContractibleGcomplex("bsSL2Z");;
 R:=FreeGResolution(P,N+1);;
+R!.group:=HAP_CongruenceSubgroupGamma0(1);   #Dec 2025
 S:=ResolutionFiniteSubgroup(R,H);;
 
 B:=ContractibleGcomplex("bsSL2Ztmp");;B!.group:=P!.group;;
 RB:=FreeGResolution(B,N+1);;
+RB!.group:=R!.group;     #Dec 2025
 SB:=ResolutionFiniteSubgroup(RB,H);;
 
 f:=GroupHomomorphismByFunction(SB!.group,S!.group,x->x);;
