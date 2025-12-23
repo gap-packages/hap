@@ -268,10 +268,10 @@ end;
 triple2word:=function(x)
 local u,uu,g,q,c;
 for u in Ugrp do
-#Print(vertex2word(G!.cosetPos(x[3])) = x[3], " ");
 c:=x[4]^-1*u*vertex2word(G!.cosetPos(x[4]));
-if c in G then return c; fi;
-od;
+#if c in G then return c; fi;
+if G!.membership(c) then return c; fi;
+od; 
 return fail;  #This should never happen
 end;
 #####################################################
@@ -407,7 +407,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
 function(n)
-local G,sl,S,T,membership,membershipLight,CosetRep, CosetPos,g,x,y,a;
+local G,sl,membership,membershipLight,CosetRep, CosetPos,g,x,y,a;
 
 if IsRing(n) then
     return HAP_CongruenceSubgroupGamma0Ideal(n);
@@ -434,10 +434,7 @@ G!.membership:=membership;
 G!.membershipLight:=membershipLight;
 G!.level:=n;
 
-S:=[[0,-1],[1,0]];;
-T:=[[1,1],[0,1]];
-
-G!.ugrp:=Group((S*T)^0);
+G!.ugrp:=Group([[1,0],[0,1]]);
 G!.name:="CongruenceSubgroupGamma0";
 if n=1 then
 G!.index:=1;
@@ -445,7 +442,7 @@ else
 G!.index:=n*Product(List(SSortedList(Factors(n)), p->1+1/p));
 fi;
 
-if IsPrimeInt(n) then   #I need to extend this to no primes
+if IsPrimeInt(n) then   #I need to extend this to none primes
 ###########################################
 CosetPos:=function(g)
 if g[1][1] mod n =0 then return n+1; fi;

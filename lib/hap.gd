@@ -16,6 +16,7 @@ ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gd");
 ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gd");
 ReadPackage("HAP","lib/Congruence/quadraticIntegers.gd");
 ReadPackage("HAP","lib/Congruence/residues.gd");
+ReadPackage("HAP","lib/Classical/subgroups.gd");
 
 
 

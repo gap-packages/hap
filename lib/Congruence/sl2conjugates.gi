@@ -17,6 +17,7 @@ G:=rec(
     conjugator:=fail,
     conjugatorInverse:=fail,
     membership:= fail,
+    membershipLight:=fail,
     generators:= fail,
     cosetRep:= fail,
     cosetPos:= fail,
@@ -83,6 +84,7 @@ end;
 ###################################################
 
 G!.membership:=membership;
+G!.membershipLight:=membership;
 G!.sl2Zsubgroup:=H;
 G!.conjugator:=g;
 G!.conjugatorInverse:=gg;
@@ -111,6 +113,7 @@ end;
 ###################################################
 
 G!.membership:=membership;
+G!.membershipLight:=membership;
 G!.sl2Zsubgroup:=H;
 G!.conjugator:=g;
 G!.conjugatorInverse:=gg;
@@ -142,6 +145,7 @@ end;
 
 HH:=Intersection(H,H^g);
 G!.membership:=membership;
+G!.membershipLight:=membership;
 #G!.sl2Zsubgroup:=HH;
 
 SetGeneratorsOfMagmaWithInverses(G,GeneratorsOfGroup(HH));

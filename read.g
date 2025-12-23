@@ -234,6 +234,8 @@ ReadPackageHap( "lib/Congruence/resAbelianBianchiSubgroup.gi");
 ReadPackageHap( "lib/Congruence/qnf_nc.gi");
 ReadPackageHap( "lib/Congruence/notused.gi");
 
+##################### CLASSICAL #####################################
+ReadPackageHap( "lib/Classical/subgroups.gi");
 
 
 

@@ -38,7 +38,7 @@ leaves:=NewDictionary(S,true,SL(2,Integers));
 nodes:=[one];
 AddDictionary(leaves,one,1);
 
-InH:=H!.membership;
+InH:=H!.membershipLight;
 
 ###########################################
 InLowDegreeNodesModH:=function(g)
