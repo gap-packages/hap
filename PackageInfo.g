@@ -71,6 +71,7 @@ SetPackageInfo( rec(
                              [ "fga",        ">=1.1" ],
                              [ "aclib",      ">=1.1" ],
                              [ "nq",         ">=1.1" ],
+                             [ "SmallGrp",   ">=1.1" ],
                            ],
     SuggestedOtherPackages := [
                                [ "homology",    ">=0.0"   ], 
@@ -91,6 +92,8 @@ SetPackageInfo( rec(
     "https://asymptote.sourceforge.io/"],
     ["Some optional functions require Singular software",
     "https://www.singular.uni-kl.de/"],
+    ["Some optional functions require ImageMagick software",
+    "https://imagemagick.org/"],
      ["One optional function requires the Simplicial Homology GAP package",
          "http://www.cis.udel.edu/~dumas"]
     ]
