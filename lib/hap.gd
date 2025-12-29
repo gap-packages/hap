@@ -905,6 +905,9 @@ DeclareGlobalFunction("TransposeOfSparseMat");
 DeclareGlobalFunction("ReverseSparseMat");
 DeclareGlobalFunction("PersistentHomologyOfFilteredSparseChainComplex");
 DeclareGlobalFunction("FilteredChainComplexToFilteredSparseChainComplex");
+DeclareGlobalFunction("SparseIdentityMat");
+DeclareGlobalFunction("SparseMatAddToEntry");
+DeclareGlobalFunction("SparseMatConcatenation");
 
 ##CONGRUENCE########################################################
 DeclareGlobalFunction("HAP_SL2SubgroupTree");

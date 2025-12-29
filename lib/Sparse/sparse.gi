@@ -212,9 +212,11 @@ first:=M!.mat[i][1][1];
 ###SparseRowAdd(M,i,r,k);  #THIS TAKES ALL THE TIME
 #############################################
 zz:=List(M!.mat[i],a->a[1]);
+if not IsSet(zz) then Print("List is not a set\n"); return fail; fi; 
+                                 #Unnecessary, but better safe than sorry!!
 for xx in M!.mat[r] do
-pos:=Position(zz,xx[1]);       #THIS IS BETTER ON SMALLER EXAMPLES
-#pos:=PositionSet(zz,xx[1]);   #THIS IS BETTER ON LARGER EXAMPLES
+#pos:=Position(zz,xx[1]);       #THIS IS BETTER ON SMALLER EXAMPLES
+pos:=PositionSet(zz,xx[1]);   #THIS IS BETTER ON LARGER EXAMPLES
 if  pos=fail then
 Add(M!.mat[i],[xx[1],k*xx[2]]);
 else
@@ -413,6 +415,76 @@ if IsBound(B!.heads) then Unbind(B!.heads); fi;
 end);
 ###############################################################
 ###############################################################
+
+###############################################################
+###############################################################
+InstallGlobalFunction(SparseIdentityMat,
+function(n)
+local S;
+
+S:=List([1..n],i->[[i,1]]);
+
+return Objectify(HapSparseMat,
+               rec( rows:=n,
+                    cols:=n,
+                    characteristic:=0,
+                    mat:=S));
+
+end);
+###############################################################
+###############################################################
+
+###############################################################
+###############################################################
+InstallGlobalFunction(SparseMatAddToEntry,
+function(S,i,j,a)
+local row2, pos;
+
+if not IsZero(a) then
+row2:=List(S!.mat[i],x->x[1]);
+pos:=Position(row2,j);
+
+if pos=fail then
+   Add(S!.mat[i],[j,a]);
+   S!.mat[i]:=Set(S!.mat[i]);
+else
+   S!.mat[i][pos][2]:=S!.mat[i][pos][2]+a;
+   if IsZero(S!.mat[i][pos][2]) then Remove(S!.mat[i],pos); fi;
+fi;
+
+fi;
+end);
+###############################################################
+###############################################################
+
+####################################################
+####################################################
+InstallGlobalFunction(SparseMatConcatenation,
+function(A,B)
+local S, Rows, Cols, char, i, j;
+
+#Inputs a matrix M and returns a sparse matrix
+
+if A!.characteristic<>B!.characteristic then return fail; fi;
+char:=A!.characteristic;
+
+if A!.cols<>B!.cols then return fail; fi;
+Cols:=A!.cols;
+
+Rows:=A!.rows+B!.rows;
+
+S:=Concatenation(A!.mat,B!.mat);
+
+
+return Objectify(HapSparseMat,
+               rec( rows:=Rows,
+                    cols:=Cols,
+                    characteristic:=char,
+                    mat:=S));
+end);
+####################################################
+####################################################
+
 
 
 
