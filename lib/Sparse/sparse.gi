@@ -76,12 +76,15 @@ local x;
 
 #Multiplies the i-th row of a sparse matrix by k.
 
-if IsZero(k) then M!.mat[i]:=[]; fi;
+if IsZero(k) then M!.mat[i]:=[]; 
+
+else
 
 for x in M!.mat[i] do
 x[2]:=k*x[2];
 od;
 
+fi;
 end);
 ####################################################
 ####################################################
@@ -112,23 +115,28 @@ local x,z,r, pos;
 
 #Adds k times the j-th row to the i-th row of a sparse matrix M.
 
-Sort(M!.mat[i]); #Leave this in for safety. It should not be needed.
+if not IsZero(k) then
 
-z:=List(M!.mat[i],a->a[1]);
+  Sort(M!.mat[i]); #Leave this in for safety. It should not be needed.
 
-for x in M!.mat[j] do
-pos:=PositionSet(z,x[1]);
-if  pos=fail then
-Add(M!.mat[i],[x[1],k*x[2]]);
-else
-M!.mat[i][pos][2]:=M!.mat[i][pos][2]+k*x[2];
+  z:=List(M!.mat[i],a->a[1]);
+
+  for x in M!.mat[j] do
+    pos:=PositionSet(z,x[1]);
+    if  pos=fail then
+      Add(M!.mat[i],[x[1],k*x[2]]);
+    else
+      M!.mat[i][pos][2]:=M!.mat[i][pos][2]+k*x[2];
+      if IsZero(M!.mat[i][pos][2]) then Unbind(M!.mat[i][pos][2]); fi;
+    fi;
+  od;
+
+  #M!.mat[i]:=Filtered(M!.mat[i],a->not IsZero(a[2]));
+  M!.mat[i]:=Filtered(M!.mat[i],a->IsBound(a));
+
+  Sort(M!.mat[i]);
+
 fi;
-od;
-
-M!.mat[i]:=Filtered(M!.mat[i],a->not IsZero(a[2]));
-
-Sort(M!.mat[i]);
-
 end);
 ####################################################
 ####################################################
@@ -160,14 +168,13 @@ if IsBound(M!.mat[i]) then
    if IsBound(M!.mat[i][1]) then
    if not IsBound(M!.heads[M!.mat[i][1][1]]) and not IsZero(M!.mat[i][1][2]) then
    M!.heads[M!.mat[i][1][1]]:=i;
-      if not IsOne(M!.mat[i][1][2])then 
+      if not IsOne(M!.mat[i][1][2]) then 
       SparseRowMult(M,i,M!.mat[i][1][2]^-1);
       fi;
    fi;
    fi;
 fi;
 od;
-
 
 for i in Difference([1..M!.rows],M!.heads) do
 SparseRowReduce(M,i);
@@ -217,16 +224,19 @@ if not IsSet(zz) then Print("List is not a set\n"); return fail; fi;
 for xx in M!.mat[r] do
 #pos:=Position(zz,xx[1]);       #THIS IS BETTER ON SMALLER EXAMPLES
 pos:=PositionSet(zz,xx[1]);   #THIS IS BETTER ON LARGER EXAMPLES
+
 if  pos=fail then
 Add(M!.mat[i],[xx[1],k*xx[2]]);
 else
 M!.mat[i][pos][2]:=M!.mat[i][pos][2]+k*xx[2];
-if IsZero(M!.mat[i][pos][2]) then M!.mat[i][pos][2]:=0; fi;  #Apr 2024
+#if IsZero(M!.mat[i][pos][2]) then M!.mat[i][pos][2]:=0; fi;  #Apr 2024
+if IsZero(M!.mat[i][pos][2]) then Unbind(M!.mat[i][pos]); fi;  #Dec 2025
 fi;
-od;
-#M!.mat[i]:=Filtered(M!.mat[i],a->not IsZero(a[2]));
 
-M!.mat[i]:=Filtered(M!.mat[i],a->not a[2]=0);   #Apr 24
+od;
+
+#M!.mat[i]:=Filtered(M!.mat[i],a-> not a[2]=0);   #Apr 24
+M!.mat[i]:=Filtered(M!.mat[i],a->IsBound(a));  #Dec 2025
 Sort(M!.mat[i]);
 #############################################
    if Length(M!.mat[i])=0 then return true;  fi;
@@ -238,6 +248,7 @@ if not IsOne(k) then
 SparseRowMult(M,i,k^-1);
 fi;
 M!.heads[first]:=i;
+
 return true;
 
 
@@ -482,6 +493,52 @@ return Objectify(HapSparseMat,
                     characteristic:=char,
                     mat:=S));
 end);
+####################################################
+####################################################
+
+####################################################
+####################################################
+InstallOtherMethod( \*,
+    "for FFE and sparse matrix",
+    [IsFFE, IsHapSparseMat],
+    function( x, A )
+    local p, B;
+    p:=Characteristic(x);
+    if A!.characteristic<>p and not A!.characteristic=0 then 
+    Print("Inconsistent field characteristics.\n");
+    return fail;
+    fi;
+    B:=List(A!.mat,r->List(r,s->[s[1],x*s[2]]));
+    return Objectify(HapSparseMat,
+               rec( rows:=A!.rows,
+                    cols:=A!.cols,
+                    characteristic:=p,
+                    mat:=B));
+
+    end );
+####################################################
+####################################################
+
+####################################################
+####################################################
+InstallOtherMethod( \*,
+    "for FFE and sparse matrix",
+    [IsHapSparseMat, IsFFE],
+    function( A, x )
+    local p, B;
+    p:=Characteristic(x);
+    if A!.characteristic<>p and not A!.characteristic=0 then
+    Print("Inconsistent field characteristics.\n");
+    return fail;
+    fi;
+    B:=List(A!.mat,r->List(r,s->[s[1],x*s[2]]));
+    return Objectify(HapSparseMat,
+               rec( rows:=A!.rows,
+                    cols:=A!.cols,
+                    characteristic:=p,
+                    mat:=B));
+
+    end );
 ####################################################
 ####################################################
 
