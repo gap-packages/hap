@@ -1367,7 +1367,7 @@ if IsPackageMarkedForLoading("singular","0") then
         # Singular is using
         Ig := Ideal(R, GroebnerBasis(Ideal(R,I)));
         # Now get the Hilbert Series
-        series := SingularInterface("hilb", [Ig, 1, degs], "bigintvec");
+        series := SingularInterface("hilb", [Ig, 1, degs], "intvec");
     
         # Remove the last one element of the list since that is not part of
         # the series (see the Singular help)
