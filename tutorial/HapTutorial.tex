@@ -1849,7 +1849,7 @@ $\begin{array}{lcl} H_0(Y,A) &= &\mathbb Z_2\, ,\\ H_1(Y,A) &= &\mathbb Z_3\,
   @gapprompt|gap>E @gapinput|RelatorsOfFpGroup(G);E
   [ f2^-1*f1^-1*f2^-1*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2 ]
   @gapprompt|gap>E @gapinput|hom:=GroupHomomorphismByImages(G,Group([[-1]]),[G.1,G.2],[[[-1]],[[-1]]]);;E
-  @gapprompt|gap>E @gapinput|A:=function(x) return Determinant(Image(hom,x)); end;;E
+  @gapprompt|gap>E @gapinput|A:=function(x); return Determinant(Image(hom,x)); end;;E
   @gapprompt|gap>E @gapinput|D:=TensorWithTwistedIntegers(C,A); #Here the function A represents E
   @gapprompt|gap>E @gapinput|#the integers with twisted action of G.E
   Chain complex of length 3 in characteristic 0 .
@@ -2680,7 +2680,7 @@ represent at least 25 distinct homotopy equivalence classes of manifolds. One
 homotopy class is represented by up to 40 of the manifolds, and at least four
 of the homotopy classes are each represented by a single manifold.. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@invariant1:=function(m)|
+  !gapprompt@gap>| !gapinput@invariant1:=function(m);|
   !gapprompt@>| !gapinput@return List([1..3],k->Homology(m,k));|
   !gapprompt@>| !gapinput@end;;|
   
@@ -3472,7 +3472,7 @@ connected by an edge when they contain common data points.
   !gapprompt@gap>| !gapinput@dz:=EuclideanApproximatedMetric;;|
   !gapprompt@gap>| !gapinput@L:=List(S,x->Maximum(List(S,y->dx(x,y))));;|
   !gapprompt@gap>| !gapinput@n:=Position(L,Minimum(L));;|
-  !gapprompt@gap>| !gapinput@f:=function(x) return [dx(S[n],x)]; end;;|
+  !gapprompt@gap>| !gapinput@f:=function(x); return [dx(S[n],x)]; end;;|
   !gapprompt@gap>| !gapinput@P:=30*[0..100];; P:=List(P, i->[i]);;|
   !gapprompt@gap>| !gapinput@r:=29;;|
   !gapprompt@gap>| !gapinput@epsilon:=75;;|
@@ -4865,13 +4865,20 @@ and fourth integral cohomomogy
 
 $H^4(M_{24},\mathbb Z) = \mathbb Z_{12}$ 
 
-of the Mathieu groups $M_{23}$ and $M_{24}$. (Warning: the computation of $H_7(M_{23},\mathbb Z)$ takes a couple of hours to run.) 
+and fifth integral homology 
+
+$H_5(M_{24},\mathbb Z) =\mathbb Z_{14}$ 
+
+of the Mathieu groups $M_{23}$ and $M_{24}$. (Warning: the computation of $H_7(M_{23},\mathbb Z)$ takes a couple of hours to run and the computation for $H_5(M_{24},\mathbb Z)$ takes an hour to run.) 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@GroupHomology(MathieuGroup(23),7);|
   [ 16, 3, 5 ]
   
   !gapprompt@gap>| !gapinput@GroupCohomology(MathieuGroup(24),4);|
   [ 4, 3 ]
+  
+  !gapprompt@gap>| !gapinput@GroupHomology(MathieuGroup(24),5);|
+  [ 2, 7 ]
   
 \end{Verbatim}
  }
@@ -5161,6 +5168,42 @@ for $G$ the graph of groups corresponding to the amalgamated product $G=S_5*_{S_
   [ 2, 2, 2, 2, 2 ]
   
 \end{Verbatim}
+ The next example computes the integral homology of $SL_2(\mathbb Z)$ in degrees $\le 5$ using the isomorphism $SL_2(\mathbb Z) \cong C_4\ast_{C_2}C_6$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@x:=(1,2,3,4,5,6,7,8,9,10,11,12);;|
+  !gapprompt@gap>| !gapinput@C6:=Group(x^2);;SetName(C6,"C6");;|
+  !gapprompt@gap>| !gapinput@C4:=Group(x^3);;SetName(C4,"C4");;|
+  !gapprompt@gap>| !gapinput@C2:=Group(x^6);;SetName(C2,"C2");;|
+  !gapprompt@gap>| !gapinput@C2C6:=GroupHomomorphismByFunction(C2,C6,x->x);;|
+  !gapprompt@gap>| !gapinput@C2C4:=GroupHomomorphismByFunction(C2,C4,x->x);;|
+  !gapprompt@gap>| !gapinput@D:=[C6,C4,[C2C6,C2C4]];;|
+  !gapprompt@gap>| !gapinput@GraphOfGroupsDisplay(D);|
+  
+\end{Verbatim}
+  
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionGraphOfGroups(D,6);;|
+  !gapprompt@gap>| !gapinput@List([0..5],n->Homology(TensorWithIntegers(R),n));|
+  [ [ 0 ], [ 12 ], [  ], [ 12 ], [  ], [ 12 ] ]
+  
+\end{Verbatim}
+ The next commands compute the integral homology in degree $7$ of a graph of groups corresponding to the HNN extension $G=H*_A$ where $H$ is the symmetric group $H=S_5$ and $A$ is the subgroup $A=S_3$ and $f:A\rightarrow H$ is the homomorphism $(1,2) \rightarrow (3,4)$, $(1,2,3) \rightarrow (3,4,5)$. The HNN extension $G$ is obtained from $H$ by adding a generator $t$ subject to the relations $t^{-1} a t = f(a)$ for $a \in A$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@S5:=SymmetricGroup(5);SetName(S5,"S5");;|
+  !gapprompt@gap>| !gapinput@A:=SymmetricGroup(3);SetName(A,"S3");;|
+  !gapprompt@gap>| !gapinput@f:=GroupHomomorphismByImages(A,S5,[(1,2),(1,2,3)],[(3,4),(3,4,5)]);;|
+  !gapprompt@gap>| !gapinput@g:=GroupHomomorphismByFunction(A,S5,x->x);;|
+  !gapprompt@gap>| !gapinput@D:=[S5,[f,g]];;|
+  !gapprompt@gap>| !gapinput@GraphOfGroupsDisplay(D);;|
+  
+\end{Verbatim}
+  
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@R:=ResolutionGraphOfGroups(D,8);;|
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),7);|
+  [ 2, 2, 60 ]
+  
+\end{Verbatim}
  }
 
  
@@ -5230,7 +5273,7 @@ One possibility is to use the data type of a \emph{$G$\texttt{\symbol{45}}Outer 
   !gapprompt@gap>| !gapinput@G:=SymmetricGroup(6);;|
   
   !gapprompt@gap>| !gapinput@A:=AbelianPcpGroup([0]);;|
-  !gapprompt@gap>| !gapinput@alpha:=function(g,a) return a^SignPerm(g); end;;|
+  !gapprompt@gap>| !gapinput@alpha:=function(g,a); return a^SignPerm(g); end;;|
   !gapprompt@gap>| !gapinput@A:=GModuleAsGOuterGroup(G,A,alpha);|
   ZG-module with abelian invariants [ 0 ] and G= SymmetricGroup( [ 1 .. 6 ] )
   
@@ -5327,7 +5370,7 @@ of the degree 11 homology of the alternating group $A_7$ of degree $7$ with coef
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(7);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),12);;|
-  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,11);|
   [ 2, 2, 4 ]
   
@@ -5341,7 +5384,7 @@ with coefficient module $A=\mathbb Z^{10}$ on which $A_{10}$ acts by permuting b
   !gapprompt@gap>| !gapinput@G:=AlternatingGroup(10);;|
   !gapprompt@gap>| !gapinput@rho:=PermToMatrixGroup(G);;|
   !gapprompt@gap>| !gapinput@R:=ResolutionFiniteGroup(SylowSubgroup(G,2),4);;|
-  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithIntegralModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithIntegralModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,R,F,3);|
   [ 4 ]
   
@@ -5359,7 +5402,7 @@ where $V$ is the vector space of dimension $3$ over $K=GF(2)$ acting via some ir
   CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -> 
   [ <an immutable 3x3 matrix over GF2>, <an immutable 3x3 matrix over GF2> ],
    <action isomorphism> )
-  !gapprompt@gap>| !gapinput@F:=function(X) return TensorWithModPModule(X,rho); end;;|
+  !gapprompt@gap>| !gapinput@F:=function(X); return TensorWithModPModule(X,rho); end;;|
   !gapprompt@gap>| !gapinput@S:=ResolutionPrimePowerGroup(SylowSubgroup(G,2),101);;|
   !gapprompt@gap>| !gapinput@PrimePartDerivedFunctorViaSubgroupChain(G,S,F,100);|
   [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
@@ -5697,7 +5740,7 @@ for all $g,h,k,l \in G$. In the above example the group $G=S_3$ acts trivially o
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@sf:=Standard_f;;|
   
-  !gapprompt@gap>| !gapinput@Test:=function(g,h,k,l)|
+  !gapprompt@gap>| !gapinput@Test:=function(g,h,k,l);|
   !gapprompt@>| !gapinput@return sf(h,k,l) - sf(g*h,k,l) + sf(g,h*k,l) - sf(g,h,k*l) + sf(g,h,k);|
   !gapprompt@>| !gapinput@end;|
   function( g, h, k, l ) ... end
@@ -5865,7 +5908,7 @@ $Stab_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ .
 
 \textsc{Illustration 3} 
 
- As a third illustration, the following commands show that $H_n(M_{23},M)_{p}$ is periodic for primes $p=5, 7, 11, 23$ of periods dividing $8, 6, 10, 22$ respectively. 
+ As a third illustration, the following commands show that $H_n(M_{23},M)_{p}$ is periodic for primes $p=5, 7, 11, 23$ of periods dividing $8, 6, 10, 22$ respectively. They also show that $H_n(M_{23},\mathbb Z)_{(3)}=0$ for $n=8,9,12,13$ and $H_n(M_{23},\mathbb Z)_{(3)}=\mathbb Z_3$ for $n=10,11$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=MathieuGroup(23);;|
   !gapprompt@gap>| !gapinput@Factors(Order(G));|
@@ -5908,6 +5951,30 @@ $Stab_5=((C_3 \times C_3) : C_3) : (C_2 \times C_2)$ .
   true
   !gapprompt@gap>| !gapinput@CohomologicalPeriod(D[1][1]);|
   22
+  
+\end{Verbatim}
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=MathieuGroup(23);;|
+  !gapprompt@gap>| !gapinput@D:=HomologicalGroupDecomposition(G,3);;|
+  !gapprompt@gap>| !gapinput@List(D[1],StructureDescription);List(D[2],StructureDescription);|
+  [ "(C3 x C3) : QD16", "A5 : S3" ]
+  [ "S3 x S3" ]
+  !gapprompt@gap>| !gapinput@for n in [8..13] do|
+  !gapprompt@>| !gapinput@Print(List(D[1],g->GroupHomology(g,n))," , ",List(D[2],g->GroupHomology(g,n)),"\n\n");|
+  !gapprompt@>| !gapinput@od;|
+  [ [ 2, 2 ], [ 2, 2, 2 ] ] , [ [ 2, 2, 2, 2 ] ]
+  
+  [ [ 2, 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+  
+  [ [ 2, 2, 3 ], [ 2, 2, 2, 3, 3 ] ] , [ [ 2, 2, 2, 2, 2, 3, 3 ] ]
+  
+  [ [ 2, 2, 2, 8, 3 ], [ 2, 2, 2, 2, 4, 3, 3, 3, 3 ] ] , 
+  [ [ 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3 ] ]
+  
+  [ [ 2, 2, 2 ], [ 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2 ] ]
+  
+  [ [ 2, 2, 2, 2, 2 ], [ 2, 2, 2, 2, 2 ] ] , [ [ 2, 2, 2, 2, 2, 2, 2, 2 ] ]
   
 \end{Verbatim}
  
@@ -6935,7 +7002,19 @@ barcode (of the sort used in Topological Data Analysis). The homomorphisms $\iot
   !gapprompt@gap>| !gapinput@BarCodeDisplay(P);|
   
 \end{Verbatim}
- }
+ Let us view a barcode as a graph with vertices arranged in columns. We then
+refer to a connected component of this graph as a \emph{bar}. Let us say that any bar with a vertex in the final
+(right\texttt{\symbol{45}}hand) column is of \emph{length} $\infty$. Let us define the \emph{length} of any other bar to be $r-1$ where $r$ is the number of vertices in the bar. Theorem 3.1 in \cite{Romero} implies that the differential $d^r_{p,q}=0$ for $p+q=k$ if and only if there is no bar of length $r$ in the barcode arising in this way for any degree $k$ homology barcode. So the following commands demonstrate that $d^r=0$ for $r\ge 2$ at least for $k\le 7$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@for k in [1..7] do|
+  !gapprompt@>| !gapinput@R:=ResolutionNormalSeries([G,N],k+1);;|
+  !gapprompt@>| !gapinput@C:=FilteredTensorWithIntegersModP(R,2);|
+  !gapprompt@>| !gapinput@P:=PersistentHomologyOfFilteredChainComplex(C,k,2);;|
+  !gapprompt@>| !gapinput@BarCodeDisplay(P);|
+  !gapprompt@>| !gapinput@od;|
+  
+\end{Verbatim}
+        }
 
  
 \section{\textcolor{Chapter }{Sparse chain complexes}}\logpage{[ 10, 7, 0 ]}
@@ -9546,7 +9625,7 @@ Z^4\end{array}\ , \]
  
 \begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
   @gapprompt|gap>A @gapinput|R:=ResolutionSL2QuadraticIntegers(-6,4);A
-  Resolution of length 4 in characteristic 0 for PSL(2,O-6) . 
+  Resolution of length 4 in characteristic 0 for SL(2,O-6) . 
   No contracting homotopy available. 
   
   @gapprompt|gap>A @gapinput|G:=R!.group;;A
@@ -9755,18 +9834,52 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational
 methods for finitely presented groups. Such methods underly the following
 computation of 
-\[H_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z_2 \oplus \cdots \oplus \mathbb
-Z_{4078793513671}\]
- where $I$ is the prime ideal in the Gaussian integers generated by $41+56\sqrt{-1}$. 
+\[H_1( \Gamma_0(I),\mathbb Z) \cong \mathbb Z \oplus \mathbb Z_2 \oplus \cdots
+\oplus \mathbb Z_{124336989193985597}\]
+ where $I$ is the prime ideal in the Gaussian integers generated by $-95+66\sqrt{-1}$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Q:=QuadraticNumberField(-1);;|
   !gapprompt@gap>| !gapinput@OQ:=RingOfIntegers(Q);;|
-  !gapprompt@gap>| !gapinput@I:=QuadraticIdeal(OQ,41+56*Sqrt(-1));|
-  ideal of norm 4817 in O(GaussianRationals)
+  !gapprompt@gap>| !gapinput@I:=QuadraticIdeal(OQ,-95+66*Sqrt(-1));|
+  ideal of norm 13381 in O(GaussianRationals)
   !gapprompt@gap>| !gapinput@G:=HAP_CongruenceSubgroupGamma0(I);;|
   !gapprompt@gap>| !gapinput@AbelianInvariants(G);|
-  [ 2, 2, 4, 5, 7, 16, 29, 43, 157, 179, 1877, 7741, 22037, 292306033, 
-    4078793513671 ]
+  [ 0, 2, 2, 2, 2, 3, 4, 5, 16, 31, 223, 857, 13913, 106103, 1267133821, 
+    141880858099, 1290077458421, 92119226692240157, 124336989193985597 ]
+  
+\end{Verbatim}
+ The command \texttt{AbelianInvariants(G)} can be quite time consuming. An alternative approach is to compute the first
+homology of $G$ from a chain complex $C$ using the command \texttt{ContractedComplex(C,b)}. This command inputs a chain complex and optionally a positive integer $b$ and attempts to return a quasi\texttt{\symbol{45}}isomorphic chain complex
+with fewer generators in each degree. The optional integer $b$ is used to limit the extent to which simplification of $C$ takes place. If no integer $b$ is entered then no limit is placed on the simplification procedure. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|R:=ResolutionSL2QuadraticIntegers(-1,3,true);;A
+  @gapprompt|gap>A @gapinput|S:=ResolutionFiniteSubgroup(R,G);;A
+  @gapprompt|gap>A @gapinput|C:=TensorWithIntegers(S);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 13382, 53528, 93674, 93674 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,20);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 681, 11418, 50884 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,40);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 541, 10765, 50371 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,60);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 521, 10555, 50181 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,80);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 506, 10251, 49892 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,100);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 481, 9778, 49444 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,200);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 433, 7648, 47362 ]
+  @gapprompt|gap>A @gapinput|C:=ContractedComplex(C,300);;A
+  @gapprompt|gap>A @gapinput|List([0..3],C!.dimension);A
+  [ 1, 354, 6652, 46445 ]
+  @gapprompt|gap>A @gapinput|h:=Homology(C,1);A
+  [ 2, 2, 2, 2, 4, 5575961616921963080290825077053419457519929798345389608972206812096744968225641101360, 0 ]
   
 \end{Verbatim}
  
@@ -9775,15 +9888,18 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
 \[ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} \rightarrow
 \frac{\lambda}{18\pi},\ \lambda =L(2,\chi_{\mathbb Q(\sqrt{-1})}) = 1
 -\frac{1}{9} + \frac{1}{25} - \frac{1}{49} + \cdots\]
- as the norm of the prime ideal $I$ tends to $\infty$. The following approximates $\lambda/18\pi = 0.0161957$ and $\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0210325$ for the above example. 
+ as the norm of the prime ideal $I$ tends to $\infty$. The following approximates $\lambda/18\pi = 0.0161957$ and $\frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)} = 0.0147988$ for the above example. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Q:=QuadraticNumberField(-1);;|
   !gapprompt@gap>| !gapinput@Lfunction(Q,2)/(18*3.142);|
   0.0161957
   
-  Loge10:=0.434294481903;; #Log_10(e)
-  !gapprompt@gap>| !gapinput@1.0*Log(Product(AbelianInvariants(G)),10)/(Loge*Norm(I));|
-  0.0210325
+  !gapprompt@gap>| !gapinput@Loge10:=0.434294481903;; #Log_10(e)|
+  !gapprompt@gap>| !gapinput@T:=Product([ 2, 2, 2, 2, 3, 4, 5, 16, 31, 223, 857, 13913, 106103, |
+  !gapprompt@>| !gapinput@                1267133821, 141880858099, 1290077458421, 92119226692240157, |
+  !gapprompt@>| !gapinput@                124336989193985597 ]);;|
+  !gapprompt@gap>| !gapinput@1.0*Log(Product(T,10)/(Loge*Norm(I));|
+  0.0147988
   
 \end{Verbatim}
  
@@ -9793,17 +9909,17 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
 \zeta_{ \mathbb Q( \sqrt{d} ) }(2)/\zeta_{\mathbb Q}(2) \]
  valid for square\texttt{\symbol{45}}free $d<0$, where $D$ is the discriminant of $\mathbb Q(\sqrt{d})$. The volume of a finite index subgroup $\Gamma$ is obtained by multiplying the right\texttt{\symbol{45}}hand side by the index $|PSL_2({\cal O}_d)\,:\, \Gamma|$. 
 
- The following commands produce a graph of $ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}$ against ${\rm Norm}(I)$ for prime ideals $I$ of norm $49 \le {\rm Norm}(I) \le 4357$ (where one ideal for each norm is taken). 
+ The following commands produce a graph of $ \frac{\log |\Gamma_0(I)_{tors}^{ab}|}{{\rm Norm}(I)}$ against ${\rm Norm}(I)$ for prime ideals $I$ of norm $49 \le {\rm Norm}(I) \le 6833$ (where one ideal for each norm is taken). 
 \begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
   @gapprompt|gap>D @gapinput|Q:=QuadraticNumberField(-1);;D
   @gapprompt|gap>D @gapinput|OQ:=RingOfIntegers(Q);;D
   @gapprompt|gap>D @gapinput|N:=QuadraticIntegersByNorm(OQ,20000);;D
   
   @gapprompt|gap>D @gapinput|#########################################D
-  @gapprompt|gap>D @gapinput|fn:=function(x)D
-  @gapprompt|gap>D @gapinput|if IsRat(x) then return x; fi;D
-  @gapprompt|gap>D @gapinput|return x!.rational+x!.irrational*Sqrt(-1);D
-  @gapprompt|gap>D @gapinput|end;D
+  @gapprompt|gap>D @gapinput|fn:=function(x);D
+  @gapprompt|>D @gapinput|if IsRat(x) then return x; fi;D
+  @gapprompt|>D @gapinput|return x!.rational+x!.irrational*Sqrt(-1);D
+  @gapprompt|>D @gapinput|end;D
   @gapprompt|gap>D @gapinput|#########################################D
   
   @gapprompt|gap>D @gapinput|NN:=List(N,fn);D
@@ -9815,16 +9931,16 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
   @gapprompt|gap>D @gapinput|Loge:=0.434294481903;; ###Log_10(e)D
   @gapprompt|gap>D @gapinput|#########################################D
   @gapprompt|gap>D @gapinput|ffn:=function(x)D
-  @gapprompt|gap>D @gapinput|local I, G, A, S, F;D
-  @gapprompt|gap>D @gapinput|I:=QuadraticIdeal(OQ,x);D
-  @gapprompt|gap>D @gapinput|G:=HAP_CongruenceSubgroupGamma0(I);;D
-  @gapprompt|gap>D @gapinput|A:=AbelianInvariants(G);D
-  @gapprompt|gap>D @gapinput|A:=Filtered(A,x->not x=0);D
-  @gapprompt|gap>D @gapinput|return [Norm(Q,x),1.0*Log(Product(Filtered(AbelianInvariants(G),i->not i=0)),10)/(Loge*Norm(I))];D
-  @gapprompt|gap>D @gapinput|end;D
+  @gapprompt|>D @gapinput|local I, G, A, T, S, F;D
+  @gapprompt|>D @gapinput|I:=QuadraticIdeal(OQ,x);D
+  @gapprompt|>D @gapinput|G:=HAP_CongruenceSubgroupGamma0(I);;D
+  @gapprompt|>D @gapinput|A:=AbelianInvariants(G);D
+  @gapprompt|>D @gapinput|T:=Filtered(A,x->not x=0);D
+  @gapprompt|>D @gapinput|return [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];D
+  @gapprompt|>D @gapinput|end;D
   @gapprompt|gap>D @gapinput|#########################################D
   
-  @gapprompt|gap>D @gapinput|S:=List(PP{[9..267]},ffn);D
+  @gapprompt|gap>D @gapinput|S:=List(PP{[9..447]},ffn);D
   @gapprompt|gap>D @gapinput|ScatterPlot(S);D
   
 \end{Verbatim}
@@ -9934,16 +10050,27 @@ A fundamental domain for $G_{-22}$ can be visualized using the following command
 \end{Verbatim}
    
 
-Two cusps are visible in the visualizations for $G_{-22}$. They lie in a single orbit. Thus, together with the orbit of $\infty$, there are two orbits of cusps for this group. 
+Two cusps are visible in these visualizations for $G_{-22}$. They lie in a single orbit. Thus, together with the orbit of $\infty$, there are two orbits of cusps for this group. 
+
+ An alternative visualization for $G_{-22}$ can be produced, in which the cells in a given orbit are coloured with a
+common colour. The following commands produce this visualization. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-22);;|
+  !gapprompt@gap>| !gapinput@Display3D(K);|
+  
+\end{Verbatim}
+  
 
 A fundamental domain for $G_{-163}$ can be visualized using the following commands. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@D:=BianchiPolyhedron(-163);;|
   !gapprompt@gap>| !gapinput@Display3D(OQ,D);;|
   !gapprompt@gap>| !gapinput@Display2D(OQ,D);;|
+  !gapprompt@gap>| !gapinput@K:=BianchiGcomplex(-163);;|
+  !gapprompt@gap>| !gapinput@Display3D(K);|
   
 \end{Verbatim}
-   
+    
 
 There is just a single orbit of cusps in this example, the orbit containing $\infty$, since $\mathbb Q(\sqrt{-163})$ is a principal ideal domain and hence has trivial class group. 
 
@@ -10298,7 +10425,7 @@ non\texttt{\symbol{45}}trivial units in ${\mathcal O}(\mathbb Q(\sqrt{-1}))$ and
 \section{\textcolor{Chapter }{Totally real quadratic fields / Hilbert modular group}}\logpage{[ 14, 10, 0 ]}
 \hyperdef{L}{X82F46C8B782420AB}{}
 {
- For square free $d>0$ the group $G_d=PSL_2({\mathcal O}_d)$ is a subgroup of $PSL_2(\mathbb R)$ but not a discrete subgroup. It embeds as a discrete subgroup of $PSL_2(\mathbb R)\times PSL_2(\mathbb R)$ but a fundamental domain for its action on ${\frak h}^2 \times {\frak h}^2$ is not implemented in HAP. One can obtain a contractible $G_d$\texttt{\symbol{45}}equivariant complex using \href{https://github.com/schoennenbeck/VMH-TotallyRealNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm to produce text files that can be read into HAP. A few
+ For square free $d>0$ the group $PSL_2({\mathcal O}_d)$ is a subgroup of $PSL_2(\mathbb R)$ but not a discrete subgroup. It embeds as a discrete subgroup of $PSL_2(\mathbb R)\times PSL_2(\mathbb R)$ but a fundamental domain for its action on ${\frak h}^2 \times {\frak h}^2$ is not implemented in HAP. One can obtain a contractible $GL_2({\mathcal O}_d)$\texttt{\symbol{45}}equivariant complex using \href{https://github.com/schoennenbeck/VMH-TotallyRealNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm to produce text files that can be read into HAP. A few
 of these text files are stored in HAP. The following commands use one such
 text file to compute integral homology groups of $GL_2({\mathcal O}(\mathbb Q(\sqrt{14})))$. In this example the contractible complex is $4$\texttt{\symbol{45}}dimensional and has $33$ orbits of $4$\texttt{\symbol{45}}dimensional cells. 
 \begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
@@ -10315,6 +10442,47 @@ text file to compute integral homology groups of $GL_2({\mathcal O}(\mathbb Q(\s
     [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 24, 24, 0, 0, 0, 0 ], 
     [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 12, 24 ], 
     [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Calling Magma's Voronoi algorithm directly}}\logpage{[ 14, 11, 0 ]}
+\hyperdef{L}{X85F5853D819AE0E1}{}
+{
+ If 
+\begin{itemize}
+\item the \textsc{Magma} computational algebra system can be started using the line command \texttt{magma} and
+\item  \href{https://github.com/schoennenbeck/VMH-ImaginaryQuadraticNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm for imaginary quadratic number fields is copied to
+\texttt{\symbol{126}}pkg/Voronoi/VMH\texttt{\symbol{45}}ImaginaryQuadraticNumberFields
+and
+\item \href{https://github.com/schoennenbeck/VMH-TotallyRealNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm for totally real quadratic number fields is copied to
+\texttt{\symbol{126}}pkg/Voronoi/VMH\texttt{\symbol{45}}TotallyRealNumberFields 
+\end{itemize}
+ then one can use the \textsc{GAP} commands \texttt{VoronoiGL(n,d)} and \texttt{VoronoiSL(n,d)} to call the \textsc{Magma} implementation of the Voronoi algorithm directly. For example, the following
+commands do this to calculate the homology groups $H^4(GL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17}
+\oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 $ and $H_4(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})),\mathbb Z) = (\mathbb Z_2)^7 \oplus
+\mathbb Z_{60}$ and $H_n(GL_3({\mathcal O}_{-5}),\mathbb Z)$ for $n=1,2$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|V:=VoronoiComplexSL(2,-5);; #makes a call to MagmaA
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(V,5);;A
+  @gapprompt|gap>A @gapinput|M:=HomogeneousPolynomials(R!.group,8);;A
+  @gapprompt|gap>A @gapinput|C:=HomToIntegralModule(R,M);;A
+  @gapprompt|gap>A @gapinput|Cohomology(C,4);A
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 8, 8 ]
+  
+  @gapprompt|gap>A @gapinput|V:=VoronoiComplexGL(2,5);; #makes a call to MagmaA
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(V,5);;A
+  @gapprompt|gap>A @gapinput|Homology(TensorWithIntegers(R),4);A
+  [ 2, 2, 2, 2, 2, 2, 2, 60 ]
+  
+  @gapprompt|gap>A @gapinput|#V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)A
+  @gapprompt|gap>A @gapinput|V:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) A
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(V,4);;A
+  @gapprompt|gap>A @gapinput|Homology(TensorWithIntegers(R),1);A
+  [ 2 ]
+  @gapprompt|gap>A @gapinput|Homology(TensorWithIntegers(R),2);A
+  [ 2, 2, 2, 4 ]
   
 \end{Verbatim}
  }
@@ -10340,7 +10508,7 @@ for the $2328$\texttt{\symbol{45}}th group $G$ in \textsc{GAP}'s library of smal
 computation achieves a speedup of 10.4 . 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@Processes:=List([1..15],i->ChildProcess());;|
-  !gapprompt@gap>| !gapinput@fn:=function(i)return GroupHomology(SmallGroup(128,i),2);end;;|
+  !gapprompt@gap>| !gapinput@fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;|
   !gapprompt@gap>| !gapinput@for p in Processes do|
   !gapprompt@>| !gapinput@ChildPut(fn,"fn",p);|
   !gapprompt@>| !gapinput@od;|

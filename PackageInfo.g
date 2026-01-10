@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.73",
-  Date    := "22/12/2025",
+  Version := "1.74",
+  Date    := "10/01/2026",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -71,6 +71,7 @@ SetPackageInfo( rec(
                              [ "fga",        ">=1.1" ],
                              [ "aclib",      ">=1.1" ],
                              [ "nq",         ">=1.1" ],
+                             [ "SmallGrp",   ">=1.1" ],
                            ],
     SuggestedOtherPackages := [
                                [ "homology",    ">=0.0"   ], 
@@ -91,6 +92,8 @@ SetPackageInfo( rec(
     "https://asymptote.sourceforge.io/"],
     ["Some optional functions require Singular software",
     "https://www.singular.uni-kl.de/"],
+    ["Some optional functions require ImageMagick software",
+    "https://imagemagick.org/"],
      ["One optional function requires the Simplicial Homology GAP package",
          "http://www.cis.udel.edu/~dumas"]
     ]

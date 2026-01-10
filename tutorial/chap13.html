@@ -1359,9 +1359,9 @@ ideal of norm 13381 in O(GaussianRationals)
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(x);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">if IsRat(x) then return x; fi;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return x!.rational+x!.irrational*Sqrt(-1);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">end;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if IsRat(x) then return x; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return x!.rational+x!.irrational*Sqrt(-1);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NN:=List(N,fn);</span>
@@ -1373,13 +1373,13 @@ ideal of norm 13381 in O(GaussianRationals)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Loge:=0.434294481903;; ###Log_10(e)</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ffn:=function(x)</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">local I, G, A, T, S, F;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,x);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=AbelianInvariants(G);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Filtered(A,x-&gt;not x=0);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">return [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">end;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">local I, G, A, T, S, F;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,x);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">A:=AbelianInvariants(G);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">T:=Filtered(A,x-&gt;not x=0);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return [Norm(Q,x),1.0*Log(Product(T),10)/(Loge*Norm(I))];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#########################################</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List(PP{[9..447]},ffn);</span>
