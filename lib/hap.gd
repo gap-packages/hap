@@ -16,7 +16,10 @@ ReadPackage("HAP","lib/RahmSanchez/DavisComplex.gd");
 ReadPackage("HAP","lib/GOuterGroups/functorialGouter.gd");
 ReadPackage("HAP","lib/Congruence/quadraticIntegers.gd");
 ReadPackage("HAP","lib/Congruence/residues.gd");
-ReadPackage("HAP","lib/Classical/subgroups.gd");
+
+## ORRU & WUNDEN#####################################################
+ReadPackage("HAP","lib/Orru/decsOrru.gd");
+ReadPackage("HAP","lib/Wunden/decsWunden.gd");
 
 
 
