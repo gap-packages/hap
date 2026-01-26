@@ -241,25 +241,29 @@
   [1X14.6 [33X[0;0YComputing quotient [22X2[122X[101X[1X-complexes[133X[101X
   
   [33X[0;0YThe  space  [22XX=frak  h^3  ∪  {∞}  ∪  Q(sqrt-d)[122X  retracts onto an [22XSL_2(mathcal
-  O_-d)[122X-equivariant  [22X2[122X-dimensional  regular  CW-complex  [22XK ⊂ X[122X. By subdividing
-  cells of [22XK[122X if necessary we can assume that the group action on [22XK[122X is [13Xrigid[113X in
-  the sense that any group element in the stabilizer of a cell fixes that cell
+  O_-d)[122X-equivariant [22X2[122X-dimensional regular CW-complex [22XK ⊂ X[122X. By barycentrically
+  subdividing [22XK[122X we can assume that the group action on [22XK[122X is [13Xrigid[113X in the sense
+  that  any  group  element  in  the  stabilizer  of  a  cell  fixes that cell
   pointwise.  Given  a congruence subgroup [22XΓ ≤ SL_2(mathcal O_-d)[122X the quotient
-  space [22XY=K/Γ[122X inherits a CW-structure and (except for a few cases where we may
-  need  to  subdibide again) the quotient will be regular. We have [22XH_n(Γ, Q) =
-  H_n(Y,  Q)[122X. The following session computes the homology of [22XY[122X for [22XΓ=Γ_0(71) ≤
-  SL(2,mathcal O_-2)[122X.[133X
+  space  [22XY=K/Γ[122X  inherits a regular CW-structure. We have [22XH_n(Γ, Q) = H_n(Y, Q)[122X
+  and  [22XH_n(Γ,  Z_p)  = H_n(Y, Z_p)[122X for any prime not dividing the order of any
+  group  element  in [22XΓ[122X. At these primes the [22Xp[122X-torsion in [22XH_n(Y, Z)[122X equals that
+  in  [22XH_n(Γ, Z)[122X. The following session computes the integral homology of [22XY[122X for
+  [22XΓ=Γ_0(71)  ≤  SL(2,mathcal O_-2)[122X and establishes that [22XΓ[122X has no [22Xp[122X-torsion for
+  primes [22Xp>3[122X and has index [22X5042[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-2);;[127X[104X
     [4X[25Xgap>[125X [27Xiso:=K!.isomorphismToGroupCyclotomicMats;;[127X[104X
-    [4X[25Xgap>[125X [27XKK:=RigidFacetsSubdivision(K);; #KK is a rigid complex[127X[104X
-    [4X[25Xgap>[125X [27XResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have [127X[104X
-    [4X[25Xgap>[125X [27X                                     #cyclotomic entries [127X[104X
+    [4X[25Xgap>[125X [27XKK:=BarycentricSubdivision(K);; #KK is a rigid complex[127X[104X
+    [4X[25Xgap>[125X [27XResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have[127X[104X
+    [4X[25Xgap>[125X [27X                                     #cyclotomic entries[127X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(QuadraticNumberField(-2));;[127X[104X
     [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,71);;[127X[104X
     [4X[25Xgap>[125X [27XN:=HAP_CongruenceSubgroupGamma0(I);; #A congruence subgroup of G[127X[104X
+    [4X[25Xgap>[125X [27XIndexInSL2O(N);[127X[104X
+    [4X[28X5042[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(KK,N); #Y = KK/N is a quotient CW-complex[127X[104X
     [4X[28XRegular CW-complex of dimension 2[128X[104X
@@ -269,8 +273,8 @@
     [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
     [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, [128X[104X
     [4X[28X  4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, [128X[104X
-    [4X[28X  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 96, 8471771350548821313678624, [128X[104X
-    [4X[28X  8471771350548821313678624, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 672, 8471771350548821313678624, [128X[104X
+    [4X[28X  42358856752744106568393120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
     [4X[28X  0, 0, 0, 0, 0 ][128X[104X
     [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
     [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
@@ -280,6 +284,8 @@
     [4X[28X[ 24, 6, 8, 4 ][128X[104X
     [4X[25Xgap>[125X [27XFactors(8471771350548821313678624);[127X[104X
     [4X[28X[ 2, 2, 2, 2, 2, 3, 7, 17, 17, 17, 19, 617, 873263, 250653841 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(42358856752744106568393120);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 3, 5, 7, 17, 17, 17, 19, 617, 873263, 250653841 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

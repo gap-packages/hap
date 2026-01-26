@@ -245,19 +245,21 @@ true
 
 <h4>14.6 <span class="Heading">Computing quotient <span class="SimpleMath">\(2\)</span>-complexes</span></h4>
 
-<p>The space <span class="SimpleMath">\(X={\frak h}^3 \cup \{\infty\} \cup \mathbb Q(\sqrt{-d})\)</span> retracts onto an <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span>-equivariant <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex <span class="SimpleMath">\(K \subset X\)</span>. By subdividing cells of <span class="SimpleMath">\(K\)</span> if necessary we can assume that the group action on <span class="SimpleMath">\(K\)</span> is <em>rigid</em> in the sense that any group element in the stabilizer of a cell fixes that cell pointwise. Given a congruence subgroup <span class="SimpleMath">\(\Gamma \le SL_2({\mathcal O}_{-d})\)</span> the quotient space <span class="SimpleMath">\(Y=K/\Gamma\)</span> inherits a CW-structure and (except for a few cases where we may need to subdibide again) the quotient will be regular. We have <span class="SimpleMath">\(H_n(\Gamma,\mathbb Q) = H_n(Y,\mathbb Q)\)</span>. The following session computes the homology of <span class="SimpleMath">\(Y\)</span> for <span class="SimpleMath">\(\Gamma=\Gamma_0(71) \le SL(2,{\mathcal O}_{-2})\)</span>.</p>
+<p>The space <span class="SimpleMath">\(X={\frak h}^3 \cup \{\infty\} \cup \mathbb Q(\sqrt{-d})\)</span> retracts onto an <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span>-equivariant <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex <span class="SimpleMath">\(K \subset X\)</span>. By barycentrically subdividing <span class="SimpleMath">\(K\)</span> we can assume that the group action on <span class="SimpleMath">\(K\)</span> is <em>rigid</em> in the sense that any group element in the stabilizer of a cell fixes that cell pointwise. Given a congruence subgroup <span class="SimpleMath">\(\Gamma \le SL_2({\mathcal O}_{-d})\)</span> the quotient space <span class="SimpleMath">\(Y=K/\Gamma\)</span> inherits a regular CW-structure. We have <span class="SimpleMath">\(H_n(\Gamma,\mathbb Q) = H_n(Y,\mathbb Q)\)</span> and <span class="SimpleMath">\(H_n(\Gamma,\mathbb Z_p) = H_n(Y,\mathbb Z_p)\)</span> for any prime not dividing the order of any group element in <span class="SimpleMath">\(\Gamma\)</span>. At these primes the <span class="SimpleMath">\(p\)</span>-torsion in <span class="SimpleMath">\(H_n(Y,\mathbb Z)\)</span> equals that in <span class="SimpleMath">\(H_n(\Gamma,\mathbb Z)\)</span>. The following session computes the integral homology of <span class="SimpleMath">\(Y\)</span> for <span class="SimpleMath">\(\Gamma=\Gamma_0(71) \le SL(2,{\mathcal O}_{-2})\)</span> and establishes that <span class="SimpleMath">\(\Gamma\)</span> has no <span class="SimpleMath">\(p\)</span>-torsion for primes <span class="SimpleMath">\(p&gt;3\)</span> and has index <span class="SimpleMath">\(5042\)</span>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso:=K!.isomorphismToGroupCyclotomicMats;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=RigidFacetsSubdivision(K);; #KK is a rigid complex</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">                                     #cyclotomic entries </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=BarycentricSubdivision(K);; #KK is a rigid complex</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">                                     #cyclotomic entries</span>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(QuadraticNumberField(-2));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,71);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=HAP_CongruenceSubgroupGamma0(I);; #A congruence subgroup of G</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInSL2O(N);</span>
+5042
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(KK,N); #Y = KK/N is a quotient CW-complex</span>
 Regular CW-complex of dimension 2
@@ -267,8 +269,8 @@ Regular CW-complex of dimension 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
   4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 
-  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 96, 8471771350548821313678624, 
-  8471771350548821313678624, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 672, 8471771350548821313678624, 
+  42358856752744106568393120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
@@ -278,6 +280,8 @@ Regular CW-complex of dimension 2
 [ 24, 6, 8, 4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(8471771350548821313678624);</span>
 [ 2, 2, 2, 2, 2, 3, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(42358856752744106568393120);</span>
+[ 2, 2, 2, 2, 2, 3, 5, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]
 
 </pre></div>
 
