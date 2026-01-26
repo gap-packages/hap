@@ -131,8 +131,9 @@
   elements of the class group it follows that the class group of [22XQ(sqrt-39)[122X is
   of order [22X4[122X.[133X
   
-  [33X[0;0YThe  following  additional  commands  comvert  the Bianchi polyhedron [22XD[122X to a
-  regular CW-complex and then display its [22X1[122X-skeleton.[133X
+  [33X[0;0YThe  following  additional  commands  comvert  the ``bottom surface'' of the
+  Bianchi  polyhedron [22XD[122X to a [22X2[122X-dimensional regular CW-complex and then display
+  the [22X1[122X-skeleton of this [22X2[122X-complex.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XD:=BianchiPolyhedron(-39);;[127X[104X
@@ -237,7 +238,53 @@
   [4X[32X[104X
   
   
-  [1X14.6 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
+  [1X14.6 [33X[0;0YComputing quotient [22X2[122X[101X[1X-complexes[133X[101X
+  
+  [33X[0;0YThe  space  [22XX=frak  h^3  ∪  {∞}  ∪  Q(sqrt-d)[122X  retracts onto an [22XSL_2(mathcal
+  O_-d)[122X-equivariant  [22X2[122X-dimensional  regular  CW-complex  [22XK ⊂ X[122X. By subdividing
+  cells of [22XK[122X if necessary we can assume that the group action on [22XK[122X is [13Xrigid[113X in
+  the sense that any group element in the stabilizer of a cell fixes that cell
+  pointwise.  Given  a congruence subgroup [22XΓ ≤ SL_2(mathcal O_-d)[122X the quotient
+  space [22XY=K/Γ[122X inherits a CW-structure and (except for a few cases where we may
+  need  to  subdibide again) the quotient will be regular. We have [22XH_n(Γ, Q) =
+  H_n(Y,  Q)[122X. The following session computes the homology of [22XY[122X for [22XΓ=Γ_0(71) ≤
+  SL(2,mathcal O_-2)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-2);;[127X[104X
+    [4X[25Xgap>[125X [27Xiso:=K!.isomorphismToGroupCyclotomicMats;;[127X[104X
+    [4X[25Xgap>[125X [27XKK:=RigidFacetsSubdivision(K);; #KK is a rigid complex[127X[104X
+    [4X[25Xgap>[125X [27XResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have [127X[104X
+    [4X[25Xgap>[125X [27X                                     #cyclotomic entries [127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(QuadraticNumberField(-2));;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,71);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=HAP_CongruenceSubgroupGamma0(I);; #A congruence subgroup of G[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(KK,N); #Y = KK/N is a quotient CW-complex[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,0);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, [128X[104X
+    [4X[28X  4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, [128X[104X
+    [4X[28X  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 96, 8471771350548821313678624, [128X[104X
+    [4X[28X  8471771350548821313678624, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFlat(List([0..2], n->[127X[104X
+    [4X[25X>[125X [27X              List([1..K!.dimension(n)],k->Order(K!.stabilizer(n,k)))  ));[127X[104X
+    [4X[28X[ 24, 6, 8, 4 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(8471771350548821313678624);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 3, 7, 17, 17, 17, 19, 617, 873263, 250653841 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.7 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  above fundamental domains can be used to construct free resolutions for
   [22XSL_2(mathcal   O_-d)[122X   and   [22XPSL_2(mathcal  O_-d)[122X.  The  following  commands
@@ -294,14 +341,14 @@
   [4X[32X[104X
   
   
-  [1X14.7 [33X[0;0YSome sanity checks[133X[101X
+  [1X14.8 [33X[0;0YSome sanity checks[133X[101X
   
   [33X[0;0YThere  is ample scope for bugs in the implementation of the above method for
   computing  resolutions  of  Bianchi groups. The following sanity checks lend
   confidence to the implementation.[133X
   
   
-  [1X14.7-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
+  [1X14.8-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
   
   [33X[0;0YLet  [22XX[122X  be  any cell complex with an action of a group [22XG[122X such that (i) [22XX[122X has
   finitely  many  [22XG[122X-orbits of cells, and (ii) the stabilizer subgroup in [22XG[122X for
@@ -333,7 +380,7 @@
   [4X[32X[104X
   
   
-  [1X14.7-2 [33X[0;0YBoundary squares to zero[133X[101X
+  [1X14.8-2 [33X[0;0YBoundary squares to zero[133X[101X
   
   [33X[0;0YThe  signs in the boundary maps of the free resolution are delicate. Another
   easy  test  is to check that the boundary in the resolution squares to zero.
@@ -362,7 +409,7 @@
   [4X[32X[104X
   
   
-  [1X14.7-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
+  [1X14.8-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
   
   [33X[0;0YSebastian  Schoennenbeck  in  his  thesis  work  computed  some contractible
   [22X2[122X-complexes  on  which Bianchi groups act with finite stabilizers (even when
@@ -393,7 +440,7 @@
   [4X[32X[104X
   
   
-  [1X14.7-4 [33X[0;0YCompare geometry to algebra[133X[101X
+  [1X14.8-4 [33X[0;0YCompare geometry to algebra[133X[101X
   
   [33X[0;0YThe  number  of  cusps  (i.e. the number of orbits of vertices with infinite
   stabilizer  subgroup) must be precisely one less than the number of elements
@@ -432,7 +479,7 @@
   [4X[32X[104X
   
   
-  [1X14.8 [33X[0;0YGroup presentations[133X[101X
+  [1X14.9 [33X[0;0YGroup presentations[133X[101X
   
   [33X[0;0YSwan's  reason for studying fundamental domains was to obtain explicit group
   presentations  for [22XSL_2(mathcal O_-d)[122X for various values of [22Xd[122X. The following
@@ -474,7 +521,7 @@
   [4X[32X[104X
   
   
-  [1X14.8-1 [33X[0;0YSwan's generators[133X[101X
+  [1X14.9-1 [33X[0;0YSwan's generators[133X[101X
   
   [33X[0;0YThe  five  generators  in the above presentation for [22XSL_2(mathcal O_-23)[122X are
   obtained  by  constructing  the  low  dimensions  of a CW-classifying space,
@@ -514,7 +561,7 @@
   [4X[32X[104X
   
   
-  [1X14.9 [33X[0;0YFinite index subgroups[133X[101X
+  [1X14.10 [33X[0;0YFinite index subgroups[133X[101X
   
   [33X[0;0YThe  following  commands  compute  the  integral  homology  of  a congruence
   subgroup  [22XG[122X  of  index  24  in  [22XSL_2(mathcal  O_-23)[122X.  They  also  compute a
@@ -551,7 +598,7 @@
   [4X[32X[104X
   
   
-  [1X14.10 [33X[0;0YTotally real quadratic fields / Hilbert modular group[133X[101X
+  [1X14.11 [33X[0;0YTotally real quadratic fields / Hilbert modular group[133X[101X
   
   [33X[0;0YFor  square free [22Xd>0[122X the group [22XPSL_2(mathcal O_d)[122X is a subgroup of [22XPSL_2( R)[122X
   but  not a discrete subgroup. It embeds as a discrete subgroup of [22XPSL_2( R)×
@@ -584,7 +631,7 @@
   [4X[32X[104X
   
   
-  [1X14.11 [33X[0;0YCalling Magma's Voronoi algorithm directly[133X[101X
+  [1X14.12 [33X[0;0YCalling Magma's Voronoi algorithm directly[133X[101X
   
   [33X[0;0YIf[133X
   
