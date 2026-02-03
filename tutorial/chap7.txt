@@ -583,6 +583,33 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe  following  example  constructs  the  Artin  braid  group [22XG=B_3[122X on three
+  strings,  the  surjection [22XG↠ S_3[122X, a complex representation [22XS_3→ GL_2( C)[122X and
+  the  composite representation [22Xρ: G→ GL_2( C)[122X. The group [22XG[122X acts on the vector
+  space  [22XV=  C⊕ C[122X via [22Xρ[122X. Then the dimensions of the cohomology groups [22XH^n(G,V)[122X
+  are computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD:=[[1,[2,3]],[2,[3,3]]];;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionArtinGroup(D,4);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=R!.group;; #Braid group[127X[104X
+    [4X[25Xgap>[125X [27Xr:=[G.1^2,G.2^2,G.3^2];;Q:=G/r;;[127X[104X
+    [4X[25Xgap>[125X [27Xq:=GroupHomomorphismByImages(G,Q,GeneratorsOfGroup(G),GeneratorsOfGroup(Q));;[127X[104X
+    [4X[25Xgap>[125X [27Xh:=IrreducibleRepresentations(Q)[3];[127X[104X
+    [4X[28XPcgs([ f1^-1*f2^-1*f3^-2*f1^-1, f3^-1*f2^-1*f1^-1*f2^-1, f2*f3^-1*f1^-1*f2^-1,[128X[104X
+    [4X[28X  f3^-1*f1^-1 ]) -> [ [ [ 0, 1 ], [ 1, 0 ] ], [ [ E(3), 0 ], [ 0, E(3)^2 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xrho:=GroupHomomorphismByFunction(G,Image(h),x->Image(h,Image(q,x)));;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToModuleOverCyclotomicField(R,rho);[127X[104X
+    [4X[28XCochain complex of length 4 over field of characteristic 0. [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,1);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(C,2);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   [33X[0;0YIt  can be computationally difficult to compute resolutions for large finite
   groups.  But  the  [22Xp[122X-primary  part  of  the  homology  can be computed using
   resolutions  of  Sylow  [22Xp[122X-subgroups.  This approach is used in the following

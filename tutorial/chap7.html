@@ -640,6 +640,30 @@ Chain complex of length 7 in characteristic 0 .
 
 </pre></div>
 
+<p>The following example constructs the Artin braid group <span class="SimpleMath">G=B_3</span> on three strings, the surjection <span class="SimpleMath">G↠ S_3</span>, a complex representation <span class="SimpleMath">S_3→ GL_2( C)</span> and the composite representation <span class="SimpleMath">ρ: G→ GL_2( C)</span>. The group <span class="SimpleMath">G</span> acts on the vector space <span class="SimpleMath">V= C⊕ C</span> via <span class="SimpleMath">ρ</span>. Then the dimensions of the cohomology groups <span class="SimpleMath">H^n(G,V)</span> are computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=[[1,[2,3]],[2,[3,3]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionArtinGroup(D,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=R!.group;; #Braid group</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=[G.1^2,G.2^2,G.3^2];;Q:=G/r;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q:=GroupHomomorphismByImages(G,Q,GeneratorsOfGroup(G),GeneratorsOfGroup(Q));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=IrreducibleRepresentations(Q)[3];</span>
+Pcgs([ f1^-1*f2^-1*f3^-2*f1^-1, f3^-1*f2^-1*f1^-1*f2^-1, f2*f3^-1*f1^-1*f2^-1,
+  f3^-1*f1^-1 ]) -&gt; [ [ [ 0, 1 ], [ 1, 0 ] ], [ [ E(3), 0 ], [ 0, E(3)^2 ] ], 
+  [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=GroupHomomorphismByFunction(G,Image(h),x-&gt;Image(h,Image(q,x)));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToModuleOverCyclotomicField(R,rho);</span>
+Cochain complex of length 4 over field of characteristic 0. 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,1);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(C,2);</span>
+1
+
+</pre></div>
+
 <p>It can be computationally difficult to compute resolutions for large finite groups. But the <span class="SimpleMath">p</span>-primary part of the homology can be computed using resolutions of Sylow <span class="SimpleMath">p</span>-subgroups. This approach is used in the following example that computes the <span class="SimpleMath">2</span>-primary part</p>
 
 <p><span class="SimpleMath">H_2(G, Z)_(2) = Z_2 ⊕ Z_2⊕ Z_2</span></p>
