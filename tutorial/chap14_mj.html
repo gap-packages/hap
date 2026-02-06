@@ -142,7 +142,7 @@ and non-cuspidal vertices of minimum squared height 1/49 .
 
 <p>A <em>cusp vertex</em> of <span class="SimpleMath">\(D\)</span> is any vertex of <span class="SimpleMath">\(D\)</span> lying in <span class="SimpleMath">\(\mathbb C \cup \infty\)</span>. In the above visualizations for <span class="SimpleMath">\(G_{-39}\)</span> several cusp vertices in <span class="SimpleMath">\(\mathbb C\)</span> are : in the 2-dimensional visualization they are represented by red dots. Computer calculations show that these cusps lie in precisely three orbits under the action of <span class="SimpleMath">\(G_{-d}\)</span>. Thus, together with the orbit of <span class="SimpleMath">\(\infty\)</span> there are four distinct orbits of cusps. By the well-known correspondence between cusp orbits and elements of the class group it follows that the class group of <span class="SimpleMath">\(\mathbb Q(\sqrt{-39})\)</span> is of order <span class="SimpleMath">\(4\)</span>.</p>
 
-<p>The following additional commands comvert the ``bottom surface'' of the Bianchi polyhedron <span class="SimpleMath">\(D\)</span> to a <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex and then display the <span class="SimpleMath">\(1\)</span>-skeleton of this <span class="SimpleMath">\(2\)</span>-complex.</p>
+<p>The following additional commands comvert the ``bottom surface'' of the Bianchi polyhedron <span class="SimpleMath">\(D\)</span> to a <span class="SimpleMath">\(2\)</span>-dimensional regular CW-complex and then displays the <span class="SimpleMath">\(1\)</span>-skeleton of this <span class="SimpleMath">\(2\)</span>-complex.</p>
 
 
 <div class="example"><pre>
@@ -300,6 +300,38 @@ Regular CW-complex of dimension 2
   16, 16, 16, 16, 16, 16, 16, 32, 96, 96, 672, 8471771350548821313678624, 
   127076570258232319705179360, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p>The next example computes a CW complex <span class="SimpleMath">\(Y\)</span> with <span class="SimpleMath">\(H^\ast(Y,\mathbb Z) =H^\ast(\Gamma_0(23),\mathbb Z)\)</span> modulo the primes <span class="SimpleMath">\(2,3\)</span> for <span class="SimpleMath">\(\Gamma_0(23) &lt; SL_2({\mathcal O}_{-2})\)</span> and shows that a basis <span class="SimpleMath">\(b_1,b_2,\ldots b_9\)</span> for <span class="SimpleMath">\(H^1(W,\mathbb Z) =\mathbb Z^{9}\)</span> satisfies <span class="SimpleMath">\(b_i\cup b_j=0\)</span> except for <span class="SimpleMath">\(b_1\cup b_6 = -b_6\cup b_1\neq 0\)</span>, <span class="SimpleMath">\(b_1\cup b_7 =-b_7\cup b_1\ne 0\)</span>, <span class="SimpleMath">\(b_1\cup b_9=-b_9\cup b_1\ne 0\)</span>.</p>
+
+
+<div class="example"><pre>
+                
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,23);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=HAP_CongruenceSubgroupGamma0(I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(KK,N);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=SimplifiedComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(Y,1);</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=IdentityMat(9);; # represents the 9 cohomology generators</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=NullMat(9,9);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cup:=CupProduct(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..9] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [j+1..9] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if not IsZero(cup(1,1,B[i],B[j])) then C[i][j]:=1; C[j,i]:=1; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(C);</span>
+[ [  0,  0,  0,  0,  0,  1,  1,  0,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ] ]
+
 
 </pre></div>
 

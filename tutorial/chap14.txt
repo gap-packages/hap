@@ -132,7 +132,7 @@
   of order [22X4[122X.[133X
   
   [33X[0;0YThe  following  additional  commands  comvert  the ``bottom surface'' of the
-  Bianchi  polyhedron [22XD[122X to a [22X2[122X-dimensional regular CW-complex and then display
+  Bianchi polyhedron [22XD[122X to a [22X2[122X-dimensional regular CW-complex and then displays
   the [22X1[122X-skeleton of this [22X2[122X-complex.[133X
   
   [4X[32X  Example  [32X[104X
@@ -304,6 +304,40 @@
     [4X[28X  16, 16, 16, 16, 16, 16, 16, 32, 96, 96, 672, 8471771350548821313678624, [128X[104X
     [4X[28X  127076570258232319705179360, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
     [4X[28X  0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  example  computes  a CW complex [22XY[122X with [22XH^∗(Y, Z) =H^∗(Γ_0(23), Z)[122X
+  modulo  the  primes  [22X2,3[122X  for  [22XΓ_0(23) < SL_2(mathcal O_-2)[122X and shows that a
+  basis  [22Xb_1,b_2,...  b_9[122X  for [22XH^1(W, Z) = Z^9[122X satisfies [22Xb_i∪ b_j=0[122X except for
+  [22Xb_1∪ b_6 = -b_6∪ b_1≠ 0[122X, [22Xb_1∪ b_7 =-b_7∪ b_1ne 0[122X, [22Xb_1∪ b_9=-b_9∪ b_1ne 0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X                [128X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,23);;[127X[104X
+    [4X[25Xgap>[125X [27XN:=HAP_CongruenceSubgroupGamma0(I);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(KK,N);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=SimplifiedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XCohomology(Y,1);[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XB:=IdentityMat(9);; # represents the 9 cohomology generators[127X[104X
+    [4X[25Xgap>[125X [27XC:=NullMat(9,9);;[127X[104X
+    [4X[25Xgap>[125X [27Xcup:=CupProduct(Y);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..9] do[127X[104X
+    [4X[25X>[125X [27Xfor j in [j+1..9] do[127X[104X
+    [4X[25X>[125X [27Xif not IsZero(cup(1,1,B[i],B[j])) then C[i][j]:=1; C[j,i]:=1; fi;[127X[104X
+    [4X[25X>[125X [27Xod;od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(C);[127X[104X
+    [4X[28X[ [  0,  0,  0,  0,  0,  1,  1,  0,  1 ],[128X[104X
+    [4X[28X  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],[128X[104X
+    [4X[28X  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ] ][128X[104X
+    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
