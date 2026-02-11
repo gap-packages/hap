@@ -335,6 +335,36 @@ Regular CW-complex of dimension 2
 
 </pre></div>
 
+<p>THe following additional commands compute the <span class="SimpleMath">\(11\)</span>-primary parts <span class="SimpleMath">\(H^2(\Gamma_0(23),\mathbb Z)_{(11)}=\mathbb Z_{11}\)</span>, <span class="SimpleMath">\(H^n(\Gamma_0(23),\mathbb Z)_{(11)}=0\)</span> for <span class="SimpleMath">\(2\ne n&gt;0\)</span>. They then compute the cohomology ring <span class="SimpleMath">\(A=H^\ast(\Gamma_0(23),\mathbb Z_{11})\)</span>, a basis <span class="SimpleMath">\(B\)</span> of <span class="SimpleMath">\(H^1(\Gamma_0(23),\mathbb Z_{11}) =(\mathbb Z_{11})^{10}\)</span>, and procuce a matrix <span class="SimpleMath">\(C=(c_{ij})\)</span> with <span class="SimpleMath">\(c_{ij}=0\)</span> if <span class="SimpleMath">\(b_i\cup b_j=0\)</span>, <span class="SimpleMath">\(c_{ij}=1\)</span> if <span class="SimpleMath">\(b_i\cup b_j\ne 0\)</span> for <span class="SimpleMath">\(b_i,b_j\in B\)</span>.</p>
+
+
+<div class="example"><pre>
+                
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology(Y,2);</span>
+[ 2, 2, 2, 4, 4, 4, 4, 4, 44, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=CohomologyRing(Y,11);</span>
+&lt;algebra of dimension 20 over GF(11)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=Basis(A);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=Filtered(B,b-&gt;A!.degree(b)=1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=NullMat(Length(B),Length(B));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..Length(B)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for j in [1..Length(B)] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">if not IsZero(B[i]*B[j]) then C[i][j]:=1; fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(C);</span>
+[ [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  1,  1,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  1,  0,  0,  1,  1,  1,  1 ],
+  [  0,  0,  0,  1,  0,  1,  0,  1,  1,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  0,  1,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  1,  0,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  1,  1,  0 ] ]
+
+</pre></div>
+
 <p><a id="X78476F127B73BBD1" name="X78476F127B73BBD1"></a></p>
 
 <h4>14.7 <span class="Heading">Computing a free resolution for <span class="SimpleMath">\(SL_2({\mathcal O}_{-d})\)</span></span></h4>
