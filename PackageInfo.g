@@ -72,6 +72,7 @@ SetPackageInfo( rec(
                              [ "aclib",      ">=1.1" ],
                              [ "nq",         ">=1.1" ],
                              [ "SmallGrp",   ">=1.1" ],
+                             [ "Polymaking", ">=0.8.4"],
                            ],
     SuggestedOtherPackages := [
                                [ "homology",    ">=0.0"   ], 
@@ -79,7 +80,6 @@ SetPackageInfo( rec(
                                [ "singular", ">=06.07.23" ],
                                [ "congruence", ">=0,0" ],
                                [ "HAPcryst", ">=0.1.0" ],
-                               [ "Polymaking", ">=0.8.4"],
                                [ "xmod", ">0.0" ],
                                [ "laguna", ">0.0"]
                               ],
