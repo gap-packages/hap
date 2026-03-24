@@ -5339,6 +5339,29 @@ where $K=GF(2)$ and $GL(3,2)$ acts with its natural action on $V=K^3$.
 \end{Verbatim}
  
 
+The following example constructs the Artin braid group $G=B_3$ on three strings, the surjection $G\twoheadrightarrow S_3$, a complex representation $S_3\rightarrow GL_2(\mathbb C)$ and the composite representation $\rho\colon G\rightarrow GL_2(\mathbb C)$. The group $G$ acts on the vector space $V=\mathbb C\oplus \mathbb C$ via $\rho$. Then the dimensions of the cohomology groups $H^n(G,V)$ are computed. 
+\begin{Verbatim}[commandchars=@|J,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>J @gapinput|D:=[[1,[2,3]],[2,[3,3]]];;J
+  @gapprompt|gap>J @gapinput|R:=ResolutionArtinGroup(D,4);;J
+  @gapprompt|gap>J @gapinput|G:=R!.group;; #Braid groupJ
+  @gapprompt|gap>J @gapinput|r:=[G.1^2,G.2^2,G.3^2];;Q:=G/r;;J
+  @gapprompt|gap>J @gapinput|q:=GroupHomomorphismByImages(G,Q,GeneratorsOfGroup(G),GeneratorsOfGroup(Q));;J
+  @gapprompt|gap>J @gapinput|h:=IrreducibleRepresentations(Q)[3];J
+  Pcgs([ f1^-1*f2^-1*f3^-2*f1^-1, f3^-1*f2^-1*f1^-1*f2^-1, f2*f3^-1*f1^-1*f2^-1,
+    f3^-1*f1^-1 ]) -> [ [ [ 0, 1 ], [ 1, 0 ] ], [ [ E(3), 0 ], [ 0, E(3)^2 ] ], 
+    [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ]
+  @gapprompt|gap>J @gapinput|rho:=GroupHomomorphismByFunction(G,Image(h),x->Image(h,Image(q,x)));;J
+  @gapprompt|gap>J @gapinput|C:=HomToModuleOverCyclotomicField(R,rho);J
+  Cochain complex of length 4 over field of characteristic 0. 
+  
+  @gapprompt|gap>J @gapinput|Cohomology(C,1);J
+  1
+  @gapprompt|gap>J @gapinput|Cohomology(C,2);J
+  1
+  
+\end{Verbatim}
+ 
+
  It can be computationally difficult to compute resolutions for large finite
 groups. But the $p$\texttt{\symbol{45}}primary part of the homology can be computed using
 resolutions of Sylow $p$\texttt{\symbol{45}}subgroups. This approach is used in the following example
@@ -10030,7 +10053,9 @@ precisely three orbits under the action of $G_{-d}$. Thus, together with the orb
 correspondence between cusp orbits and elements of the class group it follows
 that the class group of $\mathbb Q(\sqrt{-39})$ is of order $4$. 
 
-The following additional commands comvert the Bianchi polyhedron $D$ to a regular CW\texttt{\symbol{45}}complex and then display its $1$\texttt{\symbol{45}}skeleton. 
+The following additional commands comvert the ``bottom surface'' of the
+Bianchi polyhedron $D$ to a $2$\texttt{\symbol{45}}dimensional regular CW\texttt{\symbol{45}}complex and then
+displays the $1$\texttt{\symbol{45}}skeleton of this $2$\texttt{\symbol{45}}complex. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@D:=BianchiPolyhedron(-39);;|
   !gapprompt@gap>| !gapinput@Y:=RegularCWComplex(D);|
@@ -10123,7 +10148,125 @@ for finding $r$ is implemented and the user is advised to speed things up by gue
  }
 
  
-\section{\textcolor{Chapter }{Computing a free resolution for $SL_2({\mathcal O}_{-d})$}}\logpage{[ 14, 6, 0 ]}
+\section{\textcolor{Chapter }{Computing quotient $2$\texttt{\symbol{45}}complexes}}\logpage{[ 14, 6, 0 ]}
+\hyperdef{L}{X7BBAEFD781559384}{}
+{
+ The space $X={\frak h}^3 \cup \{\infty\} \cup \mathbb Q(\sqrt{-d})$ retracts onto an $SL_2({\mathcal O}_{-d})$\texttt{\symbol{45}}equivariant $2$\texttt{\symbol{45}}dimensional regular CW\texttt{\symbol{45}}complex $K \subset X$. By barycentrically subdividing $K$ we can assume that the group action on $K$ is \emph{rigid} in the sense that any group element in the stabilizer of a cell fixes that
+cell pointwise. Given a congruence subgroup $\Gamma \le SL_2({\mathcal O}_{-d})$ the quotient space $Y=K/\Gamma$ inherits a regular CW\texttt{\symbol{45}}structure. We have $H_n(\Gamma,\mathbb Q) = H_n(Y,\mathbb Q)$ and $H_n(\Gamma,\mathbb Z_p) = H_n(Y,\mathbb Z_p)$ for any prime not dividing the order of any group element in $\Gamma$. At these primes the $p$\texttt{\symbol{45}}torsion in $H_n(Y,\mathbb Z)$ equals that in $H_n(\Gamma,\mathbb Z)$.  The following session computes the integral homology of $Y$ for $\Gamma=\Gamma_0(71) \le SL(2,{\mathcal O}_{-2})$ and establishes that $\Gamma$ has no $p$\texttt{\symbol{45}}torsion for primes $p>3$ and has index $5042$. 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>D @gapinput|K:=BianchiGcomplex(-2);;D
+  @gapprompt|gap>D @gapinput|iso:=K!.isomorphismToGroupCyclotomicMats;;D
+  @gapprompt|gap>D @gapinput|KK:=BarycentricSubdivision(K);; #KK is a rigid complexD
+  @gapprompt|gap>D @gapinput|ResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now haveD
+  @gapprompt|gap>D @gapinput|                                     #cyclotomic entriesD
+  
+  @gapprompt|gap>D @gapinput|OQ:=RingOfIntegers(QuadraticNumberField(-2));;D
+  @gapprompt|gap>D @gapinput|I:=QuadraticIdeal(OQ,71);;D
+  @gapprompt|gap>D @gapinput|N:=HAP_CongruenceSubgroupGamma0(I);; #A congruence subgroup of GD
+  @gapprompt|gap>D @gapinput|IndexInSL2O(N);D
+  5042
+  
+  @gapprompt|gap>D @gapinput|Y:=GComplexToRegularCWComplex(KK,N); #Y = KK/N is a quotient CW-complexD
+  Regular CW-complex of dimension 2
+  
+  @gapprompt|gap>D @gapinput|Homology(Y,0);D
+  [ 0 ]
+  @gapprompt|gap>D @gapinput|Homology(Y,1);D
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+    4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 
+    16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 672, 8471771350548821313678624, 
+    42358856752744106568393120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0 ]
+  @gapprompt|gap>D @gapinput|Homology(Y,2);D
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+  @gapprompt|gap>D @gapinput|Flat(List([0..2], n->D
+  @gapprompt|>D @gapinput|              List([1..K!.dimension(n)],k->Order(K!.stabilizer(n,k)))  ));D
+  [ 24, 6, 8, 4 ]
+  @gapprompt|gap>D @gapinput|Factors(8471771350548821313678624);D
+  [ 2, 2, 2, 2, 2, 3, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]
+  @gapprompt|gap>D @gapinput|Factors(42358856752744106568393120);D
+  [ 2, 2, 2, 2, 2, 3, 5, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]
+  
+\end{Verbatim}
+ The above computation can be corroborated by using a free resolution to
+calculate $H_1(\Gamma_0(71),\mathbb Z)$ at all primes. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  		
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(KK,2);;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,N);;|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegers(S);;|
+  !gapprompt@gap>| !gapinput@D:=ContractedComplex(C);;|
+  !gapprompt@gap>| !gapinput@Homology(D,1);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+    4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 16, 16,
+    16, 16, 16, 16, 16, 16, 16, 32, 96, 96, 672, 8471771350548821313678624, 
+    127076570258232319705179360, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0 ]
+  
+\end{Verbatim}
+ The next example computes a CW complex $Y$ with $H^\ast(Y,\mathbb Z) =H^\ast(\Gamma_0(23),\mathbb Z)$ modulo the primes $2,3$ for $\Gamma_0(23) < SL_2({\mathcal O}_{-2})$ and shows that a basis $b_1,b_2,\ldots b_9$ for $H^1(W,\mathbb Z) =\mathbb Z^{9}$ satisfies $b_i\cup b_j=0$ except for $b_1\cup b_6 = -b_6\cup b_1\neq 0$, $b_1\cup b_7 =-b_7\cup b_1\ne 0$, $b_1\cup b_9=-b_9\cup b_1\ne 0$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+                  
+  !gapprompt@gap>| !gapinput@I:=QuadraticIdeal(OQ,23);;|
+  !gapprompt@gap>| !gapinput@N:=HAP_CongruenceSubgroupGamma0(I);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(KK,N);;|
+  !gapprompt@gap>| !gapinput@Y:=SimplifiedComplex(Y);;|
+  !gapprompt@gap>| !gapinput@Cohomology(Y,1);|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@B:=IdentityMat(9);; # represents the 9 cohomology generators|
+  !gapprompt@gap>| !gapinput@C:=NullMat(9,9);;|
+  !gapprompt@gap>| !gapinput@cup:=CupProduct(Y);;|
+  !gapprompt@gap>| !gapinput@for i in [1..9] do|
+  !gapprompt@>| !gapinput@for j in [j+1..9] do|
+  !gapprompt@>| !gapinput@if not IsZero(cup(1,1,B[i],B[j])) then C[i][j]:=1; C[j,i]:=1; fi;|
+  !gapprompt@>| !gapinput@od;od;|
+  !gapprompt@gap>| !gapinput@Display(C);|
+  [ [  0,  0,  0,  0,  0,  1,  1,  0,  1 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  1,  0,  0,  0,  0,  0,  0,  0,  0 ] ]
+  
+  
+\end{Verbatim}
+ 
+
+THe following additional commands compute the $11$\texttt{\symbol{45}}primary parts $H^2(\Gamma_0(23),\mathbb Z)_{(11)}=\mathbb Z_{11}$, $H^n(\Gamma_0(23),\mathbb Z)_{(11)}=0$ for $2\ne n>0$. They then compute the cohomology ring $A=H^\ast(\Gamma_0(23),\mathbb Z_{11})$, a basis $B$ of $H^1(\Gamma_0(23),\mathbb Z_{11}) =(\mathbb Z_{11})^{10}$, and procuce a matrix $C=(c_{ij})$ with $c_{ij}=0$ if $b_i\cup b_j=0$, $c_{ij}=1$ if $b_i\cup b_j\ne 0$ for $b_i,b_j\in B$. 
+\begin{Verbatim}[commandchars=@|E,fontsize=\small,frame=single,label=Example]
+                  
+  @gapprompt|gap>E @gapinput|Cohomology(Y,2);E
+  [ 2, 2, 2, 4, 4, 4, 4, 4, 44, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  @gapprompt|gap>E @gapinput|A:=CohomologyRing(Y,11);E
+  <algebra of dimension 20 over GF(11)>
+  @gapprompt|gap>E @gapinput|B:=Basis(A);;E
+  @gapprompt|gap>E @gapinput|B:=Filtered(B,b->A!.degree(b)=1);;E
+  @gapprompt|gap>E @gapinput|C:=NullMat(Length(B),Length(B));;E
+  @gapprompt|gap>E @gapinput|for i in [1..Length(B)] doE
+  @gapprompt|>E @gapinput|for j in [1..Length(B)] doE
+  @gapprompt|>E @gapinput|if not IsZero(B[i]*B[j]) then C[i][j]:=1; fi;E
+  @gapprompt|>E @gapinput|od;od;E
+  @gapprompt|gap>E @gapinput|Display(C);E
+  [ [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+    [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+    [  0,  0,  0,  0,  0,  1,  1,  1,  1,  1 ],
+    [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+    [  0,  0,  0,  1,  0,  0,  1,  1,  1,  1 ],
+    [  0,  0,  0,  1,  0,  1,  0,  1,  1,  1 ],
+    [  0,  1,  1,  1,  1,  1,  1,  0,  1,  1 ],
+    [  0,  1,  1,  1,  1,  1,  1,  1,  0,  1 ],
+    [  0,  1,  1,  1,  1,  1,  1,  1,  1,  0 ] ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Computing a free resolution for $SL_2({\mathcal O}_{-d})$}}\logpage{[ 14, 7, 0 ]}
 \hyperdef{L}{X78476F127B73BBD1}{}
 {
  The above fundamental domains can be used to construct free resolutions for $SL_2({\mathcal O}_{-d})$ and $PSL_2({\mathcal O}_{-d})$. The following commands illustrate the computation of free resolutions for $SL_2({\mathcal O}_{-43})$ and $SL_2({\mathcal O}_{-10})$ and $SL_2({\mathcal O}_{-14})$ and their integral homology (which in each case is periodic of period dividing $4$ in degrees $\ge 3$). The computation of fundamental domains uses exact arithmetic in the two
@@ -10173,13 +10316,13 @@ in the ideal class group of ${\mathcal O}_{-10}$ and precisely four elements in 
  }
 
  
-\section{\textcolor{Chapter }{Some sanity checks}}\logpage{[ 14, 7, 0 ]}
+\section{\textcolor{Chapter }{Some sanity checks}}\logpage{[ 14, 8, 0 ]}
 \hyperdef{L}{X784B2156823AEB15}{}
 {
  There is ample scope for bugs in the implementation of the above method for
 computing resolutions of Bianchi groups. The following sanity checks lend
 confidence to the implementation. 
-\subsection{\textcolor{Chapter }{Equivariant Euler characteristic}}\logpage{[ 14, 7, 1 ]}
+\subsection{\textcolor{Chapter }{Equivariant Euler characteristic}}\logpage{[ 14, 8, 1 ]}
 \hyperdef{L}{X7E5A36D47F9D4A47}{}
 {
  Let $X$ be any cell complex with an action of a group $G$ such that (i) $X$ has finitely many $G$\texttt{\symbol{45}}orbits of cells, and (ii) the stabilizer subgroup in $G$ for each cell is either finite or free abelian. One defines the \emph{equivariant Euler characteristic} \$\$\texttt{\symbol{92}}chi{\textunderscore}G(X) =
@@ -10208,7 +10351,7 @@ this test for the group $SL_2({\mathcal O}_{-23})$.
  }
 
  
-\subsection{\textcolor{Chapter }{Boundary squares to zero}}\logpage{[ 14, 7, 2 ]}
+\subsection{\textcolor{Chapter }{Boundary squares to zero}}\logpage{[ 14, 8, 2 ]}
 \hyperdef{L}{X852CDAFF84C5DF01}{}
 {
  The signs in the boundary maps of the free resolution are delicate. Another
@@ -10238,7 +10381,7 @@ following commands perform this check for the group $SL_2({\mathcal O}_{-23})$.
  }
 
  
-\subsection{\textcolor{Chapter }{Compare different algorithms or implementations}}\logpage{[ 14, 7, 3 ]}
+\subsection{\textcolor{Chapter }{Compare different algorithms or implementations}}\logpage{[ 14, 8, 3 ]}
 \hyperdef{L}{X7E64819A7C058EDD}{}
 {
  Sebastian Schoennenbeck in his thesis work computed some contractible $2$\texttt{\symbol{45}}complexes on which Bianchi groups act with finite
@@ -10266,7 +10409,7 @@ resolution from the $2$\texttt{\symbol{45}}complex.
  }
 
  
-\subsection{\textcolor{Chapter }{Compare geometry to algebra}}\logpage{[ 14, 7, 4 ]}
+\subsection{\textcolor{Chapter }{Compare geometry to algebra}}\logpage{[ 14, 8, 4 ]}
 \hyperdef{L}{X8223864085412705}{}
 {
  The number of cusps (i.e. the number of orbits of vertices with infinite
@@ -10310,7 +10453,7 @@ stabilizers and the following algebraic information on the boundaries of the $2$
  }
 
  
-\section{\textcolor{Chapter }{Group presentations}}\logpage{[ 14, 8, 0 ]}
+\section{\textcolor{Chapter }{Group presentations}}\logpage{[ 14, 9, 0 ]}
 \hyperdef{L}{X78BC9D077956089A}{}
 {
  Swan's reason for studying fundamental domains was to obtain explicit group
@@ -10350,7 +10493,7 @@ presentations for $SL_2({\mathcal O}_{-d})$ for various values of $d$. The follo
   
 \end{Verbatim}
  
-\subsection{\textcolor{Chapter }{Swan's generators}}\logpage{[ 14, 8, 1 ]}
+\subsection{\textcolor{Chapter }{Swan's generators}}\logpage{[ 14, 9, 1 ]}
 \hyperdef{L}{X795000AA87CCB76E}{}
 {
  The five generators in the above presentation for $SL_2({\mathcal O}_{-23})$ are obtained by constructing the low dimensions of a
@@ -10386,7 +10529,7 @@ non\texttt{\symbol{45}}trivial units in ${\mathcal O}(\mathbb Q(\sqrt{-1}))$ and
  }
 
  
-\section{\textcolor{Chapter }{Finite index subgroups}}\logpage{[ 14, 9, 0 ]}
+\section{\textcolor{Chapter }{Finite index subgroups}}\logpage{[ 14, 10, 0 ]}
 \hyperdef{L}{X786CFAA17C0A6E7A}{}
 {
  The following commands compute the integral homology of a congruence subgroup $G$ of index 24 in $SL_2({\mathcal O}_{-23})$. They also compute a presentation for $G$ with 13 generators and 24 relators. 
@@ -10422,7 +10565,7 @@ non\texttt{\symbol{45}}trivial units in ${\mathcal O}(\mathbb Q(\sqrt{-1}))$ and
  }
 
  
-\section{\textcolor{Chapter }{Totally real quadratic fields / Hilbert modular group}}\logpage{[ 14, 10, 0 ]}
+\section{\textcolor{Chapter }{Totally real quadratic fields / Hilbert modular group}}\logpage{[ 14, 11, 0 ]}
 \hyperdef{L}{X82F46C8B782420AB}{}
 {
  For square free $d>0$ the group $PSL_2({\mathcal O}_d)$ is a subgroup of $PSL_2(\mathbb R)$ but not a discrete subgroup. It embeds as a discrete subgroup of $PSL_2(\mathbb R)\times PSL_2(\mathbb R)$ but a fundamental domain for its action on ${\frak h}^2 \times {\frak h}^2$ is not implemented in HAP. One can obtain a contractible $GL_2({\mathcal O}_d)$\texttt{\symbol{45}}equivariant complex using \href{https://github.com/schoennenbeck/VMH-TotallyRealNumberFields} {Sebastian Schoennenbeck's Magma implementation} of Voronoi's algorithm to produce text files that can be read into HAP. A few
@@ -10447,7 +10590,7 @@ text file to compute integral homology groups of $GL_2({\mathcal O}(\mathbb Q(\s
  }
 
  
-\section{\textcolor{Chapter }{Calling Magma's Voronoi algorithm directly}}\logpage{[ 14, 11, 0 ]}
+\section{\textcolor{Chapter }{Calling Magma's Voronoi algorithm directly}}\logpage{[ 14, 12, 0 ]}
 \hyperdef{L}{X85F5853D819AE0E1}{}
 {
  If 
@@ -10489,7 +10632,7 @@ commands do this to calculate the homology groups $H^4(GL_2({\mathcal O}_{-5} ),
 
  }
 
- 
+  
 \chapter{\textcolor{Chapter }{Parallel computation}}\logpage{[ 15, 0, 0 ]}
 \hyperdef{L}{X7F571E8F7BBC7514}{}
 {
