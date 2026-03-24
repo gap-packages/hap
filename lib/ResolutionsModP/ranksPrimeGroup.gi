@@ -27,7 +27,7 @@ local
 	zero,
 	pcgens,
         start,
-	g,h,i,x,xx,xxx,tmp;
+	g,h,i,x,xx,xxx,tmp,pos;
 
 
 G:=arg[1];
@@ -52,6 +52,14 @@ zero:=0*one;
 
 gensG:=ReduceGenerators(GeneratorsOfGroup(G),G);
 eltsG:=Elements(G);
+################  Added this block, March 2026
+if Order(eltsG[1])>1 then
+eltsG:=List(eltsG,x->x);
+pos:=Position(eltsG,One(G));
+eltsG[pos]:=eltsG[1];
+eltsG[1]:=One(G);
+fi;
+###############
 MT:=MultiplicationTable(eltsG);
 
 pcgens:=Pcgs(G);
@@ -165,7 +173,6 @@ M[i*pp+g]:=gB[i+1];
 od;
 od;
 
-
 return M;
 end;
 #####################################################################
@@ -251,6 +258,7 @@ od;
 
 B1:=ComplementaryBasis(Bcomp,NS);
 NS:=0;
+
 #B1:=List(B1,v->List(v,x->IntFFE(x)));
 Apply(B1,v->List(v,x->IntFFE(x)));
 return B1;

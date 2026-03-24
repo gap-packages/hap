@@ -1,0 +1,23 @@
+
+gap> Cohomology(Y,2);
+[ 2, 2, 2, 4, 4, 4, 4, 4, 44, 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> A:=CohomologyRing(Y,11);
+&lt;algebra of dimension 20 over GF(11)>
+gap> B:=Basis(A);;
+gap> B:=Filtered(B,b->A!.degree(b)=1);;
+gap> C:=NullMat(Length(B),Length(B));;
+gap> for i in [1..Length(B)] do
+> for j in [1..Length(B)] do
+> if not IsZero(B[i]*B[j]) then C[i][j]:=1; fi;
+> od;od;
+gap> Display(C);
+[ [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  1,  1,  1,  1,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  1,  1,  1 ],
+  [  0,  0,  0,  1,  0,  0,  1,  1,  1,  1 ],
+  [  0,  0,  0,  1,  0,  1,  0,  1,  1,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  0,  1,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  1,  0,  1 ],
+  [  0,  1,  1,  1,  1,  1,  1,  1,  1,  0 ] ]

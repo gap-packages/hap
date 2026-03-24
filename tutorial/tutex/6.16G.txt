@@ -1,0 +1,17 @@
+gap> D:=[[1,[2,3]],[2,[3,3]]];;
+gap> R:=ResolutionArtinGroup(D,4);;
+gap> G:=R!.group;; #Braid group
+gap> r:=[G.1^2,G.2^2,G.3^2];;Q:=G/r;;
+gap> q:=GroupHomomorphismByImages(G,Q,GeneratorsOfGroup(G),GeneratorsOfGroup(Q));;
+gap> h:=IrreducibleRepresentations(Q)[3];
+Pcgs([ f1^-1*f2^-1*f3^-2*f1^-1, f3^-1*f2^-1*f1^-1*f2^-1, f2*f3^-1*f1^-1*f2^-1,
+  f3^-1*f1^-1 ]) -> [ [ [ 0, 1 ], [ 1, 0 ] ], [ [ E(3), 0 ], [ 0, E(3)^2 ] ], 
+  [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ]
+gap> rho:=GroupHomomorphismByFunction(G,Image(h),x->Image(h,Image(q,x)));;
+gap> C:=HomToModuleOverCyclotomicField(R,rho);
+Cochain complex of length 4 over field of characteristic 0. 
+
+gap> Cohomology(C,1);
+1
+gap> Cohomology(C,2);
+1

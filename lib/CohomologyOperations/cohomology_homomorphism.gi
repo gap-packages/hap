@@ -46,7 +46,7 @@ InstallGlobalFunction(CohomologyHomomorphism,
 function(arg)
 local phi,n,
       hom, R, G, A, B, C,D,HC,HD, hc, hd,nat, natd, p, fdelta, hcdelta, N, indhom,
-      genshc, imgenshc, x, y, xtilde, ytilde, homdir, iso, isod;
+      genshc, imgenshc, x, y, xtilde, ytilde, homdir, iso, isod, gens1, gens2;
 
 phi:=arg[1];
 n:=arg[2];
@@ -88,13 +88,25 @@ imgenshc:=[];
 
 homdir:=HomomorphismOfDirectProduct(p,R!.dimension(n));
 
+gens1:=GeneratorsOfGroup(Source(nat)!.ParentAttr);
+gens2:=GeneratorsOfGroup(Source(homdir));
 iso:=GroupHomomorphismByImages(Source(nat)!.ParentAttr,Source(homdir),
-GeneratorsOfGroup(Source(nat)!.ParentAttr),
-GeneratorsOfGroup(Source(homdir))  );
+gens1,gens2);
+#iso:=GroupHomomorphismByImages(Source(nat)!.ParentAttr,Source(homdir),
+#GeneratorsOfGroup(Source(nat)!.ParentAttr),
+#GeneratorsOfGroup(Source(homdir))  );
 
+#isod:=GroupHomomorphismByImages(Target(homdir),Source(natd)!.ParentAttr,
+#GeneratorsOfGroup(Target(homdir)),
+#GeneratorsOfGroup(Source(natd)!.ParentAttr)  );
+gens1:=GeneratorsOfGroup(Target(homdir));    #March 2026
+gens2:=GeneratorsOfGroup(Source(natd)!.ParentAttr);
+if Length(gens1)<>Length(gens2) then
+gens1:=Filtered(gens1,g->Order(g)>1);
+gens2:=Filtered(gens2,g->Order(g)>1);
+fi;
 isod:=GroupHomomorphismByImages(Target(homdir),Source(natd)!.ParentAttr,
-GeneratorsOfGroup(Target(homdir)),
-GeneratorsOfGroup(Source(natd)!.ParentAttr)  );
+gens1,gens2);
 ##################
 for x in genshc do
 

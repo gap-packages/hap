@@ -1,0 +1,25 @@
+
+gap> I:=QuadraticIdeal(OQ,23);;
+gap> N:=HAP_CongruenceSubgroupGamma0(I);;
+gap> Y:=GComplexToRegularCWComplex(KK,N);;
+gap> Y:=SimplifiedComplex(Y);;
+gap> Cohomology(Y,1);
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> B:=IdentityMat(9);; # represents the 9 cohomology generators
+gap> C:=NullMat(9,9);;
+gap> cup:=CupProduct(Y);;
+gap> for i in [1..9] do
+> for j in [j+1..9] do
+> if not IsZero(cup(1,1,B[i],B[j])) then C[i][j]:=1; C[j,i]:=1; fi;
+> od;od;
+gap> Display(C);
+[ [  0,  0,  0,  0,  0,  1,  1,  0,  1 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  1,  0,  0,  0,  0,  0,  0,  0,  0 ] ]
+

@@ -474,7 +474,7 @@ HorizontalPseudoBoundary[k]:=[];
 	 if l>0 then rr:=AddWrds(dl,rr);fi;
          od;
 
-         Add(PseudoBoundary[k],[r,p]);    #I'm pretty sure it's p and not q
+         Add(PseudoBoundary[k],[r,p]);    #I'm pretty sure it's p and not q 
 	 Add(HorizontalPseudoBoundary[k],rr);
       od;
   od;
@@ -684,7 +684,7 @@ grp:=E;
 ################spectral sequence requirements##################
 
 FilteredLength:=Length(R);
-
+Add(PseudoBoundary,[]);
 ##################################################
 FilteredDimension:=function(r,i)
 return Length(Filtered(List(PseudoBoundary[i],x->x[2]),y->y<=r));

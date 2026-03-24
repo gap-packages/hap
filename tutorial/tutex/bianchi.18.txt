@@ -1,0 +1,33 @@
+gap> K:=BianchiGcomplex(-2);;
+gap> iso:=K!.isomorphismToGroupCyclotomicMats;;
+gap> KK:=BarycentricSubdivision(K);; #KK is a rigid complex
+gap> ResolutionIsomorphismGroup(KK,iso);; #matrices in G=SL(2,O-2) now have
+gap>                                      #cyclotomic entries
+
+gap> OQ:=RingOfIntegers(QuadraticNumberField(-2));;
+gap> I:=QuadraticIdeal(OQ,71);;
+gap> N:=HAP_CongruenceSubgroupGamma0(I);; #A congruence subgroup of G
+gap> IndexInSL2O(N);
+5042
+
+gap> Y:=GComplexToRegularCWComplex(KK,N); #Y = KK/N is a quotient CW-complex
+Regular CW-complex of dimension 2
+
+gap> Homology(Y,0);
+[ 0 ]
+gap> Homology(Y,1);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 
+  16, 16, 16, 16, 16, 16, 16, 16, 32, 32, 96, 672, 8471771350548821313678624, 
+  42358856752744106568393120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0 ]
+gap> Homology(Y,2);
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+gap> Flat(List([0..2], n->
+>               List([1..K!.dimension(n)],k->Order(K!.stabilizer(n,k)))  ));
+[ 24, 6, 8, 4 ]
+gap> Factors(8471771350548821313678624);
+[ 2, 2, 2, 2, 2, 3, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]
+gap> Factors(42358856752744106568393120);
+[ 2, 2, 2, 2, 2, 3, 5, 7, 17, 17, 17, 19, 617, 873263, 250653841 ]

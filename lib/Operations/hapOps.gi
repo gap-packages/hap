@@ -1378,16 +1378,17 @@ end);
 ##########################################################
 ##########################################################
 
-#if false then #Oct 2025
 ##########################################################
 ##########################################################
 InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt],
 function(C,n)
-if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 2025
+if EvaluateProperty(C,"charactieristic")<>0 then return 
+PersistentBettiNumbers(C,n,EvaluateProperty(C,"charactieristic"));;
+ fi; #March 2026
 return PersistentBettiNumbers(
-FilteredChainComplexToFilteredSparseChainComplex(C),n);
+FilteredChainComplexToFilteredSparseChainComplex(C),n,EvaluateProperty(C,"charactieristic"));
 end);
 ##########################################################
 ##########################################################
@@ -1398,13 +1399,15 @@ InstallOtherMethod(PersistentBettiNumbers,
 "Betti number of a  filtered chain complex",
 [IsHapFilteredChainComplex,IsInt,IsInt],
 function(C,n,prime)
-if EvaluateProperty(C,"charactieristic")<>0 then return fail; fi; #Oct 202
+if EvaluateProperty(C,"charactieristic")<>0 then return 
+PersistentHomologyOfFilteredChainComplex(C,n,prime);;
+ fi; #March 2026
+
 return PersistentBettiNumbers(
 FilteredChainComplexToFilteredSparseChainComplex(C),n,prime);
 end);
 ##########################################################
 ##########################################################
-#fi;
 
 
 

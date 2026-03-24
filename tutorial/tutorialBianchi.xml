@@ -104,7 +104,7 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 		Computer calculations show that these
 		cusps lie in precisely three orbits under the action of <M>G_{-d}</M>. Thus, together with the orbit of <M>\infty</M> there are four distinct orbits of cusps. By the well-known correspondence between cusp orbits and elements of the class group it follows that the class group of <M>\mathbb Q(\sqrt{-39})</M> is of order <M>4</M>. 
 			
-		<P/>The following additional commands comvert the Bianchi polyhedron <M>D</M> to a regular CW-complex and then display its <M>1</M>-skeleton.
+		<P/>The following additional commands comvert the ``bottom surface'' of the Bianchi polyhedron <M>D</M> to a <M>2</M>-dimensional regular CW-complex and then displays the <M>1</M>-skeleton of this <M>2</M>-complex.
 
 			<Example>
 <#Include SYSTEM "tutex/bianchi.1A.txt">
@@ -179,6 +179,55 @@ computations with cyclotomic numbers. The account of Swan's algorithm in the the
 			<Example>
 <#Include SYSTEM "tutex/bianchi.14.txt">
 </Example>
+
+</Section>
+
+<Section><Heading>Computing quotient <M>2</M>-complexes</Heading>
+	The space <M>X={\frak h}^3 \cup \{\infty\} \cup \mathbb Q(\sqrt{-d})</M> retracts onto an <M>SL_2({\mathcal O}_{-d})</M>-equivariant <M>2</M>-dimensional regular CW-complex <M>K \subset X</M>. By barycentrically subdividing  <M>K</M>  we can assume that the group action on <M>K</M> is <E>rigid</E> in the sense
+		that any group element in the stabilizer
+		of a cell fixes that cell pointwise. Given a congruence subgroup <M>\Gamma \le SL_2({\mathcal O}_{-d})</M> the quotient space <M>Y=K/\Gamma</M> inherits a regular CW-structure.  
+			We have <M>H_n(\Gamma,\mathbb Q) = H_n(Y,\mathbb Q)</M>
+				and <M>H_n(\Gamma,\mathbb Z_p) = H_n(Y,\mathbb Z_p)</M> for any prime not dividing the order of any group element in <M>\Gamma</M>.
+					At these primes the <M>p</M>-torsion in <M>H_n(Y,\mathbb Z)</M> equals that in <M>H_n(\Gamma,\mathbb Z)</M>.
+<!--
+				Let <M>\mathcal S</M> denote the set of primes occuring in the orders of
+				the finite subgroups of <M>\Gamma</M>. For primes <M>p\notin S</M> the group <M>H_n(\Gamma,\mathbb Z)</M> contains a summand <M>\mathbb Z/p^k\mathbb Z </M> if and only if <M>H_n(Y,\mathbb Z)</M> contains this summand. Thus the homology of <M>H_n(Y,\mathbb Z)</M> can be used to detect torsion in <M>H_n(\Gamma,\mathbb Z)</M>
+
+				<P/>For <M>\Gamma=\Gamma_0(71) \le SL(2,{\mathcal O}_{-2})</M> the following session shows that <M>{\mathcal S}=\{2,3\}</M> and that 
+				<M>H_1(\Gamma_0(71),\mathbb Z)</M> contains the summand 				$$(\mathbb Z_7)^2\oplus (\mathbb Z_{17})^6 \oplus (\mathbb Z_{19})^2 \oplus (\mathbb Z_{617})^2 \oplus (\mathbb Z_{873263})^2 \oplus (\mathbb Z_{250653841})^2 .$$
+-->
+					The following session computes the 
+					integral
+					homology of <M>Y</M> for <M>\Gamma=\Gamma_0(71) \le SL(2,{\mathcal O}_{-2})</M> and establishes that <M>\Gamma</M> has no <M>p</M>-torsion for primes <M>p>3</M> and has index <M>5042</M>.
+	                                       <Example>
+<#Include SYSTEM "tutex/bianchi.18.txt">
+</Example>
+
+	The above computation can be corroborated by using a free resolution to
+	calculate <M>H_1(\Gamma_0(71),\mathbb Z)</M> at all primes.
+
+	<Example>
+		<#Include SYSTEM "tutex/bianchi.19.txt">
+</Example>
+
+	The next example computes a CW complex <M>Y</M>
+		with <M>H^\ast(Y,\mathbb Z) =H^\ast(\Gamma_0(23),\mathbb Z)</M> modulo the primes <M>2,3</M> for <M>\Gamma_0(23) &lt; SL_2({\mathcal O}_{-2})</M> and shows that a basis <M>b_1,b_2,\ldots b_9</M> for <M>H^1(W,\mathbb Z) =\mathbb Z^{9}</M>  
+		 satisfies <M>b_i\cup b_j=0</M> except for 
+		 <M>b_1\cup b_6 = -b_6\cup b_1\neq 0</M>, <M>b_1\cup b_7 =-b_7\cup b_1\ne 0</M>, <M>b_1\cup b_9=-b_9\cup b_1\ne 0</M>.
+
+
+
+	        <Example>
+                <#Include SYSTEM "tutex/bianchi.20.txt">
+</Example>
+
+<P/>THe following additional commands compute the <M>11</M>-primary parts <M>H^2(\Gamma_0(23),\mathbb Z)_{(11)}=\mathbb Z_{11}</M>, <M>H^n(\Gamma_0(23),\mathbb Z)_{(11)}=0</M> for <M>2\ne n>0</M>.
+	They then compute the cohomology ring <M>A=H^\ast(\Gamma_0(23),\mathbb Z_{11})</M>, a basis <M>B</M> of <M>H^1(\Gamma_0(23),\mathbb Z_{11}) =(\mathbb Z_{11})^{10}</M>, and procuce a matrix <M>C=(c_{ij})</M> with
+	<M>c_{ij}=0</M> if <M>b_i\cup b_j=0</M>, <M>c_{ij}=1</M> if <M>b_i\cup b_j\ne 0</M> for <M>b_i,b_j\in B</M>.
+	<Example>
+                <#Include SYSTEM "tutex/bianchi.21.txt">
+</Example>
+
 
 </Section>
 
