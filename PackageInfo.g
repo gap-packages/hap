@@ -83,6 +83,19 @@ SetPackageInfo( rec(
                                [ "xmod", ">0.0" ],
                                [ "laguna", ">0.0"]
                               ],
+    NeededSystemPackages := rec(
+                                 Ubuntu := [
+                                             [ "graphviz" ],
+                                             [ "imagemagick" ],
+                                             [ "singular" ],
+                                             [ "polymake" ]
+                                           ],
+                                 Homebrew := [
+                                               [ "graphviz" ],
+                                               [ "imagemagick" ],
+                                               [ "singular" ],
+                                             ]
+                               ),
 
     ExternalConditions := [["Some optional functions require Polymake software",
     "https://polymake.org/doku.php"],
