@@ -88,7 +88,7 @@ SetPackageInfo( rec(
                                              [ "graphviz" ],
                                              [ "imagemagick" ],
                                              [ "singular" ],
-                                             [ "polymake" ]
+                                             [ "polymake" ],
                                            ],
                                  Homebrew := [
                                                [ "graphviz" ],
