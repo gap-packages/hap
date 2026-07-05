@@ -1324,6 +1324,7 @@
   order [22X4r[122X. The following commands construct [22XP_r[122X for [22Xr=3[122X.[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XL:=[[1,2,3,4,5,6],[8,9,10,11,12,7]];;[127X[104X
     [4X[25Xgap>[125X [27XM:=[[1,7,8,2],[11,10,4,5]];;[127X[104X
     [4X[25Xgap>[125X [27XN:=[[2,8,9,3],[12,11,5,6]];;[127X[104X
@@ -1346,4 +1347,66 @@
   the prism are numbered as follows.[133X
   
   [33X[0;0YFor [22Xn=4[122X the bipyramid is the octahedron.[133X
+  
+  
+  [1X4.18 [33X[0;0YFlat manifolds, orbifolds and crystallographic groups[133X[101X
+  
+  [33X[0;0YGiven  an  [22Xn[122X-dimensional crystallographic group [22XG[122X the quotient [22XX= R^n/G[122X will
+  be  an  orbifold.  If  [22XG[122X is Bieberbach (i.e. if it acts on [22XR^n[122X without fixed
+  points)  then  the quotient [22XX[122X will be a flat manifold. The following example
+  constructs a [22X3[122X-dimensional flat manifold and computes its homology.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroup(3,142);;[127X[104X
+    [4X[25Xgap>[125X [27XIsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XK:=CrystallographicComplex(G);;[127X[104X
+    [4X[25Xgap>[125X [27XKK:=BarycentricSubdivision(K);;[127X[104X
+    [4X[25Xgap>[125X [27XKK!.group:=G;;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(KK,G);[127X[104X
+    [4X[28XRegular CW-complex of dimension 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[ 3, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  example  constructs  a [22X4[122X-dimensional orbifold arising as the
+  quotient of the [22X4[122X-torus by the permutation action of the cyclic group [22XC_5[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroup(4,4499);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(PointGroup(G));[127X[104X
+    [4X[28X"C5"[128X[104X
+    [4X[25Xgap>[125X [27XIsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XK:=CrystallographicComplex(G);;[127X[104X
+    [4X[28XKK:=BarycentricSubdivision(K);;[128X[104X
+    [4X[25Xgap>[125X [27XKK!.group:=G;;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(KK,G);[127X[104X
+    [4X[28XRegular CW-complex of dimension 4[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,2);[127X[104X
+    [4X[28X[ 5, 5, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,3);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(Y,4);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XY:=SimplifiedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(Y); #number of cells in Y[127X[104X
+    [4X[28X6948[128X[104X
+    [4X[25Xgap>[125X [27XY!.nrCells(4); #number of 4-dimensional cells in Y[127X[104X
+    [4X[28X126[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   

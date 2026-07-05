@@ -81,6 +81,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7F31DFDA846E8E75">4.17 <span class="Heading">Bipyramid manifolds</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X828ED6F381351B49">4.18 <span class="Heading">Flat manifolds, orbifolds and crystallographic groups</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Three Manifolds</span></h3>
@@ -1222,6 +1225,7 @@ true
 
 
 <div class="example"><pre>
+
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[[1,2,3,4,5,6],[8,9,10,11,12,7]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=[[1,7,8,2],[11,10,4,5]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[[2,8,9,3],[12,11,5,6]];;</span>
@@ -1243,6 +1247,67 @@ true
 <p><img src="images/bipyramid.png" align="center" height="150" alt="bipyramid"/></p>
 
 <p>For <span class="SimpleMath">\(n=4\)</span> the bipyramid is the octahedron.</p>
+
+<p><a id="X828ED6F381351B49" name="X828ED6F381351B49"></a></p>
+
+<h4>4.18 <span class="Heading">Flat manifolds, orbifolds and crystallographic groups</span></h4>
+
+<p>Given an <span class="SimpleMath">\(n\)</span>-dimensional crystallographic group <span class="SimpleMath">\(G\)</span> the quotient <span class="SimpleMath">\(X=\mathbb R^n/G\)</span> will be an orbifold. If <span class="SimpleMath">\(G\)</span> is Bieberbach (i.e. if it acts on <span class="SimpleMath">\(\mathbb R^n\)</span> without fixed points) then the quotient <span class="SimpleMath">\(X\)</span> will be a flat manifold. The following example constructs a <span class="SimpleMath">\(3\)</span>-dimensional flat manifold and computes its homology.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroup(3,142);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=CrystallographicComplex(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK:=BarycentricSubdivision(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK!.group:=G;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(KK,G);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
+[ 3, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,3);</span>
+[ 0 ]
+
+</pre></div>
+
+<p>The following example constructs a <span class="SimpleMath">\(4\)</span>-dimensional orbifold arising as the quotient of the <span class="SimpleMath">\(4\)</span>-torus by the permutation action of the cyclic group <span class="SimpleMath">\(C_5\)</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroup(4,4499);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(PointGroup(G));</span>
+"C5"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=CrystallographicComplex(G);;</span>
+KK:=BarycentricSubdivision(K);;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KK!.group:=G;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(KK,G);</span>
+Regular CW-complex of dimension 4
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
+[ 5, 5, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,3);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,4);</span>
+[ 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=SimplifiedComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y); #number of cells in Y</span>
+6948
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(4); #number of 4-dimensional cells in Y</span>
+126
+
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
