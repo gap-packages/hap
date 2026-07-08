@@ -2,9 +2,19 @@
 ###############################################################
 ###############################################################
 InstallGlobalFunction(EilenbergMacLaneSimplicialFreeAbelianGroup,
-function(G,n,m)
-local K, L, VectorToWord, M, D, i, j,  dimension, boundary, degeneracy,
+function(GG,n,m)
+local G,K, L, VectorToWord, M, D, i, j,  dimension, boundary, degeneracy,
 MFUN, DFUN;
+
+G:=GG;
+if Length(Filtered(AbelianInvariants(G),x->x>0)) <>0 then
+Print("Currently this function is implemented only for free abelian groups.\n");
+return fail;
+fi;
+
+if IsFpGroup(G) then
+G:=AbelianPcpGroup(AbelianInvariants(GG));
+fi;
 
 K:=EilenbergMacLaneSimplicialGroup(G,n,m);;
 

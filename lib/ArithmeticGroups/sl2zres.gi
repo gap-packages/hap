@@ -12,7 +12,6 @@ InstallGlobalFunction(SL2ZResolution,
 function(m,n)
 local l,p,k,
     C,R,T,RH,RK,RGamma,H,K,Gamma,D,G,F,RF;
-    
 	l:=Factors(m);
     p:=l[Length(l)];
     k:=m/p;

@@ -18,7 +18,7 @@ local
 	Trans,
 	CrossedPairing, action,
 	UpperBound,
-	Todd,tmp,HOM1, HOM2,HOMZ1,HOMZ2,EA,gensEA,i,v,w,x,y,z,t;
+	Todd,tmp,i,v,w,x,y,z,t;
 
 #if not IsFinite(arg[1]) then return NonabelianTensorSquare_inf(arg[1]); fi;
 
@@ -65,8 +65,8 @@ fi;
 # following diagrams:   AG->G->BG->F->AF->SF and SF->AG.
 
 gensAG:=GeneratorsOfGroup(AG);
-AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
 #gensAG:=MinimalGeneratingSet(AG);
+AGhomG:=IsomorphismFpGroupByGenerators(AG,gensAG);
 G:=Range(AGhomG);
 
 gensG:=FreeGeneratorsOfFpGroup(G);
@@ -186,57 +186,35 @@ fi;
 #####################################################################FI
 
 
+
 #####################################################################Test
-#This verifies the above guess. A proof that the guess is correct would make things run much faster!!
-EA:=Elements(AG);
-gensEA:=List(gensAG,i->Position(EA,i));
-HOM1:=List(EA,x->Image(AG1homF,x));
-HOM2:=List(EA,x->Image(AG2homF,x));
-HOMZ1:=List(EA,x->[]);
-HOMZ2:=List(EA,x->[]);
-EA:=Elements(AG);
-gensEA:=List(gensAG,i->Position(EA,i));
-for x in [1..Size(AG)] do
-for z in [1..Size(AG)]  do
-HOMZ1[x,z]:=Image(AG1homF,EA[x]^EA[z]);
-HOMZ2[x,z]:=Image(AG2homF,EA[x]^EA[z]);
-od;
-od;
+#This verifies the above guess
+for x in gensAG do      
+for y in gensAG do
+for t in AG do
+for z in AG do
 
-for x in gensEA do      
-for y in gensEA do
-for t in [1..Size(AG)] do
-for z in [1..Size(AG)] do
-
-#v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG1homF,z) ;
-v:=Comm(Comm(HOM1[x],HOM2[y]),HOM1[t])^HOM1[z] ;
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG1homF,z) ;
 v:=Image(FhomSF,v);
-#w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
-w:=Comm(HOMZ1[t,z],Comm(HOMZ1[x,z],HOMZ2[y,z]));
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 w:=Image(FhomSF,w);
 if not Order(v*w)=1 then return fail; fi;
 
-#v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG1homF,z) ;
-v:=Comm(Comm(HOM1[x],HOM2[y]),HOM2[t])^HOM1[z] ;
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG1homF,z) ;
 v:=Image(FhomSF,v);
-#w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
-w:=Comm(HOMZ2[t,z],Comm(HOMZ1[x,z],HOMZ2[y,z]));
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 w:=Image(FhomSF,w);
 if not Order(v*w)=1 then return fail; fi;
 
-#v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG2homF,z) ;
-v:=Comm(Comm(HOM1[x],HOM2[y]),HOM1[t])^HOM2[z] ;
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG1homF,t))^Image(AG2homF,z) ;
 v:=Image(FhomSF,v);
-#w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
-w:=Comm(HOMZ1[t,z],Comm(HOMZ1[x,z],HOMZ2[y,z]));
+w:=Comm(Image(AG1homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 w:=Image(FhomSF,w);
 if not Order(v*w)=1 then return fail; fi;
 
-#v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG2homF,z) ;
-v:=Comm(Comm(HOM1[x],HOM2[y]),HOM2[t])^HOM2[z] ;
+v:=Comm(Comm(Image(AG1homF,x),Image(AG2homF,y)),Image(AG2homF,t))^Image(AG2homF,z) ;
 v:=Image(FhomSF,v);
-#w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
-w:=Comm(HOMZ2[t,z],Comm(HOMZ1[x,z],HOMZ2[y,z]));
+w:=Comm(Image(AG2homF,t^z),Comm(Image(AG1homF,x^z),Image(AG2homF,y^z)));
 w:=Image(FhomSF,w);
 if not Order(v*w)=1 then return fail; fi;
 
