@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.75",
-  Date    := "24/03/2026",
+  Version := "1.76",
+  Date    := "08/07/2026",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -83,6 +83,19 @@ SetPackageInfo( rec(
                                [ "xmod", ">0.0" ],
                                [ "laguna", ">0.0"]
                               ],
+    NeededSystemPackages := rec(
+                                 Ubuntu := [
+                                             [ "graphviz" ],
+                                             [ "imagemagick" ],
+                                             [ "singular" ],
+                                             [ "polymake" ],
+                                           ],
+                                 Homebrew := [
+                                               [ "graphviz" ],
+                                               [ "imagemagick" ],
+                                               [ "singular" ],
+                                             ]
+                               ),
 
     ExternalConditions := [["Some optional functions require Polymake software",
     "https://polymake.org/doku.php"],

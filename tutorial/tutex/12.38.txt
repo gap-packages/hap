@@ -1,0 +1,26 @@
+gap> G:=SpaceGroup(4,4499);;
+gap> StructureDescription(PointGroup(G));
+"C5"
+gap> IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));
+false
+gap> K:=CrystallographicComplex(G);;
+KK:=BarycentricSubdivision(K);;
+gap> KK!.group:=G;;
+gap> Y:=GComplexToRegularCWComplex(KK,G);
+Regular CW-complex of dimension 4
+
+gap> Homology(Y,1);
+[  ]
+gap> Homology(Y,2);
+[ 5, 5, 0, 0 ]
+gap> Homology(Y,3);
+[  ]
+gap> Homology(Y,4);
+[ 0 ]
+
+gap> Y:=SimplifiedComplex(Y);;
+gap> Size(Y); #number of cells in Y
+6948
+gap> Y!.nrCells(4); #number of 4-dimensional cells in Y
+126
+

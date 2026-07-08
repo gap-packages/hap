@@ -3354,6 +3354,7 @@ fundamental group.
  Infinite families of spherical $3$\texttt{\symbol{45}}maniolds can be constructed from the infinite family of
 prisms. For instance, a prism manifold which we denote by $P_r$ can be obtained from a prism $D_{2r}\times [0,1]$ by identifying the left and right side under a twist of $\pi/r$, and identifying opposite square faces under a twist of $\pi/2$. Its fundamental group $\pi_1P_r$ is the binary dihedral group of order $4r$. The following commands construct $P_r$ for $r=3$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
   !gapprompt@gap>| !gapinput@L:=[[1,2,3,4,5,6],[8,9,10,11,12,7]];;|
   !gapprompt@gap>| !gapinput@M:=[[1,7,8,2],[11,10,4,5]];;|
   !gapprompt@gap>| !gapinput@N:=[[2,8,9,3],[12,11,5,6]];;|
@@ -3378,6 +3379,63 @@ CW\texttt{\symbol{45}}complex arising from a bipyramid with $n\ge 3$ by identify
   
 
  For $n=4$ the bipyramid is the octahedron. }
+
+ 
+\section{\textcolor{Chapter }{Flat manifolds, orbifolds and crystallographic groups}}\logpage{[ 4, 18, 0 ]}
+\hyperdef{L}{X828ED6F381351B49}{}
+{
+ Given an $n$\texttt{\symbol{45}}dimensional crystallographic group $G$ the quotient $X=\mathbb R^n/G$ will be an orbifold. If $G$ is Bieberbach (i.e. if it acts on $\mathbb R^n$ without fixed points) then the quotient $X$ will be a flat manifold. The following example constructs a $3$\texttt{\symbol{45}}dimensional flat manifold and computes its homology. 
+\begin{Verbatim}[commandchars=@|D,fontsize=\small,frame=single,label=Example]
+  
+  @gapprompt|gap>D @gapinput|G:=SpaceGroup(3,142);;D
+  @gapprompt|gap>D @gapinput|IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));D
+  true
+  @gapprompt|gap>D @gapinput|K:=CrystallographicComplex(G);;D
+  @gapprompt|gap>D @gapinput|KK:=BarycentricSubdivision(K);;D
+  @gapprompt|gap>D @gapinput|KK!.group:=G;;D
+  @gapprompt|gap>D @gapinput|Y:=GComplexToRegularCWComplex(KK,G);D
+  Regular CW-complex of dimension 3
+  
+  @gapprompt|gap>D @gapinput|Homology(Y,1);D
+  [ 3, 0 ]
+  @gapprompt|gap>D @gapinput|Homology(Y,2);D
+  [ 0 ]
+  @gapprompt|gap>D @gapinput|Homology(Y,3);D
+  [ 0 ]
+  
+\end{Verbatim}
+ The following example constructs a $4$\texttt{\symbol{45}}dimensional orbifold arising as the quotient of the $4$\texttt{\symbol{45}}torus by the permutation action of the cyclic group $C_5$. 
+\begin{Verbatim}[commandchars=@|E,fontsize=\small,frame=single,label=Example]
+  
+  @gapprompt|gap>E @gapinput|G:=SpaceGroup(4,4499);;E
+  @gapprompt|gap>E @gapinput|StructureDescription(PointGroup(G));E
+  "C5"
+  @gapprompt|gap>E @gapinput|IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));E
+  false
+  @gapprompt|gap>E @gapinput|K:=CrystallographicComplex(G);;E
+  KK:=BarycentricSubdivision(K);;
+  @gapprompt|gap>E @gapinput|KK!.group:=G;;E
+  @gapprompt|gap>E @gapinput|Y:=GComplexToRegularCWComplex(KK,G);E
+  Regular CW-complex of dimension 4
+  
+  @gapprompt|gap>E @gapinput|Homology(Y,1);E
+  [  ]
+  @gapprompt|gap>E @gapinput|Homology(Y,2);E
+  [ 5, 5, 0, 0 ]
+  @gapprompt|gap>E @gapinput|Homology(Y,3);E
+  [  ]
+  @gapprompt|gap>E @gapinput|Homology(Y,4);E
+  [ 0 ]
+  
+  @gapprompt|gap>E @gapinput|Y:=SimplifiedComplex(Y);;E
+  @gapprompt|gap>E @gapinput|Size(Y); #number of cells in YE
+  6948
+  @gapprompt|gap>E @gapinput|Y!.nrCells(4); #number of 4-dimensional cells in YE
+  126
+  
+  
+\end{Verbatim}
+ }
 
  }
 
@@ -5085,7 +5143,7 @@ $H^5(G,\mathbb Z)= \mathbb Z$
 
 The following example computes 
 
-$H_6(SL_2({\cal O},\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_{12}$ 
+$H_6(SL_2({\cal O}),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_{12}$ 
 
 for ${\cal O}$ the ring of integers of the number field $\mathbb Q(\sqrt{-2})$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -5093,6 +5151,27 @@ for ${\cal O}$ the ring of integers of the number field $\mathbb Q(\sqrt{-2})$.
   !gapprompt@gap>| !gapinput@R:=FreeGResolution(C,7);;|
   !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),6);|
   [ 2, 12 ]
+  
+\end{Verbatim}
+ 
+
+The following example computes 
+
+$H_n(SL_4(\mathbb Z),\mathbb Z) = \left\{ \begin{array}{ll} 0, &n=1\\ \mathbb
+Z_2 \oplus \mathbb Z_2, & n=2\\ \mathbb Z \oplus \mathbb Z_2 \oplus \mathbb
+Z_{12} \oplus \mathbb Z_{240}, &n=3\\ \mathbb Z_2 \oplus \mathbb Z_2 \oplus
+\mathbb Z_{10}, & n=4\ . \end{array}\right. $ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL4Z_d");;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,6);;|
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),1);|
+  [  ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),2);|
+  [ 2, 2 ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),3);|
+  [ 2, 12, 240, 0 ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),4);|
+  [ 2, 2, 10 ]
   
 \end{Verbatim}
  }

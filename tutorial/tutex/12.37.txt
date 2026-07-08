@@ -1,0 +1,15 @@
+gap> G:=SpaceGroup(3,142);;
+gap> IsAlmostBieberbachGroup(Image(IsomorphismPcpGroup(G)));
+true
+gap> K:=CrystallographicComplex(G);;
+gap> KK:=BarycentricSubdivision(K);;
+gap> KK!.group:=G;;
+gap> Y:=GComplexToRegularCWComplex(KK,G);
+Regular CW-complex of dimension 3
+
+gap> Homology(Y,1);
+[ 3, 0 ]
+gap> Homology(Y,2);
+[ 0 ]
+gap> Homology(Y,3);
+[ 0 ]

@@ -379,7 +379,7 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>The following example computes</p>
 
-<p><span class="SimpleMath">H_6(SL_2(cal O, Z) = Z_2 ⊕ Z_12</span></p>
+<p><span class="SimpleMath">H_6(SL_2(cal O), Z) = Z_2 ⊕ Z_12</span></p>
 
 <p>for <span class="SimpleMath">cal O</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt-2)</span>.</p>
 
@@ -389,6 +389,25 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),6);</span>
 [ 2, 12 ]
+
+</pre></div>
+
+<p>The following example computes</p>
+
+<p><span class="SimpleMath">H_n(SL_4( Z), Z) = { beginarrayll 0, &amp;n=1 Z_2 ⊕ Z_2, &amp; n=2 Z ⊕ Z_2 ⊕ Z_12 ⊕ Z_240, &amp;n=3 Z_2 ⊕ Z_2 ⊕ Z_10, &amp; n=4 . endarray.</span></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL4Z_d");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),1);</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),2);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),3);</span>
+[ 2, 12, 240, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
+[ 2, 2, 10 ]
 
 </pre></div>
 
