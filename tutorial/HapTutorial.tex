@@ -5160,7 +5160,7 @@ The following example computes
 $H_n(SL_4(\mathbb Z),\mathbb Z) = \left\{ \begin{array}{ll} 0, &n=1\\ \mathbb
 Z_2 \oplus \mathbb Z_2, & n=2\\ \mathbb Z \oplus \mathbb Z_2 \oplus \mathbb
 Z_{12} \oplus \mathbb Z_{240}, &n=3\\ \mathbb Z_2 \oplus \mathbb Z_2 \oplus
-\mathbb Z_{10}, & n=4\ . \end{array}\right. $ 
+\mathbb Z_{10}, & n=4\\ (\mathbb Z_2)^7, & n=5\ . \end{array}\right. $ 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL4Z_d");;|
   !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,6);;|
@@ -5172,6 +5172,59 @@ Z_{12} \oplus \mathbb Z_{240}, &n=3\\ \mathbb Z_2 \oplus \mathbb Z_2 \oplus
   [ 2, 12, 240, 0 ]
   !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),4);|
   [ 2, 2, 10 ]
+  !gapprompt@gap>| !gapinput@Homology(TensorWithIntegers(R),5);|
+  [ 2, 2, 2, 2, 2, 2, 2 ]
+  
+\end{Verbatim}
+ For the congruence subgroup $\Gamma_0(31) < SL_3(\mathbb Z)$ the following example computes 
+
+$H_n(\Gamma_0(31),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{30}, & n=1\\
+(\mathbb Z_2)^8, &n=2\\ (\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus
+\mathbb Z^4, & n=3 \ . \end{array}\right.$ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  	
+  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,31);;|
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(3,Z)a");;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,4);;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,G);;|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegers(S);;|
+  !gapprompt@gap>| !gapinput@D:=ContractedComplex(C);;|
+  !gapprompt@gap>| !gapinput@Homology(D,1);|
+  [ 30 ]
+  !gapprompt@gap>| !gapinput@Homology(D,2);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  !gapprompt@gap>| !gapinput@Homology(D,3);|
+  [ 6, 6, 12, 12, 0, 0, 0, 0 ]
+  
+\end{Verbatim}
+ In the preceding code $K$ is a representation of a $3$\texttt{\symbol{45}}dimensional contractible regular
+CW\texttt{\symbol{45}}complex (a 'well\texttt{\symbol{45}}rounded retract') on
+which $SL_3(\mathbb Z)$ acts by permuting cells and for which every cell stabilizer is a finite group.
+The following code shows that there is just one orbit of $3$\texttt{\symbol{45}}cells and displays the $1$\texttt{\symbol{45}}skeleton of the closure of a $3$\texttt{\symbol{45}}cell. (Further investigation of $K$ shows that the 2\texttt{\symbol{45}}cells are either hexagonal or triangular.
+Each hexagonal $2$\texttt{\symbol{45}}cell is incident with three $3$\texttt{\symbol{45}}cells; each triangular $2$\texttt{\symbol{45}}cell is incident with four $3$\texttt{\symbol{45}}cells.) 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+          
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(3,Z)a");;A
+  @gapprompt|gap>A @gapinput|List([0..4],K!.dimension);A
+  [ 1, 1, 2, 1, 0 ]
+  @gapprompt|gap>A @gapinput|Y:=GComplexToFiniteRegularCWRegion(K,0);;A
+  @gapprompt|gap>A @gapinput|Display(GraphOfRegularCWComplex(Y));A
+  
+\end{Verbatim}
+  
+
+The command \texttt{Y:=GComplexToFiniteRegularCWRegion(K,r)} returns a 'ball of radius $r$' in the contractible CW\texttt{\symbol{45}}complex represented by $K$ for any integer $r\ge 0$. The ball is returned as a finite regular CW\texttt{\symbol{45}}complex. For
+instance, the following code constructs a ball of radius $r=6$ and builds a contracting disctete vector field on this ball. The component \texttt{Y!.G{\textunderscore}Cells[n+1][k]} returns a pair $[e,g]$ with integer $e$ specifying a representative of an orbit of $n$\texttt{\symbol{45}}cells in $K$ and $g$ an element in $SL(3,\mathbb Z)$ such that the $k$th $n$\texttt{\symbol{45}}cell of $Y$ corresponds to $g.e$ . 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+          
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(3,Z)a");;A
+  @gapprompt|gap>A @gapinput|Y:=GComplexToFiniteRegularCWRegion(K,6);;A
+  @gapprompt|gap>A @gapinput|Size(Y); #number of cells in YA
+  15328275
+  @gapprompt|gap>A @gapinput|Y!.nrCells(3); #number of 3-cells in YA
+  792577
+  @gapprompt|gap>A @gapinput|CriticalCells(Y);A
+  [ [ 0, 3116128 ] ]
   
 \end{Verbatim}
  }

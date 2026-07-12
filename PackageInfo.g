@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
   PackageName := "HAP",
   Subtitle  := "Homological Algebra Programming",
-  Version := "1.76",
-  Date    := "08/07/2026",
+  Version := "1.78",
+  Date    := "12/07/2026",
   License := "GPL-2.0-or-later",
 
   SourceRepository := rec(
@@ -78,7 +78,7 @@ SetPackageInfo( rec(
                                [ "homology",    ">=0.0"   ], 
                                [ "edim",      ">=1.2.2" ],
                                [ "singular", ">=06.07.23" ],
-                               [ "congruence", ">=0,0" ],
+                               [ "congruence", ">=0.0" ],
                                [ "HAPcryst", ">=0.1.0" ],
                                [ "xmod", ">0.0" ],
                                [ "laguna", ">0.0"]
