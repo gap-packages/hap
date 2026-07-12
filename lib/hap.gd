@@ -850,6 +850,8 @@ DeclareGlobalFunction("Suspension_alt");
 DeclareGlobalFunction("PersistentBettiNumbersViaContractions");
 DeclareGlobalFunction("ParallelPersistentBettiNumbers");
 DeclareGlobalFunction("ClassifyingSpaceFiniteGroup");
+DeclareGlobalFunction("RegularCWCellClosure");
+DeclareGlobalFunction("GComplexToFiniteRegularCWRegion");
 
 
 ## KNOTS ############################################################

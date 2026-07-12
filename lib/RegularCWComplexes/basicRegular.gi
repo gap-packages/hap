@@ -2,6 +2,15 @@
 
 ######################################
 ######################################
+InstallGlobalFunction(RegularCWCellClosure,
+function(Y,n,k);
+return Source(CWSubcomplexToRegularCWMap(ClosureCWCell(Y,n,k)));
+end);
+######################################
+######################################
+
+######################################
+######################################
 InstallGlobalFunction(HomotopyTruncation,
 function(W,N)
 local Y, V, A, n, x, i;
