@@ -416,25 +416,25 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
-<p>For the congruence subgroup <span class="SimpleMath">\(\Gamma_0(31) &lt; SL_3(\mathbb Z)\)</span> the following example computes</p>
+<p>For the congruence subgroup <span class="SimpleMath">\(\Gamma_0(71) &lt; SL_3(\mathbb Z)\)</span> the following example computes</p>
 
-<p><span class="SimpleMath">\(H_n(\Gamma_0(31),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{30}, &amp; n=1\\ (\mathbb Z_2)^8, &amp;n=2\\ (\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^4, &amp; n=3 \ . \end{array}\right.\)</span></p>
+<p><span class="SimpleMath">\(H_n(\Gamma_0(71),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{70}, &amp; n=1\\ (\mathbb Z_2)^{12}\oplus (\mathbb Z_8)^2, &amp;n=2\\ (\mathbb Z_2)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^{12}, &amp; n=3 \ . \end{array}\right.\)</span></p>
 
 
 <div class="example"><pre>
 	
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,31);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,71);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(S);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,1);</span>
-[ 30 ]
+[ 70 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,2);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2 ]
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 8 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,3);</span>
-[ 6, 6, 12, 12, 0, 0, 0, 0 ]
+[ 2, 2, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
 </pre></div>
 
@@ -453,19 +453,19 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><img src="images/sl3ztopcell.gif" align="center" height="200" alt="1-skeleton of a 3-cell"/></p>
 
-<p>The command <code class="code">Y:=GComplexToFiniteRegularCWRegion(K,r)</code> returns a 'ball of radius <span class="SimpleMath">\(r\)</span>' in the contractible CW-complex represented by <span class="SimpleMath">\(K\)</span> for any integer <span class="SimpleMath">\(r\ge 0\)</span>. The ball is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <span class="SimpleMath">\(r=6\)</span> and builds a contracting disctete vector field on this ball. The component <code class="code">Y!.G_Cells[n+1][k]</code> returns a pair <span class="SimpleMath">\([e,g]\)</span> with integer <span class="SimpleMath">\(e\)</span> specifying a representative of an orbit of <span class="SimpleMath">\(n\)</span>-cells in <span class="SimpleMath">\(K\)</span> and <span class="SimpleMath">\(g\)</span> an element in <span class="SimpleMath">\(SL(3,\mathbb Z)\)</span> such that the <span class="SimpleMath">\(k\)</span>th <span class="SimpleMath">\(n\)</span>-cell of <span class="SimpleMath">\(Y\)</span> corresponds to <span class="SimpleMath">\(g.e\)</span> .</p>
+<p>The command <code class="code">Y:=GComplexToFiniteRegularCWRegion(K,r)</code> returns a 'ball of radius <span class="SimpleMath">\(r\)</span>' in the contractible CW-complex represented by <span class="SimpleMath">\(K\)</span> for any integer <span class="SimpleMath">\(r\ge 0\)</span>. The ball is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <span class="SimpleMath">\(r=7\)</span> and builds a contracting disctete vector field on this ball. The component <code class="code">Y!.G_Cells[n+1][k]</code> returns a pair <span class="SimpleMath">\([e,g]\)</span> with integer <span class="SimpleMath">\(e\)</span> specifying a representative of an orbit of <span class="SimpleMath">\(n\)</span>-cells in <span class="SimpleMath">\(K\)</span> and <span class="SimpleMath">\(g\)</span> an element in <span class="SimpleMath">\(SL(3,\mathbb Z)\)</span> such that the <span class="SimpleMath">\(k\)</span>th <span class="SimpleMath">\(n\)</span>-cell of <span class="SimpleMath">\(Y\)</span> corresponds to <span class="SimpleMath">\(g.e\)</span> .</p>
 
 
 <div class="example"><pre>
         
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToFiniteRegularCWRegion(K,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToFiniteRegularCWRegion(K,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y); #number of cells in Y</span>
-15328275
+90537003
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y!.nrCells(3); #number of 3-cells in Y</span>
-792577
+4729285
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(Y);</span>
-[ [ 0, 3116128 ] ]
+[ [ 0, 18456062 ] ]
 
 </pre></div>
 
