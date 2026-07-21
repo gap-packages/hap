@@ -28,7 +28,7 @@ InstallMethod(AmbientPosition,
 "Returns cosetPos(g) function for the congruence subgroup G",
 [ IsIntegerMatrixGroup and IsHAPCongruenceSubgroupGamma0 ],
     function(G)
-        local cosetPos, n, ProjPlane;
+        local cosetPos, n, ProjPlane, U, UU;
         if DimensionOfMatrixGroup(G) <> 3 then
             TryNextMethod();
         fi;
@@ -37,16 +37,20 @@ InstallMethod(AmbientPosition,
     
         ProjPlane := ProjectiveSpace(G);
 
-        cosetPos := function(g)
-            local v, vv, U, u, w;
+        if not IsBound(G!.Units) then
+	UU := Units(Integers mod n); #Graham
+        G!.Units:=List(U,Int);  #Graham
+        fi;
+        
+	cosetPos := function(g)
+            local v, vv, u, w, p;
             v := [g[1][1], g[2][1], g[3][1]];
             vv := List(v, x -> x mod n);
-            U := Units(Integers mod n);
-            for u in U do
-                w := List(vv, x -> (Int(u)*x) mod n);
-                if w in ProjPlane.Reps then
-                    return Position(ProjPlane.Reps,w);
-                fi;
+         
+            for u in G!.Units do  #Graham
+                w := List(vv, x -> (u*x) mod n); #Graham
+                p:=Position(ProjPlane.Reps,w);   #Graham
+                if not p=fail then return p; fi; #Graham
             od;
         end;
 
@@ -130,13 +134,13 @@ function(G)
         end;
 
     poscan := function(g)
-        return cosetPos(g^-1);
+        return cosetPos(g^-1);   
     end;
 
     transversal := List([1..Length(ProjPlane.Reps)],i->cosetOfInt(i)^-1);
 
     return Objectify( NewType( FamilyObj( GG ),
-                IsHapRightTransversalSL2ZSubgroup and IsList and
+                IsHapRightTransversalSL2ZSubgroup and IsList and  #SL2???
                 IsDuplicateFreeList and IsAttributeStoringRep ),
                 rec( group := GG,
                      subgroup := G,

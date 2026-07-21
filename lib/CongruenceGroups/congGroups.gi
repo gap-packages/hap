@@ -101,7 +101,7 @@ InstallMethod( CongruenceSubgroupGamma0, "for integer matrix group and positive 
     ##################################################
     ##
     ## Remaining components to be computed in other functions.
-    ProjectiveSpace(G);
+    if DimensionOfMatrixGroup(GG)<4 then ProjectiveSpace(G);fi;
     AmbientTransversal(G);
     AmbientPosition(G); #A generic method will be used to construct the
     AmbientRepresentation(G); #these two functions except for cases with a

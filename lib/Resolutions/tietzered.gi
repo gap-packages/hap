@@ -367,6 +367,7 @@ if Length(arg)=2 then bound:=arg[2]; else bound:=infinity; fi;
 
 T:=R;
 for s in Reversed([0..Length(R)-1]) do
+#for s in [0..Length(R)-1] do
 T:=HAPTietzeReduction_OneLevel(T,s,bound);
 od;
 

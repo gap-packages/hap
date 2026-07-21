@@ -76,13 +76,16 @@ InstallMethod( HAPCongruenceSubgroupGamma0_alt,
 [IsInt, IsInt],
 function(n,m)
     local G, sl, membership, membershipLight, CosetRep, CanonicalRep, CosetPos, ProjLine,
-    CosetOfInt, S, T, U;
+    CosetOfInt, S, T, U, UU;
     if not (n=2 and m>0) then TryNextMethod(); fi;
 
     #The following implements G=Gamm0(m) < SL(2,Z)
 
     sl := SL(2,Integers);
     G := HAP_GenericCongruenceSubgroup("SL",2,Integers,m);
+    UU := Units(Integers mod m);  #Graham
+    UU := List(UU, u->Int(u));  #Graham
+    G!.Units:=UU; #Graham
 
     ###################################################
     membership:=function(g)
@@ -129,9 +132,10 @@ function(n,m)
         local v, vv, U, u, w;
         v := [g[1][1], g[2][1]];
         vv := List(v, x -> x mod m);
-        U := Units(Integers mod m);
-        for u in U do
-            w := List(vv, x -> (Int(u)*x) mod m);
+        #U := Units(Integers mod m);
+        for u in G!.Units do
+            #w := List(vv, x -> (Int(u)*x) mod m);
+            w := List(vv, x -> (u*x) mod m);
             if w in ProjLine.Reps then                  #Takes all the time
                 return Position(ProjLine.Reps,w);       #
             fi;
@@ -174,13 +178,18 @@ InstallMethod( HAPCongruenceSubgroupGamma0,
 "for integer n and integer m",
 [IsInt, IsInt],
 function(n,m)
-    local G, sl, membership, membershipLight, CosetRep, CanonicalRep, CosetPos, ProjLine, CosetOfInt, S, T, U;
+    local G, sl, membership, membershipLight, CosetRep, CanonicalRep, CosetPos, ProjLine, CosetOfInt, S, T, U, UU;
     if not (n=2 and m>0) then TryNextMethod(); fi;
 
     #The following implements G=Gamm0(m) < SL(2,Z)
 
     sl := SL(2,Integers);
     G := HAP_GenericCongruenceSubgroup("SL",2,Integers,m);
+
+    UU := Units(Integers mod m);  #Graham
+    UU := List(UU, u->Int(u));  #Graham
+    G!.Units:=UU; #Graham
+
 
     ###################################################
     membership:=function(g)
@@ -228,10 +237,11 @@ function(n,m)
         local v, vv, U, d, dd, x, y;
         v := [g[1][1], g[2][1]];
         vv := List(v, x -> x mod m);
-        U := Units(Integers mod m);
+        #U := Units(Integers mod m);
         if vv[1] mod m = 0 then
             return [0,1];
-        elif ZmodnZObj(vv[1],m) in U then
+        #elif ZmodnZObj(vv[1],m) in U then
+        elif vv[1] in G!.Units then
             return [1,(Inverse(vv[1]) mod m)*vv[2] mod m];
         else
             d := Gcd(vv[1],m);
@@ -324,7 +334,7 @@ InstallMethod( HAPCongruenceSubgroupGamma0,
 "for SL(3,Z)",
 [IsInt, IsInt],
 function(n,m)
-    local G,sl,membership,membershipLight, ProjPlane, CosetRep, CosetPos, MatrixInSL3_Hermite, S, T, U, CosetOfInt;
+    local G,sl,membership,membershipLight, ProjPlane, CosetRep, CosetPos, MatrixInSL3_Hermite, S, T, U, UU, CosetOfInt;
     
     if not (n = 3 and m > 0) then
         TryNextMethod();
@@ -332,6 +342,11 @@ function(n,m)
 
     sl := SL(3, Integers);
     G  := HAP_GenericCongruenceSubgroup("SL", 3, Integers, m);
+
+    UU := Units(Integers mod m);  #Graham
+    UU := List(UU, u->Int(u));  #Graham
+    G!.Units:=UU; #Graham
+
 
     membership := function(g)
         if not g in sl then
@@ -369,12 +384,13 @@ function(n,m)
 
     ProjPlane := FiniteProjectivePlane(m);
     CosetPos := function(g)
-        local v, vv, U, u, w;
+        local v, vv, u, w;
         v := [g[1][1], g[2][1], g[3][1]];
         vv := List(v, x -> x mod m);
-        U := Units(Integers mod m);
-        for u in U do
-            w := List(vv, x -> (Int(u)*x) mod m);
+        #U := Units(Integers mod m);
+        for u in G!.Units do
+            #w := List(vv, x -> (Int(u)*x) mod m);
+            w := List(vv, x -> (u*x) mod m);
             if w in ProjPlane.Reps then
                 return Position(ProjPlane.Reps,w);
             fi;
