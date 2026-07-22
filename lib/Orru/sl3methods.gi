@@ -39,7 +39,7 @@ InstallMethod(AmbientPosition,
 
         if not IsBound(G!.Units) then
 	UU := Units(Integers mod n); #Graham
-        G!.Units:=List(U,Int);  #Graham
+        G!.Units:=List(UU,Int);  #Graham
         fi;
         
 	cosetPos := function(g)
