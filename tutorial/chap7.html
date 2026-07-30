@@ -43,7 +43,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7AFFB32587D047FE">7.4 <span class="Heading">Arithmetic groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X781178587E1FE338">7.4-1 <span class="Heading">Rational homology</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8479883784E4F02E">7.4-1 <span class="Heading">Rational cohomology</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X841369EB849AF695">7.4-2 <span class="Heading">Mod-<span class="SimpleMath">q</span> cohomology</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X800CB6257DC8FB3A">7.5 <span class="Heading">Artin groups</span></a>
@@ -471,9 +473,9 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>Further details on computing with Arithmetic groups can be found in Chapters <a href="chap13.html#X86D5DB887ACB1661"><span class="RefLink">13</span></a>, <a href="chap14.html#X805848868005D528"><span class="RefLink">14</span></a> and <span class="RefLink">???</span>.</p>
 
-<p><a id="X781178587E1FE338" name="X781178587E1FE338"></a></p>
+<p><a id="X8479883784E4F02E" name="X8479883784E4F02E"></a></p>
 
-<h5>7.4-1 <span class="Heading">Rational homology</span></h5>
+<h5>7.4-1 <span class="Heading">Rational cohomology</span></h5>
 
 <p>To compute the rational homology of an arithmetic group such as <span class="SimpleMath">G=SL_n( Z)</span> one can work directly with the well-rounded retract <span class="SimpleMath">K</span> on which <span class="SimpleMath">G</span> acts with finite stabilizers. The following computes the rational cohomology</p>
 
@@ -505,6 +507,41 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithRationals(V);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..6],i-&gt;Homology(D,i));</span>
 [ 0, 0, 0, 1, 0, 0, 1 ]
+
+</pre></div>
+
+<p><a id="X841369EB849AF695" name="X841369EB849AF695"></a></p>
+
+<h5>7.4-2 <span class="Heading">Mod-<span class="SimpleMath">q</span> cohomology</span></h5>
+
+<p>For a congruence subgroup <span class="SimpleMath">G</span> of an arithmetic group such as <span class="SimpleMath">SL_n( Z)</span> and positive integer <span class="SimpleMath">q</span> coprime to the order of any torsion element in <span class="SimpleMath">G</span> one can again work directly with the well-rounded retract <span class="SimpleMath">K</span> in order to compute <span class="SimpleMath">H^∗(G, Z/q Z)</span>.</p>
+
+<p>For instance, for <span class="SimpleMath">G=Γ_0(11) &lt; SL_3( Z)</span> the following computes the cohomology ring <span class="SimpleMath">H^∗(Γ_0(11), Z/5 Z)</span> and shows it to be a <span class="SimpleMath">5</span>-dimensional algebra with non-trivial product.</p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=SimplifiedComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=CohomologyRing(Y,5);</span>
+&lt;algebra of dimension 5 over GF(5)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B:=CanonicalBasis(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(B,R!.degree); #degrees of basis elements</span>
+[ 0, 1, 2, 3, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=NullMat(5,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..5] do </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   for j in [1..5] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      A[i][j]:=B[i]*B[j];</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(A);</span>
+[ [    v.1,    v.2,    v.3,    v.4,    v.5 ],
+  [    v.2,  0*v.1,    v.4,  0*v.1,  0*v.1 ],
+  [    v.3,    v.4,  0*v.1,  0*v.1,  0*v.1 ],
+  [    v.4,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ],
+  [    v.5,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ] ]
 
 </pre></div>
 

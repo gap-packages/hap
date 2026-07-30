@@ -395,7 +395,7 @@
   [14X13[114X, [14X14[114X and [14X???chapSL3Z???[114X.[133X
   
   
-  [1X7.4-1 [33X[0;0YRational homology[133X[101X
+  [1X7.4-1 [33X[0;0YRational cohomology[133X[101X
   
   [33X[0;0YTo  compute  the rational homology of an arithmetic group such as [22XG=SL_n( Z)[122X
   one  can  work directly with the well-rounded retract [22XK[122X on which [22XG[122X acts with
@@ -433,6 +433,44 @@
     [4X[25Xgap>[125X [27XD:=TensorWithRationals(V);;[127X[104X
     [4X[25Xgap>[125X [27XList([0..6],i->Homology(D,i));[127X[104X
     [4X[28X[ 0, 0, 0, 1, 0, 0, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.4-2 [33X[0;0YMod-[22Xq[122X[101X[1X cohomology[133X[101X
+  
+  [33X[0;0YFor  a  congruence  subgroup  [22XG[122X  of an arithmetic group such as [22XSL_n( Z)[122X and
+  positive  integer [22Xq[122X coprime to the order of any torsion element in [22XG[122X one can
+  again  work  directly  with  the  well-rounded retract [22XK[122X in order to compute
+  [22XH^∗(G, Z/q Z)[122X.[133X
+  
+  [33X[0;0YFor instance, for [22XG=Γ_0(11) < SL_3( Z)[122X the following computes the cohomology
+  ring  [22XH^∗(Γ_0(11),  Z/5  Z)[122X  and shows it to be a [22X5[122X-dimensional algebra with
+  non-trivial product.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,11);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=SimplifiedComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=CohomologyRing(Y,5);[127X[104X
+    [4X[28X<algebra of dimension 5 over GF(5)>[128X[104X
+    [4X[25Xgap>[125X [27XB:=CanonicalBasis(R);;[127X[104X
+    [4X[25Xgap>[125X [27XList(B,R!.degree); #degrees of basis elements[127X[104X
+    [4X[28X[ 0, 1, 2, 3, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XA:=NullMat(5,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do [127X[104X
+    [4X[25X>[125X [27X   for j in [1..5] do[127X[104X
+    [4X[25X>[125X [27X      A[i][j]:=B[i]*B[j];[127X[104X
+    [4X[25X>[125X [27X   od;[127X[104X
+    [4X[25X>[125X [27X   od;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(A);[127X[104X
+    [4X[28X[ [    v.1,    v.2,    v.3,    v.4,    v.5 ],[128X[104X
+    [4X[28X  [    v.2,  0*v.1,    v.4,  0*v.1,  0*v.1 ],[128X[104X
+    [4X[28X  [    v.3,    v.4,  0*v.1,  0*v.1,  0*v.1 ],[128X[104X
+    [4X[28X  [    v.4,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ],[128X[104X
+    [4X[28X  [    v.5,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
