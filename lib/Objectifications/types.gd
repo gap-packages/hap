@@ -29,9 +29,16 @@ InstallMethod( ViewObj,
 "for HapResolution",
  [IsHapResolution],
  function(R)
- Print("Resolution of length ", EvaluateProperty(R,"length"),
- " in characteristic ", EvaluateProperty(R,"characteristic"), 
- " for "); ViewObj(R!.group); Print(" . \n");
+if EvaluateProperty(R,"type")="resolutionOfModule" then
+   Print("Resolution of a G-module of length ", EvaluateProperty(R,"length"),
+   " in characteristic ", EvaluateProperty(R,"characteristic"),
+   " for G = "); ViewObj(R!.group); Print(" . \n");
+else
+   Print("Resolution of length ", EvaluateProperty(R,"length"),
+   " in characteristic ", EvaluateProperty(R,"characteristic"),
+   " for "); ViewObj(R!.group); Print(" . \n");
+fi;
+
  if R!.homotopy=fail then
  Print("No contracting homotopy available. \n");
  fi;
@@ -45,9 +52,16 @@ InstallMethod( PrintObj,
 "for HapResolution",
  [IsHapResolution],
   function(R)
+if EvaluateProperty(R,"type")="resolutionOfModule" then
+   Print("Resolution of a G-module of length ", EvaluateProperty(R,"length"),
+   " in characteristic ", EvaluateProperty(R,"characteristic"),
+   " for G = ", R!.group," . \n");
+else
    Print("Resolution of length ", EvaluateProperty(R,"length"),  
    " in characteristic ", EvaluateProperty(R,"characteristic"),
    " for ", R!.group," . \n");
+fi;
+
 if R!.homotopy=fail then
 Print("No contracting homotopy available. \n");
 fi;
@@ -321,8 +335,13 @@ InstallMethod( ViewObj,
 "for HapNonFreeResolution",
 [IsHapNonFreeResolution],
 function(R)
+if EvaluateProperty(R,"resolutionOfModule")=true then
+Print("Non-free resolution of a G-module in characteristic ", EvaluateProperty(R,"characteristic"),
+ " for G = "); ViewObj(R!.group); Print(" . \n");
+else
 Print("Non-free resolution in characteristic ", EvaluateProperty(R,"characteristic"),
  " for "); ViewObj(R!.group); Print(" . \n");
+fi;
 if R!.homotopy=fail then
 Print("No contracting homotopy available. \n");
 fi;
@@ -332,10 +351,17 @@ InstallMethod( PrintObj,
 "for HapNonFreeResolution",
 [IsHapNonFreeResolution],
 function(R)
-Print("Non-free resolution of length ", 
+if EvaluateProperty(R,"resolutionOfModule")=true then
+Print("Non-free resolution of a G-module of length ", 
+EvaluateProperty(R,"length"),
+" in characteristic ", EvaluateProperty(R,"characteristic"),
+" for G = ", R!.group," . \n");
+else
+Print("Non-free resolution of length ",
 EvaluateProperty(R,"length"),
 " in characteristic ", EvaluateProperty(R,"characteristic"),
 " for ", R!.group," . \n");
+fi;
 if R!.homotopy=fail then
 Print("No contracting homotopy available. \n");
 fi;

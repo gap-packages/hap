@@ -215,6 +215,8 @@ ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/simplify.gi");
 ReadPackageHap( "lib/Functors/alexander.gi");
+ReadPackageHap( "lib/Functors/dualComplex.gi");
+ReadPackageHap( "lib/Functors/tensorNonFree.gi");
 
 ##################### CONGRUENCE ######################################
 ReadPackageHap( "lib/Congruence/cong.gi");

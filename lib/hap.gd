@@ -251,6 +251,11 @@ DeclareGlobalFunction("HAP_PrimePartModified");
 DeclareGlobalFunction("HAP_SylowSubgroups");
 DeclareGlobalFunction("PrimePartDerivedFunctorHomomorphism");
 DeclareGlobalFunction("ModPCohomologyRing_alt");
+DeclareOperation("DualComplex",[IsHapResolution]);
+DeclareGlobalFunction("DualComplex_FreeResolution");
+DeclareGlobalFunction("DualComplex_NonFreeResolution");
+DeclareGlobalFunction("TensorWithIntegersMod2Torsion");
+DeclareGlobalFunction("HomToRationals");
 
 
 ## PERTURBATIONS ####################################################

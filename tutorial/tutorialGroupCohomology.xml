@@ -214,6 +214,35 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
         <#Include SYSTEM "tutex/6.38.txt">
 </Example>
 
+<P/>Further details on computing with Arithmetic groups can be found in Chapters <Ref Sect="chap:Congruence"/>, <Ref Sect="chap:Bianchi"/> and <Ref Sect="chapSL3Z"/>. 
+
+	<Subsection><Heading>Rational homology</Heading>
+		To compute the rational homology of an arithmetic group such as
+		<M>G=SL_n(\mathbb Z)</M> one can work directly with the well-rounded retract <M>K</M> on which <M>G</M> acts with finite stabilizers. The following computes the rational cohomology 
+		<P/><M>H^n(SL_4(\mathbb Z),\mathbb Q)= \left\{ 
+			\begin{array}{ll}
+                        \mathbb Q &amp; n=0,3\\
+			0 &amp; {\rm otherwise}.
+			\end{array}\right.</M>
+
+				<Example>
+        <#Include SYSTEM "tutex/6.39.txt">
+</Example>
+
+	For <M>\nu</M> the virtual cohomological dimension of <M>G=SL_n(\mathbb Z)</M> there is an isomorphism
+	<P/><M>H^{\nu-k}(SL_n(\mathbb Z),\mathbb Q) \cong H_k(SL_n(\mathbb Z),St_n \otimes_{\mathbb Z} \mathbb Q)</M>
+	<P/>
+		where <M>St_n</M> is the Steinberg module for <M>G</M>. This means that computations on the cohomology of <M>G</M> can be performed using a resolution <M>V_\ast</M> of the <M>\mathbb ZG</M>-module <M>St_n</M>. It suffices for <M>G</M> to act with finite stabilizers on the each module <M>V_k</M>. For <M>K</M> the well-rounded retract, and <M>C_\ast(K)</M> its cellular chain complex,
+			one can take <M>V_\ast = {\rm Hom}_{\mathbb Z}(C_\ast(K),\mathbb Z)</M>.
+				<P/>
+					For <M>G=SL_4(\mathbb Z)</M> we have <M>\nu=6</M>. The following commands construct <M>V_\ast</M> and compute
+					<M>H_k(V_\ast \otimes_{\mathbb ZG} \mathbb Q)</M>.
+
+						 <Example>
+        <#Include SYSTEM "tutex/6.40.txt">
+</Example>
+
+	</Subsection>
 </Section>
 
 
