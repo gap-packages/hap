@@ -45,7 +45,10 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7AFFB32587D047FE">7.4 <span class="Heading">Arithmetic groups</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X781178587E1FE338">7.4-1 <span class="Heading">Rational homology</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X800CB6257DC8FB3A">7.5 <span class="Heading">Artin groups</span></a>
 </span>
 </div>
@@ -466,6 +469,45 @@ Chain complex of length 5 in characteristic 0 .
 4729285
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CriticalCells(Y);</span>
 [ [ 0, 18456062 ] ]
+
+</pre></div>
+
+<p>Further details on computing with Arithmetic groups can be found in Chapters <a href="chap13_mj.html#X86D5DB887ACB1661"><span class="RefLink">13</span></a>, <a href="chap14_mj.html#X805848868005D528"><span class="RefLink">14</span></a> and <span class="RefLink">???</span>.</p>
+
+<p><a id="X781178587E1FE338" name="X781178587E1FE338"></a></p>
+
+<h5>7.4-1 <span class="Heading">Rational homology</span></h5>
+
+<p>To compute the rational homology of an arithmetic group such as <span class="SimpleMath">\(G=SL_n(\mathbb Z)\)</span> one can work directly with the well-rounded retract <span class="SimpleMath">\(K\)</span> on which <span class="SimpleMath">\(G\)</span> acts with finite stabilizers. The following computes the rational cohomology</p>
+
+<p><span class="SimpleMath">\(H^n(SL_4(\mathbb Z),\mathbb Q)= \left\{ \begin{array}{ll} \mathbb Q &amp; n=0,3\\ 0 &amp; {\rm otherwise}. \end{array}\right.\)</span></p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(4,Z)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=HomToRationals(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..6],i-&gt;Cohomology(C,i));</span>
+[ 1, 0, 0, 1, 0, 0, 0 ]
+
+</pre></div>
+
+<p>For <span class="SimpleMath">\(\nu\)</span> the virtual cohomological dimension of <span class="SimpleMath">\(G=SL_n(\mathbb Z)\)</span> there is an isomorphism</p>
+
+<p><span class="SimpleMath">\(H^{\nu-k}(SL_n(\mathbb Z),\mathbb Q) \cong H_k(SL_n(\mathbb Z),St_n \otimes_{\mathbb Z} \mathbb Q)\)</span></p>
+
+<p>where <span class="SimpleMath">\(St_n\)</span> is the Steinberg module for <span class="SimpleMath">\(G\)</span>. This means that computations on the cohomology of <span class="SimpleMath">\(G\)</span> can be performed using a resolution <span class="SimpleMath">\(V_\ast\)</span> of the <span class="SimpleMath">\(\mathbb ZG\)</span>-module <span class="SimpleMath">\(St_n\)</span>. It suffices for <span class="SimpleMath">\(G\)</span> to act with finite stabilizers on the each module <span class="SimpleMath">\(V_k\)</span>. For <span class="SimpleMath">\(K\)</span> the well-rounded retract, and <span class="SimpleMath">\(C_\ast(K)\)</span> its cellular chain complex, one can take <span class="SimpleMath">\(V_\ast = {\rm Hom}_{\mathbb Z}(C_\ast(K),\mathbb Z)\)</span>.</p>
+
+<p>For <span class="SimpleMath">\(G=SL_4(\mathbb Z)\)</span> we have <span class="SimpleMath">\(\nu=6\)</span>. The following commands construct <span class="SimpleMath">\(V_\ast\)</span> and compute <span class="SimpleMath">\(H_k(V_\ast \otimes_{\mathbb ZG} \mathbb Q)\)</span>.</p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(4,Z)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=TensorWithRationals(V);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..6],i-&gt;Homology(D,i));</span>
+[ 0, 0, 0, 1, 0, 0, 1 ]
 
 </pre></div>
 

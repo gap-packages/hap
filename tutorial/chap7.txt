@@ -391,6 +391,51 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YFurther details on computing with Arithmetic groups can be found in Chapters
+  [14X13[114X, [14X14[114X and [14X???chapSL3Z???[114X.[133X
+  
+  
+  [1X7.4-1 [33X[0;0YRational homology[133X[101X
+  
+  [33X[0;0YTo  compute  the rational homology of an arithmetic group such as [22XG=SL_n( Z)[122X
+  one  can  work directly with the well-rounded retract [22XK[122X on which [22XG[122X acts with
+  finite stabilizers. The following computes the rational cohomology[133X
+  
+  [33X[0;0Y[22XH^n(SL_4( Z), Q)= { beginarrayll Q & n=0,3 0 & otherwise. endarray.[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(4,Z)");;[127X[104X
+    [4X[25Xgap>[125X [27XC:=HomToRationals(K);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..6],i->Cohomology(C,i));[127X[104X
+    [4X[28X[ 1, 0, 0, 1, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  [22Xν[122X  the  virtual  cohomological  dimension  of  [22XG=SL_n(  Z)[122X  there is an
+  isomorphism[133X
+  
+  [33X[0;0Y[22XH^ν-k(SL_n( Z), Q) ≅ H_k(SL_n( Z),St_n ⊗_ Z Q)[122X[133X
+  
+  [33X[0;0Ywhere  [22XSt_n[122X  is  the Steinberg module for [22XG[122X. This means that computations on
+  the cohomology of [22XG[122X can be performed using a resolution [22XV_∗[122X of the [22XZG[122X-module
+  [22XSt_n[122X.  It  suffices  for [22XG[122X to act with finite stabilizers on the each module
+  [22XV_k[122X.  For [22XK[122X the well-rounded retract, and [22XC_∗(K)[122X its cellular chain complex,
+  one can take [22XV_∗ = Hom_ Z(C_∗(K), Z)[122X.[133X
+  
+  [33X[0;0YFor [22XG=SL_4( Z)[122X we have [22Xν=6[122X. The following commands construct [22XV_∗[122X and compute
+  [22XH_k(V_∗ ⊗_ ZG Q)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(4,Z)");;[127X[104X
+    [4X[25Xgap>[125X [27XV:=DualComplex(K);;[127X[104X
+    [4X[25Xgap>[125X [27XD:=TensorWithRationals(V);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..6],i->Homology(D,i));[127X[104X
+    [4X[28X[ 0, 0, 0, 1, 0, 0, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   
   [1X7.5 [33X[0;0YArtin groups[133X[101X
   
