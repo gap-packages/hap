@@ -513,6 +513,33 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
+<p>For <span class="SimpleMath">\(G=SL_3(\mathbb Z)\)</span> we have <span class="SimpleMath">\(\nu = 3\)</span>. The following commands use a resolution of the Steinberg module to compute the top rational cohomology</p>
+
+<p><span class="SimpleMath">\(H^3(\Gamma_0(201),\mathbb Q) \cong \mathbb Q^{54}\)</span></p>
+
+<p>for the congruence subgroup <span class="SimpleMath">\(\Gamma_0(201) &lt; SL_3(\mathbb Z)\)</span>. Furthermore, since <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> contains no elements of order <span class="SimpleMath">\(7\)</span>, these commands also establish that the <span class="SimpleMath">\(7\)</span>-primary part of the third integral cohomology is</p>
+
+<p><span class="SimpleMath">\(H^3(\Gamma_0(201),\mathbb Z)_{(7)} \cong \mathbb Z_7 \oplus \mathbb Z_7\)</span> .</p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=DualComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(L,1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,201);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,0);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 168, 168, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
 <p><a id="X841369EB849AF695" name="X841369EB849AF695"></a></p>
 
 <h5>7.4-2 <span class="Heading">Mod-<span class="SimpleMath">\(q\)</span> cohomology</span></h5>
