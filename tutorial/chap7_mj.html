@@ -515,11 +515,13 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>For <span class="SimpleMath">\(G=SL_3(\mathbb Z)\)</span> we have <span class="SimpleMath">\(\nu = 3\)</span>. The following commands use a resolution of the Steinberg module to compute the top rational cohomology</p>
 
-<p><span class="SimpleMath">\(H^3(\Gamma_0(301),\mathbb Q) \cong \mathbb Q^{62}\)</span></p>
+<p><span class="SimpleMath">\(H^3(\Gamma_0(401),\mathbb Q) \cong \mathbb Q^{66}\)</span></p>
 
-<p>for the congruence subgroup <span class="SimpleMath">\(\Gamma_0(301) &lt; SL_3(\mathbb Z)\)</span>. Furthermore, since any torsion element in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> has order dividing <span class="SimpleMath">\(24\)</span>, these commands also establish that the <span class="SimpleMath">\(p\)</span>-primary part of the third integral cohomology for <span class="SimpleMath">\(p=721494379\)</span> is</p>
+<p>for the congruence subgroup <span class="SimpleMath">\(\Gamma_0(401) &lt; SL_3(\mathbb Z)\)</span>. Furthermore, since any torsion element in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> has order dividing <span class="SimpleMath">\(24\)</span>, these commands also establish that the <span class="SimpleMath">\(p\)</span>-primary part of the third integral cohomology is</p>
 
-<p><span class="SimpleMath">\(H^3(\Gamma_0(301),\mathbb Z)_{(p)} \cong \mathbb Z_p \oplus \mathbb Z_p\)</span> .</p>
+<p><span class="SimpleMath">\(H^3(\Gamma_0(401),\mathbb Z)_{(p)} \cong \mathbb Z_p \oplus \mathbb Z_p\)</span></p>
+
+<p>for primes <span class="SimpleMath">\(p=41, 43, 1523, 2975, 5615131\)</span>. The <span class="SimpleMath">\(p\)</span>-part is trivial for all other primes <span class="SimpleMath">\(p &gt; 3\)</span>. The computation does not determine the <span class="SimpleMath">\(2\)</span>-part and <span class="SimpleMath">\(3\)</span>-part.</p>
 
 
 <div class="example"><pre>
@@ -527,20 +529,21 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,301);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,401);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegersSparse(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..100] do  #careful step-by-step reduction of the complex C</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..75] do   #careful step-by-step reduction of the complex C</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplex(C,r);;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6, 6, 6, 24, 24, 
-  17315865096, 17315865096, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 4, 4, 178329595394283932, 178329595394283932, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(17315865096);</span>
-[ 2, 2, 2, 3, 721494379 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(178329595394283932);</span>
+[ 2, 2, 41, 43, 1523, 2957, 5615131 ]
 
 </pre></div>
 
