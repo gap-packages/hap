@@ -512,11 +512,11 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>For <span class="SimpleMath">G=SL_3( Z)</span> we have <span class="SimpleMath">ν = 3</span>. The following commands use a resolution of the Steinberg module to compute the top rational cohomology</p>
 
-<p><span class="SimpleMath">H^3(Γ_0(201), Q) ≅ Q^54</span></p>
+<p><span class="SimpleMath">H^3(Γ_0(301), Q) ≅ Q^62</span></p>
 
-<p>for the congruence subgroup <span class="SimpleMath">Γ_0(201) &lt; SL_3( Z)</span>. Furthermore, since <span class="SimpleMath">SL_3( Z)</span> contains no elements of order <span class="SimpleMath">7</span>, these commands also establish that the <span class="SimpleMath">7</span>-primary part of the third integral cohomology is</p>
+<p>for the congruence subgroup <span class="SimpleMath">Γ_0(301) &lt; SL_3( Z)</span>. Furthermore, since any torsion element in <span class="SimpleMath">SL_3( Z)</span> has order dividing <span class="SimpleMath">24</span>, these commands also establish that the <span class="SimpleMath">p</span>-primary part of the third integral cohomology for <span class="SimpleMath">p=721494379</span> is</p>
 
-<p><span class="SimpleMath">H^3(Γ_0(201), Z)_(7) ≅ Z_7 ⊕ Z_7</span> .</p>
+<p><span class="SimpleMath">H^3(Γ_0(301), Z)_(p) ≅ Z_p ⊕ Z_p</span> .</p>
 
 
 <div class="example"><pre>
@@ -524,16 +524,20 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,201);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,301);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegersSparse(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,0);</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 168, 168, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..100] do  #careful step-by-step reduction of the complex C</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplex(C,r);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6, 6, 6, 24, 24, 
+  17315865096, 17315865096, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(17315865096);</span>
+[ 2, 2, 2, 3, 721494379 ]
 
 </pre></div>
 
