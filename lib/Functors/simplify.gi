@@ -3,25 +3,30 @@
 ################################################################
 InstallGlobalFunction(SimplifiedSparseChainComplex,
 function(arg)
-local C,bounds, cobounds, n, k, i, j, b,c,B,x,
+local C,bounds, cobounds, lb, n, k, i, j, b,c,B,x,
       Dimension,Boundary,first,bnd,Replace,NormForm,
-      NewGens,ZeroCells;
+      NewGens,ZeroCells,BoundaryRec,F;
 
 C:=arg[1];
 
-####################
+####################Changed this function, July 2026
 ####################
 NormForm:=function(b)
-local S, T, a, pos;
+local S,a,pos,ls;
+Sort(b);;
 S:=SSortedList(List(b,x->x[1]));
-if Length(S)=Length(b) then 
-return SSortedList(b); fi;  #Added Dec 2025
-T:=1*List(S,x->[x,0]);
-for a in b do
-pos:=PositionSorted(S,a[1]);
-T[pos][2]:=T[pos][2]+a[2];
+ls:=Length(S);
+if ls=Length(b) then return b; fi;
+S:=List(S,x->[x,0]);
+pos:=1;
+for i in [1..Length(b)] do
+a:=b[i];
+S[pos][2]:=S[pos][2]+a[2];
+if pos<ls then
+if a[1]<b[i+1][1]  then pos:=pos+1; fi;
+fi;
 od;
-return Filtered(T,x->not x[2]=0);
+return Filtered(S,x->not x[2]=0);
 end;
 ####################
 ####################
@@ -61,11 +66,12 @@ if Length(arg)=1 then
 ####################
 ####################
 first:=function(x) #find first cell with coefficient equal to +/-1
-local i;
-for i in [1..Length(x)] do
-if AbsInt(x[i][2])=1 then return i; fi;
-od;
-return fail;
+return PositionProperty(x,y->AbsInt(y[2])=1);
+#local i;
+#for i in [1..Length(x)] do
+#if AbsInt(x[i][2])=1 then return i; fi;
+#od;
+#return fail;
 end;
 ####################
 ####################
@@ -74,12 +80,13 @@ if Length(arg)=2 then
 ####################
 ####################
 first:=function(x) #find first cell with coefficient equal to +/-1
-local i;
 if Length(x)>arg[2] then return fail; fi;
-for i in [1..Length(x)] do
-if AbsInt(x[i][2])=1 then return i; fi;
-od;
-return fail;
+return PositionProperty(x,y->AbsInt(y[2])=1);
+#local i;
+#for i in [1..Length(x)] do
+#if AbsInt(x[i][2])=1 then return i; fi;
+#od;
+#return fail;
 end;
 ####################
 ####################
@@ -122,10 +129,12 @@ end;
 
 ##################Workhorse###########################
 for n in [1..Length(bounds)] do
-for k in [1..Length(bounds[n])] do
+#for k in [1..Length(bounds[n])] do
+F:=[1..Length(bounds[n])];
+SortBy(F , k->Length(bounds[n][k]));
+for k in F do
 i:=first(bounds[n][k]);
 if not i=fail then
-#if false then
 ##################
 bnd:=1*Concatenation(bounds[n][k]{[1..i-1]},bounds[n][k]{[i+1..Length(bounds[n][k])]});
 b:=1*bounds[n][k][i];
@@ -178,6 +187,26 @@ return
 List(bounds[n][k], x->[Position(NewGens[n],x[1]),x[2]]);
 end;
 ###################################
+
+BoundaryRec:=[];
+for n in [1..Length(bounds)] do
+BoundaryRec[n]:=[];
+for k in [1..Dimension(n)] do
+BoundaryRec[n][k]:=1*Boundary(n,k);
+od;
+od;
+
+lb:=Length(bounds);
+Unbind(bounds);
+Unbind(cobounds);
+Unbind(ZeroCells);
+###################################
+Boundary:=function(n,k)
+if n>lb then return []; fi;
+return BoundaryRec[n][k];
+end;
+###################################
+
 return  Objectify(HapSparseChainComplex,
                 rec(
                 dimension:=Dimension,
@@ -193,4 +222,48 @@ end);
 ################################################################
 ################################################################
 
+
+###########################################################
+###########################################################
+InstallGlobalFunction(ContractedComplexViaChild,
+function(arg)
+local  C,r,n,L,bool,file,tmpdir,t,cmd,D;
+
+C:=arg[1];
+if Length(arg)=2 then r:=arg[2]; else r:=10^10; fi;  #SLOPPY!
+
+##First check to see if any boundaries have length <=r ####
+for n in [1..Length(C)] do
+L:=List([1..C!.dimension(1)],k->Length(C!.boundary(1,k)) );;
+L:=Filtered(L,x->not x=0);;
+if Minimum(L) <=r then bool:=true; fi;
+od;
+if not bool then return C; fi;
+###########################################################
+
+tmpdir := DirectoryTemporary();;
+file:=Filename( tmpdir , "complex.txt" );
+
+t:=ChildProcess();;
+
+HAPPrintTo(file,C);
+NextAvailableChild([t]);
+cmd:=Concatenation("C:=HAPRead(\"",file,"\");");
+#ChildCommand("C:=HAPRead(\"/tmp/sparse.txt\");",t);
+ChildCommand(cmd,t);
+cmd:=Concatenation("D:=ContractedComplex(C,",String(r),");");
+NextAvailableChild([t]);
+ChildCommand(cmd,t);
+NextAvailableChild([t]);
+cmd:=Concatenation("HAPPrintTo(\"",file,"\",D);");
+#ChildCommand("HAPPrintTo(\"/tmp/sparse.txt\",D);",t);
+ChildCommand(cmd,t);
+NextAvailableChild([t]);
+D:=HAPRead(file);
+
+ChildClose(t);
+return D;
+end);
+##########################################################
+##########################################################
 
