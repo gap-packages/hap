@@ -149,6 +149,7 @@ DeclareGlobalFunction("ResolutionPGL2QuadraticIntegers");
 DeclareGlobalFunction("ResolutionGL3QuadraticIntegers");
 DeclareGlobalFunction("ResolutionPGL3QuadraticIntegers");
 DeclareAttribute("Generators",IsHapResolution);
+DeclareGlobalFunction("ResolutionFiniteSubgroup_NonFree");
 
 
 ## RESOLUTIONS MOD P ################################################
@@ -256,6 +257,7 @@ DeclareGlobalFunction("DualComplex_FreeResolution");
 DeclareGlobalFunction("DualComplex_NonFreeResolution");
 DeclareGlobalFunction("TensorWithIntegersMod2Torsion");
 DeclareGlobalFunction("HomToRationals");
+DeclareGlobalFunction("ContractedComplexViaChild");
 
 
 ## PERTURBATIONS ####################################################
