@@ -495,7 +495,7 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><span class="SimpleMath">H^ν-k(SL_n( Z), Q) ≅ H_k(SL_n( Z),St_n ⊗_ Z Q)</span></p>
 
-<p>where <span class="SimpleMath">St_n</span> is the Steinberg module for <span class="SimpleMath">G</span>. This means that computations on the cohomology of <span class="SimpleMath">G</span> can be performed using a resolution <span class="SimpleMath">V_∗</span> of the <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">St_n</span>. It suffices for <span class="SimpleMath">G</span> to act with finite stabilizers on the each module <span class="SimpleMath">V_k</span>. For <span class="SimpleMath">K</span> the well-rounded retract, and <span class="SimpleMath">C_∗(K)</span> its cellular chain complex, one can take <span class="SimpleMath">V_∗ = Hom_ Z(C_∗(K), Z)</span>.</p>
+<p>where <span class="SimpleMath">St_n</span> is the Steinberg module for <span class="SimpleMath">G</span>. This means that computations on the cohomology of <span class="SimpleMath">G</span> can be performed using a resolution <span class="SimpleMath">V_∗</span> of the <span class="SimpleMath">ZG</span>-module <span class="SimpleMath">St_n</span>. It suffices for <span class="SimpleMath">G</span> to act with finite stabilizers on each module <span class="SimpleMath">V_k</span>. For <span class="SimpleMath">K</span> the well-rounded retract, and <span class="SimpleMath">C_∗(K)</span> its cellular chain complex, one can take <span class="SimpleMath">V_∗ = Hom_ Z(C_∗(K), Z)</span>.</p>
 
 <p>For <span class="SimpleMath">G=SL_4( Z)</span> we have <span class="SimpleMath">ν=6</span>. The following commands construct <span class="SimpleMath">V_∗</span> and compute <span class="SimpleMath">H_k(V_∗ ⊗_ ZG Q)</span>.</p>
 
@@ -512,13 +512,15 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>For <span class="SimpleMath">G=SL_3( Z)</span> we have <span class="SimpleMath">ν = 3</span>. The following commands use a resolution of the Steinberg module to compute the top rational cohomology</p>
 
-<p><span class="SimpleMath">H^3(Γ_0(401), Q) ≅ Q^66</span></p>
+<p><span class="SimpleMath">H^3(Γ_0(501), Q) ≅ Q^140</span></p>
 
-<p>for the congruence subgroup <span class="SimpleMath">Γ_0(401) &lt; SL_3( Z)</span>. Furthermore, since any torsion element in <span class="SimpleMath">SL_3( Z)</span> has order dividing <span class="SimpleMath">24</span>, these commands also establish that the <span class="SimpleMath">p</span>-primary part of the third integral cohomology is</p>
+<p>for the congruence subgroup <span class="SimpleMath">Γ_0(501) &lt; SL_3( Z)</span>. Furthermore, since any torsion element in <span class="SimpleMath">SL_3( Z)</span> has order dividing <span class="SimpleMath">24</span>, these commands also establish that the <span class="SimpleMath">p</span>-primary part of the third integral cohomology is</p>
 
-<p><span class="SimpleMath">H^3(Γ_0(401), Z)_(p) ≅ Z_p ⊕ Z_p</span></p>
+<p><span class="SimpleMath">H^3(Γ_0(501), Z)_(7) ≅ Z_7 ⊕ Z_7 ⊕ Z_7 ⊕ Z_7 ⊕ Z_7 ⊕ Z_7</span> ,</p>
 
-<p>for primes <span class="SimpleMath">p=41, 43, 1523, 2975, 5615131</span>. The <span class="SimpleMath">p</span>-part is trivial for all other primes <span class="SimpleMath">p &gt; 3</span>. The computation does not determine the <span class="SimpleMath">2</span>-part and <span class="SimpleMath">3</span>-part.</p>
+<p><span class="SimpleMath">H^3(Γ_0(501), Z)_(p) ≅ Z_p ⊕ Z_p</span> for primes <span class="SimpleMath">p=7, 773, 191249, 81127067460894029326373198387</span>.</p>
+
+<p>The <span class="SimpleMath">p</span>-part is trivial for all other primes <span class="SimpleMath">p &gt; 3</span>. The computation does not determine the <span class="SimpleMath">2</span>-part or <span class="SimpleMath">3</span>-part.</p>
 
 
 <div class="example"><pre>
@@ -526,23 +528,31 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,401);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,501);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegersSparse(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..75] do   #careful step-by-step reduction of the complex C</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplex(C,r);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..200] do   #careful step-by-step reduction of the complex C</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplexViaChild(C,r);;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-  2, 2, 2, 4, 4, 178329595394283932, 178329595394283932, 0, 0, 0, 0, 0, 0, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 14, 14, 14, 14, 
+  503725266059082802220487559469426575158, 
+  503725266059082802220487559469426575158, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(178329595394283932);</span>
-[ 2, 2, 41, 43, 1523, 2957, 5615131 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(503725266059082802220487559469426575158);</span>
+[ 2, 3, 7, 773, 191249, 81127067460894029326373198387 ]
 
 </pre></div>
+
+<p>The group <span class="SimpleMath">Γ_0(501)</span> is of index <span class="SimpleMath">364741</span> in <span class="SimpleMath">SL_3( Z)</span> and the above computation takes several hours. The computation uses the function <code class="code">ContractedComplexViaChild(C,r)</code> which creates a child process, calls <code class="code">ContractibleComplex(C,r)</code> in the child, and then kills the child. This provides a simple method for avoiding the build-up of unnecessarily retained data in memory. On smaller examples or larger laptops the command <code class="code">ContractibleComplex(C,r)</code> can be used directly. The initial version of the chain complex <span class="SimpleMath">C=C_∗</span> has <span class="SimpleMath">C_0= Z^364741</span> while the quasi-isomorphic version of this complex after <span class="SimpleMath">r=200</span> reduction attempts has <span class="SimpleMath">C_0= Z^741</span>.</p>
 
 <p><a id="X841369EB849AF695" name="X841369EB849AF695"></a></p>
 
