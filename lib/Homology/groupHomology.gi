@@ -1,5 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
+if false then 
 ######################################################
 ######################################################
 InstallGlobalFunction(HAP_SylowConjugatedHomomorphism,
@@ -16,12 +17,52 @@ cl:=PH^H;
 cl:=List(cl,s->s);
 pos:=PositionProperty(cl,s->IsSubgroup(s,PG));
 g:=RepresentativeAction(H,PH,cl[pos]);
-ff:=GroupHomomorphismByFunction(G,H,x->x^g);
+ff:=GroupHomomorphismByFunction(G,H,x->Image(f,x)^(g^-1));
 
 return ff;
 end);
 ######################################################
 ######################################################
+fi;
+
+#####################################################################
+#####################################################################
+InstallGlobalFunction(HAP_SylowConjugatedHomomorphism,
+function(f,p)
+local G,H,Psrc,Pimg,PH,cl,pos,g,ff;
+
+G := Source(f);
+H := Target(f);
+
+Psrc := SylowSubgroup(G,p);
+Pimg := Image(f,Psrc);
+PH := SylowSubgroup(H,p);
+
+cl := List(PH^H,s->s);
+pos := PositionProperty(cl,s->IsSubgroup(s,Pimg));
+
+if pos=fail then
+    Error("the image of the source Sylow subgroup was not contained in a conjugate of the target Sylow subgroup");
+fi;
+
+g := RepresentativeAction(H,PH,cl[pos]);
+
+ff := GroupHomomorphismByFunction(
+    G,
+    H,
+    x->Image(f,x)^(g^-1)
+);
+
+if not IsSubgroup(PH,Image(ff,Psrc)) then
+    Error("the corrected homomorphism does not map the source Sylow subgroup into the target Sylow subgroup");
+fi;
+
+return ff;
+end);
+#####################################################################
+#####################################################################
+
+
 
 #####################################################################
 #####################################################################
