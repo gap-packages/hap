@@ -554,6 +554,42 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>The group <span class="SimpleMath">Γ_0(501)</span> is of index <span class="SimpleMath">364741</span> in <span class="SimpleMath">SL_3( Z)</span> and the above computation takes several hours. The computation uses the function <code class="code">ContractedComplexViaChild(C,r)</code> which creates a child process, calls <code class="code">ContractibleComplex(C,r)</code> in the child, and then kills the child. This provides a simple method for avoiding the build-up of unnecessarily retained data in memory. On smaller examples or larger laptops the command <code class="code">ContractibleComplex(C,r)</code> can be used directly. The initial version of the chain complex <span class="SimpleMath">C=C_∗</span> has <span class="SimpleMath">C_0= Z^364741</span> while the quasi-isomorphic version of this complex after <span class="SimpleMath">r=200</span> reduction attempts has <span class="SimpleMath">C_0= Z^741</span>.</p>
 
+<p>A similar computation gives:</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(601), Q) ≅ Q^98</span>,</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(601), Z)_(p) ≅ Z_p ⊕ Z_p</span> for primes <span class="SimpleMath">p=37, 175829261, 1011757163379728699885049667755467</span>,</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(601), Z)_(p) ≅ 0</span> for primes <span class="SimpleMath">p&gt; 3</span>.</p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,601);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegersSparse(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..200] do   #careful step-by-step reduction of the complex C</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplexViaChild(C,r);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,0);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 24, 
+  157972104741480396196975812410408490692059656, 
+  157972104741480396196975812410408490692059656, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(157972104741480396196975812410408490692059656);</span>
+[ 2, 2, 2, 3, 37, 175829261, 1011757163379728699885049667755467 ]
+
+</pre></div>
+
 <p><a id="X841369EB849AF695" name="X841369EB849AF695"></a></p>
 
 <h5>7.4-2 <span class="Heading">Mod-<span class="SimpleMath">q</span> cohomology</span></h5>
