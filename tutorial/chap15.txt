@@ -135,3 +135,108 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  
+  [1X15.4 [33X[0;0YParallelism not a substitute for careful serial implementation[133X[101X
+  
+  [33X[0;0YHere  is a story of poor implementation design causing a serial algorithm to
+  run at least 170 times slower than it should![133X
+  
+  [33X[0;0YThe following snippet begins with the construction of a regular CW-complex [22XY[122X
+  with 157539 cells. It then constructs the cellular chain complex [22XC_∗=C_∗(Y)[122X.
+  Computing the homology of [22XY[122X directly from [22XC_∗[122X would be time consuming due to
+  the  large  number  of  cells  in  [22XY[122X. So, an elementary procedure is used to
+  eliminate  redundant  generators  from  [22XY[122X  in  order  to  obtain  a  smaller
+  quasi-isomorphic  chain  complex  [22XD_∗[122X  and  this  smaller complex is used to
+  quickly obtain the homology. However, the construction of [22XD_∗[122X takes over 170
+  seconds.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfRegularCWComplex(Y);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 3679, 37565, 75083, 41212 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=ContractedComplex(C);time;[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[28X170547[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
+    [4X[28X[ 1, 27, 78, 67 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
+    [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
+    [4X[28X26[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe above procedure for reducing the number of generators in a chain complex
+  of  free  abelian  groups  uses the same elementary technique for "generator
+  removal"  as  a slightly more elaborate implementation programmed some years
+  earlier.  The  earlier implementation is (unnecessarily) restricted to chain
+  complexes  arising as cellular chain complexes of regular CW-complexes while
+  the  later  implemetation  is  aimed  at  arbitrary  chain complexes of free
+  abelian   groups.   The   earlier   implementation  returns  chain  homotopy
+  equivalences  between the original and the simplified complexes. To ease the
+  the  coding  of  the  later implementation it was decided to output just the
+  simplified  chain complex and forget about the chain maps yielding the chain
+  equivalence.[133X
+  
+  [33X[0;0YThe  following  snippet  illustrates  the  earlier  implementation. It again
+  begins  with the construction of the regular CW-complex [22XY[122X with 157539 cells.
+  It  then  takes just over a second to construct a pair of chain equivalences
+  [22Xf_1:  C_∗(Y)  →  C_∗(Y')[122X  and  [22Xf_2:  C_∗(Y')  →  C_∗(Y)[122X  with  [22XY'[122X a homotopy
+  equivalent  non-regular  CW-complex with fewer cells. It uses [22XD_∗=C_∗(Y')[122X to
+  quickly compute the homology of [22XY[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;[127X[104X
+    [4X[28X[ Chain Map between complexes of length 3 . [128X[104X
+    [4X[28X    , Chain Map between complexes of length 3 . [128X[104X
+    [4X[28X     ][128X[104X
+    [4X[28X1192[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=Source(f[1]);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 3679, 37565, 75083, 41212 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=Target(f[1]);[127X[104X
+    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
+    [4X[28X[ 4, 15, 29, 33 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
+    [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
+    [4X[28X211[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  takeaway  from this story is that careful design of the datatypes to be
+  used  in  the  implementation  of  an algorithm can significantly impact the
+  speed   of  the  implementation!  This  is  a  well  established  principle,
+  illustrated forecfully by the story. The decision to output chain maps [22XC_∗ ↔
+  D_∗[122X  leads  to an implementation where all redundant generators in [22XC_∗[122X first
+  have  to be identified, and enough information has to be retained to produce
+  the  chain  maps. The later decision to output just the complex [22XD_∗[122X leads to
+  an  easier to implement process of eliminating each redundant generator in a
+  boundary  matrix  as  soon  at  it is found. This is analogous to a gaussian
+  elimination  procedure  for  producing  echelon form that updates a boundary
+  matrix  each  time  a  suitable  pivot is found; it is easy to code but less
+  efficient than the earlier implementation.[133X
+  
+  [33X[0;0YA   new  implementation  of  [10XContractedComplex(C)[110X  will  be  included  in  a
+  subsequent release of [12XHAP[112X.[133X
+  

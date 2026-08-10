@@ -34,6 +34,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X8496786F7FCEC24A">15.3 <span class="Heading">Parallel persistent homology</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X865ABE6581DDF36A">15.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
+</span>
+</div>
 </div>
 
 <h3>15 <span class="Heading">Parallel computation</span></h3>
@@ -163,6 +166,79 @@
 1.496
 
 </pre></div>
+
+<p><a id="X865ABE6581DDF36A" name="X865ABE6581DDF36A"></a></p>
+
+<h4>15.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></h4>
+
+<p>Here is a story of poor implementation design causing a serial algorithm to run at least 170 times slower than it should!</p>
+
+<p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">\(C_\ast=C_\ast(Y)\)</span>. Computing the homology of <span class="SimpleMath">\(Y\)</span> directly from <span class="SimpleMath">\(C_\ast\)</span> would be time consuming due to the large number of cells in <span class="SimpleMath">\(Y\)</span>. So, an elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">\(Y\)</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">\(D_\ast\)</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">\(D_\ast\)</span> takes over 170 seconds.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
+[ 3679, 37565, 75083, 41212 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);time;</span>
+Chain complex of length 3 in characteristic 0 . 
+
+170547
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
+[ 1, 27, 78, 67 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
+[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+26
+
+</pre></div>
+
+<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
+
+<p>The following snippet illustrates the earlier implementation. It again begins with the construction of the regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <span class="SimpleMath">\(f_1\colon C_\ast(Y) \rightarrow C_\ast(Y')\)</span> and <span class="SimpleMath">\(f_2\colon C_\ast(Y') \rightarrow C_\ast(Y)\)</span> with <span class="SimpleMath">\(Y'\)</span> a homotopy equivalent non-regular CW-complex with fewer cells. It uses <span class="SimpleMath">\(D_\ast=C_\ast(Y')\)</span> to quickly compute the homology of <span class="SimpleMath">\(Y\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;</span>
+[ Chain Map between complexes of length 3 . 
+    , Chain Map between complexes of length 3 . 
+     ]
+1192
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(f[1]);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
+[ 3679, 37565, 75083, 41212 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=Target(f[1]);</span>
+Chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
+[ 4, 15, 29, 33 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
+[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+211
+
+</pre></div>
+
+<p>The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forecfully by the story. The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained to produce the chain maps. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon at it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.</p>
+
+<p>A new implementation of <code class="code">ContractedComplex(C)</code> will be included in a subsequent release of <strong class="button">HAP</strong>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap16_mj.html">[Next Chapter]</a>&nbsp;  </div>
