@@ -415,16 +415,28 @@
   [33X[0;0YFor  [22Xν[122X  the  virtual  cohomological  dimension  of  [22XG=SL_n(  Z)[122X  there is an
   isomorphism[133X
   
-  [33X[0;0Y[22XH^ν-k(SL_n( Z), Q) ≅ H_k(SL_n( Z),St_n ⊗_ Z Q)[122X[133X
+  [33X[0;0Y[22XH^ν-k(SL_n( Z), Z) ≅ H_k(SL_n( Z),St_n ⊗_ Z Z)[122X[133X
   
   [33X[0;0Ywhere  [22XSt_n[122X  is  the Steinberg module for [22XG[122X. This means that computations on
   the cohomology of [22XG[122X can be performed using a resolution [22XV_∗[122X of the [22XZG[122X-module
-  [22XSt_n[122X.  It  suffices for [22XG[122X to act with finite stabilizers on each module [22XV_k[122X.
-  For  [22XK[122X  the well-rounded retract, and [22XC_∗(K)[122X its cellular chain complex, one
-  can take [22XV_∗ = Hom_ Z(C_∗(K), Z)[122X.[133X
+  [22XSt_n[122X.[133X
   
-  [33X[0;0YFor [22XG=SL_4( Z)[122X we have [22Xν=6[122X. The following commands construct [22XV_∗[122X and compute
-  [22XH_k(V_∗ ⊗_ ZG Q)[122X.[133X
+  [33X[0;0YRecall that in general a group [22XG[122X is said to be a duality group, of dimension
+  [22Xn≥  0[122X, with respect to a right [22XG[122X-module [22XS[122X if there is an element [22Xe∈ H_n(G,S)[122X
+  such  that the cap-product with [22Xe[122X induces isomorphisms [22XH^k(G,A) ≅ H_n-k(G,S⊗
+  A)[122X  for  all  integers [22Xk[122X and all left [22XG[122X-modules [22XA[122X. A group [22XG[122X has a dualizing
+  module  [22XS[122X  if [22XZ[122X admits a finite length projective [22XZG[122X- resolution [22XR_∗[122X and two
+  sufficient  conditions  hold:  (a) [22XH^k(G, ZG)=0[122X for [22Xkne n[122X; (b) [22XH^n(G, ZG)[122X is
+  torsion  free.  Then [22XS≅ H^n(G, ZG)[122X as [22XG[122X-modules. A resolution for [22XS[122X is given
+  by [22XV_∗ =Hom_ ZG(R_∗, ZG)[122X.[133X
+  
+  [33X[0;0YIf  one  is  interested  in computing only the rational cohomology of finite
+  index  subgoups  of [22XSL_n( Z)[122X then it suffices to use the non free resolution
+  [22XV_∗  =  Hom_  Z(C_∗(K),  Z)[122X where [22XK[122X is a well-rounded retract and [22XC_∗(K)[122X its
+  cellular chain complex.[133X
+  
+  [33X[0;0YFor  [22XG=SL_4( Z)[122X we have [22Xν=6[122X. The following commands construct a non free [22XV_∗[122X
+  and compute [22XH_k(V_∗ ⊗_ ZG Q)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X        [128X[104X
@@ -486,12 +498,10 @@
   uses  [10XContractedComplexViaChild(C,r)[110X  which  creates  a child process, calls
   [10XContractibleComplex(C,r)[110X  in  the  child,  and  then  kills  the child. This
   provides a simple method for avoiding the build-up of unnecessarily retained
-  data  in  memory caused by the current poorly designed implementation of the
-  function  [10XContractibleComplex(C,r)[110X;  a  faster  and  more  memory  efficient
-  version  of  this  function  is  on the [12XHAP[112X to-do list (see Section [14X15.4[114X for
-  details).  The  initial version of the chain complex [22XC=C_∗[122X has [22XC_0= Z^364741[122X
-  while  the  quasi-isomorphic  version  of this complex after [22Xr=200[122X reduction
-  attempts has [22XC_0= Z^741[122X.[133X
+  data  in  memory  caused by the current naive implementation of the function
+  [10XContractibleComplex(C,r)[110X. The initial version of the chain complex [22XC=C_∗[122X has
+  [22XC_0= Z^364741[122X while the quasi-isomorphic version of this complex after [22Xr=200[122X
+  reduction attempts has [22XC_0= Z^741[122X.[133X
   
   [33X[0;0YA similar computation gives:[133X
   
