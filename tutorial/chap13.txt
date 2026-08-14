@@ -325,7 +325,7 @@
   odd [22Xk[122X and any congruence subgroup [22XΓ[122X.)[133X
   
   
-  [1X13.4-1 [33X[0;0YCohomology with rational coefficients[133X[101X
+  [1X13.4-1 [33X[0;0YCohomology with rational coefficients (via resolutions)[133X[101X
   
   [33X[0;0YTo  calculate  cohomology  [22XH^n(Γ,A)[122X  with  coefficients  in a [22XQΓ[122X-module [22XA[122X it
   suffices  to construct a resolution of [22XZ[122X by non-free [22XZΓ[122X-modules where [22XΓ[122X acts
@@ -333,7 +333,7 @@
   over  [22XQ[122X  is  computationally  less  expensive  than  computing  over  [22XZ[122X. The
   following  commands first compute [22XH^1(Γ_0(39), Q) = H_1(Γ_0(39), Q)= Q^9[122X. As
   a  larger  example,  they  then  compute  [22XH^1(Γ_0(2^13-1), Q) = Q^1365[122X where
-  [22XΓ_0(2^13-1)[122X has index [22X8192[122X in [22XSL_2( Z)[122X.[133X
+  [22XΓ_0(2^13-1)[122X has index [22X2^13+2=8192[122X in [22XSL_2( Z)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(2,Z)");[127X[104X
@@ -355,6 +355,24 @@
     [4X[25Xgap>[125X [27XC:=TensorWithRationals(KK);;[127X[104X
     [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
     [4X[28X1365[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.4-2 [33X[0;0YCohomology with rational coefficients (via regular CW-complexes)[133X[101X
+  
+  [33X[0;0YThe following computes the quotient [22XY=K/Γ_0(2^17-1)[122X of the cubic tree [22XK[122X as a
+  regular  CW-complex  and  then  computes  [22XH^1(Γ_0(2^17-1),  Q) = H^1(Y, Q) =
+  Q^21845[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=BarycentricSubdivision(ContractibleGcomplex("SL(2,Z)"));;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(2^17-1);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);[127X[104X
+    [4X[28XRegular CW-complex of dimension 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLength(Homology(Y,1));[127X[104X
+    [4X[28X21845[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -458,6 +476,14 @@
     [4X[25Xgap>[125X [27Xk:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;[127X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(Kernel(c));[127X[104X
     [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X# Some additional information on torsion[127X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Source(c));[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants(Target(c));[127X[104X
+    [4X[28X[ 0, 0, 0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 13, 13, 13, 13 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

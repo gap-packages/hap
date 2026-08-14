@@ -35,7 +35,9 @@ generators for congruence subgroups</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X818BFA9A826C0DB3">13.4 <span class="Heading">Cohomology of congruence subgroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F55F8EA82FE9122">13.4-1 <span class="Heading">Cohomology with rational coefficients</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7C4BE0967C1766B5">13.4-1 <span class="Heading">Cohomology with rational coefficients (via resolutions)</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E7E359E78E2C11A">13.4-2 <span class="Heading">Cohomology with rational coefficients (via regular CW-complexes)</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X84D30F1580CD42D1">13.5 <span class="Heading">Cuspidal cohomology</span></a>
@@ -278,11 +280,11 @@ Resolution of length 2 in characteristic 0 for CongruenceSubgroupGamma0(
 
 <p>This computation establishes that the space <span class="SimpleMath">M_10(Γ_0(39))</span> of weight <span class="SimpleMath">10</span> modular forms is of dimension <span class="SimpleMath">84</span>, and <span class="SimpleMath">M_11(Γ_0(39))</span> is of dimension <span class="SimpleMath">0</span>. (There are never any modular forms of odd weight, and so <span class="SimpleMath">M_k(Γ)=0</span> for all odd <span class="SimpleMath">k</span> and any congruence subgroup <span class="SimpleMath">Γ</span>.)</p>
 
-<p><a id="X7F55F8EA82FE9122" name="X7F55F8EA82FE9122"></a></p>
+<p><a id="X7C4BE0967C1766B5" name="X7C4BE0967C1766B5"></a></p>
 
-<h5>13.4-1 <span class="Heading">Cohomology with rational coefficients</span></h5>
+<h5>13.4-1 <span class="Heading">Cohomology with rational coefficients (via resolutions)</span></h5>
 
-<p>To calculate cohomology <span class="SimpleMath">H^n(Γ,A)</span> with coefficients in a <span class="SimpleMath">QΓ</span>-module <span class="SimpleMath">A</span> it suffices to construct a resolution of <span class="SimpleMath">Z</span> by non-free <span class="SimpleMath">ZΓ</span>-modules where <span class="SimpleMath">Γ</span> acts with finite stabilizer groups on each module in the resolution. Computing over <span class="SimpleMath">Q</span> is computationally less expensive than computing over <span class="SimpleMath">Z</span>. The following commands first compute <span class="SimpleMath">H^1(Γ_0(39), Q) = H_1(Γ_0(39), Q)= Q^9</span>. As a larger example, they then compute <span class="SimpleMath">H^1(Γ_0(2^13-1), Q) = Q^1365</span> where <span class="SimpleMath">Γ_0(2^13-1)</span> has index <span class="SimpleMath">8192</span> in <span class="SimpleMath">SL_2( Z)</span>.</p>
+<p>To calculate cohomology <span class="SimpleMath">H^n(Γ,A)</span> with coefficients in a <span class="SimpleMath">QΓ</span>-module <span class="SimpleMath">A</span> it suffices to construct a resolution of <span class="SimpleMath">Z</span> by non-free <span class="SimpleMath">ZΓ</span>-modules where <span class="SimpleMath">Γ</span> acts with finite stabilizer groups on each module in the resolution. Computing over <span class="SimpleMath">Q</span> is computationally less expensive than computing over <span class="SimpleMath">Z</span>. The following commands first compute <span class="SimpleMath">H^1(Γ_0(39), Q) = H_1(Γ_0(39), Q)= Q^9</span>. As a larger example, they then compute <span class="SimpleMath">H^1(Γ_0(2^13-1), Q) = Q^1365</span> where <span class="SimpleMath">Γ_0(2^13-1)</span> has index <span class="SimpleMath">2^13+2=8192</span> in <span class="SimpleMath">SL_2( Z)</span>.</p>
 
 
 <div class="example"><pre>
@@ -305,6 +307,24 @@ Non-free resolution in characteristic 0 for &lt;matrix group with
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithRationals(KK);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
 1365
+
+</pre></div>
+
+<p><a id="X7E7E359E78E2C11A" name="X7E7E359E78E2C11A"></a></p>
+
+<h5>13.4-2 <span class="Heading">Cohomology with rational coefficients (via regular CW-complexes)</span></h5>
+
+<p>The following computes the quotient <span class="SimpleMath">Y=K/Γ_0(2^17-1)</span> of the cubic tree <span class="SimpleMath">K</span> as a regular CW-complex and then computes <span class="SimpleMath">H^1(Γ_0(2^17-1), Q) = H^1(Y, Q) = Q^21845</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BarycentricSubdivision(ContractibleGcomplex("SL(2,Z)"));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(2^17-1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);</span>
+Regular CW-complex of dimension 1
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(Homology(Y,1));</span>
+21845
 
 </pre></div>
 
@@ -374,6 +394,14 @@ H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).<
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># Some additional information on torsion</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Source(c));</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 2, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Target(c));</span>
+[ 0, 0, 0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 13, 13, 13, 13 ]
 
 </pre></div>
 
