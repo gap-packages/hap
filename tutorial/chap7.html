@@ -564,7 +564,15 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><span class="SimpleMath">H^3(Γ_0(601), Z)_(p) ≅ Z_p ⊕ Z_p</span> for primes <span class="SimpleMath">p=37, 175829261, 1011757163379728699885049667755467</span>,</p>
 
-<p><span class="SimpleMath">H^3(Γ_0(601), Z)_(p) ≅ 0</span> for primes <span class="SimpleMath">p&gt; 3</span>.</p>
+<p><span class="SimpleMath">H^3(Γ_0(601), Z)_(p) ≅ 0</span> for all other primes <span class="SimpleMath">p&gt; 3</span>.</p>
+
+<p>Also</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(701), Q) ≅ Q^116</span>,</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(701), Z)_(p) ≅ Z_p ⊕ Z_p</span> for primes <span class="SimpleMath">p= 5, 7, 13, 113, 541, 23867527870278363301, 406535606513108747882997061430663240539</span>,</p>
+
+<p><span class="SimpleMath">H^3(Γ_0(701), Z)_(p) ≅ 0</span> for all other primes <span class="SimpleMath">p&gt; 3</span>.</p>
 
 
 <div class="example"><pre>
@@ -591,6 +599,39 @@ Chain complex of length 5 in characteristic 0 .
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(157972104741480396196975812410408490692059656);</span>
 [ 2, 2, 2, 3, 37, 175829261, 1011757163379728699885049667755467 ]
+
+</pre></div>
+
+<p> </p>
+
+
+<div class="example"><pre>
+        
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=DualComplex(K);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,701);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegersSparse(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for r in [1..200] do   #careful step-by-step reduction of the complex C</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C:=ContractedComplexViaChild(C,r);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+
+Homology(C,0);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6, 6, 6, 6, 6, 18, 18, 18, 18, 
+  14574272748332562519126602132425986851137745473252230639812547826590, 
+  14574272748332562519126602132425986851137745473252230639812547826590, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(14574272748332562519126602132425986851137745473252230639812547826590);</span>
+[ 2, 3, 3, 3, 5, 7, 13, 113, 541, 23867527870278363301, 
+  406535606513108747882997061430663240539 ]
 
 </pre></div>
 

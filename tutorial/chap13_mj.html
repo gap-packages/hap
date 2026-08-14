@@ -331,6 +331,25 @@ Regular CW-complex of dimension 1
 
 </pre></div>
 
+<p>It is known that for primes <span class="SimpleMath">\(p\)</span> the cohomology <span class="SimpleMath">\(H^1(\Gamma_0(p), \mathbb Q)\)</span> has rank</p>
+
+<p><span class="SimpleMath">\(1 + 2\left\{ \frac{p+1}{12} - \frac{ 1 + \left( \frac{-1}{p}\right) }{4} - \frac{ 1 + \left(\frac{-3}{p}\right)}{3} \right\}\)</span></p>
+
+<p>and the following provides confirmation of the rational cohomology computations.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=function(p)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">return 1 + 2* ((p+1)/12 - (1+Legendre(-1,p))/4 - (1+Legendre(-3,p))/3); </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2^13-1);</span>
+1365
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2^17-1);</span>
+21845
+
+</pre></div>
+
 <p><a id="X84D30F1580CD42D1" name="X84D30F1580CD42D1"></a></p>
 
 <h4>13.5 <span class="Heading">Cuspidal cohomology</span></h4>
