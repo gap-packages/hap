@@ -379,9 +379,9 @@ H^n(\partial X^{BS},P_{\mathbb C}(k-2)) \ ).</p>
 
 <p>Strictly speaking, this is the definition of <em>interior cohomology</em> <span class="SimpleMath">H_!^n(Γ,P_ C(k-2))</span> which in general contains the cuspidal cohomology as a subgroup. However, for congruence subgroups of <span class="SimpleMath">SL_2( Z)</span> there is equality <span class="SimpleMath">H_!^n(Γ,P_ C(k-2)) = H_cusp^n(Γ,P_ C(k-2))</span>.</p>
 
-<p>Working over <span class="SimpleMath">C</span> has the advantage of avoiding the technical issue that <span class="SimpleMath">Γ</span> does not necessarily act freely on <span class="SimpleMath">frak h</span> since there are points with finite cyclic stabilizer groups in <span class="SimpleMath">SL_2( Z)</span>. But it has the disadvantage of losing information about torsion in cohomology. So HAP confronts the issue by working with a contractible CW-complex <span class="SimpleMath">tilde X^BS</span> on which <span class="SimpleMath">Γ</span> acts freely, and <span class="SimpleMath">Γ</span>-equivariant inclusion <span class="SimpleMath">∂ tilde X^BS ↪ tilde X^BS</span>. The definition of cuspidal cohomology that we use, which coincides with the above definition when working over <span class="SimpleMath">C</span>, is</p>
+<p>Working over <span class="SimpleMath">C</span> has the advantage of avoiding the technical issue that <span class="SimpleMath">Γ</span> does not necessarily act freely on <span class="SimpleMath">frak h</span> since there are points with finite cyclic stabilizer groups in <span class="SimpleMath">SL_2( Z)</span>. But it has the disadvantage of losing information about torsion in cohomology. So HAP confronts the issue by working with a contractible CW-complex <span class="SimpleMath">tilde X^BS</span> on which <span class="SimpleMath">Γ</span> acts freely, and <span class="SimpleMath">Γ</span>-equivariant inclusion <span class="SimpleMath">∂ tilde X^BS ↪ tilde X^BS</span>. The definition of interiorl cohomology that we use, which coincides with the above definition when working over <span class="SimpleMath">C</span>, is</p>
 
-<p class="pcenter"> H_{cusp}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde X^{BS}), A)\,   ) \rightarrow
+<p class="pcenter"> H_{!}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde X^{BS}), A)\,   ) \rightarrow
 H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).</p>
 
 <p>The following data is recorded and, using perturbation theory, is combined with free resolutions for <span class="SimpleMath">C_4</span> and <span class="SimpleMath">C_6</span> to constuct <span class="SimpleMath">tilde X^BS</span>.</p>
@@ -390,12 +390,12 @@ H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).<
 
 <p>The following commands calculate</p>
 
-<p class="pcenter">H^1_{cusp}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .</p>
+<p class="pcenter">H^1_{!}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=2;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=2;; deg:=1;; c:=InteriorCohomologyHomomorphism(gamma,deg,k);</span>
 [ g1, g2, g3, g4, g5, g6, g7, g8, g9 ] -&gt; [ g1^-1*g3, g1^-1*g3, g1^-1*g3, 
   g1^-1*g3, g1^-1*g2, g1^-1*g3, g1^-1*g4, g1^-1*g4, g1^-1*g4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
@@ -410,7 +410,7 @@ H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).<
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(39);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k:=4;; deg:=1;; c:=InteriorCohomologyHomomorphism(gamma,deg,k);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(c));</span>
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
@@ -516,7 +516,7 @@ true
 
 <p>This all implies that, in principle, we can construct an approximation to an explicit basis for the space <span class="SimpleMath">S_2(Γ_0(N))</span> of cusp forms by computing eigenvalues for Hecke operators.</p>
 
-<p>Suppose that we would like a basis for <span class="SimpleMath">S_2(Γ_0(11))</span>. The following commands first show that <span class="SimpleMath">H^1_cusp(Γ_0(11), Z)= Z⊕ Z</span> from which we deduce that <span class="SimpleMath">S_2(Γ_0(11)) = C</span> is <span class="SimpleMath">1</span>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of Hecke operators are calculated to establish that the modular form</p>
+<p>Suppose that we would like a basis for <span class="SimpleMath">S_2(Γ_0(11))</span>. The following commands first show that <span class="SimpleMath">H^1_!(Γ_0(11), Z)= Z⊕ Z</span> from which we deduce that <span class="SimpleMath">S_2(Γ_0(11)) = C</span> is <span class="SimpleMath">1</span>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of Hecke operators are calculated to establish that the modular form</p>
 
 <p class="pcenter">f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots </p>
 
@@ -525,7 +525,7 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma:=HAP_CongruenceSubgroupGamma0(11);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Kernel(InteriorCohomologyHomomorphism(gamma,1,2)));</span>
 [ 0, 0 ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T1:=HeckeOperator(gamma,1,2);; Display(T1);</span>
