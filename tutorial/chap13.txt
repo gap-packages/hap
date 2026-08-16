@@ -228,7 +228,7 @@
   transversal[113X in the [12XHAP[112X implementation of congruence subgroups.[133X
   
   
-  [1X13.4 [33X[0;0YIndependent generators and genus[133X[101X
+  [1X13.4 [33X[0;0YIndependent generators[133X[101X
   
   [33X[0;0YOnce  one has access to an ambient transversal for a congruence subgroup [22XΓ ≤
   SL_2(  Z)[122X  one  can construct the finite regular CW-complex [22XY=K/Γ[122X where [22XK[122X is
@@ -243,7 +243,7 @@
   [33X[0;0YFor  example,  the following commands establish that [22XΓ(5)[122X has an independent
   generating  set  consisting  of  [22X11[122X  generators of infinite order. They then
   establish  that [22XΓ_0(13)[122X has an independent generating set with one generator
-  of infinite order and one generating set of finite order.[133X
+  of infinite order and four generators of finite order.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgamma:=HAP_PrincipalCongruenceSubgroup(5);;[127X[104X
@@ -287,7 +287,42 @@
   [4X[32X[104X
   
   
-  [1X13.5 [33X[0;0YCohomology of congruence subgroups[133X[101X
+  [1X13.5 [33X[0;0YGenus[133X[101X
+  
+  [33X[0;0YA  congruence  subgroup [22XΓ≤ SL_2( Z)[122X acts on the upper half plane [22Xfrak h[122X (see
+  [14X13.7[114X).  The quotient [22Xfrak h/Γ[122X is a non-compact surface. Compactifying, using
+  the  Borel-Serre  compactification,  yields  a closed surface with boundary.
+  Filling  the boundary curves with disks then yields a closed surface without
+  boundary. The genus of this surface is by definition the [13Xgenus[113X of [22XΓ[122X.[133X
+  
+  [33X[0;0YThe  following  computes  the  genus  of  [22XΓ(5)[122X to be 0 and also the genus of
+  [22XΓ_0(13)[122X to be 0.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("BorelSerreSL2Z");;[127X[104X
+    [4X[25Xgap>[125X [27XK:=BarycentricSubdivision(K);;[127X[104X
+    [4X[25Xgap>[125X [27XdK:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;[127X[104X
+    [4X[25Xgap>[125X [27XdK:=BarycentricSubdivision(dK);;[127X[104X
+    [4X[28X [128X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_PrincipalCongruenceSubgroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,gamma);;[127X[104X
+    [4X[25Xgap>[125X [27XdY:=GComplexToRegularCWComplex(dK,gamma);;[127X[104X
+    [4X[25Xgap>[125X [27XEulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X [128X[104X
+    [4X[25Xgap>[125X [27Xgamma:=HAP_CongruenceSubgroupGamma0(13);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,gamma);;[127X[104X
+    [4X[25Xgap>[125X [27XdY:=GComplexToRegularCWComplex(dK,gamma);;[127X[104X
+    [4X[25Xgap>[125X [27XEulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgenus:=0;; EulerCharacteristic(ClosedSurface(genus));[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.6 [33X[0;0YCohomology of congruence subgroups[133X[101X
   
   [33X[0;0YTo  compute  the  cohomology  [22XH^n(Γ,A)[122X  of  a  congruence  subgroup  [22XΓ[122X  with
   coefficients  in  a  [22XZΓ[122X-module  [22XA[122X  we  need to construct [22Xn+1[122X terms of a free
@@ -383,7 +418,7 @@
   odd [22Xk[122X and any congruence subgroup [22XΓ[122X.)[133X
   
   
-  [1X13.5-1 [33X[0;0YCohomology with rational coefficients (via resolutions)[133X[101X
+  [1X13.6-1 [33X[0;0YCohomology with rational coefficients (via resolutions)[133X[101X
   
   [33X[0;0YTo  calculate  cohomology  [22XH^n(Γ,A)[122X  with  coefficients  in a [22XQΓ[122X-module [22XA[122X it
   suffices  to construct a resolution of [22XZ[122X by non-free [22XZΓ[122X-modules where [22XΓ[122X acts
@@ -417,7 +452,7 @@
   [4X[32X[104X
   
   
-  [1X13.5-2 [33X[0;0YCohomology with rational coefficients (via regular CW-complexes)[133X[101X
+  [1X13.6-2 [33X[0;0YCohomology with rational coefficients (via regular CW-complexes)[133X[101X
   
   [33X[0;0YThe following computes the quotient [22XY=K/Γ_0(2^17-1)[122X of the cubic tree [22XK[122X as a
   regular  CW-complex  and  then  computes  [22XH^1(Γ_0(2^17-1),  Q) = H^1(Y, Q) =
@@ -454,7 +489,7 @@
   [4X[32X[104X
   
   
-  [1X13.6 [33X[0;0YCuspidal cohomology[133X[101X
+  [1X13.7 [33X[0;0YCuspidal cohomology[133X[101X
   
   [33X[0;0YTo define and compute cuspidal cohomology we consider the action of [22XSL_2( Z)[122X
   on the upper-half plane [22Xfrak h[122X given by[133X
@@ -568,7 +603,7 @@
   [4X[32X[104X
   
   
-  [1X13.7 [33X[0;0YHecke operators on forms of weight 2[133X[101X
+  [1X13.8 [33X[0;0YHecke operators on forms of weight 2[133X[101X
   
   [33X[0;0YA  congruence  subgroup  [22XΓ  ≤ SL_2( Z)[122X and element [22Xg∈ GL_2( Q)[122X determine the
   subgroup [22XΓ' = Γ ∩ gΓ g^-1[122X and homomorphisms[133X
@@ -638,7 +673,7 @@
   [4X[32X[104X
   
   
-  [1X13.8 [33X[0;0YHecke operators on forms of weight [22X≥ 2[122X[101X[1X[133X[101X
+  [1X13.9 [33X[0;0YHecke operators on forms of weight [22X≥ 2[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  above  definition of Hecke operator [22XT_p[122X for [22XΓ=Γ_0(N)[122X extends to a Hecke
   operator  [22XT_p:  H^1(Γ,P_ Q(k-2) ) → H^1(Γ,P_ Q(k-2) )[122X for [22Xk≥ 2[122X. We work over
@@ -656,7 +691,7 @@
   [4X[32X[104X
   
   
-  [1X13.9 [33X[0;0YReconstructing modular forms from cohomology computations[133X[101X
+  [1X13.10 [33X[0;0YReconstructing modular forms from cohomology computations[133X[101X
   
   [33X[0;0YGiven  a  modular  form [22Xf: frak h → C[122X associated to a congruence subgroup [22XΓ[122X,
   and  given  a  compact edge [22Xe[122X in the tessellation of [22Xfrak h[122X ([13Xi.e.[113X an edge in
@@ -787,7 +822,7 @@
   [4X[32X[104X
   
   
-  [1X13.10 [33X[0;0YThe Picard group[133X[101X
+  [1X13.11 [33X[0;0YThe Picard group[133X[101X
   
   [33X[0;0YLet  us  now  consider  the  [13XPicard  group[113X  [22XG=SL_2( Z[ i])[122X and its action on
   [13Xupper-half space[113X[133X
@@ -923,7 +958,7 @@
   [4X[32X[104X
   
   
-  [1X13.11 [33X[0;0YBianchi groups[133X[101X
+  [1X13.12 [33X[0;0YBianchi groups[133X[101X
   
   [33X[0;0YThe [13XBianchi groups[113X are the groups [22XG=PSL_2(cal O_-d)[122X where [22Xd[122X is a square free
   positive  integer  and  [22Xcal  O_-d[122X  is  the ring of integers of the imaginary
@@ -1063,7 +1098,7 @@
   [4X[32X[104X
   
   
-  [1X13.12 [33X[0;0Y(Co)homology of Bianchi groups and [22XSL_2(cal O_-d)[122X[101X[1X[133X[101X
+  [1X13.13 [33X[0;0Y(Co)homology of Bianchi groups and [22XSL_2(cal O_-d)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe (co)homology of Bianchi groups has been studied in papers such as [SV83]
   [Vog85]  [Ber00]  [Ber06]  [RF13] [Rah13b] [Rah13a] [BLR20]. Calculations in
@@ -1322,7 +1357,7 @@
   [4X[32X[104X
   
   
-  [1X13.13 [33X[0;0YSome other infinite matrix groups[133X[101X
+  [1X13.14 [33X[0;0YSome other infinite matrix groups[133X[101X
   
   [33X[0;0YAnalogous to the functions for Bianchi groups, HAP has functions[133X
   
@@ -1435,7 +1470,7 @@
   [4X[32X[104X
   
   
-  [1X13.14 [33X[0;0YIdeals and finite quotient groups[133X[101X
+  [1X13.15 [33X[0;0YIdeals and finite quotient groups[133X[101X
   
   [33X[0;0YThe  following commands first construct the number field [22XQ(sqrt-7)[122X, its ring
   of  integers  [22Xcal  O_-7=cal  O(  Q(sqrt-7))[122X, and the principal ideal [22XI=⟨ 5 +
@@ -1547,7 +1582,7 @@
   [4X[32X[104X
   
   
-  [1X13.15 [33X[0;0YCongruence subgroups for ideals[133X[101X
+  [1X13.16 [33X[0;0YCongruence subgroups for ideals[133X[101X
   
   [33X[0;0YGiven  a  ring  of  integers  [22Xcal O[122X and ideal [22XI ◃ cal O[122X there is a canonical
   homomorphism [22Xπ_I: SL_2(cal O) → SL_2(cal O/I)[122X. A subgroup [22XΓ ≤ SL_2(cal O)[122X is
@@ -1619,7 +1654,7 @@
   [4X[32X[104X
   
   
-  [1X13.16 [33X[0;0YFirst homology[133X[101X
+  [1X13.17 [33X[0;0YFirst homology[133X[101X
   
   [33X[0;0YThe  isomorphism  [22XH_1(G,  Z)  ≅  G_ab[122X  allows  for  the computation of first
   integral homology using computational methods for finitely presented groups.
