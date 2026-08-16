@@ -46,7 +46,7 @@ InstallMethod(AmbientPosition,
             local v, vv, u, w, p;
             v := [g[1][1], g[2][1], g[3][1]];
             vv := List(v, x -> x mod n);
-         
+    
             for u in G!.Units do  #Graham
                 w := List(vv, x -> (u*x) mod n); #Graham
                 p:=Position(ProjPlane.Reps,w);   #Graham

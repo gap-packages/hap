@@ -1,62 +1,29 @@
 #(C) Graham Ellis, 2005-2006
 
 #####################################################################
-InstallGlobalFunction(ResolutionFiniteSubgroup,
+InstallGlobalFunction(ResolutionFiniteSubgroup_NonFree,
 function(arg)
 local 
-		R,gensG,gensK,
+		R,
 		DimensionR, BoundaryR, HomotopyR, EltsG,
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
 		Gword2Kword, G2K, G2KRec, Pair2Int, Int2Pair,
-		Mult, MultRec, FIN, i,HomotopyRec;
+		Mult, MultRec, i,HomotopyRec;
 		
-if Length(arg)=3 then
-R:=arg[1]; gensG:=arg[2]; gensK:=arg[3];
-fi;
-if Length(arg)=2 then
-R:=arg[1]; gensG:=R!.group; gensK:=arg[2];
-fi;
-				#gensG and gensK originally had to be
-				#generating sets. Later I allowed them to be
-				#the groups G, K themselves. Sloppy!
+Print("Warning: this function is incomplete and will return wrong answers!\n");
 
+R:=arg[1]; G:=R!.group; K:=arg[2];   #Assuming K<=G
 DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 HomotopyR:=R!.homotopy;
 EltsG:=R!.elts;
 
-
-if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
-if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
-if Size(G)=Length(EltsG) then FIN:=true; else FIN:= false; fi;
-
-##Non free resolutions treaded separately
-if IsHapNonFreeResolution(R) then
-return ResolutionFiniteSubgroup_NonFree(R,K);
-fi;
-##
-
-if FIN then 
-   if IsPseudoList(EltsG) then EltsK:=EltsG;
-   else
-   EltsK:=Elements(K);
-   fi;
-else
 EltsK:=[];
-fi;
-
 
 TransK:=RightTransversal(G,K);
 sK:=Size(TransK);
 
-if FIN then
-#####################################################################
-Mult:=function(i,j)
-return Position(EltsG,TransK[i]*EltsG[j]);
-end;
-#####################################################################
-else
 MultRec:=List([1..Length(TransK)],i->[]);
 #####################################################################
 Mult:=function(i,j) local x,r;
@@ -77,7 +44,6 @@ fi;
 return MultRec[i][j];
 end;
 #####################################################################
-fi;
 
 #####################################################################
 Dimension:=function(n)
@@ -85,16 +51,6 @@ return sK*DimensionR(n);
 end;
 #####################################################################
 
-if FIN then
-#####################################################################
-G2K:=function(g)
-local t,k;
-t:=PositionCanonical(TransK,EltsG[g]);
-k:=Position(EltsK,EltsG[g]*TransK[t]^-1);
-return [k,t];
-end;
-#####################################################################
-else
 G2KRec:=[];
 #####################################################################
 G2K:=function(g)
@@ -117,7 +73,6 @@ fi;
 return G2KRec[g];
 end;
 #####################################################################
-fi;
 
 #####################################################################
 Pair2Int:=function(x)
@@ -168,7 +123,6 @@ if not IsBound(BoundaryRec[n][i]) then
 x:=Int2Pair(i);
 w:=StructuralCopy(BoundaryR(n,x[1]));
 Apply(w, y->[y[1],Mult(x[2],y[2])]);
-#Apply(w, y->[y[1],Position(EltsG,TransK[x[2]]*EltsG[y[2]])   ]); #Changed this back but forgot why this line was ever here!!
 BoundaryRec[n][i]:= Gword2Kword(w);
 ###BoundaryRec[n][i]:=AlgebraicReduction(BoundaryRec[n][i]);
 fi;

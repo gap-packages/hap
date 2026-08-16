@@ -38,8 +38,6 @@ g:=x[2];
 stab:=R!.stabilizer(n,e);
 gc:=g*Elements(stab);
 gc:=List(gc, a->T[T!.poscan(a)]);
-#gc:=SSortedList(gc);
-#gc:=gc[1];
 gc:=Minimum(gc);
 return [e,gc];
 end;

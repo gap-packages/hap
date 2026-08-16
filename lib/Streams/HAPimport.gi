@@ -29,13 +29,11 @@ HAPTEMPORARYFUNCTION:=0;
 MakeReadOnlyGlobal("HAPTEMPORARYFUNCTION");
 ##################### FILE READ TO R ################################
 
-if not IsList(R) then return R; fi;
+if IsList(R) then return R; fi;
 
 
-
-if not R.type=HapResolution then TryNextMethod(); fi;
-
-#####################################################################
+if FiltersType(R.type)=FiltersType(HapResolution) then 
+###########################HapResolution#############################
 Dimension:=function(i)
 if i<0 then return 0; fi;
 if i=0 then return 1; fi;
@@ -78,6 +76,35 @@ return Objectify(HapResolution,
                 group:=Group(R.elements),
                 properties:=R.special_properties
                     ));
+###############End HapResolution#####################################
+fi;
+
+if FiltersType(R.type)=FiltersType(HapSparseChainComplex) then
+###########################HapSparseChainComplex#####################
+Dimension:=function(i)
+if i<0 or i+1>Length(R.ranks) then return 0; fi;
+return R.ranks[i+1];
+end;
+#####################################################################
+
+
+#####################################################################
+Boundary:=function(i,j)
+if i=0 or i>Length(R.boundaries) then return []; else
+return R.boundaries[i][j]; fi;
+end;
+#####################################################################
+
+return Objectify(HapSparseChainComplex,
+                rec(
+                dimension:=Dimension,
+                boundary:=Boundary,
+                properties:=R.special_properties
+                    ));
+###############End HapSparseChainComplex#############################
+fi;
+
+
 end);
 #####################################################################
 #####################################################################

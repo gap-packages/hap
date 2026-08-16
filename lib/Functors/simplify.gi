@@ -4,20 +4,26 @@
 InstallGlobalFunction(SimplifiedSparseChainComplex,
 function(arg)
 local C,bounds, cobounds, lb, n, k, i, j, b,c,B,x,
-      Dimension,Boundary,first,bnd,Replace,NormForm,
-      NewGens,ZeroCells,BoundaryRec,F;
+      Dimension,Boundary,first,first1,bnd,Replace,NormForm,
+      NewGens,ZeroCells,BoundaryRec,PNG,merge;
 
 C:=arg[1];
 
 ####################Changed this function, July 2026
-####################
+####################Then changed the other code so that it is never called!
 NormForm:=function(b)
-local S,a,pos,ls;
+local S,a,pos,ls,L,bool,i;
+cnt:=cnt+1;
+bool:=true;
+for i in [1..Length(b)-1] do
+   if not b[i][1]<b[i+1][1] then bool:=false; break; fi;
+od;
+if bool then return b; fi;
 Sort(b);;
 S:=SSortedList(List(b,x->x[1]));
 ls:=Length(S);
 if ls=Length(b) then return b; fi;
-S:=List(S,x->[x,0]);
+Apply(S,x->[x,0]);
 pos:=1;
 for i in [1..Length(b)] do
 a:=b[i];
@@ -26,10 +32,12 @@ if pos<ls then
 if a[1]<b[i+1][1]  then pos:=pos+1; fi;
 fi;
 od;
-return Filtered(S,x->not x[2]=0);
+S:=Filtered(S,x->not x[2]=0);
+return S;
 end;
 ####################
 ####################
+
 
 ####################
 ####################
@@ -39,7 +47,10 @@ ZeroCells:=[1..C!.dimension(0)];
 
 for n in [1..Length(C)] do
 for k in [1..C!.dimension(n)] do
-bounds[n][k]:=NormForm(1*C!.boundary(n,k));
+#bounds[n][k]:=NormForm(1*C!.boundary(n,k));
+bounds[n][k]:=C!.boundary(n,k);
+if not IsSortedList(bounds[n][k]) then bounds[n][k]:=NormForm(bounds[n][k]); fi;
+#WARNING: I suppose bounds[n][k] could be sorted but yet not in normal form!!!
 od;
 od;
 
@@ -57,24 +68,20 @@ for n in [1..Length(cobounds)] do
 for k in [1..Length(cobounds[n])] do
 cobounds[n][k]:=SSortedList(cobounds[n][k]);
 od;od;
-
-
+cobounds[n+1]:=List([1..Length(bounds[n])],i->[]);
 ####################
 ####################
+
 
 if Length(arg)=1 then
 ####################
 ####################
-first:=function(x) #find first cell with coefficient equal to +/-1
+first1:=function(x) #find first cell with coefficient equal to +/-1
 return PositionProperty(x,y->AbsInt(y[2])=1);
-#local i;
-#for i in [1..Length(x)] do
-#if AbsInt(x[i][2])=1 then return i; fi;
-#od;
-#return fail;
 end;
 ####################
 ####################
+first:=first1;
 fi;
 if Length(arg)=2 then
 ####################
@@ -82,11 +89,6 @@ if Length(arg)=2 then
 first:=function(x) #find first cell with coefficient equal to +/-1
 if Length(x)>arg[2] then return fail; fi;
 return PositionProperty(x,y->AbsInt(y[2])=1);
-#local i;
-#for i in [1..Length(x)] do
-#if AbsInt(x[i][2])=1 then return i; fi;
-#od;
-#return fail;
 end;
 ####################
 ####################
@@ -96,43 +98,64 @@ fi;
 ####################
 ####################
 Replace:=function(n,b,bnd)
-local cbnd, i, B,BB,x,y,z;
-cbnd:=1*cobounds[n][b];
+local cbnd, pos, B,BB,x,Y,z,i,c;
+cbnd:=cobounds[n][b];  #removed 1*
 for i in cbnd do
-B:=bounds[n][i];
-if not B=0 then 
-BB:=[];
-  for x in B do
-  if not x[1]=b then
-  Add(BB,x); 
-  else
-  y:=1*bnd;
-  Apply(y,a->[a[1],x[2]*a[2]]);
-  Append(BB,y);
-   for z in y do
-   AddSet(cobounds[n][z[1]],i);
-   od;
-  fi;
-  od;
-bounds[n][i]:=NormForm(BB);
-fi;
+   B:=bounds[n][i];  #removed 1*
+   if not (B=0 or B=[]) then
+      pos:=PositionProperty(B,a->a[1]=b);
+      #pos:=PositionSet(List(B,a->a[1]),b);
+      if IsInt(pos) then
+          c:=B[pos][2];
+          Y:=1*bnd;
+          Apply(Y,a->[a[1],c*a[2]]);
+          Remove(B,pos);
+          bounds[n][i]:=merge(B,Y);
+          for z in Y do
+              AddSet(cobounds[n][z[1]],i);
+          od;
+      fi;
+   fi;
 od;
 return true;
 end;
 ####################
 ####################
 
+####################
+####################
+#We want to merge sort B and Y assuming that B and Y are sorted
+#returns NormForm(Concatenation(B,Y));
+merge:=function(B,Y)
+local U, pB, pY, lB, lY;
 
+lB:=Length(B); lY:=Length(Y);
+U:=[];
+pB:=1; pY:=1;
+while pB<=lB and pY<=lY do
+   if B[pB][1]<Y[pY][1] then
+      Add(U,B[pB]); pB:=pB+1;
+   elif B[pB][1]>Y[pY][1] then
+      Add(U,Y[pY]); pY:=pY+1;
+   else
+      if B[pB][2]<>-Y[pY][2] then
+         Add(U,[B[pB][1], B[pB][2]+Y[pY][2]]);
+      fi;
+      pB:=pB+1; pY:=pY+1;
+   fi;
+od;
+while pB<=lB do Add(U,B[pB]); pB:=pB+1; od;
+while pY<=lY do Add(U,Y[pY]); pY:=pY+1; od;
 
-
+return U;
+end;
+####################
+####################
 
 
 ##################Workhorse###########################
 for n in [1..Length(bounds)] do
-#for k in [1..Length(bounds[n])] do
-F:=[1..Length(bounds[n])];
-SortBy(F , k->Length(bounds[n][k]));
-for k in F do
+for k in [1..Length(bounds[n])] do
 i:=first(bounds[n][k]);
 if not i=fail then
 ##################
@@ -152,15 +175,16 @@ od;
 fi;
 
 if n<Length(cobounds) then
-cobounds[n+1][k]:=0;
+cobounds[n+1][k]:=[];
 fi;
-cobounds[n][b[1]]:=0;
+cobounds[n][b[1]]:=[];
 
 ##################
 fi;
 od;
 od;
 ######################################################
+
 
 NewGens:=[];  #NewGens[n+1] will be the n-gens that remain in simplified complex
 NewGens[1]:=ZeroCells;
@@ -180,11 +204,17 @@ return Length(NewGens[n+1]);
 end;
 ###################################
 
+PNG:=[];
+for n in [1..Length(bounds)] do
+PNG[n]:=List([1..C!.dimension(n-1)],i->Position(NewGens[n],i));
+od;
+
 ###################################
 Boundary:=function(n,k)
 if n>Length(bounds) then return []; fi;
 return 
-List(bounds[n][k], x->[Position(NewGens[n],x[1]),x[2]]);
+#List(bounds[n][k], x->[Position(NewGens[n],x[1]),x[2]]);
+List(bounds[n][k], x->[PNG[n][x[1]],x[2]]);
 end;
 ###################################
 
@@ -197,8 +227,8 @@ od;
 od;
 
 lb:=Length(bounds);
-Unbind(bounds);
-Unbind(cobounds);
+#Unbind(bounds);
+#Unbind(cobounds);
 Unbind(ZeroCells);
 ###################################
 Boundary:=function(n,k)
@@ -211,6 +241,8 @@ return  Objectify(HapSparseChainComplex,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
+                bounds:=bounds,
+                cobounds:=cobounds,
                 properties:=
                 [["length",EvaluateProperty(C,"length")],
                 ["type", "chainComplex"],

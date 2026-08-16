@@ -528,6 +528,7 @@ DeclareGlobalFunction("HomotopyEquivalentMinimalPureSubcomplex");
 DeclareAttribute("EulerCharacteristic",IsHapPureCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
+DeclareAttribute("EulerCharacteristic",IsHapRegularCWComplex);
 DeclareOperation("ContractedComplex",[IsObject]);#doc
 DeclareOperation("ExpandedComplex",[IsObject]);
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");#doc
@@ -928,7 +929,7 @@ DeclareGlobalFunction("HAP_SL2ZSubgroupTree_slow");
 DeclareGlobalFunction("HAP_SL2OSubgroupTree_slow");
 DeclareGlobalFunction("HAP_SL2ZSubgroupTree_fast");
 DeclareGlobalFunction("HAP_SL2OSubgroupTree_fast");
-DeclareGlobalFunction("CuspidalCohomologyHomomorphism");
+DeclareGlobalFunction("InteriorCohomologyHomomorphism");
 DeclareGlobalFunction("HomomorphismAsMatrix");
 DeclareGlobalFunction("HAP_GenericSL2ZSubgroup");
 DeclareGlobalFunction("HAP_PrincipalCongruenceSubgroup");

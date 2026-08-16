@@ -19,8 +19,8 @@ BoundaryRec:=[];
 
 TFSummands[1]:=[1..R!.dimension(0)];
 for n in [1..LengthC] do
-TFSummands[n+1]:=[];
 BoundaryRec[n]:=[];
+TFSummands[n+1]:=[];
 for k in [1..R!.dimension(n)] do
 tmp:=true;
 for g in Elements(R!.stabilizer(n,k)) do

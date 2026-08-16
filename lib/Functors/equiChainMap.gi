@@ -133,6 +133,7 @@ return y;
 fi;
    if m=0 then 
    u:=[[SignInt(x[1]),GhomQ(x[2])]]; 
+   #u:=[[x[1],GhomQ(x[2])]];   #Changed August 2026
       if x[1]>0 then
       mapgensRec[m+1][x[1]][x[2]]:=u;
       else

@@ -1,0 +1,22 @@
+gap> K:=ContractibleGcomplex("SL(3,Z)s");;
+gap> G:=HAPCongruenceSubgroupGamma0(3,101);;
+gap> Y:=GComplexToRegularCWComplex(K,G);;
+
+gap> C:=ChainComplexOfRegularCWComplex(Y);
+Chain complex of length 3 in characteristic 0 . 
+
+gap> List([0..3],C!.dimension);
+[ 3679, 37565, 75083, 41212 ]
+
+gap> D:=ContractedComplex(C);time;
+Chain complex of length 3 in characteristic 0 . 
+
+170547
+
+gap> List([0..3],D!.dimension);
+[ 1, 27, 78, 67 ]
+
+gap> List([0..3],n->Homology(D,n));time;
+[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+26

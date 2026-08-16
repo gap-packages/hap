@@ -114,6 +114,7 @@ the cubic tree <M>\cal T</M> we just need to record the following finite amount 
 <Section><Heading>One-dimensional fundamental domains and  
 generators for congruence subgroups</Heading>
 
+	<!--
 The modular group <M>{\cal M}=PSL_2(\mathbb Z)</M> is isomorphic, as an abstract group, 
 to the free product <M>\mathbb Z_2\ast \mathbb Z_3</M>. By the Kurosh subgroup 
 theorem, any finite index subgroup <M>M \subset {\cal M}</M> is isomorphic to the free product 
@@ -127,7 +128,7 @@ The generating set <M>\{S,U\}</M> for <M>SL_2(\mathbb Z)</M> given in the preced
 <P/> We are interested in constructing a set of generators for a given congruence subgroup <M>\Gamma</M>. If a small generating set for <M>\Gamma</M> is required then we should
  aim
 to  construct one which is close to being  projectively independent. 
-
+	-->
 <P/>
  It is useful to    
 invoke the following general result which follows from a perturbation result about free <M>\mathbb ZG</M>-resolutons in <Cite Key="ellisharrisskoldberg" Where="Theorem 2"/> and an old observation of John Milnor that a free <M>\mathbb ZG</M>-resolution can be realized as the cellular chain complex of a CW-complex if it can be so realized in low dimensions.
@@ -158,7 +159,7 @@ Thus <M>\mathring D_\Gamma</M> is a subtree of the cubic tree with <M>|SL_2(\mat
  be <M>(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)</M>. 
 
  <P/> 
-The following commands determine projectively independent 
+The following commands determine  
 generators for <M>\Gamma(6)</M> and display
 <M>\mathring D_{\Gamma(6)}</M>. The subgroup <M>\Gamma(6)</M> is free on <M>13</M> generators. 
 
@@ -169,8 +170,11 @@ generators for <M>\Gamma(6)</M> and display
 <Alt Only="HTML">&lt;img src="images/pctree6.gif" align="center" width="350" alt="Fundamental region in the   cubic tree"/>
 </Alt>
 
-<P/>An alternative but very related approach to computing generators  of congruence subgroups of <M>SL_2(\mathbb Z)</M>
- is described in <Cite Key="kulkarni"/>.
+<P/>A related approach to the  problem of computing <E>independent generators</E> ( = no nontrivial identities between them)  of congruence subgroups of <M>SL_2(\mathbb Z)</M>
+	is described in <Cite Key="kulkarni"/>. The principal congruence subgroup <M>\Gamma(N)</M> is free (since it acts on a tree with trivial stabilizers) and thus any minimal generating set is independent. Such a generating set is returned by the above method.
+
+
+
 <P/>The congruence subgroup <M>\Gamma_0(N)</M> does not act freely on the vertices of <M>\cal T</M>, and so one needs to incorporate
  a generator for the cyclic stabilizer group according to the above theorem. Alternatively, we can replace the cubic tree by a six-fold cover 
 <M>{\cal T}'</M> on whose vertex set  <M>\Gamma_0(N)</M> acts freely. 
@@ -189,6 +193,57 @@ involving <M>18</M> generators, to compute the abelianization <M>\Gamma_0(39)^{a
 
 <P/> Note that to compute <M>D_\Gamma</M> one only needs to be able to test whether a given matrix lies in <M>\Gamma</M> or not. 
 Given an inclusion <M>\Gamma'\subset \Gamma</M> of congruence subgroups, it is straightforward to use the trees <M>\mathring D_{\Gamma'}</M> and <M>\mathring D_{\Gamma}</M> to compute a system of coset representative for <M>\Gamma'\setminus \Gamma</M>.
+
+
+<Subsection><Heading>Ambient transversals</Heading>
+	For any
+	congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> a fundamental 
+		domain for the free action of <M>\Gamma</M> on some tree can 
+			always be computed by brute force search, but for principal subgroups and for <M>\Gamma_0(N)</M> one can use theoretical 
+				descriptions of the coset space <M>SL_2(\mathbb Z)/\Gamma</M> to vastly improve efficiency. However the fundamental domain is constructed, it provides and algorithm for producing a transversal of 
+<M>\Gamma</M> in <M>SL_2(\mathbb Z)</M>. 
+This transversal is referred to as the 
+<E>ambient transversal</E> in the <B>HAP</B> implementation of congruence subgroups.
+
+</Subsection>
+</Section>
+
+<Section><Heading>Independent generators</Heading>
+	Once one has access to an ambient transversal for a congruence subgroup <M>\Gamma \le SL_2(\mathbb Z)</M> one can construct the finite
+		regular CW-complex <M>Y=K/\Gamma</M> where <M>K</M> is the barycentric subdivision of the cubic treei <M>K=sd{\mathcal T}</M>. The complex <M>Y</M> will be a graph. In order to visualize <M>Y</M> it is better to let <M>K</M> be the double barycenctric subdivision <M>K</M>. Every homology cycle in <M>Y</M> gives rise to a generator of <M>\Gamma</M> of infinite order. Every vertex of degree <M>1</M> in <M>Y</M> gives rise to a generator of finite order. These infinite and finite generators constitute an independent generating set for <M>\Gamma</M> (i.e. there are no non-trivial relators).
+
+		<P/>For example, the following commands establish that <M>\Gamma(5)</M> has an independent generating set consisting of <M>11</M> generators of infinite order. They then establish that <M>\Gamma_0(13)</M> has an independent generating set with one generator of infinite order and four generators of finite order.
+		<P/>
+			<Example>
+<#Include SYSTEM "tutex/11.27.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="images/kulkrani1.png" align="center" width="350" alt="Quotient graph"/>
+</Alt>
+	                        <Example>
+<#Include SYSTEM "tutex/11.28.txt">
+</Example>
+<P/>
+<Alt Only="HTML">&lt;img src="images/kulkrani2.png" align="center" width="350" alt="Quotient graph"/>
+</Alt>
+<P/>
+	Explicit generators can be extracted from the CW-complex <M>Y</M> but this has not yet been implemented as a function in HAP. However, the Congruence package for GAP <Cite Key="congruence"/> has implemented Kulkrani's algorithm for independent generators.
+		We find:
+
+		<Example>
+<#Include SYSTEM "tutex/11.29.txt">
+</Example>
+</Section>
+	<Section><Heading>Genus</Heading>
+			A congruence subgroup <M>\Gamma\le SL_2(\mathbb Z)</M>
+				acts on the upper half plane <M>\frak h</M>  (see <Ref Sect="upperhalfplane"/>). The quotient <M>{\frak h}/\Gamma</M> 
+					is a non-compact surface. Compactifying, using  the Borel-Serre compactification, yields a closed surface with boundary. Filling the boundary curves with disks then yields a closed surface without boundary. The genus of this surface is by definition the <E>genus</E> of <M>\Gamma</M>. 
+
+					<P/> The following computes the genus of <M>\Gamma(5)</M> to be 0 and also the genus of <M>\Gamma_0(13)</M> to be 0.
+						<Example>
+<#Include SYSTEM "tutex/11.30.txt">
+</Example>
+
 </Section>
 
 <Section><Heading>Cohomology of congruence subgroups</Heading>
@@ -241,18 +296,40 @@ and <M>M_{11}(\Gamma_0(39))</M> is of dimension <M>0</M>.
 <M>M_k(\Gamma)=0</M> for all odd <M>k</M> and any congruence subgroup 
 <M>\Gamma</M>.)
 
-<Subsection><Heading>Cohomology with rational coefficients</Heading>
-To calculate cohomology <M>H^n(\Gamma,A)</M> with coefficients in a <M>\mathbb Q\Gamma</M>-module <M>A</M>  it suffices to construct a resolution of <M>\mathbb Z</M> by non-free <M>\mathbb Z\Gamma</M>-modules where <M>\Gamma</M> acts  with finite stabilizer groups on each module in the resolution. Computing over <M>\mathbb Q</M> is computationally less expensive than computing over <M>\mathbb Z</M>. The following commands first compute <M>H^1(\Gamma_0(39),\mathbb Q) = 
+<Subsection><Heading>Cohomology with rational coefficients (via resolutions)</Heading>
+To calculate cohomology <M>H^n(\Gamma,A)</M> with coefficients in a <M>\mathbb Q\Gamma</M>-module <M>A</M>  it suffices to construct a resolution of <M>\mathbb Z</M> by non-free <M>\mathbb Z\Gamma</M>-modules where <M>\Gamma</M> acts  with finite stabilizer groups on each module in the resolution. Computing over <M>\mathbb Q</M> is computationally less expensive than computing over <M>\mathbb Z</M>. The following commands  first compute <M>H^1(\Gamma_0(39),\mathbb Q) = 
 H_1(\Gamma_0(39),\mathbb Q)= \mathbb Q^9</M>. As a larger example, they then compute 
-<M>H^1(\Gamma_0(2^{13}-1),\mathbb Q) =\mathbb Q^{1365}</M> where <M>\Gamma_0(2^{13}-1)</M> has index <M>8192</M> in <M>SL_2(\mathbb Z)</M>.
+<M>H^1(\Gamma_0(2^{13}-1),\mathbb Q) =\mathbb Q^{1365}</M> where <M>\Gamma_0(2^{13}-1)</M> has index <M>2^{13}+2=8192</M> in <M>SL_2(\mathbb Z)</M>.
 
 <Example>
 <#Include SYSTEM "tutex/11.4b.txt">
 </Example>
 </Subsection>
+
+<Subsection><Heading>Cohomology with rational coefficients (via regular CW-complexes)</Heading>
+	The following computes the quotient <M>Y=K/\Gamma_0(2^{17}-1)</M> of the cubic tree <M>K</M> as a regular CW-complex and then computes <M>H^1(\Gamma_0(2^{17}-1),\mathbb Q) = H^1(Y,\mathbb Q) = \mathbb Q^{21845}</M>. 
+
+			<Example>
+<#Include SYSTEM "tutex/11.4c.txt">
+</Example>
+
+<P/> It is known that for primes <M>p</M> the cohomology
+<M>H^1(\Gamma_0(p), \mathbb Q)</M> has rank 
+<P/><M>1 + 2\left\{
+	\frac{p+1}{12}
+	- \frac{ 1 + \left( \frac{-1}{p}\right) }{4}
+	- \frac{ 1 + \left(\frac{-3}{p}\right)}{3}
+	\right\}</M>
+<P/> and the following provides confirmation of the rational cohomology computations.
+
+	<Example>
+<#Include SYSTEM "tutex/11.4d.txt">
+</Example>
+
+	</Subsection>
 </Section>
 
-<Section><Heading>Cuspidal cohomology</Heading>
+<Section Label="upperhalfplane"><Heading>Cuspidal cohomology</Heading>
 To define and compute cuspidal cohomology we  consider the action of 
 <M>SL_2(\mathbb Z)</M> on the upper-half plane <M>{\frak h}</M>
 given by
@@ -295,23 +372,35 @@ Strictly speaking, this is the definition of  <E>interior cohomology</E>
 <M>SL_2(\mathbb Z)</M> there is equality 
 <M>H_!^n(\Gamma,P_{\mathbb C}(k-2)) = H_{cusp}^n(\Gamma,P_{\mathbb C}(k-2))</M>.
 <P/> 
-Working over <M>\mathbb C</M> has the advantage of 
+<!-- Working over <M>\mathbb C</M> has the advantage of 
 avoiding the technical issue that <M>\Gamma </M> does not necessarily act freely on <M>{\frak h}</M> since there are points with finite
 cyclic stabilizer groups in <M>SL_2(\mathbb Z)</M>. But it has the disadvantage of losing  information about torsion in cohomology. So HAP confronts the issue
-by working with a contractible CW-complex 
-<M>\tilde X^{BS}</M> on which <M>\Gamma</M> acts freely, and <M>\Gamma</M>-equivariant inclusion
-<M>\partial \tilde X^{BS} \hookrightarrow \tilde X^{BS}</M>. The definition of cuspidal cohomology that we use, which coincides with the above definition when working over <M>\mathbb C</M>, is
-<Display> H_{cusp}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde X^{BS}), A)\,   ) \rightarrow
-H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).</Display>
+by working with a contractible CW-complex  -->
+
+	Working directly with the chain inclusion <M>C_\ast (\partial X^{BS}) \hookrightarrow
+		C_\ast (X^{BS})</M> would mean  handling chain groups
+			that are not free <M> SL_2(\mathbb Z)</M>-modules due the cyclic
+				torsion subgroups groups in <M>SL_2(\mathbb Z)</M>. This can be done using regular CW-complexes, but here we   avoid the
+					technicality by   
+ opting to
+ work with a contractible CW-complex
+
+<M>\widetilde {X^{BS}}</M> on which <M>\Gamma</M> acts freely, and <M>\Gamma</M>-equivariant inclusion
+<M>\widetilde{\partial  X^{BS}} \hookrightarrow \widetilde {X^{BS}}</M>. 
+	Computations on <M>\widetilde{ X^{BS}}</M>  agree with those on <M>X^{BS}</M>
+modulo any 2- and 3-torsion.
+	The definition of interior cohomology that we use, which coincides with the above definition when working over <M>\mathbb C</M>, is
+<Display> H_{!}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\widetilde {X^{BS}}), A)\,   ) \rightarrow
+	H^n(\ {\rm Hom}_{\, \mathbb  Z\Gamma}(C_\ast(\widetilde {\partial X^{BS}}), A)\, \ ).</Display>
 <P/>The following data is recorded and, using perturbation theory, is  combined
- with free resolutions for <M>C_4</M> and <M>C_6</M> to constuct <M>\tilde X^{BS}</M>.
+	with free resolutions for <M>C_4</M> and <M>C_6</M> to constuct <M>C_\ast(\widetilde {X^{BS}})</M>. The subchain complex <M>C_\ast(\widetilde {\partial X^{BS}})</M> is obtained by restricting the construction to cells <M>e^0_2</M> and <M>e^1_3</M>
  
 <P/><Alt Only="HTML">&lt;img src="images/filename-2.png" align="center" width="450" alt="Borel-Serre compactified fundamental domain in the upper-half plane"/>
 </Alt>
 
 <P/>
 The following commands calculate
-<Display>H^1_{cusp}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .</Display>
+<Display>H^1_{!}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .</Display>
 <Example>
 <#Include SYSTEM "tutex/11.6.txt">
 </Example>
@@ -398,7 +487,7 @@ for all <M>z\in {\frak h}</M>. The form <M>f</M> is a cusp form if <M>a_0=0</M>.
  basis for the space <M>S_2(\Gamma_0(N))</M> of cusp
  forms by computing eigenvalues for Hecke operators. 
 
-<P/> Suppose that we would like a basis for <M>S_2(\Gamma_0(11))</M>. The following commands first show that <M>H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z</M> from which we deduce that <M>S_2(\Gamma_0(11)) =\mathbb C</M> is <M>1</M>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of 
+<P/> Suppose that we would like a basis for <M>S_2(\Gamma_0(11))</M>. The following commands first show that <M>H^1_{!}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z</M> from which we deduce that <M>S_2(\Gamma_0(11)) =\mathbb C</M> is <M>1</M>-dimensional and thus admits a basis of eigenforms. Then eigenvalues of 
 Hecke operators are calculated to establish that the modular form
 <Display>f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots </Display>
 constitutes a basis for <M>S_2(\Gamma_0(11))</M>. 

@@ -4,7 +4,7 @@
 InstallGlobalFunction(ResolutionFiniteSubgroup,
 function(arg)
 local 
-		R,gensG,gensK,
+		R, S, gensG, gensK,
 		DimensionR, BoundaryR, HomotopyR, EltsG,
 		Dimension, Boundary, BoundaryRec, Homotopy, EltsK,
 		G, K, TransK, sK, 
@@ -20,7 +20,6 @@ fi;
 				#gensG and gensK originally had to be
 				#generating sets. Later I allowed them to be
 				#the groups G, K themselves. Sloppy!
-
 DimensionR:=R!.dimension;
 BoundaryR:=R!.boundary;
 HomotopyR:=R!.homotopy;
@@ -30,12 +29,6 @@ EltsG:=R!.elts;
 if IsList(gensG) then G:=Group(gensG); else G:=gensG; fi;
 if IsList(gensK) then K:=Group(gensK); else K:=gensK; fi;
 if Size(G)=Length(EltsG) then FIN:=true; else FIN:= false; fi;
-
-##Non free resolutions treaded separately
-if IsHapNonFreeResolution(R) then
-return ResolutionFiniteSubgroup_NonFree(R,K);
-fi;
-##
 
 if FIN then 
    if IsPseudoList(EltsG) then EltsK:=EltsG;
@@ -205,7 +198,7 @@ fi;
 end;
 ######################
 
-return Objectify(HapResolution,
+S:=Objectify(HapResolution,
 	     rec(
 	     dimension:=Dimension,
 	     boundary:=Boundary,
@@ -219,7 +212,57 @@ return Objectify(HapResolution,
 	      ["characteristic",EvaluateProperty(R,"characteristic")],
 	      ["reduced",false],
 	      ["type","resolution"] ]));
+
+if IsHapNonFreeResolution(R) then
+#Add the stabilizer and action components
+S:=ResolutionFiniteSubgroup_NonFreeResolution(R,S);
+fi;
+
+return S;
 end);
 #####################################################################
 
 
+#####################################################################
+InstallGlobalFunction(ResolutionFiniteSubgroup_NonFreeResolution,
+function(K,S)
+local Stabilizer, Action, id;
+
+id:=Position(S!.elts,One(K!.elts[1]));
+if id=fail then Add(S!.elts,One(K!.elts[1])); id:=Length(S!.elts); fi;
+
+##################################
+Stabilizer:=function(n,k)
+local x, H, g;
+x:=S!.Int2Pair(k);
+H:=K!.stabilizer(n,x[1]);
+g:=K!.elts[x[2]];
+return H^g;
+end;
+##################################
+
+##################################
+Action:=function(n,k,g);
+return 1;
+end;
+##################################
+
+
+return Objectify(HapNonFreeResolution,
+             rec(
+             dimension:=S!.dimension,
+             boundary:=S!.boundary,
+             homotopy:=S!.homotopy,
+             elts:=S!.elts,
+             group:=S!.group,
+             Int2Pair:=S!.Int2Pair,
+             transversal:=S!.transversal,
+             action:=Action,
+             stabilizer:=Stabilizer,
+             properties:=
+             [["length",EvaluateProperty(S,"length")],
+              ["characteristic",EvaluateProperty(S,"characteristic")],
+              ["reduced",false],
+              ["type","resolution"] ]));
+end);
+######################################################################

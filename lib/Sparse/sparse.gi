@@ -158,7 +158,8 @@ M!.heads:=[]; ;
 # i = M!.heads[j] is the number of the row whose first non-zero entry
 # is in column j.
 
-V:=[1..M!.rows];
+V:=[1..M!.rows];    #THE LIST V SHOULD PROBABLY BE SORTED BY ROW LENGTH
+#SortBy(V,i->Length(M!.mat[i])); #causes error in persistent homology
 
 for i in V do
 if IsBound(M!.mat[i]) then

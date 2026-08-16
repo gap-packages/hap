@@ -383,17 +383,18 @@ function(n,m)
     end;
 
     ProjPlane := FiniteProjectivePlane(m);
-    CosetPos := function(g)
-        local v, vv, u, w;
-        v := [g[1][1], g[2][1], g[3][1]];
-        vv := List(v, x -> x mod m);
+    CosetPos := function(g)   
+        local  vv, u, w;
+        vv := [g[1][1], g[2][1], g[3][1]];
+        Apply(vv, x -> x mod m);
         #U := Units(Integers mod m);
         for u in G!.Units do
             #w := List(vv, x -> (Int(u)*x) mod m);
-            w := List(vv, x -> (u*x) mod m);
-            if w in ProjPlane.Reps then
-                return Position(ProjPlane.Reps,w);
-            fi;
+            w:=1*vv;                               #
+            Apply(w, x -> (u*x) mod m) ;           #time consuming and could
+            if w in ProjPlane.Reps then            #be speeded up!  (Graham)
+                return Position(ProjPlane.Reps,w); #
+            fi;                                    #
         od;
     end;
 #    CosetRep := function(i)    #Should input a group element

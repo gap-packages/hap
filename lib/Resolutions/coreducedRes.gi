@@ -321,6 +321,9 @@ end;
 Homotopy:=function(n,x)
 if not n in [N-1,N,N+1] then return R!.homotopy(n,x); fi;
 if x[1]>0 then 
+if n>1 then 
+Print("Warning: there is a bug in the contracting homotopy.\n");
+fi;
 if n=N-1 then return HmtpyNminus1[x[1]][x[2]]; fi;
 if n=N then return HmtpyN[x[1]][x[2]]; fi;
 if n=N+1 then return HmtpyNplus1[x[1]][x[2]]; fi;

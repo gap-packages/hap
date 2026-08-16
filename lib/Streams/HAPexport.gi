@@ -132,3 +132,57 @@ AppendTo(file,";\n\n");
 
 end);
 #####################################################################
+
+#####################################################################
+InstallOtherMethod(HAPPrintTo,
+      "Method for writing HAP sparse chain complexes to a file",
+        [IsString,IsHapSparseChainComplex],
+
+function(file,R)
+local n,k,g,AppendTo,PrintTo;
+
+AppendTo:=HAP_AppendTo;
+PrintTo:=HAP_PrintTo;
+
+#Create a gap function
+PrintTo(file,"HAPTEMPORARYFUNCTION:=function() local TYPE, RANKS, HIGHEST_DEGREE, BOUNDARIES, SPECIAL_PROPERTIES;\n\n");
+#Export type of HAP object 
+AppendTo(file,"TYPE:=\nHapSparseChainComplex;\n\n");
+
+#Export length of chain complex 
+AppendTo(file,"HIGHEST_DEGREE:= \n");
+AppendTo(file,Length(R),";\n\n");
+
+#Export ranks of the chain complex in each degree.
+AppendTo(file,"RANKS:=\n");
+AppendTo(file,List([0..Length(R)],i->R!.dimension(i)),";\n\n");
+
+#Export boundary words
+AppendTo(file,"#BOUNDARIES[n][k] is the boundary of the kth free generator in degree n\n");
+
+AppendTo(file,"BOUNDARIES:=","\n[\n");
+for n in [1..Length(R)] do
+AppendTo(file,"#Degree ", n,"\n","[\n\n"  );
+for k in [1..R!.dimension(n)] do
+AppendTo(file,R!.boundary(n,k));
+if k<R!.dimension(n) then AppendTo(file,",\n\n");
+else AppendTo(file,"\n\n");
+fi;
+od;
+if n<Length(R) then
+AppendTo(file,"],\n\n");
+else
+AppendTo(file,"]\n];\n\n");
+fi;
+od;
+
+#Export special properties of the resolution
+AppendTo(file,"SPECIAL_PROPERTIES:=\n", R!.properties,";\n\n");
+
+
+AppendTo(file, "return rec( type:=TYPE, highest_degree:=HIGHEST_DEGREE, ranks:=RANKS, boundaries:=BOUNDARIES, special_properties:=SPECIAL_PROPERTIES);\n\n");
+
+AppendTo(file,"end;\n");
+end);
+#####################################################################
+

@@ -178,7 +178,7 @@ return ActionRecord[n+1][abk][g];
 end;
 ####################
 
-if name="SL2Z" then G:=SL(2,Integers); fi;
+if name="SL2Z" or name="BorelSerreSL2Z" or name="BorelSerreBoundarySL2Z" then G:=SL(2,Integers); fi;
 if name="SL3Zs" or name="SL3Za" then G:=SL(3,Integers); fi;
 if name="SL4Z" or name="SL4Z_b" or name="SL4Z_c" or name="SL4Z_d" then G:=SL(4,Integers); fi;
 SetName(G,"matrix group");

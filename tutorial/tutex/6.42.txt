@@ -1,0 +1,25 @@
+
+gap> K:=ContractibleGcomplex("SL(3,Z)a");;
+gap> V:=DualComplex(K);;
+gap> R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution
+gap> G:=HAPCongruenceSubgroupGamma0(3,501);;
+gap> S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution
+gap> C:=TensorWithIntegersSparse(S);;
+gap> for r in [1..200] do   #careful step-by-step reduction of the complex C
+> C:=ContractedComplexViaChild(C,r);;
+> od;
+
+gap> Homology(C,0);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 14, 14, 14, 14, 
+  503725266059082802220487559469426575158, 
+  503725266059082802220487559469426575158, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+gap> Factors(503725266059082802220487559469426575158);
+[ 2, 3, 7, 773, 191249, 81127067460894029326373198387 ]

@@ -1,5 +1,18 @@
 #(C) Graham Ellis
 
+#####################################################################
+#####################################################################
+InstallOtherMethod(EulerCharacteristic,
+"Euler characteristic  of a regular CW complex",
+[IsHapRegularCWComplex],
+function(M)
+return
+Sum(List([0..Dimension(M)],i->((-1)^i)*M!.nrCells(i)));
+end);
+#####################################################################
+#####################################################################
+
+
 ######################################
 ######################################
 InstallGlobalFunction(RegularCWCellClosure,

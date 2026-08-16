@@ -1,3 +1,6 @@
+MakeReadWriteGlobal("HAP_transversalmethodtoggle");
+HAP_transversalmethodtoggle:=true;;
+MakeReadOnlyGlobal("HAP_transversalmethodtoggle");
 
 ############################################################
 ############################################################
@@ -5,12 +8,17 @@ InstallMethod(RightTransversal,
 "right transversal for finite index subgroups of SL(2,Integers)",
 [IsMatrixGroup,IsMatrixGroup],
 function(H,HH);
-if not ( IsHapSL2ZSubgroup(H) or IsHapSL2ZSubgroup(HH)) then TryNextMethod(); fi;
+if not ( IsHapSL2ZSubgroup(H) or IsHapSL2ZSubgroup(HH)) then 
+   TryNextMethod(); 
+fi;
 if H=SL(2,Integers) then
-#return HAP_RightTransversalSL2ZSubgroups_alt(H,HH); #Works surprisingly well!
-return HAP_TransversalCongruenceSubgroupInAmbientGroup(H,HH);
+   if HAP_transversalmethodtoggle then
+       return HAP_TransversalCongruenceSubgroupInAmbientGroup(H,HH);
+   else
+       return HAP_RightTransversalSL2ZSubgroups_alt(H,HH); #Works well!
+   fi;
 else
-return HAP_RightTransversalSL2ZSubgroups(H,HH);
+   return HAP_RightTransversalSL2ZSubgroups(H,HH);
 fi;
 end);
 ############################################################

@@ -283,8 +283,8 @@ local  bound, x, i;
 if n <0 then return false; fi;
 if n=0 then return []; fi;
 
-#if not IsBound(BoundaryRec[n][k]) then 
-if true then 
+if not IsBound(BoundaryRec[n][k]) then 
+#if true then 
 bound:=StructuralCopy(R!.boundary(n,k));
 Apply(bound,x->[x[1],1]);
 bound:=AlgebraicReduction(bound);

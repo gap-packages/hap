@@ -1,0 +1,19 @@
+gap> K:=ContractibleGcomplex("BorelSerreSL2Z");;
+gap> K:=BarycentricSubdivision(K);;
+gap> dK:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;
+gap> dK:=BarycentricSubdivision(dK);;
+ 
+gap> gamma:=HAP_PrincipalCongruenceSubgroup(5);;
+gap> Y:=GComplexToRegularCWComplex(K,gamma);;
+gap> dY:=GComplexToRegularCWComplex(dK,gamma);;
+gap> EulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface
+2
+ 
+gap> gamma:=HAP_CongruenceSubgroupGamma0(13);;
+gap> Y:=GComplexToRegularCWComplex(K,gamma);;
+gap> dY:=GComplexToRegularCWComplex(dK,gamma);;
+gap> EulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface
+2
+
+gap> genus:=0;; EulerCharacteristic(ClosedSurface(genus));
+2

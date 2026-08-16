@@ -1,6 +1,10 @@
-InstallGlobalFunction(CuspidalCohomologyHomomorphism,
+InstallGlobalFunction(InteriorCohomologyHomomorphism,
 function(arg) 
 local H,N,A,P,R,S,B,RB,SB,T,ShomT,f,eqmap,t,fn,mapping,eqmap2,cmap,cmap1,cmap2, k,c;
+
+MakeReadWriteGlobal("HAP_transversalmethodtoggle");
+HAP_transversalmethodtoggle:=false;;  #change transversal method
+MakeReadOnlyGlobal("HAP_transversalmethodtoggle");
 
 H:=arg[1];
 N:=arg[2];
@@ -11,12 +15,12 @@ Print("The forms must be of weight k>=0.\n");
 return fail;
 fi;
 
-P:=ContractibleGcomplex("bsSL2Z");;
+P:=ContractibleGcomplex("BorelSerreSL2Z");;
 R:=FreeGResolution(P,N+1);;
 R!.group:=HAP_CongruenceSubgroupGamma0(1);   #Dec 2025
 S:=ResolutionFiniteSubgroup(R,H);;
 
-B:=ContractibleGcomplex("bsSL2Ztmp");;B!.group:=P!.group;;
+B:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;B!.group:=P!.group;;
 RB:=FreeGResolution(B,N+1);;
 RB!.group:=R!.group;     #Dec 2025
 SB:=ResolutionFiniteSubgroup(RB,H);;
@@ -55,5 +59,10 @@ cmap2:=HomToIntegralModule(eqmap2,A);
 cmap:=Compose(cmap1,cmap2);
 #return cmap;
 c:=Cohomology(cmap,N);
+
+MakeReadWriteGlobal("HAP_transversalmethodtoggle");
+HAP_transversalmethodtoggle:=true;;  #change transversal method
+MakeReadOnlyGlobal("HAP_transversalmethodtoggle");
+
 return c;
 end);

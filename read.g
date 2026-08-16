@@ -170,6 +170,7 @@ ReadPackageHap( "lib/Resolutions/barComplexMonoid.gi");
 ReadPackageHap( "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackageHap( "lib/Resolutions/presentation.gi");
 ReadPackageHap( "lib/Resolutions/resSubgroup.gi");
+ReadPackageHap( "lib/Resolutions/resSubgroupNonFree.gi");
 ReadPackageHap( "lib/Resolutions/resInfSubgroup.gi");
 ReadPackageHap( "lib/Resolutions/resGeneric.gi");
 ReadPackageHap( "lib/Resolutions/tietzered.gi");

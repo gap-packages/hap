@@ -258,7 +258,8 @@ return Objectify(HapNonFreeResolution,
     properties:=
     [["length",Maximum(1000,N)],
     ["characteristic",0],
-    ["type","resolution"]]  ));
+    ["type","resolution"],
+    ["rigid",true]]  ));
 end);
 
 
