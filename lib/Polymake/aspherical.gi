@@ -18,19 +18,9 @@ local
 	EqualitiesVec,
 	InEqualities,
 	InEqSizes,
-	Polymake,
-        tmpdir, tmpin, tmpodir, tmpout,
+	TestFeasible,
         L,r,
-        AppendTo, PrintTo,
 	R,Redges,V,ii,bol, sm, i,x,row,n,m,M;
-
-AppendTo:=HAP_AppendTo;
-PrintTo:=HAP_PrintTo;
-
-tmpdir := DirectoryTemporary();;
-tmpin:=Filename( tmpdir , "tmpIn.log" );
-tmpodir := DirectoryTemporary();;
-tmpout:=Filename( tmpdir , "tmpOut.log" );
 
 if Length(arg)=2 then F:=arg[1]; Frels:=arg[2]; fi;
 if Length(arg)=1 then
@@ -155,51 +145,36 @@ fi;
 od;
 
 #####################################################################
-Polymake:=function()
-local V, i, x, input;
+TestFeasible:=function()
+local poly, n, equations, inequalities;
 
-AppendTo(tmpin,"EQUATIONS","\n");
+n:=Length(InEqualities[1]);
 
-for i in [1..Length(EqualitiesMat)] do
-AppendTo(tmpin,-EqualitiesVec[i]," ");
-for x in [1..Length(EqualitiesMat[1])] do
-AppendTo(tmpin,EqualitiesMat[i][x]," ");
-od;
-AppendTo(tmpin,"\n");
-od;
+equations:=List([1..Length(EqualitiesMat)],
+                i->Concatenation([-EqualitiesVec[i]],EqualitiesMat[i]));
 
-AppendTo(tmpin,"\n","INEQUALITIES","\n");
+# every generator is asked for at least 2, and for at least 0 individually
+inequalities:=Concatenation(
+        List(InEqualities,row->Concatenation([-2],row)),
+        List(IdentityMat(n),row->Concatenation([0],row)));
 
-for i in [1..Length(InEqualities)] do
-AppendTo(tmpin,-2," ");
-for x in [1..Length(InEqualities[1])] do
-AppendTo(tmpin,InEqualities[i][x]," ");
-od;
-AppendTo(tmpin,"\n");
-od;
+poly:=CreatePolymakeObject();
+if Length(equations)>0 then
+    # polymaking 0.8 has no method taking a matrix for a section it does not
+    # know by name, so EQUATIONS has to go through a string; the rest of this
+    # uses the higher level methods, which both versions provide
+    AppendToPolymakeObject(poly,
+            ConvertMatrixToPolymakeString("EQUATIONS",equations));
+fi;
+AppendInequalitiesToPolymakeObject(poly,inequalities);
 
-for i in [1..Length(InEqualities[1])] do
-AppendTo(tmpin,0," ");
-for x in [1..Length(InEqualities[1])] do
-if i=x then AppendTo(tmpin,1," ");
-else  AppendTo(tmpin,0," "); fi;
-od;
-AppendTo(tmpin,"\n");
-od;
-
-Exec(Concatenation(POLYMAKE_COMMAND, " ", "'my $c=load(\"",tmpin,"\"); print $c-> FEASIBLE;' > ",tmpout));
-Exec(Concatenation("rm ",tmpin));
-input := InputTextFile(tmpout);
-x:=ReadLine(input);
-Exec(Concatenation("rm ",tmpout));
-
-return x;
+return Polymake(poly,"FEASIBLE");
 end;
 #####################################################################
 
-x:= Polymake();
+x:= TestFeasible();
 
-if x="true" then
+if x=true then
 Print("Presentation is aspherical.\n\n"); return true;
 else
 Print("Test inconclusive.\n\n");
