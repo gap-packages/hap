@@ -5176,25 +5176,25 @@ Z_{12} \oplus \mathbb Z_{240}, &n=3\\ \mathbb Z_2 \oplus \mathbb Z_2 \oplus
   [ 2, 2, 2, 2, 2, 2, 2 ]
   
 \end{Verbatim}
- For the congruence subgroup $\Gamma_0(31) < SL_3(\mathbb Z)$ the following example computes 
+ For the congruence subgroup $\Gamma_0(101) < SL_3(\mathbb Z)$ the following example computes 
 
-$H_n(\Gamma_0(31),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{30}, & n=1\\
-(\mathbb Z_2)^8, &n=2\\ (\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus
-\mathbb Z^4, & n=3 \ . \end{array}\right.$ 
+$H_n(\Gamma_0(101),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{100}, &
+n=1\\ (\mathbb Z_2)^{15}\oplus (\mathbb Z_4)^4, &n=2\\ (\mathbb Z_4)^2 \oplus
+(\mathbb Z_{12})^2 \oplus \mathbb Z^{16}, & n=3 \ . \end{array}\right.$ 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   	
-  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,31);;|
+  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,101);;|
   !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(3,Z)a");;|
   !gapprompt@gap>| !gapinput@R:=FreeGResolution(K,4);;|
   !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,G);;|
   !gapprompt@gap>| !gapinput@C:=TensorWithIntegers(S);;|
   !gapprompt@gap>| !gapinput@D:=ContractedComplex(C);;|
   !gapprompt@gap>| !gapinput@Homology(D,1);|
-  [ 30 ]
+  [ 100 ]
   !gapprompt@gap>| !gapinput@Homology(D,2);|
-  [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4 ]
   !gapprompt@gap>| !gapinput@Homology(D,3);|
-  [ 6, 6, 12, 12, 0, 0, 0, 0 ]
+  [ 4, 4, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   
 \end{Verbatim}
  In the preceding code $K$ is a representation of a $3$\texttt{\symbol{45}}dimensional contractible regular
@@ -5214,19 +5214,217 @@ Each hexagonal $2$\texttt{\symbol{45}}cell is incident with three $3$\texttt{\sy
   
 
 The command \texttt{Y:=GComplexToFiniteRegularCWRegion(K,r)} returns a 'ball of radius $r$' in the contractible CW\texttt{\symbol{45}}complex represented by $K$ for any integer $r\ge 0$. The ball is returned as a finite regular CW\texttt{\symbol{45}}complex. For
-instance, the following code constructs a ball of radius $r=6$ and builds a contracting disctete vector field on this ball. The component \texttt{Y!.G{\textunderscore}Cells[n+1][k]} returns a pair $[e,g]$ with integer $e$ specifying a representative of an orbit of $n$\texttt{\symbol{45}}cells in $K$ and $g$ an element in $SL(3,\mathbb Z)$ such that the $k$th $n$\texttt{\symbol{45}}cell of $Y$ corresponds to $g.e$ . 
+instance, the following code constructs a ball of radius $r=7$ and builds a contracting disctete vector field on this ball. The component \texttt{Y!.G{\textunderscore}Cells[n+1][k]} returns a pair $[e,g]$ with integer $e$ specifying a representative of an orbit of $n$\texttt{\symbol{45}}cells in $K$ and $g$ an element in $SL(3,\mathbb Z)$ such that the $k$th $n$\texttt{\symbol{45}}cell of $Y$ corresponds to $g.e$ . 
 \begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
           
   @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(3,Z)a");;A
-  @gapprompt|gap>A @gapinput|Y:=GComplexToFiniteRegularCWRegion(K,6);;A
+  @gapprompt|gap>A @gapinput|Y:=GComplexToFiniteRegularCWRegion(K,7);;A
   @gapprompt|gap>A @gapinput|Size(Y); #number of cells in YA
-  15328275
+  90537003
   @gapprompt|gap>A @gapinput|Y!.nrCells(3); #number of 3-cells in YA
-  792577
+  4729285
   @gapprompt|gap>A @gapinput|CriticalCells(Y);A
-  [ [ 0, 3116128 ] ]
+  [ [ 0, 18456062 ] ]
   
 \end{Verbatim}
+ 
+
+Further details on computing with Arithmetic groups can be found in Chapters \ref{chap:Congruence}, \ref{chap:Bianchi} . 
+\subsection{\textcolor{Chapter }{Rational cohomology}}\logpage{[ 7, 4, 1 ]}
+\hyperdef{L}{X8479883784E4F02E}{}
+{
+ To compute the rational homology of an arithmetic group such as $G=SL_n(\mathbb Z)$ one can work directly with the well\texttt{\symbol{45}}rounded retract $K$ on which $G$ acts with finite stabilizers. The following computes the rational cohomology 
+
+$H^n(SL_4(\mathbb Z),\mathbb Q)= \left\{ \begin{array}{ll} \mathbb Q & n=0,3\\
+0 & {\rm otherwise}. \end{array}\right.$ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+          
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(4,Z)");;|
+  !gapprompt@gap>| !gapinput@C:=HomToRationals(K);;|
+  !gapprompt@gap>| !gapinput@List([0..6],i->Cohomology(C,i));|
+  [ 1, 0, 0, 1, 0, 0, 0 ]
+  
+\end{Verbatim}
+ For $\nu$ the virtual cohomological dimension of $G=SL_n(\mathbb Z)$ there is an isomorphism 
+
+$H^{\nu-k}(SL_n(\mathbb Z),\mathbb Z) \cong H_k(SL_n(\mathbb Z),St_n
+\otimes_{\mathbb Z} \mathbb Z)$ 
+
+ where $St_n$ is the Steinberg module for $G$. This means that computations on the cohomology of $G$ can be performed using a resolution $V_\ast$ of the $\mathbb ZG$\texttt{\symbol{45}}module $St_n$. 
+
+ Recall that in general a group $G$ is said to be a duality group, of dimension $n\ge 0$, with respect to a right $G$\texttt{\symbol{45}}module $S$ if there is an element $e\in H_n(G,S)$ such that the cap\texttt{\symbol{45}}product with $e$ induces isomorphisms $H^k(G,A) \cong H_{n-k}(G,S\otimes A)$ for all integers $k$ and all left $G$\texttt{\symbol{45}}modules $A$. A group $G$ has a dualizing module $S$ if $\mathbb Z$ admits a finite length projective $\mathbb ZG$\texttt{\symbol{45}} resolution $R_\ast$ and two sufficient conditions hold: (a) $H^k(G,\mathbb ZG)=0$ for $k\ne n$; (b) $H^n(G,\mathbb ZG)$ is torsion free. Then $S\cong H^n(G,\mathbb ZG)$ as $G$\texttt{\symbol{45}}modules. A resolution for $S$ is given by $V_\ast =Hom_{\mathbb ZG}(R_\ast,\mathbb ZG)$. 
+
+ If one is interested in computing only the rational cohomology of finite index
+subgoups of $SL_n(\mathbb Z)$ then it suffices to use the non free chain complex $V_\ast = {\rm Hom}^c_{\mathbb Z}(C_\ast(K),\mathbb Z)$ where $K$ is a well\texttt{\symbol{45}}rounded retract and $C_\ast(K)$ its cellular chain complex and ${\rm Hom}^c_{\mathbb Z}(C_n(K),\mathbb Z)$ is the group of those $\mathbb Z$\texttt{\symbol{45}}linear homomorphisms $C_n(K) \rightarrow \mathbb Z$ having finite support (i.e. trivial on all but finitely many basis elements). 
+
+ For $G=SL_4(\mathbb Z)$ we have $\nu=6$. The following commands construct a non free $V_\ast$ and compute $H_k(V_\ast \otimes_{\mathbb ZG} \mathbb Q)$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+          
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(4,Z)");;|
+  !gapprompt@gap>| !gapinput@V:=DualComplex(K);;|
+  !gapprompt@gap>| !gapinput@D:=TensorWithRationals(V);;|
+  !gapprompt@gap>| !gapinput@List([0..6],i->Homology(D,i));|
+  [ 0, 0, 0, 1, 0, 0, 1 ]
+  
+\end{Verbatim}
+ For $G=SL_3(\mathbb Z)$ we have $\nu = 3$. The following commands use a resolution of the Steinberg module to compute
+the top rational cohomology 
+
+$H^3(\Gamma_0(501),\mathbb Q) \cong \mathbb Q^{140}$ 
+
+ for the congruence subgroup $\Gamma_0(501) < SL_3(\mathbb Z)$. Furthermore, since any torsion element in $SL_3(\mathbb Z)$ has order dividing $24$, these commands also establish that the $p$\texttt{\symbol{45}}primary part of the third integral cohomology is 
+
+$H^3(\Gamma_0(501),\mathbb Z)_{(7)} \cong \mathbb Z_7 \oplus \mathbb Z_7 \oplus
+\mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \ \ $ , 
+
+$H^3(\Gamma_0(501),\mathbb Z)_{(p)} \cong \mathbb Z_p \oplus \mathbb Z_p \ \ $ for primes $p=7, 773, 191249, 81127067460894029326373198387$. 
+
+The $p$\texttt{\symbol{45}}part is trivial for all other primes $p > 3$. The computation does not determine the $2$\texttt{\symbol{45}}part or $3$\texttt{\symbol{45}}part. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+          
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(3,Z)a");;|
+  !gapprompt@gap>| !gapinput@V:=DualComplex(K);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution|
+  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,501);;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegersSparse(S);;|
+  !gapprompt@gap>| !gapinput@for r in [1..200] do   #careful step-by-step reduction of the complex C|
+  !gapprompt@>| !gapinput@C:=ContractedComplexViaChild(C,r);;|
+  !gapprompt@>| !gapinput@od;|
+  
+  !gapprompt@gap>| !gapinput@Homology(C,0);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 14, 14, 14, 14, 
+    503725266059082802220487559469426575158, 
+    503725266059082802220487559469426575158, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+  !gapprompt@gap>| !gapinput@Factors(503725266059082802220487559469426575158);|
+  [ 2, 3, 7, 773, 191249, 81127067460894029326373198387 ]
+  
+\end{Verbatim}
+ The group $\Gamma_0(501)$ is of index $364741$ in $SL_3(\mathbb Z)$. The above computation uses \texttt{ContractedComplexViaChild(C,r)} which creates a child process, calls \texttt{ContractibleComplex(C,r)} in the child, and then kills the child. This provides a simple method for
+avoiding the build\texttt{\symbol{45}}up of unnecessarily retained data in
+memory caused by the current naive implementation of the function \texttt{ContractibleComplex(C,r)}. The initial version of the chain complex $C=C_\ast$ has $C_0=\mathbb Z^{364741}$ while the quasi\texttt{\symbol{45}}isomorphic version of this complex after $r=200$ reduction attempts has $C_0=\mathbb Z^{741}$. 
+
+ A similar computation gives: 
+
+$H^3(\Gamma_0(601),\mathbb Q) \cong \mathbb Q^{98}$, 
+
+$H^3(\Gamma_0(601),\mathbb Z)_{(p)} \cong \mathbb Z_p \oplus \mathbb Z_p \ \ $ for primes $p=37, 175829261, 1011757163379728699885049667755467$, 
+
+$H^3(\Gamma_0(601),\mathbb Z)_{(p)} \cong 0 \ \ $ for all other primes $p> 3$. 
+
+Also 
+
+$H^3(\Gamma_0(701),\mathbb Q) \cong \mathbb Q^{116}$, 
+
+$H^3(\Gamma_0(701),\mathbb Z)_{(p)} \cong \mathbb Z_p \oplus \mathbb Z_p \ \ $ for primes $p= 5, 7, 13, 113, 541, 23867527870278363301,
+406535606513108747882997061430663240539$, 
+
+$H^3(\Gamma_0(701),\mathbb Z)_{(p)} \cong 0 \ \ $ for all other primes $p> 3$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+          
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(3,Z)a");;|
+  !gapprompt@gap>| !gapinput@V:=DualComplex(K);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution|
+  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,601);;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegersSparse(S);;|
+  !gapprompt@gap>| !gapinput@for r in [1..200] do   #careful step-by-step reduction of the complex C|
+  !gapprompt@>| !gapinput@C:=ContractedComplexViaChild(C,r);;|
+  !gapprompt@>| !gapinput@od;|
+  
+  !gapprompt@gap>| !gapinput@Homology(C,0);|
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 24, 
+    157972104741480396196975812410408490692059656, 
+    157972104741480396196975812410408490692059656, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+  !gapprompt@gap>| !gapinput@Factors(157972104741480396196975812410408490692059656);|
+  [ 2, 2, 2, 3, 37, 175829261, 1011757163379728699885049667755467 ]
+  
+\end{Verbatim}
+ 
+
+ {\nobreakspace} 
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+          
+  
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(3,Z)a");;|
+  !gapprompt@gap>| !gapinput@V:=DualComplex(K);;|
+  !gapprompt@gap>| !gapinput@R:=FreeGResolution(V,1);; #first two terms of a free SL(3,Z)-resolution|
+  !gapprompt@gap>| !gapinput@G:=HAPCongruenceSubgroupGamma0(3,701);;|
+  !gapprompt@gap>| !gapinput@S:=ResolutionFiniteSubgroup(R,G);; #first two terms of a free G-resolution|
+  !gapprompt@gap>| !gapinput@C:=TensorWithIntegersSparse(S);;|
+  !gapprompt@gap>| !gapinput@for r in [1..200] do   #careful step-by-step reduction of the complex C|
+  !gapprompt@>| !gapinput@C:=ContractedComplexViaChild(C,r);;|
+  !gapprompt@>| !gapinput@od;|
+  
+  Homology(C,0);
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6, 6, 6, 6, 6, 18, 18, 18, 18, 
+    14574272748332562519126602132425986851137745473252230639812547826590, 
+    14574272748332562519126602132425986851137745473252230639812547826590, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+  !gapprompt@gap>| !gapinput@Factors(14574272748332562519126602132425986851137745473252230639812547826590);|
+  [ 2, 3, 3, 3, 5, 7, 13, 113, 541, 23867527870278363301, 
+    406535606513108747882997061430663240539 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{Mod\texttt{\symbol{45}}$q$ cohomology}}\logpage{[ 7, 4, 2 ]}
+\hyperdef{L}{X841369EB849AF695}{}
+{
+ For a congruence subgroup $G$ of an arithmetic group such as $SL_n(\mathbb Z)$ and positive integer $q$ coprime to the order of any torsion element in $G$ one can again work directly with the well\texttt{\symbol{45}}rounded retract $K$ in order to compute $H^\ast(G,\mathbb Z/q\mathbb Z)$. 
+
+For instance, for $G=\Gamma_0(11) < SL_3(\mathbb Z)$ the following computes the cohomology ring $H^\ast(\Gamma_0(11),\mathbb Z/5\mathbb Z)$ and shows it to be a $5$\texttt{\symbol{45}}dimensional algebra with non\texttt{\symbol{45}}trivial
+product. 
+\begin{Verbatim}[commandchars=@|E,fontsize=\small,frame=single,label=Example]
+          
+  @gapprompt|gap>E @gapinput|K:=ContractibleGcomplex("SL(3,Z)s");;E
+  @gapprompt|gap>E @gapinput|G:=HAPCongruenceSubgroupGamma0(3,11);;E
+  @gapprompt|gap>E @gapinput|Y:=GComplexToRegularCWComplex(K,G);;E
+  @gapprompt|gap>E @gapinput|Y:=SimplifiedComplex(Y);;E
+  @gapprompt|gap>E @gapinput|R:=CohomologyRing(Y,5);E
+  <algebra of dimension 5 over GF(5)>
+  @gapprompt|gap>E @gapinput|B:=CanonicalBasis(R);;E
+  @gapprompt|gap>E @gapinput|List(B,R!.degree); #degrees of basis elementsE
+  [ 0, 1, 2, 3, 3 ]
+  @gapprompt|gap>E @gapinput|A:=NullMat(5,5);;E
+  @gapprompt|gap>E @gapinput|for i in [1..5] do E
+  @gapprompt|>E @gapinput|   for j in [1..5] doE
+  @gapprompt|>E @gapinput|      A[i][j]:=B[i]*B[j];E
+  @gapprompt|>E @gapinput|   od;E
+  @gapprompt|>E @gapinput|   od;E
+  @gapprompt|gap>E @gapinput|Display(A);E
+  [ [    v.1,    v.2,    v.3,    v.4,    v.5 ],
+    [    v.2,  0*v.1,    v.4,  0*v.1,  0*v.1 ],
+    [    v.3,    v.4,  0*v.1,  0*v.1,  0*v.1 ],
+    [    v.4,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ],
+    [    v.5,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ] ]
+  
+\end{Verbatim}
+ }
+
  }
 
  
@@ -8836,7 +9034,8 @@ The following commands construct the crossed module $\partial \colon G\otimes G 
  }
 
  
-\chapter{\textcolor{Chapter }{Congruence Subgroups, Cuspidal Cohomology and Hecke Operators}}\logpage{[ 13, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Congruence Subgroups, Cuspidal Cohomology and Hecke Operators}}\label{chap:Congruence}
+\logpage{[ 13, 0, 0 ]}
 \hyperdef{L}{X86D5DB887ACB1661}{}
 {
  In this chapter we explain how HAP can be used to make computions about
@@ -8937,11 +9136,7 @@ reduced words in $S$, $U$ and $U^2$ that, apart from the identity, end in $S$.
 congruence subgroups}}\logpage{[ 13, 3, 0 ]}
 \hyperdef{L}{X7D1A56967A073A8B}{}
 {
- The modular group ${\cal M}=PSL_2(\mathbb Z)$ is isomorphic, as an abstract group, to the free product $\mathbb Z_2\ast \mathbb Z_3$. By the Kurosh subgroup theorem, any finite index subgroup $M \subset {\cal M}$ is isomorphic to the free product of finitely many copies of $\mathbb Z_2$s, $\mathbb Z_3$s and $\mathbb Z$s. A subset $\underline x \subset M$ is an \emph{independent} set of subgroup generators if $M$ is the free product of the cyclic subgroups $<x >$ as $x$ runs over $\underline x$. Let us say that a set of elements in $SL_2(\mathbb Z)$ is \emph{projectively independent} if it maps injectively onto an independent set of subgroup generators $\underline x\subset {\cal M}$. The generating set $\{S,U\}$ for $SL_2(\mathbb Z)$ given in the preceding section is projectively independent. 
-
- We are interested in constructing a set of generators for a given congruence
-subgroup $\Gamma$. If a small generating set for $\Gamma$ is required then we should aim to construct one which is close to being
-projectively independent. 
+  
 
  It is useful to invoke the following general result which follows from a
 perturbation result about free $\mathbb ZG$\texttt{\symbol{45}}resolutons in \cite[Theorem 2]{ellisharrisskoldberg} and an old observation of John Milnor that a free $\mathbb ZG$\texttt{\symbol{45}}resolution can be realized as the cellular chain complex
@@ -8958,7 +9153,7 @@ Let $W$ be as in the theorem. Then the quotient CW\texttt{\symbol{45}}complex $B
 subgroup $\Gamma=\Gamma(N)$,$N>2$. In the above theorem take $X={\cal T}$ to be the cubic tree, and note that $\Gamma$ acts freely on $\cal T$ and thus that $W={\cal T}$. To determine the $1$\texttt{\symbol{45}}cells of $B_{\Gamma}\setminus T$ we need to determine a cellular subspace $D_\Gamma \subset \cal T$ whose images under the action of $\Gamma$ cover $\cal T$ and are pairwise either disjoint or identical. The subspace $D_\Gamma$ will not be a CW\texttt{\symbol{45}}complex as it won't be closed, but it can
 be chosen to be connected, and hence contractible. We call $D_\Gamma$ a \emph{fundamental region} for $\Gamma$. We denote by $\mathring D_\Gamma$ the largest CW\texttt{\symbol{45}}subcomplex of $D_\Gamma$. The vertices of $\mathring D_\Gamma$ are the same as the vertices of $D_\Gamma$. Thus $\mathring D_\Gamma$ is a subtree of the cubic tree with $|SL_2(\mathbb Z):\Gamma|/6$ vertices. For each vertex $v$ in the tree $\mathring D_\Gamma$ define $\eta(v)=3 -{\rm degree}(v)$. Then the number of generators for $ \Gamma $ will be $(1/2)\sum_{v\in \mathring D_\Gamma} \eta(v)$. 
 
- The following commands determine projectively independent generators for $\Gamma(6)$ and display $\mathring D_{\Gamma(6)}$. The subgroup $\Gamma(6)$ is free on $13$ generators. 
+ The following commands determine generators for $\Gamma(6)$ and display $\mathring D_{\Gamma(6)}$. The subgroup $\Gamma(6)$ is free on $13$ generators. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@G:=HAP_PrincipalCongruenceSubgroup(6);;|
   !gapprompt@gap>| !gapinput@HAP_SL2TreeDisplay(G);|
@@ -8978,8 +9173,9 @@ be chosen to be connected, and hence contractible. We call $D_\Gamma$ a \emph{fu
 
   
 
-An alternative but very related approach to computing generators of congruence
-subgroups of $SL_2(\mathbb Z)$ is described in \cite{kulkarni}. 
+A related approach to the problem of computing \emph{independent generators} ( = no nontrivial identities between them) of congruence subgroups of $SL_2(\mathbb Z)$ is described in \cite{kulkarni}. The principal congruence subgroup $\Gamma(N)$ is free (since it acts on a tree with trivial stabilizers) and thus any
+minimal generating set is independent. Such a generating set is returned by
+the above method. 
 
 The congruence subgroup $\Gamma_0(N)$ does not act freely on the vertices of $\cal T$, and so one needs to incorporate a generator for the cyclic stabilizer group
 according to the above theorem. Alternatively, we can replace the cubic tree
@@ -8998,10 +9194,107 @@ generators. The following commands display $\mathring D_{\Gamma_0(39)}$ for a fu
 
   
 
- Note that to compute $D_\Gamma$ one only needs to be able to test whether a given matrix lies in $\Gamma$ or not. Given an inclusion $\Gamma'\subset \Gamma$ of congruence subgroups, it is straightforward to use the trees $\mathring D_{\Gamma'}$ and $\mathring D_{\Gamma}$ to compute a system of coset representative for $\Gamma'\setminus \Gamma$. }
+ Note that to compute $D_\Gamma$ one only needs to be able to test whether a given matrix lies in $\Gamma$ or not. Given an inclusion $\Gamma'\subset \Gamma$ of congruence subgroups, it is straightforward to use the trees $\mathring D_{\Gamma'}$ and $\mathring D_{\Gamma}$ to compute a system of coset representative for $\Gamma'\setminus \Gamma$. 
+\subsection{\textcolor{Chapter }{Ambient transversals}}\logpage{[ 13, 3, 1 ]}
+\hyperdef{L}{X80DDE3077A8F64B6}{}
+{
+ For any congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ a fundamental domain for the free action of $\Gamma$ on some tree can always be computed by brute force search, but for principal
+subgroups and for $\Gamma_0(N)$ one can use theoretical descriptions of the coset space $SL_2(\mathbb Z)/\Gamma$ to vastly improve efficiency. However the fundamental domain is constructed,
+it provides and algorithm for producing a transversal of $\Gamma$ in $SL_2(\mathbb Z)$. This transversal is referred to as the \emph{ambient transversal} in the \textsc{HAP} implementation of congruence subgroups. }
+
+ }
 
  
-\section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 13, 4, 0 ]}
+\section{\textcolor{Chapter }{Independent generators}}\logpage{[ 13, 4, 0 ]}
+\hyperdef{L}{X7CA9D3F281649AD6}{}
+{
+ Once one has access to an ambient transversal for a congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ one can construct the finite regular CW\texttt{\symbol{45}}complex $Y=K/\Gamma$ where $K$ is the barycentric subdivision of the cubic tree $K=sd{\mathcal T}$. The complex $Y$ will be a graph. In order to visualize $Y$ it is better to let $K$ be the double barycenctric subdivision $K$. Every homology cycle in $Y$ gives rise to a generator of $\Gamma$ of infinite order. Every vertex of degree $1$ in $Y$ gives rise to a generator of finite order. These infinite and finite
+generators constitute an independent generating set for $\Gamma$ (i.e. there are no non\texttt{\symbol{45}}trivial relators). 
+
+For example, the following commands establish that $\Gamma(5)$ has an independent generating set consisting of $11$ generators of infinite order. They then establish that $\Gamma_0(13)$ has an independent generating set with one generator of infinite order and
+four generators of finite order. 
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@gamma:=HAP_PrincipalCongruenceSubgroup(5);;|
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(2,Z)");;|
+  !gapprompt@gap>| !gapinput@K:=BarycentricSubdivision(K);;K:=BarycentricSubdivision(K);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(K,gamma);;|
+  !gapprompt@gap>| !gapinput@Homology(Y,1);|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  !gapprompt@gap>| !gapinput@Display( GraphOfRegularCWComplex( Y ));|
+  
+\end{Verbatim}
+ 
+
+  
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(13);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(K,gamma);;|
+  !gapprompt@gap>| !gapinput@Homology(Y,1);|
+  [ 0 ]
+  !gapprompt@gap>| !gapinput@Display( GraphOfRegularCWComplex( Y ));|
+  
+\end{Verbatim}
+ 
+
+  
+
+ Explicit generators can be extracted from the CW\texttt{\symbol{45}}complex $Y$ but this has not yet been implemented as a function in HAP. However, the
+Congruence package for GAP \cite{congruence} has implemented Kulkrani's algorithm for independent generators. We find: 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@gamma:=PrincipalCongruenceSubgroup(5);; #using Congruence package|
+  !gapprompt@gap>| !gapinput@gens:=GeneratorsOfGroup(gamma);;|
+  #I  Using the Congruence package for GeneratorsOfGroup ...
+  !gapprompt@gap>| !gapinput@List(gens,Order);|
+  [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 
+    infinity, infinity, infinity, infinity ]
+  
+  !gapprompt@gap>| !gapinput@gamma:=CongruenceSubgroupGamma0(13);; #using Congruence package|
+  !gapprompt@gap>| !gapinput@gens:=GeneratorsOfGroup(gamma);;|
+  #I  Using the Congruence package for GeneratorsOfGroup ...
+  !gapprompt@gap>| !gapinput@List(gens,Order);|
+  [ infinity, 3, 4, 4, 3 ]
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Genus}}\logpage{[ 13, 5, 0 ]}
+\hyperdef{L}{X782B5219817D4816}{}
+{
+ A congruence subgroup $\Gamma\le SL_2(\mathbb Z)$ acts on the upper half plane $\frak h$ (see \ref{upperhalfplane}). The quotient ${\frak h}/\Gamma$ is a non\texttt{\symbol{45}}compact surface. Compactifying, using the
+Borel\texttt{\symbol{45}}Serre compactification, yields a closed surface with
+boundary. Filling the boundary curves with disks then yields a closed surface
+without boundary. The genus of this surface is by definition the \emph{genus} of $\Gamma$. 
+
+ The following computes the genus of $\Gamma(5)$ to be 0 and also the genus of $\Gamma_0(13)$ to be 0. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("BorelSerreSL2Z");;|
+  !gapprompt@gap>| !gapinput@K:=BarycentricSubdivision(K);;|
+  !gapprompt@gap>| !gapinput@dK:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;|
+  !gapprompt@gap>| !gapinput@dK:=BarycentricSubdivision(dK);;|
+   
+  !gapprompt@gap>| !gapinput@gamma:=HAP_PrincipalCongruenceSubgroup(5);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(K,gamma);;|
+  !gapprompt@gap>| !gapinput@dY:=GComplexToRegularCWComplex(dK,gamma);;|
+  !gapprompt@gap>| !gapinput@EulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface|
+  2
+   
+  !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(13);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(K,gamma);;|
+  !gapprompt@gap>| !gapinput@dY:=GComplexToRegularCWComplex(dK,gamma);;|
+  !gapprompt@gap>| !gapinput@EulerCharacteristic(Y) + Length(Homology(dY,1)); # =Euler characteristic of surface|
+  2
+  
+  !gapprompt@gap>| !gapinput@genus:=0;; EulerCharacteristic(ClosedSurface(genus));|
+  2
+  
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Cohomology of congruence subgroups}}\logpage{[ 13, 6, 0 ]}
 \hyperdef{L}{X818BFA9A826C0DB3}{}
 {
  To compute the cohomology $H^n(\Gamma,A)$ of a congruence subgroup $\Gamma$ with coefficients in a $\mathbb Z\Gamma$\texttt{\symbol{45}}module $A$ we need to construct $n+1$ terms of a free $\mathbb Z\Gamma$\texttt{\symbol{45}}resolution of $\mathbb Z$. We can do this by first using perturbation techniques (as described in \cite{buiellis}) to combine the cubic tree with resolutions for the cyclic groups of order $4$ and $6$ in order to produce a free $\mathbb ZG$\texttt{\symbol{45}}resolution $R_\ast$ for $G=SL_2(\mathbb Z)$. This resolution is also a free $\mathbb Z\Gamma$\texttt{\symbol{45}}resolution with each term of rank 
@@ -9069,11 +9362,11 @@ The following commands compute
  
 
 This computation establishes that the space $M_{10}(\Gamma_0(39))$ of weight $10$ modular forms is of dimension $84$, and $M_{11}(\Gamma_0(39))$ is of dimension $0$. (There are never any modular forms of odd weight, and so $M_k(\Gamma)=0$ for all odd $k$ and any congruence subgroup $\Gamma$.) 
-\subsection{\textcolor{Chapter }{Cohomology with rational coefficients}}\logpage{[ 13, 4, 1 ]}
-\hyperdef{L}{X7F55F8EA82FE9122}{}
+\subsection{\textcolor{Chapter }{Cohomology with rational coefficients (via resolutions)}}\logpage{[ 13, 6, 1 ]}
+\hyperdef{L}{X7C4BE0967C1766B5}{}
 {
  To calculate cohomology $H^n(\Gamma,A)$ with coefficients in a $\mathbb Q\Gamma$\texttt{\symbol{45}}module $A$ it suffices to construct a resolution of $\mathbb Z$ by non\texttt{\symbol{45}}free $\mathbb Z\Gamma$\texttt{\symbol{45}}modules where $\Gamma$ acts with finite stabilizer groups on each module in the resolution. Computing
-over $\mathbb Q$ is computationally less expensive than computing over $\mathbb Z$. The following commands first compute $H^1(\Gamma_0(39),\mathbb Q) = H_1(\Gamma_0(39),\mathbb Q)= \mathbb Q^9$. As a larger example, they then compute $H^1(\Gamma_0(2^{13}-1),\mathbb Q) =\mathbb Q^{1365}$ where $\Gamma_0(2^{13}-1)$ has index $8192$ in $SL_2(\mathbb Z)$. 
+over $\mathbb Q$ is computationally less expensive than computing over $\mathbb Z$. The following commands first compute $H^1(\Gamma_0(39),\mathbb Q) = H_1(\Gamma_0(39),\mathbb Q)= \mathbb Q^9$. As a larger example, they then compute $H^1(\Gamma_0(2^{13}-1),\mathbb Q) =\mathbb Q^{1365}$ where $\Gamma_0(2^{13}-1)$ has index $2^{13}+2=8192$ in $SL_2(\mathbb Z)$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@K:=ContractibleGcomplex("SL(2,Z)");|
   Non-free resolution in characteristic 0 for SL(2,Integers) . 
@@ -9098,10 +9391,49 @@ over $\mathbb Q$ is computationally less expensive than computing over $\mathbb 
 \end{Verbatim}
  }
 
+ 
+\subsection{\textcolor{Chapter }{Cohomology with rational coefficients (via regular
+CW\texttt{\symbol{45}}complexes)}}\logpage{[ 13, 6, 2 ]}
+\hyperdef{L}{X7E7E359E78E2C11A}{}
+{
+ The following computes the quotient $Y=K/\Gamma_0(2^{17}-1)$ of the cubic tree $K$ as a regular CW\texttt{\symbol{45}}complex and then computes $H^1(\Gamma_0(2^{17}-1),\mathbb Q) = H^1(Y,\mathbb Q) = \mathbb Q^{21845}$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@K:=BarycentricSubdivision(ContractibleGcomplex("SL(2,Z)"));;|
+  !gapprompt@gap>| !gapinput@G:=HAP_CongruenceSubgroupGamma0(2^17-1);;|
+  !gapprompt@gap>| !gapinput@Y:=GComplexToRegularCWComplex(K,G);|
+  Regular CW-complex of dimension 1
+  
+  !gapprompt@gap>| !gapinput@Length(Homology(Y,1));|
+  21845
+  
+\end{Verbatim}
+ 
+
+ It is known that for primes $p$ the cohomology $H^1(\Gamma_0(p), \mathbb Q)$ has rank 
+
+$1 + 2\left\{ \frac{p+1}{12} - \frac{ 1 + \left( \frac{-1}{p}\right) }{4} -
+\frac{ 1 + \left(\frac{-3}{p}\right)}{3} \right\}$ 
+
+ and the following provides confirmation of the rational cohomology
+computations. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@f:=function(p)|
+  !gapprompt@>| !gapinput@return 1 + 2* ((p+1)/12 - (1+Legendre(-1,p))/4 - (1+Legendre(-3,p))/3); |
+  !gapprompt@>| !gapinput@end;;|
+  
+  !gapprompt@gap>| !gapinput@f(2^13-1);|
+  1365
+  !gapprompt@gap>| !gapinput@f(2^17-1);|
+  21845
+  
+\end{Verbatim}
+ }
+
  }
 
  
-\section{\textcolor{Chapter }{Cuspidal cohomology}}\logpage{[ 13, 5, 0 ]}
+\section{\textcolor{Chapter }{Cuspidal cohomology}}\label{upperhalfplane}
+\logpage{[ 13, 7, 0 ]}
 \hyperdef{L}{X84D30F1580CD42D1}{}
 {
  To define and compute cuspidal cohomology we consider the action of $SL_2(\mathbb Z)$ on the upper\texttt{\symbol{45}}half plane ${\frak h}$ given by 
@@ -9127,26 +9459,27 @@ the Borel\texttt{\symbol{45}}Serre compactification. This is a space $X^{BS}$ fo
  Strictly speaking, this is the definition of \emph{interior cohomology} $H_!^n(\Gamma,P_{\mathbb C}(k-2))$ which in general contains the cuspidal cohomology as a subgroup. However, for
 congruence subgroups of $SL_2(\mathbb Z)$ there is equality $H_!^n(\Gamma,P_{\mathbb C}(k-2)) = H_{cusp}^n(\Gamma,P_{\mathbb C}(k-2))$. 
 
- Working over $\mathbb C$ has the advantage of avoiding the technical issue that $\Gamma $ does not necessarily act freely on ${\frak h}$ since there are points with finite cyclic stabilizer groups in $SL_2(\mathbb Z)$. But it has the disadvantage of losing information about torsion in
-cohomology. So HAP confronts the issue by working with a contractible
-CW\texttt{\symbol{45}}complex $\tilde X^{BS}$ on which $\Gamma$ acts freely, and $\Gamma$\texttt{\symbol{45}}equivariant inclusion $\partial \tilde X^{BS} \hookrightarrow \tilde X^{BS}$. The definition of cuspidal cohomology that we use, which coincides with the
-above definition when working over $\mathbb C$, is 
-\[ H_{cusp}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb
-Z\Gamma}(C_\ast(\tilde X^{BS}), A)\, ) \rightarrow H^n(\ {\rm Hom}_{\, \mathbb
-Z\Gamma}(C_\ast(\tilde \partial X^{BS}), A)\, \ ).\]
+  Working directly with the chain inclusion $C_\ast (\partial X^{BS}) \hookrightarrow C_\ast (X^{BS})$ would mean handling chain groups that are not free $ SL_2(\mathbb Z)$\texttt{\symbol{45}}modules due the cyclic torsion subgroups groups in $SL_2(\mathbb Z)$. This can be done using regular CW\texttt{\symbol{45}}complexes, but here we
+avoid the technicality by opting to work with a contractible
+CW\texttt{\symbol{45}}complex $\widetilde {X^{BS}}$ on which $\Gamma$ acts freely, and $\Gamma$\texttt{\symbol{45}}equivariant inclusion $\widetilde{\partial X^{BS}} \hookrightarrow \widetilde {X^{BS}}$. Computations on $\widetilde{ X^{BS}}$ agree with those on $X^{BS}$ modulo any 2\texttt{\symbol{45}} and 3\texttt{\symbol{45}}torsion. The
+definition of interior cohomology that we use, which coincides with the above
+definition when working over $\mathbb C$, is 
+\[ H_{!}^n(\Gamma,A) = \ker (\ H^n({\rm Hom}_{\, \mathbb
+Z\Gamma}(C_\ast(\widetilde {X^{BS}}), A)\, ) \rightarrow H^n(\ {\rm Hom}_{\,
+\mathbb Z\Gamma}(C_\ast(\widetilde {\partial X^{BS}}), A)\, \ ).\]
  
 
 The following data is recorded and, using perturbation theory, is combined
-with free resolutions for $C_4$ and $C_6$ to constuct $\tilde X^{BS}$. 
+with free resolutions for $C_4$ and $C_6$ to constuct $C_\ast(\widetilde {X^{BS}})$. The subchain complex $C_\ast(\widetilde {\partial X^{BS}})$ is obtained by restricting the construction to cells $e^0_2$ and $e^1_3$ 
 
  
 
  The following commands calculate 
-\[H^1_{cusp}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .\]
+\[H^1_{!}(\Gamma_0(39),\mathbb Z) = \mathbb Z^6\ .\]
  
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(39);;|
-  !gapprompt@gap>| !gapinput@k:=2;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);|
+  !gapprompt@gap>| !gapinput@k:=2;; deg:=1;; c:=InteriorCohomologyHomomorphism(gamma,deg,k);|
   [ g1, g2, g3, g4, g5, g6, g7, g8, g9 ] -> [ g1^-1*g3, g1^-1*g3, g1^-1*g3, 
     g1^-1*g3, g1^-1*g2, g1^-1*g3, g1^-1*g4, g1^-1*g4, g1^-1*g4 ]
   !gapprompt@gap>| !gapinput@AbelianInvariants(Kernel(c));|
@@ -9159,15 +9492,23 @@ calculated dimension of $M_2(\Gamma_0(39))\cong \mathbb C^9$, we deduce from thi
 The following commands show that the space $S_4(\Gamma_0(39))$ of cuspidal weight $4$ forms is of dimension $12$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(39);;|
-  !gapprompt@gap>| !gapinput@k:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;|
+  !gapprompt@gap>| !gapinput@k:=4;; deg:=1;; c:=InteriorCohomologyHomomorphism(gamma,deg,k);;|
   !gapprompt@gap>| !gapinput@AbelianInvariants(Kernel(c));|
   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  
+  
+  !gapprompt@gap>| !gapinput@# Some additional information on torsion|
+  !gapprompt@gap>| !gapinput@AbelianInvariants(Source(c));|
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 2, 3 ]
+  !gapprompt@gap>| !gapinput@AbelianInvariants(Target(c));|
+  [ 0, 0, 0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 13, 13, 13, 13 ]
   
 \end{Verbatim}
  }
 
  
-\section{\textcolor{Chapter }{Hecke operators on forms of weight 2}}\logpage{[ 13, 6, 0 ]}
+\section{\textcolor{Chapter }{Hecke operators on forms of weight 2}}\logpage{[ 13, 8, 0 ]}
 \hyperdef{L}{X80861D3F87C29C43}{}
 {
  A congruence subgroup $\Gamma \le SL_2(\mathbb Z)$ and element $g\in GL_2(\mathbb Q)$ determine the subgroup $\Gamma' = \Gamma \cap g\Gamma g^{-1} $ and homomorphisms 
@@ -9221,7 +9562,7 @@ final command confirms that $T_2$ and $T_5$ commute. (It is a fact that $T_pT_q=
  }
 
  
-\section{\textcolor{Chapter }{Hecke operators on forms of weight $ \ge 2$}}\logpage{[ 13, 7, 0 ]}
+\section{\textcolor{Chapter }{Hecke operators on forms of weight $ \ge 2$}}\logpage{[ 13, 9, 0 ]}
 \hyperdef{L}{X831BB0897B988DA3}{}
 {
  The above definition of Hecke operator $T_p$ for $\Gamma=\Gamma_0(N)$ extends to a Hecke operator $T_p\colon H^1(\Gamma,P_{\mathbb Q}(k-2) ) \rightarrow H^1(\Gamma,P_{\mathbb
@@ -9239,7 +9580,7 @@ Q}(k-2) )$ for $\Gamma=SL_2(\mathbb Z)$ and $k=4$;
  }
 
  
-\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 13, 8, 0 ]}
+\section{\textcolor{Chapter }{Reconstructing modular forms from cohomology computations}}\logpage{[ 13, 10, 0 ]}
 \hyperdef{L}{X84CC51EE8525E0D9}{}
 {
  
@@ -9250,28 +9591,28 @@ Given a modular form $f\colon {\frak h} \rightarrow \mathbb C$ associated to a c
 H^1(\Gamma,\mathbb C)$. The correspondence $f\mapsto c(f)$ underlies the Eichler\texttt{\symbol{45}}Shimura isomorphism. Hecke operators
 can be used to recover modular forms from cohomology classes. 
 
- Let $\Gamma=\Gamma_0(N)$. The above defined Hecke operators restrict to operators on cuspidal
+ The above defined Hecke operators restrict to operators on cuspidal
 cohomology. On the left\texttt{\symbol{45}}hand side of the
 Eichler\texttt{\symbol{45}}Shimura isomorphism Hecke operators restrict to
 operators $T_s\colon S_2(\Gamma) \rightarrow S_2(\Gamma)$ for $s\ge 1$. 
 
-Consider the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z) \in M_k(\Gamma)$ there are numbers $a_s$ such that 
+Let us now restrict attention to $\Gamma=\Gamma_0(N)$. Consider the function $q=q(z)=e^{2\pi i z}$ which is holomorphic on $\mathbb C$. For any modular form $f(z) \in M_k(\Gamma_0(N))$ there are numbers $a_s$ such that 
 \[f(z) = \sum_{s=0}^\infty a_sq^s \]
  for all $z\in {\frak h}$. The form $f$ is a cusp form if $a_0=0$. 
 
- A non\texttt{\symbol{45}}zero cusp form $f\in S_2(\Gamma)$ is a cusp \emph{eigenform} if it is simultaneously an eigenvector for the Hecke operators $T_s$ for all $s =1,2,3,\cdots$ coprime to the level $N$. A cusp eigenform is said to be \emph{normalized} if its coefficient $a_1=1$. It turns out that if $f$ is normalized then the coefficient $a_s$ is an eigenvalue for $T_s$ (see for instance \cite{stein} for details). It can be shown \cite{atkinlehner} that $S_2(\Gamma_0(N))$ admits a "basis constructed from eigenforms". 
+ A non\texttt{\symbol{45}}zero cusp form $f\in S_2(\Gamma_0(N))$ is a cusp \emph{eigenform} if it is simultaneously an eigenvector for the Hecke operators $T_s$ for all $s =1,2,3,\cdots$ coprime to the level $N$. A cusp eigenform is said to be \emph{normalized} if its coefficient $a_1=1$. It turns out that if $f$ is normalized then the coefficient $a_s$ is an eigenvalue for $T_s$ (see for instance \cite{stein} for details). It can be shown \cite{atkinlehner} that $S_2(\Gamma_0(N))$ admits a "basis constructed from eigenforms". 
 
  This all implies that, in principle, we can construct an approximation to an
 explicit basis for the space $S_2(\Gamma_0(N))$ of cusp forms by computing eigenvalues for Hecke operators. 
 
- Suppose that we would like a basis for $S_2(\Gamma_0(11))$. The following commands first show that $H^1_{cusp}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z$ from which we deduce that $S_2(\Gamma_0(11)) =\mathbb C$ is $1$\texttt{\symbol{45}}dimensional and thus admits a basis of eigenforms. Then
+ Suppose that we would like a basis for $S_2(\Gamma_0(11))$. The following commands first show that $H^1_{!}(\Gamma_0(11),\mathbb Z)=\mathbb Z\oplus \mathbb Z$ from which we deduce that $S_2(\Gamma_0(11)) =\mathbb C$ is $1$\texttt{\symbol{45}}dimensional and thus admits a basis of eigenforms. Then
 eigenvalues of Hecke operators are calculated to establish that the modular
 form 
 \[f = q -2q^2 -q^3 +2q^4 +q^5 +2q^6 -2q^7 + -2q^9 -2q^{10} + \cdots \]
  constitutes a basis for $S_2(\Gamma_0(11))$. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@gamma:=HAP_CongruenceSubgroupGamma0(11);;|
-  !gapprompt@gap>| !gapinput@AbelianInvariants(Kernel(CuspidalCohomologyHomomorphism(gamma,1,2)));|
+  !gapprompt@gap>| !gapinput@AbelianInvariants(Kernel(InteriorCohomologyHomomorphism(gamma,1,2)));|
   [ 0, 0 ]
   
   !gapprompt@gap>| !gapinput@T1:=HeckeOperator(gamma,1,2);; Display(T1);|
@@ -9298,7 +9639,7 @@ form
 \end{Verbatim}
  
 
- For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma$ then $a_{p^m} =a_{p^{m-1}}a_p - p^{k-1} a_{p^{m-2}}$ where $k$ is the weight. If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. 
+ For a normalized eigenform $f=1 + \sum_{s=2}^\infty a_sq^s$ the coefficients $a_s$ with $s$ a composite integer can be expressed in terms of the coefficients $a_p$ for prime $p$. If $r,s$ are coprime then $T_{rs} =T_rT_s$. If $p$ is a prime that is not a divisor of the level $N$ of $\Gamma_0(N)$ then $a_{p^m} =a_{p^{m-1}}a_p - p^{k-1} a_{p^{m-2}}$ where $k$ is the weight. If the prime $ p$ divides $N$ then $a_{p^m} = (a_p)^m$. It thus suffices to compute the coefficients $a_p$ for prime integers $p$ only. 
 
  The following commands establish that $S_{12}(SL_2(\mathbb Z))$ has a basis consisting of one cusp eigenform 
 
@@ -9338,7 +9679,7 @@ $ - 6905934q^{17} + 2727432q^{18} + 10661420q^{19} + ...$
  }
 
  
-\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 13, 9, 0 ]}
+\section{\textcolor{Chapter }{The Picard group}}\logpage{[ 13, 11, 0 ]}
 \hyperdef{L}{X8180E53C834301EF}{}
 {
  Let us now consider the \emph{Picard group} $G=SL_2(\mathbb Z[ i])$ and its action on \emph{upper\texttt{\symbol{45}}half space} 
@@ -9422,7 +9763,7 @@ Z_{520030}\oplus \mathbb Z_{1040060} \oplus \mathbb Z^2\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 13, 10, 0 ]}
+\section{\textcolor{Chapter }{Bianchi groups}}\logpage{[ 13, 12, 0 ]}
 \hyperdef{L}{X858B1B5D8506FE81}{}
 {
  The \emph{Bianchi groups} are the groups $G=PSL_2({\cal O}_{-d})$ where $d$ is a square free positive integer and ${\cal O}_{-d}$ is the ring of integers of the imaginary quadratic field $\mathbb Q(\sqrt{-d})$. More explicitly, 
@@ -9519,7 +9860,7 @@ commands compute
  }
 
  
-\section{\textcolor{Chapter }{(Co)homology of Bianchi groups and $SL_2({\cal O}_{-d})$}}\logpage{[ 13, 11, 0 ]}
+\section{\textcolor{Chapter }{(Co)homology of Bianchi groups and $SL_2({\cal O}_{-d})$}}\logpage{[ 13, 13, 0 ]}
 \hyperdef{L}{X851390E07C3B3BB1}{}
 {
  The (co)homology of Bianchi groups has been studied in papers such as \cite{Schwermer} \cite{Vogtmann} \cite{Berkove00} \cite{Berkove06} \cite{Rahm11} \cite{Rahm13} \cite{Rahm13a} \cite{Rahm20}. Calculations in these papers can often be verified by computer. For
@@ -9741,7 +10082,7 @@ two of the stabilizer groups for the action of $PSL_2({\mathcal O}_{-163})$ are 
  }
 
  
-\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 12, 0 ]}
+\section{\textcolor{Chapter }{Some other infinite matrix groups}}\logpage{[ 13, 14, 0 ]}
 \hyperdef{L}{X86A6858884B9C05B}{}
 {
  Analogous to the functions for Bianchi groups, HAP has functions 
@@ -9837,7 +10178,7 @@ groups $SL_2(\mathbb Z[\frac{1}{2}])$, $GL_2({\cal O}_{-2})$, $GL_2({\cal O}_{2}
  }
 
  
-\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 13, 0 ]}
+\section{\textcolor{Chapter }{Ideals and finite quotient groups}}\logpage{[ 13, 15, 0 ]}
 \hyperdef{L}{X7EF5D97281EB66DA}{}
 {
  The following commands first construct the number field $\mathbb Q(\sqrt{-7})$, its ring of integers ${\cal O}_{-7}={\cal O}(\mathbb Q(\sqrt{-7}))$, and the principal ideal $I=\langle 5 + 2\sqrt{-7}\rangle \triangleleft {\cal O}(\mathbb Q(\sqrt{-7}))$ of norm ${\cal N}(I)=53$. The ring $I$ is prime since its norm is a prime number. The primality of $I$ is also demonstrated by observing that the quotient ring $R={\cal O}_{-7}/I$ is an integral domain and hence isomorphic to the unique finite field of order $53 $, $R\cong \mathbb Z/53\mathbb Z$ . (In a ring of quadratic integers \emph{prime ideal} is the same as \emph{maximal ideal}). 
@@ -9927,7 +10268,7 @@ The following commands construct the classic example of a prime ideal $I$ that i
  }
 
  
-\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 14, 0 ]}
+\section{\textcolor{Chapter }{Congruence subgroups for ideals}}\logpage{[ 13, 16, 0 ]}
 \hyperdef{L}{X7D1F72287F14C5E1}{}
 {
  
@@ -9983,7 +10324,7 @@ Z_{30} \oplus \mathbb Z^8\, ,\]
  }
 
  
-\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 15, 0 ]}
+\section{\textcolor{Chapter }{First homology}}\logpage{[ 13, 17, 0 ]}
 \hyperdef{L}{X85E912617AFE03F4}{}
 {
  The isomorphism $H_1(G,\mathbb Z) \cong G_{ab}$ allows for the computation of first integral homology using computational
@@ -10101,10 +10442,178 @@ We write $G^{ab}_{tors}$ to denote the maximal finite summand of the first homol
 \end{Verbatim}
   }
 
+ 
+\section{\textcolor{Chapter }{Generators and relators for $SL_3(\mathbb Z)$}}\label{SL3Zgens}
+\logpage{[ 13, 18, 0 ]}
+\hyperdef{L}{X7C25329D8625A428}{}
+{
+ The group $SL_n(\mathbb Z)$ is well known to be generated by the $n^2-n$ elementary matrices with a $1$ in each diagonal entry, a $1$ in a single off diagonal entry, and $0$ in every remaining entry. The Steinberg relations provide a finite
+presentation for $SL_n(\mathbb Z)$ on these generators. In fact, $SL_n(\mathbb Z)$ admits a $2$\texttt{\symbol{45}}generator presentation, one of order $2$ and the other of infinite order, for all $n>2$. For $n\ge 5$ there are also $2$\texttt{\symbol{45}}generator presentations with generators of orders $2$ and $3$. Details and references can be found in \cite{condorlv}. The paper \cite{condorlv} begins with a $3$\texttt{\symbol{45}}generator presentation for $SL_3(\mathbb Z)$ and some $2$\texttt{\symbol{45}}generator presentations derived from it. 
+
+The bottom dimensions of resolutions for $SL_3(\mathbb Z)$ arising from CW\texttt{\symbol{45}}complexes can also be used to produce
+presentations. For instance, the following commands produce the presentation 
+
+ $ < x,y,z\ |\ x^2=y^4=z^2=(xy)^3=xyzxy^2xzy^{-1} =$ 
+
+$ xyzy^{-1}xyxy^{-1}xzy(xy^{-1})^2xzy =$ 
+
+$ yxy^{-1}xyxy^{-2}x(yz)^2y^{-1}zyxy^{-1}x(yz)^2y^{-1}zy^{-1}xy = 1 >$, 
+
+$x=\left(\begin{array}{rrr} 1 & 0 & 0\\ 1 & -1 & 0\\ -4 & 0 &-1
+\end{array}\right),$ $y=\left(\begin{array}{rrr} 2 & 1 & 1\\ 1 & 1 & 1\\ -3 & -3 &-2
+\end{array}\right),$ $z=\left(\begin{array}{rrr} 0 & 1 & 0\\ 1 & 0 & 0\\ -2 & -2 &-1
+\end{array}\right). $ 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(3,Z)a");;A
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,2);;A
+  @gapprompt|gap>A @gapinput|P:=PresentationOfResolution(R);;A
+  @gapprompt|gap>A @gapinput|G:=P.freeGroup/P.relators;A
+  <fp group on the generators [ x, y, z ]>
+  @gapprompt|gap>A @gapinput|GG:=SimplifiedFpGroup(G);A
+  <fp group on the generators [ x, y, z ]>
+  @gapprompt|gap>A @gapinput|RelatorsOfFpGroup(GG);A
+  [ x^2, z^2, y^4, (x*y)^3, x*y*z*x*y^2*x*z*y^-1, 
+    x*y*z*y^-1*x*y*x*y^-1*x*z*y*(x*y^-1)^2*x*z*y, 
+    y*x*y^-1*x*y*x*y^-2*x*(y*z)^2*y^-1*z*y*x*y^-1*x*(y*z)^2*y^-1*z*y^-1*x*y ]
+  @gapprompt|gap>A @gapinput|gens:=R!.elts{P.gens};A
+  [ [ [ 1, 0, 0 ], [ 1, -1, 0 ], [ -4, 0, -1 ] ], 
+    [ [ 2, 1, 1 ], [ 1, 1, 1 ], [ -3, -3, -2 ] ], 
+    [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ -2, -2, -1 ] ] ]
+  
+\end{Verbatim}
+ 
+
+The next commands produce a $2$\texttt{\symbol{45}}generator presentation on the generators 
+
+ $h=\left(\begin{array}{rrr} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & 1 & 1
+\end{array}\right),$ $m=\left(\begin{array}{rrr} 0 & 0 & 1\\ 1 & 0 & 0\\ 0 & 1 & 0
+\end{array}\right) $ of orders $6$ and $3$. 
+\begin{Verbatim}[commandchars=@|A,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>A @gapinput|K:=ContractibleGcomplex("SL(3,Z)s");;A
+  @gapprompt|gap>A @gapinput|R:=FreeGResolution(K,3);;A
+  @gapprompt|gap>A @gapinput|P:=PresentationOfResolution(R);;A
+  @gapprompt|gap>A @gapinput|G:=P.freeGroup/P.relators;A
+  <fp group on the generators [ f, g, h, k, m, n, p, q, r, s, t, u, v, w, x, y, 
+    z ]>
+  @gapprompt|gap>A @gapinput|GG:=SimplifiedFpGroup(G);A
+  <fp group on the generators [ h, m ]>
+  @gapprompt|gap>A @gapinput|RelatorsOfFpGroup(GG);A
+  [ m^3, h^6, (h*m^-1)^4, (m^-1*h)^4, (m^-1*h^3)^2*m^-1*h^-3, (h*m^-1*h)^4, 
+    (h*m^-1)^2*(h^-1*m*h^-1)^2*(m^-1*h)^2*m, 
+    m^-1*h^-1*m*h^-1*m^-1*h*(m*h^-1)^2*(m^-1*h)^2*h*m^-1*h^-1*m*h^-1, 
+    m^-1*(h^-1*m*h^-1)^2*m*h*(m^-1*h^-1*m*h^-1)^2*m^-1*h*m^-1, 
+    (h^-1*m^-1*h*m^-1)^2*h^2*m^-1*h*m*h*m^-1*h^-2*m*h^-1*m^-1*h^-1*m, 
+    h^-1*m^-1*h^2*m^-1*h*m*h*(m^-1*h^-2)^2*m^-1*h*m*h*m^-1*h^2*m^-1, 
+    h*m^-1*h^-1*m*h^-2*m*h*m^-1*h^2*m*h*m^-1*(h^-1*m)^2*h*m^-1*h*m*h, 
+    (h^-1*m)^2*h*m*h^-1*m^-1*h^-1*m*h^-2*(m*h^-1*m*h)^2*m^-1*h*m^-1, 
+    m^-1*h^-1*m*h^-2*m^-1*(h*m^-1*h)^2*m^-1*h^-2*m*h*m^-1*h^-1*m*h^-2*m*h*m^-1*(\
+  h^2*m^-1*h)^2*(m*h^-1)^2*h^-1*m*h^2*(h*m^-1)^3*h^-2 ]
+                     
+  @gapprompt|gap>A @gapinput|gens:=R!.elts{P.gens{[3,5]}};A
+  [ [ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, 1, 1 ] ], 
+    [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ] ]
+  @gapprompt|gap>A @gapinput|List(gens,Order);A
+  [ 6, 3 ]
+  
+\end{Verbatim}
+ 
+\subsection{\textcolor{Chapter }{Expressing elements of $SL_3(\mathbb Z)$ as words in generators}}\logpage{[ 13, 18, 1 ]}
+\hyperdef{L}{X7D884B3A7A4E5DA4}{}
+{
+ The generating matrices $x,y,z$ for $SL_3(\mathbb Z)$ given in Section \ref{SL3Zgens} arise from the $1$\texttt{\symbol{45}}skeleton of the CW\texttt{\symbol{45}}complex underlying
+the resolution constructed by applying \texttt{R:=FreeGResolution(K,2)} to the well\texttt{\symbol{45}}rounded retract $K$ for $SL_3(\mathbb Z)$. The retract is stored in the file \texttt{"SL3Za"} and accessed using \texttt{K:=ContractibleGcomplex("SL3(Z)")}. For certain computations we need to express an element $w \in SL_3(\mathbb Z)$ as a word in the generators. 
+
+One naive approach is to use gaussian elimination to first express $w$ as a product of elementary matrices $E_{ij}(1)$, $E_{ij}(-1)$ with $\pm 1$ in the $ij$\texttt{\symbol{45}}position, and then replace each elementary matrix by its
+expression as a word in $x,y,z$. This is easy to implement, but obvously produces unnecessarily long
+expressions for $w$. 
+
+ A better approach is to use the six generators 
+
+ $g_1=\left(\begin{array}{rrr} -1 & 0 & 1\\ 1 & 0 & 0\\ 0 & 1 & 0
+\end{array}\right) $ $g_2=\left(\begin{array}{rrr} 0 & 0 & 1\\ 1 & 0 & -1\\ 0 & 1 & 1
+\end{array}\right) $ $g_3=\left(\begin{array}{rrr} 0 & 1 & 0\\ 0 & 0 & 1\\ 1 & 0 &-1
+\end{array}\right) $ $g_4=\left(\begin{array}{rrr} 0 & 0 & 1\\ 1 & 0 & 0\\ 0 & 1 & 0
+\end{array}\right) $ $g_5=\left(\begin{array}{rrr} 0 & 1 & 0\\ 0 & 0 & 1\\ 1 & 0 & 0
+\end{array}\right) $ $g_6=\left(\begin{array}{rrr} 0 & 1 & 0\\ 0 & 0 & 1\\ 1 & 1 & 0
+\end{array}\right) $ 
+
+ for $SL_3(\mathbb Z)$ corresponding to the six 'facet pairings' of the Voronoi domain (whose closure
+is a $6$\texttt{\symbol{45}}dimensional simplex) and then to use Voronoi reduction in
+place of gaussian elimination. The following code uses this technique to
+express our previous generators in terms of the $g_i$: 
+
+ $x= g_3g_1^{-1}g_2^2g_1g_3^{-1}g_5^{-1}g_3^{-2}g_1^{-1}g_2^{-1}g_4^{-1}$, 
+
+$y = g_3g_1^{-1}g_2^2g_1g_3^{-1}g_5^{-1}g_3^{-1}g_4^{-1}g_1^{-1}g_3^{-1}$, 
+
+$z= g_3g_1^{-1}g_2^2g_1g_3^{-1}g_1^{-1}ig_3^{-1}$, 
+
+ $h= g_2^2g_3g_1^{-1}g_6^{-1}$, 
+
+ $m=g_6^{-1}$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@x:=[ [ 1, 0, 0 ], [ 1, -1, 0 ], [ -4, 0, -1 ] ];;|
+  !gapprompt@gap>| !gapinput@y:=[ [ 2, 1, 1 ], [ 1, 1, 1 ], [ -3, -3, -2 ] ];;|
+  !gapprompt@gap>| !gapinput@z:=[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ -2, -2, -1 ] ];;|
+  !gapprompt@gap>| !gapinput@h:=[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, 1, 1 ] ];;|
+  !gapprompt@gap>| !gapinput@m:=[ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ];;|
+  !gapprompt@gap>| !gapinput@VoronoiFactorize(SL(3,Integers),x);|
+  [ 3, -1, 2, 2, 1, -3, -5, -3, -3, -1, -3, -1, -2, -4 ]
+  !gapprompt@gap>| !gapinput@VoronoiFactorize(SL(3,Integers),y);|
+  [ 3, -1, 2, 2, 1, -3, -5, -3, -4, -1, -3 ]
+  !gapprompt@gap>| !gapinput@VoronoiFactorize(SL(3,Integers),z);|
+  [ 3, -1, 2, 2, 1, -3, -1, -3 ]
+  !gapprompt@gap>| !gapinput@VoronoiFactorize(SL(3,Integers),h);|
+  [ 2, 2, 3, -1, -6 ]
+  !gapprompt@gap>| !gapinput@VoronoiFactorize(SL(3,Integers),m);|
+  [ -5 ]
+  
+\end{Verbatim}
+ The following code shows that Voronoi reduction expresses a particular random
+product of 1000 generators $g_i$ as a word of length 426 in the $g_i$ and $g_i^{-1}$. An analogus Voronoi reduction is then applied to a random product of
+generators for $SL_2(\mathbb Z)$ to express it as a word of length 192. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@G:=SL(3,Integers);;|
+  !gapprompt@gap>| !gapinput@w:=[];;|
+  !gapprompt@gap>| !gapinput@for i in [1..1000] do|
+  !gapprompt@>| !gapinput@Add(w,Random(Concatenation([-6..-1],[1..6])));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@m:=MatrixFromWord(VoronoiGenerators(G),w);|
+  [ [ -44674790530437562, -24123269560333493, -34694674085693519 ], 
+    [ -10804815618994915, -5834330203498842, -8391075861936847 ], 
+    [ -13747757726719023, -7423445338055900, -10676579969918880 ] ]
+  !gapprompt@gap>| !gapinput@e:=VoronoiFactorize(G,m);;|
+  !gapprompt@gap>| !gapinput@Length(e);|
+  426
+  !gapprompt@gap>| !gapinput@MatrixFromWord(VoronoiGenerators(G),e)=m;|
+  true
+  
+  
+  !gapprompt@gap>| !gapinput@G:=SL(2,Integers);;|
+  !gapprompt@gap>| !gapinput@w:=[];;|
+  !gapprompt@gap>| !gapinput@for i in [1..1000] do|
+  !gapprompt@>| !gapinput@Add(w,Random([-2,-1,1,2]));|
+  !gapprompt@>| !gapinput@od;|
+  !gapprompt@gap>| !gapinput@m:=MatrixFromWord(VoronoiGenerators(G),w);|
+  [ [ -4403553319158184826647, 937258106083950248383 ], 
+    [ -9411800199573354543511, 2003219988620237311896 ] ]
+  !gapprompt@gap>| !gapinput@e:=VoronoiFactorize(G,m);;|
+  !gapprompt@gap>| !gapinput@Length(e);|
+  192
+  !gapprompt@gap>| !gapinput@MatrixFromWord(VoronoiGenerators(G),e)=m;|
+  true
+  
+  
+\end{Verbatim}
+ }
+
+ }
+
  }
 
  
-\chapter{\textcolor{Chapter }{Fundamental domains for Bianchi groups}}\logpage{[ 14, 0, 0 ]}
+\chapter{\textcolor{Chapter }{Fundamental domains for Bianchi groups}}\label{chap:Bianchi}
+\logpage{[ 14, 0, 0 ]}
 \hyperdef{L}{X805848868005D528}{}
 {
  
@@ -10903,6 +11412,106 @@ larger computations that require significant memory resources.
   
 \end{Verbatim}
  }
+
+ 
+\section{\textcolor{Chapter }{Parallelism not a substitute for careful serial implementation}}\label{secStory}
+\logpage{[ 15, 4, 0 ]}
+\hyperdef{L}{X865ABE6581DDF36A}{}
+{
+ 
+
+ Here is a story of naive implementation design causing a serial algorithm to
+run at least 170 times slower than it should! 
+
+ The following snippet begins with the construction of a regular
+CW\texttt{\symbol{45}}complex $Y$ with 157539 cells. It then constructs the cellular chain complex $C_\ast=C_\ast(Y)$. Computing the homology of $Y$ directly from $C_\ast$ would be time consuming due to the large number of cells in $Y$. So, an elementary procedure is used to eliminate redundant generators from $Y$ in order to obtain a smaller quasi\texttt{\symbol{45}}isomorphic chain complex $D_\ast$ and this smaller complex is used to quickly obtain the homology. However, the
+construction of $D_\ast$ takes over 170 seconds. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|K:=ContractibleGcomplex("SL(3,Z)s");;B
+  @gapprompt|gap>B @gapinput|G:=HAPCongruenceSubgroupGamma0(3,101);;B
+  @gapprompt|gap>B @gapinput|Y:=GComplexToRegularCWComplex(K,G);;B
+  
+  @gapprompt|gap>B @gapinput|C:=ChainComplexOfRegularCWComplex(Y);B
+  Chain complex of length 3 in characteristic 0 . 
+  
+  @gapprompt|gap>B @gapinput|List([0..3],C!.dimension);B
+  [ 3679, 37565, 75083, 41212 ]
+  
+  @gapprompt|gap>B @gapinput|D:=ContractedComplex(C);time;B
+  Chain complex of length 3 in characteristic 0 . 
+  
+  170547
+  
+  @gapprompt|gap>B @gapinput|List([0..3],D!.dimension);B
+  [ 1, 27, 78, 67 ]
+  
+  @gapprompt|gap>B @gapinput|List([0..3],n->Homology(D,n));time;B
+  [ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+  26
+  
+\end{Verbatim}
+ 
+
+ The above procedure for reducing the number of generators in a chain complex
+of free abelian groups uses the same elementary technique for "generator
+removal" as a slightly more elaborate implementation programmed some years
+earlier. The earlier implementation is (unnecessarily) restricted to chain
+complexes arising as cellular chain complexes of regular
+CW\texttt{\symbol{45}}complexes while the later implemetation is aimed at
+arbitrary chain complexes of free abelian groups. The earlier implementation
+returns chain homotopy equivalences between the original and the simplified
+complexes. To ease the the coding of the later implementation it was decided
+to output just the simplified chain complex and forget about the chain maps
+yielding the chain equivalence. 
+
+ The following snippet illustrates the earlier implementation. It again begins
+with the construction of the regular CW\texttt{\symbol{45}}complex $Y$ with 157539 cells. It then takes just over a second to construct a pair of
+chain equivalences $f_1\colon C_\ast(Y) \rightarrow C_\ast(Y')$ and $f_2\colon C_\ast(Y') \rightarrow C_\ast(Y)$ with $Y'$ a homotopy equivalent non\texttt{\symbol{45}}regular
+CW\texttt{\symbol{45}}complex with fewer cells. It uses $D_\ast=C_\ast(Y')$ to quickly compute the homology of $Y$. 
+\begin{Verbatim}[commandchars=@|B,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>B @gapinput|K:=ContractibleGcomplex("SL(3,Z)s");;B
+  @gapprompt|gap>B @gapinput|G:=HAPCongruenceSubgroupGamma0(3,101);;B
+  @gapprompt|gap>B @gapinput|Y:=GComplexToRegularCWComplex(K,G);;B
+  @gapprompt|gap>B @gapinput|f:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;B
+  [ Chain Map between complexes of length 3 . 
+      , Chain Map between complexes of length 3 . 
+       ]
+  1192
+  
+  @gapprompt|gap>B @gapinput|C:=Source(f[1]);B
+  Chain complex of length 3 in characteristic 0 . 
+  
+  @gapprompt|gap>B @gapinput|List([0..3],C!.dimension);B
+  [ 3679, 37565, 75083, 41212 ]
+  
+  @gapprompt|gap>B @gapinput|D:=Target(f[1]);B
+  Chain complex of length 3 in characteristic 0 . 
+  
+  @gapprompt|gap>B @gapinput|List([0..3],D!.dimension);B
+  [ 4, 15, 29, 33 ]
+  
+  @gapprompt|gap>B @gapinput|List([0..3],n->Homology(D,n));time;B
+  [ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+  211
+  
+\end{Verbatim}
+ 
+
+ The takeaway from this story is that careful design of the datatypes to be
+used in the implementation of an algorithm can significantly impact the speed
+of the implementation! This is a well established principle, illustrated
+forcefully by the story. The decision to output chain maps $C_\ast \leftrightarrow D_\ast$ leads to an implementation where all redundant generators in $C_\ast$ first have to be identified, and enough information has to be retained to
+produce the chain maps. The later decision to output just the complex $D_\ast$ leads to an easier to implement process of eliminating each redundant
+generator in a boundary matrix as soon at it is found. This is analogous to a
+gaussian elimination procedure for producing echelon form that updates a
+boundary matrix each time a suitable pivot is found; it is easy to code but
+less efficient than the earlier implementation. 
+
+ 
+
+ A new implementation of \texttt{ContractedComplex(C)} is on the \textsc{HAP} to\texttt{\symbol{45}}do list. }
 
  }
 

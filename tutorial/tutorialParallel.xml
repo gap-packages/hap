@@ -45,4 +45,41 @@ The method lends itself to parallelisation.
 <#Include SYSTEM "tutex/10.4.txt">
 </Example>
 		</Section>
+	
+<Section Label="secStory"><Heading>Parallelism not a substitute for careful serial implementation</Heading> 
+
+	<P/> Here is a story of naive implementation design causing a serial algorithm to run at least 170 times slower than it should! 
+
+		<P/>
+                The following snippet begins with the construction of a regular
+			CW-complex <M>Y</M> with 157539 cells. It then constructs the cellular chain complex <M>C_\ast=C_\ast(Y)</M>. Computing the homology of <M>Y</M> directly from <M>C_\ast</M> would be time consuming due to the large number
+				of cells in <M>Y</M>. So, an elementary procedure is used to eliminate redundant generators from <M>Y</M> in order to obtain a smaller quasi-isomorphic chain complex <M>D_\ast</M> and this smaller complex is used to quickly obtain the homology.
+However, the construction of <M>D_\ast</M> takes over 170 seconds.
+
+					<Example>
+<#Include SYSTEM "tutex/10.6.txt">
+</Example>
+
+	<P/>
+		The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal"  as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to
+		chain complexes arising as  
+		cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes.  To ease the the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.
+	<P/>
+		The following snippet illustrates the earlier implementation. It again begins with the construction of the regular 
+		CW-complex <M>Y</M> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <M>f_1\colon C_\ast(Y) \rightarrow C_\ast(Y')</M> and <M>f_2\colon C_\ast(Y') \rightarrow C_\ast(Y)</M> with
+		<M>Y'</M>  a homotopy equivalent non-regular CW-complex with fewer cells. It uses  <M>D_\ast=C_\ast(Y')</M> to quickly compute the homology of <M>Y</M>.
+	 <Example>
+<#Include SYSTEM "tutex/10.5.txt">
+</Example>
+
+<P/> The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is  a well established principle,   illustrated forcefully by the story. The decision to output chain maps <M>C_\ast \leftrightarrow D_\ast</M> leads to an implementation where all redundant generators in <M>C_\ast</M> first have to be identified, and     enough information has to be retained to produce the chain maps. The later decision to  output just
+	the complex <M>D_\ast</M> leads to an easier to implement 
+		 process of eliminating each redundant generator in a boundary matrix as soon at it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.
+<P/>
+<P/> A new implementation of <Code>ContractedComplex(C)</Code> is on the <B>HAP</B> to-do list.
+
+
+
+</Section>
+		
 </Chapter>

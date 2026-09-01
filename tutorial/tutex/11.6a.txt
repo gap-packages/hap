@@ -1,4 +1,12 @@
 gap> gamma:=HAP_CongruenceSubgroupGamma0(39);;
-gap> k:=4;; deg:=1;; c:=CuspidalCohomologyHomomorphism(gamma,deg,k);;
+gap> k:=4;; deg:=1;; c:=InteriorCohomologyHomomorphism(gamma,deg,k);;
 gap> AbelianInvariants(Kernel(c));
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+
+gap> # Some additional information on torsion
+gap> AbelianInvariants(Source(c));
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 2, 3 ]
+gap> AbelianInvariants(Target(c));
+[ 0, 0, 0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 13, 13, 13, 13 ]

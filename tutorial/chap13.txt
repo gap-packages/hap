@@ -1946,7 +1946,8 @@
   
   [33X[0;0YThe  following  code  shows  that  Voronoi  reduction expresses a particular
   random product of 1000 generators [22Xg_i[122X as a word of length 426 in the [22Xg_i[122X and
-  [22Xg_i^-1[122X.[133X
+  [22Xg_i^-1[122X. An analogus Voronoi reduction is then applied to a random product of
+  generators for [22XSL_2( Z)[122X to express it as a word of length 192.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=SL(3,Integers);;[127X[104X
@@ -1958,11 +1959,27 @@
     [4X[28X[ [ -44674790530437562, -24123269560333493, -34694674085693519 ], [128X[104X
     [4X[28X  [ -10804815618994915, -5834330203498842, -8391075861936847 ], [128X[104X
     [4X[28X  [ -13747757726719023, -7423445338055900, -10676579969918880 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xe:=VoronoiWord(G,m);;[127X[104X
+    [4X[25Xgap>[125X [27Xe:=VoronoiFactorize(G,m);;[127X[104X
     [4X[25Xgap>[125X [27XLength(e);[127X[104X
     [4X[28X426[128X[104X
     [4X[25Xgap>[125X [27XMatrixFromWord(VoronoiGenerators(G),e)=m;[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=SL(2,Integers);;[127X[104X
+    [4X[25Xgap>[125X [27Xw:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..1000] do[127X[104X
+    [4X[25X>[125X [27XAdd(w,Random([-2,-1,1,2]));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xm:=MatrixFromWord(VoronoiGenerators(G),w);[127X[104X
+    [4X[28X[ [ -4403553319158184826647, 937258106083950248383 ], [128X[104X
+    [4X[28X  [ -9411800199573354543511, 2003219988620237311896 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xe:=VoronoiFactorize(G,m);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(e);[127X[104X
+    [4X[28X192[128X[104X
+    [4X[25Xgap>[125X [27XMatrixFromWord(VoronoiGenerators(G),e)=m;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

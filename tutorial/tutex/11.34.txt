@@ -1,0 +1,30 @@
+gap> G:=SL(3,Integers);;
+gap> w:=[];;
+gap> for i in [1..1000] do
+> Add(w,Random(Concatenation([-6..-1],[1..6])));
+> od;
+gap> m:=MatrixFromWord(VoronoiGenerators(G),w);
+[ [ -44674790530437562, -24123269560333493, -34694674085693519 ], 
+  [ -10804815618994915, -5834330203498842, -8391075861936847 ], 
+  [ -13747757726719023, -7423445338055900, -10676579969918880 ] ]
+gap> e:=VoronoiFactorize(G,m);;
+gap> Length(e);
+426
+gap> MatrixFromWord(VoronoiGenerators(G),e)=m;
+true
+
+
+gap> G:=SL(2,Integers);;
+gap> w:=[];;
+gap> for i in [1..1000] do
+> Add(w,Random([-2,-1,1,2]));
+> od;
+gap> m:=MatrixFromWord(VoronoiGenerators(G),w);
+[ [ -4403553319158184826647, 937258106083950248383 ], 
+  [ -9411800199573354543511, 2003219988620237311896 ] ]
+gap> e:=VoronoiFactorize(G,m);;
+gap> Length(e);
+192
+gap> MatrixFromWord(VoronoiGenerators(G),e)=m;
+true
+

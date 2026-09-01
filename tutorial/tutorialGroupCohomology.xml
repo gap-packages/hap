@@ -179,11 +179,11 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
 <#Include SYSTEM "tutex/6.35.txt">
 </Example>
 
-	For the congruence subgroup <M>\Gamma_0(31) &lt; SL_3(\mathbb Z)</M> the following example computes 
-<P/><M>H_n(\Gamma_0(31),\mathbb Z)= \left\{\begin{array}{ll}
-	\mathbb Z_{30}, &amp; n=1\\
-        (\mathbb Z_2)^8, &amp;n=2\\ 
-        (\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^4, &amp; n=3
+	For the congruence subgroup <M>\Gamma_0(101) &lt; SL_3(\mathbb Z)</M> the following example computes 
+<P/><M>H_n(\Gamma_0(101),\mathbb Z)= \left\{\begin{array}{ll}
+	\mathbb Z_{100}, &amp; n=1\\
+	(\mathbb Z_2)^{15}\oplus (\mathbb Z_4)^4, &amp;n=2\\ 
+	(\mathbb Z_4)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^{16}, &amp; n=3
         \ .
 	\end{array}\right.</M>
 
@@ -205,7 +205,7 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
 <P/>The command <C>Y:=GComplexToFiniteRegularCWRegion(K,r)</C> returns
 	a 'ball of radius <M>r</M>' in the contractible CW-complex represented by 
 	<M>K</M> for any integer <M>r\ge 0</M>. 
-		The ball is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <M>r=6</M> and builds a contracting disctete vector field
+		The ball is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <M>r=7</M> and builds a contracting disctete vector field
 		on this ball. 
 		The component <C>Y!.G_Cells[n+1][k]</C> returns a pair <M>[e,g]</M> with integer <M>e</M> specifying a representative of an orbit of 
 <M>n</M>-cells in <M>K</M> and <M>g</M> an element in <M>SL(3,\mathbb Z)</M> such that the <M>k</M>th <M>n</M>-cell of <M>Y</M> corresponds to <M>g.e</M> .
@@ -214,6 +214,118 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
         <#Include SYSTEM "tutex/6.38.txt">
 </Example>
 
+<P/>Further details on computing with Arithmetic groups can be found in Chapters <Ref Sect="chap:Congruence"/>, <Ref Sect="chap:Bianchi"/> <!-- and <Ref Sect="chapSL3Z"/> -->. 
+
+	<Subsection><Heading>Rational cohomology</Heading>
+		To compute the rational homology of an arithmetic group such as
+		<M>G=SL_n(\mathbb Z)</M> one can work directly with the well-rounded retract <M>K</M> on which <M>G</M> acts with finite stabilizers. The following computes the rational cohomology 
+		<P/><M>H^n(SL_4(\mathbb Z),\mathbb Q)= \left\{ 
+			\begin{array}{ll}
+                        \mathbb Q &amp; n=0,3\\
+			0 &amp; {\rm otherwise}.
+			\end{array}\right.</M>
+
+				<Example>
+        <#Include SYSTEM "tutex/6.39.txt">
+</Example>
+
+	For <M>\nu</M> the virtual cohomological dimension of <M>G=SL_n(\mathbb Z)</M> there is an isomorphism
+	<P/><M>H^{\nu-k}(SL_n(\mathbb Z),\mathbb Z) \cong H_k(SL_n(\mathbb Z),St_n \otimes_{\mathbb Z} \mathbb Z)</M>
+	<P/>
+		where <M>St_n</M> is the Steinberg module for <M>G</M>. This means that computations on the cohomology of <M>G</M> can be performed using a resolution <M>V_\ast</M> of the <M>\mathbb ZG</M>-module <M>St_n</M>. 
+
+
+		<P/>
+			Recall that in general a group <M>G</M> is 
+				said to be a duality group, of dimension <M>n\ge 0</M>, with respect to a right <M>G</M>-module <M>S</M> if there is an element <M>e\in H_n(G,S)</M> such that the cap-product with <M>e</M> induces isomorphisms
+				<M>H^k(G,A) \cong H_{n-k}(G,S\otimes A)</M> for all integers <M>k</M> and all left <M>G</M>-modules <M>A</M>.
+					A group <M>G</M> has a dualizing module <M>S</M> if <M>\mathbb Z</M>  admits a finite length projective <M>\mathbb ZG</M>- resolution <M>R_\ast</M>
+						and two sufficient conditions hold: (a) <M>H^k(G,\mathbb ZG)=0</M> for <M>k\ne n</M>; (b) <M>H^n(G,\mathbb ZG)</M> is torsion free. Then <M>S\cong H^n(G,\mathbb ZG)</M> as <M>G</M>-modules. A resolution for <M>S</M> is given by <M>V_\ast =Hom_{\mathbb ZG}(R_\ast,\mathbb ZG)</M>.
+
+				<P/>
+					If one is interested in computing only the rational cohomology   
+					 of finite index subgoups of <M>SL_n(\mathbb Z)</M> 
+						then  it suffices to use the non free chain complex <M>V_\ast = {\rm Hom}^c_{\mathbb Z}(C_\ast(K),\mathbb Z)</M> where
+						<M>K</M> is 
+							a well-rounded retract and <M>C_\ast(K)</M> its cellular chain complex and <M>{\rm Hom}^c_{\mathbb Z}(C_n(K),\mathbb Z)</M> is the group of those <M>\mathbb Z</M>-linear homomorphisms <M>C_n(K) \rightarrow \mathbb Z</M> having finite support (i.e. trivial on all but finitely many basis elements).
+				<P/>
+					For <M>G=SL_4(\mathbb Z)</M> we have <M>\nu=6</M>. The following commands construct a non free <M>V_\ast</M> and compute
+					<M>H_k(V_\ast \otimes_{\mathbb ZG} \mathbb Q)</M>.
+
+						 <Example>
+        <#Include SYSTEM "tutex/6.40.txt">
+</Example>
+
+	For <M>G=SL_3(\mathbb Z)</M> we have <M>\nu = 3</M>. The following commands use a resolution of the Steinberg module to compute the top rational cohomology
+	<P/><M>H^3(\Gamma_0(501),\mathbb Q) \cong \mathbb Q^{140}</M>
+<P/>	for the congruence subgroup <M>\Gamma_0(501) &lt; SL_3(\mathbb Z)</M>.
+	Furthermore, since any torsion element in <M>SL_3(\mathbb Z)</M> has order dividing <M>24</M>,  these commands also establish that
+		the <M>p</M>-primary part of the third integral cohomology is
+		<P/><M>H^3(\Gamma_0(501),\mathbb Z)_{(7)} \cong \mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \oplus \mathbb Z_7 \ \  </M> ,
+		<P/><M>H^3(\Gamma_0(501),\mathbb Z)_{(p)} \cong \mathbb Z_p 
+	\oplus \mathbb Z_p \ \ </M>   
+				for primes <M>p=7, 773, 191249, 81127067460894029326373198387</M>. 
+			<P/>The 
+		<M>p</M>-part is trivial for all other primes <M>p > 3</M>. The computation does not determine the <M>2</M>-part or <M>3</M>-part. 
+
+			<Example>
+        <#Include SYSTEM "tutex/6.42.txt">
+</Example>
+	The group <M>\Gamma_0(501)</M> is of index <M>364741</M>
+                in <M>SL_3(\mathbb Z)</M>. 
+                The above computation
+         uses  <C>ContractedComplexViaChild(C,r)</C>
+                which creates a child process, calls <C>ContractibleComplex(C,r)</C> in the child, and then kills the child. This provides a simple method
+			for avoiding the build-up of unnecessarily retained data in memory caused by the  current 
+			naive implementation of the function <C>ContractibleComplex(C,r)</C>.  
+			 The initial version of the chain complex <M>C=C_\ast</M> has <M>C_0=\mathbb Z^{364741}</M> while the quasi-isomorphic version of this complex after <M>r=200</M> reduction attempts has <M>C_0=\mathbb Z^{741}</M>.
+
+
+<P/>		A similar computation gives:
+			<P/><M>H^3(\Gamma_0(601),\mathbb Q) \cong \mathbb Q^{98}</M>,
+      
+                <P/><M>H^3(\Gamma_0(601),\mathbb Z)_{(p)} \cong \mathbb Z_p
+        \oplus \mathbb Z_p \ \ </M>
+                                for primes <M>p=37, 175829261, 1011757163379728699885049667755467</M>,
+					<P/><M>H^3(\Gamma_0(601),\mathbb Z)_{(p)} \cong 0   
+         \ \ </M>
+                                for all other primes <M>p&gt; 3</M>.
+				<P/>Also
+					<P/><M>H^3(\Gamma_0(701),\mathbb Q) \cong \mathbb Q^{116}</M>,
+
+						<P/><M>H^3(\Gamma_0(701),\mathbb Z)_{(p)} \cong \mathbb Z_p
+        \oplus \mathbb Z_p \ \ </M>
+                                for primes <M>p= 5, 7, 13, 113, 541, 23867527870278363301, 
+					406535606513108747882997061430663240539</M>,
+						<P/><M>H^3(\Gamma_0(701),\mathbb Z)_{(p)} \cong 0
+         \ \ </M>
+                                for all other primes <M>p&gt; 3</M>.
+	<Example>
+        <#Include SYSTEM "tutex/6.43.txt">
+</Example>
+<P/> &nbsp;
+<P/>
+<Example>
+        <#Include SYSTEM "tutex/6.44.txt">
+</Example>
+
+
+	</Subsection>
+
+	<Subsection><Heading>Mod-<M>q</M> cohomology</Heading>
+For a congruence subgroup <M>G</M> of an arithmetic group such as
+<M>SL_n(\mathbb Z)</M> and positive integer <M>q</M> coprime to the order of any torsion element in <M>G</M>  one can again
+work directly with the well-rounded retract <M>K</M> 
+in order to compute <M>H^\ast(G,\mathbb Z/q\mathbb Z)</M>.	
+
+<P/>For instance, for <M>G=\Gamma_0(11) &lt; SL_3(\mathbb Z)</M> 
+	the following computes the cohomology ring <M>H^\ast(\Gamma_0(11),\mathbb Z/5\mathbb Z)</M> and shows it to be a <M>5</M>-dimensional  algebra  with non-trivial product.
+
+					<Example>
+        <#Include SYSTEM "tutex/6.41.txt">
+</Example>
+
+	</Subsection>
 </Section>
 
 

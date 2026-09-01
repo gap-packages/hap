@@ -1655,7 +1655,7 @@ h^2*m^-1*h)^2*(m*h^-1)^2*h^-1*m*h^2*(h*m^-1)^3*h^-2 ]
 
 </pre></div>
 
-<p>The following code shows that Voronoi reduction expresses a particular random product of 1000 generators <span class="SimpleMath">\(g_i\)</span> as a word of length 426 in the <span class="SimpleMath">\(g_i\)</span> and <span class="SimpleMath">\(g_i^{-1}\)</span>.</p>
+<p>The following code shows that Voronoi reduction expresses a particular random product of 1000 generators <span class="SimpleMath">\(g_i\)</span> as a word of length 426 in the <span class="SimpleMath">\(g_i\)</span> and <span class="SimpleMath">\(g_i^{-1}\)</span>. An analogus Voronoi reduction is then applied to a random product of generators for <span class="SimpleMath">\(SL_2(\mathbb Z)\)</span> to express it as a word of length 192.</p>
 
 
 <div class="example"><pre>
@@ -1668,11 +1668,27 @@ h^2*m^-1*h)^2*(m*h^-1)^2*h^-1*m*h^2*(h*m^-1)^3*h^-2 ]
 [ [ -44674790530437562, -24123269560333493, -34694674085693519 ], 
   [ -10804815618994915, -5834330203498842, -8391075861936847 ], 
   [ -13747757726719023, -7423445338055900, -10676579969918880 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:=VoronoiWord(G,m);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:=VoronoiFactorize(G,m);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(e);</span>
 426
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MatrixFromWord(VoronoiGenerators(G),e)=m;</span>
 true
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SL(2,Integers);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..1000] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(w,Random([-2,-1,1,2]));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=MatrixFromWord(VoronoiGenerators(G),w);</span>
+[ [ -4403553319158184826647, 937258106083950248383 ], 
+  [ -9411800199573354543511, 2003219988620237311896 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:=VoronoiFactorize(G,m);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(e);</span>
+192
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MatrixFromWord(VoronoiGenerators(G),e)=m;</span>
+true
+
 
 </pre></div>
 
