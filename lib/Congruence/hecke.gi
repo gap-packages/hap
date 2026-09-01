@@ -168,6 +168,10 @@ k:=arg[3];
 #There is a bug in the contracting homotopy of Tietze reducedResolution for
 #degree >1 but we only use degree 1 here.
 
+#MakeReadWriteGlobal("HAP_transversalmethodtoggle");
+#HAP_transversalmethodtoggle:=false;;  #change transversal method
+#MakeReadOnlyGlobal("HAP_transversalmethodtoggle");
+
 
 N:=1;
    g:=pp; p:=0;
@@ -208,32 +212,29 @@ HHhomH:=GroupHomomorphismByFunction(HH,H,x->x^gg);
 
 A:=HomogeneousPolynomials(H,k-2);
 
-#Print(Runtime(),"\n");
 map1:=TransferCochainMap(TH,HH,A);;
 THH:=map1!.resH;   #resolution for HH
 map1:=HomToIntegersModP(map1,-1/2);
-#if false then
 
 map1:=HomologyVectorSpace(map1,N);
 
 
 map1:=List(Basis(Source(map1)),x->Image(map1,x));
 map1:=TransposedMat(map1);
-#Print(Runtime(),"\n");;
-#fi;
 
 map3:=EquivariantChainMap(THH,TH,HHhomH);
 map3:=HomToIntegralModule(map3,A,ag);
 map3:=HomToIntegersModP(map3,-1/2);
-#return [map3,map1];
 
 map3:=HomologyVectorSpace(map3,N);
 
 
 map3:=List(Basis(Source(map3)),x->Image(map3,x));
 map3:=TransposedMat(map3);
-#Print(Runtime(),"\n");;
 
+#MakeReadWriteGlobal("HAP_transversalmethodtoggle");
+#HAP_transversalmethodtoggle:=true;;  #change transversal method
+#MakeReadOnlyGlobal("HAP_transversalmethodtoggle");
 
 if map1=[] or map3=[] then return []; fi;
 return Product([map3,map1]);

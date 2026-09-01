@@ -62,7 +62,7 @@ InstallMethod(ProjectiveSpace,
      transversal:=Concatenation(transversal, [  [[0,1],[-1,0]] ]);
 
         return Objectify( NewType( FamilyObj( GG ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
                     rec( group := GG,
                          subgroup := G,

@@ -140,7 +140,7 @@ function(G)
     transversal := List([1..Length(ProjPlane.Reps)],i->cosetOfInt(i)^-1);
 
     return Objectify( NewType( FamilyObj( GG ),
-                IsHapRightTransversalSL2ZSubgroup and IsList and  #SL2???
+                IsHapRightTransversalSLnZSubgroup and IsList and  #SL2???
                 IsDuplicateFreeList and IsAttributeStoringRep ),
                 rec( group := GG,
                      subgroup := G,

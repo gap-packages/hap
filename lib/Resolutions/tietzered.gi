@@ -14,6 +14,7 @@ local
         PseudoBoundary,
         PseudoBoundaryN,
         PseudoBoundaryNplus2,
+        PseudoBoundaryNew,
 	FindFreeFace,
 	action, ActionInv, Elts,
  	modN, modNplus1,
@@ -40,16 +41,39 @@ fi;
 
 #####################################################################
 
+#####################################################################
+action:=function(g,l)  #changed Augus 2026
+local pos, h;
 
+h:=Elts[g]*Elts[l[2]];
+Add(Elts,h); pos:=Length(Elts);
+
+return [1*l[1],pos];
+end;
+#####################################################################
+
+#####################################################################
+ActionInv:=function(g,l)  #changed August 2026
+local pos, h;
+h:=Elts[g]^-1*Elts[l[2]];
+Add(Elts,h); pos:=Length(Elts);
+
+return [1*l[1],pos];
+end;
+#####################################################################
+
+if (not IsMutable(R!.elts)) or false then   #if set to true then memory is saved on infinite groups but the searching takes time
 #####################################################################
 action:=function(g,l)
 local pos, h;
+
 h:=Elts[g]*Elts[l[2]];
-pos:=Position(Elts,h);
+pos:=Position(Elts,h);   
 if pos=fail then
 Add(Elts, h);
 pos:=Length(Elts);
 fi;
+
 return [1*l[1],pos];
 end;
 #####################################################################
@@ -58,14 +82,16 @@ end;
 ActionInv:=function(g,l)
 local pos, h;
 h:=Elts[g]^-1*Elts[l[2]];
-pos:=Position(Elts,h);
+pos:=Position(Elts,h);   
 if pos=fail then
 Add(Elts, h);
 pos:=Length(Elts);
 fi;
+
 return [1*l[1],pos];
 end;
 #####################################################################
+fi;
 
 if IsPseudoList(Elts) then
 if IsBound(Elts!.mult) then
@@ -84,8 +110,8 @@ pos:=Elts!.mult(Elts!.inv(g),l[2]);
 return [1*l[1],pos];
 end;
 #####################################################################
-
 fi;fi;
+
 ########################################################
 FindFreeFace:=function()
 local i,b,pos,y, wrd,ee, g,trp3;
@@ -93,6 +119,7 @@ local i,b,pos,y, wrd,ee, g,trp3;
 #replace all g multiples of the generating cell [e,1] with g multiples 
 #of the word wrd in boundaries of N+1-dimensional cells, and delete the 
 #i-th free cell in dimension N+1;.
+
 for i in [1..Length(PseudoBoundary)] do
 b:=List(PseudoBoundary[i],x->AbsInt(x[1]));
 b:=Collected(b);
@@ -110,9 +137,11 @@ ee:=b[pos][1];
 else ee:=-b[pos][1]; trp3:=-i;
 fi;
 wrd:=List(wrd,x->ActionInv(g,x));
+
 return [ee,wrd,trp3,g];
 fi;
 od;
+
 return fail;
 end;
 ########################################################
@@ -312,18 +341,53 @@ else
 Homotopy:=fail;
 fi;
 
+## SAVE MEMORY
+if R!.homotopy=fail then
+# need to think more about homotopy case
+PseudoBoundaryNew:=[];;
+for i in [1..Length(R)] do
+PseudoBoundaryNew[i+1]:=[];
+for j in [1..Dimension(i)] do
+PseudoBoundaryNew[i+1][j]:=1*Boundary(i,j);
+od;
+od;
+PseudoBoundaryNew[1]:=0*[1..Dimension(0)];
+
+##############################
+Boundary:=function(n,i)
+return PseudoBoundaryNew[n+1][i];
+end;
+##############################
+
+##############################
+Dimension:=function(n)
+if n<0 or n>Length(PseudoBoundaryNew) then return 0; fi;
+return Length(PseudoBoundaryNew[n+1]);
+end;
+##############################
+
+Unbind(PseudoBoundary);
+Unbind(PseudoBoundaryN);
+Unbind(PseudoBoundaryNplus2);
+fi;
+##MEMORY SAVED
+
 CR:=Objectify(HapResolution,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
                 homotopy:=Homotopy,
-                elts:=R!.elts,
-                group:=R!.group,
+                elts:=StructuralCopy(R!.elts),
+                group:=StructuralCopy(R!.group),
                 properties:=
                    [["length",EvaluateProperty(R,"length")],
                     ["reduced",EvaluateProperty(R,"reduced")],
                     ["type","resolution"],
                     ["characteristic",EvaluateProperty(R,"characteristic")]  ]));
+
+if R!.homotopy=fail then
+Unbind(R);
+fi;
 
 return CR;
 
@@ -362,7 +426,7 @@ end);
 InstallGlobalFunction(HAPTietzeReduction_Inf,
 function(arg)
 local R,bound, T, s;
-R:=arg[1];
+R:=StructuralCopy(arg[1]);
 if Length(arg)=2 then bound:=arg[2]; else bound:=infinity; fi;
 
 T:=R;

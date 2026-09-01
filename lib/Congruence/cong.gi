@@ -15,10 +15,10 @@ if H=SL(2,Integers) then
    if HAP_transversalmethodtoggle then
        return HAP_TransversalCongruenceSubgroupInAmbientGroup(H,HH);
    else
-       return HAP_RightTransversalSL2ZSubgroups_alt(H,HH); #Works well!
+       return HAP_RightTransversalSLnZSubgroups_alt(H,HH); #Works well!
    fi;
 else
-   return HAP_RightTransversalSL2ZSubgroups(H,HH);
+   return HAP_RightTransversalSLnZSubgroups(H,HH);
 fi;
 end);
 ############################################################
@@ -28,16 +28,20 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_TransversalCongruenceSubgroupInAmbientGroup,
 function(G,H)
-local poscan;
+local poscan, bool;
 
-if not IsBound(H!.transversal) then
+bool:=IsBound(H!.transversal);
+if bool then bool:= not (H!.transversal = fail); fi;
+
+#if not IsBound(H!.transversal) then
+if not bool then 
 return HAP_TransversalCongruenceSubgroupInAmbientGroupSlow(G,H);
 fi;
 
 poscan:=function(g); return H!.cosetPos(g^-1); end;
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
                subgroup := H,
@@ -117,7 +121,7 @@ end;
 ####################################################
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
                subgroup := H,
@@ -130,12 +134,13 @@ end);
 
 ############################################################
 ############################################################
-InstallGlobalFunction(HAP_RightTransversalSL2ZSubgroups,
+InstallGlobalFunction(HAP_RightTransversalSLnZSubgroups,
 function(H,HH)
 local F, RHH, poscan, G; 
 
 G:=SL(2,Integers);
-RHH:=HAP_RightTransversalSL2ZSubgroups(HAP_CongruenceSubgroupGamma0(1),HH);
+#RHH:=HAP_RightTransversalSLnZSubgroups(HAP_CongruenceSubgroupGamma0(1),HH);
+RHH:=RightTransversal(HAP_CongruenceSubgroupGamma0(1),HH);
 F:=Filtered(RHH,x->x in H);
 
 poscan:=function(g)
@@ -147,7 +152,7 @@ od;
 end;
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := H,
                subgroup := HH,
@@ -161,7 +166,7 @@ end);
 ###########################################################
 InstallOtherMethod(PositionCanonical,
 "for HapRightTransversals of subrougs in SL(2,Z) or SL(2,O)",
-[IsHapRightTransversalSL2ZSubgroup,IsObject],
+[IsHapRightTransversalSLnZSubgroup,IsObject],
 function(R,x)
 return R!.poscan(x);
 end);

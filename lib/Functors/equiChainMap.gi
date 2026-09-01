@@ -2,8 +2,10 @@
 
 #####################################################################
 InstallGlobalFunction(EquivariantChainMap,
-function(R,S,f)
+#function(R,S,f)
+function(arg)
 local 
+        R,S,f,f_0,
 	HomotopyS, EltsQ, 
 	DimensionR,BoundaryR, EltsG, Mult,
 	GhomQ, 			#Let f:G-->Q
@@ -14,6 +16,17 @@ local
 	Multmat,
         IDEL,
 	N,m,i,j,g,AlgRed;
+
+R:=arg[1];
+S:=arg[2];
+f:=arg[3];
+
+if Length(arg)=4 then f_0:=arg[4];
+else f_0:=function(i) return 1; end;  #this is good for resolutions of Z
+fi;
+#Here f_0(i) returns the vertex [j,g] to which vertex i is sent, 
+#where j could be negative but i is assumed positive. At some point
+#we might want to allow f(i) to be a word.
 
 N:=Minimum(EvaluateProperty(R,"length"),EvaluateProperty(S,"length"));
 HomotopyS:=S!.homotopy;
@@ -132,8 +145,8 @@ fi;
 return y;
 fi;
    if m=0 then 
-   u:=[[SignInt(x[1]),GhomQ(x[2])]]; 
-   #u:=[[x[1],GhomQ(x[2])]];   #Changed August 2026
+   #u:=[[SignInt(x[1]),GhomQ(x[2])]]; 
+   u:=[[SignInt(x[1])*f_0(AbsInt(x[1])),GhomQ(x[2])]];   #Changed August 2026
       if x[1]>0 then
       mapgensRec[m+1][x[1]][x[2]]:=u;
       else

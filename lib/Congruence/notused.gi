@@ -37,7 +37,7 @@ end;
 ##########################################
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
                subgroup := H,
@@ -97,7 +97,7 @@ return PositionCanonical(R,ImagesRepresentative(epi2,x));
 end;
 ##########################################
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
                subgroup := H,
@@ -111,7 +111,7 @@ fi;
 
 ############################################################
 ############################################################
-InstallGlobalFunction(HAP_RightTransversalSL2ZSubgroups_alt,
+InstallGlobalFunction(HAP_RightTransversalSLnZSubgroups_alt,
 function(H,HH)
 local F, rels, S, T, G, FhomG, Q, gensQ, epi, ElementToWord,
 gensH, gensHH, QH, QHH, R, R1, R2, s, t, poscan, iso;
@@ -250,7 +250,7 @@ end;
 #####################################################
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := H,
                subgroup := HH,

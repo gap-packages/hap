@@ -184,6 +184,7 @@ end;
 #####################################################
 
 Unbind(tree[1]);
+G!.tree:=tree;   #Added August 2026
 genTriples:=List(genTriples,x->triple2word(x));
 genTriples:=Concatenation(genTriples);
 genTriples:=List(genTriples,x->Minimum(x,x^-1));

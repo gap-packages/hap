@@ -994,8 +994,19 @@ InstallOtherMethod(ContractedComplex,
 "contracted  free ZG-resolution",
 [IsHapResolution],
 function(R)
-return
-TietzeReducedResolution(R);
+return HAPTietzeReduction_Inf(R);
+#TietzeReducedResolution(R);
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  free ZG-resolution",
+[IsHapResolution,IsInt],
+function(R,r)
+return HAPTietzeReduction_Inf(R,r);
 end);
 ##########################################################
 ##########################################################

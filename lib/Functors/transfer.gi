@@ -114,10 +114,10 @@ end);
 #####################################################
 InstallGlobalFunction(TransferChainMap,
 function(R,H)
-local S,CR,CS, T, TT, fn, SS,map, HhomH, TietzeReduced;
+local S,CR,CS, T, TT, fn, fnn,SS,map, HhomH, TietzeReduced;
 
 TietzeReduced:=function(R) return R; end;
-TietzeReduced:=TietzeReducedResolution;
+#TietzeReduced:=TietzeReducedResolution;  #Aug 2026
 S:=ResolutionFiniteSubgroup(R,H);;
 CR:=TensorWithIntegers(R);;
 CS:=TensorWithIntegers(S);;
@@ -148,7 +148,8 @@ T:=Objectify(HapChainMap,
            ));
 SS:=TietzeReduced(S);;
 HhomH:=GroupHomomorphismByFunction(H,H,x->x);
-map:=EquivariantChainMap(S,SS,HhomH);;
+fnn:=function(i) return i; end;
+map:=EquivariantChainMap(S,SS,HhomH,fnn);;
 map:=TensorWithIntegers(map);
 TT:=Compose(map,T);
 TT!.resH:=SS;

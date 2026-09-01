@@ -282,6 +282,7 @@ function(n,m)
 
     G!.cosetRep := CosetRep;   
     G!.cosetPos := CosetPos;   
+    G!.ambientGroup:=sl;
     G!.ambientGenerators:=[S,S*U];
     G!.transversal:=List([1..Length(ProjLine)],i->CosetOfInt(i)^-1);
 
@@ -304,7 +305,11 @@ function(G)
     if not (G!.dimension = 2 and G!.ringOfIntegers = Integers) then
         TryNextMethod();
     fi;
+if not G!.cosetPos=fail then
     HAP_SL2ZSubgroupTree_fast(G);
+else
+    HAP_SL2ZSubgroupTree_slow(G);
+fi;
 end);
 ###################################################################
 ###################################################################
@@ -313,17 +318,30 @@ end);
 ###################################################################
 
 InstallOtherMethod( RightTransversal,
-"Right transversal of congruence subgroup G in SL(2,Z)",
+"Right transversal of congruence subgroup G in SL(n,Z)",
 [IsMatrixGroup, IsHapCongruenceSubgroup],
 100000,
 function(G,H)
-    if not (H!.dimension = 2 and Name(G) = "SL(2,Integers)") then
-        TryNextMethod();
+local T;
+    if not (IsHapCongruenceSubgroup(G) 
+            or Name(G) = "SL(2,Integers)" 
+            or Name(G)="SL(3,Integers)") 
+    then TryNextMethod();
     fi;
 
-    #HAPCongruenceSubgroupTree(H);
+    T:=HAP_TransversalCongruenceSubgroupInAmbientGroup(H!.ambientGroup,H);
 
-    return HAP_TransversalCongruenceSubgroupInAmbientGroup(G,H);
+    if G=H!.ambientGroup then 
+        return T;
+    fi;
+
+    if IsSubgroup(G,H) then
+  
+ 
+    fi;
+
+    TryNextMethod();
+
 end);
 ###################################################################
 ###################################################################
@@ -419,6 +437,7 @@ function(n,m)
     G!.cosetRep := CosetRep;  
     G!.cosetPos := CosetPos;  
     G!.ambientGenerators:=[S,T,U];
+    G!.ambientGroup:=sl;
     G!.transversal:=List([1..Length(ProjPlane.Reps)],i->CosetOfInt(i)^-1);
 
     G := ObjectifyWithAttributes(G, TypeObj(G),
@@ -433,7 +452,11 @@ InstallMethod(HAPCongruenceSubgroupTree,
 [IsHapCongruenceSubgroup],
 function(G)
 if not (G!.dimension=3 and G!.ringOfIntegers=Integers) then TryNextMethod(); fi;
-HAP_SL3ZSubgroupTree_fast(G);
+if not G!.cosetPos=fail then
+    HAP_SL3ZSubgroupTree_fast(G);
+else
+    HAP_SL2ZSubgroupTree_slow(G);
+fi;
 end);
 
 InstallOtherMethod(\in,
@@ -453,17 +476,49 @@ HAPCongruenceSubgroupTree(G);
 return  G!.GeneratorsOfMagmaWithInverses;
 end);
 
-InstallOtherMethod( RightTransversal,
-"Right transversal of congruence subgroup G in SL(3,Z)",
-[IsMatrixGroup, IsHapCongruenceSubgroup],
-1000000,
-function(G,H)
-    if not (H!.dimension = 3 and Name(G) = "SL(3,Integers)") then
-        TryNextMethod();
-    fi;
+#################################################################################################
+#################################################################################################
+InstallMethod( HAPIntersectionConjugatedCongruenceSubgroup,
+"for SL(3,Z)",
+[IsHapCongruenceSubgroup, IsMatrix],
+function(H,g)
+    local G,gg,membership,membershipLight;
 
-    #HAPCongruenceSubgroupTree(H);
+    G  := HAP_GenericCongruenceSubgroup("any name", H!.DimensionOfMatrixGroup, H!.ringOfIntegers, fail);
+    G!.fam:=H!.fam;
 
-    return HAP_TransversalCongruenceSubgroupInAmbientGroup(G,H);
+    gg:=g^-1;
+    membership := function(x) return H!.membership(x) and H!.membership(x^gg); end;
+
+    membershipLight := function(x) return H!.membershipLight(x) and H!.membershipLight(x^gg); end; 
+
+    G!.membership := membership;
+    G!.membershipLight := membership;   #NOTE!!
+    G!.level := fail;
+    G!.name := "Intersection Of Congruence Subgroups";
+
+    G!.cosetRep := fail;
+    G!.cosetPos := fail;
+    G!.ambientGenerators:= H!.ambientGenerators;
+    G!.ambientGroup:= H!.ambientGroup;
+    G!.transversal:= fail;
+
+    G := ObjectifyWithAttributes(G, TypeObj(H),
+        IsIntegerMatrixGroup, true,
+        IsFinite, false);
+
+    HAP_TransversalCongruenceSubgroupInAmbientGroupSlow(G!.ambientGroup,G);
+
+    return G;
 end);
 
+################################################
+################################################
+InstallOtherMethod(IndexNC,
+"index for HapCongruenceSubgroups",
+[IsMatrixGroup,IsHapCongruenceSubgroup],
+function(G,H);
+return Length(RightTransversal(G,H));
+end);
+################################################
+################################################

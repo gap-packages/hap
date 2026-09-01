@@ -41,7 +41,7 @@ fi;
 ##########################################################
 
 ##########################################################
-if IsHapChainMap(R) then
+if IsHapChainMap(R) then  #changed August 2026
 C:=TensorWithRationals(Source(R));
 D:=TensorWithRationals(Target(R));
 map:=R!.mapping;
@@ -54,6 +54,12 @@ Objectify(HapChainMap,
             properties:=
             [["type","chainMap"],
              ["characteristic", -1/2]]));
+fi;
+##########################################################
+
+########################################################## Added Aug 2026
+if IsHapEquivariantChainMap(R) then
+return TensorWithRationals(TensorWithIntegers(R));
 fi;
 ##########################################################
 

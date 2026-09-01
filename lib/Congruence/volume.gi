@@ -27,7 +27,7 @@ InstallOtherMethod(IsomorphismFpGroup,
 1000000,#Again, there must be a better way
 function(H)
 local QH, epi, ElementToWord, iso;
-QH:=HAP_RightTransversalSL2ZSubgroups_alt(H,false);
+QH:=HAP_RightTransversalSLnZSubgroups_alt(H,false);
 iso:=IsomorphismFpGroup(QH);
 epi:=QH!.epimorphism;
 ElementToWord:=QH!.ElementToWord;
@@ -44,7 +44,7 @@ InstallOtherMethod(AbelianInvariants,
 [IsHapSL2ZSubgroup],
 1000000,#Again, there must be a better way
 function(H)
-return AbelianInvariants(HAP_RightTransversalSL2ZSubgroups(H,false));
+return AbelianInvariants(HAP_RightTransversalSLnZSubgroups(H,false));
 end);
 ##################################
 

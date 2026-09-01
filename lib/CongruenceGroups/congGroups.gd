@@ -192,4 +192,12 @@ DeclareOperation( "IntersectionWithConjugate", [ IsHAPCongruenceSubgroup, IsMatr
      ViewObj(R!.subgroup); Print(" in "); ViewObj(R!.group);Print(" . \n");
      end);
 
+DeclareGlobalFunction("VoronoiGenerators");
+DeclareGlobalFunction("VoronoiBaseMatrix");
+DeclareGlobalFunction("MatrixFromWord");
+DeclareGlobalFunction("VoronoiReduce");
+DeclareGlobalFunction("VoronoiFactorize");
+DeclareGlobalFunction("VoronoiCoordinates");
+DeclareGlobalFunction("VoronoiWord");
+DeclareGlobalFunction("VoronoiBuildStabilizer");
 

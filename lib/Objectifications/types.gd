@@ -660,24 +660,24 @@ end);
 
 #####################################################################
 #####################################################################
-IsHapRightTransversalSL2ZSubgroup:=NewFilter("IsHapRightTransversalSL2ZSubgroup");;
+IsHapRightTransversalSLnZSubgroup:=NewFilter("IsHapRightTransversalSLnZSubgroup");;
 
-HapRightTransversalSL2ZSubgroup:=NewType(FamilyObj(rec()),
-                   IsHapRightTransversalSL2ZSubgroup
+HapRightTransversalSLnZSubgroup:=NewType(FamilyObj(rec()),
+                   IsHapRightTransversalSLnZSubgroup
                    and IsList
                    );;
 
 InstallMethod( ViewObj,
-"for HapRightTransversalSL2ZSubgroup",
-[IsHapRightTransversalSL2ZSubgroup],
+"for HapRightTransversalSLnZSubgroup",
+[IsHapRightTransversalSLnZSubgroup],
 function(R)
 Print("Transversal of "); 
   ViewObj(R!.subgroup); Print(" in "); ViewObj(R!.group);Print(" . \n");
  end);
 
 InstallMethod( PrintObj,
-"for HapTransversalSL2ZSubgroup",
-[IsHapRightTransversalSL2ZSubgroup],
+"for HapTransversalSLnZSubgroup",
+[IsHapRightTransversalSLnZSubgroup],
 function(R)
 Print("Transversal of ");
   ViewObj(R!.subgroup); Print(" in "); ViewObj(R!.group);Print(" . \n");

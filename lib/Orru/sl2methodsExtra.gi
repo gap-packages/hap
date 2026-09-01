@@ -216,7 +216,7 @@ InstallMethod(AmbientRepresentation,
         transversal := List([1..Length(ProjLine)],i->cosetOfInt(i)^-1);
 
         return Objectify( NewType( FamilyObj( GG ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
                     rec( group := GG,
                          subgroup := G,

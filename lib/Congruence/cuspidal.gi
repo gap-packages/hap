@@ -16,11 +16,13 @@ return fail;
 fi;
 
 P:=ContractibleGcomplex("BorelSerreSL2Z");;
+P!.group:=P!.originalGroup;
 R:=FreeGResolution(P,N+1);;
 R!.group:=HAP_CongruenceSubgroupGamma0(1);   #Dec 2025
 S:=ResolutionFiniteSubgroup(R,H);;
 
-B:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;B!.group:=P!.group;;
+B:=ContractibleGcomplex("BorelSerreBoundarySL2Z");;
+B!.group:=P!.group;;
 RB:=FreeGResolution(B,N+1);;
 RB!.group:=R!.group;     #Dec 2025
 SB:=ResolutionFiniteSubgroup(RB,H);;
@@ -30,7 +32,7 @@ eqmap:=EquivariantChainMap(SB,S,f);;
 
 #t:=Length(H!.tree);  #Not true!!!!!
 t:=SB!.dimension(0);
-   fn:=function(x)
+   fn:=function(x)          #This is messy!! Needs to be coded more robustly 
    if AbsInt(x[1])<=t then
       return [SignInt(x[1])*(AbsInt(x[1])+t),x[2]];
    else 
@@ -54,7 +56,7 @@ eqmap2:=EquivariantChainMap(S,T,f);
 
 A:=HomogeneousPolynomials(R!.group,k);
 cmap1:=HomToIntegralModule(eqmap,A);
-#return Cohomology(cmap1,N);
+#Print(Cohomology(cmap1,N),"\n");;
 cmap2:=HomToIntegralModule(eqmap2,A);
 cmap:=Compose(cmap1,cmap2);
 #return cmap;

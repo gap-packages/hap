@@ -10,6 +10,7 @@ DeclareGlobalFunction("HAP_FiniteProjectivePlaneIntegers");
 DeclareGlobalFunction("HAP_SL3ZSubgroupTree_fast");
 DeclareOperation("HAPCongruenceSubgroupGamma0",[IsInt,IsInt]);
 DeclareOperation("HAPCongruenceSubgroupGamma0_alt",[IsInt,IsInt]);
+DeclareOperation("HAPIntersectionConjugatedCongruenceSubgroup",[IsHapCongruenceSubgroup,IsMatrix]);
 DeclareOperation("HAPCongruenceSubgroupTree",[IsHapCongruenceSubgroup]);
 DeclareGlobalFunction("Gamma0_SL3ZTopRationalHomology");
 

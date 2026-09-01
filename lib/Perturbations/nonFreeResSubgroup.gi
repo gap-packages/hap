@@ -33,7 +33,7 @@ end;
 ####################
 
 return Objectify( NewType( FamilyObj( G ),
-                    IsHapRightTransversalSL2ZSubgroup and IsList and
+                    IsHapRightTransversalSLnZSubgroup and IsList and
                     IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
                subgroup := H,

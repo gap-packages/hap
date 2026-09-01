@@ -6,8 +6,8 @@ HAP_GCOMPLEX_SETUP:=[true];
 InstallGlobalFunction(ContractibleGcomplex,
 function(groupname)
 local
-	C, 
-        G, StabilizerGroups, Stabilizer,
+	C,K, 
+        G, StabilizerGroups, Stabilizer, Goriginal,
         lnth,
         dims,Dimension,
         Boundary,
@@ -178,12 +178,13 @@ return ActionRecord[n+1][abk][g];
 end;
 ####################
 
-if name="SL2Z" or name="BorelSerreSL2Z" or name="BorelSerreBoundarySL2Z" then G:=SL(2,Integers); fi;
+if name="SL2Z" or name="BorelSerreSL2Z" or name="BorelSerreBoundarySL2Z" 
+then Goriginal:=G; G:=SL(2,Integers); fi;
 if name="SL3Zs" or name="SL3Za" then G:=SL(3,Integers); fi;
 if name="SL4Z" or name="SL4Z_b" or name="SL4Z_c" or name="SL4Z_d" then G:=SL(4,Integers); fi;
 SetName(G,"matrix group");
 
-return Objectify(HapNonFreeResolution,
+K:= Objectify(HapNonFreeResolution,
             rec(
             dimension:=Dimension,
             boundary:=Boundary,
@@ -197,7 +198,10 @@ return Objectify(HapNonFreeResolution,
              ["characteristic",0],
              ["type","resolution"],
              ["reduced",true]]  ));
-
+if IsBound(Goriginal) then
+            K!.originalGroup:=Goriginal;
+fi;
+return K;
 end);
 ################################################
 ################################################
