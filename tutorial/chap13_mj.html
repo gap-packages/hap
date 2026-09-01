@@ -87,7 +87,10 @@ generators for congruence subgroups</span></a>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13_mj.html#X7C25329D8625A428">13.18 <span class="Heading">Generators and relators for <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span></span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7D884B3A7A4E5DA4">13.18-1 <span class="Heading">Expressing elements of <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> as words in generators</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>13 <span class="Heading">Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</span></h3>
@@ -1576,7 +1579,7 @@ ideal of norm 13381 in O(GaussianRationals)
 
 <p>The next commands produce a <span class="SimpleMath">\(2\)</span>-generator presentation on the generators</p>
 
-<p><span class="SimpleMath">\(h=\left(\begin{array}{rrr} 1 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; -1\\ 0 &amp; 1 &amp; 1 \end{array}\right),\)</span> <span class="SimpleMath">\(m=\left(\begin{array}{rrr} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp;-0 \end{array}\right) \)</span> of orders <span class="SimpleMath">\(6\)</span> and <span class="SimpleMath">\(3\)</span>.</p>
+<p><span class="SimpleMath">\(h=\left(\begin{array}{rrr} 1 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; -1\\ 0 &amp; 1 &amp; 1 \end{array}\right),\)</span> <span class="SimpleMath">\(m=\left(\begin{array}{rrr} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0 \end{array}\right) \)</span> of orders <span class="SimpleMath">\(6\)</span> and <span class="SimpleMath">\(3\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -1605,6 +1608,70 @@ h^2*m^-1*h)^2*(m*h^-1)^2*h^-1*m*h^2*(h*m^-1)^3*h^-2 ]
   [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(gens,Order);</span>
 [ 6, 3 ]
+
+</pre></div>
+
+<p><a id="X7D884B3A7A4E5DA4" name="X7D884B3A7A4E5DA4"></a></p>
+
+<h5>13.18-1 <span class="Heading">Expressing elements of <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> as words in generators</span></h5>
+
+<p>The generating matrices <span class="SimpleMath">\(x,y,z\)</span> for <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> given in Section <a href="chap13_mj.html#X7C25329D8625A428"><span class="RefLink">13.18</span></a> arise from the <span class="SimpleMath">\(1\)</span>-skeleton of the CW-complex underlying the resolution constructed by applying <code class="code">R:=FreeGResolution(K,2)</code> to the well-rounded retract <span class="SimpleMath">\(K\)</span> for <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span>. The retract is stored in the file <code class="code">"SL3Za"</code> and accessed using <code class="code">K:=ContractibleGcomplex("SL3(Z)")</code>. For certain computations we need to express an element <span class="SimpleMath">\(w \in SL_3(\mathbb Z)\)</span> as a word in the generators.</p>
+
+<p>One naive approach is to use gaussian elimination to first express <span class="SimpleMath">\(w\)</span> as a product of elementary matrices <span class="SimpleMath">\(E_{ij}(1)\)</span>, <span class="SimpleMath">\(E_{ij}(-1)\)</span> with <span class="SimpleMath">\(\pm 1\)</span> in the <span class="SimpleMath">\(ij\)</span>-position, and then replace each elementary matrix by its expression as a word in <span class="SimpleMath">\(x,y,z\)</span>. This is easy to implement, but obvously produces unnecessarily long expressions for <span class="SimpleMath">\(w\)</span>.</p>
+
+<p>A better approach is to use the six generators</p>
+
+<p><span class="SimpleMath">\(g_1=\left(\begin{array}{rrr} -1 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0 \end{array}\right) \)</span> <span class="SimpleMath">\(g_2=\left(\begin{array}{rrr} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; -1\\ 0 &amp; 1 &amp; 1 \end{array}\right) \)</span> <span class="SimpleMath">\(g_3=\left(\begin{array}{rrr} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp;-1 \end{array}\right) \)</span> <span class="SimpleMath">\(g_4=\left(\begin{array}{rrr} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0 \end{array}\right) \)</span> <span class="SimpleMath">\(g_5=\left(\begin{array}{rrr} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0 \end{array}\right) \)</span> <span class="SimpleMath">\(g_6=\left(\begin{array}{rrr} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1\\ 1 &amp; 1 &amp; 0 \end{array}\right) \)</span></p>
+
+<p>for <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> corresponding to the six 'facet pairings' of the Voronoi domain (whose closure is a <span class="SimpleMath">\(6\)</span>-dimensional simplex) and then to use Voronoi reduction in place of gaussian elimination. The following code uses this technique to express our previous generators in terms of the <span class="SimpleMath">\(g_i\)</span>:</p>
+
+<p><span class="SimpleMath">\(x= g_3g_1^{-1}g_2^2g_1g_3^{-1}g_5^{-1}g_3^{-2}g_1^{-1}g_2^{-1}g_4^{-1}\)</span>,</p>
+
+<p><span class="SimpleMath">\(y = g_3g_1^{-1}g_2^2g_1g_3^{-1}g_5^{-1}g_3^{-1}g_4^{-1}g_1^{-1}g_3^{-1}\)</span>,</p>
+
+<p><span class="SimpleMath">\(z= g_3g_1^{-1}g_2^2g_1g_3^{-1}g_1^{-1}ig_3^{-1}\)</span>,</p>
+
+<p><span class="SimpleMath">\(h= g_2^2g_3g_1^{-1}g_6^{-1}\)</span>,</p>
+
+<p><span class="SimpleMath">\(m=g_6^{-1}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=[ [ 1, 0, 0 ], [ 1, -1, 0 ], [ -4, 0, -1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=[ [ 2, 1, 1 ], [ 1, 1, 1 ], [ -3, -3, -2 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z:=[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ -2, -2, -1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, 1, 1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=[ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpressVoronoi(x);</span>
+[ 3, -1, 2, 2, 1, -3, -5, -3, -3, -1, -3, -1, -2, -4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpressVoronoi(y);</span>
+[ 3, -1, 2, 2, 1, -3, -5, -3, -4, -1, -3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpressVoronoi(z);</span>
+[ 3, -1, 2, 2, 1, -3, -1, -3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpressVoronoi(h);</span>
+[ 2, 2, 3, -1, -6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExpressVoronoi(m);</span>
+[ -5 ]
+
+</pre></div>
+
+<p>The following code shows that Voronoi reduction expresses a particular random product of 1000 generators <span class="SimpleMath">\(g_i\)</span> as a word of length 538 in the <span class="SimpleMath">\(g_i\)</span> and <span class="SimpleMath">\(g_i^{-1}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..1000] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(w,Random([1..6]));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=MatrixFromWord(w);</span>
+[ [ 129544252430656961733, -83317615193381732324, 48467576091151784350 ], 
+  [ -377403267642219303008, 242730492755523469964, -141201336595692779417 ], 
+  [ -439197848417580645041, 282474263748635300169, -164321108330481602174 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:=ExpressVoronoi(m);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(e);</span>
+538
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MatrixFromWord(e)=m;</span>
+true
 
 </pre></div>
 

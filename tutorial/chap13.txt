@@ -1854,7 +1854,7 @@
   [33X[0;0YThe next commands produce a [22X2[122X-generator presentation on the generators[133X
   
   [33X[0;0Y[22Xh=(beginarrayrrr  1 & 0 & 0 0 & 0 & -1 0 & 1 & 1 endarray),[122X [22Xm=(beginarrayrrr
-  0 & 0 & 1 1 & 0 & 0 0 & 1 &-0 endarray)[122X of orders [22X6[122X and [22X3[122X.[133X
+  0 & 0 & 1 1 & 0 & 0 0 & 1 & 0 endarray)[122X of orders [22X6[122X and [22X3[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
@@ -1882,6 +1882,86 @@
     [4X[28X  [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ] ][128X[104X
     [4X[25Xgap>[125X [27XList(gens,Order);[127X[104X
     [4X[28X[ 6, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.18-1 [33X[0;0YExpressing elements of [22XSL_3( Z)[122X[101X[1X as words in generators[133X[101X
+  
+  [33X[0;0YThe generating matrices [22Xx,y,z[122X for [22XSL_3( Z)[122X given in Section [14X13.18[114X arise from
+  the  [22X1[122X-skeleton  of  the CW-complex underlying the resolution constructed by
+  applying [10XR:=FreeGResolution(K,2)[110X to the well-rounded retract [22XK[122X for [22XSL_3( Z)[122X.
+  The   retract   is   stored   in   the   file  [10X"SL3Za"[110X  and  accessed  using
+  [10XK:=ContractibleGcomplex("SL3(Z)")[110X.  For  certain  computations  we  need  to
+  express an element [22Xw ∈ SL_3( Z)[122X as a word in the generators.[133X
+  
+  [33X[0;0YOne  naive  approach  is to use gaussian elimination to first express [22Xw[122X as a
+  product   of   elementary  matrices  [22XE_ij(1)[122X,  [22XE_ij(-1)[122X  with  [22X±  1[122X  in  the
+  [22Xij[122X-position,  and then replace each elementary matrix by its expression as a
+  word   in   [22Xx,y,z[122X.   This  is  easy  to  implement,  but  obvously  produces
+  unnecessarily long expressions for [22Xw[122X.[133X
+  
+  [33X[0;0YA better approach is to use the six generators[133X
+  
+  [33X[0;0Y[22Xg_1=(beginarrayrrr   -1  &  0  &  1  1  &  0  &  0  0  &  1  &  0  endarray)[122X
+  [22Xg_2=(beginarrayrrr   0  &  0  &  1  1  &  0  &  -1  0  &  1  &  1  endarray)[122X
+  [22Xg_3=(beginarrayrrr   0   &   1  &  0  0  &  0  &  1  1  &  0  &-1  endarray)[122X
+  [22Xg_4=(beginarrayrrr   0   &  0  &  1  1  &  0  &  0  0  &  1  &  0  endarray)[122X
+  [22Xg_5=(beginarrayrrr   0   &  1  &  0  0  &  0  &  1  1  &  0  &  0  endarray)[122X
+  [22Xg_6=(beginarrayrrr 0 & 1 & 0 0 & 0 & 1 1 & 1 & 0 endarray)[122X[133X
+  
+  [33X[0;0Yfor [22XSL_3( Z)[122X corresponding to the six 'facet pairings' of the Voronoi domain
+  (whose closure is a [22X6[122X-dimensional simplex) and then to use Voronoi reduction
+  in  place of gaussian elimination. The following code uses this technique to
+  express our previous generators in terms of the [22Xg_i[122X:[133X
+  
+  [33X[0;0Y[22Xx= g_3g_1^-1g_2^2g_1g_3^-1g_5^-1g_3^-2g_1^-1g_2^-1g_4^-1[122X,[133X
+  
+  [33X[0;0Y[22Xy = g_3g_1^-1g_2^2g_1g_3^-1g_5^-1g_3^-1g_4^-1g_1^-1g_3^-1[122X,[133X
+  
+  [33X[0;0Y[22Xz= g_3g_1^-1g_2^2g_1g_3^-1g_1^-1ig_3^-1[122X,[133X
+  
+  [33X[0;0Y[22Xh= g_2^2g_3g_1^-1g_6^-1[122X,[133X
+  
+  [33X[0;0Y[22Xm=g_6^-1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx:=[ [ 1, 0, 0 ], [ 1, -1, 0 ], [ -4, 0, -1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xy:=[ [ 2, 1, 1 ], [ 1, 1, 1 ], [ -3, -3, -2 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xz:=[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ -2, -2, -1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xh:=[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, 1, 1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xm:=[ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27XExpressVoronoi(x);[127X[104X
+    [4X[28X[ 3, -1, 2, 2, 1, -3, -5, -3, -3, -1, -3, -1, -2, -4 ][128X[104X
+    [4X[25Xgap>[125X [27XExpressVoronoi(y);[127X[104X
+    [4X[28X[ 3, -1, 2, 2, 1, -3, -5, -3, -4, -1, -3 ][128X[104X
+    [4X[25Xgap>[125X [27XExpressVoronoi(z);[127X[104X
+    [4X[28X[ 3, -1, 2, 2, 1, -3, -1, -3 ][128X[104X
+    [4X[25Xgap>[125X [27XExpressVoronoi(h);[127X[104X
+    [4X[28X[ 2, 2, 3, -1, -6 ][128X[104X
+    [4X[25Xgap>[125X [27XExpressVoronoi(m);[127X[104X
+    [4X[28X[ -5 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  code  shows  that  Voronoi  reduction expresses a particular
+  random product of 1000 generators [22Xg_i[122X as a word of length 538 in the [22Xg_i[122X and
+  [22Xg_i^-1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xw:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..1000] do[127X[104X
+    [4X[25X>[125X [27XAdd(w,Random([1..6]));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xm:=MatrixFromWord(w);[127X[104X
+    [4X[28X[ [ 129544252430656961733, -83317615193381732324, 48467576091151784350 ], [128X[104X
+    [4X[28X  [ -377403267642219303008, 242730492755523469964, -141201336595692779417 ], [128X[104X
+    [4X[28X  [ -439197848417580645041, 282474263748635300169, -164321108330481602174 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xe:=ExpressVoronoi(m);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(e);[127X[104X
+    [4X[28X538[128X[104X
+    [4X[25Xgap>[125X [27XMatrixFromWord(e)=m;[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
