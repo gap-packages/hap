@@ -3,7 +3,7 @@
   
   [33X[0;0YIn  this  chapter  we  explain  how HAP can be used to make computions about
   modular  forms  associated  to  congruence subgroups [22XΓ[122X of [22XSL_2( Z)[122X. Also, in
-  Subsection  10.8  onwards,  we  demonstrate  cohomology computations for the
+  [14X13.11[114X  onwards  and  in  [14X7.4[114X, we demonstrate cohomology computations for the
   [13XPicard  group[113X [22XSL_2( Z[i])[122X, some [13XBianchi groups[113X [22XPSL_2(cal O_-d)[122X where [22Xcal O_d[122X
   is the ring of integers of [22XQ(sqrt-d)[122X for square free positive integer [22Xd[122X, and
   some  other  groups  of  the  form  [22XSL_m(cal  O)[122X, [22XGL_m(cal O)[122X, [22XPSL_m(cal O)[122X,
@@ -1982,4 +1982,72 @@
     [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YThe  following is a histogram of the lengths of the Voronoi factorization of
+  [22X5000[122X  matrices,  each matrix being a product of [22X5000[122X random generators [22Xg_i^±
+  1[122X.  In all but a handful of cases the factorization is of length [22X≤ 5000[122X. The
+  code  used  to  produce  it is below. An analogous histogram for matrices in
+  [22XSL_2( Z)[122X is also shown.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SL(3,Integers);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [1..5000] do[127X[104X
+    [4X[25X>[125X [27Xw:=[];;[127X[104X
+    [4X[25X>[125X [27Xfor i in [1..5000] do[127X[104X
+    [4X[25X>[125X [27XAdd(w,Random(Concatenation([-6..-1],[1..6])));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25X>[125X [27Xm:=MatrixFromWord(VoronoiGenerators(G),w);[127X[104X
+    [4X[25X>[125X [27Xe:=VoronoiFactorize(G,m);;[127X[104X
+    [4X[25X>[125X [27XAdd(L,Length(e));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XL:=SortedList(L);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=List([1..Length(L)],i->[i,L[i]]);;[127X[104X
+    [4X[25Xgap>[125X [27XScatterPlot(L);[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.18-2 [33X[0;0YRecap on Voronoi reduction[133X[101X
+  
+  [33X[0;0YUp  to  [22XGL_3(  Z)[122X-equivalence there is just one perfect form in dimension [22X3[122X,
+  namely [22Xv^tP_0v[122X represented by[133X
+  
+  [33X[0;0Y[22XP_0=(beginarrayrrr  2  &  -1  &  0  -1  &  2  &  -1  0  &  -1 & 2 endarray),
+  v=(beginarrayrrr x y z endarray).[122X[133X
+  
+  [33X[0;0YIts   [22X12[122X   minimal  vectors  are  [22Xv_1=e_1[122X,  [22Xv_2=e_2[122X,  [22Xv_3=e_3[122X,  [22Xv_4=e_1+e_2[122X,
+  [22Xv_5=e_2+e_3[122X, [22Xv_6=e_1+e_2+e_3[122X and their inverses, with [22Xe_i[122X the standard basis
+  vectors. The fundamental Voronoi cone in the space of [22X3× 3[122X positive-definite
+  symmetric  matrices  has  closure  [22XC_0=  R_≥  0 R_1 + ⋯ + R_≥ 0 R_6[122X with six
+  extreme rays corresponding to [22XR_i=v_i v_i^t[122X. Any positive-definite symmetric
+  matrix [22XQ=(q_ij)[122X can be expressed[133X
+  
+  [33X[0;0Y[22XQ=c_1R_1 +⋯ c_6R_6[122X[133X
+  
+  [33X[0;0Ywith [22Xc_i=c_i(Q)[122X given by[133X
+  
+  [33X[0;0Y[22Xbeginarrayll    c_1=q_11-q_12,    c_2=q_22-q_12+q_13-q_23,    c_3=q_33-q_23,
+  c_4=q_12-q_13, c_5=q_23-q_13, c_6=q_13 endarray[122X.[133X
+  
+  [33X[0;0YSo [22XQ[122X lies in the cone [22XC_0[122X precisely when [22Xc_1(Q)≥ 0, ..., c_6(Q)≥ 0[122X.[133X
+  
+  [33X[0;0YWe define the [13Xheight[113X of [22XQ[122X to be[133X
+  
+  [33X[0;0Y[22Xht(Q)= c_1(Q) + ⋯ +c_6(Q) = frac12 tr(P_0Q)[122X.[133X
+  
+  [33X[0;0YThe barycentre of the fundamental cone [22XC_0[122X is [22XB_0 = frac16(R_1 +⋯ +R_6)[122X. Our
+  six  generating  matrices [22Xg_1,⋯,g_6[122X are chosen so that [22Xg_i^tB_0g_i[122X lies in a
+  cone  neighbouring  [22XC_0[122X. The facet stabilizers have order [22X4[122X and so there are
+  four  choices  for  each  [22Xg_i[122X.  Our  choice  ensures  that the height of the
+  barycentre  of  a positive-definite symmetric matrix [22XQ[122X can always be reduced
+  by transforming [22XQ[122X to [22Xg_i^tQg_i[122X for at least one [22Xi[122X. The algorithm chooses the
+  [22Xi[122X giving the greatest height reduction.[133X
+  
+  [33X[0;0YNote  1: this discussion and the implementation of [10XVoronoiFactorization[110X uses
+  group  actions on the right. These need to be converted to left actions when
+  the implementation is required to match the convention in HAP resolutions.[133X
+  
+  [33X[0;0YNote 2: the algorithm could be adapted to other groups, including cases with
+  more than one perfect form up to equivalence.[133X
   

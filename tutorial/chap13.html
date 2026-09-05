@@ -87,12 +87,14 @@ generators for congruence subgroups</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D884B3A7A4E5DA4">13.18-1 <span class="Heading">Expressing elements of <span class="SimpleMath">SL_3( Z)</span> as words in generators</span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X79523C637B227329">13.18-2 <span class="Heading">Recap on Voronoi reduction</span></a>
+</span>
 </div></div>
 </div>
 
 <h3>13 <span class="Heading">Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</span></h3>
 
-<p>In this chapter we explain how HAP can be used to make computions about modular forms associated to congruence subgroups <span class="SimpleMath">Γ</span> of <span class="SimpleMath">SL_2( Z)</span>. Also, in Subsection 10.8 onwards, we demonstrate cohomology computations for the <em>Picard group</em> <span class="SimpleMath">SL_2( Z[i])</span>, some <em>Bianchi groups</em> <span class="SimpleMath">PSL_2(cal O_-d)</span> where <span class="SimpleMath">cal O_d</span> is the ring of integers of <span class="SimpleMath">Q(sqrt-d)</span> for square free positive integer <span class="SimpleMath">d</span>, and some other groups of the form <span class="SimpleMath">SL_m(cal O)</span>, <span class="SimpleMath">GL_m(cal O)</span>, <span class="SimpleMath">PSL_m(cal O)</span>, <span class="SimpleMath">PGL_m(cal O)</span>, for <span class="SimpleMath">m=2,3,4</span> and certain <span class="SimpleMath">cal O= Z, cal O_-d</span>.</p>
+<p>In this chapter we explain how HAP can be used to make computions about modular forms associated to congruence subgroups <span class="SimpleMath">Γ</span> of <span class="SimpleMath">SL_2( Z)</span>. Also, in <a href="chap13.html#X8180E53C834301EF"><span class="RefLink">13.11</span></a> onwards and in <a href="chap7.html#X7AFFB32587D047FE"><span class="RefLink">7.4</span></a>, we demonstrate cohomology computations for the <em>Picard group</em> <span class="SimpleMath">SL_2( Z[i])</span>, some <em>Bianchi groups</em> <span class="SimpleMath">PSL_2(cal O_-d)</span> where <span class="SimpleMath">cal O_d</span> is the ring of integers of <span class="SimpleMath">Q(sqrt-d)</span> for square free positive integer <span class="SimpleMath">d</span>, and some other groups of the form <span class="SimpleMath">SL_m(cal O)</span>, <span class="SimpleMath">GL_m(cal O)</span>, <span class="SimpleMath">PSL_m(cal O)</span>, <span class="SimpleMath">PGL_m(cal O)</span>, for <span class="SimpleMath">m=2,3,4</span> and certain <span class="SimpleMath">cal O= Z, cal O_-d</span>.</p>
 
 <p><a id="X79A1974B7B4987DE" name="X79A1974B7B4987DE"></a></p>
 
@@ -1536,7 +1538,7 @@ ideal of norm 13381 in O(GaussianRationals)
 
 </pre></div>
 
-<p><img src="images/primesTorsion.png" align="center" width="1200" alt="graph of torsion versus norm"/></p>
+<p><img src="images/primesTorsion.png" align="center" width="700" alt="graph of torsion versus norm"/></p>
 
 <p><a id="X7C25329D8625A428" name="X7C25329D8625A428"></a></p>
 
@@ -1688,6 +1690,57 @@ true
 
 
 </pre></div>
+
+<p>The following is a histogram of the lengths of the Voronoi factorization of <span class="SimpleMath">5000</span> matrices, each matrix being a product of <span class="SimpleMath">5000</span> random generators <span class="SimpleMath">g_i^± 1</span>. In all but a handful of cases the factorization is of length <span class="SimpleMath">≤ 5000</span>. The code used to produce it is below. An analogous histogram for matrices in <span class="SimpleMath">SL_2( Z)</span> is also shown.</p>
+
+<p><img src="images/sl3histogram.png" align="center" width="500" alt="histogram"/> <img src="images/sl2histogram.png" align="center" width="500" alt="histogram"/></p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SL(3,Integers);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=[];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [1..5000] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">w:=[];;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">for i in [1..5000] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(w,Random(Concatenation([-6..-1],[1..6])));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">m:=MatrixFromWord(VoronoiGenerators(G),w);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">e:=VoronoiFactorize(G,m);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Add(L,Length(e));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=SortedList(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=List([1..Length(L)],i-&gt;[i,L[i]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlot(L);</span>
+
+</pre></div>
+
+<p><a id="X79523C637B227329" name="X79523C637B227329"></a></p>
+
+<h5>13.18-2 <span class="Heading">Recap on Voronoi reduction</span></h5>
+
+<p>Up to <span class="SimpleMath">GL_3( Z)</span>-equivalence there is just one perfect form in dimension <span class="SimpleMath">3</span>, namely <span class="SimpleMath">v^tP_0v</span> represented by</p>
+
+<p><span class="SimpleMath">P_0=(beginarrayrrr 2 &amp; -1 &amp; 0 -1 &amp; 2 &amp; -1 0 &amp; -1 &amp; 2 endarray), v=(beginarrayrrr x y z endarray).</span></p>
+
+<p>Its <span class="SimpleMath">12</span> minimal vectors are <span class="SimpleMath">v_1=e_1</span>, <span class="SimpleMath">v_2=e_2</span>, <span class="SimpleMath">v_3=e_3</span>, <span class="SimpleMath">v_4=e_1+e_2</span>, <span class="SimpleMath">v_5=e_2+e_3</span>, <span class="SimpleMath">v_6=e_1+e_2+e_3</span> and their inverses, with <span class="SimpleMath">e_i</span> the standard basis vectors. The fundamental Voronoi cone in the space of <span class="SimpleMath">3× 3</span> positive-definite symmetric matrices has closure <span class="SimpleMath">C_0= R_≥ 0 R_1 + ⋯ + R_≥ 0 R_6</span> with six extreme rays corresponding to <span class="SimpleMath">R_i=v_i v_i^t</span>. Any positive-definite symmetric matrix <span class="SimpleMath">Q=(q_ij)</span> can be expressed</p>
+
+<p><span class="SimpleMath">Q=c_1R_1 +⋯ c_6R_6</span></p>
+
+<p>with <span class="SimpleMath">c_i=c_i(Q)</span> given by</p>
+
+<p><span class="SimpleMath">beginarrayll c_1=q_11-q_12, c_2=q_22-q_12+q_13-q_23, c_3=q_33-q_23, c_4=q_12-q_13, c_5=q_23-q_13, c_6=q_13 endarray</span>.</p>
+
+<p>So <span class="SimpleMath">Q</span> lies in the cone <span class="SimpleMath">C_0</span> precisely when <span class="SimpleMath">c_1(Q)≥ 0, ..., c_6(Q)≥ 0</span>.</p>
+
+<p>We define the <em>height</em> of <span class="SimpleMath">Q</span> to be</p>
+
+<p><span class="SimpleMath">ht(Q)= c_1(Q) + ⋯ +c_6(Q) = frac12 tr(P_0Q)</span>.</p>
+
+<p>The barycentre of the fundamental cone <span class="SimpleMath">C_0</span> is <span class="SimpleMath">B_0 = frac16(R_1 +⋯ +R_6)</span>. Our six generating matrices <span class="SimpleMath">g_1,⋯,g_6</span> are chosen so that <span class="SimpleMath">g_i^tB_0g_i</span> lies in a cone neighbouring <span class="SimpleMath">C_0</span>. The facet stabilizers have order <span class="SimpleMath">4</span> and so there are four choices for each <span class="SimpleMath">g_i</span>. Our choice ensures that the height of the barycentre of a positive-definite symmetric matrix <span class="SimpleMath">Q</span> can always be reduced by transforming <span class="SimpleMath">Q</span> to <span class="SimpleMath">g_i^tQg_i</span> for at least one <span class="SimpleMath">i</span>. The algorithm chooses the <span class="SimpleMath">i</span> giving the greatest height reduction.</p>
+
+<p>Note 1: this discussion and the implementation of <code class="code">VoronoiFactorization</code> uses group actions on the right. These need to be converted to left actions when the implementation is required to match the convention in HAP resolutions.</p>
+
+<p>Note 2: the algorithm could be adapted to other groups, including cases with more than one perfect form up to equivalence.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14.html">[Next Chapter]</a>&nbsp;  </div>
