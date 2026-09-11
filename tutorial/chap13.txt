@@ -2044,10 +2044,201 @@
   by transforming [22XQ[122X to [22Xg_i^tQg_i[122X for at least one [22Xi[122X. The algorithm chooses the
   [22Xi[122X giving the greatest height reduction.[133X
   
-  [33X[0;0YNote  1: this discussion and the implementation of [10XVoronoiFactorization[110X uses
+  [33X[0;0YNote  1:  this  discussion  and  the implementation of [10XVoronoiFactorize[110X uses
   group  actions on the right. These need to be converted to left actions when
   the implementation is required to match the convention in HAP resolutions.[133X
   
   [33X[0;0YNote 2: the algorithm could be adapted to other groups, including cases with
   more than one perfect form up to equivalence.[133X
+  
+  
+  [1X13.19 [33X[0;0YContracting homotopies[133X[101X
+  
+  [33X[0;0YLet  [22XK_∗  :  ⋯  → K_2 → K_1 → K_0[122X be an exact sequence of finitely generated
+  [22XG[122X-modules (over some ring such as [22XZ[122X, [22XQ[122X, [22XGF(p)[122X, [22Xmathcal O( Q(sqrtd))[122X ). Let's
+  always assume that the underlying abelian group of each [22XG[122X-module [22XK_n[122X is free
+  as  a module over the ground ring. If the modules are free [22XG[122X-modules then we
+  can  represent  [22XK_∗[122X  by a data type for which [10XIsHapResolution(K)[110X is true. If
+  the  modules  are  not  free  as  [22XG[122X-modules  we  can  represent  it  so that
+  [10XIsHapNonFreeResolution(K)[110X  is  true.  If  [22XG[122X  is  the  trivial  group  we can
+  represent it so that [10XIsHapChainComplex(K)[110X is true.[133X
+  
+  [33X[0;0YFor  such a sequence [22XK_∗[122X of [22XG[122X-modules and such a sequence [22XK'_∗[122X of [22XG'[122X-modules
+  (over  common ground ring) we may be given an explicit additive homomorphism
+  [22Xf_0:  K_0 → K_0[122X which we wish to extend to an additive chain map [22Xf_∗ : K_∗ →
+  K'_∗[122X. Two cases of interest are:[133X
+  
+  [30X    [33X[0;6YSuppose  that  [22XK_∗[122X  and  [22XK'_∗[122X are both free resolutions of the trivial
+        module [22XZ[122X and that we are given a group homomorphism [22Xϕ: G→ G'[122X. It is an
+        easy matter to lift the identity [22XH_0(K_∗)= Z stackrel=⟶ Z=H_0(K'_∗)[122X to
+        a  [22Xϕ[122X-equivariant homomorphism [22Xf_0: K_0→ K'_0[122X. In this setting we would
+        like  to  extend  [22Xf_0[122X to a [22Xϕ[122X-equivariant chain map [22Xf_∗ : K_∗ → K'_∗[122X in
+        order    to    calculate   with   induced   homomorphisms   in   group
+        homology/cohomology.[133X
+  
+  [30X    [33X[0;6YSuppose that [22XK_∗[122X is a non-free resolution (with finite stabilizers) of
+        the  Steinberg  module  [22XSt_n(mathcal  F)[122X  with  [22Xmathcal F[122X the field of
+        fractions  of  some  ring  of  integers  [22Xmathcal  O[122X. For instance, for
+        [22Xmathcal  O=  Z[122X, [22Xmathcal F= Q[122X and [22Xn=3,4[122X an implementation of such a [22XK_∗[122X
+        is  illustrated  in  Section  [14X7.4-1[114X. A matrix [22XA∈ St_n(mathcal F)[122X gives
+        rise   to   an   easily   described  additive  homomorphism  [22XH_0(K_∗)≅
+        St_n(mathcal   F)   stackrelfrakh}⟶   St_n(mathcal  F)≅  H_0(K_∗)[122X.  An
+        algorithm  of  Ash  for  expressing rational modular symbols as linear
+        cominations  of  integral  symbols  can  be  used to lift [22Xfrak h[122X to an
+        additive  homomorphism  [22Xfrak  h_0:  K_0→ K_0[122X. In this setting we would
+        like to extend [22Xfrak h_0[122X to an additive chain map [22Xfrak h_∗ : K_∗ → K'_∗[122X
+        in  order  to calculate Hecke operators on the cohomology [22XH^ν -k(Γ, Q)
+        =H_k(K_∗/Γ)⊗  Q[122X  of  a congruence subgroup [22XΓ ≤ SL_n(mathcal O)[122X where [22Xν[122X
+        denotes the virtual cohomological dimension of [22XSL_n(mathcal O)[122X.[133X
+  
+  [33X[0;0YFor an infinite group [22XG[122X the modules [22XK_n[122X are (typically) infinitely generated
+  over  the ground ring. We can represent a basis element over the ground ring
+  by  [22Xg.e^n_i[122X  where  [22Xg[122X is a (possibly not unique) group element and [22Xe^n_i[122X are
+  generators  for [22XK_n[122X as a [22XG[122X-module. So the additive chain map [22Xf_n: K_n → K'_n[122X
+  needs  to  be  represented  as a formula/algorithm that returns the value of
+  [22Xf(g.e^n_i)[122X  for  each [22Xg[122X and each [22Xe^n_i[122X. If the chain map is equivariant then
+  the  formula  [22Xf_n(g.e^n_i) = g.f_n(e^n_i)[122X means that we only need to compute
+  the finitely many values of [22Xf_n(e^n_i)[122X.[133X
+  
+  [33X[0;0YThe  values  of  [22Xf_n(g.e^n_i)[122X can be computed recursively by [22Xf_n(g.e^n_i) =x[122X
+  where [22Xx∈ K'_n[122X is any element such that [22Xd_n(x) = f_n-1( g.d_n(e^n_i) )[122X. Since
+  [22Xf_n-1(  g.d_n(e^n_i))  ∈  ker(d_n-1: K'_n-1→ K'_n-2)[122X the construction of the
+  chain  map  [22Xf_∗[122X  is  straightforward  if  we  can somehow implement additive
+  sections[133X
+  
+  [33X[0;0Y[22Xh_n-1: d_n(K'_n) ⟶ K'_n[122X[133X
+  
+  [33X[0;0Yto  the  boundary  maps  [22Xd_n:  K'_n↠ d_n(K'_n)[122X. Let us call a family of such
+  additive  sections,  one  section  for  each  [22Xn≥  1[122X,  a  [13Xpartial contracting
+  homotopy[113X.  An  example  of a partial contracting homotopy is provided by any
+  chain homotopy[133X
+  
+  [33X[0;0Y[22X{h_n-1: K'_n-1→ K'_n}_n≥ 1[122X[133X
+  
+  [33X[0;0Yrepresenting  the  chain homotopy equivalence [22XK'_∗ stackrel≃⟶ H_0(K'_∗)[122X. Let
+  us  call  such  a chain homotopy a [13Xcontracting homotopy[113X. The homotopy can be
+  represented on a computer by a function [10XK'!.homotopy(n,[k,i])[110X that inputs an
+  integer  [22Xn[122X  and  pair  of  integers  [22X[k,i][122X  representing  the  basis element
+  [22Xg_i.e^n_k  ∈  K'_n[122X  and  returns a representation of a linear combination of
+  basis  elements  in  [22XK'_n+1[122X.  Alternatively,  a  partial  homotopy  could be
+  implemented  as a function [10XK'!.partialHomotopy(n,w)[110X that inputs an integer [22Xn[122X
+  and  an  expression  [22Xw[122X  representing  a  word in [22Xd_n+1(K'_n+1)[122X and returns a
+  representation of a linear combination of basis elements in [22XK'_n+1[122X.[133X
+  
+  [33X[0;0YIt  is straighforward to test whether any potential lift [22Xtilde w ∈ K'_n+1[122X of
+  [22Xw∈   d_n+1(K'_n+1)[122X   is   indeed   a   lift.   Thus   an  implementation  of
+  [10XK'!.partialHomotopy(n,w)[110X  could  use  heuristic  methods  and return [10Xfail[110X in
+  cases   where   a   conjectured  lift  is  not  actually  a  lift.  Such  an
+  implementation  might  fail to terminate in some situations, but whenever it
+  does  terminate  the  computed  answer  would be guaranteed correct. In many
+  situations  it  is  practical  to  implement  a  fully  contracting homotopy
+  [10XK'!.homotopy(n,[k,i])[110X.[133X
+  
+  [33X[0;0YIn  summary,  to  extend [22Xf_0: K_0→ K'_0[122X to degree [22Xn[122X, [22Xf_n: K_n→ K'_n[122X, we need
+  just  the  first  [22Xn[122X  terms of a partial contracting homotopy on [22XK'_∗[122X. In the
+  context  of Steinberg modules, the last [22Xn[122X terms of a contracting homotopy of
+  the  well-rounded  retract  provides  the  first  [22Xn[122X  terms  of a contracting
+  homotopy  on  the dual Voronoi complex which is a non-free resolution of the
+  Steinberg module.[133X
+  
+  
+  [1X13.19-1 [33X[0;0YSome implemented contracting homotopies[133X[101X
+  
+  [33X[0;0YContracting homotopies have been implemented on free [22XZG[122X-resolutions of [22XZ[122X for
+  finite  groups  [14X11.1[114X,  finite [22Xp[122X-groups over [22XGF(p)[122X [14X11.4[114X, abelian groups [14X11.5[114X,
+  nilpotent groups [14X11.6[114X, groups with subnormal series [14X11.7[114X, groups with normal
+  series    [14X11.8[114X,    (almost)   crystallographic   polycyclic   groups   [14X11.9[114X,
+  crystallographic  space  groups  with  cubical fundamental domain [14X11.12[114X, the
+  groups  [22XSL_2( Z[1/m])[122X for square-free [22Xm[122X [14X11.15[114X, finite index subgroups of any
+  of  the previous groups [14X11.19[114X, direct products of any of the previous groups
+  5.1.13  ([7X"../doc/chap5.html#X7FCE801781AD83E1"/>[107X),  extensions of any of the
+  previous    groups    by    any    of    the    previous    groups    5.1.14
+  ([7X"../doc/chap5.html#X79C83C4881B6A656"/>[107X).[133X
+  
+  [33X[0;0YA  non-free  resolution with finite stabilizers and contracting homotopy can
+  be  constructed  for  a  space group [22XG[122X with cubical fundamental domain using
+  [10XK:=ResolutionCubicalCrystGroup(G)[110X. This is due to Bui Anh Tuan.[133X
+  
+  [33X[0;0YA non-free resolution of dimension 1 (i.e. a tree) with contracting homotopy
+  can  be  constructed  for  the  group  [22XG=SL_2(  Z[1/(mp)])[122X using the command
+  [10XK:=SL2ZTree(m,p)[110X  where  [22Xp[122X  is a prime coprime to square-free [22Xm≥ 1[122X. The tree
+  has  stabilizer  groups  corresponding  to  the  amalgamated product [22XG=SL_2(
+  Z[1/m])  ∗_Γ_0(p)  SL_2(  Z[1/m])[122X description of [22XG=SL_2( Z[1/(mp)])[122X. This is
+  due to Bui Anh Tuan.[133X
+  
+  [33X[0;0YNot  every contractible finite regular CW-complex [22XX[122X is collapsible. If it is
+  collapsible  then  it  is an NP-hard problem to find an explicit sequence of
+  collapses that collapse [22XX[122X to point. With these comments in mind, the command
+  [10XF:=ChainComplexEquivalenceOfRegularCWComplex(X)[110X  can  be used to find a pair
+  of quasi-isomorphism chain maps [22Xf_∗: C_∗ X → C_∗ Y[122X, [22Xg_∗: C_∗ Y → C_∗ X[122X where
+  [22XY[122X is obtained from [22XX[122X by a sequence of collapses. If [22XY[122X is just a single point
+  then this data is equivalent to a contracting homotopy on [22XC_∗ X[122X. This method
+  of  producing  a contracting homotopy is illustrated in [14X7.4[114X where it is used
+  to  produce  a  contracting  homotopy on a finite 'ball' in the well-rounded
+  retract [22XK[122X for [22XSL_3( Z)[122X. In cases where this finite ball method works, it may
+  suffice  to  extend  chain  maps for which only 'small' elements of [22Xd_n(K_n)[122X
+  need to be lifted to [22XK_n[122X.[133X
+  
+  [33X[0;0YFormulae  for  contracting  homotopies on [22XC_∗(X)[122X for [22XX[122X any direct product of
+  various  dimensional  simplices,  cubes,  permutahedra  and associahedra are
+  implemented in functions underlying the illustrations in [14X1.14[114X.[133X
+  
+  
+  [1X13.19-2 [33X[0;0YSome implementable contracting homotopies[133X[101X
+  
+  [33X[0;0YSuppose  that  our  resolution  [22XK_∗[122X  is  the  cellular chain complex of some
+  regular  CW-complex that we denote by [22XK[122X. The additive map [22Xh_0: K_0 → K_1[122X can
+  be  viewed as a maximal tree in the [22X1[122X-skeleton of [22XK[122X. It could be represented
+  as  a  function  [10XK!.homotopy(0,[k,i])[110X that returns the sum of those edges in
+  the tree connecting the vertex [22Xg_i.e^0_k[122X to the base-point of the tree.[133X
+  
+  [33X[0;0YConsider  the  case  where  [22XK[122X  is the [22X3[122X-dimensional well-rounded retract for
+  [22XG=SL_3(  Z)[122X. There is just one [22XG[122X-orbit of [22X0[122X-cells represented by [22Xe^0[122X and one
+  orbit  of [22X1[122X-cells represented by [22Xe^1[122X say. The vertices connected to [22Xe^0[122X by a
+  single  edge  are precisely [22Xg_1.e^0, g_2.e^0, ..., g_6.e^0[122X where the [22Xg_i[122X are
+  the  generators  for  [22XSL_3(  Z)[122X  introduced  above  in [14X13.18-1[114X. The function
+  [10XVoronoiFactorize(SL(3,Integers),g)[110X  can be viewed as determining the path in
+  a maximal tree from [22Xg.e^0[122X to the base-point in the tree. Assuming that [22Xg=g_m[122X
+  is   the   [22Xm[122X-th   element   in   our   listing   of   group  elements,  then
+  [10XK!.homotopy(0,[1,m])[110X should return the sum of these edges.[133X
+  
+  [33X[0;0YConsider  the  case  where  [22XV_∗  =  Hom^c_  Z(C_∗(K),  Z)[122X is the dual of the
+  well-rounded  retract  for  [22XSL_3( Z)[122X (see [14X7.4-1[114X). An explicit chain homotopy
+  equivalence  [22XC_∗  (K) stackrel≃⟶ Z[122X should give us an explcit equivalence [22XV_∗
+  stackrel≃⟶  St_3(  Q)[122X.  In  particular, the additive map [22Xh_2: K_2 → K_3[122X of a
+  contracting  homotopy  should  induce  an  additive map [22Xh_0: V_0 → V_1[122X which
+  could  be  used to construct Hecke operators on [22XH_1(V_∗ ⊗_ ZG Q) ≅ H^2(SL(3,
+  Z),  Q)[122X.  To  this  end, consider the graph [22Xmathcal G(K)[122X with one vertex for
+  every [22X3[122X-cell in [22XK[122X and an edge whenever two [22X3[122X-cells of [22XK[122X have a common [22X2[122X-cell
+  in  their  boundaries.  From  the description of the cellular structure of [22XK[122X
+  given  in  [14X7.4[114X  we see that each vertex in the graph [22Xmathcal G(K)[122X has degree
+  [22X24[122X.  Moreover,  [22Xmathcal  G(K)[122X  can  be  viewed  as  the  Cayley  graph on [22X24[122X
+  generators  [22Xh_1,  h_2, ... h_24[122X for [22XSL_3( Z)[122X. These generators are stored in
+  the        variable        [10XNeighbourGens[110X        in        the       function
+  [10XGComplexToFiniteRegularCWRegion(K,N)[110X              available             here
+  ([7Xhttps://github.com/gap-packages/hap/blob/master/lib/RegularCWComplexes/bruteforce.gi[107X).
+  A  maximal  tree  in  [22Xmathcal  G(K)[122X  is  essentially a way of factorizing an
+  element  of  [22XSL_3(  Z)[122X  as  a  product  of  the [22X24[122X generators [22Xh_i[122X and can be
+  obtained  from the factorization in terms of the six generators [22Xg_i[122X given by
+  [10XVoronoiFactorize(G,g)[110X  in  [14X13.18-1[114X.  Experimentation  suggests the following
+  holds:[133X
+  
+  [33X[0;0Y[13XConjecture:[113X This spanning tree is leafless.[133X
+  
+  [33X[0;0YLet  us  direct  the edges of the spanning tree towards the root. Thus every
+  vertex  of  the spanning tree other than the root has precisely one outgoing
+  edge.  All other edges incident with the vertex are incoming. The conjecture
+  says  that  every  vertex  has at least one incoming edge. Every edge in the
+  spanning  tree  is  labelled  by  a  generator [22Xh_i[122X. Let's deem the preferred
+  incoming  edge  to  a  vertex  to  be that incoming edge whose label [22Xh_i[122X has
+  lowest  value  of  [22Xi[122X.  The  preferred  edges  in the spanning tree provide a
+  matching  between the [22X3[122X-cells of [22XK[122X and a subset of the [22X2[122X-cells. Let [22XL[122X denote
+  the subcomplex of the [22X2[122X-skeleton [22XK^2[122X with all matched [22X2[122X-cells removed. Then,
+  assuming   the   conjecture,   the  matching  determines  a  chain  homotopy
+  equivalence  [22XC_∗(K)  →  C_∗(L)[122X and a homomorphism [22Xh_2: C_2(K) → C_3(K)[122X which
+  can  be used to lift elements of [22Xd_3(C_3(K))[122X to [22XC_3(K)[122X. If the conjecture is
+  false  then  the lift will fail in some instances. But it is easy to test in
+  any  given instance if the list is correct. If all instances of the list are
+  correct  in  a  computation  then  the  resulting  computation is guaranteed
+  correct.[133X
   
