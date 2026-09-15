@@ -1,7 +1,6 @@
 # Graham Ellis 2005-2026 
 #This file was written with the help of ChatGPT
 
-
 #############################################################################
 #
 # Voronoi reduction for (currently) G = SL(3,Z)
@@ -19,14 +18,14 @@
 InstallGlobalFunction(VoronoiGenerators,
 function(G);
 
-if G=SL(2,Integers) then return
+if Name(G)="SL(2,Integers)" then return
   [
   [ [ 0, -1 ], [ 1, 0 ]],
   [ [ 1, 1 ], [ 0, 1 ]]
   ];
 fi;
 
-if G=SL(3,Integers) then return 
+if Name(G)="SL(3,Integers)" then return 
   [
   [ [ -1, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ],
   [ [  0, 0, 1 ], [ 1, 0,-1 ], [ 0, 1, 1 ] ],
@@ -50,7 +49,7 @@ end);
 InstallGlobalFunction(VoronoiBaseMatrix,
 function(G);
 
-if G=SL(3,Integers) then
+if Name(G)="SL(3,Integers)" then
     return 
     [ [3,2,1],
       [2,4,2],
@@ -102,12 +101,12 @@ end);
 InstallGlobalFunction(VoronoiFactorize,
 function(G,M)
 
-local w,gens,CheckWord, elts,nums;
+local w,gens,CheckWord, elts,nums,cancels,cnt;
 
 if Order(M)=1 then return []; fi;
 
 ####################################
-if G=SL(2,Integers) then 
+if Name(G)="SL(2,Integers)" then 
 elts:=VoronoiGenerators(G);
 elts:=[elts[1],elts[1]^2,elts[1]^3,elts[2],elts[2]^-1];
 nums:=[1,[1,1],-1,2,-2];
@@ -118,6 +117,17 @@ fi;
 ####################################
 
 w := VoronoiWord(G,M);
+cancels:=[[1,6],[-1,-6],[6,1],[-6,-1],[4,5],[-4,-5],[5,4],[-5,-4]];;
+cnt:=1;;
+while cnt<Length(w) do
+if w[cnt]=-w[cnt+1] or [w[cnt],w[cnt+1]] in cancels then 
+w[cnt]:=0; w[cnt+1]:=0; cnt:=cnt+2;
+else
+cnt:=cnt+1;
+fi;
+od;
+w:=Filtered(w,x->x<>0);
+
 gens:=VoronoiGenerators(SL(3,Integers));
 
 ##############
@@ -147,7 +157,7 @@ InstallGlobalFunction(VoronoiCoordinates,
 function(G,Q)
 local a,b,c,d,e,f;
 
-if G=SL(3,Integers) then
+if Name(G)="SL(3,Integers)" then
 a := Q[1][1];
 b := Q[2][2];
 c := Q[3][3];
@@ -183,7 +193,7 @@ local stab,words,frontier,newfrontier,InverseWord,
       A,w,B,u,key,gens,StabGenerators;
 
 if not G=SL(3,Integers) then return fail; fi;
-
+if IsBound(G!.VoronoiStabilizer) then return G!.VoronoiStabilizer; fi;
 StabGenerators := [
     [ 1,-3 ],
     [ 2, 2 ],
@@ -239,7 +249,7 @@ while Length(frontier) > 0 do
     frontier := newfrontier;
 
 od;
-
+G!.VoronoiStabilizer:=[stab,words];
 return [stab,words];
 
 end);

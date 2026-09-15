@@ -73,12 +73,13 @@ SetPackageInfo( rec(
                              [ "nq",         ">=1.1" ],
                              [ "SmallGrp",   ">=1.1" ],
                              [ "Polymaking", ">=0.8.4"],
+			     [ "congruence", ">=0.0" ]
                            ],
     SuggestedOtherPackages := [
                                [ "homology",    ">=0.0"   ], 
                                [ "edim",      ">=1.2.2" ],
                                [ "singular", ">=06.07.23" ],
-                               [ "congruence", ">=0.0" ],
+                            #   [ "congruence", ">=0.0" ],
                                [ "HAPcryst", ">=0.1.0" ],
                                [ "xmod", ">0.0" ],
                                [ "laguna", ">0.0"]
@@ -117,8 +118,8 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "Loading HAP ",
                             String( ~.Version ), " ...\n" ),
 
-#TestFile :=  "tst/testquick.g",
-TestFile :=  "tst/testall.g",
+TestFile :=  "tst/testquick.g",
+#TestFile :=  "tst/testall.g",
 
 Keywords := [ "homology", "cohomology", "resolution", "homotopy group", 
 "module of identities", "CW complex", "simplicial complex", "cubical complex", "permutahedral complex", "knots", "nonabelian tensor", "nonabelian exterior", "covering space" ]

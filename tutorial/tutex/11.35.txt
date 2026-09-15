@@ -1,0 +1,14 @@
+gap> G:=SL(3,Integers);;
+gap> L:=[];;
+gap> for n in [1..5000] do
+> w:=[];;
+> for i in [1..5000] do
+> Add(w,Random(Concatenation([-6..-1],[1..6])));
+> od;
+> m:=MatrixFromWord(VoronoiGenerators(G),w);
+> e:=VoronoiFactorize(G,m);;
+> Add(L,Length(e));
+> od;
+gap> L:=SortedList(L);;
+gap> L:=List([1..Length(L)],i->[i,L[i]]);;
+gap> ScatterPlot(L);

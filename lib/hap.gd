@@ -39,6 +39,7 @@ DeclareGlobalFunction("OppositeGroup");
 DeclareGlobalFunction("QuotientGroup");
 DeclareGlobalFunction("2x2matrix");
 DeclareGlobalFunction("ResolutionBoundaryOfWord");
+DeclareGlobalFunction("HAPAlgRedSort");
 
 ## FpG MODULES#######################################################
 DeclareGlobalFunction("DesuspensionFpGModule");

@@ -4,9 +4,6 @@
 ##
 #####################################################################
 
-#Copy this file to read.g to avail of efficiencies implemented with 
-#the help of ChatGPT. (AIE = AI Enhanced)
-
 HAPconstant:=2;	
 SetInfoLevel(InfoWarning,0); #We shouldn't really do this!
 ReadPackage("HAP","boolean");
@@ -168,7 +165,7 @@ ReadPackageHap( "lib/NonabelianTensor/weak.gi");
 ##################### RESOLUTIONS ###################################
 ReadPackageHap( "lib/Resolutions/resAspherical.gi");
 ReadPackageHap( "lib/Resolutions/resAbGroup.gi");
-ReadPackageHap( "libAIE/ResolutionsAIE/resFiniteGroupAIE.gi");
+ReadPackageHap( "lib/Resolutions/resFiniteGroup.gi");
 ReadPackageHap( "lib/Resolutions/barComplexMonoid.gi");
 ReadPackageHap( "lib/Resolutions/resSmallFpGroup.gi");
 ReadPackageHap( "lib/Resolutions/presentation.gi");
@@ -217,7 +214,7 @@ ReadPackageHap( "lib/Functors/homtintmodp.gi");
 ReadPackageHap( "lib/Functors/transfer.gi");
 ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
-ReadPackageHap( "libAIE/FunctorsAIE/simplifyAIE.gi");
+ReadPackageHap( "lib/Functors/simplify.gi");
 ReadPackageHap( "lib/Functors/alexander.gi");
 ReadPackageHap( "lib/Functors/dualComplex.gi");
 ReadPackageHap( "lib/Functors/tensorNonFree.gi");

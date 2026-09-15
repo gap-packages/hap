@@ -15,15 +15,16 @@ end);
 #####################################################################
 
 #####################################################################
-HAPAlgRedSort:=function(x,y)
+InstallGlobalFunction(HAPAlgRedSort,
+function(x,y)
 local xx,yy;
-xx:=1*x;xx[1][1]:=AbsInt(xx[1][1]);
-yy:=1*y;yy[1][1]:=AbsInt(yy[1][1]);
+xx:=StructuralCopy(x);xx[1][1]:=AbsInt(xx[1][1]);
+yy:=StructuralCopy(y);yy[1][1]:=AbsInt(yy[1][1]);
 if xx[1] < yy[1] then return true; fi;
 if xx[1] > yy[1] then return false; fi;
 if x[1][1] < y[1][1] then return true; fi;
 return false;
-end;
+end);
 #####################################################################
 
 #####################################################################
@@ -38,7 +39,7 @@ if p=0  then    #Changed this, July 2026
 #######################################
 if Length(w)=0 then return w; fi;
 ww:=[];
-v:=Collected(1*w);
+v:=Collected(StructuralCopy(w));
 
 Sort(v,HAPAlgRedSort);
 i:=1;
@@ -277,7 +278,7 @@ if n=1 then return w; fi;
 
 v:=[];
 
-u:=1*w; 
+u:=StructuralCopy(w); 
 if n<=0 then for x in u do x[1]:=-x[1]; od; fi;
 
 for i in [1..AbsoluteValue(n)] do

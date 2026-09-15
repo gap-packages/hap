@@ -690,9 +690,11 @@ end);
 ##             
 ##
 InstallGlobalFunction(ResolutionCubicalCrystGroup,
-function(GG,n)
-local G,gens,B,C,R,Gram, pos, Homotopy,Cnew;
+function(arg)
+local GG,n,G,gens,B,C,R,Gram, pos, Homotopy,Cnew;
  
+GG:=arg[1];
+if Length(arg)=2 then n:=arg[2]; fi;
     G:=StandardAffineCrystGroup(GG); #Added October 2024. Ideally we 
                                      #should modify code so that this 
                                      #conversion is avoided.
@@ -727,6 +729,7 @@ local G,gens,B,C,R,Gram, pos, Homotopy,Cnew;
             end;
 
             Cnew!.homotopy:=Homotopy;
+       if Length(arg)=1 then return Cnew; fi;
             R:=FreeZGResolution(Cnew,n);
             R!.Bool:=C!.Bool; #Added October 2024
             return R;

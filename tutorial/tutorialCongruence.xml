@@ -1,8 +1,8 @@
 <Chapter Label="chap:Congruence"><Heading>Congruence Subgroups, Cuspidal Cohomology  and Hecke Operators</Heading>
 
 
-In this chapter we explain how HAP can be used to make computions 
-about modular forms associated to congruence subgroups <M>\Gamma</M> of <M>SL_2(\mathbb Z)</M>. Also, in  Subsection 10.8 onwards, we demonstrate
+In this chapter  we explain how HAP can be used to make computions 
+about modular forms associated to congruence subgroups <M>\Gamma</M> of <M>SL_2(\mathbb Z)</M>. Also, in   <Ref Sect="sectPicard"/> onwards and  in <Ref Sect="sectArithGroups"/>, we demonstrate
  cohomology computations for the <E>Picard group</E> <M>SL_2(\mathbb Z[i])</M>,
  some <E>Bianchi groups</E>
  <M>PSL_2({\cal O}_{-d}) </M> where <M>{\cal O}_{d}</M> is the ring of integers of <M>\mathbb Q(\sqrt{-d})</M> for  square free positive integer <M>d</M>, and some other groups of the form
@@ -516,7 +516,7 @@ consisting of one cusp eigenform
 
 </Section>
 
-<Section><Heading>The Picard group</Heading>
+<Section Label="sectPicard"><Heading>The Picard group</Heading>
 Let us now consider the <E>Picard group</E> <M>G=SL_2(\mathbb Z[ i])</M> and 
 its action on <E>upper-half space</E>
 <Display>{\frak h}^3 =\{(z,t) \in \mathbb C\times \mathbb R\ |\ t &gt; 0\} \ . </Display>
@@ -938,7 +938,7 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 <#Include SYSTEM "tutex/11.21.txt">
 </Example>
 
-<Alt Only="HTML">&lt;img src="images/primesTorsion.png" align="center" width="1200" alt="graph of torsion versus norm"/>
+<Alt Only="HTML">&lt;img src="images/primesTorsion.png" align="center" width="700" alt="graph of torsion versus norm"/>
 </Alt>
 
 
@@ -992,7 +992,7 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 <#Include SYSTEM "tutex/11.32.txt">
 </Example>
 
-<Subsection><Heading>Expressing elements of <M>SL_3(\mathbb Z)</M> as words in generators</Heading>
+<Subsection Label="sectExpressing"><Heading>Expressing elements of <M>SL_3(\mathbb Z)</M> as words in generators</Heading>
 		The generating matrices <M>x,y,z</M> for <M>SL_3(\mathbb Z)</M> given in Section <Ref Sect="SL3Zgens"/> arise from the <M>1</M>-skeleton of the CW-complex underlying the resolution constructed by applying <Code>R:=FreeGResolution(K,2)</Code> 
 			to the well-rounded retract <M>K</M> for <M>SL_3(\mathbb Z)</M>. The retract is stored in the file <Code>"SL3Za"</Code> and accessed using <Code>K:=ContractibleGcomplex("SL3(Z)")</Code>.
 				For certain computations we need to express an element <M>w \in SL_3(\mathbb Z)</M> as a word in the generators. 
@@ -1044,7 +1044,7 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 
 <P/>
 	for <M>SL_3(\mathbb Z)</M>	corresponding to the 
-	six 'facet pairings' of the Voronoi domain (whose closure is a <M>6</M>-dimensional simplex) and then to use Voronoi reduction in place of gaussian elimination.
+	six 'facet pairings' of the Voronoi domain (whose closure is a <M>5</M>-dimensional simplex) and then to use Voronoi reduction in place of gaussian elimination.
 		The following code uses this technique to express our previous generators in terms of the <M>g_i</M>:
 
 		<P/> <M>x= g_3g_1^{-1}g_2^2g_1g_3^{-1}g_5^{-1}g_3^{-2}g_1^{-1}g_2^{-1}g_4^{-1}</M>,
@@ -1066,10 +1066,189 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 <Example>
 <#Include SYSTEM "tutex/11.34.txt">
 </Example>
+
+<P/>The following is a histogram of the lengths of the Voronoi factorization of <M>5000</M> matrices, each matrix being a product of <M>5000</M> random generators <M>g_i^{\pm 1}</M>. In all but a handful of cases the factorization is of length <M>\le 5000</M>. The code used to produce it is below. An analogous histogram for matrices in <M>SL_2(\mathbb Z)</M> is also shown. 
+
+	<P/>
+<Alt Only="HTML">&lt;img src="images/sl3histogram.png" align="center" width="500" alt="histogram"/>
+</Alt>
+	<Alt Only="HTML">&lt;img src="images/sl2histogram.png" align="center" width="500" alt="histogram"/>
+</Alt>
+
+
+<Example>
+<#Include SYSTEM "tutex/11.35.txt">
+</Example>
+
+
 </Subsection>
 
+<Subsection><Heading>Recap on Voronoi reduction</Heading>
+	Up to <M>GL_3(\mathbb Z)</M>-equivalence there is just one perfect form in dimension <M>3</M>, namely <M>v^tP_0v</M> represented by 
+
+		<P/>	<M>
+			P_0=\left(\begin{array}{rrr}
+                        2 &amp; -1 &amp; 0\\
+                        -1 &amp; 2 &amp; -1\\
+                        0 &amp; -1 &amp; 2
+			\end{array}\right), \ \ \
+
+                        v=\left(\begin{array}{rrr}
+                        x \\
+                        y \\
+                        z 
+                        \end{array}\right). 
+</M>
+<P/>Its <M>12</M> minimal vectors are <M>v_1=e_1</M>, <M>v_2=e_2</M>, <M>v_3=e_3</M>, <M>v_4=e_1+e_2</M>, <M>v_5=e_2+e_3</M>, <M>v_6=e_1+e_2+e_3</M> and their inverses, with <M>e_i</M> the standard basis vectors. The fundamental
+	Voronoi cone in the space of <M>3\times 3</M> positive-definite symmetric matrices has closure  <M>C_0=\mathbb R_{\ge 0} R_1 + \cdots + \mathbb R_{\ge 0} R_6</M>
+		with six extreme rays corresponding to <M>R_i=v_i v_i^t</M>.
+
+			Any positive-definite symmetric matrix <M>Q=(q_{ij})</M> can be expressed
+			<P/><M> Q=c_1R_1 +\cdots c_6R_6</M>
+			<P/>	with <M>c_i=c_i(Q)</M> given by
+			<P/>
+			<M>\begin{array}{ll}
+				c_1=q_{11}-q_{12},\\
+				c_2=q_{22}-q_{12}+q_{13}-q_{23},\\
+				c_3=q_{33}-q_{23},\\
+				c_4=q_{12}-q_{13},\\
+				c_5=q_{23}-q_{13},\\
+				c_6=q_{13}
+				\end{array}</M>.
+				<P/>					So <M>Q</M> lies in the  cone <M>C_0</M> precisely when <M>c_1(Q)\ge 0, \ldots, c_6(Q)\ge 0</M>.
+
+					<P/>We define the <E>height</E> of <M>Q</M> to be
+					<P/><M>ht(Q)= c_1(Q) + \cdots +c_6(Q) = \frac{1}{2} tr(P_0Q)</M>.
+
+					<P/>The barycentre of the fundamental cone <M>C_0</M> is <M>B_0 = \frac{1}{6}(R_1 +\cdots +R_6)</M>.
+						Our six generating matrices 
+					<M>g_1,\cdots,g_6</M> are chosen so that <M>g_i^tB_0g_i</M> lies in a cone neighbouring 
+					<M>C_0</M>. The facet stabilizers have order <M>4</M> and so there are four choices for each <M>g_i</M>. Our choice ensures that the height of the barycentre of a positive-definite symmetric matrix <M>Q</M> can always be reduced by transforming <M>Q</M> to <M>g_i^tQg_i</M> for at least one <M>i</M>. The algorithm chooses the <M>i</M> giving the greatest height reduction.
+
+					<P/> Note 1: this discussion and the implementation of <Code>VoronoiFactorize</Code> uses group actions on the right. These need to be converted to left actions when the implementation is required
+						to match the convention in HAP resolutions. 
+
+					<P/>Note 2: the algorithm could be adapted to other groups, including cases with more than one perfect form up to equivalence.
+</Subsection>
 
 </Section>
 
+<Section Label="homotopies"><Heading>Contracting homotopies</Heading>
+
+		Let <M>K_\ast : \cdots \rightarrow K_2 \rightarrow K_1 \rightarrow K_0</M> be an exact sequence of finitely generated <M>G</M>-modules (over some ring such as <M>\mathbb Z</M>, <M>\mathbb Q</M>, <M>GF(p)</M>, <M>{\mathcal O}(\mathbb Q(\sqrt{d}))</M> ). Let's always assume that the underlying abelian group of each <M>G</M>-module <M>K_n</M> is  free as a module over the ground ring. If the modules are free <M>G</M>-modules then we can represent <M>K_\ast</M> 
+			by a data type for which <Code>IsHapResolution(K)</Code> is true. If the modules are not free as <M>G</M>-modules we can represent it so that <Code>IsHapNonFreeResolution(K)</Code> is true. If <M>G</M> is the trivial group we can represent it so that <Code>IsHapChainComplex(K)</Code> is true. 
+<P/> 
+	For such a sequence <M>K_\ast</M> of <M>G</M>-modules and such a sequence
+	<M>K'_\ast</M> of <M>G'</M>-modules (over common ground ring) we may 
+
+		be given  an explicit additive homomorphism <M>f_0\colon K_0 \rightarrow K_0</M> which we wish to extend to an additive chain map 
+		<M>f_\ast \colon K_\ast \rightarrow K'_\ast</M>.
+			Two cases of interest are:
+			
+<List>
+<Item>
+	Suppose that  <M>K_\ast</M> and <M>K'_\ast</M> are both free resolutions of the trivial module <M>\mathbb Z</M> and that we are given a group homomorphism
+	<M>\phi\colon G\rightarrow G'</M>. It is an easy matter to lift the identity
+	<M>H_0(K_\ast)=\mathbb Z \stackrel{=}{\longrightarrow} \mathbb Z=H_0(K'_\ast)</M> to a <M>\phi</M>-equivariant homomorphism <M>f_0\colon K_0\rightarrow K'_0</M>. In this setting we would like to extend <M>f_0</M> to a <M>\phi</M>-equivariant chain map <M>f_\ast \colon K_\ast \rightarrow K'_\ast</M> in order to calculate with induced homomorphisms in group homology/cohomology.
+</Item>
+<Item>
+		Suppose that  <M>K_\ast</M> is a non-free resolution (with finite stabilizers) of the Steinberg module <M>St_n({\mathcal F})</M> with <M>{\mathcal F}</M> the field of fractions of some ring of integers <M>{\mathcal O}</M>. For instance, for  <M>\mathcal O=\mathbb Z</M>, <M>\mathcal F=\mathbb Q</M> and <M>n=3,4</M> an
+			implementation of such a <M>K_\ast</M> 
+			is illustrated in Section <Ref Sect="sectRationalCohomology"/>.
+				A matrix <M>A\in St_n({\mathcal F})</M> gives rise to an easily described additive homomorphism <M>H_0(K_\ast)\cong St_n({\mathcal F})  \stackrel{\frak{h}}{\longrightarrow} St_n({\mathcal F})\cong H_0(K_\ast)</M>.
+					An algorithm of Ash for expressing rational modular symbols as linear cominations of integral symbols can be used to lift <M>{\frak h}</M> to an additive homomorphism <M>{\frak h}_0\colon K_0\rightarrow K_0</M>.
+						In this setting we would like to extend <M>{\frak h}_0</M> to an additive  chain map <M>{\frak h}_\ast \colon K_\ast \rightarrow K'_\ast</M> in order to calculate Hecke operators on the cohomology
+						<M>H^{\nu -k}(\Gamma,\mathbb Q)
+							=H_k(K_\ast/\Gamma)\otimes \mathbb Q</M> of a congruence subgroup <M>\Gamma \le SL_n({\mathcal O})</M>
+							where <M>\nu</M> denotes the virtual cohomological dimension of <M>SL_n({\mathcal O})</M>.
+</Item>
+</List>
+
+<P/> For an infinite group <M>G</M> the modules <M>K_n</M> are (typically) infinitely generated over the ground ring. We can represent a basis element over the ground ring by <M>g.e^n_i</M> where <M>g</M> is a (possibly not unique) group element and <M>e^n_i</M> are generators for <M>K_n</M> as a <M>G</M>-module. So the additive chain map <M>f_n\colon K_n \rightarrow K'_n</M> needs to be represented as a formula/algorithm that returns the value of <M>f(g.e^n_i)</M> for each <M>g</M> and each <M>e^n_i</M>. If the chain map is equivariant then the formula
+<M>f_n(g.e^n_i) = g.f_n(e^n_i)</M> means that we only need to compute the finitely many values of <M>f_n(e^n_i)</M>.
+
+<P/> The values of <M>f_n(g.e^n_i)</M> can be computed recursively by <M>f_n(g.e^n_i) =x</M> where <M>x\in K'_n</M> is any element such that <M>d_n(x) = f_{n-1}(\, g.d_n(e^n_i) \,)</M>. Since <M>f_{n-1}(\, g.d_n(e^n_i)\,) \in \ker(d_{n-1}\colon K'_{n-1}\rightarrow K'_{n-2})</M> the construction of the chain map <M>f_\ast</M> is straightforward if we can somehow implement  additive sections
+<P/><M> h_{n-1}\colon d_{n}(K'_n) \longrightarrow K'_n </M>
+<P/>	to the boundary maps <M>d_n\colon K'_n\twoheadrightarrow d_n(K'_n)</M>.
+	Let us call a family of such additive sections, one section for each <M>n\ge 1</M>, a <E>partial contracting homotopy</E>. An example of a partial contracting homotopy is provided by any chain homotopy <P/><M>\{\,h_{n-1}\colon K'_{n-1}\rightarrow K'_n\,\}_{n\ge 1}</M> 
+	<P/>representing the chain
+		homotopy equivalence <M>K'_\ast 
+			\stackrel{\simeq}{\longrightarrow} H_0(K'_\ast)</M>. Let us call such a chain homotopy a <E>contracting homotopy</E>. The homotopy can be represented on a computer by a function <Code>K'!.homotopy(n,[k,i])</Code> that inputs an integer <M>n</M> and pair of integers <M>[k,i]</M> representing the basis element <M>g_i.e^n_k \in K'_n</M> and returns a representation of a linear combination of basis elements in <M>K'_{n+1}</M>. Alternatively, a partial homotopy could be implemented as a function <Code>K'!.partialHomotopy(n,w)</Code> that inputs an integer <M>n</M> and an expression <M>w</M> representing a word in
+			<M>d_{n+1}(K'_{n+1})</M> and returns a representation of a linear combination of basis elements in <M>K'_{n+1}</M>.
+
+
+			<P/> It is straighforward to test whether
+				any potential lift <M>\tilde w \in K'_{n+1}</M> of <M>w\in d_{n+1}(K'_{n+1})</M> is indeed a lift. Thus an implementation of  <Code>K'!.partialHomotopy(n,w)</Code> could use heuristic methods and return <Code>fail</Code> in cases where a conjectured lift is not actually a lift. Such an implementation might fail to terminate in some situations, but whenever it does terminate the computed answer would be guaranteed  correct.
+				In many situations it is practical to implement a fully contracting homotopy 
+				<Code>K'!.homotopy(n,[k,i])</Code>.
+
+			<P/>In summary, to extend <M>f_0\colon K_0\rightarrow K'_0</M> to degree <M>n</M>, <M>f_n\colon K_n\rightarrow K'_n</M>, we need just
+				the first <M>n</M> terms of a partial contracting homotopy on <M>K'_\ast</M>. In the context of Steinberg modules, the last <M>n</M> terms of a contracting homotopy of the well-rounded retract 
+					provides the first <M>n</M> terms of a contracting homotopy on the dual Voronoi complex which  is a non-free resolution of the Steinberg module.
+
+<Subsection Label="examplehomotopies"><Heading>Some implemented contracting homotopies</Heading>
+
+	Contracting homotopies have  been implemented on free <M>\mathbb ZG</M>-resolutions of <M>\mathbb Z</M> for finite groups <Ref Sect="sectSmallFinite"/>, finite <M>p</M>-groups over <M>GF(p)</M> <Ref Sect="sectFinitepGroups"/>, 
+		abelian groups <Ref Sect="sectAbelianGroups"/>,
+			nilpotent groups <Ref Sect="sectNilpotentGroups"/>,
+				groups with subnormal series <Ref Sect="sectSubnormalSeries"/>,
+groups with normal series <Ref Sect="sectNormalSeries"/>,
+	(almost) crystallographic polycyclic groups <Ref Sect="sectAlmostCrystallographic"/>, 
+		crystallographic space groups with cubical fundamental domain <Ref Sect="sectCubicalCrystallographic"/>, the groups <M>SL_2(\mathbb Z[1/m])</M> for square-free <M>m</M> <Ref Sect="sectReciprocalm"/>,
+			finite index subgroups of any of the previous groups <Ref Sect="sectFiniteIndex"/>, direct products of any of the previous groups 
+			<URL><Link>"../doc/chap5.html#X7FCE801781AD83E1"/></Link><LinkText>5.1.13</LinkText></URL>, extensions of any of the previous groups by any of the previous groups <URL><Link>"../doc/chap5.html#X79C83C4881B6A656"/></Link><LinkText>5.1.14</LinkText></URL>.
+
+			<P/> A non-free resolution with finite stabilizers and contracting homotopy can be constructed for a space group <M>G</M> with cubical fundamental domain using <Code>K:=ResolutionCubicalCrystGroup(G)</Code>. This is due to Bui Anh Tuan.
+
+
+			<P/> A non-free resolution of dimension 1 (i.e. a tree) with contracting homotopy can be constructed for the group <M>G=SL_2(\mathbb Z[1/(mp)])</M> using the command <Code>K:=SL2ZTree(m,p)</Code> where <M>p</M> is a prime coprime to square-free <M>m\ge 1</M>. The tree has stabilizer groups corresponding to the amalgamated product
+			<M>G=SL_2(\mathbb Z[1/m]) \ast_{\Gamma_0(p)} SL_2(\mathbb Z[1/m])</M> description of <M>G=SL_2(\mathbb Z[1/(mp)])</M>. This is due to Bui Anh Tuan.
+
+			<P/> Not every contractible finite regular CW-complex <M>X</M> is collapsible. If it is collapsible then it is an NP-hard problem to find an explicit sequence of collapses that collapse <M>X</M> to point.
+With these comments in mind, the command
+<Code>F:=ChainComplexEquivalenceOfRegularCWComplex(X)</Code>
+can be used to find a pair of quasi-isomorphism chain maps
+<M>f_\ast\colon C_\ast X \rightarrow C_\ast Y</M>, <M>g_\ast\colon C_\ast Y \rightarrow C_\ast X</M> where <M>Y</M> is obtained from <M>X</M> by a sequence of collapses. If <M>Y</M> is just a single point then this data is equivalent to a contracting homotopy on <M>C_\ast X</M>. This method of producing a contracting homotopy is illustrated in <Ref Sect="sectArithGroups"/> where it is used to produce a contracting homotopy on a finite 'ball' in the well-rounded retract <M>K</M> for <M>SL_3(\mathbb Z)</M>.
+	In cases where this finite ball method works, it may suffice to extend chain maps for which only 'small' elements of <M>d_n(K_n)</M> need to be lifted to <M>K_n</M>.
+
+<P/> Formulae for contracting homotopies on  <M>C_\ast(X)</M> for <M>X</M>
+	any direct product of various dimensional simplices, cubes, permutahedra and associahedra are implemented in functions underlying the illustrations in <Ref Sect="sectDiagonals"/>. 
+
+
+		</Subsection>
+
+<Subsection Label="examplehomotopies"><Heading>Some implementable contracting homotopies</Heading>
+
+		Suppose that our resolution <M>K_\ast</M> is the cellular chain complex of some regular CW-complex that we  denote by <M>K</M>. The additive map <M>h_0\colon K_0 \rightarrow K_1</M> can be viewed as a maximal tree in the <M>1</M>-skeleton of <M>K</M>. It could be represented as a function <Code>K!.homotopy(0,[k,i])</Code> that returns the sum of those edges in the tree connecting the vertex <M>g_i.e^0_k</M> to the base-point of the tree.
+
+		<P/>Consider the case where <M>K</M> is the <M>3</M>-dimensional well-rounded retract for <M>G=SL_3(\mathbb Z)</M>. There is just one <M>G</M>-orbit of <M>0</M>-cells represented by <M>e^0</M>
+			and one orbit of <M>1</M>-cells represented by <M>e^1</M> say. The vertices connected to <M>e^0</M> by a single edge are precisely 
+			<M>g_1.e^0, g_2.e^0, \ldots, g_6.e^0</M> where the <M>g_i</M> are the generators for <M>SL_3(\mathbb Z)</M> introduced above in <Ref Sect="sectExpressing"/>.
+				The function <Code>VoronoiFactorize(SL(3,Integers),g)</Code> can be viewed as determining the path in a maximal tree from <M>g.e^0</M> to the base-point in the tree. Assuming that <M>g=g_m</M> is the <M>m</M>-th element in our listing of group elements, then <Code>K!.homotopy(0,[1,m])</Code> should return the sum of these edges.
+
+				<P/> Consider the case where 
+				<M>V_\ast = {\rm Hom}^c_{\mathbb Z}(C_\ast(K),\mathbb Z)</M> is the dual of the well-rounded retract for <M>SL_3(\mathbb Z)</M> (see 
+					<Ref Sect="sectRationalCohomology"/>).
+						An explicit chain homotopy equivalence 
+					<M>C_\ast (K) \stackrel{\simeq}{\longrightarrow} \mathbb Z</M> should give us an explcit equivalence <M>V_\ast \stackrel{\simeq}{\longrightarrow} St_3(\mathbb Q)</M>.
+						In particular, the additive map
+					<M>h_2\colon K_2 \rightarrow K_3</M> of a contracting homotopy should induce an
+						additive map <M>h_0\colon V_0 \rightarrow V_1</M> which could be used to construct Hecke operators on <M>H_1(V_\ast \otimes_{\mathbb ZG} \mathbb Q) \cong H^2(SL(3,\mathbb Z),\mathbb Q)</M>.
+							To this end, consider the graph
+<M>{\mathcal G}(K)</M> with one vertex for every <M>3</M>-cell in <M>K</M>
+	and an edge whenever two <M>3</M>-cells of <M>K</M> have a common <M>2</M>-cell in their boundaries. 
+		From the description of the cellular structure of <M>K</M> given in <Ref Sect="sectArithGroups"/> we see that each vertex in the graph <M>{\mathcal G}(K)</M> has degree <M>24</M>. Moreover, <M>{\mathcal G}(K)</M> can be viewed as the Cayley graph on <M>24</M> generators <M>h_1, h_2, \ldots h_{24}</M> for <M>SL_3(\mathbb Z)</M>. These generators are stored in the variable
+		<Code>NeighbourGens</Code> in the function <Code>GComplexToFiniteRegularCWRegion(K,N)</Code> available <URL><Link>https://github.com/gap-packages/hap/blob/master/lib/RegularCWComplexes/bruteforce.gi</Link><LinkText>here</LinkText></URL>. A maximal tree in <M>{\mathcal G}(K)</M>
+			is essentially a way of factorizing an element of <M>SL_3(\mathbb Z)</M> as a product of the <M>24</M> generators <M>h_i</M> and can be obtained from the factorization in terms of the six generators <M>g_i</M> given by <Code>VoronoiFactorize(G,g)</Code> in <Ref Sect="sectExpressing"/>. Experimentation suggests the following holds:
+			<P/><E>Conjecture:</E> This spanning tree is leafless.
+			<P/>
+				Let us direct the edges of the spanning tree towards the root. Thus every vertex of the 
+				spanning tree other than the root has precisely one outgoing edge. All other edges incident with the vertex are incoming. The conjecture says that every vertex has at least one incoming edge. Every edge in the spanning tree is labelled by a generator <M>h_i</M>.
+					Let's deem the preferred incoming edge to a vertex to be that incoming edge whose label <M>h_i</M> has lowest value of <M>i</M>. The preferred edges in the spanning tree provide a matching between the <M>3</M>-cells of <M>K</M> and a subset of the <M>2</M>-cells.
+						Let <M>L</M> denote the subcomplex of the <M>2</M>-skeleton <M>K^2</M> with all matched <M>2</M>-cells removed. Then, assuming the conjecture, the matching determines a chain homotopy equivalence <M>C_\ast(K) \rightarrow C_\ast(L)</M> and a
+							homomorphism
+				<M>h_2\colon C_2(K) \rightarrow C_3(K)</M> which can be used to lift elements of <M>d_3(C_3(K))</M> to <M>C_3(K)</M>. If the conjecture is false then the lift will fail in some instances. But it is easy to test in any given instance if the lift is correct. If all instances of the lift are correct in a computation then the resulting computation is guaranteed correct.
+</Subsection>
+</Section>
 
 </Chapter>
