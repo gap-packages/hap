@@ -217,7 +217,7 @@ ReadPackageHap( "lib/Functors/homtintmodp.gi");
 ReadPackageHap( "lib/Functors/transfer.gi");
 ReadPackageHap( "lib/Functors/bianchiHomogeneousPolys.gi");
 ReadPackageHap( "lib/Functors/homogeneousPolys.gi");
-ReadPackageHap( "libAIE/FunctorsAIE/simplifyAIE.gi");
+ReadPackageHap( "lib/Functors/simplify.gi");
 ReadPackageHap( "lib/Functors/alexander.gi");
 ReadPackageHap( "lib/Functors/dualComplex.gi");
 ReadPackageHap( "lib/Functors/tensorNonFree.gi");
