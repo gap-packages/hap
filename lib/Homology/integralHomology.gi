@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2006
-#RT:=0;
+
 #####################################################################
 InstallGlobalFunction(IntegralHomology,
 function(X,n)
@@ -37,11 +37,11 @@ for i in [1..Dimension(n)] do
 M1[i]:=Boundary(n,i);
 od;
 ConvertToMatrixRep(M1);
-BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;  
+#BasisKerd1:=LLLReducedBasis(M1,"linearcomb").relations;  
 #Do we really want LLL? If not, replace previous line by following 3 lines 
-#ln:=Length(M1);
-#M1 := HermiteNormalFormIntegerMatTransform(M1);;
-#BasisKerd1:= M1.rowtrans{[M1.rank+1..ln]};
+ln:=Length(M1);
+M1 := HermiteNormalFormIntegerMatTransform(M1);;
+BasisKerd1:= M1.rowtrans{[M1.rank+1..ln]};
 
 M1:=0;
 fi;
