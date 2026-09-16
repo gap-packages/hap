@@ -8,6 +8,7 @@ gap> F:=FundamentalGroup(f);
 gap> phi:=ChainMap(f);
 Chain Map between complexes of length 2 . 
 
-gap> H:=Homology(phi,2);
-[ g1 ] -> [ g1 ]
+gap> H:=Homology(phi,2);;
+gap> Image(H);
+Pcp-group with orders [ 0 ]
 gap> STOP_TEST( "tst.tst", 1000 );
