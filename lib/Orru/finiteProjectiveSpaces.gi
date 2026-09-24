@@ -27,6 +27,13 @@ function(n)
 return HAP_FiniteProjectiveLineIntegers_alt(n);
 end);
 
+InstallMethod(FiniteProjectivePlane_alt,
+"Finite projective line for the ring Z/nZ",
+[IsInt],
+function(n)
+return HAP_FiniteProjectivePlaneIntegers_alt(n);
+end);
+
 
 
 
@@ -72,7 +79,7 @@ function(n)
     );
 end);
 
-InstallGlobalFunction(HAP_FiniteProjectivePlaneIntegers,
+InstallGlobalFunction(HAP_FiniteProjectivePlaneIntegers_alt,
 function(n)
     local UnitEls, x, y, z, i, c, d, u, UnitsAction, Representatives, 
           RepOf, r, v, w, m, min;
@@ -160,4 +167,44 @@ function(n)
     return Rep;
 end);
 
+InstallGlobalFunction(HAP_FiniteProjectivePlaneIntegers,
+function(n)
+    local divs, Rep, d, q, g, q_g, m, u, U_m, dd, qq, z, uu, zz;
 
+    divs := List(DivisorsInt(n));
+    Remove(divs);
+    divs := Concatenation([n],divs);
+    Rep := [];
+
+    for d in divs do
+      q := n/d;
+      for g in divs do
+        q_g := n/g;
+        m := Gcd(q,q_g);
+        U_m := Filtered([0..m-1], z -> Gcd(z,m) = 1);
+
+        for u in U_m do
+          uu := u;          
+          while Gcd(uu, q_g) <> 1 do
+            uu := uu + m;
+          od;
+
+          dd := Gcd(d,g);
+          qq := n/dd;
+
+          for z in [0..qq-1] do
+            if Gcd(z,dd,qq) = 1 then
+              zz := z;
+              while Gcd(zz, dd) <> 1 do
+                zz := zz + qq;
+              od;
+
+              Add(Rep, [d mod n,g*uu mod n,zz]);
+            fi;
+          od;
+        od;
+      od;
+    od;
+
+    return rec(Reps := Set(List(Rep, Immutable)));;
+end);
