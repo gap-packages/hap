@@ -28,30 +28,49 @@ InstallMethod(AmbientPosition,
 "Returns cosetPos(g) function for the congruence subgroup G",
 [ IsIntegerMatrixGroup and IsHAPCongruenceSubgroupGamma0 ],
     function(G)
-        local cosetPos, n, ProjPlane, U, UU;
+        local cosetPos, canonicalRep, n, ProjPlane;
         if DimensionOfMatrixGroup(G) <> 3 then
             TryNextMethod();
         fi;
 
         n := LevelOfCongruenceSubgroup(G);
-    
+
+        canonicalRep := function(g)
+            local x, y, z, d_x, q_x, a, d_y, q_y, y_0, b, d, q, z_0;
+
+            x := g[1][1] mod n;
+            y := g[2][1] mod n;
+            z := g[3][1] mod n;
+
+            d_x := Gcd(x,n);
+            q_x := n/d_x;
+            a := Gcdex(x/d_x, q_x).coeff1 mod q_x;
+
+            d_y := Gcd(y,n);
+            q_y := n/d_y;
+            y_0 := a*(y/d_y) mod Gcd(q_y,q_x);
+
+            while not Gcd(y_0, q_y) = 1 do
+                y_0 := y_0 + Gcd(q_y,q_x);
+            od;
+
+            b := ChineseRem([q_x,q_y],[a, Gcdex(y/d_y, q_y).coeff1*y_0 mod q_y]);
+
+            d := Gcd(d_x,d_y);
+            q := n/d;
+
+            z_0 := b*z mod q;
+            while not Gcd(z_0, d) = 1 do
+                z_0 := z_0 + q;
+            od;
+
+            return [d_x mod n, d_y*y_0 mod n, z_0];
+        end;
+        
         ProjPlane := ProjectiveSpace(G);
 
-        if not IsBound(G!.Units) then
-	UU := Units(Integers mod n); #Graham
-        G!.Units:=List(UU,Int);  #Graham
-        fi;
-        
-	cosetPos := function(g)
-            local v, vv, u, w, p;
-            v := [g[1][1], g[2][1], g[3][1]];
-            vv := List(v, x -> x mod n);
-    
-            for u in G!.Units do  #Graham
-                w := List(vv, x -> (u*x) mod n); #Graham
-                p:=Position(ProjPlane.Reps,w);   #Graham
-                if not p=fail then return p; fi; #Graham
-            od;
+        cosetPos := function(g)
+            return Position(ProjPlane.Reps, canonicalRep(g));
         end;
 
         return cosetPos;
@@ -60,7 +79,7 @@ InstallMethod(AmbientPosition,
 ##
 ## AmbientRepresentation( <G> )
 ##
-## Returns a function cosetPos(g) giving a canonical rpresentative of the 
+## Returns a function, cosetRep(g), giving a canonical representative of the 
 ## coset gG in the ambient group. 
 InstallMethod(AmbientRepresentation,
 "Returns cosetRep(g) function for the congruence subgroup G",

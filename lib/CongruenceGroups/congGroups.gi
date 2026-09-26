@@ -532,8 +532,10 @@ InstallMethod( IsSubset,
       vertex2word, one, cosetPos, cosetRep, triple2word,
       i,j,u,c,a,b;
 
-        if DimensionOfMatrixGroup(G)>2 then TryNextMethod(); fi;
-        n:=LevelOfCongruenceSubgroup(G);
+    if DimensionOfMatrixGroup(G)>2 and
+       not (DimensionOfMatrixGroup(G)=3 and IsHAPCongruenceSubgroupGamma0(G))
+    then TryNextMethod(); fi;
+    n:=LevelOfCongruenceSubgroup(G);
 
      GG:=AmbientGroupOfCongruenceSubgroup(G);
      ambientGenerators:=GeneratorsOfGroup(GG);
