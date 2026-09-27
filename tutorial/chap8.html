@@ -43,7 +43,10 @@
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X80114B0483EF9A67">8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">2</span>-groups</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7EFDE3DA850B1FDD">8.4-1 <span class="Heading">Stiefel-Whitney classes of a finite <span class="SimpleMath">2</span>-group</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">p</span>-group</span></a>
 </span>
 </div>
@@ -427,6 +430,31 @@ Sq^4(h)=d*d*d*d*b*b+g*e*d+p*c
 Sq^1(p)=c*d*d*d*b
 Sq^2(p)=d*d*d*d*b*b+c*d*d*d*d
 Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
+
+</pre></div>
+
+<p><a id="X7EFDE3DA850B1FDD" name="X7EFDE3DA850B1FDD"></a></p>
+
+<h5>8.4-1 <span class="Heading">Stiefel-Whitney classes of a finite <span class="SimpleMath">2</span>-group</span></h5>
+
+<p>For the quaternion group <span class="SimpleMath">Q</span> of order <span class="SimpleMath">8</span> with a specified faithful <span class="SimpleMath">4</span>-dimensional real representation <span class="SimpleMath">Q→ GL_4( R)</span> the following computes fundamental multiples <span class="SimpleMath">ρ^0(Φ)∪ w_i =Sq^i(ρ^0(Φ))</span> of Stiefel-Whitney classes, where <span class="SimpleMath">ρ^∗: H^∗(Q, F_2) → H^∗+D(Q, F_2)</span> is a homomorphism, <span class="SimpleMath">0ne Φ∈ H^0(Q, F_2)</span> and in this case <span class="SimpleMath">D=4</span>. The penultimate command returns all solutions <span class="SimpleMath">x</span> to <span class="SimpleMath">ρ^0(Φ)∪ x =Sq^i(ρ^0(Φ))</span>. Since the solutions are unique in this example, the final command lists <span class="SimpleMath">w_0+w_1+w_2+w_3+w_4 =1+w_4</span>. Here <span class="SimpleMath">w_4</span> is the generator of <span class="SimpleMath">H^4(Q, F_2)= Z_2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=Group([a,b]);; #Quaternion group of order 8</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IdentityMapping(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v:=[1,2,3,4];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Mod2SteenrodAlgebra(Q,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A);</span>
+[ v.7, 0*v.1, 0*v.1, 0*v.1, v.13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(sw,A!.degree);  #degrees of fundamental multiples</span>
+[ 4, 0, 0, 0, 8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);</span>
+[ [ v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ v.7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TotalStiefelWhitneyClass:= w[1][1]+w[2][1]+w[3][1]+w[4][1]+w[5][1];</span>
+v.1+v.7
 
 </pre></div>
 
