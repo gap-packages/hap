@@ -1,0 +1,14 @@
+gap> a:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;
+gap> b:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;
+gap> Q:=Group([a,b]);; #Quaternion group of order 8
+gap> rho:=IdentityMapping(Q);;
+gap> v:=[1,2,3,4];;
+gap> A:=Mod2SteenrodAlgebra(Q,10);;
+gap> sw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A);
+[ v.7, 0*v.1, 0*v.1, 0*v.1, v.13 ]
+gap> List(sw,A!.degree);  #degrees of fundamental multiples
+[ 4, 0, 0, 0, 8 ]
+gap> w:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);
+[ [ v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ v.7 ] ]
+gap> TotalStiefelWhitneyClass:= w[1][1]+w[2][1]+w[3][1]+w[4][1]+w[5][1];
+v.1+v.7

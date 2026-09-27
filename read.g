@@ -168,6 +168,7 @@ ReadPackageHap( "lib/NonabelianTensor/weak.gi");
 ##################### RESOLUTIONS ###################################
 ReadPackageHap( "lib/Resolutions/resAspherical.gi");
 ReadPackageHap( "lib/Resolutions/resAbGroup.gi");
+ReadPackageHap( "lib/Resolutions/resFiniteGroup.gi");
 ReadPackageHap( "libAIE/ResolutionsAIE/resFiniteGroupAIE.gi");
 ReadPackageHap( "lib/Resolutions/barComplexMonoid.gi");
 ReadPackageHap( "lib/Resolutions/resSmallFpGroup.gi");

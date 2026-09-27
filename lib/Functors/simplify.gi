@@ -4,13 +4,23 @@
 InstallGlobalFunction(SimplifiedSparseChainComplex,
 function(arg)
 local C,bounds, cobounds, lb, n, k, i, j, b,c,B,x,
-      Dimension,Boundary,first,first1,bnd,Replace,NormForm,
-      NewGens,ZeroCells,BoundaryRec,PNG,merge;
+      Dimension,Boundary,first,bnd,Replace,NormForm,
+      NewGens,ZeroCells,BoundaryRec,PNG,merge,D,CmapD,DmapC,
+      CmappingD,DmappingC,ReplacementRec,rr,chnmp;
 
 C:=arg[1];
+if Length(arg)=1 then rr:=infinity; chnmp:=false; fi;
+if Length(arg)=2 then
+          if IsInt(arg[2]) then rr:=arg[2]; chnmp:=false; fi;
+          if IsBool(arg[2]) then rr:=infinity; chnmp:=true; fi;
+fi;
+if Length(arg)=3 then
+          if IsInt(arg[2]) then rr:=arg[2]; chnmp:=true; fi;
+          if IsInt(arg[3]) then rr:=arg[3]; chnmp:=true; fi;
+fi;
 
-####################Changed this function, July 2026
-####################Then changed the other code so that it is never called!
+####################Changed this function, July 2026.  Then changed remaining
+####################code so that NormForm is rarely called!
 NormForm:=function(b)
 local S,a,pos,ls,L,bool,i;
 cnt:=cnt+1;
@@ -73,28 +83,60 @@ cobounds[n+1]:=List([1..Length(bounds[n])],i->[]);
 ####################
 
 
-if Length(arg)=1 then
-####################
-####################
-first1:=function(x) #find first cell with coefficient equal to +/-1
-return PositionProperty(x,y->AbsInt(y[2])=1);
-end;
-####################
-####################
-first:=first1;
-fi;
-if Length(arg)=2 then
+if rr=infinity then
 ####################
 ####################
 first:=function(x) #find first cell with coefficient equal to +/-1
-if Length(x)>arg[2] then return fail; fi;
+return PositionProperty(x,y->AbsInt(y[2])=1);
+end;
+####################
+####################
+fi;
+if rr<infinity then
+####################
+####################
+first:=function(x) #find first cell with coefficient equal to +/-1
+if Length(x)>rr then return fail; fi;
 return PositionProperty(x,y->AbsInt(y[2])=1);
 end;
 ####################
 ####################
 fi;
 
-
+if chnmp then
+ReplacementRec:=List([0..Length(C)],n->[]);
+# ReplacementRec[i] is a record of the ordered sequence of replacements of 
+# n-cells, where bnd occurs in the boundary of the k-th (n+1)-cell.  
+# The (n+1)-cell will be deleted by other code.
+####################
+####################
+##This function replaces the (n-1)-cell b throughout by bnd
+Replace:=function(n,b,bnd)
+local cbnd, pos, B,BB,x,Y,z,i,c;
+Add(ReplacementRec[n-1],[b,bnd,k]);   #k is defined whenever Replace is applied
+cbnd:=cobounds[n][b];  #removed 1*
+for i in cbnd do
+   B:=bounds[n][i];  #removed 1*
+   if not (B=0 or B=[]) then
+      pos:=PositionProperty(B,a->a[1]=b);
+      #pos:=PositionSet(List(B,a->a[1]),b);
+      if IsInt(pos) then
+          c:=B[pos][2];
+          Y:=1*bnd;
+          Apply(Y,a->[a[1],c*a[2]]);
+          Remove(B,pos);
+          bounds[n][i]:=merge(B,Y);
+          for z in Y do
+              AddSet(cobounds[n][z[1]],i);
+          od;
+      fi;
+   fi;
+od;
+return true;
+end;
+####################
+####################
+else
 ####################
 ####################
 Replace:=function(n,b,bnd)
@@ -121,6 +163,7 @@ return true;
 end;
 ####################
 ####################
+fi;
 
 ####################
 ####################
@@ -186,7 +229,7 @@ od;
 ######################################################
 
 
-NewGens:=[];  #NewGens[n+1] will be the n-gens that remain in simplified complex
+NewGens:=[];  #NewGens[n+1] will be the n-gens remaining in simplified complex
 NewGens[1]:=ZeroCells;
 for n in [1..Length(bounds)] do
 NewGens[n+1]:=Filtered([1..Length(bounds[n])],k-> not bounds[n][k]=0);
@@ -237,7 +280,7 @@ return BoundaryRec[n][k];
 end;
 ###################################
 
-return  Objectify(HapSparseChainComplex,
+D:=  Objectify(HapSparseChainComplex,
                 rec(
                 dimension:=Dimension,
                 boundary:=Boundary,
@@ -249,7 +292,39 @@ return  Objectify(HapSparseChainComplex,
                 ["characteristic",
                 EvaluateProperty(C,"characteristic")] ]));
 
+if chnmp then
+CmappingD:=fail;  #To do
+DmappingC:=fail;
 
+CmapD:=Objectify(HapChainMap,
+        rec(
+           source:=C,
+           target:=D,
+           mapping:=CmappingD,
+           properties:=[ ["type","chainMap"],
+           ["characteristic", Maximum(
+           EvaluateProperty(C,"characteristic"),
+           EvaluateProperty(C,"characteristic"))],
+           ]
+           ));
+DmapC:=Objectify(HapChainMap,
+        rec(
+           source:=D,
+           target:=C,
+           mapping:=DmappingC,
+           properties:=[ ["type","chainMap"],
+           ["characteristic", Maximum(
+           EvaluateProperty(C,"characteristic"),
+           EvaluateProperty(C,"characteristic"))],
+           ]
+           ));
+
+D!.ReplacementRec:=ReplacementRec;
+D!.CmapD:=CmapD;
+D!.DmapC:=DmapC;
+fi;
+
+return D;
 end);
 ################################################################
 ################################################################

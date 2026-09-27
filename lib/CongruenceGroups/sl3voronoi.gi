@@ -127,6 +127,10 @@ cnt:=cnt+1;
 fi;
 od;
 w:=Filtered(w,x->x<>0);
+for cnt in [1..Length(w)] do
+if AbsInt(w[cnt])=5 then w[cnt]:=-SignInt(w[cnt])*4; fi;
+if AbsInt(w[cnt])=6 then w[cnt]:=-SignInt(w[cnt])*1; fi;
+od;
 
 gens:=VoronoiGenerators(SL(3,Integers));
 
@@ -190,7 +194,7 @@ end);
 InstallGlobalFunction(VoronoiBuildStabilizer,
 function(G)
 local stab,words,frontier,newfrontier,InverseWord,
-      A,w,B,u,key,gens,StabGenerators;
+      A,w,B,u,key,gens,StabGenerators,cnt;
 
 if not G=SL(3,Integers) then return fail; fi;
 if IsBound(G!.VoronoiStabilizer) then return G!.VoronoiStabilizer; fi;
@@ -226,6 +230,11 @@ while Length(frontier) > 0 do
 
         w := words.(String(A));
 
+for cnt in [1..Length(w)] do
+if AbsInt(w[cnt])=5 then w[cnt]:=-SignInt(w[cnt])*4; fi;
+if AbsInt(w[cnt])=6 then w[cnt]:=-SignInt(w[cnt])*1; fi;
+od;
+
         for u in Concatenation(
                     StabGenerators,
                     List(StabGenerators,InverseWord)) do
@@ -249,6 +258,7 @@ while Length(frontier) > 0 do
     frontier := newfrontier;
 
 od;
+
 G!.VoronoiStabilizer:=[stab,words];
 return [stab,words];
 
@@ -274,9 +284,9 @@ end);
 # and Mred lies in the fundamental cone.
 
 InstallGlobalFunction(VoronoiReduce,
-function(G,M,VoronoiCoordinates)
+function(G,M)
 
-local A,Anew,VoronoiHeight,MCoordinates,c,i,H,Hnew,w,candidates,j,S0,gens;
+local A,Anew,VoronoiHeight,MCoordinates,c,i,H,Hnew,w,candidates,j,S0,gens,cnt;
 
     A := M;
     w := [];
@@ -285,23 +295,23 @@ local A,Anew,VoronoiHeight,MCoordinates,c,i,H,Hnew,w,candidates,j,S0,gens;
     gens:=VoronoiGenerators(G);
 
 ########################
-VoronoiHeight := function(M)
-local Q,c;
-Q := TransposedMat(M)*S0*M;
-c := VoronoiCoordinates(G,Q);
-return Sum(c);
-end;
-########################
-
-########################
 MCoordinates := function(M)
 return VoronoiCoordinates(G,TransposedMat(M)*S0*M);
 end;
 ########################
+
+########################
+VoronoiHeight := function(M)
+local c;
+c := MCoordinates(M);
+return Sum(c);
+end;
+########################
+
     while true do
 
-        c := MCoordinates(A);
-        H := Sum(c);
+        c:=MCoordinates(A);
+        H := VoronoiHeight(A);
 
         candidates := [];
 
@@ -336,6 +346,11 @@ end;
 
     od;
 
+for cnt in [1..Length(w)] do
+if AbsInt(w[cnt])=5 then w[cnt]:=-SignInt(w[cnt])*4; fi;
+if AbsInt(w[cnt])=6 then w[cnt]:=-SignInt(w[cnt])*1; fi;
+od;
+
     return [A,w];
 
 end);
@@ -361,7 +376,7 @@ local R,A,w,ws,gens,StabilizerData,StabilizerWords,WordForStabilizerElement;
 
 gens:=VoronoiGenerators(SL(3,Integers));
 
-R := VoronoiReduce(G,M,VoronoiCoordinates);
+R := VoronoiReduce(G,M);
 
 A := R[1];
 w := R[2];

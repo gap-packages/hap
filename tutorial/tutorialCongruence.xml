@@ -1118,17 +1118,23 @@ The following approximates <M>\lambda/18\pi = 0.0161957</M> and
 				<P/>					So <M>Q</M> lies in the  cone <M>C_0</M> precisely when <M>c_1(Q)\ge 0, \ldots, c_6(Q)\ge 0</M>.
 
 					<P/>We define the <E>height</E> of <M>Q</M> to be
-					<P/><M>ht(Q)= c_1(Q) + \cdots +c_6(Q) = \frac{1}{2} tr(P_0Q)</M>.
-
-					<P/>The barycentre of the fundamental cone <M>C_0</M> is <M>B_0 = \frac{1}{6}(R_1 +\cdots +R_6)</M>.
+					<P/><M>ht(Q)= c_1(Q) + \cdots +c_6(Q)  </M>.
+					<P/>One can check that we also have the formula
+					<P/><M>ht(Q) = \frac{1}{2} tr(P_0Q)</M>.
+					<P/>The barycentre of the fundamental cone <M>C_0</M> corresponding to <M>P_0</M> is defined to be <M>B_0 = \frac{1}{6}(R_1 +\cdots +R_6)</M>. The barycentre of any other cone correposnding to <M>Q=g^tP_0g</M> with <M>g\in SL_3(\mathbb Z)</M> is defined to be <M>B=g^tB_0g</M>.
 						Our six generating matrices 
 					<M>g_1,\cdots,g_6</M> are chosen so that <M>g_i^tB_0g_i</M> lies in a cone neighbouring 
-					<M>C_0</M>. The facet stabilizers have order <M>4</M> and so there are four choices for each <M>g_i</M>. Our choice ensures that the height of the barycentre of a positive-definite symmetric matrix <M>Q</M> can always be reduced by transforming <M>Q</M> to <M>g_i^tQg_i</M> for at least one <M>i</M>. The algorithm chooses the <M>i</M> giving the greatest height reduction.
+					<M>C_0</M>. <P/>One can check that  <M>g_1^tR_6g_1 = R_1-R_2+R_3+R_4+R_5-R_6</M> and that the action of <M>g_1</M> permutes <M>R_1,\ldots,R_5</M>.  Hence <M>ht(g_1^tQg_1) =ht(Q) + C_6(Q) </M>. Similarly for the other generators <M>g_i</M>. Re-indexing the <M>R_i</M> appropriately, we obtain 
+					<P/><M> ht(g_i^tQg_i) =ht(Q) + C_i(Q) </M>. 
+					<P/>In particular,
+                                        <P/><M> C_i(Q) &lt; 0 \Rightarrow ht(g_i^tQg_i) &lt; ht(Q)</M>.
+					<P/>The height of the barycentre of a positive-definite symmetric matrix <M>Q</M> corresponding to a cone <M>\ne C_0</M> can always be reduced by transforming <M>Q</M> to <M>g_i^tQg_i</M> for at least one <M>i</M>.
+						The algorithm chooses the <M>i</M> giving the greatest height reduction.
 
 					<P/> Note 1: this discussion and the implementation of <Code>VoronoiFactorize</Code> uses group actions on the right. These need to be converted to left actions when the implementation is required
 						to match the convention in HAP resolutions. 
 
-					<P/>Note 2: the algorithm could be adapted to other groups, including cases with more than one perfect form up to equivalence.
+					<P/>Note 2: presumably the algorithm could be adapted to other groups, including cases with more than one perfect form up to equivalence.
 </Subsection>
 
 </Section>

@@ -1,5 +1,5 @@
 #(C) Graham Ellis, 2005-2006
-
+#RT:=0;
 #####################################################################
 InstallGlobalFunction(IntegralHomology,
 function(X,n)

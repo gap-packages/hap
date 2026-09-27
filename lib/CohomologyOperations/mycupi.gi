@@ -5,7 +5,7 @@ InstallGlobalFunction(HAP_PHI,
 function(G,NN)
 local N, phiRec, phiRecT, Diag,Diagrec, C2, C2G, GG, RG, RGG, RC2, RC2G, 
 phi_0,phi,Tau,tauhom,tau,taurec,MultGG, FirstEmbedding, SecondEmbedding, Fproj, Sproj,FirstProjection,
-SecondProjection, n, MT;
+SecondProjection, n, MT, MTT, ii,jj;
 N:=NN+1;
 ## G is a group
 ## N is a positive integer
@@ -69,9 +69,29 @@ end;
 ################################
 
 MT:=MultiplicationTable(GG);
+if RGG!.elts=Elements(GG) then
 ################################
 MultGG:=function(i,j) return MT[i][j]; end;
 ################################
+else     #Fixed September 2026
+MTT:=[];
+MultGG:=function(i,j)
+local ii,jj,k;
+ii:=Position(Elements(GG),RGG!.elts[i]);
+jj:=Position(Elements(GG),RGG!.elts[j]);
+k:=MT[ii][jj];
+return Position(RGG!.elts,Elements(GG)[k]);
+end;
+for ii in [1..Length(Elements(GG))] do
+MTT[ii]:=[];
+for jj in [1..Length(Elements(GG))] do
+MTT[ii][jj]:=MultGG(ii,jj);
+od;od;
+MT:=MTT;
+################################
+MultGG:=function(i,j) return MT[i][j]; end;
+################################
+fi;
 
 ################################
 phi_0:=function(a,ii)
