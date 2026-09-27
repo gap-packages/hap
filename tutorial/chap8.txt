@@ -426,12 +426,15 @@
   [1X8.4-1 [33X[0;0YStiefel-Whitney classes of a finite [22X2[122X[101X[1X-group[133X[101X
   
   [33X[0;0YFor   the   quaternion  group  [22XQ[122X  of  order  [22X8[122X  with  a  specified  faithful
-  [22X4[122X-dimensional  real  representation  [22XQ→  GL_4(  R)[122X  the  following  computes
-  fundamental  multiples [22Xρ^0(Φ)∪ w_i =Sq^i(ρ^0(Φ))[122X of Stiefel-Whitney classes,
-  where [22Xρ^∗: H^∗(Q, F_2) → H^∗+D(Q, F_2)[122X is a homomorphism, [22X0ne Φ∈ H^0(Q, F_2)[122X
-  and  in  this  case  [22XD=4[122X. The penultimate command returns all solutions [22Xx[122X to
-  [22Xρ^0(Φ)∪ x =Sq^i(ρ^0(Φ))[122X. Since the solutions are unique in this example, the
-  final command lists [22Xw_0+w_1+w_2+w_3+w_4 =1+w_4[122X. Here [22Xw_4[122X is the generator of
+  [22X4[122X-dimensional  real  representation  [22Xρ:  Q→  GL_4( R)[122X the following computes
+  fundamental  multiples  [22Xρ^0(Φ)∪ w_i =Sq^i(ρ^0(Φ))[122X of Stiefel-Whitney classes
+  of  the bundle [22XE_ρ=EG×_G R^6 → BG[122X, where [22Xρ^∗: H^∗(Q, F_2) → H^∗+D(Q, F_2)[122X is
+  a  homomorphism,  [22X0ne  Φ∈  H^0(Q, F_2)[122X and in this case [22XD=4[122X. This value of [22XD[122X
+  equals  the  dimension of the convex hull of the orbit of a chosen vector [22Xv∈
+  R^4[122X.   The  penultimate  command  returns  all  solutions  [22Xx[122X  to  [22Xρ^0(Φ)∪  x
+  =Sq^i(ρ^0(Φ))[122X. Since the solutions are unique in this example, and since the
+  reprentation  is  four  dimensional,  the  final  command  lists  the  total
+  Stiefel-Whitney  class [22Xw(ρ)=1+0+0+0+w_4 =1+w_4[122X. Here [22Xw_4[122X is the generator of
   [22XH^4(Q, F_2)= Z_2[122X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -453,13 +456,12 @@
   [4X[32X[104X
   
   [33X[0;0YA  Sylow [22X2[122X-subgroup [22XG[122X of the symmetric group [22XS_6[122X has a natural [22X6[122X-dimensional
-  real  representation  [22Xρ[122X acting by permuting coordinates. The boundary of the
-  convex  hull  of  the orbit of the vector [22Xv=(1,2,2,1,2,5)[122X is a [22X3[122X-dimensional
-  sphere  [22XX=S^3[122X  on  which [22XG[122X acts. The bundle [22XE_ρ=EG×_G R^6 → BG[122X can be pulled
-  back  along the classifying map [22Xf: X/G→ BG[122X. The following computes the total
-  Stiefel-Whitney  class  for  the  bundle  [22Xξ_ρ:  f^∗(EG×_G  R^6)  → S^3/G[122X. It
-  computes  it  to  be  [22Xw=  1  +  (  v.2+v.3+v.4 )+ ( v.5+v.6+v.8 )+ v.12[122X with
-  [22Xv_2+v_3+v_4∈ H^1(G, F_2)[122X, [22Xv_5+v_6+v_8∈ H^2(G, F_2)[122X and [22Xv_12∈ H^3(G, F_2)[122X.[133X
+  real  representation  [22Xρ[122X  acting by permuting coordinates. The convex hull of
+  the  vector  [22Xv=(1,2,2,1,2,5)[122X  is  a  [22X3[122X-dimensional  polytope.  The following
+  computes  the  total  Stiefel-Whitney  class to be [22Xw= 1 + ( v.2+v.3+v.4 )+ (
+  v.5+v.6+v.8 )+ v.12 +w_4+w_5+w_6[122X with [22Xv_2+v_3+v_4∈ H^1(G, F_2)[122X, [22Xv_5+v_6+v_8∈
+  H^2(G,  F_2)[122X,  [22Xv_12∈  H^3(G,  F_2)[122X  and where [22Xw_4[122X, [22Xw_5[122X, [22Xw_6[122X are undetermined
+  potentially non-trivial classes of degrees [22X4, 5, 6[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=SylowSubgroup(SymmetricGroup(6),2);;[127X[104X
@@ -467,6 +469,11 @@
     [4X[28X[ (1,2), (3,4), (1,3)(2,4), (5,6) ][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
     [4X[28X"C2 x D8"[128X[104X
+    [4X[25Xgap>[125X [27Xv:=[1,2,2,1,2,5];;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PolytopalComplex(G,v);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..5],P!.dimension);[127X[104X
+    [4X[28X[ 1, 3, 2, 1, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xsw:=FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);[127X[104X
     [4X[28X[ [ v.1 ], [ v.2+v.3+v.4 ], [ v.5+v.6+v.8 ], [ v.12 ] ][128X[104X
     [4X[28X[128X[104X
@@ -474,6 +481,11 @@
     [4X[28X[ 0, 1, 2, 3 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YIt is possible to chose different starting vectors [22Xv[122X whose convex hulls have
+  dimension  greater  than  [22X3[122X. But experimentation suggests that these lead to
+  non-unique  solutions  [22Xx[122X  to the equation [22Xρ^0(Φ)∪ x =Sq^i(ρ^0(Φ))[122X. Maybe one
+  could use a range of [22Xv[122X and intersect the solution sets?[133X
   
   
   [1X8.5 [33X[0;0YSteenrod operations on the classifying space of a finite [22Xp[122X[101X[1X-group[133X[101X
