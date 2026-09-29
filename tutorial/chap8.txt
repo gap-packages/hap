@@ -423,6 +423,102 @@
   [4X[32X[104X
   
   
+  [1X8.4-1 [33X[0;0YStiefel-Whitney classes of a finite [22X2[122X[101X[1X-group[133X[101X
+  
+  [33X[0;0YA  finite group representation [22Xρ: G → GL_n( R)[122X gives rise to a vector bundle
+  [22XE_ρ  = EG ×_G R^n → BG[122X which, in turn, gives rise to Stiefel-Whitney classes
+  [22Xw_i∈  H^i(BG, F_2) = H^i(G, F_2)[122X. Let [22XU∈ tilde H^n(Th(E_ρ), F_2)[122X be the Thom
+  class  and  let  [22Xs_0^∗:  tilde  H^∗(Th(E_ρ),  F_2)  →  H^∗(BG,  F_2)[122X  be the
+  homomorphism  induced  by  the  zero  section. The Stiefel-Whitney class [22Xw_i[122X
+  satisfies the equation[133X
+  
+  [33X[0;0Y[22Xw_i ∪ s_0^∗(U) = Sq^i(s_0^∗(U))[122X.[133X
+  
+  [33X[0;0YThere could be many solutions [22Xx[122X to the equation[133X
+  
+  [33X[0;0Y[22Xx ∪ s_0^∗(U) = Sq^i(s_0^∗(U))[122X[133X
+  
+  [33X[0;0Y(for instance one could have [22Xs_0^∗(U) =0[122X). But in those cases where there is
+  a  unique  solution  the equation provides a method of determining [22Xw_i[122X. Even
+  when  the  solution  isn't  unique  the equation might still narrow down the
+  search  for [22Xw_i[122X. On a computer one could equivalently consider the bundle [22XEG
+  ×_G  V → BG[122X where [22XV[122X is some [22Xn[122X-dimensional polytope for which the action of [22XG[122X
+  on  [22XR^n[122X restricts to [22XV[122X in a way that permutes cells. For instance, one could
+  take [22XV[122X to be the convex hull of the orbit of some user chosen vector [22Xv[122X. This
+  is         the         approach        underlying        the        function
+  [10XFundamentalMultiplesOfStiefelWhitneyClasses[110X   which   begins   by  computing
+  [22Xs_0^∗(U)[122X.[133X
+  
+  [33X[0;0YAn  advantage to this approach is that it largely avoids computations in the
+  Thom space [22XTh(E_ρ)[122X, though there are some obvious limitations:[133X
+  
+  [30X    [33X[0;6Yif [22Xs_0^∗(U)=0[122X then no information about the [22Xw_i[122X is obtained.[133X
+  
+  [30X    [33X[0;6Yif the vector [22Xv[122X is chosen so that the orbit polytope [22XV[122X is not of 'full
+        dimension'  then  only information on Stiefel-Whitney classes of a sub
+        representation is obtained.[133X
+  
+  [30X    [33X[0;6Ynot  all Steenrod squares on [22XH^∗(G, F_2)[122X have been implemented, and so
+        [10Xfail[110X may be returned instead of solutions to the equation.[133X
+  
+  [33X[0;0YFor   the   quaternion  group  [22XQ[122X  of  order  [22X8[122X  with  a  specified  faithful
+  [22X4[122X-dimensional  real  representation  [22Xρ:  Q→  GL_4( R)[122X the following computes
+  fundamental  multiples  [22Xs_0^∗(U)∪  w_i  =Sq^i(s_0^∗(U))[122X  of  Stiefel-Whitney
+  classes.  The  chosen vector [22Xv[122X yields an orbit polytope of full dimension [22X4[122X.
+  The  penultimate  command returns all solutions to the above equation. Since
+  the solutions are unique in this example, and since the reprentation is four
+  dimensional,  the  final  command  lists  the  total  Stiefel-Whitney  class
+  [22Xw(ρ)=1+0+0+0+w_4 =1+w_4[122X. Here [22Xw_4[122X is the generator of [22XH^4(Q, F_2)= Z_2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xa:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;[127X[104X
+    [4X[25Xgap>[125X [27Xb:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;[127X[104X
+    [4X[25Xgap>[125X [27XQ:=Group([a,b]);; #Quaternion group of order 8[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=IdentityMapping(Q);;[127X[104X
+    [4X[25Xgap>[125X [27Xv:=[1,2,3,4];;[127X[104X
+    [4X[25Xgap>[125X [27XA:=Mod2SteenrodAlgebra(Q,10);;[127X[104X
+    [4X[25Xgap>[125X [27Xsw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X[ v.7, 0*v.1, 0*v.1, 0*v.1, v.13 ][128X[104X
+    [4X[25Xgap>[125X [27XList(sw,A!.degree);  #degrees of fundamental multiples[127X[104X
+    [4X[28X[ 4, 0, 0, 0, 8 ][128X[104X
+    [4X[25Xgap>[125X [27Xw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);[127X[104X
+    [4X[28X[ [ v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ v.7 ] ][128X[104X
+    [4X[25Xgap>[125X [27XTotalStiefelWhitneyClass:= w[1][1]+w[2][1]+w[3][1]+w[4][1]+w[5][1];[127X[104X
+    [4X[28Xv.1+v.7[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  Sylow [22X2[122X-subgroup [22XG[122X of the symmetric group [22XS_6[122X has a natural [22X6[122X-dimensional
+  real  representation  [22Xρ[122X  acting by permuting coordinates. The convex hull of
+  the  vector  [22Xv=(1,2,2,1,2,5)[122X  is  a  [22X3[122X-dimensional  polytope and not of full
+  dimension.  The  following computes the total Stiefel-Whitney class of a sub
+  representation  to  be  [22Xw=  1  + ( v.2+v.3+v.4 )+ ( v.5+v.6+v.8 )+ v.12[122X with
+  [22Xv_2+v_3+v_4∈ H^1(G, F_2)[122X, [22Xv_5+v_6+v_8∈ H^2(G, F_2)[122X, and [22Xv_12∈ H^3(G, F_2)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SylowSubgroup(SymmetricGroup(6),2);;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(G);[127X[104X
+    [4X[28X[ (1,2), (3,4), (1,3)(2,4), (5,6) ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X
+    [4X[28X"C2 x D8"[128X[104X
+    [4X[25Xgap>[125X [27XA:=Mod2SteenrodAlgebra(G,10);;[127X[104X
+    [4X[25Xgap>[125X [27Xrho:=PermToMatrixGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27Xv:=[1,2,2,1,2,5];;[127X[104X
+    [4X[25Xgap>[125X [27XP:=PolytopalComplex(G,v);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..5],P!.dimension);[127X[104X
+    [4X[28X[ 1, 3, 2, 1, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsw:=FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X[ [ v.1 ], [ v.2+v.3+v.4 ], [ v.5+v.6+v.8 ], [ v.12 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(Flat(sw),A!.degree);[127X[104X
+    [4X[28X[ 0, 1, 2, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
   [1X8.5 [33X[0;0YSteenrod operations on the classifying space of a finite [22Xp[122X[101X[1X-group[133X[101X
   
   [33X[0;0YThe  following  example  constructs  the  first  eight  degrees of the mod-[22X3[122X

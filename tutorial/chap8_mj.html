@@ -46,7 +46,10 @@
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80114B0483EF9A67">8.4 <span class="Heading">Steenrod operations for finite <span class="SimpleMath">\(2\)</span>-groups</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7EFDE3DA850B1FDD">8.4-1 <span class="Heading">Stiefel-Whitney classes of a finite <span class="SimpleMath">\(2\)</span>-group</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7D5ACA56870A40E9">8.5 <span class="Heading">Steenrod operations on the classifying space of a finite <span class="SimpleMath">\(p\)</span>-group</span></a>
 </span>
 </div>
@@ -430,6 +433,81 @@ Sq^4(h)=d*d*d*d*b*b+g*e*d+p*c
 Sq^1(p)=c*d*d*d*b
 Sq^2(p)=d*d*d*d*b*b+c*d*d*d*d
 Sq^4(p)=d*d*d*d*d*b*b+d*d*d*d*d*d+g*d*d*d*b+g*g*d+p*d*d
+
+</pre></div>
+
+<p><a id="X7EFDE3DA850B1FDD" name="X7EFDE3DA850B1FDD"></a></p>
+
+<h5>8.4-1 <span class="Heading">Stiefel-Whitney classes of a finite <span class="SimpleMath">\(2\)</span>-group</span></h5>
+
+<p>A finite group representation <span class="SimpleMath">\(\rho\colon G \rightarrow GL_n(\mathbb R)\)</span> gives rise to a vector bundle <span class="SimpleMath">\(E_\rho = EG \times_G \mathbb R^n \rightarrow BG\)</span> which, in turn, gives rise to Stiefel-Whitney classes <span class="SimpleMath">\(w_i\in H^i(BG,\mathbb F_2) = H^i(G,\mathbb F_2)\)</span>. Let <span class="SimpleMath">\(U\in \tilde H^n(Th(E_\rho),\mathbb F_2) \)</span> be the Thom class and let <span class="SimpleMath">\(s_0^\ast\colon \tilde H^\ast(Th(E_\rho),\mathbb F_2) \rightarrow H^\ast(BG,\mathbb F_2)\)</span> be the homomorphism induced by the zero section. The Stiefel-Whitney class <span class="SimpleMath">\(w_i\)</span> satisfies the equation</p>
+
+<p><span class="SimpleMath">\(w_i \cup s_0^\ast(U) = Sq^i(s_0^\ast(U))\ \)</span>.</p>
+
+<p>There could be many solutions <span class="SimpleMath">\(x\)</span> to the equation</p>
+
+<p><span class="SimpleMath">\(x \cup s_0^\ast(U) = Sq^i(s_0^\ast(U))\ \)</span></p>
+
+<p>(for instance one could have <span class="SimpleMath">\(s_0^\ast(U) =0\)</span>). But in those cases where there is a unique solution the equation provides a method of determining <span class="SimpleMath">\(w_i\)</span>. Even when the solution isn't unique the equation might still narrow down the search for <span class="SimpleMath">\(w_i\)</span>. On a computer one could equivalently consider the bundle <span class="SimpleMath">\(EG \times_G V \rightarrow BG\)</span> where <span class="SimpleMath">\(V\)</span> is some <span class="SimpleMath">\(n\)</span>-dimensional polytope for which the action of <span class="SimpleMath">\(G\)</span> on <span class="SimpleMath">\(\mathbb R^n\)</span> restricts to <span class="SimpleMath">\(V\)</span> in a way that permutes cells. For instance, one could take <span class="SimpleMath">\(V\)</span> to be the convex hull of the orbit of some user chosen vector <span class="SimpleMath">\(v\)</span>. This is the approach underlying the function <code class="code">FundamentalMultiplesOfStiefelWhitneyClasses</code> which begins by computing <span class="SimpleMath">\(s_0^\ast(U)\)</span>.</p>
+
+<p>An advantage to this approach is that it largely avoids computations in the Thom space <span class="SimpleMath">\(Th(E_\rho)\)</span>, though there are some obvious limitations:</p>
+
+
+<ul>
+<li><p>if <span class="SimpleMath">\(s_0^\ast(U)=0\)</span> then no information about the <span class="SimpleMath">\(w_i\)</span> is obtained.</p>
+
+</li>
+<li><p>if the vector <span class="SimpleMath">\(v\)</span> is chosen so that the orbit polytope <span class="SimpleMath">\(V\)</span> is not of 'full dimension' then only information on Stiefel-Whitney classes of a sub representation is obtained.</p>
+
+</li>
+<li><p>not all Steenrod squares on <span class="SimpleMath">\(H^\ast(G,\mathbb F_2)\)</span> have been implemented, and so <code class="code">fail</code> may be returned instead of solutions to the equation.</p>
+
+</li>
+</ul>
+<p>For the quaternion group <span class="SimpleMath">\(Q\)</span> of order <span class="SimpleMath">\(8\)</span> with a specified faithful <span class="SimpleMath">\(4\)</span>-dimensional real representation <span class="SimpleMath">\(\rho\colon Q\rightarrow GL_4(\mathbb R)\)</span> the following computes fundamental multiples <span class="SimpleMath">\(s_0^\ast(U)\cup w_i =Sq^i(s_0^\ast(U))\)</span> of Stiefel-Whitney classes. The chosen vector <span class="SimpleMath">\(v\)</span> yields an orbit polytope of full dimension <span class="SimpleMath">\(4\)</span>. The penultimate command returns all solutions to the above equation. Since the solutions are unique in this example, and since the reprentation is four dimensional, the final command lists the total Stiefel-Whitney class <span class="SimpleMath">\(w(\rho)=1+0+0+0+w_4 =1+w_4\)</span>. Here <span class="SimpleMath">\(w_4\)</span> is the generator of <span class="SimpleMath">\(H^4(Q,\mathbb F_2)=\mathbb Z_2\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=[[0,-1,0,0,],[1,0,0,0,],[0,0,0,1],[0,0,-1,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b:=[[0,0,-1,0],[0,0,0,-1],[1,0,0,0],[0,1,0,0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=Group([a,b]);; #Quaternion group of order 8</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=IdentityMapping(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v:=[1,2,3,4];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Mod2SteenrodAlgebra(Q,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sw:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A);</span>
+
+[ v.7, 0*v.1, 0*v.1, 0*v.1, v.13 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(sw,A!.degree);  #degrees of fundamental multiples</span>
+[ 4, 0, 0, 0, 8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w:= FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);</span>
+[ [ v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ 0*v.1 ], [ v.7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TotalStiefelWhitneyClass:= w[1][1]+w[2][1]+w[3][1]+w[4][1]+w[5][1];</span>
+v.1+v.7
+
+</pre></div>
+
+<p>A Sylow <span class="SimpleMath">\(2\)</span>-subgroup <span class="SimpleMath">\(G\)</span> of the symmetric group <span class="SimpleMath">\(S_6\)</span> has a natural <span class="SimpleMath">\(6\)</span>-dimensional real representation <span class="SimpleMath">\(\rho\)</span> acting by permuting coordinates. The convex hull of the vector <span class="SimpleMath">\(v=(1,2,2,1,2,5)\)</span> is a <span class="SimpleMath">\(3\)</span>-dimensional polytope and not of full dimension. The following computes the total Stiefel-Whitney class of a sub representation to be <span class="SimpleMath">\(w= 1 + ( v.2+v.3+v.4 )+ ( v.5+v.6+v.8 )+ v.12\)</span> with <span class="SimpleMath">\(v_2+v_3+v_4\in H^1(G,\mathbb F_2)\)</span>, <span class="SimpleMath">\(v_5+v_6+v_8\in H^2(G,\mathbb F_2)\)</span>, and <span class="SimpleMath">\(v_{12}\in H^3(G,\mathbb F_2)\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SylowSubgroup(SymmetricGroup(6),2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfGroup(G);</span>
+[ (1,2), (3,4), (1,3)(2,4), (5,6) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
+"C2 x D8"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=Mod2SteenrodAlgebra(G,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho:=PermToMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v:=[1,2,2,1,2,5];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PolytopalComplex(G,v);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..5],P!.dimension);</span>
+[ 1, 3, 2, 1, 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sw:=FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);</span>
+
+[ [ v.1 ], [ v.2+v.3+v.4 ], [ v.5+v.6+v.8 ], [ v.12 ] ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(Flat(sw),A!.degree);</span>
+[ 0, 1, 2, 3 ]
 
 </pre></div>
 
