@@ -140,7 +140,14 @@ local G,N,R,A,S,p,mx,
 G:=arg[1];
 p:=PrimePGroup(G);
 N:=arg[2];
-if Length(arg)>2 then R:=arg[3]; else
+if Length(arg)>2 then R:=arg[3]; 
+   if not R!.group=G then 
+   Print(
+   "Third argument is not a resolution for the group of the first argument.\n" 
+   ); 
+   return fail; 
+   fi;             #fixed October 2026
+else
 R:=ResolutionPrimePowerGroup(G,N+1);fi;
 R!.properties[PositionProperty(R!.properties,x->x[1]="length")][2]:=N;
 A:=ModPCohomologyRing(R);
@@ -150,12 +157,12 @@ mx:=Maximum(mx)+1;
 mx:=Minimum(mx,N);
 if Length(arg)>3 then S:=arg[4];                #Should delete this option
 else
-   if IsOddInt(p) then
+   #if IsOddInt(p) then
          S:=ResolutionGenericGroup(G,mx+2);          #November 2024
-   else
-         if mx<N then S:=R; else
-         S:=ResolutionPrimePowerGroup(G,mx+2); fi;       #Wasteful!
-   fi;
+   #else
+   #      if mx<N then S:=R; else
+   #      S:=ResolutionPrimePowerGroup(G,mx+2); #fi;       #Wasteful!
+   #fi;
 fi;
 
 x:=(1,2,3,4);;
