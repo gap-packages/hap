@@ -114,11 +114,7 @@ N := Order(G);
 #############################################################################
 
 if IsMatrixGroup(G) then
-    if not IdGroupsAvailable(N) then
-       iso := IsomorphismPermGroup(G);
-    else
-       iso:=IsomorphismGroups(G,SmallGroup(IdGroup(G))); #
-    fi;
+    iso := IsomorphismPermGroup(G);
 
     if Length(arg) = 2 then
         R := ResolutionFiniteGroup(Image(iso, G), K);

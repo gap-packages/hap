@@ -2843,7 +2843,7 @@ end;
       od;
       Coboundaries[k+1]:=List(Boundaries[k+1],a->[0]);
       #####COBOUNDARIES END######
-      Y:=ListsOfCellsToRegularCWComplex(Boundaries,Coboundaries,k);
+      Y:=ListsOfCellsToRegularCWComplex(Boundaries,Coboundaries,k,fail); #changed Sept 2026, added "fail" to argument list
       crit:=CriticalCellsOfRegularCWComplex(Y);
 
       if (Length(crit)=1 and crit[1][1]=0) then return true;

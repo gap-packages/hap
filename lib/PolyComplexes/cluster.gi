@@ -947,6 +947,11 @@ function(G,dim)
 local  A, T, Vertices, NrSimplices, Simplices, SimplicesLst, EnumeratedSimplex,
        bool, s, VL,x, y, d, i,j,k,l,m,n,FilteredDims,FilteredDimension, t, mx,mn;
 
+if dim>5 then 
+Print("Currently only implemented up to dimension dim=5.\n");
+return fail;
+fi;
+
 A:=G!.incidenceMatrix;
 T:=G!.filtrationLength;
 
@@ -1041,10 +1046,11 @@ if dim>=5 then
 for s in SimplicesLst[5] do
 i:=s[1];j:=s[2];k:=s[3];l:=s[4];m:=s[5];
 for n in [m+1..VL] do
-mn:=Minimum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[m][m], A[l][n], A[m][n]]);
+mn:=Minimum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[l][m], A[l][n], A[m][n]]);
 if mn>0 then 
-mx:=Maximum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[m][m], A[l][n], A[m][n]]);
-Add(SimplicesLst[6][mx],[i,j,k,l,m,n]); fi;
+mx:=Maximum([ A[i][j], A[i][k], A[i][l], A[i][m], A[i][n], A[j][k], A[j][l], A[j][m], A[j][n], A[k][l], A[k][m],   A[k][n], A[l][m], A[l][n], A[m][n]]);
+Add(SimplicesLst[6][mx],[i,j,k,l,m,n]); fi; #changed Sept 2026. 
+                                            #changed A[m][m[] to A[l][m] twice
 od;od;
 for t in [1..T] do
 SimplicesLst[6][t]:=SSortedList(SimplicesLst[6][t]);
@@ -1063,11 +1069,12 @@ for y in Combinations(Vertices,d+1) do
 mn:=0;
 mx:=0;
 for x in Combinations(y,2) do
-if A[x[1]][x[2]]=0 then mn:=0; break;
+if A[x[1]][x[2]]=0 then mn:=0; mx:=0; break;
 else
-mx:=Maximum(bool,A[x[1]][x[2]]); fi;
+#mx:=Maximum(bool,A[x[1]][x[2]]); fi;
+mx:=Maximum(mx,A[x[1]][x[2]]); fi;   #changed Sept 2026
 od;
-if mx>0 then Add(SimplicesLst[d][mx],y); fi;
+if mx>0 then Add(SimplicesLst[d+1][mx],y); fi;  #changed d-->d+1 Sept 2026
 od;
 for t in [1..T] do
 SimplicesLst[d+1][t]:=SSortedList(SimplicesLst[d+1][t]);

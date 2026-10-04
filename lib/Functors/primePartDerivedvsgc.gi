@@ -1,6 +1,6 @@
 #(C) Graham Ellis, 2005-2006
 
-cnt:=0;
+
 #####################################################################
 InstallGlobalFunction(PrimePartDerivedFunctorViaSubgroupChain,
 function(GG,R,F,n)
@@ -200,7 +200,7 @@ DCRS:=Filtered(DCRS,a->not a in Cent);  #This does not achieve much
 #DCRS:=List(DCRS,x->x[1]);              #
 
    for L in DCRS do
-   cnt:=cnt+1;
+   #cnt:=cnt+1;
    AddRels(AscChn{[1..i-1]},L);
    od;
 od;

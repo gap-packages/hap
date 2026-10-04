@@ -38,7 +38,7 @@ local
 	Charact,
 	AlgebraicRed,
 	ExtendRes, Extendible,
-	i, ii, iso, 
+	i, ii, iso,  
 #################################
 AbsInt,				#
 SignInt;			#
@@ -68,15 +68,19 @@ G:=GroupWithGenerators(Gens);
 N:=Order(G);
 #if IsCyclic(G) then return ResolutionFiniteCyclicGroup(G,K); fi; #Added 15 August 2019
 
+
 ######################################################
 if IsMatrixGroup(G) then
-iso:=IsomorphismPermGroup(G);
+    if not IdGroupsAvailable(N) then
+       iso := IsomorphismPermGroup(G);
+    else
+       iso:=IsomorphismGroups(G,SmallGroup(IdGroup(G))); #
+    fi;
 #R:=ResolutionFiniteGroup(Image(iso),N); #CHANGED 26/11/2018
 R:=ResolutionFiniteGroup(Image(iso,G),K);
 R!.elts:=List(R!.elts,x->PreImageElm(iso,x));
 R!.group:=G;
 return R;
-
 fi;
 ######################################################
 

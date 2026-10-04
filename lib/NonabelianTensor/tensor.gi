@@ -20,7 +20,7 @@ Print("Arguments must have common codomain"); return fail; fi;
 if not 
 (IsNilpotent(Source(CatOneGroupByCrossedModule(MG)!.sourceMap))
 and
-IsNilpotent(Source(CatOneGroupByCrossedModule(MG)!.sourceMap)) )
+IsNilpotent(Source(CatOneGroupByCrossedModule(NG)!.sourceMap)) )
 then
 Print("WARNING: The largest nilpotent quotient of the tensor product will be returned.\n\n");
 fi;

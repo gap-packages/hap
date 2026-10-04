@@ -21,7 +21,8 @@ local
 	DelGen, DelWord, DelGenRec,
 	PseudoBoundary,FinalBoundary,
         FilteredLength, FilteredDimension, FilteredDimensionRecord,
-	L,i,k,n,q,r,s,t,bool;
+	L,i,k,n,q,r,s,t,bool,
+        PosG,EltsGDict;
 
 SetInfoLevel(InfoWarning,0);
 
@@ -35,6 +36,35 @@ G:=P!.group;
 bool:=not IsComponentObjectRep(One(G));
 bool:=IsHapSL2Subgroup(G) or IsHapSL2OSubgroup(G) or IsBound(G!.bianchiInteger);
 EltsG:=P!.elts;
+
+EltsGDict:=NewDictionary(EltsG[1],true);
+for i in [1..Length(EltsG)] do
+   if IsBound(EltsG[i]) then
+      AddDictionary(EltsGDict,EltsG[i],i);
+   fi;
+od;
+####################
+PosG:=function(EltsG,g)    #Let's keep format same as Position(EltsG,g)
+local h;
+      #Other calls may add to EltsG we need to check
+      if Length(EltsGDict!.entries)<>Length(EltsG) then
+         for h in [1..Length(EltsG)] do
+            if IsBound(EltsG[h]) then
+            if not KnowsDictionary(EltsGDict,EltsG[h]) then
+               AddDictionary(EltsGDict,EltsG[h],h);
+            fi;
+            fi;
+         od;
+      fi;
+
+      if not KnowsDictionary(EltsGDict,g) then
+         Add(EltsG,g);
+         AddDictionary(EltsGDict,g,Length(EltsG));
+      fi;
+return LookupDictionary(EltsGDict,g);
+end;
+####################
+
 BoundaryP:=P!.boundary;
 
 BinGp:=ContractibleGcomplex("SL(2,O-2)_a");
@@ -188,11 +218,14 @@ Mult:=function(g,h)
 local pos;
 if not IsBound(MultRecord[g]) then MultRecord[g]:=[]; fi;
 if not IsBound(MultRecord[g][h]) then
-    pos:= Position(EltsG,EltsG[g]*EltsG[h]);
-    if pos=fail then Add(EltsG,EltsG[g]*EltsG[h]);  
-    MultRecord[g][h]:= Length(EltsG);
-    else MultRecord[g][h]:= pos; 
-    fi;
+    pos:=PosG(EltsG,EltsG[g]*EltsG[h]);
+    #pos:= Position(EltsG,EltsG[g]*EltsG[h]);
+    #if pos=fail then 
+    #Add(EltsG,EltsG[g]*EltsG[h]);  
+    #MultRecord[g][h]:= Length(EltsG);
+    #else 
+    MultRecord[g][h]:= pos; 
+    #fi;
 fi;
 return MultRecord[g][h];
 end;
@@ -558,6 +591,7 @@ return Objectify(HapResolution,
                 pseudoBoundary:=PseudoBoundary,
                 pair2Quad:=Pair2Quad,
                 quad2Pair:=Quad2Pair,
+                PosG:=PosG,
                 properties:=
                    [["length",N],
                     ["filtration_length",FilteredLength],
@@ -594,7 +628,12 @@ S:=arg[1];
 G:=arg[2];
 EltsG:=arg[3];
 
+#PosG:=Position;
+if IsBound(S!.PosG)
+then PosG:=S!.PosG;
+else
 PosG:=Position;
+fi;
 
 H:=S!.group;
 EltsH:=S!.elts;
@@ -608,11 +647,9 @@ HhomG:=function(i)
 local pos;
 
 if IsBound(HhomGrec[i]) then return HhomGrec[i]; fi;
-
 pos:= PosG(EltsG,EltsH[i]);
 if pos=fail then Add(EltsG,EltsH[i]);   HhomGrec[i]:=Length(EltsG); 
 else HhomGrec[i]:= pos; fi;
-
 return HhomGrec[i];
 end;
 #######################################
@@ -653,7 +690,6 @@ pos1:=PosG(EltsG,t);
 if pos1=fail then Add(EltsG,t); pos1:=Length(EltsG);fi;
 pos2:=Position(EltsH,h);
 if pos2=fail then Add(EltsH,h); pos2:=Length(EltsH);fi;
-
 GmapTHrec[g]:= [pos1,pos2];
 
 return GmapTHrec[g];
@@ -670,7 +706,6 @@ if not IsBound(THmapGrec[t]) then THmapGrec[t]:=[]; fi;
 if IsBound( THmapGrec[t][h] ) then return THmapGrec[t][h]; fi;
 
 g:=EltsG[t]*EltsG[HhomG(h)];
-
 pos:= PosG(EltsG,g);
 
 
@@ -721,7 +756,7 @@ end;
 
 
 
-return Objectify(HapResolution,
+R:= Objectify(HapResolution,
                 rec(
                 dimension:=S!.dimension,
                 boundary:=Boundary,
@@ -731,6 +766,11 @@ return Objectify(HapResolution,
                 properties:=S!.properties
                 ));
 
+if IsBound(S!.PosG) then  #Only pass on an efficient PosG function
+R!.PosG:=S!.PosG;
+fi;
+
+return R;
 end);
 ################################################################
 ################################################################
@@ -750,7 +790,7 @@ local
 G:=Source(hom);
 N:=Kernel(hom);
 
-EltsG:=Elements(G);
+EltsG:=Elements(G); #I guess this means G is finite!
 
 EltsQ:=S!.elts;
 BoundaryS:=S!.boundary;
@@ -765,9 +805,9 @@ end;
 QmapG:=function(q)
 local pos;
 pos:= Position(EltsG,PreImagesRepresentative(hom,EltsQ[q]));
-if pos = fail then Add(EltsG,PreImagesRepresentative(hom,EltsQ[q]));
+#if pos = fail then Add(EltsG,PreImagesRepresentative(hom,EltsQ[q]));
 return Length(EltsG);
-else return pos; fi;
+#else return pos; fi;
 end;
 #################################################################
 

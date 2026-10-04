@@ -92,7 +92,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_SL2ZSubgroupTree_slow,
 function(G)
-local tree,InGmodU,Ugrp,v,p,g,s,n,q,vv,gens,
+local cnt,tree,InGmodU,Ugrp,v,p,g,s,n,q,vv,gens,
       nodes, leaves, ambientGenerators, InLowDegreeNodesModG, 
       one, genTriples, vertex2word, triple2word, csts;
 

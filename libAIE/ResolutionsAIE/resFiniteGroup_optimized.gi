@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##  ResolutionFiniteGroup.g
+##  ResolutionFiniteGroup v15
 ##
-##  Experimental performance-oriented rewrite of HAP's
+##  Ordered event-driven consequence propagation experiment.
 ##  ResolutionFiniteGroup.
 ##
 ##  Main changes:
@@ -24,11 +24,9 @@
 ##  it can coexist with HAP's ResolutionFiniteGroup for benchmarking and
 ##  regression testing.
 ##
-##  IMPORTANT:
-##  The event-driven collapse order can differ from HAP's original scan
-##  order.  The resulting resolution should therefore be validated on the
-##  groups/degrees relevant to your application, especially with
-##  tietze = true.
+##  v15 keeps the original g,j scan order for consequence commits.
+##  Consequences generated behind the current scan cursor are deferred to
+##  the next pass, matching the reference FindConsequences semantics.
 ##
 #############################################################################
 ResolutionFiniteGroup_alt:=ResolutionFiniteGroup;
@@ -53,6 +51,9 @@ local
     ExtendRes, Extendible,
     IncidenceByFace, Residual,
     ConsequenceQueue, ConsequenceQueueHead, ConsequenceQueued,
+    ScanOrder, ScanCursor, ScanQueued, ScanPos,
+    CurrentHeap, NextHeap,
+    HeapPush, HeapPop,
     InitConsequenceEngine, RegisterBoundaryRow,
     EnqueueConsequence, MarkMCEntry, ProcessConsequences,
     UniqueZeroFace, AddSphere,
@@ -114,11 +115,7 @@ N := Order(G);
 #############################################################################
 
 if IsMatrixGroup(G) then
-    if not IdGroupsAvailable(N) then
-       iso := IsomorphismPermGroup(G);
-    else
-       iso:=IsomorphismGroups(G,SmallGroup(IdGroup(G))); #
-    fi;
+    iso := IsomorphismPermGroup(G);
 
     if Length(arg) = 2 then
         R := ResolutionFiniteGroup(Image(iso, G), K);
@@ -484,11 +481,67 @@ end;
 ##
 #############################################################################
 
+HeapPush := function(H, x)
+local k, parent, tmp;
+
+    Add(H, x);
+    k := Length(H);
+
+    while k > 1 do
+        parent := QuoInt(k, 2);
+        if H[parent] <= x then
+            break;
+        fi;
+        H[k] := H[parent];
+        k := parent;
+    od;
+
+    H[k] := x;
+end;
+
+HeapPop := function(H)
+local result, last, k, child, tmp;
+
+    if Length(H) = 0 then
+        return fail;
+    fi;
+
+    result := H[1];
+    last := Remove(H);
+
+    if Length(H) = 0 then
+        return result;
+    fi;
+
+    k := 1;
+
+    while true do
+        child := 2 * k;
+
+        if child > Length(H) then
+            break;
+        fi;
+
+        if child < Length(H) and H[child + 1] < H[child] then
+            child := child + 1;
+        fi;
+
+        if H[child] >= last then
+            break;
+        fi;
+
+        H[k] := H[child];
+        k := child;
+    od;
+
+    H[k] := last;
+    return result;
+end;
+
 InitConsequenceEngine := function(MC)
-local a;
+local a, j, g, q, pos, iterset;
 
     IncidenceByFace := [];
-
     for a in [1..Length(MC)] do
         IncidenceByFace[a] := [];
     od;
@@ -496,98 +549,98 @@ local a;
     Residual := [];
     ConsequenceQueued := [];
 
-    ConsequenceQueue := [];
-    ConsequenceQueueHead := 1;
+    ScanOrder := [];
+    ScanPos := [];
+    pos := 0;
+
+    if i < K or Extendible then
+        iterset := Concatenation([1..Dimension(i)],
+                                 Reversed([1..Dimension(i)]));
+    else
+        iterset := [1..Dimension(i)];
+    fi;
+
+    for q in [1..Length(ExtendedElts)] do
+        g := ExtendedElts[q];
+        for j in iterset do
+            pos := pos + 1;
+            Add(ScanOrder, [j,g]);
+            if not IsBound(ScanPos[j]) then ScanPos[j] := []; fi;
+            ScanPos[j][g] := pos;
+        od;
+    od;
+
+    ScanCursor := 1;
+    ScanQueued := ListWithIdenticalEntries(pos, false);
+    CurrentHeap := [];
+    NextHeap := [];
 end;
 
 EnqueueConsequence := function(j, g)
+local q;
 
-    if not ConsequenceQueued[j][g] then
-        Add(ConsequenceQueue, [j, g]);
-        ConsequenceQueued[j][g] := true;
+    if not IsBound(ScanPos[j]) or not IsBound(ScanPos[j][g]) then
+        return;
     fi;
 
-end;
+    q := ScanPos[j][g];
 
-#############################################################################
-##
-##  Return the unique currently-unmatched boundary face of [j,g].
-##
-#############################################################################
+    if ScanQueued[q] then
+        return;
+    fi;
+
+    ScanQueued[q] := true;
+
+    # The original nested scan encounters the smallest eligible position
+    # at or after its current cursor.  A consequence generated behind that
+    # cursor therefore belongs to the next complete pass.
+    if q >= ScanCursor then
+        HeapPush(CurrentHeap, q);
+    else
+        HeapPush(NextHeap, q);
+    fi;
+end;
 
 UniqueZeroFace := function(i, MC, j, g)
 local e, h;
 
     for e in PseudoBoundary[i][j] do
-
         h := ActionIndex(g, e[2]);
-
         if MC[AbsInt(e[1])][h] = 0 then
             return [e[1], h];
         fi;
-
     od;
 
     return fail;
 end;
 
-#############################################################################
-##
-##  Record a translated sphere when Tietze reduction is enabled.
-##
-#############################################################################
-
 AddSphere := function(i, j, g)
-
     if tietze then
-
         Add(
             Spheres,
             List(
                 PseudoBoundary[i][j],
-                e -> [
-                    e[1],
-                    ActionIndex(g, e[2])
-                ]
+                e -> [e[1], ActionIndex(g, e[2])]
             )
         );
-
     fi;
-
 end;
 
-#############################################################################
-##
-##  Mark one MC entry and update only affected translated cells.
-##
-#############################################################################
-
 MarkMCEntry := function(i, MC, p)
-local
-    a, h,
-    incidence,
-    j, t, g,
-    r;
+local a, h, incidence, j, t, g, r;
 
     a := AbsInt(p[1]);
     h := p[2];
 
-    if MC[a][h] = 1 then
-        return;
-    fi;
+    if MC[a][h] = 1 then return; fi;
 
     MC[a][h] := 1;
     RemainingZeros := RemainingZeros - 1;
 
     for incidence in IncidenceByFace[a] do
-
         j := incidence[1];
         t := incidence[2];
-
-        g := ActionIndex(
-            h,
-            InverseIndex[t]
-        );
+        g := ActionIndex(h, InverseIndex[t]);
 
         Residual[j][g] := Residual[j][g] - 1;
         r := Residual[j][g];
@@ -597,138 +650,102 @@ local
         elif r = 0 then
             AddSphere(i, j, g);
         fi;
-
     od;
-
 end;
-
-#############################################################################
-##
-##  Register one newly-created boundary row.
-##
-##  PseudoBoundary[i] grows during NextResTerm, so incidences are registered
-##  incrementally.  The new row's translated residual counts are initialized
-##  against the CURRENT MC state.
-##
-#############################################################################
 
 RegisterBoundaryRow := function(i, MC, j)
-local
-    e,
-    a, t,
-    g, h,
-    r;
+local e, a, t, g, h, r;
 
     for e in PseudoBoundary[i][j] do
-
         a := AbsInt(e[1]);
         t := e[2];
-
-        Add(
-            IncidenceByFace[a],
-            [j, t]
-        );
-
+        Add(IncidenceByFace[a], [j,t]);
     od;
 
-    Residual[j] :=
-        ListWithIdenticalEntries(N, 0);
-
-    ConsequenceQueued[j] :=
-        ListWithIdenticalEntries(N, false);
+    Residual[j] := ListWithIdenticalEntries(N, 0);
+    ConsequenceQueued[j] := ListWithIdenticalEntries(N, false);
 
     for g in [1..N] do
-
         r := 0;
-
         for e in PseudoBoundary[i][j] do
-
             h := ActionIndex(g, e[2]);
-
-            if MC[AbsInt(e[1])][h] = 0 then
-                r := r + 1;
-            fi;
-
+            if MC[AbsInt(e[1])][h] = 0 then r := r + 1; fi;
         od;
-
         Residual[j][g] := r;
-
         if r = 1 then
-            EnqueueConsequence(j, g);
+            EnqueueConsequence(j,g);
         elif r = 0 then
-            AddSphere(i, j, g);
+            AddSphere(i,j,g);
         fi;
-
     od;
-
 end;
-
-#############################################################################
-##
-##  Drain the consequence queue.
-##
-##  Queue entries may become stale while waiting, so Residual is checked
-##  immediately before processing.
-##
-#############################################################################
 
 ProcessConsequences := function(i, MC)
 local
-    x,
+    q,
     j, g,
     p,
     a, h;
 
-    while ConsequenceQueueHead <= Length(ConsequenceQueue) do
+    # CurrentHeap contains consequences which occur at or after the current
+    # scan cursor.  NextHeap contains consequences which were generated
+    # behind it.  This is exactly the ordering of the original nested scan,
+    # but without repeatedly scanning the entire cell list.
+    ScanCursor := 1;
 
-        x := ConsequenceQueue[ConsequenceQueueHead];
-        ConsequenceQueueHead :=
-            ConsequenceQueueHead + 1;
+    while Length(CurrentHeap) > 0 or Length(NextHeap) > 0 do
 
-        j := x[1];
-        g := x[2];
+        if Length(CurrentHeap) = 0 then
+            CurrentHeap := NextHeap;
+            NextHeap := [];
+            ScanCursor := 1;
+        fi;
 
-        ConsequenceQueued[j][g] := false;
+        q := HeapPop(CurrentHeap);
+        ScanQueued[q] := false;
 
-        if Residual[j][g] = 1 then
+        # q is the earliest eligible position at or after ScanCursor.
+        # Entries in CurrentHeap are inserted with respect to the cursor
+        # which was current when they became consequences.
+        if q < ScanCursor then
+            # This can only occur after a stale heap transition; defer it.
+            HeapPush(NextHeap, q);
+        else
 
-            p := UniqueZeroFace(i, MC, j, g);
+            j := ScanOrder[q][1];
+            g := ScanOrder[q][2];
 
-            if p <> fail then
+            ScanCursor := q + 1;
 
-                a := AbsInt(p[1]);
-                h := p[2];
+            if Residual[j][g] = 1 then
 
-                if i < K or Extendible then
+                p := UniqueZeroFace(i, MC, j, g);
 
-                    ContractionMatrix[i][a][h] :=
-                        [
-                            SignInt(p[1]) * j,
-                            g
-                        ];
+                if p <> fail then
+
+                    a := AbsInt(p[1]);
+                    h := p[2];
+
+                    if i < K or Extendible then
+                        ContractionMatrix[i][a][h] :=
+                            [SignInt(p[1]) * j, g];
+                    fi;
+
+                    MaxComplex[i + 1][j][g] := 1;
+
+                    MarkMCEntry(i, MC, p);
 
                 fi;
 
-                MaxComplex[i + 1][j][g] := 1;
-
-                MarkMCEntry(i, MC, p);
-
             fi;
-
         fi;
-
     od;
 
+    CurrentHeap := [];
+    NextHeap := [];
     ConsequenceQueue := [];
     ConsequenceQueueHead := 1;
-
 end;
-
-#############################################################################
-##
-##  Compute the next resolution term.
-##
-#############################################################################
 
 NextResTerm := function(i)
 local

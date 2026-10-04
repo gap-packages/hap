@@ -14,7 +14,7 @@ local
 	N,m,i,j,g;
 
 if (not "solutionMatBoundaryMatrices" in NamesOfComponents(S) )
-and (not "solutionMatBoundaryMatrices" in NamesOfComponents(S)  )
+#and (not "solutionMatBoundaryMatrices" in NamesOfComponents(S)  ) #changed Sept 2026
 then 
 Print("This function can only be applied to resolutions constructed using ResolutionPrimePowerGroup().\n");
 return fail;

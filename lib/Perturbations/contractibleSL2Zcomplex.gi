@@ -18,8 +18,8 @@ local
         St0,St1, x, n,k,s,BI,SGN,tmp, LstEl , 
         bool, name,
 	GeneratorsRepresentation,SimplifyGeneratorsRepresentation,EdgeFinder,
-	pos,AddList,Chomotopy,Path2Gindex,FinalHomotopy,Homotopy,Sign,
-        EdgeFinder1,RefineEdge,Edge;
+	pos,AddList,Chomotopy,Path2Gindex,FinalHomotopy,#Homotopy,
+        Sign, EdgeFinder1,RefineEdge,Edge;
 
 bool:=ReadPackage("HAP","lib/Perturbations/Gcomplexes/SL2Z");
 
@@ -355,12 +355,12 @@ else
 fi;
 end;
 ####################END: SL2Z-homotopy###################################
-Homotopy:=function(n,g)
-if name="SL2Z" then return FinalHomotopy(n,g);
-else
-        return fail;
-fi;
-end;
+#Homotopy:=function(n,g)
+#if name="SL2Z" then return FinalHomotopy(n,g);
+#else
+#        return fail;
+#fi;
+#end;
 #########################################################################
 
 

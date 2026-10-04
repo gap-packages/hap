@@ -87,6 +87,9 @@ od;
 ################ READ HASSE DIAGRAM #################################
 
 tmp := Polymake(poly,"F_VECTOR");
+if tmp=fail then
+Print("Polymake failed to compute with the polytope since it is of dimension <2.\n\n");
+fi;
 
 index:=[1];                   #because Polymake has
 for i in [1..Length(tmp)] do  #discontinued the DIMS

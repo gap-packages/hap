@@ -273,7 +273,7 @@ InstallMethod( IsSubset,
      "Constructs a coset tree for a generic congruence subgroup (slow method)",
      [ IsHAPCongruenceSubgroup ],
      function(G)
-     local GG,tree,InGmodU,Ugrp,v,p,g,s,n,q,vv,gens,
+     local cnt, GG,tree,InGmodU,Ugrp,v,p,g,s,n,q,vv,gens,
       nodes, leaves, ambientGenerators, InLowDegreeNodesModG,
       one, genTriples, vertex2word, triple2word, csts,U;
 
@@ -398,7 +398,7 @@ InstallMethod( IsSubset,
      "returns a transversal for G in the ambient group (slow method)",
      [ IsHAPCongruenceSubgroup ],
      function(G)
-     local GG,tree,v,p,g,s,n,q,vv,gens,
+     local cnt, GG,tree,v,p,g,s,n,q,vv,gens,
       nodes, nodesinv, leaves, ambientGenerators, InLowDegreeNodesModG,
       one, poscan;
 

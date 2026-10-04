@@ -12,7 +12,7 @@ function(arg)
 
 G:=arg[1];
 N:=arg[2];
-if Length(arg)>2 then bool:=arg[3]; fi;
+if Length(arg)>2 then bool:=arg[3]; fi; #bool is never used
 if Length(arg)>3 then prime :=arg[4]; fi;
 
 ####FINITE################
@@ -27,9 +27,9 @@ Tz:=function(R) return R; end;
    else return ResolutionAbelianGroup(G,N); fi;
    fi;
 
-   if Order(G)<64 then  
-   return Tz(ResolutionFiniteGroup(G,N));
-   fi;
+   if Order(G)<64 then   
+   return Tz(ResolutionFiniteGroup(G,N));                       
+   fi;                                                         
 
    if IsPGroup(G) then
    #return ResolutionNormalSeries(UpperCentralSeries(G),N);

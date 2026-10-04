@@ -4,7 +4,7 @@
 InstallGlobalFunction(IsSuperperfect,
 function(G)
 local
-	C,P,primes,R,prm,F;
+	C,P,primes,R,prm,F,X;
 
 F:= function(X)
 return TensorWithIntegersModP(X,prm);

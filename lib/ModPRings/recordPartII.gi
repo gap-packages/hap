@@ -77,7 +77,7 @@ end;
 
 dim:=Dimension(A);
 zero:=Zero(A);
-#one:=One(A);
+one:=One(A);    #uncommented Sept 2026
 bas:=Basis(A);
 SetOne(A,bas[1]);  #I think this is OK
 nicbas:=NiceBas(A);

@@ -1,0 +1,18 @@
+gap> G:=SylowSubgroup(SymmetricGroup(6),2);;
+gap> GeneratorsOfGroup(G);
+[ (1,2), (3,4), (1,3)(2,4), (5,6) ]
+gap> StructureDescription(G);
+"C2 x D8"
+gap> A:=Mod2SteenrodAlgebra(G,10);;
+gap> rho:=PermToMatrixGroup(G);;
+gap> v:=[1,2,2,1,2,5];;
+gap> P:=PolytopalComplex(G,v);;
+gap> List([0..5],P!.dimension);
+[ 1, 3, 2, 1, 0, 0 ]
+
+gap> sw:=FundamentalMultiplesOfStiefelWhitneyClasses(rho,v,A,true);
+
+[ [ v.1 ], [ v.2+v.3+v.4 ], [ v.5+v.6+v.8 ], [ v.12 ] ]
+
+gap> List(Flat(sw),A!.degree);
+[ 0, 1, 2, 3 ]

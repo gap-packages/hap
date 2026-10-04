@@ -510,7 +510,7 @@ InstallOtherMethod( Embedding,
 	SetActedGroup(A,Source(e));
 	SetActingGroup(A,ActingGroup(D));
 	beta:=function(g,a)
-	      return Image(p,OuterAction(g,Image(e,a)));  
+	      return Image(p,OuterAction(D)(g,Image(e,a))); #changed Sept 2026 
 	end;
 	SetOuterAction(A,beta);
 	
@@ -533,7 +533,7 @@ InstallOtherMethod( Projection,
         SetActedGroup(A,Source(e));
         SetActingGroup(A,ActingGroup(D));
         beta:=function(g,a)
-              return Image(p,OuterAction(g,Image(e,a)));
+              return Image(p,OuterAction(D)(g,Image(e,a)));
         end;
         SetOuterAction(A,beta);
 

@@ -209,7 +209,7 @@ function(K,L)
 local LF, RT, TL, BL, TR, BR, P, Q, x, 
 A,B,M,y,x1,x2,y1,y2, bools,  s,t, i, j;
 
-if not (EvaluateProperty(K,"knot") and EvaluateProperty(K,"knot")) then
+if not (EvaluateProperty(K,"knot") and EvaluateProperty(L,"knot")) then
 Print("The sum is only defined for knots.\n");
 return fail;
 fi;

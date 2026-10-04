@@ -167,14 +167,57 @@ ring.
 
 	<Subsection><Heading>Stiefel-Whitney classes of a finite <M>2</M>-group</Heading>
 
+		
+		A finite group representation <M>\rho\colon G \rightarrow GL_n(\mathbb R)</M> gives 
+			rise to a vector bundle <M>E_\rho = EG \times_G \mathbb R^n \rightarrow BG</M> which, in turn, 
+				gives rise to Stiefel-Whitney classes 
+			<M>w_i\in H^i(BG,\mathbb F_2) = H^i(G,\mathbb F_2)</M>. Let <M>U\in \tilde H^n(Th(E_\rho),\mathbb F_2) </M> be the Thom class and let <M>s_0^\ast\colon \tilde H^\ast(Th(E_\rho),\mathbb F_2) \rightarrow H^\ast(BG,\mathbb F_2)</M> be the 
+				homomorphism induced by the zero section. The Stiefel-Whitney class <M>w_i</M> satisfies the equation
+		<P/><M>w_i \cup s_0^\ast(U) = Sq^i(s_0^\ast(U))\ </M>.
+		<P/>There could be many solutions <M>x</M> to the equation
+	<P/><M>x \cup s_0^\ast(U) = Sq^i(s_0^\ast(U))\ </M>
+	<P/>		(for instance one could have <M>s_0^\ast(U) =0</M>). But in  those cases where there is a unique solution the equation provides a method of determining <M>w_i</M>. Even when the solution isn't unique the equation 
+		might still  narrow down the search for <M>w_i</M>.  
+
+
+			On a computer one could equivalently consider the bundle <M>EG \times_G V \rightarrow BG</M> where <M>V</M> is some <M>n</M>-dimensional polytope for which the action of <M>G</M> on <M>\mathbb R^n</M> restricts to <M>V</M>
+				in a way that permutes cells. For instance, one could take <M>V</M> to be the convex hull of the orbit of some user chosen vector <M>v</M>. This is the approach underlying the function
+		<Code>FundamentalMultiplesOfStiefelWhitneyClasses</Code> which begins by computing <M>s_0^\ast(U)</M>.
+
+		<P/> An advantage to this approach is that it largely
+			avoids computations in the Thom space <M>Th(E_\rho)</M>, though there are some  obvious limitations:
+		<List>
+			<Item> if <M>s_0^\ast(U)=0</M> then no information about the <M>w_i</M> is obtained.</Item>
+			<Item> if the vector <M>v</M> is chosen so that the orbit polytope <M>V</M> is not of 'full dimension' then only information on Stiefel-Whitney classes of a sub representation is obtained.</Item>
+			<Item> not all Steenrod squares on <M>H^\ast(G,\mathbb F_2)</M> have been implemented, and so <Code>fail</Code> may be returned instead of solutions to the equation.</Item>
+		</List>
+		<P/>
 			For the quaternion group <M>Q</M> of order <M>8</M> with a specified faithful
-			<M>4</M>-dimensional real representation <M>Q\rightarrow GL_4(\mathbb R)</M>
-				the following computes fundamental multiples <M>\rho^0(\Phi)\cup w_i =Sq^i(\rho^0(\Phi))</M> of Stiefel-Whitney classes, where <M>\rho^\ast\colon H^\ast(Q,\mathbb F_2) \rightarrow H^{\ast+D}(Q,\mathbb F_2) </M> is a homomorphism, 
-				<M>0\ne \Phi\in H^0(Q,\mathbb F_2)</M> and in this case <M>D=4</M>. The penultimate command returns all solutions <M>x</M> to <M>\rho^0(\Phi)\cup x =Sq^i(\rho^0(\Phi))</M>. Since the solutions are unique in this example, the final command lists <M>w_0+w_1+w_2+w_3+w_4 =1+w_4</M>. Here <M>w_4</M> is the generator of <M>H^4(Q,\mathbb F_2)=\mathbb Z_2</M>.
+			<M>4</M>-dimensional real representation <M>\rho\colon Q\rightarrow GL_4(\mathbb R)</M>
+				the following computes fundamental multiples 
+			<M>s_0^\ast(U)\cup w_i =Sq^i(s_0^\ast(U))</M> of Stiefel-Whitney classes.
+				The chosen vector <M>v</M> yields an orbit polytope of full dimension <M>4</M>. 
+					The penultimate command returns all solutions to the above equation. Since the solutions are unique in this example, and since the reprentation is four dimensional, the final command lists the total Stiefel-Whitney class <M>w(\rho)=1+0+0+0+w_4 =1+w_4</M>. Here <M>w_4</M> is the generator of <M>H^4(Q,\mathbb F_2)=\mathbb Z_2</M>.
 <Example>
 <#Include SYSTEM "tutex/7.9.txt">
 </Example>
-	</Subsection>
+	A Sylow <M>2</M>-subgroup <M>G</M> of the symmetric group <M>S_6</M> 
+		has a natural <M>6</M>-dimensional real representation <M>\rho</M>
+			acting by permuting coordinates. The convex hull of the vector <M>v=(1,2,2,1,2,5)</M> is a <M>3</M>-dimensional polytope and not of full dimension.
+The following 
+				computes the total Stiefel-Whitney class of a sub representation
+				to be   
+			<M>w= 1 + ( v.2+v.3+v.4 )+ ( v.5+v.6+v.8 )+  v.12</M>
+				with <M>v_2+v_3+v_4\in H^1(G,\mathbb F_2)</M>,
+					<M>v_5+v_6+v_8\in H^2(G,\mathbb F_2)</M>,
+						and
+					<M>v_{12}\in H^3(G,\mathbb F_2)</M>.
+<Example>
+<#Include SYSTEM "tutex/7.10.txt">
+</Example>
+
+
+</Subsection>
 </Section>
 
 

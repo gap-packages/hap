@@ -8,12 +8,13 @@ InstallOtherMethod( HAP_EquivalenceClasses,
 
   function ( list, relation )
 
-    local  classes, invs, longestfirst, byinvs, elm, pos, inserted, count;
+    local  classes, invs, longestfirst, #byinvs, 
+    elm, pos, inserted, count;
 
     if IsEmpty(list) then return []; fi;
 
     longestfirst := function(c1,c2) return Length(c1) > Length(c2); end;
-    byinvs := function(c1,c2) return relation(c1[1]) < relation(c2[1]); end;
+    #byinvs := function(c1,c2) return relation(c1[1]) < relation(c2[1]); end;
 
       classes := [[list[1]]]; count := 0;
       for elm in list{[2..Length(list)]} do
@@ -61,9 +62,8 @@ if bool then return List(D,c->c[1]);; fi;  #A possibly redundant
                                            #list will be returned.
 
 #############
-AreIsomorphic:=function(H)
-if IsomorphismGroups(G,H)=fail then return false;
-else return true; fi;
+AreIsomorphic:=function(G,H)      #modified Sept 2026
+return IsomorphismGroups(G,H)<>fail;
 end;
 #############
 

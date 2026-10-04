@@ -296,7 +296,7 @@ local Y,c;
 if Dimension(K)=2 then
 return FundamentalGroupSimplicialTwoComplex(K);
 fi;
-Y:=SimplicialComplexToRegularCWComplex(K,3);;
+Y:=SimplicialComplexToRegularCWComplex(K);;
 c:=CocriticalCellsOfRegularCWComplex(Y,3);
 return FundamentalGroup(Y);
 end);

@@ -23,7 +23,7 @@ fi;
 ####################code so that NormForm is rarely called!
 NormForm:=function(b)
 local S,a,pos,ls,L,bool,i;
-cnt:=cnt+1;
+#cnt:=cnt+1;
 bool:=true;
 for i in [1..Length(b)-1] do
    if not b[i][1]<b[i+1][1] then bool:=false; break; fi;

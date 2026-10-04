@@ -57,7 +57,7 @@ end);
 ###################################################################
 InstallGlobalFunction(HAP_TransversalCongruenceSubgroupInAmbientGroupSlow,
 function(G,H)
-local tree,InH,v,p,g,s,n,q,vv,gens,
+local cnt, tree,InH,v,p,g,s,n,q,vv,gens,
       nodes, nodesinv, leaves, ambientGenerators, InLowDegreeNodesModH,
       one, poscan, nind;
 

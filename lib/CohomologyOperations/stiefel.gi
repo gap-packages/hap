@@ -191,7 +191,7 @@ CThomCR:=Objectify(HapCochainMap,CThomCR);
 
 ####
 ####
-#We now construct a function stief(v,k):CR^k--CR^(n+d), v|-->w
+#We now construct a function stief(v,k):CR^k--CR^(k+d), v|-->w
 #where d is the dimension of the polytope P
 d:=0;
 while P!.dimension(d+1)>0 do d:=d+1; od;
@@ -222,6 +222,8 @@ InstallGlobalFunction(FundamentalMultiplesOfStiefelWhitneyClasses,
 function(arg)
 local bool,G,v,A,P,N,S,R,stief,d,L,i,k,j,fund,Bas,Bas1,Bas2,swc,swc1,PIRep,u,a,b,w;
 
+#Print("Warning: This experimental code should not be used.\n\n");
+#The code is fine!
 # Inputs either (G,v,A) where G is either a matrix/permutation group or a group representation.
 
 G:=arg[1];

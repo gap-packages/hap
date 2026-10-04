@@ -217,7 +217,7 @@ end);
 ##########################################################
 InstallGlobalFunction(ChainComplexOfUniversalCover,
 function(arg)
-local X, Y, dim, bool, nrCriticalCells,C,Boundary, critical,
+local cnt,X, Y, dim, bool, nrCriticalCells,C,Boundary, critical,
          BASIS,BIJ,DEFORM,DEFORMrec, f, bnd, sn, def, def1, def2,
          mult,inv, BOUNDARY, BNDrec;
 
