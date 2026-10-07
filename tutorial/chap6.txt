@@ -685,3 +685,121 @@
   easily  constructed directly from its definition in terms of a set-theoretic
   'section' of the crossed module corresponding to [22XH[122X.[133X
   
+  
+  [1X6.12 [33X[0;0YSecond Chern classes with HAP -- a worked example[133X[101X
+  
+  [33X[0;0YThis example is contributed by Moe Tabei and computes [22Xc_2[122X of two-dimensional
+  complex  representations  of  [22XQ_8[122X and [22XD_8[122X as Euler classes of representation
+  spheres.   The   function   is   not   part   of   HAP;   it  is  one  file,
+  [10XSecondChernClass.g[110X, read into GAP after HAP is loaded.[133X
+  
+  
+  [1X6.12-1 [33X[0;0YGetting the file[133X[101X
+  
+  [33X[0;0YEither download the single file:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xcurl -O https://raw.githubusercontent.com/yui9696/hap-crosschecks/main/chern/SecondChernClass.g[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yor clone the repository, which also gives the tests:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xgit clone https://github.com/yui9696/hap-crosschecks.git[128X[104X
+    [4X[28Xcd hap-crosschecks/chern[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YStart GAP in the directory that holds [10XSecondChernClass.g[110X.[133X
+  
+  
+  [1X6.12-2 [33X[0;0YThe quaternion group[133X[101X
+  
+  [33X[0;0YThe  group  [22XQ_8[122Xacts  freely  on  the  unit sphere [22XS^3[122X of its two-dimensional
+  irreducible  representation,  so by Swan [Swa60] the second Chern class must
+  generate [22XH^4(Q_8, Z) = Z/8[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("HAP");;[127X[104X
+    [4X[25Xgap>[125X [27XRead("SecondChernClass.g");[127X[104X
+    [4X[25Xgap>[125X [27XG := SmallGroup(8,4);; StructureDescription(G);[127X[104X
+    [4X[28X"Q8"[128X[104X
+    [4X[25Xgap>[125X [27XR := ResolutionFiniteGroup(G, 5);;[127X[104X
+    [4X[25Xgap>[125X [27XCR_CocyclesAndCoboundaries(R, 4, true).torsionCoefficients;[127X[104X
+    [4X[28X[ 8 ][128X[104X
+    [4X[25Xgap>[125X [27Xchi := First(Irr(G), c -> Degree(c) = 2);;[127X[104X
+    [4X[25Xgap>[125X [27XSecondChernClassOfCharacter(R, chi);[127X[104X
+    [4X[28X[ 5 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  answer  is  the  vector  of  coordinates of [22Xc_2(χ)[122X in the generators of
+  [22XH^4(G, Z)[122X returned by [10XCR_CocyclesAndCoboundaries(R, 4, true)[110X. Here the class
+  is  [22X5[122X  in  [22XZ/8[122X,  a  generator.  The coordinates depend on the resolution, so
+  another  resolution  (or  another  version  of  HAP)  may  give  a different
+  generator; the order of the class does not change.[133X
+  
+  
+  [1X6.12-3 [33X[0;0YThe dihedral group[133X[101X
+  
+  [33X[0;0YThe  group [22XD_8[122X does not act freely on [22XS^3[122X. Restricted to the cyclic subgroup
+  of  order [22X4[122X the representation splits as [22Xλ + λ^-1[122X, where [22Xc_2 = -c_1(λ)^2[122X has
+  order [22X4[122X, so [22Xc_2(χ)[122X has order at least [22X4[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := SmallGroup(8,3);; StructureDescription(G);[127X[104X
+    [4X[28X"D8"[128X[104X
+    [4X[25Xgap>[125X [27XR := ResolutionFiniteGroup(G, 5);;[127X[104X
+    [4X[25Xgap>[125X [27Xchi := First(Irr(G), c -> Degree(c) = 2);;[127X[104X
+    [4X[25Xgap>[125X [27XCR_CocyclesAndCoboundaries(R, 4, true).torsionCoefficients;[127X[104X
+    [4X[28X[ 2, 2, 4 ][128X[104X
+    [4X[25Xgap>[125X [27XSecondChernClassOfCharacter(R, chi);[127X[104X
+    [4X[28X[ 1, 0, 1 ][128X[104X
+    [4X[28X                                [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  class  [22X[1,0,1][122X  in  [22XZ/2  ⊕  Z/2  ⊕ Z/4[122X has order [22X4[122X. Any character whose
+  irreducible  constituents  have  degree  at  most [22X2[122X is accepted; the Whitney
+  formula  is  applied  for  you.  For  the  sum  [22Xχ  +  χ[122X  and for the regular
+  representation:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSecondChernClassOfCharacter(R, chi + chi);[127X[104X
+    [4X[28X[ 1, 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XSecondChernClassOfCharacter(R, Sum(Irr(G), c -> Degree(c) * c));[127X[104X
+    [4X[28X[ 0, 0, 2 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YBoth classes have order [22X2[122X.[133X
+  
+  
+  [1X6.12-4 [33X[0;0YChecking the example[133X[101X
+  
+  [33X[0;0Y[10Xtutorial_example.g[110X  runs  sections  2  and  3  and  checks the orders of the
+  classes rather than their coordinates:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xgap -q -b tutorial_example.g < /dev/null[128X[104X
+    [4X[28X        [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  ends  with  `0  failures.` on GAP 4.15.1 with HAP 1.70 and with HAP 1.79
+  from GitHub, in about 2 seconds.[133X
+  
+  
+  [1X6.12-5 [33X[0;0YWhat the computation rests on[133X[101X
+  
+  [33X[0;0YFor  a  two-dimensional  monomial  representation the unit sphere [22XS^3[122X is the
+  join  of  two  circles, and the class computed is the extension class of its
+  cellular  chain  complex.  That  this class is the Euler class also when the
+  action  is  not  free  is Proposition 2.3 of [A. Guclukan and E. Yalcin, [13XThe
+  Euler  class  of  a  subset  complex[113X,  Quart.  J.  Math.  61 (2010), 43--68,
+  doi:10.1093/qmath/han025].[133X
+  
+  [33X[0;0YThe  join  structure  is  not  a G-CW structure in the strict sense; why the
+  proposition     still     applies     is    explained    in    the    README
+  ([7Xhttps://github.com/yui9696/hap-crosschecks/blob/main/chern/README.md[107X) file.[133X
+  
+  [33X[0;0YThe   functions   and   their   limits   are   described   in   the   README
+  ([7Xhttps://github.com/yui9696/hap-crosschecks/blob/main/chern/README.md[107X) file,
+  and  [10Xtest_SecondChernClass.g[110X compares them with routes that do not use Euler
+  classes.[133X
+  

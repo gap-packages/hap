@@ -58,6 +58,20 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X78040D8580D35D53">6.11 <span class="Heading">Third group cohomology and homotopy <span class="SimpleMath">\(2\)</span>-types</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7A2740A57FD1A41E">6.12 <span class="Heading">Second Chern classes with HAP -- a worked example</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7F84BD37795F6CD7">6.12-1 <span class="Heading">Getting the file</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X79C283907FD58B51">6.12-2 <span class="Heading">The quaternion group</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X78FB5ECA7D8F2331">6.12-3 <span class="Heading">The dihedral group</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X800895A3811B0CC3">6.12-4 <span class="Heading">Checking the example</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X807985147976B49C">6.12-5 <span class="Heading">What the computation rests on</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>6 <span class="Heading">Group theoretic computations</span></h3>
@@ -663,6 +677,108 @@ Standard 3-cocycle
 </pre></div>
 
 <p>The <span class="SimpleMath">\(3\)</span>-cocycle corresponding to the Postnikov invariant of <span class="SimpleMath">\(H\)</span> itself can be easily constructed directly from its definition in terms of a set-theoretic 'section' of the crossed module corresponding to <span class="SimpleMath">\(H\)</span>.</p>
+
+<p><a id="X7A2740A57FD1A41E" name="X7A2740A57FD1A41E"></a></p>
+
+<h4>6.12 <span class="Heading">Second Chern classes with HAP -- a worked example</span></h4>
+
+<p>This example is contributed by Moe Tabei and computes <span class="SimpleMath">\(c_2\)</span> of two-dimensional complex representations of <span class="SimpleMath">\(Q_8\)</span> and <span class="SimpleMath">\(D_8\)</span> as Euler classes of representation spheres. The function is not part of HAP; it is one file, <code class="code">SecondChernClass.g</code>, read into GAP after HAP is loaded.</p>
+
+<p><a id="X7F84BD37795F6CD7" name="X7F84BD37795F6CD7"></a></p>
+
+<h5>6.12-1 <span class="Heading">Getting the file</span></h5>
+
+<p>Either download the single file:</p>
+
+
+<div class="example"><pre>
+curl -O https://raw.githubusercontent.com/yui9696/hap-crosschecks/main/chern/SecondChernClass.g
+</pre></div>
+
+<p>or clone the repository, which also gives the tests:</p>
+
+
+<div class="example"><pre>
+git clone https://github.com/yui9696/hap-crosschecks.git
+cd hap-crosschecks/chern
+</pre></div>
+
+<p>Start GAP in the directory that holds <code class="code">SecondChernClass.g</code>.</p>
+
+<p><a id="X79C283907FD58B51" name="X79C283907FD58B51"></a></p>
+
+<h5>6.12-2 <span class="Heading">The quaternion group</span></h5>
+
+<p>The group <span class="SimpleMath">\(Q_8 \)</span>acts freely on the unit sphere <span class="SimpleMath">\(S^3\)</span> of its two-dimensional irreducible representation, so by Swan <a href="chapBib_mj.html#biBswan2">[Swa60]</a> the second Chern class must generate <span class="SimpleMath">\(H^4(Q_8,\mathbb Z) = \mathbb Z/8\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("HAP");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read("SecondChernClass.g");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SmallGroup(8,4);; StructureDescription(G);</span>
+"Q8"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ResolutionFiniteGroup(G, 5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CR_CocyclesAndCoboundaries(R, 4, true).torsionCoefficients;</span>
+[ 8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi := First(Irr(G), c -&gt; Degree(c) = 2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondChernClassOfCharacter(R, chi);</span>
+[ 5 ]
+</pre></div>
+
+<p>The answer is the vector of coordinates of <span class="SimpleMath">\(c_2(\chi)\)</span> in the generators of <span class="SimpleMath">\(H^4(G,\mathbb Z)\)</span> returned by <code class="code">CR_CocyclesAndCoboundaries(R, 4, true)</code>. Here the class is <span class="SimpleMath">\(5\)</span> in <span class="SimpleMath">\(\mathbb Z/8\)</span>, a generator. The coordinates depend on the resolution, so another resolution (or another version of HAP) may give a different generator; the order of the class does not change.</p>
+
+<p><a id="X78FB5ECA7D8F2331" name="X78FB5ECA7D8F2331"></a></p>
+
+<h5>6.12-3 <span class="Heading">The dihedral group</span></h5>
+
+<p>The group <span class="SimpleMath">\(D_8\)</span> does not act freely on <span class="SimpleMath">\(S^3\)</span>. Restricted to the cyclic subgroup of order <span class="SimpleMath">\(4\)</span> the representation splits as <span class="SimpleMath">\(\lambda + \lambda^{-1}\)</span>, where <span class="SimpleMath">\(c_2 = -c_1(\lambda)^2\)</span> has order <span class="SimpleMath">\(4\)</span>, so <span class="SimpleMath">\(c_2(\chi)\)</span> has order at least <span class="SimpleMath">\(4\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SmallGroup(8,3);; StructureDescription(G);</span>
+"D8"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ResolutionFiniteGroup(G, 5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi := First(Irr(G), c -&gt; Degree(c) = 2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CR_CocyclesAndCoboundaries(R, 4, true).torsionCoefficients;</span>
+[ 2, 2, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondChernClassOfCharacter(R, chi);</span>
+[ 1, 0, 1 ]
+                                </pre></div>
+
+<p>The class <span class="SimpleMath">\([1,0,1]\)</span> in <span class="SimpleMath">\(\mathbb Z/2 \oplus \mathbb Z/2 \oplus \mathbb Z/4\)</span> has order <span class="SimpleMath">\(4\)</span>. Any character whose irreducible constituents have degree at most <span class="SimpleMath">\(2\)</span> is accepted; the Whitney formula is applied for you. For the sum <span class="SimpleMath">\(\chi + \chi\)</span> and for the regular representation:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondChernClassOfCharacter(R, chi + chi);</span>
+[ 1, 1, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SecondChernClassOfCharacter(R, Sum(Irr(G), c -&gt; Degree(c) * c));</span>
+[ 0, 0, 2 ]
+</pre></div>
+
+<p>Both classes have order <span class="SimpleMath">\(2\)</span>.</p>
+
+<p><a id="X800895A3811B0CC3" name="X800895A3811B0CC3"></a></p>
+
+<h5>6.12-4 <span class="Heading">Checking the example</span></h5>
+
+<p><code class="code">tutorial_example.g</code> runs sections 2 and 3 and checks the orders of the classes rather than their coordinates:</p>
+
+
+<div class="example"><pre>
+gap -q -b tutorial_example.g &lt; /dev/null
+        </pre></div>
+
+<p>It ends with `0 failures.` on GAP 4.15.1 with HAP 1.70 and with HAP 1.79 from GitHub, in about 2 seconds.</p>
+
+<p><a id="X807985147976B49C" name="X807985147976B49C"></a></p>
+
+<h5>6.12-5 <span class="Heading">What the computation rests on</span></h5>
+
+<p>For a two-dimensional monomial representation the unit sphere <span class="SimpleMath">\(S^3\)</span> is the join of two circles, and the class computed is the extension class of its cellular chain complex. That this class is the Euler class also when the action is not free is Proposition 2.3 of [A. Guclukan and E. Yalcin, <em>The Euler class of a subset complex</em>, Quart. J. Math. 61 (2010), 43--68, doi:10.1093/qmath/han025].</p>
+
+<p>The join structure is not a G-CW structure in the strict sense; why the proposition still applies is explained in the <span class="URL"><a href="https://github.com/yui9696/hap-crosschecks/blob/main/chern/README.md">README</a></span> file.</p>
+
+<p>The functions and their limits are described in the <span class="URL"><a href="https://github.com/yui9696/hap-crosschecks/blob/main/chern/README.md">README</a></span> file, and <code class="code">test_SecondChernClass.g</code> compares them with routes that do not use Euler classes.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
