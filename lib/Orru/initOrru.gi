@@ -5,3 +5,4 @@ ReadPackageHap( "lib/Orru/SL3ZTopHomology.gi");
 ReadPackageHap( "lib/Orru/sl2methodsExtra.gi");
 ReadPackageHap( "lib/Orru/sl3methods.gi");
 ReadPackageHap( "lib/Orru/sl4methods.gi");
+ReadPackageHap( "lib/Orru/slnmethods.gi");
