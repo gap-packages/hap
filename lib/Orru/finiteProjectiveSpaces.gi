@@ -48,6 +48,20 @@ function(n)
 return HAP_FiniteProjectiveSpace3Integers(n);
 end);
 
+InstallMethod(FiniteProjectiveSpace_alt,
+"n dimensional finite projective space for the ring Z/nZ",
+[IsInt, IsInt],
+function(dim,n)
+return HAP_FiniteProjectiveSpaceIntegers_alt(dim,n);
+end);
+
+InstallMethod(FiniteProjectiveSpace,
+"n dimensional finite projective space for the ring Z/nZ",
+[IsInt, IsInt],
+function(dim,n)
+return HAP_FiniteProjectiveSpaceIntegers(dim,n);
+end);
+
 
 InstallGlobalFunction(HAP_FiniteProjectiveLineIntegers_alt,
 function(n)
@@ -322,5 +336,136 @@ function(n)
     return rec(
         Reps := Set(Representatives),
         RepOf:= RepOf
+    );
+end);
+
+InstallGlobalFunction(HAP_FiniteProjectiveSpaceIntegers_alt,
+function(dim,n)
+    local UnitEls, UnitsAction, Representatives, RepOf, IsBoundRep, SetRep,
+          v, w, m, min;
+
+    UnitEls := Units(Integers mod n);
+
+    UnitsAction := function(c, u)
+      local uu;
+      uu := Int(u);
+      return List(c, x -> (uu * x) mod n);
+    end;
+
+    RepOf := [];
+
+    IsBoundRep := function(w)
+      local L, i;
+      L := RepOf;
+      for i in [1..Length(w)-1] do
+        if not IsBound(L[w[i]]) then
+          return false;
+        fi;
+        L := L[w[i]];
+      od;
+      return IsBound(L[w[Length(w)]]);
+    end;
+
+    SetRep := function(w, val)
+      local L, i;
+      L := RepOf;
+      for i in [1..Length(w)-1] do
+        if not IsBound(L[w[i]]) then
+          L[w[i]] := [];
+        fi;
+        L := L[w[i]];
+      od;
+      L[w[Length(w)]] := val;
+    end;
+
+    Representatives := [];
+
+    for v in IteratorOfTuples([0..n-1], dim+1) do
+      if Gcd(Concatenation(v, [n])) = 1 and not IsBoundRep(v + 1) then
+        m := Orbit(UnitEls, v, UnitsAction);
+        min := Minimum(m);
+        AddSet(Representatives, min);
+        for w in m + 1 do
+          SetRep(w, min);
+        od;
+      fi;
+    od;
+
+    return rec(
+        Reps := Set(Representatives),
+        RepOf:= RepOf
+    );
+end);
+
+InstallGlobalFunction(HAP_FiniteProjectiveSpaceIntegers,
+function(dim,n)
+    local divs, Rep, LiftUnit, Extend, CanonicalRep;
+
+    divs := List(DivisorsInt(n));
+    Remove(divs);
+    divs := Concatenation([n],divs);
+    Rep := [];
+
+    LiftUnit := function(u, m, q)
+      local uu;
+      uu := u;
+      while Gcd(uu, q) <> 1 do
+        uu := uu + m;
+      od;
+      return uu;
+    end;
+
+    Extend := function(v, Q)
+      local t, d, q, g, u;
+      if Length(v) = dim then
+        for t in [0..Q-1] do
+          if Gcd(t, Q, n/Q) = 1 then
+            Add(Rep, Concatenation(v, [LiftUnit(t, Q, n/Q)]));
+          fi;
+        od;
+      else
+        for d in divs do
+          q := n/d;
+          g := Gcd(Q,q);
+          for u in Filtered([0..g-1], e -> Gcd(e, g) = 1) do
+            Extend(Concatenation(v, [d * LiftUnit(u, g, q) mod n]), Lcm(Q, q));
+          od;
+        od;
+      fi;
+    end;
+
+    Extend([], 1);
+
+    CanonicalRep := function(v)
+      local vv, x, Q, a, i, d, q, g, x_0, ai;
+
+      vv := v mod n;
+      x := [];
+
+      d := Gcd(vv[1], n);
+      q := n/d;
+      a := Gcdex(vv[1]/d, q).coeff1 mod q;
+      Q := q;
+      x[1] := d mod n;
+
+      for i in [2..dim] do
+        d := Gcd(vv[i], n);
+        q := n/d;
+        g := Gcd(Q, q);
+        x_0 := LiftUnit(a*(vv[i]/d) mod g, g, q);
+        ai := Gcdex(vv[i]/d, q).coeff1 * x_0 mod q;
+        a := ChineseRem([Q, q], [a, ai]);
+        Q := LcmInt(Q, q);
+        x[i] := d*x_0 mod n;
+      od;
+
+      x[dim+1] := LiftUnit(a*vv[dim+1] mod Q, Q, n/Q);
+
+      return x;
+    end;
+
+    return rec(
+      Reps := Set(List(Rep, Immutable)),
+      RepOf := CanonicalRep
     );
 end);

@@ -37,63 +37,35 @@ InstallMethod( CongruenceSubgroupGamma0, "for integer matrix group and positive 
              GG!.GeneratorsOfMagmaWithInverses := [S*U,S*U^2];
      fi;
 
+    membership:=function(g)
+        local i;
 
-    if DimensionOfMatrixGroup(GG)=2 then
-    ###################################################
-    membership:=function(g)
-    if not g in GG then return false; fi;
-    if not g[2][1] mod n = 0  then return false;
-    else return true; fi;
-    end;
-    ###################################################
-    ###################################################
-    ambientMembership:=function(g)
-    if not g[2][1] mod n = 0  then return false;
-    else  return true; fi;
-    end;
-    ###################################################
-    fi;
-    if DimensionOfMatrixGroup(GG)=3 then
-    ###################################################
-    membership:=function(g)
-    if not g in GG then return false; fi;
-    if not g[2][1] mod n = 0  then return false; fi;
-    if not g[3][1] mod n = 0  then return false; fi;
-    return true;
-    end;
-    ###################################################
-    ###################################################
-    ambientMembership:=function(g)
-    if not g[2][1] mod n = 0  then return false; fi;
-    if not g[3][1] mod n = 0  then return false; fi;
-    return true; 
-    end;
-    ###################################################
-    fi;
-    if DimensionOfMatrixGroup(GG)=4 then
-    ###################################################
-    membership:=function(g)
-    if not g in GG then return false; fi;
-    if not g[2][1] mod n = 0  then return false; fi;
-    if not g[3][1] mod n = 0  then return false; fi;
-    if not g[4][1] mod n = 0  then return false; fi;
-    return true;
-    end;
-    ###################################################
-    ###################################################
-    ambientMembership:=function(g)
-    if not g[2][1] mod n = 0  then return false; fi;
-    if not g[3][1] mod n = 0  then return false; fi;
-    if not g[4][1] mod n = 0  then return false; fi;
-    return true;
-    end;
-    ###################################################
-    fi;
+        if not g in GG then
+            return false;
+        fi;
 
-    if DimensionOfMatrixGroup(GG)>4 then
-    Print("Gamma0 not yet implemented for matrices of dimension >4.\n");
-    return fail;
-    fi;
+        ## Gamma0: first column is (*,0,...,0) mod n.
+        for i in [2..DimensionOfMatrixGroup(GG)] do
+            if not g[i][1] mod n = 0 then
+                return false;
+            fi;
+        od;
+
+        return true;
+    end;
+    ###################################################
+    ###################################################
+    ambientMembership:=function(g)
+        local i;
+
+        for i in [2..DimensionOfMatrixGroup(GG)] do
+            if not g[i][1] mod n = 0 then
+                return false;
+            fi;
+        od;
+
+        return true;
+    end;
 
     G!.membership:=membership;
     G!.ambientMembership:=ambientMembership;
@@ -101,7 +73,7 @@ InstallMethod( CongruenceSubgroupGamma0, "for integer matrix group and positive 
     ##################################################
     ##
     ## Remaining components to be computed in other functions.
-    if DimensionOfMatrixGroup(GG)<5 then ProjectiveSpace(G);fi;
+    ProjectiveSpace(G);
     AmbientTransversal(G);
     AmbientPosition(G); #A generic method will be used to construct the
     AmbientRepresentation(G); #these two functions except for cases with a
