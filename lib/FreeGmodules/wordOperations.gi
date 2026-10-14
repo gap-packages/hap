@@ -130,7 +130,6 @@ InstallGlobalFunction(AddFreeWords,
 function(arg)
 local x,u,v,w,r, w2;
 
-
 if Length(arg[2])<Length(arg[1]) then
 v:=arg[1];w:=arg[2];
 else
@@ -152,7 +151,6 @@ for x in v do
 od;
 
 u:=Filtered(u,i->(not i=0));
-
 return u;
 end);
 #####################################################################

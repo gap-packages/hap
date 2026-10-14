@@ -1,5 +1,6 @@
 #(C) 2008 Graham Ellis
 
+
 ################################################################
 InstallGlobalFunction(FreeGResolution,
 function(arg)
@@ -13,7 +14,7 @@ local
       	Quad2Pair,Quad2PairRec,
 	HtpyGen, HtpyWord,
 	StabGrps, 
-	StabResls, 
+	StabResls, StabReslsTmp,
         ResolutionFG,
 	action,
         AlgRed,  
@@ -46,7 +47,7 @@ od;
 ####################
 PosG:=function(EltsG,g)    #Let's keep format same as Position(EltsG,g)
 local h;
-      #Other calls may add to EltsG we need to check
+      #Other calls may add to EltsG so we need to check
       if Length(EltsGDict!.entries)<>Length(EltsG) then
          for h in [1..Length(EltsG)] do
             if IsBound(EltsG[h]) then
@@ -103,7 +104,7 @@ return res;
 fi;
 ###
 
-iso:=RegularActionHomomorphism(G);
+iso:=RegularActionHomomorphism(G);   #THIS IS NO LONGER NECESSARY
 Q:=Image(iso);
 
 if Order(Image(iso))=24 then
@@ -164,11 +165,11 @@ end;
 else
 
 ##############################################
-AlgRed:= function(www)
-local x,i,v,k,u,w,ww;
+AlgRed:= function(w)
+local x,i,v,k,u,ww;
 
-if www=[] then return www; fi;
-w:=www;
+if w=[] then return w; fi;
+
         for x in w do
         if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
         od;
@@ -179,6 +180,7 @@ ww:=[];
 
 v:=Collected(w);
 if Maximum(List(v,x->x[2]))<2 then return w; fi;
+w:=0;
 Sort(v,HAPAlgRedSort);
 i:=1;
 while i <=Length(v)-1 do
@@ -196,12 +198,13 @@ while i <=Length(v)-1 do
     i:=i+1;
   fi;
 od;
+
+v:=0;
 return ww;
 end;
 #######################################
 
 fi;
-
 
 
 ##############################################
@@ -231,19 +234,27 @@ return MultRecord[g][h];
 end;
 ################################################################
 
-StabGrps:= List([0..Length(P)],n->
+StabGrps:= List([0..N],n->
            List([1..P!.dimension(n)], k->P!.stabilizer(n,k))); 
 
 StabResls:=[];
+StabReslsTmp:=[];
 i:=N;
 #if true then
 #################################
 for L in StabGrps do
-Add(StabResls,List(L,	
-g->ExtendScalars(ResolutionFG(g,i),G,EltsG))
-);
+Add(StabReslsTmp,List(L, g->ResolutionFG(g,i)));
+od;
+for L in StabReslsTmp do
+for r in L do
+r!.PosG:=PosG;
+od;
+od;
+for L in StabReslsTmp do
+Add(StabResls,List(L,	r->ExtendScalars(r,G,EltsG)));
 i:=Maximum(0,AbsInt(i-1));
 od;
+StabReslsTmp:=0;
 #################################
 #else
 ##################################
@@ -378,26 +389,105 @@ end;
 ###################################################################
 
 ###################################################################
-HtpyWord:=function(q,s,w)
-local h,z,x,y;
-#This applies the "vertical homotopy" to the r-word w in "dimension" 
-#[q,s]. The output is an r-word in "dimension" [q,s+1].
+#HtpyWord:=function(q,s,w)
+#local h,z,x,y,hdict,pos,i;
+##This applies the "vertical homotopy" to the r-word w in "dimension" 
+##[q,s]. The output is an r-word in "dimension" [q,s+1].
+##Modified this October 2026 so that AlgRed is no longer used.
+#h:=[];
+#hdict:=NewDictionary([1,1,1],true);
 
+#for y in w do
+
+#x:=[action(q,y[1],y[3])*y[1],y[2],y[3]];
+#z:=HtpyGen(q,s,x[1],x[2],x[3]);
+#x:=0;
+#y:=0;
+#z:=List(z,a->[action(q,a[1],a[3])*a[1],a[2],a[3]]);
+
+#        for x in z do
+#        if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
+#        pos:=LookupDictionary(hdict,[AbsInt(x[1]),x[2],x[3]]);
+#        if pos=fail then 
+#                 Add(h,[SignInt(x[1]),AbsInt(x[1]),x[2],x[3]]);
+#                 AddDictionary(hdict,[AbsInt(x[1]),x[2],x[3]],Length(h));
+#        else
+#                 h[pos][1]:=h[pos][1]+SignInt(x[1]);
+#        fi;
+#        od;
+
+#od;
+
+#w:=0;
+#hdict:=0;
+
+#for i in [1..Length(h)] do
+#x:=h[i];
+#h[i]:=MultiplyWord(x[1], [[x[2],x[3],x[4] ]]) ;
+#od;
+
+#return Concatenation(h);
+#end;
+###################################################################
+
+###################################################################
+HtpyWord:=function(q,s,w)
+local h,z,x,y,hdict,pos,i;
+#This applies the "vertical homotopy" to the r-word w in "dimension"
+#[q,s]. The output is an r-word in "dimension" [q,s+1].
+#Modified this October 2026 so that AlgRed is no longer used.
+#This is the second modification, the first is left above for readability.
 h:=[];
+hdict:=[1..2*Length(EltsG)]; #This might need increasing for some groups
 
 for y in w do
+
 x:=[action(q,y[1],y[3])*y[1],y[2],y[3]];
-
 z:=HtpyGen(q,s,x[1],x[2],x[3]);
-
-
+x:=0;
+y:=0;
 z:=List(z,a->[action(q,a[1],a[3])*a[1],a[2],a[3]]);
-Append(h,z);
+
+    for x in z do
+        if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
+        if IsList(hdict[x[3]])  then
+           if IsBound(hdict[x[3]][AbsInt(x[1])]) then
+               if IsBound(hdict[x[3]][AbsInt(x[1])][x[2]]) then
+                   pos:=hdict[x[3]][AbsInt(x[1])][x[2]];
+                   h[pos][1]:=h[pos][1]+SignInt(x[1]);
+               else
+                   Add(h,[SignInt(x[1]),AbsInt(x[1]),x[2],x[3]]);
+                   pos:=Length(h);
+                   hdict[x[3]][AbsInt(x[1])][x[2]]:=pos;
+               fi;
+           else
+               hdict[x[3]][AbsInt(x[1])]:=[];
+               Add(h,[SignInt(x[1]),AbsInt(x[1]),x[2],x[3]]);
+               pos:=Length(h);
+               hdict[x[3]][AbsInt(x[1])][x[2]]:=pos;
+           fi;
+        else
+           hdict[x[3]]:=[];
+           hdict[x[3]][AbsInt(x[1])]:=[];
+           Add(h,[SignInt(x[1]),AbsInt(x[1]),x[2],x[3]]);
+           pos:=Length(h);
+           hdict[x[3]][AbsInt(x[1])][x[2]]:=pos;
+        fi;
+    od;
 od;
 
-return AlgRed(h);
+w:=0;
+hdict:=0;
+
+for i in [1..Length(h)] do
+x:=h[i];
+h[i]:=MultiplyWord(x[1], [[x[2],x[3],x[4] ]]) ;
+od;
+
+return Concatenation(h);
 end;
 ###################################################################
+
 
 DelGenRec:=[];
 for k in [1..N+1] do
@@ -466,11 +556,13 @@ else
 
 if pt>0 then
 DelGenRec[k+1][q+1][s+1][pr][pt]:=
-AlgRed(HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,-pt)))) ;
+#AlgRed(HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,-pt)))) ;
+HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,-pt)));
 return DelGenRec[k+1][q+1][s+1][pr][pt];
 else
 DelGenRec[k+1][q+1][s+1][pr][-pt]:=
-AlgRed(HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,pt)))) ;
+#AlgRed(HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,pt)))) ;
+HtpyWord(q-1,s-1,DelWord(1,q,s-1,DelGen(0,q,s,pr,pt)));
 
 return 
 List(DelGenRec[k+1][q+1][s+1][pr][-pt], a->[a[1],-a[2],a[3]]);
@@ -510,7 +602,7 @@ Append(y,List(DelGen(k,q,s,x[1],x[2]),
 a->[a[1],a[2],Mult(x[3],a[3])]));
 od;
 
-return y;  #Added Jan 2013. Speeds up the calculation in some(!!) examples.
+#return y;  #Added Jan 2013. Speeds up the calculation in some(!!) examples.
 return AlgRed(y);
 
 end;
@@ -534,6 +626,7 @@ List(z,x->[Quad2Pair(q-i,x[1],s+i-1,x[2])[2],x[3]])  );
 else break;
 fi;
 od;
+
 
 return AlgebraicReduction(y);
 end;
@@ -709,11 +802,12 @@ g:=EltsG[t]*EltsG[HhomG(h)];
 pos:= PosG(EltsG,g);
 
 
-if pos=fail then Add(EltsG, g);
-
- THmapGrec[t][h]:= Length(EltsG);
-else  THmapGrec[t][h]:= pos; fi;
-
+if pos=fail then 
+                Add(EltsG, g); 
+                THmapGrec[t][h]:= Length(EltsG);
+else  
+                THmapGrec[t][h]:= pos; 
+fi;
 return  THmapGrec[t][h];
 end;
 #######################################

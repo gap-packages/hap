@@ -38,12 +38,12 @@ Tz:=function(R) return R; end;
    fi;
 
 L:=LowerCentralSeries(G);
-if Maximum(List(L,Order)) <1000 then
-if Length(L)>1 then
-return  ResolutionNormalSeries(LowerCentralSeries(G),N);
-else 
-return ResolutionFiniteGroup(G,N);
-fi;
+if Maximum(List(L,Order)) <1000 then   #THIS CONDITION NEEDS ADJUSTING
+  if Length(L)>1 then
+    return  ResolutionNormalSeries(LowerCentralSeries(G),N);
+  else 
+    return ResolutionFiniteGroup(G,N);
+  fi;
 fi;
 
    if IsNilpotent(G) then

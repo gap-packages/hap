@@ -49,6 +49,7 @@ fi;
 
 BoolE:=SizeE<=SMALL and Size(R!.group)=Size(R!.elts)
 and Size(S!.group)=Size(S!.elts);
+
 #################################
 if BoolE then
 MT:=[];
@@ -459,10 +460,10 @@ od;
 
 PseudoBoundary:=[];
 HorizontalPseudoBoundary:=[];
-for k in [1..n] do
+for k in [1..n] do  
 PseudoBoundary[k]:=[];
 HorizontalPseudoBoundary[k]:=[];
-   for q in [0..k] do
+   for q in [0..k] do 
    p:=k-q;
       for j in [DimPQ(p+1,q-1)+1..DimPQ(p,q)] do
 
@@ -472,6 +473,7 @@ HorizontalPseudoBoundary[k]:=[];
 	 dl:=Del(l,p,q,j);    
          r:=AddWrds(dl,r);
 	 if l>0 then rr:=AddWrds(dl,rr);fi;
+
          od;
 
          Add(PseudoBoundary[k],[r,p]);    #I'm pretty sure it's p and not q 
