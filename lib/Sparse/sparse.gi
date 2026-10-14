@@ -369,7 +369,7 @@ end);
 #####################################################################
 InstallGlobalFunction(NullspaceSparseMatDestructive,
 function(B)
-local NS, heads, free, vec, revcol,  pos, i,v,w, x,y,z,h,s;
+local NS, heads, free, i, v, x, y, z, h, s;
 
 NS:=[];
 
@@ -377,29 +377,24 @@ if not IsBound(B!.heads) then
 SparseSemiEchelon(B);
 fi;
 
-heads:=Filtered([1..B!.cols],x->IsBound(B!.heads[x]));
+heads:=Filtered([1..B!.cols],x->B!.heads[x]<>0);
 
 free:=Difference([1..B!.cols],heads);
-revcol:=Reversed([1..B!.cols]);
 
 for x in free do
-v:=[];
-Add(v,[x,1]);
+v:=ListWithIdenticalEntries(B!.cols,0);
+v[x]:=1;
 
-for y in revcol do
-if y in heads then
+for y in Reversed(heads) do
 h:=B!.mat[B!.heads[y]];
-
 s:=0;
 for z in h do
-pos:=PositionProperty(v,a->a[1]=z[1]);
-if IsInt(pos) then s:=s+z[2]*v[pos][2]; fi;
+s:=s+z[2]*v[z[1]];
 od;
-if not s=0 then Add(v,[y,-s]); fi;
-fi;
+v[y]:=-s;
 od;
 
-Add(NS,v);
+Add(NS, Filtered(List([1..B!.cols],i->[i,v[i]]), p->not IsZero(p[2])));
 
 od;
 return NS;
