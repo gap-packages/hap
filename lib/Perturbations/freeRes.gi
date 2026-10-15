@@ -38,13 +38,15 @@ bool:=not IsComponentObjectRep(One(G));
 bool:=IsHapSL2Subgroup(G) or IsHapSL2OSubgroup(G) or IsBound(G!.bianchiInteger);
 EltsG:=P!.elts;
 
+if false then  #try changing false to true for SL(5,Z) and the like
+#####################
 EltsGDict:=NewDictionary(EltsG[1],true);
 for i in [1..Length(EltsG)] do
    if IsBound(EltsG[i]) then
       AddDictionary(EltsGDict,EltsG[i],i);
    fi;
 od;
-####################
+##
 PosG:=function(EltsG,g)    #Let's keep format same as Position(EltsG,g)
 local h;
       #Other calls may add to EltsG so we need to check
@@ -65,6 +67,16 @@ local h;
 return LookupDictionary(EltsGDict,g);
 end;
 ####################
+else
+####################
+PosG:=function(EltsG,g)
+local pos;
+pos:=Position(EltsG,g);
+if pos =fail then Add(EltsG,g); pos:=Length(EltsG); fi;
+return pos;
+end;
+####################
+fi;
 
 BoundaryP:=P!.boundary;
 
