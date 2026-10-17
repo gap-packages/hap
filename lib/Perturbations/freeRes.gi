@@ -450,7 +450,7 @@ local h,z,x,y,hdict,pos,i;
 #Modified this October 2026 so that AlgRed is no longer used.
 #This is the second modification, the first is left above for readability.
 h:=[];
-hdict:=[1..2*Length(EltsG)]; #This might need increasing for some groups
+hdict:=[1..10*Length(EltsG)]; #This might need increasing for some groups
 
 for y in w do
 
@@ -462,6 +462,7 @@ z:=List(z,a->[action(q,a[1],a[3])*a[1],a[2],a[3]]);
 
     for x in z do
         if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
+        if not IsBound(hdict[x[3]]) then hdict[x[3]]:=x[3]; fi;
         if IsList(hdict[x[3]])  then
            if IsBound(hdict[x[3]][AbsInt(x[1])]) then
                if IsBound(hdict[x[3]][AbsInt(x[1])][x[2]]) then
