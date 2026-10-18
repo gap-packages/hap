@@ -47,6 +47,8 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X841369EB849AF695">7.4-2 <span class="Heading">Mod-<span class="SimpleMath">q</span> cohomology</span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C2A5C5F80A956C6">7.4-3 <span class="Heading"><span class="SimpleMath">S</span>-arithmetic groups</span></a>
+</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X800CB6257DC8FB3A">7.5 <span class="Heading">Artin groups</span></a>
 </span>
@@ -426,7 +428,7 @@ Chain complex of length 5 in characteristic 0 .
 <div class="example"><pre>
 	
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)a");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(S);;</span>
@@ -669,6 +671,37 @@ Homology(C,0);
   [    v.5,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ] ]
 
 </pre></div>
+
+<p><a id="X7C2A5C5F80A956C6" name="X7C2A5C5F80A956C6"></a></p>
+
+<h5>7.4-3 <span class="Heading"><span class="SimpleMath">S</span>-arithmetic groups</span></h5>
+
+<p>The following commands compute the integral homology of <span class="SimpleMath">SL_2( Z[1/58])</span> in degrees up to <span class="SimpleMath">7</span>. This is joint work with <strong class="button">Bui Anh Tuan</strong>.</p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2Z(58,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [0..7] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print("H_",n,"= ",Homology(C,n),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+H_0= [ 0 ]
+H_1= [ 3 ]
+H_2= [ 28, 0 ]
+H_3= [ 3, 3, 6, 24, 0, 0, 0, 0 ]
+H_4= [ 2, 2, 2, 2, 4 ]
+H_5= [ 3, 3, 6, 24 ]
+H_6= [ 2, 2, 2, 2, 4 ]
+H_7= [ 3, 3, 6, 24 ]
+
+</pre></div>
+
+<p>This completely determines the additive homology of <span class="SimpleMath">SL_2( Z[1/58])</span> because, for any product <span class="SimpleMath">m=p_1p_2... p_k</span> of <span class="SimpleMath">k</span> distinct primes, the cohomology (and hence homology) of <span class="SimpleMath">G=SL_2( Z[1/m])</span> is periodic of period <span class="SimpleMath">2</span> in degrees <span class="SimpleMath">&gt;k+1</span>. To see this recall the isomorphism <span class="SimpleMath">G=SL_2( Z[1/m]) ≅ SL_2( Z[1/m']) ∗_Γ_0(p_k) SL_2( Z[1/m'])</span> for <span class="SimpleMath">m'=m/p_k</span>. By Bass-Serre theory (or by <a href="chapBib.html#biBkmoss">[Mos80]</a>) there exists a cellular space <span class="SimpleMath">X</span> of dimension <span class="SimpleMath">k+1</span> on which the group <span class="SimpleMath">G</span> acts with finite stabilizer groups. The group <span class="SimpleMath">G</span> also acts (non-discretely) on <span class="SimpleMath">Y= R^2∖ {0} ≃ S^1</span>. The finite subgroups of <span class="SimpleMath">G</span> are cyclic and act fixed-point freely on <span class="SimpleMath">Y</span>. The group <span class="SimpleMath">G</span> acts freely on <span class="SimpleMath">X× Y</span>. Since <span class="SimpleMath">X</span> is contractible the Borel construction <span class="SimpleMath">Y_hG = (X× Y)/G</span> fibres over the classifying space <span class="SimpleMath">BG</span> with fibre <span class="SimpleMath">S^1</span>. The action is orientation preserving. The oriented <span class="SimpleMath">S^1</span> fibre bundle <span class="SimpleMath">Y_hG ⟶ B</span> with euler class <span class="SimpleMath">e∈ H^2(BG, Z)</span> gives rise to the exact Gysin sequence</p>
+
+<p><span class="SimpleMath">⋯ → H^i(BG, Z) stackrel∪ e⟶ H^i+2(BG, Z) → H^i+2(Y_hG, Z) → H^i+1(BG, Z) → ⋯</span> .</p>
+
+<p>Since <span class="SimpleMath">Y_hG</span> has trivial cohomology in degrees <span class="SimpleMath">&gt;k+1</span> we obtain the periodicity of period <span class="SimpleMath">2</span>.</p>
 
 <p><a id="X800CB6257DC8FB3A" name="X800CB6257DC8FB3A"></a></p>
 

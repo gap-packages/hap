@@ -336,7 +336,7 @@
   [4X[32X  Example  [32X[104X
     [4X[28X	[128X[104X
     [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
-    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)a");;[127X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
     [4X[25Xgap>[125X [27XR:=FreeGResolution(K,4);;[127X[104X
     [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
     [4X[25Xgap>[125X [27XC:=TensorWithIntegers(S);;[127X[104X
@@ -619,6 +619,50 @@
     [4X[28X  [    v.5,  0*v.1,  0*v.1,  0*v.1,  0*v.1 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X7.4-3 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
+  
+  [33X[0;0YThe  following  commands  compute the integral homology of [22XSL_2( Z[1/58])[122X in
+  degrees up to [22X7[122X. This is joint work with [12XBui Anh Tuan[112X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2Z(58,8);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in [0..7] do[127X[104X
+    [4X[25X>[125X [27XPrint("H_",n,"= ",Homology(C,n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XH_0= [ 0 ][128X[104X
+    [4X[28XH_1= [ 3 ][128X[104X
+    [4X[28XH_2= [ 28, 0 ][128X[104X
+    [4X[28XH_3= [ 3, 3, 6, 24, 0, 0, 0, 0 ][128X[104X
+    [4X[28XH_4= [ 2, 2, 2, 2, 4 ][128X[104X
+    [4X[28XH_5= [ 3, 3, 6, 24 ][128X[104X
+    [4X[28XH_6= [ 2, 2, 2, 2, 4 ][128X[104X
+    [4X[28XH_7= [ 3, 3, 6, 24 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  completely determines the additive homology of [22XSL_2( Z[1/58])[122X because,
+  for  any  product  [22Xm=p_1p_2... p_k[122X of [22Xk[122X distinct primes, the cohomology (and
+  hence  homology) of [22XG=SL_2( Z[1/m])[122X is periodic of period [22X2[122X in degrees [22X>k+1[122X.
+  To  see  this  recall  the  isomorphism  [22XG=SL_2(  Z[1/m])  ≅  SL_2( Z[1/m'])
+  ∗_Γ_0(p_k) SL_2( Z[1/m'])[122X for [22Xm'=m/p_k[122X. By Bass-Serre theory (or by [Mos80])
+  there  exists  a cellular space [22XX[122X of dimension [22Xk+1[122X on which the group [22XG[122X acts
+  with  finite stabilizer groups. The group [22XG[122X also acts (non-discretely) on [22XY=
+  R^2∖  {0}  ≃  S^1[122X.  The finite subgroups of [22XG[122X are cyclic and act fixed-point
+  freely  on  [22XY[122X.  The group [22XG[122X acts freely on [22XX× Y[122X. Since [22XX[122X is contractible the
+  Borel construction [22XY_hG = (X× Y)/G[122X fibres over the classifying space [22XBG[122X with
+  fibre  [22XS^1[122X.  The  action  is  orientation preserving. The oriented [22XS^1[122X fibre
+  bundle [22XY_hG ⟶ B[122X with euler class [22Xe∈ H^2(BG, Z)[122X gives rise to the exact Gysin
+  sequence[133X
+  
+  [33X[0;0Y[22X⋯ → H^i(BG, Z) stackrel∪ e⟶ H^i+2(BG, Z) → H^i+2(Y_hG, Z) → H^i+1(BG, Z) → ⋯[122X
+  .[133X
+  
+  [33X[0;0YSince  [22XY_hG[122X has trivial cohomology in degrees [22X>k+1[122X we obtain the periodicity
+  of period [22X2[122X.[133X
   
   
   [1X7.5 [33X[0;0YArtin groups[133X[101X
