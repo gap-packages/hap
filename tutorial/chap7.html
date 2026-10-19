@@ -388,6 +388,8 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><span class="SimpleMath">H_6(SL_2(cal O), Z) = Z_2 ⊕ Z_12</span></p>
 
+<p><span class="SimpleMath">H_6(PSL_2(cal O), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_6</span></p>
+
 <p>for <span class="SimpleMath">cal O</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt-2)</span>.</p>
 
 
@@ -396,6 +398,12 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),6);</span>
 [ 2, 12 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractibleGcomplex("SL(2,O-2_a)");; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PC:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PR:=FreeGResolution(PC,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(PR),6);</span>
+[ 2, 2, 2, 6 ]
 
 </pre></div>
 
