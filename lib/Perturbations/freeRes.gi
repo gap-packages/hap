@@ -108,6 +108,11 @@ if IsBianchiAbelianGroup(G) and Order(G)=infinity then
 res:=ResolutionAbelianBianchiSubgroup(G,n);
 return res;
 fi;
+
+if Size(G)<513 then
+return ResolutionFiniteGroup(G,n);
+fi;
+
 if IsAbelian(G) and not bool then   #NOT SURE WHY I NEED TO DO THIS
 #if false then
 res:=ResolutionAbelianGroup_alt(G,n);
