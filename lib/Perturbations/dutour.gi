@@ -4,8 +4,9 @@ HAP_GCOMPLEX_SETUP:=[true];
 ################################################
 ################################################
 InstallGlobalFunction(ContractibleGcomplex,
-function(groupname)
+function(arg)
 local
+        groupname,
 	C,K, 
         G, StabilizerGroups, Stabilizer, Goriginal,
         lnth,
@@ -20,6 +21,7 @@ local
         x, lstMathieu, lstAlexanderSebastianSL, lstSebastianGL, lstAlexanderSebastianAlt,
         n,k,s,BI,SGN,tmp, LstEl , bool, name,dd;
 
+groupname:=arg[1];
 n:=Position(groupname,'-');##This won't work for all file names
 k:=Position(groupname,')');##So I'll re-introduce the number elsewhere
 if IsInt(n) and IsInt(k) then dd:=groupname{[n+1..k-1]}; #dd:=-Int(dd);
@@ -65,7 +67,10 @@ fi;
 
 
 C:=StructuralCopy(HAP_GCOMPLEX_LIST);
+if Length(arg)>1 then lnth:=arg[2];
+else
 lnth:=Length(C)-1;
+fi;
 
 dims:=List([1..lnth+1],n->Length(C[n]));
 
