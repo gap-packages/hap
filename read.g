@@ -112,6 +112,10 @@ fi;
 
 ReadPackageHap( "lib/TitlePage/makeHapMan.gi");
 
+# Load the Voronoi entry points and optional provider interface. This defines
+# functions only; Magma is invoked only when its backend is requested.
+ReadPackageHap( "lib/Voronoi/seb.gi");
+
 ################# OBJECTIFICATIONS ###############################
 ReadPackageHap( "lib/Objectifications/basicMethods.gi");
 ################# OBJECTIFICATIONS DONE ##########################

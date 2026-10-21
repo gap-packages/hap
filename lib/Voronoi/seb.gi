@@ -1,10 +1,34 @@
 HAP_KOMPLEKS123:=fail;
 DIMS:=0;;   #THIS IS NOT ALLOWED! CHANGE IT!!
 
+# Optional providers implement function(kind,n,d), where kind is "GL" or "SL"
+# and d is a squarefree quadratic radicand. A provider returns a HAP non-free
+# resolution, or fail for unsupported inputs. The caller explicitly chooses it
+# with : backend := "name". No extra dependency is loaded by HAP.
+BindGlobal("HAP_VORONOI_BACKENDS", rec());
+BindGlobal("RegisterVoronoiBackend", function(name, provider)
+    if not IsString(name) or Length(name)=0 or name="magma"
+       or not IsFunction(provider) then
+        Error("expected a nonempty backend name other than magma and a function");
+    fi;
+    HAP_VORONOI_BACKENDS.(name) := provider;
+end);
+BindGlobal("CallVoronoiBackend", function(name, kind, n, d)
+    if not IsString(name) or not IsBound(HAP_VORONOI_BACKENDS.(name)) then
+        Error("unknown Voronoi backend; register it with RegisterVoronoiBackend");
+    fi;
+    return HAP_VORONOI_BACKENDS.(name)(kind,n,d);
+end);
+
 ############################################################
 ############################################################
 VoronoiComplexGL:=function(n,d)
-local file,file2,m,k,G;
+local file,file2,m,k,G,backend;
+
+backend:=ValueOption("backend");
+if backend<>fail and backend<>"magma" then
+return CallVoronoiBackend(backend,"GL",n,d);
+fi;
 
 if d<0 then
 file:="~/pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields/Magma/BasicData.m";
@@ -43,7 +67,12 @@ end;
 ############################################################
 ############################################################
 VoronoiComplexSL:=function(n,d)
-local file,file2,m,k,G;
+local file,file2,m,k,G,backend;
+
+backend:=ValueOption("backend");
+if backend<>fail and backend<>"magma" then
+return CallVoronoiBackend(backend,"SL",n,d);
+fi;
 
 if d<0 then
 file:="~/pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields/Magma/BasicData.m";

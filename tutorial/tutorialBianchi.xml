@@ -408,4 +408,29 @@ The signs in the boundary maps of the free resolution are delicate. Another easy
 </Example>
 
 </Section>
+
+<Section><Heading>Optional Voronoi backends</Heading>
+<P>The functions <C>VoronoiComplexGL(n,d)</C> and
+<C>VoronoiComplexSL(n,d)</C> accept the option <C>backend</C>.
+Without this option, or with <C>backend := "magma"</C>, they use the
+Magma implementation described above. An external package can register an
+alternative using <C>RegisterVoronoiBackend(name, provider)</C>. The name
+must be a nonempty string other than <C>"magma"</C>, and
+<C>provider(kind,n,d)</C> must be a function. Its first argument is
+<C>"GL"</C> or <C>"SL"</C>; <C>d</C> is a squarefree radicand, not a
+field discriminant. The provider returns a HAP non-free resolution for the
+requested group, or <C>fail</C> if the input is unsupported. Failure never
+silently falls back to Magma. Registering an existing name replaces its
+provider.</P>
+<P>For example, a Julia package running with GAP.jl can register an
+in-process callback under the name <C>"julia"</C>. Once registered,
+<C>VoronoiComplexGL(2,-7 : backend := "julia")</C> calls that provider.
+HAP itself does not install or load Julia. An unregistered backend name is
+an error. Providers must supply complete stabilizers, the orientation action
+and equivariant boundaries; perfect forms or a group presentation alone
+do not suffice for higher homology. Standard HAP operations such as
+<C>FreeGResolution</C> and <C>TensorWithIntegers</C> then apply to the
+returned object. A contracting homotopy is a separate capability and must
+not be inferred merely from the existence of a resolution.</P>
+</Section>
 </Chapter>
