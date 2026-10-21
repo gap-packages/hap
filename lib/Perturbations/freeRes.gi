@@ -109,9 +109,9 @@ res:=ResolutionAbelianBianchiSubgroup(G,n);
 return res;
 fi;
 
-#if Size(G)<32 then
-#return ResolutionFiniteGroup(G,n);
-#fi;
+if Size(G)<32 then
+return ResolutionFiniteGroup(G,n);
+fi;
 
 if IsAbelian(G) and not bool then   #NOT SURE WHY I NEED TO DO THIS
 #if false then
