@@ -109,7 +109,7 @@ res:=ResolutionAbelianBianchiSubgroup(G,n);
 return res;
 fi;
 
-if Size(G)<32 then
+if Size(G)<32 and not IsAbelian(G) then
 return ResolutionFiniteGroup(G,n);
 fi;
 
