@@ -31,13 +31,13 @@
 ##  tietze = true.
 ##
 #############################################################################
-ResolutionFiniteGroup_alt:=ResolutionFiniteGroup;
-MakeReadOnlyGlobal("ResolutionFiniteGroup_alt");
-MakeReadWriteGlobal("ResolutionFiniteGroup");
-UnbindGlobal("ResolutionFiniteGroup");
-DeclareGlobalFunction("ResolutionFiniteGroup");
+#ResolutionFiniteGroup_alt:=ResolutionFiniteGroup;
+#MakeReadOnlyGlobal("ResolutionFiniteGroup_alt");
+#MakeReadWriteGlobal("ResolutionFiniteGroup");
+#UnbindGlobal("ResolutionFiniteGroup");
+#DeclareGlobalFunction("ResolutionFiniteGroup_alt");
 
-InstallGlobalFunction(ResolutionFiniteGroup,
+InstallGlobalFunction(ResolutionFiniteGroup_alt,
 function(arg)
 
 local

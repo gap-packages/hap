@@ -119,6 +119,7 @@ DeclareGlobalFunction("ResolutionArithmeticGroup");
 DeclareGlobalFunction("ResolutionGenericGroup");
 DeclareOperation("Resolution",[IsGroup,IsInt]);
 DeclareGlobalFunction("ResolutionFiniteGroup");
+DeclareGlobalFunction("ResolutionFiniteGroup_alt");
 DeclareGlobalFunction("ResolutionSmallGroup");
 DeclareSynonym("ResolutionSmallFpGroup",ResolutionSmallGroup);
 DeclareGlobalFunction("PresentationOfResolution");
