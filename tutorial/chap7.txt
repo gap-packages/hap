@@ -631,10 +631,55 @@
   
   [1X7.4-3 [33X[0;0YGenerators and relators for the Steinberg module [22XSt_3( Q)[122X[101X[1X[133X[101X
   
-  [33X[0;0YThe  following  theorem  is a variant of the [22Xn=3[122X case of Theorem B in [CP17]
-  and can be proved using the commands below.[133X
+  [33X[0;0YThe  following  rather  inelegant  variant  of  the [22Xn=3[122X case of Theorem B in
+  [CP17] is proved using the commands below.[133X
   
-  [33X[0;0Y[12XTheorem (work in progress).[112X[133X
+  [33X[0;0Y[12XTheorem.[112X  [13XThe Steinberg module[113X [22XSt_3( Q)[122X [13Xis the abelian group with generators[113X
+  [22X[v_1,v_2,v_3][122X[13X,   one   for  each  ordered  basis[113X  [22X{v_1,v_2,v_3}[122X[13X  of[113X  [22XZ^3[122X  [13Xof
+  determinant[113X [22X+1[122X[13X, subject to the following five families of relations:[113X[133X
+  
+  [33X[0;0Y[22X[v_1,v_2,v_3]=-[-v_1,-v_1-v_2+2v_3,-v_1+v_3],[122X[133X
+  
+  [33X[0;0Y[22X[v_1,v_2,v_3]=[v_1+v_2+v_3,v_2,v_1-v_3],[122X[133X
+  
+  [33X[0;0Y[22X[v_1,v_2,v_3]=[v_1-2v_3,-v_2,-v_3],[122X[133X
+  
+  [33X[0;0Y[22X[v_1,v_2,v_3]=-[2v_2-v_3,-v_1+2v_2,v_3]+[2v_1-v_3,v_2,v_1]                 +
+  [v_1+v_2,v_1+v_3,v_3],[122X[133X
+  
+  [33X[0;0Y[22X[v_1,v_2,v_3] = [v_1+v_2-v_3,2v_2-v_3,v_2] + [v_2+v_3,v_1+v_2-v_3,v_3].[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)a");;[127X[104X
+    [4X[25Xgap>[125X [27XV:=DualComplex(K);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(V,1);;[127X[104X
+    [4X[25Xgap>[125X [27XR!.dimension(0);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XR!.dimension(1);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XPrintZGword(R!.boundary(1,1),R!.elts);[127X[104X
+    [4X[28X( - [ [ -1, -1, -1 ], [ 0, -1, 0 ], [ 0, 2, 1 ] ] - [128X[104X
+    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] )E1[128X[104X
+    [4X[25Xgap>[125X [27XPrintZGword(R!.boundary(1,2),R!.elts);[127X[104X
+    [4X[28X( - [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] + [128X[104X
+    [4X[28X[ [ 1, 1, 1 ], [ 1, 0, 0 ], [ -2, 0, -1 ] ] )E1[128X[104X
+    [4X[25Xgap>[125X [27XPrintZGword(R!.boundary(1,3),R!.elts);[127X[104X
+    [4X[28X( + [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ -2, 0, -1 ] ] - [128X[104X
+    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] )E1[128X[104X
+    [4X[25Xgap>[125X [27XA:=R!.elts[4];;[127X[104X
+    [4X[25Xgap>[125X [27XPrintZGword(R!.boundary(1,4),A^-1*R!.elts);[127X[104X
+    [4X[28X( + [ [ 0, -1, 0 ], [ 2, 2, 1 ], [ -1, 0, 0 ] ] + [128X[104X
+    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] - [128X[104X
+    [4X[28X[ [ 2, 0, 1 ], [ 0, 1, 0 ], [ -1, 0, 0 ] ] - [128X[104X
+    [4X[28X[ [ 1, 1, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ] )E1[128X[104X
+    [4X[25Xgap>[125X [27XA:=R!.elts[73];;[127X[104X
+    [4X[25Xgap>[125X [27XPrintZGword(R!.boundary(1,5),A^-1*R!.elts);[127X[104X
+    [4X[28X( - [ [ 1, 0, 0 ], [ 1, 2, 1 ], [ -1, -1, 0 ] ] + [128X[104X
+    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] - [128X[104X
+    [4X[28X[ [ 0, 1, 0 ], [ 1, 1, 1 ], [ 1, -1, 0 ] ] )E1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   
   
   [1X7.4-4 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
