@@ -51,7 +51,6 @@ jobs:
       contents: read
     env:
       JULIA_NUM_THREADS: '1'
-      JULIA_NUM_PRECOMPILE_TASKS: '1'
       OPENBLAS_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v7
@@ -71,6 +70,10 @@ jobs:
         run: >-
           julia --startup-file=no --project=arithmetic-voronoi
           -e 'using Pkg; Pkg.instantiate(;allow_autoprecomp=false)'
+      - name: Precompile Julia provider
+        run: >-
+          julia --startup-file=no --project=arithmetic-voronoi
+          -e 'using Pkg; Pkg.precompile("ArithmeticVoronoi"; strict=true, timing=true)'
       - name: Construct a fresh complex and check integral H1 and H2
         run: >-
           julia --startup-file=no --project=arithmetic-voronoi

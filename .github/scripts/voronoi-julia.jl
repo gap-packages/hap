@@ -1,8 +1,13 @@
 # Run with the ArithmeticVoronoi environment pinned in ../workflows/CI.yml:
 # julia --startup-file=no --project=/path/to/arithmetic_voronoi \
 #     .github/scripts/voronoi-julia.jl
+println("Loading the Julia provider and its dependencies...")
+flush(stdout)
+package_load_started = time_ns()
 using ArithmeticVoronoi, Oscar, Test
 import Oscar: GAP
+println("Package loading: ", round((time_ns() - package_load_started) / 1e9; digits=2), " s")
+flush(stdout)
 
 # Test this HAP checkout, including its startup registration. Check before
 # enabling the provider so the adapter's compatibility wrapper cannot mask
