@@ -567,10 +567,9 @@ ReadPackageHap("lib/Manifolds/dodecahedronCwComplex.gi");
 ReadPackageHap("lib/Manifolds/manifoldType.gi");
 ReadPackageHap("lib/Manifolds/star.gi");
 
-################## KELVIN & KHALED & MOE##################################
+################## KELVIN & KHALED ##################################
 ReadPackageHap("lib/Kelvin/init.g");
 ReadPackageHap("lib/Khaled/init.g");
-ReadPackageHap("lib/Tabei/initTabei.gi");
 
 
 

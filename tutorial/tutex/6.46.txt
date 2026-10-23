@@ -1,0 +1,28 @@
+
+gap> K:=ContractibleGcomplex("SL(3,Z)a");;
+gap> V:=DualComplex(K);;
+gap> R:=FreeGResolution(V,1);;
+gap> R!.dimension(0);
+1
+gap> R!.dimension(1);
+5
+gap> PrintZGword(R!.boundary(1,1),R!.elts);
+( - [ [ -1, -1, -1 ], [ 0, -1, 0 ], [ 0, 2, 1 ] ] - 
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] )E1
+gap> PrintZGword(R!.boundary(1,2),R!.elts);
+( - [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] + 
+[ [ 1, 1, 1 ], [ 1, 0, 0 ], [ -2, 0, -1 ] ] )E1
+gap> PrintZGword(R!.boundary(1,3),R!.elts);
+( + [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ -2, 0, -1 ] ] - 
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] )E1
+gap> A:=R!.elts[4];;
+gap> PrintZGword(R!.boundary(1,4),A^-1*R!.elts);
+( + [ [ 0, -1, 0 ], [ 2, 2, 1 ], [ -1, 0, 0 ] ] + 
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] - 
+[ [ 2, 0, 1 ], [ 0, 1, 0 ], [ -1, 0, 0 ] ] - 
+[ [ 1, 1, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ] )E1
+gap> A:=R!.elts[73];;
+gap> PrintZGword(R!.boundary(1,5),A^-1*R!.elts);
+( - [ [ 1, 0, 0 ], [ 1, 2, 1 ], [ -1, -1, 0 ] ] + 
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] - 
+[ [ 0, 1, 0 ], [ 1, 1, 1 ], [ 1, -1, 0 ] ] )E1

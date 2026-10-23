@@ -154,6 +154,7 @@ The following example computes
 
 <P/>The following example computes
 <P/><M>H_6(SL_2({\cal O}),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_{12}</M>
+<P/><M>H_6(PSL_2({\cal O}),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_{6}</M>
 <P/>for  <M>{\cal O}</M> the ring of integers of the
 number field  <M>\mathbb Q(\sqrt{-2})</M>.
 
@@ -232,7 +233,7 @@ number field  <M>\mathbb Q(\sqrt{-2})</M>.
 	For <M>\nu</M> the virtual cohomological dimension of <M>G=SL_n(\mathbb Z)</M> there is an isomorphism
 	<P/><M>H^{\nu-k}(SL_n(\mathbb Z),\mathbb Z) \cong H_k(SL_n(\mathbb Z),St_n \otimes_{\mathbb Z} \mathbb Z)</M>
 	<P/>
-		where <M>St_n</M> is the Steinberg module for <M>G</M>. This means that computations on the cohomology of <M>G</M> can be performed using a resolution <M>V_\ast</M> of the <M>\mathbb ZG</M>-module <M>St_n</M>. 
+		where <M>St_n=St_n(\mathbb Q)</M> is the Steinberg module for <M>G</M>. This means that computations on the cohomology of <M>G</M> can be performed using a resolution <M>V_\ast</M> of the <M>\mathbb ZG</M>-module <M>St_n</M>. 
 
 
 		<P/>
@@ -324,6 +325,47 @@ in order to compute <M>H^\ast(G,\mathbb Z/q\mathbb Z)</M>.
 					<Example>
         <#Include SYSTEM "tutex/6.41.txt">
 </Example>
+
+	</Subsection>
+
+		<Subsection><Heading>Generators and relators for the Steinberg module <M>St_3(\mathbb Q)</M></Heading>
+
+				The following rather inelegant  variant of the <M>n=3</M> case of Theorem B in <Cite Key="churchputnam"/> is proved using the commands below.
+
+
+				<P/><B>Theorem.</B> <E>The Steinberg module</E> <M>St_3(\mathbb Q)</M> <E>is the abelian group with generators</E> <M>[v_1,v_2,v_3]</M><E>, one for each ordered basis</E> <M>\{v_1,v_2,v_3\}</M><E> of</E> <M>\mathbb Z^3</M> <E>of determinant</E> <M>+1</M><E>, subject to the following 
+					five families of relations:</E>
+			<P/> <M>[v_1,v_2,v_3]=-[-v_1,-v_1-v_2+2v_3,-v_1+v_3],</M>
+			<P/> <M>[v_1,v_2,v_3]=[v_1+v_2+v_3,v_2,v_1-v_3],</M>
+			<P/> <M>[v_1,v_2,v_3]=[v_1-2v_3,-v_2,-v_3],</M>
+			<P/> <M>[v_1,v_2,v_3]=-[2v_2-v_3,-v_1+2v_2,v_3]+[2v_1-v_3,v_2,v_1] + [v_1+v_2,v_1+v_3,v_3],</M>
+			<P/> <M>[v_1,v_2,v_3] = [v_1+v_2-v_3,2v_2-v_3,v_2] + [v_2+v_3,v_1+v_2-v_3,v_3].</M>
+		
+
+
+			<Example>
+        <#Include SYSTEM "tutex/6.46.txt">
+</Example>
+				
+</Subsection>
+
+	<Subsection><Heading><M>S</M>-arithmetic groups</Heading>
+
+			The following commands compute the integral homology of <M>SL_2(\mathbb Z[1/58])</M> in degrees up to <M>7</M>. This is joint work with <B>Bui Anh Tuan</B>.
+
+<Example>
+        <#Include SYSTEM "tutex/6.45.txt">
+</Example>
+	This completely determines the additive homology of <M>SL_2(\mathbb Z[1/58])</M> because, for any product <M>m=p_1p_2\ldots p_k</M> of <M>k</M> distinct primes, the cohomology (and hence homology) of <M>G=SL_2(\mathbb Z[1/m])</M>
+		is periodic of period <M>2</M> in degrees <M>>k+1</M>. To see this recall the isomorphism <M>G=SL_2(\mathbb Z[1/m]) \cong SL_2(\mathbb Z[1/m']) \ast_{\Gamma_0(p_k)} SL_2(\mathbb Z[1/m'])</M> for <M>m'=m/p_k</M>.
+			By Bass-Serre theory (or by <Cite Key="kmoss"/>) there exists a cellular space <M>X</M> of dimension <M>k+1</M> on which the group 
+			<M>G</M> acts with finite stabilizer groups. The group <M>G</M> also acts (non-discretely) on <M>Y=\mathbb R^2\setminus \{0\} \simeq S^1 </M>.
+				The finite subgroups of <M>G</M> are cyclic and act fixed-point freely on <M>Y</M>. The group <M>G</M> acts freely on <M>X\times Y</M>. Since <M>X</M> is contractible the Borel construction <M>Y_{hG} = (X\times Y)/G</M> fibres over the classifying space <M>BG</M> with fibre <M>S^1</M>.
+					The action is orientation preserving.
+					The oriented <M>S^1</M> fibre bundle <M>Y_{hG} \longrightarrow B</M> with euler class <M>e\in H^2(BG,\mathbb Z)</M>
+						gives rise to the exact Gysin sequence
+				<P/><M> \cdots \rightarrow H^i(BG,\mathbb Z) \stackrel{\cup e}{\longrightarrow} H^{i+2}(BG,\mathbb Z) \rightarrow H^{i+2}(Y_{hG},\mathbb Z) \rightarrow H^{i+1}(BG,\mathbb Z) \rightarrow \cdots</M> .
+				<P/> Since <M>Y_{hG}</M> has trivial cohomology in degrees <M>>k+1</M> we obtain the periodicity of period <M>2</M>.
 
 	</Subsection>
 </Section>
