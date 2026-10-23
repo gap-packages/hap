@@ -109,6 +109,10 @@ res:=ResolutionAbelianBianchiSubgroup(G,n);
 return res;
 fi;
 
+if IsComponentObjectRep(One(G)) then 
+return ResolutionFiniteGroup(G,n);
+fi;
+
 if Size(G)<32 and not IsAbelian(G) then
 return ResolutionFiniteGroup(G,n);
 fi;
