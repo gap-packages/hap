@@ -677,7 +677,7 @@ No contracting homotopy available.
 
 </li>
 </ul>
-<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">\(H^4(GL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17} \oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 \)</span> and <span class="SimpleMath">\(H_4(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})),\mathbb Z) = (\mathbb Z_2)^7 \oplus \mathbb Z_{60}\)</span> and <span class="SimpleMath">\(H_n(GL_3({\mathcal O}_{-5}),\mathbb Z)\)</span> for <span class="SimpleMath">\(n=1,2\)</span>.</p>
+<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">\(H^4(GL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17} \oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 \)</span> and <span class="SimpleMath">\(H_4(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})),\mathbb Z) = (\mathbb Z_2)^7 \oplus \mathbb Z_{60}\)</span> and <span class="SimpleMath">\(H_n(GL_3({\mathcal O}_{-5}),\mathbb Z)\)</span> for <span class="SimpleMath">\(n=1,2\)</span>. Also, a three generator presentation for <span class="SimpleMath">\(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})\)</span> is computed.</p>
 
 
 <div class="example"><pre>
@@ -692,6 +692,15 @@ No contracting homotopy available.
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(V,5);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),4);</span>
 [ 2, 2, 2, 2, 2, 2, 2, 60 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=P.freeGroup/P.relators;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=SimplifiedFpGroup(P);</span>
+&lt;fp group on the generators [ r, t, x ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(P);</span>
+[ r^2, (t*r)^2, t^5, (t^-1*x^-1*r*x)^2, x*r*t^-1*x^-2*r*x*t, (r*t^-1*x^-1)^2*r*x*r*x, t*x^-1*r*t^2*x^-2*r*x^2*t^-2*x, t*x^-1*t^-2*r*x^-1*t^2*x*t^-2*r*x*t, 
+  r*t^-1*x^-1*t*x*t^-1*r*x^-1*r*x^2*r*x^-1*t^2, x^-2*t^-1*x*r*t^2*r*x^-1*(t^-1*x*r)^2*t^-2, (t^-1*r*x^-1*t^-1*r*x*t^-1)^3, 
+  (x^-1*r)^2*x^2*r*t^-2*x*t^-1*r*x*(t*r*x^-1*r)^2*x^-1*t^-1*r*x*t*r*x^-1*r*x*r*t*x*r*t^-3*x^-1*r ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) </span>

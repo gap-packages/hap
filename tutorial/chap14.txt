@@ -744,7 +744,8 @@
   following commands do this to calculate the homology groups [22XH^4(GL_2(mathcal
   O_-5  ),P_{mathcal  O_-5}(8))  =  (  Z_2)^17  ⊕  (  Z_4)^2  ⊕  (  Z_8)^2[122X and
   [22XH_4(GL_2(mathcal  O(  Q(sqrt5)),  Z)  = ( Z_2)^7 ⊕ Z_60[122X and [22XH_n(GL_3(mathcal
-  O_-5), Z)[122X for [22Xn=1,2[122X.[133X
+  O_-5),  Z)[122X  for [22Xn=1,2[122X. Also, a three generator presentation for [22XGL_2(mathcal
+  O( Q(sqrt5)[122X is computed.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XV:=VoronoiComplexSL(2,-5);; #makes a call to Magma[127X[104X
@@ -758,6 +759,15 @@
     [4X[25Xgap>[125X [27XR:=FreeGResolution(V,5);;[127X[104X
     [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),4);[127X[104X
     [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 60 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP:=PresentationOfResolution(R);;[127X[104X
+    [4X[25Xgap>[125X [27XP:=P.freeGroup/P.relators;;[127X[104X
+    [4X[25Xgap>[125X [27XP:=SimplifiedFpGroup(P);[127X[104X
+    [4X[28X<fp group on the generators [ r, t, x ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup(P);[127X[104X
+    [4X[28X[ r^2, (t*r)^2, t^5, (t^-1*x^-1*r*x)^2, x*r*t^-1*x^-2*r*x*t, (r*t^-1*x^-1)^2*r*x*r*x, t*x^-1*r*t^2*x^-2*r*x^2*t^-2*x, t*x^-1*t^-2*r*x^-1*t^2*x*t^-2*r*x*t, [128X[104X
+    [4X[28X  r*t^-1*x^-1*t*x*t^-1*r*x^-1*r*x^2*r*x^-1*t^2, x^-2*t^-1*x*r*t^2*r*x^-1*(t^-1*x*r)^2*t^-2, (t^-1*r*x^-1*t^-1*r*x*t^-1)^3, [128X[104X
+    [4X[28X  (x^-1*r)^2*x^2*r*t^-2*x*t^-1*r*x*(t*r*x^-1*r)^2*x^-1*t^-1*r*x*t*r*x^-1*r*x*r*t*x*r*t^-3*x^-1*r ][128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27X#V:=VoronoiComplexGL(3,-5);; #makes a call to Magma (requires much time)[127X[104X
     [4X[25Xgap>[125X [27XV:=ContractibleGcomplex("SL(3,O-5)");; #loads stored data (is faster) [127X[104X
