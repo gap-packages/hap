@@ -73,6 +73,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X85F5853D819AE0E1">14.12 <span class="Heading">Calling Magma's Voronoi algorithm directly</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X78A6A3B9861FDAC1">14.13 <span class="Heading">Optional Voronoi backends</span></a>
+</span>
+</div>
 </div>
 
 <h3>14 <span class="Heading">Fundamental domains for Bianchi groups</span></h3>
@@ -699,6 +702,30 @@ No contracting homotopy available.
 [ 2, 2, 2, 4 ]
 
 </pre></div>
+
+<p><a id="X78A6A3B9861FDAC1" name="X78A6A3B9861FDAC1"></a></p>
+
+<h4>14.13 <span class="Heading">Optional Voronoi backends</span></h4>
+
+<p>An external package can register a provider using <code class="code">RegisterVoronoiBackend(name, provider)</code>, where <code class="code">provider</code> is a function of one argument. The name must be a nonempty string other than <code class="code">"magma"</code>. Registering an existing name replaces its provider.</p>
+
+<p>The general entry point is <code class="code">VoronoiComplex(request : backend := name)</code>. It requires a record and an explicitly selected registered provider. HAP passes the record unchanged; the provider interprets and validates its contents. The interface imposes no particular field degree, rank or group family. For example, a provider may accept the following description:</p>
+
+
+<div class="example"><pre>
+request := rec(
+    group := "GL", rank := 2,
+    field := rec(kind := "quadratic", discriminant := -7),
+    order := rec(kind := "maximal"),
+    lattice := rec(kind := "free"));
+K := VoronoiComplex(request : backend := "julia");
+</pre></div>
+
+<p>Field polynomials, order bases, lattice ideals or subgroup data can be included when a provider supports them. This does not assert that any particular provider implements those cases. A provider returns a HAP non-free resolution or <code class="code">fail</code> for an unsupported request; it may also raise an error explaining the limitation. Failure never falls back to Magma.</p>
+
+<p>The existing functions <code class="code">VoronoiComplexGL(n,d)</code> and <code class="code">VoronoiComplexSL(n,d)</code> also accept the option <code class="code">backend</code>. When selecting a registered provider, these construct a record with <code class="code">group</code> equal to <code class="code">"GL"</code> or <code class="code">"SL"</code>, <code class="code">rank := n</code>, <code class="code">field := rec(kind := "quadratic", radicand := d)</code>, <code class="code">order := rec(kind := "maximal")</code> and <code class="code">lattice := rec(kind := "free")</code>. Here <code class="code">d</code> is a squarefree radicand, not a field discriminant. Without the backend option, or with <code class="code">backend := "magma"</code>, these two convenience functions retain the Magma implementation described above.</p>
+
+<p>A Julia package running with GAP.jl can register an in-process callback under the name <code class="code">"julia"</code>. HAP itself does not install or load Julia. An unregistered backend name is an error. Providers must supply complete stabilizers, the orientation action and equivariant boundaries; perfect forms or a group presentation alone do not suffice for higher homology. Standard HAP operations such as <code class="code">FreeGResolution</code> and <code class="code">TensorWithIntegers</code> then apply to the returned object. A contracting homotopy is a separate capability and must not be inferred merely from the existence of a resolution.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15_mj.html">[Next Chapter]</a>&nbsp;  </div>
