@@ -388,11 +388,15 @@ Chain complex of length 5 in characteristic 0 .
 
 <p>The following example computes</p>
 
-<p><span class="SimpleMath">H_6(SL_2(cal O), Z) = Z_2 ⊕ Z_12</span></p>
+<p><span class="SimpleMath">H_6(SL_2(cal O_-2}), Z) = Z_2 ⊕ Z_12</span></p>
 
-<p><span class="SimpleMath">H_6(PSL_2(cal O), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_6</span></p>
+<p><span class="SimpleMath">H_6(PSL_2(cal O_-2}), Z) = Z_2 ⊕ Z_2 ⊕ Z_2 ⊕ Z_6</span></p>
 
-<p>for <span class="SimpleMath">cal O</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt-2)</span>.</p>
+<p><span class="SimpleMath">H_6(GL_2(cal O_2}), Z) = ( Z_2)^18</span></p>
+
+<p><span class="SimpleMath">H_3(GL_3(cal O_-2}), Z) = Z_2⊕ Z_2 ⊕ Z_6 ⊕ Z_12 ⊕ Z ⊕ Z</span></p>
+
+<p>for <span class="SimpleMath">cal O_-2}</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt-2)</span> and <span class="SimpleMath">cal O_2}</span> the ring of integers of the number field <span class="SimpleMath">Q(sqrt2)</span>. (See <a href="chap14.html#X78476F127B73BBD1"><span class="RefLink">14.7</span></a> for more on imaginary quadratic number fields and <a href="chap14.html#X82F46C8B782420AB"><span class="RefLink">14.11</span></a> for totally real quadratic number fields.) The final commands realize <span class="SimpleMath">GL_3(mathcal O_-2)</span> as a finitely presented group on four generators with 32 relators.</p>
 
 
 <div class="example"><pre>
@@ -406,6 +410,23 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PR:=FreeGResolution(PC,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(PR),6);</span>
 [ 2, 2, 2, 6 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractibleGcomplex("GL(2,O2)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),6);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractibleGcomplex("GL(3,O-2)");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),3);</span>
+[ 2, 2, 6, 12, 24, 0, 0 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P:=PresentationOfResolution(R);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GL3:=P.freeGroup/P.relators;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GL3:=SimplifiedFpGroup(GL3);</span>
+&lt;fp group on the generators [ q, r, t, z ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(RelatorsOfFpGroup(GL3));</span>
+32
 
 </pre></div>
 
@@ -692,13 +713,13 @@ Homology(C,0);
 
 <p><span class="SimpleMath">[v_1,v_2,v_3]=-[-v_1,-v_1-v_2+2v_3,-v_1+v_3],</span></p>
 
-<p><span class="SimpleMath">[v_1,v_2,v_3]=[v_1+v_2+v_3,v_2,v_1-v_3],</span></p>
+<p><span class="SimpleMath">[v_1,v_2,v_3]=[v_1+v_2-2v_3,v_1,v_1-v_3],</span></p>
 
 <p><span class="SimpleMath">[v_1,v_2,v_3]=[v_1-2v_3,-v_2,-v_3],</span></p>
 
-<p><span class="SimpleMath">[v_1,v_2,v_3]=-[2v_2-v_3,-v_1+2v_2,v_3]+[2v_1-v_3,v_2,v_1] + [v_1+v_2,v_1+v_3,v_3],</span></p>
+<p><span class="SimpleMath">[v_1,v_2,v_3]=-[2v_2-v_3,-v_1+2v_2,v_3]+[2v_1-v_3,v_2,v_1] + [v_1+v_2,v_1+v_3,v_1],</span></p>
 
-<p><span class="SimpleMath">[v_1,v_2,v_3] = [v_1+v_2-v_3,2v_2-v_3,v_2] + [v_2+v_3,v_1+v_2-v_3,v_3].</span></p>
+<p><span class="SimpleMath">[v_1,v_2,v_3] = [v_1+v_2-v_3,2v_2-v_3,v_2] + [v_2+v_3,v_1+v_2-v_3,v_2].</span></p>
 
 
 <div class="example"><pre>
