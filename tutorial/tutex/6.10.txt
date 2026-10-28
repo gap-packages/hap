@@ -8,3 +8,20 @@ gap> PC:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;
 gap> PR:=FreeGResolution(PC,7);;
 gap> Homology(TensorWithIntegers(PR),6);
 [ 2, 2, 2, 6 ]
+
+gap> C:=ContractibleGcomplex("GL(2,O2)");;
+gap> R:=FreeGResolution(C,7);;
+gap> Homology(TensorWithIntegers(R),6);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+
+gap> C:=ContractibleGcomplex("GL(3,O-2)");;
+gap> R:=FreeGResolution(C,4);;
+gap> Homology(TensorWithIntegers(R),3);
+[ 2, 2, 6, 12, 24, 0, 0 ]
+
+gap> P:=PresentationOfResolution(R);;
+gap> GL3:=P.freeGroup/P.relators;;
+gap> GL3:=SimplifiedFpGroup(GL3);
+&lt;fp group on the generators [ q, r, t, z ]>
+gap> Length(RelatorsOfFpGroup(GL3));
+32

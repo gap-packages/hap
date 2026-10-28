@@ -26,7 +26,7 @@ Rgroup:=PK!.group;
 Rgroup!.bianchiInteger:=d;
 PK!.group:=Rgroup;
 
-R:=FreeGResolution(PK,n);
+R:=FreeGResolution_alt(PK,n);
 Rgroup:=R!.group;
 Rgroup!.bianchiInteger:=d;
 R!.group:=Rgroup;

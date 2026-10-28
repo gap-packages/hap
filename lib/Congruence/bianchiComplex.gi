@@ -704,19 +704,22 @@ if IsRat(M[2][2]) then M[2][2]:=QuadraticNumber(M[2][2],0,d); fi;
 od;
 
 G:=Group(gens);
-#I:=QuadraticIdeal(OQ,One(OQ));;
-##G:=HAP_CongruenceSubgroupGamma0(I);;
+#I:=QuadraticIdeal(OQ,One(OQ));;       ##
+#G:=HAP_CongruenceSubgroupGamma0(I);;  ##uncommented these two lines, Oct 2026
 G!.tree:=true;
+SetQuadraticArithmetic(G,true);
 SetGeneratorsOfGroup(G,gens);
 SetSize(G,infinity);
 SetOrder(G,infinity);
 
+if false then
 H:=RingOfIntegers(QuadraticNumberField(d));;
 H:=QuadraticIdeal(H,1);;
 H:=HAP_CongruenceSubgroupGamma0(H);;
 H!.tree:=true;;
 H:=GroupHomomorphismByFunction(G,H,QuadraticNumberToCyclotomic);
-
+fi;
+H:=fail;
 
 R:= Objectify(HapNonFreeResolution,
             rec(
@@ -736,6 +739,15 @@ R:= Objectify(HapNonFreeResolution,
              ["characteristic",0],
              ["type","resolution"],
              ["reduced",false]]  ));
+
+I:=QuadraticIdeal(OQ,One(OQ));;       ##
+G:=HAP_CongruenceSubgroupGamma0Ideal(I,R);;  ##uncommented these two lines, Oct 2026
+G!.tree:=true;
+SetQuadraticArithmetic(G,true);
+SetGeneratorsOfGroup(G,gens);
+SetSize(G,infinity);
+SetOrder(G,infinity);
+R!.group:=G;
 
 RecalculateIncidenceNumbers_NonFreeRes(R);
 return R;

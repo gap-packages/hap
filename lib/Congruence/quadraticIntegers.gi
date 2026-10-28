@@ -122,6 +122,7 @@ N:=HermiteNormalFormIntegerMat(A); #rows are new basis of I
 Setter(NormOfIdeal)(I,N[1][1]*N[2][2]);
 #if R!.bianchiInteger mod 4 = 1 then D:=2*(D-(1/2)); fi;
 I!.hermiteBasis:=[N,D];
+I!.hermiteBasisHQA:=[N,D]*One(HAPSqrt(R!.bianchiInteger));
 SetName(I,Concatenation("ideal of norm ", String(Norm(I))," in ",Name(R)) );
 return I;
 end);
@@ -198,8 +199,10 @@ InstallGlobalFunction(HAP_InverseOpFunction,
 function(I,T,x)
 local y;
 for y in T do
-if x*y-1 in I then return y; fi;
+#if x*y-1 in I then return y; fi;
+if (x*y-1) mod I =0 then return y; fi;
 od;
+
 return fail;
 end);
 ##########################################################
@@ -431,7 +434,7 @@ local X,R,S,d,gens,G;
 X:=arg[1];
 
 if IsInt(X) then
-   R:=ResolutionSL2QuadraticIntegers(X,2);
+     R:=ResolutionSL2QuadraticIntegers(X,2);
    gens:=Generators(R,true);
    G:=Group(gens);
    SetName(G,Concatenation("SL(2,O(Q(",String(X),"))"));
@@ -444,7 +447,7 @@ if IsRing(X) then
   if not IsBound(S!.bianchiInteger) then return fail; 
   else d:=S!.bianchiInteger; fi;
 
-   R:=ResolutionSL2QuadraticIntegers(d,2);
+     R:=ResolutionSL2QuadraticIntegers(d,2);
    gens:=Generators(R,true);
    G:=Group(gens*One(S));
    SetName(G,Concatenation("SL(2,", Name(X),")"));

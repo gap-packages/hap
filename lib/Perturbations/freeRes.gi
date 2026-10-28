@@ -2,7 +2,7 @@
 
 
 ################################################################
-InstallGlobalFunction(FreeGResolution,
+InstallGlobalFunction(FreeGResolution_alt,
 function(arg)
 local 
 	P,N,prime,
@@ -139,8 +139,8 @@ return res;
 fi;
 fi;
 
-#res:=ResolutionFiniteGroup(Q,n);
-res:=ResolutionGenericGroup(Q,n);
+res:=ResolutionFiniteGroup(Q,n);
+#res:=ResolutionGenericGroup(Q,n);
 res!.group:=G;
 res!.elts:=List(res!.elts,x->PreImagesRepresentative(iso,x));
 return res;
@@ -272,7 +272,7 @@ r!.PosG:=PosG;
 od;
 od;
 for L in StabReslsTmp do
-Add(StabResls,List(L,	r->ExtendScalars(r,G,EltsG)));
+Add(StabResls,List(L,	r->ExtendScalars_alt(r,G,EltsG)));
 i:=Maximum(0,AbsInt(i-1));
 od;
 StabReslsTmp:=0;
@@ -724,7 +724,7 @@ end);
 
 ################################################################
 ################################################################
-InstallGlobalFunction(ExtendScalars,
+InstallGlobalFunction(ExtendScalars_alt,
 function(arg)
 # Here H=S!.group is a subgroup of G, and EltsG is a list of the 
 # elements of G.

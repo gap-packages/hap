@@ -72,18 +72,6 @@ end);
 
 ####################################################################
 #####################################################################
-InstallOtherMethod( MultiplicationTable,
-    "for small group of 2x2 matrices of quadratic numbers",
-    [IsHap2x2matrixGroup],
-100000000,
-    function( G )
-     return HAP_MultiplicationTableOfGroup(G);
-end);
-#####################################################################
-#####################################################################
-
-####################################################################
-#####################################################################
 InstallOtherMethod( AsSSortedList,
     "for small group of 2x2 matrices of quadratic numbers",
     [IsHap2x2matrixGroup],
@@ -257,6 +245,37 @@ InstallOtherMethod( \+,
 #####################################################################
 InstallOtherMethod( \+,
     "for quadratic number",
+    [IsCyclotomic, IsHapQuadraticNumber],
+    function( x, y )
+    local Q;
+    Q:=Quadratic(x); 
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    return QuadraticNumber( Q.a/Q.d + y!.rational, Q.b/Q.d+y!.irrational, y!.bianchiInteger );
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \+,
+    "for quadratic number",
+    [IsHapQuadraticNumber, IsCyclotomic],
+    function( y, x )
+    local Q;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    return QuadraticNumber( Q.a/Q.d + y!.rational, Q.b/Q.d+y!.irrational, y!.bianchiInteger );
+    end );
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \+,
+    "for quadratic number",
     [IsHapQuadraticNumber, IsRat],
     function( x, y )
     return QuadraticNumber( y + x!.rational, x!.irrational, x!.bianchiInteger );
@@ -282,6 +301,36 @@ InstallOtherMethod( \-,
     [IsHapQuadraticNumber, IsRat],
     function( x, y )
     return QuadraticNumber( -y + x!.rational, x!.irrational, x!.bianchiInteger );
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \-,
+    "for quadratic number",
+    [IsCyclotomic, IsHapQuadraticNumber],
+    function( x, y )
+    local Q;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    return QuadraticNumber( Q.a/Q.d - y!.rational, Q.b/Q.d-y!.irrational, y!.bianchiInteger );
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \-,
+    "for quadratic number",
+    [IsHapQuadraticNumber,IsCyclotomic],
+    function( y, x )
+    local Q;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    return QuadraticNumber( -Q.a/Q.d + y!.rational, -Q.b/Q.d+y!.irrational, y!.bianchiInteger );
     end );
 #####################################################################
 #####################################################################
@@ -355,6 +404,39 @@ InstallOtherMethod( \*,
 #####################################################################
 InstallOtherMethod( \*,
     "for quadratic number",
+    [IsCyclotomic,IsHapQuadraticNumber],
+    function( x, y )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx*y;
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \*,
+    "for quadratic number",
+    [IsHapQuadraticNumber,IsCyclotomic],
+    function( y, x )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx*y;
+    end );
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \*,
+    "for quadratic number",
     [IsHapQuadraticNumber, IsHapQuadraticNumber],
     function( x, y )
     local p;
@@ -407,6 +489,38 @@ InstallOtherMethod( \/,
     D:=y!.rational^2 -BI*y!.irrational^2;
     return QuadraticNumber( (x*y!.rational )/D,
      - (x*y!.irrational)/D     , y!.bianchiInteger );
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \/,
+    "for quadratic number",
+    [IsCyclotomic,IsHapQuadraticNumber],
+    function( x, y )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx/y;
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \/,
+    "for quadratic number",
+    [IsHapQuadraticNumber,IsCyclotomic],
+    function( y, x )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return y/xx;
     end );
 #####################################################################
 #####################################################################
@@ -476,6 +590,39 @@ InstallOtherMethod( \<,
 
 #####################################################################
 #####################################################################
+InstallOtherMethod( \<,
+    "for quadratic number",
+    [IsCyclotomic,IsHapQuadraticNumber],
+    function( x, y )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx<y;
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \<,
+    "for quadratic number",
+    [IsHapQuadraticNumber,IsCyclotomic],
+    function( y, x )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return y<xx;
+    end );
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#####################################################################
 InstallOtherMethod( \=,
     "for quadratic number",
     [IsHapQuadraticNumber, IsHapQuadraticNumber],
@@ -513,6 +660,40 @@ InstallOtherMethod( \=,
 
 #####################################################################
 #####################################################################
+InstallOtherMethod( \=,
+    "for quadratic number",
+    [IsCyclotomic,IsHapQuadraticNumber],
+    function( x, y )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx=y;
+    end );
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod( \=,
+    "for quadratic number",
+    [IsHapQuadraticNumber,IsCyclotomic],
+    function( y, x )
+    local Q,xx;
+    Q:=Quadratic(x);
+    if Q=fail then return Q; fi;
+    if not Q.root=y!.bianchiInteger then return fail; fi;
+    xx:=QuadraticNumber( Q.a/Q.d, Q.b/Q.d, y!.bianchiInteger );
+    return xx=y;
+    end );
+#####################################################################
+#####################################################################
+
+
+
+#####################################################################
+#####################################################################
 InstallOtherMethod( One,
     "for quadratic number",
     [IsHapQuadraticNumber],
@@ -539,7 +720,8 @@ InstallOtherMethod( Zero,
 
 #####################################################################
 #####################################################################
-HAPQuadratic:=function(x)
+InstallGlobalFunction(HAPQuadratic,
+function(x)
 local Q;
 
 Q:=rec();
@@ -554,35 +736,127 @@ Q.d:=1;
 fi;
 
 return Q;
-end;
+end);
 #####################################################################
 #####################################################################
 
 #####################################################################
 #####################################################################
-HAPNorm:=function(OQ,x)
+InstallGlobalFunction(HAPNorm,
+function(OQ,x)
 if IsRat(x) then return x^2; fi;
 if not OQ!.bianchiInteger=x!.bianchiInteger then return fail; fi;
 return x!.rational^2+(-x!.bianchiInteger)*x!.irrational^2;
-end;
+end);
 #####################################################################
 #####################################################################
 
 #####################################################################
 #####################################################################
-HAPSqrt:=function(n)
+InstallGlobalFunction(HAPSqrt,
+function(n)
 if IsRat(Sqrt(n)) then return Sqrt(n); fi;
 return QuadraticNumber(0,1,n);
-end;
+end);
 #####################################################################
 #####################################################################
 
 #####################################################################
 #####################################################################
-QuadraticToCyclotomic:=function(a)
+InstallGlobalFunction(QuadraticToCyclotomic,
+function(a)
 if IsRat(a) then return a; fi;
 return a!.rational+a!.irrational*Sqrt(a!.bianchiInteger);
-end;
+end);
 #####################################################################
 #####################################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(MOD,
+"for a cyclotomic  and an ideal in a ring of quadratic integers",
+[IsHapQuadraticNumber,IsIdealOfQuadraticIntegers and IsRing],
+function(x,I)
+local g, N, D, p;
+
+N:=I!.hermiteBasis[1];
+D:=I!.hermiteBasisHQA[2];
+
+#p:=PartsOfQuadraticInteger(AssociatedRing(I),x);
+#Should really return an error when the discriminants don't match.
+p:=[x!.rational,x!.irrational];
+p:=p-Hap_int(p[1]/N[1][1])*N[1];
+p:=p-Hap_int(p[2]/N[2][2])*N[2];
+
+return p[1]+p[2]*D;
+
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(IN,
+"for ring of quadratic integers",
+[IsHapQuadraticNumber,IsRingOfQuadraticIntegers and IsRing],
+function(x,R)
+local p;
+
+##Should really check the discriminant here!!
+p:=[x!.rational,x!.irrational];
+
+if IsInt(p[1]) and IsInt(p[2]) then return true;
+else return false;
+fi;
+
+
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(IN,
+"for ideal in a ring of quadratic integers",
+[IsHapQuadraticNumber,IsIdealOfQuadraticIntegers and IsRing ],
+function(x,I)
+local g;
+
+if x mod I = 0 then return true; else return false; fi;
+
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(InverseOp,
+"Inverse of an element mod an ideal",
+[IsIdealOfQuadraticIntegers,IsHapQuadraticNumber],  #NEED TO IMPROVE THIS!!!
+function(I,x)
+local T, fn, pos;
+
+if not IsBound(I!.RightTransvesalHQA) then
+T:=RightTransversal(I);
+I!.RightTransversalHQA:=SSortedList(T*One(HAPSqrt(AssociatedRing(I)!.bianchiInteger)));
+fi;
+
+T:=I!.RightTransversalHQA;
+
+
+if not IsBound(I!.inversesHQA) then
+I!.inversesHQA:=[];;
+fi;
+
+pos:=PositionSorted(T, x mod I);
+
+if not IsBound(I!.inversesHQA[pos]) then
+I!.inversesHQA[pos]:=HAP_InverseOpFunction(I,T,x);
+fi;
+
+return I!.inversesHQA[pos];
+end);
+##########################################################
+##########################################################
 

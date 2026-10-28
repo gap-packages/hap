@@ -272,11 +272,13 @@ DeclareGlobalFunction("ResolutionExtension");
 DeclareGlobalFunction("ResolutionFiniteDirectProduct");
 DeclareGlobalFunction("ResolutionSubnormalSeries");
 DeclareGlobalFunction("FreeGResolution");
+DeclareGlobalFunction("FreeGResolution_alt");
 DeclareGlobalFunction("ContractibleGcomplex");
 DeclareGlobalFunction("ContractibleSL2ZComplex");
 DeclareGlobalFunction("ContractibleSL2ZComplex_alt");
 DeclareGlobalFunction("QuotientOfContractibleGcomplex");
 DeclareGlobalFunction("ExtendScalars");
+DeclareGlobalFunction("ExtendScalars_alt");
 DeclareGlobalFunction("InduceScalars");
 DeclareGlobalFunction("TwistedResolution");
 DeclareGlobalFunction("CoxeterComplex");
@@ -926,6 +928,8 @@ DeclareGlobalFunction("SparseMatAddToEntry");
 DeclareGlobalFunction("SparseMatConcatenation");
 
 ##CONGRUENCE########################################################
+DeclareProperty("QuadraticArithmetic",IsMatrixGroup);
+DeclareAttribute("AmbientResolution",IsRing);
 DeclareGlobalFunction("HAP_SL2SubgroupTree");
 DeclareGlobalFunction("HAP_SL2ZSubgroupTree_slow");
 DeclareGlobalFunction("HAP_SL2OSubgroupTree_slow");

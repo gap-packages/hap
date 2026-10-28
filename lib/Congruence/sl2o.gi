@@ -38,23 +38,35 @@ end);
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0Ideal,
-function(I)
-local G, membership, membershipLight, CosetRep, CosetPos,CosetReps,R,g,x,y,a, one, zero;
+function(arg)
+local I, G, membership, membershipLight, CosetRep, CosetPos,CosetReps,
+P,R,g,x,y,a, one, zero;
+
+I:=arg[1];
+if Length(arg)=2 then
+   SetAmbientResolution(I,arg[2]);
+fi;
 
 G:=HAP_GenericSL2OSubgroup();
-one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
-zero:=Zero(one);
 
+if HasQuadraticArithmetic(I) then
+   one:=One(HAPSqrt(AssociatedRing(I)!.bianchiInteger));
+   zero:=Zero(one);
+   SetQuadraticArithmetic(G,true);
+else
+   one:=One(I!.GeneratorsOfTwoSidedIdeal[1]);
+   zero:=Zero(one);
+fi;
 ###################################################
 membership:=function(g)
 if not Determinant(g)=1 then return false; fi;
-if not g[2][1] in I   then return false; fi;
+if not g[2][1] mod I = 0   then return false; fi;
 return true; 
 end;
 ###################################################
 ###################################################
 membershipLight:=function(g)
-if not g[2][1] in I   then return false; fi;
+if not g[2][1] mod I = 0   then return false; fi;
 return true;
 end;
 ###################################################
@@ -63,14 +75,25 @@ G!.membership:=membership;
 G!.membershipLight:=membershipLight;
 G!.level:=I;
 if Norm(I)=1 then
+  if not HasAmbientResolution(I) then
   G!.GeneratorsOfMagmaWithInverses:=one*GeneratorsOfGroup(SL2QuadraticIntegers(AssociatedRing(I)!.bianchiInteger,true));
+  else
+  R:=AmbientResolution(I);
+    if IsHapNonFreeResolution(R) then
+    R:=FreeGResolution(R,2);
+    fi;
+  P:=PresentationOfResolution(R);;
+  P:=R!.elts{P!.gens};
+  G!.GeneratorsOfMagmaWithInverses:=one*P;
+  fi;
+   
 fi;
 G!.name:="CongruenceSubgroupGamma0";
 G!.ugrp:=Group(IdentityMat(2));
 
 #if false then 
 if IsPrime(I) then   #I need to extend this to no primes
-R:=RightTransversal(I);
+R:=RightTransversal(I)*one;
 ###########################################
 CosetPos:=function(g)
 if g[1][1] mod I =zero then return 1+Norm(I); fi;  
@@ -81,11 +104,11 @@ end;
 ###########################################
 CosetRep:=function(g)
 if g[1][1] mod I=zero then return one*[[0,-1],[1,0]]; fi;
-return [one*[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,one]];
+return one*[[1,0],[(g[2][1]*InverseOp(g[1][1])) mod I,one]];
 end;
 ###########################################
 
-CosetReps:=List([1..Norm(I)],i->[one*[1,0],[R[i],one]]);
+CosetReps:=List([1..Norm(I)],i->[one*[1,0],one*[R[i],1]]);
 Add(CosetReps,one*[[0,-1],[1,0]]);
 G!.cosetRep:=CosetRep;
 G!.cosetReps:=CosetReps;
@@ -158,14 +181,27 @@ fi;
 d:=AssociatedRing(G!.level)!.bianchiInteger;
 
 
-R:=ResolutionSL2QuadraticIntegers(d,2,true);;
-#R:=BianchiGcomplex(d);
-#R:=FreeGResolution(R,2);
+if HasQuadraticArithmetic(G) then
+   R:=G!.level;
+   if HasAmbientResolution(R) then
+      R:=AmbientResolution(R);
+   else
+      R:=BianchiGcomplex(d);            ##
+      R:=FreeGResolution(R,2);          ##uncommented these two lines Oct 2026
+   fi;
+else
+   R:=ResolutionSL2QuadraticIntegers(d,2,true);;
+fi;
+
 P:=PresentationOfResolution(R);
 gens:= R!.elts{P.gens};
 
-#one:=IdentityMat(2);
-one:=One(R!.elts[2]);
+if HasQuadraticArithmetic(G) then
+   one:=One(R!.elts[1])*One(HAPSqrt(d));  #Changed October 2026
+else
+   one:=One(R!.elts[2]);
+fi;
+
 
 Ugrp:=G!.ugrp;
 Ugrp:=Elements(Ugrp);

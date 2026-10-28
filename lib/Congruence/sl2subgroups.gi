@@ -407,13 +407,18 @@ end);
 ###################################################################
 ###################################################################
 InstallGlobalFunction(HAP_CongruenceSubgroupGamma0,
-function(n)
-local G,sl,membership,membershipLight,CosetRep, CosetPos,transversal,g,x,y,a;
+function(arg)
+local n,G,sl,membership,membershipLight,CosetRep, CosetPos,transversal,g,x,y,a;
 
-if IsRing(n) then
-    return HAP_CongruenceSubgroupGamma0Ideal(n);
+if IsRing(arg[1]) then
+    if Length(arg)=1 then
+       return HAP_CongruenceSubgroupGamma0Ideal(arg[1]);
+    else
+       return HAP_CongruenceSubgroupGamma0Ideal(arg[1],arg[2]);
+    fi;
 fi;
 
+n:=arg[1];
 sl:=SL(2,Integers);
 G:=HAP_GenericSL2ZSubgroup();
 

@@ -162,6 +162,10 @@ DeclareGlobalFunction("IsUnimodularCollection");
 DeclareGlobalFunction("HAP_BianchiRegularCWComplex");
 DeclareGlobalFunction("HAP_BianchiTransformations");
 DeclareGlobalFunction("Hap_int");
+DeclareGlobalFunction("HAPQuadratic");
+DeclareGlobalFunction("HAPNorm");
+DeclareGlobalFunction("HAPSqrt");
+DeclareGlobalFunction("QuadraticToCyclotomic");
 
 ####################################################################
 #####################################################################

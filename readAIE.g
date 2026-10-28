@@ -112,6 +112,10 @@ fi;
 
 ReadPackageHap( "lib/TitlePage/makeHapMan.gi");
 
+# Load the Voronoi entry points and optional provider interface. This defines
+# functions only; Magma is invoked only when its backend is requested.
+ReadPackageHap( "lib/Voronoi/seb.gi");
+
 ################# OBJECTIFICATIONS ###############################
 ReadPackageHap( "lib/Objectifications/basicMethods.gi");
 ################# OBJECTIFICATIONS DONE ##########################
@@ -285,6 +289,7 @@ ReadPackageHap( "lib/Perturbations/resNormalSer.gi");
 ReadPackageHap( "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackageHap( "lib/Perturbations/resSubNormSeries.gi");
 ReadPackageHap( "lib/Perturbations/freeRes.gi");
+ReadPackageHap( "lib/Perturbations/freeResAlt.gi");
 ReadPackageHap( "lib/Perturbations/dutour.gi");
 ReadPackageHap( "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackageHap( "lib/Perturbations/contractibleSL2ZcomplexALT.gi");
