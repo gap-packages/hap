@@ -91,14 +91,111 @@
   been stored iin [12XHAP[112X for use in constructing free resolutions.[133X
   
   [33X[0;0YMore  recently a [12XGAP[112X implementation of Swan's algorithm has been included in
-  [12XHAP[112X.  The  implementation  uses  exact  computations  in  [22XQ(sqrt-d)[122X  and  in
-  [22XQ(sqrtd)[122X.  A  bespoke  implementation  of  these  two  fields is part of the
-  implementation  so  as  to  avoid making apparently slower computations with
-  cyclotomic  numbers.  The  account  of  Swan's  algorithm  in  the thesis of
-  Alexander Rahm was the main reference during the implementation.[133X
+  [12XHAP[112X. The account of Swan's algorithm in the thesis of Alexander Rahm was the
+  main reference during the implementation.[133X
   
   
-  [1X14.4 [33X[0;0YExamples[133X[101X
+  [1X14.4 [33X[0;0YArithmetic operations in quadratic number fields[133X[101X
+  
+  [33X[0;0YThe  implementation of Swan's algorithm uses exact computations in [22XQ(sqrt-d)[122X
+  and  in  [22XQ(sqrtd)[122X.  For  this,  a bespoke implementation of basic arithmetic
+  operations  in quadratic number fields has been introduced in order to avoid
+  slow computations with cyclotomic numbers. The following example illustrates
+  this basic arithmetic.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X#A computation with cyclotomic numbers[127X[104X
+    [4X[25Xgap>[125X [27Xx:=Sqrt(-163);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do[127X[104X
+    [4X[25X>[125X [27Xx:=1/(1+x);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X22900[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#A computation with quadratic numbers[127X[104X
+    [4X[25Xgap>[125X [27Xx:=HAPSqrt(-163);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do[127X[104X
+    [4X[25X>[125X [27Xx:=1/(1+x);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following example illustrates the underlying type coercion.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X#Type coercion[127X[104X
+    [4X[25Xgap>[125X [27Xx:=1+Sqrt(-2);[127X[104X
+    [4X[28X1+E(8)+E(8)^3[128X[104X
+    [4X[25Xgap>[125X [27Xy:=1-HAPSqrt(-2);[127X[104X
+    [4X[28X1 + -1 Sqrt(-2)[128X[104X
+    [4X[25Xgap>[125X [27Xxy:=x*y;[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XList([x,y,xy],IsCyclotomic);[127X[104X
+    [4X[28X[ true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XList([x,y,xy],IsHapQuadraticNumber);[127X[104X
+    [4X[28X[ false, true, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YType  coercion happens automatically. However, the following example shows a
+  speedup  obtained  by  initially delaring that quadratic arithmetic is to be
+  used.  The  example  constructs  to  degree  [22X2[122X  a  free  resolution  for the
+  congruence subgroup [22XG=Γ_0(7) < SL_2(mathcal O( Q(sqrt-22))[122X and evaluates the
+  boundary  maps  (in  order  to  determine  their  'size').  The example also
+  illustrates the slower construction of a resolution for [22XG[122X in which quadratic
+  arithmetic is not used at all.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X#Construction of a resolution and a ring of integers[127X[104X
+    [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-22);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,2);;[127X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-22);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Declaration that quadratic arithmetic is to be used[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XSetQuadraticArithmetic(I,true);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X[ 6700, 27800 ][128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X5761[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#No declaration that quadratic arithmetic is to be used[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X[ 6700, 27700 ][128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X8175[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#No quadratic arithmetic used at all[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-22,2,true);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X[ 5300, 23550 ][128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X36643[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.5 [33X[0;0YExamples[133X[101X
   
   [33X[0;0YThe  fundamental domain [22XD=overlineF ∩ B[122X (where the overline denotes closure)
   has boundary [22X∂ D[122X involving the four vertical quadrilateral [22X2[122X-cells contained
@@ -194,7 +291,7 @@
   [4X[32X[104X
   
   
-  [1X14.5 [33X[0;0YEstablishing correctness of a fundamental domain[133X[101X
+  [1X14.6 [33X[0;0YEstablishing correctness of a fundamental domain[133X[101X
   
   [33X[0;0YThe  cusps  of  a  fundamental domain can be calculated independently of the
   domain  computation. The remaining vertices of the domain will have positive
@@ -238,7 +335,7 @@
   [4X[32X[104X
   
   
-  [1X14.6 [33X[0;0YComputing quotient [22X2[122X[101X[1X-complexes[133X[101X
+  [1X14.7 [33X[0;0YComputing quotient [22X2[122X[101X[1X-complexes[133X[101X
   
   [33X[0;0YThe  space  [22XX=frak  h^3  ∪  {∞}  ∪  Q(sqrt-d)[122X  retracts onto an [22XSL_2(mathcal
   O_-d)[122X-equivariant [22X2[122X-dimensional regular CW-complex [22XK ⊂ X[122X. By barycentrically
@@ -375,7 +472,7 @@
   [4X[32X[104X
   
   
-  [1X14.7 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
+  [1X14.8 [33X[0;0YComputing a free resolution for [22XSL_2(mathcal O_-d)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  above fundamental domains can be used to construct free resolutions for
   [22XSL_2(mathcal   O_-d)[122X   and   [22XPSL_2(mathcal  O_-d)[122X.  The  following  commands
@@ -432,14 +529,14 @@
   [4X[32X[104X
   
   
-  [1X14.8 [33X[0;0YSome sanity checks[133X[101X
+  [1X14.9 [33X[0;0YSome sanity checks[133X[101X
   
   [33X[0;0YThere  is ample scope for bugs in the implementation of the above method for
   computing  resolutions  of  Bianchi groups. The following sanity checks lend
   confidence to the implementation.[133X
   
   
-  [1X14.8-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
+  [1X14.9-1 [33X[0;0YEquivariant Euler characteristic[133X[101X
   
   [33X[0;0YLet  [22XX[122X  be  any cell complex with an action of a group [22XG[122X such that (i) [22XX[122X has
   finitely  many  [22XG[122X-orbits of cells, and (ii) the stabilizer subgroup in [22XG[122X for
@@ -471,7 +568,7 @@
   [4X[32X[104X
   
   
-  [1X14.8-2 [33X[0;0YBoundary squares to zero[133X[101X
+  [1X14.9-2 [33X[0;0YBoundary squares to zero[133X[101X
   
   [33X[0;0YThe  signs in the boundary maps of the free resolution are delicate. Another
   easy  test  is to check that the boundary in the resolution squares to zero.
@@ -500,7 +597,7 @@
   [4X[32X[104X
   
   
-  [1X14.8-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
+  [1X14.9-3 [33X[0;0YCompare different algorithms or implementations[133X[101X
   
   [33X[0;0YSebastian  Schoennenbeck  in  his  thesis  work  computed  some contractible
   [22X2[122X-complexes  on  which Bianchi groups act with finite stabilizers (even when
@@ -531,7 +628,7 @@
   [4X[32X[104X
   
   
-  [1X14.8-4 [33X[0;0YCompare geometry to algebra[133X[101X
+  [1X14.9-4 [33X[0;0YCompare geometry to algebra[133X[101X
   
   [33X[0;0YThe  number  of  cusps  (i.e. the number of orbits of vertices with infinite
   stabilizer  subgroup) must be precisely one less than the number of elements
@@ -570,7 +667,7 @@
   [4X[32X[104X
   
   
-  [1X14.9 [33X[0;0YGroup presentations[133X[101X
+  [1X14.10 [33X[0;0YGroup presentations[133X[101X
   
   [33X[0;0YSwan's  reason for studying fundamental domains was to obtain explicit group
   presentations  for [22XSL_2(mathcal O_-d)[122X for various values of [22Xd[122X. The following
@@ -612,7 +709,7 @@
   [4X[32X[104X
   
   
-  [1X14.9-1 [33X[0;0YSwan's generators[133X[101X
+  [1X14.10-1 [33X[0;0YSwan's generators[133X[101X
   
   [33X[0;0YThe  five  generators  in the above presentation for [22XSL_2(mathcal O_-23)[122X are
   obtained  by  constructing  the  low  dimensions  of a CW-classifying space,
@@ -652,7 +749,7 @@
   [4X[32X[104X
   
   
-  [1X14.10 [33X[0;0YFinite index subgroups[133X[101X
+  [1X14.11 [33X[0;0YFinite index subgroups[133X[101X
   
   [33X[0;0YThe  following  commands  compute  the  integral  homology  of  a congruence
   subgroup  [22XG[122X  of  index  24  in  [22XSL_2(mathcal  O_-23)[122X.  They  also  compute a
@@ -689,7 +786,7 @@
   [4X[32X[104X
   
   
-  [1X14.11 [33X[0;0YTotally real quadratic fields / Hilbert modular group[133X[101X
+  [1X14.12 [33X[0;0YTotally real quadratic fields / Hilbert modular group[133X[101X
   
   [33X[0;0YFor  square free [22Xd>0[122X the group [22XPSL_2(mathcal O_d)[122X is a subgroup of [22XPSL_2( R)[122X
   but  not a discrete subgroup. It embeds as a discrete subgroup of [22XPSL_2( R)×
@@ -722,7 +819,7 @@
   [4X[32X[104X
   
   
-  [1X14.12 [33X[0;0YCalling Magma's Voronoi algorithm directly[133X[101X
+  [1X14.13 [33X[0;0YCalling Magma's Voronoi algorithm directly[133X[101X
   
   [33X[0;0YIf[133X
   
@@ -780,7 +877,7 @@
   [4X[32X[104X
   
   
-  [1X14.13 [33X[0;0YOptional Voronoi backends[133X[101X
+  [1X14.14 [33X[0;0YOptional Voronoi backends[133X[101X
   
   [33X[0;0YAn     external     package     can     register     a     provider    using
   [10XRegisterVoronoiBackend(name,  provider)[110X, where [10Xprovider[110X is a function of one
