@@ -168,52 +168,70 @@
 
 </pre></div>
 
-<p>Type coercion happens automatically. However, the following example shows a speedup obtained by initially declaring that quadratic arithmetic is to be used. The example constructs to degree <span class="SimpleMath">\(2\)</span> a free resolution for the congruence subgroup <span class="SimpleMath">\(G=\Gamma_0(7) &lt; SL_2({\mathcal O}(\mathbb Q(\sqrt{-22}))\)</span> and evaluates the boundary maps (in order to determine their 'size'). The example also illustrates the slower construction of a resolution for <span class="SimpleMath">\(G\)</span> in which quadratic arithmetic is not used at all.</p>
+<p>Quadratic ideals use quadratic arithmetic by default in computations with cohomology of congruence subgroups. This is achieved through the default property <code class="code">HasQuadraticArithmetic(I)=true</code> for quadratic ideals which the user can choose to alter. Some resolutions use cyclotomic numbers to express boundary homomorphisms and other resolutions use HAP's quadratic numbers instead. Type coercion happens automatically when a cyclotomic number and HAP quadratic number are added/subtracted, multiplied/divided.</p>
+
+<p>The following example ilustrates various different timings, obtained by changing the default values of <code class="code">HasQuadraticArithmetic(I)</code>, when constructing to degree <span class="SimpleMath">\(2\)</span> a free resolution for the congruence subgroup <span class="SimpleMath">\(G=\Gamma_0(7) &lt; SL_2({\mathcal O}(\mathbb Q(\sqrt{-22}))\)</span> and evaluating its boundary maps (in order to determine their 'size').</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Construction of a resolution and a ring of integers</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Construction of a resolution R1 with boundaries expressed</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#in terms of HapQuadraticNumbers </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=BianchiGcomplex(-22);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R1:=FreeGResolution(K,2);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Construction of a resolution R2 with boundaries expressed</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#in terms of cyclotomics</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2:=ResolutionSL2QuadraticIntegers(-22,2,true);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Construction of ring of integers</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-22);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
 
-
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Declaration that quadratic arithmetic is to be used</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Using R1 and an ideal with default quadratic arithmetic</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,7);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetQuadraticArithmetic(I,true);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrime(I);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R1,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 [ 6700, 27800 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
-411
+455
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#No declaration that quadratic arithmetic is to be used</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Using R1 and an ideal without default quadratic arithmetic</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ResetFilterObj(I,HasQuadraticArithmetic);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrime(I);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R1,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 [ 6700, 27700 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
 3245
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#No quadratic arithmetic used at all</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2QuadraticIntegers(-22,2,true);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Using R2 and an ideal without default quadratic arithmetic</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ResetFilterObj(I,HasQuadraticArithmetic);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrime(I);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R2,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 [ 5300, 23550 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
-36643
+37267
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Using R2 and an ideal with default quadratic arithmetic</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrime(I);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAP_CongruenceSubgroupGamma0(I,R2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R2,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+[ 5300, 23550 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
+972
 
 </pre></div>
 

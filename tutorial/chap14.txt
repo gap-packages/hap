@@ -139,57 +139,79 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YType  coercion happens automatically. However, the following example shows a
-  speedup  obtained  by initially declaring that quadratic arithmetic is to be
-  used.  The  example  constructs  to  degree  [22X2[122X  a  free  resolution  for the
-  congruence subgroup [22XG=Γ_0(7) < SL_2(mathcal O( Q(sqrt-22))[122X and evaluates the
-  boundary  maps  (in  order  to  determine  their  'size').  The example also
-  illustrates the slower construction of a resolution for [22XG[122X in which quadratic
-  arithmetic is not used at all.[133X
+  [33X[0;0YQuadratic  ideals  use  quadratic arithmetic by default in computations with
+  cohomology  of  congruence  subgroups.  This is achieved through the default
+  property  [10XHasQuadraticArithmetic(I)=true[110X for quadratic ideals which the user
+  can  choose  to  alter.  Some  resolutions use cyclotomic numbers to express
+  boundary  homomorphisms  and  other  resolutions use HAP's quadratic numbers
+  instead.  Type  coercion  happens automatically when a cyclotomic number and
+  HAP quadratic number are added/subtracted, multiplied/divided.[133X
+  
+  [33X[0;0YThe  following  example  ilustrates  various  different timings, obtained by
+  changing  the default values of [10XHasQuadraticArithmetic(I)[110X, when constructing
+  to  degree  [22X2[122X  a  free  resolution  for  the  congruence subgroup [22XG=Γ_0(7) <
+  SL_2(mathcal  O(  Q(sqrt-22))[122X  and evaluating its boundary maps (in order to
+  determine their 'size').[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27X#Construction of a resolution and a ring of integers[127X[104X
+    [4X[25Xgap>[125X [27X#Construction of a resolution R1 with boundaries expressed[127X[104X
+    [4X[25Xgap>[125X [27X#in terms of HapQuadraticNumbers [127X[104X
     [4X[25Xgap>[125X [27XK:=BianchiGcomplex(-22);;[127X[104X
-    [4X[25Xgap>[125X [27XR:=FreeGResolution(K,2);;[127X[104X
+    [4X[25Xgap>[125X [27XR1:=FreeGResolution(K,2);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Construction of a resolution R2 with boundaries expressed[127X[104X
+    [4X[25Xgap>[125X [27X#in terms of cyclotomics[127X[104X
+    [4X[25Xgap>[125X [27XR2:=ResolutionSL2QuadraticIntegers(-22,2,true);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Construction of ring of integers[127X[104X
     [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-22);;[127X[104X
     [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27X#Declaration that quadratic arithmetic is to be used[127X[104X
+    [4X[25Xgap>[125X [27X#Using R1 and an ideal with default quadratic arithmetic[127X[104X
     [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
-    [4X[25Xgap>[125X [27XSetQuadraticArithmetic(I,true);;[127X[104X
     [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R1);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R1,G);;[127X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X[ 6700, 27800 ][128X[104X
     [4X[25Xgap>[125X [27Xtime;[127X[104X
-    [4X[28X411[128X[104X
+    [4X[28X455[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27X#No declaration that quadratic arithmetic is to be used[127X[104X
+    [4X[25Xgap>[125X [27X#Using R1 and an ideal without default quadratic arithmetic[127X[104X
     [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XResetFilterObj(I,HasQuadraticArithmetic);[127X[104X
     [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R1);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R1,G);;[127X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X[ 6700, 27700 ][128X[104X
     [4X[25Xgap>[125X [27Xtime;[127X[104X
     [4X[28X3245[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27X#No quadratic arithmetic used at all[127X[104X
-    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-22,2,true);;[127X[104X
+    [4X[25Xgap>[125X [27X#Using R2 and an ideal without default quadratic arithmetic[127X[104X
     [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XResetFilterObj(I,HasQuadraticArithmetic);[127X[104X
     [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R2);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R2,G);;[127X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X[ 5300, 23550 ][128X[104X
     [4X[25Xgap>[125X [27Xtime;[127X[104X
-    [4X[28X36643[128X[104X
+    [4X[28X37267[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X#Using R2 and an ideal with default quadratic arithmetic[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,7);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPrime(I);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG:=HAP_CongruenceSubgroupGamma0(I,R2);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R2,G);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X[ 5300, 23550 ][128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X972[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
