@@ -46,13 +46,17 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7AFFB32587D047FE">7.4 <span class="Heading">Arithmetic groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8479883784E4F02E">7.4-1 <span class="Heading">Rational cohomology</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7FFFCCCC870722B8">7.4-1 <span class="Heading">Congruence subgroups</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X841369EB849AF695">7.4-2 <span class="Heading">Mod-<span class="SimpleMath">\(q\)</span> cohomology</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7F161E2B8192000E">7.4-2 <span class="Heading">A well-rounded retract</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C4900A17F987F5B">7.4-3 <span class="Heading">Generators and relators for the Steinberg module <span class="SimpleMath">\(St_3(\mathbb Q)\)</span></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8479883784E4F02E">7.4-3 <span class="Heading">Rational cohomology</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C2A5C5F80A956C6">7.4-4 <span class="Heading"><span class="SimpleMath">\(S\)</span>-arithmetic groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X841369EB849AF695">7.4-4 <span class="Heading">Mod-<span class="SimpleMath">\(q\)</span> cohomology</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C4900A17F987F5B">7.4-5 <span class="Heading">Generators and relators for the Steinberg module <span class="SimpleMath">\(St_3(\mathbb Q)\)</span></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C2A5C5F80A956C6">7.4-6 <span class="Heading"><span class="SimpleMath">\(S\)</span>-arithmetic groups</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X800CB6257DC8FB3A">7.5 <span class="Heading">Artin groups</span></a>
@@ -454,14 +458,20 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
-<p>For the congruence subgroup <span class="SimpleMath">\(\Gamma_0(101) &lt; SL_3(\mathbb Z)\)</span> the following example computes</p>
+<p><a id="X7FFFCCCC870722B8" name="X7FFFCCCC870722B8"></a></p>
+
+<h5>7.4-1 <span class="Heading">Congruence subgroups</span></h5>
+
+<p>For the congruence subgroup <span class="SimpleMath">\(\Gamma_0(101) &lt; SL_3(\mathbb Z)\)</span> of index <span class="SimpleMath">\(10303\)</span> the following example computes</p>
 
 <p><span class="SimpleMath">\(H_n(\Gamma_0(101),\mathbb Z)= \left\{\begin{array}{ll} \mathbb Z_{100}, &amp; n=1\\ (\mathbb Z_2)^{15}\oplus (\mathbb Z_4)^4, &amp;n=2\\ (\mathbb Z_4)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^{16}, &amp; n=3 \ . \end{array}\right.\)</span></p>
 
 
 <div class="example"><pre>
 	
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=CongruenceSubgroupGamma0(SL(3,Integers),101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(RightTransversal(SL(3,Integers),G)); #Index of G in SL(3,Z)</span>
+10303
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(K,4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
@@ -475,6 +485,37 @@ Chain complex of length 5 in characteristic 0 .
 [ 4, 4, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
 </pre></div>
+
+<p>For the ideal <span class="SimpleMath">\(I\)</span> in the ring of integers <span class="SimpleMath">\({\mathcal O}_{-5}={\mathcal O}(\mathbb Q(\sqrt{-5}))\)</span> and the congruence subgroup <span class="SimpleMath">\(\Gamma_0(I) &lt; SL_3({\mathcal O})\)</span> of index <span class="SimpleMath">\(252\)</span> the following example computes</p>
+
+<p><span class="SimpleMath">\(H_n(\Gamma_0(I),\mathbb Z)= \left\{\begin{array}{ll} (\mathbb Z_{2})^6 \oplus \mathbb Z_4 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z_{120} \oplus \mathbb Z_{480} \oplus \mathbb Z_{1510538400} \oplus \mathbb Z^{16}, &amp; n=1\\ (\mathbb Z_2)^{27}\oplus \mathbb Z_4 \oplus \mathbb Z^{15}, &amp;n=2 \ . \end{array}\right.\)</span></p>
+
+
+<div class="example"><pre>
+        
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q:=QuadraticNumberField(-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OQ:=RingOfIntegers(Q);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:=QuadraticIdeal(OQ,-5+6*Sqrt(-5));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sl:=SL2QuadraticIntegers(-5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=CongruenceSubgroupGamma0(sl,I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(RightTransversal(sl,G));</span>
+252
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ResolutionSL2QuadraticIntegers(-5,2,true);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=TensorWithIntegers(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractedComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,1);</span>
+[ 2, 2, 2, 2, 2, 2, 4, 12, 12, 120, 480, 1510538400, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(C,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+  2, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+</pre></div>
+
+<p><a id="X7F161E2B8192000E" name="X7F161E2B8192000E"></a></p>
+
+<h5>7.4-2 <span class="Heading">A well-rounded retract</span></h5>
 
 <p>In the preceding code <span class="SimpleMath">\(K\)</span> is a representation of a <span class="SimpleMath">\(3\)</span>-dimensional contractible regular CW-complex (a 'well-rounded retract') on which <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> acts by permuting cells and for which every cell stabilizer is a finite group. The following code shows that there is just one orbit of <span class="SimpleMath">\(3\)</span>-cells and displays the <span class="SimpleMath">\(1\)</span>-skeleton of the closure of a <span class="SimpleMath">\(3\)</span>-cell. (Further investigation of <span class="SimpleMath">\(K\)</span> shows that the 2-cells are either hexagonal or triangular. Each hexagonal <span class="SimpleMath">\(2\)</span>-cell is incident with three <span class="SimpleMath">\(3\)</span>-cells; each triangular <span class="SimpleMath">\(2\)</span>-cell is incident with four <span class="SimpleMath">\(3\)</span>-cells.)</p>
 
@@ -511,7 +552,7 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><a id="X8479883784E4F02E" name="X8479883784E4F02E"></a></p>
 
-<h5>7.4-1 <span class="Heading">Rational cohomology</span></h5>
+<h5>7.4-3 <span class="Heading">Rational cohomology</span></h5>
 
 <p>To compute the rational homology of an arithmetic group such as <span class="SimpleMath">\(G=SL_n(\mathbb Z)\)</span> one can work directly with the well-rounded retract <span class="SimpleMath">\(K\)</span> on which <span class="SimpleMath">\(G\)</span> acts with finite stabilizers. The following computes the rational cohomology</p>
 
@@ -673,7 +714,7 @@ Homology(C,0);
 
 <p><a id="X841369EB849AF695" name="X841369EB849AF695"></a></p>
 
-<h5>7.4-2 <span class="Heading">Mod-<span class="SimpleMath">\(q\)</span> cohomology</span></h5>
+<h5>7.4-4 <span class="Heading">Mod-<span class="SimpleMath">\(q\)</span> cohomology</span></h5>
 
 <p>For a congruence subgroup <span class="SimpleMath">\(G\)</span> of an arithmetic group such as <span class="SimpleMath">\(SL_n(\mathbb Z)\)</span> and positive integer <span class="SimpleMath">\(q\)</span> coprime to the order of any torsion element in <span class="SimpleMath">\(G\)</span> one can again work directly with the well-rounded retract <span class="SimpleMath">\(K\)</span> in order to compute <span class="SimpleMath">\(H^\ast(G,\mathbb Z/q\mathbb Z)\)</span>.</p>
 
@@ -708,7 +749,7 @@ Homology(C,0);
 
 <p><a id="X7C4900A17F987F5B" name="X7C4900A17F987F5B"></a></p>
 
-<h5>7.4-3 <span class="Heading">Generators and relators for the Steinberg module <span class="SimpleMath">\(St_3(\mathbb Q)\)</span></span></h5>
+<h5>7.4-5 <span class="Heading">Generators and relators for the Steinberg module <span class="SimpleMath">\(St_3(\mathbb Q)\)</span></span></h5>
 
 <p>The following rather inelegant variant of the <span class="SimpleMath">\(n=3\)</span> case of Theorem B in <a href="chapBib_mj.html#biBchurchputnam">[CP17]</a> is proved using the commands below.</p>
 
@@ -759,7 +800,7 @@ Homology(C,0);
 
 <p><a id="X7C2A5C5F80A956C6" name="X7C2A5C5F80A956C6"></a></p>
 
-<h5>7.4-4 <span class="Heading"><span class="SimpleMath">\(S\)</span>-arithmetic groups</span></h5>
+<h5>7.4-6 <span class="Heading"><span class="SimpleMath">\(S\)</span>-arithmetic groups</span></h5>
 
 <p>The following commands compute the integral homology of <span class="SimpleMath">\(SL_2(\mathbb Z[1/58])\)</span> in degrees up to <span class="SimpleMath">\(7\)</span>. This is joint work with <strong class="button">Bui Anh Tuan</strong>.</p>
 

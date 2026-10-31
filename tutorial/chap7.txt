@@ -360,15 +360,20 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YFor  the  congruence  subgroup  [22XΓ_0(101)  <  SL_3(  Z)[122X the following example
-  computes[133X
+  
+  [1X7.4-1 [33X[0;0YCongruence subgroups[133X[101X
+  
+  [33X[0;0YFor the congruence subgroup [22XΓ_0(101) < SL_3( Z)[122X of index [22X10303[122X the following
+  example computes[133X
   
   [33X[0;0Y[22XH_n(Γ_0(101),  Z)=  {beginarrayll  Z_100,  & n=1 ( Z_2)^15⊕ ( Z_4)^4, &n=2 (
   Z_4)^2 ⊕ ( Z_12)^2 ⊕ Z^16, & n=3 . endarray.[122X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X	[128X[104X
-    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=CongruenceSubgroupGamma0(SL(3,Integers),101);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(RightTransversal(SL(3,Integers),G)); #Index of G in SL(3,Z)[127X[104X
+    [4X[28X10303[128X[104X
     [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
     [4X[25Xgap>[125X [27XR:=FreeGResolution(K,4);;[127X[104X
     [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
@@ -382,6 +387,38 @@
     [4X[28X[ 4, 4, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YFor  the  ideal [22XI[122X in the ring of integers [22Xmathcal O_-5=mathcal O( Q(sqrt-5))[122X
+  and  the  congruence  subgroup  [22XΓ_0(I)  <  SL_3(mathcal  O)[122X of index [22X252[122X the
+  following example computes[133X
+  
+  [33X[0;0Y[22XH_n(Γ_0(I),  Z)=  {beginarrayll ( Z_2)^6 ⊕ Z_4 ⊕ ( Z_12)^2 ⊕ Z_120 ⊕ Z_480 ⊕
+  Z_1510538400 ⊕ Z^16, & n=1 ( Z_2)^27⊕ Z_4 ⊕ Z^15, &n=2 . endarray.[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XQ:=QuadraticNumberField(-5);;[127X[104X
+    [4X[25Xgap>[125X [27XOQ:=RingOfIntegers(Q);;[127X[104X
+    [4X[25Xgap>[125X [27XI:=QuadraticIdeal(OQ,-5+6*Sqrt(-5));;[127X[104X
+    [4X[25Xgap>[125X [27Xsl:=SL2QuadraticIntegers(-5);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=CongruenceSubgroupGamma0(sl,I);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(RightTransversal(sl,G));[127X[104X
+    [4X[28X252[128X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSL2QuadraticIntegers(-5,2,true);;[127X[104X
+    [4X[25Xgap>[125X [27XS:=ResolutionFiniteSubgroup(R,G);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(S);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ContractedComplex(C);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(C,1);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 4, 12, 12, 120, 480, 1510538400, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,2);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [128X[104X
+    [4X[28X  2, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.4-2 [33X[0;0YA well-rounded retract[133X[101X
   
   [33X[0;0YIn  the preceding code [22XK[122X is a representation of a [22X3[122X-dimensional contractible
   regular  CW-complex  (a  'well-rounded  retract')  on which [22XSL_3( Z)[122X acts by
@@ -428,7 +465,7 @@
   [14X13[114X, [14X14[114X .[133X
   
   
-  [1X7.4-1 [33X[0;0YRational cohomology[133X[101X
+  [1X7.4-3 [33X[0;0YRational cohomology[133X[101X
   
   [33X[0;0YTo  compute  the rational homology of an arithmetic group such as [22XG=SL_n( Z)[122X
   one  can  work directly with the well-rounded retract [22XK[122X on which [22XG[122X acts with
@@ -616,7 +653,7 @@
   [4X[32X[104X
   
   
-  [1X7.4-2 [33X[0;0YMod-[22Xq[122X[101X[1X cohomology[133X[101X
+  [1X7.4-4 [33X[0;0YMod-[22Xq[122X[101X[1X cohomology[133X[101X
   
   [33X[0;0YFor  a  congruence  subgroup  [22XG[122X  of an arithmetic group such as [22XSL_n( Z)[122X and
   positive  integer [22Xq[122X coprime to the order of any torsion element in [22XG[122X one can
@@ -654,7 +691,7 @@
   [4X[32X[104X
   
   
-  [1X7.4-3 [33X[0;0YGenerators and relators for the Steinberg module [22XSt_3( Q)[122X[101X[1X[133X[101X
+  [1X7.4-5 [33X[0;0YGenerators and relators for the Steinberg module [22XSt_3( Q)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  following  rather  inelegant  variant  of  the [22Xn=3[122X case of Theorem B in
   [CP17] is proved using the commands below.[133X
@@ -707,7 +744,7 @@
   [4X[32X[104X
   
   
-  [1X7.4-4 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
+  [1X7.4-6 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
   
   [33X[0;0YThe  following  commands  compute the integral homology of [22XSL_2( Z[1/58])[122X in
   degrees up to [22X7[122X. This is joint work with [12XBui Anh Tuan[112X.[133X
