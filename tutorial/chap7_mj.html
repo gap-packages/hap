@@ -397,13 +397,15 @@ Chain complex of length 5 in characteristic 0 .
 
 <p><span class="SimpleMath">\(H_6(SL_2({\cal O_{-2}}),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_{12}\)</span></p>
 
+<p><span class="SimpleMath">\(H^2(SL_2({\cal O}_{-2}),P_{{\cal O}_{-2}}(8)) = (\mathbb Z_2)^8 \oplus (\mathbb Z_{168})^2 \oplus \mathbb Z^2\)</span></p>
+
 <p><span class="SimpleMath">\(H_6(PSL_2({\cal O_{-2}}),\mathbb Z) = \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_2 \oplus \mathbb Z_{6}\)</span></p>
 
 <p><span class="SimpleMath">\(H_6(GL_2({\cal O_{2}}),\mathbb Z) = (\mathbb Z_2)^{18}\)</span></p>
 
 <p><span class="SimpleMath">\(H_3(GL_3({\cal O_{-2}}),\mathbb Z) = \mathbb Z_2\oplus \mathbb Z_2 \oplus \mathbb Z_6 \oplus \mathbb Z_{12} \oplus \mathbb Z \oplus \mathbb Z\)</span></p>
 
-<p>for <span class="SimpleMath">\({\cal O_{-2}}\)</span> the ring of integers of the number field <span class="SimpleMath">\(\mathbb Q(\sqrt{-2})\)</span> and <span class="SimpleMath">\({\cal O_{2}}\)</span> the ring of integers of the number field <span class="SimpleMath">\(\mathbb Q(\sqrt{2})\)</span>. (See <a href="chap14_mj.html#X78476F127B73BBD1"><span class="RefLink">14.8</span></a> for more on imaginary quadratic number fields and <a href="chap14_mj.html#X82F46C8B782420AB"><span class="RefLink">14.12</span></a> for totally real quadratic number fields.) The final commands realize <span class="SimpleMath">\(GL_3({\mathcal O}_{-2})\)</span> as a finitely presented group on four generators with 32 relators.</p>
+<p>for <span class="SimpleMath">\({\cal O_{-2}}\)</span> the ring of integers of the number field <span class="SimpleMath">\(\mathbb Q(\sqrt{-2})\)</span> and <span class="SimpleMath">\({\cal O_{2}}\)</span> the ring of integers of the number field <span class="SimpleMath">\(\mathbb Q(\sqrt{2})\)</span>. See <a href="chap14_mj.html#X78476F127B73BBD1"><span class="RefLink">14.8</span></a> for more on imaginary quadratic number fields and <a href="chap14_mj.html#X82F46C8B782420AB"><span class="RefLink">14.12</span></a> for totally real quadratic number fields. The coefficient module <span class="SimpleMath">\(P_{{\mathcal O}_{-2}}(8)\)</span> is the set of homogeneous polynomials over <span class="SimpleMath">\({\mathcal O}_{-2}\)</span> of degree <span class="SimpleMath">\(8\)</span> with group action described in <a href="chap13_mj.html#X79A1974B7B4987DE"><span class="RefLink">13.1</span></a>. The final commands realize <span class="SimpleMath">\(GL_3({\mathcal O}_{-2})\)</span> as a finitely presented group on four generators with 32 relators.</p>
 
 
 <div class="example"><pre>
@@ -411,6 +413,10 @@ Chain complex of length 5 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeGResolution(C,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(TensorWithIntegers(R),6);</span>
 [ 2, 12 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=HomogeneousPolynomials(R!.group,8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cohomology( HomToIntegralModule(R,M) ,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 168, 168, 0, 0 ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ContractibleGcomplex("SL(2,O-2_a)");; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PC:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;</span>
@@ -486,7 +492,7 @@ Chain complex of length 5 in characteristic 0 .
 
 </pre></div>
 
-<p>For the ideal <span class="SimpleMath">\(I\)</span> in the ring of integers <span class="SimpleMath">\({\mathcal O}_{-5}={\mathcal O}(\mathbb Q(\sqrt{-5}))\)</span> and the congruence subgroup <span class="SimpleMath">\(\Gamma_0(I) &lt; SL_3({\mathcal O})\)</span> of index <span class="SimpleMath">\(252\)</span> the following example computes</p>
+<p>For the ideal <span class="SimpleMath">\(I\)</span> in the ring of integers <span class="SimpleMath">\({\mathcal O}_{-5}={\mathcal O}(\mathbb Q(\sqrt{-5}))\)</span> and the congruence subgroup <span class="SimpleMath">\(\Gamma_0(I) &lt; SL_3({\mathcal O}_{-5})\)</span> of index <span class="SimpleMath">\(252\)</span> the following example computes</p>
 
 <p><span class="SimpleMath">\(H_n(\Gamma_0(I),\mathbb Z)= \left\{\begin{array}{ll} (\mathbb Z_{2})^6 \oplus \mathbb Z_4 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z_{120} \oplus \mathbb Z_{480} \oplus \mathbb Z_{1510538400} \oplus \mathbb Z^{16}, &amp; n=1\\ (\mathbb Z_2)^{27}\oplus \mathbb Z_4 \oplus \mathbb Z^{15}, &amp;n=2 \ . \end{array}\right.\)</span></p>
 
