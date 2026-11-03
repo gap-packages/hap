@@ -474,8 +474,41 @@ radicand, not a field discriminant. Without the backend option, or with
 <C>backend := "magma"</C>, these two convenience functions retain the
 Magma implementation described above.
 <P/>
-A Julia package running with GAP.jl can register an in-process callback
+The Julia package
+<URL Text="ArithmeticVoronoi.jl">https://github.com/dimpase/ArithmeticVoronoi.jl</URL>
+computes these complexes natively and can register an in-process callback
 under the name <C>"julia"</C>. HAP itself does not install or load Julia.
+From Julia, the direct interface loads HAP automatically:
+<Log><![CDATA[
+using ArithmeticVoronoi, Oscar
+import Oscar: GAP
+K = hap_voronoi_complex(-7; group=:PSL, resolution_length=3);
+R = GAP.Globals.FreeGResolution(K, 3);
+GAP.gap_to_julia(GAP.Globals.Homology(GAP.Globals.TensorWithIntegers(R), 1))
+# [0, 2]
+]]></Log>
+The integer argument here is a fundamental field discriminant. Omit it for
+rational coefficients: <C>hap_voronoi_complex(; rank=3, group=:SL)</C>
+computes a complex for <M>SL_3(\mathbb Z)</M>. The provider supports ranks
+at least two, rational and quadratic GL, and rational and imaginary-quadratic
+SL and PSL on free lattices over maximal orders. PSL divides by the full
+scalar centre. Real-quadratic SL/PSL complexes, nonmaximal orders and nonfree
+lattices are not supplied by this provider. The package's separate
+presentation algorithms cover real-quadratic SL/PSL too; they do not replace
+the equivariant cell data required by HAP.
+<P/>
+For HAP's record dispatcher in the same Julia session, first run
+<C>enable_hap_julia_backend()</C>. A rational example is:
+<Log><![CDATA[
+request := rec(group := "SL", rank := 3, field := rec(kind := "rational"),
+    order := rec(kind := "maximal"), lattice := rec(kind := "free"));
+K := VoronoiComplex(request : backend := "julia");
+]]></Log>
+These last commands use GAP syntax, which can be evaluated through GAP.jl.
+See the
+<URL Text="ArithmeticVoronoi HAP guide">https://dimpase.github.io/ArithmeticVoronoi.jl/hap_and_vmh/</URL>
+for installation, the direct Julia calls and supported computations.
+<P/>
 An unregistered backend name is an error. Providers must supply complete stabilizers, the orientation action
 and equivariant boundaries; perfect forms or a group presentation alone
 do not suffice for higher homology. Standard HAP operations such as

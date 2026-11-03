@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   julia-voronoi:
-    name: Julia Voronoi example (GL2, D=-7)
+    name: Julia Voronoi examples (GL, SL and PSL)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -54,15 +54,15 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v7
-      - name: Check out the Julia provider and its pinned environment
+      - name: Check out the Julia provider at a tested revision
         uses: actions/checkout@v7
         with:
-          repository: dimpase/arithmetic_voronoi
-          ref: 007df75debde04c7469124891ac78d555d5de20b
+          repository: dimpase/ArithmeticVoronoi.jl
+          ref: c6942b97936e69a392ee88523fbf3574edcc6e26
           path: arithmetic-voronoi
       - uses: julia-actions/setup-julia@v3
         with:
-          version: '1.13.2'
+          version: '1'
       - uses: julia-actions/cache@v3
         with:
           delete-old-caches: 'false'
@@ -74,7 +74,7 @@ jobs:
         run: >-
           julia --startup-file=no --project=arithmetic-voronoi
           -e 'using Pkg; Pkg.precompile("ArithmeticVoronoi"; strict=true, timing=true)'
-      - name: Construct a fresh complex and check integral H1 and H2
+      - name: Construct fresh complexes and check integral homology
         run: >-
           julia --startup-file=no --project=arithmetic-voronoi
           .github/scripts/voronoi-julia.jl
