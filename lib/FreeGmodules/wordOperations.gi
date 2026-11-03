@@ -459,7 +459,7 @@ InstallOtherMethod( InverseMutable,
 
 function(x) local w;
 w:=List(x!.element,InverseMutable);
-return Objectify(HapOppositeElement,
+return Objectify(HapQuotientElement,
                     rec(
                     element:=w) );
 end);
