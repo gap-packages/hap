@@ -237,4 +237,4 @@ Display3DUnimodularPairs(Y!.ring,Y!.unimodularPairsSingletons,lst);
 #####################################################################
 #####################################################################
 
-
+DeclareOperation("inHQA",[IsHapQuadraticNumber,IsRingOfQuadraticIntegers]);

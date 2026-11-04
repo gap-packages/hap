@@ -16,6 +16,17 @@ end);
 
 #####################################################################
 #####################################################################
+InstallOtherMethod(QuadraticNumberToCyclotomic,
+  "converts a quadratic number to a cyclotomic",
+    [IsCyclotomic],
+    function( x )
+    return x;
+end);
+#####################################################################
+#####################################################################
+
+#####################################################################
+#####################################################################
 InstallMethod(QuadraticNumberToCyclotomic,
   "converts a quadratic number to a cyclotomic",
     [IsHapQuadraticNumber],
@@ -784,9 +795,14 @@ D:=I!.hermiteBasisHQA[2];
 
 #p:=PartsOfQuadraticInteger(AssociatedRing(I),x);
 #Should really return an error when the discriminants don't match.
-p:=[x!.rational,x!.irrational];
-p:=p-Hap_int(p[1]/N[1][1])*N[1];
-p:=p-Hap_int(p[2]/N[2][2])*N[2];
+if AssociatedRing(I)!.bianchiInteger mod 4 = 1 then
+   p:=[x!.rational-x!.irrational, 2*x!.irrational];
+else
+   p:=[x!.rational,x!.irrational];
+fi;
+
+   p:=p-Hap_int(p[1]/N[1][1])*N[1];
+   p:=p-Hap_int(p[2]/N[2][2])*N[2];
 
 return p[1]+p[2]*D;
 
@@ -796,19 +812,33 @@ end);
 
 ##########################################################
 ##########################################################
-InstallOtherMethod(IN,
+InstallOtherMethod(inHQA,    
 "for ring of quadratic integers",
-[IsHapQuadraticNumber,IsRingOfQuadraticIntegers and IsRing],
+[IsHapQuadraticNumber,IsRingOfQuadraticIntegers],  #For good reasons GAP will
+                                                   #not allow a
+                                                   #HapQuardraticNumber to be
+                                                   #deemed "in" the ring OQ
+						   #of cyclotomics. So inHAQ
+                                                   #is the workaround.
+
 function(x,R)
-local p;
+local q,a,b,d;
 
-##Should really check the discriminant here!!
-p:=[x!.rational,x!.irrational];
+d:=R!.bianchiInteger;
 
-if IsInt(p[1]) and IsInt(p[2]) then return true;
+if not x!.bianchiInteger = R!.bianchiInteger then return false; fi;
+
+q:=HAPQuadratic(x);
+
+a:=q.a/q.d;
+b:=q.b/q.d;
+
+
+if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+
+if IsInt(a) and IsInt(b) then return true;
 else return false;
 fi;
-
 
 end);
 ##########################################################
@@ -816,13 +846,58 @@ end);
 
 ##########################################################
 ##########################################################
-InstallOtherMethod(IN,
+InstallOtherMethod(inHQA,
+"for ring of quadratic integers",
+[IsCyclotomic,IsRingOfQuadraticIntegers],  
+
+function(x,R)
+local q,a,b,d;
+
+q:=Quadratic(x);
+d:=q.root;
+if not d = R!.bianchiInteger then return false; fi;
+a:=q.a/q.d;
+b:=q.b/q.d;
+
+
+if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
+
+if IsInt(a) and IsInt(b) then return true;
+else return false;
+fi;
+
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
+InstallOtherMethod(inHQA,
 "for ideal in a ring of quadratic integers",
 [IsHapQuadraticNumber,IsIdealOfQuadraticIntegers and IsRing ],
 function(x,I)
 local g;
 
+if not inHQA(x,AssociatedRing(I)) then return false; fi;
+
 if x mod I = 0 then return true; else return false; fi;
+
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ImaginaryPart,
+"for ideal in a ring of quadratic integers",
+[IsHapQuadraticNumber],
+function(x)
+local y;
+
+y:=x!.rational+x!.irrational*Sqrt(x!.bianchiInteger);
+
+return ImaginaryPart(y);
 
 end);
 ##########################################################
@@ -837,7 +912,7 @@ InstallOtherMethod(InverseOp,
 function(I,x)
 local T, fn, pos;
 
-if not IsBound(I!.RightTransvesalHQA) then
+if not IsBound(I!.RightTransversalHQA) then
 T:=RightTransversal(I);
 I!.RightTransversalHQA:=SSortedList(T*One(HAPSqrt(AssociatedRing(I)!.bianchiInteger)));
 fi;

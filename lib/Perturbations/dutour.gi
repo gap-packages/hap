@@ -24,8 +24,9 @@ local
 groupname:=arg[1];
 n:=Position(groupname,'-');##This won't work for all file names
 k:=Position(groupname,')');##So I'll re-introduce the number elsewhere
-if IsInt(n) and IsInt(k) then dd:=groupname{[n+1..k-1]}; #dd:=-Int(dd);
+if IsInt(n) and IsInt(k) then dd:=groupname{[n+1..k-1]}; 
 else dd:=fail; fi;
+if IsInt(dd) then dd:=-Int(dd); fi;
 groupname:=Filtered(groupname,x->not(x='(' or x=')' or x=',' or x='[' or x=']'));
 name:=groupname;
 

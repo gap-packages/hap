@@ -1,0 +1,58 @@
+gap> #Construction of a resolution R1 with boundaries expressed
+gap> #in terms of HapQuadraticNumbers 
+gap> K:=BianchiGcomplex(-22);;
+gap> R1:=FreeGResolution(K,2);;
+
+gap> #Construction of a resolution R2 with boundaries expressed
+gap> #in terms of cyclotomics
+gap> R2:=ResolutionSL2QuadraticIntegers(-22,2,true);;
+
+gap> #Construction of ring of integers
+gap> Q:=QuadraticNumberField(-22);;
+gap> OQ:=RingOfIntegers(Q);;
+
+gap> #Using R1 and an ideal with default quadratic arithmetic
+gap> I:=QuadraticIdeal(OQ,7);;
+gap> IsPrime(I);
+true
+gap> G:=HAP_CongruenceSubgroupGamma0(I,R1);;
+gap> S:=ResolutionFiniteSubgroup(R1,G);;
+gap> Size(S);
+[ 6700, 27800 ]
+gap> time;
+455
+
+gap> #Using R1 and an ideal without default quadratic arithmetic
+gap> I:=QuadraticIdeal(OQ,7);;
+gap> ResetFilterObj(I,HasQuadraticArithmetic);
+gap> IsPrime(I);
+true
+gap> G:=HAP_CongruenceSubgroupGamma0(I,R1);;
+gap> S:=ResolutionFiniteSubgroup(R1,G);;
+gap> Size(S);
+[ 6700, 27700 ]
+gap> time;
+3245
+
+gap> #Using R2 and an ideal without default quadratic arithmetic
+gap> I:=QuadraticIdeal(OQ,7);;
+gap> ResetFilterObj(I,HasQuadraticArithmetic);
+gap> IsPrime(I);
+true
+gap> G:=HAP_CongruenceSubgroupGamma0(I,R2);;
+gap> S:=ResolutionFiniteSubgroup(R2,G);;
+gap> Size(S);
+[ 5300, 23550 ]
+gap> time;
+37267
+
+gap> #Using R2 and an ideal with default quadratic arithmetic
+gap> I:=QuadraticIdeal(OQ,7);;
+gap> IsPrime(I);
+true
+gap> G:=HAP_CongruenceSubgroupGamma0(I,R2);;
+gap> S:=ResolutionFiniteSubgroup(R2,G);;
+gap> Size(S);
+[ 5300, 23550 ]
+gap> time;
+972

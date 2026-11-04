@@ -66,7 +66,7 @@ function(x,R)
 local p; 
 
 p:=PartsOfQuadraticInteger(R,x);
-if p=fail then return false; fi;
+if p=fail or not p[3]=R!.bianchiInteger then return false; fi;
 
 if IsInt(p[1]) and IsInt(p[2]) then return true;
 else return false;
@@ -124,6 +124,8 @@ Setter(NormOfIdeal)(I,N[1][1]*N[2][2]);
 I!.hermiteBasis:=[N,D];
 I!.hermiteBasisHQA:=[N,D]*One(HAPSqrt(R!.bianchiInteger));
 SetName(I,Concatenation("ideal of norm ", String(Norm(I))," in ",Name(R)) );
+
+SetQuadraticArithmetic(I,true);   #October 2026
 return I;
 end);
 ##########################################################
@@ -407,7 +409,7 @@ b:=q.b/q.d;
 
 
 if d mod 4 = 1 then a:=a-b; b:=2*b;fi;
-return [a,b];
+return [a,b,d];
 fi;
 
 r:=Sqrt(d);
@@ -433,24 +435,55 @@ local X,R,S,d,gens,G;
 
 X:=arg[1];
 
+if IsHapResolution(X) then 
+   R:=X;
+   G:=R!.group;
+   X:=GeneratorsOfGroup(G)[1][1][1];
+   X:=X!.bianchiInteger;
+   SetName(G,Concatenation("SL(2,O(Q(",String(X),"))"));
+   SetIsIntegerMatrixGroup(G,false);
+   SetIsFinite(G,false);
+   SetCharacteristic(G,0);
+   SetIsHAPCongruenceSubgroupGamma0(G,true);
+   G!.bianchiInteger:=X;
+  return G;
+fi;
+
 if IsInt(X) then
-     R:=ResolutionSL2QuadraticIntegers(X,2);
+   R:=ResolutionSL2QuadraticIntegers(X,2);
    gens:=Generators(R,true);
+   gens:=gens*One(HAPSqrt(X));
    G:=Group(gens);
    SetName(G,Concatenation("SL(2,O(Q(",String(X),"))"));
+   SetIsIntegerMatrixGroup(G,false);
+   SetIsFinite(G,false);
+   SetCharacteristic(G,0);
+   SetIsHAPCongruenceSubgroupGamma0(G,true);
+   G!.bianchiInteger:=X;
    return G;
 fi;
+
 if IsRing(X) then
+if not IsRingOfQuadraticIntegers(X) then
   if not IsBound(X!.associatedIdeal) then return fail; 
   else S:=X!.associatedIdeal;  S:=S!.AssociatedRing;
   fi;
+else
+  S:=X;
+fi;
   if not IsBound(S!.bianchiInteger) then return fail; 
   else d:=S!.bianchiInteger; fi;
 
      R:=ResolutionSL2QuadraticIntegers(d,2);
    gens:=Generators(R,true);
-   G:=Group(gens*One(S));
+   gens:=gens*One(HAPSqrt(d));
+   G:=Group(gens);
    SetName(G,Concatenation("SL(2,", Name(X),")"));
+   SetIsIntegerMatrixGroup(G,false);
+   SetIsFinite(G,false);
+   SetCharacteristic(G,0);
+   SetIsHAPCongruenceSubgroupGamma0(G,true);
+   G!.bianchiInteger:=d;
    return G;
   
 fi;

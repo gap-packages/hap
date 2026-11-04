@@ -25,7 +25,7 @@ G:=rec(
 
 ObjectifyWithAttributes(G, type,
 DimensionOfMatrixGroup, 2,
-IsIntegerMatrixGroup, true,
+IsMatrixGroup, true,
 IsFinite, false,
 IsHapSL2OSubgroup, true,
 IsHapSL2Subgroup, true);
@@ -625,7 +625,8 @@ end);
 ############################################################
 InstallOtherMethod(RightTransversal,
 "right transversal for finite index subgroups of SL2QuadraticIntegers(d))",
-[IsHapSL2OSubgroup,IsHapSL2OSubgroup],
+#[IsHapSL2OSubgroup,IsHapSL2OSubgroup],
+[IsMatrixGroup,IsHapSL2OSubgroup],
 1000000, #Must be a better way than this to ensure this method
 function(H,HH)
 local N;

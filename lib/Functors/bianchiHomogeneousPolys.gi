@@ -5,6 +5,8 @@ InstallGlobalFunction(HAP_4x4MatTo2x2Mat,
 function(M,dd)
 local d, fun, x, A, B, C, D;
 
+if Length(M)=2 then return QuadraticNumberToCyclotomic(M); fi;
+
 if IsString(dd) then d:=EvalString(dd);
 else d:=dd;
 fi;
@@ -99,8 +101,11 @@ local G,n,m,M,R,module,fn,x,y,u,v,z, gensM, gensG, ispsl, d;
 G:=arg[1];
 n:=arg[2];
 m:=arg[3];
-
+if HasName(G) then
 ispsl:=Name(G){[1,2,3]} = "PSL";
+else
+ispsl:=false;
+fi;
 d:=G!.bianchiInteger;
 
 R:=Field(Sqrt(d)); 
@@ -157,7 +162,6 @@ gensM:=List(gensG,fn);;
 M:=Group( gensM );;
 #module:=MappingByFunction(SL(4,Integers),M,x->fn(x));
 module:=MappingByFunction(G,M,x->fn(x));
-
 return module;
 end);
 ########################################################

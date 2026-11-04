@@ -1,8 +1,8 @@
 #############################################################################
 ##
-## This file contains constructors of congruence subgroups and methods for 
-## general congruence subgroups. Faster methods for specific groups of interest
-## are installed elsewhere.
+## This file contains constructors of congruence subgroups in SL(n,Z) and 
+## methods for general congruence subgroups. Faster methods for specific 
+## groups of interest are installed elsewhere.
 
 #############################################################################
 ##
@@ -456,7 +456,7 @@ InstallMethod( IsSubset,
      [ IsMatrixGroup , IsHAPCongruenceSubgroup ],
      function(GG,G)
      local T, poscan, Tinv;
-     if GG=AmbientGroupOfCongruenceSubgroup(G) then
+     if Name(GG)=Name(AmbientGroupOfCongruenceSubgroup(G)) then
         return AmbientTransversal(G);
      fi;
  
@@ -503,6 +503,7 @@ InstallMethod( IsSubset,
       leaves,genTriples,generators, InLowDegreeNodesModG, csts, cnt,
       vertex2word, one, cosetPos, cosetRep, triple2word,
       i,j,u,c,a,b;
+Print(IsHapCongruenceSubgroup(G),"\n");
 
     if DimensionOfMatrixGroup(G)>2 and
        not (DimensionOfMatrixGroup(G) in [3,4] and IsHAPCongruenceSubgroupGamma0(G))

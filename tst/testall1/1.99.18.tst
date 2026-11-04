@@ -8,7 +8,6 @@ Resolution of length 3 in characteristic 0 for PSL(2,O-2) .
 No contracting homotopy available. 
 
 gap> R:=ResolutionSL2QuadraticIntegers(-2,2,true);;
-
 gap> Q:=QuadraticNumberField(-2);;
 gap> OQ:=RingOfIntegers(Q);;
 gap> I:=QuadraticIdeal(OQ,3+1*Sqrt(-2));

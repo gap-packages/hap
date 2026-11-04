@@ -71,11 +71,39 @@ approach  based on Voronoi's theory of perfect forms in his
 		Output from the code of Alexander Rahm and Sebastian Schoennenbeck for certain Bianchi groups has been
 		stored iin <B>HAP</B> for use in constructing free resolutions.
 		
-		<P/>More recently a <B>GAP</B> implementation of Swan's algorithm has been included  in <B>HAP</B>. The implementation uses exact computations in <M>\mathbb Q(\sqrt{-d})</M> and in <M>\mathbb Q(\sqrt{d})</M>. A 
+		<P/>More recently a <B>GAP</B> implementation of Swan's algorithm has been included  in <B>HAP</B>. 
+			The account of Swan's algorithm in the thesis of Alexander Rahm was the main reference during the implementation.
+	</Section>
+		<Section Label="sectQuadArith"><Heading>Arithmetic operations in quadratic number fields</Heading>
+			The implementation of Swan's algorithm uses exact computations in <M>\mathbb Q(\sqrt{-d})</M> and in <M>\mathbb Q(\sqrt{d})</M>. For this, a  
 			bespoke
-			implementation of these two fields is
-			part of the implementation so as to avoid making apparently slower
-computations with cyclotomic numbers. The account of Swan's algorithm in the thesis of Alexander Rahm was the main reference during the implementation.  
+				implementation of basic arithmetic operations
+				in quadratic number fields has been introduced in order to avoid slow computations with cyclotomic numbers.  The following example illustrates this  basic arithmetic. 
+
+				<Example>
+<#Include SYSTEM "tutex/bianchi.22.txt">
+</Example>
+
+	The following example illustrates the underlying type coercion.
+
+                                <Example>
+<#Include SYSTEM "tutex/bianchi.23.txt">
+</Example>
+
+	Quadratic ideals use quadratic arithmetic by default in computations with cohomology of congruence subgroups. This is achieved through
+	the default property <Code>HasQuadraticArithmetic(I)=true</Code> for quadratic ideals which the user can choose to alter.
+
+		Some resolutions use cyclotomic numbers to express boundary homomorphisms and other resolutions use HAP's quadratic numbers instead. Type coercion happens automatically when a cyclotomic number and HAP quadratic number are added/subtracted, multiplied/divided. 
+
+	<P/>The following example ilustrates various different timings, obtained by changing the default values of <Code>HasQuadraticArithmetic(I)</Code>,
+		when constructing to degree <M>2</M> a free resolution for the 
+		congruence subgroup <M>G=\Gamma_0(7) &lt; SL_2({\mathcal O}(\mathbb Q(\sqrt{-22}))</M> and  evaluating its  boundary maps (in order to determine their 'size').
+	<Example>
+<#Include SYSTEM "tutex/bianchi.24.txt">
+</Example>
+
+
+
 
 </Section>
 
@@ -399,7 +427,7 @@ The signs in the boundary maps of the free resolution are delicate. Another easy
 		</List>
 				then one can use the <B>GAP</B> commands <C>VoronoiGL(n,d)</C>
 					and <C>VoronoiSL(n,d)</C> to call  the <B>Magma</B> implementation of the Voronoi algorithm  directly. For example, the following commands do this to calculate the homology  groups
-					<M>H^4(GL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17} \oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 </M>
+					<M>H^4(SL_2({\mathcal O}_{-5} ),P_{{\mathcal O}_{-5}}(8)) = (\mathbb Z_2)^{17} \oplus (\mathbb Z_4)^2 \oplus (\mathbb Z_8)^2 </M>
 						and <M>H_4(GL_2({\mathcal O}(\mathbb Q(\sqrt{5})),\mathbb Z) = (\mathbb Z_2)^7 \oplus \mathbb Z_{60}</M>
 							and <M>H_n(GL_3({\mathcal O}_{-5}),\mathbb Z)</M> for <M>n=1,2</M>.
 								Also, a three generator presentation for <M>GL_2({\mathcal O}(\mathbb Q(\sqrt{5})</M> is computed.

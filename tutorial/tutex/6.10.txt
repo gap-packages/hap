@@ -3,6 +3,10 @@ gap> R:=FreeGResolution(C,7);;
 gap> Homology(TensorWithIntegers(R),6);
 [ 2, 12 ]
 
+gap> M:=HomogeneousPolynomials(R!.group,8);;
+gap> Cohomology( HomToIntegralModule(R,M) ,2);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 168, 168, 0, 0 ]
+
 gap> C:=ContractibleGcomplex("SL(2,O-2_a)");; 
 gap> PC:=QuotientOfContractibleGcomplex(K,Group(-One(K!.group)));;
 gap> PR:=FreeGResolution(PC,7);;

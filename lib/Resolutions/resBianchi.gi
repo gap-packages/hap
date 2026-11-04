@@ -95,7 +95,8 @@ if Length(arg)=3 then
   od;
   Q:=QuadraticNumberField(d);;OQ:=RingOfIntegers(Q);;I:=QuadraticIdeal(OQ,1);;
   Apply(R!.elts,x->HAP_4x4MatTo2x2Mat(x,d));
-  G:=HAP_CongruenceSubgroupGamma0(I);;
+#  G:=HAP_CongruenceSubgroupGamma0(I);;
+  G:=SL2QuadraticIntegers(d);
   G!.tree:=true;
   R!.group:=G;
   fi;

@@ -1,5 +1,17 @@
 ##########################################################
 ##########################################################
+InstallOtherMethod(\^,
+"Conjugating a list of elements of a group",
+[IsList, IsObject],
+function(L,x)
+return List(L,l->l^x);
+end);
+##########################################################
+##########################################################
+
+
+##########################################################
+##########################################################
 InstallOtherMethod(Radical,
 "Radical of FpG-module",
 [IsHapFPGModule],
@@ -1020,6 +1032,21 @@ function(C)
 local D;
 D:=HomToIntegers(C);
 D:=ContractedComplex(D);
+D:=HomToIntegers(D);
+return D;
+end);
+##########################################################
+##########################################################
+
+##########################################################
+##########################################################
+InstallOtherMethod(ContractedComplex,
+"contracted  chain complex",
+[IsHapCochainComplex,IsInt],
+function(C,r)
+local D;
+D:=HomToIntegers(C);
+D:=ContractedComplex(D,r);
 D:=HomToIntegers(D);
 return D;
 end);

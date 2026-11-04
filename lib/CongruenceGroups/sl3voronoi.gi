@@ -346,10 +346,10 @@ end;
 
     od;
 
-for cnt in [1..Length(w)] do
-if AbsInt(w[cnt])=5 then w[cnt]:=-SignInt(w[cnt])*4; fi;
-if AbsInt(w[cnt])=6 then w[cnt]:=-SignInt(w[cnt])*1; fi;
-od;
+#for cnt in [1..Length(w)] do
+#if AbsInt(w[cnt])=5 then w[cnt]:=-SignInt(w[cnt])*4; fi;
+#if AbsInt(w[cnt])=6 then w[cnt]:=-SignInt(w[cnt])*1; fi;
+#od;
 
     return [A,w];
 
