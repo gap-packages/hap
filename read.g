@@ -578,3 +578,6 @@ SetInfoLevel(InfoWarning,1); #This is GAP's default level
 
 ##AFTER THOUGHT######################################################
 ReadPackageHap("lib/hap_afterthought.gd");
+
+# Equivariant G-complex simplification.
+ReadPackageHap("lib/Wunden/initWunden.gi");
