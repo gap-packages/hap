@@ -478,7 +478,16 @@ The Julia package
 <URL Text="ArithmeticVoronoi.jl">https://github.com/dimpase/ArithmeticVoronoi.jl</URL>
 computes these complexes natively and can register an in-process callback
 under the name <C>"julia"</C>. HAP itself does not install or load Julia.
-From Julia, the direct interface loads HAP automatically:
+The rational request and projective-complex examples below extend the first
+registered release, v0.1.0. Install the tested provider revision used by this
+CI job in your chosen Julia environment, along with OSCAR for its GAP interface:
+<Log><![CDATA[
+import Pkg
+Pkg.add(url="https://github.com/dimpase/ArithmeticVoronoi.jl.git",
+        rev="c6942b97936e69a392ee88523fbf3574edcc6e26")
+Pkg.add("Oscar")
+]]></Log>
+The direct Julia interface loads HAP automatically:
 <Log><![CDATA[
 using ArithmeticVoronoi, Oscar
 import Oscar: GAP
@@ -506,7 +515,7 @@ K := VoronoiComplex(request : backend := "julia");
 ]]></Log>
 These last commands use GAP syntax, which can be evaluated through GAP.jl.
 See the
-<URL Text="ArithmeticVoronoi HAP guide">https://dimpase.github.io/ArithmeticVoronoi.jl/hap_and_vmh/</URL>
+<URL Text="ArithmeticVoronoi HAP guide">https://github.com/dimpase/ArithmeticVoronoi.jl/blob/c6942b97936e69a392ee88523fbf3574edcc6e26/docs/src/hap_and_vmh.md</URL>
 for installation, the direct Julia calls and supported computations.
 <P/>
 An unregistered backend name is an error. Providers must supply complete stabilizers, the orientation action
