@@ -16,6 +16,10 @@ gap> Print([haprequest.group,haprequest.rank,haprequest.field.radicand],"\n");
 gap> haprequest := VoronoiComplexGL(3,5 : backend := "hap-test");;
 gap> Print([haprequest.group,haprequest.rank,haprequest.field.radicand],"\n");
 [ "GL", 3, 5 ]
+gap> haprequest := rec(group:="PSL",rank:=4,field:=rec(kind:="rational"),
+> order:=rec(kind:="maximal"),lattice:=rec(kind:="free"));;
+gap> Print(IsIdenticalObj(haprequest,VoronoiComplex(haprequest : backend := "hap-test")),"\n");
+true
 gap> RegisterVoronoiBackend("hap-test-fail", request -> fail);
 gap> Print(VoronoiComplex(rec() : backend := "hap-test-fail"),"\n");
 fail
