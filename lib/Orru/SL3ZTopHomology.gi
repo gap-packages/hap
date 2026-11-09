@@ -3,15 +3,23 @@
 ###########################################################
 InstallGlobalFunction(Gamma0_SL3ZTopRationalHomology,
 function(n)
-    local FirstCondition, SecondCondition, ThirdCondition_1, ThirdCondition_2, A, B, C, i, j, M, SolutionSpace,FiniteProjectivePlane,ProjPlane;
+    local ProjPlane, M, S;
 
 #Returns the dimension of the degree 3 rational homology of the 
 #congruence subgroup Gamma_0(n) in SL(3,Z). 
 
-##########################################
-##########################################
-
     ProjPlane := FiniteProjectiveSpace(2,n);
+    M := Gamma0_SL3ZModularSymbolRelations(ProjPlane,n);
+    S := SparseSmithNormalForm(M);
+
+    return S.freeRank;
+end);
+###########################################################
+###########################################################
+
+InstallGlobalFunction(Gamma0_SL3ZModularSymbolRelations,
+function(ProjPlane, n)
+    local FirstCondition, SecondCondition, ThirdCondition_1, ThirdCondition_2, A, B, C, i, j, M;
 
     FirstCondition := function(p)
         local v;
@@ -51,10 +59,9 @@ function(n)
         j := Position(ProjPlane.Reps,ThirdCondition_2(ProjPlane.Reps[i]));
         SparseMatAddToEntry(C,i,j,1);
     od;
+
     M:=SparseMatConcatenation(A,B);Unbind(A);Unbind(B);
     M:=SparseMatConcatenation(M,C);Unbind(C);
-    return Length(ProjPlane.Reps) - RankMatDestructive(M);
-end);
-###########################################################
-###########################################################
 
+    return M;
+end);
