@@ -16,7 +16,7 @@ InstallMethod(ProjectiveSpace,
 
         n := LevelOfCongruenceSubgroup(G);
 
-        return FiniteProjectivePlane(n);
+        return FiniteProjectiveSpace(2,n);
      end);
 ##########################################################################
 ##
