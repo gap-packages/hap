@@ -16,7 +16,7 @@ InstallGlobalFunction(RestrictNonFreeResolution, function(R,K)
     local G, one, length, top, T, cosetPosition, q, g, x,
           data, records, elts, originalIndex, subgroupIndex, prepare,
           dimension, checkCell, fromOriginal, toOriginal, boundary,
-          stabilizer, action, homotopy, boundaryCache;
+          stabilizer, action, homotopy, boundaryCache, RT;
     if not IsHapNonFreeResolution(R) or not IsGroup(K) then
         Error("Expected a HapNonFreeResolution and a subgroup");
     fi;
@@ -33,16 +33,35 @@ InstallGlobalFunction(RestrictNonFreeResolution, function(R,K)
     if HasIsFinite(G) and IsFinite(G) then
         if not IsSubgroup(G,K) then Error("K must be a subgroup of R!.group"); fi;
     fi;
-    T := [one];
-    cosetPosition := g -> PositionProperty(T,t -> t^-1*g in K);
-    q := 1;
-    while q <= Length(T) do
-        for g in GeneratorsOfGroup(G) do
-            x := g*T[q];
-            if cosetPosition(x)=fail then Add(T,x); fi;
-        od;
-        q := q+1;
-    od;
+#    T := [one];
+#    ## cosetPosition := g -> PositionProperty(T,t -> t^-1*g in K);
+#if IsBound(K!.ambientMembership) then                         # Originally 
+#  cosetPosition:=function(g)                                  # changed to
+#  local g1;                                                   # this faster
+#  g1:=g^-1;                                                   # version before
+#  return PositionProperty(T, t->K!.ambientMembership(g1*t));  # realizing that
+#  end;                                                        # this is just a
+#else                                                          # left 
+#  cosetPosition:=function(g)                                  # transversal
+#  local g1;                                                   #
+#  g1:=g^-1;                                                   #
+#  return PositionProperty(T, t->g1*t in K);                   #
+#  end;                                                        #
+#fi;                                                           #
+#    q := 1;
+#    while q <= Length(T) do
+#        for g in GeneratorsOfGroup(G) do
+#            x := g*T[q];
+#            if cosetPosition(x)=fail then Add(T,x); fi;
+#        od;
+#        q := q+1;
+#    od;
+
+#The next three lines replace (and speed up) the above commented lines.
+RT:=RightTransversal(G,K);
+T:=List(RT,x->x^-1);
+cosetPosition:=function(g); return PositionCanonical(RT,g^-1); end;
+
     top := length;
     while top > 0 and R!.dimension(top)=0 do top := top-1; od;
     data := List([0..top],n -> []);
@@ -52,15 +71,21 @@ InstallGlobalFunction(RestrictNonFreeResolution, function(R,K)
 
     originalIndex := function(g)
         local pos;
-        pos := Position(R!.elts,g);
-        if pos=fail then Add(R!.elts,g); pos := Length(R!.elts); fi;
-        return pos;
+        #pos := Position(R!.elts,g); #Changed this tp focus on speed
+        #if pos=fail then            #rather than on memory
+        Add(R!.elts,g); 
+        #pos := Length(R!.elts); fi; #
+        return Length(R!.elts);
+        #return pos;                 #
     end;
     subgroupIndex := function(g)
         local pos;
-        pos := Position(elts,g);
-        if pos=fail then Add(elts,g); pos := Length(elts); fi;
-        return pos;
+        #pos := Position(elts,g);    #Changed this to focus on speed
+        #if pos=fail then            #rather than on memory
+        Add(elts,g); 
+        #pos := Length(elts); fi;    #
+        return Length(elts);
+        #return pos;                 #
     end;
 
     # Orbits of H on the LEFT cosets G/K. For a base coset x*K,

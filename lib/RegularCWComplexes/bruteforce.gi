@@ -160,6 +160,7 @@ od;
 
 Y:=RegularCWComplex(boundaries);
 Y!.G_Cells:=Cells;
+Y!.StandardForm:=StandardForm;
 return Y;
 end);
 #####################################################################

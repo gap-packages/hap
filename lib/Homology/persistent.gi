@@ -1037,9 +1037,18 @@ InstallGlobalFunction(TruncatedGComplex,
 function(arg)
 local R,a,b,Dimension, Boundary, Stabilizer, action;
 
+if Length(arg)=3 then
 R:=arg[1];
 a:=arg[2];
 b:=arg[3];
+fi;
+
+if Length(arg)=2 then
+R:=arg[1];
+a:=0;
+b:=arg[2];
+fi;
+
 
 ##################
 Dimension:=function(n)

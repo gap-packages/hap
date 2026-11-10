@@ -39,7 +39,6 @@ InstallMethod( CongruenceSubgroupGamma0, "for integer matrix group and positive 
 
     membership:=function(g)
         local i;
-
         if not g in GG then
             return false;
         fi;
@@ -503,7 +502,6 @@ InstallMethod( IsSubset,
       leaves,genTriples,generators, InLowDegreeNodesModG, csts, cnt,
       vertex2word, one, cosetPos, cosetRep, triple2word,
       i,j,u,c,a,b;
-Print(IsHapCongruenceSubgroup(G),"\n");
 
     if DimensionOfMatrixGroup(G)>2 and
        not (DimensionOfMatrixGroup(G) in [3,4] and IsHAPCongruenceSubgroupGamma0(G))

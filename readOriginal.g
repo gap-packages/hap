@@ -247,8 +247,9 @@ ReadPackageHap( "lib/Congruence/GCWquotient.gi");
 
 ReadPackageHap( "lib/CongruenceGroups/initCongruenceGroups.gi");
 
-##################### ORRU #####################################
+##################### ORRU & WUNDEN #################################
 ReadPackageHap( "lib/Orru/initOrru.gi");
+ReadPackageHap("lib/Wunden/initWunden.gi");
 
 
 

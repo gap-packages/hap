@@ -251,9 +251,10 @@ ReadPackageHap( "lib/Congruence/GCWquotient.gi");
 
 ReadPackageHap( "lib/CongruenceGroups/initCongruenceGroups.gi");
 
-##################### ORRU #####################################
-ReadPackageHap( "lib/Orru/initOrru.gi");
 
+##################### ORRU & WUNDEN #################################
+ReadPackageHap( "lib/Orru/initOrru.gi");
+ReadPackageHap("lib/Wunden/initWunden.gi");
 
 
 
@@ -579,6 +580,3 @@ SetInfoLevel(InfoWarning,1); #This is GAP's default level
 
 ##AFTER THOUGHT######################################################
 ReadPackageHap("lib/hap_afterthought.gd");
-
-# Equivariant G-complex simplification.
-ReadPackageHap("lib/Wunden/initWunden.gi");

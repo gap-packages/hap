@@ -17,9 +17,11 @@ M:=[1..LengthC];
 TFSummands:=[];
 BoundaryRec:=[];
 
-TFSummands[1]:=[1..R!.dimension(0)];
-for n in [1..LengthC] do
+#TFSummands[1]:=[1..R!.dimension(0)];
+for n in [0..LengthC] do
+if n>0 then
 BoundaryRec[n]:=[];
+fi;
 TFSummands[n+1]:=[];
 for k in [1..R!.dimension(n)] do
 tmp:=true;
