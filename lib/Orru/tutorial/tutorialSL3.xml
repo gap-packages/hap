@@ -1,81 +1,128 @@
-<Chapter Label="chapSL3Z"><Heading>Congruence Subgroups of <M>SL_3(\mathbb Z)</M> (by Giulia Orr&#x00F9;)</Heading>
+<Chapter Label="chapSL3Z"><Heading>Congruence Subgroups of <M>SL_n(\mathbb Z)</M> (by Giulia Orr&#x00F9;)</Heading>
+<Section Label="sectGamma0"><Heading>The congruence subgroups <M>\Gamma_0(N)</M></Heading>
+Let <M>N \geq 1</M>. The congruence subgroup <M>\Gamma_0(N)\subset SL_n(\mathbb Z)</M> consists of the matrices <M>(a_{ij})</M> with <M>a_{i1} \equiv 0 \bmod N</M> for all <M>i \neq 1</M>. The following command builds <M>\Gamma_0(6) \subset SL_3(\mathbb Z)</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.1.txt">
+</Example>
+We can test whether a matrix belongs to <M>\Gamma_0(6)</M>. The test also checks that the matrix is in <M>SL_3(\mathbb Z)</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.2.txt">
+</Example>
 
-	Let <M>\Gamma_0(N) = \{\left(\begin{array}{lll}
-		a_{11} &amp;a_{12} &amp;a_{13}\\
-		a_{21} &amp;a_{22} &amp;a_{23}\\
-		a_{31} &amp;a_{32} &amp;a_{33}
-		\end{array}\right) \in SL_3(\mathbb Z)\ \colon \ a_{21}\equiv a_{31} \equiv 0 \mod N \}.
-</M>
-        <Section><Heading>Rational homology in degree 3</Heading>
-			The homology <M>H_3(\Gamma_0(N),\mathbb Q)</M> was computed for all <M>10 \le N\le 209</M> and many <M>210\le N\le 250</M> in <Cite Key="vanderkallen"/>. The following command, based on the same method, computes <M>H_3(\Gamma_0(31),\mathbb Q) =\mathbb Q^{4}</M>.
+The following commands compute the index of <M>\Gamma_0(3)</M> in <M>SL_5(\mathbb Z)</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.1.2.txt">
+</Example>
+
+The object <C>G</C> also stores the following data:
+<List>
+<Item>A representative of each point of the space <M>\mathbb{P}^2(\mathbb Z / 6
+\mathbb Z) \cong SL_3(\mathbb Z)/\Gamma_0(6)</M>, where the coset <M>g\Gamma_0(6)</M> corresponds to the first column of <M>g</M>, see Section <Ref Sect="sectProjSpaces"/>. These are stored in <C>Reps</C>, together with a function <C>RepOf</C> that takes
+a unimodular vector in <M>\mathbb Z^3</M> and returns its representative:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.3.txt">
+</Example>
+</Item>
+<Item>Two functions for the left cosets of <M>G</M>. For a matrix <M>g</M> in
+<M>SL_3(\mathbb Z)</M>, <C>AmbientRepresentation</C> returns a canonical
+representative of the coset <M>gG</M>, and <C>AmbientPosition</C> returns the
+position in <C>Reps</C> of the corresponding point. Since <C>M</C> lies in
+<M>G</M>, its coset is the trivial one, with the identity as representative.
+The first column of <C>A</C> is <M>(1,1,0)</M>, the 19th element of <C>Reps</C>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.4.txt">
+</Example>
+</Item>
+<Item>A right transversal of <M>G</M> in its ambient group, that is, one representative <M>t</M> of each right coset <M>Gt</M>. Note that the previous item uses left cosets <M>gG</M> instead: the inverses <M>t^{-1}</M> of the elements of the transversal are representatives of the left cosets.
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/gamma0.5.txt">
+</Example>
+</Item>
+
+</List>
+
+</Section>
+
+<Section Label="sectProjSpaces"><Heading>Projective spaces over <M>\mathbb Z/N\mathbb Z</M></Heading>
+The space <M>\mathbb P^d(\mathbb Z / N\mathbb Z)</M> is the set of vectors <M>(x_0,\ldots,x_d) \in (\mathbb Z/N\mathbb Z)^{d+1}</M> such that <M>\gcd(x_0,\ldots,x_d,N) = 1</M>, modulo multiplication by units of <M>\mathbb Z / N \mathbb Z</M>.
+<P/>The function <C>FiniteProjectiveSpace</C> takes the dimension <M>d</M> and the
+<Emph>level</Emph> <M>N</M>. It returns a record containing a list <C>Reps</C> with one representative of each point, and a function <C>RepOf</C> that returns the representative of a given vector. For example, the following command computes the <Emph>Fano plane</Emph>, that is, the finite projective plane of order 2:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/projspaces.1.txt">
+</Example>
+It is worth noting that, when <M>N</M> is prime, <M>\mathbb P^d(\mathbb Z/N\mathbb Z)</M> is the finite projective space over the field with <M>N</M> elements.
+Two other examples:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/projspaces.2.txt">
+</Example>
+The function <C>FiniteProjectiveSpace</C> is used in the construction of the
+congruence subgroups <M>\Gamma_0(N)</M>, see Section <Ref Sect="sectGamma0"/>.
+Note that the length of <C>Reps</C> equals, in both cases, the index of the
+corresponding subgroup built there. This is because <M>SL_n(\mathbb Z)/\Gamma_0(N) \cong \mathbb P^{n-1}(\mathbb Z/N\mathbb Z)</M>.
+</Section>
+
+
+
+<Section><Heading>Rational homology in degree 3</Heading>
+The homology <M>H_3(\Gamma_0(N),\mathbb Q)</M> for <M>\Gamma_0(N) \subset SL_3(\mathbb Z)</M> was computed for all <M>10 \le N\le 209</M> and many <M>210\le N\le 250</M> in <Cite Key="vanderkallen"/>. The following command, based on the same method, computes <M>H_3(\Gamma_0(31),\mathbb Q) =\mathbb Q^{4}</M>.
                 
 <Example>
-	<#Include SYSTEM "../lib/Orru/tutorial/tutex/sl3.1.txt">
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/sl3.1.txt">
 </Example>
 
 <P/> This command can be used to extend the computations to  the following table of dimensions of <M>H_3(\Gamma_0(N),\mathbb Q)</M> for all <M>10\le N\le 300</M>. The table corrects slips in
-<Cite Key="vanderkallen"/> for <M>N=27,92,93,240,250</M>.
+<Cite Key="vanderkallen"/> for <M>N=27,92,93,240,250</M> (in bold).
 
 <P/>
 <M>
-	\begin{array}{l|llllllllll}
-	x= &amp;0 &amp;1 &amp;2 &amp;3 &amp;4 &amp;5 &amp;6 &amp;7 &amp;8 &amp;9 \\
-        N &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\hline\\
-	10+x &amp;2 &amp;2 &amp;7 &amp;0 &amp;4 &amp;4 &amp;6 &amp;2 &amp;7&amp;2 \\
-20+x &amp;9 &amp;4&amp;8&amp;4&amp;17&amp;4&amp;6&amp;5&amp;13&amp;4\\
-30+x &amp;20&amp;4&amp;12&amp;10&amp;10&amp;8&amp;21&amp;4&amp;12&amp;8\\
-40+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-50+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-60+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-70+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-80+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-90+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-100+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-110+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-120+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-130+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-140+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-150+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-160+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-170+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-180+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-190+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-200+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-210+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-220+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-230+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-240+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-250+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-260+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-270+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-280+x &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\
-290+x &amp;142&amp;78&amp;121&amp;48&amp;239&amp;70&amp;141&amp;107&amp;98&amp;60\\
-300+x &amp;325&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;
-	\end{array}
+\begin{array}{r|rrrrrrrrrr}
+{}_{N}\diagdown{}^{x} &amp;0 &amp;1 &amp;2 &amp;3 &amp;4 &amp;5 &amp;6 &amp;7 &amp;8 &amp;9 \\ \hline
+10+x &amp;2 &amp;2 &amp;7 &amp;0 &amp;4 &amp;4 &amp;6 &amp;2 &amp;7 &amp;2 \\
+20+x &amp;9 &amp;4 &amp;8 &amp;4 &amp;17 &amp;4 &amp;6 &amp;\mathbf{5} &amp;13 &amp;4 \\
+30+x &amp;20 &amp;4 &amp;12 &amp;10 &amp;10 &amp;8 &amp;21 &amp;4 &amp;12 &amp;8 \\
+40+x &amp;23 &amp;6 &amp;26 &amp;6 &amp;21 &amp;15 &amp;16 &amp;8 &amp;34 &amp;9 \\
+50+x &amp;20 &amp;14 &amp;21 &amp;10 &amp;25 &amp;14 &amp;31 &amp;14 &amp;20 &amp;10 \\
+60+x &amp;55 &amp;10 &amp;20 &amp;19 &amp;26 &amp;12 &amp;42 &amp;10 &amp;29 &amp;20 \\
+70+x &amp;38 &amp;12 &amp;51 &amp;10 &amp;22 &amp;28 &amp;33 &amp;18 &amp;44 &amp;14 \\
+80+x &amp;48 &amp;23 &amp;26 &amp;14 &amp;71 &amp;18 &amp;28 &amp;24 &amp;49 &amp;16 \\
+90+x &amp;67 &amp;16 &amp;\mathbf{41} &amp;\mathbf{24} &amp;32 &amp;22 &amp;68 &amp;14 &amp;43 &amp;33 \\
+100+x &amp;59 &amp;16 &amp;60 &amp;16 &amp;51 &amp;48 &amp;42 &amp;18 &amp;69 &amp;16 \\
+110+x &amp;58 &amp;28 &amp;64 &amp;18 &amp;66 &amp;28 &amp;57 &amp;35 &amp;40 &amp;26 \\
+120+x &amp;125 &amp;29 &amp;44 &amp;40 &amp;53 &amp;28 &amp;89 &amp;20 &amp;58 &amp;34 \\
+130+x &amp;60 &amp;22 &amp;107 &amp;26 &amp;44 &amp;51 &amp;67 &amp;22 &amp;82 &amp;22 \\
+140+x &amp;101 &amp;40 &amp;50 &amp;30 &amp;111 &amp;32 &amp;46 &amp;55 &amp;61 &amp;24 \\
+150+x &amp;122 &amp;24 &amp;75 &amp;51 &amp;76 &amp;36 &amp;119 &amp;24 &amp;62 &amp;50 \\
+160+x &amp;100 &amp;36 &amp;101 &amp;26 &amp;69 &amp;74 &amp;56 &amp;28 &amp;161 &amp;40 \\
+170+x &amp;80 &amp;53 &amp;73 &amp;28 &amp;106 &amp;56 &amp;102 &amp;50 &amp;64 &amp;30 \\
+180+x &amp;177 &amp;28 &amp;82 &amp;54 &amp;93 &amp;40 &amp;106 &amp;40 &amp;81 &amp;67 \\
+190+x &amp;94 &amp;32 &amp;146 &amp;30 &amp;62 &amp;80 &amp;121 &amp;32 &amp;139 &amp;32 \\
+200+x &amp;141 &amp;54 &amp;66 &amp;44 &amp;155 &amp;48 &amp;68 &amp;67 &amp;108 &amp;44 \\
+210+x &amp;204 &amp;34 &amp;109 &amp;60 &amp;72 &amp;50 &amp;163 &amp;44 &amp;70 &amp;58 \\
+220+x &amp;149 &amp;44 &amp;124 &amp;38 &amp;130 &amp;107 &amp;74 &amp;38 &amp;173 &amp;36 \\
+230+x &amp;114 &amp;94 &amp;129 &amp;38 &amp;155 &amp;56 &amp;101 &amp;70 &amp;110 &amp;40 \\
+240+x &amp;\mathbf{256} &amp;38 &amp;119 &amp;79 &amp;117 &amp;83 &amp;158 &amp;46 &amp;119 &amp;70 \\
+250+x &amp;\mathbf{122} &amp;42 &amp;233 &amp;54 &amp;84 &amp;106 &amp;134 &amp;42 &amp;146 &amp;52 \\
+260+x &amp;165 &amp;83 &amp;88 &amp;44 &amp;243 &amp;66 &amp;120 &amp;80 &amp;113 &amp;44 \\
+270+x &amp;217 &amp;44 &amp;140 &amp;100 &amp;90 &amp;86 &amp;207 &amp;44 &amp;92 &amp;87 \\
+280+x &amp;227 &amp;46 &amp;162 &amp;46 &amp;127 &amp;118 &amp;126 &amp;62 &amp;235 &amp;74 \\
+290+x &amp;142 &amp;78 &amp;121 &amp;48 &amp;239 &amp;70 &amp;141 &amp;107 &amp;98 &amp;60 \\
+300+x &amp;325 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
+\end{array}
 </M>
+
 
         </Section>       
 
-	<Section><Heading>Integral homology modulo the primes <M>2</M> and <M>3</M></Heading>
-		The group <M>SL_3(\mathbb Z)</M> acts cellularly on a <M>3</M>-dimensional contractible
-			regular CW complex <M>K</M>
-				with each cell stabilizer group finite of order dividing <M>24</M>. Hence, the finite index subgroup
-<M>\Gamma_0(N)</M> also acts on this space.
-The quotient <M>Y=K/\Gamma_0(N)</M>
-	has integral homology <M>H_n(Y,\mathbb Z)</M> equal to the group homology <M>H_n(\Gamma_0(N),\mathbb Z)</M> modulo any <M>2</M>-torsion and <M>3</M>-torsion. For <M>N=31</M> the
-		following example computes <M>H_1(Y,\mathbb Z)=\mathbb Z_{5}</M>, <M>H_2(Y,\mathbb Z)=\mathbb Z_3</M> and <M>H_3(Y,\mathbb Z)= \mathbb Z^4</M>.
-
+<Section><Heading>Integral homology away from the primes 2 and
+     3</Heading>
+The group <M>SL_3(\mathbb Z)</M> acts cellularly on a <M>3</M>-dimensional contractible regular CW complex <M>K</M>, with finite cell stabilizers of order dividing <M>24</M>. Hence the finite index subgroup <M>\Gamma_0(N)</M> also acts on <M>K</M>. The quotient <M>Y=K/\Gamma_0(N)</M> has the same integral homology as <M>\Gamma_0(N)</M> away from the primes <M>2</M> and <M>3</M>: the free parts and the <M>p</M>-torsion for <M>p \geq 5</M> agree, while the <M>2</M> and <M>3</M>-torsion may differ. For <M>N=31</M>, the following example computes <M>H_1(Y,\mathbb Z)=\mathbb Z_{5}</M>, <M>H_2(Y,\mathbb Z)=\mathbb Z_3</M> and <M>H_3(Y,\mathbb Z)= \mathbb Z^4</M>.
 <Example>
 <#Include SYSTEM "../lib/Orru/tutorial/tutex/sl3.2.txt">
 </Example>
+</Section>
 
-	</Section>
-
-	<Section><Heading>Low-dimensional integral homology</Heading>
-			The following example computes <M>H_1(\Gamma_0(31),\mathbb Z)= \mathbb Z_{30}</M>,
-	<M>H_2(\Gamma_0(31),\mathbb Z)= (\mathbb Z_2)^8 </M>,
-	<M>H_3(\Gamma_0(31),\mathbb Z)=(\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2
-	\oplus \mathbb Z^4</M>.
+<Section><Heading>Low-dimensional integral homology</Heading>
+To compute the homology exactly, including the <M>2</M>- and <M>3</M>-torsion, we need a free <M>\mathbb Z\Gamma_0(N)</M>-resolution. Its tensor product with <M>\mathbb Z</M> gives <M>H_n(\Gamma_0(N),\mathbb Z)</M>, at a higher computational cost than the quotient <M>Y</M>. The following example computes <M>H_1(\Gamma_0(31),\mathbb Z)= \mathbb Z_{30}</M>, <M>H_2(\Gamma_0(31),\mathbb Z)= (\mathbb Z_2)^8 </M>, <M>H_3(\Gamma_0(31),\mathbb Z)=(\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^4</M>.
 
 <Example>
 <#Include SYSTEM "../lib/Orru/tutorial/tutex/sl3.3.txt">

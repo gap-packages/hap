@@ -24,6 +24,10 @@ DeclareOperation("HAPCongruenceSubgroupGamma0_alt",[IsInt,IsInt]);
 DeclareOperation("HAPIntersectionConjugatedCongruenceSubgroup",[IsHapCongruenceSubgroup,IsMatrix]);
 DeclareOperation("HAPCongruenceSubgroupTree",[IsHapCongruenceSubgroup]);
 DeclareGlobalFunction("Gamma0_SL3ZTopRationalHomology");
+DeclareGlobalFunction("Gamma0_SL3ZModularSymbolRelations");
+DeclareGlobalFunction("SparseSmithNormalForm");
+
+
 
 InstallMethod( ViewObj,
 "for HapCongruenceSubgroup",
