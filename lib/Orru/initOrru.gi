@@ -7,4 +7,6 @@ ReadPackageHap( "lib/Orru/sl3methods.gi");
 ReadPackageHap( "lib/Orru/sl4methods.gi");
 ReadPackageHap( "lib/Orru/slnmethods.gi");
 ReadPackageHap( "lib/Orru/SparseSNF.gi");
+ReadPackageHap( "lib/Orru/heckesl3.gi");
+
 
