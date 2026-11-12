@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (HAP commands) - Chapter 15: Parallel computation</title>
+<title>GAP (HAP commands) - Chapter 15: Congruence Subgroups of \(SL_n(\mathbb Z)\) (by Giulia Orrù)</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -18,233 +18,210 @@
 <body class="chap15"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap16_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap15.html">[MathJax off]</a></p>
-<p><a id="X7F571E8F7BBC7514" name="X7F571E8F7BBC7514"></a></p>
-<div class="ChapSects"><a href="chap15_mj.html#X7F571E8F7BBC7514">15 <span class="Heading">Parallel computation</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X7EAE286B837D27BA">15.1 <span class="Heading">An embarassingly parallel computation</span></a>
+<p><a id="X78E279F08527EE89" name="X78E279F08527EE89"></a></p>
+<div class="ChapSects"><a href="chap15_mj.html#X78E279F08527EE89">15 <span class="Heading">Congruence Subgroups of <span class="SimpleMath">\(SL_n(\mathbb Z)\)</span> (by Giulia Orrù)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X78319FA683B80826">15.1 <span class="Heading">The congruence subgroups <span class="SimpleMath">\(\Gamma_0(N)\)</span></span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X80F359DD7C54D405">15.2 <span class="Heading">A non-embarassingly parallel computation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X844A44D784FD8C99">15.2 <span class="Heading">Projective spaces over <span class="SimpleMath">\(\mathbb Z/N\mathbb Z\)</span></span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X8496786F7FCEC24A">15.3 <span class="Heading">Parallel persistent homology</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X8301B12684BBBD20">15.3 <span class="Heading">Rational homology in degree 3</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X865ABE6581DDF36A">15.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X87516CF77FC141BF">15.4 <span class="Heading">Integral homology away from the primes 2 and
+     3</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X8533FDC2780EF77C">15.5 <span class="Heading">Low-dimensional integral homology</span></a>
 </span>
 </div>
 </div>
 
-<h3>15 <span class="Heading">Parallel computation</span></h3>
+<h3>15 <span class="Heading">Congruence Subgroups of <span class="SimpleMath">\(SL_n(\mathbb Z)\)</span> (by Giulia Orrù)</span></h3>
 
-<p><a id="X7EAE286B837D27BA" name="X7EAE286B837D27BA"></a></p>
+<p><a id="X78319FA683B80826" name="X78319FA683B80826"></a></p>
 
-<h4>15.1 <span class="Heading">An embarassingly parallel computation</span></h4>
+<h4>15.1 <span class="Heading">The congruence subgroups <span class="SimpleMath">\(\Gamma_0(N)\)</span></span></h4>
 
-<p>The following example creates fifteen child processes and uses them simultaneously to compute the second integral homology of each of the <span class="SimpleMath">\(2328\)</span> groups of order <span class="SimpleMath">\(128\)</span>. The final command shows that</p>
-
-<p><span class="SimpleMath">\(H_2(G,\mathbb Z)=\mathbb Z_2^{21}\)</span></p>
-
-<p>for the <span class="SimpleMath">\(2328\)</span>-th group <span class="SimpleMath">\(G\)</span> in <strong class="button">GAP</strong>'s library of small groups. The penulimate command shows that the parallel computation achieves a speedup of 10.4 .</p>
+<p>Let <span class="SimpleMath">\(N \geq 1\)</span>. The congruence subgroup <span class="SimpleMath">\(\Gamma_0(N)\subset SL_n(\mathbb Z)\)</span> consists of the matrices <span class="SimpleMath">\((a_{ij})\)</span> with <span class="SimpleMath">\(a_{i1} \equiv 0 \bmod N\)</span> for all <span class="SimpleMath">\(i \neq 1\)</span>. The following command builds <span class="SimpleMath">\(\Gamma_0(6) \subset SL_3(\mathbb Z)\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Processes:=List([1..15],i-&gt;ChildProcess());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in Processes do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildPut(fn,"fn",p);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");</span>
-1716105545
-1716105554
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");</span>
-1716105586
-1716105680
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(680-586)/(554-545);</span>
-10.4444
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L[2328];</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := CongruenceSubgroupGamma0(SL(3,Integers),6);</span>
+&lt;group of 3x3 matrices in characteristic 0&gt;
 </pre></div>
 
-<p>The function <code class="code">ParallelList()</code> is built from <strong class="button">HAP</strong>'s six core functions for parallel computation.</p>
-
-<p><a id="X80F359DD7C54D405" name="X80F359DD7C54D405"></a></p>
-
-<h4>15.2 <span class="Heading">A non-embarassingly parallel computation</span></h4>
-
-<p>The following commands use core functions to compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over two processors.</p>
+<p>We can test whether a matrix belongs to <span class="SimpleMath">\(\Gamma_0(6)\)</span>. The test also checks that the matrix is in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716109418
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..5000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[5001..10000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716110143
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716111389
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(111389-110143)/(110143-109418);</span>
-1.71862
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := [[1, 0, 0], [30, 1, 0], [12, 0, 1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.membership(M);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := [[1, 1, 0], [1, 2, 0], [0, 0, 1]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.membership(A);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.membership([[1, 0, 0], [6, 1, 0], [0, 0, 2]]);</span>
+false
 </pre></div>
 
-<p>The next commands compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <span class="SimpleMath">\(M\)</span> and <span class="SimpleMath">\(N\)</span> are communicated to all processes) and the computation achieves a speedup of 7.6.</p>
+<p>The following commands compute the index of <span class="SimpleMath">\(\Gamma_0(3)\)</span> in <span class="SimpleMath">\(SL_5(\mathbb Z)\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716156583
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(M,"M",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(N,"N",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">cmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildCommand(cmd,S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> C:=ChildGet("A",S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Append(A,C);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716157489
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716164405
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(64405-57489)/(57489-56583);</span>
-7.63355
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := CongruenceSubgroupGamma0(SL(5,Integers),3);</span>
+&lt;group of 5x5 matrices in characteristic 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexInAmbientGroup(H);</span>
+121
 </pre></div>
 
-<p><a id="X8496786F7FCEC24A" name="X8496786F7FCEC24A"></a></p>
+<p>The object <code class="code">G</code> also stores the following data:</p>
 
-<h4>15.3 <span class="Heading">Parallel persistent homology</span></h4>
 
-<p>Section <a href="chap5_mj.html#X7D2CC9CB85DF1BAF"><span class="RefLink">5.8</span></a> illustrates an alternative method of computing the persitent Betti numbers of a filtered pure cubical complex. The method lends itself to parallelisation. However, the following parallel computation of persistent Betti numbers achieves only a speedup of <span class="SimpleMath">\(1.5\)</span> due to a significant time spent transferring data structures between processes. On the other hand, the persistent Betti function could be used to distribute computations over several computers. This might be useful for larger computations that require significant memory resources.</p>
+<ul>
+<li><p>A representative of each point of the space <span class="SimpleMath">\(\mathbb{P}^2(\mathbb Z / 6 \mathbb Z) \cong SL_3(\mathbb Z)/\Gamma_0(6)\)</span>, where the coset <span class="SimpleMath">\(g\Gamma_0(6)\)</span> corresponds to the first column of <span class="SimpleMath">\(g\)</span>, see Section <a href="chap15_mj.html#X844A44D784FD8C99"><span class="RefLink">15.2</span></a>. These are stored in <code class="code">Reps</code>, together with a function <code class="code">RepOf</code> that takes a unimodular vector in <span class="SimpleMath">\(\mathbb Z^3\)</span> and returns its representative:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data247.txt");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ThickeningFiltration(T,25);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[0,1,2];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");</span>
-1717160785
-1717161285
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");</span>
-1717161528
-1717162276
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(1717162276-1717161528)/(1717161285-1717160785);</span>
-1.496
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(G!.ProjectiveSpace.Reps); #Note that this coincides with the index</span>
+91
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.ProjectiveSpace.Reps{[1..5]}; #The first five elements of the representatives</span>
+[ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 0, 1, 2 ], [ 0, 1, 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.ProjectiveSpace.RepOf([5,2,7]);</span>
+[ 1, 4, 5 ]
 </pre></div>
 
-<p><a id="X865ABE6581DDF36A" name="X865ABE6581DDF36A"></a></p>
-
-<h4>15.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></h4>
-
-<p>Here is a story of naive implementation design causing a serial algorithm to run at least 170 times slower than it should!</p>
-
-<p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">\(C_\ast=C_\ast(Y)\)</span>. Computing the homology of <span class="SimpleMath">\(Y\)</span> directly from <span class="SimpleMath">\(C_\ast\)</span> would be time consuming due to the large number of cells in <span class="SimpleMath">\(Y\)</span>. So, an elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">\(Y\)</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">\(D_\ast\)</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">\(D_\ast\)</span> takes over 170 seconds.</p>
+</li>
+<li><p>Two functions for the left cosets of <span class="SimpleMath">\(G\)</span>. For a matrix <span class="SimpleMath">\(g\)</span> in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span>, <code class="code">AmbientRepresentation</code> returns a canonical representative of the coset <span class="SimpleMath">\(gG\)</span>, and <code class="code">AmbientPosition</code> returns the position in <code class="code">Reps</code> of the corresponding point. Since <code class="code">M</code> lies in <span class="SimpleMath">\(G\)</span>, its coset is the trivial one, with the identity as representative. The first column of <code class="code">A</code> is <span class="SimpleMath">\((1,1,0)\)</span>, the 19th element of <code class="code">Reps</code>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
-[ 3679, 37565, 75083, 41212 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);time;</span>
-Chain complex of length 3 in characteristic 0 . 
-
-170547
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
-[ 1, 27, 78, 67 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
-[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
-26
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.AmbientRepresentation(M);</span>
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.AmbientPosition(M); #Position in Reps</span>
+13 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.AmbientRepresentation(A);</span>
+[ [ 1, 0, 0 ], [ 1, 1, 0 ], [ 0, 0, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.AmbientPosition(A); #Position in Reps</span>
+19
 </pre></div>
 
-<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
-
-<p>The following snippet illustrates the earlier implementation. It again begins with the construction of the regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <span class="SimpleMath">\(f_1\colon C_\ast(Y) \rightarrow C_\ast(Y')\)</span> and <span class="SimpleMath">\(f_2\colon C_\ast(Y') \rightarrow C_\ast(Y)\)</span> with <span class="SimpleMath">\(Y'\)</span> a homotopy equivalent non-regular CW-complex with fewer cells. It uses <span class="SimpleMath">\(D_\ast=C_\ast(Y')\)</span> to quickly compute the homology of <span class="SimpleMath">\(Y\)</span>.</p>
+</li>
+<li><p>A right transversal of <span class="SimpleMath">\(G\)</span> in its ambient group, that is, one representative <span class="SimpleMath">\(t\)</span> of each right coset <span class="SimpleMath">\(Gt\)</span>. Note that the previous item uses left cosets <span class="SimpleMath">\(gG\)</span> instead: the inverses <span class="SimpleMath">\(t^{-1}\)</span> of the elements of the transversal are representatives of the left cosets.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;</span>
-[ Chain Map between complexes of length 3 . 
-    , Chain Map between complexes of length 3 . 
-     ]
-1192
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(f[1]);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
-[ 3679, 37565, 75083, 41212 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=Target(f[1]);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
-[ 4, 15, 29, 33 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
-[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
-211
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G!.AmbientTransversal;</span>
+Transversal of &lt;group of 3x3 matrices in characteristic 0&gt; in SL(3,Integers). 
 </pre></div>
 
-<p>The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forcefully by the story. The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained to produce the chain maps. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon at it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.</p>
+</li>
+</ul>
+<p><a id="X844A44D784FD8C99" name="X844A44D784FD8C99"></a></p>
 
-<p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list.</p>
+<h4>15.2 <span class="Heading">Projective spaces over <span class="SimpleMath">\(\mathbb Z/N\mathbb Z\)</span></span></h4>
+
+<p>The space <span class="SimpleMath">\(\mathbb P^d(\mathbb Z / N\mathbb Z)\)</span> is the set of vectors <span class="SimpleMath">\((x_0,\ldots,x_d) \in (\mathbb Z/N\mathbb Z)^{d+1}\)</span> such that <span class="SimpleMath">\(\gcd(x_0,\ldots,x_d,N) = 1\)</span>, modulo multiplication by units of <span class="SimpleMath">\(\mathbb Z / N \mathbb Z\)</span>.</p>
+
+<p>The function <code class="code">FiniteProjectiveSpace</code> takes the dimension <span class="SimpleMath">\(d\)</span> and the <em>level</em> <span class="SimpleMath">\(N\)</span>. It returns a record containing a list <code class="code">Reps</code> with one representative of each point, and a function <code class="code">RepOf</code> that returns the representative of a given vector. For example, the following command computes the <em>Fano plane</em>, that is, the finite projective plane of order 2:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FiniteProjectiveSpace(2,2);</span>
+rec( RepOf := function( v ) ... end, 
+  Reps := [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 1, 0, 0 ], 
+      [ 1, 0, 1 ], [ 1, 1, 0 ], [ 1, 1, 1 ] ] )
+</pre></div>
+
+<p>It is worth noting that, when <span class="SimpleMath">\(N\)</span> is prime, <span class="SimpleMath">\(\mathbb P^d(\mathbb Z/N\mathbb Z)\)</span> is the finite projective space over the field with <span class="SimpleMath">\(N\)</span> elements. Two other examples:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := FiniteProjectiveSpace(2,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(P.Reps);</span>
+91
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P.RepOf([5,2,7]);</span>
+[ 1, 4, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(FiniteProjectiveSpace(4,3).Reps);</span>
+121
+</pre></div>
+
+<p>The function <code class="code">FiniteProjectiveSpace</code> is used in the construction of the congruence subgroups <span class="SimpleMath">\(\Gamma_0(N)\)</span>, see Section <a href="chap15_mj.html#X78319FA683B80826"><span class="RefLink">15.1</span></a>. Note that the length of <code class="code">Reps</code> equals, in both cases, the index of the corresponding subgroup built there. This is because <span class="SimpleMath">\(SL_n(\mathbb Z)/\Gamma_0(N) \cong \mathbb P^{n-1}(\mathbb Z/N\mathbb Z)\)</span>.</p>
+
+<p><a id="X8301B12684BBBD20" name="X8301B12684BBBD20"></a></p>
+
+<h4>15.3 <span class="Heading">Rational homology in degree 3</span></h4>
+
+<p>The homology <span class="SimpleMath">\(H_3(\Gamma_0(N),\mathbb Q)\)</span> for <span class="SimpleMath">\(\Gamma_0(N) \subset SL_3(\mathbb Z)\)</span> was computed for all <span class="SimpleMath">\(10 \le N\le 209\)</span> and many <span class="SimpleMath">\(210\le N\le 250\)</span> in <a href="chapBib_mj.html#biBvanderkallen">[vGvdKTV97]</a>. The following command, based on the same method, computes <span class="SimpleMath">\(H_3(\Gamma_0(31),\mathbb Q) =\mathbb Q^{4}\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gamma0_SL3ZTopRationalHomology(31);</span>
+4
+</pre></div>
+
+<p>This command can be used to extend the computations to the following table of dimensions of <span class="SimpleMath">\(H_3(\Gamma_0(N),\mathbb Q)\)</span> for all <span class="SimpleMath">\(10\le N\le 300\)</span>. The table corrects slips in <a href="chapBib_mj.html#biBvanderkallen">[vGvdKTV97]</a> for <span class="SimpleMath">\(N=27,92,93,240,250\)</span> (in bold).</p>
+
+<p><span class="SimpleMath">\( \begin{array}{r|rrrrrrrrrr} {}_{N}\diagdown{}^{x} &amp;0 &amp;1 &amp;2 &amp;3 &amp;4 &amp;5 &amp;6 &amp;7 &amp;8 &amp;9 \\ \hline 10+x &amp;2 &amp;2 &amp;7 &amp;0 &amp;4 &amp;4 &amp;6 &amp;2 &amp;7 &amp;2 \\ 20+x &amp;9 &amp;4 &amp;8 &amp;4 &amp;17 &amp;4 &amp;6 &amp;\mathbf{5} &amp;13 &amp;4 \\ 30+x &amp;20 &amp;4 &amp;12 &amp;10 &amp;10 &amp;8 &amp;21 &amp;4 &amp;12 &amp;8 \\ 40+x &amp;23 &amp;6 &amp;26 &amp;6 &amp;21 &amp;15 &amp;16 &amp;8 &amp;34 &amp;9 \\ 50+x &amp;20 &amp;14 &amp;21 &amp;10 &amp;25 &amp;14 &amp;31 &amp;14 &amp;20 &amp;10 \\ 60+x &amp;55 &amp;10 &amp;20 &amp;19 &amp;26 &amp;12 &amp;42 &amp;10 &amp;29 &amp;20 \\ 70+x &amp;38 &amp;12 &amp;51 &amp;10 &amp;22 &amp;28 &amp;33 &amp;18 &amp;44 &amp;14 \\ 80+x &amp;48 &amp;23 &amp;26 &amp;14 &amp;71 &amp;18 &amp;28 &amp;24 &amp;49 &amp;16 \\ 90+x &amp;67 &amp;16 &amp;\mathbf{41} &amp;\mathbf{24} &amp;32 &amp;22 &amp;68 &amp;14 &amp;43 &amp;33 \\ 100+x &amp;59 &amp;16 &amp;60 &amp;16 &amp;51 &amp;48 &amp;42 &amp;18 &amp;69 &amp;16 \\ 110+x &amp;58 &amp;28 &amp;64 &amp;18 &amp;66 &amp;28 &amp;57 &amp;35 &amp;40 &amp;26 \\ 120+x &amp;125 &amp;29 &amp;44 &amp;40 &amp;53 &amp;28 &amp;89 &amp;20 &amp;58 &amp;34 \\ 130+x &amp;60 &amp;22 &amp;107 &amp;26 &amp;44 &amp;51 &amp;67 &amp;22 &amp;82 &amp;22 \\ 140+x &amp;101 &amp;40 &amp;50 &amp;30 &amp;111 &amp;32 &amp;46 &amp;55 &amp;61 &amp;24 \\ 150+x &amp;122 &amp;24 &amp;75 &amp;51 &amp;76 &amp;36 &amp;119 &amp;24 &amp;62 &amp;50 \\ 160+x &amp;100 &amp;36 &amp;101 &amp;26 &amp;69 &amp;74 &amp;56 &amp;28 &amp;161 &amp;40 \\ 170+x &amp;80 &amp;53 &amp;73 &amp;28 &amp;106 &amp;56 &amp;102 &amp;50 &amp;64 &amp;30 \\ 180+x &amp;177 &amp;28 &amp;82 &amp;54 &amp;93 &amp;40 &amp;106 &amp;40 &amp;81 &amp;67 \\ 190+x &amp;94 &amp;32 &amp;146 &amp;30 &amp;62 &amp;80 &amp;121 &amp;32 &amp;139 &amp;32 \\ 200+x &amp;141 &amp;54 &amp;66 &amp;44 &amp;155 &amp;48 &amp;68 &amp;67 &amp;108 &amp;44 \\ 210+x &amp;204 &amp;34 &amp;109 &amp;60 &amp;72 &amp;50 &amp;163 &amp;44 &amp;70 &amp;58 \\ 220+x &amp;149 &amp;44 &amp;124 &amp;38 &amp;130 &amp;107 &amp;74 &amp;38 &amp;173 &amp;36 \\ 230+x &amp;114 &amp;94 &amp;129 &amp;38 &amp;155 &amp;56 &amp;101 &amp;70 &amp;110 &amp;40 \\ 240+x &amp;\mathbf{256} &amp;38 &amp;119 &amp;79 &amp;117 &amp;83 &amp;158 &amp;46 &amp;119 &amp;70 \\ 250+x &amp;\mathbf{122} &amp;42 &amp;233 &amp;54 &amp;84 &amp;106 &amp;134 &amp;42 &amp;146 &amp;52 \\ 260+x &amp;165 &amp;83 &amp;88 &amp;44 &amp;243 &amp;66 &amp;120 &amp;80 &amp;113 &amp;44 \\ 270+x &amp;217 &amp;44 &amp;140 &amp;100 &amp;90 &amp;86 &amp;207 &amp;44 &amp;92 &amp;87 \\ 280+x &amp;227 &amp;46 &amp;162 &amp;46 &amp;127 &amp;118 &amp;126 &amp;62 &amp;235 &amp;74 \\ 290+x &amp;142 &amp;78 &amp;121 &amp;48 &amp;239 &amp;70 &amp;141 &amp;107 &amp;98 &amp;60 \\ 300+x &amp;325 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \end{array} \)</span></p>
+
+<p><a id="X87516CF77FC141BF" name="X87516CF77FC141BF"></a></p>
+
+<h4>15.4 <span class="Heading">Integral homology away from the primes 2 and
+     3</span></h4>
+
+<p>The group <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> acts cellularly on a <span class="SimpleMath">\(3\)</span>-dimensional contractible regular CW complex <span class="SimpleMath">\(K\)</span>, with finite cell stabilizers of order dividing <span class="SimpleMath">\(24\)</span>. Hence the finite index subgroup <span class="SimpleMath">\(\Gamma_0(N)\)</span> also acts on <span class="SimpleMath">\(K\)</span>. The quotient <span class="SimpleMath">\(Y=K/\Gamma_0(N)\)</span> has the same integral homology as <span class="SimpleMath">\(\Gamma_0(N)\)</span> away from the primes <span class="SimpleMath">\(2\)</span> and <span class="SimpleMath">\(3\)</span>: the free parts and the <span class="SimpleMath">\(p\)</span>-torsion for <span class="SimpleMath">\(p \geq 5\)</span> agree, while the <span class="SimpleMath">\(2\)</span> and <span class="SimpleMath">\(3\)</span>-torsion may differ. For <span class="SimpleMath">\(N=31\)</span>, the following example computes <span class="SimpleMath">\(H_1(Y,\mathbb Z)=\mathbb Z_{5}\)</span>, <span class="SimpleMath">\(H_2(Y,\mathbb Z)=\mathbb Z_3\)</span> and <span class="SimpleMath">\(H_3(Y,\mathbb Z)= \mathbb Z^4\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := CongruenceSubgroupGamma0(SL(3,Integers),31);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y := GComplexToRegularCWComplex(K,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y := SimplifiedComplex(Y);</span>
+Regular CW-complex of dimension 3
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Y);  #number of cells</span>
+1349
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,1);</span>
+[ 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,2);</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(Y,3);</span>
+[ 0, 0, 0, 0 ]
+</pre></div>
+
+<p><a id="X8533FDC2780EF77C" name="X8533FDC2780EF77C"></a></p>
+
+<h4>15.5 <span class="Heading">Low-dimensional integral homology</span></h4>
+
+<p>To compute the homology exactly, including the <span class="SimpleMath">\(2\)</span>- and <span class="SimpleMath">\(3\)</span>-torsion, we need a free <span class="SimpleMath">\(\mathbb Z\Gamma_0(N)\)</span>-resolution. Its tensor product with <span class="SimpleMath">\(\mathbb Z\)</span> gives <span class="SimpleMath">\(H_n(\Gamma_0(N),\mathbb Z)\)</span>, at a higher computational cost than the quotient <span class="SimpleMath">\(Y\)</span>. The following example computes <span class="SimpleMath">\(H_1(\Gamma_0(31),\mathbb Z)= \mathbb Z_{30}\)</span>, <span class="SimpleMath">\(H_2(\Gamma_0(31),\mathbb Z)= (\mathbb Z_2)^8 \)</span>, <span class="SimpleMath">\(H_3(\Gamma_0(31),\mathbb Z)=(\mathbb Z_6)^2 \oplus (\mathbb Z_{12})^2 \oplus \mathbb Z^4\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := CongruenceSubgroupGamma0(SL(3,Integers),31);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := FreeGResolution(K,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ResolutionFiniteSubgroup(R,G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := TensorWithIntegers(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := ContractedComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,1);</span>
+[ 30 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,2);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homology(D,3);</span>
+[ 6, 6, 12, 12, 0, 0, 0, 0 ]
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap16_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
