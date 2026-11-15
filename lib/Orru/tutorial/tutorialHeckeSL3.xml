@@ -1,0 +1,45 @@
+<Chapter Label="chapHeckeSL3"><Heading>Hecke operators for <M>\Gamma_0(N)</M> in <M>SL_3(\mathbb Z)</M> (by Giulia Orr&#x00F9;)</Heading>
+
+
+<Section Label="sectHeckeIntro"><Heading>The Hecke operator <M>E_p</M></Heading>
+
+Let <M>\alpha_p</M> be the matrix defining the Hecke operator <M>E_p: H^3(\Gamma_0(N), \mathbb C) \to H^3(\Gamma_0(N), \mathbb C)</M>, for prime <M>p</M> not dividing <M>N</M>, with <Display>\alpha_p = \left(\begin{array}{ccc}
+p &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 1
+\end{array}\right)</Display>
+The double coset <M>\Gamma_0(N)\alpha_p \Gamma_0(N)</M> can be decomposed as <M> \coprod_i \beta_i \Gamma_0(N)</M>. For <M>N = 53</M> and <M>p = 2</M> there are <M>p^2 + p + 1 = 7</M> representatives <M>\beta_i</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/hecke.0.txt">
+</Example>
+
+<P/>
+The function <C>Gamma0_SL3ZHeckeOperator(N,p)</C> computes the action of <M>E_p</M> over
+<M>\mathbb Z</M> on <M>H_0(\Gamma_0(N),St)</M>, using the presentation of Section
+<Ref Sect="sectSteinberg"/>. It returns the matrix <C>Tfree</C> of <M>E_p</M> on the free part,
+whose eigenvalues are those of <M>E_p</M> on <M>H^3(\Gamma_0(N),\mathbb C)</M>, and the matrix
+<C>Ttorsion</C> of its action on the torsion part.
+For example, for <M>N=11</M> and <M>p=2</M> the group <M>H_0(\Gamma_0(11),St)</M> is free of rank <M>2</M>, and the matrix of <M>E_2</M> is:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/heckematrices.txt">
+</Example>
+
+</Section>
+
+<Section><Heading>Characteristic polynomial of <M>E_p</M></Heading>
+The following commands compute the factored characteristic polynomials of <M>E_p: H^3(\Gamma_0(11),\mathbb C) \to H^3(\Gamma_0(11),\mathbb C)</M>, for <M>p = 2, 3, 5, 7</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/hecke.11a.txt">
+</Example>
+Note that, in each case, the eigenvalues are exactly <M>p^2+b_p</M> and <M>1+pb_p</M>, where <M>b_p</M> is the <M>p</M>-th coefficient of the newform of weight 2 and level 11 (associated with the elliptic curve 11a). They correspond to the noncuspidal classes that arise from the Eisenstein liftings (see Example 3.4 of <Cite Key="vanderkallen"/>). Moreover, when <M>N</M> is prime, one has <Cite Key="AGG"/>:<Display>\dim H^3(\Gamma_0(N),\mathbb C) = \dim H^3_{cusp}(\Gamma_0(N),\mathbb C) + 2\dim S_2(N),</Display> where <M>S_2(N)</M> is the space of weight two cusp forms for <M>\Gamma_0(N) \subset SL_2(\mathbb Z)</M>. For <M>N=11</M> we have <M>\dim H^3(\Gamma_0(11),\mathbb C)=2</M> (Section <Ref Sect="sectRationalHomologyDim"/>) and <M>\dim S_2(11)=1</M>, so there are no
+cuspidal classes.
+<P/>
+For <M>N = 53</M> we have <M>\dim H^3(\Gamma_0(53),\mathbb C)=10</M> and <M>\dim S_2(53)=4</M>, so <M>\dim H^3_{cusp}(\Gamma_0(53),\mathbb C)=2</M>. The following computes the factored characteristic polynomial of <M>E_2</M> for <M>N = 53</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/hecke.53.txt">
+</Example>
+The linear and cubic factors are the Eisenstein liftings of the four newforms in
+<M>S_2(53)</M>. The remaining factor <M>x_1^2+4x_1+15</M> comes from the cuspidal part: its roots <M>-2\pm\sqrt{-11}</M> are the eigenvalue <M>a_2</M> in Table 2 of <Cite Key="vanderkallen"/> and its complex conjugate.
+</Section>
+
+</Chapter>

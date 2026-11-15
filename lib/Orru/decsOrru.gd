@@ -26,6 +26,14 @@ DeclareOperation("HAPCongruenceSubgroupTree",[IsHapCongruenceSubgroup]);
 DeclareGlobalFunction("Gamma0_SL3ZTopRationalHomology");
 DeclareGlobalFunction("Gamma0_SL3ZModularSymbolRelations");
 DeclareGlobalFunction("SparseSmithNormalForm");
+DeclareGlobalFunction("HAP_UnimodularDecomposition");
+DeclareGlobalFunction("HAP_Gamma0_SL3ZHeckeCosetReps");
+DeclareGlobalFunction("HAP_Gamma0_SL3ZHeckeLift");
+DeclareGlobalFunction("Gamma0_SL3ZHeckeOperator");
+DeclareGlobalFunction("Gamma0_SL3ZSteinbergCoinvariants");
+
+
+
 
 
 
