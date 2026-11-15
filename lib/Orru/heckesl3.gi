@@ -176,5 +176,5 @@ function(n,p)
     Tfree := T{free}{free};
     Ttorsion := T{torsion}{torsion};
 
-    return rec(Tfree := Tfree, Ttorsion := Ttorsion);
+    return rec(Tfree := Tfree, Ttorsion := Ttorsion, divisors := S.divisors);
 end);

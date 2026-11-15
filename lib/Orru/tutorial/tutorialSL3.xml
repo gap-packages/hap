@@ -62,8 +62,35 @@ corresponding subgroup built there. This is because <M>SL_n(\mathbb Z)/\Gamma_0(
 </Section>
 
 
+<Section Label = "sectSteinberg"><Heading>Homology of the Steinberg module</Heading>
+By a theorem of Bykovski&#x012D; (see <Cite Key="churchputnam"/>, Theorem B), the Steinberg module <M>St_3(\mathbb Q)</M> has a presentation with one generator for each basis of <M>\mathbb Z^3</M> (see also <Ref Subsect ="SteinbergGens"/>). Taking <M>\Gamma_0(N)</M>-coinvariants gives a presentation of <M>H_0(\Gamma_0(N),St_3(\mathbb Q))</M> with one generator <M>[x:y:z]</M> for each point of <M>\mathbb P^2(\mathbb Z/N\mathbb Z)</M> and relations
+<List>
+<Item>
+<M>[x:y:z] = -[-y:x:z]</M>;
+</Item>
+<Item>
+<M>[x:y:z] = [z:x:y]</M>;
+</Item>
+<Item>
+<M>[x:y:z] = -[-y:x-y:z]-[y-x:x:z]</M>
+</Item>
+</List>
+See also <Cite Key="vanderkallen"/>.
+The following commands compute the the relation matrix: its columns are indexed by the 7 points of ℙ²(ℤ/2ℤ), and it has three rows for each point:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/presentationSt.txt">
+</Example>
+The following command computes, using this presentation, <M>H_0(\Gamma_0(31),St)</M>. Rationally, this is actually <M>H^3(\Gamma_0(31),\mathbb Q) = \mathbb Q^4</M>, by Borel-Serre duality. Integrally, the two groups agree only away from the primes <M>2</M> and <M>3</M>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/homologySt.txt">
+</Example>
+The above command for <M>N = 501</M> gave the same results as in <Ref Subsect="sectRationalCohomology"/>:
+<Example>
+<#Include SYSTEM "../lib/Orru/tutorial/tutex/homologySt2.txt">
+</Example>
+</Section>
 
-<Section><Heading>Rational homology in degree 3</Heading>
+<Section Label="sectRationalHomologyDim"><Heading>Rational homology in degree 3</Heading>
 The homology <M>H_3(\Gamma_0(N),\mathbb Q)</M> for <M>\Gamma_0(N) \subset SL_3(\mathbb Z)</M> was computed for all <M>10 \le N\le 209</M> and many <M>210\le N\le 250</M> in <Cite Key="vanderkallen"/>. The following command, based on the same method, computes <M>H_3(\Gamma_0(31),\mathbb Q) =\mathbb Q^{4}</M>.
                 
 <Example>

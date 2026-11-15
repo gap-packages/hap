@@ -30,6 +30,8 @@ DeclareGlobalFunction("HAP_UnimodularDecomposition");
 DeclareGlobalFunction("HAP_Gamma0_SL3ZHeckeCosetReps");
 DeclareGlobalFunction("HAP_Gamma0_SL3ZHeckeLift");
 DeclareGlobalFunction("Gamma0_SL3ZHeckeOperator");
+DeclareGlobalFunction("Gamma0_SL3ZSteinbergCoinvariants");
+
 
 
 

@@ -17,6 +17,19 @@ end);
 ###########################################################
 ###########################################################
 
+InstallGlobalFunction(Gamma0_SL3ZSteinbergCoinvariants,
+function(n)
+    local ProjPlane, M, S;
+
+    ProjPlane := FiniteProjectiveSpace(2,n);
+    M := Gamma0_SL3ZModularSymbolRelations(ProjPlane,n);
+    S := SparseSmithNormalForm(M);
+
+    return Concatenation(S.torsion, ListWithIdenticalEntries(S.freeRank, 0));
+end);
+###########################################################
+###########################################################
+
 InstallGlobalFunction(Gamma0_SL3ZModularSymbolRelations,
 function(ProjPlane, n)
     local FirstCondition, SecondCondition, ThirdCondition_1, ThirdCondition_2, A, B, C, i, j, M;
