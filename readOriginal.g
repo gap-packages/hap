@@ -472,6 +472,7 @@ ReadPackageHap("lib/RegularCWComplexes/quotient.gi");
 ReadPackageHap("lib/RegularCWComplexes/planartrees.gi");
 ReadPackageHap("lib/RegularCWComplexes/ldcup.gi");
 ReadPackageHap("lib/RegularCWComplexes/bruteforce.gi");
+ReadPackageHap("lib/RegularCWComplexes/localHomotopy.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################

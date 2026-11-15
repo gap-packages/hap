@@ -6,8 +6,19 @@
 InstallGlobalFunction(HomToIntegers, 
 function(X)
 local 	HomToZ_Obj,
-	HomToZ_Arr;
-	
+	HomToZ_Arr,
+        HomNFToZ_Obj;	
+#####################################################################
+#####################################################################
+HomNFToZ_Obj:=function(R);
+
+Print("Warning: returned chain complex omits 2-torsion summands.\n");
+
+return HomToIntegers(TensorWithIntegersMod2Torsion(R));
+end;
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################
@@ -140,6 +151,9 @@ return Objectify(HapCochainMap,
 end;
 #####################################################################
 #####################################################################
+
+if IsHapNonFreeResolution(X) then
+return HomNFToZ_Obj(X); fi;
 
 if EvaluateProperty(X,"type") = "resolution" then
 return HomToZ_Obj(X); fi;

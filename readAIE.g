@@ -251,8 +251,10 @@ ReadPackageHap( "lib/Congruence/GCWquotient.gi");
 
 ReadPackageHap( "lib/CongruenceGroups/initCongruenceGroups.gi");
 
-##################### ORRU #####################################
+##################### ORRU & WUNDEN #################################
 ReadPackageHap( "lib/Orru/initOrru.gi");
+ReadPackageHap("lib/Wunden/initWunden.gi");
+
 
 
 
@@ -475,6 +477,7 @@ ReadPackageHap("lib/RegularCWComplexes/quotient.gi");
 ReadPackageHap("lib/RegularCWComplexes/planartrees.gi");
 ReadPackageHap("lib/RegularCWComplexes/ldcup.gi");
 ReadPackageHap("lib/RegularCWComplexes/bruteforce.gi");
+ReadPackageHap("lib/RegularCWComplexes/localHomotopy.gi");
 
 if IsPackageMarkedForLoading("congruence","0.0") then
 ############### ARITHMETIC GROUPS#########################

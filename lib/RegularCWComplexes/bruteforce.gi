@@ -104,7 +104,8 @@ for k in [1..N] do
       for g in NeighbourGens[i] do
          w:=CanonicalLeftCosetElement(g*x,R!.stabilizer(dim,i));
          if not w in TileReps[i] then
-            AddSet(TileReps[i],w);
+            #AddSet(TileReps[i],w);
+              Add(TileReps[i],w);
             Add(NewLeaves,w);
          fi;
       od;
@@ -152,7 +153,7 @@ b:=1*R!.boundary(n,x[1]);
 Apply(b,z->[z[1],R!.elts[z[2]]]);
 Apply(b,y->[y[1],x[2]*y[2]]);
 Apply(b,y->StandardForm(n-1,y));
-Apply(b,c->PositionSorted(Cells[n],c));
+Apply(b,c->PositionSet(Cells[n],c));
 b:=Concatenation([Length(b)],b);
 boundaries[n+1][k]:=b;
 od;

@@ -1,6 +1,35 @@
 #(C) Graham ellis, 2005-2006
 
 #####################################################################
+InstallGlobalFunction(SquaresToZero,
+function(arg)
+local R,dim, n, k, b;
+
+R:=arg[1];
+if Length(arg)=2 then dim:=arg[2]; else
+dim:=-1;
+while R!.dimension(dim+1)>0 do
+dim:=dim+1;
+od;
+fi;
+
+for n in [1..dim] do
+for k in [1..R!.dimension(n+1)] do
+ b:=ResolutionBoundaryOfWord(R,n,R!.boundary(n+1,k));
+b:=List(b,x->[x[1],R!.elts[x[2]]]);
+if IsBound(R!.StandardForm) then
+b:=List(b,x->R!.StandardForm(n-1,x));
+fi;
+b:=AlgebraicReduction(b,2);
+if Length(b)>0 then Print(b,"\n"); return false; fi;
+od;
+od;
+return true;
+
+end);
+#####################################################################
+
+#####################################################################
 InstallGlobalFunction(HAP_PrintTo,
 function(arg)
 local file, out,i;

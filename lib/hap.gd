@@ -172,6 +172,7 @@ DeclareGlobalFunction("ModPCohomologyPresentationBounds");
 
 
 ## FUNCTORS #########################################################
+DeclareGlobalFunction("SquaresToZero");
 DeclareGlobalFunction("HAP_PrintTo");
 DeclareGlobalFunction("HAP_AppendTo");
 DeclareGlobalFunction("HapExample");
@@ -865,6 +866,7 @@ DeclareGlobalFunction("ParallelPersistentBettiNumbers");
 DeclareGlobalFunction("ClassifyingSpaceFiniteGroup");
 DeclareGlobalFunction("RegularCWCellClosure");
 DeclareGlobalFunction("GComplexToFiniteRegularCWRegion");
+DeclareGlobalFunction("BuildLocalHomotopy");
 
 
 ## KNOTS ############################################################

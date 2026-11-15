@@ -94,7 +94,7 @@ if d<0 then
 file:="~/pkg/Voronoi/VMH-ImaginaryQuadraticNumberFields/Magma/BasicData.m";
 fi;
 if d>0 then
-Print("For a totally real quadratic number field we'd need the order of the unit group.\n");
+Print("For a totally real quadratic number field SL_n(O) is not available from this Magma call. However, SL_n(O)xZ is of finite index in GL_n(O) and one can extract the cohomology of SL_n(O) from that of SL_n(O)xZ.\n");
 return fail; 
 file:="~/pkg/Voronoi/VMH-TotallyRealNumberFields/Magma/BasicData.m";
 fi;
