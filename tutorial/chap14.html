@@ -69,11 +69,16 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X82F46C8B782420AB">14.12 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X82C8FC4082401D15">14.12-1 <span class="Heading">Stored complexes for <span class="SimpleMath">GL_n(mathcal O_d)</span></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X872AEE727DC179CD">14.12-2 <span class="Heading">Accessing the cohomology of <span class="SimpleMath">SL_n(mathcal O_d)</span> from <span class="SimpleMath">GL_n(mathcal O_d)</span> when <span class="SimpleMath">dgt 1</span></span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X85F5853D819AE0E1">14.13 <span class="Heading">Calling Magma's Voronoi algorithm directly</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X78A6A3B9861FDAC1">14.14 <span class="Heading">Optional Voronoi backends</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X8211C13386CE0F3B">14.14 <span class="Heading">Optional Voronoi backends: calling a Julia Voronoi algorithm directly</span></a>
 </span>
 </div>
 </div>
@@ -750,7 +755,13 @@ ideal of norm 23 in O(Q(Sqrt(-23)))
 
 <h4>14.12 <span class="Heading">Totally real quadratic fields / Hilbert modular group</span></h4>
 
-<p>For square free <span class="SimpleMath">d&gt;0</span> the group <span class="SimpleMath">PSL_2(mathcal O_d)</span> is a subgroup of <span class="SimpleMath">PSL_2( R)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">PSL_2( R)× PSL_2( R)</span> but a fundamental domain for its action on <span class="SimpleMath">frak h^2 × frak h^2</span> is not implemented in HAP. One can obtain a contractible <span class="SimpleMath">GL_2(mathcal O_d)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">GL_2(mathcal O( Q(sqrt14)))</span>. In this example the contractible complex is <span class="SimpleMath">4</span>-dimensional and has <span class="SimpleMath">33</span> orbits of <span class="SimpleMath">4</span>-dimensional cells.</p>
+<p>For square free <span class="SimpleMath">d&gt;1</span> the group <span class="SimpleMath">PSL_2(mathcal O_d)</span> is a subgroup of <span class="SimpleMath">PSL_2( R)</span> but not a discrete subgroup. It embeds as a discrete subgroup of <span class="SimpleMath">PSL_2( R)× PSL_2( R)</span> but a fundamental domain for its action on <span class="SimpleMath">frak h^2 × frak h^2</span> is not implemented in HAP.</p>
+
+<p><a id="X82C8FC4082401D15" name="X82C8FC4082401D15"></a></p>
+
+<h5>14.12-1 <span class="Heading">Stored complexes for <span class="SimpleMath">GL_n(mathcal O_d)</span></span></h5>
+
+<p>One can obtain a contractible <span class="SimpleMath">GL_n(mathcal O_d)</span>-equivariant complex using <span class="URL"><a href="https://github.com/schoennenbeck/VMH-TotallyRealNumberFields">Sebastian Schoennenbeck's Magma implementation</a></span> of Voronoi's algorithm to produce text files that can be read into HAP. A few of these text files are stored in HAP for <span class="SimpleMath">n=2,3</span> and a Magma interface <a href="chap14.html#X85F5853D819AE0E1"><span class="RefLink">14.13</span></a> provides for cases not stored. The following commands use one such text file to compute integral homology groups of <span class="SimpleMath">GL_2(mathcal O( Q(sqrt14)))</span>. In this example the <span class="SimpleMath">4</span>-dimensional contractible complex has <span class="SimpleMath">33</span> orbits of <span class="SimpleMath">4</span>-dimensional cells.</p>
 
 
 <div class="example"><pre>
@@ -770,6 +781,22 @@ No contracting homotopy available.
 
 </pre></div>
 
+<p><a id="X872AEE727DC179CD" name="X872AEE727DC179CD"></a></p>
+
+<h5>14.12-2 <span class="Heading">Accessing the cohomology of <span class="SimpleMath">SL_n(mathcal O_d)</span> from <span class="SimpleMath">GL_n(mathcal O_d)</span> when <span class="SimpleMath">dgt 1</span></span></h5>
+
+<p>For square-free <span class="SimpleMath">dgt 1</span> the exact sequence <span class="SimpleMath">SL_n(mathcal O_d) ↣ GL_n(mathcal O_d) ↠ mathcal O_d^×</span> and Dirichlet's unit theorem imply that <span class="SimpleMath">SL_n(mathcal O_d)× Z</span> is isomorphic to a finite index subgroup of <span class="SimpleMath">GL_n(mathcal O_d)</span>, the subgroup being of index <span class="SimpleMath">2n</span> for even <span class="SimpleMath">n</span> and index <span class="SimpleMath">n</span> for odd <span class="SimpleMath">n</span>. Thus by restricting the action of <span class="SimpleMath">GL_n(mathcal O_d)</span> one can obtain a contractible complex for <span class="SimpleMath">SL_n(mathcal O_d)× Z</span>. The (co)homology of <span class="SimpleMath">SL_n(mathcal O_d)</span> is readily extracted from the (co)homology of <span class="SimpleMath">SL_n(mathcal O_d)× Z</span> using for instance the Kunneth formula.</p>
+
+<p>For example, <span class="SimpleMath">SL_2(mathcal O_d)</span> is generated by the four matrices</p>
+
+<p><span class="SimpleMath">T_1=(beginarrayll 1 &amp; 1 0 &amp; 1 endarray)</span>, <span class="SimpleMath">T_ω=(beginarrayll 1 &amp; ω 0 &amp; 1 endarray)</span>, <span class="SimpleMath">L_1=(beginarrayll 1 &amp; 0 1 &amp; 1 endarray)</span>, <span class="SimpleMath">L_ω=(beginarrayll 1 &amp; 0 ω &amp; 1 endarray)</span></p>
+
+<p>where <span class="SimpleMath">{1,ω}</span> is our basis for <span class="SimpleMath">mathcal O_d</span>. Adding a fifth matrix</p>
+
+<p><span class="SimpleMath">Z_ϵ=(beginarrayll ϵ &amp; 0 0 &amp; ϵ endarray)</span></p>
+
+<p>where <span class="SimpleMath">ϵ</span> is the fundamental unit of <span class="SimpleMath">mathcal O_d</span> yields a 5-element generating set for the subgroup isomorphic to <span class="SimpleMath">SL_2(mathcal O_d) × Z</span>. These generators can be used to restrict a free resolution for <span class="SimpleMath">GL_2(mathcal O_d)</span> to a free resolution for <span class="SimpleMath">SL_2(mathcal O_d)× Z</span>. The fundamental unit <span class="SimpleMath">ϵ</span> can be found algorithmically by generating increasingly large solutions to Pell's equation <span class="SimpleMath">x^2-dy^2=± 1</span>.</p>
+
 <p><a id="X85F5853D819AE0E1" name="X85F5853D819AE0E1"></a></p>
 
 <h4>14.13 <span class="Heading">Calling Magma's Voronoi algorithm directly</span></h4>
@@ -788,7 +815,18 @@ No contracting homotopy available.
 
 </li>
 </ul>
-<p>then one can use the <strong class="button">GAP</strong> commands <code class="code">VoronoiGL(n,d)</code> and <code class="code">VoronoiSL(n,d)</code> to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">H^4(SL_2(mathcal O_-5 ),P_{mathcal O_-5}(8)) = ( Z_2)^17 ⊕ ( Z_4)^2 ⊕ ( Z_8)^2</span> and <span class="SimpleMath">H_4(GL_2(mathcal O( Q(sqrt5)), Z) = ( Z_2)^7 ⊕ Z_60</span> and <span class="SimpleMath">H_n(GL_3(mathcal O_-5), Z)</span> for <span class="SimpleMath">n=1,2</span>. Also, a three generator presentation for <span class="SimpleMath">GL_2(mathcal O( Q(sqrt5)</span> is computed.</p>
+<p>then one can use the <strong class="button">GAP</strong> commands</p>
+
+
+<ul>
+<li><p><code class="code">VoronoiGL(n,d)</code></p>
+
+</li>
+<li><p><code class="code">VoronoiSL(n,d)</code> (in the imaginary quadratic case only. See the Julia implementation below for the real case.)</p>
+
+</li>
+</ul>
+<p>to call the <strong class="button">Magma</strong> implementation of the Voronoi algorithm directly. For example, the following commands do this to calculate the homology groups <span class="SimpleMath">H^4(SL_2(mathcal O_-5 ),P_{mathcal O_-5}(8)) = ( Z_2)^17 ⊕ ( Z_4)^2 ⊕ ( Z_8)^2</span> and <span class="SimpleMath">H_4(GL_2(mathcal O( Q(sqrt5)), Z) = ( Z_2)^7 ⊕ Z_60</span> and <span class="SimpleMath">H_n(GL_3(mathcal O_-5), Z)</span> for <span class="SimpleMath">n=1,2</span>. Also, a three generator presentation for <span class="SimpleMath">GL_2(mathcal O( Q(sqrt5)</span> is computed.</p>
 
 
 <div class="example"><pre>
@@ -823,9 +861,9 @@ No contracting homotopy available.
 
 </pre></div>
 
-<p><a id="X78A6A3B9861FDAC1" name="X78A6A3B9861FDAC1"></a></p>
+<p><a id="X8211C13386CE0F3B" name="X8211C13386CE0F3B"></a></p>
 
-<h4>14.14 <span class="Heading">Optional Voronoi backends</span></h4>
+<h4>14.14 <span class="Heading">Optional Voronoi backends: calling a Julia Voronoi algorithm directly</span></h4>
 
 <p>An external package can register a provider using <code class="code">RegisterVoronoiBackend(name, provider)</code>, where <code class="code">provider</code> is a function of one argument. The name must be a nonempty string other than <code class="code">"magma"</code>. Registering an existing name replaces its provider.</p>
 
