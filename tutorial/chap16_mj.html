@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (HAP commands) - Chapter 16: Parallel computation</title>
+<title>GAP (HAP commands) - Chapter 16: Hecke operators for \(\Gamma_0(N)\) in \(SL_3(\mathbb Z)\) (by Giulia Orrù)</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -18,233 +18,96 @@
 <body class="chap16"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap16.html">[MathJax off]</a></p>
-<p><a id="X7F571E8F7BBC7514" name="X7F571E8F7BBC7514"></a></p>
-<div class="ChapSects"><a href="chap16_mj.html#X7F571E8F7BBC7514">16 <span class="Heading">Parallel computation</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7EAE286B837D27BA">16.1 <span class="Heading">An embarassingly parallel computation</span></a>
+<p><a id="X835BF30781541F96" name="X835BF30781541F96"></a></p>
+<div class="ChapSects"><a href="chap16_mj.html#X835BF30781541F96">16 <span class="Heading">Hecke operators for <span class="SimpleMath">\(\Gamma_0(N)\)</span> in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> (by Giulia Orrù)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7EB1911980FDDADE">16.1 <span class="Heading">The Hecke operator <span class="SimpleMath">\(E_p\)</span></span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X80F359DD7C54D405">16.2 <span class="Heading">A non-embarassingly parallel computation</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X8496786F7FCEC24A">16.3 <span class="Heading">Parallel persistent homology</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X865ABE6581DDF36A">16.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X84C43D378199E7F1">16.2 <span class="Heading">Characteristic polynomial of <span class="SimpleMath">\(E_p\)</span></span></a>
 </span>
 </div>
 </div>
 
-<h3>16 <span class="Heading">Parallel computation</span></h3>
+<h3>16 <span class="Heading">Hecke operators for <span class="SimpleMath">\(\Gamma_0(N)\)</span> in <span class="SimpleMath">\(SL_3(\mathbb Z)\)</span> (by Giulia Orrù)</span></h3>
 
-<p><a id="X7EAE286B837D27BA" name="X7EAE286B837D27BA"></a></p>
+<p><a id="X7EB1911980FDDADE" name="X7EB1911980FDDADE"></a></p>
 
-<h4>16.1 <span class="Heading">An embarassingly parallel computation</span></h4>
+<h4>16.1 <span class="Heading">The Hecke operator <span class="SimpleMath">\(E_p\)</span></span></h4>
 
-<p>The following example creates fifteen child processes and uses them simultaneously to compute the second integral homology of each of the <span class="SimpleMath">\(2328\)</span> groups of order <span class="SimpleMath">\(128\)</span>. The final command shows that</p>
+<p>Let <span class="SimpleMath">\(\alpha_p\)</span> be the matrix defining the Hecke operator <span class="SimpleMath">\(E_p: H^3(\Gamma_0(N), \mathbb C) \to H^3(\Gamma_0(N), \mathbb C)\)</span>, for prime <span class="SimpleMath">\(p\)</span> not dividing <span class="SimpleMath">\(N\)</span>, with</p>
 
-<p><span class="SimpleMath">\(H_2(G,\mathbb Z)=\mathbb Z_2^{21}\)</span></p>
+<p class="center">\[\alpha_p = \left(\begin{array}{ccc}
+p &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 1
+\end{array}\right)\]</p>
 
-<p>for the <span class="SimpleMath">\(2328\)</span>-th group <span class="SimpleMath">\(G\)</span> in <strong class="button">GAP</strong>'s library of small groups. The penulimate command shows that the parallel computation achieves a speedup of 10.4 .</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Processes:=List([1..15],i-&gt;ChildProcess());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for p in Processes do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildPut(fn,"fn",p);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");</span>
-1716105545
-1716105554
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");</span>
-1716105586
-1716105680
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(680-586)/(554-545);</span>
-10.4444
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L[2328];</span>
-[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
-
-</pre></div>
-
-<p>The function <code class="code">ParallelList()</code> is built from <strong class="button">HAP</strong>'s six core functions for parallel computation.</p>
-
-<p><a id="X80F359DD7C54D405" name="X80F359DD7C54D405"></a></p>
-
-<h4>16.2 <span class="Heading">A non-embarassingly parallel computation</span></h4>
-
-<p>The following commands use core functions to compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over two processors.</p>
+<p>The double coset <span class="SimpleMath">\(\Gamma_0(N)\alpha_p \Gamma_0(N)\)</span> can be decomposed as <span class="SimpleMath">\( \coprod_i \beta_i \Gamma_0(N)\)</span>. For <span class="SimpleMath">\(N = 53\)</span> and <span class="SimpleMath">\(p = 2\)</span> there are <span class="SimpleMath">\(p^2 + p + 1 = 7\)</span> representatives <span class="SimpleMath">\(\beta_i\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(10000,10000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=ChildProcess();;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716109418
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mtop:=M{[1..5000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mbottom:=M{[5001..10000]};;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(Mtop,"Mtop",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPut(N,"N",s);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextAvailableChild([s]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildCommand("Atop:=Mtop*N;;",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Abottom:=Mbottom*N;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=ChildGet("Atop",s);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Append(A,Abottom);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716110143
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716111389
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(111389-110143)/(110143-109418);</span>
-1.71862
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HAP_Gamma0_SL3ZHeckeCosetReps(53,2);</span>
+[ [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 2 ] ], 
+  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 1, 2 ] ], 
+  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 53, 0, 2 ] ], 
+  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 53, 1, 2 ] ], 
+  [ [ 1, 0, 0 ], [ 0, 2, 0 ], [ 0, 0, 1 ] ], 
+  [ [ 1, 0, 0 ], [ 53, 2, 0 ], [ 0, 0, 1 ] ], 
+  [ [ 2, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] ]
 </pre></div>
 
-<p>The next commands compute the product <span class="SimpleMath">\(A=M\times N\)</span> of two random matrices by distributing the work over fifteen processors. The parallelization is very naive (the entire matrices <span class="SimpleMath">\(M\)</span> and <span class="SimpleMath">\(N\)</span> are communicated to all processes) and the computation achieves a speedup of 7.6.</p>
+<p>The function <code class="code">Gamma0_SL3ZHeckeOperator(N,p)</code> computes the action of <span class="SimpleMath">\(E_p\)</span> over <span class="SimpleMath">\(\mathbb Z\)</span> on <span class="SimpleMath">\(H_0(\Gamma_0(N),St)\)</span>, using the presentation of Section <a href="chap15_mj.html#X7DFBB07B797E49E5"><span class="RefLink">15.3</span></a>. It returns the matrix <code class="code">Tfree</code> of <span class="SimpleMath">\(E_p\)</span> on the free part, whose eigenvalues are those of <span class="SimpleMath">\(E_p\)</span> on <span class="SimpleMath">\(H^3(\Gamma_0(N),\mathbb C)\)</span>, and the matrix <code class="code">Ttorsion</code> of its action on the torsion part. For example, for <span class="SimpleMath">\(N=11\)</span> and <span class="SimpleMath">\(p=2\)</span> the group <span class="SimpleMath">\(H_0(\Gamma_0(11),St)\)</span> is free of rank <span class="SimpleMath">\(2\)</span>, and the matrix of <span class="SimpleMath">\(E_2\)</span> is:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=RandomMat(15000,15000);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716156583
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(M,"M",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChildPutObj(N,"N",S);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">cmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ChildCommand(cmd,S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:=[];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..15] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> C:=ChildGet("A",S[i]);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Append(A,C);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");</span>
-1716157489
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AA:=M*N;;Exec("date +%s");</span>
-1716164405
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(64405-57489)/(57489-56583);</span>
-7.63355
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gamma0_SL3ZHeckeOperator(11,2).Tfree;</span>
+[ [ -3, -1 ], [ 0, 2 ] ]
 </pre></div>
 
-<p><a id="X8496786F7FCEC24A" name="X8496786F7FCEC24A"></a></p>
+<p><a id="X84C43D378199E7F1" name="X84C43D378199E7F1"></a></p>
 
-<h4>16.3 <span class="Heading">Parallel persistent homology</span></h4>
+<h4>16.2 <span class="Heading">Characteristic polynomial of <span class="SimpleMath">\(E_p\)</span></span></h4>
 
-<p>Section <a href="chap5_mj.html#X7D2CC9CB85DF1BAF"><span class="RefLink">5.8</span></a> illustrates an alternative method of computing the persitent Betti numbers of a filtered pure cubical complex. The method lends itself to parallelisation. However, the following parallel computation of persistent Betti numbers achieves only a speedup of <span class="SimpleMath">\(1.5\)</span> due to a significant time spent transferring data structures between processes. On the other hand, the persistent Betti function could be used to distribute computations over several computers. This might be useful for larger computations that require significant memory resources.</p>
+<p>The following commands compute the factored characteristic polynomials of <span class="SimpleMath">\(E_p: H^3(\Gamma_0(11),\mathbb C) \to H^3(\Gamma_0(11),\mathbb C)\)</span>, for <span class="SimpleMath">\(p = 2, 3, 5, 7\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:=HapFile("data247.txt");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read(file);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F:=ThickeningFiltration(T,25);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=List([1..15],i-&gt;ChildCreate());;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N:=[0,1,2];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");</span>
-1717160785
-1717161285
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");</span>
-1717161528
-1717162276
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">speedup:=1.0*(1717162276-1717161528)/(1717161285-1717160785);</span>
-1.496
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,2).Tfree));</span>
+[ x_1-2, x_1+3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,3).Tfree));</span>
+[ x_1-8, x_1+2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,5).Tfree));</span>
+[ x_1-26, x_1-6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,7).Tfree));</span>
+[ x_1-47, x_1+13 ]
 </pre></div>
 
-<p><a id="X865ABE6581DDF36A" name="X865ABE6581DDF36A"></a></p>
+<p>Note that, in each case, the eigenvalues are exactly <span class="SimpleMath">\(p^2+b_p\)</span> and <span class="SimpleMath">\(1+pb_p\)</span>, where <span class="SimpleMath">\(b_p\)</span> is the <span class="SimpleMath">\(p\)</span>-th coefficient of the newform of weight 2 and level 11 (associated with the elliptic curve 11a). They correspond to the noncuspidal classes that arise from the Eisenstein liftings (see Example 3.4 of <a href="chapBib_mj.html#biBvanderkallen">[vGvdKTV97]</a>). Moreover, when <span class="SimpleMath">\(N\)</span> is prime, one has <a href="chapBib_mj.html#biBAGG">[AGG84]</a>:</p>
 
-<h4>16.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></h4>
+<p class="center">\[\dim H^3(\Gamma_0(N),\mathbb C) = \dim H^3_{cusp}(\Gamma_0(N),\mathbb C) + 2\dim S_2(N),\]</p>
 
-<p>Here is a story of naive implementation design causing a serial algorithm to run at least 170 times slower than it should!</p>
+<p>where <span class="SimpleMath">\(S_2(N)\)</span> is the space of weight two cusp forms for <span class="SimpleMath">\(\Gamma_0(N) \subset SL_2(\mathbb Z)\)</span>. For <span class="SimpleMath">\(N=11\)</span> we have <span class="SimpleMath">\(\dim H^3(\Gamma_0(11),\mathbb C)=2\)</span> (Section <a href="chap15_mj.html#X8301B12684BBBD20"><span class="RefLink">15.4</span></a>) and <span class="SimpleMath">\(\dim S_2(11)=1\)</span>, so there are no cuspidal classes.</p>
 
-<p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">\(C_\ast=C_\ast(Y)\)</span>. Computing the homology of <span class="SimpleMath">\(Y\)</span> directly from <span class="SimpleMath">\(C_\ast\)</span> would be time consuming due to the large number of cells in <span class="SimpleMath">\(Y\)</span>. So, an elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">\(Y\)</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">\(D_\ast\)</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">\(D_\ast\)</span> takes over 170 seconds.</p>
+<p>For <span class="SimpleMath">\(N = 53\)</span> we have <span class="SimpleMath">\(\dim H^3(\Gamma_0(53),\mathbb C)=10\)</span> and <span class="SimpleMath">\(\dim S_2(53)=4\)</span>, so <span class="SimpleMath">\(\dim H^3_{cusp}(\Gamma_0(53),\mathbb C)=2\)</span>. The following computes the factored characteristic polynomial of <span class="SimpleMath">\(E_2\)</span> for <span class="SimpleMath">\(N = 53\)</span>:</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
-[ 3679, 37565, 75083, 41212 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=ContractedComplex(C);time;</span>
-Chain complex of length 3 in characteristic 0 . 
-
-170547
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
-[ 1, 27, 78, 67 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
-[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
-26
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(53,2).Tfree));</span>
+[ x_1-3, x_1+1, x_1^2+4*x_1+15, x_1^3-11*x_1^2+37*x_1-37, x_1^3-x_1^2-13*x_1+5 ]
 </pre></div>
 
-<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
-
-<p>The following snippet illustrates the earlier implementation. It again begins with the construction of the regular CW-complex <span class="SimpleMath">\(Y\)</span> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <span class="SimpleMath">\(f_1\colon C_\ast(Y) \rightarrow C_\ast(Y')\)</span> and <span class="SimpleMath">\(f_2\colon C_\ast(Y') \rightarrow C_\ast(Y)\)</span> with <span class="SimpleMath">\(Y'\)</span> a homotopy equivalent non-regular CW-complex with fewer cells. It uses <span class="SimpleMath">\(D_\ast=C_\ast(Y')\)</span> to quickly compute the homology of <span class="SimpleMath">\(Y\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;</span>
-[ Chain Map between complexes of length 3 . 
-    , Chain Map between complexes of length 3 . 
-     ]
-1192
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(f[1]);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
-[ 3679, 37565, 75083, 41212 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=Target(f[1]);</span>
-Chain complex of length 3 in characteristic 0 . 
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
-[ 4, 15, 29, 33 ]
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
-[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
-211
-
-</pre></div>
-
-<p>The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forcefully by the story. The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained to produce the chain maps. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon at it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.</p>
-
-<p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list.</p>
+<p>The linear and cubic factors are the Eisenstein liftings of the four newforms in <span class="SimpleMath">\(S_2(53)\)</span>. The remaining factor <span class="SimpleMath">\(x_1^2+4x_1+15\)</span> comes from the cuspidal part: its roots <span class="SimpleMath">\(-2\pm\sqrt{-11}\)</span> are the eigenvalue <span class="SimpleMath">\(a_2\)</span> in Table 2 of <a href="chapBib_mj.html#biBvanderkallen">[vGvdKTV97]</a> and its complex conjugate.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

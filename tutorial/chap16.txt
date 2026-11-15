@@ -1,241 +1,88 @@
   
-  [1X16 [33X[0;0YParallel computation[133X[101X
+  [1X16 [33X[0;0YHecke operators for [22XΓ_0(N)[122X[101X[1X in [22XSL_3( Z)[122X[101X[1X (by Giulia Orrù)[133X[101X
   
   
-  [1X16.1 [33X[0;0YAn embarassingly parallel computation[133X[101X
+  [1X16.1 [33X[0;0YThe Hecke operator [22XE_p[122X[101X[1X[133X[101X
   
-  [33X[0;0YThe  following  example  creates  fifteen  child  processes  and  uses  them
-  simultaneously  to  compute the second integral homology of each of the [22X2328[122X
-  groups of order [22X128[122X. The final command shows that[133X
+  [33X[0;0YLet  [22Xα_p[122X  be  the  matrix defining the Hecke operator [22XE_p: H^3(Γ_0(N), C) ->
+  H^3(Γ_0(N), C)[122X, for prime [22Xp[122X not dividing [22XN[122X, with[133X
   
-  [33X[0;0Y[22XH_2(G, Z)= Z_2^21[122X[133X
   
-  [33X[0;0Yfor  the  [22X2328[122X-th  group  [22XG[122X in [12XGAP[112X's library of small groups. The penulimate
-  command shows that the parallel computation achieves a speedup of 10.4 .[133X
+  [24X[33X[0;6Y\alpha_p  =  \left(\begin{array}{ccc}  p  &  0  &  0\\ 0 & 1 & 0\\ 0 & 0 & 1
+  \end{array}\right)[133X
+  
+  [124X
+  
+  [33X[0;0YThe double coset [22XΓ_0(N)α_p Γ_0(N)[122X can be decomposed as [22X∐_i β_i Γ_0(N)[122X. For [22XN
+  = 53[122X and [22Xp = 2[122X there are [22Xp^2 + p + 1 = 7[122X representatives [22Xβ_i[122X:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XProcesses:=List([1..15],i->ChildProcess());;[127X[104X
-    [4X[25Xgap>[125X [27Xfn:=function(i);return GroupHomology(SmallGroup(128,i),2);end;;[127X[104X
-    [4X[25Xgap>[125X [27Xfor p in Processes do[127X[104X
-    [4X[25X>[125X [27XChildPut(fn,"fn",p);[127X[104X
-    [4X[25X>[125X [27Xod;[127X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");L:=ParallelList([1..2328],"fn",Processes);;Exec("date +%s");[127X[104X
-    [4X[28X1716105545[128X[104X
-    [4X[28X1716105554[128X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");L1:=List([1..2328],fn);;Exec("date +%s");[127X[104X
-    [4X[28X1716105586[128X[104X
-    [4X[28X1716105680[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xspeedup:=1.0*(680-586)/(554-545);[127X[104X
-    [4X[28X10.4444[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XL[2328];[127X[104X
-    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ][128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHAP_Gamma0_SL3ZHeckeCosetReps(53,2);[127X[104X
+    [4X[28X[ [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 2 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 1, 2 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 53, 0, 2 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 53, 1, 2 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 0, 2, 0 ], [ 0, 0, 1 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 53, 2, 0 ], [ 0, 0, 1 ] ], [128X[104X
+    [4X[28X  [ [ 2, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  function  [10XParallelList()[110X  is  built  from  [12XHAP[112X's six core functions for
-  parallel computation.[133X
-  
-  
-  [1X16.2 [33X[0;0YA non-embarassingly parallel computation[133X[101X
-  
-  [33X[0;0YThe  following  commands use core functions to compute the product [22XA=M× N[122X of
-  two random matrices by distributing the work over two processors.[133X
+  [33X[0;0YThe function [10XGamma0_SL3ZHeckeOperator(N,p)[110X computes the action of [22XE_p[122X over [22XZ[122X
+  on  [22XH_0(Γ_0(N),St)[122X,  using  the presentation of Section [14X15.3[114X. It returns the
+  matrix  [10XTfree[110X of [22XE_p[122X on the free part, whose eigenvalues are those of [22XE_p[122X on
+  [22XH^3(Γ_0(N),  C)[122X,  and the matrix [10XTtorsion[110X of its action on the torsion part.
+  For  example,  for [22XN=11[122X and [22Xp=2[122X the group [22XH_0(Γ_0(11),St)[122X is free of rank [22X2[122X,
+  and the matrix of [22XE_2[122X is:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XM:=RandomMat(10000,10000);;[127X[104X
-    [4X[25Xgap>[125X [27XN:=RandomMat(10000,10000);;[127X[104X
-    [4X[25Xgap>[125X [27X[127X[104X
-    [4X[25Xgap>[125X [27Xs:=ChildProcess();;[127X[104X
-    [4X[25Xgap>[125X [27X[127X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716109418[128X[104X
-    [4X[25Xgap>[125X [27XMtop:=M{[1..5000]};;[127X[104X
-    [4X[25Xgap>[125X [27XMbottom:=M{[5001..10000]};;[127X[104X
-    [4X[25Xgap>[125X [27XChildPut(Mtop,"Mtop",s);[127X[104X
-    [4X[25Xgap>[125X [27XChildPut(N,"N",s);[127X[104X
-    [4X[25Xgap>[125X [27XNextAvailableChild([s]);;[127X[104X
-    [4X[25Xgap>[125X [27XChildCommand("Atop:=Mtop*N;;",s);;[127X[104X
-    [4X[25Xgap>[125X [27XAbottom:=Mbottom*N;;[127X[104X
-    [4X[25Xgap>[125X [27XA:=ChildGet("Atop",s);;[127X[104X
-    [4X[25Xgap>[125X [27XAppend(A,Abottom);;[127X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716110143[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XAA:=M*N;;Exec("date +%s");[127X[104X
-    [4X[28X1716111389[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xspeedup:=1.0*(111389-110143)/(110143-109418);[127X[104X
-    [4X[28X1.71862[128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe  next  commands  compute  the  product  [22XA=M× N[122X of two random matrices by
-  distributing  the  work over fifteen processors. The parallelization is very
-  naive  (the  entire  matrices [22XM[122X and [22XN[122X are communicated to all processes) and
-  the computation achieves a speedup of 7.6.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XM:=RandomMat(15000,15000);;[127X[104X
-    [4X[25Xgap>[125X [27XN:=RandomMat(15000,15000);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=List([1..15],i->ChildCreate());;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716156583[128X[104X
-    [4X[25Xgap>[125X [27XChildPutObj(M,"M",S);[127X[104X
-    [4X[25Xgap>[125X [27XChildPutObj(N,"N",S);[127X[104X
-    [4X[25Xgap>[125X [27Xfor i in [1..15] do[127X[104X
-    [4X[25X>[125X [27Xcmd:=Concatenation("A:=M{[1..1000]+(",String(i),"-1)*1000}*N;");[127X[104X
-    [4X[25X>[125X [27XChildCommand(cmd,S[i]);[127X[104X
-    [4X[25X>[125X [27Xod;[127X[104X
-    [4X[25Xgap>[125X [27XA:=[];;[127X[104X
-    [4X[25Xgap>[125X [27Xfor i in [1..15] do[127X[104X
-    [4X[25X>[125X [27X C:=ChildGet("A",S[i]);[127X[104X
-    [4X[25X>[125X [27X Append(A,C);[127X[104X
-    [4X[25X>[125X [27Xod;[127X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");[127X[104X
-    [4X[28X1716157489[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XAA:=M*N;;Exec("date +%s");[127X[104X
-    [4X[28X1716164405[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xspeedup:=1.0*(64405-57489)/(57489-56583);[127X[104X
-    [4X[28X7.63355[128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGamma0_SL3ZHeckeOperator(11,2).Tfree;[127X[104X
+    [4X[28X[ [ -3, -1 ], [ 0, 2 ] ][128X[104X
   [4X[32X[104X
   
   
-  [1X16.3 [33X[0;0YParallel persistent homology[133X[101X
+  [1X16.2 [33X[0;0YCharacteristic polynomial of [22XE_p[122X[101X[1X[133X[101X
   
-  [33X[0;0YSection  [14X5.8[114X  illustrates  an  alternative method of computing the persitent
-  Betti numbers of a filtered pure cubical complex. The method lends itself to
-  parallelisation.  However,  the following parallel computation of persistent
-  Betti numbers achieves only a speedup of [22X1.5[122X due to a significant time spent
-  transferring  data  structures  between  processes.  On  the other hand, the
-  persistent  Betti  function  could  be  used to distribute computations over
-  several computers. This might be useful for larger computations that require
-  significant memory resources.[133X
+  [33X[0;0YThe  following  commands  compute the factored characteristic polynomials of
+  [22XE_p: H^3(Γ_0(11), C) -> H^3(Γ_0(11), C)[122X, for [22Xp = 2, 3, 5, 7[122X:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfile:=HapFile("data247.txt");;[127X[104X
-    [4X[25Xgap>[125X [27XRead(file);;[127X[104X
-    [4X[25Xgap>[125X [27XF:=ThickeningFiltration(T,25);;[127X[104X
-    [4X[25Xgap>[125X [27XS:=List([1..15],i->ChildCreate());;[127X[104X
-    [4X[25Xgap>[125X [27XN:=[0,1,2];;[127X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");P:=ParallelPersistentBettiNumbers(F,N,S);;Exec("date +%s");[127X[104X
-    [4X[28X1717160785[128X[104X
-    [4X[28X1717161285[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XExec("date +%s");Q:=PersistentBettiNumbersAlt(F,N);;Exec("date +%s");[127X[104X
-    [4X[28X1717161528[128X[104X
-    [4X[28X1717162276[128X[104X
-    [4X[25Xgap>[125X [27Xspeedup:=1.0*(1717162276-1717161528)/(1717161285-1717160785);[127X[104X
-    [4X[28X1.496[128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFactors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,2).Tfree));[127X[104X
+    [4X[28X[ x_1-2, x_1+3 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,3).Tfree));[127X[104X
+    [4X[28X[ x_1-8, x_1+2 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,5).Tfree));[127X[104X
+    [4X[28X[ x_1-26, x_1-6 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(11,7).Tfree));[127X[104X
+    [4X[28X[ x_1-47, x_1+13 ][128X[104X
   [4X[32X[104X
   
+  [33X[0;0YNote  that,  in  each  case, the eigenvalues are exactly [22Xp^2+b_p[122X and [22X1+pb_p[122X,
+  where  [22Xb_p[122X  is  the [22Xp[122X-th coefficient of the newform of weight 2 and level 11
+  (associated with the elliptic curve 11a). They correspond to the noncuspidal
+  classes  that  arise  from  the  Eisenstein  liftings  (see  Example  3.4 of
+  [vGvdKTV97]). Moreover, when [22XN[122X is prime, one has [AGG84]:[133X
   
-  [1X16.4 [33X[0;0YParallelism not a substitute for careful serial implementation[133X[101X
   
-  [33X[0;0YHere is a story of naive implementation design causing a serial algorithm to
-  run at least 170 times slower than it should![133X
+  [24X[33X[0;6Y\dim  H^3(\Gamma_0(N),\mathbb  C) = \dim H^3_{cusp}(\Gamma_0(N),\mathbb C) +
+  2\dim S_2(N),[133X
   
-  [33X[0;0YThe following snippet begins with the construction of a regular CW-complex [22XY[122X
-  with 157539 cells. It then constructs the cellular chain complex [22XC_∗=C_∗(Y)[122X.
-  Computing the homology of [22XY[122X directly from [22XC_∗[122X would be time consuming due to
-  the  large  number  of  cells  in  [22XY[122X. So, an elementary procedure is used to
-  eliminate  redundant  generators  from  [22XY[122X  in  order  to  obtain  a  smaller
-  quasi-isomorphic  chain  complex  [22XD_∗[122X  and  this  smaller complex is used to
-  quickly obtain the homology. However, the construction of [22XD_∗[122X takes over 170
-  seconds.[133X
+  [124X
+  
+  [33X[0;0Ywhere  [22XS_2(N)[122X  is  the space of weight two cusp forms for [22XΓ_0(N) ⊂ SL_2( Z)[122X.
+  For  [22XN=11[122X we have [22Xdim H^3(Γ_0(11), C)=2[122X (Section [14X15.4[114X) and [22Xdim S_2(11)=1[122X, so
+  there are no cuspidal classes.[133X
+  
+  [33X[0;0YFor  [22XN  =  53[122X  we  have  [22Xdim  H^3(Γ_0(53),  C)=10[122X  and [22Xdim S_2(53)=4[122X, so [22Xdim
+  H^3_cusp(Γ_0(53),  C)=2[122X.  The following computes the factored characteristic
+  polynomial of [22XE_2[122X for [22XN = 53[122X:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
-    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
-    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XC:=ChainComplexOfRegularCWComplex(Y);[127X[104X
-    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
-    [4X[28X[ 3679, 37565, 75083, 41212 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XD:=ContractedComplex(C);time;[127X[104X
-    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[28X170547[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
-    [4X[28X[ 1, 27, 78, 67 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
-    [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
-    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
-    [4X[28X26[128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFactors(CharacteristicPolynomial(Gamma0_SL3ZHeckeOperator(53,2).Tfree));[127X[104X
+    [4X[28X[ x_1-3, x_1+1, x_1^2+4*x_1+15, x_1^3-11*x_1^2+37*x_1-37, x_1^3-x_1^2-13*x_1+5 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe above procedure for reducing the number of generators in a chain complex
-  of  free  abelian  groups  uses the same elementary technique for "generator
-  removal"  as  a slightly more elaborate implementation programmed some years
-  earlier.  The  earlier implementation is (unnecessarily) restricted to chain
-  complexes  arising as cellular chain complexes of regular CW-complexes while
-  the  later  implemetation  is  aimed  at  arbitrary  chain complexes of free
-  abelian   groups.   The   earlier   implementation  returns  chain  homotopy
-  equivalences  between the original and the simplified complexes. To ease the
-  the  coding  of  the  later implementation it was decided to output just the
-  simplified  chain complex and forget about the chain maps yielding the chain
-  equivalence.[133X
-  
-  [33X[0;0YThe  following  snippet  illustrates  the  earlier  implementation. It again
-  begins  with the construction of the regular CW-complex [22XY[122X with 157539 cells.
-  It  then  takes just over a second to construct a pair of chain equivalences
-  [22Xf_1:  C_∗(Y)  →  C_∗(Y')[122X  and  [22Xf_2:  C_∗(Y')  →  C_∗(Y)[122X  with  [22XY'[122X a homotopy
-  equivalent  non-regular  CW-complex with fewer cells. It uses [22XD_∗=C_∗(Y')[122X to
-  quickly compute the homology of [22XY[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
-    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
-    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
-    [4X[25Xgap>[125X [27Xf:=ChainComplexEquivalenceOfRegularCWComplex(Y);time;[127X[104X
-    [4X[28X[ Chain Map between complexes of length 3 . [128X[104X
-    [4X[28X    , Chain Map between complexes of length 3 . [128X[104X
-    [4X[28X     ][128X[104X
-    [4X[28X1192[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XC:=Source(f[1]);[127X[104X
-    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
-    [4X[28X[ 3679, 37565, 75083, 41212 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XD:=Target(f[1]);[127X[104X
-    [4X[28XChain complex of length 3 in characteristic 0 . [128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
-    [4X[28X[ 4, 15, 29, 33 ][128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
-    [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
-    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
-    [4X[28X211[128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe  takeaway  from this story is that careful design of the datatypes to be
-  used  in  the  implementation  of  an algorithm can significantly impact the
-  speed   of  the  implementation!  This  is  a  well  established  principle,
-  illustrated forcefully by the story. The decision to output chain maps [22XC_∗ ↔
-  D_∗[122X  leads  to an implementation where all redundant generators in [22XC_∗[122X first
-  have  to be identified, and enough information has to be retained to produce
-  the  chain  maps. The later decision to output just the complex [22XD_∗[122X leads to
-  an  easier to implement process of eliminating each redundant generator in a
-  boundary  matrix  as  soon  at  it is found. This is analogous to a gaussian
-  elimination  procedure  for  producing  echelon form that updates a boundary
-  matrix  each  time  a  suitable  pivot is found; it is easy to code but less
-  efficient than the earlier implementation.[133X
-  
-  [33X[0;0YA new implementation of [10XContractedComplex(C)[110X is on the [12XHAP[112X to-do list.[133X
+  [33X[0;0YThe  linear  and  cubic  factors  are  the  Eisenstein  liftings of the four
+  newforms  in  [22XS_2(53)[122X.  The  remaining  factor  [22Xx_1^2+4x_1+15[122X comes from the
+  cuspidal  part:  its  roots  [22X-2±sqrt-11[122X are the eigenvalue [22Xa_2[122X in Table 2 of
+  [vGvdKTV97] and its complex conjugate.[133X
   
