@@ -495,7 +495,7 @@
   [4X[32X[104X
   
   [33X[0;0YFurther details on computing with Arithmetic groups can be found in Chapters
-  [14X13[114X, [14X14[114X .[133X
+  [14X13[114X, [14X14[114X and [14X15[114X.[133X
   
   
   [1X7.4-3 [33X[0;0YRational cohomology[133X[101X
@@ -724,7 +724,88 @@
   [4X[32X[104X
   
   
-  [1X7.4-5 [33X[0;0YGenerators and relators for the Steinberg module [22XSt_3( Q)[122X[101X[1X[133X[101X
+  [1X7.4-5 [33X[0;0YIntegral cohomology rings[133X[101X
+  
+  [33X[0;0YExisting  HAP  functions  require  a resolution with contracting homotopy in
+  order  to  compute  cup products in integral cohomology. So too do functions
+  for  computing  (co)homology  homomorphisms  induced by group homomorphisms.
+  Resolutions  for  Arithmetic groups in HAP are typically constructed without
+  contracting homotopies![133X
+  
+  [33X[0;0YSuch  a  resolution  can  be  viewed  as  the  cellular  chain  complex of a
+  contractible  cellular space, and clearly the contraction is applied to only
+  finitely  many cells in any finite computation. It thus suffices to have the
+  contraction  implemented  on  a suitable finite subspace -- that is, [13Xlocally
+  implemented[113X.[133X
+  
+  [33X[0;0YThe  following example begins by constructing a [22X4[122X-dimensional cellular space
+  [22XK[122X  on  which [22XG=GL(mathcal O_2)[122X acts cellularly with finite stabilizers where
+  [22Xmathcal  O_2[122X  denotes  the  ring  of integers of [22XQ(sqrt2)[122X. This construction
+  calls   Magma   code   written   by  Sebastian  Schoennenbeck  (see  [14X14.13[114X).
+  Alternatively,  a call could be made to Julia code written by Dima Pasechnik
+  (see [14X14.14[114X).[133X
+  
+  [33X[0;0YThe  example then builds part of a contracting homotopy on a finite subspace
+  [22XK'⊂  K[122X.  More  precisely,  the  space  [22XK[122X  has  a  single orbit of [22X4[122X-cells. A
+  representative  [22Xe^4[122X  of this orbit is chosen and added to [22XK'[122X. Then all those
+  [22X4[122X-cells  with  a  facet in common with [22Xe^4[122X are added to [22XK'[122X. Then all [22X4[122X-cells
+  with  a  facet in [22XK'[122X are added to [22XK'[122X. We think of [22XK'[122X as a [22X2[122X-times thickening
+  of [22Xe^4[122X or as a ball of 'radius' [22X2[122X.[133X
+  
+  [33X[0;0YThen  a  free  [22XZG[122X-resolution  is  constructed  from  [22XK[122X  and  used to compute
+  cohomology     additively.     $$H^n(GL_2({\mathcal     O}_2),\mathbb     Z)
+  =\left\{\begin{array}{ll}  \mathbb  Z,  &  n=1\\  (\mathbb  Z_2)^2,  & n=2\\
+  (\mathbb  Z_2)^6,  &  n=3\\  (\mathbb  Z_2)^7\oplus  \mathbb Z_{48}, & n=4\\
+  (\mathbb Z_2)^{11}\oplus \mathbb Z_{24}, & n=5\\ \end{array}\right.$$[133X
+  
+  [33X[0;0YDuring  the  construction  of  the  free  resolution the locally implemented
+  contracting   homotopy   has  been  transferred  to  a  locally  implemented
+  contraction  on  the  resolution. This local homotopy is sufficient to allow
+  for  the  computation  of  cup products (as composition products). The final
+  commands  shows  that  the  cohomology  ring  has  a  minimal generating set
+  involving  one  generator  in  degree  [22X1[122X,  two  generators in degree [22X2[122X, five
+  generators  in  degree [22X3[122X, four generators in degree [22X4[122X. The computation stops
+  there  and  says nothing about the elements in the minimal generating set of
+  degree [22X> 4[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        [128X[104X
+    [4X[25Xgap>[125X [27XK:=VoronoiComplexGL(2,2 : backend := "magma");; #Calls Sebastian Schoennenbeck's Magma code[127X[104X
+    [4X[28XNon-free resolution in characteristic 0 for GL(2,O2) .[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XBuildLocalHomotopy(K,2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR:=FreeZGResolution(K,6);[127X[104X
+    [4X[28XResolution of length 6 in characteristic 0 for GL(2,O2) .[128X[104X
+    [4X[25Xgap>[125X [27XList([0..5],R!.dimension);[127X[104X
+    [4X[28X[ 2, 8, 20, 36, 53, 71 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),1);[127X[104X
+    [4X[28X[ 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),2);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),3);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),4);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 48 ][128X[104X
+    [4X[25Xgap>[125X [27XCohomology(HomToIntegers(R),5);[127X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 24 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIntegralRingGenerators(R,1);[127X[104X
+    [4X[28X[ [ 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIntegralRingGenerators(R,2);[127X[104X
+    [4X[28X[ [ 1, 0 ], [ 0, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIntegralRingGenerators(R,3);[127X[104X
+    [4X[28X[ [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIntegralRingGenerators(R,4);[127X[104X
+    [4X[28X[ [ 0, 0, 0, 1, 0, -1, -1, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.4-6 [33X[0;0YGenerators and relators for the Steinberg module [22XSt_3( Q)[122X[101X[1X[133X[101X
   
   [33X[0;0YThe  following  rather  inelegant  variant  of  the [22Xn=3[122X case of Theorem B in
   [CP17] is proved using the commands below.[133X
@@ -777,7 +858,7 @@
   [4X[32X[104X
   
   
-  [1X7.4-6 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
+  [1X7.4-7 [33X[0;0Y[22XS[122X[101X[1X-arithmetic groups[133X[101X
   
   [33X[0;0YThe  following  commands  compute the integral homology of [22XSL_2( Z[1/58])[122X in
   degrees up to [22X7[122X. This is joint work with [12XBui Anh Tuan[112X.[133X
