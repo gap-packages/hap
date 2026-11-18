@@ -5,7 +5,7 @@ InstallGlobalFunction(GComplexToFiniteRegularCWRegion,
 function(R,N)
 local Y, dim, dim1, Cells,boundaries, StandardForm, 
 Tiles, tile, pos,NeighbourGens,CanonicalLeftCosetElement,TileReps,
-w,NewLeaves,Leaves,i,e,f,n,k,g,b,x;
+w,NewLeaves,Leaves,i,e,f,n,k,g,b,x,Sign;
 #R is a contractible G-complex
 
 #######################################################
@@ -160,8 +160,46 @@ od;
 od;
 
 Y:=RegularCWComplex(boundaries);
+OrientRegularCWComplex(Y);
+
+#############################################
+Sign:=function(n,e,g)
+local SignAtPos, k;
+#Returns +/- 1 such that g_*[e] = Sign * [g.e], where e is the orbit
+#representative cell of dimension n (an index of R) and [e] carries the
+#orientation of Y on the cell with standard form [e,identity].
+
+SignAtPos:=function(n,k)
+local c, kk, bd, o, f, ff, fk, bdg, p, s1, s2;
+if n=0 then return 1; fi;
+c:=Cells[n+1][k];
+kk:=PositionSet(Cells[n+1],StandardForm(n,[c[1],g*c[2]]));   #g.c
+bd:=Y!.boundaries[n+1][k];          #[length, f1, f2, ...]
+o:=Y!.orientation[n+1][k];
+f:=bd[2];                           #a facet of c
+s1:=o[1];                           #[c:f]
+ff:=Cells[n][f];
+fk:=PositionSet(Cells[n],StandardForm(n-1,[ff[1],g*ff[2]]));  #g.f
+bdg:=Y!.boundaries[n+1][kk];
+p:=Position(bdg,fk,1);              #search from index 2
+s2:=Y!.orientation[n+1][kk][p-1];   #[g.c:g.f]
+return s1*s2*SignAtPos(n-1,f);
+end;
+
+if n=0 then return 1; fi;
+k:=PositionSet(Cells[n+1],StandardForm(n,[e,One(g)]));
+return SignAtPos(n,k);
+end;
+#############################################
+
+
+
+
 Y!.G_Cells:=Cells;
 Y!.StandardForm:=StandardForm;
+Y!.Sign:=Sign;
+
+
 return Y;
 end);
 #####################################################################

@@ -618,7 +618,7 @@ kcells:=tmp;
             d:=[];
             w[2]:=pos(CanonicalRightCosetElement(StabGrp[k+1][AbsInt(w[1])],
                                                                 Elts[w[2]]));
-            w[1]:=a*Sign(k,w[1],w[2])*w[1];  #K is always positive? So this 
+            #w[1]:=a*Sign(k,w[1],w[2])*w[1];  #K is always positive? So this 
                                              #line does nothing! Graham 2026
             ww:=[AbsInt(w[1]),w[2]];
             h:=StructuralCopy(DVF(k,ww));

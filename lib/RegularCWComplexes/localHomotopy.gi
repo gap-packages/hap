@@ -4,22 +4,18 @@
 InstallGlobalFunction(BuildLocalHomotopy,
 function(K,N)
 local Y, homotopy, PseudoBoundary, Boundary, HomotopyRec,
-FinalHomotopy, pos,C,D,i,k,n,b,x,s, dim;
+FinalHomotopy, pos,C,i,k,n,b,x,s,g,h,one, dim, orient,id;
 
 Y:=GComplexToFiniteRegularCWRegion(K,N);
-Print("Contracting homotopy is valid in characteristic 2 only at present.\n");
-#At present this function only works mod 2. We need to adjust
-##the orientation on Y so that it agrees with the orientation on K.
 if Length(CriticalCells(Y))<>1 then Print("Error\n"); return fail; fi;
-C:=ChainComplexWithChainHomotopy(Y);
-D:=ChainComplexOfRegularCWComplex(Y);
+one:=One(K!.group);
 
 dim:=-1;;
 while K!.dimension(dim+1)>0 do
    dim:=dim+1;
 od;
 
-if false then ##############################################
+
 ##Each cell in Y is represented as g.e with g a preferred 
 ##group element and e is the preferred representative cell 
 ##in the orbit. We modify the boundary of K so that only preferred
@@ -40,6 +36,9 @@ for n in [1..dim] do
          x:=Y!.StandardForm(n-1,x);
          s:= Y!.orientation[n+1][pos][i];
          x:=Y!.StandardForm(n-1,x);
+
+s:= s*Y!.Sign(n-1,x[1],x[2]);
+
          x[1]:=s*x[1];
          Add(K!.elts,x[2]);
          x[2]:=Length(K!.elts);
@@ -59,15 +58,14 @@ fi;
 end;
 #############################
 K!.boundary:=Boundary;
-##
-##
-fi; ##############################################
 
+
+C:=ChainComplexWithChainHomotopy(Y);
 
 ############################################
 ############################################
 homotopy:=function(n,x)
-local id, sf, pos, v, h, H, z, i, j, g, sgn;
+local id, sf, pos, v, h, H, z, i, j, g, sgn,sg;
 #x=[k,g] is an integer pair representing g.e^n_k
 #For the moment will give a very clumsy implementation. 
 #The plan is to refine all the "searching" and to use sparse
@@ -75,22 +73,19 @@ local id, sf, pos, v, h, H, z, i, j, g, sgn;
 
 g:=K!.elts[x[2]];
 sf:=Y!.StandardForm(n,1*[x[1],g]);
-#sgn:=sf[2]^-1*g;
-#sgn:=K!.action(n,x[1],Position(K!.elts,sgn)); 
 sf:=PositionSet(Y!.G_Cells[n+1],sf); #Y!.G_Cells is a strictly sorted list
 v:=[1..Y!.nrCells(n)]*0;
-v[sf]:=SignInt(x[1]);
+v[sf]:=Y!.Sign(n,x[1],g)*SignInt(x[1]);
 h:=C!.chainHomotopy(v,n);
 H:=[];
 for i in [1..Length(h)] do
 if h[i]<>0 then
   z:=ShallowCopy(Y!.G_Cells[n+2][i]);
+sg:=Y!.Sign(n+1,z[1],z[2]);
   Add(K!.elts,z[2]);
   z[2]:=Length(K!.elts);
-    if h[i]<0 then
-      z[1]:=-z[1];
-      h[i]:=-h[i];
-    fi;
+if h[i]*sg<0 then z[1]:=-z[1]; fi;
+h[i]:=AbsInt(h[i]);
       for j in [1..h[i]] do
         Add(H,z);
       od;
@@ -120,7 +115,7 @@ if not IsBound(HomotopyRec[n+1][absw[1]][w[2]]) then
    HomotopyRec[n+1][absw[1]][w[2]]:=homotopy(n,absw);
 fi;
 
-if w[1]>1 then 
+if w[1]>0 then 
    return HomotopyRec[n+1][w[1]][w[2]];
 else
    return NegateWord(HomotopyRec[n+1][absw[1]][w[2]]);

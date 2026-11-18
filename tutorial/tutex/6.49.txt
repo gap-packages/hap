@@ -1,0 +1,32 @@
+
+gap> K:=VoronoiComplexGL(2,2 : backend := "magma");; #Calls Sebastian Schoennenbeck's Magma code
+Non-free resolution in characteristic 0 for GL(2,O2) .
+
+gap> BuildLocalHomotopy(K,2);
+true
+gap> R:=FreeZGResolution(K,6);
+Resolution of length 6 in characteristic 0 for GL(2,O2) .
+gap> List([0..5],R!.dimension);
+[ 2, 8, 20, 36, 53, 71 ]
+
+gap> Cohomology(HomToIntegers(R),1);
+[ 0 ]
+gap> Cohomology(HomToIntegers(R),2);
+[ 2, 2 ]
+gap> Cohomology(HomToIntegers(R),3);
+[ 2, 2, 2, 2, 2, 2 ]
+gap> Cohomology(HomToIntegers(R),4);
+[ 2, 2, 2, 2, 2, 2, 2, 48 ]
+gap> Cohomology(HomToIntegers(R),5);
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 24 ]
+
+gap> IntegralRingGenerators(R,1);
+[ [ 1 ] ]
+gap> IntegralRingGenerators(R,2);
+[ [ 1, 0 ], [ 0, 1 ] ]
+gap> IntegralRingGenerators(R,3);
+[ [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], 
+  [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ]
+gap> IntegralRingGenerators(R,4);
+[ [ 0, 0, 0, 1, 0, -1, -1, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ]

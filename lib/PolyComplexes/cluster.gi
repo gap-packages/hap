@@ -447,13 +447,16 @@ od;
 for i in [1..Length(M)] do
 for j in [i+1..Length(M)] do
 
-#if not M[i][j]=0 then
-#AppendTo(tmpInlog,i," -- ", j, " \n");
-#fi;
-
 for mm in [1..M[i][j]] do
 AppendTo(tmpInlog,i," -- ", j, " \n");
 od;
+#if M[i][j]>1 then
+#AppendTo(tmpInlog,i," -- ", j, "[color=red] \n");
+#fi;
+#if M[i][j]=1 then
+#AppendTo(tmpInlog,i," -- ", j, "[color=white] \n");
+#fi;
+
 
 od;od;
 
