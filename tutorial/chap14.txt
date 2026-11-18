@@ -978,15 +978,13 @@
   [33X[0;0YThe              Julia              package             ArithmeticVoronoi.jl
   ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl[107X)  computes  these complexes
   natively and can register an in-process callback under the name [10X"julia"[110X. HAP
-  itself   does   not   install  or  load  Julia.  The  rational  request  and
-  projective-complex  examples  below  extend  the  first  registered release,
-  v0.1.0.  Install  the  tested  provider revision used by this CI job in your
-  chosen Julia environment, along with OSCAR for its GAP interface:[133X
+  itself  does  not  install  or  load  Julia.  These  examples use registered
+  ArithmeticVoronoi v0.1.1, also pinned in CI. Install it from Julia's General
+  registry, along with OSCAR for its GAP interface:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28Ximport Pkg[128X[104X
-    [4X[28XPkg.add(url="https://github.com/dimpase/ArithmeticVoronoi.jl.git",[128X[104X
-    [4X[28X        rev="c6942b97936e69a392ee88523fbf3574edcc6e26")[128X[104X
+    [4X[28XPkg.add(name="ArithmeticVoronoi", version="0.1.1")[128X[104X
     [4X[28XPkg.add("Oscar")[128X[104X
   [4X[32X[104X
   
@@ -1005,11 +1003,29 @@
   rational  coefficients:  [10Xhap_voronoi_complex(; rank=3, group=:SL)[110X computes a
   complex for [22XSL_3( Z)[122X. The provider supports ranks at least two, rational and
   quadratic  GL,  and  rational  and  imaginary-quadratic  SL  and PSL on free
-  lattices  over  maximal  orders.  PSL  divides  by  the  full scalar centre.
-  Real-quadratic  SL/PSL complexes, nonmaximal orders and nonfree lattices are
-  not   supplied   by  this  provider.  The  package's  separate  presentation
-  algorithms  cover  real-quadratic  SL/PSL  too;  they  do  not  replace  the
-  equivariant cell data required by HAP.[133X
+  lattices over maximal orders. PSL divides by the full scalar centre. Version
+  0.1.1  additionally  constructs  certified  real-quadratic  SL  in rank two.
+  Real-quadratic  SL in higher ranks, real-quadratic PSL complexes, nonmaximal
+  orders  and nonfree lattices are not supplied by this release. The package's
+  separate  presentation  algorithms  cover real-quadratic SL/PSL too; they do
+  not replace the equivariant cell data required by HAP.[133X
+  
+  [33X[0;0YFor  example,  compute  a  fresh  complex  for  SL over the maximal order of
+  [22XQ(sqrt5)[122X, then its first two integral homology groups:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XK = hap_voronoi_complex(5; group=:SL, resolution_length=3);[128X[104X
+    [4X[28XR = GAP.Globals.FreeGResolution(K, 3);[128X[104X
+    [4X[28XC = GAP.Globals.TensorWithIntegers(R);[128X[104X
+    [4X[28X[GAP.gap_to_julia(GAP.Globals.Homology(C,n)) for n in 1:2][128X[104X
+    [4X[28X# [[], [0,0,0]]: H1 is trivial; H2 is Z^3.[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  determinant-height  construction  computes  and  certifies  the complex
+  afresh; it uses no Magma or stored complex. Certification failure returns an
+  error.   After   enabling   the   Julia   backend,  HAP's  convenience  call
+  [10XVoronoiComplexSL(2,3  :  backend := "julia")[110X uses the squarefree radicand 3,
+  corresponding to discriminant 12 in the direct Julia interface.[133X
   
   [33X[0;0YFor   HAP's   record  dispatcher  in  the  same  Julia  session,  first  run
   [10Xenable_hap_julia_backend()[110X. A rational example is:[133X
@@ -1022,7 +1038,7 @@
   
   [33X[0;0YThese  last  commands use GAP syntax, which can be evaluated through GAP.jl.
   See            the           ArithmeticVoronoi           HAP           guide
-  ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl/blob/c6942b97936e69a392ee88523fbf3574edcc6e26/docs/src/hap_and_vmh.md[107X)
+  ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl/blob/v0.1.1/docs/src/hap_and_vmh.md[107X)
   for installation, the direct Julia calls and supported computations.[133X
   
   [33X[0;0YAn  unregistered  backend  name  is an error. Providers must supply complete
