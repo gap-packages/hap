@@ -22,6 +22,7 @@ println("HAP checkout: ", hap_root)
 println("Julia ", VERSION, "; OSCAR ", pkgversion(Oscar), "; GAP ", GAP.GAP_VERSION)
 
 @testset "ArithmeticVoronoi: rational and quadratic groups" begin
+    @test pkgversion(ArithmeticVoronoi)==v"0.1.1"
     enable_hap_julia_backend(;progress=true,resolution_length=3)
     @test GAP.Globals.IsIdenticalObj(dispatcher,GAP.Globals.VoronoiComplex)
     construct=GAP.evalstr("r -> VoronoiComplex(r : backend := \"julia\")")
@@ -30,6 +31,8 @@ println("Julia ", VERSION, "; OSCAR ", pkgversion(Oscar), "; GAP ", GAP.GAP_VERS
     examples=(
         (request=voronoi_request(-7),cells=[1,2,1],homology=([2,2,2],[2,12])),
         (request=voronoi_request(5),cells=[2,4,5,4,1],homology=([0,2],[2,2,2,2])),
+        (request=voronoi_request(5;group=:SL),cells=nothing,homology=(Int[],[0,0,0])),
+        (request=voronoi_request(12;group=:SL),cells=nothing,homology=([2,6],[0,0,0])),
         (request=voronoi_request(-7;group=:SL),cells=nothing,homology=([0,4],[12])),
         (request=voronoi_request(-7;group=:PSL),cells=nothing,homology=([0,2],)),
         (request=voronoi_request(;rank=3),cells=[1,1,2,1],homology=([2],[2,2])),
@@ -65,6 +68,11 @@ println("Julia ", VERSION, "; OSCAR ", pkgversion(Oscar), "; GAP ", GAP.GAP_VERS
     K=hap_voronoi_complex(;group=:PSL,resolution_length=2)
     R=GAP.Globals.FreeGResolution(K,2)
     @test Int.(GAP.gap_to_julia(GAP.Globals.Homology(GAP.Globals.TensorWithIntegers(R),1)))==[6]
+    # HAP convenience calls take a radicand: 3 means discriminant 12.
+    K=GAP.evalstr("VoronoiComplexSL(2,3 : backend := \"julia\")")
+    @test Int(GAP.evalstr("K -> K!.arithmeticVoronoi")(K).discriminant)==12
+    R=GAP.Globals.FreeGResolution(K,2)
+    @test sort(Int.(GAP.gap_to_julia(GAP.Globals.Homology(GAP.Globals.TensorWithIntegers(R),1))))==[2,6]
     # Later computations must not overwrite an earlier object's captured data.
     R=GAP.Globals.FreeGResolution(first_complex,3)
     @test sort(Int.(GAP.gap_to_julia(GAP.Globals.Homology(GAP.Globals.TensorWithIntegers(R),2))))==[2,12]
