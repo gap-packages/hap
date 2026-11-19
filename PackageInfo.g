@@ -64,7 +64,7 @@ SetPackageInfo( rec(
 
 
   Dependencies := rec(
-    GAP := ">= 4.12",
+    GAP := ">= 4.14",
     NeededOtherPackages := [
                              [ "polycyclic", ">=1.1" ],
                              [ "crystcat",   ">=1.1" ],
@@ -73,13 +73,13 @@ SetPackageInfo( rec(
                              [ "nq",         ">=1.1" ],
                              [ "SmallGrp",   ">=1.1" ],
                              [ "Polymaking", ">=0.8.4"],
-                             [ "singular", ">=06.07.23" ],
+                            # [ "singular", ">=06.07.23" ],
 			                 [ "congruence", ">=0.0" ]
                            ],
     SuggestedOtherPackages := [
                                [ "homology",    ">=0.0"   ], 
                                [ "edim",      ">=1.2.2" ],
-                            #   [ "singular", ">=06.07.23" ],
+                               [ "singular", ">=06.07.23" ],
                             #   [ "congruence", ">=0.0" ],
                                [ "HAPcryst", ">=0.1.0" ],
                                [ "xmod", ">0.0" ],
