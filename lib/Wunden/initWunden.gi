@@ -9,3 +9,4 @@ ReadPackageHap("lib/Wunden/reduce.gi");
 
 ReadPackageHap("lib/Wunden/building_general.gi");
 ReadPackageHap("lib/Wunden/restrict_nonfree.gi");
+ReadPackageHap("lib/Wunden/conjugate_nonfree.gi");

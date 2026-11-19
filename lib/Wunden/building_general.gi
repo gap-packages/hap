@@ -1,6 +1,7 @@
 # B_n(p) for SL(n,Z[1/p]), using the conventions of buildin.g.
 # After LoadPackage("hap"); B := BruhatTitsBuildingSL(6,2);
 
+# Column lattices L(a)=a*Z_p^n, with left action g*[L]=[gL].
 # Exact membership in a cell stabilizer; no enumeration of infinite groups.
 InstallMethod(\in, [IsMatrix, IsGroup and HasBTBuildingLatticeBases],
     function(g,h)
@@ -8,7 +9,7 @@ InstallMethod(\in, [IsMatrix, IsGroup and HasBTBuildingLatticeBases],
         bases := BTBuildingLatticeBases(h); n := Length(bases[1]);
         return Length(g)=n and ForAll(g,r -> Length(r)=n)
             and ForAll(Concatenation(g),IsRat) and DeterminantMat(g)=1
-            and ForAll(bases,a -> ForAll(Concatenation(a*g*a^-1),IsInt));
+            and ForAll(bases,a -> ForAll(Concatenation(a^-1*g*a),IsInt));
     end);
 
 InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
@@ -26,19 +27,19 @@ InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
     pairs := Filtered(Tuples([1..n],2),ij -> ij[1]<>ij[2]);
     gens := List(pairs,ij -> elementary(ij[1],ij[2],1));
 
-    # Row bases a_i=diag(1,...,1,p,...,p), with i trailing p's.
+    # Column bases a_i=diag(1,...,1,p,...,p), with i trailing p's.
     # Degree d representatives are the (d+1)-subsets, oriented increasingly.
     a := List([0..n-1],i -> DiagonalMat(
         Concatenation(List([1..n-i],j -> 1),List([1..i],j -> p))));
     cells := List([1..n],k -> Combinations([1..n],k));
-    rotation := NullMat(n,n); rotation[1][n] := p;
-    for i in [2..n] do rotation[i][i-1] := 1; od;
+    rotation := NullMat(n,n); rotation[n][1] := p;
+    for i in [2..n] do rotation[i-1][i] := 1; od;
     powers := List([0..n-1],i -> rotation^i);
     kernel := fail; flagCache := rec();
     stabilizers := List([1..n],i -> []);
 
     # Generators of Gamma_n(p), n>=3. Sury--Venkataramana's formula,
-    # as stated in Detinko--Flannery--Hulpke, Proposition 1.10:
+    # see Detinko--Flannery--Hulpke, Proposition 1.10:
     # https://arxiv.org/pdf/1906.10423 (see BUILDING_GENERAL.md).
     principalGenerators := function()
         local sigma, upper, ij, c, k;
@@ -70,7 +71,8 @@ InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
         od;
     fi;
 
-    # Rank 2: Schreier generators for the row-line stabilizer in SL(2,Z).
+    # Rank 2: compute row-line Schreier generators, then transpose them
+    # to obtain generators for the column-line stabilizer in SL(2,Z).
     # Transversal rows represent [1,t] (0<=t<p) and [0,1].
     sl2EdgeGenerators := function()
         local reps, result, r, s, x, pos;
@@ -85,10 +87,10 @@ InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
                 if x<>one then AddSet(result,x); fi;
             od;
         od;
-        return result;
+        return List(result,TransposedMat);
     end;
 
-    # Full preimage of a standard row-flag stabilizer in SL(n,F_p).
+    # Full preimage of a standard column-flag stabilizer in SL(n,F_p).
     # cuts lists the dimensions of the prefix subspaces in that flag.
     flagGenerators := function(cuts)
         local key, allowed;
@@ -99,7 +101,7 @@ InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
             else
                 if kernel=fail then kernel := principalGenerators(); fi;
                 allowed := Filtered(pairs,ij ->
-                    ForAll(cuts,d -> not (ij[1]<=d and d<ij[2])));
+                    ForAll(cuts,d -> not (ij[2]<=d and d<ij[1])));
                 flagCache.(key) := Union(kernel,torus,
                     List(allowed,ij -> elementary(ij[1],ij[2],1)));
             fi;
@@ -133,7 +135,7 @@ InstallGlobalFunction(BruhatTitsBuildingSL, function(n,p)
             # then conjugate the integral stabilizer back to the given cell.
             cuts := Set(List(c{[2..Length(c)]},j -> n-(j-c[1])));
             r := powers[shift+1];
-            h := Group(List(flagGenerators(cuts),g -> r^-1*g*r));
+            h := Group(List(flagGenerators(cuts),g -> r*g*r^-1));
             SetBTBuildingLatticeBases(h,a{c}); SetIsFinite(h,false);
             stabilizers[d+1][k] := h;
         fi;

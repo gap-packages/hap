@@ -19,3 +19,6 @@ DeclareAttribute("BTBuildingLatticeBases", IsGroup);
 DeclareAttribute("RestrictionCellStabilizerData", IsGroup);
 DeclareGlobalFunction("BruhatTitsBuildingSL");
 DeclareGlobalFunction("RestrictNonFreeResolution");
+
+DeclareAttribute("NonFreeConjugationData", IsGroup);
+DeclareGlobalFunction("ConjugateNonFreeResolution");
