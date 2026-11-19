@@ -728,9 +728,9 @@
   
   [33X[0;0YExisting  HAP  functions  require  a resolution with contracting homotopy in
   order  to  compute  cup products in integral cohomology. So too do functions
-  for  computing  (co)homology  homomorphisms  induced by group homomorphisms.
-  Resolutions  for  Arithmetic groups in HAP are typically constructed without
-  contracting homotopies![133X
+  for  computing  (co)homology  homomorphisms  induced  by group homomorphisms
+  [14X7.9-1[114X.  Resolutions  for  Arithmetic groups in HAP are typically constructed
+  without contracting homotopies![133X
   
   [33X[0;0YSuch  a  resolution  can  be  viewed  as  the  cellular  chain  complex of a
   contractible  cellular space, and clearly the contraction is applied to only
@@ -1316,6 +1316,97 @@
     [4X[28X[ 2, 2 ][128X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(Range(c)/Image(c));[127X[104X
     [4X[28X[ 2, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.9-1 [33X[0;0YContracting homotopies[133X[101X
+  
+  [33X[0;0YIn  order to induce a homomorphism in (co)homology from a group homomorphism
+  [22Xϕ:  G_1→  G_2[122X  HAP  requires  the  resolution for the target group [22XG_2[122X to be
+  endowed   with   a   contracting   homotopy.   Certain  functions,  such  as
+  [10XResolutionFiniteGroup(G,n)[110X   and   [10XResolutionNilpotentGroup(G,n)[110X,   build  a
+  contracting  homotopy  during  the  construction  of  the  resolution. Other
+  resolution  functions  construct no contracting homotopy and can not be used
+  to compute induced homomorphisms.[133X
+  
+  [33X[0;0YResolutions  for  groups  of  finite  virtual  cohomological  dimension  are
+  typically  constructued  by first building a contractible G-CW complex [22XK[122X and
+  then combining [22XK[122X with free resolutions for the cell stabilizers. If the cell
+  stabilizer   resolutions  have  contracting  homotopies,  and  if  [22XK[122X  has  a
+  contracting  homotopy, then so too does the combined resolution. If [22XK[122X is not
+  endowed  with a contracting homotopy then one can try to use a 'brute force'
+  method  to  implement a contracting homotopy on a finite 'ball' in [22XK[122X of some
+  'radius'  [22Xr[122X.  The resulting combined resolution will then have a contracting
+  homotopy implemented on a finite 'ball' in the associated cell complex. If [22Xr[122X
+  is  chosen  large  enough one can then induce (co)homology homomorphisms. To
+  illustrate  this  we consider a [22X2[122X-dimensional crystallographic group [22XG[122X and a
+  non-inner  automorphism  [22Xϕ:  G→  G[122X.  The  group  [22XG[122X has virtual cohomological
+  dimension  [22X2[122X.  A tessellation for [22XK= R^2[122X can be produced using the following
+  commands   which  call  Polymake  computational  geometry  software  in  the
+  construction of a fundamental domain (with non-trivial stabilizer).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=SpaceGroup(2,16);;[127X[104X
+    [4X[25Xgap>[125X [27XG:=AffineCrystGroupOnRight(GeneratorsOfGroup(G));;[127X[104X
+    [4X[25Xgap>[125X [27XK:=CrystallographicComplex(G);[127X[104X
+    [4X[28XNon-free resolution in characteristic 0 for <matrix group with [128X[104X
+    [4X[28X4 generators> . [128X[104X
+    [4X[28XNo contracting homotopy available.[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  commands  build  a  'ball'  in [22XK[122X of radius [22X10[122X and endow it with a
+  contracting  homotopy.  The  [22X1[122X-skeleton  of the ball is displayed and we see
+  that  the  fundamental domain is a pentagon. The contracting homotopy on the
+  [22X1[122X-skeleton  corresponds to a subtree; this subtree is also displayed (though
+  the commands are not shown).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBuildLocalHomotopy(K,10);;[127X[104X
+    [4X[25Xgap>[125X [27XBall:=K!.space;[127X[104X
+    [4X[28XRegular CW-complex of dimension 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(GraphOfRegularCWComplex(Ball));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNext  the  contracting homotopy is used to compute the homology homomorphism
+  in low degrees induced from a non-inner automorphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=FreeZGResolution(K,11);;[127X[104X
+    [4X[25Xgap>[125X [27XP := [[0,1,0],[1,0,0],[0,0,1]]^-1;;[127X[104X
+    [4X[25Xgap>[125X [27Xphi := GroupHomomorphismByFunction(G, G, x->x^P);;[127X[104X
+    [4X[25Xgap>[125X [27Xmap:=EquivariantChainMap(R,R,phi);[127X[104X
+    [4X[28XEquivariant Chain Map between resolutions of length 11 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT:=TensorWithIntegers(map);[127X[104X
+    [4X[28XChain Map between complexes of length 11 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfor n in [1..10] do[127X[104X
+    [4X[25X>[125X [27XPrint(Homology(T,n),"\n");[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [128X[104X
+    [4X[28X[ 3, 2 ], Pcp-group with orders [ 3, 2 ], [ g1, g2 ], [ g1^2, g2 ] )[128X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [ 0 ], Pcp-group with orders [128X[104X
+    [4X[28X[ 0 ], [ g1 ], [ g1^-1 ] )[128X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [128X[104X
+    [4X[28X[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], [128X[104X
+    [4X[28X[ g1, g2, g3 ] )[128X[104X
+    [4X[28XPcgs([  ]) -> [  ][128X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [128X[104X
+    [4X[28X[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], [128X[104X
+    [4X[28X[ g1^2, g2^5, g3 ] )[128X[104X
+    [4X[28XPcgs([  ]) -> [  ][128X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [128X[104X
+    [4X[28X[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], [128X[104X
+    [4X[28X[ g1, g2, g3 ] )[128X[104X
+    [4X[28XPcgs([  ]) -> [  ][128X[104X
+    [4X[28XGroupHomomorphismByImages( Pcp-group with orders [128X[104X
+    [4X[28X[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], [128X[104X
+    [4X[28X[ g1^2, g2^5, g3 ] )[128X[104X
+    [4X[28XPcgs([  ]) -> [  ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

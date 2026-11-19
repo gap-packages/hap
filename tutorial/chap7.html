@@ -72,7 +72,10 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7E573EA582CCEF2E">7.9 <span class="Heading">Cohomology as a functor of the first variable</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X792B9CC97C670AEA">7.9-1 <span class="Heading">Contracting homotopies</span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X796731727A7EBE59">7.10 <span class="Heading">Cohomology as a functor of the second variable and the long exact coefficient sequence</span></a>
 </span>
 </div>
@@ -779,7 +782,7 @@ Homology(C,0);
 
 <h5>7.4-5 <span class="Heading">Integral cohomology rings</span></h5>
 
-<p>Existing HAP functions require a resolution with contracting homotopy in order to compute cup products in integral cohomology. So too do functions for computing (co)homology homomorphisms induced by group homomorphisms. Resolutions for Arithmetic groups in HAP are typically constructed without contracting homotopies!</p>
+<p>Existing HAP functions require a resolution with contracting homotopy in order to compute cup products in integral cohomology. So too do functions for computing (co)homology homomorphisms induced by group homomorphisms <a href="chap7.html#X792B9CC97C670AEA"><span class="RefLink">7.9-1</span></a>. Resolutions for Arithmetic groups in HAP are typically constructed without contracting homotopies!</p>
 
 <p>Such a resolution can be viewed as the cellular chain complex of a contractible cellular space, and clearly the contraction is applied to only finitely many cells in any finite computation. It thus suffices to have the contraction implemented on a suitable finite subspace -- that is, <em>locally implemented</em>.</p>
 
@@ -1284,6 +1287,78 @@ CompositionMapping( [ (5,7)(6,8), (2,3,5)(4,7,6) ] -&gt;
 [ 2, 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariants(Range(c)/Image(c));</span>
 [ 2, 3 ]
+
+</pre></div>
+
+<p><a id="X792B9CC97C670AEA" name="X792B9CC97C670AEA"></a></p>
+
+<h5>7.9-1 <span class="Heading">Contracting homotopies</span></h5>
+
+<p>In order to induce a homomorphism in (co)homology from a group homomorphism <span class="SimpleMath">ϕ: G_1→ G_2</span> HAP requires the resolution for the target group <span class="SimpleMath">G_2</span> to be endowed with a contracting homotopy. Certain functions, such as <code class="code">ResolutionFiniteGroup(G,n)</code> and <code class="code">ResolutionNilpotentGroup(G,n)</code>, build a contracting homotopy during the construction of the resolution. Other resolution functions construct no contracting homotopy and can not be used to compute induced homomorphisms.</p>
+
+<p>Resolutions for groups of finite virtual cohomological dimension are typically constructued by first building a contractible G-CW complex <span class="SimpleMath">K</span> and then combining <span class="SimpleMath">K</span> with free resolutions for the cell stabilizers. If the cell stabilizer resolutions have contracting homotopies, and if <span class="SimpleMath">K</span> has a contracting homotopy, then so too does the combined resolution. If <span class="SimpleMath">K</span> is not endowed with a contracting homotopy then one can try to use a 'brute force' method to implement a contracting homotopy on a finite 'ball' in <span class="SimpleMath">K</span> of some 'radius' <span class="SimpleMath">r</span>. The resulting combined resolution will then have a contracting homotopy implemented on a finite 'ball' in the associated cell complex. If <span class="SimpleMath">r</span> is chosen large enough one can then induce (co)homology homomorphisms. To illustrate this we consider a <span class="SimpleMath">2</span>-dimensional crystallographic group <span class="SimpleMath">G</span> and a non-inner automorphism <span class="SimpleMath">ϕ: G→ G</span>. The group <span class="SimpleMath">G</span> has virtual cohomological dimension <span class="SimpleMath">2</span>. A tessellation for <span class="SimpleMath">K= R^2</span> can be produced using the following commands which call Polymake computational geometry software in the construction of a fundamental domain (with non-trivial stabilizer).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=SpaceGroup(2,16);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AffineCrystGroupOnRight(GeneratorsOfGroup(G));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=CrystallographicComplex(G);</span>
+Non-free resolution in characteristic 0 for &lt;matrix group with 
+4 generators&gt; . 
+No contracting homotopy available.
+
+</pre></div>
+
+<p>The next commands build a 'ball' in <span class="SimpleMath">K</span> of radius <span class="SimpleMath">10</span> and endow it with a contracting homotopy. The <span class="SimpleMath">1</span>-skeleton of the ball is displayed and we see that the fundamental domain is a pentagon. The contracting homotopy on the <span class="SimpleMath">1</span>-skeleton corresponds to a subtree; this subtree is also displayed (though the commands are not shown).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BuildLocalHomotopy(K,10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ball:=K!.space;</span>
+Regular CW-complex of dimension 2
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(GraphOfRegularCWComplex(Ball));</span>
+
+</pre></div>
+
+<p><img src="images/pentagonalball.gif" align="center" height="300" alt="1-skeleton of a ball of radius 10"/> <img src="images/pentagonalballtree.gif" align="center" height="300" alt="contracting tree"/></p>
+
+<p>Next the contracting homotopy is used to compute the homology homomorphism in low degrees induced from a non-inner automorphism.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeZGResolution(K,11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := [[0,1,0],[1,0,0],[0,0,1]]^-1;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := GroupHomomorphismByFunction(G, G, x-&gt;x^P);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map:=EquivariantChainMap(R,R,phi);</span>
+Equivariant Chain Map between resolutions of length 11 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=TensorWithIntegers(map);</span>
+Chain Map between complexes of length 11 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [1..10] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Print(Homology(T,n),"\n");</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 2 ], Pcp-group with orders [ 3, 2 ], [ g1, g2 ], [ g1^2, g2 ] )
+GroupHomomorphismByImages( Pcp-group with orders [ 0 ], Pcp-group with orders 
+[ 0 ], [ g1 ], [ g1^-1 ] )
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1, g2, g3 ] )
+Pcgs([  ]) -&gt; [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1^2, g2^5, g3 ] )
+Pcgs([  ]) -&gt; [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1, g2, g3 ] )
+Pcgs([  ]) -&gt; [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1^2, g2^5, g3 ] )
+Pcgs([  ]) -&gt; [  ]
 
 </pre></div>
 
