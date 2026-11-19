@@ -64,7 +64,7 @@ SetPackageInfo( rec(
 
 
   Dependencies := rec(
-    GAP := ">= 4.12",
+    GAP := "> 4.12",
     NeededOtherPackages := [
                              [ "polycyclic", ">=1.1" ],
                              [ "crystcat",   ">=1.1" ],
