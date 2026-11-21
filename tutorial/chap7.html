@@ -831,6 +831,48 @@ Resolution of length 6 in characteristic 0 for GL(2,O2) .
 
 </pre></div>
 
+<p>The same computation can be performed from within the Oscar system, using the ArithmeticVoronoi package, as follows.</p>
+
+
+<div class="example"><pre>
+        
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.13.4 (2026-11-13)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org release
+|__/                   |
+
+julia&gt; using ArithmeticVoronoi, Oscar
+
+julia&gt; import Oscar: GAP
+
+julia&gt; GAP.evalstr("""ExtendRootDirectories(["/home/MyDirectory"]);""")
+
+julia&gt; enable_hap_julia_backend()
+
+julia&gt; GAP.prompt()
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">request := rec(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    group := "GL", rank := 2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    field := rec(kind := "quadratic", discriminant := 8),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    order := rec(kind := "maximal"),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    lattice := rec(kind := "free"));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := VoronoiComplex(request : backend := "julia");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=FreeZGResolution(K,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=1;;Cohomology(HomToIntegers(R),n);</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=2;;Cohomology(HomToIntegers(R),n);</span>
+[ 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=3;;Cohomology(HomToIntegers(R),n);</span>
+[ 2, 2, 2, 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=4;;Cohomology(HomToIntegers(R),n);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 48 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=5;;Cohomology(HomToIntegers(R),n);</span>
+[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 24 ]
+
+</pre></div>
+
 <p><a id="X7C4900A17F987F5B" name="X7C4900A17F987F5B"></a></p>
 
 <h5>7.4-6 <span class="Heading">Generators and relators for the Steinberg module <span class="SimpleMath">St_3( Q)</span></span></h5>
