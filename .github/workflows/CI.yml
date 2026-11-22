@@ -27,7 +27,7 @@ jobs:
         gap-version:
           - 'devel'   # current GAP development version from git
           - 'latest'  # latest GAP release
-          #- 'minimal' # oldest GAP release supported by this package
+          - 'minimal' # oldest GAP release supported by this package
 
     steps:
       - uses: actions/checkout@v7
@@ -35,6 +35,14 @@ jobs:
         with:
           gap-version: ${{ matrix.gap-version }}
       - uses: gap-actions/build-pkg@v3
+      - name: Install the Singular interface with bigintvec support
+        if: matrix.gap-version == 'minimal'
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl -fsSL --retry 3 -O https://github.com/gap-packages/singular/releases/download/v2026.05.05/singular-2026.05.05.tar.gz
+          echo 'adb30a57aa5afea34c89cb30c3ba53f1164e7952ed5fd80d11c963c352d9a7d5  singular-2026.05.05.tar.gz' | sha256sum --check
+          tar -xzf singular-2026.05.05.tar.gz -C "$GAPROOT/pkg"
+          "$GAPROOT/gap" -q --quitonbreak -c 'QUIT_GAP(LoadPackage("singular", ">=2026.05.05") = true);'
       - uses: gap-actions/run-pkg-tests@v4
       #- uses: gap-actions/run-pkg-tests@v4
       #  with:
