@@ -501,11 +501,11 @@ The Julia package
 <URL Text="ArithmeticVoronoi.jl">https://github.com/dimpase/ArithmeticVoronoi.jl</URL>
 computes these complexes natively and can register an in-process callback
 under the name <C>"julia"</C>. HAP itself does not install or load Julia.
-These examples use registered ArithmeticVoronoi v0.1.1, also pinned in CI.
+These examples use registered ArithmeticVoronoi v0.1.2, also pinned in CI.
 Install it from Julia's General registry, along with OSCAR for its GAP interface:
 <Log><![CDATA[
 import Pkg
-Pkg.add(name="ArithmeticVoronoi", version="0.1.1")
+Pkg.add(name="ArithmeticVoronoi", version="0.1.2")
 Pkg.add("Oscar")
 ]]></Log>
 The direct Julia interface loads HAP automatically:
@@ -519,14 +519,14 @@ GAP.gap_to_julia(GAP.Globals.Homology(GAP.Globals.TensorWithIntegers(R), 1))
 ]]></Log>
 The integer argument here is a fundamental field discriminant. Omit it for
 rational coefficients: <C>hap_voronoi_complex(; rank=3, group=:SL)</C>
-computes a complex for <M>SL_3(\mathbb Z)</M>. The provider supports ranks
-at least two, rational and quadratic GL, and rational and imaginary-quadratic
-SL and PSL on free lattices over maximal orders. PSL divides by the full
-scalar centre. Version 0.1.1 additionally constructs certified real-quadratic
-SL in rank two. Real-quadratic SL in higher ranks, real-quadratic PSL complexes,
-nonmaximal orders and nonfree lattices are not supplied by this release. The package's separate
-presentation algorithms cover real-quadratic SL/PSL too; they do not replace
-the equivariant cell data required by HAP.
+computes a complex for <M>SL_3(\mathbb Z)</M>. On free lattices of rank
+<M>n \geq 2</M>, the provider supports GL and SL over the integers and over
+maximal quadratic orders. It also supports PSL over the integers and imaginary
+quadratic maximal orders, dividing SL by its full scalar centre.
+For real-quadratic SL, version 0.1.2 accepts every such rank and constructs a
+certified determinant-height level complex. Homology has been verified through
+degree three in rank two at discriminants 5 and 12, and through degree one in
+rank three at discriminant 5. Higher ranks await a completed computation.
 <P/>
 For example, compute a fresh complex for SL over the maximal order of
 <M>\mathbb Q(\sqrt{5})</M>, then its first two integral homology groups:
@@ -539,20 +539,49 @@ C = GAP.Globals.TensorWithIntegers(R);
 ]]></Log>
 The determinant-height construction computes and certifies the complex afresh;
 it uses no Magma or stored complex. Certification failure returns an error.
-After enabling the Julia backend, HAP's convenience call
-<C>VoronoiComplexSL(2,3 : backend := "julia")</C> uses the squarefree
-radicand 3, corresponding to discriminant 12 in the direct Julia interface.
-<P/>
-For HAP's record dispatcher in the same Julia session, first run
-<C>enable_hap_julia_backend()</C>. A rational example is:
+To use HAP's dispatcher, enable the provider in Julia and set the resolution
+length. For real-quadratic SL, length two certifies the full level and
+exports a chain model through degree two, sufficient for first homology.
+<Log><![CDATA[
+enable_hap_julia_backend(; resolution_length=2)
+GAP.prompt()
+]]></Log>
+At this GAP prompt, the following computes first homology for
+<M>SL_3</M> over the maximal order of <M>\mathbb Q(\sqrt{5})</M>.
+This is a substantially longer computation than the rank-two example.
+<Log><![CDATA[
+K := VoronoiComplexSL(3,5 : backend := "julia");;
+R := FreeGResolution(K,2);;
+Homology(TensorWithIntegers(R),1);
+# [ ]   (trivial)
+]]></Log>
+Here the second argument of <C>VoronoiComplexSL</C> is a squarefree
+radicand. For example <C>VoronoiComplexSL(2,3 : backend := "julia")</C>
+selects discriminant 12. For <M>SL_3(\mathbb Z)</M> use a record instead:
 <Log><![CDATA[
 request := rec(group := "SL", rank := 3, field := rec(kind := "rational"),
     order := rec(kind := "maximal"), lattice := rec(kind := "free"));
-K := VoronoiComplex(request : backend := "julia");
+K := VoronoiComplex(request : backend := "julia");;
 ]]></Log>
-These last commands use GAP syntax, which can be evaluated through GAP.jl.
+<P/>
+For geometric incidence calculations, request the full unreduced level.
+The provider normally returns a smaller chain model for computing homology.
+In v0.1.2 the reduction switch belongs to the detailed Julia constructor.
+This GAP call in the same session returns its geometric complex for
+<M>SL_2(\mathbb Z[\sqrt{2}])</M>, of discriminant 8:
+<Log><![CDATA[
+K := JuliaEvalString(Concatenation(
+    "ArithmeticVoronoi.RealQuadraticSL.compute_real_sl_complex(",
+    "8; reduce=false).hap"));;
+List([0..3], K!.dimension);
+# [ 1, 4, 7, 2 ]
+]]></Log>
+These are orbit counts by dimension. One can inspect the two top-cell
+boundaries with <C>K!.boundary(3,1)</C> and <C>K!.boundary(3,2)</C>.
+<C>GComplexToFiniteRegularCWRegion(K,0)</C> requires a single orbit of
+top-dimensional cells and returns <C>fail</C> for this example.
 See the
-<URL Text="ArithmeticVoronoi HAP guide">https://github.com/dimpase/ArithmeticVoronoi.jl/blob/v0.1.1/docs/src/hap_and_vmh.md</URL>
+<URL Text="ArithmeticVoronoi HAP guide">https://github.com/dimpase/ArithmeticVoronoi.jl/blob/v0.1.2/docs/src/hap_and_vmh.md</URL>
 for installation, the direct Julia calls and supported computations.
 <P/>
 An unregistered backend name is an error. Providers must supply complete stabilizers, the orientation action
