@@ -898,7 +898,7 @@
   [30X    [33X[0;6Y[10XVoronoiGL(n,d)[110X[133X
   
   [30X    [33X[0;6Y[10XVoronoiSL(n,d)[110X  (in  the  imaginary quadratic case only. See the Julia
-        implementation [14X14.14[114X below for the real case.)[133X
+        implementation below for the real case.)[133X
   
   [33X[0;0Yto  call  the  [12XMagma[112X  implementation  of the Voronoi algorithm directly. For
   example,  the  following  commands  do this to calculate the homology groups
@@ -980,12 +980,12 @@
   ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl[107X)  computes  these complexes
   natively and can register an in-process callback under the name [10X"julia"[110X. HAP
   itself  does  not  install  or  load  Julia.  These  examples use registered
-  ArithmeticVoronoi v0.1.1, also pinned in CI. Install it from Julia's General
+  ArithmeticVoronoi v0.1.2, also pinned in CI. Install it from Julia's General
   registry, along with OSCAR for its GAP interface:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28Ximport Pkg[128X[104X
-    [4X[28XPkg.add(name="ArithmeticVoronoi", version="0.1.1")[128X[104X
+    [4X[28XPkg.add(name="ArithmeticVoronoi", version="0.1.2")[128X[104X
     [4X[28XPkg.add("Oscar")[128X[104X
   [4X[32X[104X
   
@@ -1002,14 +1002,14 @@
   
   [33X[0;0YThe  integer  argument here is a fundamental field discriminant. Omit it for
   rational  coefficients:  [10Xhap_voronoi_complex(; rank=3, group=:SL)[110X computes a
-  complex for [22XSL_3( Z)[122X. The provider supports ranks at least two, rational and
-  quadratic  GL,  and  rational  and  imaginary-quadratic  SL  and PSL on free
-  lattices over maximal orders. PSL divides by the full scalar centre. Version
-  0.1.1  additionally  constructs  certified  real-quadratic  SL  in rank two.
-  Real-quadratic  SL in higher ranks, real-quadratic PSL complexes, nonmaximal
-  orders  and nonfree lattices are not supplied by this release. The package's
-  separate  presentation  algorithms  cover real-quadratic SL/PSL too; they do
-  not replace the equivariant cell data required by HAP.[133X
+  complex  for [22XSL_3( Z)[122X. On free lattices of rank [22Xn ≥ 2[122X, the provider supports
+  GL  and  SL  over  the  integers  and over maximal quadratic orders. It also
+  supports  PSL  over  the  integers  and  imaginary quadratic maximal orders,
+  dividing  SL by its full scalar centre. For real-quadratic SL, version 0.1.2
+  accepts  every such rank and constructs a certified determinant-height level
+  complex.  Homology  has  been  verified  through degree three in rank two at
+  discriminants 5 and 12, and through degree one in rank three at discriminant
+  5. Higher ranks await a completed computation.[133X
   
   [33X[0;0YFor  example,  compute  a  fresh  complex  for  SL over the maximal order of
   [22XQ(sqrt5)[122X, then its first two integral homology groups:[133X
@@ -1024,22 +1024,57 @@
   
   [33X[0;0YThe  determinant-height  construction  computes  and  certifies  the complex
   afresh; it uses no Magma or stored complex. Certification failure returns an
-  error.   After   enabling   the   Julia   backend,  HAP's  convenience  call
-  [10XVoronoiComplexSL(2,3  :  backend := "julia")[110X uses the squarefree radicand 3,
-  corresponding to discriminant 12 in the direct Julia interface.[133X
+  error.  To  use  HAP's  dispatcher, enable the provider in Julia and set the
+  resolution  length.  For  real-quadratic  SL,  length two certifies the full
+  level  and  exports  a  chain model through degree two, sufficient for first
+  homology.[133X
   
-  [33X[0;0YFor   HAP's   record  dispatcher  in  the  same  Julia  session,  first  run
-  [10Xenable_hap_julia_backend()[110X. A rational example is:[133X
+  [4X[32X  Example  [32X[104X
+    [4X[28Xenable_hap_julia_backend(; resolution_length=2)[128X[104X
+    [4X[28XGAP.prompt()[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAt  this GAP prompt, the following computes first homology for [22XSL_3[122X over the
+  maximal  order  of [22XQ(sqrt5)[122X. This is a substantially longer computation than
+  the rank-two example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XK := VoronoiComplexSL(3,5 : backend := "julia");;[128X[104X
+    [4X[28XR := FreeGResolution(K,2);;[128X[104X
+    [4X[28XHomology(TensorWithIntegers(R),1);[128X[104X
+    [4X[28X# [ ]   (trivial)[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHere  the  second argument of [10XVoronoiComplexSL[110X is a squarefree radicand. For
+  example  [10XVoronoiComplexSL(2,3 : backend := "julia")[110X selects discriminant 12.
+  For [22XSL_3( Z)[122X use a record instead:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28Xrequest := rec(group := "SL", rank := 3, field := rec(kind := "rational"),[128X[104X
     [4X[28X    order := rec(kind := "maximal"), lattice := rec(kind := "free"));[128X[104X
-    [4X[28XK := VoronoiComplex(request : backend := "julia");[128X[104X
+    [4X[28XK := VoronoiComplex(request : backend := "julia");;[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThese  last  commands use GAP syntax, which can be evaluated through GAP.jl.
-  See            the           ArithmeticVoronoi           HAP           guide
-  ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl/blob/v0.1.1/docs/src/hap_and_vmh.md[107X)
+  [33X[0;0YFor  geometric incidence calculations, request the full unreduced level. The
+  provider  normally  returns a smaller chain model for computing homology. In
+  v0.1.2  the reduction switch belongs to the detailed Julia constructor. This
+  GAP  call  in  the  same  session  returns  its  geometric complex for [22XSL_2(
+  Z[sqrt2])[122X, of discriminant 8:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XK := JuliaEvalString(Concatenation([128X[104X
+    [4X[28X    "ArithmeticVoronoi.RealQuadraticSL.compute_real_sl_complex(",[128X[104X
+    [4X[28X    "8; reduce=false).hap"));;[128X[104X
+    [4X[28XList([0..3], K!.dimension);[128X[104X
+    [4X[28X# [ 1, 4, 7, 2 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThese  are  orbit  counts  by  dimension.  One  can inspect the two top-cell
+  boundaries       with       [10XK!.boundary(3,1)[110X      and      [10XK!.boundary(3,2)[110X.
+  [10XGComplexToFiniteRegularCWRegion(K,0)[110X    requires    a    single   orbit   of
+  top-dimensional   cells   and   returns  [10Xfail[110X  for  this  example.  See  the
+  ArithmeticVoronoi                          HAP                         guide
+  ([7Xhttps://github.com/dimpase/ArithmeticVoronoi.jl/blob/v0.1.2/docs/src/hap_and_vmh.md[107X)
   for installation, the direct Julia calls and supported computations.[133X
   
   [33X[0;0YAn  unregistered  backend  name  is an error. Providers must supply complete
