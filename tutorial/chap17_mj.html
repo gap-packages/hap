@@ -36,7 +36,10 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap17_mj.html#X865ABE6581DDF36A">17.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17_mj.html#X83E2594E815844FA">17.4-1 <span class="Heading">Postscript to the story of naive implementation</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>17 <span class="Heading">Parallel computation</span></h3>
@@ -239,6 +242,46 @@ Chain complex of length 3 in characteristic 0 .
 <p>The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forcefully by the story. The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained to produce the chain maps. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon at it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.</p>
 
 <p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list.</p>
+
+<p><a id="X83E2594E815844FA" name="X83E2594E815844FA"></a></p>
+
+<h5>17.4-1 <span class="Heading">Postscript to the story of naive implementation</span></h5>
+
+<p>Given recent advances in AI capability I decided to ask Claude to remove this item from the <strong class="button">HAP</strong> to-do list. More precisely, I asked Claude to extend the implementation of <code class="code">ChainHomotopyEquivalenceOfRegularCWComplex(Y)</code> to a function <code class="code">ChainHomotopyEquivalenceOfChainComplex(C)</code> that applies to an arbitrary chain complex <span class="SimpleMath">\(C\)</span> of f.g. free abelian groups. The following illustrates its performance on the above example.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:=ContractibleGcomplex("SL(3,Z)s");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexToSparseChainComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ChainComplexEquivalenceOfChainComplex(C);time;</span>
+[ Chain Map between complexes of length 3 . 
+    , Chain Map between complexes of length 3 . 
+     ]
+65701
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(f[1]);</span>
+Sparse chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],C!.dimension);</span>
+[ 3679, 37565, 75083, 41212 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D:=Target(f[1]);</span>
+Sparse chain complex of length 3 in characteristic 0 . 
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
+[ 1, 6, 54, 64 ]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
+[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+17
+
+
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap16_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap18_mj.html">[Next Chapter]</a>&nbsp;  </div>

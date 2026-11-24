@@ -239,3 +239,46 @@
   
   [33X[0;0YA new implementation of [10XContractedComplex(C)[110X is on the [12XHAP[112X to-do list.[133X
   
+  
+  [1X17.4-1 [33X[0;0YPostscript to the story of naive implementation[133X[101X
+  
+  [33X[0;0YGiven  recent  advances  in  AI capability I decided to ask Claude to remove
+  this  item from the [12XHAP[112X to-do list. More precisely, I asked Claude to extend
+  the  implementation  of  [10XChainHomotopyEquivalenceOfRegularCWComplex(Y)[110X  to a
+  function   [10XChainHomotopyEquivalenceOfChainComplex(C)[110X   that  applies  to  an
+  arbitrary  chain  complex  [22XC[122X  of  f.g.  free  abelian  groups. The following
+  illustrates its performance on the above example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
+    [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
+    [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexOfRegularCWComplex(Y);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=ChainComplexToSparseChainComplex(C);;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=ChainComplexEquivalenceOfChainComplex(C);time;[127X[104X
+    [4X[28X[ Chain Map between complexes of length 3 . [128X[104X
+    [4X[28X    , Chain Map between complexes of length 3 . [128X[104X
+    [4X[28X     ][128X[104X
+    [4X[28X65701[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=Source(f[1]);[127X[104X
+    [4X[28XSparse chain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],C!.dimension);[127X[104X
+    [4X[28X[ 3679, 37565, 75083, 41212 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD:=Target(f[1]);[127X[104X
+    [4X[28XSparse chain complex of length 3 in characteristic 0 . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
+    [4X[28X[ 1, 6, 54, 64 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
+    [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
+    [4X[28X17[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
