@@ -34,7 +34,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap17.html#X865ABE6581DDF36A">17.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17.html#X78B29A017F82CADE">17.4-1 <span class="Heading">Successful postscript to the story of naive implementation</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17.html#X8231675A7ADB12AE">17.4-1 <span class="Heading">Successful postscript to the story of naive implementation (November 2026)</span></a>
 </span>
 </div></div>
 </div>
@@ -173,7 +173,15 @@
 
 <p>Here is a story of naive implementation design causing a serial algorithm to run much slower than it should!</p>
 
-<p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">Y</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">C_∗=C_∗(Y)</span>. Computing the homology of <span class="SimpleMath">Y</span> directly from <span class="SimpleMath">C_∗</span> would be time consuming due to the large number of cells in <span class="SimpleMath">Y</span>. So, an elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">Y</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">D_∗</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">D_∗</span> takes over 170 seconds.</p>
+<p>In HAP the command <code class="code">XX=ContractedComplex(X) </code> inputs an object <span class="SimpleMath">X</span> and outputs a potentially smaller object <span class="SimpleMath">XX</span> of the same datatype and same homotopy type (in the appropriate category). Here <span class="SimpleMath">X</span> can be a regular CW complex or a chain complex of free abelian groups or a chain complex of free <span class="SimpleMath">ZG</span>-modules. The object <span class="SimpleMath">XX</span> is obtained from <span class="SimpleMath">X</span> by finding a cell/basis element <span class="SimpleMath">e^n</span> whose boundary <span class="SimpleMath">d(e^n)</span> is a combination of cells/basis elements</p>
+
+<p><span class="SimpleMath">d(e^n) = a_1e^n-1_1 + a_2e^n-1_2 + ... + a_te^n-1_t</span></p>
+
+<p>where some coefficient, let's say <span class="SimpleMath">a_1</span>, is a unit. Then the pair <span class="SimpleMath">(e^n,e^n-1_1)</span> is deemed redundant: the cell/basis element <span class="SimpleMath">e^n</span> is dropped from <span class="SimpleMath">XX</span> and the cell/basis element <span class="SimpleMath">e^n-1_1</span> is rewritten as</p>
+
+<p><span class="SimpleMath">e^n-1_1 = -a_1^-1( a_2e^n-1_2 + ... + a_te^n-1_t ) .</span></p>
+
+<p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">Y</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">C_∗=C_∗(Y)</span>. Computing the homology of <span class="SimpleMath">Y</span> directly from <span class="SimpleMath">C_∗</span> would be time consuming due to the large number of cells in <span class="SimpleMath">Y</span>. So, a version of the above elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">Y</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">D_∗</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">D_∗</span> takes over 170 seconds.</p>
 
 
 <div class="example"><pre>
@@ -202,7 +210,7 @@ Chain complex of length 3 in characteristic 0 .
 
 </pre></div>
 
-<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
+<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary removal technique as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
 
 <p>The following snippet illustrates the earlier implementation. It again begins with the construction of the regular CW-complex <span class="SimpleMath">Y</span> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <span class="SimpleMath">f_1: C_∗(Y) → C_∗(Y')</span> and <span class="SimpleMath">f_2: C_∗(Y') → C_∗(Y)</span> with <span class="SimpleMath">Y'</span> a homotopy equivalent non-regular CW-complex with fewer cells. It uses <span class="SimpleMath">D_∗=C_∗(Y')</span> to quickly compute the homology of <span class="SimpleMath">Y</span>.</p>
 
@@ -240,9 +248,9 @@ Chain complex of length 3 in characteristic 0 .
 
 <p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list.</p>
 
-<p><a id="X78B29A017F82CADE" name="X78B29A017F82CADE"></a></p>
+<p><a id="X8231675A7ADB12AE" name="X8231675A7ADB12AE"></a></p>
 
-<h5>17.4-1 <span class="Heading">Successful postscript to the story of naive implementation</span></h5>
+<h5>17.4-1 <span class="Heading">Successful postscript to the story of naive implementation (November 2026)</span></h5>
 
 <p>Given recent advances in AI capability I decided to ask Claude to remove this item from the <strong class="button">HAP</strong> to-do list. More precisely, I asked Claude to extend the implementation of <code class="code">ChainHomotopyEquivalenceOfRegularCWComplex(Y)</code> to a function <code class="code">ChainHomotopyEquivalenceOfChainComplex(C)</code> that applies to an arbitrary chain complex <span class="SimpleMath">C</span> of f.g. free abelian groups. (The dfference is that coefficients in a boundary map can now be any integer rather than just -1, 0, 1. So when choosing a pair (e^n,e^{n-1}) to eliminate we need to check additionally that e^{n-1} occurs with coefficient -1 or +1 and not -n or +n with n&gt;1.) The following illustrates its impressive performance on the above example!</p>
 

@@ -141,14 +141,29 @@
   [33X[0;0YHere is a story of naive implementation design causing a serial algorithm to
   run much slower than it should![133X
   
+  [33X[0;0YIn HAP the command [10XXX=ContractedComplex(X) [110X inputs an object [22XX[122X and outputs a
+  potentially  smaller  object  [22XXX[122X of the same datatype and same homotopy type
+  (in the appropriate category). Here [22XX[122X can be a regular CW complex or a chain
+  complex  of  free  abelian groups or a chain complex of free [22XZG[122X-modules. The
+  object  [22XXX[122X  is  obtained  from  [22XX[122X  by finding a cell/basis element [22Xe^n[122X whose
+  boundary [22Xd(e^n)[122X is a combination of cells/basis elements[133X
+  
+  [33X[0;0Y[22Xd(e^n) = a_1e^n-1_1 + a_2e^n-1_2 + ... + a_te^n-1_t[122X[133X
+  
+  [33X[0;0Ywhere   some   coefficient,  let's  say  [22Xa_1[122X,  is  a  unit.  Then  the  pair
+  [22X(e^n,e^n-1_1)[122X  is  deemed  redundant:  the cell/basis element [22Xe^n[122X is dropped
+  from [22XXX[122X and the cell/basis element [22Xe^n-1_1[122X is rewritten as[133X
+  
+  [33X[0;0Y[22Xe^n-1_1 = -a_1^-1( a_2e^n-1_2 + ... + a_te^n-1_t ) .[122X[133X
+  
   [33X[0;0YThe following snippet begins with the construction of a regular CW-complex [22XY[122X
   with 157539 cells. It then constructs the cellular chain complex [22XC_∗=C_∗(Y)[122X.
   Computing the homology of [22XY[122X directly from [22XC_∗[122X would be time consuming due to
-  the  large  number  of  cells  in  [22XY[122X. So, an elementary procedure is used to
-  eliminate  redundant  generators  from  [22XY[122X  in  order  to  obtain  a  smaller
-  quasi-isomorphic  chain  complex  [22XD_∗[122X  and  this  smaller complex is used to
-  quickly obtain the homology. However, the construction of [22XD_∗[122X takes over 170
-  seconds.[133X
+  the  large  number  of  cells  in  [22XY[122X.  So, a version of the above elementary
+  procedure  is  used  to  eliminate  redundant  generators from [22XY[122X in order to
+  obtain a smaller quasi-isomorphic chain complex [22XD_∗[122X and this smaller complex
+  is  used  to  quickly  obtain the homology. However, the construction of [22XD_∗[122X
+  takes over 170 seconds.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
@@ -177,16 +192,15 @@
   [4X[32X[104X
   
   [33X[0;0YThe above procedure for reducing the number of generators in a chain complex
-  of  free  abelian  groups  uses the same elementary technique for "generator
-  removal"  as  a slightly more elaborate implementation programmed some years
-  earlier.  The  earlier implementation is (unnecessarily) restricted to chain
-  complexes  arising as cellular chain complexes of regular CW-complexes while
-  the  later  implemetation  is  aimed  at  arbitrary  chain complexes of free
-  abelian   groups.   The   earlier   implementation  returns  chain  homotopy
-  equivalences  between the original and the simplified complexes. To ease the
-  coding  of  the  later  implementation  it  was  decided  to output just the
-  simplified  chain complex and forget about the chain maps yielding the chain
-  equivalence.[133X
+  of  free  abelian  groups  uses  the  same elementary removal technique as a
+  slightly  more  elaborate  implementation programmed some years earlier. The
+  earlier  implementation  is  (unnecessarily)  restricted  to chain complexes
+  arising  as cellular chain complexes of regular CW-complexes while the later
+  implemetation  is aimed at arbitrary chain complexes of free abelian groups.
+  The  earlier  implementation returns chain homotopy equivalences between the
+  original  and  the  simplified  complexes.  To  ease the coding of the later
+  implementation  it  was  decided to output just the simplified chain complex
+  and forget about the chain maps yielding the chain equivalence.[133X
   
   [33X[0;0YThe  following  snippet  illustrates  the  earlier  implementation. It again
   begins  with the construction of the regular CW-complex [22XY[122X with 157539 cells.
@@ -240,7 +254,8 @@
   [33X[0;0YA new implementation of [10XContractedComplex(C)[110X is on the [12XHAP[112X to-do list.[133X
   
   
-  [1X17.4-1 [33X[0;0YSuccessful postscript to the story of naive implementation[133X[101X
+  [1X17.4-1  [33X[0;0YSuccessful postscript to the story of naive implementation (November[101X
+  [1X2026)[133X[101X
   
   [33X[0;0YGiven  recent  advances  in  AI capability I decided to ask Claude to remove
   this  item from the [12XHAP[112X to-do list. More precisely, I asked Claude to extend
