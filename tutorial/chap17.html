@@ -34,7 +34,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap17.html#X865ABE6581DDF36A">17.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17.html#X83E2594E815844FA">17.4-1 <span class="Heading">Postscript to the story of naive implementation</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17.html#X78B29A017F82CADE">17.4-1 <span class="Heading">Successful postscript to the story of naive implementation</span></a>
 </span>
 </div></div>
 </div>
@@ -171,7 +171,7 @@
 
 <h4>17.4 <span class="Heading">Parallelism not a substitute for careful serial implementation</span></h4>
 
-<p>Here is a story of naive implementation design causing a serial algorithm to run at least 170 times slower than it should!</p>
+<p>Here is a story of naive implementation design causing a serial algorithm to run much slower than it should!</p>
 
 <p>The following snippet begins with the construction of a regular CW-complex <span class="SimpleMath">Y</span> with 157539 cells. It then constructs the cellular chain complex <span class="SimpleMath">C_∗=C_∗(Y)</span>. Computing the homology of <span class="SimpleMath">Y</span> directly from <span class="SimpleMath">C_∗</span> would be time consuming due to the large number of cells in <span class="SimpleMath">Y</span>. So, an elementary procedure is used to eliminate redundant generators from <span class="SimpleMath">Y</span> in order to obtain a smaller quasi-isomorphic chain complex <span class="SimpleMath">D_∗</span> and this smaller complex is used to quickly obtain the homology. However, the construction of <span class="SimpleMath">D_∗</span> takes over 170 seconds.</p>
 
@@ -202,7 +202,7 @@ Chain complex of length 3 in characteristic 0 .
 
 </pre></div>
 
-<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
+<p>The above procedure for reducing the number of generators in a chain complex of free abelian groups uses the same elementary technique for "generator removal" as a slightly more elaborate implementation programmed some years earlier. The earlier implementation is (unnecessarily) restricted to chain complexes arising as cellular chain complexes of regular CW-complexes while the later implemetation is aimed at arbitrary chain complexes of free abelian groups. The earlier implementation returns chain homotopy equivalences between the original and the simplified complexes. To ease the coding of the later implementation it was decided to output just the simplified chain complex and forget about the chain maps yielding the chain equivalence.</p>
 
 <p>The following snippet illustrates the earlier implementation. It again begins with the construction of the regular CW-complex <span class="SimpleMath">Y</span> with 157539 cells. It then takes just over a second to construct a pair of chain equivalences <span class="SimpleMath">f_1: C_∗(Y) → C_∗(Y')</span> and <span class="SimpleMath">f_2: C_∗(Y') → C_∗(Y)</span> with <span class="SimpleMath">Y'</span> a homotopy equivalent non-regular CW-complex with fewer cells. It uses <span class="SimpleMath">D_∗=C_∗(Y')</span> to quickly compute the homology of <span class="SimpleMath">Y</span>.</p>
 
@@ -240,11 +240,11 @@ Chain complex of length 3 in characteristic 0 .
 
 <p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list.</p>
 
-<p><a id="X83E2594E815844FA" name="X83E2594E815844FA"></a></p>
+<p><a id="X78B29A017F82CADE" name="X78B29A017F82CADE"></a></p>
 
-<h5>17.4-1 <span class="Heading">Postscript to the story of naive implementation</span></h5>
+<h5>17.4-1 <span class="Heading">Successful postscript to the story of naive implementation</span></h5>
 
-<p>Given recent advances in AI capability I decided to ask Claude to remove this item from the <strong class="button">HAP</strong> to-do list. More precisely, I asked Claude to extend the implementation of <code class="code">ChainHomotopyEquivalenceOfRegularCWComplex(Y)</code> to a function <code class="code">ChainHomotopyEquivalenceOfChainComplex(C)</code> that applies to an arbitrary chain complex <span class="SimpleMath">C</span> of f.g. free abelian groups. The following illustrates its performance on the above example.</p>
+<p>Given recent advances in AI capability I decided to ask Claude to remove this item from the <strong class="button">HAP</strong> to-do list. More precisely, I asked Claude to extend the implementation of <code class="code">ChainHomotopyEquivalenceOfRegularCWComplex(Y)</code> to a function <code class="code">ChainHomotopyEquivalenceOfChainComplex(C)</code> that applies to an arbitrary chain complex <span class="SimpleMath">C</span> of f.g. free abelian groups. The following illustrates its impressive performance on the above example!</p>
 
 
 <div class="example"><pre>
@@ -252,13 +252,13 @@ Chain complex of length 3 in characteristic 0 .
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=HAPCongruenceSubgroupGamma0(3,101);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y:=GComplexToRegularCWComplex(K,G);;</span>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexOfRegularCWComplex(Y);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=ChainComplexToSparseChainComplex(C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=SparseChainComplexOfRegularCWComplex(Y);;</span>
+
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ChainComplexEquivalenceOfChainComplex(C);time;</span>
 [ Chain Map between complexes of length 3 . 
     , Chain Map between complexes of length 3 . 
      ]
-65701
+431
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C:=Source(f[1]);</span>
 Sparse chain complex of length 3 in characteristic 0 . 
@@ -270,13 +270,12 @@ Sparse chain complex of length 3 in characteristic 0 .
 Sparse chain complex of length 3 in characteristic 0 . 
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],D!.dimension);</span>
-[ 1, 6, 54, 64 ]
+[ 3, 11, 26, 33 ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([0..3],n-&gt;Homology(D,n));time;</span>
 [ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
-17
-
+118
 
 </pre></div>
 

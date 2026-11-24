@@ -139,7 +139,7 @@
   [1X17.4 [33X[0;0YParallelism not a substitute for careful serial implementation[133X[101X
   
   [33X[0;0YHere is a story of naive implementation design causing a serial algorithm to
-  run at least 170 times slower than it should![133X
+  run much slower than it should![133X
   
   [33X[0;0YThe following snippet begins with the construction of a regular CW-complex [22XY[122X
   with 157539 cells. It then constructs the cellular chain complex [22XC_∗=C_∗(Y)[122X.
@@ -184,7 +184,7 @@
   the  later  implemetation  is  aimed  at  arbitrary  chain complexes of free
   abelian   groups.   The   earlier   implementation  returns  chain  homotopy
   equivalences  between the original and the simplified complexes. To ease the
-  the  coding  of  the  later implementation it was decided to output just the
+  coding  of  the  later  implementation  it  was  decided  to output just the
   simplified  chain complex and forget about the chain maps yielding the chain
   equivalence.[133X
   
@@ -240,27 +240,27 @@
   [33X[0;0YA new implementation of [10XContractedComplex(C)[110X is on the [12XHAP[112X to-do list.[133X
   
   
-  [1X17.4-1 [33X[0;0YPostscript to the story of naive implementation[133X[101X
+  [1X17.4-1 [33X[0;0YSuccessful postscript to the story of naive implementation[133X[101X
   
   [33X[0;0YGiven  recent  advances  in  AI capability I decided to ask Claude to remove
   this  item from the [12XHAP[112X to-do list. More precisely, I asked Claude to extend
   the  implementation  of  [10XChainHomotopyEquivalenceOfRegularCWComplex(Y)[110X  to a
   function   [10XChainHomotopyEquivalenceOfChainComplex(C)[110X   that  applies  to  an
   arbitrary  chain  complex  [22XC[122X  of  f.g.  free  abelian  groups. The following
-  illustrates its performance on the above example.[133X
+  illustrates its impressive performance on the above example![133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XK:=ContractibleGcomplex("SL(3,Z)s");;[127X[104X
     [4X[25Xgap>[125X [27XG:=HAPCongruenceSubgroupGamma0(3,101);;[127X[104X
     [4X[25Xgap>[125X [27XY:=GComplexToRegularCWComplex(K,G);;[127X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XC:=ChainComplexOfRegularCWComplex(Y);;[127X[104X
-    [4X[25Xgap>[125X [27XC:=ChainComplexToSparseChainComplex(C);;[127X[104X
+    [4X[25Xgap>[125X [27XC:=SparseChainComplexOfRegularCWComplex(Y);;[127X[104X
+    [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xf:=ChainComplexEquivalenceOfChainComplex(C);time;[127X[104X
     [4X[28X[ Chain Map between complexes of length 3 . [128X[104X
     [4X[28X    , Chain Map between complexes of length 3 . [128X[104X
     [4X[28X     ][128X[104X
-    [4X[28X65701[128X[104X
+    [4X[28X431[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XC:=Source(f[1]);[127X[104X
     [4X[28XSparse chain complex of length 3 in characteristic 0 . [128X[104X
@@ -272,13 +272,12 @@
     [4X[28XSparse chain complex of length 3 in characteristic 0 . [128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XList([0..3],D!.dimension);[127X[104X
-    [4X[28X[ 1, 6, 54, 64 ][128X[104X
+    [4X[28X[ 3, 11, 26, 33 ][128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XList([0..3],n->Homology(D,n));time;[127X[104X
     [4X[28X[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], [128X[104X
     [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
-    [4X[28X17[128X[104X
-    [4X[28X[128X[104X
+    [4X[28X118[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
