@@ -259,6 +259,7 @@ ReadPackageHap("lib/Wunden/initWunden.gi");
 
 
 
+
 ##################### HOMOLOGY ######################################
 ReadPackageHap( "lib/Homology/integralHomology.gi");
 #ReadPackageHap( "lib/Homology/integralHomology.may2017working");
@@ -501,6 +502,7 @@ ReadPackageHap("/lib/Knots/identifyKnots.gi");
 
 ################## SPARSE ##########################################
 ReadPackageHap("lib/Sparse/sparse.gi");
+ReadPackageHap("libAIE/Sparse/chainComplexEquivalence.gi");
 
 
 ################# CRYSTALLOGRAPHIC GROUPS #####################

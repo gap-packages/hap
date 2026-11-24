@@ -502,6 +502,7 @@ ReadPackageHap("/lib/Knots/identifyKnots.gi");
 
 ################## SPARSE ##########################################
 ReadPackageHap("lib/Sparse/sparse.gi");
+ReadPackageHap("libAIE/Sparse/chainHomotopyEquivalence.gi");
 
 
 ################# CRYSTALLOGRAPHIC GROUPS #####################

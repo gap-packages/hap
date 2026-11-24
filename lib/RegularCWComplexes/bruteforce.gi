@@ -64,18 +64,14 @@ end;
 ########################################
 fi;
 
-Tiles:=[];
-for k in [1..R!.dimension(dim)] do
-   tile:=1*R!.boundary(dim,k);
-   Apply(tile,x->[x[1],R!.elts[x[2]]]);
-   Apply(tile,e->StandardForm(dim1,e));
-   Add(Tiles,tile);
-od;
+Tiles:=[1..R!.dimension(dim)];
 
 ###################################################################
 NeighbourGens:=List([1..Length(Tiles)],x->[]);
-for i in [1..Length(Tiles)] do
-tile:=Tiles[i];
+for i in Tiles do
+   tile:=1*R!.boundary(dim,i);
+   Apply(tile,x->[x[1],R!.elts[x[2]]]);
+   Apply(tile,e->StandardForm(dim1,e));
 
    for e in tile do
       for f in tile do

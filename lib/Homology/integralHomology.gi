@@ -6,7 +6,7 @@ function(X,n)
 local
 	Homology_Obj,
 	Homology_Arr,
-	HomologyAsFpGroup, xx;
+	HomologyAsFpGroup, xx, H, HH;
 
 
 #####################################################################
@@ -303,6 +303,11 @@ xx:=IntegralHomologyOfChainComplex(X,n);
 return xx; fi;
 
 if EvaluateProperty(X,"type")="chainMap" then
+H:= IntegralHomologyOfChainComplex(Source(X),n);
+if H=[] then HH:=IntegralHomologyOfChainComplex(Source(X),n);
+   H:=AbelianGroup(H); HH:=AbelianGroup(HH);
+  return GroupHomomorphismByImagesNC(H,HH,[One(H)],[One(HH)]);
+fi;
 xx:=Homology_Arr(X,n);
 return xx; fi;
 

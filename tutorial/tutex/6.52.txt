@@ -1,0 +1,32 @@
+gap> R:=FreeZGResolution(K,11);;
+gap> P := [[0,1,0],[1,0,0],[0,0,1]]^-1;;
+gap> phi := GroupHomomorphismByFunction(G, G, x->x^P);;
+gap> map:=EquivariantChainMap(R,R,phi);
+Equivariant Chain Map between resolutions of length 11 . 
+
+gap> T:=TensorWithIntegers(map);
+Chain Map between complexes of length 11 . 
+
+gap> for n in [1..10] do
+> Print(Homology(T,n),"\n");
+> od;
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 2 ], Pcp-group with orders [ 3, 2 ], [ g1, g2 ], [ g1^2, g2 ] )
+GroupHomomorphismByImages( Pcp-group with orders [ 0 ], Pcp-group with orders 
+[ 0 ], [ g1 ], [ g1^-1 ] )
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1, g2, g3 ] )
+Pcgs([  ]) -> [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1^2, g2^5, g3 ] )
+Pcgs([  ]) -> [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1, g2, g3 ] )
+Pcgs([  ]) -> [  ]
+GroupHomomorphismByImages( Pcp-group with orders 
+[ 3, 6, 2 ], Pcp-group with orders [ 3, 6, 2 ], [ g1, g2, g3 ], 
+[ g1^2, g2^5, g3 ] )
+Pcgs([  ]) -> [  ]

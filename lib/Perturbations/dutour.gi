@@ -118,6 +118,7 @@ BI:=tmp.ListIFace;
 SGN:=tmp.ListSign;
 LstEl:=List(tmp.ListElt,w->TransMat(w));
 Append(Elts,Difference(LstEl,Elts));
+#Append(Elts,LstEl);
 for s in [1..Length(BI)] do
 BI[s]:=[SGN[s]*BI[s],Position(Elts,LstEl[s])];
 od;

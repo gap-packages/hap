@@ -7,7 +7,9 @@ local Y, homotopy, PseudoBoundary, Boundary, HomotopyRec,
 FinalHomotopy, pos,C,i,k,n,b,x,s,g,h,one, dim, orient,id;
 
 Y:=GComplexToFiniteRegularCWRegion(K,N);
-if Length(CriticalCells(Y))<>1 then Print("Error\n"); return fail; fi;
+if Length(CriticalCells(Y))<>1 then Print("Error\n"); K!.space:=Y; 
+return fail; 
+fi;
 one:=One(K!.group);
 
 dim:=-1;;

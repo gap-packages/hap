@@ -1,0 +1,28 @@
+gap> K:=ContractibleGcomplex("SL(3,Z)s");;
+gap> G:=HAPCongruenceSubgroupGamma0(3,101);;
+gap> Y:=GComplexToRegularCWComplex(K,G);;
+
+gap> C:=SparseChainComplexOfRegularCWComplex(Y);;
+
+gap> f:=ChainComplexEquivalenceOfChainComplex(C);time;
+[ Chain Map between complexes of length 3 . 
+    , Chain Map between complexes of length 3 . 
+     ]
+431
+
+gap> C:=Source(f[1]);
+Sparse chain complex of length 3 in characteristic 0 . 
+
+gap> List([0..3],C!.dimension);
+[ 3679, 37565, 75083, 41212 ]
+
+gap> D:=Target(f[1]);
+Sparse chain complex of length 3 in characteristic 0 . 
+
+gap> List([0..3],D!.dimension);
+[ 3, 11, 26, 33 ]
+
+gap> List([0..3],n->Homology(D,n));time;
+[ [ 0 ], [ 25 ], [ 2, 2, 2, 2, 2 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+118

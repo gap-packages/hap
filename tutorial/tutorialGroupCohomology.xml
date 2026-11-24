@@ -237,7 +237,7 @@ For the ideal <M>I</M> in the ring of integers
 <P/>The command <C>Y:=GComplexToFiniteRegularCWRegion(K,r)</C> returns
 	a 'ball of radius <M>r</M>' in the contractible CW-complex represented by 
 	<M>K</M> for any integer <M>r\ge 0</M>. 
-		The ball is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <M>r=7</M> and builds a contracting disctete vector field
+		The 'ball' is returned as a finite regular CW-complex. For instance, the following code constructs a ball of radius <M>r=7</M> and builds a contracting disctete vector field
 		on this ball. 
 		The component <C>Y!.G_Cells[n+1][k]</C> returns a pair <M>[e,g]</M> with integer <M>e</M> specifying a representative of an orbit of 
 <M>n</M>-cells in <M>K</M> and <M>g</M> an element in <M>SL(3,\mathbb Z)</M> such that the <M>k</M>th <M>n</M>-cell of <M>Y</M> corresponds to <M>g.e</M> .
@@ -249,7 +249,7 @@ For the ideal <M>I</M> in the ring of integers
 <P/>Further details on computing with Arithmetic groups can be found in Chapters <Ref Sect="chap:Congruence"/>, <Ref Sect="chap:Bianchi"/> and <Ref Sect="chapSL3Z"/>. 
 
 </Subsection>
-	<Subsection Label="sectRationalCohomology"><Heading>Rational cohomology</Heading>
+	<Subsection Label="sectRationalCohomology"><Heading>Rational cohomology and cohomology away from small primes</Heading>
 		To compute the rational homology of an arithmetic group such as
 		<M>G=SL_n(\mathbb Z)</M> one can work directly with the well-rounded retract <M>K</M> on which <M>G</M> acts with finite stabilizers. The following computes the rational cohomology 
 		<P/><M>H^n(SL_4(\mathbb Z),\mathbb Q)= \left\{ 
@@ -361,7 +361,7 @@ in order to compute <M>H^\ast(G,\mathbb Z/q\mathbb Z)</M>.
 	</Subsection>
 
 	<Subsection Label="ArithmeticCupProducts"><Heading>Integral cohomology rings</Heading>
-		Existing HAP functions require a resolution with contracting homotopy in order to compute cup products in integral cohomology. So too do functions for computing (co)homology homomorphisms induced by group homomorphisms. 
+		Existing HAP functions require a resolution with contracting homotopy in order to compute cup products in integral cohomology. So too do functions for computing (co)homology homomorphisms induced by group homomorphisms <Ref Sect="seccrysthomotopy"/>. 
 		Resolutions for Arithmetic groups in HAP are typically constructed without contracting homotopies! 
 
 		<P/>Such a resolution can be viewed as the cellular chain complex of a contractible cellular space,  and clearly the contraction is applied to only finitely many cells in any finite computation. It thus suffices to have the contraction implemented on a suitable finite subspace -- that is, <E>locally implemented</E>. 
@@ -373,7 +373,7 @@ in order to compute <M>H^\ast(G,\mathbb Z/q\mathbb Z)</M>.
 			<P/>				The example then builds part of a contracting homotopy on a finite subspace  <M>K'\subset K</M>.
 					More precisely, the space <M>K</M> has a single orbit of <M>4</M>-cells.
 						A representative <M>e^4</M> of this orbit is chosen and added to <M>K'</M>.
-							Then all those <M>4</M>-cells with a facet in common with <M>e^4</M> are added to <M>K'</M>. Then all <M>4</M>-cells with a facet in <M>K'</M> are added to <M>K'</M>. We think of <M>K'</M> as a <M>2</M>-times thickening of <M>e^4</M> or as a ball of 'radius' <M>2</M>.
+							Then all those <M>4</M>-cells with a facet in common with <M>e^4</M> are added to <M>K'</M>. Then all <M>4</M>-cells with a facet in <M>K'</M> are added to <M>K'</M>. At this stage <M>K'</M> may not be contractible, so we remove enough cells from <M>K'</M> to ensure that it is in fact collapsible. We think of <M>K'</M> constructed in this way as a kind of 'ball' of 'radius' <M>2</M>.
 
 <P/> Then a free <M>\mathbb ZG</M>-resolution is constructed from <M>K</M> and used to compute cohomology additively.
 	$$H^n(GL_2({\mathcal O}_2),\mathbb Z) =\left\{\begin{array}{ll}
@@ -387,6 +387,12 @@ in order to compute <M>H^\ast(G,\mathbb Z/q\mathbb Z)</M>.
 
 	<Example>
         <#Include SYSTEM "tutex/6.49.txt">
+</Example>
+
+	The same computation can be performed from within the Oscar system, using the ArithmeticVoronoi package, as follows.
+
+	<Example>
+        <#Include SYSTEM "tutex/6.53.txt">
 </Example>
 
 	</Subsection>
@@ -674,6 +680,42 @@ The final commands determine that the kernel of the homomorphism <M>H^6(f,A)</M>
 <#Include SYSTEM "tutex/6.16A.txt">
 </Example>
 
+<Subsection Label="seccrysthomotopy"><Heading>Contracting homotopies</Heading>
+	In order to induce a homomorphism in (co)homology from a group homomorphism <M>\phi\colon G_1\rightarrow G_2</M> HAP requires the resolution for
+		the target group <M>G_2</M> to be endowed with a contracting homotopy. 
+			Certain functions, such as <Code>ResolutionFiniteGroup(G,n)</Code> and <Code>ResolutionNilpotentGroup(G,n)</Code>, 
+				build a contracting homotopy during the construction of the resolution. Other resolution functions construct no contracting homotopy and can not be used to compute induced homomorphisms. 
+
+			<P/>Resolutions for groups of finite virtual cohomological dimension are typically constructued by first building a contractible G-CW complex <M>K</M> and then combining <M>K</M>
+					with free resolutions for
+				the cell stabilizers. If the cell stabilizer resolutions have contracting homotopies, and if <M>K</M> has a contracting homotopy, then so too does the combined resolution.  If <M>K</M> is not endowed with a contracting homotopy then one can try to use a 'brute force' method to implement a contracting homotopy on a finite 'ball' in <M>K</M> of some 'radius' <M>r</M>. The resulting combined resolution will then have a contracting homotopy implemented on a finite 'ball' in the associated cell complex. If <M>r</M> is chosen large enough one can then induce (co)homology homomorphisms. To illustrate this we consider a <M>2</M>-dimensional crystallographic group <M>G</M> and a non-inner automorphism
+				<M>\phi\colon G\rightarrow G</M>. The group <M>G</M> has virtual cohomological dimension <M>2</M>. A tessellation 
+					for <M>K=\mathbb R^2</M> can be produced using the following commands which call Polymake computational geometry software in the construction of  a fundamental domain (with non-trivial stabilizer). 
+						<Example>
+<#Include SYSTEM "tutex/6.50.txt">
+</Example>
+
+<P/>The next commands build a 'ball' in <M>K</M> of radius <M>10</M> and endow
+	it with a contracting homotopy. The <M>1</M>-skeleton of the ball is displayed and we see that the fundamental domain is a pentagon. The contracting homotopy on the <M>1</M>-skeleton corresponds to a subtree; this subtree is also displayed (though the commands are not shown).
+
+<Example>
+<#Include SYSTEM "tutex/6.51.txt">
+</Example>
+
+	<P/><Alt Only="HTML">&lt;img src="images/pentagonalball.gif" align="center" height="300" alt="1-skeleton of a ball of radius 10"/>
+</Alt>
+	<Alt Only="HTML">&lt;img src="images/pentagonalballtree.gif" align="center" height="300" alt="contracting tree"/>
+</Alt>
+
+<P/>
+	Next the contracting homotopy is used to compute the homology homomorphism in low degrees induced from a non-inner automorphism.
+
+<Example>
+<#Include SYSTEM "tutex/6.52.txt">
+</Example>
+
+
+</Subsection>
 </Section>
 
 <Section><Heading>Cohomology as a functor of the second variable and the long exact coefficient sequence</Heading>

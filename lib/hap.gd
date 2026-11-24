@@ -929,6 +929,7 @@ DeclareGlobalFunction("FilteredChainComplexToFilteredSparseChainComplex");
 DeclareGlobalFunction("SparseIdentityMat");
 DeclareGlobalFunction("SparseMatAddToEntry");
 DeclareGlobalFunction("SparseMatConcatenation");
+DeclareGlobalFunction("ChainComplexEquivalenceOfChainComplex");
 
 ##CONGRUENCE########################################################
 DeclareProperty("QuadraticArithmetic",IsMatrixGroup);
