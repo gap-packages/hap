@@ -252,22 +252,26 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  takeaway  from this story is that careful design of the datatypes to be
-  used  in  the  implementation  of  an algorithm can significantly impact the
-  speed   of  the  implementation!  This  is  a  well  established  principle,
-  illustrated forcefully by the story. The decision to output chain maps [22XC_∗ ↔
-  D_∗[122X  leads  to an implementation where all redundant generators in [22XC_∗[122X first
-  have to be identified, and enough information has to be retained (using some
-  computer  representation  of  a  discrete vector field) to produce the chain
-  maps.  The  later decision to output just the complex [22XD_∗[122X leads to an easier
-  to  implement  process of eliminating each redundant generator in a boundary
-  matrix  as  soon as it is found. This is analogous to a gaussian elimination
-  procedure  for  producing  echelon  form that updates a boundary matrix each
-  time  a  suitable pivot is found; it is easy to code but less efficient than
-  the earlier implementation.[133X
+  [33X[0;0YThe  takeaway  from this story is that design of datatypes to be used in the
+  implementation  of  an  algorithm  can significantly impact the speed of the
+  implementation! This is a well established principle, illustrated forcefully
+  by the story.[133X
   
-  [33X[0;0YA  new  implementation of [10XContractedComplex(C)[110X is on the [12XHAP[112X to-do list (see
-  [14X17.4-1[114X.[133X
+  [33X[0;0YThe decision to output chain maps [22XC_∗ ↔ D_∗[122X leads to an implementation where
+  all  redundant  generators  in  [22XC_∗[122X  first have to be identified, and enough
+  information  has  to  be  retained  to produce the chain maps. By using some
+  computer  representation  of a discrete vector field, [12Xlazy evaluation[112X can be
+  used  to  evaluate  the  chain  maps,  and  to  evaluate  them  only  on the
+  non-redundant  generators. The later decision to output just the complex [22XD_∗[122X
+  leads  to  an  easier  to  implement  process  of eliminating each redundant
+  generator  in  a  boundary  matrix  as  soon  as  it is found. This is [12Xeager
+  evaluation[112X  and  somewhat  analogous to a gaussian elimination procedure for
+  producing  echelon  form that updates a boundary matrix each time a suitable
+  pivot  is  found; it is a bit easier to code but significantly slower on the
+  given example than the earlier implementation.[133X
+  
+  [33X[0;0YA  new implementation of [10XContractedComplex(C)[110X [13Xwas[113X on the [12XHAP[112X to-do list (see
+  [14X17.4-1[114X).[133X
   
   
   [1X17.4-1  [33X[0;0YSuccessful postscript to the story of naive implementation (November[101X
@@ -315,4 +319,19 @@
     [4X[28X118[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X17.4-2 [33X[0;0YResulting modification to HAP[133X[101X
+  
+  [33X[0;0YIn version 1.80 of HAP the default functionality of [10XContractedComplex(X)[110X has
+  changed  slightly.  The  functionality  is  unchanged  if  [22XX[122X  is  a  regular
+  CW-complex  or  a  free  [22XZG[122X-resolution.  The  [10Xread.g[110X file in HAP now has two
+  master  copies: [10XreadOriginal.g[110X and [10XreadAIE.g[110X. The functionality is unchanged
+  if  [10Xread.g[110X  equals  the  first  of these. But if [22XX[122X is a chain complex and if
+  [10Xread.g[110X  equals the second master copy, and this is the default setting, then
+  the Claude AI generated lazy code discussed in the prceeding section is used
+  to reduce the chain complex. However, for [22XX[122X a chain complex and [22Xr[122X a positive
+  integer  or  [22Xr=∞[122X, the command [10XContractedComplex(X,r)[110X runs the original eager
+  code  and  only  eliminates a pair [22X(e^n,e^n-1)[122X if the number of cells in the
+  boundary [22Xd(e^n)[122X counted with multiplicity is no greater than [22Xr[122X.[133X
   

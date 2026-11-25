@@ -39,6 +39,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17_mj.html#X8231675A7ADB12AE">17.4-1 <span class="Heading">Successful postscript to the story of naive implementation (November 2026)</span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap17_mj.html#X7F3BFFD48609E914">17.4-2 <span class="Heading">Resulting modification to HAP</span></a>
+</span>
 </div></div>
 </div>
 
@@ -250,9 +252,11 @@ Chain complex of length 3 in characteristic 0 .
 
 </pre></div>
 
-<p>The takeaway from this story is that careful design of the datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forcefully by the story. The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained (using some computer representation of a discrete vector field) to produce the chain maps. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon as it is found. This is analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is easy to code but less efficient than the earlier implementation.</p>
+<p>The takeaway from this story is that design of datatypes to be used in the implementation of an algorithm can significantly impact the speed of the implementation! This is a well established principle, illustrated forcefully by the story.</p>
 
-<p>A new implementation of <code class="code">ContractedComplex(C)</code> is on the <strong class="button">HAP</strong> to-do list (see <a href="chap17_mj.html#X8231675A7ADB12AE"><span class="RefLink">17.4-1</span></a>.</p>
+<p>The decision to output chain maps <span class="SimpleMath">\(C_\ast \leftrightarrow D_\ast\)</span> leads to an implementation where all redundant generators in <span class="SimpleMath">\(C_\ast\)</span> first have to be identified, and enough information has to be retained to produce the chain maps. By using some computer representation of a discrete vector field, <strong class="button">lazy evaluation</strong> can be used to evaluate the chain maps, and to evaluate them only on the non-redundant generators. The later decision to output just the complex <span class="SimpleMath">\(D_\ast\)</span> leads to an easier to implement process of eliminating each redundant generator in a boundary matrix as soon as it is found. This is <strong class="button">eager evaluation</strong> and somewhat analogous to a gaussian elimination procedure for producing echelon form that updates a boundary matrix each time a suitable pivot is found; it is a bit easier to code but significantly slower on the given example than the earlier implementation.</p>
+
+<p>A new implementation of <code class="code">ContractedComplex(C)</code> <em>was</em> on the <strong class="button">HAP</strong> to-do list (see <a href="chap17_mj.html#X8231675A7ADB12AE"><span class="RefLink">17.4-1</span></a>).</p>
 
 <p><a id="X8231675A7ADB12AE" name="X8231675A7ADB12AE"></a></p>
 
@@ -292,6 +296,12 @@ Sparse chain complex of length 3 in characteristic 0 .
 118
 
 </pre></div>
+
+<p><a id="X7F3BFFD48609E914" name="X7F3BFFD48609E914"></a></p>
+
+<h5>17.4-2 <span class="Heading">Resulting modification to HAP</span></h5>
+
+<p>In version 1.80 of HAP the default functionality of <code class="code">ContractedComplex(X)</code> has changed slightly. The functionality is unchanged if <span class="SimpleMath">\(X\)</span> is a regular CW-complex or a free <span class="SimpleMath">\(\mathbb ZG\)</span>-resolution. The <code class="code">read.g</code> file in HAP now has two master copies: <code class="code">readOriginal.g</code> and <code class="code">readAIE.g</code>. The functionality is unchanged if <code class="code">read.g</code> equals the first of these. But if <span class="SimpleMath">\(X\)</span> is a chain complex and if <code class="code">read.g</code> equals the second master copy, and this is the default setting, then the Claude AI generated lazy code discussed in the prceeding section is used to reduce the chain complex. However, for <span class="SimpleMath">\(X\)</span> a chain complex and <span class="SimpleMath">\(r\)</span> a positive integer or <span class="SimpleMath">\(r=\infty\)</span>, the command <code class="code">ContractedComplex(X,r)</code> runs the original eager code and only eliminates a pair <span class="SimpleMath">\((e^n,e^{n-1})\)</span> if the number of cells in the boundary <span class="SimpleMath">\(d(e^n)\)</span> counted with multiplicity is no greater than <span class="SimpleMath">\(r\)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap16_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap18_mj.html">[Next Chapter]</a>&nbsp;  </div>
