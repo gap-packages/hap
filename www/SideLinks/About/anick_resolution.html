@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anick resolution, step by step</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  body { max-width: 46em; margin: 2em auto; padding: 0 1em; font-family: Georgia, "Times New Roman", serif;
+         font-size: 17px; line-height: 1.55; color: #222; }
+  h1 { font-size: 1.8em; margin-bottom: 0.2em; }
+  h2 { font-size: 1.3em; margin-top: 1.8em; }
+  .byline { color: #666; margin-top: 0; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 0.9em; }
+  .credit { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ccc; color: #666; font-size: 0.9em; }
+  li { margin: 0.25em 0; }
+</style>
+</head>
+<body>
+
+<h1>The Anick resolution, step by step</h1>
+<p class="byline">November 2026</p>
+
+<p>The Anick resolution builds a free \(\mathbb{Z}G\)-resolution of \(\mathbb{Z}\) from a complete rewriting
+system for \(G\): its free generators are the &ldquo;chains&rdquo; of the rewriting system, and its boundary maps
+come from one recursion. This note works with right \(\mathbb{Z}G\)-modules (HAP's left convention is obtained by
+replacing \(g\) with \(g^{-1}\)) and uses the cyclic group \(C_r\) as a running example.</p>
+
+<p>David Anick introduced the resolution in 1986, as a free resolution of \(k\) over an augmented algebra over a
+field \(k\), with chains built from the leading terms of a Gr&ouml;bner basis [Anick 1986]. The construction never
+divides, so it works verbatim over \(\mathbb{Z}\). Over \(\mathbb{Z}\) it was obtained algebraically by Kobayashi
+(1990), for monoid algebras over any commutative ring, and topologically by Brown (1992), by collapsing the
+classifying space of a group or monoid with a complete rewriting system.</p>
+
+<h2>1. What we want</h2>
+
+<p>We want a free \(\mathbb{Z}G\)-resolution of \(\mathbb{Z}\) with a small, explicitly known basis in each degree
+and boundary maps that can be computed mechanically:</p>
+\[ \cdots \to P_2 \to P_1 \to P_0 \to \mathbb{Z} \to 0 . \]
+<p>The Anick resolution gets both from one piece of extra data: a <strong>complete rewriting system</strong>
+for \(G\).</p>
+
+<h2>2. The rewriting system</h2>
+
+<p>Every element of \(G\) gets one chosen word, its <strong>normal form</strong>, and a set of rules rewrites any
+word to that normal form. A complete rewriting system is a set of rules &ldquo;word \(\to\) shorter or smaller
+word&rdquo; which, applied in any order, always ends at the normal form.</p>
+
+<p><strong>\(G\) as a monoid.</strong> A rewriting system is a monoid presentation: words are positive words in
+the letters, with no formal inverses, and the Anick resolution is a resolution over the monoid ring, which is
+\(\mathbb{Z}G\) when the monoid is \(G\) itself. For a finite group nothing is lost, since each inverse is already a
+positive word (\(f^{-1} = f^{r-1}\cdot w\) with \(w\) in later letters). An infinite cyclic step needs an extra inverse
+letter \(A\), with tips \(aA\) and \(Aa\), and each such step multiplies the generating function of the ranks by
+\((1+t)/(1-t)\) instead of \(1/(1-t)\).</p>
+
+<p>For a pc group with pcgs \(f_1,\dots,f_k\) and relative orders \(r_1,\dots,r_k\), collection gives exactly
+this:</p>
+<ul>
+  <li><strong>Normal forms:</strong> \(f_1^{a_1} f_2^{a_2} \cdots f_k^{a_k}\), with \(0 \le a_i \lt r_i\).</li>
+  <li><strong>Power rules:</strong> \(f_i^{r_i} \to\) a word in \(f_{i+1},\dots,f_k\).</li>
+  <li><strong>Conjugation rules:</strong> \(f_j f_i \to f_i \cdots\) for \(j > i\), so letters out of order move
+      left.</li>
+</ul>
+<p>The key objects are the <strong>tips</strong>: the shortest words that are <em>not</em> normal forms. For a pc
+group they are \(f_i^{r_i}\) and \(f_j f_i\) with \(j > i\). Everything else is built from the tips.</p>
+
+<h2>3. Chains: the free generators</h2>
+
+<p>The basis of \(P_n\) is the set of <strong>\(n\)-chains</strong>, words built by chaining tips:</p>
+<ul>
+  <li><strong>0-chain:</strong> the empty word, so \(P_0 = \mathbb{Z}G\).</li>
+  <li><strong>1-chains:</strong> the letters \(f_1,\dots,f_k\).</li>
+  <li><strong>2-chains:</strong> the tips.</li>
+  <li><strong>\(n\)-chains:</strong> each new tip starts inside the previous segment and ends in the new one,
+      overlapping as little as possible.</li>
+</ul>
+<p><strong>Overlaps.</strong> An \(n\)-chain is a word covered by \(n-1\) tips, each overlapping the next, and each
+starting inside the segment before. For example, take \(C_2 \times C_2\) with pcgs \(f_1 = a\), \(f_2 = b\). The
+tips are \(aa\), \(bb\) and \(ba\) (\(ab\) is a normal form).</p>
+<ul>
+  <li><strong>2-chains:</strong> the tips \(aa\), \(bb\), \(ba\).</li>
+  <li><strong>A 3-chain:</strong> \(b \mid a \mid a\). Here \(ba\) covers the first two segments, and \(aa\) starts at
+      the second segment and ends in the third.</li>
+  <li><strong>The rest:</strong> \(a \mid a \mid a\), \(b \mid b \mid a\) and \(b \mid b \mid b\), so
+      \(4 = \binom{3}{1}\) in degree 3.</li>
+  <li><strong>Not a chain:</strong> \(a \mid b\), because \(ab\) is a normal form, not a tip. That is why the letter
+      indices never increase.</li>
+</ul>
+<p>For a pc group an \(n\)-chain is a non-increasing sequence of letter indices
+\(j_1 \ge j_2 \ge \cdots \ge j_n\). Repeats of a letter alternate between the segments \(f\) and \(f^{r-1}\),
+because consecutive copies of the tip \(f^r\) overlap. So
+\(\operatorname{rank} P_n = \binom{n+k-1}{k-1}\).</p>
+
+<p><strong>Example, \(C_r\) with generator \(f\).</strong> There is one tip, \(f^r\), and one \(n\)-chain in each
+degree:</p>
+\[ f, \qquad f \mid f^{r-1}, \qquad f \mid f^{r-1} \mid f, \qquad f \mid f^{r-1} \mid f \mid f^{r-1}, \qquad \dots \]
+<p>So \(\operatorname{rank} P_n = 1\) for every \(n\), as for the familiar periodic resolution of \(C_r\).</p>
+
+<h2>4. The boundary maps</h2>
+
+<p>Write an \((n+1)\)-chain as \(c\cdot t\), where \(c\) is its first \(n\) segments and \(t\) its last segment, a
+group element. The boundary is a forced leading term minus one correction:</p>
+\[ d(c\cdot t) \;=\; c\otimes t \;-\; h\bigl(d(c)\cdot t\bigr). \]
+<ul>
+  <li><strong>Leading term \(c\otimes t\):</strong> &ldquo;drop the last segment&rdquo;.</li>
+  <li><strong>Correction \(h(d(c)\cdot t)\):</strong> makes \(d\circ d = 0\) and exactness hold; \(h\) is a
+      contracting homotopy defined in lower degrees.</li>
+</ul>
+<p>The homotopy \(h\) is a normal-form algorithm lifted to chains. To compute \(h(c\otimes g)\), write \(g\) in
+normal form and ask whether \(c\) followed by the beginning \(s\) of \(\mathrm{nf}(g)\) is again a chain
+\(cs\):</p>
+<ul>
+  <li><strong>If not:</strong> \(h(c\otimes g) = 0\).</li>
+  <li><strong>If so,</strong> with \(g = s\cdot u\):
+  \[ h(c\otimes g) \;=\; (cs)\otimes u \;-\; h\bigl(d(cs)\cdot u \;-\; c\otimes g\bigr). \]</li>
+</ul>
+<p>The second term is the error made by the leading term, corrected again recursively. The recursion terminates
+because the rewriting system is Noetherian, and results are remembered on the monomials \(c\otimes g\).</p>
+
+<p><strong>Example, \(C_r\) again.</strong></p>
+<ol>
+  <li>\(d_1(f) = () \otimes f - () \otimes 1\), i.e. \(f - 1\).</li>
+  <li>The homotopy on \(P_0\): \(h\bigl(()\otimes f^m\bigr) = \sum_{i \lt m} f\otimes f^i\). The word \(f^m\) starts
+      with \(f\), and the recursion peels off one \(f\) at a time.</li>
+  <li>\(d_2(f \mid f^{r-1}) = f\otimes f^{r-1} - h\bigl(()\otimes f^r - ()\otimes f^{r-1}\bigr)\). Since
+      \(f^r = 1\) and \(h(()\otimes 1) = 0\), this is
+      \(f\otimes\bigl(f^{r-1} + \cdots + f + 1\bigr) = f\otimes N\), the norm element.</li>
+</ol>
+<p>So the recursion reproduces the standard periodic resolution of \(C_r\), with boundaries alternating \(f-1\) and
+\(N\). For a general pc group the cyclic pieces are glued together through the conjugation tips \(f_j f_i\), and
+that gluing produces the correction terms.</p>
+
+<h2>5. Why it is a resolution</h2>
+
+<p>The Anick resolution is a Morse complex of the bar resolution, so it is exact and inherits a contracting
+homotopy.</p>
+
+<p>The bar resolution has basis \([g_1 \mid \cdots \mid g_n]\) for all \(n\)-tuples of nontrivial elements, far
+too big. The rewriting system pairs up these basis elements, by splitting or merging entries where a tip occurs.
+This pairing is an acyclic matching in the sense of algebraic discrete Morse theory. The unpaired, critical, basis
+elements are exactly the Anick chains, and the Morse complex built on them is the Anick resolution (Brown 1992;
+Sk&ouml;ldberg 2006; J&ouml;llenbeck&ndash;Welker 2009).</p>
+
+<p>A Morse complex is a deformation retract of the original complex. So the Anick resolution is homotopy
+equivalent to the bar resolution, hence exact, and its contracting homotopy is \(h\).</p>
+
+<p><strong>What Morse theory adds.</strong> Not the contracting homotopy: Anick's construction already has one.
+Nor comparison maps with the bar resolution: two contracting homotopies give those by lifting, and Crainic's
+version of the perturbation lemma accepts them without a strict retraction. What it adds is a clean derivation,
+with exactness for free, and one framework that also covers later reductions such as cancelling unit pivots, which
+is itself algebraic Morse theory.</p>
+
+<h2>6. How it relates to <code>ResolutionNilpotentGroup</code></h2>
+
+<p>For a pc group, the ranks \(\binom{n+k-1}{k-1}\) are the same as those of the twisted tensor product built step
+by step along the series, i.e. <code>ResolutionNilpotentGroup</code>: both come from the same pcgs. The Anick
+construction gets there by one recursion with one correction term per generator, instead of a sum of perturbation
+terms \(d_1 + d_2 + \cdots\). That is why it is cheaper to compute.</p>
+
+<h2>7. Why polycyclic groups: \(A_5\) as a contrast</h2>
+
+<p>Any complete rewriting system gives an Anick resolution, but only for pc groups is its size guaranteed to grow
+polynomially. For a pc group the ranks are \(\binom{n+k-1}{k-1}\), a polynomial in \(n\) of degree \(k-1\). For
+\(A_5\) they grow exponentially.</p>
+
+<table style="border-collapse: collapse; margin: 1em 0;">
+  <tr><th style="text-align:left; padding: 0.3em 1em 0.3em 0; border-bottom: 1px solid #999;">Resolution of \(A_5\)</th>
+      <th style="text-align:left; padding: 0.3em 0; border-bottom: 1px solid #999;">Ranks in degrees 0&ndash;6</th></tr>
+  <tr><td style="padding: 0.3em 1em 0.3em 0;">Anick, Knuth&ndash;Bendix system for
+      \(\langle a, b \mid a^2, b^3, (ab)^5\rangle\) (17 tips)</td>
+      <td style="padding: 0.3em 0;">1, 3, 17, 74, 396, 1880, 9517 (about 5&times; per degree)</td></tr>
+  <tr><td style="padding: 0.3em 1em 0.3em 0;"><code>ResolutionFiniteGroup</code></td>
+      <td style="padding: 0.3em 0;">1, 3, 6, 10, 14, 19</td></tr>
+</table>
+
+<p>The reason is visible in the growth polynomial of the normal forms,
+\(H(t) = \sum_{g} t^{|\mathrm{nf}(g)|}\). The Anick resolution is graded by word length, so its Euler
+characteristic gives Anick's identity, where \(C_n(t)\) counts \(n\)-chains by length:</p>
+\[ \sum_{n\ge 0} (-1)^n\, C_n(t) \;=\; \frac{1}{H(t)} . \]
+<p>If \(H(t)\) has a root inside the unit disk, the coefficients of \(1/H(t)\) grow exponentially, and so must the
+ranks.</p>
+<ul>
+  <li><strong>Pc group:</strong> \(H(t) = \prod_i \bigl(1 + t + \cdots + t^{r_i-1}\bigr)\), whose roots are roots
+      of unity, giving \(1/(1-t)^k\).</li>
+  <li><strong>This \(A_5\) system:</strong> \(H(t)\) has coefficients 1, 3, 4, 6, 8, 10, 8, 10, 6, 3, 1 and a root
+      of modulus about 0.50.</li>
+</ul>
+<p>By Kronecker's theorem, polynomial growth is possible only if \(H(t)\) is a product of cyclotomic polynomials,
+i.e. the normal forms grow like those of a pc group. Whether \(A_5\) has such a complete rewriting system is open
+here.</p>
+<p>Other constructions do give small, polynomially growing resolutions for \(A_5\). <code>ResolutionFiniteGroup</code>
+gives the ranks in the table above. And \(A_5\) is the even subgroup of the finite Coxeter group
+\(H_3 \cong A_5 \times C_2\), whose De Concini&ndash;Salvetti resolution has ranks
+\(\binom{k+2}{k} = 1, 3, 6, 10, 15, \dots\) in degree \(k\) (HAP's <code>ResolutionCoxeterGroup</code> implements a
+version). Restricted to \(A_5\) it is a free \(\mathbb{Z}A_5\)-resolution with twice those ranks. For homology alone,
+HAP's <code>GroupHomology</code> can also work through Sylow subgroups, which are solvable.</p>
+
+<h2>References</h2>
+<ul>
+  <li>D. J. Anick, <a href="https://dx.doi.org/10.1090/S0002-9947-1986-0846601-5">On the homology of associative
+      algebras</a>, Trans. Amer. Math. Soc. 296 (1986), 641&ndash;659.</li>
+  <li>Y. Kobayashi, Complete rewriting systems and homology of monoid algebras, J. Pure Appl. Algebra 65 (1990),
+      263&ndash;275.</li>
+  <li>K. S. Brown, The geometry of rewriting systems: a proof of the Anick&ndash;Groves&ndash;Squier theorem, in
+      <em>Algorithms and Classification in Combinatorial Group Theory</em> (Berkeley, 1989), MSRI Publ. 23,
+      Springer, 1992, 137&ndash;163. Brown's own overview:
+      <a href="https://pi.math.cornell.edu/~kbrown/slides/rewriting.pdf">Rewriting systems and discrete Morse
+      theory</a> (slides, 2013).</li>
+  <li>C. De Concini and M. Salvetti, <a href="https://doi.org/10.4310/MRL.2000.v7.n2.a7">Cohomology of Coxeter
+      groups and Artin groups</a>, Math. Res. Lett. 7 (2000), 213&ndash;232.</li>
+  <li>E. Sk&ouml;ldberg, <a href="https://webhomes.maths.ed.ac.uk/~v1ranick/papers/skoldberg.pdf">Morse theory from
+      an algebraic viewpoint</a>, Trans. Amer. Math. Soc. 358 (2006), 115&ndash;129.</li>
+  <li>M. J&ouml;llenbeck and V. Welker, <a href="https://bookstore.ams.org/MEMO/197/923">Minimal resolutions via
+      algebraic discrete Morse theory</a>, Mem. Amer. Math. Soc. 197 (2009), no. 923.</li>
+  <li>M. Crainic, <a href="https://arxiv.org/abs/math/0403266">On the perturbation lemma, and deformations</a>,
+      arXiv:math/0403266 (2004).</li>
+</ul>
+
+<p class="credit">Written with the assistance of Claude (Anthropic), November 2026.</p>
+
+</body>
+</html>
