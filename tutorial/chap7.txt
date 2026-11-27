@@ -8,12 +8,17 @@
   [1X7.1-1 [33X[0;0YNaive homology computation for a very small group[133X[101X
   
   [33X[0;0YIt  is  possible to compute the low degree (co)homology of a finite group or
-  monoid  of  small  order  directly  from  the  bar resolution. The following
-  commands take this approach to computing the fifth integral homology[133X
+  monoid  of  small  order  directly from the (normalized) bar resolution. The
+  following  commands  take  this  approach  to  computing  the fifth integral
+  homology[133X
   
   [33X[0;0Y[22XH_5(Q_4, Z) = Z_2⊕ Z_2[122X[133X
   
-  [33X[0;0Yof the quaternion group [22XG=Q_4[122X of order [22X8[122X.[133X
+  [33X[0;0Yof  the quaternion group [22XG=Q_4[122X of order [22X8[122X. The chain complex [22XB_∗[122X obtained by
+  tensoring  the bar resolution with [22XZ[122X (i.e. killing the action) is calculated
+  first.   Then   this   chain   complex   is   reduced   using  the  function
+  [10XContractedComplex(B)[110X  (see Section [14X17.4[114X for how it works) before homology is
+  computed.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XQ:=QuaternionGroup(8);;[127X[104X
@@ -30,12 +35,12 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YHowever,  this approach is of limited applicability since the bar resolution
-  involves  [22X|G|^k[122X free generators in degree [22Xk[122X. A range of techniques, tailored
-  to  specific  classes  of groups, can be used to compute the (co)homology of
-  larger finite groups.[133X
+  [33X[0;0YHowever,  this approach is of limited applicability since the normalized bar
+  resolution  involves  [22X|G-1|^k[122X  free  generators  in  degree  [22Xk[122X.  A  range of
+  techniques,  tailored  to specific classes of groups, can be used to compute
+  the (co)homology of larger finite groups.[133X
   
-  [33X[0;0YThis  naive  approach  does  have the merit of being applicable to arbitrary
+  [33X[0;0YThe  naive  approach  does  have  the merit of being applicable to arbitrary
   small  monoids.  The  following  calculates the homology in degrees [22X≤ 7[122X of a
   monoid of order 8, the monoid being specified by its multiplication table.[133X
   
@@ -64,7 +69,106 @@
   [4X[32X[104X
   
   
-  [1X7.1-2 [33X[0;0YA more efficient homology computation[133X[101X
+  [1X7.1-2 [33X[0;0YOther resolutions[133X[101X
+  
+  [33X[0;0YThe  Anick  resolution builds a free [22XZG[122X-resolution from a complete rewriting
+  system   for   a   monoid   or   group   [22XG[122X.   An   overview  is  given  here
+  ([7X../www/SideLinks/About/anick_resolution.html[107X).     The     resolution    is
+  straighforward to implement and a practical tool for polycyclic groups whose
+  polycyclic  generating  sets  [13Xpcgs[113X,  viewed  as rewriting systems, guarantee
+  polynomial growth of the resolution.[133X
+  
+  [33X[0;0YThe  following  commands use GAP's default pcgs for the quaternion group [22XQ_4[122X
+  to build [22X20[122X terms of the Anick resolution and compute [22XH_19(Q_4, Z)= Z_8[122X. The
+  calculation  is  then  repeated  with a more carefully chosen rewrite system
+  that produces a resolution of rank [22Xn+1[122X in degree [22Xn[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=QuaternionGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionAnick(G,20);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),19);[127X[104X
+    [4X[28X[ 8 ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..10], R!.dimension);[127X[104X
+    [4X[28X[ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMonoid("j","i");; j := F.1;; i := F.2;;[127X[104X
+    [4X[25Xgap>[125X [27XQ := F / [[i^4, One(F)], [j^2, i^2], [i*j, j*i^3]];;[127X[104X
+    [4X[25Xgap>[125X [27Xord := WreathProductOrdering(F, [i, j], [1, 2]);;   # j on the higher level[127X[104X
+    [4X[25Xgap>[125X [27Xrws := KnuthBendixRewritingSystem(Q, ord);; MakeConfluent(rws);;[127X[104X
+    [4X[25Xgap>[125X [27XR := ResolutionAnickOfMonoid(rws, 20);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),19);[127X[104X
+    [4X[28X[ 8 ][128X[104X
+    [4X[25Xgap>[125X [27XList([0..20], R!.dimension);[127X[104X
+    [4X[28X[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  a  non-cyclic  finite  monoid/group  the  least number of generators in
+  degree  [22Xn[122X  of  the  Anick  resolution is [22Xn+1[122X. But other resolutions can have
+  fewer  generators.  Continuing  with the [22XQ_8[122X example, the following commands
+  produce a smaller resolution.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=QuaternionGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionSmallGroup(G,20);;[127X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(R),19);[127X[104X
+    [4X[28X[ 8 ][128X[104X
+    [4X[25Xgap>[125X [27XList([1..20], R!.dimension);[127X[104X
+    [4X[28X[ 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  groups  that  are  not  polycylic  the  Anick  resolution  can  be less
+  effective.  As  an example, a search through several thousand random rewrite
+  systems  for  the alternating group [22XA_5[122X produced only Anick resolutions that
+  seem to grow exponentially. For instance:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeMonoid("a","b");; a := F.1;; b := F.2;;[127X[104X
+    [4X[25Xgap>[125X [27XA5 := F / [[a^2, One(F)], [b^3, One(F)], [(a*b)^5, One(F)]];;[127X[104X
+    [4X[25Xgap>[125X [27XSize(A5);[127X[104X
+    [4X[28X60[128X[104X
+    [4X[25Xgap>[125X [27Xord := WreathProductOrdering(F, [a, b], [1, 2]);;   # j on the higher levelgap> rws := KnuthBendixRewritingSystem(A5, ord);; MakeConfluent(rws);;[127X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionAnickOfMonoid(rws,10);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..9],R!.dimension);[127X[104X
+    [4X[28X[ 1, 2, 6, 19, 73, 278, 1088, 4241, 16589, 64832 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC:=TensorWithIntegers(R);;[127X[104X
+    [4X[25Xgap>[125X [27Xfor r in [2,4,8,16,32,64] do  C:=ContractedComplex(C,r); od;;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..9],C!.dimension);[127X[104X
+    [4X[28X[ 1, 0, 1, 3, 3, 4, 5, 12, 15, 51621 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(C,8);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  quicker  way  to  produce  the  first  few  terms  of  a reasonable small
+  resolution  for  [22XA_5[122X is the following (based on a resolution construction in
+  [Ell04]).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=ResolutionFiniteGroup(AlternatingGroup(5),10);;[127X[104X
+    [4X[25Xgap>[125X [27XList([0..10],R!.dimension);[127X[104X
+    [4X[28X[ 1, 3, 6, 10, 14, 19, 26, 32, 38, 46, 56 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT:=ContractedComplex(R);[127X[104X
+    [4X[28XResolution of length 10 in characteristic 0 for Group([ (3,4,5), (1,2,3,4,5) [128X[104X
+    [4X[28X ]) . [128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..10],T!.dimension);[127X[104X
+    [4X[28X[ 1, 3, 5, 6, 9, 12, 15, 15, 15, 19, 41 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHomology(TensorWithIntegers(T),8);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  range  of  methods  for  constructing  resolutions  of finite groups, and
+  infinite groups, can be found in Section [14X11[114X.[133X
+  
+  
+  [1X7.1-3 [33X[0;0YHomology computation via Sylow subgroups[133X[101X
   
   [33X[0;0YThe following example computes the seventh integral homology[133X
   
@@ -95,7 +199,7 @@
   [4X[32X[104X
   
   
-  [1X7.1-3 [33X[0;0YComputation of an induced homology homomorphism[133X[101X
+  [1X7.1-4 [33X[0;0YComputation of an induced homology homomorphism[133X[101X
   
   [33X[0;0YThe following example computes the cokernel[133X
   
@@ -123,7 +227,7 @@
   [4X[32X[104X
   
   
-  [1X7.1-4 [33X[0;0YSome other finite group homology computations[133X[101X
+  [1X7.1-5 [33X[0;0YSome other finite group homology computations[133X[101X
   
   [33X[0;0YThe following example computes the third integral homology of the Weyl group
   [22XW=Weyl(E_8)[122X, a group of order [22X696729600[122X.[133X
